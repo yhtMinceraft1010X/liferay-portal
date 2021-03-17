@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
@@ -41,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_diff"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/change_tracking/view_diff"
 	},
 	service = MVCRenderCommand.class
 )
@@ -66,13 +66,12 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 				ctCollection, _ctDisplayRendererRegistry, ctEntry,
 				_ctEntryLocalService,
 				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse), _language,
-				_portal.getLocale(renderRequest));
+				_portal.getHttpServletResponse(renderResponse), _language);
 
 			renderRequest.setAttribute(
 				CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);
 
-			return "/change_lists/view_diff.jsp";
+			return "/publications/view_diff.jsp";
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);

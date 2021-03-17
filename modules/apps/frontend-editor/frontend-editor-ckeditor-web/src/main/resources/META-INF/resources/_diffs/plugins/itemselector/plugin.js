@@ -13,8 +13,6 @@
  */
 
 (function () {
-	var IE9AndLater = AUI.Env.UA.ie >= 9;
-
 	var STR_FILE_ENTRY_RETURN_TYPE =
 		'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
 
@@ -204,7 +202,7 @@
 
 			return (
 				selection.getType() === CKEDITOR.SELECTION_NONE ||
-				(ranges.length === 1 && (ranges[0].collapsed || IE9AndLater))
+				(ranges.length === 1 && ranges[0].collapsed)
 			);
 		},
 
@@ -236,33 +234,13 @@
 						callback(imageSrc, selectedItem);
 					}
 					else {
-						var imageElement = new CKEDITOR.dom.element.createFromHtml(
-							'<img src="' + imageSrc + '">'
-						);
+						var elementOuterHtml = '<img src="' + imageSrc + '">';
 
-						editor.insertElement(imageElement);
-
-						if (IE9AndLater) {
-							if (!editor.window.$.AlloyEditor) {
-								editor.insertHtml('&nbsp;');
-							}
-
-							var element = new CKEDITOR.dom.element('br');
-
-							editor.insertElement(element);
-							editor.getSelection();
-
-							editor.fire('editorInteraction', {
-								nativeEvent: {},
-								selectionData: {
-									element,
-									region: element.getClientRect(),
-								},
-							});
+						if (instance._isEmptySelection(editor)) {
+							elementOuterHtml += '<br />';
 						}
-						else {
-							editor.execCommand('enter');
-						}
+
+						editor.insertHtml(elementOuterHtml);
 
 						editor.focus();
 					}
@@ -442,7 +420,7 @@
 						dialogDefinition,
 						'info',
 						'imageselector',
-						'txtUrl'
+						'src'
 					);
 				}
 				else if (dialogName === 'video') {

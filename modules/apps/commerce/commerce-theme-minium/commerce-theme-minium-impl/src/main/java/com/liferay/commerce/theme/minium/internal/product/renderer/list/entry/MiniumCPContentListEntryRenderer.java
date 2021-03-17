@@ -144,7 +144,8 @@ public class MiniumCPContentListEntryRenderer
 					PortletRequest.ACTION_PHASE);
 
 			editCompareProductActionURL.setParameter(
-				ActionRequest.ACTION_NAME, "editCompareProduct");
+				ActionRequest.ACTION_NAME,
+				"/cp_compare_content_web/edit_compare_product");
 
 			context.put("compareCheckboxVisible", false);
 			context.put(
@@ -284,20 +285,24 @@ public class MiniumCPContentListEntryRenderer
 			boolean addedToWishlist = false;
 
 			if (cpSku != null) {
-				if (_commerceWishListItemService.
+				int count =
+					_commerceWishListItemService.
 						getCommerceWishListItemByContainsCPInstanceCount(
 							commerceWishList.getCommerceWishListId(),
-							cpSku.getCPInstanceUuid()) > 0) {
+							cpSku.getCPInstanceUuid());
 
+				if (count > 0) {
 					addedToWishlist = true;
 				}
 			}
 			else {
-				if (_commerceWishListItemService.
+				int count =
+					_commerceWishListItemService.
 						getCommerceWishListItemByContainsCProductCount(
 							commerceWishList.getCommerceWishListId(),
-							cpCatalogEntry.getCProductId()) > 0) {
+							cpCatalogEntry.getCProductId());
 
+				if (count > 0) {
 					addedToWishlist = true;
 				}
 			}

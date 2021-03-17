@@ -18,13 +18,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.CacheResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -65,6 +65,13 @@ public class LanguageExtension {
 
 		for (ServiceRegistration<ResourceBundleLoader> serviceRegistration :
 				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		for (ServiceRegistration
+				<com.liferay.portal.kernel.util.ResourceBundleLoader>
+					serviceRegistration : _compatServiceRegistrations) {
 
 			serviceRegistration.unregister();
 		}
@@ -132,6 +139,13 @@ public class LanguageExtension {
 					_bundleContext.registerService(
 						ResourceBundleLoader.class, resourceBundleLoader,
 						attributes));
+
+				_compatServiceRegistrations.add(
+					_bundleContext.registerService(
+						com.liferay.portal.kernel.util.ResourceBundleLoader.
+							class,
+						new CompatResourceBundleLoader(resourceBundleLoader),
+						attributes));
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -147,7 +161,7 @@ public class LanguageExtension {
 		boolean excludePortalResource) {
 
 		ResourceBundleLoader resourceBundleLoader =
-			ResourceBundleUtil.getResourceBundleLoader(baseName, classLoader);
+			new ClassResourceBundleLoader(baseName, classLoader);
 
 		if (excludePortalResource) {
 			return new CacheResourceBundleLoader(resourceBundleLoader);
@@ -169,6 +183,10 @@ public class LanguageExtension {
 	private final Bundle _bundle;
 	private final List<BundleCapability> _bundleCapabilities;
 	private final BundleContext _bundleContext;
+	private final Collection
+		<ServiceRegistration
+			<com.liferay.portal.kernel.util.ResourceBundleLoader>>
+				_compatServiceRegistrations = new ArrayList<>();
 	private final Collection<ServiceRegistration<ResourceBundleLoader>>
 		_serviceRegistrations = new ArrayList<>();
 	private final List<ServiceTrackerResourceBundleLoader>

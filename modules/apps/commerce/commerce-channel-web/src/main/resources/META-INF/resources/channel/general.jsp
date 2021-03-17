@@ -30,7 +30,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 ).build();
 %>
 
-<portlet:actionURL name="editCommerceChannel" var="editCommerceChannelActionURL" />
+<portlet:actionURL name="/commerce_channels/edit_commerce_channel" var="editCommerceChannelActionURL" />
 
 <aui:form action="<%= editCommerceChannelActionURL %>" cssClass="m-0 p-0" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceChannel == null) ? Constants.ADD : Constants.UPDATE %>" />
@@ -74,7 +74,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					%>
 
 				</aui:select>
-
 			</commerce-ui:panel>
 		</div>
 

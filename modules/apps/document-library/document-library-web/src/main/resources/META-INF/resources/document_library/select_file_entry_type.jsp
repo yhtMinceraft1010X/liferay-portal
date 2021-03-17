@@ -35,7 +35,7 @@ portletURL.setParameter("eventName", eventName);
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setLabel(LanguageUtil.get(request, "document-types"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "document-types"));
 					});
 			}
 		}
@@ -61,11 +61,10 @@ portletURL.setParameter("eventName", eventName);
 				row.setCssClass("select-action active");
 			}
 
-			Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-				"fileEntryTypeId", fileEntryType.getFileEntryTypeId()
-			).build();
-
-			row.setData(rowData);
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"fileEntryTypeId", fileEntryType.getFileEntryTypeId()
+				).build());
 			%>
 
 			<liferay-ui:search-container-column-icon

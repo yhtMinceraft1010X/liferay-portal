@@ -42,7 +42,7 @@ List<NavigationItem> navigationItems =
 				navigationItem -> {
 					navigationItem.setActive(true);
 					navigationItem.setHref(currentURL);
-					navigationItem.setLabel(LanguageUtil.get(request, "details"));
+					navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "details"));
 				});
 		}
 	};
@@ -175,7 +175,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						<h5><liferay-ui:message key="description" /></h5>
 
 						<p>
-							<%= HtmlUtil.escape(group.getDescription()) %>
+							<%= HtmlUtil.escape(group.getDescription(locale)) %>
 						</p>
 					</c:if>
 

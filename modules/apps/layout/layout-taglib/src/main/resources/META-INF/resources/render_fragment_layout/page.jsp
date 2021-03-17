@@ -26,10 +26,6 @@ boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
 %>
 
-<liferay-util:html-top>
-	<%= renderFragmentLayoutDisplayContext.getPortletHeaderPaths() %>
-</liferay-util:html-top>
-
 <%
 try {
 	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
@@ -55,7 +51,3 @@ finally {
 	request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
 }
 %>
-
-<liferay-util:html-bottom>
-	<%= renderFragmentLayoutDisplayContext.getPortletFooterPaths() %>
-</liferay-util:html-bottom>

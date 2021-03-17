@@ -16,13 +16,13 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
@@ -52,6 +52,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -60,8 +63,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_changes"
+		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
+		"mvc.command.name=/change_tracking/view_changes"
 	},
 	service = MVCRenderCommand.class
 )
@@ -96,7 +99,7 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 					themeDisplay.getPermissionChecker(), ctCollection,
 					ActionKeys.VIEW)) {
 
-				return "/change_lists/view.jsp";
+				return "/publications/view.jsp";
 			}
 		}
 		catch (PortalException portalException) {
@@ -104,7 +107,7 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				_log.warn(portalException, portalException);
 			}
 
-			return "/change_lists/view.jsp";
+			return "/publications/view.jsp";
 		}
 
 		ViewChangesDisplayContext viewChangesDisplayContext =
@@ -118,7 +121,7 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
 
-		return "/change_lists/view_changes.jsp";
+		return "/publications/view_changes.jsp";
 	}
 
 	@Activate
@@ -166,8 +169,12 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private PublishScheduler _publishScheduler;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PublishScheduler _publishScheduler;
 
 	@Reference
 	private UserLocalService _userLocalService;

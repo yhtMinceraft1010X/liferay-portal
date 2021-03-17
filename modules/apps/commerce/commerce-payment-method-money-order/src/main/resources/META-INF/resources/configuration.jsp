@@ -26,15 +26,13 @@ LocalizedValuesMap messageLocalizedValuesMap = moneyOrderGroupServiceConfigurati
 if (messageLocalizedValuesMap != null) {
 	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
 }
-
-long commerceChannelId = ParamUtil.getLong(request, "commerceChannelId");
 %>
 
-<portlet:actionURL name="editMoneyOrderCommercePaymentMethodConfiguration" var="editCommercePaymentMethodActionURL" />
+<portlet:actionURL name="/commerce_payment_methods/edit_money_order_commerce_payment_method_configuration" var="editCommercePaymentMethodActionURL" />
 
 <aui:form action="<%= editCommercePaymentMethodActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
+	<aui:input name="commerceChannelId" type="hidden" value='<%= ParamUtil.getLong(request, "commerceChannelId") %>' />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<commerce-ui:panel>

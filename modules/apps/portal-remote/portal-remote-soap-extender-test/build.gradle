@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile group: "com.liferay", name: "javax.jws", version: "1.1.0.LIFERAY-PATCHED-1"
 	testIntegrationCompile group: "com.liferay", name: "javax.xml.ws", version: "2.3.0.LIFERAY-PATCHED-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -14,5 +15,4 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

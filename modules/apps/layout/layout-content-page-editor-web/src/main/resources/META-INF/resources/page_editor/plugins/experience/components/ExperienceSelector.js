@@ -27,6 +27,7 @@ import selectCanUpdateExperiences from '../../../app/selectors/selectCanUpdateEx
 import selectCanUpdateSegments from '../../../app/selectors/selectCanUpdateSegments';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import createExperience from '../thunks/createExperience';
+import duplicateExperience from '../thunks/duplicateExperience';
 import removeExperience from '../thunks/removeExperience';
 import updateExperience from '../thunks/updateExperience';
 import updateExperiencePriority from '../thunks/updateExperiencePriority';
@@ -64,14 +65,8 @@ function getUpdateExperiencePriorityTargets(
 	const targetExperience = orderedExperiences[targetIndex];
 
 	return {
-		subtarget: {
-			priority: targetExperience.priority,
-			segmentsExperienceId: subtargetExperience.segmentsExperienceId,
-		},
-		target: {
-			priority: subtargetExperience.priority,
-			segmentsExperienceId: targetExperience.segmentsExperienceId,
-		},
+		priority: subtargetExperience.priority,
+		segmentsExperienceId: targetExperience.segmentsExperienceId,
 	};
 }
 
@@ -100,6 +95,7 @@ const ExperienceSelector = ({
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
 		onClose: () => {
 			setOpenModal(false);
+			setEditingExperience({});
 		},
 	});
 
@@ -164,7 +160,6 @@ const ExperienceSelector = ({
 			)
 				.then(() => {
 					if (isMounted()) {
-						setEditingExperience({});
 						onModalClose();
 					}
 					openToast({
@@ -259,33 +254,47 @@ const ExperienceSelector = ({
 			});
 	};
 
+	const handleExperienceDuplication = (id) => {
+		dispatch(
+			duplicateExperience({
+				segmentsExperienceId: id,
+			})
+		)
+			.then(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'the-experience-was-duplicated-successfully'
+					),
+					type: 'success',
+				});
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+	};
+
 	const decreasePriority = (id) => {
-		const {subtarget, target} = getUpdateExperiencePriorityTargets(
+		const target = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,
 			'down'
 		);
 
-		dispatch(
-			updateExperiencePriority({
-				subtarget,
-				target,
-			})
-		);
+		dispatch(updateExperiencePriority(target));
 	};
 	const increasePriority = (id) => {
-		const {subtarget, target} = getUpdateExperiencePriorityTargets(
+		const target = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,
 			'up'
 		);
 
-		dispatch(
-			updateExperiencePriority({
-				subtarget,
-				target,
-			})
-		);
+		dispatch(updateExperiencePriority(target));
 	};
 
 	return (
@@ -343,6 +352,9 @@ const ExperienceSelector = ({
 								}
 								experiences={experiences}
 								onDeleteExperience={deleteExperience}
+								onDuplicateExperience={
+									handleExperienceDuplication
+								}
 								onEditExperience={handleEditExperienceClick}
 								onPriorityDecrease={decreasePriority}
 								onPriorityIncrease={increasePriority}

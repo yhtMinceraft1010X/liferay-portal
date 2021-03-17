@@ -17,6 +17,7 @@ package com.liferay.commerce.subscription.web.internal.frontend;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.subscription.web.internal.frontend.constants.CommerceSubscriptionDataSetConstants;
 import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -98,7 +99,8 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 		portletURL.setParameter("redirect", portletURL.toString());
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "editCommerceSubscriptionEntry");
+			ActionRequest.ACTION_NAME,
+			"/commerce_subscription_entry/edit_commerce_subscription_entry");
 		portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		portletURL.setParameter(
 			"commerceSubscriptionEntryId",
@@ -117,7 +119,8 @@ public class CommerceSubscriptionEntryClayDataSetActionProvider
 			PortletProvider.Action.MANAGE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommerceSubscriptionEntry");
+			"mvcRenderCommandName",
+			"/commerce_subscription_entry/edit_commerce_subscription_entry");
 		portletURL.setParameter(
 			"redirect", _portal.getCurrentURL(httpServletRequest));
 		portletURL.setParameter(

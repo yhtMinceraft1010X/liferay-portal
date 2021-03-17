@@ -54,7 +54,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 			/>
 
 			<portlet:renderURL var="addCommerceCountryURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
+				<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_country" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
@@ -78,7 +78,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 	</liferay-frontend:management-bar>
 
 	<div class="container-fluid-1280">
-		<portlet:actionURL name="editCommerceCountry" var="editCommerceCountryActionURL" />
+		<portlet:actionURL name="/commerce_country/edit_commerce_country" var="editCommerceCountryActionURL" />
 
 		<aui:form action="<%= editCommerceCountryActionURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
@@ -98,7 +98,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					<%
 					PortletURL rowURL = renderResponse.createRenderURL();
 
-					rowURL.setParameter("mvcRenderCommandName", "editCommerceCountry");
+					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_country");
 					rowURL.setParameter("redirect", currentURL);
 					rowURL.setParameter("commerceCountryId", String.valueOf(commerceCountry.getCommerceCountryId()));
 					%>

@@ -13,12 +13,17 @@
  */
 
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {ConstantsProvider} from '../contexts/ConstantsContext';
+import {ItemsProvider, useItems} from '../contexts/ItemsContext';
 import {SelectedMenuItemIdProvider} from '../contexts/SelectedMenuItemIdContext';
 import {SidebarPanelIdProvider} from '../contexts/SidebarPanelIdContext';
+import {DragDropProvider} from '../utils/useDragAndDrop';
 import {AppLayout} from './AppLayout';
+import DragPreview from './DragPreview';
 import {EmptyState} from './EmptyState';
 import {Menu} from './Menu';
 import {MenuItemSettingsPanel} from './MenuItemSettingsPanel';
@@ -40,22 +45,27 @@ export function App(props) {
 	const {siteNavigationMenuItems} = props;
 
 	return (
-		<ConstantsProvider constants={props}>
-			<SelectedMenuItemIdProvider>
-				<SidebarPanelIdProvider>
-					<AppLayout
-						contentChildren={
-							!siteNavigationMenuItems.length ? (
-								<EmptyState />
-							) : (
-								<Menu />
-							)
-						}
-						sidebarPanels={SIDEBAR_PANELS}
-						toolbarChildren={<Toolbar />}
-					/>
-				</SidebarPanelIdProvider>
-			</SelectedMenuItemIdProvider>
-		</ConstantsProvider>
+		<DndProvider backend={HTML5Backend}>
+			<ConstantsProvider constants={props}>
+				<ItemsProvider initialItems={siteNavigationMenuItems}>
+					<DragPreview />
+					<DragDropProvider>
+						<SelectedMenuItemIdProvider>
+							<SidebarPanelIdProvider>
+								<AppLayoutWrapper />
+							</SidebarPanelIdProvider>
+						</SelectedMenuItemIdProvider>
+					</DragDropProvider>
+				</ItemsProvider>
+			</ConstantsProvider>
+		</DndProvider>
 	);
 }
+
+const AppLayoutWrapper = () => (
+	<AppLayout
+		contentChildren={useItems().length ? <Menu /> : <EmptyState />}
+		sidebarPanels={SIDEBAR_PANELS}
+		toolbarChildren={<Toolbar />}
+	/>
+);

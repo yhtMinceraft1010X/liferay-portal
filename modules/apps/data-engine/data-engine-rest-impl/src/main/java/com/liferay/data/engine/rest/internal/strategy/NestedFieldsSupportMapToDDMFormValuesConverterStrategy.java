@@ -98,7 +98,7 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 	private NestedFieldsSupportMapToDDMFormValuesConverterStrategy() {
 	}
 
-	private static NestedFieldsSupportMapToDDMFormValuesConverterStrategy
+	private static final NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 		_nestedFieldsSupportMapToDDMFormValuesConverterStrategy =
 			new NestedFieldsSupportMapToDDMFormValuesConverterStrategy();
 

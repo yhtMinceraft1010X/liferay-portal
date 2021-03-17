@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.util.CPCompareContentHelper;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
@@ -25,7 +26,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
-import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -93,7 +93,8 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		PortletURL portletURL = renderResponse.createActionURL();
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "clearCompareProducts");
+			ActionRequest.ACTION_NAME,
+			"/cp_compare_content_mini_web/clear_compare_products");
 
 		String redirect = _portal.getCurrentURL(renderRequest);
 
@@ -232,7 +233,8 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 		PortletURL portletURL = renderResponse.createActionURL();
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "deleteCompareProduct");
+			ActionRequest.ACTION_NAME,
+			"/cp_compare_content_mini_web/delete_compare_product");
 
 		String redirect = _portal.getCurrentURL(renderRequest);
 

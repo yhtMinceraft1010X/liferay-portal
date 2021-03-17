@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -105,6 +106,9 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		).put(
 			"upgradedStructure",
 			GetterUtil.getBoolean(ddmFormField.getProperty("upgradedStructure"))
+		).put(
+			"visible",
+			ListUtil.isNotEmpty(_getVisibleNestedFields(nestedFields))
 		).build();
 	}
 
@@ -159,13 +163,8 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 	protected JSONArray getRowsJSONArray(List<Object> nestedFields) {
 		JSONArray rowsJSONArray = jsonFactory.createJSONArray();
 
-		Stream<Object> visibleNestedFieldsStream = nestedFields.stream();
-
-		List<Object> visibleNestedFields = visibleNestedFieldsStream.filter(
-			this::isNestedFieldVisible
-		).collect(
-			Collectors.toList()
-		);
+		List<Object> visibleNestedFields = _getVisibleNestedFields(
+			nestedFields);
 
 		if (!visibleNestedFields.isEmpty()) {
 			rowsJSONArray.put(createRowJSONObject(visibleNestedFields));
@@ -216,6 +215,16 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private List<Object> _getVisibleNestedFields(List<Object> nestedFields) {
+		Stream<Object> visibleNestedFieldsStream = nestedFields.stream();
+
+		return visibleNestedFieldsStream.filter(
+			this::isNestedFieldVisible
+		).collect(
+			Collectors.toList()
+		);
+	}
 
 	private boolean _needsLoadLayout(DDMFormField ddmFormField) {
 		if (Validator.isNotNull(ddmFormField.getProperty("ddmStructureId")) &&

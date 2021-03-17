@@ -39,7 +39,7 @@ definition {
 		if (IsElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL")) {
 			Click(
 				key_radioOption = "${shippingMethod}",
-				locator1 = "CommerceAccelerators#CHECKOUT_SHIPPING_OPTION_RADIO");
+				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			if ("${shippingMethod}" == "Standard") {
 				deliveryValue = "15";
@@ -107,10 +107,12 @@ definition {
 				value1 = "${addressCountry}");
 		}
 
-		AssertTextEquals(
-			key_paymentMethod = "${paymentMethod}",
-			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
-			value1 = "${paymentMethod}");
+		if (isSet(paymentMethod)) {
+			AssertTextEquals(
+				key_paymentMethod = "${paymentMethod}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+				value1 = "${paymentMethod}");
+		}
 
 		AssertTextEquals(
 			key_productName = "${productName}",

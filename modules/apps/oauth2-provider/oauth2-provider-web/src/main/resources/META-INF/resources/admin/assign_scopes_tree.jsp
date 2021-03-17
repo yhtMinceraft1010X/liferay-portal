@@ -23,13 +23,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 Tree.Node<String> scopeAliasTreeNode = assignScopesTreeDisplayContext.getScopeAliasTreeNode();
 
-Set<String> assignedDeletedScopeAliases = assignScopesTreeDisplayContext.getAssignedDeletedScopeAliases();
-Set<String> assignedScopeAliases = assignScopesTreeDisplayContext.getAssignedScopeAliases();
-Map<String, String> scopeAliasesDescriptionsMap = assignScopesTreeDisplayContext.getScopeAliasesDescriptionsMap();
-
-pageContext.setAttribute("assignedDeletedScopeAliases", assignedDeletedScopeAliases);
-pageContext.setAttribute("assignedScopeAliases", assignedScopeAliases);
-pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptionsMap);
+pageContext.setAttribute("assignedDeletedScopeAliases", assignScopesTreeDisplayContext.getAssignedDeletedScopeAliases());
+pageContext.setAttribute("assignedScopeAliases", assignScopesTreeDisplayContext.getAssignedScopeAliases());
+pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayContext.getScopeAliasesDescriptionsMap());
 %>
 
 <clay:container-fluid
@@ -61,8 +57,8 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 
 			<clay:row>
 				<clay:col>
-					<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
-						<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
+					<portlet:actionURL name="/oauth2_provider/assign_scopes" var="assignScopesURL">
+						<portlet:param name="mvcRenderCommandName" value="/oauth2_provider/assign_scopes" />
 						<portlet:param name="navigation" value="assign_scopes" />
 						<portlet:param name="backURL" value="<%= redirect %>" />
 						<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2Application.getOAuth2ApplicationId()) %>" />

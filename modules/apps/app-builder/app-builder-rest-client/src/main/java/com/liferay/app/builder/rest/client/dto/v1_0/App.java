@@ -17,6 +17,8 @@ package com.liferay.app.builder.rest.client.dto.v1_0;
 import com.liferay.app.builder.rest.client.function.UnsafeSupplier;
 import com.liferay.app.builder.rest.client.serdes.v1_0.AppSerDes;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -28,7 +30,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class App implements Cloneable {
+public class App implements Cloneable, Serializable {
 
 	public static App toDTO(String json) {
 		return AppSerDes.toDTO(json);

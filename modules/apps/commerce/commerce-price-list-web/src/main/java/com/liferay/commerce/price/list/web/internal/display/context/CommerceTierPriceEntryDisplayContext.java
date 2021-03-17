@@ -184,7 +184,8 @@ public class CommerceTierPriceEntryDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCommerceTierPriceEntries");
+			"mvcRenderCommandName",
+			"/commerce_price_list/view_commerce_tier_price_entries");
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
@@ -205,10 +206,6 @@ public class CommerceTierPriceEntryDisplayContext
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null,
 			"there-are-no-tier-price-entries");
@@ -224,6 +221,10 @@ public class CommerceTierPriceEntryDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 

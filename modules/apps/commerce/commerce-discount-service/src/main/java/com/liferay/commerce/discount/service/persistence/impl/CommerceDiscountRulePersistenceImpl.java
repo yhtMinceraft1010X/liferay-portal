@@ -1264,10 +1264,10 @@ public class CommerceDiscountRulePersistenceImpl
 		return finderPath;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
 	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
 		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
 
 	private static class CommerceDiscountRuleModelArgumentsResolver
 		implements ArgumentsResolver {

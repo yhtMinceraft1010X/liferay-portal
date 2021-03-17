@@ -34,7 +34,7 @@ else {
 
 <div class="card-horizontal main-content-card">
 	<div class="card-body">
-		<div id="<portlet:namespace />themeContainer">
+		<div id="<portlet:namespace />currentThemeContainer">
 			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 		</div>
 
@@ -49,7 +49,7 @@ else {
 
 	var selThemeId = '<%= selTheme.getThemeId() %>';
 
-	var themeContainer = A.one('#<portlet:namespace />themeContainer');
+	var themeContainer = A.one('#<portlet:namespace />currentThemeContainer');
 
 	<portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_theme.jsp" />
@@ -71,7 +71,7 @@ else {
 					});
 
 					Liferay.Util.fetch(
-						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
+						'<portlet:renderURL copyCurrentRenderParameters="<%= true %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" /></portlet:renderURL>',
 						{
 							body: Liferay.Util.objectToFormData(data),
 							method: 'POST',
@@ -84,6 +84,25 @@ else {
 							themeContainer.plug(A.Plugin.ParseContent);
 
 							themeContainer.setContent(responseData);
+
+							var newCheckboxNames = [];
+
+							var checkboxInputs = themeContainer.all(
+								'input[type=checkbox]'
+							);
+
+							checkboxInputs.each(function (item, index) {
+								var checkboxName = item.attr('name');
+								newCheckboxNames.push(
+									checkboxName.substring(
+										'<portlet:namespace />'.length
+									)
+								);
+							});
+
+							document.querySelector(
+								'#<portlet:namespace />checkboxNames'
+							).value = newCheckboxNames.join(',');
 
 							selThemeId = selectedItem;
 						});

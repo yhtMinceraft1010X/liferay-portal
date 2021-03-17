@@ -22,7 +22,7 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 CommerceApplicationBrand commerceApplicationBrand = commerceApplicationAdminDisplayContext.getCommerceApplicationBrand();
 %>
 
-<portlet:actionURL name="editCommerceApplicationBrand" var="editCommerceApplicationBrandActionURL" />
+<portlet:actionURL name="/commerce_application_admin/edit_commerce_application_brand" var="editCommerceApplicationBrandActionURL" />
 
 <div class="container-fluid-1280 entry-body">
 	<aui:form action="<%= editCommerceApplicationBrandActionURL %>" method="post" name="fm">

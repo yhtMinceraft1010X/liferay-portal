@@ -46,6 +46,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -195,7 +196,18 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 						if (value instanceof JSONObject) {
 							JSONObject valueJSONObject = (JSONObject)value;
 
-							value = valueJSONObject.getString("color");
+							if (valueJSONObject.has("color")) {
+								value = valueJSONObject.getString("color");
+							}
+							else {
+								JSONDeserializer<Map<String, Object>>
+									jsonDeserializer =
+										JSONFactoryUtil.
+											createJSONDeserializer();
+
+								value = jsonDeserializer.deserialize(
+									value.toString());
+							}
 						}
 
 						put(key, value);
@@ -253,17 +265,18 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 						"BackgroundImageFragmentEntryProcessor"),
 				saveMapping));
 
-		Map<String, String> editableTypes =
-			EditableFragmentEntryProcessorUtil.getEditableTypes(
-				fragmentEntryLink.getHtml());
+		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
+			"com.liferay.fragment.entry.processor.editable." +
+				"EditableFragmentEntryProcessor");
 
-		fragmentFields.addAll(
-			_getTextFragmentFields(
-				editableTypes,
-				editableValuesJSONObject.getJSONObject(
-					"com.liferay.fragment.entry.processor.editable." +
-						"EditableFragmentEntryProcessor"),
-				saveMapping));
+		if (jsonObject != null) {
+			Map<String, String> editableTypes =
+				EditableFragmentEntryProcessorUtil.getEditableTypes(
+					fragmentEntryLink.getHtml());
+
+			fragmentFields.addAll(
+				_getTextFragmentFields(editableTypes, jsonObject, saveMapping));
+		}
 
 		return fragmentFields.toArray(new FragmentField[0]);
 	}

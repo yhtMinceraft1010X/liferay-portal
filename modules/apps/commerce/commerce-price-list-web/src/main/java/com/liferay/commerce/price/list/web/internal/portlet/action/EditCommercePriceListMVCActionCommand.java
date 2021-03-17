@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=editCommercePriceList"
+		"mvc.command.name=/commerce_price_list/edit_commerce_price_list"
 	},
 	service = MVCActionCommand.class
 )
@@ -146,7 +146,8 @@ public class EditCommercePriceListMVCActionCommand
 			CommercePriceList.class.getName(), PortletProvider.Action.MANAGE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommercePriceList");
+			"mvcRenderCommandName",
+			"/commerce_price_list/edit_commerce_price_list");
 		portletURL.setParameter(
 			"commercePriceListId",
 			String.valueOf(commercePriceList.getCommercePriceListId()));
@@ -161,8 +162,6 @@ public class EditCommercePriceListMVCActionCommand
 		long commercePriceListId = ParamUtil.getLong(
 			actionRequest, "commercePriceListId");
 
-		long commerceCatalogGroupId = ParamUtil.getLong(
-			actionRequest, "commerceCatalogGroupId");
 		long commerceCurrencyId = ParamUtil.getLong(
 			actionRequest, "commerceCurrencyId");
 		boolean netPrice = ParamUtil.getBoolean(actionRequest, "netPrice");
@@ -215,6 +214,9 @@ public class EditCommercePriceListMVCActionCommand
 		CommercePriceList commercePriceList;
 
 		if (commercePriceListId <= 0) {
+			long commerceCatalogGroupId = ParamUtil.getLong(
+				actionRequest, "commerceCatalogGroupId");
+
 			commercePriceList = _commercePriceListService.addCommercePriceList(
 				commerceCatalogGroupId, serviceContext.getUserId(),
 				commerceCurrencyId, netPrice, parentCommercePriceListId, name,

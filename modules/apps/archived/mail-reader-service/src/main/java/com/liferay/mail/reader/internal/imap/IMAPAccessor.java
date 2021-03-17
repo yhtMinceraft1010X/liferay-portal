@@ -1014,8 +1014,7 @@ public class IMAPAccessor {
 		}
 		else {
 			MailFile mailFile = new MailFile(
-				StringBundler.concat(contentPath, StringPool.PERIOD, "-1"),
-				fileName, part.getSize());
+				contentPath + ".-1", fileName, part.getSize());
 
 			mailFiles.add(mailFile);
 		}

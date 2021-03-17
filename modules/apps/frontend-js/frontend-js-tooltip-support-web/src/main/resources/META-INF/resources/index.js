@@ -159,8 +159,11 @@ const TooltipProvider = () => {
 				document.body,
 				eventName,
 				SELECTOR_TRIGGER,
-				(event) =>
-					dispatch({target: event.delegateTarget, type: 'show'})
+				(event) => {
+					saveTitle(event.delegateTarget);
+
+					dispatch({target: event.delegateTarget, type: 'show'});
+				}
 			);
 		});
 
@@ -210,8 +213,6 @@ const TooltipProvider = () => {
 					Align.BottomCenter
 				)
 			);
-
-			saveTitle(state.target);
 		}
 	}, [state.target]);
 

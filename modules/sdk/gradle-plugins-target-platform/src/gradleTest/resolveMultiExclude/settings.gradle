@@ -1,4 +1,0 @@
-include "modules:foo-api"
-include "modules:foo-portlet"
-include "modules:foo-rule"
-include "modules:foo-service"

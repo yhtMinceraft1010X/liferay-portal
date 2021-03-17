@@ -18,8 +18,6 @@
 
 <%
 NPMResolver npmResolver = (NPMResolver)request.getAttribute("NPMResolver");
-
-String cpOptionsEditorRequire = npmResolver.resolveModuleName("commerce-product-options-web/CPOptionsEditor.es") + " as CPOptionsEditor";
 %>
 
 <%
@@ -39,21 +37,21 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 
 </div>
 
-<portlet:resourceURL id="cpOptions" var="cpOptionsURL">
+<portlet:resourceURL id="/cp_options/cp_options" var="cpOptionsURL">
 </portlet:resourceURL>
 
 <liferay-portlet:renderURL var="cpOptionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="cpOption" />
+	<portlet:param name="mvcRenderCommandName" value="/cp_options/edit_cp_option" />
 </liferay-portlet:renderURL>
 
-<portlet:resourceURL id="cpOptionValues" var="cpOptionValuesURL">
+<portlet:resourceURL id="/cp_options/cp_option_values" var="cpOptionValuesURL">
 </portlet:resourceURL>
 
 <liferay-portlet:renderURL var="cpOptionValueURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="editProductOptionValue" />
+	<portlet:param name="mvcRenderCommandName" value="/cp_options/edit_cp_option_value" />
 </liferay-portlet:renderURL>
 
-<aui:script require="<%= cpOptionsEditorRequire %>">
+<aui:script require='<%= npmResolver.resolveModuleName("commerce-product-options-web/CPOptionsEditor.es") + " as CPOptionsEditor" %>'>
 	var cpOptionsEditor = new CPOptionsEditor.default(
 		{
 			hasEditPermission: <%= PortalPermissionUtil.contains(permissionChecker, CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION) %>,

@@ -22,6 +22,10 @@ import java.io.File;
  */
 public class AntivirusScannerUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static AntivirusScanner getAntivirusScanner() {
 		return _antivirusScanner;
 	}
@@ -48,6 +52,10 @@ public class AntivirusScannerUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setAntivirusScanner(AntivirusScanner antivirusScanner) {
 		_antivirusScanner = antivirusScanner;
 	}

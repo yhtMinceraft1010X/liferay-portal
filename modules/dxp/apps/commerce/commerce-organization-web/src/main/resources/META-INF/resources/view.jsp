@@ -95,7 +95,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		<aui:script require="commerce-organization-web/js/index as OrgChart">
 			OrgChart.default('<%= segmentEditRootElementId %>', {
 				assetsPath: '<%= PortalUtil.getPathContext(request) + "/assets" %>',
-				namespace: '<portlet:namespace/>',
+				namespace: '<portlet:namespace />',
 				spritemap:
 					'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
 				imagesPath: '<%= themeDisplay.getPathThemeImages() %>',
@@ -111,7 +111,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		<aui:button cssClass="btn-lg" name="addOrganizationButton" primary="<%= true %>" value="add-organization" />
 	</div>
 
-	<portlet:actionURL name="editCommerceOrganization" var="editCommerceOrganizationActionURL">
+	<portlet:actionURL name="/commerce_organization/edit_commerce_organization" var="editCommerceOrganizationActionURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 

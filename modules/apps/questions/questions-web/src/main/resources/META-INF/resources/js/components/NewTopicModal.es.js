@@ -20,9 +20,16 @@ import React, {useContext, useRef} from 'react';
 
 import {AppContext} from '../AppContext.es';
 import {createSubTopicQuery, createTopicQuery} from '../utils/client.es';
+import lang from '../utils/lang.es';
 import {deleteCacheVariables} from '../utils/utils.es';
 
-export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
+export default ({
+	currentSectionId,
+	onClose,
+	onCreateNavigateTo,
+	setError,
+	visible,
+}) => {
 	const context = useContext(AppContext);
 	const topicName = useRef(null);
 	const topicDescription = useRef(null);
@@ -56,24 +63,48 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 		},
 	});
 
-	const createTopic = () => {
-		if (currentSectionId) {
-			createNewSubTopic({
-				variables: {
-					description: topicDescription.current.value,
-					parentMessageBoardSectionId: currentSectionId,
-					title: topicName.current.value,
-				},
-			});
+	const isValidTopic = (topic) => {
+		const hyphens = /-+/g;
+		if (hyphens.test(topic)) {
+			const error = {
+				message: lang.sub(
+					Liferay.Language.get(
+						'the-x-cannot-contain-the-following-invalid-characters-x'
+					),
+					[
+						Liferay.Language.get('topic-name'),
+						' - & \' @ \\\\ ] } : , = > / < \\n [ {  | + # ` ? \\" \\r ; / * ~',
+					]
+				),
+			};
+			setError(error);
+
+			return false;
 		}
-		else {
-			createNewTopic({
-				variables: {
-					description: topicDescription.current.value,
-					siteKey: context.siteKey,
-					title: topicName.current.value,
-				},
-			});
+
+		return true;
+	};
+
+	const createTopic = () => {
+		if (isValidTopic(topicName.current.value)) {
+			if (currentSectionId) {
+				createNewSubTopic({
+					variables: {
+						description: topicDescription.current.value,
+						parentMessageBoardSectionId: currentSectionId,
+						title: topicName.current.value,
+					},
+				});
+			}
+			else {
+				createNewTopic({
+					variables: {
+						description: topicDescription.current.value,
+						siteKey: context.siteKey,
+						title: topicName.current.value,
+					},
+				});
+			}
 		}
 	};
 

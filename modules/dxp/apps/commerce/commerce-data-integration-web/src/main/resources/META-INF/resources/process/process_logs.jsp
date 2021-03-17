@@ -20,6 +20,7 @@
 CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLogDisplayContext = (CommerceDataIntegrationProcessLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceDataIntegrationProcess commerceDataIntegrationProcess = commerceDataIntegrationProcessLogDisplayContext.getCommerceDataIntegrationProcess();
+
 PortletURL portletURL = commerceDataIntegrationProcessLogDisplayContext.getPortletURL();
 
 portletURL.setParameter("searchContainerId", "commerceDataIntegrationProcessLogs");
@@ -53,7 +54,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<%
 						PortletURL rowURL = renderResponse.createRenderURL();
 
-						rowURL.setParameter("mvcRenderCommandName", "viewCommerceDataIntegrationProcessLog");
+						rowURL.setParameter("mvcRenderCommandName", "/commerce_data_integration/view_commerce_data_integration_process_log");
 						rowURL.setParameter("redirect", currentURL);
 						rowURL.setParameter("cDataIntegrationProcessLogId", String.valueOf(commerceDataIntegrationProcessLog.getCommerceDataIntegrationProcessLogId()));
 						%>

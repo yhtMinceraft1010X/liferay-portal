@@ -49,6 +49,14 @@ public class GroupFinderUtil {
 			andOperator);
 	}
 
+	public static java.util.Map
+		<java.io.Serializable, com.liferay.portal.kernel.model.Group>
+			fetchByPrimaryKeys(
+				java.util.Set<java.io.Serializable> primaryKeys) {
+
+		return getFinder().fetchByPrimaryKeys(primaryKeys);
+	}
+
 	public static java.util.List<Long> findByActiveGroupIds(long userId) {
 		return getFinder().findByActiveGroupIds(userId);
 	}

@@ -111,7 +111,8 @@ public class SynonymsDisplayBuilder {
 	protected RenderURL buildEditRenderURL(SynonymSet synonymSet) {
 		RenderURL editRenderURL = _renderResponse.createRenderURL();
 
-		editRenderURL.setParameter("mvcRenderCommandName", "editSynonymSet");
+		editRenderURL.setParameter(
+			"mvcRenderCommandName", "/synonyms/edit_synonym_sets");
 		editRenderURL.setParameter(
 			"redirect", _portal.getCurrentURL(_httpServletRequest));
 		editRenderURL.setParameter("synonymSetId", synonymSet.getId());
@@ -200,7 +201,7 @@ public class SynonymsDisplayBuilder {
 				ActionURL deleteURL = _renderResponse.createActionURL();
 
 				deleteURL.setParameter(
-					ActionRequest.ACTION_NAME, "deleteSynonymSet");
+					ActionRequest.ACTION_NAME, "/synonyms/delete_synonym_sets");
 				deleteURL.setParameter(Constants.CMD, Constants.DELETE);
 				deleteURL.setParameter("rowIds", synonymSet.getId());
 				deleteURL.setParameter(
@@ -226,7 +227,7 @@ public class SynonymsDisplayBuilder {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"editSynonymSet", "redirect",
+					"/synonyms/edit_synonym_sets", "redirect",
 					_portal.getCurrentURL(_httpServletRequest));
 				dropdownItem.setLabel(
 					_language.get(_httpServletRequest, "new-synonym-set"));

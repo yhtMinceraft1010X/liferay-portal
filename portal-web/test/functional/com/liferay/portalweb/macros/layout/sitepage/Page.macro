@@ -2,7 +2,7 @@ definition {
 
 	macro _addPageTypeEmbedded {
 		Type(
-			locator1 = "SitePagesEditPage#PAGE_TYPE_EMBEDDED_URL_FIELD",
+			locator1 = "TextInput#URL",
 			value1 = "${pageTypeURL}");
 
 		AssertTextEquals.assertPartialText(
@@ -231,6 +231,28 @@ definition {
 		LexiconCard.clickCardTitle(card = "${themeName}");
 
 		SelectFrameTop(value1 = "relative=top");
+
+		PortletEntry.save();
+	}
+
+	macro configureCanonicalURL {
+		var checkboxName = "Use Custom Canonical URL";
+
+		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.");
+		}
+
+		if (isSet(locale)) {
+			PortletEntry.changeLocale(locale = "${locale}");
+		}
+
+		Type(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "${customCanonicalURL}");
 
 		PortletEntry.save();
 	}
@@ -1009,7 +1031,6 @@ definition {
 		AssertElementPresent(locator1 = "SitePages#DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_EXPANDED");
 
 		for (var portletName : list "${portletNameList}") {
-
 			if ("${portletName}" == "Portal Directory") {
 				var key_componentOrPortletName ="Directory";
 			}
@@ -1141,9 +1162,8 @@ definition {
 			value1 = "0px");
 
 		var sideNavWidth = Css.getCssValue(
-			cssClassSelector = ".sidenav-menu",
-			cssProperty = "width"
-		);
+			attribute = "width",
+			element = "//div[contains(@class,'product-menu-open')]");
 
 		AssertCssValue(
 			locator1 = "Home#SITE_WRAPPER",

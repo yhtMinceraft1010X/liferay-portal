@@ -115,7 +115,7 @@ Export-Package:\
 	com.sun.syndication.io;version='1.0',\
 	com.sun.syndication.io.impl;version='1.0',\
 	\
-	com.thoughtworks.xstream.*;version='1.4.11.1',\
+	com.thoughtworks.xstream.*;version='1.4.15',\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\
@@ -347,7 +347,6 @@ Provide-Capability:\
 	@../../../lib/portal/dom4j.jar,\
 	@../../../lib/portal/hibernate-commons-annotations.jar,\
 	@../../../lib/portal/hibernate-core.jar,\
-	@../../../lib/portal/jackson-databind.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\
@@ -406,6 +405,7 @@ Provide-Capability:\
 	@lib/com.liferay.petra.sql.dsl.api.jar,\
 	@lib/com.liferay.petra.sql.dsl.spi.jar,\
 	@lib/com.liferay.petra.string.jar,\
+	@lib/com.liferay.petra.url.pattern.mapper.jar,\
 	@lib/com.liferay.petra.xml.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\

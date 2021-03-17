@@ -40,6 +40,7 @@ const REMOVAL_TIMEOUT = 2000,
 function CartItem({item: cartItem}) {
 	const {
 		cartItems: childItems,
+		errorMessages,
 		id: cartItemId,
 		name,
 		options: rawOptions,
@@ -52,17 +53,18 @@ function CartItem({item: cartItem}) {
 	} = cartItem;
 
 	const {
-			AJAX,
-			cartState,
-			displayDiscountLevels,
-			setIsUpdating,
-			spritemap,
-			updateCartModel,
-		} = useContext(MiniCartContext),
-		{id: orderId} = cartState,
-		[itemState, setItemState] = useState(INITIAL_ITEM_STATE),
-		[itemQuantity, setItemQuantity] = useState(quantity),
-		[itemPrice, updateItemPrice] = useState(price);
+		CartResource,
+		cartState,
+		displayDiscountLevels,
+		setIsUpdating,
+		spritemap,
+		updateCartModel,
+	} = useContext(MiniCartContext);
+
+	const {id: orderId} = cartState;
+	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
+	const [itemQuantity, setItemQuantity] = useState(quantity);
+	const [itemPrice, updateItemPrice] = useState(price);
 
 	const options = parseOptions(rawOptions);
 
@@ -82,51 +84,52 @@ function CartItem({item: cartItem}) {
 	};
 
 	const cancelRemoveItem = () => {
-			clearTimeout(removalTimeoutRef);
+		clearTimeout(itemState.removalTimeoutRef);
 
-			setItemState({
-				...INITIAL_ITEM_STATE,
-				isRemovalCanceled: true,
-				removalTimeoutRef: setTimeout(() => {
-					setIsUpdating(false);
+		setItemState({
+			...INITIAL_ITEM_STATE,
+			isRemovalCanceled: true,
+			removalTimeoutRef: setTimeout(() => {
+				setIsUpdating(false);
 
-					setItemState(INITIAL_ITEM_STATE);
-				}, REMOVAL_CANCELING_TIMEOUT),
-			});
-		},
-		removeItem = () => {
-			setItemState({
-				...INITIAL_ITEM_STATE,
-				isGettingRemoved: true,
-				removalTimeoutRef: setTimeout(() => {
-					setIsUpdating(true);
+				setItemState(INITIAL_ITEM_STATE);
+			}, REMOVAL_CANCELING_TIMEOUT),
+		});
+	};
 
-					setItemState({
-						...INITIAL_ITEM_STATE,
-						isGettingRemoved: true,
-						isRemoved: true,
-						removalTimeoutRef: setTimeout(() => {
-							AJAX.deleteItemById(cartItemId)
-								.then(() => updateCartModel({orderId}))
-								.then(() => {
-									setIsUpdating(false);
-									Liferay.fire(PRODUCT_REMOVED, {
-										skuId,
-									});
-								})
-								.catch(showErrors);
-						}, REMOVAL_CANCELING_TIMEOUT),
-					});
-				}, REMOVAL_TIMEOUT),
-			});
-		};
+	const removeItem = () => {
+		setItemState({
+			...INITIAL_ITEM_STATE,
+			isGettingRemoved: true,
+			removalTimeoutRef: setTimeout(() => {
+				setIsUpdating(true);
+
+				setItemState({
+					...INITIAL_ITEM_STATE,
+					isGettingRemoved: true,
+					isRemoved: true,
+					removalTimeoutRef: setTimeout(() => {
+						CartResource.deleteItemById(cartItemId)
+							.then(() => updateCartModel({orderId}))
+							.then(() => {
+								setIsUpdating(false);
+								Liferay.fire(PRODUCT_REMOVED, {
+									skuId,
+								});
+							})
+							.catch(showErrors);
+					}, REMOVAL_CANCELING_TIMEOUT),
+				});
+			}, REMOVAL_TIMEOUT),
+		});
+	};
 
 	const updateItemQuantity = useCallback(
 		(quantity) => {
 			if (quantity !== itemQuantity) {
 				setIsUpdating(true);
 
-				AJAX.updateItemById(cartItemId, {
+				CartResource.updateItemById(cartItemId, {
 					...cartItem,
 					quantity,
 				})
@@ -137,8 +140,8 @@ function CartItem({item: cartItem}) {
 						return Promise.resolve(updatedItem);
 					})
 					.then(({price: updatedPrice}) => {
-						const {price: updatedPriceValue} = updatedPrice,
-							{price: currentPriceValue} = itemPrice;
+						const {price: currentPriceValue} = itemPrice;
+						const {price: updatedPriceValue} = updatedPrice;
 
 						/**
 						 * The unit price of an item may change based
@@ -162,7 +165,7 @@ function CartItem({item: cartItem}) {
 
 			return Promise.resolve();
 		}, // eslint-disable-next-line react-hooks/exhaustive-deps
-		[AJAX, cartItem, cartItemId, orderId]
+		[CartResource, cartItem, cartItemId, orderId]
 	);
 
 	const {
@@ -170,7 +173,6 @@ function CartItem({item: cartItem}) {
 		isRemovalCanceled,
 		isRemoved,
 		isShowingErrors,
-		removalTimeoutRef,
 	} = itemState;
 
 	return (
@@ -225,6 +227,17 @@ function CartItem({item: cartItem}) {
 					<ClayIcon spritemap={spritemap} symbol={'times'} />
 				</button>
 			</div>
+
+			{errorMessages && (
+				<div className={'mini-cart-item-errors'}>
+					<ClayIcon
+						spritemap={spritemap}
+						symbol={'exclamation-circle'}
+					/>
+
+					<span>{errorMessages}</span>
+				</div>
+			)}
 
 			{isShowingErrors && (
 				<div className={'mini-cart-item-errors'}>

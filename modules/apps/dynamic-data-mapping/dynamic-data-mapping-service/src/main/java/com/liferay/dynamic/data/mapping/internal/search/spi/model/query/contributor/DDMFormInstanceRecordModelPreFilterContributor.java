@@ -15,13 +15,13 @@
 package com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
@@ -100,10 +100,11 @@ public class DDMFormInstanceRecordModelPreFilterContributor
 						new BooleanFilter();
 
 					locales.forEach(
-						locale -> notEmptyFieldBooleanFilter.addTerm(
-							ddmIndexer.encodeName(
-								structureId, notEmptyField, locale),
-							StringPool.BLANK, BooleanClauseOccur.MUST));
+						locale -> notEmptyFieldBooleanFilter.add(
+							new ExistsFilter(
+								ddmIndexer.encodeName(
+									structureId, notEmptyField, locale)),
+							BooleanClauseOccur.MUST));
 
 					booleanFilter.add(
 						notEmptyFieldBooleanFilter,

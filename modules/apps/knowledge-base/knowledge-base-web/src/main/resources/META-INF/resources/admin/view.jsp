@@ -20,6 +20,7 @@
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
+
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 boolean kbFolderView = parentResourceClassNameId == kbFolderClassNameId;
@@ -147,11 +148,10 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<%
 							KBFolder kbFolder = (KBFolder)kbObject;
 
-							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder))
-							).build();
-
-							row.setData(rowData);
+							row.setData(
+								HashMapBuilder.<String, Object>put(
+									"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbFolder))
+								).build());
 
 							row.setPrimaryKey(String.valueOf(kbFolder.getKbFolderId()));
 							%>
@@ -231,11 +231,10 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							<%
 							KBArticle kbArticle = (KBArticle)kbObject;
 
-							Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-								"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle))
-							).build();
-
-							row.setData(rowData);
+							row.setData(
+								HashMapBuilder.<String, Object>put(
+									"actions", StringUtil.merge(kbAdminManagementToolbarDisplayContext.getAvailableActions(kbArticle))
+								).build());
 
 							row.setPrimaryKey(String.valueOf(kbArticle.getResourcePrimKey()));
 							%>
@@ -320,7 +319,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	</div>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	var deleteEntries = function () {
 		if (
 			confirm(
@@ -350,4 +349,4 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			}
 		});
 	});
-</aui:script>
+</script>

@@ -27,11 +27,9 @@ portletURL.setParameter("historyKey", liferayPortletResponse.getNamespace() + "i
 
 SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = new SearchContainer<>(liferayPortletRequest, portletURL, null, null);
 
-int cpAttachmentFileEntriesCount = cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY);
-
 List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpAttachmentFileEntryService.getCPAttachmentFileEntries(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY, cpAttachmentFileEntrySearchContainer.getStart(), cpAttachmentFileEntrySearchContainer.getEnd());
 
-cpAttachmentFileEntrySearchContainer.setTotal(cpAttachmentFileEntriesCount);
+cpAttachmentFileEntrySearchContainer.setTotal(cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(PortalUtil.getClassNameId(AssetCategory.class), assetCategory.getCategoryId(), CPAttachmentFileEntryConstants.TYPE_IMAGE, WorkflowConstants.STATUS_ANY));
 cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 %>
 
@@ -46,7 +44,7 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 		/>
 
 		<liferay-portlet:renderURL var="addAttachmentFileEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="editAssetCategoryCPAttachmentFileEntry" />
+			<portlet:param name="mvcRenderCommandName" value="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(assetCategory.getCategoryId()) %>" />
 		</liferay-portlet:renderURL>

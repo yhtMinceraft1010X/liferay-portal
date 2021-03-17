@@ -53,4 +53,9 @@ public class AppBuilderDataLayoutBuilderDefinition
 		return false;
 	}
 
+	@Override
+	public String[] getUnimplementedProperties() {
+		return new String[] {"allowGuestUsers"};
+	}
+
 }

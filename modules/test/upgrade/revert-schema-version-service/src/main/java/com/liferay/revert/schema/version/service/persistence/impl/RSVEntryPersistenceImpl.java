@@ -640,15 +640,6 @@ public class RSVEntryPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		RSVEntryPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(RSVPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	private FinderPath _createFinderPath(
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult) {
@@ -666,10 +657,10 @@ public class RSVEntryPersistenceImpl
 		return finderPath;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
 	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
 		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
 
 	private static class RSVEntryModelArgumentsResolver
 		implements ArgumentsResolver {

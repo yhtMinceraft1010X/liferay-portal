@@ -2,7 +2,6 @@
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column";
-
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Shared App Builder";
@@ -25,7 +24,6 @@ definition {
 	}
 
 	tearDown {
-
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -38,7 +36,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
 			Page.tearDownCP();
 
 			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
@@ -63,15 +60,14 @@ definition {
 					resourceName = "com.liferay.app.builder",
 					roleTitle = "${roleTitle}");
 			}
-
 		}
 	}
 
 	@description = "Create, Remove, Update and Delete entries of an application deployed as Product Menu"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfProductMenuApp {
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfProductMenuApp";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfProductMenuApp";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -322,8 +318,8 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfStandaloneApp";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfStandaloneApp";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -576,8 +572,8 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
-		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfWidgetApp";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilder#CreateRemoveUpdateDeleteEntriesOfWidgetApp";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -755,8 +751,8 @@ definition {
 	@description = "Create table views with a fixed entries filter of list field types (select from list and single selection)"
 	@priority = "5"
 	test CreateTableViewsWithFixedEntriesFilter {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppBuilder#CreateTableViewsWithFixedEntriesFilter";
-		property portal.acceptance = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1046,8 +1042,8 @@ definition {
 	@description = "Delete fields from the Form View through the Delete options and assert its affect on other Form and Table views"
 	@priority = "5"
 	test DeleteFormViewFieldFromObject {
-		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1178,7 +1174,6 @@ definition {
 		FormViewBuilder.setName(formViewName = "Form View Title 1");
 
 		for (var fieldType : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
-
 			FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
 
 			FormViewBuilder.closeSidebar();
@@ -1189,7 +1184,6 @@ definition {
 		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
 
 		for (var fieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
-
 			FormViewBuilder.fieldEllipsisAction(
 				fieldLabel = "${fieldLabel}",
 				selectAction = "Remove");
@@ -1202,7 +1196,6 @@ definition {
 		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
 
 		for (var fieldType : list "Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
-
 			FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldType}");
 
 			FormViewBuilder.validateObjectFieldName(fieldName = "${fieldType}");
@@ -1214,8 +1207,8 @@ definition {
 	@description = "Reuse my object's existing fields when creating a new form view"
 	@priority = "5"
 	test ReuseExistingFormViewFields {
-		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1292,29 +1285,21 @@ definition {
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Hobbies",
-			fieldLabelRequired = "Hobbies Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
 
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Hobby 2",
-			fieldLabelRequired = "Hobbies edited Required",
 			fieldName = "Hobbies edited");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Marital Status",
-			fieldLabelRequired = "Marital Status Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
 		FormViewBuilder.validateFormMultipleSelectionField(
 			fieldLabel = "Marital Status 3",
-			fieldLabelRequired = "Marital Status Required",
 			fieldName = "Marital Status");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Occupation",
-			fieldLabelRequired = "Occupation Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Occupation");
 		FormViewBuilder.validateSelectFromListField(
 			optionValue = "Occupation 2",
 			rowNumber = "2");
@@ -1324,14 +1309,10 @@ definition {
 			fieldLabel = "Testing Changed Name",
 			fieldName = "Nickname");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Full name",
-			fieldLabelRequired = "Full name Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Full name");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Number of children",
-			fieldLabelRequired = "Number of children Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Number of children");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
@@ -1340,9 +1321,7 @@ definition {
 
 		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
 		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(
-			fieldLabel = "Date of birth",
-			fieldLabelRequired = "Date of birth Required");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Date of birth");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 
 		FormViewBuilder.save();
@@ -1351,29 +1330,19 @@ definition {
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 
-		FormViewBuilder.validateFieldLabel(
-			fieldLabel = "Occupation",
-			fieldLabelRequired = "Occupation Required");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Occupation");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
 
-		FormViewBuilder.validateFieldLabel(
-			fieldLabel = "Marital Status",
-			fieldLabelRequired = "Marital Status Required");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Marital Status");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
 
-		FormViewBuilder.validateFieldLabel(
-			fieldLabel = "Full name",
-			fieldLabelRequired = "Full name Required");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
 
-		FormViewBuilder.validateFieldLabel(
-			fieldLabel = "Number of children",
-			fieldLabelRequired = "Number of children Required");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Number of children");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
 
-		FormViewBuilder.validateFieldLabel(
-			fieldLabel = "Date of birth",
-			fieldLabelRequired = "Date of birth Required");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date of birth");
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 

@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -68,12 +69,9 @@ public class Log4JUtil {
 			}
 		}
 		catch (IOException ioException) {
-			java.util.logging.Logger logger =
-				java.util.logging.Logger.getLogger(Log4JUtil.class.getName());
-
-			logger.log(
-				java.util.logging.Level.WARNING,
-				"Unable to load portal-log4j-ext.xml", ioException);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to load portal-log4j-ext.xml", ioException);
+			}
 		}
 	}
 
@@ -138,7 +136,7 @@ public class Log4JUtil {
 			}
 		}
 		catch (Exception exception) {
-			_logger.error(exception, exception);
+			_log.error(exception, exception);
 		}
 	}
 
@@ -180,7 +178,7 @@ public class Log4JUtil {
 			LogFactoryUtil.setLogFactory(logFactory);
 		}
 		catch (Exception exception) {
-			_logger.error(exception, exception);
+			_log.error(exception, exception);
 		}
 
 		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {
@@ -279,7 +277,7 @@ public class Log4JUtil {
 			urlContent = new String(bytes, StringPool.UTF8);
 		}
 		catch (Exception exception) {
-			_logger.error(exception, exception);
+			_log.error(exception, exception);
 
 			return null;
 		}
@@ -315,7 +313,7 @@ public class Log4JUtil {
 			content, "<appender-ref ref=\"" + appenderName + "\" />");
 	}
 
-	private static final Logger _logger = Logger.getRootLogger();
+	private static final Log _log = LogFactoryUtil.getLog(Log4JUtil.class);
 
 	private static final Map<String, String> _customLogSettings =
 		new ConcurrentHashMap<>();

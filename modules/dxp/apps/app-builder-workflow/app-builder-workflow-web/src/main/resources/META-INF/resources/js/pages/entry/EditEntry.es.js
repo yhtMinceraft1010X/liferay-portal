@@ -18,6 +18,7 @@ import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
 import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
+import {useTimeout} from 'frontend-js-react-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
 	useCallback,
@@ -83,6 +84,7 @@ export default function EditEntry({
 		appId,
 		useMemo(() => [dataRecordId], [dataRecordId])
 	);
+	const delay = useTimeout();
 
 	const appWorkflow = useAppWorkflow(appId);
 
@@ -113,41 +115,63 @@ export default function EditEntry({
 		)
 	);
 
-	const doFetch = useCallback(() => {
-		setLoading(true);
+	const doFetch = useCallback(
+		({newAssignee} = {}) => {
+			setLoading(true);
 
-		if (appWorkflowDefinitionId) {
-			if (isEdit) {
-				getItem(
-					`/o/portal-workflow-metrics/v1.0/processes/${appWorkflowDefinitionId}/instances`,
-					{classPKs: [dataRecordId]}
-				).then(({items}) => {
-					setLoading(false);
+			if (appWorkflowDefinitionId) {
+				if (isEdit) {
+					const getWorkflowInfo = () => {
+						getItem(
+							`/o/portal-workflow-metrics/v1.0/processes/${appWorkflowDefinitionId}/instances`,
+							{classPKs: [dataRecordId]}
+						).then(({items}) => {
+							let retryCount = 0;
+							if (items.length) {
+								const {id, ...instance} = items.pop();
 
-					if (items.length) {
-						const {id, ...instance} = items.pop();
+								const [assignee] = instance.assignees || [];
 
-						const [assignee] = instance.assignees || [];
+								if (
+									newAssignee &&
+									newAssignee.id !== assignee?.id &&
+									retryCount <= 5
+								) {
+									retryCount++;
 
-						const assignedToUser =
-							Number(themeDisplay.getUserId()) === assignee?.id;
+									return delay(getWorkflowInfo, 1000);
+								}
 
-						setWorkflowInfo({
-							...instance,
-							appVersion,
-							canReassign: assignedToUser || assignee?.reviewer,
-							instanceId: id,
-							tasks: appWorkflowTasks,
+								const assignedToUser =
+									Number(themeDisplay.getUserId()) ===
+									assignee?.id;
+
+								setLoading(false);
+								setWorkflowInfo({
+									...instance,
+									appVersion,
+									canReassign:
+										assignedToUser || assignee?.reviewer,
+									instanceId: id,
+									tasks: appWorkflowTasks,
+								});
+							}
+							else {
+								setLoading(false);
+							}
 						});
-					}
-				});
+					};
+
+					getWorkflowInfo();
+				}
+				else {
+					setLoading(false);
+				}
 			}
-			else {
-				setLoading(false);
-			}
-		}
+		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [appWorkflowDefinitionId, dataRecordId, isEdit]);
+		[appWorkflowDefinitionId, dataRecordId, isEdit]
+	);
 
 	const onCancel = useCallback(() => {
 		if (redirect) {
@@ -157,14 +181,6 @@ export default function EditEntry({
 			Liferay.Util.navigate(basePortletURL);
 		}
 	}, [basePortletURL, redirect]);
-
-	const onCloseModal = (isRefetch) => {
-		setModalVisible(false);
-
-		if (isRefetch) {
-			doFetch();
-		}
-	};
 
 	const saveDataRecord = useCallback(
 		({transitionName}, dataRecord) => {
@@ -348,6 +364,7 @@ export default function EditEntry({
 					<WorkflowInfoPortal>
 						<div className="d-flex justify-content-center mt-4">
 							<WorkflowInfoBar
+								className="bar-sm"
 								{...workflowInfo}
 								hideColumns={['step']}
 							/>
@@ -388,7 +405,8 @@ export default function EditEntry({
 			{isModalVisible && (
 				<ReassignEntryModal
 					entry={workflowInfo}
-					onCloseModal={onCloseModal}
+					onCloseModal={() => setModalVisible(false)}
+					refetch={doFetch}
 				/>
 			)}
 		</>

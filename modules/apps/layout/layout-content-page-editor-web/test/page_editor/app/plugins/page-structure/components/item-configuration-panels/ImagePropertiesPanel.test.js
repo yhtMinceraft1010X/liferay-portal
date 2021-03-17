@@ -58,6 +58,7 @@ jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			adaptiveMediaEnabled: true,
 			defaultLanguageId: 'en',
 		},
 	})
@@ -184,7 +185,7 @@ describe('TextField', () => {
 
 		expect(ImageSelector).toBeCalledWith(
 			expect.objectContaining({
-				imageTitle: 'default-url.jpg',
+				imageTitle: '',
 				label: 'image',
 			}),
 			{}

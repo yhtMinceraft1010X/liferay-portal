@@ -20,8 +20,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.constants.JournalContentPortletKeys" %><%@
-page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
+<%@ page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
 page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
@@ -30,8 +29,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-
-<%@ page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 

@@ -1,7 +1,6 @@
 definition {
 
 	macro addFieldByDoubleClick {
-
 		var key_fieldLabel = "${fieldType}";
 
 		var iterator = "0";
@@ -23,23 +22,14 @@ definition {
 	}
 
 	macro addFieldByDoubleClickFromObjectSidebar {
-
 		var key_fieldLabel = "${fieldLabel}";
 
 		DoubleClick(locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
 
-		if (isSet(fieldLabelRequired)) {
-			FormViewBuilder.validateFieldLabel(
-				fieldLabel = "${fieldLabel}",
-				fieldLabelRequired = "${fieldLabelRequired}");
-		}
-		else {
-			FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldLabel}");
-		}
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldLabel}");
 	}
 
 	macro addFieldByDragAndDrop {
-
 		Pause(locator1 = "10000");
 
 		var key_fieldLabel = "${fieldType}";
@@ -63,7 +53,6 @@ definition {
 	}
 
 	macro addFormView {
-
 		while ( IsElementNotPresent(locator1 = "AppBuilder#NAVBAR") || IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB") ) {
 			Pause(locator1 = "1000");
 		}
@@ -112,8 +101,28 @@ definition {
 			locator1 = "FormViewBuilder#SWITCHER_OPTION");
 	}
 
+	macro clickFieldLabel {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
+	}
+
+	macro confirmDeleteFromObject {
+		Click(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${key_fieldLabel}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
 	macro createFirstRule {
@@ -122,6 +131,34 @@ definition {
 
 	macro deleteButtonInDeleteFromObject {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+	}
+
+	macro deleteDisabledFieldSetEntry {
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
+	}
+
+	macro deleteFieldSetEntry {
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 	}
 
 	macro deleteFromObjectViaX {
@@ -135,16 +172,13 @@ definition {
 	}
 
 	macro deleteObjectSidebarField {
-
 		FormViewBuilder.deleteFromObjectViaX(fieldName = "${fieldLabel}");
 
 		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
-
 			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 		}
 
 		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE")) {
-
 			Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 		}
 
@@ -154,7 +188,6 @@ definition {
 	}
 
 	macro deselectSelectWithMultipleOptions {
-
 		for (var selectOption : list "${selectOptionsList}") {
 			FormViewBuilder.disableCheckbox(
 				fieldName = "${fieldName}",
@@ -208,6 +241,12 @@ definition {
 			value1 = "${optionValue}");
 
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
+	}
+
+	macro editRuleName {
+		Type(
+			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
+			value1 = "${ruleName}");
 	}
 
 	macro editRules {
@@ -279,6 +318,18 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
+	macro gotoFields {
+		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
+	}
+
+	macro goToFieldsetsTab {
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+	}
+
+	macro gotoRules {
+		Click(locator1 = "FormViewBuilder#RULES_TAB");
+	}
+
 	macro openFormView {
 		AppBuilderAdmin.openItem(itemName = "${formViewName}");
 	}
@@ -336,7 +387,6 @@ definition {
 	}
 
 	macro selectSelectWithMultipleOptions {
-
 		for (var selectOption : list "${selectOptionsList}") {
 			FormViewBuilder.enableCheckbox(
 				fieldName = "${fieldName}",
@@ -395,7 +445,6 @@ definition {
 	}
 
 	macro setName {
-
 		AppBuilderAdmin.setName(title = "${formViewName}");
 	}
 
@@ -403,6 +452,36 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
 			value1 = "${ruleName}");
+	}
+
+	macro setUpTwoFieldSets {
+		var key_fieldSetName = "${fieldSetName}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType1}");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "${fieldSetName}");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+	}
+
+	macro switchLocalization {
+		Click(
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+
+		Click(
+			key_localizationList = "${localizationName}",
+			locator1 = "FormViewBuilder#LOCALIZATION_LIST");
 	}
 
 	macro switchToAdvancedTab {
@@ -434,16 +513,9 @@ definition {
 	}
 
 	macro validateFieldLabel {
-		if (isSet(fieldLabelRequired)) {
-			AssertTextEquals(
-				locator1 = "FormViewBuilder#FIELD_LABEL",
-				value1 = "${fieldLabelRequired}");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "FormViewBuilder#FIELD_LABEL",
-				value1 = "${fieldLabel}");
-		}
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro validateFieldLabelRequired {
@@ -455,18 +527,17 @@ definition {
 	macro validateFormMultipleSelectionField {
 		var key_fieldType = "${fieldLabel}";
 
-		if (isSet(fieldLabelRequired)) {
-			FormViewBuilder.validateFieldLabel(
-				fieldLabel = "${fieldName}",
-				fieldLabelRequired = "${fieldLabelRequired}");
-		}
-		else {
-			FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldName}");
-		}
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldName}");
 
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL_MULTIPLE_SELECTION",
 			value1 = "${fieldLabel}");
+	}
+
+	macro validateLocalization {
+		AssertElementPresent(
+			key_symbolName = "${symbolName}",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
 	}
 
 	macro validateNoFieldLabel {

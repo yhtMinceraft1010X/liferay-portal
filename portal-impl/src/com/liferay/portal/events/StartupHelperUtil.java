@@ -47,6 +47,8 @@ import java.util.List;
 public class StartupHelperUtil {
 
 	public static void initResourceActions() {
+		ResourceActionLocalServiceUtil.checkResourceActions();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<String> modelNames = ResourceActionsUtil.getModelNames();
 
@@ -220,16 +222,6 @@ public class StartupHelperUtil {
 			System.out.println(msg);
 
 			throw new RuntimeException(msg);
-		}
-
-		if (!PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getConnection())) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Execute the upgrade tool first if you need to upgrade " +
-						"the portal to the latest schema version");
-			}
 		}
 	}
 

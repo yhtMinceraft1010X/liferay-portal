@@ -1,5 +1,0 @@
-task runGradleTest
-
-runGradleTest {
-	dependsOn "assertLog"
-}

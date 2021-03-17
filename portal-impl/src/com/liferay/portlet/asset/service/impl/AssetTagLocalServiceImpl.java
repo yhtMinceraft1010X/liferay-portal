@@ -814,9 +814,12 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		}
 
 		if (!AssetUtil.isValidWord(name)) {
+			String invalidCharacters = StringUtil.merge(
+				AssetUtil.INVALID_CHARACTERS, StringPool.SPACE);
+
 			throw new AssetTagException(
-				StringUtil.merge(
-					AssetUtil.INVALID_CHARACTERS, StringPool.SPACE),
+				"Tag name has one or more invalid characters: " +
+					invalidCharacters,
 				AssetTagException.INVALID_CHARACTER);
 		}
 

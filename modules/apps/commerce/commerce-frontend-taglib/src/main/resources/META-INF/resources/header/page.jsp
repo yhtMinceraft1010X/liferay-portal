@@ -77,13 +77,11 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											<%= beanId %>
 										</strong>
 
-										<clay:button
-											cssClass="lfr-portal-tooltip text-secondary"
-											displayType="unstyled"
-											icon="question-circle"
-											small="<%= true %>"
-											title='<%= LanguageUtil.get(request, "identification-number") %>'
-										/>
+										<span class="lfr-portal-tooltip ml-1 text-secondary" title="<%= LanguageUtil.get(request, "identification-number") %>">
+											<clay:icon
+												symbol="question-circle"
+											/>
+										</span>
 									</small>
 								</c:if>
 
@@ -97,18 +95,16 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											<%= externalReferenceCode %>
 										</strong>
 
-										<clay:button
-											cssClass="lfr-portal-tooltip text-secondary"
-											displayType="unstyled"
-											icon="question-circle"
-											small="<%= true %>"
-											title='<%= LanguageUtil.get(request, "external-reference-code") %>'
-										/>
+										<span class="lfr-portal-tooltip ml-1 text-secondary" title="<%= LanguageUtil.get(request, "external-reference-code") %>">
+											<clay:icon
+												symbol="question-circle"
+											/>
+										</span>
 
 										<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditUrl) %>">
 											<clay:button
-												cssClass="text-secondary"
-												displayType="unstyled"
+												cssClass="h-auto ml-1 p-0 text-secondary w-auto"
+												displayType="link"
 												icon="pencil"
 												id="erc-edit-modal-opener"
 												small="<%= true %>"
@@ -294,7 +290,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 								boolean submitCheck = Validator.isNull(action.getId());
 
-								String actionId = Validator.isNotNull(action.getId()) ? action.getId() : "header-action" + StringPool.UNDERLINE + PortalUtil.generateRandomKey(request, "taglib_step_tracker");
+								String actionId = Validator.isNotNull(action.getId()) ? action.getId() : "header-action_" + PortalUtil.generateRandomKey(request, "taglib_step_tracker");
 							%>
 
 								<clay:link

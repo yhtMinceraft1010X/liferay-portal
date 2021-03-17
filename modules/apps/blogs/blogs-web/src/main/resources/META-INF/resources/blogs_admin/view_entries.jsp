@@ -23,6 +23,7 @@ String assetTagName = ParamUtil.getString(request, "tag");
 BlogEntriesDisplayContext blogEntriesDisplayContext = (BlogEntriesDisplayContext)request.getAttribute(BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT);
 
 String displayStyle = blogEntriesDisplayContext.getDisplayStyle();
+
 SearchContainer<BlogsEntry> entriesSearchContainer = blogEntriesDisplayContext.getSearchContainer();
 
 PortletURL portletURL = entriesSearchContainer.getIteratorURL();
@@ -77,11 +78,10 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 				</liferay-portlet:renderURL>
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(blogEntriesDisplayContext.getAvailableActions(entry))
+					).build());
 				%>
 
 				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>

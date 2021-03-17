@@ -108,6 +108,8 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -131,8 +133,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -217,6 +217,7 @@ public class ContentPageEditorDisplayContext {
 		_itemSelector = itemSelector;
 		_pageEditorConfiguration = pageEditorConfiguration;
 		_renderResponse = renderResponse;
+
 		_resourceBundleLoader =
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByBundleSymbolicName(
@@ -236,6 +237,9 @@ public class ContentPageEditorDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
+				"adaptiveMediaEnabled",
+				_ffLayoutContentPageEditorConfiguration.adaptiveMediaEnabled()
+			).put(
 				"addFragmentCompositionURL",
 				getFragmentEntryActionURL(
 					"/content_layout/add_fragment_composition")
@@ -292,7 +296,7 @@ public class ContentPageEditorDisplayContext {
 				"defaultStyleBookEntryImagePreviewURL",
 				() -> {
 					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultStyleBookEntry();
+						_getDefaultMasterStyleBookEntry();
 
 					if (defaultStyleBookEntry != null) {
 						return defaultStyleBookEntry.getImagePreviewURL(
@@ -305,7 +309,7 @@ public class ContentPageEditorDisplayContext {
 				"defaultStyleBookEntryName",
 				() -> {
 					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultStyleBookEntry();
+						_getDefaultMasterStyleBookEntry();
 
 					if (defaultStyleBookEntry != null) {
 						return defaultStyleBookEntry.getName();
@@ -334,6 +338,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"duplicateItemURL",
 				getFragmentEntryActionURL("/content_layout/duplicate_item")
+			).put(
+				"duplicateSegmentsExperienceURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/duplicate_segments_experience")
 			).put(
 				"editFragmentEntryLinkCommentURL",
 				getFragmentEntryActionURL(
@@ -487,6 +495,22 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL("/content_layout/get_fragment_entry_link")
 			).put(
 				"sidebarPanels", getSidebarPanels()
+			).put(
+				"styleBookEnabled",
+				() -> {
+					Layout layout = themeDisplay.getLayout();
+
+					LayoutSet layoutSet = layout.getLayoutSet();
+
+					if (Validator.isNull(layout.getThemeId()) ||
+						Objects.equals(
+							layout.getThemeId(), layoutSet.getThemeId())) {
+
+						return true;
+					}
+
+					return false;
+				}
 			).put(
 				"styleBookEntryId",
 				() -> {
@@ -903,6 +927,18 @@ public class ContentPageEditorDisplayContext {
 		return _defaultConfigurations;
 	}
 
+	private StyleBookEntry _getDefaultMasterStyleBookEntry() {
+		if (_defaultMasterStyleBookEntry != null) {
+			return _defaultMasterStyleBookEntry;
+		}
+
+		_defaultMasterStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
+				themeDisplay.getLayout());
+
+		return _defaultMasterStyleBookEntry;
+	}
+
 	private StyleBookEntry _getDefaultStyleBookEntry() {
 		if (_defaultStyleBookEntry != null) {
 			return _defaultStyleBookEntry;
@@ -926,7 +962,8 @@ public class ContentPageEditorDisplayContext {
 				PortletRequest.ACTION_PHASE);
 
 			discardDraftURL.setParameter(
-				ActionRequest.ACTION_NAME, "/layout/discard_draft_layout");
+				ActionRequest.ACTION_NAME,
+				"/layout_admin/discard_draft_layout");
 			discardDraftURL.setParameter(
 				"redirect", themeDisplay.getURLCurrent());
 			discardDraftURL.setParameter(
@@ -940,7 +977,7 @@ public class ContentPageEditorDisplayContext {
 			PortletRequest.ACTION_PHASE);
 
 		deleteLayoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/delete_layout");
+			ActionRequest.ACTION_NAME, "/layout_admin/delete_layout");
 
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -1434,7 +1471,7 @@ public class ContentPageEditorDisplayContext {
 					).put(
 						"editableTypes",
 						EditableFragmentEntryProcessorUtil.getEditableTypes(
-							fragmentEntryLink.getHtml())
+							content)
 					).put(
 						"editableValues",
 						JSONFactoryUtil.createJSONObject(
@@ -1638,7 +1675,7 @@ public class ContentPageEditorDisplayContext {
 			PortletRequest.RENDER_PHASE);
 
 		lookAndFeelURL.setParameter(
-			"mvcRenderCommandName", "/layout/edit_layout");
+			"mvcRenderCommandName", "/layout_admin/edit_layout");
 
 		lookAndFeelURL.setParameter(
 			"redirect",
@@ -1695,12 +1732,10 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getMasterLayoutJSONObject() {
 		Layout layout = themeDisplay.getLayout();
 
-		LayoutStructure masterLayoutStructure = _getMasterLayoutStructure();
-
 		return JSONUtil.put(
 			"masterLayoutData",
 			Optional.ofNullable(
-				masterLayoutStructure
+				_getMasterLayoutStructure()
 			).map(
 				LayoutStructure::toJSONObject
 			).orElse(
@@ -2192,6 +2227,7 @@ public class ContentPageEditorDisplayContext {
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;
 	private Map<String, Object> _defaultConfigurations;
+	private StyleBookEntry _defaultMasterStyleBookEntry;
 	private StyleBookEntry _defaultStyleBookEntry;
 	private final FFLayoutContentPageEditorConfiguration
 		_ffLayoutContentPageEditorConfiguration;

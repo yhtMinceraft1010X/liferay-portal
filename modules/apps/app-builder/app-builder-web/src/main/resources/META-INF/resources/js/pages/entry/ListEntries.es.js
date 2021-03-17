@@ -21,10 +21,14 @@ import {Loading} from '../../components/loading/Loading.es';
 import useDataListView from '../../hooks/useDataListView.es';
 import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
+import useQuery from '../../hooks/useQuery.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
+import NoPermissionEntry from './NoPermissionEntry.es';
 import {buildEntries, navigateToEditPage} from './utils.es';
 
-export default function ListEntries() {
+export default function ListEntries({history}) {
+	const actions = useEntriesActions();
+	const permissions = usePermissions();
 	const {
 		appId,
 		basePortletURL,
@@ -39,9 +43,7 @@ export default function ListEntries() {
 		dataDefinition,
 		dataListView: {fieldNames},
 		isLoading,
-	} = useDataListView(dataListViewId, dataDefinitionId);
-
-	const permissions = usePermissions();
+	} = useDataListView(dataListViewId, dataDefinitionId, permissions.view);
 
 	const formColumns = columns.map(({value, ...column}) => ({
 		...column,
@@ -52,25 +54,38 @@ export default function ListEntries() {
 		),
 	}));
 
-	const portletParams = {
-		languageId: userLanguageId,
+	const onClickEditPage = () => {
+		navigateToEditPage(basePortletURL, {
+			backURL: window.location.href,
+			languageId: userLanguageId,
+		});
 	};
+
+	const [query] = useQuery(
+		history,
+		{
+			keywords: '',
+			page: 1,
+			pageSize: 20,
+			sort: '',
+		},
+		appId
+	);
+
+	if (!permissions.view) {
+		return <NoPermissionEntry />;
+	}
 
 	return (
 		<Loading isLoading={isLoading}>
 			<ListView
-				actions={useEntriesActions()}
+				actions={actions}
 				addButton={() =>
 					showFormView &&
 					permissions.add && (
 						<Button
 							className="nav-btn nav-btn-monospaced"
-							onClick={() =>
-								navigateToEditPage(
-									basePortletURL,
-									portletParams
-								)
-							}
+							onClick={onClickEditPage}
 							symbol="plus"
 							tooltip={Liferay.Language.get('new-entry')}
 						/>
@@ -83,12 +98,7 @@ export default function ListEntries() {
 						permissions.add && (
 							<Button
 								displayType="secondary"
-								onClick={() =>
-									navigateToEditPage(
-										basePortletURL,
-										portletParams
-									)
-								}
+								onClick={onClickEditPage}
 							>
 								{Liferay.Language.get('new-entry')}
 							</Button>
@@ -106,7 +116,7 @@ export default function ListEntries() {
 					dataDefinition,
 					fieldNames,
 					permissions,
-					scope: appId,
+					query,
 				})}
 			</ListView>
 		</Loading>

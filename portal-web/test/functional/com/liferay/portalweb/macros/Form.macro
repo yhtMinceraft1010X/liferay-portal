@@ -125,6 +125,18 @@ definition {
 		AssertElementNotPresent(locator1 = "FormPortlet#FORM_PAGE");
 	}
 
+	macro deleteFieldModalConfirmation {
+		FormsAdminNavigator.gotoDeleteField(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
+
+		while (IsElementPresent(locator1 = "Form#VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE")) {
+			Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+		}
+
+		Form.validateNoFieldLabel(fieldLabel = "${fieldLabel}");
+	}
+
 	macro deleteSuccessPage {
 		var key_formPageNumber = "${formPageNumber}";
 
@@ -172,14 +184,7 @@ definition {
 			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
 		}
 
-		if (isSet(fieldLabelRequired)) {
-			Form.editFieldLabelMetal(
-				fieldLabelRequired = "${fieldLabelRequired}",
-				fieldValue = "${fieldValue}");
-		}
-		else {
-			Form.editFieldLabelMetal(fieldValue = "${fieldValue}");
-		}
+		Form.editFieldLabelMetal(fieldValue = "${fieldValue}");
 	}
 
 	macro editFieldDataProvider {
@@ -205,16 +210,9 @@ definition {
 
 		var key_fieldName = "${fieldValue}";
 
-		if (isSet(fieldLabelRequired)) {
-			AssertTextEquals(
-				locator1 = "Form#FIELD_LABEL",
-				value1 = "${fieldLabelRequired}");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Form#FIELD_LABEL",
-				value1 = "${fieldValue}");
-		}
+		AssertTextEquals(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldValue}");
 	}
 
 	macro editImageDescription {
@@ -345,10 +343,18 @@ definition {
 			var key_fieldLocation = "${fieldPositionNumber}";
 		}
 
-		DragAndDrop.dragAndDropPortletToObject(
-			locator1 = "Form#ADD_FIELD_TYPE",
-			locator2 = "Form#ADD_FIELD_POSITION",
-			value1 = "${fieldType}");
+		if (isSet(local)) {
+			DragAndDrop.dragAndDropPortletToObject(
+				locator1 = "Form#ADD_FIELD_TYPE",
+				locator2 = "Form#ADD_FIELD_POSITION_1",
+				value1 = "${fieldType}");
+		}
+		else {
+			DragAndDrop.dragAndDropPortletToObject(
+				locator1 = "Form#ADD_FIELD_TYPE",
+				locator2 = "Form#ADD_FIELD_POSITION",
+				value1 = "${fieldType}");
+		}
 
 		if (isSet(localeBasic)) {
 			var key_localeBasic = "${localeBasic}";
@@ -591,6 +597,12 @@ definition {
 		var key_uniqueSuccess = "The form was unpublished successfully.";
 
 		AssertElementPresent(locator1 = "Message#UNIQUE_SUCCESS");
+	}
+
+	macro validateNoFieldLabel {
+		AssertElementNotPresent(
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}");
 	}
 
 	macro viewAltPagePagination {

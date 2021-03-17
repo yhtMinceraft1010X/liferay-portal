@@ -214,7 +214,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					layoutUuid = latestArticle.getLayoutUuid();
 				}
 			}
-			else if (targetLayout == null) {
+			else if ((displayPageType ==
+						AssetDisplayPageConstants.TYPE_DEFAULT) ||
+					 (targetLayout == null)) {
+
 				layoutUuid = null;
 			}
 		}
@@ -418,11 +421,19 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
-		if (Validator.isNotNull(portletResource) &&
-			(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+		if (workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) {
+			String referringPortletResource = ParamUtil.getString(
+				actionRequest, "referringPortletResource");
 
-			MultiSessionMessages.add(
-				actionRequest, portletResource + "requestProcessed");
+			if (Validator.isNotNull(referringPortletResource)) {
+				MultiSessionMessages.add(
+					actionRequest,
+					referringPortletResource + "requestProcessed");
+			}
+			else if (Validator.isNotNull(portletResource)) {
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "requestProcessed");
+			}
 		}
 
 		sendEditArticleRedirect(actionRequest, article, oldUrlTitle);

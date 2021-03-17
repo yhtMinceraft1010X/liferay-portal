@@ -18,9 +18,11 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -38,7 +40,7 @@ import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -82,12 +84,22 @@ public class ViewDiscardDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"ctEntries",
+			"ctEntriesJSONArray",
 			() -> {
 				JSONArray ctEntriesJSONArray =
 					JSONFactoryUtil.createJSONArray();
 
 				for (CTEntry ctEntry : ctEntries) {
+					RenderURL viewURL = _renderResponse.createRenderURL();
+
+					viewURL.setParameter(
+						"mvcRenderCommandName", "/change_tracking/view_diff");
+					viewURL.setParameter(
+						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+					PublicationsPortletURLUtil.setWindowState(
+						viewURL, LiferayWindowState.POP_UP);
+
 					ctEntriesJSONArray.put(
 						JSONUtil.put(
 							"ctEntryId", ctEntry.getCtEntryId()
@@ -106,19 +118,12 @@ public class ViewDiscardDisplayContext {
 								_themeDisplay.getLocale())
 						).put(
 							"userId", ctEntry.getUserId()
+						).put(
+							"viewURL", viewURL.toString()
 						));
 				}
 
 				return ctEntriesJSONArray;
-			}
-		).put(
-			"renderURL",
-			() -> {
-				ResourceURL renderURL = _renderResponse.createResourceURL();
-
-				renderURL.setResourceID("/change_lists/render_diff");
-
-				return renderURL.toString();
 			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
@@ -144,6 +149,11 @@ public class ViewDiscardDisplayContext {
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/change_tracking/view_changes");
+		portletURL.setParameter(
+			"ctCollectionId", String.valueOf(_ctCollectionId));
+
 		return portletURL.toString();
 	}
 
@@ -151,7 +161,7 @@ public class ViewDiscardDisplayContext {
 		ActionURL submitURL = _renderResponse.createActionURL();
 
 		submitURL.setParameter(
-			ActionRequest.ACTION_NAME, "/change_lists/discard_changes");
+			ActionRequest.ACTION_NAME, "/change_tracking/discard_changes");
 		submitURL.setParameter("redirect", getRedirectURL());
 		submitURL.setParameter(
 			"ctCollectionId", String.valueOf(_ctCollectionId));

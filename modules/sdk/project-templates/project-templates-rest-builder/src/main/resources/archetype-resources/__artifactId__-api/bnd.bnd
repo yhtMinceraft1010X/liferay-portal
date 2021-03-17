@@ -1,6 +1,0 @@
-Bundle-Name: ${artifactId}-api
-Bundle-SymbolicName: ${package}.api
-Bundle-Version: ${version}
-Export-Package:\
-	${package}.dto.v1_0,\
-	${package}.resource.v1_0

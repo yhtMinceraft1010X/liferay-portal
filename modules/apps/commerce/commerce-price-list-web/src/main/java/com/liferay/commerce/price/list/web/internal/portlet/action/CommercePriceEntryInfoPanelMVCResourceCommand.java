@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=commercePriceEntryInfoPanel"
+		"mvc.command.name=/commerce_price_list/commerce_price_entry_info_panel"
 	},
 	service = MVCResourceCommand.class
 )
@@ -67,7 +67,8 @@ public class CommercePriceEntryInfoPanelMVCResourceCommand
 				resourceRequest));
 
 		include(
-			resourceRequest, resourceResponse, "/price_entry_info_panel.jsp");
+			resourceRequest, resourceResponse,
+			"/commerce_price_entry_info_panel.jsp");
 	}
 
 	@Reference

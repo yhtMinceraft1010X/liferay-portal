@@ -4532,6 +4532,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 		ctStrictColumnNames.add("formInstanceVersion");
 		ctStrictColumnNames.add("storageId");
 		ctStrictColumnNames.add("version");
+		ctStrictColumnNames.add("ipAddress");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(
@@ -4772,15 +4773,6 @@ public class DDMFormInstanceRecordPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
-	static {
-		try {
-			Class.forName(DDMPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	private FinderPath _createFinderPath(
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult) {
@@ -4798,10 +4790,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 		return finderPath;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
 	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
 		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
 
 	private static class DDMFormInstanceRecordModelArgumentsResolver
 		implements ArgumentsResolver {

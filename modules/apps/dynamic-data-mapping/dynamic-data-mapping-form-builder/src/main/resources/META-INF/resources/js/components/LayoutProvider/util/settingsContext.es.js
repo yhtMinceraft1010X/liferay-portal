@@ -14,23 +14,56 @@
 
 import {
 	PagesVisitor,
+	generateInstanceId,
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
 import {getDefaultFieldName} from '../../../util/fieldSupport.es';
 import {updateFieldValidationProperty} from './fields.es';
 
-export const getSettingsContextProperty = (settingsContext, propertyName) => {
+export const getSettingsContextProperty = (
+	settingsContext,
+	propertyName,
+	propertyType = 'value'
+) => {
 	let propertyValue;
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields((field) => {
 		if (propertyName === field.fieldName) {
-			propertyValue = field.value;
+			propertyValue = field[propertyType];
 		}
 	});
 
 	return propertyValue;
+};
+
+export const setFieldReferenceErrorMessage = (
+	settingsContext,
+	propertyName,
+	displayErrors = true,
+	shouldUpdateValue = false
+) => {
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields((field) => {
+			if (propertyName === field.fieldName) {
+				field = {
+					...field,
+					displayErrors,
+					errorMessage: Liferay.Language.get(
+						'this-reference-is-already-being-used'
+					),
+					shouldUpdateValue,
+					valid: !displayErrors,
+				};
+			}
+
+			return field;
+		}),
+	};
 };
 
 export const updateSettingsContextProperty = (
@@ -59,6 +92,22 @@ export const updateSettingsContextProperty = (
 			}
 
 			return field;
+		}),
+	};
+};
+
+export const updateSettingsContextInstanceId = ({settingsContext}) => {
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	return {
+		...settingsContext,
+		pages: visitor.mapFields((field) => {
+			const newField = {
+				...field,
+				instanceId: generateInstanceId(8),
+			};
+
+			return newField;
 		}),
 	};
 };
@@ -106,6 +155,26 @@ export const updateFieldName = (
 			),
 		};
 	}
+
+	return focusedField;
+};
+
+export const updateFieldReference = (
+	focusedField,
+	invalid = false,
+	shouldUpdateValue = false
+) => {
+	const {settingsContext} = focusedField;
+
+	focusedField = {
+		...focusedField,
+		settingsContext: setFieldReferenceErrorMessage(
+			settingsContext,
+			'fieldReference',
+			invalid,
+			shouldUpdateValue
+		),
+	};
 
 	return focusedField;
 };

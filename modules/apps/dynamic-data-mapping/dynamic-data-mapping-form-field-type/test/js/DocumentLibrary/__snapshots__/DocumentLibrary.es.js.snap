@@ -43,7 +43,6 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -56,8 +55,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       Type something
@@ -74,9 +72,8 @@ exports[`Field DocumentLibrary has a label 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
-      for="textField"
       tabindex="0"
     >
       label
@@ -116,15 +113,13 @@ exports[`Field DocumentLibrary has a label 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       label
@@ -177,7 +172,6 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         placeholder="Placeholder"
         type="hidden"
@@ -232,7 +226,6 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -286,7 +279,6 @@ exports[`Field DocumentLibrary has a value 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{\\"id\\":\\"123\\"}"
@@ -394,7 +386,6 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -448,7 +439,6 @@ exports[`Field DocumentLibrary is not required 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
@@ -466,9 +456,8 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
-      for="textField"
       tabindex="0"
     >
       text
@@ -508,15 +497,13 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       </div>
       <input
         class="form-control"
-        id="textField"
         name="textField"
         type="hidden"
         value="{}"
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       text

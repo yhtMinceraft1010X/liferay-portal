@@ -196,7 +196,7 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 	private DefaultMapToDDMFormValuesConverterStrategy() {
 	}
 
-	private static DefaultMapToDDMFormValuesConverterStrategy
+	private static final DefaultMapToDDMFormValuesConverterStrategy
 		_defaultMapToDDMFormValuesConverterStrategy =
 			new DefaultMapToDDMFormValuesConverterStrategy();
 

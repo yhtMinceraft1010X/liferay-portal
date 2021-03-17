@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=cpOptions"
+		"mvc.command.name=/cp_options/cp_options"
 	},
 	service = MVCResourceCommand.class
 )
@@ -104,9 +104,11 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 	private boolean _hasDDMFormFieldTypeProperties(
 		String ddmFormFieldTypeName) {
 
-		if (_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-				ddmFormFieldTypeName) == null) {
+		Map<String, Object> properties =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldTypeName);
 
+		if (properties == null) {
 			return false;
 		}
 

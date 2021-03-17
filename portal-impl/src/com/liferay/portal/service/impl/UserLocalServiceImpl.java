@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
@@ -263,6 +262,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long[] userGroupIds = null;
 		boolean sendEmail = false;
 		ServiceContext serviceContext = new ServiceContext();
+
+		Company company = companyLocalService.getCompany(companyId);
+
+		serviceContext.setPathMain(PortalUtil.getPathMain());
+		serviceContext.setPortalURL(company.getPortalURL(0));
 
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -2176,6 +2180,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the default user for the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the default user for the company, or <code>null</code> if a user
+	 * 			with the company key could not be found
+	 */
+	@Override
+	public User fetchDefaultUser(long companyId) {
+		User user = _defaultUsers.get(companyId);
+
+		if (user == null) {
+			user = userPersistence.fetchByC_DU(companyId, true);
+
+			if (user != null) {
+				_defaultUsers.put(companyId, user);
+			}
+		}
+
+		return user;
+	}
+
+	/**
 	 * Returns the user with the contact ID.
 	 *
 	 * @param  contactId the user's contact ID
@@ -2934,34 +2960,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user with the UUID.
-	 *
-	 * @param  uuid the user's UUID
-	 * @param  companyId the primary key of the user's company
-	 * @return the user with the UUID
-	 */
-	@Override
-	public User getUserByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-
-		List<User> users = userPersistence.findByUuid_C(uuid, companyId);
-
-		if (users.isEmpty()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{uuid=");
-			sb.append(uuid);
-			sb.append(", companyId=");
-			sb.append(companyId);
-			sb.append("}");
-
-			throw new NoSuchUserException(sb.toString());
-		}
-
-		return users.get(0);
-	}
-
-	/**
 	 * Returns the number of users with the status belonging to the user group.
 	 *
 	 * @param  userGroupId the primary key of the user group
@@ -3537,7 +3535,47 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public Map<Long, Integer> searchCounts(
 		long companyId, int status, long[] groupIds) {
 
-		return userFinder.countByGroups(companyId, status, groupIds);
+		Map<Long, Integer> counts = new HashMap<>();
+
+		LinkedHashMap<String, Object> params = null;
+
+		try {
+			for (long groupId : groupIds) {
+				Group group = groupPersistence.fetchByPrimaryKey(groupId);
+
+				if (group == null) {
+					continue;
+				}
+
+				if (group.isOrganization()) {
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersOrgs", group.getOrganizationId()
+					).build();
+				}
+				else if (group.isUserGroup()) {
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersUserGroups", group.getClassPK()
+					).build();
+				}
+				else {
+					params = LinkedHashMapBuilder.<String, Object>put(
+						"usersGroups", groupId
+					).build();
+				}
+
+				int count = userFinder.countByKeywords(
+					companyId, null, status, params);
+
+				if (count > 0) {
+					counts.put(groupId, count);
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return counts;
 	}
 
 	@Override
@@ -6004,6 +6042,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {-1L});
 
 		if (params != null) {
 			String keywords = (String)params.remove("keywords");

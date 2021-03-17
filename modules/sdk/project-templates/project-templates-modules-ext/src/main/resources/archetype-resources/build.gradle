@@ -1,3 +1,0 @@
-dependencies {
-	originalModule group: "com.liferay", name: "${originalModuleName}"
-}

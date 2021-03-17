@@ -15,6 +15,7 @@
 import getJsModule from '../utilities/modules';
 import ActionsLinkRenderer from './ActionLinkRenderer';
 import ActionsDropdownRenderer from './ActionsDropdownRenderer';
+import BooleanRenderer from './BooleanRenderer';
 import CheckboxRenderer from './CheckboxRenderer';
 import DateRenderer from './DateRenderer';
 import DefaultRenderer from './DefaultRenderer';
@@ -29,6 +30,7 @@ import TooltipPriceRenderer from './TooltipPriceRenderer';
 const dataRenderers = {
 	actionLink: ActionsLinkRenderer,
 	actionsDropdown: ActionsDropdownRenderer,
+	boolean: BooleanRenderer,
 	checkbox: CheckboxRenderer,
 	date: DateRenderer,
 	default: DefaultRenderer,

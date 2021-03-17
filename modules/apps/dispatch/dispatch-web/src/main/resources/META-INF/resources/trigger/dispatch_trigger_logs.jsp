@@ -20,6 +20,7 @@
 DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DispatchTrigger dispatchTrigger = dispatchLogDisplayContext.getDispatchTrigger();
+
 PortletURL portletURL = dispatchLogDisplayContext.getPortletURL();
 
 portletURL.setParameter("searchContainerId", "dispatchLogs");
@@ -53,7 +54,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<%
 						PortletURL rowURL = renderResponse.createRenderURL();
 
-						rowURL.setParameter("mvcRenderCommandName", "viewDispatchLog");
+						rowURL.setParameter("mvcRenderCommandName", "/dispatch/view_dispatch_log");
 						rowURL.setParameter("redirect", currentURL);
 						rowURL.setParameter("dispatchLogId", String.valueOf(dispatchLog.getDispatchLogId()));
 						%>
@@ -82,8 +83,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<liferay-ui:search-container-column-text
 							name="status"
 						>
-							<h6 class="background-task-status-row background-task-status-<%= BackgroundTaskConstants.getStatusLabel(dispatchLog.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(dispatchLog.getStatus()) %>">
-								<liferay-ui:message key="<%= BackgroundTaskConstants.getStatusLabel(dispatchLog.getStatus()) %>" />
+
+							<%
+							DispatchTaskStatus dispatchTaskStatus = DispatchTaskStatus.valueOf(dispatchLog.getStatus());
+							%>
+
+							<h6 class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> <%= dispatchTaskStatus.getCssClass() %>">
+								<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
 							</h6>
 						</liferay-ui:search-container-column-text>
 

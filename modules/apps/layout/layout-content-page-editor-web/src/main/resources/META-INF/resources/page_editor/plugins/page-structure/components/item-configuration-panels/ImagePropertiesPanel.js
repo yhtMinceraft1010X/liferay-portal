@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
@@ -105,10 +106,12 @@ export function ImagePropertiesPanel({item}) {
 			processorKey
 		);
 
-		const url = content.url != null ? content.url : content;
-
-		return editableValue.defaulValue === url ? '' : url;
+		return content?.url ?? content;
 	});
+
+	const imageTitle =
+		editableConfig.imageTitle ||
+		(imageUrl === editableValue.defaultValue ? '' : imageUrl);
 
 	const updateEditableValues = (
 		alt,
@@ -159,20 +162,20 @@ export function ImagePropertiesPanel({item}) {
 		const nextEditableValueConfig = {
 			...editableValue.config,
 			alt: '',
-			imageTitle: '',
+			imageTitle: imageTitle || '',
 		};
 
-		if (imageTitle) {
-			nextEditableValueConfig.imageTitle = imageTitle;
-		}
+		const nextEditableValueContent = config.adaptiveMediaEnabled
+			? {
+					fileEntryId,
+					url: imageUrl,
+			  }
+			: imageUrl;
 
 		nextEditableValue = {
 			...editableValue,
 			config: nextEditableValueConfig,
-			[state.languageId]: {
-				fileEntryId,
-				url: imageUrl,
-			},
+			[state.languageId]: nextEditableValueContent,
 		};
 
 		const nextEditableValues = {
@@ -198,7 +201,7 @@ export function ImagePropertiesPanel({item}) {
 	return (
 		<>
 			<ImageSelector
-				imageTitle={editableConfig.imageTitle || imageUrl}
+				imageTitle={imageTitle}
 				label={Liferay.Language.get('image')}
 				onClearButtonPressed={() => onImageChange('', '')}
 				onImageSelected={(image) =>
@@ -206,7 +209,7 @@ export function ImagePropertiesPanel({item}) {
 				}
 			/>
 
-			{imageUrl && imageSize && (
+			{imageTitle && imageSize && (
 				<div className="mb-2 small">
 					<b>{Liferay.Language.get('resolution')}:</b>
 					<span className="ml-2">

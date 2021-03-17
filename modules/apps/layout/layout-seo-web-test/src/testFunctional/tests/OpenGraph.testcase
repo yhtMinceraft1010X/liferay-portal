@@ -92,6 +92,7 @@ definition {
 	test DisableConfiguration {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfiguration";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		SystemSettings.openSystemSettingsAdmin();
@@ -117,8 +118,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings",
+			portlet = "Site Settings",
 			site = "Test Site Name");
 
 		AssertElementNotPresent(
@@ -141,8 +141,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings",
+			portlet = "Site Settings",
 			site = "Test Site Name");
 
 		OpenGraph.disableOpenGraphAtSiteLevel();
@@ -431,8 +430,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -646,6 +644,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

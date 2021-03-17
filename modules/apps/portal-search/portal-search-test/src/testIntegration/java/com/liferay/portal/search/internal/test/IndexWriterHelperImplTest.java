@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
@@ -42,6 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,6 +65,8 @@ public class IndexWriterHelperImplTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(!isSearchEngine("Solr"));
+
 		reindex(null);
 
 		Thread.sleep(10000);
@@ -179,6 +185,25 @@ public class IndexWriterHelperImplTest {
 		return companyIds;
 	}
 
+	protected boolean isSearchEngine(String engine) {
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine(
+			_searchEngineHelper.getDefaultSearchEngineId());
+
+		String vendor = searchEngine.getVendor();
+
+		if (engine.equals("Elasticsearch7")) {
+			String version = _searchEngineInformation.getClientVersionString();
+
+			if (vendor.equals("Elasticsearch") && version.startsWith("7")) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return vendor.equals(engine);
+	}
+
 	protected void populateOriginalCounts(
 		Map<Long, Long> originalCounts, String className,
 		boolean systemIndexer) {
@@ -238,6 +263,12 @@ public class IndexWriterHelperImplTest {
 	private static final String _CLASS_NAME_CONFIGURATION_MODEL_INDEXER =
 		"com.liferay.configuration.admin.web.internal.search." +
 			"ConfigurationModelIndexer";
+
+	@Inject
+	private static SearchEngineHelper _searchEngineHelper;
+
+	@Inject
+	private static SearchEngineInformation _searchEngineInformation;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

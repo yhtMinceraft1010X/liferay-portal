@@ -16,11 +16,15 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
@@ -50,11 +54,13 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.internal.spring.transaction.ReadOnlyTransactionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -652,6 +658,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@Override
 	public T update(T model) {
+		Class<?> clazz = model.getModelClass();
+
 		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {
 			throw new IllegalStateException(
 				"Update called with read only transaction");
@@ -664,6 +672,29 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		boolean isNew = model.isNew();
+
+		if (isNew && (_dataLimitModelMaxCount > 0)) {
+			AuditedModel auditedModel = (AuditedModel)model;
+
+			FromStep fromStep = DSLQueryFactoryUtil.count();
+
+			JoinStep joinStep = fromStep.from(_table);
+
+			GroupByStep groupByStep = joinStep.where(
+				_table.getColumn(
+					"companyId", Long.class
+				).eq(
+					auditedModel.getCompanyId()
+				));
+
+			Long modelCount = dslQuery(groupByStep);
+
+			if (modelCount >= _dataLimitModelMaxCount) {
+				throw new DataLimitExceededException(
+					"Unable to exceed maximum number of allowed " +
+						clazz.getName());
+			}
+		}
 
 		ModelListener<T>[] listeners = getListeners();
 
@@ -836,6 +867,17 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected void setModelClass(Class<T> modelClass) {
 		_modelClass = modelClass;
+
+		long dataLimitModelMaxCount = GetterUtil.getLong(
+			PropsUtil.get(
+				"data.limit.model.max.count",
+				new Filter(modelClass.getName())));
+
+		if (AuditedModel.class.isAssignableFrom(modelClass) &&
+			(dataLimitModelMaxCount > 0)) {
+
+			_dataLimitModelMaxCount = dataLimitModelMaxCount;
+		}
 	}
 
 	protected void setModelImplClass(Class<? extends T> modelImplClass) {
@@ -1035,6 +1077,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		).build();
 
 	private int _databaseOrderByMaxColumns;
+	private long _dataLimitModelMaxCount;
 	private DataSource _dataSource;
 	private DB _db;
 	private Map<String, String> _dbColumnNames = Collections.emptyMap();

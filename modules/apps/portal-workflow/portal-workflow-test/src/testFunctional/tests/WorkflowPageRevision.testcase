@@ -4,6 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Workflow";
+
 	var page = "Public Pages";
 	var pageName = "Site Page Name";
 	var siteName = "Site Name";
@@ -70,7 +71,6 @@ definition {
 
 	@priority = "4"
 	test RejectPageRevisionPG {
-
 		var pageName = "Page Revision Page";
 
 		Navigator.gotoStagedSitePage(
@@ -246,7 +246,6 @@ definition {
 	@ignore = "true"
 	@priority = "2"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

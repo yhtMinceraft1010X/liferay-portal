@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.style.book">
 	<namespace>StyleBook</namespace>
-	<entity local-service="true" name="StyleBookEntry" remote-service="true" versioned="true">
+	<entity local-service="true" name="StyleBookEntry" remote-service="true" uuid="true" versioned="true">
 
 		<!-- PK fields -->
 
@@ -19,6 +19,7 @@
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 

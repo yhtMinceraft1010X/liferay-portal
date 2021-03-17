@@ -31,7 +31,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -42,12 +41,14 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -78,12 +80,15 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.insurance.site.initializer.internal.util.ImagesImporterUtil;
+import com.liferay.site.insurance.site.initializer.internal.util.StyleBookEntriesImporterUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.File;
 
@@ -132,7 +137,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getName(Locale locale) {
-		return "Insurance Demo Site";
+		return "Raylife";
 	}
 
 	@Override
@@ -157,11 +162,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_addFragmentEntries();
 			_addSiteNavigationMenus();
 
+			_addStyleBookEntries();
+			_setDefaultStyleBookEntry();
+
 			_addLayoutPageTemplateEntries();
+			_setDefaultLayoutPageTemplateEntries();
 
 			_addLayouts();
-
-			_setDefaultLayoutPageTemplateEntries();
 
 			_updateLayoutSetLookAndFeel("private");
 			_updateLayoutSetLookAndFeel("public");
@@ -186,17 +193,19 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _addAssetListEntries() throws Exception {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Policies", _getDynamicCollectionTypeSettings("POLICY"),
+			"Policies", _getDynamicCollectionTypeSettings("POLICY", null),
 			_serviceContext);
 
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Closed Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			"Closed Claims",
+			_getDynamicCollectionTypeSettings("CLAIM", new String[] {"closed"}),
 			_serviceContext);
 
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-			"Open Claims", _getDynamicCollectionTypeSettings("CLAIM"),
+			"Open Claims",
+			_getDynamicCollectionTypeSettings("CLAIM", new String[] {"open"}),
 			_serviceContext);
 	}
 
@@ -240,8 +249,13 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				typeSettingsUnicodeProperties.toString());
 		}
 
-		draftLayout = _updateLayoutTypeSettings(
-			draftLayout, pageDefinitionJSONObject.getJSONObject("settings"));
+		JSONObject settingsJSONObject = pageDefinitionJSONObject.getJSONObject(
+			"settings");
+
+		if (settingsJSONObject != null) {
+			draftLayout = _updateLayoutTypeSettings(
+				draftLayout, settingsJSONObject);
+		}
 
 		layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
@@ -347,6 +361,20 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			JSONObject journalArticleJSONObject =
 				JSONFactoryUtil.createJSONObject(content);
 
+			List<String> assetTagNames = new ArrayList<>();
+
+			JSONArray assetTagNamesJSONArray =
+				journalArticleJSONObject.getJSONArray("tags");
+
+			if (assetTagNamesJSONArray != null) {
+				for (int i = 0; i < assetTagNamesJSONArray.length(); i++) {
+					assetTagNames.add(assetTagNamesJSONArray.getString(i));
+				}
+			}
+
+			_serviceContext.setAssetTagNames(
+				assetTagNames.toArray(new String[0]));
+
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				_serviceContext.getTimeZone());
 
@@ -368,8 +396,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 					journalArticleJSONObject.getString("name")),
 				null,
 				StringUtil.replace(
-					_read("journal_article.xml", url), StringPool.DOLLAR,
-					StringPool.DOLLAR, fileEntriesMap),
+					_read("journal_article.xml", url), "[$", "$]",
+					fileEntriesMap),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
 				displayDateMonth, displayDateDay, displayDateYear,
@@ -394,6 +422,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				resourceClassNameId, article.getResourcePrimKey(),
 				defaultLayoutPageTemplateEntryId,
 				AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
+
+			_serviceContext.setAssetTagNames(null);
 		}
 	}
 
@@ -450,6 +480,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				String.valueOf(
 					_siteNavigationMenuMap.get("Customer Portal Menu"))
 			).put(
+				"LAYOUT_URL_CLAIMS", _getPrivateFriendlyURL("claims")
+			).put(
+				"LAYOUT_URL_POLICIES", _getPrivateFriendlyURL("policies")
+			).put(
 				"PUBLIC_SITE_NAVIGATION_MENU_ID",
 				String.valueOf(_siteNavigationMenuMap.get("Public Menu"))
 			).put(
@@ -474,9 +508,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			String path = jsonObject.getString("path");
 
 			JSONObject pageJSONObject = JSONFactoryUtil.createJSONObject(
-				_read(
-					StringBundler.concat(
-						"/layouts/", path, StringPool.SLASH, "page.json")));
+				_read(StringBundler.concat("/layouts/", path, "/page.json")));
 
 			String type = StringUtil.toLowerCase(
 				pageJSONObject.getString("type"));
@@ -489,9 +521,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 				String pageDefinitionJSON = StringUtil.replace(
 					_read(
 						StringBundler.concat(
-							"/layouts/", path, StringPool.SLASH,
-							"page-definition.json")),
-					"\"$", "$\"", resourcesMap);
+							"/layouts/", path, "/page-definition.json")),
+					"\"[$", "$]\"", resourcesMap);
 
 				layout = _addContentLayout(
 					pageJSONObject,
@@ -567,6 +598,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addStyleBookEntries() throws Exception {
+		URL url = _bundle.getEntry("/style-books.zip");
+
+		File file = FileUtil.createTempFile(url.openStream());
+
+		StyleBookEntriesImporterUtil.importStyleBookEntries(
+			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
+			file, false);
+	}
+
 	private Layout _addWidgetLayout(JSONObject jsonObject) throws Exception {
 		String name = jsonObject.getString("name");
 
@@ -586,15 +627,22 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			Map<String, String> stringValuesMap)
 		throws Exception {
 
-		String content = StringUtil.read(url.openStream());
+		if (_isReplaceableTokenFileExtension(url)) {
+			String content = StringUtil.read(url.openStream());
 
-		content = StringUtil.replace(content, "\"£", "£\"", numberValuesMap);
+			content = StringUtil.replace(
+				content, "\"[£", "£]\"", numberValuesMap);
 
-		content = StringUtil.replace(
-			content, StringPool.DOLLAR, StringPool.DOLLAR, stringValuesMap);
+			content = StringUtil.replace(content, "[$", "$]", stringValuesMap);
 
-		zipWriter.addEntry(
-			StringUtil.removeSubstring(url.getPath(), _PATH), content);
+			zipWriter.addEntry(
+				StringUtil.removeSubstring(url.getPath(), _PATH), content);
+		}
+		else {
+			zipWriter.addEntry(
+				StringUtil.removeSubstring(url.getPath(), _PATH),
+				url.openStream());
+		}
 	}
 
 	private void _createServiceContext(long groupId) throws Exception {
@@ -660,7 +708,8 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		return defaultAssetDisplayPage.getLayoutPageTemplateEntryId();
 	}
 
-	private String _getDynamicCollectionTypeSettings(String ddmStructureKey)
+	private String _getDynamicCollectionTypeSettings(
+			String ddmStructureKey, String[] assetTagNames)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
@@ -689,6 +738,15 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		unicodeProperties.put("orderByType1", "ASC");
 		unicodeProperties.put("orderByType2", "ASC");
 
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			for (int i = 0; i < assetTagNames.length; i++) {
+				unicodeProperties.put("queryAndOperator" + i, "true");
+				unicodeProperties.put("queryContains" + i, "true");
+				unicodeProperties.put("queryName" + i, "assetTags");
+				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+			}
+		}
+
 		return unicodeProperties.toString();
 	}
 
@@ -712,6 +770,14 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 
 		return fileEntriesMap;
+	}
+
+	private String _getPrivateFriendlyURL(String layoutName) throws Exception {
+		Group scopeGroup = _serviceContext.getScopeGroup();
+
+		return StringBundler.concat(
+			_portal.getPathFriendlyURLPrivateGroup(),
+			scopeGroup.getFriendlyURL(), StringPool.FORWARD_SLASH, layoutName);
 	}
 
 	private Map<String, String> _getResourcesMap() {
@@ -789,6 +855,16 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private boolean _isReplaceableTokenFileExtension(URL url) {
+		String filePath = url.getPath();
+
+		int index = filePath.lastIndexOf(".");
+
+		String extension = filePath.substring(index);
+
+		return ArrayUtil.contains(_REPLACEABLE_TOKEN_FILE_EXTENSION, extension);
+	}
+
 	private void _populateZipWriter(
 			ZipWriter zipWriter, URL url, Map<String, String> numberValuesMap,
 			Map<String, String> stringValuesMap)
@@ -825,19 +901,30 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private void _setDefaultLayoutPageTemplateEntries() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "policy",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				_serviceContext.getScopeGroupId(), "policy");
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		if (layoutPageTemplateEntry != null) {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		}
 
 		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				_serviceContext.getScopeGroupId(), "claim",
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				_serviceContext.getScopeGroupId(), "claim");
 
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		if (layoutPageTemplateEntry != null) {
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		}
+	}
+
+	private void _setDefaultStyleBookEntry() throws PortalException {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				_serviceContext.getScopeGroupId(), "raylife");
+
+		_styleBookEntryLocalService.updateDefaultStyleBookEntry(
+			styleBookEntry.getStyleBookEntryId(), true);
 	}
 
 	private void _updateLayoutSetLookAndFeel(String type) throws Exception {
@@ -869,6 +956,17 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			_serviceContext.getScopeGroupId(), privateLayoutSet,
 			layoutSet.getThemeId(), layoutSet.getColorSchemeId(),
 			_read("/layout-set/" + type + "/css.css"));
+
+		URL logoURL = _bundle.getEntry(
+			StringBundler.concat(_PATH, "/layout-set/", type, "/logo.png"));
+
+		if (logoURL != null) {
+			File file = FileUtil.createTempFile(logoURL.openStream());
+
+			_layoutSetLocalService.updateLogo(
+				_serviceContext.getScopeGroupId(), privateLayoutSet, true,
+				file);
+		}
 	}
 
 	private Layout _updateLayoutTypeSettings(
@@ -901,9 +999,7 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 		String themeName = settingsJSONObject.getString("themeName");
 
 		if (Validator.isNotNull(themeName)) {
-			String themeId = _getThemeId(layout.getCompanyId(), themeName);
-
-			layout.setThemeId(themeId);
+			layout.setThemeId(_getThemeId(layout.getCompanyId(), themeName));
 		}
 
 		String colorSchemeName = settingsJSONObject.getString(
@@ -940,6 +1036,10 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 	private static final String _PATH =
 		"com/liferay/site/insurance/site/initializer/internal/dependencies";
+
+	private static final String[] _REPLACEABLE_TOKEN_FILE_EXTENSION = {
+		".ftl", ".json", ".xml"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InsuranceSiteInitializer.class);
@@ -1023,6 +1123,9 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	private Map<String, Long> _siteNavigationMenuMap;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

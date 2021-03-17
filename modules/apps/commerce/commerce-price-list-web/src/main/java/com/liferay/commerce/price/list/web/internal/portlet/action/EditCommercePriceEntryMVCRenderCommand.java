@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePriceListPortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=editCommercePriceEntry"
+		"mvc.command.name=/commerce_price_list/edit_commerce_price_entry"
 	},
 	service = MVCRenderCommand.class
 )
@@ -60,7 +60,7 @@ public class EditCommercePriceEntryMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceEntryDisplayContext);
 
-		return "/edit_price_entry.jsp";
+		return "/edit_commerce_price_entry.jsp";
 	}
 
 	@Reference

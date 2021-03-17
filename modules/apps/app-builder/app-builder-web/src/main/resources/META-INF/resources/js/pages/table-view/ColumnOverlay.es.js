@@ -25,12 +25,18 @@ import EditTableViewContext, {
 } from './EditTableViewContext.es';
 import {getColumnIndex, getColumnNode, getFieldTypeLabel} from './utils.es';
 
+const getTableResponsiveNode = (container) => {
+	return container.querySelector('.table-responsive');
+};
+
 const getStyle = (container, index) => {
 	const columnNode = getColumnNode(container, index);
 
 	return {
 		height: container.offsetHeight,
-		left: columnNode.offsetLeft,
+		left:
+			columnNode.offsetLeft -
+			getTableResponsiveNode(container).scrollLeft,
 		position: 'absolute',
 		top: container.offsetTop,
 		width: columnNode.offsetWidth,
@@ -59,6 +65,15 @@ const Overlay = ({
 		window
 	);
 
+	useEventListener(
+		'scroll',
+		() => {
+			setStyle(getStyle(container, index));
+		},
+		true,
+		getTableResponsiveNode(container)
+	);
+
 	useLayoutEffect(() => {
 		setStyle(getStyle(container, index));
 	}, [container, index, total]);
@@ -66,13 +81,13 @@ const Overlay = ({
 	return (
 		<div className={classNames('column-overlay', {selected})} style={style}>
 			<header>
-				<label>{fieldTypeLabel}</label>
+				<label className="text-truncate">{fieldTypeLabel}</label>
 
 				<Button
 					borderless
 					displayType="secondary"
 					onClick={() => onRemoveFieldName(name)}
-					symbol="times-circle"
+					symbol="trash"
 					tooltip={Liferay.Language.get('remove')}
 				/>
 			</header>

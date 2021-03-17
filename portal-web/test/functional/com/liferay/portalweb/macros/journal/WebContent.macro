@@ -559,7 +559,6 @@ definition {
 					locator1 = "WC#ICON_DOCUMENT_TITLE",
 					value1 = "${webContentDocumentsAndMedia}");
 			}
-
 		}
 
 		if (isSet(webContentHTML)) {
@@ -582,7 +581,6 @@ definition {
 					imageFileName = "${webContentImage}",
 					navTab = "Documents and Media");
 			}
-
 			else {
 				ItemSelector.uploadFile(
 					navTab = "Web Content Images",
@@ -599,9 +597,16 @@ definition {
 		if (isSet(webContentImageUnderDocumentsAndMedia)) {
 			Click(locator1 = "WCEditWebContent#IMAGE_FIELD_SELECT");
 
-			ItemSelector.uploadFile(
-				navTab = "Documents and Media",
-				uploadFileName = "${webContentImageUnderDocumentsAndMedia}");
+			if (isSet(imageFileName)) {
+				ItemSelector.selectDMImage(
+					imageFileName = "${imageFileName}",
+					navTab = "Documents and Media");
+			}
+			else {
+				ItemSelector.uploadFile(
+					navTab = "Documents and Media",
+					uploadFileName = "${webContentImageUnderDocumentsAndMedia}");
+			}
 		}
 
 		if (isSet(webContentInteger)) {
@@ -671,7 +676,6 @@ definition {
 
 				SelectFrame(value1 = "relative=top");
 			}
-
 		}
 
 		if (isSet(webContentText)) {
@@ -809,6 +813,20 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");
+	}
+
+	macro clickMarginOfContentContainer {
+		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
+		var offSetY = MathUtil.product("50","${elementHeight}");
+		var offSetY = MathUtil.quotient("${offSetY}","100");
+
+		var elementWidth = selenium.getElementWidth("WCEditWebContent#CONTENT_CONTAINER");
+		var offSetX = MathUtil.product("2","${elementWidth}");
+		var offSetX = MathUtil.quotient("${offSetX}","100");
+
+		Click.clickAt(
+			locator1 = "WCEditWebContent#CONTENT_CONTAINER",
+			value1 = "${offSetX},${offSetY}");
 	}
 
 	macro copyCP {
@@ -1000,7 +1018,7 @@ definition {
 	macro editFriendlyURL {
 		Panel.expandPanel(panel = "Friendly URL");
 
-		Type(
+		Type.typePause(
 			locator1 = "TextInput#FRIENDLY_URL",
 			value1 = "${webContentFriendlyURL}");
 	}
@@ -1709,6 +1727,16 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
+
+		if (isSet(displayPageTemplateDisabled)) {
+			Portlet.waitForForm();
+
+			var key_panel = "Display Page Template";
+
+			AssertElementNotPresent(locator1 = "Panel#PANEL_COLLAPSED");
+
+			AssertElementNotPresent(locator1 = "Panel#PANEL_EXPANDED");
+		}
 	}
 
 	macro viewCPWithoutContentField {
@@ -2233,34 +2261,130 @@ definition {
 	}
 
 	macro viewWithStructureCP {
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		if (!(isSet(predefinedValue))) {
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		WebContentNavigator.gotoEditCP(
-			webContentTitle = "${webContentTitle}",
-			webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
+			WebContentNavigator.gotoEditCP(
+				webContentTitle = "${webContentTitle}",
+				webContentTitleEscapeCharacter = "${webContentTitleEscapeCharacter}");
 
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${webContentTitle}");
 
-		if (isSet(description)) {
+			if (isSet(description)) {
+				SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "Summary",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+				AssertTextEquals(
+					locator1 = "CKEditor#BODY",
+					value1 = "${description}");
+
+				SelectFrameTop(value1 = "relative=top");
+			}
+		}
+
+		if (isSet(webContentBoolean)) {
+			if ("${webContentBoolean}" == "true") {
+				FormFields.viewCheckboxChecked(fieldName = "Boolean");
+			}
+			else if ("${webContentBoolean}" == "false") {
+				FormFields.viewCheckboxNotChecked(fieldName = "Boolean");
+			}
+		}
+
+		if (isSet(webContentColor)) {
+			AssertAttributeValue(
+				attribute1 = "style",
+				key_fieldName = "Color",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentColor}");
+		}
+
+		if (isSet(webContentDate)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldLabel = "Date",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentDate}");
+		}
+
+		if (isSet(webContentDecimal)) {
+			AssertTextEquals(
+				key_fieldLabel = "Decimal",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentDecimal}");
+		}
+
+		if (isSet(webContentDocumentsAndMedia)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentDocumentsAndMediaFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentDocumentsAndMedia}");
+		}
+
+		if (isSet(webContentHTML)) {
 			SelectFrame.selectFrameNoLoading(
-				key_fieldLabel = "Summary",
+				key_fieldLabel = "HTML",
 				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 			AssertTextEquals(
 				locator1 = "CKEditor#BODY",
-				value1 = "${description}");
+				value1 = "${webContentHTML}");
 
-			SelectFrameTop(value1 = "relative=top");
+			SelectFrameTop();
 		}
 
 		if (isSet(webContentImage)) {
-			Click(locator1 = "Button#PREVIEW");
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "Image",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentImage}");
 
-			SelectFrameTop(value1 = "relative=top");
+			AssertVisible(locator1 = "Button#PREVIEW");
+		}
 
-			SikuliAssertElementPresent(locator1 = "DDMField#IMAGE_PREVIEW_PNG");
+		if (isSet(webContentInteger)) {
+			AssertTextEquals(
+				key_fieldLabel = "Integer",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentInteger}");
+		}
+
+		if (isSet(webContentLinkToPage)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentLinkToPageFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentLinkToPage}");
+		}
+		if (isSet(webContentNumber)) {
+			AssertTextEquals(
+				key_fieldLabel = "Number",
+				locator1 = "WCEditWebContent#TEXT_INPUT_FIELD",
+				value1 = "${webContentNumber}");
+		}
+
+		if (isSet(webContentRadio)) {
+			FormFields.viewRadioValue(
+				fieldName = "Radio",
+				fieldValue = "${webContentRadio}");
+		}
+
+		if (isSet(webContentSeparator)) {
+			AssertVisible(
+				key_fieldName = "Separator",
+				locator1 = "DDMField#SEPARATOR");
+		}
+
+		if (isSet(webContentSelect)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Select",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${webContentSelect}");
 		}
 
 		if (isSet(webContentText)) {
@@ -2272,38 +2396,56 @@ definition {
 
 		if (isSet(webContentTextBox)) {
 			if (isSet(fieldName)) {
-				AssertTextEquals(
-					key_fieldName = "${fieldName}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
+				var actual = selenium.getHtmlNodeText("//div[contains(@data-fieldname,'${fieldName}')]//textarea");
+
+				TestUtils.assertEquals(
+					actual = "${actual}",
+					expected = "${webContentTextBox}");
+			}
+			else if (isSet(webContentTextBoxFieldName)) {
+				var actual = selenium.getHtmlNodeText("//div[contains(@data-fieldname,'${webContentTextBoxFieldName}')]//textarea");
+
+				TestUtils.assertEquals(
+					actual = "${actual}",
+					expected = "${webContentTextBox}");
 			}
 			else {
-				AssertTextEquals(
-					key_fieldName = "TextBox",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
+				var actual = selenium.getHtmlNodeText("//div[contains(@data-fieldname,'TextBox')]//textarea");
+
+				TestUtils.assertEquals(
+					actual = "${actual}",
+					expected = "${webContentTextBox}");
 			}
 		}
 
 		if (isSet(webContentTextBox2)) {
-			var key_fieldName = "${fieldName2}";
+			var actual = selenium.getHtmlNodeText("//div[contains(@data-fieldname,'${fieldName2}')]//textarea");
 
-			AssertTextEquals(
-				locator1 = "DDMField#TEXT_BOX",
-				value1 = "${webContentTextBox2}");
+			TestUtils.assertEquals(
+				actual = "${actual}",
+				expected = "${webContentTextBox2}");
 		}
 
 		if (isSet(webContentTextBoxList)) {
 			var count = "1";
 
 			for (var webContentTextBox : list "${webContentTextBoxList}") {
-				AssertTextEquals(
-					key_fieldName = "heading${count}",
-					locator1 = "DDMField#TEXT_BOX",
-					value1 = "${webContentTextBox}");
+				var actual = selenium.getHtmlNodeText("//div[contains(@data-fieldname,'heading${count}')]//textarea");
+
+				TestUtils.assertEquals(
+					actual = "${actual}",
+					expected = "${webContentTextBox}");
 
 				var count = ${count} + 1;
 			}
+		}
+
+		if (isSet(webContentWebContent)) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldName = "${webContentWebContentFieldName}",
+				locator1 = "TextInput#SELECTOR_INPUT",
+				value1 = "${webContentWebContent}");
 		}
 	}
 

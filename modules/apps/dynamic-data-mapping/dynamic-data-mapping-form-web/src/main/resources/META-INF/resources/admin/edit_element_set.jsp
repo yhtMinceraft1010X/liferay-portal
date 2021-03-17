@@ -22,6 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 DDMStructure structure = ddmFormAdminDisplayContext.getDDMStructure();
 
 long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
+
 long structureId = ParamUtil.getLong(request, "structureId");
 
 if (structure != null) {
@@ -36,15 +37,17 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-element-set") : LanguageUtil.get(request, "edit-element-set"));
 %>
 
-<portlet:actionURL name="saveStructure" var="saveStructureURL">
+<portlet:actionURL name="/dynamic_data_mapping_form/save_structure" var="saveStructureURL">
 	<portlet:param name="mvcRenderCommandName" value="/admin/edit_element_set" />
 </portlet:actionURL>
 
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
-	/>
+	<div class="forms-navigation-bar">
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
+		/>
+	</div>
 
 	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
 		<clay:container-fluid
@@ -215,4 +218,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.on('destroyPortlet', clearPortletHandlers);
 
 	Liferay.Forms.App.start();
+
+	if (Liferay.Browser.isIe()) {
+		document.querySelector('.portlet-forms').classList.add('portlet-forms-ie');
+	}
 </aui:script>

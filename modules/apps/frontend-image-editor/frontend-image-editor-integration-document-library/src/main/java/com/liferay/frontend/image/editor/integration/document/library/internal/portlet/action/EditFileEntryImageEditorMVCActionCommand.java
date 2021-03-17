@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.image.editor.integration.document.library.internal.portlet.action;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -160,6 +161,11 @@ public class EditFileEntryImageEditorMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), uploadPortletRequest);
 
+		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
 		fileEntry = _dlAppService.updateFileEntry(
 			fileEntryId, sourceFileName, contentType, fileEntry.getTitle(),
 			fileEntry.getDescription(), StringPool.BLANK,
@@ -184,6 +190,9 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryImageEditorMVCActionCommand.class);
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

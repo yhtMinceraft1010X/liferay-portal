@@ -2167,6 +2167,7 @@ public class OrganizationLocalServiceImpl
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {-1L});
 
 		if (params != null) {
 			String keywords = (String)params.remove("keywords");
@@ -2455,7 +2456,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	private static final String _TYPE_FIELD_NAME = Field.getSortableFieldName(
-		StringBundler.concat(Field.TYPE, StringPool.UNDERLINE, "String"));
+		Field.TYPE + "_String");
 
 	private static volatile OrganizationTypesSettings
 		_organizationTypesSettings =

@@ -24,7 +24,9 @@ import java.io.IOException;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 
 	@Override

@@ -240,8 +240,6 @@ definition {
 			}
 
 			if ("${importPermissions}" == "true") {
-				Click(locator1 = "ExportImport#PERMISSIONS_TITLE");
-
 				Check.checkToggleSwitch(locator1 = "Checkbox#PERMISSIONS");
 			}
 
@@ -300,7 +298,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
-				value1 = "There are missing references that could not be found in the current site. Please import the following elements first:");
+				value1 = "There are missing references that could not be found in the current environment. Please import the following elements first:");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "SitePagesImport#VALIDATION_ERROR_LIST_ITEM",

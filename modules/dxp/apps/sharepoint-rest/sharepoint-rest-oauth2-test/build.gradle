@@ -1,5 +1,5 @@
 dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile project(":core:petra:petra-sql-dsl-api")
 	testIntegrationCompile project(":dxp:apps:sharepoint-rest:sharepoint-rest-oauth2-api");
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

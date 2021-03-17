@@ -25,17 +25,6 @@
 									"target": "Self"
 								}
 							}
-						},
-						{
-							"id": "link-button",
-							"value": {
-								"fragmentLink": {
-									"href": {
-										"value": "/web/guest/sign-in"
-									},
-									"target": "Self"
-								}
-							}
 						}
 					],
 					"fragmentStyle": {
@@ -70,11 +59,11 @@
 							"widgetConfig": {
 								"displayDepth": "0",
 								"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-								"displayStyleGroupId": "$SCOPE_GROUP_ID$",
+								"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
 								"expandedLevels": "auto",
 								"rootMenuItemLevel": "0",
 								"rootMenuItemType": "absolute",
-								"siteNavigationMenuId": "$PUBLIC_SITE_NAVIGATION_MENU_ID$",
+								"siteNavigationMenuId": "[$PUBLIC_SITE_NAVIGATION_MENU_ID$]",
 								"siteNavigationMenuType": "-1"
 							},
 							"widgetInstanceId": "nav",
@@ -179,15 +168,5 @@
 			}
 		],
 		"type": "Root"
-	},
-	"settings": {
-		"colorSchemeName": "01",
-		"themeName": "Classic",
-		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
-			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
-		}
 	}
 }

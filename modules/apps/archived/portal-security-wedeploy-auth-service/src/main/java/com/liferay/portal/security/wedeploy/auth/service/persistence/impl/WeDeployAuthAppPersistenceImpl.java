@@ -1361,15 +1361,6 @@ public class WeDeployAuthAppPersistenceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		WeDeployAuthAppPersistenceImpl.class);
 
-	static {
-		try {
-			Class.forName(WeDeployAuthPersistenceConstants.class.getName());
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new ExceptionInInitializerError(classNotFoundException);
-		}
-	}
-
 	private FinderPath _createFinderPath(
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult) {
@@ -1387,10 +1378,10 @@ public class WeDeployAuthAppPersistenceImpl
 		return finderPath;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
 	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
 		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
 
 	private static class WeDeployAuthAppModelArgumentsResolver
 		implements ArgumentsResolver {

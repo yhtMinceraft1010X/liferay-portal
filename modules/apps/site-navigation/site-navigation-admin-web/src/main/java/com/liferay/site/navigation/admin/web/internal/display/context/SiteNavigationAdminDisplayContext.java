@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,7 +54,9 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -254,7 +258,22 @@ public class SiteNavigationAdminDisplayContext {
 
 	public Map<String, Object> getSiteNavigationContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"addFragmentEntryLinkCommentURL",
+			"addSiteNavigationMenuItemOptions",
+			getAddSiteNavigationMenuItemDropdownItems()
+		).put(
+			"deleteSiteNavigationMenuItemURL",
+			() -> {
+				PortletURL actionURL =
+					_liferayPortletResponse.createActionURL();
+
+				actionURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/navigation_menu/delete_site_navigation_menu_item");
+
+				return actionURL.toString();
+			}
+		).put(
+			"editSiteNavigationMenuItemParentURL",
 			() -> {
 				PortletURL actionURL =
 					_liferayPortletResponse.createActionURL();
@@ -297,6 +316,17 @@ public class SiteNavigationAdminDisplayContext {
 			}
 		).put(
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
+		).put(
+			"languageDirection", _getLanguageDirection()
+		).put(
+			"languageId",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return themeDisplay.getLanguageId();
+			}
 		).put(
 			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest)
 		).put(
@@ -421,6 +451,25 @@ public class SiteNavigationAdminDisplayContext {
 		return addURL.toString();
 	}
 
+	private Map<String, String> _getLanguageDirection() {
+		Map<String, String> languageDirection = new HashMap<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		for (Locale curLocale :
+				LanguageUtil.getAvailableLocales(
+					themeDisplay.getScopeGroupId())) {
+
+			languageDirection.put(
+				LocaleUtil.toLanguageId(curLocale),
+				LanguageUtil.get(curLocale, "lang.dir"));
+		}
+
+		return languageDirection;
+	}
+
 	private JSONArray _getSiteNavigationMenuItemsJSONArray(
 		long parentSiteNavigationMenuItemId) {
 
@@ -450,6 +499,9 @@ public class SiteNavigationAdminDisplayContext {
 					"children",
 					_getSiteNavigationMenuItemsJSONArray(
 						siteNavigationMenuItemId)
+				).put(
+					"parentSiteNavigationMenuItemId",
+					parentSiteNavigationMenuItemId
 				).put(
 					"siteNavigationMenuItemId", siteNavigationMenuItemId
 				).put(

@@ -31,8 +31,8 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.model.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -73,8 +74,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.frutilla.FrutillaRule;
 
@@ -89,6 +88,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alec Sloan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CommerceOrderTest {
 
@@ -877,13 +877,12 @@ public class CommerceOrderTest {
 	}
 
 	private Role _addSalesAgentRole() throws Exception {
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			_serviceContext.getLocale(), "Sales Agent"
-		).build();
-
 		Role role = _roleLocalService.addRole(
-			_user.getUserId(), null, 0, "Sales Agent", titleMap, null, 1, null,
-			_serviceContext);
+			_user.getUserId(), null, 0, "Sales Agent",
+			HashMapBuilder.put(
+				_serviceContext.getLocale(), "Sales Agent"
+			).build(),
+			null, 1, null, _serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			_serviceContext.getCompanyId(), "90", 1,

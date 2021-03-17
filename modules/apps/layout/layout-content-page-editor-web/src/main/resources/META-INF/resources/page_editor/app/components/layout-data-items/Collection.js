@@ -15,6 +15,7 @@
 import ClayLayout from '@clayui/layout';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import CollectionService from '../../services/CollectionService';
 import {useDispatch, useSelector} from '../../store/index';
 import {CollectionItemContextProvider} from '../CollectionItemContext';
@@ -81,7 +82,11 @@ const Grid = ({
 					return (
 						<ClayLayout.Col
 							key={key}
-							size={12 / collectionConfig.numberOfColumns}
+							size={
+								COLUMN_SIZE_MODULE_PER_ROW_SIZES[
+									collectionConfig.numberOfColumns
+								][collectionConfig.numberOfColumns][j]
+							}
 						>
 							{index < maxNumberOfItems && (
 								<ColumnContext

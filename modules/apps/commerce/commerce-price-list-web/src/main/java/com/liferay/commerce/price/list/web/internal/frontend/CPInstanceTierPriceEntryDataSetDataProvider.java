@@ -19,6 +19,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.price.list.web.internal.frontend.constants.CommercePriceListDataSetConstants;
 import com.liferay.commerce.price.list.web.internal.model.InstanceTierPriceEntry;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -76,8 +77,9 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 			CommercePriceList commercePriceList =
 				commercePriceEntry.getCommercePriceList();
 
-			CommerceMoney priceMoney = commerceTierPriceEntry.getPriceMoney(
-				commercePriceList.getCommerceCurrencyId());
+			CommerceMoney priceCommerceMoney =
+				commerceTierPriceEntry.getPriceMoney(
+					commercePriceList.getCommerceCurrencyId());
 
 			Date createDate = commerceTierPriceEntry.getCreateDate();
 
@@ -89,7 +91,7 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 					HtmlUtil.escape(
-						priceMoney.format(
+						priceCommerceMoney.format(
 							_portal.getLocale(httpServletRequest))),
 					commerceTierPriceEntry.getMinQuantity(),
 					LanguageUtil.format(

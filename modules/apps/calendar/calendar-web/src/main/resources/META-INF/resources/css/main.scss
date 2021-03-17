@@ -177,8 +177,30 @@
 		}
 	}
 
+	.lfr-discussion-reply-container {
+		.button-holder.dialog-footer {
+			bottom: 0;
+			display: block;
+			left: unset;
+			padding: 10px 0;
+
+			.btn {
+				margin-left: 0;
+			}
+
+			.btn-cancel {
+				margin-left: 1rem;
+			}
+		}
+	}
+
 	.modal-title {
 		text-transform: capitalize;
+	}
+
+	.portlet-body .panel {
+		margin-top: 1rem;
+		padding: 1rem;
 	}
 
 	.scheduler-event-content,
@@ -429,6 +451,8 @@
 }
 
 .scheduler-base-controls {
+	flex: 0 0 100%;
+	max-width: 100%;
 	width: 50%;
 
 	.btn-group {
@@ -452,6 +476,8 @@
 
 .scheduler-base-hd .scheduler-base-views {
 	align-items: start;
+	flex: 0 0 100%;
+	max-width: 100%;
 
 	button {
 		border-color: #cdced9;
@@ -789,6 +815,8 @@
 
 		.calendar-portlet-column-grid,
 		.calendar-portlet-column-options {
+			flex: 0 0 100%;
+			max-width: 100%;
 			width: 100%;
 		}
 
@@ -852,6 +880,8 @@
 @mixin col-md-6 {
 	.calendar-portlet-column-parent {
 		.calendar-portlet-column-grid {
+			flex: 0 0 60%;
+			max-width: 60%;
 			width: 60%;
 
 			.scheduler-base-content .scheduler-base-hd {
@@ -904,6 +934,8 @@
 		}
 
 		.calendar-portlet-column-options {
+			flex: 0 0 40%;
+			max-width: 40%;
 			width: 40%;
 		}
 	}
@@ -912,6 +944,8 @@
 @mixin col-md-8 {
 	.calendar-portlet-column-parent {
 		.calendar-portlet-column-grid {
+			flex: 0 0 65%;
+			max-width: 65%;
 			width: 65%;
 
 			.scheduler-base-content .scheduler-base-hd {
@@ -960,6 +994,8 @@
 		}
 
 		.calendar-portlet-column-options {
+			flex: 0 0 35%;
+			max-width: 35%;
 			width: 35%;
 		}
 	}

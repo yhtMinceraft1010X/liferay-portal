@@ -243,15 +243,15 @@ public class CommerceDiscountCalculationV2Impl
 			return null;
 		}
 
-		CommerceDiscount commerceDiscount =
-			commerceDiscountLocalService.getCommerceDiscount(
-				commerceDiscountId);
-
 		BigDecimal discountAmount = BigDecimal.ZERO;
 
 		if (usePercentage) {
 			discountAmount = commercePrice.multiply(commerceDiscountValue);
 			discountAmount = discountAmount.divide(_ONE_HUNDRED);
+
+			CommerceDiscount commerceDiscount =
+				commerceDiscountLocalService.getCommerceDiscount(
+					commerceDiscountId);
 
 			BigDecimal maximumDiscountAmount =
 				commerceDiscount.getMaximumDiscountAmount();
@@ -424,11 +424,12 @@ public class CommerceDiscountCalculationV2Impl
 		currentDiscountAmount = currentDiscountAmount.setScale(
 			_SCALE, roundingMode);
 
-		CommerceMoney discountAmount = _commerceMoneyFactory.create(
-			commerceCurrency, currentDiscountAmount);
+		CommerceMoney discountAmountCommerceMoney =
+			_commerceMoneyFactory.create(
+				commerceCurrency, currentDiscountAmount);
 
 		return new CommerceDiscountValue(
-			0, discountAmount,
+			0, discountAmountCommerceMoney,
 			_getDiscountPercentage(discountedAmount, amount, roundingMode),
 			commerceDiscountLevels);
 	}
@@ -467,12 +468,13 @@ public class CommerceDiscountCalculationV2Impl
 			return null;
 		}
 
-		CommerceMoney discountAmount = _commerceMoneyFactory.create(
-			commerceCurrency,
-			currentDiscountAmount.multiply(new BigDecimal(quantity)));
+		CommerceMoney discountAmountCommerceMoney =
+			_commerceMoneyFactory.create(
+				commerceCurrency,
+				currentDiscountAmount.multiply(new BigDecimal(quantity)));
 
 		return new CommerceDiscountValue(
-			0, discountAmount,
+			0, discountAmountCommerceMoney,
 			_getDiscountPercentage(
 				discountedAmount, commercePrice, roundingMode),
 			commerceDiscountLevels);

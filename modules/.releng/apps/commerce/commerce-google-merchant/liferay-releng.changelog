@@ -7,3 +7,13 @@
 # Bundle Version 3.0.2
 #
 183acccd1f8882b0d30c2fa4bdddb601bf5f4550^..633865d97704d018df02e1c965c1b67c66d4d3bb=COMMERCE-4620
+
+#
+# Bundle Version 3.0.6
+#
+633865d97704d018df02e1c965c1b67c66d4d3bb^..72dc4d23428cea20bea9c4dfb439122749be0cad=LPS-124961
+
+#
+# Bundle Version 3.0.7
+#
+72dc4d23428cea20bea9c4dfb439122749be0cad^..b4ef594bff43a3bd438f953beb1df6a5c5432704=LPS-127182

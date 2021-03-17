@@ -14,8 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
-import static org.hamcrest.CoreMatchers.containsString;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
@@ -59,6 +57,8 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.hamcrest.CoreMatchers;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -98,15 +98,14 @@ public class GetPagePreviewMVCResourceCommandTest {
 
 		_themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-
 		_themeDisplay.setLanguageId(
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 		_themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		_themeDisplay.setRealUser(TestPropsValues.getUser());
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
-		_themeDisplay.setRealUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -199,10 +198,12 @@ public class GetPagePreviewMVCResourceCommandTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertThat(content, containsString(_fragmentEntryLink.getCss()));
 		Assert.assertThat(
-			content, containsString(_fragmentEntryLink.getHtml()));
-		Assert.assertThat(content, containsString(_fragmentEntryLink.getJs()));
+			content, CoreMatchers.containsString(_fragmentEntryLink.getCss()));
+		Assert.assertThat(
+			content, CoreMatchers.containsString(_fragmentEntryLink.getHtml()));
+		Assert.assertThat(
+			content, CoreMatchers.containsString(_fragmentEntryLink.getJs()));
 	}
 
 	@Inject

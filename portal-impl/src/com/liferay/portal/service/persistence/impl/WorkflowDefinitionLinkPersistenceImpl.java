@@ -3866,10 +3866,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		return finderPath;
 	}
 
-	private ServiceRegistration<ArgumentsResolver>
-		_argumentsResolverServiceRegistration;
 	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
 		new HashSet<>();
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
 
 	private static class WorkflowDefinitionLinkModelArgumentsResolver
 		implements ArgumentsResolver {

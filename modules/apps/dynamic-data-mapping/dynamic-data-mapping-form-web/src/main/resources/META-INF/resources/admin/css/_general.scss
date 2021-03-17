@@ -88,6 +88,27 @@ td.lfr-name-column {
 		}
 	}
 
+	.modal-body {
+		padding: 0;
+
+		.component-tbar {
+			height: 48px;
+			padding: 0 12px;
+
+			.nav-link {
+				height: 100%;
+			}
+		}
+
+		.tab-pane {
+			padding: 16px 12px 8px;
+		}
+	}
+
+	.modal-footer {
+		padding-right: 20px;
+	}
+
 	.navbar-nav {
 		float: none;
 		margin-right: 0;
@@ -233,7 +254,7 @@ td.lfr-name-column {
 		position: sticky;
 		top: 56px;
 		width: 100%;
-		z-index: 10;
+		z-index: 51;
 	}
 
 	.icon-asterisk {
@@ -418,6 +439,19 @@ td.lfr-name-column {
 				color: #fff;
 			}
 		}
+	}
+}
+
+.portlet-forms-ie {
+	.forms-navigation-bar,
+	.navigation-bar-secondary,
+	.management-bar {
+		position: inherit !important;
+		top: 0 !important;
+	}
+
+	.sidebar-container {
+		top: 56px !important;
 	}
 }
 

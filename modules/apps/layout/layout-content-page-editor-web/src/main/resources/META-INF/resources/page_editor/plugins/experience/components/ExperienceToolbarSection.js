@@ -35,14 +35,25 @@ export default function ExperienceToolbarSection({selectId}) {
 		() =>
 			Object.values(availableSegmentsExperiences)
 				.sort((a, b) => b.priority - a.priority)
-				.map((experience) => {
+				.map((experience, _, experiences) => {
 					const segmentsEntryName =
 						config.availableSegmentsEntries[
 							experience.segmentsEntryId
 						].name;
 
+					const firstExperience = experiences.find(
+						(exp) =>
+							exp.segmentsEntryId ===
+								experience.segmentsEntryId ||
+							exp.segmentsEntryId ===
+								config.defaultSegmentsEntryId
+					);
+
 					return {
 						...experience,
+						active:
+							firstExperience.segmentsExperienceId ===
+							experience.segmentsExperienceId,
 						segmentsEntryName,
 					};
 				}),
@@ -51,8 +62,6 @@ export default function ExperienceToolbarSection({selectId}) {
 	const segments = useMemo(
 		() => Object.values(config.availableSegmentsEntries),
 		[]
-	).filter(
-		(segment) => segment.segmentsEntryId !== config.defaultSegmentsEntryId
 	);
 
 	const selectedExperience =
@@ -77,8 +86,8 @@ export default function ExperienceToolbarSection({selectId}) {
 				editSegmentsEntryURL={config.editSegmentsEntryURL}
 				experiences={experiences}
 				segments={segments}
-				selectedExperience={selectedExperience}
 				selectId={selectId}
+				selectedExperience={selectedExperience}
 			/>
 		</div>
 	);

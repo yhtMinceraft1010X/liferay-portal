@@ -59,11 +59,10 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 				>
 
 					<%
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate))
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", StringUtil.merge(kbTemplatesManagementToolbarDisplayContext.getAvailableActions(kbTemplate))
+						).build());
 					%>
 
 					<liferay-ui:search-container-column-user
@@ -112,7 +111,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script>
+<script>
 	var deleteKBTemplates = function () {
 		if (
 			confirm(
@@ -154,4 +153,4 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			}
 		});
 	});
-</aui:script>
+</script>

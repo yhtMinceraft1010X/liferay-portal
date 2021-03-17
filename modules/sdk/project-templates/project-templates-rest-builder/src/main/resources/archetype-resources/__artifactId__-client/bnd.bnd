@@ -1,3 +1,0 @@
-Bundle-Name: ${artifactId}-client
-Bundle-SymbolicName: ${package}.client
-Bundle-Version: ${version}

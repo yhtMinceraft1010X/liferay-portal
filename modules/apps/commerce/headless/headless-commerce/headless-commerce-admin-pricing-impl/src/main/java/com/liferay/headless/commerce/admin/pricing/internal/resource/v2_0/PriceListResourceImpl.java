@@ -257,9 +257,8 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
 		}
 
-		long time = date.getTime();
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(time, timeZone);
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
 
 		return new DateConfig(calendar);
 	}
@@ -274,9 +273,8 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 			return new DateConfig(expirationCalendar);
 		}
 
-		long time = date.getTime();
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(time, timeZone);
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
 
 		return new DateConfig(calendar);
 	}
@@ -465,10 +463,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 				CommercePriceEntry commercePriceEntry =
 					_commercePriceEntryService.upsertCommercePriceEntry(
-						GetterUtil.getLong(priceEntry.getId()),
+						priceEntry.getExternalReferenceCode(),
+						GetterUtil.getLong(priceEntry.getPriceEntryId()),
 						GetterUtil.getLong(priceEntry.getSkuId()), null,
 						commercePriceList.getCommercePriceListId(),
-						priceEntry.getExternalReferenceCode(),
 						BigDecimal.valueOf(priceEntry.getPrice()),
 						priceEntry.getDiscountDiscovery(),
 						priceEntry.getDiscountLevel1(),

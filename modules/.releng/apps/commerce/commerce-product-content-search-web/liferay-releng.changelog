@@ -32,3 +32,23 @@ a6047e8a93372358c81ac54bb86004eb8ad487d3^..943f1cdfcbc6310f3d0cf86f44ebdb2cd2680
 # Bundle Version 3.0.11
 #
 943f1cdfcbc6310f3d0cf86f44ebdb2cd268088e^..63b6b616040e70e655bb8f6a7cda4f9fc56fb8f2=LPS-105380
+
+#
+# Bundle Version 3.0.12
+#
+63b6b616040e70e655bb8f6a7cda4f9fc56fb8f2^..774aac5b8d5a6fb19260d9e2ff0d46403259d750=LPS-105380
+
+#
+# Bundle Version 3.0.13
+#
+774aac5b8d5a6fb19260d9e2ff0d46403259d750^..86c0ea6cbaa67fccd168121859bdac1ea9987be2=LPS-122607
+
+#
+# Bundle Version 3.0.14
+#
+86c0ea6cbaa67fccd168121859bdac1ea9987be2^..48d28e6128cc101a8ac8f870dfaeaea21db1832c=COMMERCE-5243 COMMERCE-5272
+
+#
+# Bundle Version 3.0.15
+#
+48d28e6128cc101a8ac8f870dfaeaea21db1832c^..b9e087999b3d5b30fdda35c9f2c430ac7215343a=LPS-124961

@@ -109,6 +109,7 @@ definition {
 	}
 
 	test AddAndEditOAuthSAPEntries {
+		property custom.properties = "json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "OAuth2#AddAndEditOAuthSAPEntries";
 
 		ApplicationsMenu.gotoPortlet(
@@ -170,7 +171,7 @@ definition {
 
 		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
 
-		if (!(contains("${portalVersionOutput}", "{}"))) {
+		if (!(contains("${portalVersionOutput}", "Access denied to com.liferay.portal.kernel.service.PortalService#getVersion"))) {
 			fail("Access denied message was not returned");
 		}
 
@@ -469,6 +470,18 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
 		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Security Tools",
+			configurationName = "Portal Cross-Origin Resource Sharing (CORS)",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.addDefaultPortalCORS();
+
+		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -604,7 +617,6 @@ definition {
 			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
 
 		for (var resourcePanel : list "Bulk Processing,Content Delivery,Dynamic Data Lists,Forms,Portal Services,Taxonomy Administration,User Administration,Workflow Administration") {
-
 			AssertHTMLSourceTextNotPresent(value1 = "${resourcePanel}");
 		}
 	}
@@ -707,6 +719,18 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Security Tools",
+			configurationName = "Portal Cross-Origin Resource Sharing (CORS)",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.addDefaultPortalCORS();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

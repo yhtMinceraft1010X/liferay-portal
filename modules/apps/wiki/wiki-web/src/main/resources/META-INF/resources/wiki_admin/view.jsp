@@ -65,6 +65,7 @@ SearchContainer<WikiNode> wikiNodesSearchContainer = new SearchContainer(renderR
 NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
 
 wikiNodesSearchContainer.setRowChecker(nodesChecker);
+
 wikiNodesSearchContainer.setOrderByCol(orderByCol);
 wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
 wikiNodesSearchContainer.setOrderByType(orderByType);
@@ -145,11 +146,10 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 				>
 
 					<%
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(wikiNodesManagementToolbarDisplayContext.getAvailableActions(node))
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", StringUtil.merge(wikiNodesManagementToolbarDisplayContext.getAvailableActions(node))
+						).build());
 
 					PortletURL rowURL = renderResponse.createRenderURL();
 

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPMENT,
-		"mvc.command.name=editCommerceShipmentCourierDetail"
+		"mvc.command.name=/commerce_shipment/edit_commerce_shipment_courier_detail"
 	},
 	service = MVCRenderCommand.class
 )
@@ -64,7 +64,7 @@ public class EditCommerceShipmentCourierDetailMVCRenderCommand
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);
 
-		return "/shipment/carrier_details.jsp";
+		return "/shipment/edit_commerce_shipment_courier_details.jsp";
 	}
 
 	@Reference

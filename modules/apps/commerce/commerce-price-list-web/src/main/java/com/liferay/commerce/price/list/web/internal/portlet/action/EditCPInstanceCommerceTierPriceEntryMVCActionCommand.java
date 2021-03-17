@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
-		"mvc.command.name=editCPInstanceCommerceTierPriceEntry"
+		"mvc.command.name=/cp_definitions/edit_cp_instance_commerce_tier_price_entry"
 	},
 	service = MVCActionCommand.class
 )
@@ -134,9 +134,6 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			long commerceTierPriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
-		long commercePriceEntryId = ParamUtil.getLong(
-			actionRequest, "commercePriceEntryId");
-
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
 		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
@@ -149,6 +146,9 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 		CommerceTierPriceEntry commerceTierPriceEntry = null;
 
 		if (commerceTierPriceEntryId <= 0) {
+			long commercePriceEntryId = ParamUtil.getLong(
+				actionRequest, "commercePriceEntryId");
+
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
 					commercePriceEntryId, price, promoPrice, minQuantity,

@@ -14,9 +14,14 @@
 							"value": {
 								"fragmentLink": {
 									"href": {
-										"value": "/web/guest/policies"
+										"value": "[$LAYOUT_URL_POLICIES$]"
 									},
 									"target": "Self"
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Policies"
+									}
 								}
 							}
 						},
@@ -768,10 +773,8 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "customer-portal"
-		},
-		"themeName": "Classic"
+		}
 	}
 }

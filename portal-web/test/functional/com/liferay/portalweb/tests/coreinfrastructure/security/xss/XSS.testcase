@@ -110,7 +110,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
 
@@ -245,7 +245,6 @@ definition {
 
 	@priority = "4"
 	test ViewRecycleBin {
-
 		var entryTitle = '''<script>alert(123);</script>''';
 
 		Navigator.openURL();
@@ -337,7 +336,6 @@ definition {
 
 	@priority = "5"
 	test ViewSearchResults {
-
 		var siteName = '''<script>alert(123);</script>''';
 
 		ApplicationsMenu.gotoPortlet(
@@ -481,7 +479,7 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-		User.editDetailsViaMyAccount(
+		User.editUserInformation(
 			userFirstNameEdit = '''<script>alert(123);</script>''',
 			userLastNameEdit = '''<script>alert(123);</script>''',
 			userMiddleNameEdit = '''<script>alert(123);</script>''');

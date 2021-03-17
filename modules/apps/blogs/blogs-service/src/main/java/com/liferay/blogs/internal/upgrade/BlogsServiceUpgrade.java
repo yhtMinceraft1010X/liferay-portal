@@ -16,13 +16,12 @@ package com.liferay.blogs.internal.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeClassNames;
-import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeFriendlyURL;
-import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
 import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -48,9 +47,12 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeFriendlyURL(_friendlyURLEntryLocalService));
+			new com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeBlogsEntry(
+				_friendlyURLEntryLocalService));
 
-		registry.register("1.1.0", "1.1.1", new UpgradeUrlTitle());
+		registry.register(
+			"1.1.0", "1.1.1",
+			new com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeBlogsEntry());
 
 		registry.register(
 			"1.1.1", "1.1.2",
@@ -88,6 +90,10 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"2.1.0", "2.1.1",
+			new com.liferay.blogs.internal.upgrade.v2_1_1.UpgradeBlogsEntry());
 	}
 
 	@Reference
@@ -107,6 +113,9 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference(target = "(dl.store.upgrade=true)")
+	private Store _store;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

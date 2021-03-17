@@ -2,12 +2,11 @@
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column";
-
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "App Builder,Workflow";
-	property testray.main.component.name = "Workflow";
 	property test.run.environment = "EE";
+	property testray.component.names = "App Builder,Workflow";
+	property testray.main.component.name = "App Builder";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -17,9 +16,17 @@ definition {
 		JSONGroup.addGroup(groupName = "App Builder Workflow Site Name");
 
 		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
 	}
 
 	tearDown {
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
 
 		AppBuilderAdmin.teardownAppBuilder();
 
@@ -34,15 +41,62 @@ definition {
 		}
 	}
 
-	@description = "Create a Basic Workflow App"
+	@description = "Assign an entry (task) through the App's table view"
 	@priority = "5"
-	test CreateBasicWorkflowApp {
+	test AssignEntryThroughTableView {
 		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
-			portlet = "Objects");
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.verifyAssignToOption(itemName = "Content");
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "Test Test");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test Test");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Administrator");
+	}
+
+	@description = "Create a Basic Workflow App"
+	@priority = "5"
+	test CreateBasicWorkflowApp {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -96,12 +150,6 @@ definition {
 	@description = "Create a Basic Workflow App with different deployment options"
 	@priority = "4"
 	test CreateBasicWorkflowAppWithDifferentDeployments {
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",
 			isCreatingFormView = "true",
@@ -138,16 +186,16 @@ definition {
 			portlet = "Apps");
 
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderWorkflow.clickBackButton();
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		Button.click(button = "Cancel");
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.validateObjectResultPresent(objectName = "my custom object 1");
@@ -185,11 +233,11 @@ definition {
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
 		Button.click(button = "Cancel");
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "Widget Workflow App");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "my custom object 1");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Deploy");
@@ -257,9 +305,39 @@ definition {
 		Navigator.closeWindow();
 	}
 
+	@description = "LRQA-60385 - Automate LPS-110981: As an App Admin, I want to deploy an App with multiple workflow steps and one same Form View"
+	@priority = "5"
+	test CreateNewStepSecondaryActionAndAssignee {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.assertStepPresent(step = "1");
+
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+		AppBuilderWorkflow.validateActionPresent(action = "Secondary Action");
+
+		AppBuilderWorkflow.clickStepConfigurationBackButton();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+		AppBuilderWorkflow.assertAssigneeInfoPresentOnStep(
+			assignee = "Administrator",
+			step = "2");
+	}
+
 	@description = "Create an App through the 'Apps' portlet"
 	@priority = "5"
 	test CreateStandardApp {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -301,7 +379,7 @@ definition {
 			panel = "Applications",
 			portlet = "Apps");
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "Not Existent Object");
 		AppBuilderAppAdmin.validateNoObjectResultMessage();
@@ -314,14 +392,14 @@ definition {
 		Button.click(button = "Cancel");
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object 1");
 		AppBuilderStandardApp.clickBackButton();
 		AppBuilderAppAdmin.validateCreateNewAppButtonPresent();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 		AppBuilderAppAdmin.clickOnSelectObject();
 		AppBuilderAppAdmin.searchItem(itemName = "my custom object 1");
 		AppBuilderAppAdmin.selectObject(objectName = "my custom object 1");
@@ -370,15 +448,98 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content Test 2");
 	}
 
-	@description = "Filter and order the apps created using App Builder"
+	@description = "Delete a step while creating a Workflow App"
 	@priority = "5"
-	test FilterAndOrderStandardApps {
+	test DeleteStep {
 		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Applications",
-			portlet = "Objects");
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.assertStepPresent(step = "1");
+		AppBuilderWorkflow.deleteStep(step = "1");
+		AppBuilderWorkflow.assertStepNotPresent(step = "1");
+	}
+
+	@description = "LRQA-60707 - Automate LPS-110982: As an App Admin, I want to delete a step of my App's workflow"
+	@priority = "4"
+	test DeleteStepWhileRunning {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+			assignee = "Administrator",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.deleteStep(step = "1");
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.assertStepNotPresent(step = "1");
+
+		Button.click(button = "Cancel");
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 2");
+		AppBuilderWorkflow.submit();
+		Refresh();
+		AppBuilderWorkflow.assertEntryInfoOnTableView(
+			entryName = "Content 2",
+			info = "Completed");
+	}
+
+	@description = "Filter and order the apps created using App Builder"
+	@priority = "5"
+	test FilterAndOrderStandardApps {
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -550,11 +711,6 @@ definition {
 		var formViewName = "My Form View";
 		var tableViewName = "My Table View";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
-
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "true",
@@ -572,7 +728,7 @@ definition {
 
 		AppBuilderAppAdmin.goToWorkflowPoweredTab();
 
-		Button.click(button = "Create New App");
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
 
 		AppBuilderWorkflow.selectStartStepDataAndViews(
 			formViewName = "${formViewName}",
@@ -583,18 +739,18 @@ definition {
 
 		AppBuilderWorkflow.selectStepAssignee(
 			assignee = "Administrator",
-			stepNumber = "1");
+			step = "1");
 
 		AppBuilderWorkflow.selectStepSingleFormView(
 			formViewMode = "Editable",
 			formViewName = "${formViewName}",
-			stepNumber = "1");
+			step = "1");
 
 		AppBuilderWorkflow.addNewStep();
 
 		AppBuilderWorkflow.selectStepAssignee(
 			assignee = "Administrator",
-			stepNumber = "2");
+			step = "2");
 
 		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
 		Button.click(button = "Deploy");
@@ -645,11 +801,6 @@ definition {
 	@priority = "5"
 	test ValidateListOfStandardApps {
 		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My Custom Object",
@@ -735,6 +886,381 @@ definition {
 		Navigator.closeWindow();
 
 		AppBuilderAdmin.deleteApp(itemName = "My App");
+	}
+
+	@description = "LRQA-60598 - Automate LPS-111001: As an App Admin, I want to Liferay to handle multiple running versions of my App every time I make an update on a existing App"
+	@priority = "5"
+	test ValidateMultipleRunningVersions {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View 1",
+			tableViewName = "My Table View");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.createBasicWorkflowApp(
+			deployOption = "Product Menu",
+			formViewName = "My Form View 1",
+			isCreatingViaPlusIcon = "false",
+			objectName = "my custom object",
+			tableViewName = "My Table View",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 1");
+
+		AppBuilderWorkflow.submit();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			versionNumber = "2.0",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.selectStepSingleFormView(
+			formViewMode = "Editable",
+			formViewName = "My Form View 2",
+			step = "1");
+
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			versionNumber = "3.0",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.openItem(itemName = "My Workflow App");
+		AppBuilderWorkflow.deleteStep(step = "1");
+		AppBuilderWorkflow.saveNewVersionedApp();
+		AppBuilderAppAdmin.assertWorkflowAppVersion(
+			versionNumber = "4.0",
+			workflowAppName = "My Workflow App");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+		AppBuilderAdmin.addEntry();
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content 2");
+
+		AppBuilderWorkflow.submit();
+		AppBuilderAdmin.openItem(itemName = "Content 1");
+		AppBuilderWorkflow.assertEntryAppVersion(versionNumber = "1.0");
+		DetailsView.nextEntry();
+		AppBuilderWorkflow.assertEntryAppVersion(versionNumber = "4.0");
+	}
+
+	@description = "LRQA-61243 - Automate LPS-119370: As an App Admin, I want a shortcut link to create new Objects during the Workflow App creation experience"
+	@priority = "4"
+	test ValidateShortcutLinkToCreateObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.assertCreateObjectShortLinkPresent();
+		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+		AppBuilderAdmin.assertCheckboxPresent(checkboxOption = "Continue and Create Form View");
+		Navigator.closeWindow();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.assertCreateObjectShortLinkPresent();
+		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+		AppBuilderAdmin.assertCheckboxPresent(checkboxOption = "Continue and Create Form View");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		Navigator.closeWindow();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.searchItem(itemName = "No Object Result");
+		AppBuilderAppAdmin.assertCreateObjectShortLinkPresent();
+		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
+		AppBuilderAdmin.assertCheckboxPresent(checkboxOption = "Continue and Create Form View");
+		Navigator.closeWindow();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnCreateNewAppButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderAppAdmin.clickOnSelectObject();
+		AppBuilderAppAdmin.searchItem(itemName = "No Object Result");
+		AppBuilderAppAdmin.assertCreateObjectShortLinkPresent();
+		AppBuilderAppAdmin.clickOnCreateObjectShortLink();
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
+		AppBuilderAdmin.assertCheckboxPresent(checkboxOption = "Continue and Create Form View");
+		Navigator.closeWindow();
+	}
+
+	@description = "Validate steps while running an App"
+	@priority = "4"
+	test ValidateStepsWhileRunningApp {
+		var formViewName = "My Form View";
+		var tableViewName = "My Table View";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "${formViewName}",
+			tableViewName = "${tableViewName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStep(step = "Start");
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Add New Action");
+		AppBuilderWorkflow.selectStep(step = "1");
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Add New Action");
+		AppBuilderWorkflow.selectStep(step = "End");
+		AppBuilderWorkflow.assertButtonNotPresent(button = "Actions");
+
+		AppBuilderWorkflow.selectStep(step = "1");
+		AppBuilderWorkflow.addNewStep();
+		AppBuilderWorkflow.selectStartStepDataAndViews(
+			formViewName = "${formViewName}",
+			objectName = "my custom object",
+			tableViewName = "${tableViewName}");
+		AppBuilderWorkflow.addWorkflowAppName(workflowAppName = "My Workflow App");
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "1");
+
+		AppBuilderWorkflow.selectStepAssignee(
+			assignee = "Administrator",
+			step = "2");
+
+		AppBuilderWorkflow.selectActionsCard();
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+		AppBuilderWorkflow.validateActionPresent(action = "Secondary Action");
+		Button.click(button = "Remove");
+		AppBuilderWorkflow.validateActionNotPresent(action = "Secondary Action");
+
+		AppBuilderWorkflow.clickOnAddNewActionButton();
+
+		AppBuilderWorkflow.defineActionName(
+			action = "Primary Action",
+			actionName = "Go Next");
+
+		AppBuilderWorkflow.defineActionName(
+			action = "Secondary Action",
+			actionName = "Go Back");
+
+		AppBuilderWorkflow.clickStepConfigurationBackButton();
+
+		AppBuilderWorkflow.validateActionsNamesInsideActionsCards(
+			primaryActionName = "Go Next",
+			secondaryActionName = "Go Back");
+
+		Button.click(button = "Deploy");
+		App.toggleDeploy(deployOption = "Product Menu");
+		Button.click(button = "Done");
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Done");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content");
+
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAdmin.editItem(itemName = "Content");
+		AppBuilderWorkflow.submit();
+		Refresh();
+
+		AppBuilderWorkflow.assignEntry(
+			assignee = "Test Test",
+			itemName = "Content");
+
+		AppBuilderAdmin.editItem(itemName = "Content");
+		AppBuilderWorkflow.waitForButtonPresent(buttonName = "Go Next");
+		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Next");
+		AppBuilderWorkflow.assertButtonPresent(buttonName = "Go Back");
+	}
+
+	@description = "LRQA-61050 - Automate smoke tests from LPS-111006"
+	@priority = "5"
+	test ViewWorkflowAppThroughNotifications {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		for (var delpoyOption : list "Widget,Standalone,Product Menu") {
+			AppBuilderAppAdmin.createBasicWorkflowAppWith1ExtraStep(
+				assignee = "Administrator",
+				deployOption = "${delpoyOption}",
+				formViewName = "My Form View",
+				isCreatingViaPlusIcon = "true",
+				objectName = "my custom object",
+				tableViewName = "My Table View",
+				workflowAppName = "My Workflow App ${delpoyOption}");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Workflow Site Name",
+			layoutName = "App Builder Workflow Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Workflow Site Name",
+			layoutName = "App Builder Workflow Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Workflow Test Page",
+			siteName = "App Builder Workflow Site Name");
+
+		Portlet.addPG(
+			pageName = "App Builder Workflow Test Page",
+			portletName = "My Workflow App Widget");
+
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Widget");
+
+		AppBuilderWorkflow.submit();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Widget",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Widget");
+
+		AppBuilderAdmin.gotoCustomAppApplicationsMenuApplications(portlet = "My Workflow App Product Menu");
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Product Menu");
+
+		AppBuilderWorkflow.submit();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Product Menu",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Product Menu");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAdmin.openStandAloneApp(itemName = "My Workflow App Standalone");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.addEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Content From Standalone");
+
+		AppBuilderWorkflow.submit();
+		Navigator.closeWindow();
+		Navigator.gotoNotifications();
+
+		AppBuilderWorkflow.gotoViaNotification(
+			assetType = "My Workflow App Standalone",
+			user = "Test Test");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Text",
+			fieldValue = "Content From Standalone");
 	}
 
 }

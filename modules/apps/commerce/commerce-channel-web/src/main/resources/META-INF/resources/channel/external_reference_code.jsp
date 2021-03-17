@@ -20,7 +20,7 @@
 CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<portlet:actionURL name="editCommerceChannelExternalReferenceCode" var="editCommerceChannelExternalReferenceCodeURL" />
+<portlet:actionURL name="/commerce_channels/edit_commerce_channel_external_reference_code" var="editCommerceChannelExternalReferenceCodeURL" />
 
 <commerce-ui:modal-content>
 	<aui:form action="<%= editCommerceChannelExternalReferenceCodeURL %>" cssClass="container-fluid-1280 p-0" method="post" name="fm">

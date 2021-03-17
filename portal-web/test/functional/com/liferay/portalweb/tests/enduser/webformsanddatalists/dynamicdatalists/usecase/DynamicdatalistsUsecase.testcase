@@ -922,7 +922,6 @@ definition {
 	@description = "This is a use case for LPS-50549."
 	@priority = "4"
 	test AddXSSToHTMLField {
-
 		var ddlRecordFieldData1 = '''<img src=x onerror=alert(/xss/) />''';
 
 		var ddlRecordFieldData2 = ''''+alert('xss')+'"+alert("xss")+"''';
@@ -981,10 +980,7 @@ definition {
 
 		DDLRecord.addCP();
 
-		DDLRecord.populateFieldHTML(
-			ddlRecordFieldData = "${ddlRecordFieldData1}",
-			fieldFieldLabel = "HTML",
-			fieldName = "HTML");
+		FormFields.editParagraphBody(content = "${ddlRecordFieldData1}");
 
 		PortletEntry.publish();
 
@@ -1537,7 +1533,7 @@ definition {
 
 		Navigator.closeSpecificWindow(
 			closeWindowTitle = "Data Definition Page Name - ${siteName}",
-			selectWindowTitle = "Users and Organizations - Control Panel - ${siteName}");
+			selectWindowTitle = "Users and Organizations - ${siteName}");
 
 		Navigator.openURL();
 
@@ -1803,7 +1799,6 @@ definition {
 	@priority = "3"
 	test EditDefaultLanguageAndPublishRecord {
 		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "DynamicdatalistUsecase#EditDefaultLanguageAndPublishRecord";
 
 		Navigator.openURL();
@@ -1813,7 +1808,7 @@ definition {
 			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+		PortalSettings.setCurrentInstanceLanguageCP(newLanguage = "Spanish (Spain)");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1859,10 +1854,10 @@ definition {
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name");
 
-		PortletEntry.viewLocale(locale = "en-US");
+		PortletEntry.viewLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text English",
+			ddlRecordFieldData = "Text Spanish",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1874,12 +1869,12 @@ definition {
 
 		DDLRecord.editCP(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "Text English");
+			ddlRecordFieldData = "Text Spanish");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1936,16 +1931,16 @@ definition {
 
 		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
 
-		PortletEntry.viewLocale(locale = "en-US");
+		PortletEntry.viewLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text en-US",
+			ddlRecordFieldData = "Text es-ES",
 			fieldName = "Text");
 
-		PortletEntry.changeLocale(locale = "es-ES");
+		PortletEntry.changeLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1975,6 +1970,8 @@ definition {
 			ddlListName = "List Name Display",
 			ddlRecordFieldData = "remove",
 			fieldFieldLabel = "Text");
+
+		PortalSettings.setCurrentInstanceLanguageCP(newLanguage = "English (United States)");
 	}
 
 	@description = "This is a use case for LPS-59272."
@@ -2070,6 +2067,7 @@ definition {
 	@priority = "4"
 	test FormTemplateUniqueField {
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#FormTemplateUniqueField";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2134,6 +2132,7 @@ definition {
 	@priority = "4"
 	test RemoveRepeatableDateField {
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#RemoveRepeatableDateField";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2419,6 +2418,7 @@ definition {
 	@priority = "4"
 	test ViewCannotSaveWithDuplicateFieldNames {
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewCannotSaveWithDuplicateFieldNames";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2450,6 +2450,7 @@ definition {
 	@priority = "4"
 	test ViewDisplayTemplateClassLinks {
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewDisplayTemplateClassLinks";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2991,8 +2992,8 @@ definition {
 	@description = "This is a use case for LPS-60155."
 	@priority = "5"
 	test ViewRequiredNestedDocumentsAndMediaField {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3075,6 +3076,7 @@ definition {
 	@priority = "4"
 	test ViewUniqueFieldLabels {
 		property test.name.skip.portal.instance = "DynamicdatalistsUsecase#ViewUniqueFieldLabels";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

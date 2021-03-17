@@ -144,20 +144,27 @@ public abstract class BaseCORSClientTestCase {
 
 		Future<String[]> future = processChannel.getProcessNoticeableFuture();
 
-		String[] results = future.get();
+		try {
+			String[] results = future.get();
 
-		if (allowOrigin) {
-			Assert.assertEquals(_TEST_CORS_URI, results[0]);
-		}
-		else {
-			Assert.assertNull(results[0]);
-		}
+			if (allowOrigin) {
+				Assert.assertEquals(_TEST_CORS_URI, results[0]);
+			}
+			else {
+				Assert.assertNull(results[0]);
+			}
 
-		if (!HttpMethod.OPTIONS.equals(method)) {
-			Assert.assertNotEquals(StringPool.BLANK, results[1]);
-		}
+			if (!HttpMethod.OPTIONS.equals(method)) {
+				Assert.assertNotEquals(StringPool.BLANK, results[1]);
+			}
 
-		Assert.assertEquals("200", results[2]);
+			Assert.assertEquals("200", results[2]);
+		}
+		catch (Exception exception) {
+			if (allowOrigin) {
+				throw exception;
+			}
+		}
 	}
 
 	protected void createFactoryConfiguration(

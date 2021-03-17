@@ -62,6 +62,27 @@ export default function MultiPanelSidebar({
 		registerPanel = register(sidebarPanelId, promise, {app, panel});
 	}
 
+	const togglePlugin = () => {
+		if (hasError) {
+			setHasError(false);
+		}
+
+		if (registerPanel) {
+			registerPanel.then((plugin) => {
+				if (
+					plugin &&
+					typeof plugin.activate === 'function' &&
+					isMounted()
+				) {
+					plugin.activate();
+				}
+				else if (!plugin) {
+					setHasError(true);
+				}
+			});
+		}
+	};
+
 	useEffect(
 		() => {
 			if (panel) {
@@ -167,33 +188,17 @@ export default function MultiPanelSidebar({
 		});
 	};
 
-	const togglePlugin = () => {
-		if (hasError) {
-			setHasError(false);
-		}
-
-		if (registerPanel) {
-			registerPanel.then((plugin) => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				}
-				else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		}
-	};
-
 	return (
 		<ClayTooltipProvider>
 			<div
 				className={classNames(
 					'multi-panel-sidebar',
-					`multi-panel-sidebar-${variant}`
+					`multi-panel-sidebar-${variant}`,
+					{
+						'publications-enabled': document.querySelector(
+							'.change-tracking-indicator'
+						),
+					}
 				)}
 			>
 				<nav

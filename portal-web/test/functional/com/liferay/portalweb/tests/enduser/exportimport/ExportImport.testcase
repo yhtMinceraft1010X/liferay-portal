@@ -251,6 +251,8 @@ definition {
 	@description = "This is a use case for LPS-82752."
 	@priority = "5"
 	test ExportContentThenPublish {
+		property portal.acceptance = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
@@ -314,88 +316,6 @@ definition {
 		LAR.exportPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
 		AssertConsoleTextNotPresent(value1 = "NoSuchFileEntryException");
-	}
-
-	@description = "This is a use case for LPS-96391."
-	@priority = "5"
-	test ExportImportContentPageWithWCDOnFragment {
-		property test.name.skip.portal.instance = "ExportImport#ExportImportContentPageWithWCDOnFragment";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONFragment.addFragmentCollection(
-			groupName = "Site Name",
-			name = "Collection Name");
-
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
-
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		var fragmentHTML = '''<lfr-widget-web-content>''';
-		var htmlSnippet = '''<lfr-''';
-
-		FragmentsEditor.autocompleteFragmentHTML(
-			autocompleteField = "lfr-widget-web-content",
-			fragmentHTML = "${fragmentHTML}",
-			htmlSnippet = "${htmlSnippet}");
-
-		PortletEntry.publish();
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Site Name",
-			title = "WC WebContent Title");
-
-		SitePages.openPagesAdmin(siteURLKey = "site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Fragment Name");
-
-		WebContentDisplayPortlet.selectWebContent(
-			contentPage = "true",
-			webContentTitle = "WC WebContent Title");
-
-		PageEditor.clickPublish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		LAR.exportSiteCP(siteScopeName = "Site Name");
-
-		var key_larFileName = "${larFileName}";
-
-		var larFileName = LAR.getLarFileName();
-
-		LAR.downloadLar();
-
-		JSONGroup.addGroup(groupName = "New Site");
-
-		LAR.importSiteCP(
-			larFileName = "${larFileName}",
-			siteName = "New Site");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.editCP(
-			webContentContentEdit = "WC WebContent New Content",
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent New Title");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent New Content");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/new-site/test-content-page-name");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 	}
 
 	@priority = "5"
@@ -583,8 +503,8 @@ definition {
 	@description = "This is a use case for LPS-91440."
 	@priority = "3"
 	test ExportImportGlobalPagesViaInstances {
-		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "ExportImport#ExportImportGlobalPagesViaInstances";
 
 		LAR.openExportAdmin(siteScopeName = "Global");
 
@@ -1129,6 +1049,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@priority = "4"
@@ -1242,8 +1164,6 @@ definition {
 	@description = "This is a use case for LPS-84204."
 	@priority = "4"
 	test ExportImportWCDReferenceWhenNotStagedWebContent {
-		property test.name.skip.portal.instance = "ExportImport#ExportImportWCDReferenceWhenNotStagedWebContent";
-
 		JSONGroup.addGroup(groupName = "Site Name A");
 
 		Staging.openStagingAdmin(siteURLKey = "site-name-a");
@@ -1389,6 +1309,8 @@ definition {
 	@description = "This is a use case for LPS-83326."
 	@priority = "5"
 	test ExportImportWebContentFolderWithWorkflow {
+		property portal.acceptance = "true";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentFolder.addCP(
@@ -1561,6 +1483,7 @@ definition {
 	@description = "This is a use case for LPS-88498."
 	@priority = "5"
 	test ExportViaGuest {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
 
 		JSONUser.addUser(

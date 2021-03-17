@@ -29,7 +29,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 	displayContext="<%= assetListManagementToolbarDisplayContext %>"
 />
 
-<portlet:actionURL name="/asset_list/delete_asset_list_entry" var="deleteAssetListEntryURL">
+<portlet:actionURL name="/asset_list/delete_asset_list_entries" var="deleteAssetListEntryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
@@ -53,7 +53,7 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 					<%
 					String editURL = StringPool.BLANK;
 
-					if (AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE)) {
+					if (AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.UPDATE) || AssetListEntryPermission.contains(permissionChecker, assetListEntry, ActionKeys.VIEW)) {
 						PortletURL editAssetListEntryURL = liferayPortletResponse.createRenderURL();
 
 						editAssetListEntryURL.setParameter("mvcPath", "/edit_asset_list_entry.jsp");
@@ -63,11 +63,10 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 						editURL = editAssetListEntryURL.toString();
 					}
 
-					Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-						"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
-					).build();
-
-					row.setData(rowData);
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", assetListManagementToolbarDisplayContext.getAvailableActions(assetListEntry)
+						).build());
 					%>
 
 					<liferay-ui:search-container-column-icon

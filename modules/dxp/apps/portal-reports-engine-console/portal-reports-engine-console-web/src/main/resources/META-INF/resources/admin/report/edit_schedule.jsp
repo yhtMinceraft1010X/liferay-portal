@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 	<portlet:param name="tabs1" value="reports" />
 </portlet:renderURL>
 
-<portlet:actionURL name="addScheduler" var="addSchedulerURL">
+<portlet:actionURL name="/reports_admin/add_scheduler" var="addSchedulerURL">
 	<portlet:param name="mvcPath" value="/admin/report/edit_schedule.jsp" />
 	<portlet:param name="redirect" value="<%= searchRequestsURL %>" />
 </portlet:actionURL>
@@ -203,7 +203,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 				%>
 
 			</aui:fieldset>
-
 		</c:if>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">

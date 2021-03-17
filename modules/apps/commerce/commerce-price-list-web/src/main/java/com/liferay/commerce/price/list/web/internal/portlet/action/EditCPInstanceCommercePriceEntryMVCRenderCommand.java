@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
-		"mvc.command.name=editCPInstanceCommercePriceEntry"
+		"mvc.command.name=/cp_definitions/edit_cp_instance_commerce_price_entry"
 	},
 	service = MVCRenderCommand.class
 )
@@ -61,7 +61,7 @@ public class EditCPInstanceCommercePriceEntryMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/edit_instance_price_entry.jsp");
+				"/edit_cp_instance_commerce_price_entry.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =

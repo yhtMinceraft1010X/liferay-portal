@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:asset:asset-display-page-api")
 	testIntegrationCompile project(":apps:asset:asset-info-display-api")
@@ -14,5 +15,4 @@ dependencies {
 	testIntegrationCompile project(":apps:product-navigation:product-navigation-control-menu-api")
 	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile project(":dxp:apps:analytics:analytics-reports-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

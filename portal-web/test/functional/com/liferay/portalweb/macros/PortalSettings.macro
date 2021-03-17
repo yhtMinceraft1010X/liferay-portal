@@ -194,7 +194,6 @@ definition {
 
 	macro configureLDAPSetting {
 		for (var enableSetting : list "${enableSettingList}") {
-
 			if ("${enableSetting}" == "enabled") {
 				PortalSettings.gotoConfiguration(
 					configurationCategory = "LDAP",
@@ -701,6 +700,15 @@ definition {
 			configurationCategory = "Portal Settings",
 			configurationName = "Portal Settings",
 			configurationScope = "Virtual Instance Scope");
+	}
+
+	macro setCurrentInstanceLanguageCP {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "${newLanguage}");
 	}
 
 	macro tearDownAuthenticationCP {
@@ -1287,7 +1295,6 @@ definition {
 
 	macro viewEnabledLDAPSetting {
 		for (var enableSetting : list "${enableSettingList}") {
-
 			if ("${enableSetting}" == "enabled") {
 				PortalSettings.gotoConfiguration(
 					configurationCategory = "LDAP",

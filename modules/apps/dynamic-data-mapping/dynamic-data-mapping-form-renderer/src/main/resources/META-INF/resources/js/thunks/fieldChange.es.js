@@ -15,7 +15,7 @@
 import {debounce} from 'frontend-js-web';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {evaluate} from '../util/evaluation.es';
+import {evaluate, mergePages} from '../util/evaluation.es';
 import {PagesVisitor} from '../util/visitors.es';
 
 let REVALIDATE_UPDATES = [];
@@ -47,9 +47,12 @@ const UPDATE_DELAY_MS = 50;
 
 const debounceFn = debounce((fn) => fn(), UPDATE_DELAY_MS);
 
+let lastEditedPages = [];
+
 export default function fieldChange({
 	defaultLanguageId,
 	editingLanguageId,
+	groupId,
 	pages,
 	portletNamespace,
 	properties,
@@ -74,6 +77,8 @@ export default function fieldChange({
 				value,
 			});
 
+			lastEditedPages = editedPages;
+
 			// We want a synchronous update without waiting for an evaluation of
 			// the field.
 
@@ -88,6 +93,7 @@ export default function fieldChange({
 				evaluate(fieldName, {
 					defaultLanguageId,
 					editingLanguageId,
+					groupId,
 					pages: editedPages,
 					portletNamespace,
 					rules,
@@ -118,12 +124,20 @@ export default function fieldChange({
 							return;
 						}
 
+						const mergedPages = mergePages(
+							defaultLanguageId,
+							editingLanguageId,
+							fieldName,
+							evaluatedPages,
+							lastEditedPages
+						);
+
 						dispatch({
-							payload: evaluatedPages,
+							payload: mergedPages,
 							type: EVENT_TYPES.UPDATE_PAGES,
 						});
 						dispatch({
-							payload: evaluatedPages,
+							payload: mergedPages,
 							type: EVENT_TYPES.FIELD_EVALUATED,
 						});
 					})

@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {getMessageBoardThreadByIdQuery} from '../utils/client.es';
+import {getSectionByMessageQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -33,23 +33,20 @@ export default withRouter(
 
 		const historyPushParser = historyPushWithSlug(history.push);
 
-		useQuery(getMessageBoardThreadByIdQuery, {
-			onCompleted({messageBoardThreads}) {
-				if (messageBoardThreads.items) {
-					historyPushParser(
-						`/questions/${
-							context.useTopicNamesInURL
-								? messageBoardThreads.items[0]
-										.messageBoardSection.title
-								: messageBoardThreads.items[0]
-										.messageBoardSection.id
-						}/${messageBoardThreads.items[0].friendlyUrlPath}`
-					);
-				}
+		useQuery(getSectionByMessageQuery, {
+			onCompleted({messageBoardMessage}) {
+				historyPushParser(
+					`/questions/${
+						context.useTopicNamesInURL
+							? messageBoardMessage.messageBoardThread
+									.messageBoardSection.title
+							: messageBoardMessage.messageBoardThread
+									.messageBoardSection.id
+					}/${messageBoardMessage.friendlyUrlPath}`
+				);
 			},
 			variables: {
-				filter: `id eq '${questionId}'`,
-				siteKey: context.siteKey,
+				messageBoardMessageId: questionId,
 			},
 		});
 

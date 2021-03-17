@@ -26,8 +26,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(service = DispatchTriggerPermission.class)
+@Deprecated
 public class DispatchTriggerPermissionImpl
 	implements DispatchTriggerPermission {
 

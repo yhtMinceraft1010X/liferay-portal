@@ -7,6 +7,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransfor
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.Validator
 
 import groovy.io.FileType
@@ -84,6 +85,7 @@ task portalJavadoc(type: Javadoc)
 task portalJavadocJar(type: Jar)
 task portalSourcesJar(type: ShadowJar)
 task prepareMajorIncrement
+task prepareMajorIncrementAppProperties
 task syncAppProperties
 task syncGitRepoReleases
 task tagAppReleases
@@ -520,7 +522,11 @@ portalJavadoc {
 	options.stylesheetFile = file("../tools/styles/javadoc.css")
 	source {
 		zipTree(portalSourcesJar.archivePath).matching {
-			include _getPortalJavadocIncludes(portalArtifactsJar.relengPropertiesFiles)
+			exclude "module-info.java"
+			exclude "org/apache/axis/enum/**"
+			exclude "org/apache/commons/lang/enum/**"
+			exclude "org/objectweb/asm/util/CheckMethodAdapter.java"
+			include "**/*.java"
 		}
 	}
 	title = "Portal " + _getReleaseInfoVersion()
@@ -681,7 +687,7 @@ prepareMajorIncrement {
 		Closure<Void> convertToProjectDependenciesClosure = {
 			File dir ->
 
-			if (dir.parentFile.name == "util") {
+			if ((dir.parentFile.name == "poshi") || (dir.parentFile.name == "util")) {
 				return
 			}
 
@@ -888,6 +894,33 @@ prepareMajorIncrement {
 	group = "releng"
 }
 
+prepareMajorIncrementAppProperties {
+	description = "Increment 'app.marketplace.version' to the next major version for all 'app.properties' files."
+	group = "releng"
+
+	doLast {
+		FileTree appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.properties", ".releng/dxp/**/app.properties"])
+
+		appPropertiesFileTree.each {
+			File appPropertiesFile ->
+
+			File markerFile = new File(appPropertiesFile.parentFile, ".lfrbuild-app-portal-build-ignore")
+
+			if (!markerFile.exists()) {
+				appPropertiesFile.text = appPropertiesFile.text.replaceFirst(~/app.marketplace.version=(\w+\.\w+\.\w+)/) {
+					String all, String versionString ->
+
+					VersionNumber versionNumber = VersionNumber.parse(versionString)
+
+					VersionNumber newVersionNumber = new VersionNumber(versionNumber.major + 1, 0, 0, null)
+
+					all.replace versionString, newVersionNumber as String
+				}
+			}
+		}
+	}
+}
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
@@ -899,10 +932,6 @@ syncAppProperties {
 	group = "releng"
 
 	doLast {
-		if (FileUtil.exists(project, ".releng/dxp")) {
-			assert FileUtil.exists(project, "../release.profile-dxp.properties") : "Please run 'ant setup-profile-dxp'"
-		}
-
 		Properties releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.properties"))
 
 		FileTree appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.properties"])
@@ -917,7 +946,7 @@ syncAppProperties {
 			}
 		}
 
-		if (FileUtil.exists(project, ".releng/dxp")) {
+		if (FileUtil.exists(project, ".releng/dxp") && FileUtil.exists(project, "../release.profile-dxp.properties")) {
 			releaseProperties = GUtil.loadProperties(new File(projectDir.parentFile, "release.profile-dxp.properties"))
 
 			appPropertiesFileTree = fileTree(dir: projectDir, includes: [".releng/dxp/**/app.properties"])
@@ -1417,6 +1446,11 @@ private List<String> _getExcludes(File jarFile) {
 		excludes.add("**/node_modules/**")
 	}
 
+	excludes.add("/META-INF/custom-sql/**")
+	excludes.add("/META-INF/images/**")
+	excludes.add("/META-INF/sql/**")
+	excludes.add("/META-INF/versions/**")
+
 	return excludes
 }
 
@@ -1443,7 +1477,7 @@ private List<String> _getIncludes(File jarFile) {
 
 		String path = it.path
 
-		if (path.startsWith("com/liferay/") && (jar.getResource(path + "/packageinfo") != null)) {
+		if (path.startsWith("com/liferay/") && ((jar.getResource(path + "/packageinfo") != null) || path.endsWith("/taglib"))) {
 			includes.add(path + "/*")
 		}
 	}
@@ -1510,6 +1544,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		if (enforceVersionArtifacts != null) {
 			for (String artifact : enforceVersionArtifacts.split(",")) {
 				if (!artifact.startsWith("com.fasterxml") &&
+					!artifact.startsWith("com.liferay.alloy-taglibs:alloy-taglib:") &&
 					!artifact.startsWith("com.liferay:biz.aQute.bnd.annotation:") &&
 					!artifact.startsWith("com.liferay.portletmvc4spring:com.liferay.portletmvc4spring.test:") &&
 					!artifact.startsWith("io.swagger") &&
@@ -1543,6 +1578,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 	}
 
 	List<Dependency> dependencies = new ArrayList<>()
+	Set<String> dependencyNotations = new TreeSet<>()
 
 	for (String artifactURL : artifactURLs) {
 		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
@@ -1563,6 +1599,61 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		dependencies.add(dependencyHandler.create(files(dir)))
 
 		logger.lifecycle "Added {}", jarFile.name
+
+		int x = artifactURL.lastIndexOf("/")
+
+		int y = artifactURL.lastIndexOf("/", x - 1)
+
+		int z = artifactURL.lastIndexOf("/", y - 1)
+
+		String dependencyName = artifactURL.substring(z + 1, y)
+		String dependencyVersion = artifactURL.substring(y + 1, x)
+
+		String baseURL = artifactURL.substring(0, z)
+
+		x = baseURL.indexOf("/content/")
+
+		y = baseURL.indexOf("/", x + 9)
+
+		z = baseURL.indexOf("/", y + 1)
+
+		String dependencyGroupPath = baseURL.substring(z + 1)
+
+		dependencyNotations.add dependencyGroupPath.replace('/' as char, '.' as char) + ":" + dependencyName + ":" + dependencyVersion
+	}
+
+	File versionsTxtFile = new File(portalArtifactsDir, "versions.txt")
+
+	versionsTxtFile.text = StringUtil.merge(dependencyNotations as String[], "\n")
+
+	DependencyHandler dependencyHandler = project.getDependencies()
+
+	dependencies.add(dependencyHandler.create(files(versionsTxtFile)))
+
+	portalArtifactsDir.eachFile {
+		File portalArtifactDir ->
+
+		File servicesDir = new File(portalArtifactDir, "META-INF/services")
+
+		if (servicesDir.exists()) {
+			servicesDir.eachFile {
+				File servicesFile ->
+
+				servicesFile.getText("UTF-8").eachLine {
+					String line ->
+
+					if (Validator.isNotNull(line)) {
+						File file = new File(portalArtifactDir, line.replace('.' as char, '/' as char) + ".class")
+
+						if (!file.exists()) {
+							delete servicesFile
+
+							return
+						}
+					}
+				}
+			}
+		}
 	}
 
 	return dependencies
@@ -1610,66 +1701,6 @@ private List<Dependency> _getPortalJavadocDependencies() {
 	}
 
 	return dependencies
-}
-
-private List<String> _getPortalJavadocIncludes(List<File> relengPropertiesFiles) {
-	File cacheDir = new File(buildDir, "releng/portalCache")
-
-	List<String> includes = new ArrayList<>()
-
-	for (File artifactPropertiesFile : relengPropertiesFiles) {
-		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
-
-		String artifactURL = artifactProperties.getProperty("artifact.url")
-
-		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
-
-		aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
-
-		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
-
-		if (resource == null) {
-			continue
-		}
-
-		Manifest manifest = new Manifest(resource.openInputStream())
-
-		Attributes attributes = manifest.getMainAttributes()
-
-		String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
-
-		if (exportPackageValue == null) {
-			continue
-		}
-
-		for (String pattern : exportPackageValue.split(",")) {
-			pattern = pattern.trim()
-
-			if (pattern.startsWith("!")) {
-				continue
-			}
-
-			pattern = pattern.substring(0, pattern.length())
-
-			if (pattern.contains(";")) {
-				pattern = pattern.substring(0, pattern.indexOf(';'))
-			}
-
-			if (pattern.equals("org.apache.axis.enum")) {
-				continue
-			}
-
-			pattern = "**/" + pattern.replace('.', '/')
-
-			if (!pattern.endsWith("/*")) {
-				pattern += "/*"
-			}
-
-			includes.add(pattern + ".java")
-		}
-	}
-
-	return includes
 }
 
 private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFiles) {

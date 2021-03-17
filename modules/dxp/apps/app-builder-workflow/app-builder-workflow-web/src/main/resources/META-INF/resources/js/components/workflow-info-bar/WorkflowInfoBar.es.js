@@ -12,6 +12,7 @@
 import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {concatValues} from 'app-builder-web/js/utils/utils.es';
+import classNames from 'classnames';
 import React from 'react';
 
 import '../../../css/WorkflowInfoBar.scss';
@@ -19,6 +20,7 @@ import '../../../css/WorkflowInfoBar.scss';
 export default function WorkflowInfo({
 	assignees = [],
 	appVersion,
+	className,
 	completed,
 	hideColumns = [],
 	taskNames = [],
@@ -49,6 +51,11 @@ export default function WorkflowInfo({
 		assignee = roleNames.length ? concatValues(roleNames) : emptyValue;
 	}
 
+	const tooltipProps = {
+		'data-tooltip-align': 'bottom',
+		'data-tooltip-delay': '0',
+	};
+
 	const items = [
 		{
 			label: Liferay.Language.get('status'),
@@ -63,15 +70,18 @@ export default function WorkflowInfo({
 		{
 			label: Liferay.Language.get('assignee'),
 			show: !hideColumns.includes('assignee'),
+			tooltip: {
+				title: assignee,
+				...tooltipProps,
+			},
 			value: assignee,
 		},
 		{
 			label: Liferay.Language.get('version'),
 			show: !hideColumns.includes('status'),
 			tooltip: {
-				'data-tooltip-align': 'bottom',
-				'data-tooltip-delay': '0',
 				title: Liferay.Language.get('app-version'),
+				...tooltipProps,
 			},
 			value: appVersion ?? '1.0',
 		},
@@ -79,7 +89,7 @@ export default function WorkflowInfo({
 
 	return (
 		<ClayTooltipProvider>
-			<div className="workflow-info-bar">
+			<div className={classNames('workflow-info-bar', className)}>
 				{items.map(
 					({label, show, tooltip = {}, value}, index) =>
 						show && (

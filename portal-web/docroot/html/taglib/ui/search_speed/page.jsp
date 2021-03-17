@@ -23,9 +23,11 @@ Hits hits = (Hits)request.getAttribute("liferay-ui:search:hits");
 searchContainer.setTotal(hits.getLength());
 
 NumberFormat doubleFormat = NumberFormat.getInstance(locale);
+
 doubleFormat.setMaximumFractionDigits(2);
 
 NumberFormat integerFormat = NumberFormat.getInstance(locale);
+
 integerFormat.setMaximumFractionDigits(0);
 %>
 

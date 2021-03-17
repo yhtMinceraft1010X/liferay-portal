@@ -14,6 +14,11 @@
 
 package com.liferay.style.book.service.base;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -24,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -314,6 +320,72 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(StyleBookEntry.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName("styleBookEntryId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<StyleBookEntry>() {
+
+				@Override
+				public void performAction(StyleBookEntry styleBookEntry)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, styleBookEntry);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(StyleBookEntry.class.getName())));
+
+		return exportActionableDynamicQuery;
 	}
 
 	/**
@@ -785,6 +857,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 
 		StyleBookEntry draftStyleBookEntry = create();
 
+		draftStyleBookEntry.setUuid(publishedStyleBookEntry.getUuid());
 		draftStyleBookEntry.setHeadId(publishedStyleBookEntry.getPrimaryKey());
 		draftStyleBookEntry.setGroupId(publishedStyleBookEntry.getGroupId());
 		draftStyleBookEntry.setCompanyId(
@@ -793,6 +866,8 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 		draftStyleBookEntry.setUserName(publishedStyleBookEntry.getUserName());
 		draftStyleBookEntry.setCreateDate(
 			publishedStyleBookEntry.getCreateDate());
+		draftStyleBookEntry.setModifiedDate(
+			publishedStyleBookEntry.getModifiedDate());
 		draftStyleBookEntry.setDefaultStyleBookEntry(
 			publishedStyleBookEntry.getDefaultStyleBookEntry());
 		draftStyleBookEntry.setFrontendTokensValues(

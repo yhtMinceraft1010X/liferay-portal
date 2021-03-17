@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.petra.string.StringBundler;
@@ -58,11 +59,9 @@ public class MenuItemProvider {
 		Folder folder, ThemeDisplay themeDisplay,
 		PortletRequest portletRequest) {
 
-		long folderId = _getFolderId(folder);
-
 		if (!_hasPermission(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
+				themeDisplay.getScopeGroupId(), _getFolderId(folder),
 				ActionKeys.ADD_DOCUMENT)) {
 
 			return Collections.emptyList();
@@ -124,7 +123,7 @@ public class MenuItemProvider {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 		portletURL.setParameter(
 			"fileEntryTypeId",
-			String.valueOf(DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT));
+			String.valueOf(_getDefaultFileEntryTypeId(folderId)));
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -321,6 +320,23 @@ public class MenuItemProvider {
 				DepotEntryLocalServiceUtil.getGroupConnectedDepotEntries(
 					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				DepotEntry::getGroupId));
+	}
+
+	private long _getDefaultFileEntryTypeId(long folderId) {
+		try {
+			return DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+				folderId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get default file entry type ID for folder " +
+						folderId,
+					portalException);
+			}
+
+			return DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT;
+		}
 	}
 
 	private MenuItem _getFileEntryTypeMenuItem(

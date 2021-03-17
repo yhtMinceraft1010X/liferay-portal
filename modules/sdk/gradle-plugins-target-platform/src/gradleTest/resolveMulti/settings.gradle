@@ -1,3 +1,0 @@
-include "modules:foo-api"
-include "modules:foo-portlet"
-include "modules:foo-service"

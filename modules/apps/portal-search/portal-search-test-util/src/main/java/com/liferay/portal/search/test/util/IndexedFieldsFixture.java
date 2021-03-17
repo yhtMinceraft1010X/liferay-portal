@@ -56,6 +56,7 @@ public class IndexedFieldsFixture {
 
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_searchEngineHelper = searchEngineHelper;
+
 		_uidFactory = null;
 		_documentBuilderFactory = null;
 	}
@@ -67,8 +68,9 @@ public class IndexedFieldsFixture {
 
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_searchEngineHelper = searchEngineHelper;
-		_uidFactory = null;
 		_documentBuilderFactory = documentBuilderFactory;
+
+		_uidFactory = null;
 	}
 
 	public IndexedFieldsFixture(

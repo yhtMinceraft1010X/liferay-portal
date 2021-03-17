@@ -37,8 +37,8 @@ definition {
 
 	@priority = "4"
 	test Add20Forms {
-		property test.name.skip.portal.instance = "Forms#Add20Forms";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#Add20Forms";
 
 		Navigator.openURL();
 
@@ -70,8 +70,8 @@ definition {
 
 	@priority = "4"
 	test Add30Fields {
-		property test.name.skip.portal.instance = "Forms#Add30Fields";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#Add30Fields";
 
 		Navigator.openURL();
 
@@ -100,9 +100,9 @@ definition {
 
 	@priority = "5"
 	test AddElementSetsWithTranslation {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
-		property portal.acceptance = "true";
 
 		Navigator.openURL();
 
@@ -122,7 +122,7 @@ definition {
 
 		Form.editElementSetFieldLabel(fieldValue = "Text Field Required");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "required");
 
 		Form.closeSidebar();
 
@@ -163,9 +163,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
-		Form.editElementSetFieldLabel(
-			fieldLabelRequired = "表格文本 Required",
-			fieldValue = "表格文本");
+		Form.editElementSetFieldLabel(fieldValue = "表格文本");
 
 		Form.closeSidebar();
 
@@ -219,7 +217,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldLabelRequired = "表格文本 Required",
 			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
@@ -270,7 +267,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldLabelRequired = "Text Field Required Required",
 			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
@@ -279,7 +275,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldLabelRequired = "Text Field Required Required",
 			fieldName = "${textFieldRequiredName2}");
 
 		FormFields.viewSelectLabel(
@@ -292,7 +287,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldLabelRequired = "表格文本 Required",
 			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
@@ -301,7 +295,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldLabelRequired = "表格文本 Required",
 			fieldName = "${textFieldRequiredName2}");
 
 		FormFields.viewSelectLabel(
@@ -356,7 +349,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldLabelRequired = "表格文本 Required",
 			fieldName = "${textFieldRequiredName3}");
 
 		FormFields.viewSelectLabel(
@@ -386,8 +378,8 @@ definition {
 
 	@priority = "5"
 	test AddFormInGlobal {
-		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -416,7 +408,7 @@ definition {
 			fieldHelpText = "Help Text",
 			fieldName = "tip");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -468,7 +460,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Label",
-			fieldLabelRequired = "Label Required",
 			fieldName = "Label");
 	}
 
@@ -595,8 +586,8 @@ definition {
 	@description = "This is a use case for LPS-73274."
 	@priority = "4"
 	test AddFormWithDuplicateTextFields {
-		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
 
 		Navigator.openURL();
 
@@ -639,8 +630,8 @@ definition {
 
 	@priority = "5"
 	test AddFormWithSpanishAsDefaultPortalLanguage {
-		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
 
 		Navigator.openURL();
 
@@ -737,8 +728,8 @@ definition {
 	@description = "This is a use case for LPS-75116 and LPS-79101."
 	@priority = "4"
 	test ChangeFieldType {
-		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
 
 		Navigator.openURL();
 
@@ -771,7 +762,7 @@ definition {
 				rowNumber = "${number}");
 		}
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -789,7 +780,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -804,7 +794,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -832,7 +821,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -853,7 +841,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -868,7 +855,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -896,7 +882,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -917,7 +902,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -932,7 +916,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewRadioValue(
@@ -945,7 +928,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -985,7 +967,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "TestingTitle");
 
 		FormFields.viewFieldHelpText(
@@ -1075,7 +1056,6 @@ definition {
 
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Testing Title",
-			fieldLabelRequired = "Testing Title Required",
 			fieldName = "${fieldSelectFromField}",
 			selectOption = "Select 2");
 
@@ -1351,8 +1331,8 @@ definition {
 
 	@priority = "5"
 	test DeletePages {
-		property test.name.skip.portal.instance = "Forms#DeletePages";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#DeletePages";
 
 		Navigator.openURL();
 
@@ -1408,8 +1388,8 @@ definition {
 	@description = "This is a use case for LPS-74997."
 	@priority = "4"
 	test DeleteSelectFromListOptionAndViewEntries {
-		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionAndViewEntries";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionAndViewEntries";
 
 		Navigator.openURL();
 
@@ -1570,8 +1550,8 @@ definition {
 
 	@priority = "4"
 	test EditAllFormFieldNames {
-		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
 
 		Navigator.openURL();
 
@@ -1817,7 +1797,6 @@ definition {
 		FormFields.viewTextField(
 			fieldHelpText = "Configure how long a lock is held before releasing due to suspected deadlock.",
 			fieldLabel = "Lock Timeout Milliseconds",
-			fieldLabelRequired = "Lock Timeout Milliseconds Required",
 			fieldName = "ds.lock.timeout.milliseconds");
 
 		Refresh();
@@ -1938,8 +1917,8 @@ definition {
 	@description = "This is a use case for LPS-69100 and LPS-69334."
 	@priority = "2"
 	test EditFormWithUpdatedSiteAndUserLocale {
-		property test.name.skip.portal.instance = "Forms#EditFormWithUpdatedSiteAndUserLocale";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#EditFormWithUpdatedSiteAndUserLocale";
 
 		Navigator.openURL();
 
@@ -1996,7 +1975,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			portlet = "Settings");
+			portlet = "Site Settings");
 
 		Site.configureCurrentLanguagesCP(
 			defaultSiteLanguage = "Spanish (Spain)",
@@ -2018,8 +1997,8 @@ definition {
 	@description = "This is a use case for LPS-78697."
 	@priority = "4"
 	test EditTranslatedGridField {
-		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
 
 		Navigator.openURL();
 
@@ -2159,8 +2138,8 @@ definition {
 	@description = "This is a use case for LPS-59331"
 	@priority = "5"
 	test NavigateToCorrectForm {
-		property test.name.skip.portal.instance = "Forms#NavigateToCorrectForm";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#NavigateToCorrectForm";
 
 		Navigator.openURL();
 
@@ -2343,8 +2322,8 @@ definition {
 	@description = "This is a use case for LPS-68381."
 	@priority = "3"
 	test ReorderFieldOptions {
-		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
 
 		Navigator.openURL();
 
@@ -2413,8 +2392,9 @@ definition {
 	@description = "This is a use case for LPS-59336."
 	@priority = "4"
 	test SearchFormRecordMultipleEntries {
-		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
+
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
 		Navigator.openURL();
@@ -2515,8 +2495,8 @@ definition {
 	@description = "This is a use case for LPS-76079."
 	@priority = "4"
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
-		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
 
 		Navigator.openURL();
 
@@ -2592,8 +2572,8 @@ definition {
 
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
-		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -2971,8 +2951,8 @@ definition {
 
 	@priority = "4"
 	test SubmitFormAndViewEmailNotification {
-		property test.name.skip.portal.instance = "Forms#SubmitFormAndViewEmailNotification";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormAndViewEmailNotification";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();
@@ -3156,8 +3136,8 @@ definition {
 	@description = "This is a use case for LPS-64798."
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -3204,7 +3184,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -3235,7 +3215,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Option1",
@@ -3266,7 +3246,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -3449,7 +3429,6 @@ definition {
 
 		FormsAdmin.viewMultilineTextEntry(
 			fieldLabel = "MultilineText",
-			fieldLabelRequired = "MultilineText Required",
 			fieldName = "${fieldMultilineTextField}",
 			fieldValue = "Multiline Text");
 
@@ -3460,7 +3439,6 @@ definition {
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
-			fieldLabelRequired = "Radio Required",
 			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 1");
 
@@ -3497,8 +3475,8 @@ definition {
 
 	@priority = "5"
 	test SubmitFormWithCustomTextContainingValidation {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomTextContainingValidation";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomTextContainingValidation";
 
 		Navigator.openURL();
 
@@ -3588,8 +3566,8 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 
 		Navigator.openURL();
 
@@ -3773,8 +3751,8 @@ definition {
 	@description = "This is a use case for LPS-59338."
 	@priority = "4"
 	test SubmitFormWithRequiredCheckboxField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredCheckboxField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredCheckboxField";
 
 		Navigator.openURL();
 
@@ -3796,7 +3774,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -3831,7 +3809,6 @@ definition {
 
 		FormFields.viewCheckboxLabel(
 			fieldLabel = "Checkbox Field",
-			fieldLabelRequired = "Checkbox Field Required",
 			fieldName = "${fieldMultipleSelectionField}");
 
 		FormFields.viewRequiredAsterisk();
@@ -3862,8 +3839,8 @@ definition {
 	@description = "This is a use case for LPS-98073."
 	@priority = "5"
 	test SubmitFormWithRequiredImageField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -3958,6 +3935,7 @@ definition {
 	@priority = "3"
 	test SubmitFormWithRequiredMultiLineTextField {
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredMultiLineTextField";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3978,7 +3956,7 @@ definition {
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -4008,7 +3986,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldLabelRequired = "Text Field Required",
 			fieldName = "TextField");
 
 		FormFields.viewRequiredAsterisk();
@@ -4041,6 +4018,7 @@ definition {
 	@priority = "4"
 	test SubmitFormWithRequiredRadioField {
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRadioField";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4061,7 +4039,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		FormFields.editOptionsRow(
 			optionName = "Option1",
@@ -4100,7 +4078,6 @@ definition {
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio Field",
-			fieldLabelRequired = "Radio Field Required",
 			fieldName = "${fieldSingleSelectionField}");
 
 		FormFields.viewRequiredAsterisk();
@@ -4131,8 +4108,8 @@ definition {
 	@description = "This is a use case for LPS-59335."
 	@priority = "5"
 	test SubmitFormWithRequiredRepeatingTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
 
 		Navigator.openURL();
 
@@ -4152,7 +4129,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.gotoAdvancedTab();
 
@@ -4211,8 +4188,8 @@ definition {
 	@description = "This is a use case for LPS-58829."
 	@priority = "5"
 	test SubmitFormWithRequiredTextField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredTextField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredTextField";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -4233,7 +4210,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -4263,7 +4240,6 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
-			fieldLabelRequired = "Text Field Required",
 			fieldName = "${fieldTextField}");
 
 		FormFields.viewRequiredAsterisk();
@@ -4294,8 +4270,8 @@ definition {
 	@description = "This is a use case for LPS-59351."
 	@priority = "4"
 	test SubmitFormWithSwitcherCheckboxField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
 
 		Navigator.openURL();
 
@@ -4388,8 +4364,8 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithUploadField {
-		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
 
 		Navigator.openURL();
 
@@ -4459,11 +4435,188 @@ definition {
 			uploadFileName = "Document_1.jpg");
 	}
 
+	@priority = "4"
+	test SubmitFormWithUploadFieldAsGuestUser {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadFieldAsGuestUser";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		var uploadFieldName = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Upload Field");
+
+		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewUploadFieldAsGuest(
+			fieldLabel = "Upload Field",
+			fieldName = "${uploadFieldName}");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document_1.mp4");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid extension (doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx).");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document -_.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewUploadFile(
+			fieldLabel = "Upload Field",
+			fieldName = "${uploadFieldName}",
+			uploadFileName = "Document -_.jpg");
+	}
+
+	@description = "This is a use case for LPS-125462."
+	@priority = "5"
+	test SubmitFormWithUploadFieldAsNewUser {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		var uploadFieldName = FormFields.getFieldName();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		User.editUserSiteCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewUploadField(
+			fieldLabel = "Upload",
+			fieldName = "${uploadFieldName}");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deactivateCP(userFirstName = "userfn");
+
+		User.deleteCP();
+	}
+
 	@description = "This is a use case for LPS-73322."
 	@priority = "4"
 	test SubmitWithRequiredDateField {
-		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
 
 		Navigator.openURL();
 
@@ -4485,7 +4638,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -4505,7 +4658,6 @@ definition {
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
-			fieldLabelRequired = "Date Field Required",
 			fieldName = "${fieldDateField}");
 
 		FormFields.viewRequiredAsterisk();
@@ -4544,16 +4696,129 @@ definition {
 
 		FormsAdmin.viewDateEntry(
 			fieldLabel = "Date Field",
-			fieldLabelRequired = "Date Field Required",
 			fieldName = "${fieldDateField}",
 			fieldValue = "01/01/2016");
+	}
+
+	@description = "This is a use case for LPS-125499."
+	@priority = "2"
+	test UploadFileWithInvalidSizeAsGuestUser {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#UploadFileWithInvalidSizeAsGuestUser";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		var uploadFieldName = FormFields.getFieldName();
+
+		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		FormFields.editText(
+			fieldName = "maxSize",
+			fieldValue = "10485760");
+
+		SystemSettings.saveConfiguration();
+
+		SystemSettings.exitEditConfiguration();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		FormFields.editText(
+			fieldName = "guestUploadMaximumFileSize",
+			fieldValue = "1");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewUploadFieldAsGuest(
+			fieldLabel = "Upload",
+			fieldName = "${uploadFieldName}");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document_1.mp4");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 10.0MB.");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "large_file.pdf");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 1 MB.");
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		SystemSettings.resetConfiguration();
+
+		SystemSettings.exitEditConfiguration();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		SystemSettings.resetConfiguration();
 	}
 
 	@description = "This is a use case for LPS-68182."
 	@priority = "3"
 	test ViewBlankLabelWhenAddingNewField {
-		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
 
 		Navigator.openURL();
 
@@ -4589,8 +4854,8 @@ definition {
 	@description = "This is a use case for LPS-69214."
 	@priority = "3"
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
-		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
 
 		Navigator.openURL();
 
@@ -4624,8 +4889,8 @@ definition {
 	@description = "This is a use case for LPS-64305."
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
-		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
 
 		Navigator.openURL();
 
@@ -4687,8 +4952,8 @@ definition {
 	@description = "This is a use case for LPS-70560."
 	@priority = "4"
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
-		property test.name.skip.portal.instance = "Forms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
 
 		Navigator.openURL();
 
@@ -4724,7 +4989,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
-		FormFields.enableSwitcher(fieldName = "Required Field");
+		FormFields.enableSwitcher(fieldName = "Required");
 
 		Form.closeSidebar();
 
@@ -4774,8 +5039,8 @@ definition {
 	@description = "This is a use case for LPS-66513."
 	@priority = "3"
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
-		property test.name.skip.portal.instance = "Forms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
 
 		Navigator.openURL();
 
@@ -4851,8 +5116,8 @@ definition {
 
 	@priority = "4"
 	test ViewRepeatableTextFieldLabel {
-		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
 
 		Navigator.openURL();
 
@@ -4914,8 +5179,8 @@ definition {
 	@description = "This is a use case for LPS-68390."
 	@priority = "3"
 	test ViewSaveNotification {
-		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
 
 		Navigator.openURL();
 
@@ -4947,9 +5212,9 @@ definition {
 	@description = "This is a use case for LPS-71072."
 	@priority = "5"
 	test ViewSuccessPage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Forms#ViewSuccessPage";
 		property testray.component.names = "Training";
-		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

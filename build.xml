@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+<project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant" xmlns:if="ant:if">
 	<import file="build-common.xml" />
 
 	<macrodef name="clean-liferay-home">
@@ -333,75 +333,15 @@ message.
 					<arg value="-Dbuild.profile=portal-pre" />
 				</gradle-execute>
 
-				<if>
-					<or>
-						<not>
-							<available file="${project.dir}/modules/private" type="dir" />
-						</not>
-						<not>
-							<isset property="env.JENKINS_HOME" />
-						</not>
-					</or>
-					<then>
-						<gradle-execute dir="${project.dir}/modules" task="deploy">
-							<arg value="--parallel" />
-							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-							<arg value="-Dbuild.profile=${build.profile}" />
-							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-						</gradle-execute>
-					</then>
-					<else>
-						<gradle-execute dir="${project.dir}/modules/private" failonerror="false" outputproperty="private.modules.project.paths" task="printProjectPath">
-							<arg value="--quiet" />
-							<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-							<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-							<arg value="-Dbuild.profile=${build.profile}" />
-							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-						</gradle-execute>
-
-						<if>
-							<not>
-								<equals arg1="${private.modules.project.paths}" arg2="" />
-							</not>
-							<then>
-								<gradle-execute checktask="true" dir="${project.dir}/modules/private" task="deploy">
-									<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-									<arg value="-Dbuild.profile=${build.profile}" />
-									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-								</gradle-execute>
-							</then>
-						</if>
-
-						<if>
-							<and>
-								<isset property="build.exclude.dirs" />
-								<not>
-									<equals arg1="${build.exclude.dirs}" arg2="" />
-								</not>
-							</and>
-							<then>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
-									<arg value="--parallel" />
-									<arg value="-Dbuild.exclude.dirs=private,${build.exclude.dirs}" />
-									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-									<arg value="-Dbuild.profile=${build.profile}" />
-									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-								</gradle-execute>
-							</then>
-							<else>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
-									<arg value="--parallel" />
-									<arg value="-Dbuild.exclude.dirs=private" />
-									<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-									<arg value="-Dbuild.profile=${build.profile}" />
-									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-								</gradle-execute>
-							</else>
-						</if>
-					</else>
-				</if>
+				<gradle-execute dir="${project.dir}/modules" task="deploy">
+					<arg value="--parallel" />
+					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
+					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
+					<arg value="-Dbuild.profile=${build.profile}" />
+					<arg if:true="${gradle.build.scan.enabled}" value="-Dgradle.build.scan.enabled=true" />
+					<arg if:set="gradle.build.scan.server.url" value="-Dgradle.build.scan.server.url=${gradle.build.scan.server.url}" />
+					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+				</gradle-execute>
 
 				<if>
 					<equals arg1="${marker.files.lfrbuild.ci.enabled}" arg2="true" />
@@ -1100,39 +1040,18 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="setup-profile-dxp">
-		<condition else="master-private" property="profile.dxp.branch.name" value="${build.setup.profile.dxp.branch.name}">
-			<isset property="build.setup.profile.dxp.branch.name" />
+		<condition else="false" property="upstream.stable.suite" value="true">
+			<and>
+				<equals arg1="${env.CI_TEST_SUITE}" arg2="stable" />
+				<isset property="env.CONTROLLER_BUILD_URL" />
+			</and>
 		</condition>
 
-		<if>
-			<and>
-				<isset property="env.JENKINS_HOME" />
-			</and>
-			<then>
-				<retry retrycount="5" retrydelay="3000">
-					<sequential>
-						<delete failonerror="false" file="${user.home}/.ssh/known_hosts" />
-
-						<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
-							<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-							<arg value="-Dprofile.dxp.branch.name=${profile.dxp.branch.name}" />
-							<arg value="-Dprofile.dxp.repository.url=git@github-dev.liferay.com:liferay/liferay-portal-ee.git" />
-						</gradle-execute>
-					</sequential>
-				</retry>
-			</then>
-			<else>
-				<condition else="git@github.com:liferay/liferay-portal-ee.git" property="profile.dxp.repository.url" value="${build.setup.profile.dxp.repository.url}">
-					<isset property="build.setup.profile.dxp.repository.url" />
-				</condition>
-
-				<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
-					<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-					<arg value="-Dprofile.dxp.branch.name=${profile.dxp.branch.name}" />
-					<arg value="-Dprofile.dxp.repository.url=${profile.dxp.repository.url}" />
-				</gradle-execute>
-			</else>
-		</if>
+		<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
+			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
+			<arg value="-Dprofile.dxp.commit.id=${build.setup.profile.dxp.commit.id}" />
+			<arg value="-Dupstream.stable.suite=${upstream.stable.suite}" />
+		</gradle-execute>
 
 		<condition else="${git.working.branch.name}-private" property="to.branch.name" value="${git.working.branch.name}">
 			<antelope:endswith string="${git.working.branch.name}" with="-private" />

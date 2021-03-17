@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.inventory.web.internal.display.context;
 
-import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
-
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,7 +78,8 @@ public class CommerceInventoryDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommerceInventoryWarehouse");
+			"mvcRenderCommandName",
+			"/commerce_inventory/edit_commerce_inventory_warehouse");
 		portletURL.setParameter("sku", _sku);
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -148,11 +148,10 @@ public class CommerceInventoryDisplayContext {
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()
 		throws PrincipalException {
 
-		long companyId = _cpRequestHelper.getCompanyId();
-
 		return _commerceInventoryWarehouseService.
 			getCommerceInventoryWarehouses(
-				companyId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				_cpRequestHelper.getCompanyId(), true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 	}
 
 	public String getCreateInventoryItemActionURL() throws Exception {
@@ -162,7 +161,8 @@ public class CommerceInventoryDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "addCommerceInventoryWarehouseItem");
+			"mvcRenderCommandName",
+			"/commerce_inventory/add_commerce_inventory_item");
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -176,7 +176,8 @@ public class CommerceInventoryDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommerceInventoryReplenishmentItem");
+			"mvcRenderCommandName",
+			"/commerce_inventory/edit_commerce_inventory_replenishment_item");
 		portletURL.setParameter("sku", _sku);
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -192,7 +193,7 @@ public class CommerceInventoryDisplayContext {
 		}
 
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
 			RenderResponse renderResponse =
@@ -212,7 +213,7 @@ public class CommerceInventoryDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
 			creationMenu.addDropdownItem(
@@ -253,7 +254,7 @@ public class CommerceInventoryDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
 			creationMenu.addDropdownItem(
@@ -279,7 +280,8 @@ public class CommerceInventoryDisplayContext {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "transferQuantities");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/commerce_inventory/transfer_quantities");
 		portletURL.setParameter("sku", _sku);
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -294,7 +296,8 @@ public class CommerceInventoryDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "editCommerceInventoryItem");
+			ActionRequest.ACTION_NAME,
+			"/commerce_inventory/edit_commerce_inventory_item");
 		portletURL.setParameter(Constants.CMD, "transition");
 		portletURL.setParameter("sku", _sku);
 		portletURL.setParameter("redirect", _cpRequestHelper.getCurrentURL());
@@ -306,7 +309,7 @@ public class CommerceInventoryDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
-				getPermissionChecker(),
+				PermissionThreadLocal.getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
 			creationMenu.addDropdownItem(

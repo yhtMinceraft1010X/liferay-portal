@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,6 +74,13 @@ public class FieldsToDDMFormValuesConverterImpl
 			for (int i = 0; i < repetitions; i++) {
 				DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
 					fieldName);
+
+				DDMFormField ddmFormField = ddmFormFieldsMap.get(fieldName);
+
+				if (ddmFormField != null) {
+					ddmFormFieldValue.setFieldReference(
+						ddmFormField.getFieldReference());
+				}
 
 				setDDMFormFieldValueProperties(
 					ddmFormFieldValue, ddmFormFieldsMap, fields,
@@ -222,7 +230,10 @@ public class FieldsToDDMFormValuesConverterImpl
 				numberFormat.setMinimumFractionDigits(1);
 			}
 
-			return numberFormat.format(number.doubleValue());
+			String valueString = numberFormat.format(number.doubleValue());
+
+			return StringUtil.removeChars(
+				valueString, CharPool.NO_BREAK_SPACE, CharPool.SPACE);
 		}
 
 		return String.valueOf(fieldValue);
@@ -343,6 +354,14 @@ public class FieldsToDDMFormValuesConverterImpl
 			for (int i = 0; i < repetitions; i++) {
 				DDMFormFieldValue nestedDDMFormFieldValue =
 					createDDMFormFieldValue(nestedFieldName);
+
+				DDMFormField nestedDDMFormField = ddmFormFieldsMap.get(
+					nestedFieldName);
+
+				if (nestedDDMFormField != null) {
+					nestedDDMFormFieldValue.setFieldReference(
+						nestedDDMFormField.getFieldReference());
+				}
 
 				setDDMFormFieldValueProperties(
 					nestedDDMFormFieldValue, ddmFormFieldsMap, ddmFields,

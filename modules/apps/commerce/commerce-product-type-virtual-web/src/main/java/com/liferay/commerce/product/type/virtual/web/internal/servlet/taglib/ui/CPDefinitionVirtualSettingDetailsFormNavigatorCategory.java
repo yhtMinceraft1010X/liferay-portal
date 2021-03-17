@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.constants.CPDefinitionVirtualSettingFormNavigatorConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 

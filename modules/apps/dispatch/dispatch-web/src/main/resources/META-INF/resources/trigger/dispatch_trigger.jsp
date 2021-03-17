@@ -48,7 +48,7 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 }
 %>
 
-<portlet:actionURL name="editDispatchTrigger" var="editDispatchTriggerActionURL" />
+<portlet:actionURL name="/dispatch/edit_dispatch_trigger" var="editDispatchTriggerActionURL" />
 
 <aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -62,6 +62,34 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 			<div class="lfr-form-content">
 				<aui:fieldset>
 					<aui:input name="active" />
+
+					<c:choose>
+						<c:when test="<%= ClusterExecutorUtil.isEnabled() %>">
+							<aui:select label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
+
+								<%
+								for (DispatchTaskClusterMode dispatchTaskClusterMode : DispatchTaskClusterMode.values()) {
+									if (dispatchTaskClusterMode == DispatchTaskClusterMode.NOT_APPLICABLE) {
+										continue;
+									}
+								%>
+
+									<aui:option label="<%= dispatchTaskClusterMode.getLabel() %>" selected="<%= dispatchTrigger.getDispatchTaskClusterMode() == dispatchTaskClusterMode.getMode() %>" value="<%= dispatchTaskClusterMode.getMode() %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+						</c:when>
+						<c:otherwise>
+							<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
+								<aui:option label="<%= DispatchTaskClusterMode.NOT_APPLICABLE.getLabel() %>" />
+							</aui:select>
+						</c:otherwise>
+					</c:choose>
+
+					<aui:input name="overlapAllowed" />
 
 					<aui:input name="cronExpression" />
 
@@ -91,28 +119,36 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 					</aui:field-wrapper>
 
 					<aui:field-wrapper label="end-date">
-						<liferay-ui:input-date
-							dayParam="endDateDay"
-							dayValue="<%= endDateDay %>"
-							monthParam="endDateMonth"
-							monthValue="<%= endDateMonth %>"
-							yearParam="endDateYear"
-							yearValue="<%= endDateYear %>"
-						/>
+						<aui:input name="neverEnd" onClick='<%= liferayPortletResponse.getNamespace() + "updateEndDateTimeInputsDisabled(this.checked);" %>' type="checkbox" value="<%= neverEnd %>" />
+
+						<span class="end-date-input-selector">
+							<liferay-ui:input-date
+								dayParam="endDateDay"
+								dayValue="<%= endDateDay %>"
+								disabled="<%= neverEnd %>"
+								monthParam="endDateMonth"
+								monthValue="<%= endDateMonth %>"
+								yearParam="endDateYear"
+								yearValue="<%= endDateYear %>"
+							/>
+						</span>
 
 						<liferay-ui:icon
 							icon="calendar"
 							markupView="lexicon"
 						/>
 
-						<liferay-ui:input-time
-							amPmParam="endDateAmPm"
-							amPmValue="<%= endDateAmPm %>"
-							hourParam="endDateHour"
-							hourValue="<%= endDateHour %>"
-							minuteParam="endDateMinute"
-							minuteValue="<%= endDateMinute %>"
-						/>
+						<span class="end-time-input-selector">
+							<liferay-ui:input-time
+								amPmParam="endDateAmPm"
+								amPmValue="<%= endDateAmPm %>"
+								disabled="<%= neverEnd %>"
+								hourParam="endDateHour"
+								hourValue="<%= endDateHour %>"
+								minuteParam="endDateMinute"
+								minuteValue="<%= endDateMinute %>"
+							/>
+						</span>
 					</aui:field-wrapper>
 				</aui:fieldset>
 
@@ -125,3 +161,19 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />updateEndDateTimeInputsDisabled',
+		function (checked) {
+			document
+				.querySelectorAll(
+					'.end-date-input-selector input, .end-time-input-selector input'
+				)
+				.forEach(function (input) {
+					input.disabled = checked;
+				});
+		}
+	);
+</aui:script>

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -22,6 +23,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.configuration.FFDisplayPageAdminWebConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
@@ -131,6 +133,19 @@ public class DisplayPageActionDropdownItemsProvider {
 			() -> hasUpdatePermission && _isShowDiscardDraftAction(),
 			_getDiscardDraftActionUnsafeConsumer()
 		).add(
+			() -> {
+				int count =
+					AssetDisplayPageEntryServiceUtil.
+						getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+							_layoutPageTemplateEntry.
+								getLayoutPageTemplateEntryId());
+
+				return FFDisplayPageAdminWebConfigurationUtil.
+					viewUsagesEnabled() &&
+					   (count > 0);
+			},
+			_getViewUsagesDisplayPageActionUnsafeConsumer()
+		).add(
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.DELETE),
@@ -147,8 +162,9 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				editPageURL, "mvcRenderCommandName", "/layout/edit_layout",
-				"redirect", _themeDisplay.getURLCurrent(), "backURL",
+				editPageURL, "mvcRenderCommandName",
+				"/layout_admin/edit_layout", "redirect",
+				_themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "portletResource",
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				"selPlid", _layoutPageTemplateEntry.getPlid());
@@ -227,7 +243,7 @@ public class DisplayPageActionDropdownItemsProvider {
 			PortletRequest.ACTION_PHASE);
 
 		discardDraftURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/discard_draft_layout");
+			ActionRequest.ACTION_NAME, "/layout_admin/discard_draft_layout");
 		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		discardDraftURL.setParameter(
 			"selPlid", String.valueOf(_draftLayout.getPlid()));
@@ -453,6 +469,22 @@ public class DisplayPageActionDropdownItemsProvider {
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getViewUsagesDisplayPageActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/layout_page_template/view_display_page_usages",
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+				"redirect", _themeDisplay.getURLCurrent());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};
 	}
 

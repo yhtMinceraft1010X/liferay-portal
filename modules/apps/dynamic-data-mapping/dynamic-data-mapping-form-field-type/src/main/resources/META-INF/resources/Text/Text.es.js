@@ -35,10 +35,13 @@ const Text = ({
 	onChange,
 	onFocus,
 	placeholder,
+	shouldUpdateValue,
 	syncDelay,
 	value: initialValue,
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, syncDelay);
+
+	const inputRef = useRef(null);
 
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
@@ -59,15 +62,41 @@ const Text = ({
 		setValue,
 	]);
 
+	useEffect(() => {
+		if (
+			fieldName === 'fieldReference' &&
+			inputRef.current &&
+			inputRef.current.value !== initialValue &&
+			(inputRef.current.value === '' || shouldUpdateValue)
+		) {
+			setValue(initialValue);
+			onChange({target: {value: initialValue}});
+		}
+	}, [
+		initialValue,
+		inputRef,
+		fieldName,
+		onChange,
+		setValue,
+		shouldUpdateValue,
+	]);
+
 	return (
 		<ClayInput
 			className="ddm-field-text"
 			disabled={disabled}
-			id={id ? id : name}
+			id={id}
 			name={name}
-			onBlur={onBlur}
+			onBlur={(event) => {
+				if (fieldName == 'fieldReference') {
+					onBlur({target: {value: initialValue}});
+				}
+				else {
+					onBlur(event);
+				}
+			}}
 			onChange={(event) => {
-				if (fieldName === 'name') {
+				if (fieldName === 'fieldReference' || fieldName === 'name') {
 					event.target.value = normalizeFieldName(event.target.value);
 				}
 
@@ -76,6 +105,7 @@ const Text = ({
 			}}
 			onFocus={onFocus}
 			placeholder={placeholder}
+			ref={inputRef}
 			type="text"
 			value={value}
 		/>
@@ -131,14 +161,31 @@ const Autocomplete = ({
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
 
-	const filteredItems = options.filter((item) => item && item.match(value));
+	const escapeChars = (string) =>
+		string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+
+	const filteredItems = options.filter(
+		(item) => item && item.match(escapeChars(value))
+	);
 
 	useEffect(() => {
 		if (filteredItems.length === 1 && filteredItems.includes(value)) {
 			setVisible(false);
 		}
 		else {
-			setVisible(!!value);
+			const ddmPageContainerLayout = inputRef.current.closest(
+				'.ddm-page-container-layout'
+			);
+
+			if (
+				ddmPageContainerLayout &&
+				ddmPageContainerLayout.classList.contains('hide')
+			) {
+				setVisible(false);
+			}
+			else {
+				setVisible(!!value);
+			}
 		}
 	}, [filteredItems, value]);
 
@@ -274,6 +321,7 @@ const Main = ({
 	placeholder,
 	predefinedValue = '',
 	readOnly,
+	shouldUpdateValue = false,
 	syncDelay = true,
 	value,
 	...otherProps
@@ -312,6 +360,7 @@ const Main = ({
 				onFocus={onFocus}
 				options={optionsMemo}
 				placeholder={placeholder}
+				shouldUpdateValue={shouldUpdateValue}
 				syncDelay={syncDelay}
 				value={value ? value : predefinedValue}
 			/>

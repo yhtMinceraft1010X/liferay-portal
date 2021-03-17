@@ -77,6 +77,27 @@ export default function Sidebar() {
 		registerPanel = register(sidebarPanelId, promise, {app, panel});
 	}
 
+	const togglePlugin = () => {
+		if (hasError) {
+			setHasError(false);
+		}
+
+		if (registerPanel) {
+			registerPanel.then((plugin) => {
+				if (
+					plugin &&
+					typeof plugin.activate === 'function' &&
+					isMounted()
+				) {
+					plugin.activate();
+				}
+				else if (!plugin) {
+					setHasError(true);
+				}
+			});
+		}
+	};
+
 	useEffect(
 		() => {
 			if (panel) {
@@ -160,30 +181,12 @@ export default function Sidebar() {
 		);
 	};
 
-	const togglePlugin = () => {
-		if (hasError) {
-			setHasError(false);
-		}
-
-		if (registerPanel) {
-			registerPanel.then((plugin) => {
-				if (
-					plugin &&
-					typeof plugin.activate === 'function' &&
-					isMounted()
-				) {
-					plugin.activate();
-				}
-				else if (!plugin) {
-					setHasError(true);
-				}
-			});
-		}
-	};
-
 	return createPortal(
 		<ClayTooltipProvider>
-			<div className="page-editor__sidebar" ref={dropClearRef}>
+			<div
+				className="page-editor__sidebar page-editor__theme-adapter-forms"
+				ref={dropClearRef}
+			>
 				<div
 					className={classNames('page-editor__sidebar__buttons', {
 						light: true,

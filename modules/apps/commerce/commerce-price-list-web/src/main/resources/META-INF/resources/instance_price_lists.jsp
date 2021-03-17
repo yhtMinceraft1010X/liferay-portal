@@ -20,18 +20,17 @@
 CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPInstance cpInstance = cpInstanceCommercePriceEntryDisplayContext.getCPInstance();
-long cpDefinitionId = cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId();
 long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId();
 PortletURL portletURL = cpInstanceCommercePriceEntryDisplayContext.getPortletURL();
 
 PortletURL productSkusURL = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 
-productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
-productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
+productSkusURL.setParameter("mvcRenderCommandName", "/cp_definitions/edit_cp_definition");
+productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpInstanceCommercePriceEntryDisplayContext.getCPDefinitionId()));
 productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 %>
 
-<portlet:actionURL name="editCPInstanceCommercePriceEntry" var="addCommercePriceEntryURL" />
+<portlet:actionURL name="/cp_definitions/edit_cp_instance_commerce_price_entry" var="addCommercePriceEntryURL" />
 
 <aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />

@@ -53,13 +53,13 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("announcements"));
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "announcements"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "announcements"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(navigation.equals("alerts"));
 						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "alerts");
-						navigationItem.setLabel(LanguageUtil.get(request, "alerts"));
+						navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "alerts"));
 					});
 			}
 		}
@@ -101,11 +101,10 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 			>
 
 				<%
-				Map<String, Object> rowData = HashMapBuilder.<String, Object>put(
-					"actions", StringUtil.merge(announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry))
-				).build();
-
-				row.setData(rowData);
+				row.setData(
+					HashMapBuilder.<String, Object>put(
+						"actions", StringUtil.merge(announcementsAdminViewManagementToolbarDisplayContext.getAvailableActions(entry))
+					).build());
 
 				PortletURL rowURL = renderResponse.createRenderURL();
 

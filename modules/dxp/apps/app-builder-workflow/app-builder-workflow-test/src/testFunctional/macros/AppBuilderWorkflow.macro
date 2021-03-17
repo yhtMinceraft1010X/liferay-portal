@@ -1,39 +1,83 @@
 definition {
 
 	macro addNewStep {
-
 		Click(locator1 = "AppBuilderWorkflow#NEW_STEP_BUTTON");
 	}
 
 	macro addWorkflowAppName {
-
 		Type(
 			locator1 = "AppBuilderWorkflow#WORKFLOW_APP_NAME_FIELD",
 			value1 = "${workflowAppName}");
 	}
 
-	macro assertButtonDisabled {
+	macro assertAssigneeInfoPresentOnStep {
+		AssertElementPresent(
+			key_assignee = "${assignee}",
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD_ASSIGNEE_INFO");
+	}
 
+	macro assertButtonDisabled {
 		AssertVisible(
 			key_text = "${buttonName}",
 			locator1 = "Button#ANY_DISABLED");
 	}
 
-	macro assertFieldDisabled {
+	macro assertButtonNotPresent {
+		Button.viewNotPresent(button = "${buttonName}");
+	}
 
+	macro assertButtonPresent {
+		Button.viewPresent(button = "${buttonName}");
+	}
+
+	macro assertEntryAppVersion {
+		var key_versionNumber = "${versionNumber}";
+
+		if (IsElementNotPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION")) {
+			DetailsView.nextEntry();
+
+			if (IsElementNotPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION")) {
+				DetailsView.previousEntry();
+			}
+
+			AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
+		}
+		else {
+			AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_APP_VERSION");
+		}
+	}
+
+	macro assertEntryInfoOnTableView {
+		var key_entryName = "${entryName}";
+		var key_info = "${info}";
+		AssertElementPresent(locator1 = "AppBuilderWorkflow#ENTRY_INFO_ON_TABLE_VIEW");
+	}
+
+	macro assertFieldDisabled {
 		AssertVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "AppBuilderWorkflow#TEXT_FIELD_DISABLED");
 	}
 
-	macro assignEntry {
+	macro assertStepNotPresent {
+		AssertElementNotPresent(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD");
+	}
 
+	macro assertStepPresent {
+		AssertElementPresent(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD");
+	}
+
+	macro assignEntry {
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
 		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
-
 			Refresh();
 			Pause(locator1 = "3000");
 			Click(
@@ -59,47 +103,99 @@ definition {
 	}
 
 	macro clickBackButton {
-
 		Click(locator1 = "AppBuilderWorkflow#BACK_BUTTON");
 	}
 
-	macro clickOnSelectFormView {
+	macro clickOnAddNewActionButton {
+		Button.click(button = "Add New Action");
+	}
 
+	macro clickOnSelectFormView {
 		Click(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON");
 	}
 
 	macro clickOnSelectObject {
-
 		Click(locator1 = "AppBuilderWorkflow#SELECT_OBJECT_BUTTON");
 	}
 
 	macro clickOnSelectTableView {
-
 		Click(locator1 = "AppBuilderWorkflow#SELECT_TABLE_VIEW_BUTTON");
 	}
 
-	macro selectDataAndViews {
+	macro clickSaveButton {
+		Button.click(button = "Save");
+	}
 
-		Click(locator1 = "AppBuilderWorkflow#DATA_AND_VIEWS_BUTTON");
+	macro clickSaveButtonFromSaveAppModal {
+		Click(
+			key_buttonName = "Save",
+			locator1 = "AppBuilderWorkflow#SAVE_APP_MODAL_BUTTON");
+	}
+
+	macro clickStepConfigurationBackButton {
+		Click(locator1 = "AppBuilderWorkflow#STEP_CONFIGURATION_BACK_BUTTON");
+	}
+
+	macro defineActionName {
+		Type(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM_NAME_INPUT",
+			value1 = "${actionName}");
+	}
+
+	macro deleteStep {
+		Click(
+			key_step = "${step}",
+			locator1 = "AppBuilderWorkflow#STEP_CARD_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Delete Step");
+	}
+
+	macro gotoViaNotification {
+		Notifications.gotoNotifications();
+
+		if (isSet(user)) {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "${user} sent you a ${assetType} entry in the workflow.");
+		}
+		else {
+			AssertClick(
+				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+				value1 = "sent you a ${assetType} entry in the workflow.");
+		}
+	}
+
+	macro saveNewVersionedApp {
+		AppBuilderWorkflow.clickSaveButton();
+		AppBuilderWorkflow.clickSaveButtonFromSaveAppModal();
+		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Save");
+	}
+
+	macro selectActionsCard {
+		Click(locator1 = "AppBuilderWorkflow#ACTIONS_CARD");
+	}
+
+	macro selectDataAndViewsCard {
+		Click(locator1 = "AppBuilderWorkflow#DATA_AND_VIEWS_CARD");
 	}
 
 	macro selectFormView {
-
 		Click(
 			key_itemName = "${formViewName}",
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
 	macro selectObject {
-
 		Click(
 			key_objectName = "${objectName}",
 			locator1 = "AppBuilderWorkflow#OBJECT_ITEM");
 	}
 
 	macro selectStartStepDataAndViews {
+		AppBuilderWorkflow.selectStep(step = "Start");
 
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "${objectName}");
@@ -112,15 +208,13 @@ definition {
 	}
 
 	macro selectStep {
-
 		Click(
-			key_stepNumber = "${stepNumber}",
+			key_step = "${step}",
 			locator1 = "AppBuilderWorkflow#STEP_CARD");
 	}
 
 	macro selectStepAssignee {
-
-		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
+		AppBuilderWorkflow.selectStep(step = "${step}");
 
 		Click(locator1 = "AppBuilderWorkflow#SELECT_ASSIGNEE_FIELD");
 
@@ -130,10 +224,9 @@ definition {
 	}
 
 	macro selectStepSingleFormView {
+		AppBuilderWorkflow.selectStep(step = "${step}");
 
-		AppBuilderWorkflow.selectStep(stepNumber = "${stepNumber}");
-
-		AppBuilderWorkflow.selectDataAndViews();
+		AppBuilderWorkflow.selectDataAndViewsCard();
 
 		if (!(IsTextEqual.isPartialText(locator1 = "AppBuilderWorkflow#SELECT_FORM_VIEW_BUTTON_TEXT", value1 = "${formViewName}"))) {
 			AppBuilderWorkflow.clickOnSelectFormView();
@@ -146,14 +239,12 @@ definition {
 	}
 
 	macro selectTableView {
-
 		Click(
 			key_itemName = "${tableViewName}",
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
 	macro submit {
-
 		while (IsElementNotPresent(key_text = "Submit", locator1 = "Button#ANY")) {
 			Pause(locator1 = "3000");
 		}
@@ -162,23 +253,71 @@ definition {
 		AppBuilderWorkflow.waitForButtonNotPresent(buttonName = "Submit");
 	}
 
-	macro validateFormOrTableViewResultNotPresent {
+	macro validateActionNotPresent {
+		AssertElementNotPresent(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM");
+	}
 
+	macro validateActionPresent {
+		AssertElementPresent(
+			key_action = "${action}",
+			locator1 = "AppBuilderWorkflow#ACTION_ITEM");
+	}
+
+	macro validateActionsNamesInsideActionsCards {
+		AssertElementPresent(
+			key_action = "Primary Action",
+			key_actionName = "${primaryActionName}",
+			locator1 = "AppBuilderWorkflow#ACTION_NAME_INSIDE_ACTIONS_CARD");
+
+		if (isSet(secondaryActionName)) {
+			AssertElementPresent(
+				key_action = "Secondary Action",
+				key_actionName = "${secondaryActionName}",
+				locator1 = "AppBuilderWorkflow#ACTION_NAME_INSIDE_ACTIONS_CARD");
+		}
+	}
+
+	macro validateFormOrTableViewResultNotPresent {
 		AssertElementNotPresent(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
 	macro validateFormOrTableViewResultPresent {
-
 		AssertElementPresent(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilderWorkflow#FORM_OR_TABLE_VIEW_ITEM");
 	}
 
-	macro waitForButtonNotPresent {
+	macro verifyAssignToOption {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 
+		while (IsElementNotPresent(key_menuItem = "Assign to", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Refresh();
+			Pause(locator1 = "3000");
+			Click(
+				key_itemName = "${itemName}",
+				locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+		}
+
+		AssertTextEquals(
+			key_menuItem = "Assign to",
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Assign to");
+	}
+
+	macro waitForButtonNotPresent {
 		while (IsElementPresent(key_text = "${buttonName}", locator1 = "Button#ANY")) {
+			Pause(locator1 = "1000");
+		}
+	}
+
+	macro waitForButtonPresent {
+		while (IsElementNotPresent(key_text = "${buttonName}", locator1 = "Button#ANY")) {
 			Pause(locator1 = "1000");
 		}
 	}

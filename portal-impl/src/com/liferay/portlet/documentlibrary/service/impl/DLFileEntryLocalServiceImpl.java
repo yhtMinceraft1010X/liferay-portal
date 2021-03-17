@@ -1608,7 +1608,7 @@ public class DLFileEntryLocalServiceImpl
 			(DLFileEntry dlFileEntry) -> {
 				dlFileEntry.setTreePath(treePath);
 
-				updateDLFileEntry(dlFileEntry);
+				dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 
 				if (!reindex) {
 					return;

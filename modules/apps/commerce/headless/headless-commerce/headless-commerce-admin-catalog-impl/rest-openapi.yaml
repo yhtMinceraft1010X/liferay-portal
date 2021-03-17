@@ -674,8 +674,7 @@ components:
                     type: string
                 lowStockAction:
                     description:
-                        The low stock action that will be performed when a product
-                        is out of stock
+                        The low stock action that will be performed when a product is out of stock
                     type: string
                 maxOrderQuantity:
                     format: int32
@@ -1174,7 +1173,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '3.0.7'."
+        artifact ID 'com.liferay.headless.commerce.admin.catalog.client', and version '3.0.11'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

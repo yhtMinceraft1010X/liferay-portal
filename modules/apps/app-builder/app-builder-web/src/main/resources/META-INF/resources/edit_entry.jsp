@@ -18,6 +18,7 @@
 
 <%
 AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebKeys.APP);
+
 AppBuilderAppPortletTabContext appBuilderAppPortletTabContext = (AppBuilderAppPortletTabContext)request.getAttribute(AppBuilderWebKeys.APP_TAB_CONTEXT);
 
 List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
@@ -93,6 +94,8 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 										"dataListViewId", appBuilderApp.getDeDataListViewId()
 									).put(
 										"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
+									).put(
+										"portraitURL", request.getAttribute(AppBuilderWebKeys.APP_PORTRAIT_URL)
 									).put(
 										"redirect", ParamUtil.getString(request, "redirect")
 									).put(

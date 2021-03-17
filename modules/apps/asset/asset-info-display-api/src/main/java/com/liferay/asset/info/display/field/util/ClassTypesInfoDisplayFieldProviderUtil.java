@@ -54,10 +54,8 @@ public class ClassTypesInfoDisplayFieldProviderUtil {
 		ClassTypesInfoDisplayFieldProvider classTypesInfoDisplayFieldProvider =
 			_serviceTracker.getService();
 
-		ClassTypeReader classTypeReader = _getClassTypeReader(className);
-
 		return classTypesInfoDisplayFieldProvider.getClassTypes(
-			groupId, classTypeReader, locale);
+			groupId, _getClassTypeReader(className), locale);
 	}
 
 	private static ClassTypeReader _getClassTypeReader(String className) {

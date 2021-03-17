@@ -142,6 +142,11 @@ public class CommerceCheckoutTest {
 
 		User user = _company.getDefaultUser();
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.getGuestCommerceAccount(
 				_company.getCompanyId());
@@ -278,6 +283,11 @@ public class CommerceCheckoutTest {
 
 			User user = _company.getDefaultUser();
 
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
 			CommerceAccount commerceAccount =
 				_commerceAccountLocalService.getGuestCommerceAccount(
 					_company.getCompanyId());
@@ -321,6 +331,11 @@ public class CommerceCheckoutTest {
 			"The price list with the highest priority should be retrieved"
 		);
 
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
@@ -357,10 +372,8 @@ public class CommerceCheckoutTest {
 
 			BigDecimal price = commercePriceEntry.getPrice();
 
-			int quantity = commerceOrderItem.getQuantity();
-
 			BigDecimal totalItemPrice = price.multiply(
-				BigDecimal.valueOf(quantity));
+				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 
 			expectedSubtotal = expectedSubtotal.add(totalItemPrice);
 		}

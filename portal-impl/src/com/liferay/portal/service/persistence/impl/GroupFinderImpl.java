@@ -16,6 +16,8 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -43,6 +45,8 @@ import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.service.impl.GroupLocalServiceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -99,6 +103,12 @@ public class GroupFinderImpl
 
 	public static final String FIND_BY_C_PG_N_D =
 		GroupFinder.class.getName() + ".findByC_PG_N_D";
+
+	public static final FinderPath FINDER_PATH_FIND_BY_C_A = new FinderPath(
+		GroupPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		"GroupFinderImpl_findByC_A",
+		new String[] {Long.class.getName(), Boolean.class.getName()},
+		new String[] {"companyId", "active_"}, false);
 
 	public static final String JOIN_BY_ACTIVE =
 		GroupFinder.class.getName() + ".joinByActive";
@@ -339,6 +349,13 @@ public class GroupFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public Map<Serializable, Group> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return super.fetchByPrimaryKeys(primaryKeys);
 	}
 
 	@Override
@@ -690,6 +707,15 @@ public class GroupFinderImpl
 
 	@Override
 	public List<Long> findByC_A(long companyId, boolean active) {
+		Object[] finderArgs = {companyId, active};
+
+		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
+			FINDER_PATH_FIND_BY_C_A, finderArgs, null);
+
+		if (list != null) {
+			return list;
+		}
+
 		Session session = null;
 
 		try {
@@ -706,7 +732,12 @@ public class GroupFinderImpl
 			queryPos.add(companyId);
 			queryPos.add(active);
 
-			return sqlQuery.list(true);
+			list = sqlQuery.list(true);
+
+			FinderCacheUtil.putResult(
+				FINDER_PATH_FIND_BY_C_A, finderArgs, list);
+
+			return list;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

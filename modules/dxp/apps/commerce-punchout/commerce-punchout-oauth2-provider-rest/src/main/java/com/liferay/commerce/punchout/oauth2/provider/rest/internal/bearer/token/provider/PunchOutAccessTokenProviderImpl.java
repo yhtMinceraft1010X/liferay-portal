@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -160,7 +161,7 @@ public class PunchOutAccessTokenProviderImpl
 				PunchOutAccessToken punchOutAccessToken =
 					punchOutAccessTokenDelayed.getPunchOutAccessToken();
 
-				String tokenString = String.valueOf(
+				String tokenString = Base64.encodeToURL(
 					punchOutAccessToken.getToken());
 
 				if (token.equals(tokenString)) {
@@ -233,7 +234,8 @@ public class PunchOutAccessTokenProviderImpl
 			PunchOutAccessToken punchOutAccessToken =
 				punchOutAccessTokenDelayed.getPunchOutAccessToken();
 
-			String tokenString = String.valueOf(punchOutAccessToken.getToken());
+			String tokenString = Base64.encodeToURL(
+				punchOutAccessToken.getToken());
 
 			if (token.equals(tokenString)) {
 				return punchOutAccessToken;

@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANGLE_DOWN</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='${key_text}']</td>
 	<td></td>
@@ -706,6 +711,11 @@
 <tr>
 	<td>SIGN_IN</td>
 	<td>//button[contains(.,'Sign In')] | //button[contains(.,'Acceder')] | //button[contains(.,'Anmelden')] | //button[contains(.,'ログイン')] | //button[contains(.,'登录')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_INDICATOR</td>
+	<td>//button[contains(@class,'staging-indicator-button')]</td>
 	<td></td>
 </tr>
 <tr>

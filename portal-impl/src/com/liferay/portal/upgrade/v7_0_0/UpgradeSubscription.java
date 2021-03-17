@@ -217,6 +217,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 		).put(
 			Layout.class.getName(), "Layout,groupId,plid"
 		).put(
+			"com.liferay.calendar.model.CalendarBooking",
+			"CalendarBooking,groupId,calendarBookingId"
+		).put(
 			"com.liferay.message.boards.kernel.model.MBCategory",
 			"MBCategory,groupId,categoryId"
 		).put(
@@ -237,6 +240,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 		).put(
 			"com.liferay.portlet.dynamic.data.mapping.kernel.DDMStructure",
 			"DDMStructure,groupId,structureId"
+		).put(
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"JournalArticle,groupId,resourcePrimKey"
 		).put(
 			"com.liferay.portlet.journal.model.JournalFolder",
 			"JournalFolder,groupId,folderId"

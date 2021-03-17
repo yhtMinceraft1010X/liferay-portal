@@ -141,8 +141,14 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 
 		String groupLanguageIds = typeSettingsProperties.getProperty(PropsKeys.LOCALES);
 
+		Set<String> companyLanguageIds = SetUtil.fromArray(PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED));
+
 		if (groupLanguageIds != null) {
 			for (Locale currentLocale : LocaleUtil.fromLanguageIds(StringUtil.split(groupLanguageIds))) {
+				if (!companyLanguageIds.contains(LanguageUtil.getLanguageId(currentLocale))) {
+					continue;
+				}
+
 				leftList.add(new KeyValuePair(LanguageUtil.getLanguageId(currentLocale), currentLocale.getDisplayName(locale)));
 			}
 		}

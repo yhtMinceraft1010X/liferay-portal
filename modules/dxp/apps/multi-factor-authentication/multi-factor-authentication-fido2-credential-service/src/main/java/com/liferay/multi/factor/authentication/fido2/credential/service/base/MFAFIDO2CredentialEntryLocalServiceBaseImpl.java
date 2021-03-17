@@ -316,7 +316,6 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
-	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -336,7 +335,6 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 				(MFAFIDO2CredentialEntry)persistedModel);
 	}
 
-	@Override
 	public BasePersistence<MFAFIDO2CredentialEntry> getBasePersistence() {
 		return mfaFIDO2CredentialEntryPersistence;
 	}

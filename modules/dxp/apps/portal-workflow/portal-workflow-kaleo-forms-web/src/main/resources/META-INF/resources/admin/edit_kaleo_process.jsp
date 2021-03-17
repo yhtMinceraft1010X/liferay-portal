@@ -71,7 +71,7 @@ renderResponse.setTitle(title);
 	</clay:container-fluid>
 </c:if>
 
-<portlet:actionURL name="updateKaleoProcess" var="editKaleoProcessURL">
+<portlet:actionURL name="/kaleo_forms/update_kaleo_process" var="editKaleoProcessURL">
 	<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
 	<portlet:param name="redirect" value="<%= backPortletURL.toString() %>" />
 </portlet:actionURL>
@@ -115,7 +115,7 @@ renderResponse.setTitle(title);
 			if (form === event.form) {
 				Liferay.component('<portlet:namespace />KaleoFormsAdmin', function () {
 					return new Liferay.KaleoFormsAdmin({
-						currentURL: '<%= currentURL %>',
+						currentURL: '<%= HtmlUtil.escapeJS(currentURL) %>',
 						form: form,
 						kaleoProcessId: <%= kaleoProcessId %>,
 						namespace: '<portlet:namespace />',

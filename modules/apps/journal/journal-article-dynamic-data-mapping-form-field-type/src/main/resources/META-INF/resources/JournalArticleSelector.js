@@ -103,6 +103,10 @@ const JournalArticleSelector = ({
 					</ClayInput.GroupItem>
 				)}
 			</ClayInput.Group>
+
+			{article.message && (
+				<div className="form-feedback-item">{article.message}</div>
+			)}
 		</ClayForm.Group>
 	);
 };

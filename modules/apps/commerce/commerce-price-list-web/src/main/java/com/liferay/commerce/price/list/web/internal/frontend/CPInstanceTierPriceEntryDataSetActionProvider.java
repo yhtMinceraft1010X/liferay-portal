@@ -18,6 +18,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.price.list.web.internal.frontend.constants.CommercePriceListDataSetConstants;
 import com.liferay.commerce.price.list.web.internal.model.InstanceTierPriceEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -117,7 +118,8 @@ public class CPInstanceTierPriceEntryDataSetActionProvider
 			_portal.getCurrentURL(httpServletRequest));
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "editCPInstanceCommerceTierPriceEntry");
+			ActionRequest.ACTION_NAME,
+			"/cp_definitions/edit_cp_instance_commerce_tier_price_entry");
 		portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
@@ -151,7 +153,8 @@ public class CPInstanceTierPriceEntryDataSetActionProvider
 			PortletProvider.Action.MANAGE);
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editCPInstanceCommerceTierPriceEntry");
+			"mvcRenderCommandName",
+			"/cp_definitions/edit_cp_instance_commerce_tier_price_entry");
 		portletURL.setParameter(
 			"redirect", _portal.getCurrentURL(httpServletRequest));
 		portletURL.setParameter(

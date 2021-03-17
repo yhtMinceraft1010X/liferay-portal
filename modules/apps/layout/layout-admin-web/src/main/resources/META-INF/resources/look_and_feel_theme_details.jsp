@@ -45,7 +45,16 @@ else {
 }
 
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
+
+String stylebookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningMessage();
 %>
+
+<c:if test="<%= Validator.isNotNull(stylebookWarningMessage) %>">
+	<clay:alert
+		displayType="info"
+		message="<%= stylebookWarningMessage %>"
+	/>
+</c:if>
 
 <aui:input name="regularThemeId" type="hidden" value="<%= selTheme.getThemeId() %>" />
 <aui:input name="regularColorSchemeId" type="hidden" value="<%= selColorScheme.getColorSchemeId() %>" />
@@ -156,9 +165,11 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 	for (Map.Entry<String, ThemeSetting> entry : configurableSettings.entrySet()) {
 		String name = LanguageUtil.get(selThemeResourceBundle, entry.getKey());
+
 		ThemeSetting themeSetting = entry.getValue();
 
 		String type = GetterUtil.getString(themeSetting.getType(), "text");
+
 		String value = StringPool.BLANK;
 
 		if (useDefaultThemeSettings) {

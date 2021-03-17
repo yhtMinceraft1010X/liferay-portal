@@ -153,37 +153,25 @@ public class JournalTestUtil {
 			long groupId, long folderId, long classNameId, String articleId,
 			boolean autoArticleId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
-			String layoutUuid, Locale defaultLocale, Date expirationDate,
-			boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return addArticle(
-			groupId, folderId, classNameId, articleId, autoArticleId, titleMap,
-			descriptionMap, contentMap, layoutUuid, defaultLocale, null,
-			expirationDate, workflowEnabled, approved, serviceContext);
-	}
-
-	public static JournalArticle addArticle(
-			long groupId, long folderId, long classNameId, String articleId,
-			boolean autoArticleId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
-			String layoutUuid, Locale defaultLocale, Date displayDate,
-			Date expirationDate, boolean workflowEnabled, boolean approved,
-			ServiceContext serviceContext)
+			DDMStructure ddmStructure, String layoutUuid, Locale defaultLocale,
+			Date displayDate, Date expirationDate, boolean workflowEnabled,
+			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
-		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
-			_locales, defaultLocale);
-
 		long ddmGroupId = GetterUtil.getLong(
 			serviceContext.getAttribute("ddmGroupId"), groupId);
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			ddmGroupId, JournalArticle.class.getName(), ddmForm, defaultLocale);
+		if (ddmStructure == null) {
+			DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+				_locales, defaultLocale);
+
+			ddmStructure = DDMStructureTestUtil.addStructure(
+				ddmGroupId, JournalArticle.class.getName(), ddmForm,
+				defaultLocale);
+		}
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			ddmGroupId, ddmStructure.getStructureId(),
@@ -249,6 +237,37 @@ public class JournalTestUtil {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0, 0,
 			0, true, true, false, null, null, null, null, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String articleId,
+			boolean autoArticleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
+			String layoutUuid, Locale defaultLocale, Date expirationDate,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, classNameId, articleId, autoArticleId, titleMap,
+			descriptionMap, contentMap, layoutUuid, defaultLocale, null,
+			expirationDate, workflowEnabled, approved, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String articleId,
+			boolean autoArticleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
+			String layoutUuid, Locale defaultLocale, Date displayDate,
+			Date expirationDate, boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, classNameId, articleId, autoArticleId, titleMap,
+			descriptionMap, contentMap, null, layoutUuid, defaultLocale,
+			displayDate, expirationDate, workflowEnabled, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(

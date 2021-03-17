@@ -636,6 +636,9 @@ public interface PropsKeys {
 	public static final String CONTROL_PANEL_NAVIGATION_MAX_SITES =
 		"control.panel.navigation.max.sites";
 
+	public static final String CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK =
+		"cors.disable.authorization.context.check";
+
 	public static final String COUNTER_DATA_CENTER_COUNT =
 		"counter.data.center.count";
 
@@ -654,6 +657,78 @@ public interface PropsKeys {
 
 	public static final String CUSTOM_SQL_FUNCTION_ISNULL =
 		"custom.sql.function.isnull";
+
+	public static final String DATA_LIMIT_MAIL_MESSAGE_MAX_COUNT =
+		"data.limit.mail.message.max.count";
+
+	public static final String DATA_LIMIT_MAIL_MESSAGE_MAX_PERIOD =
+		"data.limit.mail.message.max.period";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT =
+		"data.limit.max.journal.article.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT =
+		"data.limit.max.journal.folder.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_COUNT =
+		"data.limit.max.mail.message.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_PERIOD =
+		"data.limit.max.mail.message.period";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
+		"data.limit.max.organization.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_ROLE_COUNT =
+		"data.limit.max.role.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_SITE_COUNT =
+		"data.limit.max.site.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_TEAM_COUNT =
+		"data.limit.max.team.count";
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final String DATA_LIMIT_MAX_USER_COUNT =
+		"data.limit.max.user.count";
+
+	public static final String DATA_LIMIT_SITE_MAX_COUNT =
+		"data.limit.site.max.count";
 
 	public static final String DATABASE_IN_MAX_PARAMETERS =
 		"database.in.max.parameters";
@@ -1054,6 +1129,10 @@ public interface PropsKeys {
 	public static final String DL_STORE_ANTIVIRUS_ENABLED =
 		"dl.store.antivirus.enabled";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DL_STORE_ANTIVIRUS_IMPL =
 		"dl.store.antivirus.impl";
 
@@ -2015,6 +2094,9 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_EXPORT_PASSWORD_ATTRIBUTES =
 		"module.framework.export.password.attributes";
 
+	public static final String MODULE_FRAMEWORK_FILE_INSTALL_CFG_ENABLED =
+		"module.framework.file.install.cfg.enabled";
+
 	public static final String MODULE_FRAMEWORK_MARKETPLACE_DIR =
 		"module.framework.marketplace.dir";
 
@@ -2649,6 +2731,9 @@ public interface PropsKeys {
 
 	public static final String RECENT_CONTENT_MAX_DISPLAY_ITEMS =
 		"recent.content.max.display.items";
+
+	public static final String RECENT_GROUPS_MAX_ELEMENTS =
+		"recent.groups.max.elements";
 
 	public static final String REDIRECT_URL_DOMAINS_ALLOWED =
 		"redirect.url.domains.allowed";
@@ -3308,6 +3393,9 @@ public interface PropsKeys {
 	public static final String USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED =
 		"users.reminder.queries.custom.question.enabled";
 
+	public static final String USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT =
+		"users.reminder.queries.display.answer.in.plain.text";
+
 	public static final String USERS_REMINDER_QUERIES_ENABLED =
 		"users.reminder.queries.enabled";
 
@@ -3400,6 +3488,12 @@ public interface PropsKeys {
 	@Deprecated
 	public static final String VERIFY_PROCESSES = "verify.processes";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.view.count.configuration.ViewCountsConfiguration
+	 *             #enabled()}
+	 */
+	@Deprecated
 	public static final String VIEW_COUNT_ENABLED = "view.count.enabled";
 
 	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME =

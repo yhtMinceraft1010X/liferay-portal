@@ -54,7 +54,7 @@ public class JournalArticleContentDashboardItemFactory
 
 		AssetEntry assetEntry = null;
 
-		if (!journalArticle.isApproved() &&
+		if (!journalArticle.isApproved() && !journalArticle.isExpired() &&
 			(journalArticle.getVersion() !=
 				JournalArticleConstants.VERSION_DEFAULT)) {
 
@@ -65,6 +65,12 @@ public class JournalArticleContentDashboardItemFactory
 			assetEntry = _assetEntryLocalService.fetchEntry(
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey());
+		}
+
+		if (assetEntry == null) {
+			throw new NoSuchModelException(
+				"Unable to find an asset entry for journal article " +
+					journalArticle.getPrimaryKey());
 		}
 
 		Optional<ContentDashboardItemTypeFactory>

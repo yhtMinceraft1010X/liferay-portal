@@ -135,6 +135,14 @@ definition {
 		}
 	}
 
+	macro assertReportEntryPresent {
+		var key_reportsDefinitionName = "${reportsDefinitionName}";
+
+		AssertElementPresent(
+			locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME",
+			value1 = "${reportsDefinitionName}");
+	}
+
 	macro configureDeliveryEmail {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL",
@@ -146,7 +154,7 @@ definition {
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(
+		Type.typeCodeMirrorEditorNoError(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 			value1 = "${deliveryBody}");
 
@@ -322,7 +330,7 @@ Sincerely,<br />
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(
+		Type.typeCodeMirrorEditorNoError(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 			value1 = "${deliveryBody}");
 

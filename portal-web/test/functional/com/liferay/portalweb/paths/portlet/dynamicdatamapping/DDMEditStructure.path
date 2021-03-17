@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>FIELDS_FIELD</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
+	<td>//li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,7 +134,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//ul[contains(@class,'property-builder-fields-container')]</td>
+	<td>//div[contains(@class,'property-builder-content-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -234,6 +234,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'component btn-toolbar')]//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SELECT_FIELD</td>
+	<td>//div[contains(@class,'celleditor-focused')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_CELL_EDITOR_OPTIONS_NAME_1</td>
 	<td>//div[contains(@class,'celleditor-edit-option-row')][1]//input[contains(@class,'celleditor-edit-input-name')]</td>
 	<td></td>
@@ -261,6 +271,11 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_OPTIONS_VALUE_3</td>
 	<td>xPath=(//div[contains(@class,'celleditor-edit-option-row')])[3]//input[contains(@class,'celleditor-edit-input-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_WEB_CONTENT_ARTICLE_CONTENT</td>
+	<td>//form[contains(@class,'journal-article-cell-editor-content')]/span</td>
 	<td></td>
 </tr>
 <tr>

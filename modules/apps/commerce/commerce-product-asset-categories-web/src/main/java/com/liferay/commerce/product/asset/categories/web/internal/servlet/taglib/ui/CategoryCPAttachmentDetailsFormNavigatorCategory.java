@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.asset.categories.web.internal.servlet.taglib.ui.constants.CategoryCPAttachmentFormNavigatorConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 

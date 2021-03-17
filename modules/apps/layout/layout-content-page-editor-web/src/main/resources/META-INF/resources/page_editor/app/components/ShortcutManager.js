@@ -43,6 +43,9 @@ const ctrlOrMeta = (event) =>
 const isEditableField = (element) =>
 	!!closest(element, '.page-editor__editable');
 
+const isEditingEditableField = () =>
+	!!document.activeElement.getAttribute('contenteditable');
+
 const isInteractiveElement = (element) => {
 	return (
 		['INPUT', 'OPTION', 'SELECT', 'TEXTAREA'].includes(element.tagName) ||
@@ -201,7 +204,8 @@ export default function ShortcutManager() {
 			canBeExecuted: (event) =>
 				(isEditableField(event.target) ||
 					!isInteractiveElement(event.target)) &&
-				!isWithinIframe(),
+				!isWithinIframe() &&
+				!isEditingEditableField(),
 			isKeyCombination: (event) =>
 				ctrlOrMeta(event) &&
 				event.keyCode === Z_KEYCODE &&
@@ -233,9 +237,12 @@ export default function ShortcutManager() {
 	}, []);
 
 	return (
-		<SaveFragmentCompositionModal
-			onCloseModal={() => setOpenSaveModal(false)}
-			open={openSaveModal}
-		/>
+		<>
+			{openSaveModal && (
+				<SaveFragmentCompositionModal
+					onCloseModal={() => setOpenSaveModal(false)}
+				/>
+			)}
+		</>
 	);
 }

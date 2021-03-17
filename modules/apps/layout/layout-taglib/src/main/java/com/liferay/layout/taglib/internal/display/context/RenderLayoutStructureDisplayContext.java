@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.FrontendTokenMapping;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -130,7 +131,9 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
-		if (collectionJSONObject.length() <= 0) {
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
 			return Collections.emptyList();
 		}
 
@@ -167,8 +170,17 @@ public class RenderLayoutStructureDisplayContext {
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if ((collectionJSONObject == null) ||
+			(collectionJSONObject.length() <= 0)) {
+
+			return null;
+		}
+
 		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionStyledLayoutStructureItem.getCollectionJSONObject());
+			collectionJSONObject);
 
 		if (listObjectReference == null) {
 			return null;
@@ -708,7 +720,10 @@ public class RenderLayoutStructureDisplayContext {
 			return styleValue;
 		}
 
-		return "var(--" + styleValueJSONObject.getString("cssVariable") + ")";
+		String cssVariable = styleValueJSONObject.getString(
+			FrontendTokenMapping.TYPE_CSS_VARIABLE);
+
+		return "var(--" + cssVariable + ")";
 	}
 
 	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
@@ -837,9 +852,15 @@ public class RenderLayoutStructureDisplayContext {
 
 		_frontendTokensJSONObject = JSONFactoryUtil.createJSONObject();
 
-		StyleBookEntry styleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+		StyleBookEntry styleBookEntry = null;
+
+		boolean styleBookEntryPreview = ParamUtil.getBoolean(
+			_httpServletRequest, "styleBookEntryPreview");
+
+		if (!styleBookEntryPreview) {
+			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 				_themeDisplay.getLayout());
+		}
 
 		JSONObject frontendTokenValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -898,7 +919,7 @@ public class RenderLayoutStructureDisplayContext {
 
 						if (Objects.equals(
 								mappingJSONObject.getString("type"),
-								"cssVariable")) {
+								FrontendTokenMapping.TYPE_CSS_VARIABLE)) {
 
 							cssVariable = mappingJSONObject.getString("value");
 						}
@@ -922,7 +943,7 @@ public class RenderLayoutStructureDisplayContext {
 					_frontendTokensJSONObject.put(
 						name,
 						JSONUtil.put(
-							"cssVariable", cssVariable
+							FrontendTokenMapping.TYPE_CSS_VARIABLE, cssVariable
 						).put(
 							"value", value
 						));

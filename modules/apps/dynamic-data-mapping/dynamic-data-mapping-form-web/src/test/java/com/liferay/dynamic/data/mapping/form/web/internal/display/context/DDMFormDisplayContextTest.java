@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -55,6 +58,8 @@ import java.util.Set;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -63,6 +68,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -73,7 +79,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest(LocaleUtil.class)
+@PrepareForTest({LocaleUtil.class, PortletPermissionUtil.class})
 @RunWith(PowerMockRunner.class)
 public class DDMFormDisplayContextTest extends PowerMockito {
 
@@ -303,6 +309,42 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		Assert.assertTrue(createDDMFormDisplayContext.isFormShared());
 	}
 
+	@Test
+	public void testIsShowIconInEditMode() throws Exception {
+		_mockHttpServletRequest.addParameter("p_l_mode", Constants.EDIT);
+
+		DDMFormDisplayContext ddmFormDisplayContext = createSpy(
+			false, false, false);
+
+		Assert.assertFalse(ddmFormDisplayContext.isShowConfigurationIcon());
+	}
+
+	@Test
+	public void testIsShowIconInPreview() throws Exception {
+		DDMFormDisplayContext ddmFormDisplayContext = createSpy(
+			false, true, false);
+
+		Assert.assertFalse(ddmFormDisplayContext.isShowConfigurationIcon());
+	}
+
+	@Test
+	public void testIsShowIconWithPermission() throws Exception {
+		mockPortletPermissionUtil();
+
+		DDMFormDisplayContext ddmFormDisplayContext = createSpy(
+			false, false, true);
+
+		Assert.assertTrue(ddmFormDisplayContext.isShowConfigurationIcon());
+	}
+
+	@Test
+	public void testIsShowIconWithSharedForm() throws Exception {
+		DDMFormDisplayContext ddmFormDisplayContext = createSpy(
+			true, false, true);
+
+		Assert.assertFalse(ddmFormDisplayContext.isShowConfigurationIcon());
+	}
+
 	protected DDMForm createDDMForm(
 		Set<Locale> availableLocales, Locale locale) {
 
@@ -337,6 +379,34 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMStorageAdapterTracker.class), mock(GroupLocalService.class),
 			new JSONFactoryImpl(),
 			mock(WorkflowDefinitionLinkLocalService.class), mock(Portal.class));
+	}
+
+	protected DDMFormDisplayContext createSpy(
+			boolean formShared, boolean preview, boolean sharedURL)
+		throws PortalException {
+
+		DDMFormDisplayContext ddmFormDisplayContext = spy(
+			createDDMFormDisplayContext());
+
+		Mockito.doReturn(
+			formShared
+		).when(
+			ddmFormDisplayContext
+		).isFormShared();
+
+		Mockito.doReturn(
+			preview
+		).when(
+			ddmFormDisplayContext
+		).isPreview();
+
+		Mockito.doReturn(
+			sharedURL
+		).when(
+			ddmFormDisplayContext
+		).isSharedURL();
+
+		return ddmFormDisplayContext;
 	}
 
 	protected DDMFormInstance mockDDMFormInstance() throws PortalException {
@@ -376,6 +446,19 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		);
 
 		return ddmFormInstanceSettings;
+	}
+
+	protected void mockPortletPermissionUtil() throws PortalException {
+		mockStatic(PortletPermissionUtil.class);
+
+		when(
+			PortletPermissionUtil.contains(
+				Matchers.any(PermissionChecker.class),
+				Matchers.any(Layout.class), Matchers.anyString(),
+				Matchers.anyString())
+		).thenReturn(
+			true
+		);
 	}
 
 	protected MockRenderRequest mockRenderRequest() {
@@ -469,6 +552,13 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		).thenReturn(
 			_request
 		);
+
+		when(
+			PortalUtil.getOriginalServletRequest(
+				Matchers.any(HttpServletRequest.class))
+		).thenReturn(
+			_mockHttpServletRequest
+		);
 	}
 
 	@Mock
@@ -482,6 +572,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Mock
 	private Language _language;
+
+	private final MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
 
 	@Mock
 	private MockHttpServletRequest _request;

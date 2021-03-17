@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=cpOption"
+		"mvc.command.name=/cp_options/edit_cp_option"
 	},
 	service = MVCRenderCommand.class
 )
@@ -66,7 +66,7 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(exception);
 		}
 
-		return "/edit_option.jsp";
+		return "/edit_cp_option.jsp";
 	}
 
 	@Reference

@@ -24,6 +24,7 @@ WikiPortletInstanceConfiguration wikiPortletInstanceConfiguration = wikiRequestH
 boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);
 
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 WikiPage originalPage = null;
@@ -154,11 +155,15 @@ if (portletTitleBasedNavigation) {
 					<c:choose>
 						<c:when test="<%= print %>">
 							<aui:script>
-								print();
-
-								setTimeout(function () {
+								window.onafterprint = function () {
 									window.close();
-								}, 100);
+								};
+
+								window.onfocus = function () {
+									window.close();
+								};
+
+								print();
 							</aui:script>
 						</c:when>
 						<c:otherwise>
@@ -192,21 +197,6 @@ if (portletTitleBasedNavigation) {
 				catch (Exception e) {
 					formattedContent = wikiPage.getContent();
 				}
-
-				Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-					"assetEntry", layoutAssetEntry
-				).put(
-					"formattedContent", formattedContent
-				).put(
-					"viewURL", viewPageURL.toString()
-				).put(
-					"wikiPortletInstanceConfiguration", wikiPortletInstanceConfiguration
-
-				// Deprecated
-
-				).put(
-					"wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceConfiguration
-				).build();
 				%>
 
 				<c:if test="<%= !portletTitleBasedNavigation %>">
@@ -215,7 +205,19 @@ if (portletTitleBasedNavigation) {
 
 				<liferay-ddm:template-renderer
 					className="<%= WikiPage.class.getName() %>"
-					contextObjects="<%= contextObjects %>"
+					contextObjects='<%=
+						HashMapBuilder.<String, Object>put(
+							"assetEntry", layoutAssetEntry
+						).put(
+							"formattedContent", formattedContent
+						).put(
+							"viewURL", viewPageURL.toString()
+						).put(
+							"wikiPortletInstanceConfiguration", wikiPortletInstanceConfiguration
+						).put(
+							"wikiPortletInstanceOverriddenConfiguration", wikiPortletInstanceConfiguration
+						).build()
+					%>'
 					displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>"
 					displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"
 					entries="<%= entries %>"
@@ -415,6 +417,7 @@ if (portletTitleBasedNavigation) {
 						description = StringUtil.shorten(description, 200);
 
 						PortalUtil.setPageDescription(description, request);
+
 						PortalUtil.setPageKeywords(assetHelper.getAssetKeywords(WikiPage.class.getName(), wikiPage.getResourcePrimKey()), request);
 					}
 

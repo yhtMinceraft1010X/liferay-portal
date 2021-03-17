@@ -132,6 +132,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		List<ConflictInfo> conflictInfos = new ArrayList<>();
 
+		_checkAdditions(
+			connection, ctPersistence, conflictInfos, primaryKeyName);
+
 		if (_modificationCTEntries != null) {
 			_checkModifications(
 				connection, ctPersistence, conflictInfos, primaryKeyName);
@@ -153,6 +156,34 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		return conflictInfos;
 	}
 
+	private void _checkAdditions(
+		Connection connection, CTPersistence<T> ctPersistence,
+		List<ConflictInfo> conflictInfos, String primaryKeyName) {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select ", ctPersistence.getTableName(), ".",
+					primaryKeyName, " from ", ctPersistence.getTableName(),
+					" inner join CTEntry on CTEntry.modelClassPK = ",
+					ctPersistence.getTableName(), ".", primaryKeyName,
+					" where CTEntry.ctCollectionId = ", _sourceCTCollectionId,
+					" and CTEntry.modelClassNameId = ", _modelClassNameId,
+					" and CTEntry.changeType = ",
+					CTConstants.CT_CHANGE_TYPE_ADDITION, " and ",
+					ctPersistence.getTableName(), ".ctCollectionId = ",
+					_targetCTCollectionId));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				conflictInfos.add(
+					new AdditionConflictInfo(resultSet.getLong(1)));
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(sqlException);
+		}
+	}
+
 	private void _checkConstraint(
 			Connection connection, CTPersistence<T> ctPersistence,
 			List<ConflictInfo> conflictInfos, String primaryKeyName,
@@ -161,7 +192,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(
 			ctPersistence.getTableName(), primaryKeyName, columnNames,
-			_sourceCTCollectionId, _targetCTCollectionId, true);
+			_sourceCTCollectionId, _targetCTCollectionId);
 
 		List<Map.Entry<Long, Long>> nextPrimaryKeys =
 			_getConflictingPrimaryKeys(connection, constraintConflictsSQL);
@@ -383,7 +414,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				}
 			}
 			catch (SQLException sqlException) {
-				throw new ORMException(sqlException);
+				throw new ORMException(
+					"Unable to execute query: " + dslQuery, sqlException);
 			}
 		}
 	}

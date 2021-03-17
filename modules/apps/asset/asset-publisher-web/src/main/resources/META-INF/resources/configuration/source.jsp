@@ -32,9 +32,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
 
 	for (long classNameId : classNameIds) {
-		String className = PortalUtil.getClassName(classNameId);
-
-		typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className)));
+		typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
 	}
 
 	// Right list
@@ -479,18 +477,17 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		'<portlet:namespace />ddmStructureFieldValue'
 	);
 
-	if (
-		assetSelector &&
-		ddmStructureFieldNameInput &&
-		ddmStructureFieldValueInput
-	) {
-		assetSelector.addEventListener('change', function (event) {
+	assetSelector.addEventListener('change', function (event) {
+		if (ddmStructureFieldNameInput) {
 			ddmStructureFieldNameInput.value = '';
-			ddmStructureFieldValueInput.value = '';
+		}
 
-			<portlet:namespace />toggleSubclasses(true);
-		});
-	}
+		if (ddmStructureFieldValueInput) {
+			ddmStructureFieldValueInput.value = '';
+		}
+
+		<portlet:namespace />toggleSubclasses(true);
+	});
 
 	dom.delegate(
 		sourcePanel,

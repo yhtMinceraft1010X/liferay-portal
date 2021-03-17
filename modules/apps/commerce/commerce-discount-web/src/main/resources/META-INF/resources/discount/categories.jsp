@@ -18,11 +18,9 @@
 
 <%
 CommerceDiscountRelDisplayContext commerceDiscountRelDisplayContext = (CommerceDiscountRelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-String assetCategoryIds = commerceDiscountRelDisplayContext.getAssetCategoryIds();
 %>
 
-<portlet:actionURL name="editCommerceDiscountRel" var="editCommerceDiscountRelActionURL" />
+<portlet:actionURL name="/commerce_discount/edit_commerce_discount_rel" var="editCommerceDiscountRelActionURL" />
 
 <aui:form action="<%= editCommerceDiscountRelActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
@@ -38,7 +36,7 @@ String assetCategoryIds = commerceDiscountRelDisplayContext.getAssetCategoryIds(
 				<h4><liferay-ui:message key="select-categories" /></h4>
 
 				<liferay-asset:asset-categories-selector
-					categoryIds="<%= assetCategoryIds %>"
+					categoryIds="<%= commerceDiscountRelDisplayContext.getAssetCategoryIds() %>"
 					hiddenInput="classPKs"
 				/>
 			</aui:fieldset>

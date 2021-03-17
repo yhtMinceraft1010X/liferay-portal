@@ -52,10 +52,10 @@ public class ServiceConfigurationInitializer {
 		_classLoader = classLoader;
 		_portletConfiguration = portletConfiguration;
 		_serviceConfiguration = serviceConfiguration;
-
-		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
 		_resourceActions = resourceActions;
 		_serviceComponentLocalService = serviceComponentLocalService;
+
+		_serviceComponentConfiguration = new ModuleResourceLoader(bundle);
 	}
 
 	public void stop() {
@@ -126,27 +126,11 @@ public class ServiceConfigurationInitializer {
 
 	private void _readResourceActions() {
 		try {
-			String portlets = _portletConfiguration.get(
-				"service.configurator.portlet.ids");
-
-			if (Validator.isNull(portlets)) {
-				_resourceActions.readAndCheck(
-					null, _classLoader,
-					StringUtil.split(
-						_portletConfiguration.get(
-							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
-			}
-			else {
-				_resourceActions.read(
-					null, _classLoader,
-					StringUtil.split(
-						_portletConfiguration.get(
-							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
-
-				for (String portletId : StringUtil.split(portlets)) {
-					_resourceActions.check(portletId);
-				}
-			}
+			_resourceActions.readAndCheck(
+				_classLoader,
+				StringUtil.split(
+					_portletConfiguration.get(
+						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
 		}
 		catch (Exception exception) {
 			_log.error(

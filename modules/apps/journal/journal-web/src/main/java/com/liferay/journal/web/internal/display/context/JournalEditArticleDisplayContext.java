@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -90,14 +91,11 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getArticleId() {
-		if (_articleId != null) {
-			return _articleId;
+		if (_article == null) {
+			return null;
 		}
 
-		_articleId = BeanParamUtil.getString(
-			_article, _httpServletRequest, "articleId");
-
-		return _articleId;
+		return _article.getArticleId();
 	}
 
 	public Set<Locale> getAvailableLocales() {
@@ -145,13 +143,17 @@ public class JournalEditArticleDisplayContext {
 			() -> {
 				Map<String, Object> strings = new HashMap<>();
 
-				for (Locale availableLocale : getAvailableLocales()) {
+				Set<Locale> locales = new HashSet<>(getAvailableLocales());
+
+				locales.add(
+					LocaleUtil.fromLanguageId(getDefaultArticleLanguageId()));
+
+				for (Locale locale : locales) {
 					strings.put(
-						LocaleUtil.toLanguageId(availableLocale),
+						LocaleUtil.toLanguageId(locale),
 						StringBundler.concat(
-							availableLocale.getDisplayLanguage(),
-							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-							availableLocale.getCountry(),
+							locale.getDisplayLanguage(), StringPool.SPACE,
+							StringPool.OPEN_PARENTHESIS, locale.getCountry(),
 							StringPool.CLOSE_PARENTHESIS));
 				}
 
@@ -342,6 +344,10 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getDefaultArticleLanguageId() {
+		if (_defaultArticleLanguageId != null) {
+			return _defaultArticleLanguageId;
+		}
+
 		Locale siteDefaultLocale = null;
 
 		try {
@@ -353,12 +359,16 @@ public class JournalEditArticleDisplayContext {
 			siteDefaultLocale = LocaleUtil.getSiteDefault();
 		}
 
-		if (_article == null) {
-			return LocaleUtil.toLanguageId(siteDefaultLocale);
+		if (Validator.isNull(getArticleId())) {
+			_defaultArticleLanguageId = LocaleUtil.toLanguageId(
+				siteDefaultLocale);
+		}
+		else {
+			_defaultArticleLanguageId = LocalizationUtil.getDefaultLanguageId(
+				_article.getContent(), siteDefaultLocale);
 		}
 
-		return LocalizationUtil.getDefaultLanguageId(
-			_article.getContent(), siteDefaultLocale);
+		return _defaultArticleLanguageId;
 	}
 
 	public String getEditArticleURL() {
@@ -777,7 +787,6 @@ public class JournalEditArticleDisplayContext {
 		JournalEditArticleDisplayContext.class);
 
 	private JournalArticle _article;
-	private String _articleId;
 	private Set<Locale> _availableLocales;
 	private Boolean _changeStructure;
 	private Long _classNameId;
@@ -787,6 +796,7 @@ public class JournalEditArticleDisplayContext {
 	private String _ddmStructureKey;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
+	private String _defaultArticleLanguageId;
 	private String _defaultLanguageId;
 	private Long _folderId;
 	private Long _groupId;

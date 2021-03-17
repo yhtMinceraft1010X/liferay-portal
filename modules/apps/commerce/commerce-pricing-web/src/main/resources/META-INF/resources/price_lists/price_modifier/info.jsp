@@ -40,7 +40,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 }
 %>
 
-<portlet:actionURL name="editCommercePriceModifier" var="editCommercePriceModifierActionURL" />
+<portlet:actionURL name="/commerce_price_list/edit_commerce_price_modifier" var="editCommercePriceModifierActionURL" />
 
 <aui:form action="<%= editCommercePriceModifierActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

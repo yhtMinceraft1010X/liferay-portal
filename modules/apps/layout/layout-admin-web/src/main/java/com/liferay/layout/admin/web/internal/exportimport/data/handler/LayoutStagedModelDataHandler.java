@@ -573,7 +573,9 @@ public class LayoutStagedModelDataHandler
 			existingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 				uuid, groupId, privateLayout);
 
-			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout)) {
+			if (SitesUtil.isLayoutModifiedSinceLastMerge(existingLayout) ||
+				!_isLayoutOutdated(existingLayout, layout)) {
+
 				layouts.put(oldLayoutId, existingLayout);
 
 				return;
@@ -1475,32 +1477,8 @@ public class LayoutStagedModelDataHandler
 			layout.getPrimaryKey(), importedLayout.getPrimaryKey());
 
 		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
-			String path = friendlyURLEntryElement.attributeValue("path");
-
-			FriendlyURLEntry friendlyURLEntry =
-				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
-
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, friendlyURLEntryElement);
-
-			Map<Long, Long> friendlyURLEntries =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					FriendlyURLEntry.class);
-
-			long friendlyURLEntryId = MapUtil.getLong(
-				friendlyURLEntries, friendlyURLEntry.getFriendlyURLEntryId(),
-				friendlyURLEntry.getFriendlyURLEntryId());
-
-			FriendlyURLEntry existingFriendlyURLEntry =
-				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-					friendlyURLEntryId);
-
-			if (existingFriendlyURLEntry != null) {
-				existingFriendlyURLEntry.setClassPK(importedLayout.getPlid());
-
-				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
-					existingFriendlyURLEntry);
-			}
 		}
 	}
 
@@ -1515,15 +1493,8 @@ public class LayoutStagedModelDataHandler
 		for (Element layoutClassedModelUsageElement :
 				layoutClassedModelUsageElements) {
 
-			String layoutClassedModelUsagePath =
-				layoutClassedModelUsageElement.attributeValue("path");
-
-			LayoutClassedModelUsage layoutClassedModelUsage =
-				(LayoutClassedModelUsage)portletDataContext.getZipEntryAsObject(
-					layoutClassedModelUsagePath);
-
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutClassedModelUsage);
+				portletDataContext, layoutClassedModelUsageElement);
 		}
 	}
 
@@ -1565,9 +1536,7 @@ public class LayoutStagedModelDataHandler
 
 		if (ArrayUtil.isNotEmpty(iconBytes)) {
 			if (importedLayout.getIconImageId() == 0) {
-				long iconImageId = _counterLocalService.increment();
-
-				importedLayout.setIconImageId(iconImageId);
+				importedLayout.setIconImageId(_counterLocalService.increment());
 			}
 
 			_imageLocalService.updateImage(
@@ -2336,11 +2305,16 @@ public class LayoutStagedModelDataHandler
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), layout.getPlid());
 
-		if (layoutPageTemplateStructure != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutPageTemplateStructure,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		if (layoutPageTemplateStructure == null) {
+			layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					rebuildLayoutPageTemplateStructure(
+						layout.getGroupId(), layout.getPlid());
 		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layout, layoutPageTemplateStructure,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 	}
 
 	private void _exportMasterLayout(
@@ -2405,6 +2379,26 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return layout.getLayoutPrototypeUuid();
+	}
+
+	private boolean _isLayoutOutdated(Layout existingLayout, Layout layout) {
+		if ((existingLayout == null) || (layout == null)) {
+			return true;
+		}
+
+		Date existingLayoutModifiedDate = existingLayout.getModifiedDate();
+		long lastMergeTime = GetterUtil.getLong(
+			existingLayout.getTypeSettingsProperty(Sites.LAST_MERGE_TIME));
+		Date layoutModifiedDate = layout.getModifiedDate();
+
+		if ((existingLayoutModifiedDate == null) ||
+			(layoutModifiedDate == null) ||
+			(layoutModifiedDate.getTime() > lastMergeTime)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private Layout _updateCollectionLayoutTypeSettings(

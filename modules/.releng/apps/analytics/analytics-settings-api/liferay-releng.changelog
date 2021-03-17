@@ -17,3 +17,13 @@
 # Bundle Version 4.2.0
 #
 742a15413603125ee322d10b6c90ec48686bf5c8^..8c6f7952ca385ca5a5df42b04575094eacb13541=LRAC-6436 LRAC-6447
+
+#
+# Bundle Version 4.2.2
+#
+8c6f7952ca385ca5a5df42b04575094eacb13541^..a97fe8d5e4e8bb51ac7bdb7430c6aaa92bf927f5=LPS-119196
+
+#
+# Bundle Version 4.3.0
+#
+a97fe8d5e4e8bb51ac7bdb7430c6aaa92bf927f5^..69451d6ff6ebdc9028dd2e808b72c8d5ad71d24e=LRAC-7193

@@ -18,10 +18,10 @@
 
 <%
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
-DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHelper = (DispatchTalendScheduledTaskExecutorHelper)request.getAttribute("dispatchTalendScheduledTaskExecutorHelper");
+String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_NAME);
 %>
 
-<liferay-portlet:actionURL name="editDispatchTalendJobArchive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
+<liferay-portlet:actionURL name="/dispatch_talend/edit_dispatch_talend_job_archive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
 
 <div class="closed container-fluid-1280" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="container main-content-body sheet">
@@ -31,11 +31,7 @@ DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHel
 
 			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
-			<%
-			FileEntry fileEntry = dispatchTalendScheduledTaskExecutorHelper.getFileEntry(dispatchTrigger.getDispatchTriggerId());
-			%>
-
-			<p class="<%= (fileEntry != null) ? "text-default" : "hide text-default" %>" id="<portlet:namespace />fileEntryName">
+			<p class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />fileEntryName">
 				<span id="<portlet:namespace />fileEntryRemove">
 					<liferay-ui:icon
 						icon="times"
@@ -44,12 +40,12 @@ DispatchTalendScheduledTaskExecutorHelper dispatchTalendScheduledTaskExecutorHel
 					/>
 				</span>
 				<span>
-					<%= (fileEntry != null) ? fileEntry.getFileName() : StringPool.BLANK %>
+					<%= fileEntryName %>
 				</span>
 			</p>
 
 			<c:if test="<%= (dispatchTrigger == null) || !dispatchTrigger.isSystem() %>">
-				<div class="<%= (fileEntry != null) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileEntry">
+				<div class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntry">
 					<aui:input name="jobArchive" required="<%= true %>" type="file" />
 				</div>
 			</c:if>

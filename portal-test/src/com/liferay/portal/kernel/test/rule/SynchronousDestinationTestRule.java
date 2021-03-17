@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
@@ -40,11 +41,12 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyManager;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
@@ -127,9 +129,6 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void enableSync() {
-			ServiceDependencyManager serviceDependencyManager =
-				new ServiceDependencyManager();
-
 			Filter auditFilter = _registerDestinationFilter(
 				DestinationNames.AUDIT);
 			Filter asyncFilter = _registerDestinationFilter(
@@ -138,16 +137,6 @@ public class SynchronousDestinationTestRule
 				DestinationNames.BACKGROUND_TASK);
 			Filter backgroundTaskStatusFilter = _registerDestinationFilter(
 				DestinationNames.BACKGROUND_TASK_STATUS);
-			Filter commerceOrderFilter = _registerDestinationFilter(
-				"liferay/order_status");
-			Filter commercePaymentFilter = _registerDestinationFilter(
-				"liferay/payment_status");
-			Filter commerceShipmentFilter = _registerDestinationFilter(
-				"liferay/shipment_status");
-			Filter commerceStockFilter = _registerDestinationFilter(
-				"liferay/stock_quantity");
-			Filter commerceSubscriptionFilter = _registerDestinationFilter(
-				"liferay/subscription_status");
 			Filter ddmStructureReindexFilter = _registerDestinationFilter(
 				"liferay/ddm_structure_reindex");
 			Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
@@ -163,16 +152,37 @@ public class SynchronousDestinationTestRule
 			Filter subscrpitionSenderFilter = _registerDestinationFilter(
 				DestinationNames.SUBSCRIPTION_SENDER);
 
-			serviceDependencyManager.registerDependencies(
-				auditFilter, asyncFilter, backgroundTaskFilter,
-				backgroundTaskStatusFilter, commerceOrderFilter,
-				commercePaymentFilter, commerceShipmentFilter,
-				commerceStockFilter, commerceSubscriptionFilter,
-				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
-				pdfProcessorFilter, rawMetaDataProcessorFilter,
-				segmentsEntryReindexFilter, subscrpitionSenderFilter);
+			boolean solrEnabled = _isSolrEnabled();
 
-			serviceDependencyManager.waitForDependencies();
+			if (!solrEnabled) {
+				Filter commerceOrderFilter = _registerDestinationFilter(
+					"liferay/order_status");
+				Filter commercePaymentFilter = _registerDestinationFilter(
+					"liferay/payment_status");
+				Filter commerceShipmentFilter = _registerDestinationFilter(
+					"liferay/shipment_status");
+				Filter commerceStockFilter = _registerDestinationFilter(
+					"liferay/stock_quantity");
+				Filter commerceSubscriptionFilter = _registerDestinationFilter(
+					"liferay/subscription_status");
+
+				_waitForDependencies(
+					auditFilter, asyncFilter, backgroundTaskFilter,
+					backgroundTaskStatusFilter, commerceOrderFilter,
+					commercePaymentFilter, commerceShipmentFilter,
+					commerceStockFilter, commerceSubscriptionFilter,
+					ddmStructureReindexFilter, kaleoGraphWalkerFilter,
+					mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
+					segmentsEntryReindexFilter, subscrpitionSenderFilter);
+			}
+			else {
+				_waitForDependencies(
+					auditFilter, asyncFilter, backgroundTaskFilter,
+					backgroundTaskStatusFilter, ddmStructureReindexFilter,
+					kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
+					rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
+					subscrpitionSenderFilter);
+			}
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -199,11 +209,14 @@ public class SynchronousDestinationTestRule
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 			replaceDestination("liferay/segments_entry_reindex");
-			replaceDestination("liferay/order_status");
-			replaceDestination("liferay/payment_status");
-			replaceDestination("liferay/shipment_status");
-			replaceDestination("liferay/stock_quantity");
-			replaceDestination("liferay/subscription_status");
+
+			if (!solrEnabled) {
+				replaceDestination("liferay/order_status");
+				replaceDestination("liferay/payment_status");
+				replaceDestination("liferay/shipment_status");
+				replaceDestination("liferay/stock_quantity");
+				replaceDestination("liferay/subscription_status");
+			}
 
 			if (_sync != null) {
 				for (String name : _sync.destinationNames()) {
@@ -365,6 +378,13 @@ public class SynchronousDestinationTestRule
 			_sync = sync;
 		}
 
+		private boolean _isSolrEnabled() {
+			SearchEngine searchEngine = SearchEngineHelperUtil.getSearchEngine(
+				SearchEngineHelperUtil.getDefaultSearchEngineId());
+
+			return Objects.equals(searchEngine.getVendor(), "Solr");
+		}
+
 		private Filter _registerDestinationFilter(String destinationName) {
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -372,6 +392,40 @@ public class SynchronousDestinationTestRule
 				StringBundler.concat(
 					"(&(destination.name=", destinationName, ")(objectClass=",
 					Destination.class.getName(), "))"));
+		}
+
+		private void _waitForDependencies(Filter... filters) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			for (Filter filter : filters) {
+				ServiceTracker<Object, Object> serviceTracker =
+					registry.trackServices(filter);
+
+				serviceTracker.open();
+
+				while (true) {
+					try {
+						Object service = serviceTracker.waitForService(2000);
+
+						if (service != null) {
+							serviceTracker.close();
+
+							break;
+						}
+
+						System.out.println(
+							"Waiting for destination " + filter.toString());
+					}
+					catch (InterruptedException interruptedException) {
+						System.out.println(
+							StringBundler.concat(
+								"Stopped waiting for destination ",
+								filter.toString(), " due to interruption"));
+
+						return;
+					}
+				}
+			}
 		}
 
 		private final List<String> _absentDestinationNames = new ArrayList<>();
