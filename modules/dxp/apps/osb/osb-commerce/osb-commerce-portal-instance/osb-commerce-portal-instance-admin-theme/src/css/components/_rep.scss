@@ -1,0 +1,36 @@
+.osb-commerce-rep {
+	background-color: $secondary-bg;
+
+	&-background {
+		height: 100%;
+		left: 12%;
+		position: absolute;
+		top: 0;
+
+		& > div {
+			align-items: center;
+			display: flex;
+			height: inherit;
+			width: inherit;
+		}
+
+		img {
+			height: 80%;
+			width: auto;
+		}
+	}
+
+	&-punch {
+		color: $gray-900;
+
+		h1 {
+			font-size: 2rem;
+			font-weight: 600;
+		}
+	}
+
+	.btn-secondary {
+		border-color: #fff;
+		padding: 0.7rem 1.8rem;
+	}
+}

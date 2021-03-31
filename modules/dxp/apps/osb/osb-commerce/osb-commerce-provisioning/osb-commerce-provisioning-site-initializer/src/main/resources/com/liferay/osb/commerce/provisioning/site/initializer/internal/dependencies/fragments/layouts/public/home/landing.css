@@ -1,0 +1,63 @@
+.osb-commerce-landing {
+	height: 100vh;
+	max-height: 930px;
+	position: relative;
+}
+
+.has-control-menu .osb-commerce-landing {
+	height: calc(100vh - 56px);
+}
+
+.osb-commerce-landing-headline {
+	font-size: 2.5rem !important;
+}
+
+.osb-commerce-landing-image {
+	bottom: 0;
+	height: auto;
+	left: 0;
+	position: absolute;
+	transform: translateY(-151px);
+	width: 100%;
+	z-index: 1;
+}
+
+.osb-commerce-landing-image img {
+	display: block;
+	height: auto;
+	margin: 0 auto;
+	position: relative;
+	width: 90%;
+}
+
+.osb-commerce-landing-text {
+	z-index: 2;
+}
+
+.osb-commerce-landing-punch {
+	font-size: 1.5rem;
+}
+
+.osb-commerce-landing-trial-btn {
+	box-shadow: 0 4px 20px -8px #134194;
+}
+
+.osb-commerce-plans-pricing {
+	margin-top: -77px;
+	position: relative;
+}
+
+.osb-commerce-plans-pricing::before {
+	background-color: #fff;
+	content: '';
+	height: 160%;
+	position: absolute;
+	top: -7rem;
+	width: 100%;
+}
+
+.osb-commerce-rep {
+	margin-top: 10rem;
+	padding: 6rem;
+	position: relative;
+}

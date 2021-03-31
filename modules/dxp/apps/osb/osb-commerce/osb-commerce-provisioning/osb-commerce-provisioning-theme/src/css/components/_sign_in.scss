@@ -1,0 +1,82 @@
+.sign-in {
+	$sign-in-wrapper-width: 25rem;
+
+	&-btn {
+		display: inline-block;
+		position: relative;
+	}
+
+	&-wrapper {
+		animation: openSignIn 200ms 1 ease-out forwards;
+		cursor: default;
+		display: inherit;
+		margin: 0 calc(29px - #{$sign-in-wrapper-width}) auto;
+		position: absolute;
+		text-align: left;
+		top: $topbar-height;
+		width: $sign-in-wrapper-width;
+		z-index: 1;
+
+		@keyframes openSignIn {
+			from {
+				opacity: 0;
+				transform: translate3d(0, -20px, 0);
+			}
+
+			to {
+				opacity: 1;
+				transform: translate3d(0, 0, 0);
+			}
+		}
+
+		&:not(.is-open) {
+			animation: openSignIn 200ms 1 ease-out backwards;
+			display: none;
+		}
+
+		.btn-primary[type='submit'] {
+			width: 100%;
+		}
+
+		.button-holder {
+			margin: 0;
+		}
+
+		.list-unstyled {
+			display: flex;
+			justify-content: center;
+			margin: 1rem;
+		}
+
+		.modal {
+			&-body {
+				padding: 1.5rem 2.5rem 0.3rem;
+			}
+
+			&-content {
+				box-shadow: 0 1rem 2rem -10px rgba(0, 0, 0, 0.3);
+			}
+
+			&-title {
+				font-weight: 600;
+			}
+		}
+
+		.portlet-content {
+			padding: 0;
+		}
+	}
+
+	.modal-dialog {
+		&::before {
+			background: #fff;
+			content: '';
+			height: 0.8rem;
+			margin-top: -0.35rem;
+			position: absolute;
+			right: 30px;
+			transform: rotate(45deg);
+			width: 0.8rem;
+		}
+	}
+}

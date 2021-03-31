@@ -1,0 +1,22 @@
+{
+	"author": "Gianmarco Brunialti Masera <gianmarco.brunialti@liferay.com> (https://github.com/gianmarcobrunialti)",
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"distName": "osb-commerce-provisioning-theme",
+		"rubySass": false,
+		"templateLanguage": "ftl",
+		"version": "7.3"
+	},
+	"main": "package.json",
+	"name": "osb-commerce-provisioning-theme",
+	"scripts": {
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

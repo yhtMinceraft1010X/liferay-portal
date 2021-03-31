@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<root available-locales="[£LOCALE£]" default-locale="[£LOCALE£]">
+	<dynamic-element index-type="text" instance-id="ujms" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$2@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="dlhq" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$3@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="vbex" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$4@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="ogmb" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$5@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="daaw" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$6@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="yqjc" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$7@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="guss" name="plansImage" type="image">
+		<dynamic-content language-id="[£LOCALE£]">
+			<![CDATA[[$8@2x.png$]]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

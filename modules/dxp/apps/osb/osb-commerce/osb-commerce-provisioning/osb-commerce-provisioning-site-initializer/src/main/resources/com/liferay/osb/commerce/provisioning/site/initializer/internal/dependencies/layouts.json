@@ -1,0 +1,134 @@
+[
+	{
+		"layoutTemplateId": "1_column",
+		"name": "Home",
+		"portlets": [
+		]
+	},
+	{
+		"layoutTemplateId": "1_column",
+		"name": "Plans",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_saas",
+				"portletPreferences": {
+					"cpContentListRendererKey": "commerce-saas-list-renderer",
+					"grouped--cpTypeListEntryRendererKey": "list-entry-saas",
+					"renderSelection": "custom",
+					"selectionStyle": "dynamic",
+					"simple--cpTypeListEntryRendererKey": "list-entry-saas",
+					"virtual--cpTypeListEntryRendererKey": "list-entry-saas"
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_saas",
+				"portletPreferences": {
+					"articleId": "PLANS",
+					"ddmStructureKey": "plans-structure",
+					"ddmTemplateKey": "PLANS",
+					"portletSetupCss": "{\"textData\":{\"fontFamily\":\"\",\"color\":\"\",\"textAlign\":\"\",\"wordSpacing\":\"\",\"letterSpacing\":\"\",\"fontSize\":\"\",\"lineHeight\":\"\",\"textDecoration\":\"\",\"fontStyle\":\"\",\"fontWeight\":\"\"},\"spacingData\":{\"padding\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false},\"margin\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false}},\"borderData\":{\"borderColor\":{\"top\":\"\",\"left\":\"\",\"bottom\":\"\",\"right\":\"\",\"sameForAll\":false},\"borderWidth\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false},\"borderStyle\":{\"top\":\"\",\"left\":\"\",\"bottom\":\"\",\"right\":\"\",\"sameForAll\":false}},\"bgData\":{\"backgroundColor\":\"\",\"useBgImage\":false,\"backgroundImage\":\"\",\"backgroundPosition\":{\"top\":{\"unit\":\"\",\"value\":\"\"},\"left\":{\"unit\":\"\",\"value\":\"\"}},\"backgroundRepeat\":\"\"},\"advancedData\":{\"customCSSClassName\":\"\",\"customCSS\":\"#portlet_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_saas {\\nmargin-top: -180px;\\n}\"}}"
+				}
+			}
+		]
+	},
+	{
+		"layoutTemplateId": "1_column",
+		"name": "Trial",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_osb_commerce_provisioning_web_portlet_TrialRegistrationPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "2_columns_iii",
+		"lookAndFeel": {
+			"CUSTOMIZABLE_LAYOUT": false,
+			"column-1-customizable": false,
+			"column-2-customizable": false,
+			"layout-template-id": "2_columns_iii",
+			"layoutUpdateable": true,
+			"lfr-theme:regular:wide-layout": false,
+			"sitemap-changefreq": "daily",
+			"sitemap-include": 1
+		},
+		"name": "Checkout",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet_INSTANCE_saas"
+			}
+		],
+		"privateLayout": true
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Account Management",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet"
+			}
+		],
+		"privateLayout": true
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "2_columns_ii",
+		"lookAndFeel": {
+			"CUSTOMIZABLE_LAYOUT": false,
+			"column-1-customizable": false,
+			"column-2-customizable": false,
+			"layout-template-id": "2_columns_ii",
+			"layoutUpdateable": true,
+			"lfr-theme:regular:is-login-page": true,
+			"lfr-theme:regular:redirect-to-private-layouts": true,
+			"lfr-theme:regular:show-sidebar": false,
+			"lfr-theme:regular:show-topbar": false,
+			"lfr-theme:regular:wide-layout": false,
+			"sitemap-changefreq": "daily",
+			"sitemap-include": 1
+		},
+		"name": "Login",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_login_web_portlet_LoginPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "LOGIN_SPLASH",
+					"ddmStructureKey": "login-splash-structure",
+					"ddmTemplateKey": "LOGIN_SPLASH"
+				}
+			}
+		]
+	}
+]

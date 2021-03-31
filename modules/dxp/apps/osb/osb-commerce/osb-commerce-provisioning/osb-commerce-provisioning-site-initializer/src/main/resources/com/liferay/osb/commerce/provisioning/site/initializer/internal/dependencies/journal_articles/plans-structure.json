@@ -1,0 +1,36 @@
+{
+	"availableLanguageIds": [
+		"[£LOCALE£]"
+	],
+	"defaultLanguageId": "[£LOCALE£]",
+	"fields": [
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"[£LOCALE£]": "Image"
+			},
+			"localizable": true,
+			"name": "plansImage",
+			"predefinedValue": {
+				"[£LOCALE£]": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"[£LOCALE£]": ""
+			},
+			"type": "ddm-image"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

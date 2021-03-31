@@ -1,0 +1,100 @@
+<section class="container osb-commerce-landing osb-commerce-section d-flex flex-column pt-5">
+	<div class="osb-commerce-landing-image">
+		<lfr-editable id="osb-commerce-landing-image" type="image">
+			<img alt="" src="[resources:placeholder_00.png]" />
+		</lfr-editable>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3 d-xs-none"></div>
+		<div class="col-md-6 col-xs-12 text-center osb-commerce-landing-text pt-5">
+			<lfr-editable id="osb-commerce-landing-title" type="rich-text">
+				<h1 class="osb-commerce-landing-headline">Liferay Commerce SaaS is Officially Available</h1>
+			</lfr-editable>
+
+			<lfr-editable id="osb-commerce-landing-punch" type="rich-text">
+				<h3 class="font-weight-light mt-3">
+					This is an amazing punch line that should invite the
+					user to surf the site.
+				</h3>
+			</lfr-editable>
+
+			<lfr-editable id="osb-commerce-landing-trial" type="link">
+				<div class="d-inline-flex mt-3">
+					<a class="btn btn-primary osb-commerce-landing-trial-btn" href="#" id="fragment-${fragmentEntryLinkNamespace}-osb-commerce-landing-trial" onclick="window.open(window.location.href + '/trial-registration', '_blank')">
+						Start Trial
+					</a>
+				</div>
+			</lfr-editable>
+		</div>
+
+		<div class="col-md-3 d-xs-none"></div>
+	</div>
+</section>
+
+<section class="osb-commerce-plans-pricing mb-5">
+	<div class="row">
+		<div class="col-md-3 d-xs-none"></div>
+		<div class="col-md-6 col-xs-12 text-center pt-5">
+			<lfr-editable id="osb-commerce-plans-pricing-title" type="rich-text">
+				<h1>Plans & pricing</h1>
+			</lfr-editable>
+
+			<lfr-editable id="osb-commerce-plans-pricing-punch" type="rich-text">
+				<h3 class="font-weight-light mt-3 mb-5">
+					Stand out from the crow with a B2B Commerce platform that enables
+					you to deliver value across the entire customer journey.
+				</h3>
+			</lfr-editable>
+		</div>
+
+		<div class="col-md-3 d-xs-none"></div>
+	</div>
+
+	[#assign
+		landing_product_publisher_portlet_preferences =
+			freeMarkerPortletPreferences.getPreferences({
+				"renderSelection": "custom",
+				"cpContentListRendererKey": "osb-commerce-provisioning-list"
+			})
+	/]
+
+	[#if liferay_portlet??]
+		[@liferay_portlet.runtime
+			defaultPreferences=landing_product_publisher_portlet_preferences
+			instanceId="CPPublisher_landing_page"
+			portletName="com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
+		/]
+	[/#if]
+</section>
+
+<section class="osb-commerce-rep">
+	<div class="osb-commerce-rep-background">
+		<lfr-editable id="osb-commerce-rep-bg" type="image">
+			<img alt="" src="[resources:placeholder_01.png]" />
+		</lfr-editable>
+	</div>
+
+	<div class="container p-3">
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4 px-4 osb-commerce-rep-punch">
+				<lfr-editable id="osb-commerce-rep-punch-line" type="rich-text">
+					<h1>Talk to a Rep to<br />Discuss Your Needs</h1>
+				</lfr-editable>
+			</div>
+
+			<div class="col-md-4 pl-5 d-flex align-items-center text-left osb-commerce-rep-link">
+				<lfr-editable id="osb-commerce-rep-link" type="link">
+					<a
+						class="btn btn-secondary"
+						href="#"
+						id="fragment-${fragmentEntryLinkNamespace}-osb-commerce-rep-link"
+					>
+						Get in Touch
+					</a>
+				</lfr-editable>
+			</div>
+		</div>
+	</div>
+</section>

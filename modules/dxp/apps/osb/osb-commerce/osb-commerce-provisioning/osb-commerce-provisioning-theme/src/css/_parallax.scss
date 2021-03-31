@@ -1,0 +1,64 @@
+// stylelint-disable at-rule-no-unknown
+
+@function calculate-scale($distance) {
+	@return ($base-parallax-perspective - $distance) /
+		$base-parallax-perspective;
+}
+
+.parallax-container {
+	height: 100vh;
+	margin-top: -#{$navbar-commerce-height};
+
+	.has-control-menu & {
+		margin-top: calc(-1 * (#{$control-menu-height-desktop} + #{$navbar-commerce-height}));
+	}
+
+	.parallax {
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		perspective: #{$base-parallax-perspective}px;
+		perspective-origin: 50% 0;
+		position: relative;
+		width: 100%;
+
+		.bg-wrapper {
+			height: 100vh;
+			position: relative;
+
+			.bg {
+				background: url(../images/parallax.png) 0 0 repeat-y transparent;
+				background-size: 100% auto;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+
+				&.back {
+					$double-distance: $base-parallax-z-distance * 2;
+
+					transform: rotate(180deg) translateZ(#{$double-distance}px)
+						scale(calculate-scale($double-distance));
+				}
+
+				&.front {
+					transform: translateZ(#{$base-parallax-z-distance}px)
+						scale(calculate-scale($base-parallax-z-distance));
+				}
+			}
+		}
+
+		.content-wrapper {
+			display: flex;
+			flex-flow: column;
+			justify-content: space-between;
+			left: 0;
+			min-height: 100%;
+			position: absolute;
+			top: 0;
+			transform: translateZ(0);
+			width: 100%;
+		}
+	}
+}

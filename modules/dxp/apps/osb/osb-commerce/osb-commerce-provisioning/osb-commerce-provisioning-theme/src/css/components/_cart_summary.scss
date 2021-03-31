@@ -1,0 +1,52 @@
+.mini-cart {
+	background-color: $gray-400;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	overflow: hidden;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: background-color 200ms ease-out;
+	transition-delay: unset;
+	width: 500px;
+	z-index: 1140;
+
+	.osb-commerce-cart-summary {
+		display: flex;
+		flex-direction: column;
+		padding: 0 3rem;
+		text-align: center;
+
+		.cart-summary-subtotal,
+		.cart-summary-discount,
+		.cart-summary-total {
+			display: flex;
+			font-size: large;
+			justify-content: space-between;
+			margin: 0.8rem 0;
+		}
+
+		.cart-summary-total {
+			font-size: x-large;
+
+			& span {
+				font-weight: 600;
+			}
+		}
+
+		.cart-summary-price {
+			border-top: 1px solid $secondary-bg;
+			padding-top: 1.5rem;
+		}
+
+		.subscription-entry {
+			margin-bottom: 1.5rem;
+
+			.name h1 {
+				font-size: 1.5rem;
+			}
+		}
+	}
+}

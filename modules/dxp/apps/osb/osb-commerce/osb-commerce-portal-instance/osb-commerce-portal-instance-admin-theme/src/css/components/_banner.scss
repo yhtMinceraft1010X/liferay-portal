@@ -1,0 +1,25 @@
+#banner {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 5;
+
+	&::before {
+		background-color: #fff;
+		content: '';
+		height: 100%;
+		opacity: 0;
+		position: absolute;
+		transition: opacity 200ms ease-out;
+		width: 100%;
+	}
+
+	.has-control-menu & {
+		top: $control-menu-height-desktop;
+	}
+
+	&.always-solid::before,
+	&.is-solid::before {
+		opacity: 1;
+	}
+}

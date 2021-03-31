@@ -1,0 +1,15 @@
+{
+	"osb-commerce-provisioning-web": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/osb-commerce-provisioning-web/$1"
+		},
+		"file-globs": "**/*.js",
+		"input": "build/node/packageRunBuild/resources",
+		"output": "build/node/packageRunBuild/resources/bridge/osb-commerce-provisioning-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "osb-commerce-provisioning-web/$1"
+		}
+	}
+}

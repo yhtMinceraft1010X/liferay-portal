@@ -1,0 +1,39 @@
+#plan-management {
+	.panel-secondary {
+		border-color: transparent;
+	}
+
+	.osb-commerce-active-plan .panel-secondary {
+		box-shadow: 0 40px 20px -20px rgba(19, 65, 148, 0.2);
+
+		.active-plan {
+			&-details {
+				border-left: 1px solid $gray-300;
+				padding-left: 3rem;
+			}
+
+			.name {
+				font-size: 1.3rem;
+				font-weight: 600;
+			}
+
+			.currency {
+				font-size: 1.5rem;
+				font-weight: 600;
+			}
+
+			.value {
+				font-size: 2rem;
+				font-weight: 600;
+			}
+		}
+	}
+
+	.osb-commerce-plan-features .panel-secondary {
+		margin-bottom: 0.3rem;
+
+		.toggle-switch {
+			transform: scale3d(0.9, 0.9, 1);
+		}
+	}
+}

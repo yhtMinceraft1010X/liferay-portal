@@ -1,0 +1,9 @@
+Bundle-Name: Liferay OSB Commerce Provisioning Theme Implementation
+Bundle-SymbolicName: com.liferay.osb.commerce.provisioning.theme.impl
+Bundle-Version: 1.0.0
+Liferay-JS-Submodules-Bridge: osb-commerce-provisioning-theme-impl
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.osb.commerce.provisioning.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /osb-commerce-provisioning-theme-impl

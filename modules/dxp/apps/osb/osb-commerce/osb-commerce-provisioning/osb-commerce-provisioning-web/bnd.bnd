@@ -1,0 +1,4 @@
+Bundle-Name: Liferay OSB Commerce Provisioning Web
+Bundle-SymbolicName: com.liferay.osb.commerce.provisioning.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /osb-commerce-provisioning-web

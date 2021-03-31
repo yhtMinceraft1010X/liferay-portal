@@ -1,0 +1,10 @@
+#
+# Liferay App Version 6.0.0
+#
+
+app.artifacts-6.0.0=\
+	com.liferay.sharepoint.soap.repository-1.0.15.jar
+
+app.change.log-6.0.0=LPS-105380 LPS-108455 LPS-108456 LPS-110747 LPS-111494 LPS-115716 LPS-116495 LPS-121592 LPS-122403 LPS-77699 LPS-84119 LRQA-51488 RELEASE-3115
+
+app.git.id-6.0.0=caf31532f2f8c0be3f6eb80d176e90c792a1614b

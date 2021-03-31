@@ -1,0 +1,8 @@
+Bundle-Name: Liferay OSB Commerce Provisioning Implementation
+Bundle-SymbolicName: com.liferay.osb.commerce.provisioning.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.avalon.*,\
+	!org.apache.log.*,\
+	\
+	*

@@ -1,0 +1,64 @@
+@import 'fonts';
+@import 'parallax';
+
+body {
+	background: linear-gradient(
+			0deg,
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 0.5)
+		),
+		$gray-400;
+}
+
+html,
+body {
+	width: 100vw;
+	-webkit-font-smoothing: antialiased;
+}
+
+#wrapper {
+	@import 'components/banner';
+	@import 'components/card_entry';
+	@import 'components/cart_summary';
+	@import 'components/commerce_accounts_portlet';
+	@import 'components/footer';
+	@import 'components/navbars';
+	@import 'components/rep';
+	@import 'components/sign_in';
+	@import 'components/subscription_entry';
+	@import 'portlet/plan_management';
+	@import 'portlet/trial_registration';
+
+	padding: 0;
+
+	.btn-primary,
+	.btn-outline-primary,
+	.btn-secondary,
+	.btn-outline-secondary {
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.1rem;
+		text-transform: uppercase;
+	}
+
+	.btn-link {
+		font-size: 0.9em;
+	}
+
+	.btn-outline-primary {
+		border-color: $border-color;
+	}
+
+	h1 {
+		font-size: 1.8rem;
+	}
+
+	main {
+		padding: 8rem 0 0 0;
+	}
+
+	#addAccountModal,
+	#userInvitationModal {
+		display: none;
+	}
+}

@@ -1,0 +1,33 @@
+<section class="account_settings container my-5">
+	<div class="row">
+		<div class="col-lg-12">
+			<lfr-widget-breadcrumb></lfr-widget-breadcrumb>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-3 mt-4">
+			[#assign
+				portlet_preferences = freeMarkerPortletPreferences.getPreferences({
+					"portletSetupPortletDecoratorId": "barebone",
+					"rootMenuItemType": "absolute",
+					"rootMenuItemLevel": "0",
+					"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL"
+				})
+			/]
+
+			[#if liferay_portlet??]
+				[@liferay_portlet.runtime
+					defaultPreferences=portlet_preferences
+					instanceId="site_navigation_menu_account_navigation"
+					portletProviderAction=portletProviderAction.VIEW
+					portletProviderClassName="com.liferay.portal.kernel.theme.NavItem"
+				/]
+			[/#if]
+		</div>
+
+		<div class="col-lg-9">
+			<lfr-widget-osb-commerce-settings></lfr-widget-osb-commerce-settings>
+		</div>
+	</div>
+</section>

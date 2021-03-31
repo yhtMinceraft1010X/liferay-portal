@@ -1,0 +1,15 @@
+[
+	{
+		"instanceId": "saas",
+		"layoutFriendlyURL": "/checkout",
+		"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet",
+		"portletPreferences": {
+			"displayStyle": {
+				"FileName": "SAAS_CART_SUMMARY.ftl",
+				"Name": "Saas Cart Summary",
+				"PortletClassName": "com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentTotalPortlet"
+			},
+			"displayStyleGroupId": ""
+		}
+	}
+]

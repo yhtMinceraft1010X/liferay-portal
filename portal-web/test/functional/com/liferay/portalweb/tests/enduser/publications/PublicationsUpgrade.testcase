@@ -1,0 +1,72 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Publications";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	test PublishAndRevertPublicationsArchive7310 {
+		property data.archive.type = "data-archive-Publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10";
+		property test.run.environment = "EE";
+
+		AssertTextPresent(
+			key_publicationsName = "Publication 2 Name",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Publication 2 Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		Publications.revertPublication(publicationsName = "Publication 1 Name");
+
+		AssertTextPresent(
+			key_publicationsName = "Revert &quot;Publication 1 Name&quot;",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Revert &quot;Publication 1 Name&quot;");
+
+		Publications.selectPublication(publicationsName = "Publication 2 Name");
+
+		Publications.gotoReviewPublications();
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Web Content Article",
+			publicationsSite = "Guest",
+			publicationsTitle = "WC WebContent Title 2 Edit",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
+
+		PublicationsChanges.viewPublicationsViaChangesStyle(
+			publicationsCategory = "Page",
+			publicationsSite = "Guest",
+			publicationsTitle = "Test Page",
+			publicationsType = "Added",
+			publicationsUser = "Test Test");
+
+		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+
+		Publications.publishPublication(publicationsName = "Publication 2 Name");
+	}
+
+}

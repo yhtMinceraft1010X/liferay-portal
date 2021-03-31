@@ -1,0 +1,51 @@
+.subscription-entry {
+	.description {
+		line-height: 1.8em;
+		margin-bottom: 2rem;
+		padding: 0 3.5rem;
+		text-align: center;
+
+		p {
+			font-size: 1.2em;
+		}
+
+		big {
+			font-size: 1.8em;
+			font-weight: 600;
+		}
+	}
+
+	.image img {
+		height: 4em;
+	}
+
+	.features {
+		box-sizing: border-box;
+		padding: 0 3.5em;
+
+		ul {
+			list-style-type: none;
+			padding: 0;
+			text-align: left;
+
+			li {
+				align-items: center;
+				display: flex;
+				margin-bottom: 0.5em;
+
+				.list-icon {
+					color: $success;
+					width: 10%;
+				}
+
+				.feature {
+					width: 90%;
+				}
+			}
+		}
+	}
+
+	.name h1 {
+		font-size: 2em;
+	}
+}
