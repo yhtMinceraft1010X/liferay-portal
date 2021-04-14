@@ -23,6 +23,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -154,6 +155,10 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 		if (cpInstances.size() > 1) {
 			return LanguageUtil.get(locale, "multiple-skus");
+		}
+
+		if (cpInstances.isEmpty()) {
+			return StringPool.BLANK;
 		}
 
 		CPInstance cpInstance = cpInstances.get(0);
