@@ -18,21 +18,34 @@ import {
 	OPEN_MODAL_FROM_IFRAME,
 } from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 
-function initializeSidePanelListeners() {
-	Liferay.on(OPEN_MODAL, (payload) => {
-		window.top.Liferay.fire(OPEN_MODAL_FROM_IFRAME, payload);
-	});
+class SidePanelListenersInitializer {
+	constructor() {
+		Liferay.on(OPEN_MODAL, this.handleOpenModalFromSidePanel);
 
-	document.querySelector('body').classList.remove('open');
+		document.body.classList.remove('open');
 
-	document
-		.querySelectorAll('.side-panel-iframe-close, .btn-cancel')
-		.forEach((trigger) => {
-			trigger.addEventListener('click', (event) => {
-				event.preventDefault();
-				window.parent.Liferay.fire(CLOSE_SIDE_PANEL);
+		document
+			.querySelectorAll('.side-panel-iframe-close, .btn-cancel')
+			.forEach((trigger) => {
+				trigger.addEventListener('click', (event) => {
+					event.preventDefault();
+
+					const parentWindow = Liferay.Util.getOpener();
+
+					parentWindow.Liferay.fire(CLOSE_SIDE_PANEL);
+				});
 			});
-		});
+	}
+
+	dispose() {
+		Liferay.detach(OPEN_MODAL, this.handleOpenModalFromSidePanel);
+	}
+
+	handleOpenModalFromSidePanel(payload) {
+		const topWindow = Liferay.Util.getTop();
+
+		topWindow.Liferay.fire(OPEN_MODAL_FROM_IFRAME, payload);
+	}
 }
 
-export default initializeSidePanelListeners;
+export default SidePanelListenersInitializer;
