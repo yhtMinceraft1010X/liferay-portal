@@ -32,13 +32,35 @@ definition {
 	}
 
 	@description = "Verify that a Paragraph Field can be created"
-	@ignore = "true"
 	@priority = "5"
 	test CanBeCreated {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131221 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		Form.save();
+
+		Click(locator1 = "Icon#BACK");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+		
+		AssertElementPresent(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+			value1 = "Test");
 	}
 
 	@description = "Verify that a Paragraph Field can be deleted"
@@ -48,6 +70,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131223 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Paragraph Field can be duplicated"
