@@ -463,6 +463,11 @@
     <td>//div[contains(@id,'permissionsContent')]//select[contains(@id,'inputPermissionsViewRole')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>ANY_DISABLED_BUTTON</td>
+    <td>//button[contains(@class,'disabled') and contains (text(),'${key_value}')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

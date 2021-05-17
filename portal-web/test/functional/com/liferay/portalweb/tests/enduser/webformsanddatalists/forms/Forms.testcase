@@ -810,13 +810,57 @@ definition {
 	}
 
 	@description = "Verify that a Form can be unpublished"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeUnpublished {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130507 CanBeUnpublished pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Form.unpublishForm();
+
+		AssertElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
+
+		AssertElementPresent(
+			key_value = "Share",
+			locator1 = "Form#ANY_DISABLED_BUTTON");
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		AssertElementNotPresent(
+			key_fieldLabe = "Text",
+			locator1 = "FormFields#LABEL");
+
+		AssertElementNotPresent(
+			key_text = "Submit",
+			locator1 = "Button#ANY");
+
+		AssertElementNotPresent(
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3_ALT",
+			value1 = "This form is not available or it was not published.");
+
+			
 	}
 
 	@description = "This is a use case for LPS-75116 and LPS-79101."
