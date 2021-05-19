@@ -403,15 +403,13 @@ definition {
 		AssertElementPresent(
 			key_fieldLabel = "Paragraph",
 			locator1 = "FormFields#LABEL");
-			
-		
+
 		for (var liContent : list "Test A,Test B,Test C") {
 			AssertElementPresent(
 				key_itemName = "${liContent}",
 				key_labelName = "Paragraph",
 				locator1 = "FormFields#PARAGRAPH_CONTENT_UNORDERED_LIST");
 		}
-
 	}
 
 	@description = "Verify that the Body Text supports HTML"
