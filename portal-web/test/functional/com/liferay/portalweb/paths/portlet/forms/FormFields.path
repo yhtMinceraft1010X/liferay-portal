@@ -362,6 +362,11 @@
 <tr>
 	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
 	<td>//a[contains(@title,"${key_titleName}")]</td>
+<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_CONTENT_UNORDERED_LIST</td>
+	<td>//legend[contains(text(),'${key_labelName}')]//..//ul//li[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>
