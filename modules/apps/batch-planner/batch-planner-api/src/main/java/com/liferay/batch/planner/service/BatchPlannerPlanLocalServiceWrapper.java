@@ -53,12 +53,11 @@ public class BatchPlannerPlanLocalServiceWrapper
 
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan addBatchPlannerPlan(
-			long userId, String name,
-			com.liferay.batch.planner.plan.PlanExternalType planExternalType)
+			long userId, String externalType, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanLocalService.addBatchPlannerPlan(
-			userId, name, planExternalType);
+			userId, externalType, name);
 	}
 
 	/**
@@ -344,11 +343,11 @@ public class BatchPlannerPlanLocalServiceWrapper
 	@Override
 	public com.liferay.batch.planner.model.BatchPlannerPlan
 			updateBatchPlannerPlan(
-				long batchPlannerPlanId, long userId, String name)
+				long userId, long batchPlannerPlanId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			batchPlannerPlanId, userId, name);
+			userId, batchPlannerPlanId, name);
 	}
 
 	@Override

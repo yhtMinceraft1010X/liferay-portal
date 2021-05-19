@@ -62,11 +62,10 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan addBatchPlannerPlan(
-			long userId, String name,
-			com.liferay.batch.planner.plan.PlanExternalType planExternalType)
+			long userId, String externalType, String name)
 		throws PortalException {
 
-		return getService().addBatchPlannerPlan(userId, name, planExternalType);
+		return getService().addBatchPlannerPlan(userId, externalType, name);
 	}
 
 	/**
@@ -309,11 +308,11 @@ public class BatchPlannerPlanLocalServiceUtil {
 	}
 
 	public static BatchPlannerPlan updateBatchPlannerPlan(
-			long batchPlannerPlanId, long userId, String name)
+			long userId, long batchPlannerPlanId, String name)
 		throws PortalException {
 
 		return getService().updateBatchPlannerPlan(
-			batchPlannerPlanId, userId, name);
+			userId, batchPlannerPlanId, name);
 	}
 
 	public static BatchPlannerPlanLocalService getService() {
