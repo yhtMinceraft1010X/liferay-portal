@@ -111,15 +111,15 @@ definition {
 			fieldType = "Single Selection");
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
-		
+
 		FormFields.editOptionsRow(
-			rowNumber = "1",
-			optionValue = "Option 1");
-		
+			optionValue = "Option 1",
+			rowNumber = "1");
+
 		FormFields.editOptionsRow(
-			rowNumber = "2",
-			optionValue = "Option 2");
-		
+			optionValue = "Option 2",
+			rowNumber = "2");
+
 		Click(locator1 = "Button#SAVE");
 
 		Button.clickPublish();
@@ -131,28 +131,28 @@ definition {
 			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW");
 
 		AssertElementPresent(
-			key_rowNumber = "1",
 			key_optionValue = "Option 1",
+			key_rowNumber = "1",
 			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
 
 		AssertElementPresent(
-			key_rowNumber = "1",
 			key_optionValue = "Option 2",
+			key_rowNumber = "1",
 			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
 
 		Click(
-			key_rowNumber = "1",
 			key_optionValue = "Option 1",
+			key_rowNumber = "1",
 			locator1 = "FormPortlet#SELECT_SINGLE_SELECTION_ROW_OPTION");
 
 		Button.clickSubmitButton();
 
 		FormPortlet.viewSuccessPage(
-			successPageTitle = "Thank you.",
-			successPageDescription = "Your information was successfully received. Thank you for filling out the form.");
-		
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
 		Navigator.openSpecificURL(url = "http://localhost:8080");
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -165,7 +165,6 @@ definition {
 			fieldLabel = "Single Selection",
 			fieldName = "${fieldSingleSelectionField}",
 			fieldValue = "Option 1");
-		
 	}
 
 	@description = "Verify that changes to the Field can be canceled"
