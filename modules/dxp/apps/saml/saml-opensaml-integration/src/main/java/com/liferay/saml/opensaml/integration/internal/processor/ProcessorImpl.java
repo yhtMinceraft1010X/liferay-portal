@@ -100,10 +100,10 @@ public abstract class ProcessorImpl
 		public <V, U, Y> void handleMappedUnsafeObject(
 			String fieldExpression, Class<V> clazz,
 			BiFunction<V, BiFunction<String, Class<Y>, Y>, U> mappingFunction,
-			UnsafeBiConsumer<T, U, ?> consumer) {
+			UnsafeBiConsumer<T, U, ?> unsafeBiConsumer) {
 
 			_patchingQueue.add(
-				object -> consumer.accept(
+				object -> unsafeBiConsumer.accept(
 					object,
 					mappingFunction.apply(
 						_processorContext.getValue(fieldExpression, clazz),
@@ -112,7 +112,7 @@ public abstract class ProcessorImpl
 
 		public <V> void handleUnsafeObjectArray(
 			String fieldExpression, Class<V> clazz,
-			UnsafeBiConsumer<T, V[], ?> consumer) {
+			UnsafeBiConsumer<T, V[], ?> unsafeBiConsumer) {
 
 			V[] values = _processorContext.getValueArray(
 				fieldExpression, clazz);
@@ -121,7 +121,7 @@ public abstract class ProcessorImpl
 				return;
 			}
 
-			_patchingQueue.add(object -> consumer.accept(object, values));
+			_patchingQueue.add(object -> unsafeBiConsumer.accept(object, values));
 		}
 
 		@Override
