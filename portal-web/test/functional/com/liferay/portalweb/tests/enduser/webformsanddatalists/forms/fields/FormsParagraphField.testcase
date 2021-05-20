@@ -237,8 +237,6 @@ definition {
 		AssertElementPresent(
 			key_bodyName = "Test",
 			locator1 = "FormFields#PARAGRAPH_SPECIFIC_FIELD_BY_BODY");
-
-			
 	}
 
 	@description = "Verify that a Table can be deleted in the Body Text"
