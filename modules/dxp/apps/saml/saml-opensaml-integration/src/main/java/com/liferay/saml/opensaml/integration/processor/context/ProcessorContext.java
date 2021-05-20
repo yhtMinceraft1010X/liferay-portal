@@ -30,7 +30,7 @@ public interface ProcessorContext<M extends BaseModel<M>> {
 	public Bind<M> bind(int processingIndex, UpdateFunction<M> updateFunction);
 
 	public <T extends BaseModel<T>> Bind<T> bind(
-		String publicIdentifier, Function<M, T> modelGetter,
+		String publicIdentifier, Function<M, T> modelGetterFunction,
 		int processingIndex, UpdateFunction<T> updateFunction);
 
 	public <V> V getValue(String fieldExpression, Class<V> clazz);

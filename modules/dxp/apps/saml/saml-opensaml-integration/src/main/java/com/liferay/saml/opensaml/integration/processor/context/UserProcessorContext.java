@@ -30,7 +30,7 @@ public interface UserProcessorContext extends ProcessorContext<User> {
 
 	@Override
 	public <T extends BaseModel<T>> UserBind<T> bind(
-		String publicIdentifier, Function<User, T> modelGetter,
+		String publicIdentifier, Function<User, T> modelGetterFunction,
 		int processingIndex, UpdateFunction<T> updateFunction);
 
 	public interface UserBind<T extends BaseModel<T>> extends Bind<T> {

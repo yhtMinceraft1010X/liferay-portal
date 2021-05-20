@@ -55,7 +55,7 @@ public class DynamicUserFieldExpressionResolver
 		UserResolver.UserResolverSAMLContext userResolverSAMLContext,
 		Map<String, List<Serializable>> incomingAttributeValues) {
 
-		String userIdentifierExpression = doResolverUserFieldExpression(
+		String userIdentifierExpression = _resolverUserFieldExpression(
 			userResolverSAMLContext.resolveSubjectNameFormat());
 
 		if (_log.isDebugEnabled()) {
@@ -67,7 +67,7 @@ public class DynamicUserFieldExpressionResolver
 		return userIdentifierExpression;
 	}
 
-	protected String doResolverUserFieldExpression(String subjectNameFormat) {
+	private String _resolverUserFieldExpression(String subjectNameFormat) {
 		if (Objects.equals(subjectNameFormat, NameIDType.EMAIL)) {
 			return CompanyConstants.AUTH_TYPE_EA;
 		}

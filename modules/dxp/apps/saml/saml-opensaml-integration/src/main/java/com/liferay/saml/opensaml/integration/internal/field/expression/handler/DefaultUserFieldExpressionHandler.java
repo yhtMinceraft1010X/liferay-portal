@@ -68,7 +68,6 @@ public class DefaultUserFieldExpressionHandler
 		userBind.mapString("emailAddress", User::setEmailAddress);
 		userBind.mapString("firstName", User::setFirstName);
 		userBind.mapString("lastName", User::setLastName);
-
 		userBind.mapUnsafeString(
 			"modifiedDate",
 			(user, value) -> {
@@ -76,7 +75,6 @@ public class DefaultUserFieldExpressionHandler
 
 				user.setModifiedDate(dateTime.toDate());
 			});
-
 		userBind.mapString("screenName", User::setScreenName);
 		userBind.mapString("uuid", User::setUuid);
 
@@ -166,11 +164,8 @@ public class DefaultUserFieldExpressionHandler
 
 		long creatorUserId = 0;
 		boolean autoPassword = true;
-
 		String password1 = null;
-
 		String password2 = null;
-
 		boolean autoScreenName = false;
 		int prefixId = 0;
 		int suffixId = 0;
