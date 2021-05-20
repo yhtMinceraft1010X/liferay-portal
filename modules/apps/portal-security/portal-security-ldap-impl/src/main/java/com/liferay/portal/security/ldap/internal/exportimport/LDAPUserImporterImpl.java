@@ -440,8 +440,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringBundler.concat(
-					"User with the uuid=", uuid,
+				"User with UUID " + uuid +
 					" was not found in any LDAP servers"));
 		}
 
