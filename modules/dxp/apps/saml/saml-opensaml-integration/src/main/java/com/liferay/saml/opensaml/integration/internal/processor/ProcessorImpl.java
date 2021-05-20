@@ -139,9 +139,9 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> {
+				(object, values) -> {
 					for (String value : values) {
-						biConsumer.accept(obj, GetterUtil.getBoolean(value));
+						biConsumer.accept(object, GetterUtil.getBoolean(value));
 					}
 				});
 		}
@@ -152,14 +152,14 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, value) -> {
+				(object, value) -> {
 					boolean[] booleanArray = new boolean[value.length];
 
 					for (int i = 0; i < booleanArray.length; i++) {
 						booleanArray[i] = GetterUtil.getBoolean(value[i]);
 					}
 
-					biConsumer.accept(obj, booleanArray);
+					biConsumer.accept(object, booleanArray);
 				});
 		}
 
@@ -169,10 +169,10 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> {
+				(object, values) -> {
 					for (String value : values) {
 						try {
-							biConsumer.accept(obj, Long.parseLong(value));
+							biConsumer.accept(object, Long.parseLong(value));
 						}
 						catch (NumberFormatException numberFormatException) {
 							throw numberFormatException;
@@ -187,11 +187,11 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, value) -> {
+				(object, value) -> {
 					Stream<String> stream = Arrays.stream(value);
 
 					biConsumer.accept(
-						obj,
+						object,
 						stream.mapToLong(
 							Long::parseLong
 						).toArray());
@@ -204,7 +204,7 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> biConsumer.accept(obj, values[0]));
+				(object, values) -> biConsumer.accept(object, values[0]));
 		}
 
 		@Override
@@ -213,7 +213,7 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> biConsumer.accept(obj, values));
+				(object, values) -> biConsumer.accept(object, values));
 		}
 
 		@Override
@@ -223,7 +223,7 @@ public abstract class ProcessorImpl
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> unsafeBiConsumer.accept(obj, values[0]));
+				(object, values) -> unsafeBiConsumer.accept(object, values[0]));
 		}
 
 		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue;
@@ -371,13 +371,13 @@ public abstract class ProcessorImpl
 		Map.Entry<Class<?>, Serializable> objectKey =
 			new AbstractMap.SimpleEntry<>(model.getClass(), publicIdentifier);
 
-		T obj = (T)_objectCache.get(objectKey);
+		T object = (T)_objectCache.get(objectKey);
 
 		T tNew;
 
-		if (obj != null) {
-			tNew = obj;
-			model = (T)obj.clone();
+		if (object != null) {
+			tNew = object;
+			model = (T)object.clone();
 		}
 		else {
 			tNew = model;
