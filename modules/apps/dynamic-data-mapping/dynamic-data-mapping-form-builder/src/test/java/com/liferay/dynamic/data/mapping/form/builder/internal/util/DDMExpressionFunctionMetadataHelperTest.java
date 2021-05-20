@@ -52,9 +52,9 @@ public class DDMExpressionFunctionMetadataHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpLanguageUtil();
-		setUpPortal();
-		setUpResourceBundleUtil();
+		_setUpLanguageUtil();
+		_setUpPortal();
+		_setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -80,7 +80,6 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		Assert.assertEquals(
 			ddmExpressionFunctionMetadatas.toString(), 1,
 			ddmExpressionFunctionMetadatas.size());
-
 		Assert.assertEquals(
 			new DDMExpressionFunctionMetadata(
 				"binaryFunction", "binaryFunction", "boolean",
@@ -93,7 +92,6 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		Assert.assertEquals(
 			ddmExpressionFunctionMetadatas.toString(), 1,
 			ddmExpressionFunctionMetadatas.size());
-
 		Assert.assertEquals(
 			new DDMExpressionFunctionMetadata(
 				"binaryFunction", "binaryFunction", "boolean",
@@ -160,13 +158,13 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		);
 	}
 
-	protected void setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(PowerMockito.mock(Language.class));
 	}
 
-	protected void setUpPortal() throws Exception {
+	private void _setUpPortal() throws Exception {
 		Portal portal = PowerMockito.mock(Portal.class);
 
 		MemberMatcher.field(
@@ -182,7 +180,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		);
 	}
 
-	protected void setUpResourceBundleUtil() {
+	private void _setUpResourceBundleUtil() {
 		PowerMockito.mockStatic(ResourceBundleUtil.class);
 
 		PowerMockito.when(
