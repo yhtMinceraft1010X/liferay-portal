@@ -70,7 +70,7 @@ public abstract class ProcessorImpl
 
 	@Override
 	public <T, V extends T> void setValueArray(
-		String fieldExpression, Class<T> clazz, V[] value) {
+		Class<T> clazz, String fieldExpression, V[] value) {
 
 		Map<String, Object[]> map = _values.computeIfAbsent(
 			clazz, c -> new HashMap<>());

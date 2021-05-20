@@ -26,7 +26,7 @@ public interface Processor<M extends BaseModel<M>> {
 	public M process(ServiceContext serviceContext) throws PortalException;
 
 	public <T, V extends T> void setValueArray(
-		String fieldExpression, Class<T> clazz, V[] value);
+		Class<T> clazz, String fieldExpression, V[] value);
 
 	public void setValueArray(String fieldExpression, String[] value);
 
