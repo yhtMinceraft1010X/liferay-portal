@@ -77,7 +77,7 @@ public abstract class ProcessorImpl
 		if (map == null) {
 			map = new HashMap<>();
 
-			_maps.put(clazz, map)
+			_maps.put(clazz, map);
 		}
 
 		map.put(fieldExpression, value);

@@ -50,10 +50,11 @@ public class UserProcessorFactoryImpl implements UserProcessorFactory {
 			 UserFieldExpressionHandlerRegistry> implements UserProcessor {
 
 		public UserProcessorImpl(
-			User model,
-			UserFieldExpressionHandlerRegistry fieldExpressionHandlerRegistry) {
+			User user,
+			UserFieldExpressionHandlerRegistry
+				userFieldExpressionHandlerRegistry) {
 
-			super(model, fieldExpressionHandlerRegistry);
+			super(user, userFieldExpressionHandlerRegistry);
 		}
 
 		public class UserBindImpl<T extends BaseModel<T>>
