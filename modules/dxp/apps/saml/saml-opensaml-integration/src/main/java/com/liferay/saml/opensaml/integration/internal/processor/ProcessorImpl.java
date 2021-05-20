@@ -94,7 +94,8 @@ public abstract class ProcessorImpl
 			_processorContext = processorContext;
 
 			_patchingQueue = getPatchingQueue(
-				publicIdentifier, modelGetterFunction, processingIndex, updateFunction);
+				publicIdentifier, modelGetterFunction, processingIndex,
+				updateFunction);
 		}
 
 		public <V, U, Y> void handleMappedUnsafeObject(
@@ -121,7 +122,8 @@ public abstract class ProcessorImpl
 				return;
 			}
 
-			_patchingQueue.add(object -> unsafeBiConsumer.accept(object, values));
+			_patchingQueue.add(
+				object -> unsafeBiConsumer.accept(object, values));
 		}
 
 		@Override

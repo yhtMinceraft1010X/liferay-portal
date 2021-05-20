@@ -93,8 +93,8 @@ public class UserProcessorFactoryImpl implements UserProcessorFactory {
 				int processingIndex, UpdateFunction<T> updateFunction) {
 
 				return new UserBindImpl<>(
-					this, publicIdentifier, modelGetterFunction, processingIndex,
-					updateFunction);
+					this, publicIdentifier, modelGetterFunction,
+					processingIndex, updateFunction);
 			}
 
 		}

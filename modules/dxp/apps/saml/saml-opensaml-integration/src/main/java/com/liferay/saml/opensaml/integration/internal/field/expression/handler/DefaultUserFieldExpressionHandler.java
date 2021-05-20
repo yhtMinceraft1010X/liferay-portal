@@ -63,7 +63,8 @@ public class DefaultUserFieldExpressionHandler
 	@Override
 	public void bindProcessorContext(UserProcessorContext processorContext) {
 		ProcessorContext.Bind<User> userBind = processorContext.bind(
-			Integer.MIN_VALUE, this::_update);
+			Integer.MIN_VALUE,
+			(currentUser, newUser, serviceContext) -> newUser);
 
 		userBind.mapString("emailAddress", User::setEmailAddress);
 		userBind.mapString("firstName", User::setFirstName);
@@ -78,7 +79,7 @@ public class DefaultUserFieldExpressionHandler
 		userBind.mapString("screenName", User::setScreenName);
 		userBind.mapString("uuid", User::setUuid);
 
-		processorContext.bind(_processingIndex, this::_persist);
+		processorContext.bind(_processingIndex, this::_updateUser);
 	}
 
 	@Override
@@ -199,7 +200,7 @@ public class DefaultUserFieldExpressionHandler
 		return user;
 	}
 
-	private User _persist(
+	private User _updateUser(
 			User currentUser, User newUser, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -258,13 +259,6 @@ public class DefaultUserFieldExpressionHandler
 			newUser = _userLocalService.updateModifiedDate(
 				newUser.getUserId(), modifiedDate);
 		}
-
-		return newUser;
-	}
-
-	private User _update(
-			User currentUser, User newUser, ServiceContext serviceContext)
-		throws PortalException {
 
 		return newUser;
 	}
