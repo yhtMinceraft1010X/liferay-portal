@@ -180,7 +180,7 @@ public class TestrayRoutine {
 	}
 
 	public TestrayBuild getTestrayBuildByName(
-		String buildName, String... nameFilters) {
+		String buildName, String... names) {
 
 		if (_testrayBuildsByName.containsKey(buildName)) {
 			return _testrayBuildsByName.get(buildName);
@@ -190,9 +190,9 @@ public class TestrayRoutine {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (String nameFilter : nameFilters) {
+		for (String name : names) {
 			sb.append("&name=");
-			sb.append(JenkinsResultsParserUtil.fixURL(nameFilter));
+			sb.append(JenkinsResultsParserUtil.fixURL(name));
 		}
 
 		while (true) {
@@ -245,7 +245,7 @@ public class TestrayRoutine {
 	}
 
 	public List<TestrayBuild> getTestrayBuilds(
-		int maxSize, LocalDate localDate, String nameFilter) {
+		int maxSize, LocalDate localDate, String name) {
 
 		int current = 1;
 
@@ -257,9 +257,9 @@ public class TestrayRoutine {
 			sb.append("%22");
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(nameFilter)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(name)) {
 			sb.append("&name=");
-			sb.append(nameFilter);
+			sb.append(name);
 		}
 
 		while ((current * _DELTA) <= maxSize) {
@@ -306,8 +306,8 @@ public class TestrayRoutine {
 		for (TestrayBuild testrayBuild : _testrayBuildsByID.values()) {
 			String testrayBuildName = testrayBuild.getName();
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(nameFilter) &&
-				!testrayBuildName.contains(nameFilter)) {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(name) &&
+				!testrayBuildName.contains(name)) {
 
 				continue;
 			}
