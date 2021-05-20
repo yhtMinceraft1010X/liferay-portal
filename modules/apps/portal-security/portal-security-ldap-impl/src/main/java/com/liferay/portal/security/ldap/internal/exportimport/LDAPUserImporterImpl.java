@@ -318,9 +318,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {
 
-			String providerUrl = ldapServerConfiguration.baseProviderURL();
-
-			if (Validator.isNull(providerUrl)) {
+			if (Validator.isNull(ldapServerConfiguration.baseProviderURL())) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"No provider URL defined in " +
@@ -403,7 +401,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (Validator.isBlank(attributeName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"User field uuid is not mapped for LDAP server " +
+					"User field UUID is not mapped for LDAP server " +
 						ldapServerId);
 			}
 
@@ -422,9 +420,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {
 
-			String providerUrl = ldapServerConfiguration.baseProviderURL();
-
-			if (Validator.isNull(providerUrl)) {
+			if (Validator.isNull(ldapServerConfiguration.baseProviderURL())) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"No provider URL defined in " +
