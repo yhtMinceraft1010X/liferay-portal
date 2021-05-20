@@ -80,11 +80,6 @@ public class CommerceDeliverySubscriptionsTest {
 		_user = UserTestUtil.addUser(_company);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(

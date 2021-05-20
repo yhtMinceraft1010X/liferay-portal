@@ -82,11 +82,6 @@ public class CommercePriceListIndexerTest {
 		_indexer = _indexerRegistry.getIndexer(CommercePriceList.class);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();

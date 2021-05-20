@@ -75,11 +75,6 @@ public class CPDefinitionIndexerTest {
 		_indexer = _indexerRegistry.getIndexer(CPDefinition.class);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(

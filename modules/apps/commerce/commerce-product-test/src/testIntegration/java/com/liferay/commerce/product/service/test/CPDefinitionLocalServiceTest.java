@@ -76,11 +76,6 @@ public class CPDefinitionLocalServiceTest {
 		_company = CompanyTestUtil.addCompany();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(

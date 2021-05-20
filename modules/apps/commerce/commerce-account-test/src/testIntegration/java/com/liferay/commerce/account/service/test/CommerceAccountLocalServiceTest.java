@@ -74,11 +74,6 @@ public class CommerceAccountLocalServiceTest {
 		_user = UserTestUtil.addUser(_company);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Test
 	public void testAddBusinessCommerceAccount() throws Exception {
 		frutillaRule.scenario(

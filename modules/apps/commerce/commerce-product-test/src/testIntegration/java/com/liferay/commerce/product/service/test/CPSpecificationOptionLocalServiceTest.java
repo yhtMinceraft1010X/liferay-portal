@@ -67,11 +67,6 @@ public class CPSpecificationOptionLocalServiceTest {
 		_user = UserTestUtil.addUser(_company);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(

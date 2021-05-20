@@ -83,11 +83,6 @@ public class AnnouncementsEntryLocalServiceTest {
 		_company = CompanyTestUtil.addCompany();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		CompanyLocalServiceUtil.deleteCompany(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
