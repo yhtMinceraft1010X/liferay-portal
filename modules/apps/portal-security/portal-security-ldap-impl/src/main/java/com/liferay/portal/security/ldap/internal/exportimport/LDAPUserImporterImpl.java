@@ -221,7 +221,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"LDAP server id ", ldapServerId,
+							"LDAP server ID ", ldapServerId,
 							" is no longer valid, company ", companyId,
 							" now uses ",
 							ldapServerConfiguration.ldapServerId()));
@@ -550,7 +550,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"LDAP server id ", ldapServerId,
+						"LDAP server ID ", ldapServerId,
 						" is no longer valid, company ", companyId,
 						" now uses ", ldapServerConfiguration.ldapServerId()));
 			}
@@ -1062,7 +1062,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"LDAP server id ", ldapImportContext.getLdapServerId(),
+						"LDAP server ID ", ldapImportContext.getLdapServerId(),
 						" is no longer valid, company ",
 						ldapImportContext.getCompanyId(), " now uses ",
 						ldapServerConfiguration.ldapServerId()));
@@ -1283,7 +1283,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"LDAP server id ", ldapServerId,
+							"LDAP server ID ", ldapServerId,
 							" is no longer valid, company ", companyId,
 							" now uses ",
 							ldapServerConfiguration.ldapServerId()));
@@ -1838,7 +1838,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"LDAP server id ", ldapServerId,
+						"LDAP server ID ", ldapServerId,
 						" is no longer valid, company ", companyId,
 						" now uses ", ldapServerConfiguration.ldapServerId()));
 			}
