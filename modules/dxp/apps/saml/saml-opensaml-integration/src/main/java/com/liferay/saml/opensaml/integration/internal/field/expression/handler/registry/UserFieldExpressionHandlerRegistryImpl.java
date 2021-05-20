@@ -41,36 +41,36 @@ public class UserFieldExpressionHandlerRegistryImpl
 
 	@Override
 	public UserFieldExpressionHandler getFieldExpressionHandler(String prefix) {
-		return _userFieldExpressionHandlers.getService(prefix);
+		return _orderedServiceTrackerMap.getService(prefix);
 	}
 
 	@Override
 	public Set<String> getFieldExpressionHandlerPrefixes() {
-		return _userFieldExpressionHandlers.getServicesKeys();
+		return _orderedServiceTrackerMap.getServicesKeys();
 	}
 
 	@Override
 	public List<String> getOrderedFieldExpressionHandlerPrefixes() {
-		return _userFieldExpressionHandlers.getOrderedServicesKeys();
+		return _orderedServiceTrackerMap.getOrderedServicesKeys();
 	}
 
 	@Override
 	public List<Map.Entry<String, UserFieldExpressionHandler>>
 		getOrderedFieldExpressionHandlers() {
 
-		return _userFieldExpressionHandlers.getOrderedServices();
+		return _orderedServiceTrackerMap.getOrderedServices();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_userFieldExpressionHandlers = _orderedServiceTrackerMapFactory.create(
+		_orderedServiceTrackerMap = _orderedServiceTrackerMapFactory.create(
 			bundleContext, UserFieldExpressionHandler.class, "prefix",
 			() -> _defaultUserFieldExpressionHandler);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_userFieldExpressionHandlers.close();
+		_orderedServiceTrackerMap.close();
 	}
 
 	@Reference(
@@ -85,6 +85,6 @@ public class UserFieldExpressionHandlerRegistryImpl
 	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
 
 	private OrderedServiceTrackerMap<UserFieldExpressionHandler>
-		_userFieldExpressionHandlers;
+		_orderedServiceTrackerMap;
 
 }

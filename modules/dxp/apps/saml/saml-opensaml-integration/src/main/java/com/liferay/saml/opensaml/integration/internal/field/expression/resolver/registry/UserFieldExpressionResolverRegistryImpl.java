@@ -42,26 +42,26 @@ public class UserFieldExpressionResolverRegistryImpl
 	public List<Map.Entry<String, UserFieldExpressionResolver>>
 		getOrderedUserFieldExpressionResolvers() {
 
-		return _userFieldExpressionResolvers.getOrderedServices();
+		return _orderedServiceTrackerMap.getOrderedServices();
 	}
 
 	@Override
 	public UserFieldExpressionResolver getUserFieldExpressionResolver(
 		String key) {
 
-		return _userFieldExpressionResolvers.getService(key);
+		return _orderedServiceTrackerMap.getService(key);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_userFieldExpressionResolvers = _orderedServiceTrackerMapFactory.create(
+		_orderedServiceTrackerMap = _orderedServiceTrackerMapFactory.create(
 			bundleContext, UserFieldExpressionResolver.class, "key",
 			() -> _defaultUserFieldExpressionResolver);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_userFieldExpressionResolvers.close();
+		_orderedServiceTrackerMap.close();
 	}
 
 	@Reference(
@@ -76,6 +76,6 @@ public class UserFieldExpressionResolverRegistryImpl
 	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
 
 	private OrderedServiceTrackerMap<UserFieldExpressionResolver>
-		_userFieldExpressionResolvers;
+		_orderedServiceTrackerMap;
 
 }
