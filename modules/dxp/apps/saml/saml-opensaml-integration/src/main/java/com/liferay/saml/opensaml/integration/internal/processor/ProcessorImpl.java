@@ -72,8 +72,13 @@ public abstract class ProcessorImpl
 	public <T, V extends T> void setValueArray(
 		Class<T> clazz, String fieldExpression, V[] value) {
 
-		Map<String, Object[]> map = _values.computeIfAbsent(
-			clazz, c -> new HashMap<>());
+		Map<String, Object[]> map = _values.get(clazz);
+
+		if (map == null) {
+			map = new HashMap<>();
+
+			_values.put(clazz, map)
+		}
 
 		map.put(fieldExpression, value);
 	}
