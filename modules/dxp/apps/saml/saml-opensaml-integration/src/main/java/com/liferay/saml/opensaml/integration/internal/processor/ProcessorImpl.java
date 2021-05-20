@@ -87,14 +87,14 @@ public abstract class ProcessorImpl
 		implements ProcessorContext.Bind<T> {
 
 		public BindImpl(
-			Function<M, T> modelGetter, int processingIndex,
+			Function<M, T> modelGetterFunction, int processingIndex,
 			ProcessorContext processorContext, String publicIdentifier,
 			ProcessorContext.UpdateFunction<T> updateFunction) {
 
 			_processorContext = processorContext;
 
 			_patchingQueue = getPatchingQueue(
-				publicIdentifier, modelGetter, processingIndex, updateFunction);
+				publicIdentifier, modelGetterFunction, processingIndex, updateFunction);
 		}
 
 		public <V, U, Y> void handleMappedUnsafeObject(
@@ -248,11 +248,11 @@ public abstract class ProcessorImpl
 
 		@Override
 		public <T extends BaseModel<T>> Bind<T> bind(
-			String publicIdentifier, Function<M, T> modelGetter,
+			String publicIdentifier, Function<M, T> modelGetterFunction,
 			int processingIndex, UpdateFunction<T> updateFunction) {
 
 			return new BindImpl<>(
-				modelGetter, processingIndex, this, publicIdentifier,
+				modelGetterFunction, processingIndex, this, publicIdentifier,
 				updateFunction);
 		}
 
@@ -288,11 +288,11 @@ public abstract class ProcessorImpl
 
 	protected <T extends BaseModel<T>> Queue<UnsafeConsumer<T, ?>>
 		getPatchingQueue(
-			String publicIdentifier, Function<M, T> modelGetter,
+			String publicIdentifier, Function<M, T> modelGetterFunction,
 			int processingIndex,
 			ProcessorContext.UpdateFunction<T> updateFunction) {
 
-		T model = modelGetter.apply(_model);
+		T model = modelGetterFunction.apply(_model);
 
 		if (model != _model) {
 			if (publicIdentifier == null) {
