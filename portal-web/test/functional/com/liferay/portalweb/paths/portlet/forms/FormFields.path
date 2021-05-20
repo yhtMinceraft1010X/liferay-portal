@@ -365,6 +365,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAGRAPH_SPECIFIC_FIELD_BY_BODY</td>
+	<td>//div[@class='liferay-ddm-form-field-paragraph-text']/p[contains(.,'${key_bodyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
