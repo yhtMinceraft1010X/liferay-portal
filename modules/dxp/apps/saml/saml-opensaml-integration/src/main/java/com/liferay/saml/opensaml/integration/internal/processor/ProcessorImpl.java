@@ -421,6 +421,7 @@ public abstract class ProcessorImpl
 	}
 
 	private final FEHR _fieldExpressionHandlerRegistry;
+	private final Map<Class<?>, Map<String, Object[]>> _maps = new HashMap<>();
 	private final M _model;
 	private final Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
 		_modelUnsafeConsumers = new PriorityQueue<>(
@@ -431,7 +432,5 @@ public abstract class ProcessorImpl
 	private final Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
 		_unsafeConsumers = new PriorityQueue<>(
 			Comparator.comparingInt(Map.Entry::getKey));
-	private final Map<Class<?>, Map<String, Object[]>> _maps =
-		new HashMap<>();
 
 }
