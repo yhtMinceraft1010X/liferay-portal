@@ -152,6 +152,7 @@ const Validation = ({
 						options={validations}
 						placeholder={Liferay.Language.get('choose-an-option')}
 						readOnly={readOnly || localizationMode}
+						showEmptyOption={false}
 						spritemap={spritemap}
 						value={[selectedValidation.name]}
 						visible={visible}
