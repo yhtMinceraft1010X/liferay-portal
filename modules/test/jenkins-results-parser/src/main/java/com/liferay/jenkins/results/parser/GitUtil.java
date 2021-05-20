@@ -311,7 +311,7 @@ public class GitUtil {
 
 		System.err.println(executionResult.getStandardError());
 
-		throw new RuntimeException("Unable to run command.\n     " + args[0]);
+		throw new RuntimeException("Unable to run command:\n     " + args[0]);
 	}
 
 	public static String toSlaveGitHubDevNodeRemoteURL(
