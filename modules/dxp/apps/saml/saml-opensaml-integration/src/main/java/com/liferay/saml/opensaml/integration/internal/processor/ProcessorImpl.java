@@ -72,12 +72,12 @@ public abstract class ProcessorImpl
 	public <T, V extends T> void setValueArray(
 		Class<T> clazz, String fieldExpression, V[] value) {
 
-		Map<String, Object[]> map = _values.get(clazz);
+		Map<String, Object[]> map = _maps.get(clazz);
 
 		if (map == null) {
 			map = new HashMap<>();
 
-			_values.put(clazz, map)
+			_maps.put(clazz, map)
 		}
 
 		map.put(fieldExpression, value);
@@ -280,7 +280,7 @@ public abstract class ProcessorImpl
 				fieldExpression = _prefix + ':' + fieldExpression;
 			}
 
-			Map<String, Object[]> map = _values.get(clazz);
+			Map<String, Object[]> map = _maps.get(clazz);
 
 			if (map == null) {
 				return null;
@@ -431,7 +431,7 @@ public abstract class ProcessorImpl
 	private final Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
 		_unsafeConsumers = new PriorityQueue<>(
 			Comparator.comparingInt(Map.Entry::getKey));
-	private final Map<Class<?>, Map<String, Object[]>> _values =
+	private final Map<Class<?>, Map<String, Object[]>> _maps =
 		new HashMap<>();
 
 }
