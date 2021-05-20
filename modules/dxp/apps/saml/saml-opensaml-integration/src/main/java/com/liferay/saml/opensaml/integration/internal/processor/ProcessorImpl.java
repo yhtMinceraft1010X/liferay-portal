@@ -85,7 +85,7 @@ public abstract class ProcessorImpl
 
 	@Override
 	public void setValueArray(String fieldExpression, String[] value) {
-		setValueArray(fieldExpression, String.class, value);
+		setValueArray(String.class, fieldExpression, value);
 	}
 
 	public class BindImpl<T extends BaseModel<T>>
