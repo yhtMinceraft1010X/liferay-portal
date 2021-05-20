@@ -749,7 +749,6 @@ definition {
 		Form.addTextField(fieldPositionNumber = "0");
 
 		Form.save();
-		
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -760,7 +759,6 @@ definition {
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 
 		FormsAdmin.deleteForm(formName = "Form 1");
-
 	}
 
 	@description = "Verify that a Form can be duplicated"
