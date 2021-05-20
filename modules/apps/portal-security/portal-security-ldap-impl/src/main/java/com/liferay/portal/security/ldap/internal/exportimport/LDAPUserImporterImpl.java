@@ -1291,7 +1291,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				return null;
 			}
 
-			SafeLdapFilter safeLdapFilter;
+			SafeLdapFilter safeLdapFilter = null;
 
 			try {
 				safeLdapFilter = SafeLdapFilterFactory.fromUnsafeFilter(
