@@ -72,10 +72,10 @@ public class UserFieldExpressionResolverRegistryImpl
 	private volatile UserFieldExpressionResolver
 		_defaultUserFieldExpressionResolver;
 
-	@Reference
-	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
-
 	private OrderedServiceTrackerMap<UserFieldExpressionResolver>
 		_orderedServiceTrackerMap;
+
+	@Reference
+	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
 
 }
