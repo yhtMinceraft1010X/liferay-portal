@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context.logic;
 
-import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
@@ -267,7 +266,8 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
-					DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
+					"com_liferay_digital_signature_web_internal_portlet_" +
+						"CollectDigitalSignaturePortlet")
 			).setBackURL(
 				_getCurrentURL()
 			).setParameter(
