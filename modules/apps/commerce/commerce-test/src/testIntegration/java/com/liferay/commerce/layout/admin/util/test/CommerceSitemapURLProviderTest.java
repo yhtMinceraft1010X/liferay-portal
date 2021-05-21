@@ -235,6 +235,7 @@ public class CommerceSitemapURLProviderTest {
 				friendlyURLEntry.getUrlTitle(_themeDisplay.getLanguageId());
 
 		Assert.assertTrue(node.hasContent());
+
 		String xml = node.asXML();
 
 		Assert.assertTrue(xml.contains(categoryFriendlyURL));
