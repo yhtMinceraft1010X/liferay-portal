@@ -14,8 +14,6 @@
 
 package com.liferay.batch.planner.constants;
 
-import java.util.Objects;
-
 /**
  * @author Igor Beslic
  */
@@ -40,15 +38,5 @@ public class BatchPlannerConstants {
 		EXTERNAL_TYPE_TXT, EXTERNAL_TYPE_XLS, EXTERNAL_TYPE_XLSX,
 		EXTERNAL_TYPE_XML
 	};
-
-	public static boolean isExternalType(String value) {
-		for (String externalType : EXTERNAL_TYPES) {
-			if (Objects.equals(value, externalType)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 }
