@@ -16,8 +16,8 @@ package com.liferay.object.rest.internal.jaxrs.application;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
-import com.liferay.object.rest.internal.jaxrs.openapi.OpenAPIResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
+import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.vulcan.openapi.DTOProperty;

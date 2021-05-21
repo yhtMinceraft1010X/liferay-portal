@@ -144,7 +144,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return getOpenAPI(resourceClasses, type, uriInfo, null);
+		return getOpenAPI(null, resourceClasses, type, uriInfo);
 	}
 
 	private OpenAPISpecFilter _toOpenAPISpecFilter(
