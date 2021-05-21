@@ -54,8 +54,8 @@ public interface OpenAPIResource {
 	}
 
 	public default Response getOpenAPI(
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo,
-			OpenAPISchemaFilter openAPISchemaFilter)
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
 		return null;

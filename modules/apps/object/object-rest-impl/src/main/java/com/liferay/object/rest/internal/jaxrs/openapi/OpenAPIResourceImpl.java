@@ -54,7 +54,7 @@ public class OpenAPIResourceImpl {
 		throws Exception {
 
 		return _openAPIResource.getOpenAPI(
-			_resourceClasses, type, _uriInfo, _openAPISchemaFilter);
+			_openAPISchemaFilter, _resourceClasses, type, _uriInfo);
 	}
 
 	private final OpenAPIResource _openAPIResource;

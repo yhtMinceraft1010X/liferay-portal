@@ -68,9 +68,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		return getOpenAPI(resourceClasses, type, uriInfo, null);
 	}
 
+	@Override
 	public Response getOpenAPI(
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo,
-			OpenAPISchemaFilter openAPISchemaFilter)
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
 		throws Exception {
 
 		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
