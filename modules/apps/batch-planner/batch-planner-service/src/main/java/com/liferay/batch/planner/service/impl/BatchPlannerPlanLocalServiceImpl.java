@@ -102,12 +102,17 @@ public class BatchPlannerPlanLocalServiceImpl
 			long batchPlannerPlanId, long companyId, String name)
 		throws PortalException {
 
+		if (Validator.isNull(name)) {
+			throw new BatchPlannerPlanNameException(
+				"Batch planner plan name is null for company " + companyId);
+		}
+
 		int maxLength = ModelHintsUtil.getMaxLength(
 			BatchPlannerPlan.class.getName(), "name");
 
-		if (Validator.isNull(name) || (name.length() > maxLength)) {
+		if (name.length() > maxLength) {
 			throw new BatchPlannerPlanNameException(
-				"Batch planner plan name must not be empty or longer than " +
+				"Batch planner plan name must not be longer than " +
 					maxLength);
 		}
 
@@ -123,7 +128,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		throw new DuplicateBatchPlannerPlanException(
 			StringBundler.concat(
 				"Batch planner plan name \"", name,
-				"\" already exists for company ID ", companyId));
+				"\" already exists for company ", companyId));
 	}
 
 }
