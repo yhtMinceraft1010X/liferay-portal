@@ -314,6 +314,9 @@ public class CommerceSitemapURLProviderTest {
 		Assert.assertTrue(xml.contains(productFriendlyURL));
 	}
 
+	private static Company _company;
+	private static User _user;
+
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -321,7 +324,6 @@ public class CommerceSitemapURLProviderTest {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private CommerceCurrency _commerceCurrency;
-	private static Company _company;
 
 	@Inject
 	private CPFileImporter _cpFileImporter;
@@ -352,6 +354,5 @@ public class CommerceSitemapURLProviderTest {
 
 	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
-	private static User _user;
 
 }
