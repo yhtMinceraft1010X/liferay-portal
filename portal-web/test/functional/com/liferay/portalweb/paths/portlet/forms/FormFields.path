@@ -200,6 +200,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_OPTION_VALUE_FIELD_REFERENCE</td>
+	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input[@class='key-value-reference-input'] | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input[@class='key-value-reference-input']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD_VISIBLE</td>
 	<td>//div[@class='options']//div[@hidden='hidden']/following-sibling::div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
 	<td></td>

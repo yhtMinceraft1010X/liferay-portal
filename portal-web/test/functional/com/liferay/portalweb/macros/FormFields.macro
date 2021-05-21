@@ -186,6 +186,26 @@ definition {
 			value1 = "${optionValue}");
 	}
 
+	macro editOptionsRowValueOrFieldReference {
+		var key_rowNumber = "${rowNumber}";
+
+		WaitForElementPresent(
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+
+		Type(
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+
+		if (isSet(fieldReference)) {
+			Type(
+				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_REFERENCE",
+				value1 = "${fieldReference}");
+		}
+
+		AssertElementPresent(locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD");
+	}
+
 	macro editParagraphBody {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
@@ -731,6 +751,26 @@ definition {
 			AssertTextEquals(
 				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 				value1 = "${fieldValue}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
+				value1 = "${fieldValue}");
+		}
+	}
+
+	macro viewOptionsRowFieldValueOrFieldReference {
+		var key_rowNumber = "${rowNumber}";
+
+		if (IsVisible(locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD")) {
+			AssertTextEquals(
+				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+				value1 = "${fieldValue}");
+			if (isSet(fieldReference)) {
+				AssertTextEquals(
+					locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_REFERENCE",
+					value1 = "${fieldReference}");
+			}
 		}
 		else {
 			AssertTextEquals(
