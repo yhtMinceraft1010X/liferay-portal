@@ -77,11 +77,6 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		_validateName(batchPlannerPlanId, user.getCompanyId(), name);
 
-		if (userId != batchPlannerPlan.getUserId()) {
-			batchPlannerPlan.setUserId(userId);
-			batchPlannerPlan.setUserName(user.getFullName());
-		}
-
 		batchPlannerPlan.setName(name);
 
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
