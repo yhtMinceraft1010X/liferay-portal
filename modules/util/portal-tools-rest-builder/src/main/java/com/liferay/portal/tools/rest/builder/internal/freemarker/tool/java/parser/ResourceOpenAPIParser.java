@@ -675,15 +675,15 @@ public class ResourceOpenAPIParser {
 			return operation.getOperationId();
 		}
 
+		boolean collection = StringUtil.startsWith(
+			returnType, Page.class.getName() + "<");
+
 		List<String> methodNameSegments = new ArrayList<>();
 
 		methodNameSegments.add(OpenAPIParserUtil.getHTTPMethod(operation));
 
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
-
-		boolean collection = StringUtil.startsWith(
-			returnType, Page.class.getName() + "<");
 
 		for (int i = 0; i < pathSegments.length; i++) {
 			String pathSegment = pathSegments[i];
