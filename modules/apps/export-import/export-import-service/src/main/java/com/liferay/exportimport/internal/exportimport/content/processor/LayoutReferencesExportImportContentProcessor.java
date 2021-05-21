@@ -1032,12 +1032,11 @@ public class LayoutReferencesExportImportContentProcessor
 			}
 		}
 		catch (UnknownHostException unknownHostException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(unknownHostException.getMessage());
-			}
-
 			if (_log.isDebugEnabled()) {
 				_log.debug(unknownHostException, unknownHostException);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(unknownHostException.getMessage());
 			}
 		}
 		catch (Exception exception) {
