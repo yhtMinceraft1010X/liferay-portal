@@ -55,6 +55,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"liferay.jackson", false
 					).put(
+						"objectDefinitionId",
+						objectDefinition.getObjectDefinitionId()
+					).put(
 						"osgi.jaxrs.application.base",
 						"/" + objectDefinition.getRESTContextPath()
 					).put(
@@ -62,9 +65,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"(osgi.jaxrs.name=Liferay.Vulcan)"
 					).put(
 						"osgi.jaxrs.name", objectDefinition.getName()
-					).put(
-						"objectDefinitionId",
-						objectDefinition.getObjectDefinitionId()
 					).build()),
 				_resourceComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
