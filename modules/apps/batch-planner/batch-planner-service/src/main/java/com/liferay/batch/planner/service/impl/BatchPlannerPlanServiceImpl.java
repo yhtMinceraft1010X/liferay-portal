@@ -37,13 +37,13 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			String name, String externalType)
+			String externalType, String name)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
-			permissionChecker.getUserId(), name, externalType);
+			permissionChecker.getUserId(), externalType, name);
 	}
 
 	@Override

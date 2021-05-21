@@ -45,12 +45,12 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			long userId, String name, String externalType)
+			long userId, String externalType, String name)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
 		_validateExternalType(externalType);
+
+		User user = userLocalService.getUser(userId);
 
 		_validateName(0, user.getCompanyId(), name);
 
