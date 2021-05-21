@@ -620,8 +620,8 @@ public class DDMFormEvaluatorHelper {
 					ddmFormField.getRequiredErrorMessage();
 
 				if (localizedValue != null) {
-					HashMap<Locale, String> values =
-						(HashMap<Locale, String>)localizedValue.getValues();
+					Map<Locale, String> values =
+						(Map<Locale, String>)localizedValue.getValues();
 
 					String value = values.get(
 						_ddmFormEvaluatorEvaluateRequest.getLocale());
