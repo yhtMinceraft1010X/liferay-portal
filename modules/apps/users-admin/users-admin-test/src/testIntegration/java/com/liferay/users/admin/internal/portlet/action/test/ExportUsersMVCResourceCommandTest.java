@@ -58,7 +58,6 @@ public class ExportUsersMVCResourceCommandTest {
 	public void testGetUserCSVWithExpando() throws Exception {
 		boolean permissionsCustomAttributeReadCheckByDefault =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT;
-
 		String[] usersExportCSVfields = PropsValues.USERS_EXPORT_CSV_FIELDS;
 
 		try {
@@ -109,7 +108,6 @@ public class ExportUsersMVCResourceCommandTest {
 			_setPropsValuesValue(
 				"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT",
 				permissionsCustomAttributeReadCheckByDefault);
-
 			_setPropsValuesValue(
 				"USERS_EXPORT_CSV_FIELDS", usersExportCSVfields);
 		}
