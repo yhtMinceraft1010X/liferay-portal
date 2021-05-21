@@ -40,6 +40,14 @@ public interface OpenAPIResource {
 	}
 
 	public default Response getOpenAPI(
+			OpenAPISchemaFilter openAPISchemaFilter,
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return null;
+	}
+
+	public default Response getOpenAPI(
 			Set<Class<?>> resourceClasses, String type)
 		throws Exception {
 
@@ -51,14 +59,6 @@ public interface OpenAPIResource {
 		throws Exception {
 
 		return getOpenAPI(resourceClasses, type, uriInfo);
-	}
-
-	public default Response getOpenAPI(
-			OpenAPISchemaFilter openAPISchemaFilter,
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
-		throws Exception {
-
-		return null;
 	}
 
 }

@@ -54,21 +54,6 @@ import org.osgi.service.component.annotations.Component;
 public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Override
-	public Response getOpenAPI(Set<Class<?>> resourceClasses, String type)
-		throws Exception {
-
-		return getOpenAPI(resourceClasses, type, null);
-	}
-
-	@Override
-	public Response getOpenAPI(
-			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
-		throws Exception {
-
-		return getOpenAPI(resourceClasses, type, uriInfo, null);
-	}
-
-	@Override
 	public Response getOpenAPI(
 			OpenAPISchemaFilter openAPISchemaFilter,
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
@@ -145,6 +130,21 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		).type(
 			MediaType.APPLICATION_JSON_TYPE
 		).build();
+	}
+
+	@Override
+	public Response getOpenAPI(Set<Class<?>> resourceClasses, String type)
+		throws Exception {
+
+		return getOpenAPI(resourceClasses, type, null);
+	}
+
+	@Override
+	public Response getOpenAPI(
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return getOpenAPI(resourceClasses, type, uriInfo, null);
 	}
 
 	private OpenAPISpecFilter _toOpenAPISpecFilter(
