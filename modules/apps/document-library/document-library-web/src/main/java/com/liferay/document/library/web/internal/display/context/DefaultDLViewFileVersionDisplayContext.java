@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -401,9 +400,7 @@ public class DefaultDLViewFileVersionDisplayContext
 				(ThemeDisplay)_httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (DigitalSignatureConfigurationUtil.enabled(
-					themeDisplay.getSiteGroupId())) {
-
+			if (false) {
 				_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
 			}
 
