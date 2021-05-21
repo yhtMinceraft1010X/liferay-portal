@@ -81,6 +81,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -102,12 +103,15 @@ public class CommerceSitemapURLProviderTest {
 		new LiferayIntegrationTestRule(),
 		PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		_user = UserTestUtil.addUser(_company);
+	}
 
+	@Before
+	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
 
@@ -317,7 +321,7 @@ public class CommerceSitemapURLProviderTest {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private CommerceCurrency _commerceCurrency;
-	private Company _company;
+	private static Company _company;
 
 	@Inject
 	private CPFileImporter _cpFileImporter;
@@ -348,6 +352,6 @@ public class CommerceSitemapURLProviderTest {
 
 	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
-	private User _user;
+	private static User _user;
 
 }
