@@ -14,7 +14,7 @@
 
 package com.liferay.batch.planner.service.impl;
 
-import com.liferay.batch.planner.constants.BatchPlannerConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
@@ -86,7 +86,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		throws PortalException {
 
 		if (ArrayUtil.contains(
-				BatchPlannerConstants.EXTERNAL_TYPES, externalType)) {
+				BatchPlannerPlanConstants.EXTERNAL_TYPES, externalType)) {
 
 			return;
 		}
@@ -95,7 +95,8 @@ public class BatchPlannerPlanLocalServiceImpl
 			StringBundler.concat(
 				"Batch planner plan external type must be one of following: ",
 				StringUtil.merge(
-					BatchPlannerConstants.EXTERNAL_TYPES, StringPool.COMMA)));
+					BatchPlannerPlanConstants.EXTERNAL_TYPES,
+					StringPool.COMMA)));
 	}
 
 	private void _validateName(
@@ -112,8 +113,7 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		if (name.length() > maxLength) {
 			throw new BatchPlannerPlanNameException(
-				"Batch planner plan name must not be longer than " +
-					maxLength);
+				"Batch planner plan name must not be longer than " + maxLength);
 		}
 
 		BatchPlannerPlan batchPlannerPlan =

@@ -17,7 +17,7 @@ package com.liferay.batch.planner.constants;
 /**
  * @author Igor Beslic
  */
-public class BatchPlannerConstants {
+public class BatchPlannerPlanConstants {
 
 	public static final String EXTERNAL_TYPE_CSV = "CSV";
 
