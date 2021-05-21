@@ -48,10 +48,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 		_componentInstancesMap.put(
-			objectDefinitionId,
+			objectDefinition.getObjectDefinitionId(),
 			Arrays.asList(
 				_applicationComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -65,7 +63,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.name", objectDefinition.getName()
 					).put(
-						"objectDefinitionId", objectDefinitionId
+						"objectDefinitionId",
+						objectDefinition.getObjectDefinitionId()
 					).build()),
 				_resourceComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -103,7 +102,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectDefinitionGraphQLDTOContributor.of(
 					objectDefinition, _objectEntryManager,
 					_objectFieldLocalService.getObjectFields(
-						objectDefinitionId)),
+						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"dto.name", objectDefinition.getDBTableName()
 				).build()));
