@@ -37,7 +37,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Igor Beslic
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 
