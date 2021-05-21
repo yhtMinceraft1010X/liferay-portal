@@ -123,11 +123,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
-	@Reference(
-		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
-	)
-	private ComponentFactory _objectEntryApplicationComponentFactory;
-
 	private BundleContext _bundleContext;
 	private final Map<Long, List<ComponentInstance>> _componentInstancesMap =
 		new HashMap<>();
@@ -135,15 +130,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Reference
-	private ObjectEntryManager _objectEntryManager;
+	@Reference(
+		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
+	)
+	private ComponentFactory _objectEntryApplicationComponentFactory;
 
 	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference(
 		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource)"
 	)
 	private ComponentFactory _objectEntryResourceComponentFactory;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }
