@@ -105,13 +105,17 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		for (Map.Entry<String, List<String>> entry :
 				queryParameters.entrySet()) {
 
-			if (Objects.equals(entry.getKey(), "taskItemDelegateName")) {
-				List<String> values = entry.getValue();
-
-				if (!values.isEmpty()) {
-					return values.get(0);
-				}
+			if (!Objects.equals(entry.getKey(), "taskItemDelegateName")) {
+				continue;
 			}
+
+			List<String> values = entry.getValue();
+
+			if (values.isEmpty()) {
+				continue;
+			}
+
+			return values.get(0);
 		}
 
 		return null;
