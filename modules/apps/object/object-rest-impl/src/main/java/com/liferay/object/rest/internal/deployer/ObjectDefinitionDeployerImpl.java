@@ -55,7 +55,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"liferay.jackson", false
 					).put(
-						"objectDefinitionId",
+						"liferay.object.definition.id",
 						objectDefinition.getObjectDefinitionId()
 					).put(
 						"osgi.jaxrs.application.base",

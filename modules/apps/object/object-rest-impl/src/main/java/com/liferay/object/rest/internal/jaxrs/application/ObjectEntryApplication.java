@@ -70,7 +70,8 @@ public class ObjectEntryApplication extends Application {
 	protected void activate(Map<String, Object> properties) {
 		_applicationName = (String)properties.get("osgi.jaxrs.name");
 
-		_objectDefinitionId = (Long)properties.get("objectDefinitionId");
+		_objectDefinitionId = (Long)properties.get(
+			"liferay.object.definition.id");
 
 		_objectFields = _objectFieldLocalService.getObjectFields(
 			_objectDefinitionId);
