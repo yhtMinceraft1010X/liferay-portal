@@ -92,8 +92,8 @@ public class BatchPlannerPlanLocalServiceImpl
 		}
 
 		throw new BatchPlannerPlanExternalTypeException(
-			String.format(
-				"Batch planner plan external type must be one of %s",
+			StringBundler.concat(
+				"Batch planner plan external type must be one of following: ",
 				StringUtil.merge(
 					BatchPlannerConstants.EXTERNAL_TYPES, StringPool.COMMA)));
 	}
