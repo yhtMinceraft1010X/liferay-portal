@@ -49,7 +49,7 @@ public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testAddBatchPlannerPlanExceptions() throws Exception {
+	public void testAddBatchPlannerPlan() throws Exception {
 		User omniAdminUser = UserTestUtil.addOmniAdminUser();
 
 		UserTestUtil.setUser(omniAdminUser);
