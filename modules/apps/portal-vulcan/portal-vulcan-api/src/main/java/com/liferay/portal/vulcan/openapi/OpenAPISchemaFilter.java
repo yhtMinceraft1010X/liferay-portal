@@ -19,11 +19,11 @@ package com.liferay.portal.vulcan.openapi;
  */
 public class OpenAPISchemaFilter {
 
-	public DTOProperty getDtoProperty() {
+	public DTOProperty getDTOProperty() {
 		return _dtoProperty;
 	}
 
-	public void setDtoProperty(DTOProperty dtoProperty) {
+	public void setDTOProperty(DTOProperty dtoProperty) {
 		_dtoProperty = dtoProperty;
 	}
 

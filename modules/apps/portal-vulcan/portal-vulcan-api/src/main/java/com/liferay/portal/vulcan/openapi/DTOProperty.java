@@ -27,7 +27,7 @@ public class DTOProperty {
 		_type = type;
 	}
 
-	public List<DTOProperty> getDtoProperties() {
+	public List<DTOProperty> getDTOProperties() {
 		return _dtoProperties;
 	}
 
@@ -39,7 +39,7 @@ public class DTOProperty {
 		return _type;
 	}
 
-	public void setDtoProperties(List<DTOProperty> dtoProperties) {
+	public void setDTOProperties(List<DTOProperty> dtoProperties) {
 		_dtoProperties = dtoProperties;
 	}
 

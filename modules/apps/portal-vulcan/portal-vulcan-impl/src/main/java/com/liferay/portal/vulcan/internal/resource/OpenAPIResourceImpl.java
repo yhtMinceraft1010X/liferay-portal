@@ -157,11 +157,11 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
-				DTOProperty dtoProperty = openAPISchemaFilter.getDtoProperty();
+				DTOProperty dtoProperty = openAPISchemaFilter.getDTOProperty();
 
 				if (Objects.equals(dtoProperty.getName(), schema.getName())) {
 					for (DTOProperty curVariableName :
-							dtoProperty.getDtoProperties()) {
+							dtoProperty.getDTOProperties()) {
 
 						schema.addProperties(
 							curVariableName.getName(),
@@ -208,7 +208,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				}
 
 				for (DTOProperty curVariableName :
-						dtoProperty.getDtoProperties()) {
+						dtoProperty.getDTOProperties()) {
 
 					schema.addProperties(
 						curVariableName.getName(), _addSchema(curVariableName));

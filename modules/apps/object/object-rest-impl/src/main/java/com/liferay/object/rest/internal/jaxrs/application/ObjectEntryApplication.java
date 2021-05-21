@@ -83,7 +83,7 @@ public class ObjectEntryApplication extends Application {
 
 		Stream<ObjectField> stream = _objectFields.stream();
 
-		dtoProperty.setDtoProperties(
+		dtoProperty.setDTOProperties(
 			stream.map(
 				objectField -> new DTOProperty(
 					objectField.getName(), objectField.getType())
@@ -91,7 +91,7 @@ public class ObjectEntryApplication extends Application {
 				Collectors.toList()
 			));
 
-		openAPISchemaFilter.setDtoProperty(dtoProperty);
+		openAPISchemaFilter.setDTOProperty(dtoProperty);
 
 		return openAPISchemaFilter;
 	}
