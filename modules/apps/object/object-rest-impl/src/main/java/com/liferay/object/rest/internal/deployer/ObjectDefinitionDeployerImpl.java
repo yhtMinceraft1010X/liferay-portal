@@ -50,7 +50,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
-		_componentInstanceMap.put(
+		_componentInstancesMap.put(
 			objectDefinitionId,
 			Arrays.asList(
 				_applicationComponentFactory.newInstance(
@@ -111,7 +111,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public void undeploy(long objectDefinitionId) {
-		List<ComponentInstance> componentInstances = _componentInstanceMap.get(
+		List<ComponentInstance> componentInstances = _componentInstancesMap.get(
 			objectDefinitionId);
 
 		for (ComponentInstance componentInstance : componentInstances) {
@@ -130,7 +130,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private ComponentFactory _applicationComponentFactory;
 
 	private BundleContext _bundleContext;
-	private final Map<Long, List<ComponentInstance>> _componentInstanceMap =
+	private final Map<Long, List<ComponentInstance>> _componentInstancesMap =
 		new HashMap<>();
 
 	@Reference
