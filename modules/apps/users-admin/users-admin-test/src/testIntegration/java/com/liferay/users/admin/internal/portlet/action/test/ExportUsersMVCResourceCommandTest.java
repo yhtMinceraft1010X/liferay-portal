@@ -61,7 +61,8 @@ public class ExportUsersMVCResourceCommandTest {
 		String[] usersExportCSVfields = PropsValues.USERS_EXPORT_CSV_FIELDS;
 
 		try {
-			_setPropsValuesValue(
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
 				"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT", false);
 
 			Company company1 = CompanyTestUtil.addCompany();
@@ -81,8 +82,8 @@ public class ExportUsersMVCResourceCommandTest {
 				expandoTable.getName(), expandoColumn.getName(),
 				user1.getUserId(), RandomTestUtil.randomString());
 
-			_setPropsValuesValue(
-				"USERS_EXPORT_CSV_FIELDS",
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "USERS_EXPORT_CSV_FIELDS",
 				new String[] {
 					"fullName", "expando:" + expandoColumn.getName()
 				});
@@ -105,11 +106,13 @@ public class ExportUsersMVCResourceCommandTest {
 				_getUserCSV(user2));
 		}
 		finally {
-			_setPropsValuesValue(
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
 				"PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT",
 				permissionsCustomAttributeReadCheckByDefault);
-			_setPropsValuesValue(
-				"USERS_EXPORT_CSV_FIELDS", usersExportCSVfields);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "USERS_EXPORT_CSV_FIELDS",
+				usersExportCSVfields);
 		}
 	}
 
@@ -117,12 +120,6 @@ public class ExportUsersMVCResourceCommandTest {
 		return ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "getUserCSV", new Class<?>[] {User.class},
 			user);
-	}
-
-	private void _setPropsValuesValue(String name, Object value)
-		throws Exception {
-
-		ReflectionTestUtil.setFieldValue(PropsValues.class, name, value);
 	}
 
 	@Inject
