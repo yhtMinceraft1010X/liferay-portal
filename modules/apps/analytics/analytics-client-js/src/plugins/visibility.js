@@ -67,7 +67,7 @@ function visibility(analytics) {
 		document.addEventListener(visibilityChange, onVisibilityChange);
 
 		return () => {
-			window.removeEventListener(visibilityChange, onVisibilityChange);
+			document.removeEventListener(visibilityChange, onVisibilityChange);
 		};
 	}
 }
