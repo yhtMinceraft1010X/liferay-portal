@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -61,8 +59,6 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setCompanyId(user.getCompanyId());
 		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setUserName(user.getFullName());
-		batchPlannerPlan.setCreateDate(new Date());
-		batchPlannerPlan.setModifiedDate(batchPlannerPlan.getCreateDate());
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setName(name);
 
@@ -86,7 +82,6 @@ public class BatchPlannerPlanLocalServiceImpl
 			batchPlannerPlan.setUserName(user.getFullName());
 		}
 
-		batchPlannerPlan.setModifiedDate(new Date());
 		batchPlannerPlan.setName(name);
 
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
