@@ -54,7 +54,7 @@ public class BatchPlannerPlanServiceImpl
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			batchPlannerPlanId, permissionChecker.getUserId(), name);
+			permissionChecker.getUserId(), batchPlannerPlanId, name);
 	}
 
 }

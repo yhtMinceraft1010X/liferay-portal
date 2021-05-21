@@ -70,7 +70,7 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	@Override
 	public BatchPlannerPlan updateBatchPlannerPlan(
-			long batchPlannerPlanId, long userId, String name)
+			long userId, long batchPlannerPlanId, String name)
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan =
