@@ -161,12 +161,12 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				DTOProperty dtoProperty = openAPISchemaFilter.getDTOProperty();
 
 				if (Objects.equals(dtoProperty.getName(), schema.getName())) {
-					for (DTOProperty curVariableName :
+					for (DTOProperty childDTOProperty :
 							dtoProperty.getDTOProperties()) {
 
 						schema.addProperties(
-							curVariableName.getName(),
-							_addSchema(curVariableName));
+							childDTOProperty.getName(),
+							_addSchema(childDTOProperty));
 					}
 
 					return Optional.of(schema);
@@ -208,11 +208,12 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 					schema.setType("object");
 				}
 
-				for (DTOProperty curVariableName :
+				for (DTOProperty childDTOProperty :
 						dtoProperty.getDTOProperties()) {
 
 					schema.addProperties(
-						curVariableName.getName(), _addSchema(curVariableName));
+						childDTOProperty.getName(),
+						_addSchema(childDTOProperty));
 				}
 
 				return schema;
