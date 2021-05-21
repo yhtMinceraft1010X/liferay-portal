@@ -51,7 +51,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_componentInstancesMap.put(
 			objectDefinition.getObjectDefinitionId(),
 			Arrays.asList(
-				_applicationComponentFactory.newInstance(
+				_objectEntryApplicationComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
 						"liferay.jackson", false
 					).put(
@@ -66,7 +66,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.name", objectDefinition.getName()
 					).build()),
-				_resourceComponentFactory.newInstance(
+				_objectEntryResourceComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
 						"api.version", "v1.0"
 					).put(
@@ -126,7 +126,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference(
 		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
 	)
-	private ComponentFactory _applicationComponentFactory;
+	private ComponentFactory _objectEntryApplicationComponentFactory;
 
 	private BundleContext _bundleContext;
 	private final Map<Long, List<ComponentInstance>> _componentInstancesMap =
@@ -144,6 +144,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference(
 		target = "(component.factory=com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource)"
 	)
-	private ComponentFactory _resourceComponentFactory;
+	private ComponentFactory _objectEntryResourceComponentFactory;
 
 }
