@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.jaxrs.openapi;
+package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
