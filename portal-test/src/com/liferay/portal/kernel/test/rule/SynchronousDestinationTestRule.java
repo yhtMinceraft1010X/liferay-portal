@@ -181,10 +181,10 @@ public class SynchronousDestinationTestRule
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
 
-			_forceSyncSafeCloseable = ProxyModeThreadLocal.setWithSafeCloseable(
-				true);
 			_bufferedIncrementForceSyncSafeCloseable =
 				BufferedIncrementThreadLocal.setWithSafeCloseable(true);
+			_forceSyncSafeCloseable = ProxyModeThreadLocal.setWithSafeCloseable(
+				true);
 
 			replaceDestination(DestinationNames.AUDIT);
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
@@ -335,12 +335,12 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void restorePreviousSync() {
-			if (_forceSyncSafeCloseable != null) {
-				_forceSyncSafeCloseable.close();
-			}
-
 			if (_bufferedIncrementForceSyncSafeCloseable != null) {
 				_bufferedIncrementForceSyncSafeCloseable.close();
+			}
+
+			if (_forceSyncSafeCloseable != null) {
+				_forceSyncSafeCloseable.close();
 			}
 
 			for (Destination destination : _asyncServiceDestinations) {
