@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_FIELD_NAME_BUTTON</td>
+	<td>//div[contains(@class,'sidebar-header')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_TEXT_FIELD</td>
 	<td>//input[(@class='form-control ddm-field-text')]</td>
 	<td></td>
