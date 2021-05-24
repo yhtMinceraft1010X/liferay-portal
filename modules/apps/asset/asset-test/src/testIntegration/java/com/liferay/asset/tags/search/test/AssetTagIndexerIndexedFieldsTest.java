@@ -129,15 +129,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 				).modelIndexerClasses(
 					AssetTag.class
 				).addComplexQueryPart(
-					getComplexQueryPart(_queries.term("entryClassPK", classPK))
+					_getComplexQueryPart(_queries.term("entryClassPK", classPK))
 				).build()));
-	}
-
-	protected ComplexQueryPart getComplexQueryPart(Query query) {
-		return _complexQueryPartBuilderFactory.builder(
-		).query(
-			query
-		).build();
 	}
 
 	@Inject
@@ -202,6 +195,13 @@ public class AssetTagIndexerIndexedFieldsTest {
 		_populateRoles(assetTag, map);
 
 		return map;
+	}
+
+	private ComplexQueryPart _getComplexQueryPart(Query query) {
+		return _complexQueryPartBuilderFactory.builder(
+		).query(
+			query
+		).build();
 	}
 
 	private void _populateDates(AssetTag assetTag, Map<String, String> map) {
