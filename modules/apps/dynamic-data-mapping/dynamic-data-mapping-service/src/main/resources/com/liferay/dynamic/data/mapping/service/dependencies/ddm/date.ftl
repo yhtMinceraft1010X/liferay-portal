@@ -64,12 +64,13 @@
 
 <#assign
 	dayValue = paramUtil.getInteger(request, "${namespacedFieldName}Day", day)
-	monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", month)
-	yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", year)
 
 	firstDayOfWeekCalendar = calendarFactory.getCalendar(timeZone, requestedLocale)
 
 	firstDayOfWeek = firstDayOfWeekCalendar.getFirstDayOfWeek() - 1
+
+	monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", month)
+	yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", year)
 />
 
 <@liferay_aui["field-wrapper"]
