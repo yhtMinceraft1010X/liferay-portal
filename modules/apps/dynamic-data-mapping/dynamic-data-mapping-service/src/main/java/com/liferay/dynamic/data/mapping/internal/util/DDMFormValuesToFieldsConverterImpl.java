@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -53,11 +54,15 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		_filterDDMFormFieldValues(ddmFormFieldsMap, ddmFormFieldValues);
+
 		Fields ddmFields = createDDMFields(ddmStructure);
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
-
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			_addMissingRepeatedDDMFormFieldValues(
 				ddmFormFieldValue.getDDMFormField(),
 				ddmFormValues.getDefaultLocale(),
@@ -250,6 +255,26 @@ public class DDMFormValuesToFieldsConverterImpl
 				availableLocales, nestedDDMFormFieldValue,
 				repeatableAncestor || ddmFormField.isRepeatable());
 		}
+	}
+
+	private void _filterDDMFormFieldValues(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		ddmFormFieldValues.removeIf(
+			ddmFormFieldValue -> !ddmFormFieldsMap.containsKey(
+				ddmFormFieldValue.getName()));
+
+		ddmFormFieldValues.forEach(
+			ddmFormFieldValue -> {
+				List<DDMFormFieldValue> nestedDDMFormFieldValues =
+					ddmFormFieldValue.getNestedDDMFormFieldValues();
+
+				if (!nestedDDMFormFieldValues.isEmpty()) {
+					_filterDDMFormFieldValues(
+						ddmFormFieldsMap, nestedDDMFormFieldValues);
+				}
+			});
 	}
 
 }
