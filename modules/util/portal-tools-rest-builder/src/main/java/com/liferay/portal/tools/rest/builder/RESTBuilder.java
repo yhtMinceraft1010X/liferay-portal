@@ -131,7 +131,8 @@ public class RESTBuilder {
 
 	public RESTBuilder(
 			File copyrightFile, File configDir,
-			Boolean forceClientVersionDescription)
+			Boolean forceClientVersionDescription,
+			Boolean forcePredictableOperationId)
 		throws Exception {
 
 		_copyrightFile = copyrightFile;
@@ -147,6 +148,11 @@ public class RESTBuilder {
 				_configYAML.setForceClientVersionDescription(
 					forceClientVersionDescription);
 			}
+
+			if (forcePredictableOperationId != null) {
+				_configYAML.setForcePredictableOperationId(
+					forcePredictableOperationId);
+			}
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
@@ -159,7 +165,8 @@ public class RESTBuilder {
 		this(
 			restBuilderArgs.getCopyrightFile(),
 			restBuilderArgs.getRESTConfigDir(),
-			restBuilderArgs.isForceClientVersionDescription());
+			restBuilderArgs.isForceClientVersionDescription(),
+			restBuilderArgs.isForcePredictableOperationId());
 	}
 
 	public void build() throws Exception {
