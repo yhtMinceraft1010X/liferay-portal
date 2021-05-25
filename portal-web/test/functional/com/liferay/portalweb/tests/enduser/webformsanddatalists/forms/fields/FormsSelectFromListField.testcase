@@ -174,24 +174,22 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content &amp; Data",
-            portlet = "Forms");
-        
-		
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
 		FormsAdminNavigator.gotoAddForm();
-        
+
 		Form.editName(formName = "Form1");
-        
+
 		Form.gotoAddField(
-            fieldPositionNumber = "0",
-            fieldType = "Select from List");
-		
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 1",
 			optionValue = "1");
 
-		FormViewBuilder.setFieldHelpText(
-			fieldLabel ="Help Text Test");
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
 
 		Form.save();
 
@@ -200,7 +198,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
 
 		FormFields.viewFieldHelpText(fieldHelpText = "Help Text Test");
-
 	}
 
 	@description = "Verify that the Field Label can be edited"
