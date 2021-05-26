@@ -208,8 +208,8 @@ public class ObjectEntryKeywordQueryContributor
 			_log.error("Blob type is not indexable");
 		}
 		else if (Objects.equals(objectField.getType(), "Boolean")) {
-			if (StringUtil.equalsIgnoreCase(fieldKeywords, "true") ||
-				StringUtil.equalsIgnoreCase(fieldKeywords, "false")) {
+			if (StringUtil.equalsIgnoreCase(fieldKeywords, "false") ||
+				StringUtil.equalsIgnoreCase(fieldKeywords, "true")) {
 
 				nestedBooleanQuery.add(
 					new TermQueryImpl(
@@ -217,8 +217,8 @@ public class ObjectEntryKeywordQueryContributor
 						StringUtil.toLowerCase(fieldKeywords)),
 					BooleanClauseOccur.MUST);
 			}
-			else if (StringUtil.equalsIgnoreCase(fieldKeywords, "yes") ||
-					 StringUtil.equalsIgnoreCase(fieldKeywords, "no")) {
+			else if (StringUtil.equalsIgnoreCase(fieldKeywords, "no") ||
+					 StringUtil.equalsIgnoreCase(fieldKeywords, "yes")) {
 
 				nestedBooleanQuery.add(
 					new TermQueryImpl(
