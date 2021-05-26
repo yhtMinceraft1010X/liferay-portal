@@ -731,6 +731,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130996 CanBeCreatedWithMultiplePages pending implementation
+
 	}
 
 	@description = "Verify that a Form can be deleted"
@@ -2343,6 +2344,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131744 MultipleFormsCanBeDeleted pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-59331"
@@ -2444,6 +2446,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130999 PagesCanBeReordered pending implementation
+
 	}
 
 	@description = "Verify that Form Pages can be reset"
@@ -2454,6 +2457,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131000 PagesCanBeReset pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-61740"
@@ -5734,6 +5738,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130510 WillAutosaveAfterOneMinute pending implementation
+
 	}
 
 }
