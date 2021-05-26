@@ -138,7 +138,6 @@ public class DDMFormContextToDDMFormValues
 						jsonObject,
 						ddmFormFieldsMap.get(jsonObject.getString("fieldName")),
 						ddmFormFieldValue);
-
 					setNestedDDMFormFieldValues(
 						jsonObject, ddmFormFieldsMap, ddmFormFieldValue);
 
