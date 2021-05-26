@@ -1040,7 +1040,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(_DATE_FORMAT);
 
-		Calendar calendar = Calendar.getInstance(_utc);
+		Calendar calendar = Calendar.getInstance(_timeZone);
 
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
 
@@ -1348,7 +1348,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	private static final DecimalFormat _payPalDecimalFormat = new DecimalFormat(
 		"#,###.##");
-	private static final TimeZone _utc = TimeZone.getTimeZone("UTC");
+	private static final TimeZone _timeZone = TimeZone.getTimeZone("UTC");
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
