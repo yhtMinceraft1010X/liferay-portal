@@ -633,8 +633,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			ApplicationContext applicationContext = new ApplicationContext();
 
-			applicationContext.returnUrl(commercePaymentRequest.getReturnUrl());
 			applicationContext.cancelUrl(commercePaymentRequest.getCancelUrl());
+			applicationContext.returnUrl(commercePaymentRequest.getReturnUrl());
 
 			orderRequest.applicationContext(applicationContext);
 
