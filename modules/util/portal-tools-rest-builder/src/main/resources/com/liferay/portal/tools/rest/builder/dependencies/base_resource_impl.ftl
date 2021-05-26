@@ -195,7 +195,8 @@ public abstract class Base${schemaName}ResourceImpl
 						<@permissionActions
 							resourceId="resourceId"
 							resourceName="resourceName"
-							source=schemaName />,
+							source=schemaName
+						/>,
 						resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
