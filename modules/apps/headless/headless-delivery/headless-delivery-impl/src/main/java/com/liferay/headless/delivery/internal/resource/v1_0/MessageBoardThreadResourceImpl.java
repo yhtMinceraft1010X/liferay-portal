@@ -227,7 +227,7 @@ public class MessageBoardThreadResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		_checkMessageStatusPermissions(
+		_checkPermission(
 			mbThread.getCompanyId(), mbThread.getGroupId(),
 			mbThread.getStatus(), mbThread.getUserId());
 
@@ -311,7 +311,7 @@ public class MessageBoardThreadResourceImpl
 					friendlyUrlPath);
 		}
 
-		_checkMessageStatusPermissions(
+		_checkPermission(
 			mbMessage.getCompanyId(), mbMessage.getGroupId(),
 			mbMessage.getStatus(), mbMessage.getUserId());
 
@@ -512,7 +512,7 @@ public class MessageBoardThreadResourceImpl
 		return _toMessageBoardThread(mbMessage);
 	}
 
-	private void _checkMessageStatusPermissions(
+	private void _checkPermission(
 		long companyId, long groupId, int status, long userId) {
 
 		PermissionChecker permissionChecker =
