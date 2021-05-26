@@ -657,12 +657,11 @@ public abstract class Base${schemaName}ResourceImpl
 	resourceName
 	source
 >
-	HashMapBuilder
-		.put(
-			"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId}))
-		.put(
-			"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId}))
-		.build()
+	HashMapBuilder.put(
+		"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId})
+	).put(
+		"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId})
+	).build()
 </#macro>
 
 <#macro updateResourcePermissions
