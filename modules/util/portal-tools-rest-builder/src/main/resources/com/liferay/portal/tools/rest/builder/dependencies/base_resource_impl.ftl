@@ -609,19 +609,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 }
 
-<#macro permissionActions
-	resourceId
-	resourceName
-	source
->
-	HashMapBuilder
-		.put(
-			"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId}))
-		.put(
-			"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId}))
-		.build()
-</#macro>
-
 <#macro castParameters
 	type
 	value
@@ -663,6 +650,19 @@ public abstract class Base${schemaName}ResourceImpl
 			)
 		</#if>
 	</#if>
+</#macro>
+
+<#macro permissionActions
+	resourceId
+	resourceName
+	source
+>
+	HashMapBuilder
+		.put(
+			"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId}))
+		.put(
+			"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId}))
+		.build()
 </#macro>
 
 <#macro updateResourcePermissions
