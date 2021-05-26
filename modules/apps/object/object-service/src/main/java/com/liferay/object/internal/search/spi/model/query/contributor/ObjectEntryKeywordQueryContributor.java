@@ -171,7 +171,7 @@ public class ObjectEntryKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		String fieldKeywords = _getKeywords(
-			keywords, searchContext, objectField.getName());
+			objectField.getName(), keywords, searchContext);
 
 		if (Validator.isNull(fieldKeywords)) {
 			return;
@@ -279,7 +279,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private String _getKeywords(
-		String keywords, SearchContext searchContext, String fieldName) {
+		String fieldName, String keywords, SearchContext searchContext) {
 
 		if (Validator.isNotNull(keywords)) {
 			return keywords;
