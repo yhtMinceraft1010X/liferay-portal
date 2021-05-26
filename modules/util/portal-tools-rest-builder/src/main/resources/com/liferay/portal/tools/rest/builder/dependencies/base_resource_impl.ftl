@@ -192,7 +192,7 @@ public abstract class Base${schemaName}ResourceImpl
 					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
 
 					return toPermissionPage(
-						<@permissionActions
+						<@getActions
 							resourceId="resourceId"
 							resourceName="resourceName"
 							source=schemaName
@@ -209,7 +209,7 @@ public abstract class Base${schemaName}ResourceImpl
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
 
 				return toPermissionPage(
-					<@permissionActions
+					<@getActions
 						resourceId="assetLibraryId"
 						resourceName="portletName"
 						source="AssetLibrary" + schemaName
@@ -223,7 +223,7 @@ public abstract class Base${schemaName}ResourceImpl
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId, siteId);
 
 				return toPermissionPage(
-					<@permissionActions
+					<@getActions
 						resourceId="siteId"
 						resourceName="portletName"
 						source="Site" + schemaName
@@ -241,7 +241,7 @@ public abstract class Base${schemaName}ResourceImpl
 						resourceId="resourceId"
 						resourceName="resourceName"
 					>
-						<@permissionActions
+						<@getActions
 							resourceId="resourceId"
 							resourceName="resourceName"
 							source=schemaName
@@ -260,7 +260,7 @@ public abstract class Base${schemaName}ResourceImpl
 					resourceId="assetLibraryId"
 					resourceName="portletName"
 				>
-					<@permissionActions
+					<@getActions
 						resourceId="assetLibraryId"
 						resourceName="portletName"
 						source="AssetLibrary" + schemaName
@@ -276,7 +276,7 @@ public abstract class Base${schemaName}ResourceImpl
 					resourceId="siteId"
 					resourceName="portletName"
 				>
-					<@permissionActions
+					<@getActions
 						resourceId="siteId"
 						resourceName="portletName"
 						source="Site" + schemaName
@@ -652,7 +652,7 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 </#macro>
 
-<#macro permissionActions
+<#macro getActions
 	resourceId
 	resourceName
 	source
