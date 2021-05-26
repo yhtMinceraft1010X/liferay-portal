@@ -525,7 +525,7 @@ public class MessageBoardThreadResourceImpl
 			throw new NotAuthorizedException(
 				StringBundler.concat(
 					"User ", userId,
-					" must be owner or content reviewer to access this ",
+					" must be the owner or a content reviewer to access this ",
 					"message thread"));
 		}
 	}
