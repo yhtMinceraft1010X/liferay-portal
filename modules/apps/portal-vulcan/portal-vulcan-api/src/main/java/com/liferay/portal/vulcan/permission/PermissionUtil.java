@@ -72,7 +72,7 @@ public class PermissionUtil {
 			ResourcePermissionLocalService resourcePermissionLocalService)
 		throws PortalException {
 
-		_checkResourceExist(
+		_checkResources(
 			companyId, resourceId, resourceName,
 			resourcePermissionLocalService);
 
@@ -144,7 +144,7 @@ public class PermissionUtil {
 			Role role)
 		throws PortalException {
 
-		_checkResourceExist(
+		_checkResources(
 			companyId, id, resourceName, resourcePermissionLocalService);
 
 		ResourcePermission resourcePermission =
@@ -159,7 +159,7 @@ public class PermissionUtil {
 		return toPermission(resourceActions, resourcePermission, role);
 	}
 
-	private static void _checkResourceExist(
+	private static void _checkResources(
 			long companyId, long resourceId, String resourceName,
 			ResourcePermissionLocalService resourcePermissionLocalService)
 		throws PortalException {
