@@ -85,14 +85,14 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField("baker", "Boolean"),
 					_createObjectField("dog", "Date"),
 					_createObjectField("easy", "String"),
-					_createObjectField(true, true, null, "easykey", "String"),
+					_createObjectField(true, true, null, "fox", "String"),
 					_createObjectField(
-						true, false, "en_US", "easyen", "String"),
+						true, false, "en_US", "george", "String"),
 					_createObjectField(
-						false, false, null, "notindexed", "String"),
-					_createObjectField("height", "Double"),
-					_createObjectField("numberOfBooksWritten", "Integer"),
-					_createObjectField("speed", "BigDecimal")));
+						false, false, null, "how", "String"),
+					_createObjectField("item", "Double"),
+					_createObjectField("jig", "Integer"),
+					_createObjectField("king", "BigDecimal")));
 
 		for (int i = 0; i < 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
@@ -107,19 +107,19 @@ public class ObjectDefinitionSampleGenerator {
 					"easy",
 					"The quick brown fox jumps over the lazy dog. " + i + "!"
 				).put(
-					"easyen",
+					"fox",
 					"The english brown fox trusted the lazy dog. " + i + "!"
 				).put(
-					"easykey", "test" + i
+					"george", "test" + i
 				).put(
-					"height", 180.5D + i
+					"how", 180.5D + i
 				).put(
-					"notindexed",
+					"item",
 					"The unsearchable brown fox jumps over the lazy dog. " + i
 				).put(
-					"numberOfBooksWritten", 5 + i
+					"jig", 5 + i
 				).put(
-					"speed", BigDecimal.valueOf(45L + i)
+					"king", BigDecimal.valueOf(45L + i)
 				).build(),
 				new ServiceContext());
 		}
