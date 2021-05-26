@@ -212,7 +212,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<@permissionActions
 						resourceId="assetLibraryId"
 						resourceName="portletName"
-						source="AssetLibrary" + schemaName />,
+						source="AssetLibrary" + schemaName
+					/>,
 					assetLibraryId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
@@ -225,7 +226,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<@permissionActions
 						resourceId="siteId"
 						resourceName="portletName"
-						source="Site" + schemaName />,
+						source="Site" + schemaName
+					/>,
 					siteId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
@@ -242,7 +244,8 @@ public abstract class Base${schemaName}ResourceImpl
 						<@permissionActions
 							resourceId="resourceId"
 							resourceName="resourceName"
-							source=schemaName />
+							source=schemaName
+						/>
 					</@updateResourcePermissions>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
@@ -260,7 +263,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<@permissionActions
 						resourceId="assetLibraryId"
 						resourceName="portletName"
-						source="AssetLibrary" + schemaName />
+						source="AssetLibrary" + schemaName
+					/>
 				</@updateResourcePermissions>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
@@ -275,7 +279,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<@permissionActions
 						resourceId="siteId"
 						resourceName="portletName"
-						source="Site" + schemaName />
+						source="Site" + schemaName
+					/>
 				</@updateResourcePermissions>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
@@ -669,6 +674,5 @@ public abstract class Base${schemaName}ResourceImpl
 
 	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
 
-	return toPermissionPage(
-		<#nested>, ${resourceId}, ${resourceName}, null);
+	return toPermissionPage(<#nested>, ${resourceId}, ${resourceName}, null);
 </#macro>
