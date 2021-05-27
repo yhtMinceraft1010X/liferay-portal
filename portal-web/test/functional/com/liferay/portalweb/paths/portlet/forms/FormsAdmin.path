@@ -10,6 +10,16 @@
 <tbody>
 <!--FORMS_ENTRY_TABLE-->
 <tr>
+	<td>FORM_ENTRY_CHECKBOX</td>
+	<td>//td/a[text()='${key_formName}']//..//..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_ENTRY_LINK</td>
+	<td>//td/a[text()='${key_formName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_ENTRY_TABLE_BODY</td>
 	<td>//table[contains(@class,'table')]//tbody//*[contains(text(),'${key_fieldBody}')]</td>
 	<td></td>
