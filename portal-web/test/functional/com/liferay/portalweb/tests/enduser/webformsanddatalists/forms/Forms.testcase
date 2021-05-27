@@ -2393,7 +2393,6 @@ definition {
 		AssertElementNotPresent(
 			key_formName = "Form 2",
 			locator1 = "FormsAdmin#FORM_ENTRY_LINK");
-			
 	}
 
 	@description = "This is a use case for LPS-59331"
