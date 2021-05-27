@@ -262,7 +262,6 @@ definition {
 		FormViewBuilder.clickShowLabel();
 
 		Form.save();
-		
 
 		FormsAdminNavigator.gotoBack();
 
