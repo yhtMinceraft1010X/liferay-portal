@@ -106,15 +106,15 @@ public class ObjectDefinitionSampleGenerator {
 					"easy",
 					"The quick brown fox jumps over the lazy dog. " + i + "!"
 				).put(
-					"fox",
+					"fox", "test" + i
+				).put(
+					"george",
 					"The english brown fox trusted the lazy dog. " + i + "!"
 				).put(
-					"george", "test" + i
-				).put(
-					"how", 180.5D + i
-				).put(
-					"item",
+					"how",
 					"The unsearchable brown fox jumps over the lazy dog. " + i
+				).put(
+					"item", 180.5D + i
 				).put(
 					"jig", 5 + i
 				).put(
