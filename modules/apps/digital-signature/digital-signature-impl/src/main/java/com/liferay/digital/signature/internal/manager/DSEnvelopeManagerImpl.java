@@ -122,7 +122,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			JSONUtil.toList(
 				jsonObject.getJSONArray("envelopes"),
 				envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log),
-			Pagination.of(page, jsonObject.getInt("resultSetSize")),
+			Pagination.of(page, pageSize),
 			jsonObject.getInt("totalSetSize"));
 	}
 
