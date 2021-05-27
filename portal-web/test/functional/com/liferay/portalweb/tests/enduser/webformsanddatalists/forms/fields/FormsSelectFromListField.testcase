@@ -203,7 +203,6 @@ definition {
 		Form.editFieldLabelMetal(fieldValue = "Test Select From List");
 
 		Form.save();
-		
 
 		FormsAdminNavigator.gotoBack();
 
