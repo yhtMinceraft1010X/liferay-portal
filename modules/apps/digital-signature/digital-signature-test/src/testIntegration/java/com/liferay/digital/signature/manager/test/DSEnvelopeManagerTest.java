@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 
@@ -138,7 +139,7 @@ public class DSEnvelopeManagerTest {
 
 		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			"2021-01-01", "desc", 1, 2);
+			"2021-01-01", "desc", Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getPageSize());
 

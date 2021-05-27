@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -56,8 +57,9 @@ public class GetDSEnvelopesMVCResourceCommand extends BaseMVCResourceCommand {
 		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 			"2011-01-01", ParamUtil.getString(resourceRequest, "order", "desc"),
-			ParamUtil.getInteger(resourceRequest, "page"),
-			ParamUtil.getInteger(resourceRequest, "pageSize"));
+			Pagination.of(
+				ParamUtil.getInteger(resourceRequest, "page"),
+				ParamUtil.getInteger(resourceRequest, "pageSize")));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, page.toString());

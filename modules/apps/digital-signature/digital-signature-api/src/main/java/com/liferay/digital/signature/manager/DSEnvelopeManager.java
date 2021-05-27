@@ -16,6 +16,7 @@ package com.liferay.digital.signature.manager;
 
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -36,6 +37,6 @@ public interface DSEnvelopeManager {
 
 	public Page<DSEnvelope> getDSEnvelopesPage(
 		long companyId, long groupId, String fromDateString, String order,
-		int page, int pageSize);
+		Pagination pagination);
 
 }

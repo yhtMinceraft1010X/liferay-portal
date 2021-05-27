@@ -21,12 +21,12 @@ import com.liferay.digital.signature.model.DSCustomField;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -106,24 +106,21 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	@Override
 	public Page<DSEnvelope> getDSEnvelopesPage(
 		long companyId, long groupId, String fromDateString, String order,
-		int page, int pageSize) {
-
-		String startPosition = String.valueOf(pageSize * (page - 1));
+		Pagination pagination) {
 
 		JSONObject jsonObject = _dsHttp.get(
 			companyId, groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString, "&count=",
-				String.valueOf(pageSize), "&start_position=", startPosition,
-				"&folder_types=sentitems",
+				pagination.getPageSize(), "&start_position=",
+				pagination.getStartPosition(), "&folder_types=sentitems",
 				"&include=custom_fields,documents,recipients&order=", order));
 
 		return Page.of(
 			JSONUtil.toList(
 				jsonObject.getJSONArray("envelopes"),
 				envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log),
-			Pagination.of(page, pageSize),
-			jsonObject.getInt("totalSetSize"));
+			pagination, jsonObject.getInt("totalSetSize"));
 	}
 
 	private List<DSDocument> _getDSDocuments(JSONArray jsonArray) {
