@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -62,7 +61,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -90,11 +88,6 @@ public class AccountRoleLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -570,9 +563,6 @@ public class AccountRoleLocalServiceTest {
 	}
 
 	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry1;

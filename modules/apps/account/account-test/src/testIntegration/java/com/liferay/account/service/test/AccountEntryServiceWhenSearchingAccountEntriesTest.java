@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -58,7 +57,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -82,11 +80,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -294,9 +287,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	}
 
 	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

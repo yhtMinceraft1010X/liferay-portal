@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -45,7 +44,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -68,11 +66,6 @@ public class AccountGroupLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -298,9 +291,6 @@ public class AccountGroupLocalServiceTest {
 	}
 
 	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -68,11 +67,6 @@ public class RoleModelListenerTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -227,13 +221,13 @@ public class RoleModelListenerTest {
 	private static Company _company;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
