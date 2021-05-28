@@ -1,3 +1,5 @@
+@import './components/document_library_form';
+
 .digital-signature {
 	.collect-digital-signature {
 		margin-top: 48px;
@@ -25,6 +27,12 @@
 			&__table-with-pagination {
 				margin-top: 20px;
 			}
+		}
+	}
+
+	.document-library-form {
+		.has-error .form-control {
+			background-color: #feefef !important;
 		}
 	}
 }
