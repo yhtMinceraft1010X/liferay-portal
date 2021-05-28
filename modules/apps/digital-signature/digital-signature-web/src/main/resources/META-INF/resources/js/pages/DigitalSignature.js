@@ -15,22 +15,19 @@
 import React from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 
+import {AppContextProvider} from '../AppContext';
+import EnvelopeForm from './envelope/EnvelopeForm';
 import EnvelopeList from './envelope/EnvelopeList';
 
-const DigitalSignature = (digitalSignatureProps) => {
-	return (
+const DigitalSignature = (props) => (
+	<AppContextProvider {...props}>
 		<HashRouter>
 			<Switch>
-				<Route
-					component={(props) => (
-						<EnvelopeList {...props} {...digitalSignatureProps} />
-					)}
-					exact
-					path="/"
-				/>
+				<Route component={EnvelopeList} exact path="/" />
+				<Route component={EnvelopeForm} exact path="/new-envelope" />
 			</Switch>
 		</HashRouter>
-	);
-};
+	</AppContextProvider>
+);
 
 export default DigitalSignature;
