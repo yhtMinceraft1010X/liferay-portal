@@ -453,8 +453,6 @@ public class DDMFormTemplateContextFactoryImpl
 						"parameterMessage",
 						ddmValidation.getParameterMessage(locale)
 					).put(
-						"regex", ddmValidation.getRegex()
-					).put(
 						"template", ddmValidation.getTemplate()
 					).build()
 				).toArray());
