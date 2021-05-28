@@ -121,7 +121,7 @@ public class ObjectEntryKeywordQueryContributor
 		String lowerTerm = range[0];
 		String upperTerm = range[1];
 
-		if (!_isValidRange(lowerTerm, upperTerm, type)) {
+		if (!_isValidRange(lowerTerm, type, upperTerm)) {
 			return;
 		}
 
@@ -291,7 +291,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private boolean _isValidRange(
-		String lowerTerm, String upperTerm, String type) {
+		String lowerTerm, String type, String upperTerm) {
 
 		if ((lowerTerm == null) || (upperTerm == null)) {
 			return false;
