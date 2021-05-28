@@ -73,7 +73,7 @@ export const VALIDATIONS = {
 			template: 'NOT(contains({name}, "{parameter}"))',
 		},
 		{
-			label: Liferay.Language.get('is-an-url'),
+			label: Liferay.Language.get('is-a-url'),
 			name: 'url',
 			parameterMessage: '',
 			regex: /^isURL\((.+)\)$/,
