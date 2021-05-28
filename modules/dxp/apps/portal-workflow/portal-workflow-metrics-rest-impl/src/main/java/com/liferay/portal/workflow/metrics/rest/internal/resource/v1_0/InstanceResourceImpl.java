@@ -181,7 +181,6 @@ public class InstanceResourceImpl
 
 		topHitsAggregation.addSortFields(
 			_sorts.field("remainingTime", SortOrder.ASC));
-
 		topHitsAggregation.setSize(100);
 
 		slaInstanceResultFilterAggregation.addChildAggregation(
