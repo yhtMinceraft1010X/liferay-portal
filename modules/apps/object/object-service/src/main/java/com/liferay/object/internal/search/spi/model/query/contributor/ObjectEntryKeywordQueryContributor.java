@@ -298,19 +298,11 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		try {
-			if (Objects.equals(type, "Double") ||
-				Objects.equals(type, "BigDecimal")) {
+			if (Objects.equals(type, "BigDecimal") ||
+				Objects.equals(type, "Double")) {
 
 				Double.valueOf(lowerTerm);
 				Double.valueOf(upperTerm);
-			}
-			else if (Objects.equals(type, "Long")) {
-				Long.valueOf(lowerTerm);
-				Long.valueOf(upperTerm);
-			}
-			else if (Objects.equals(type, "Integer")) {
-				Integer.valueOf(lowerTerm);
-				Integer.valueOf(upperTerm);
 			}
 			else if (Objects.equals(type, "Date")) {
 				Matcher lowerTermMatcher = _pattern.matcher(lowerTerm);
@@ -321,6 +313,14 @@ public class ObjectEntryKeywordQueryContributor
 
 					return false;
 				}
+			}
+			else if (Objects.equals(type, "Integer")) {
+				Integer.valueOf(lowerTerm);
+				Integer.valueOf(upperTerm);
+			}
+			else if (Objects.equals(type, "Long")) {
+				Long.valueOf(lowerTerm);
+				Long.valueOf(upperTerm);
 			}
 			else {
 				return false;
