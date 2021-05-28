@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE,
+		"javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE,
 		"mvc.command.name=/digital_signature/add_ds_envelope"
 	},
 	service = MVCResourceCommand.class
