@@ -79,10 +79,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Date");
-		
-
-
-
 	}
 
 	@description = "Verify that a Date Field can be duplicated"
