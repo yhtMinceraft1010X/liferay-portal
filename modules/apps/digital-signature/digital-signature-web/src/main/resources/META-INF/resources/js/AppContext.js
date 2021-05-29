@@ -21,18 +21,16 @@ const AppContextProvider = ({
 	children,
 	portletNamespace,
 	...otherProps
-}) => {
-	return (
-		<AppContext.Provider
-			value={{
-				baseResourceURL,
-				portletNamespace,
-				...otherProps,
-			}}
-		>
-			{children}
-		</AppContext.Provider>
-	);
-};
+}) => (
+	<AppContext.Provider
+		value={{
+			baseResourceURL,
+			portletNamespace,
+			...otherProps,
+		}}
+	>
+		{children}
+	</AppContext.Provider>
+);
 
 export {AppContext, AppContextProvider};
