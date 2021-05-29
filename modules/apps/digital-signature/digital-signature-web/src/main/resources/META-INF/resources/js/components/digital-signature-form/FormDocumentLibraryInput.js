@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -31,6 +30,7 @@ const ErrorFeedback = ({error}) => (
 
 const FormDocumentLibraryInput = ({error, onChange}) => {
 	const {portletNamespace} = useContext(AppContext);
+
 	const getDocumentLibrarySelectorURL = () => {
 		const criterionJSON = {
 			desiredItemSelectorReturnTypes:
@@ -55,8 +55,6 @@ const FormDocumentLibraryInput = ({error, onChange}) => {
 		return documentLibrarySelectorURL.toString();
 	};
 
-	console.log(getDocumentLibrarySelectorURL());
-
 	return (
 		<div className="document-library-form">
 			<ClayForm.Group
@@ -64,7 +62,7 @@ const FormDocumentLibraryInput = ({error, onChange}) => {
 					'has-error': error,
 				})}
 			>
-				<label>Document Library</label>
+				<label>{Liferay.Language.get('document')}</label>
 				<ConfigProvider config={{portletNamespace}}>
 					<DocumentLibrary
 						itemSelectorURL={getDocumentLibrarySelectorURL()}
@@ -74,7 +72,7 @@ const FormDocumentLibraryInput = ({error, onChange}) => {
 					/>
 				</ConfigProvider>
 
-				{typeof error === 'string' && <ErrorFeedback error={error} />}
+				{error && <ErrorFeedback error={error} />}
 			</ClayForm.Group>
 		</div>
 	);
