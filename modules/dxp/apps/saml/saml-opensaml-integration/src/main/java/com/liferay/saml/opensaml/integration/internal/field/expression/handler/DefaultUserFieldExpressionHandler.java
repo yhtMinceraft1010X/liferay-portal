@@ -230,10 +230,10 @@ public class DefaultUserFieldExpressionHandler
 				currentUser.getFirstName(), newUser.getFirstName()) &&
 			Objects.equals(currentUser.getLastName(), newUser.getLastName()) &&
 			Objects.equals(
-				currentUser.getScreenName(), newUser.getScreenName()) &&
-			Objects.equals(currentUser.getUuid(), newUser.getUuid()) &&
+				currentUser.getModifiedDate(), newUser.getModifiedDate()) &&
 			Objects.equals(
-				currentUser.getModifiedDate(), newUser.getModifiedDate())) {
+				currentUser.getScreenName(), newUser.getScreenName()) &&
+			Objects.equals(currentUser.getUuid(), newUser.getUuid())) {
 
 			return newUser;
 		}
