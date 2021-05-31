@@ -362,8 +362,6 @@ definition {
 		Form.viewSelectFromListOnPreview(
 			fieldName = "Option 1",
 			rowPosition = "2");
-
-			
 	}
 
 	@description = "Verify that options can be sorted alphabetically"
