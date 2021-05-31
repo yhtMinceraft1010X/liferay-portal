@@ -218,9 +218,9 @@ public class BlogsEntryActionDropdownItemsProvider {
 				WebKeys.THEME_DISPLAY);
 
 		return dropdownItem -> {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			String portletResource = StringPool.BLANK;
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			if (!Objects.equals(
 					portletDisplay.getPortletName(),
