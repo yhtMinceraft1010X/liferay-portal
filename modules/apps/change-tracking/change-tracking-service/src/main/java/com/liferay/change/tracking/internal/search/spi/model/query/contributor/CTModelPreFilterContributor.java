@@ -114,7 +114,6 @@ public class CTModelPreFilterContributor implements ModelPreFilterContributor {
 				booleanFilter.addTerm(
 					_CT_COLLECTION_ID, String.valueOf(ctCollectionId),
 					BooleanClauseOccur.SHOULD);
-
 				booleanFilter.addTerm(
 					_CT_COLLECTION_ID,
 					String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION),
