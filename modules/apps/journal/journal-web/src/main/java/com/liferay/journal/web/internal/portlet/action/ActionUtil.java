@@ -327,8 +327,8 @@ public class ActionUtil {
 					ddmStructure.getStructureId());
 
 				article.getContent();
-				article.getTitleMap();
 				article.getDescriptionMap();
+				article.getTitleMap();
 
 				article.setNew(true);
 				article.setId(0);
