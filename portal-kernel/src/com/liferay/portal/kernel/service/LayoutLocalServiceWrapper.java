@@ -943,9 +943,6 @@ public class LayoutLocalServiceWrapper
 	 *
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
-	 * @param statuses the layout's workflow status. For more information
-	 search the portal kernel's WorkflowConstants class for constants
-	 starting with the "STATUS_" prefix.
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the layouts
@@ -1163,9 +1160,6 @@ public class LayoutLocalServiceWrapper
 	 * @param privateLayout whether the layout is private to the group
 	 * @param keywords keywords
 	 * @param types layout types
-	 * @param statuses the layout's workflow status. For more information
-	 search the portal kernel's WorkflowConstants class for constants
-	 starting with the "STATUS_" prefix.
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the layouts
@@ -1233,9 +1227,6 @@ public class LayoutLocalServiceWrapper
 	 * @param groupId the primary key of the group
 	 * @param keywords keywords
 	 * @param types layout types
-	 * @param statuses the layout's workflow status. For more information
-	 search the portal kernel's WorkflowConstants class for constants
-	 starting with the "STATUS_" prefix.
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the layouts
