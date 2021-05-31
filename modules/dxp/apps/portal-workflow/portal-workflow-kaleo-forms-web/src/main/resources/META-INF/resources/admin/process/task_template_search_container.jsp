@@ -109,40 +109,37 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 
 <portlet:resourceURL id="saveInPortletSession" var="saveInPortletSessionURL" />
 
-<%
-String itemSelectorURL = PortletURLBuilder.create(
-	PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/select_template.jsp"
-).setParameter(
-	"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
-).setParameter(
-	"navigationStartsOn", DDMNavigationHelper.SELECT_TEMPLATE
-).setParameter(
-	"portletResourceNamespace", liferayPortletResponse.getNamespace()
-).setParameter(
-	"refererPortletName", portletDisplay.getId()
-).setParameter(
-	"resourceClassNameId", scopeClassNameId
-).setParameter(
-	"scopeTitle", LanguageUtil.get(request, "form")
-).setParameter(
-	"showBackURL", false
-).setParameter(
-	"showHeader", false
-).setParameter(
-	"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
-).setWindowState(
-	LiferayWindowState.POP_UP
-).buildString();
-%>
-
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"backURL", HtmlUtil.escapeURL(backURL)
 		).put(
-			"itemSelectorURL", itemSelectorURL
+			"itemSelectorURL",
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				"/select_template.jsp"
+			).setParameter(
+				"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
+			).setParameter(
+				"navigationStartsOn", DDMNavigationHelper.SELECT_TEMPLATE
+			).setParameter(
+				"portletResourceNamespace", liferayPortletResponse.getNamespace()
+			).setParameter(
+				"refererPortletName", portletDisplay.getId()
+			).setParameter(
+				"resourceClassNameId", scopeClassNameId
+			).setParameter(
+				"scopeTitle", LanguageUtil.get(request, "form")
+			).setParameter(
+				"showBackURL", false
+			).setParameter(
+				"showHeader", false
+			).setParameter(
+				"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString()
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).put(

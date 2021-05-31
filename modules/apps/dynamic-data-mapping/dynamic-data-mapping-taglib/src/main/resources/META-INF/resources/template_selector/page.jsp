@@ -94,26 +94,6 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	</c:if>
 </clay:content-row>
 
-<%
-String manageDDMTemplatesURL = PortletURLBuilder.create(
-	PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/view_template.jsp"
-).setParameter(
-	"classNameId", classNameId
-).setParameter(
-	"groupId", ddmTemplateGroupId
-).setParameter(
-	"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES
-).setParameter(
-	"refererPortletName", PortletKeys.PORTLET_DISPLAY_TEMPLATE
-).setParameter(
-	"showHeader", false
-).setWindowState(
-	LiferayWindowState.POP_UP
-).buildString();
-%>
-
 <aui:script sandbox="<%= true %>">
 	const manageDDMTemplatesLink = document.getElementById(
 		'<portlet:namespace />selectDDMTemplate'
@@ -133,7 +113,25 @@ String manageDDMTemplatesURL = PortletURLBuilder.create(
 				},
 				title:
 					'<%= UnicodeLanguageUtil.get(request, "widget-templates") %>',
-				url: '<%= manageDDMTemplatesURL %>',
+				url: '<%=
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/view_template.jsp"
+					).setParameter(
+						"classNameId", classNameId
+					).setParameter(
+						"groupId", ddmTemplateGroupId
+					).setParameter(
+						"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES
+					).setParameter(
+						"refererPortletName", PortletKeys.PORTLET_DISPLAY_TEMPLATE
+					).setParameter(
+						"showHeader", false
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				%>',
 			});
 		});
 	}
