@@ -674,6 +674,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPLOAD_ON_WIDGET_ON_ANY_ROW</td>
+	<td>//div[@class='ddm-field'][${key_rowNumber}]//button[contains(text(),'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_ON_DUPLICATE_FIELD</td>
 	<td>//div[@class='ddm-field'][2]//button[contains(text(),'Select')]</td>
 	<td></td>

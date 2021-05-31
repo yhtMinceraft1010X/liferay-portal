@@ -54,13 +54,41 @@ definition {
 	}
 
 	@description = "Verify that an image can be uploaded"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUploadAnImage {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133043 CanBeUploaded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image");
+		
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.selectImageUpload(
+			rowNumber = "1",
+			navTab = "Documents and Media",
+			fileName = "Document_1.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+
 
 	}
 
