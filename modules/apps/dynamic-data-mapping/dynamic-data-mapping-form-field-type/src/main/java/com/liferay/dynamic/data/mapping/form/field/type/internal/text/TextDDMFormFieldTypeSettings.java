@@ -196,7 +196,7 @@ public interface TextDDMFormFieldTypeSettings
 		label = "%hide-field",
 		properties = {
 			"showAsSwitcher=true",
-			"tooltip=%the-user-filling-the-form-wont-be-able-to-see-this-field"
+			"tooltip=%the-user-filling-the-form-will-not-be-able-to-see-this-field"
 		},
 		visibilityExpression = "FALSE"
 	)
