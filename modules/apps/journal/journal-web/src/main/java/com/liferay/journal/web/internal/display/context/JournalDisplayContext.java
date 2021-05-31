@@ -1140,6 +1140,10 @@ public class JournalDisplayContext {
 
 		searchContext.setAndSearch(false);
 
+		if (!showVersions) {
+			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+		}
+
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.ARTICLE_ID, getKeywords()
@@ -1168,17 +1172,12 @@ public class JournalDisplayContext {
 					"keywords", getKeywords()
 				).build()
 			).build());
-
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(_getFolderIds());
 		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
 		searchContext.setIncludeInternalAssetCategories(true);
 		searchContext.setKeywords(getKeywords());
-
-		if (!showVersions) {
-			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
-		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
