@@ -561,14 +561,14 @@ definition {
 	}
 
 	macro selectImageUpload {
-
 		WaitForElementPresent(locator1 = "FormFields#UPLOAD_ON_WIDGET");
 
-		if(isSet(rowNumber)){
+		if (isSet(rowNumber)) {
 			Click(
 				key_rowNumber = "${rowNumber}",
 				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
-		}else{
+		}
+		else {
 			Click(
 				key_rowNumber = "1",
 				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
@@ -577,7 +577,6 @@ definition {
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",
 			uploadFileName = "${fileName}");
-
 	}
 
 	macro selectRadioOption {

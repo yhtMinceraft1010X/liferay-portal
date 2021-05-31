@@ -70,7 +70,7 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
 			fieldType = "Image");
-		
+
 		Form.save();
 
 		Form.publishForm();
@@ -78,18 +78,15 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.selectImageUpload(
-			rowNumber = "1",
+			fileName = "Document_1.jpg",
 			navTab = "Documents and Media",
-			fileName = "Document_1.jpg");
+			rowNumber = "1");
 
 		FormPortlet.submitSuccessfully();
 
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
-
-
-
 	}
 
 	@description = "Verify that an image can be uploaded from Liferay Documents and Media"
