@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Objects;
 import java.util.Properties;
 
 import org.junit.After;
@@ -83,7 +84,6 @@ public class ProxyConfigTest {
 
 		String domain = "domain";
 		String networkAddress = "http://domain:9200";
-		String nonProxyHostDomain = "nonProxyHostDomain";
 
 		Mockito.when(
 			_http.getDomain(networkAddress)
@@ -94,7 +94,7 @@ public class ProxyConfigTest {
 		Mockito.when(
 			_http.isNonProxyHost(domain)
 		).thenReturn(
-			nonProxyHostDomain.equals(domain)
+			Objects.equals(domain, "nonProxyHostDomain")
 		);
 
 		ProxyConfig proxyConfig = builder.host(
