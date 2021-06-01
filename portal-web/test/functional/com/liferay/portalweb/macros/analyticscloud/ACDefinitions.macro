@@ -1,0 +1,10 @@
+definition {
+
+    @summary = "Navigates to a definition in the Definitions screen \
+	@param definitionType the name of the definition that will be navigated to"
+	macro goToDefinition {
+        var key_DefinitionType = "${definitionType}";
+		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
+	}
+    
+}
