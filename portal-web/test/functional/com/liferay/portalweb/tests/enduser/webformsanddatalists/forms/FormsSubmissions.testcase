@@ -368,7 +368,6 @@ definition {
 
 		Form.publishForm();
 
-
 		FormsAdminNavigator.gotoPublishedForm();
 
 		Form.viewSubmitButtonText(key_buttonText = "Send Form");
