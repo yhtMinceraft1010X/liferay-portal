@@ -23,7 +23,6 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
@@ -83,7 +82,7 @@ public class QuestionsConfigurationModelListener
 
 			String historyRouterBasePath = GetterUtil.getString(
 				properties.get("historyRouterBasePath"));
-			HashMapDictionary<String, Object> hashMapDictionary =
+			Dictionary<String, Object> assetRendererFactoryProperties =
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", QuestionsPortletKeys.QUESTIONS
 				).put(
@@ -97,7 +96,7 @@ public class QuestionsConfigurationModelListener
 						_companyLocalService, historyRouterBasePath,
 						_mbCategoryLocalService,
 						_mbCategoryModelResourcePermission),
-					hashMapDictionary);
+					assetRendererFactoryProperties);
 			_mbMessageServiceRegistration =
 				(ServiceRegistration)_bundleContext.registerService(
 					AssetRendererFactory.class,
@@ -105,7 +104,7 @@ public class QuestionsConfigurationModelListener
 						_companyLocalService, historyRouterBasePath,
 						_mbMessageLocalService,
 						_mbMessageModelResourcePermission),
-					hashMapDictionary);
+					assetRendererFactoryProperties);
 		}
 		else {
 			if (_mbMessageServiceRegistration != null) {
