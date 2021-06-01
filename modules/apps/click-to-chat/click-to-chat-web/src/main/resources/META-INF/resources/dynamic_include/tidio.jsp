@@ -17,8 +17,8 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <script>
-	function loadScript() {
-		function setUserInfo() {
+	function loadTidioScript() {
+		function setTidioUserInfo() {
 			if ('<%= themeDisplay.isSignedIn() %>' === 'true') {
 				zE('webWidget', 'identify', {
 					email: '<%= user.getEmailAddress() %>',
@@ -37,7 +37,7 @@
 			);
 			scriptElement.setAttribute('type', 'text/javascript');
 			scriptElement.onload = function () {
-				setUserInfo();
+				setTidioUserInfo();
 			};
 
 			var bodyElement = document.getElementsByTagName('body').item(0);
@@ -45,15 +45,15 @@
 			bodyElement.appendChild(scriptElement);
 		}
 		else {
-			setUserInfo();
+			setTidioUserInfo();
 		}
 	}
 
 	window.onload = function () {
-		loadScript();
+		loadTidioScript();
 	};
 
 	if (document.readyState === 'complete') {
-		loadScript();
+		loadTidioScript();
 	}
 </script>
