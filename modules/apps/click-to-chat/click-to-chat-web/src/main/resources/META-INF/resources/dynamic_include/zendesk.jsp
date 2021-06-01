@@ -17,8 +17,8 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <script>
-	function loadScript() {
-		function setUserInfo() {
+	function loadZendeskScript() {
+		function setZendeskUserInfo() {
 			if ('<%= themeDisplay.isSignedIn() %>' === 'true') {
 				zE('webWidget', 'identify', {
 					email: '<%= user.getEmailAddress() %>',
@@ -37,7 +37,7 @@
 			);
 			scriptElement.setAttribute('type', 'text/javascript');
 			scriptElement.onload = function () {
-				setUserInfo();
+				setZendeskUserInfo();
 			};
 
 			var bodyElement = document.getElementsByTagName('body').item(0);
@@ -45,15 +45,15 @@
 			bodyElement.appendChild(scriptElement);
 		}
 		else {
-			setUserInfo();
+			setZendeskUserInfo();
 		}
 	}
 
 	window.onload = function () {
-		loadScript();
+		loadZendeskScript();
 	};
 
 	if (document.readyState === 'complete') {
-		loadScript();
+		loadZendeskScript();
 	}
 </script>
