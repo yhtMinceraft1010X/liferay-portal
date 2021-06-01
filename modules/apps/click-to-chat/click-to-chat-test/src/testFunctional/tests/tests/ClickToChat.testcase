@@ -782,7 +782,7 @@ definition {
 		AssertNotVisible(locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID");
 	}
 
-@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
+	@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
 	@priority = "5"
 	test VerifyChatwootPersistence {
 		ApplicationsMenu.gotoPortlet(
@@ -822,48 +822,6 @@ definition {
 		User.firstLoginPG();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
-	}
-
-	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
-	@priority = "5"
-	test VerifyHubspotPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Hubspot");
-
-		var clickToChatHubspotPassword = PropsUtil.get("click.to.chat.hubspot.password");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatHubspotPassword}");
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 	}
 
 	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
@@ -906,6 +864,48 @@ definition {
 		User.firstLoginPG();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
+	@priority = "5"
+	test VerifyHubspotPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Hubspot");
+
+		var clickToChatHubspotPassword = PropsUtil.get("click.to.chat.hubspot.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatHubspotPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 	}
 
 	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
@@ -1160,48 +1160,6 @@ definition {
 		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
 	}
 
-	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
-	@priority = "5"
-	test VerifyZendeskPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Zendesk");
-
-		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "${clickToChatZendeskPassword}");
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
-
-		User.logoutPG();
-
-		User.firstLoginPG();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
-	}
-
 	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTolvnowPersistence {
@@ -1242,6 +1200,48 @@ definition {
 		User.firstLoginPG();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
+	@priority = "5"
+	test VerifyZendeskPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Zendesk");
+
+		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatZendeskPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
 	}
 
 }
