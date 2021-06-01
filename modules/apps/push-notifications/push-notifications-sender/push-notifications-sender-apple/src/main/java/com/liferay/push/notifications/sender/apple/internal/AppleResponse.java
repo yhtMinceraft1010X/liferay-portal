@@ -55,9 +55,9 @@ public class AppleResponse extends BaseResponse {
 		super(ApplePushNotificationsSender.PLATFORM);
 
 		if (apnsPushNotification != null) {
-			Instant expiration = apnsPushNotification.getExpiration();
+			Instant instant = apnsPushNotification.getExpiration();
 
-			expiry = expiration.getNano();
+			expiry = instant.getNano();
 
 			id = apnsPushNotification.getCollapseId();
 			payload = apnsPushNotification.getPayload();
