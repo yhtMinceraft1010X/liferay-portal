@@ -308,33 +308,35 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 	private void _handleNotificationResponse(
 		CompletableFuture<PushNotificationResponse<SimpleApnsPushNotification>>
-			notificationResponse) {
+			completableFuture) {
 
-		notificationResponse.whenComplete(
-			(response, cause) -> {
-				if (response != null) {
-					if (!response.isAccepted() && _log.isWarnEnabled()) {
-						String timestamp = String.valueOf(
-							response.getTokenInvalidationTimestamp(
-							).orElse(
-								Instant.parse("")
-							));
+		completableFuture.whenComplete(
+			(simpleApnsPushNotification, throwable) -> {
+				if (simpleApnsPushNotification == null) {
+					sendResponse(new AppleResponse(null, throwable));
 
-						_log.warn(
-							StringBundler.concat(
-								"Notification rejected by the APNs gateway: ",
-								response.getRejectionReason(),
-								"\t…and the token is invalid as of ",
-								timestamp));
-					}
-
-					sendResponse(
-						new AppleResponse(
-							response.getPushNotification(), false));
+					return;
 				}
-				else {
-					sendResponse(new AppleResponse(null, cause));
+
+				if (!simpleApnsPushNotification.isAccepted() &&
+					_log.isWarnEnabled()) {
+
+					String timestamp = String.valueOf(
+						response.getTokenInvalidationTimestamp(
+						).orElse(
+							Instant.parse("")
+						));
+
+					_log.warn(
+						StringBundler.concat(
+							"The token is invalid as of ", timestamp, ": ",
+							simpleApnsPushNotification.getRejectionReason()));
 				}
+
+				sendResponse(
+					new AppleResponse(
+						simpleApnsPushNotification.getPushNotification(),
+						false));
 			});
 	}
 
