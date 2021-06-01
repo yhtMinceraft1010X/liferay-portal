@@ -16,9 +16,8 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script async src="//code.tidio.co/<%= clickToChatChatProviderAccountId %>.js"></script>
-
 <script type="text/javascript">
+	console.log('document.readyState', document.readyState === 'complete')
 	var _tn = _tn || [];
 
 	_tn.push(['account', '<%= clickToChatChatProviderAccountId %>']);
@@ -29,17 +28,37 @@
 		_tn.push(['_setName', '<%= user.getScreenName() %>']);
 	</c:if>
 
-	(function () {
-		document.write(unescape("%3Cspan id='tolvnow'%3E%3C/span%3E"));
-
-		var tss = document.createElement('script');
-
-		tss.async = true;
-		tss.src = '//tracker.tolvnow.com/js/tn.js';
-		tss.type = 'text/javascript';
-
-		var s = document.getElementsByTagName('script')[0];
-
-		s.parentNode.insertBefore(tss, s);
-	})();
+	function loadScript() {
+		console.log('script exist', document.getElementById('tolvnow-script-chat'))
+		if (!document.getElementById('tolvnow-script-chat')) {
+			var spanElement = document.createElement('span');
+	
+			spanElement.setAttribute('id', 'tolvnow');
+	
+			var scriptElement = document.createElement('script');
+	
+			scriptElement.setAttribute('async', true);
+			scriptElement.setAttribute('id', 'tolvnow-script-chat');
+			scriptElement.setAttribute(
+				'src',
+				'//tracker.tolvnow.com/js/tn.js'
+			);
+			scriptElement.setAttribute('type', 'text/javascript');
+	
+			var bodyElement = document.getElementsByTagName('body').item(0);
+	
+			bodyElement.appendChild(spanElement);
+			bodyElement.appendChild(scriptElement);
+		}
+	}
+	
+	window.onload = function() {
+		console.log('window.onload')
+		loadScript();
+	}
+	
+	if (document.readyState === 'complete') {
+		console.log('document.readyState')
+		loadScript();
+	}
 </script>
