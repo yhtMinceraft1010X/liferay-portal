@@ -73,6 +73,7 @@ public class QuestionsConfigurationModelListener
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_bundleContext = bundleContext;
+
 		_enableAssetRenderer(properties);
 	}
 
