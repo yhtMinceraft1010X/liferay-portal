@@ -67,8 +67,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Hubspot provider errors message"
 	@priority = "4"
 	test CheckHubspotErrorMessage {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -105,8 +103,6 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Inherit' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysInheritPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -159,8 +155,6 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysOverridePersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Override");
@@ -217,8 +211,6 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Inherit or Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyInheritOrOverridePersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Inherit or Override");
@@ -271,8 +263,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Crisp Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test CrispProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -304,8 +294,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableChatwoot {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -339,8 +327,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableCrisp {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -373,8 +359,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Hubspot provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableHubspot {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -409,8 +393,6 @@ definition {
 	test EnableAndDisableJivoChat {
 		property portal.acceptance = "true";
 
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -444,8 +426,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableLiveChat {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -480,8 +460,6 @@ definition {
 	test EnableAndDisableLivePerson {
 		property portal.acceptance = "true";
 
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -514,8 +492,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Smartsupp provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableSmartsupp {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -548,8 +524,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify TawkTo provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableTawkTo {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -583,8 +557,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableTidio {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -617,8 +589,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableTolvnow {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -651,8 +621,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Zendesk provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableZendesk {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -685,8 +653,6 @@ definition {
 	@description = "This is a test for LPS-129049. Verify if it is possible to hide the chat provider"
 	@priority = "4"
 	test HideChatProvider {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Override");
@@ -699,8 +665,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Hubspot Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test HubspotProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -731,8 +695,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if JivoChat Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test JivoChatProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -763,8 +725,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if LiveChat Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test LiveChatProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -795,8 +755,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if LivePerson Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test LivePersonProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -827,8 +785,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Smartsupp Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test SmartsuppProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -859,8 +815,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if TawkTo Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TawkToProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -891,8 +845,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Tidio Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TidioProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -923,8 +875,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Tolvnow Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TolvnowProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -955,8 +905,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
 	@priority = "5"
 	test VerifyChatwootPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -987,8 +935,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
 	@priority = "5"
 	test VerifyCrispPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1019,8 +965,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
 	@priority = "5"
 	test VerifyHubspotPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1051,8 +995,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
 	@priority = "5"
 	test VerifyJivoChatPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1083,8 +1025,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
 	@priority = "5"
 	test VerifyLiveChatPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1115,8 +1055,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
 	@priority = "5"
 	test VerifyLivePersonPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1147,8 +1085,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Smartsupp provider persistence after logout and login"
 	@priority = "5"
 	test VerifySmartsuppPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1179,8 +1115,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify TawkTo provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTawkToPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1211,8 +1145,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTidioPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1243,8 +1175,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTolvnowPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1275,8 +1205,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
 	@priority = "5"
 	test VerifyZendeskPersistence {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -1307,8 +1235,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Zendesk Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test ZendeskProviderKeepsEnabledAfterLogout {
-
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
