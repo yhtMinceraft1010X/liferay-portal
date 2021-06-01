@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>ACDefinitions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACDefinitions</td></tr>
+</thead>
+<tbody>
+<!-- LOGIN SCREEN FIELDS  -->
+<tr>
+    <td>DEFINITION_TYPE</td>
+    <td>//div[contains(@class, 'card card-root')]//a[text()='${key_definitionType}']</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
