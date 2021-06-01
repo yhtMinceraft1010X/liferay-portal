@@ -782,4 +782,466 @@ definition {
 		AssertNotVisible(locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID");
 	}
 
+@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
+	@priority = "5"
+	test VerifyChatwootPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Chatwoot");
+
+		var clickToChatChatwootPassword = PropsUtil.get("click.to.chat.chatwoot.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatChatwootPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
+	@priority = "5"
+	test VerifyHubspotPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Hubspot");
+
+		var clickToChatHubspotPassword = PropsUtil.get("click.to.chat.hubspot.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatHubspotPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
+	@priority = "5"
+	test VerifyCrispPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Crisp");
+
+		var clickToChatCrispPassword = PropsUtil.get("click.to.chat.crisp.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatCrispPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
+	}
+
+	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
+	@priority = "5"
+	test VerifyJivoChatPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "JivoChat");
+
+		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatJivochatPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+	}
+
+	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
+	@priority = "5"
+	test VerifyLiveChatPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "LiveChat");
+
+		var clickToChatLivechatPassword = PropsUtil.get("click.to.chat.livechat.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatLivechatPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
+	}
+
+	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
+	@priority = "5"
+	test VerifyLivePersonPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Liveperson");
+
+		var clickToChatLivepersonPassword = PropsUtil.get("click.to.chat.liveperson.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatLivepersonPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Smartsupp provider persistence after logout and login"
+	@priority = "5"
+	test VerifySmartsuppPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Smartsupp");
+
+		var clickToChatSmartsuppPassword = PropsUtil.get("click.to.chat.smartsupp.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatSmartsuppPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
+	}
+
+	@description = "This is a test for LPS-133453. Verify TawkTo provider persistence after logout and login"
+	@priority = "5"
+	test VerifyTawkToPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "TawkTo");
+
+		var clickToChatTawktoPassword = PropsUtil.get("click.to.chat.tawkto.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatTawktoPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
+	@priority = "5"
+	test VerifyTidioPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Tidio");
+
+		var clickToChatTidioPassword = PropsUtil.get("click.to.chat.tidio.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatTidioPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
+	@priority = "5"
+	test VerifyZendeskPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Zendesk");
+
+		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatZendeskPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+	}
+
+	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
+	@priority = "5"
+	test VerifyTolvnowPersistence {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Tolvnow");
+
+		var clickToChatTolvnowPassword = PropsUtil.get("click.to.chat.tolvnow.password");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "${clickToChatTolvnowPassword}");
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
+	}
+
 }
