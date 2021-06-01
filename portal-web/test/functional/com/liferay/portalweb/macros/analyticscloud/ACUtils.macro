@@ -156,7 +156,11 @@ definition {
 	}
 
 	macro closeModal {
-		Click(locator1= "ACUtils#MODAL_CLOSE_BUTTON");
+		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
+	}
+
+	macro clearSearchBar {
+		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON")
 	}
 
 }
