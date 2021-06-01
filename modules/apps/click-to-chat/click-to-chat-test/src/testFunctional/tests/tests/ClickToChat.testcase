@@ -9,6 +9,18 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Click to Chat",
+			configurationName = "Click to Chat Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
 	}
 
 	tearDown {
@@ -25,18 +37,6 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Chatwoot Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test ChatwootProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -67,17 +67,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Hubspot provider errors message"
 	@priority = "4"
 	test CheckHubspotErrorMessage {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -115,17 +105,7 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Inherit' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysInheritPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -179,17 +159,7 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyAlwaysOverridePersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -247,17 +217,7 @@ definition {
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Inherit or Override' in Instance Settings"
 	@priority = "5"
 	test CheckStrategyInheritOrOverridePersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -311,17 +271,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Crisp Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test CrispProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -354,17 +304,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableChatwoot {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -399,17 +339,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableCrisp {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -443,17 +373,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Hubspot provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableHubspot {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -489,17 +409,7 @@ definition {
 	test EnableAndDisableJivoChat {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -534,17 +444,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableLiveChat {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -580,17 +480,7 @@ definition {
 	test EnableAndDisableLivePerson {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -624,17 +514,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Smartsupp provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableSmartsupp {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -668,17 +548,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify TawkTo provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableTawkTo {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -713,17 +583,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test EnableAndDisableTidio {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -757,17 +617,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableTolvnow {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -801,17 +651,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify Zendesk provider can be enabled and disabled."
 	@priority = "5"
 	test EnableAndDisableZendesk {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -845,17 +685,7 @@ definition {
 	@description = "This is a test for LPS-129049. Verify if it is possible to hide the chat provider"
 	@priority = "4"
 	test HideChatProvider {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -869,17 +699,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Hubspot Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test HubspotProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -911,17 +731,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if JivoChat Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test JivoChatProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -953,17 +763,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if LiveChat Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test LiveChatProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -995,17 +795,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if LivePerson Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test LivePersonProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1037,17 +827,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Smartsupp Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test SmartsuppProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1079,17 +859,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if TawkTo Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TawkToProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1121,17 +891,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Tidio Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TidioProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1163,17 +923,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Tolvnow Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test TolvnowProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1205,17 +955,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Chatwoot provider persistence after logout and login"
 	@priority = "5"
 	test VerifyChatwootPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1247,17 +987,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Crisp provider persistence after logout and login"
 	@priority = "5"
 	test VerifyCrispPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1289,17 +1019,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Hubspot provider persistence after logout and login"
 	@priority = "5"
 	test VerifyHubspotPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1331,17 +1051,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify JivoChat provider persistence after logout and login"
 	@priority = "5"
 	test VerifyJivoChatPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1373,17 +1083,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
 	@priority = "5"
 	test VerifyLiveChatPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1415,17 +1115,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify LivePerson provider persistence after logout and login"
 	@priority = "5"
 	test VerifyLivePersonPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1457,17 +1147,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Smartsupp provider persistence after logout and login"
 	@priority = "5"
 	test VerifySmartsuppPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1499,17 +1179,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify TawkTo provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTawkToPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1541,17 +1211,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTidioPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1583,17 +1243,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
 	@priority = "5"
 	test VerifyTolvnowPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1625,17 +1275,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify Zendesk provider persistence after logout and login"
 	@priority = "5"
 	test VerifyZendeskPersistence {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -1667,17 +1307,7 @@ definition {
 	@description = "This is a test for LPS-133453. Verify if Zendesk Provider Keeps Enabled After Logout"
 	@priority = "5"
 	test ZendeskProviderKeepsEnabledAfterLogout {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Click to Chat",
-			configurationName = "Click to Chat Configuration",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
 
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
