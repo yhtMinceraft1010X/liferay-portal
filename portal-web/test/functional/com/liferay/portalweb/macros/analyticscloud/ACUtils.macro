@@ -155,4 +155,8 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro closeModal {
+		Click(locator1= "ACUtils#MODAL_CLOSE_BUTTON");
+	}
+
 }
