@@ -896,7 +896,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		Type.sendKeys(
+		Type(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
