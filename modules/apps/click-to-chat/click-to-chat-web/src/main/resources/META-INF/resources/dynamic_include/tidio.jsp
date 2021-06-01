@@ -16,14 +16,44 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script async src="//code.tidio.co/<%= clickToChatChatProviderAccountId %>.js"></script>
+<script>
+	function loadScript() {
+		function setUserInfo() {
+			if ('<%= themeDisplay.isSignedIn() %>' === 'true') {
+				zE('webWidget', 'identify', {
+					email: '<%= user.getEmailAddress() %>',
+					name: '<%= user.getScreenName() %>',
+				});
+			}
+		}
 
-<c:if test="<%= themeDisplay.isSignedIn() %>">
-	<script>
-		document.tidioIdentify = {
-			distinct_id: '<%= user.getUserId() %>',
-			email: '<%= user.getEmailAddress() %>',
-			name: '<%= user.getFirstName() %>',
-		};
-	</script>
-</c:if>
+		if (!document.getElementById('tidio-script-chat')) {
+			var scriptElement = document.createElement('script');
+
+			scriptElement.setAttribute('id', 'tidio-script-chat');
+			scriptElement.setAttribute(
+				'src',
+				'//code.tidio.co/<%= clickToChatChatProviderAccountId %>.js'
+			);
+			scriptElement.setAttribute('type', 'text/javascript');
+			scriptElement.onload = function () {
+				setUserInfo();
+			};
+
+			var bodyElement = document.getElementsByTagName('body').item(0);
+
+			bodyElement.appendChild(scriptElement);
+		}
+		else {
+			setUserInfo();
+		}
+	}
+
+	window.onload = function () {
+		loadScript();
+	};
+
+	if (document.readyState === 'complete') {
+		loadScript();
+	}
+</script>
