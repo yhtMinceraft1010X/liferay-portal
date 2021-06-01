@@ -271,7 +271,6 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Test Text");
 
-
 		FormPortlet.submit();
 
 		FormPortlet.viewSuccessPage(
