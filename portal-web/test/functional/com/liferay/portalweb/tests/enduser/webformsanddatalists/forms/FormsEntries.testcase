@@ -242,13 +242,13 @@ definition {
 
 		FormsAdmin.viewFormTableHeader(fieldHeader = "Numeric");
 
-		FormsAdmin.viewFormTableBody(fieldBody = "Test Text");
+		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Test Text");
 
-		FormsAdmin.viewFormTableBody(fieldBody = "5");
+		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "5");
 
-		FormsAdmin.viewFormTableBody(fieldBody = "Approved");
+		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Approved");
 
-		FormsAdmin.viewFormTableBody(fieldBody = "Test Test");
+		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Test Test");
 	}
 
 	@description = "Verify that the correct number of Entries are displayed"
@@ -562,13 +562,55 @@ definition {
 	}
 
 	@description = "Verify that with Single Approver Workflow enabled and after the user Submit for Publication, the form entry will have a pending label"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test WorkflowSubmissionChangesLabelToPending {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131202 WorkflowSubmissionChangesLabelToPending pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureWorkflow(workflowDefinition = "Single Approver");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit for Publication");
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+		
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormEntryWorkflowStatus(formEntryWorkflowStatus = "Pending");
+
+
+
 
 	}
 
