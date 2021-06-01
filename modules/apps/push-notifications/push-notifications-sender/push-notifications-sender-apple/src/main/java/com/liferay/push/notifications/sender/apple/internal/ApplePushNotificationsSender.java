@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -86,8 +87,8 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		tokensStream.map(
 			token -> new SimpleApnsPushNotification(token, _topic, payload)
 		).forEach(
-			notification -> _handleNotificationResponse(
-				_apnsClient.sendNotification(notification))
+			simpleApnsPushNotification -> _handleNotificationResponse(
+				_apnsClient.sendNotification(simpleApnsPushNotification))
 		);
 	}
 
@@ -321,11 +322,15 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 				if (!simpleApnsPushNotification.isAccepted() &&
 					_log.isWarnEnabled()) {
 
-					String timestamp = String.valueOf(
-						response.getTokenInvalidationTimestamp(
-						).orElse(
-							Instant.parse("")
-						));
+					String timestamp = String.valueOf(Instant.parse(""));
+
+					Optional<Instant> optional =
+						simpleApnsPushNotification.
+							getTokenInvalidationTimestamp();
+
+					if (optional.isPresent()) {
+						timestamp = String.valueOf(optional.get());
+					}
 
 					_log.warn(
 						StringBundler.concat(
