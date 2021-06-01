@@ -218,34 +218,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
 		}
 
-		String titleLocalizedKey = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
-
-		if (Validator.isNotNull(titleLocalizedKey)) {
-			JSONArray titleLocalizedArgumentsJSONArray =
-				payloadJSONObject.getJSONArray(
-					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
-
-			if (titleLocalizedArgumentsJSONArray != null) {
-				List<String> localizedArguments = new ArrayList<>();
-
-				for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
-					 i++) {
-
-					localizedArguments.add(
-						titleLocalizedArgumentsJSONArray.getString(i));
-				}
-
-				simpleApnsPayloadBuilder.setLocalizedAlertTitle(
-					titleLocalizedKey,
-					localizedArguments.toArray(new String[0]));
-			}
-			else {
-				simpleApnsPayloadBuilder.setLocalizedAlertTitle(
-					titleLocalizedKey);
-			}
-		}
-
 		String bodyLocalizedKey = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_BODY_LOCALIZED);
 
@@ -271,6 +243,34 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			else {
 				simpleApnsPayloadBuilder.setLocalizedAlertMessage(
 					bodyLocalizedKey);
+			}
+		}
+
+		String titleLocalizedKey = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
+
+		if (Validator.isNotNull(titleLocalizedKey)) {
+			JSONArray titleLocalizedArgumentsJSONArray =
+				payloadJSONObject.getJSONArray(
+					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
+
+			if (titleLocalizedArgumentsJSONArray != null) {
+				List<String> localizedArguments = new ArrayList<>();
+
+				for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
+					 i++) {
+
+					localizedArguments.add(
+						titleLocalizedArgumentsJSONArray.getString(i));
+				}
+
+				simpleApnsPayloadBuilder.setLocalizedAlertTitle(
+					titleLocalizedKey,
+					localizedArguments.toArray(new String[0]));
+			}
+			else {
+				simpleApnsPayloadBuilder.setLocalizedAlertTitle(
+					titleLocalizedKey);
 			}
 		}
 
