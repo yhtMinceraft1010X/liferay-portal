@@ -169,6 +169,8 @@ definition {
 	@description = "This test ensures its possible to translate the Fieldset to N languages."
 	@priority = "5"
 	test TranslateFieldsetToNLanguages {
+		property portal.upstream = "quarantine";
+
 		var fieldsetNameEN = "Fieldset Name";
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -201,8 +203,6 @@ definition {
 			fieldNameList = "Text,Numeric",
 			fieldsetName = "${fieldsetNameEN}",
 			localeList = "pt-BR,de-DE,es-ES");
-
-		Refresh();
 
 		WebContentStructures.saveCP();
 
