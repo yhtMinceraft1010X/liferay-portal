@@ -145,11 +145,6 @@ definition {
 		FormViewBuilder.validatePredefinedSelectList(
 			fieldName = "Select from List",
 			fieldValue = "Option 1");
-
-
-
-
-
 	}
 
 	@description = "Verify that a list can be created using Autofill"
