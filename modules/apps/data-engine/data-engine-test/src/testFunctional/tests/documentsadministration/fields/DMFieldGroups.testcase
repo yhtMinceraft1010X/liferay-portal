@@ -179,8 +179,9 @@ definition {
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertElementNotPresent(
-			key_FieldGroupIndex = "2",
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX");
+			index = "1",
+			key_fieldLabel = "Fields Group",
+			locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
 	}
 
 	@description = "This test ensures it's possible to duplicate a field group."
