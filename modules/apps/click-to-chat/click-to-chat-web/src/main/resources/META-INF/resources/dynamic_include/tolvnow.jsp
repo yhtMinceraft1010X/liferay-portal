@@ -17,7 +17,6 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <script type="text/javascript">
-	console.log('document.readyState', document.readyState === 'complete')
 	var _tn = _tn || [];
 
 	_tn.push(['account', '<%= clickToChatChatProviderAccountId %>']);
@@ -28,37 +27,31 @@
 		_tn.push(['_setName', '<%= user.getScreenName() %>']);
 	</c:if>
 
-	function loadScript() {
-		console.log('script exist', document.getElementById('tolvnow-script-chat'))
+	function loadTolnowScript() {
 		if (!document.getElementById('tolvnow-script-chat')) {
 			var spanElement = document.createElement('span');
-	
+
 			spanElement.setAttribute('id', 'tolvnow');
-	
+
 			var scriptElement = document.createElement('script');
-	
+
 			scriptElement.setAttribute('async', true);
 			scriptElement.setAttribute('id', 'tolvnow-script-chat');
-			scriptElement.setAttribute(
-				'src',
-				'//tracker.tolvnow.com/js/tn.js'
-			);
+			scriptElement.setAttribute('src', '//tracker.tolvnow.com/js/tn.js');
 			scriptElement.setAttribute('type', 'text/javascript');
-	
+
 			var bodyElement = document.getElementsByTagName('body').item(0);
-	
+
 			bodyElement.appendChild(spanElement);
 			bodyElement.appendChild(scriptElement);
 		}
 	}
-	
-	window.onload = function() {
-		console.log('window.onload')
-		loadScript();
-	}
-	
+
+	window.onload = function () {
+		loadTolnowScript();
+	};
+
 	if (document.readyState === 'complete') {
-		console.log('document.readyState')
-		loadScript();
+		loadTolnowScript();
 	}
 </script>
