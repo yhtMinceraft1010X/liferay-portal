@@ -1,10 +1,17 @@
 definition {
 
-    @summary = "Navigates to a definition in the Definitions screen \
-	@param definitionType the name of the definition that will be navigated to"
-	macro goToDefinition {
+    @summary = "Navigates to a definition in the Definitions screen. \
+	@param definitionType the name of the definition that will be navigated to."
+	macro goToDefinitionType {
         var key_DefinitionType = "${definitionType}";
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
+
+     @summary = "Opens the attribute details modal by clicking its name on the list. \
+	@param attributeName the name of the attribute to be clicked."
+    macro openIndividualAttributeDetails {
+        var key_AtributeName = "${attributeName}";
+        Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
+    }
     
 }
