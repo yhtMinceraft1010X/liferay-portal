@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.service.impl;
+package com.liferay.layout.internal.service;
 
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.model.Layout;
