@@ -163,6 +163,23 @@ public class UpdateLanguageActionTest {
 	public void testGetRedirectWithFriendlyURLWithVirtualHost()
 		throws Exception {
 
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServerName(_VIRTUAL_HOSTNAME);
+
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		httpSession.setAttribute(WebKeys.LOCALE, _targetLocale);
+
+		mockHttpServletRequest.setParameter(
+			"redirect",
+			StringBundler.concat(
+				StringPool.SLASH, _sourceUKLocale.toLanguageTag(),
+				_getFriendlyURLSeparatorPart(_sourceUKLocale), "?queryString"));
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		LayoutSet layoutSet = _layout.getLayoutSet();
@@ -178,31 +195,12 @@ public class UpdateLanguageActionTest {
 		themeDisplay.setPortalDomain(_VIRTUAL_HOSTNAME);
 		themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + _VIRTUAL_HOSTNAME);
 
-		String targetURL = StringBundler.concat(
-			Http.HTTP_WITH_SLASH, _VIRTUAL_HOSTNAME,
-			_getFriendlyURLSeparatorPart(_targetLocale), "?queryString");
-
-		String sourceURL = StringBundler.concat(
-			StringPool.SLASH, _sourceUKLocale.toLanguageTag(),
-			_getFriendlyURLSeparatorPart(_sourceUKLocale), "?queryString");
-
-		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setServerName(_VIRTUAL_HOSTNAME);
-
-		HttpSession httpSession = mockHttpServletRequest.getSession();
-
-		httpSession.setAttribute(WebKeys.LOCALE, _targetLocale);
-
-		mockHttpServletRequest.setParameter("redirect", sourceURL);
-
-		String redirect = updateLanguageAction.getRedirect(
-			mockHttpServletRequest, themeDisplay, _targetLocale);
-
-		Assert.assertEquals(targetURL, redirect);
+		Assert.assertEquals(
+			StringBundler.concat(
+				Http.HTTP_WITH_SLASH, _VIRTUAL_HOSTNAME,
+				_getFriendlyURLSeparatorPart(_targetLocale), "?queryString"),
+			updateLanguageAction.getRedirect(
+				mockHttpServletRequest, themeDisplay, _targetLocale));
 	}
 
 	private void _assertRedirect(
