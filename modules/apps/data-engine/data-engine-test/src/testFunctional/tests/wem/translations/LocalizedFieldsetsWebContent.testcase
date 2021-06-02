@@ -34,7 +34,7 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldNameList = "Date",
+			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
