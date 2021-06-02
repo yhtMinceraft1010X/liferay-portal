@@ -1,0 +1,66 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+
+		// Open Analytics Cloud, login, open faro demo workspace and take the token to connect to DXP
+
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		// Take token from Analytics Cloud
+
+		ACLogin.loginAs();
+
+		ACWorkspace.openWorkspace();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		// Go to DXP portal
+
+		TestCase.setUpPortalInstance();
+
+		Navigator.openURL();
+
+		User.firstLoginPG();
+
+        ACDXPSettings.connectDXPtoAnalyticsCloud();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Assert a newly connected data source is listed as a source of individual attributes in Definitions > Individuals."
+	@priority = "5"
+	test AssertNewSourceInSourceListForIndividualAttribute {
+        ACUtils.launchAC();
+
+        ACNavigation.goToSettings();
+        ACSettings.goToDefinitions();
+        
+        ACDefinitions.goToDefinitionType(
+            definitionType = "Individuals"
+        );
+        
+		ACDefinitions.assertIndividualAttributesSource(
+            dataSourceName = "Liferay DXP",
+            attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,timeZoneId,userId,uuid"
+        );
+	}
+
+}
