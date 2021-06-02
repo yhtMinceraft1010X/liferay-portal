@@ -319,11 +319,7 @@ public class JSONUtil {
 		}
 
 		for (T t : list) {
-			Object item = unsafeFunction.apply(t);
-
-			if (item != null) {
-				jsonArray.put(item);
-			}
+			jsonArray.put(unsafeFunction.apply(t));
 		}
 
 		return jsonArray;
@@ -341,11 +337,7 @@ public class JSONUtil {
 
 		for (T t : list) {
 			try {
-				Object item = unsafeFunction.apply(t);
-
-				if (item != null) {
-					jsonArray.put(item);
-				}
+				jsonArray.put(unsafeFunction.apply(t));
 			}
 			catch (Exception exception) {
 				exceptionConsumer.accept(exception);
@@ -379,11 +371,7 @@ public class JSONUtil {
 		}
 
 		for (T t : set) {
-			Object item = unsafeFunction.apply(t);
-
-			if (item != null) {
-				jsonArray.put(item);
-			}
+			jsonArray.put(unsafeFunction.apply(t));
 		}
 
 		return jsonArray;
@@ -401,11 +389,7 @@ public class JSONUtil {
 
 		for (T t : set) {
 			try {
-				Object item = unsafeFunction.apply(t);
-
-				if (item != null) {
-					jsonArray.put(item);
-				}
+				jsonArray.put(unsafeFunction.apply(t));
 			}
 			catch (Exception exception) {
 				exceptionConsumer.accept(exception);
@@ -439,11 +423,7 @@ public class JSONUtil {
 		}
 
 		for (T t : array) {
-			Object item = unsafeFunction.apply(t);
-
-			if (item != null) {
-				jsonArray.put(item);
-			}
+			jsonArray.put(unsafeFunction.apply(t));
 		}
 
 		return jsonArray;
@@ -461,11 +441,7 @@ public class JSONUtil {
 
 		for (T t : array) {
 			try {
-				Object item = unsafeFunction.apply(t);
-
-				if (item != null) {
-					jsonArray.put(item);
-				}
+				jsonArray.put(unsafeFunction.apply(t));
 			}
 			catch (Exception exception) {
 				exceptionConsumer.accept(exception);
@@ -514,11 +490,7 @@ public class JSONUtil {
 		List<T> values = new ArrayList<>(jsonArray.length());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			T item = unsafeFunction.apply(jsonArray.getJSONObject(i));
-
-			if (item != null) {
-				values.add(item);
-			}
+			values.add(unsafeFunction.apply(jsonArray.getJSONObject(i)));
 		}
 
 		return values;
@@ -537,11 +509,7 @@ public class JSONUtil {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			try {
-				T item = unsafeFunction.apply(jsonArray.getJSONObject(i));
-
-				if (item != null) {
-					values.add(item);
-				}
+				values.add(unsafeFunction.apply(jsonArray.getJSONObject(i)));
 			}
 			catch (Exception exception) {
 				exceptionConsumer.accept(exception);
