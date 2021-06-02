@@ -10,7 +10,7 @@ definition {
     @summary = "Opens the attribute details modal by clicking its name on the list. \
 	@param attributeName the name of the attribute to be clicked."
     macro openIndividualAttributeDetails {
-        var key_AtributeName = "${attributeName}";
+        var key_AttributeName = "${attributeName}";
         Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
     }
 
@@ -22,7 +22,7 @@ definition {
 
         for (var attributeName : list "${attributeList}") {
             Type(
-			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			locator1 = "ACSettings#SEARCH_BAR",
 			value1 = "${attributeName}");
 
             ACDefinitions.openIndividualAttributeDetails(

@@ -11,13 +11,13 @@
 <!-- DEFINITIONS -->
 <tr>
     <td>DEFINITION_TYPE</td>
-    <td>//div[contains(@class, 'card card-root')]//a[text()='${key_definitionType}']</td>
+    <td>//div[contains(@class, 'card card-root')]//a[text()='${key_DefinitionType}']</td>
     <td></td>
 </tr>
 <!-- INDIVIDUAL ATTRIBUTES -->
 <tr>
     <td>ATTRIBUTE_NAME</td>
-    <td>//div[contains(@class, 'card card-root')]//button[text()='${key_attributeName}']</td>
+    <td>//div[contains(@class, 'card card-root')]//button[text()='${key_AttributeName}']</td>
     <td></td>
 </tr>
 <tr>

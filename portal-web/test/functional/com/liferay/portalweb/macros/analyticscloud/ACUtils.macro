@@ -160,7 +160,7 @@ definition {
 	}
 
 	macro clearSearchBar {
-		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON")
+		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
 
 }
