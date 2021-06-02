@@ -110,10 +110,6 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().cancelCheckOut(userId, fileEntryId);
 	}
 
-	/**
-	 * Checks all file entries by handling their expirations and sending
-	 * review notifications based on their current workflow.
-	 */
 	public static void checkFileEntries(long checkInterval)
 		throws PortalException {
 
