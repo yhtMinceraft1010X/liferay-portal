@@ -228,8 +228,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			long groupId, boolean importPageDefinition, String title)
 		throws Exception {
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
 		unicodeProperties.put("published", Boolean.TRUE.toString());
@@ -238,7 +236,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			TestPropsValues.getUserId(), groupId, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			HashMapBuilder.put(
-				locale, title
+				LocaleUtil.getSiteDefault(), title
 			).build(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
