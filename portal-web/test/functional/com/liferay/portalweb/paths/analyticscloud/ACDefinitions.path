@@ -20,6 +20,11 @@
     <td>//div[contains(@class, 'card card-root')]//button[text()='${key_attributeName}']</td>
     <td></td>
 </tr>
+<tr>
+    <td>SOURCE_NAME</td>
+    <td>//div[contains(@class, 'table-root')]//td[text()='${key_DataSourceName}']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>
