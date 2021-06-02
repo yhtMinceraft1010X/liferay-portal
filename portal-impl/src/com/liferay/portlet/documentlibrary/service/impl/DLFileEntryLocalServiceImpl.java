@@ -344,10 +344,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersion;
 	}
 
-	/**
-	 * Checks all file entries by handling their expirations and sending
-	 * review notifications based on their current workflow.
-	 */
 	@Override
 	public void checkFileEntries(long checkInterval) throws PortalException {
 		Date now = new Date();
