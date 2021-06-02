@@ -167,7 +167,7 @@ public class UpdateLanguageActionTest {
 
 		LayoutSet layoutSet = _layout.getLayoutSet();
 
-		layoutSet.setVirtualHostname(_VIRTUALHOST);
+		layoutSet.setVirtualHostname(_VIRTUAL_HOSTNAME);
 
 		themeDisplay.setI18nLanguageId(_sourceUKLocale.getLanguage());
 		themeDisplay.setI18nPath("/" + _sourceUKLocale.getLanguage());
@@ -175,11 +175,11 @@ public class UpdateLanguageActionTest {
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setPortalDomain(_VIRTUALHOST);
-		themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + _VIRTUALHOST);
+		themeDisplay.setPortalDomain(_VIRTUAL_HOSTNAME);
+		themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + _VIRTUAL_HOSTNAME);
 
 		String targetURL = StringBundler.concat(
-			Http.HTTP_WITH_SLASH, _VIRTUALHOST,
+			Http.HTTP_WITH_SLASH, _VIRTUAL_HOSTNAME,
 			_getFriendlyURLSeparatorPart(_targetLocale), "?queryString");
 
 		String sourceURL = StringBundler.concat(
@@ -191,7 +191,7 @@ public class UpdateLanguageActionTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setServerName(_VIRTUALHOST);
+		mockHttpServletRequest.setServerName(_VIRTUAL_HOSTNAME);
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
@@ -387,7 +387,7 @@ public class UpdateLanguageActionTest {
 	private static final String _PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER =
 		"/-/asset_publisher/instanceID/content/";
 
-	private static final String _VIRTUALHOST = "test.com";
+	private static final String _VIRTUAL_HOSTNAME = "test.com";
 
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
