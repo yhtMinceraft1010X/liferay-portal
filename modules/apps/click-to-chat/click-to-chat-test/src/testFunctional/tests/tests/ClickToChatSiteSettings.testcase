@@ -193,4 +193,5 @@ definition {
 			chatProviderId = "${chatProviderId}",
 			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
 	}
+
 }
