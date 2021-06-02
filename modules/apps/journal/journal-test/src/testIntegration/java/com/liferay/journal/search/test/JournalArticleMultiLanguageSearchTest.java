@@ -165,7 +165,7 @@ public class JournalArticleMultiLanguageSearchTest {
 	}
 
 	@Test
-	public void testSearchAndSearchCount() throws Exception {
+	public void testSearchCount() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
