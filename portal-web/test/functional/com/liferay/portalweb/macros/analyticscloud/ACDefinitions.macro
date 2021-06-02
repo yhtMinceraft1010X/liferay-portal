@@ -7,11 +7,37 @@ definition {
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
 
-     @summary = "Opens the attribute details modal by clicking its name on the list. \
+    @summary = "Opens the attribute details modal by clicking its name on the list. \
 	@param attributeName the name of the attribute to be clicked."
     macro openIndividualAttributeDetails {
         var key_AtributeName = "${attributeName}";
         Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
+    }
+
+    @summary = "Asserts dataSourceName is listed in the attribute details modal. \
+	@param attributeName the name of the attribute to be clicked. \
+    @param dataSourceName the name of the data source to be asserted."
+    macro assertIndividualAttributesSource {
+        var key_DataSourceName = "${dataSourceName}";
+
+        for (var attributeName : list "${attributeList}") {
+            Type(
+			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			value1 = "${attributeName}");
+
+            ACDefinitions.openIndividualAttributeDetails(
+                attributeName = "${attributeName}"
+                );
+
+            AssertTextEquals(
+                locator1 = "ACDefinitions#SOURCE_NAME",
+                value1 = "${dataSourceName}"
+            );
+
+            ACUtils.closeModal();
+            ACUtils.clearSearchBar();
+		}
+
     }
     
 }
