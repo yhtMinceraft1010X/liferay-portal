@@ -346,16 +346,16 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void checkFileEntries(long checkInterval) throws PortalException {
-		Date now = new Date();
+		Date date = new Date();
 
 		if (_previousCheckDate == null) {
 			_previousCheckDate = new Date(
-				now.getTime() - (checkInterval * Time.MINUTE));
+				date.getTime() - (checkInterval * Time.MINUTE));
 		}
 
-		_checkFileEntriesByReviewDate(now);
+		_checkFileEntriesByReviewDate(date);
 
-		_previousCheckDate = now;
+		_previousCheckDate = date;
 	}
 
 	@Override
@@ -2520,7 +2520,7 @@ public class DLFileEntryLocalServiceImpl
 					FileUtil.stripExtension(sourceFileName), extension);
 			}
 
-			Date now = new Date();
+			Date date = new Date();
 
 			validateFile(
 				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
@@ -2539,7 +2539,7 @@ public class DLFileEntryLocalServiceImpl
 				mimeType, title, description, changeLog, extraSettings,
 				fileEntryTypeId, ddmFormValuesMap, version, size,
 				expirationDate, reviewDate, dlFileVersion.getStatus(),
-				serviceContext.getModifiedDate(now), serviceContext);
+				serviceContext.getModifiedDate(date), serviceContext);
 
 			// Folder
 
@@ -2549,7 +2549,7 @@ public class DLFileEntryLocalServiceImpl
 
 				dlFolderLocalService.updateLastPostDate(
 					dlFileEntry.getFolderId(),
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 
 			// File
