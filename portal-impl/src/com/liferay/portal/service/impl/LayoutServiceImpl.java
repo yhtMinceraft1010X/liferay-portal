@@ -935,6 +935,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return false;
 	}
 
+	@Override
 	public Layout publishLayout(long plid) throws Exception {
 		throw new UnsupportedOperationException();
 	}
