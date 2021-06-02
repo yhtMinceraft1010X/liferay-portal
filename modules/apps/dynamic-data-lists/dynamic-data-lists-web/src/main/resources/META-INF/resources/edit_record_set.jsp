@@ -166,45 +166,45 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	</aui:form>
 </clay:container-fluid>
 
-<%
-Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-
-String itemSelectorURL = PortletURLBuilder.create(
-	PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/select_structure.jsp"
-).setParameter(
-	"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
-).setParameter(
-	"classPK", ddmStructureId
-).setParameter(
-	"groupId", groupId
-).setParameter(
-	"navigationStartsOn", DDMNavigationHelper.SELECT_STRUCTURE
-).setParameter(
-	"portletResourceNamespace", liferayPortletResponse.getNamespace()
-).setParameter(
-	"refererPortletName", portlet.getPortletName()
-).setParameter(
-	"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
-).setParameter(
-	"showAncestorScopes", true
-).setParameter(
-	"showBackURL", false
-).setParameter(
-	"showHeader", false
-).setParameter(
-	"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
-).setWindowState(
-	LiferayWindowState.POP_UP
-).buildString();
-%>
-
 <aui:script>
+
+	<%
+	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	%>
+
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"itemSelectorURL", itemSelectorURL
+				"itemSelectorURL",
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/select_structure.jsp"
+				).setParameter(
+					"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
+				).setParameter(
+					"classPK", ddmStructureId
+				).setParameter(
+					"groupId", groupId
+				).setParameter(
+					"navigationStartsOn", DDMNavigationHelper.SELECT_STRUCTURE
+				).setParameter(
+					"portletResourceNamespace", liferayPortletResponse.getNamespace()
+				).setParameter(
+					"refererPortletName", portlet.getPortletName()
+				).setParameter(
+					"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
+				).setParameter(
+					"showAncestorScopes", true
+				).setParameter(
+					"showBackURL", false
+				).setParameter(
+					"showHeader", false
+				).setParameter(
+					"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString()
 			).put(
 				"portletNamespace", liferayPortletResponse.getNamespace()
 			).put(
