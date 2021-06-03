@@ -122,7 +122,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
 	}
@@ -251,7 +251,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
 	}
@@ -355,7 +355,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 	}
@@ -449,7 +449,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 	}
@@ -542,7 +542,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
 	}
@@ -636,7 +636,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 	}
@@ -728,7 +728,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
 	}
@@ -820,7 +820,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
 	}
@@ -913,7 +913,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
 	}
@@ -1005,7 +1005,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
 	}
@@ -1097,7 +1097,7 @@ definition {
 
 		User.logoutPG();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
 	}
