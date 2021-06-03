@@ -76,8 +76,7 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 				"fileEntries",
 				JSONUtil.toJSONArray(
 					dsEnvelope.getDSDocuments(),
-					dsDocument -> _toJSONObject(
-						dsDocument, themeDisplay),
+					dsDocument -> _toJSONObject(dsDocument, themeDisplay),
 					_log)
 			));
 	}
