@@ -76,13 +76,13 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 				"fileEntries",
 				JSONUtil.toJSONArray(
 					dsEnvelope.getDSDocuments(),
-					dsDocument -> _getFileEntryDetailsJSONObject(
+					dsDocument -> _toJSONObject(
 						themeDisplay, dsDocument),
 					_log)
 			));
 	}
 
-	private JSONObject _getFileEntryDetailsJSONObject(
+	private JSONObject _toJSONObject(
 			ThemeDisplay themeDisplay, DSDocument dsDocument)
 		throws Exception {
 
