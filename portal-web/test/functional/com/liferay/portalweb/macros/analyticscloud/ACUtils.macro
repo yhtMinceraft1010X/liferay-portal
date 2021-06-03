@@ -15,6 +15,10 @@ definition {
 			widgetName = "${widgetName}");
 	}
 
+	macro clearSearchBar {
+		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
+	}
+
 	macro closeAllSessions {
 		var analyticsCloudAsahCuratorURL = PropsUtil.get("analytics.cloud.asah.curator.url");
 
@@ -29,6 +33,10 @@ definition {
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+	}
+
+	macro closeModal {
+		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
 	}
 
 	macro createBlogsAndAddToPage {
@@ -153,14 +161,6 @@ definition {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	macro closeModal {
-		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
-	}
-
-	macro clearSearchBar {
-		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
 
 }

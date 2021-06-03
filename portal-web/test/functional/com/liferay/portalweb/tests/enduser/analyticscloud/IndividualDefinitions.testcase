@@ -30,7 +30,7 @@ definition {
 
 		User.firstLoginPG();
 
-        ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	tearDown {
@@ -48,19 +48,16 @@ definition {
 	@description = "Assert a newly connected data source is listed as a source of individual attributes in Definitions > Individuals."
 	@priority = "5"
 	test AssertNewSourceInSourceListForIndividualAttribute {
-        ACUtils.launchAC();
+		ACUtils.launchAC();
 
-        ACNavigation.goToSettings();
-        ACSettings.goToDefinitions();
-        
-        ACDefinitions.goToDefinitionType(
-            definitionType = "Individuals"
-        );
-        
+		ACNavigation.goToSettings();
+		ACSettings.goToDefinitions();
+
+		ACDefinitions.goToDefinitionType(definitionType = "Individuals");
+
 		ACDefinitions.assertIndividualAttributesSource(
-            dataSourceName = "Liferay DXP",
-            attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,timeZoneId,userId,uuid"
-        );
+			attributeList = "additionalName,address,birthDate,classPK,contactId,createDate,email,familyName,gender,givenName,jobTitle,modifiedDate,telephone,timeZoneId,userId,uuid",
+			dataSourceName = "Liferay DXP");
 	}
 
 }
