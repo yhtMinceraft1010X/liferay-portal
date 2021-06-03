@@ -35,7 +35,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Chatwoot provider can be enabled and disabled."
-	@ignore = "true"
 	@priority = "5"
 	test ChatwootCanBeEnabledAndDisabled {
 		Select(
@@ -54,15 +53,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_CHATWOOT");
 	}
@@ -87,8 +82,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
 
@@ -115,8 +108,6 @@ definition {
 			value1 = "${clickToChatChatwootPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
 
@@ -183,15 +174,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_CRISP");
 	}
@@ -216,8 +203,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
 
@@ -244,8 +229,6 @@ definition {
 			value1 = "${clickToChatCrispPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CRISP");
 
@@ -287,15 +270,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_HUBSPOT");
 	}
@@ -320,8 +299,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 
@@ -348,8 +325,6 @@ definition {
 			value1 = "${clickToChatHubspotPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
 
@@ -381,15 +356,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 	}
@@ -414,8 +385,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 
@@ -442,8 +411,6 @@ definition {
 			value1 = "${clickToChatJivochatPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
 
@@ -474,15 +441,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_LIVECHAT");
 	}
@@ -507,8 +470,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
 
@@ -535,8 +496,6 @@ definition {
 			value1 = "${clickToChatLivechatPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVECHAT");
 
@@ -568,15 +527,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 	}
@@ -601,8 +556,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 
@@ -629,8 +582,6 @@ definition {
 			value1 = "${clickToChatLivepersonPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_LIVEPERSON");
 
@@ -660,15 +611,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_SMARTSUPP");
 	}
@@ -693,8 +640,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
 
@@ -721,8 +666,6 @@ definition {
 			value1 = "${clickToChatSmartsuppPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_SMARTSUPP");
 
@@ -752,15 +695,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_TAWKTO");
 	}
@@ -785,8 +724,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
 
@@ -813,8 +750,6 @@ definition {
 			value1 = "${clickToChatTawktoPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TAWKTO");
 
@@ -845,20 +780,17 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementNotPresent(locator1 = "Providers#CHAT_TIDIO");
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Tidio Provider Keeps Enabled After Logout"
+	@ignore = "true"
 	@priority = "5"
 	test TidioProviderKeepsEnabledAfterLogout {
 		Select(
@@ -879,8 +811,6 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
 
 		User.logoutPG();
@@ -889,6 +819,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Tidio provider persistence after logout and login"
+	@ignore = "true"
 	@priority = "5"
 	test TidioProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
@@ -906,8 +837,6 @@ definition {
 			value1 = "${clickToChatTidioPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TIDIO");
 
@@ -937,15 +866,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_TOLVNOW");
 	}
@@ -970,8 +895,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
 
@@ -998,8 +921,6 @@ definition {
 			value1 = "${clickToChatTolvnowPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_TOLVNOW");
 
@@ -1029,15 +950,11 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		Refresh();
-
 		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementNotPresent(locator1 = "Providers#CHAT_ZENDESK");
 	}
@@ -1062,8 +979,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "guestUsersAllowed");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
 
@@ -1090,8 +1005,6 @@ definition {
 			value1 = "${clickToChatZendeskPassword}");
 
 		SystemSettings.saveConfiguration();
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
 
