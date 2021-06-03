@@ -90,21 +90,21 @@ public class CryptoHashTest {
 
 		_password = "This is a test".getBytes(StandardCharsets.US_ASCII);
 
-		_saltGeneric = RandomTestUtil.randomBytes();
+		_salt = RandomTestUtil.randomBytes();
 
 		MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
 
-		_expectedHashMD = messageDigest.digest(
-			ArrayUtil.append(_saltGeneric, _password));
+		_expectedMessageDigestHash = messageDigest.digest(
+			ArrayUtil.append(_salt, _password));
 
-		String saltBCrypt = BCrypt.gensalt();
+		String bCryptSalt = BCrypt.gensalt();
 
-		_saltBCrypt = saltBCrypt.getBytes(StandardCharsets.US_ASCII);
+		_bCryptSalt = bCryptSalt.getBytes(StandardCharsets.US_ASCII);
 
-		String expectedHashBCrypt = BCrypt.hashpw(
-			new String(_password, StandardCharsets.US_ASCII), saltBCrypt);
+		String expectedBCryptHash = BCrypt.hashpw(
+			new String(_password, StandardCharsets.US_ASCII), bCryptSalt);
 
-		_expectedHashBCrypt = expectedHashBCrypt.getBytes(
+		_expectedBCryptHash = expectedBCryptHash.getBytes(
 			StandardCharsets.US_ASCII);
 	}
 
@@ -288,39 +288,39 @@ public class CryptoHashTest {
 		throws Exception {
 
 		_cryptoHashVerifier.verify(
-			_password, _expectedHashMD,
+			_password, _expectedMessageDigestHash,
 			new CryptoHashVerificationContext(
 				RandomTestUtil.randomString(), Collections.emptyMap(),
-				_saltGeneric));
+				_salt));
 	}
 
 	@Test
 	public void testCryptoHashVerifierWithStaticInput() throws Exception {
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
-				_password, _expectedHashMD,
+				_password, _expectedMessageDigestHash,
 				new CryptoHashVerificationContext(
 					"MessageDigest",
 					HashMapBuilder.<String, Object>put(
 						"message.digest.algorithm", "SHA-512"
 					).build(),
-					_saltGeneric)));
+					_salt)));
 
 		Assert.assertFalse(
 			_cryptoHashVerifier.verify(
-				_password, _expectedHashMD,
+				_password, _expectedMessageDigestHash,
 				new CryptoHashVerificationContext(
 					"MessageDigest",
 					HashMapBuilder.<String, Object>put(
 						"message.digest.algorithm", "SHA-256"
 					).build(),
-					_saltGeneric)));
+					_salt)));
 
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
-				_password, _expectedHashBCrypt,
+				_password, _expectedBCryptHash,
 				new CryptoHashVerificationContext(
-					"BCrypt", Collections.emptyMap(), _saltBCrypt)));
+					"BCrypt", Collections.emptyMap(), _bCryptSalt)));
 	}
 
 	private Configuration _addFactoryConfiguration(
@@ -528,11 +528,11 @@ public class CryptoHashTest {
 	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);
 
 	private static BundleContext _bundleContext;
-	private static byte[] _expectedHashBCrypt;
-	private static byte[] _expectedHashMD;
+	private static byte[] _expectedBCryptHash;
+	private static byte[] _expectedMessageDigestHash;
 	private static byte[] _password;
-	private static byte[] _saltBCrypt;
-	private static byte[] _saltGeneric;
+	private static byte[] _bCryptSalt;
+	private static byte[] _salt;
 
 	private final List<AutoCloseable> _autoCloseables = new ArrayList<>();
 
