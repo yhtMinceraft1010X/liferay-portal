@@ -89,13 +89,7 @@ public class CryptoHashTest {
 		_bundleContext = bundle.getBundleContext();
 
 		_password = "This is a test".getBytes(StandardCharsets.US_ASCII);
-
 		_salt = RandomTestUtil.randomBytes();
-
-		MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-
-		_expectedMessageDigestHash = messageDigest.digest(
-			ArrayUtil.append(_salt, _password));
 
 		String bCryptSalt = BCrypt.gensalt();
 
@@ -106,6 +100,11 @@ public class CryptoHashTest {
 
 		_expectedBCryptHash = expectedBCryptHash.getBytes(
 			StandardCharsets.US_ASCII);
+
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+
+		_expectedMessageDigestHash = messageDigest.digest(
+			ArrayUtil.append(_salt, _password));
 	}
 
 	@After
