@@ -289,8 +289,7 @@ public class CryptoHashTest {
 		_cryptoHashVerifier.verify(
 			_password, _expectedMessageDigestHash,
 			new CryptoHashVerificationContext(
-				RandomTestUtil.randomString(), Collections.emptyMap(),
-				_salt));
+				RandomTestUtil.randomString(), Collections.emptyMap(), _salt));
 	}
 
 	@Test
@@ -526,11 +525,11 @@ public class CryptoHashTest {
 
 	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);
 
+	private static byte[] _bCryptSalt;
 	private static BundleContext _bundleContext;
 	private static byte[] _expectedBCryptHash;
 	private static byte[] _expectedMessageDigestHash;
 	private static byte[] _password;
-	private static byte[] _bCryptSalt;
 	private static byte[] _salt;
 
 	private final List<AutoCloseable> _autoCloseables = new ArrayList<>();
