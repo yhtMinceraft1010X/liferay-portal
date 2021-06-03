@@ -345,40 +345,6 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	</aui:button-row>
 </clay:container-fluid>
 
-<%
-Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-
-String itemSelectorURL = PortletURLBuilder.create(
-	PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE)
-).setMVCPath(
-	"/select_structure.jsp"
-).setParameter(
-	"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
-).setParameter(
-	"classPK", (structure != null) ? structure.getPrimaryKey() : 0
-).setParameter(
-	"groupId", groupId
-).setParameter(
-	"navigationStartsOn", DDMNavigationHelper.EDIT_STRUCTURE
-).setParameter(
-	"portletResourceNamespace", liferayPortletResponse.getNamespace()
-).setParameter(
-	"refererPortletName", refererPortletName
-).setParameter(
-	"showAncestorScopes", true
-).setParameter(
-	"showBackURL", false
-).setParameter(
-	"showHeader", false
-).setParameter(
-	"showManageTemplates", false
-).setParameter(
-	"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
-).setWindowState(
-	LiferayWindowState.POP_UP
-).buildString();
-%>
-
 <aui:script>
 	function <portlet:namespace />openParentStructureSelector() {
 		const opener = Liferay.Util.getOpener();
@@ -407,7 +373,43 @@ String itemSelectorURL = PortletURLBuilder.create(
 			},
 			selectEventName: '<portlet:namespace />selectParentStructure',
 			title: '<%= HtmlUtil.escapeJS(scopeTitle) %>',
-			url: '<%= itemSelectorURL %>',
+
+			<%
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+			%>
+
+			url:
+				'<%=
+					PortletURLBuilder.create(
+						PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE)
+					).setMVCPath(
+						"/select_structure.jsp"
+					).setParameter(
+						"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
+					).setParameter(
+						"classPK", (structure != null) ? structure.getPrimaryKey() : 0
+					).setParameter(
+						"groupId", groupId
+					).setParameter(
+						"navigationStartsOn", DDMNavigationHelper.EDIT_STRUCTURE
+					).setParameter(
+						"portletResourceNamespace", liferayPortletResponse.getNamespace()
+					).setParameter(
+						"refererPortletName", refererPortletName
+					).setParameter(
+						"showAncestorScopes", true
+					).setParameter(
+						"showBackURL", false
+					).setParameter(
+						"showHeader", false
+					).setParameter(
+						"showManageTemplates", false
+					).setParameter(
+						"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).buildString()
+				%>',
 		});
 	}
 
