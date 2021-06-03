@@ -24,7 +24,6 @@ import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
-import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
@@ -45,9 +44,7 @@ import com.liferay.segments.context.RequestContextMapper;
 import java.util.List;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletResponse;
 import javax.portlet.WindowState;
 
@@ -171,44 +168,38 @@ public class AssetHelperUtil {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ServletContext servletContext =
-			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
-
 		Portlet portlet = _portletLocalService.getPortletById(
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);
-
-		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
-			portlet, servletContext);
+		ServletContext servletContext =
+			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				httpServletRequest, portlet.getPortletId());
 
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.getStrictPreferences(
-				portletPreferencesIds);
-
 		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
 			portlet, servletContext);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
-			httpServletRequest, portlet, invokerPortlet, portletContext,
-			WindowState.NORMAL, PortletMode.VIEW, portletPreferences,
+			httpServletRequest, portlet,
+			PortletInstanceFactoryUtil.create(portlet, servletContext),
+			portletConfig.getPortletContext(), WindowState.NORMAL,
+			PortletMode.VIEW,
+			_portletPreferencesLocalService.getStrictPreferences(
+				portletPreferencesIds),
 			themeDisplay.getPlid());
 
 		liferayRenderRequest.setPortletRequestDispatcherRequest(
 			httpServletRequest);
 
-		PortletResponse portletResponse = RenderResponseFactory.create(
-			httpServletResponse, liferayRenderRequest);
-
-		liferayRenderRequest.defineObjects(portletConfig, portletResponse);
+		liferayRenderRequest.defineObjects(
+			portletConfig,
+			RenderResponseFactory.create(
+				httpServletResponse, liferayRenderRequest));
 
 		return liferayRenderRequest;
 	}

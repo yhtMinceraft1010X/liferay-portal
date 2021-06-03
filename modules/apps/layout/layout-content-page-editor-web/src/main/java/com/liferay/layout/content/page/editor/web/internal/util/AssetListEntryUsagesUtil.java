@@ -302,7 +302,6 @@ public class AssetListEntryUsagesUtil {
 				InfoListItemSelectorReturnType.class.getName());
 			portletURL.setParameter(
 				"showActions", String.valueOf(Boolean.TRUE));
-
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
 		catch (Exception exception) {
