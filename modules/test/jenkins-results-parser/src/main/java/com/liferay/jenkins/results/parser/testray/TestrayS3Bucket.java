@@ -189,7 +189,8 @@ public class TestrayS3Bucket {
 				googleApplicationCredentials)) {
 
 			throw new RuntimeException(
-				"Please set 'GOOGLE_APPLICATION_CREDENTIALS'");
+				"Please set the environment variable " +
+					"\"GOOGLE_APPLICATION_CREDENTIALS\"");
 		}
 
 		StorageOptions storageOptions = StorageOptions.getDefaultInstance();
