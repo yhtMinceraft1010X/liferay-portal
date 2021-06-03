@@ -90,7 +90,7 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
-	public void testAddAndDeleteUserOrganization() throws Exception {
+	public void testAddUserOrganizationByEmailAddress() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		User user = UserTestUtil.addUser();
