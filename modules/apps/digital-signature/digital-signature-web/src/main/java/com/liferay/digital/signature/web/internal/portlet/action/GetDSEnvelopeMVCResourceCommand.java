@@ -21,7 +21,6 @@ import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -62,9 +61,8 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)resourceRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
 			themeDisplay.getCompanyId(), themeDisplay.getCompanyGroupId(),
@@ -78,8 +76,7 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 				"fileEntries",
 				JSONUtil.toJSONArray(
 					dsEnvelope.getDSDocuments(),
-					dsDocument -> _toJSONObject(dsDocument, themeDisplay),
-					_log)
+					dsDocument -> _toJSONObject(dsDocument, themeDisplay), _log)
 			));
 	}
 
