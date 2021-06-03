@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Objects;
+
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -87,7 +89,7 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String dsDocumentId = dsDocument.getDSDocumentId();
 
-		if (dsDocumentId.equals("certificate")) {
+		if (Objects.equals(dsDocumentId, "certificate")) {
 			return null;
 		}
 
