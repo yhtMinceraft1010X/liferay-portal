@@ -995,13 +995,16 @@ public class LayoutStagedModelDataHandler
 
 		privateLayout = portletDataContext.isPrivateLayout();
 
-		if (layout.isTypeAssetDisplay()) {
-			portletDataContext.setPrivateLayout(false);
+		try {
+			if (layout.isTypeAssetDisplay()) {
+				portletDataContext.setPrivateLayout(false);
+			}
+
+			portletDataContext.importClassedModel(layout, importedLayout);
 		}
-
-		portletDataContext.importClassedModel(layout, importedLayout);
-
-		portletDataContext.setPrivateLayout(privateLayout);
+		finally {
+			portletDataContext.setPrivateLayout(privateLayout);
+		}
 	}
 
 	protected void exportLayoutIconImage(
