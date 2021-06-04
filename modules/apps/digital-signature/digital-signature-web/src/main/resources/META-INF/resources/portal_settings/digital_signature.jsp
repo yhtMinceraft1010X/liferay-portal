@@ -44,7 +44,7 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 		</aui:select>
 
 		<label class="text-secondary">
-			<liferay-ui:message key="site-settings-strategy-description" />
+			<liferay-ui:message arguments="digital-signature" key="site-settings-strategy-description" />
 		</label>
 	</div>
 </div>
