@@ -105,7 +105,7 @@ public class CPPriceRangeFacetsPortlet
 			SearchContext searchContext =
 				portletSharedSearchSettings.getSearchContext();
 
-			Facet facet = getFacet(renderRequest);
+			Facet facet = getFacet(renderRequest, searchContext);
 
 			Optional<String[]> parameterValuesOptional =
 				portletSharedSearchSettings.getParameterValues71(
@@ -156,55 +156,8 @@ public class CPPriceRangeFacetsPortlet
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected SearchContext buildSearchContext(RenderRequest renderRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(themeDisplay.getCompanyId());
-		searchContext.setLayout(themeDisplay.getLayout());
-		searchContext.setLocale(themeDisplay.getLocale());
-		searchContext.setTimeZone(themeDisplay.getTimeZone());
-		searchContext.setUserId(themeDisplay.getUserId());
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setLocale(themeDisplay.getLocale());
-
-		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-				themeDisplay.getScopeGroupId());
-
-		if (commerceChannel != null) {
-			searchContext.setAttribute(
-				"commerceChannelGroupId", commerceChannel.getGroupId());
-
-			CommerceAccount commerceAccount =
-				_commerceAccountHelper.getCurrentCommerceAccount(
-					commerceChannel.getGroupId(),
-					_portal.getHttpServletRequest(renderRequest));
-
-			if (commerceAccount != null) {
-				long[] commerceAccountGroupIds =
-					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
-
-				searchContext.setAttribute(
-					"commerceAccountGroupIds", commerceAccountGroupIds);
-			}
-		}
-
-		searchContext.setAttribute("secure", Boolean.TRUE);
-
-		return searchContext;
-	}
-
-	protected Facet getFacet(RenderRequest renderRequest)
+	protected Facet getFacet(
+			RenderRequest renderRequest, SearchContext searchContext)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -216,8 +169,6 @@ public class CPPriceRangeFacetsPortlet
 			cpPriceRangeFacetsPortletInstanceConfiguration =
 				portletDisplay.getPortletInstanceConfiguration(
 					CPPriceRangeFacetsPortletInstanceConfiguration.class);
-
-		SearchContext searchContext = buildSearchContext(renderRequest);
 
 		Facet facet = new RangeFacet(searchContext);
 
@@ -241,13 +192,6 @@ public class CPPriceRangeFacetsPortlet
 		facet.setFacetConfiguration(facetConfiguration);
 
 		facet.setFieldName(CPField.BASE_PRICE);
-
-		searchContext.addFacet(facet);
-
-		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CPDefinition.class);
-
-		indexer.search(searchContext);
 
 		return facet;
 	}
