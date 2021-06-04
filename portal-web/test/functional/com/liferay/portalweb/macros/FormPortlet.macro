@@ -73,7 +73,6 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "${successPageDescription}",
 			successPageTitle = "${successPageTitle}");
-			
 	}
 
 	macro submitLocalizedSuccessfully {

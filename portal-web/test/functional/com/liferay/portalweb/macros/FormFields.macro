@@ -405,7 +405,6 @@ definition {
 		Type(
 			locator1 = "FormFields#VALIDATION_ERROR_MESSAGE",
 			value1 = "${validationErrorMessage}");
-
 	}
 
 	macro enableCheckbox {

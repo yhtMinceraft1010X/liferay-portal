@@ -242,7 +242,6 @@ definition {
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
 		FormPortlet.submitAndViewSuccessPage();
-		
 	}
 
 	@description = "Verify that the "Is Not Equal To" option can be used to validate a Numeric Field"
