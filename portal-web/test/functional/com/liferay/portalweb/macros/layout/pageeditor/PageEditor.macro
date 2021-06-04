@@ -194,6 +194,10 @@ definition {
 		}
 
 		if (("${navTab}" == "Widgets") && ("${displayStyle}" == "list")) {
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "${portletName}");
+
 			if ((isSet(targetFragmentName)) && ("${height}" == "Short")) {
 				DragAndDrop.javaScriptDragAndDropObjectBelowShortNestedObject(
 					key_portletName = "${portletName}",
