@@ -383,7 +383,7 @@ public class UserFinderTest {
 	}
 
 	@Test
-	public void testParseQueryWithLimit() throws Exception {
+	public void testFindByC_FN_MN_LN_SN_EA_S() throws Exception {
 		String[] firstNames = {null};
 		String[] middleNames = {null};
 		String[] lastNames = {null};
