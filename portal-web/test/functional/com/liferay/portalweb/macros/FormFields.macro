@@ -721,6 +721,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewFieldLabelNotPresent {
+		AssertElementNotPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 	macro viewFieldName {
 		if (isSet(localeAdvanced)) {
 			Form.gotoAdvancedTab(key_localeAdvanced = "${localeAdvanced}");

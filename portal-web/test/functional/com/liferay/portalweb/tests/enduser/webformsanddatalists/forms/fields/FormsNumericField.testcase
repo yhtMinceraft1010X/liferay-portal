@@ -259,13 +259,41 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132841 LabelCanBeHidden pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.viewFieldLabel(
+			fieldName = "label",
+			fieldValue = "Numeric");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Numeric");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Numeric");
 
 	}
 
