@@ -59,15 +59,15 @@ artifacts {
 
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
-	compileInclude group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.70"
+	compileInclude group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.71"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.132"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.130"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.129"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.129"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.133"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.131"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.130"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.130"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.127"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.modules.ext", version: "1.0.114"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.mvc.portlet", version: "1.0.128"
