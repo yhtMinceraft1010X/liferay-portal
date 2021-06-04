@@ -93,7 +93,7 @@ public class ExportFormInstanceMVCResourceCommand
 				WorkflowConstants.STATUS_APPROVED
 			).build();
 
-		byte[] content;
+		byte[] content = null;
 
 		try {
 			DDMFormInstanceRecordExporterResponse

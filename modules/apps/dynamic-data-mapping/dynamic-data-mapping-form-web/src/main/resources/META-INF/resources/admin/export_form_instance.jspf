@@ -43,7 +43,7 @@ boolean csvExportDisabled = StringUtil.equals("disabled", csvExport);
 	<div class="hide" id="<portlet:namespace />xlsWarning">
 		<clay:alert
 			displayType="warning"
-			message="the-total-number-of-characters-that-a-cell-can-contain-is-32767-characters.-in-case-of-this-limit-is-exceeded-cell-content-will-be-trimmed"
+			message="the-total-number-of-characters-that-a-cell-can-contain-is-32767-characters"
 		/>
 	</div>
 
