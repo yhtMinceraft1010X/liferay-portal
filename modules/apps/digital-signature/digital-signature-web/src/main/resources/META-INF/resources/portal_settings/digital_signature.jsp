@@ -52,7 +52,7 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 <div id="<%= liferayPortletResponse.getNamespace() + "digitalSignatureProviderCredentials" %>">
 	<div class="mb-4">
 		<liferay-learn:message
-			key="docusign-keys-help"
+			key="docusign-credentials-help"
 			resource="digital-signature-web"
 		/>
 	</div>
