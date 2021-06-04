@@ -294,7 +294,6 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Numeric");
-
 	}
 
 	@description = "Verify that a Numeric Field only accepts numbers"
