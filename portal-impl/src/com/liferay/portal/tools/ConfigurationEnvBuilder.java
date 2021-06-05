@@ -42,20 +42,20 @@ import java.util.regex.Pattern;
 public class ConfigurationEnvBuilder {
 
 	public static String generateConfigOverrideContent(
-			String[] configurationFiles)
+			String[] configurationJavaFiles)
 		throws IOException {
 
 		Map<String, String> configOverrides = new TreeMap<>();
 
 		Matcher matcher = _pattern.matcher("");
 
-		for (String configurationFile : configurationFiles) {
-			Path path = Paths.get(configurationFile);
+		for (String configurationJavaFile : configurationJavaFiles) {
+			Path path = Paths.get(configurationJavaFile);
 
-			String fullyQualifiedName = configurationFile.substring(
-				configurationFile.indexOf(
+			String fullyQualifiedName = configurationJavaFile.substring(
+				configurationJavaFile.indexOf(
 					StringBundler.concat("com", File.separator, "liferay")),
-				configurationFile.indexOf(".java"));
+				configurationJavaFile.indexOf(".java"));
 
 			fullyQualifiedName = StringUtil.replace(
 				fullyQualifiedName, File.separator, StringPool.PERIOD);
@@ -98,10 +98,10 @@ public class ConfigurationEnvBuilder {
 	public static void main(String[] args) throws IOException {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String[] configurationFiles = StringUtil.split(
-			arguments.get("config.files"));
+		String[] configurationJavaFiles = StringUtil.split(
+			arguments.get("configuration.java.files"));
 
-		String content = generateConfigOverrideContent(configurationFiles);
+		String content = generateConfigOverrideContent(configurationJavaFiles);
 
 		Files.write(
 			Paths.get(arguments.get("output.file")), content.getBytes());

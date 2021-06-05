@@ -595,7 +595,7 @@ message.
 	</target>
 
 	<target name="generate-config-env-vars">
-		<pathconvert pathsep="," property="config.files">
+		<pathconvert pathsep="," property="configuration.java.files">
 			<fileset
 				dir="modules"
 				excludes=""
@@ -611,7 +611,7 @@ message.
 			fork="${fork.mode}"
 			newenvironment="true"
 		>
-			<arg value="config.files=${config.files}" />
+			<arg value="configuration.java.files=${configuration.java.files}" />
 			<arg value="output.file=${project.dir}/modules/config-env.txt" />
 		</java>
 	</target>
