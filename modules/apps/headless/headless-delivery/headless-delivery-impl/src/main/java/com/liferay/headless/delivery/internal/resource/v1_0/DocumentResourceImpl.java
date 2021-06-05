@@ -770,23 +770,22 @@ public class DocumentResourceImpl
 			long documentId, FileEntry fileEntry, MultipartBody multipartBody)
 		throws Exception {
 
+		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
+
 		Optional<Document> documentOptional =
 			multipartBody.getValueAsInstanceOptional(
 				"document", Document.class);
 
-		if ((multipartBody.getBinaryFile("file") == null) &&
-			!documentOptional.isPresent()) {
-
-			throw new BadRequestException("No document or file found in body");
+		if ((binaryFile == null) && !documentOptional.isPresent()) {
+			throw new BadRequestException(
+				"Document and file are not found in body");
 		}
 
-		BinaryFile binaryFile = Optional.ofNullable(
-			multipartBody.getBinaryFile("file")
-		).orElse(
-			new BinaryFile(
+		if (binaryFile == null) {
+			binaryFile = new BinaryFile(
 				fileEntry.getMimeType(), fileEntry.getFileName(),
-				fileEntry.getContentStream(), fileEntry.getSize())
-		);
+				fileEntry.getContentStream(), fileEntry.getSize());
+		}
 
 		fileEntry = _moveDocument(documentId, documentOptional, fileEntry);
 
