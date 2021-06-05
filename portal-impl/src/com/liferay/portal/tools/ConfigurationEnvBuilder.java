@@ -45,7 +45,7 @@ public class ConfigurationEnvBuilder {
 			String[] configurationJavaFiles)
 		throws IOException {
 
-		Map<String, String> configOverrides = new TreeMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		Matcher matcher = _pattern.matcher("");
 
@@ -74,17 +74,17 @@ public class ConfigurationEnvBuilder {
 						fullyQualifiedName, StringPool.UNDERLINE,
 						matcher.group(1));
 
-					configOverrides.put(decoded, _encode(decoded));
+					map.put(decoded, _encode(decoded));
 				}
 			}
 		}
 
-		StringBundler sb = new StringBundler((configOverrides.size() * 5) + 2);
+		StringBundler sb = new StringBundler((map.size() * 5) + 2);
 
-		sb.append(_HEADER);
-		sb.append("\n\n");
+		sb.append("#\n# The following environment variables can be used to " +
+		sb.append("override OSGi configurations.\n#\n\n");
 
-		for (Map.Entry<String, String> entry : configOverrides.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			sb.append("#\n#");
 			sb.append(entry.getKey());
 			sb.append("\n#\n");
@@ -110,7 +110,7 @@ public class ConfigurationEnvBuilder {
 	private static String _encode(String string) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(_PREFIX);
+		sb.append("LIFERAY_CONFIGURATION_OVERRIDE_");
 
 		for (char c : string.toCharArray()) {
 			if (Character.isLowerCase(c)) {
@@ -127,12 +127,6 @@ public class ConfigurationEnvBuilder {
 
 		return sb.toString();
 	}
-
-	private static final String _HEADER =
-		"# These environment variables can be used to override modules " +
-			"configurations";
-
-	private static final String _PREFIX = "LIFERAY_CONFIGURATION_OVERRIDE_";
 
 	private static final Map<Character, String> _charPoolChars =
 		new HashMap<Character, String>() {
