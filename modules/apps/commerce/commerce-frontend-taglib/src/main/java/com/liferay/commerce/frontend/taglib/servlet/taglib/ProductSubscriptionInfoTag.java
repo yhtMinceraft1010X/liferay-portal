@@ -173,9 +173,10 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		setServletContext(ServletContextUtil.getServletContext());
+
 		cpSubscriptionTypeRegistry =
 			ServletContextUtil.getCPSubscriptionTypeRegistry();
-		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setShowDuration(boolean showDuration) {

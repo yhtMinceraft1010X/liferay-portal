@@ -81,8 +81,9 @@ public class GalleryTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		setServletContext(ServletContextUtil.getServletContext());
+
+		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 	}
 
 	@Override

@@ -226,13 +226,14 @@ public class AddToCartTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		setServletContext(ServletContextUtil.getServletContext());
+
 		_commerceInventoryEngine =
 			ServletContextUtil.getCommerceInventoryEngine();
 		_commerceOrderItemLocalService =
 			ServletContextUtil.getCommerceOrderItemLocalService();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		_productHelper = ServletContextUtil.getProductHelper();
-		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSpritemap(String spritemap) {
