@@ -74,7 +74,7 @@ public class ConfigurationEnvBuilder {
 						fullyQualifiedName, StringPool.UNDERLINE,
 						matcher.group(1));
 
-					map.put(decoded, _encode(decoded));
+					map.put(decoded, _getEnvirionmentVariableName(decoded));
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public class ConfigurationEnvBuilder {
 			Paths.get(arguments.get("output.file")), content.getBytes());
 	}
 
-	private static String _encode(String string) {
+	private static String _getEnvirionmentVariableName(String string) {
 		StringBundler sb = new StringBundler();
 
 		sb.append("LIFERAY_CONFIGURATION_OVERRIDE_");
