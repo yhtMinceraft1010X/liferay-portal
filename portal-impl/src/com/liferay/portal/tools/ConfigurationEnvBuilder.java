@@ -85,7 +85,7 @@ public class ConfigurationEnvBuilder {
 		sb.append("override OSGi configurations.\n#\n\n");
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			sb.append("#\n#");
+			sb.append("#\n# ");
 			sb.append(entry.getKey());
 			sb.append("\n#\n");
 			sb.append(entry.getValue());
