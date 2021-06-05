@@ -70,11 +70,11 @@ public class ConfigurationEnvBuilder {
 				matcher.reset(line);
 
 				if (matcher.matches()) {
-					String decoded = StringBundler.concat(
+					String configurationKey = StringBundler.concat(
 						fullyQualifiedName, StringPool.UNDERLINE,
 						matcher.group(1));
 
-					map.put(decoded, _getEnvirionmentVariableName(decoded));
+					map.put(configurationKey, _getEnvirionmentVariableName(configurationKey));
 				}
 			}
 		}
@@ -107,12 +107,12 @@ public class ConfigurationEnvBuilder {
 			Paths.get(arguments.get("output.file")), content.getBytes());
 	}
 
-	private static String _getEnvirionmentVariableName(String string) {
+	private static String _getEnvirionmentVariableName(String configurationKey) {
 		StringBundler sb = new StringBundler();
 
 		sb.append("LIFERAY_CONFIGURATION_OVERRIDE_");
 
-		for (char c : string.toCharArray()) {
+		for (char c : configurationKey.toCharArray()) {
 			if (Character.isLowerCase(c)) {
 				sb.append(Character.toUpperCase(c));
 			}
