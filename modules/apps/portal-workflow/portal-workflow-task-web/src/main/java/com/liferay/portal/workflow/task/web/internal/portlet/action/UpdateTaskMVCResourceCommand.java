@@ -56,26 +56,31 @@ public class UpdateTaskMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long workflowTaskId = ParamUtil.getLong(
-			resourceRequest, "workflowTaskId");
-
-		int dueDateMonth = ParamUtil.getInteger(
-			resourceRequest, "dueDateMonth");
-		int dueDateDay = ParamUtil.getInteger(resourceRequest, "dueDateDay");
-		int dueDateYear = ParamUtil.getInteger(resourceRequest, "dueDateYear");
-		int dueDateHour = ParamUtil.getInteger(resourceRequest, "dueDateHour");
-		int dueDateMinute = ParamUtil.getInteger(
-			resourceRequest, "dueDateMinute");
-		int dueDateAmPm = ParamUtil.getInteger(resourceRequest, "dueDateAmPm");
-
-		if (dueDateAmPm == Calendar.PM) {
-			dueDateHour += 12;
-		}
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long workflowTaskId = ParamUtil.getLong(
+				resourceRequest, "workflowTaskId");
+
+			int dueDateMonth = ParamUtil.getInteger(
+				resourceRequest, "dueDateMonth");
+			int dueDateDay = ParamUtil.getInteger(
+				resourceRequest, "dueDateDay");
+			int dueDateYear = ParamUtil.getInteger(
+				resourceRequest, "dueDateYear");
+			int dueDateHour = ParamUtil.getInteger(
+				resourceRequest, "dueDateHour");
+			int dueDateMinute = ParamUtil.getInteger(
+				resourceRequest, "dueDateMinute");
+			int dueDateAmPm = ParamUtil.getInteger(
+				resourceRequest, "dueDateAmPm");
+
+			if (dueDateAmPm == Calendar.PM) {
+				dueDateHour += 12;
+			}
+
 			Date dueDate = _portal.getDate(
 				dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
 				dueDateMinute, themeDisplay.getTimeZone(),
