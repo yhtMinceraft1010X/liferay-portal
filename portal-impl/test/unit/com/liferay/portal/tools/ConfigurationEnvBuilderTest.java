@@ -54,7 +54,7 @@ public class ConfigurationEnvBuilderTest {
 
 		List<String> configFiles = new ArrayList<>();
 
-		Matcher matcher = _configPattern.matcher(StringPool.BLANK);
+		Matcher matcher = _pattern.matcher(StringPool.BLANK);
 
 		Files.walkFileTree(
 			modulesDirPath,
@@ -91,7 +91,7 @@ public class ConfigurationEnvBuilderTest {
 			expectedContent, actualContent);
 	}
 
-	private static final Pattern _configPattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		StringBundler.concat(
 			".*", File.separator, "apps", File.separator, ".*", File.separator,
 			"configuration", File.separator, "[^", File.separator,
