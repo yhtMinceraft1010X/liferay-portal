@@ -154,12 +154,13 @@ public class FormNavigatorTag extends IncludeTag {
 	private String[] _getCategoryKeys() {
 		List<String> categoryKeys = new ArrayList<>();
 
-		HttpServletRequest httpServletRequest = getRequest();
-
 		FormNavigatorCategoryProvider formNavigatorCategoryProvider =
 			ServletContextUtil.getFormNavigatorCategoryProvider();
 		FormNavigatorEntryProvider formNavigatorEntryProvider =
 			ServletContextUtil.getFormNavigatorEntryProvider();
+
+		HttpServletRequest httpServletRequest = getRequest();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
