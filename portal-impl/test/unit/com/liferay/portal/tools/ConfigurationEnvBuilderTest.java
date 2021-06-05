@@ -83,11 +83,11 @@ public class ConfigurationEnvBuilderTest {
 				configFiles.toArray(new String[0]));
 
 		String actualContent = new String(
-			Files.readAllBytes(modulesDirPath.resolve("config-env.txt")));
+			Files.readAllBytes(modulesDirPath.resolve("configuration-env.txt")));
 
 		Assert.assertEquals(
 			"Please run \"ant generate-config-env-vars\" to regenerate " +
-				"config-env.txt file",
+				"configuration-env.txt file",
 			expectedContent, actualContent);
 	}
 
