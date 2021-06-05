@@ -122,13 +122,11 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Document randomDocument = randomDocument();
 
-		Map<String, File> multipartFiles = getMultipartFiles();
-
 		Document putDocument =
 			documentResource.putSiteDocumentByExternalReferenceCode(
 				testGroup.getGroupId(),
 				randomDocument.getExternalReferenceCode(), randomDocument,
-				multipartFiles);
+				getMultipartFiles());
 
 		assertEquals(randomDocument, putDocument);
 		assertValid(putDocument);
@@ -139,8 +137,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		assertEquals(randomDocument, getDocument);
 		assertValid(getDocument);
-
-		assertValid(getDocument, multipartFiles);
+		assertValid(getDocument, getMultipartFiles());
 
 		Assert.assertEquals(
 			randomDocument.getExternalReferenceCode(),
