@@ -528,6 +528,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SELECT_LIST_INDEX</td>
+	<td>xpath=//label[contains(text(),'${key_fieldLabel}')]/../../..//div[contains(@class,'ddm-field') and contains(@data-field-name,'SelectFromList')][${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_SINGLE_SELECTION_ROW</td>
 	<td>//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]</td>
 	<td></td>

@@ -94,6 +94,13 @@ definition {
 			value1 = "Duplicate");
 	}
 
+	macro duplicateSelectListField {
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+
+
+	}
+
 	macro editBlankMultiTextFieldWithEnterKey {
 		KeyPress(
 			key_fieldName = "${fieldName}",
@@ -617,6 +624,26 @@ definition {
 		}
 	}
 
+	macro selectSelectOptionRepeatable {
+		var key_fieldLabel = "${fieldLabel}";
+		var key_selectOption = "${selectOption}";
+		var key_index = "${index}";
+
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "FormFields#SELECT_SELECT_LIST_INDEX",
+			value1 = "${selectOption}");
+
+		Click(
+			key_fieldLabel = "${fieldName}",
+			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
+			value1 = "${selectOption}");
+
+
+
+	}
+
 	macro selectSelectWithMultipleOptions {
 		var key_fieldName = "${fieldName}";
 
@@ -1002,6 +1029,17 @@ definition {
 			key_repeatableFieldNumber = "${repeatableFieldNumber}",
 			locator1 = "FormFields#REPEATABLE_HELP_TEXT",
 			value1 = "${fieldHelpText}");
+	}
+
+	macro viewRepeatableSelectFromList{
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "FormFields#SELECT_SELECT_LIST_INDEX"
+		);
+
+		
+
 	}
 
 	macro viewRepeatableSingleSelectionRow {
