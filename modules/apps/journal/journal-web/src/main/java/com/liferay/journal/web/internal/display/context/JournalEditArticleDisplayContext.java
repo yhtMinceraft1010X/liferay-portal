@@ -229,12 +229,12 @@ public class JournalEditArticleDisplayContext {
 			(getClassNameId() ==
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
 
-			JournalArticle articleDefaultValues =
+			JournalArticle ddmStructureArticle =
 				JournalArticleServiceUtil.getArticle(
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId());
 
-			content = articleDefaultValues.getContent();
+			content = ddmStructureArticle.getContent();
 		}
 
 		if (Validator.isNull(content)) {
