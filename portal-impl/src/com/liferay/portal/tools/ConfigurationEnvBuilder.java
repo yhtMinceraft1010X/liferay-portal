@@ -122,9 +122,7 @@ public class ConfigurationEnvBuilder {
 			}
 			else {
 				sb.append(CharPool.UNDERLINE);
-
-				sb.append(_charPoolChars.get(c));
-
+				sb.append(_charStrings.get(c));
 				sb.append(CharPool.UNDERLINE);
 			}
 		}
@@ -132,7 +130,7 @@ public class ConfigurationEnvBuilder {
 		return sb.toString();
 	}
 
-	private static final Map<Character, String> _charPoolChars =
+	private static final Map<Character, String> _charStrings =
 		new HashMap<Character, String>() {
 			{
 				try {
