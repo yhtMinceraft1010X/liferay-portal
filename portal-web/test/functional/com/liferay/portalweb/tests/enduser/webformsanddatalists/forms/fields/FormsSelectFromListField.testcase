@@ -769,8 +769,6 @@ definition {
 		Form.viewFieldReference(
 			fieldName = "Select from List",
 			key_fieldReference = "SelectFromList1234");
-
-
 	}
 
 	@description = "Verify that the Field Type can be changed"
