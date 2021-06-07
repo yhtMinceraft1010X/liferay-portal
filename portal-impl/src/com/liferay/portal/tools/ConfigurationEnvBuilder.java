@@ -44,12 +44,12 @@ public class ConfigurationEnvBuilder {
 	public static String buildContent(String[] configurationJavaFileNames)
 		throws IOException {
 
+		Map<String, String> map = new TreeMap<>();
+
 		StringBundler sb = new StringBundler((map.size() * 5) + 2);
 
 		sb.append("#\n# The following environment variables can be used to ");
 		sb.append("override OSGi configurations.\n#");
-
-		Map<String, String> map = new TreeMap<>();
 
 		Matcher matcher = _pattern.matcher("");
 
