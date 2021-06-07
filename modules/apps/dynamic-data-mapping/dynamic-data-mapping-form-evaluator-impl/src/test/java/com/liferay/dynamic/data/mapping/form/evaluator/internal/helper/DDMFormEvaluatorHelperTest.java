@@ -1719,9 +1719,9 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		Mockito.when(
 			_language.get(
 				Matchers.any(ResourceBundle.class),
-				Matchers.eq("input-format-not-satisfied"))
+				Matchers.eq("input-format-is-not-satisfied"))
 		).thenReturn(
-			"Input format not satisfied."
+			"Input format is not satisfied."
 		);
 
 		Mockito.when(
