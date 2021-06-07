@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
  */
 public class ConfigurationEnvBuilder {
 
-	public static String generateConfigOverrideContent(
+	public static String buildContent(
 			String[] configurationJavaFiles)
 		throws IOException {
 
@@ -103,7 +103,7 @@ public class ConfigurationEnvBuilder {
 		String[] configurationJavaFiles = StringUtil.split(
 			arguments.get("configuration.java.files"));
 
-		String content = generateConfigOverrideContent(configurationJavaFiles);
+		String content = buildContent(configurationJavaFiles);
 
 		Files.write(
 			Paths.get(arguments.get("output.file")), content.getBytes());

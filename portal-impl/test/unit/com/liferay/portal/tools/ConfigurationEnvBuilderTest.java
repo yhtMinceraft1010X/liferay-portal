@@ -79,7 +79,7 @@ public class ConfigurationEnvBuilderTest {
 			});
 
 		String expectedContent =
-			ConfigurationEnvBuilder.generateConfigOverrideContent(
+			ConfigurationEnvBuilder.buildContent(
 				configFiles.toArray(new String[0]));
 
 		String actualContent = new String(
