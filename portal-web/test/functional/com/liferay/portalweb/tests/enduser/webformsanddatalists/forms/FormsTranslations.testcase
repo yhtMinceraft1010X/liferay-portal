@@ -1189,10 +1189,9 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-		category = "Content &amp; Data",
-		portlet = "Forms");
-	
-	
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form1");
@@ -1220,13 +1219,13 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
-				
+
 		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
 
 		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
 
 		Refresh();
-		
+
 		FormViewBuilder.editText(
 			fieldName = "Text",
 			fieldValue = "Man");
@@ -1240,7 +1239,6 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
-
 	}
 
 	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
