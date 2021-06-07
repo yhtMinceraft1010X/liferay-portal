@@ -83,7 +83,7 @@ public class ConfigurationEnvBuilder {
 
 		StringBundler sb = new StringBundler((map.size() * 5) + 2);
 
-		sb.append("#\n# The following environment variables can be used to " +
+		sb.append("#\n# The following environment variables can be used to ");
 		sb.append("override OSGi configurations.\n#\n\n");
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
