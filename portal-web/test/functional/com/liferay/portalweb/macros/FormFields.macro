@@ -788,6 +788,12 @@ definition {
 			changeAppLanguageTo = "${key_language}",
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
+	
+	macro viewAutoCompleteOption {
+		var key_autocompleteOption = "${autocompleteOption}";
+
+		AssertElementPresent(locator1 = "FormFields#AUTOCOMPLETE_OPTION");
+	}
 
 	macro viewCaptchaField {
 		AssertElementPresent.assertVisible(locator1 = "FormFields#CAPTCHA_FIELD");

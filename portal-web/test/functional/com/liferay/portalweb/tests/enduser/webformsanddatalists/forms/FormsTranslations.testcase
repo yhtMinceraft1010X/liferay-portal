@@ -1183,13 +1183,63 @@ definition {
 	}
 
 	@description = "Verify that a Text field's Autocomplete Options can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TextFieldAutocompleteOptionsCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133497 TextFieldAutocompleteOptionsCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+		category = "Content &amp; Data",
+		portlet = "Forms");
+	
+	
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.gotoAutocompleteTab();
+
+		FormViewBuilder.editAutoComplete(key_optionValue = "Manually");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Apple",
+			optionValue = "1");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Manzana",
+			optionValue = "1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+				
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		Refresh();
+		
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Man");
+
+		FormFields.viewAutoCompleteOption(autocompleteOption = "Manzana");
+
+		FormFields.selectAutoCompleteOption(autocompleteOption = "Manzana");
+
+		Button.click(button = "Enviar");
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 
 	}
 
