@@ -448,7 +448,7 @@ definition {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-				ProductMenu.gotoPortlet(
+		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
@@ -484,7 +484,7 @@ definition {
 		FormFields.editConfirmationFieldText(
 			fieldName = "Text",
 			fieldValue = "Test");
-		
+
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The information does not match.");
 
 		FormFields.editConfirmationFieldText(
@@ -494,8 +494,6 @@ definition {
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "The information does not match.");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-		
-
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
