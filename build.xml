@@ -594,7 +594,7 @@ message.
 		</DTDDoc>
 	</target>
 
-	<target name="generate-config-env-vars">
+	<target name="generate-config-env">
 		<pathconvert pathsep="," property="configuration.java.files">
 			<fileset
 				dir="modules"
