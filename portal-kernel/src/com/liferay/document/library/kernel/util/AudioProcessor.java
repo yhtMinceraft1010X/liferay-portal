@@ -23,9 +23,12 @@ import java.io.InputStream;
 
 import java.util.Set;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Sergio González
  */
+@ProviderType
 public interface AudioProcessor {
 
 	public static final String PREVIEW_TYPE = "mp3";
