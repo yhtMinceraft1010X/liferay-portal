@@ -209,13 +209,11 @@ definition {
 
 		FormFields.viewRepeatableSelectFromList(
 			fieldLabel = "Select from List",
-			index = "1"
-		);
-		
+			index = "1");
+
 		FormFields.viewRepeatableSelectFromList(
 			fieldLabel = "Select from List",
-			index = "2"
-		);
+			index = "2");
 
 		FormFields.selectSelectOptionRepeatable(
 			fieldLabel = "Select from List",
@@ -228,10 +226,6 @@ definition {
 			selectOption = "Option 1");
 
 		FormPortlet.submitSuccessfully();
-
-
-
-
 	}
 
 	@description = "Verify that a Form can be submitted with the Select From List Field"

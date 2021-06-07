@@ -96,9 +96,6 @@ definition {
 
 	macro duplicateSelectListField {
 		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-
-
 	}
 
 	macro editBlankMultiTextFieldWithEnterKey {
@@ -639,9 +636,6 @@ definition {
 			key_fieldLabel = "${fieldName}",
 			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST",
 			value1 = "${selectOption}");
-
-
-
 	}
 
 	macro selectSelectWithMultipleOptions {
@@ -1031,15 +1025,11 @@ definition {
 			value1 = "${fieldHelpText}");
 	}
 
-	macro viewRepeatableSelectFromList{
+	macro viewRepeatableSelectFromList {
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			key_index = "${index}",
-			locator1 = "FormFields#SELECT_SELECT_LIST_INDEX"
-		);
-
-		
-
+			locator1 = "FormFields#SELECT_SELECT_LIST_INDEX");
 	}
 
 	macro viewRepeatableSingleSelectionRow {
