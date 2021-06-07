@@ -977,16 +977,13 @@ definition {
 		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
 
 		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
-		
+
 		FormViewBuilder.viewTranslationLanguage(symbolName = "es-ES");
 
 		FormFields.viewParagraphField(
 			fieldName = "Paragraph",
 			fieldTitle = "Párrafo",
 			fieldValue = "Texto de Párrafo");
-
-
-
 	}
 
 	@description = "Verify that a Rich Text field's Label, Help Text and Predefined Value can be translated"
