@@ -47,7 +47,7 @@ public class AudioEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!XugglerUtil.isEnabled() && !AudioProcessorUtil.isEnabled()) {
+		if (!AudioProcessorUtil.isEnabled() && !XugglerUtil.isEnabled()) {
 			return;
 		}
 

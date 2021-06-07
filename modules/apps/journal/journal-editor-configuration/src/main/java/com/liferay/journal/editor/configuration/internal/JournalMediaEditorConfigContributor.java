@@ -49,7 +49,7 @@ public class JournalMediaEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!XugglerUtil.isEnabled() && !AudioProcessorUtil.isEnabled()) {
+		if (!AudioProcessorUtil.isEnabled() && !XugglerUtil.isEnabled()) {
 			return;
 		}
 

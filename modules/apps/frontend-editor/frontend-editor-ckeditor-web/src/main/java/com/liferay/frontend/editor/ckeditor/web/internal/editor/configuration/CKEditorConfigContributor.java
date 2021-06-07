@@ -215,7 +215,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Link', Unlink]"),
 			toJSONArray("['Table', 'ImageSelector', 'VideoSelector']"));
 
-		if (XugglerUtil.isEnabled() || AudioProcessorUtil.isEnabled()) {
+		if (AudioProcessorUtil.isEnabled() || XugglerUtil.isEnabled()) {
 			jsonArray.put(toJSONArray("['AudioSelector']"));
 		}
 
