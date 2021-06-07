@@ -62,7 +62,7 @@ public class ConfigurationEnvBuilderTest {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes BasicFileAttributes)
+						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
 					String pathString = path.toString();
@@ -84,8 +84,8 @@ public class ConfigurationEnvBuilderTest {
 			ConfigurationEnvBuilder.buildContent(
 				configurationJavaFileNames.toArray(new String[0])),
 			new String(
-			Files.readAllBytes(
-				modulesDirPath.resolve("configuration-env.txt"))));
+				Files.readAllBytes(
+					modulesDirPath.resolve("configuration-env.txt"))));
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

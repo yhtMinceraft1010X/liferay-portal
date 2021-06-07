@@ -41,8 +41,7 @@ import java.util.regex.Pattern;
  */
 public class ConfigurationEnvBuilder {
 
-	public static String buildContent(
-			String[] configurationJavaFileNames)
+	public static String buildContent(String[] configurationJavaFileNames)
 		throws IOException {
 
 		Map<String, String> map = new TreeMap<>();
