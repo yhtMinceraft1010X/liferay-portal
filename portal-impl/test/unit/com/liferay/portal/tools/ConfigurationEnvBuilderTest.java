@@ -49,10 +49,10 @@ public class ConfigurationEnvBuilderTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testScanConfigurationEnvFile() throws IOException {
-		Path modulesDirPath = Paths.get("modules");
+	public void testBuildContent() throws IOException {
+		List<String> configurationJavaFileNames = new ArrayList<>();
 
-		List<String> configFiles = new ArrayList<>();
+		Path modulesDirPath = Paths.get("modules");
 
 		Matcher matcher = _pattern.matcher(StringPool.BLANK);
 
@@ -62,7 +62,7 @@ public class ConfigurationEnvBuilderTest {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes attrs)
+						Path path, BasicFileAttributes BasicFileAttributes)
 					throws IOException {
 
 					String pathString = path.toString();
@@ -70,7 +70,7 @@ public class ConfigurationEnvBuilderTest {
 					matcher.reset(pathString);
 
 					if (matcher.matches()) {
-						configFiles.add(pathString);
+						configurationJavaFileNames.add(pathString);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -78,17 +78,14 @@ public class ConfigurationEnvBuilderTest {
 
 			});
 
-		String expectedContent =
-			ConfigurationEnvBuilder.buildContent(
-				configFiles.toArray(new String[0]));
-
-		String actualContent = new String(
-			Files.readAllBytes(modulesDirPath.resolve("configuration-env.txt")));
-
 		Assert.assertEquals(
-			"Please run \"ant generate-config-env-vars\" to regenerate " +
-				"configuration-env.txt file",
-			expectedContent, actualContent);
+			"Run \"ant generate-config-env-vars\" to regenerate " +
+				"modules/configuration-env.txt.",
+			ConfigurationEnvBuilder.buildContent(
+				configurationJavaFileNames.toArray(new String[0])),
+			new String(
+			Files.readAllBytes(
+				modulesDirPath.resolve("configuration-env.txt"))));
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

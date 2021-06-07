@@ -42,20 +42,20 @@ import java.util.regex.Pattern;
 public class ConfigurationEnvBuilder {
 
 	public static String buildContent(
-			String[] configurationJavaFiles)
+			String[] configurationJavaFileNames)
 		throws IOException {
 
 		Map<String, String> map = new TreeMap<>();
 
 		Matcher matcher = _pattern.matcher("");
 
-		for (String configurationJavaFile : configurationJavaFiles) {
-			Path path = Paths.get(configurationJavaFile);
+		for (String configurationJavaFileName : configurationJavaFileNames) {
+			Path path = Paths.get(configurationJavaFileName);
 
-			String fullyQualifiedName = configurationJavaFile.substring(
-				configurationJavaFile.indexOf(
+			String fullyQualifiedName = configurationJavaFileName.substring(
+				configurationJavaFileName.indexOf(
 					StringBundler.concat("com", File.separator, "liferay")),
-				configurationJavaFile.indexOf(".java"));
+				configurationJavaFileName.indexOf(".java"));
 
 			fullyQualifiedName = StringUtil.replace(
 				fullyQualifiedName, File.separator, StringPool.PERIOD);
@@ -100,10 +100,10 @@ public class ConfigurationEnvBuilder {
 	public static void main(String[] args) throws IOException {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String[] configurationJavaFiles = StringUtil.split(
+		String[] configurationJavaFileNames = StringUtil.split(
 			arguments.get("configuration.java.files"));
 
-		String content = buildContent(configurationJavaFiles);
+		String content = buildContent(configurationJavaFileNames);
 
 		Files.write(
 			Paths.get(arguments.get("output.file")), content.getBytes());
