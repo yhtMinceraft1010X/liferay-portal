@@ -68,10 +68,10 @@ public class AccountGroupRelUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(1, defaultUser.getUserId());
 			preparedStatement.setString(2, defaultUser.getFullName());
 
-			Date now = new Date(System.currentTimeMillis());
+			Date date = new Date(System.currentTimeMillis());
 
-			preparedStatement.setDate(3, now);
-			preparedStatement.setDate(4, now);
+			preparedStatement.setDate(3, date);
+			preparedStatement.setDate(4, date);
 
 			preparedStatement.setLong(5, company.getCompanyId());
 
