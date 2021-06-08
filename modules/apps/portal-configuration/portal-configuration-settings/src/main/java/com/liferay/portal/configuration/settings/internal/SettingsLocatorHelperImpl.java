@@ -416,10 +416,10 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		@Override
 		public ScopedConfigurationManagedServiceFactory addingService(
-			ServiceReference<ConfigurationBeanDeclaration> reference) {
+			ServiceReference<ConfigurationBeanDeclaration> serviceReference) {
 
 			ConfigurationBeanDeclaration configurationBeanDeclaration =
-				context.getService(reference);
+				context.getService(serviceReference);
 
 			Class<?> configurationBeanClass =
 				configurationBeanDeclaration.getConfigurationBeanClass();
@@ -447,11 +447,11 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		@Override
 		public void removedService(
-			ServiceReference<ConfigurationBeanDeclaration> reference,
+			ServiceReference<ConfigurationBeanDeclaration> serviceReference,
 			ScopedConfigurationManagedServiceFactory
 				scopedConfigurationManagedServiceFactory) {
 
-			context.ungetService(reference);
+			context.ungetService(serviceReference);
 
 			_scopedConfigurationManagedServiceFactories.remove(
 				scopedConfigurationManagedServiceFactory.getName());
