@@ -171,9 +171,7 @@ message.
 	</target>
 
 	<target name="bom-all">
-		<echo>
-Manually run "ant all" or "ant snapshot-bundle" to initialize the bundle.
-</echo>
+		<echo>Manually run "ant all" or "ant snapshot-bundle" to initialize the bundle.</echo>
 
 		<setup-sdk />
 
