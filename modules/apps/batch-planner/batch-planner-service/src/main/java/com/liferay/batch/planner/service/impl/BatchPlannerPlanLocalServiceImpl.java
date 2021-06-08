@@ -86,8 +86,10 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		batchPlannerLogPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);
+
 		batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);
+
 		batchPlannerPolicyPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);
 

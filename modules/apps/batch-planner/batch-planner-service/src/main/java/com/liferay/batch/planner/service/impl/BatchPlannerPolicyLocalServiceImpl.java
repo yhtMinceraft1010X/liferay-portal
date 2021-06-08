@@ -52,14 +52,15 @@ public class BatchPlannerPolicyLocalServiceImpl
 		BatchPlannerPlan batchPlannerPlan =
 			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 
-		User user = userLocalService.getUser(userId);
-
 		BatchPlannerPolicy batchPlannerPolicy =
 			batchPlannerPolicyPersistence.create(
 				counterLocalService.increment());
 
 		batchPlannerPolicy.setCompanyId(batchPlannerPlan.getCompanyId());
 		batchPlannerPolicy.setUserId(userId);
+
+		User user = userLocalService.getUser(userId);
+
 		batchPlannerPolicy.setUserName(user.getFullName());
 
 		batchPlannerPolicy.setBatchPlannerPlanId(
