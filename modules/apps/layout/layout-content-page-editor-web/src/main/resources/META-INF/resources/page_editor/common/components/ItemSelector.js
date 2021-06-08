@@ -137,6 +137,28 @@ export default function ItemSelector({
 		[label, onItemSelect, selectedItem]
 	);
 
+	const selectedItemTitle = useSelectorCallback(
+		(state) => {
+			if (!selectedItem) {
+				return '';
+			}
+
+			return (
+				[
+					...(quickMappedInfoItems || []),
+					...(state.mappedInfoItems || []),
+				].find(
+					(item) =>
+						item.classNameId === selectedItem.classNameId &&
+						item.classPK === selectedItem.classPK
+				)?.title ||
+				selectedItem.title ||
+				''
+			);
+		},
+		[quickMappedInfoItems, selectedItem]
+	);
+
 	const selectContentButtonIcon = selectedItem?.title ? 'change' : 'plus';
 
 	const selectContentButtonLabel = Liferay.Util.sub(
@@ -168,7 +190,7 @@ export default function ItemSelector({
 					readOnly
 					sizing="sm"
 					type="text"
-					value={selectedItem?.title || ''}
+					value={selectedItemTitle}
 				/>
 
 				{showAddButton &&
