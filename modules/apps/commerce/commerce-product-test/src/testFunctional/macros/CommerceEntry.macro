@@ -149,6 +149,7 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${symbol}");
 		}
+
 		if (isSet(formatPattern)) {
 			Type(
 				key_fieldLabel = "Format Pattern",
