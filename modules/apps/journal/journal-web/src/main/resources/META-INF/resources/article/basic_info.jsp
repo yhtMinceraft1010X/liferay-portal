@@ -60,7 +60,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 				).setMVCPath(
 					"/select_folder.jsp"
 				).setParameter(
-					"folderId", String.valueOf(journalEditArticleDisplayContext.getFolderId())
+					"folderId", journalEditArticleDisplayContext.getFolderId()
 				).buildString()
 			).build()
 		%>'

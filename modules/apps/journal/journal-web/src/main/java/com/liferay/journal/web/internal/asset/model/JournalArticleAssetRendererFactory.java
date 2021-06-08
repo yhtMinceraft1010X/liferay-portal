@@ -205,7 +205,7 @@ public class JournalArticleAssetRendererFactory
 		).setMVCPath(
 			"/edit_article.jsp"
 		).setParameter(
-			"showSelectFolder", Boolean.TRUE.toString()
+			"showSelectFolder", true
 		).build();
 
 		if (classTypeId > 0) {
