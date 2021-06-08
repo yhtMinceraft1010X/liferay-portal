@@ -116,6 +116,7 @@ const ModalContent = ({
 					name,
 					paginationMode,
 				},
+				defaultLanguageId,
 				name,
 			};
 
