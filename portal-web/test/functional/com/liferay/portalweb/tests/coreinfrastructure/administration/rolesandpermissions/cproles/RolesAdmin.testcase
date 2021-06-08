@@ -24,6 +24,7 @@ definition {
 		}
 	}
 
+	@priority = "3"
 	test CanAddRoleWithSameNameDifferentKey {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
