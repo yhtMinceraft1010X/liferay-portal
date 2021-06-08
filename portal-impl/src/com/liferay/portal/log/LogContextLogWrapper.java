@@ -114,15 +114,15 @@ public class LogContextLogWrapper extends LogWrapper {
 	}
 
 	private Object _getLogContextMessage(Object message) {
-		ServiceTrackerList<LogContext> logContexts = _logContexts;
+		ServiceTrackerList<LogContext> serviceTrackerList = _serviceTrackerList;
 
-		if (logContexts == null) {
+		if (serviceTrackerList == null) {
 			return message;
 		}
 
 		StringBundler sb = new StringBundler();
 
-		for (LogContext logContext : logContexts) {
+		for (LogContext logContext : serviceTrackerList) {
 			Map<String, String> context = logContext.getContext();
 
 			if (context.isEmpty()) {
@@ -164,7 +164,7 @@ public class LogContextLogWrapper extends LogWrapper {
 		return sb.toString();
 	}
 
-	private static volatile ServiceTrackerList<LogContext> _logContexts;
+	private static volatile ServiceTrackerList<LogContext> _serviceTrackerList;
 
 	static {
 		PortalLifecycleUtil.register(
@@ -172,18 +172,19 @@ public class LogContextLogWrapper extends LogWrapper {
 
 				@Override
 				protected void doPortalDestroy() {
-					ServiceTrackerList<LogContext> logContexts = _logContexts;
+					ServiceTrackerList<LogContext> serviceTrackerList =
+						_serviceTrackerList;
 
-					_logContexts = null;
+					_serviceTrackerList = null;
 
-					if (logContexts != null) {
-						logContexts.close();
+					if (serviceTrackerList != null) {
+						serviceTrackerList.close();
 					}
 				}
 
 				@Override
 				protected void doPortalInit() {
-					_logContexts = ServiceTrackerCollections.openList(
+					_serviceTrackerList = ServiceTrackerCollections.openList(
 						LogContext.class);
 				}
 
