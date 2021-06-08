@@ -20,7 +20,7 @@ import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
+import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class BatchPlannerPlanLocalServiceTest {
+public class BatchPlannerPlanServiceTest {
 
 	@ClassRule
 	@Rule
@@ -53,8 +53,7 @@ public class BatchPlannerPlanLocalServiceTest {
 		String name = RandomTestUtil.randomString();
 
 		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(),
+			_batchPlannerPlanService.addBatchPlannerPlan(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
 
 		Assert.assertEquals(
@@ -63,8 +62,8 @@ public class BatchPlannerPlanLocalServiceTest {
 		Assert.assertEquals(name, batchPlannerPlan.getName());
 
 		try {
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), "", RandomTestUtil.randomString());
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				"", RandomTestUtil.randomString());
 
 			Assert.fail();
 		}
@@ -81,8 +80,7 @@ public class BatchPlannerPlanLocalServiceTest {
 		}
 
 		try {
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(),
+			_batchPlannerPlanService.addBatchPlannerPlan(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, "");
 
 			Assert.fail();
@@ -97,8 +95,7 @@ public class BatchPlannerPlanLocalServiceTest {
 		int maxLength = 75;
 
 		try {
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(),
+			_batchPlannerPlanService.addBatchPlannerPlan(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
 				RandomTestUtil.randomString(maxLength + 1));
 
@@ -111,8 +108,7 @@ public class BatchPlannerPlanLocalServiceTest {
 		}
 
 		try {
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(),
+			_batchPlannerPlanService.addBatchPlannerPlan(
 				BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV, name);
 
 			Assert.fail();
@@ -128,10 +124,11 @@ public class BatchPlannerPlanLocalServiceTest {
 				duplicateBatchPlannerPlanException.getMessage());
 		}
 
-		_batchPlannerPlanLocalService.deleteBatchPlannerPlan(batchPlannerPlan);
+		_batchPlannerPlanService.deleteBatchPlannerPlan(
+			batchPlannerPlan.getBatchPlannerPlanId());
 	}
 
 	@Inject
-	private BatchPlannerPlanLocalService _batchPlannerPlanLocalService;
+	private BatchPlannerPlanService _batchPlannerPlanService;
 
 }
