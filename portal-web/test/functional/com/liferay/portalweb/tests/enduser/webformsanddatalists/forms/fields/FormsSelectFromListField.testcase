@@ -199,8 +199,6 @@ definition {
 		FormFields.viewSelectFromListOption(optionValue = "Option 2");
 
 		FormFields.viewDeletedSelectFromListOption(optionValue = "Option 1");
-
-		
 	}
 
 	@description = "Verify that a Select From List Field can be required"
