@@ -43,9 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 public class TestDataDefinitionContentType
 	implements DataDefinitionContentType {
 
-	public static final String DATA_ENGINE_TEST =
-		"com_liferay_data_engine_test_portlet_DataEngineTestPortlet";
-
 	@Override
 	public boolean allowEmptyDataDefinition() {
 		return _allowEmptyDataDefinition;
@@ -73,7 +70,7 @@ public class TestDataDefinitionContentType
 
 	@Override
 	public String getPortletResourceName() {
-		return DATA_ENGINE_TEST;
+		return _PORTLET_RESOURCE_NAME;
 	}
 
 	@Override
@@ -115,7 +112,8 @@ public class TestDataDefinitionContentType
 	@Deactivate
 	protected void deactivate() {
 		List<ResourceAction> portletResourceActions =
-			_resourceActionLocalService.getResourceActions(DATA_ENGINE_TEST);
+			_resourceActionLocalService.getResourceActions(
+				_PORTLET_RESOURCE_NAME);
 
 		for (ResourceAction portletResourceAction : portletResourceActions) {
 			_resourceActionLocalService.deleteResourceAction(
@@ -123,7 +121,7 @@ public class TestDataDefinitionContentType
 		}
 
 		List<String> modelResourceNames =
-			_resourceActions.getPortletModelResources(DATA_ENGINE_TEST);
+			_resourceActions.getPortletModelResources(_PORTLET_RESOURCE_NAME);
 
 		for (String modelResourceName : modelResourceNames) {
 			List<ResourceAction> modelResourceActions =
@@ -136,6 +134,9 @@ public class TestDataDefinitionContentType
 			}
 		}
 	}
+
+	private static final String _PORTLET_RESOURCE_NAME =
+		"com_liferay_data_engine_test_portlet_DataEngineTestPortlet";
 
 	private boolean _allowEmptyDataDefinition = true;
 
