@@ -670,7 +670,6 @@ definition {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -682,29 +681,28 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
 			fieldType = "Multiple Selection");
-		
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 1",
 			optionValue = "1");
-		
+
 		FormFields.addSingleSelectionOption(
 			optionName = "Option 2",
 			optionValue = "2");
 
 		Form.gotoAdvancedTab();
- 
+
 		FormViewBuilder.selectSelectWithMultipleOptionsPredefined(
 			fieldName = "Multiple Selection",
 			selectOptionsList = "Option 1");
 
 		Form.gotoBasicTab();
-		
+
 		FormFields.deleteSpecificOptionFromMultipleSelection(key_valueOption = "Option 1");
 
 		Form.gotoAdvancedTab();
 
 		FormFields.viewPredefinedValueDropdownContent(key_textContent = "Choose Options");
-
 	}
 
 	@description = "Verify that the Field Reference can be edited"
