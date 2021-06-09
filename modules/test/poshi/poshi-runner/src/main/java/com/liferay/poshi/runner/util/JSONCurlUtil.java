@@ -192,8 +192,8 @@ public class JSONCurlUtil {
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("The curl URL must be the first argument of the request");
-			sb.append(" string.\n'");
+			sb.append("The curl URL must be the first argument of the ");
+			sb.append("request string.\n'");
 			sb.append(token);
 			sb.append("' is an invalid URL.");
 
