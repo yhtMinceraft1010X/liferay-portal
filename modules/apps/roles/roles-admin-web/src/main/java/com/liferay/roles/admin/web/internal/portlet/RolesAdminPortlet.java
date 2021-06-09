@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -777,7 +778,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 				role, scopeGroupId, DepotEntry.class.getName(),
 				ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
 				ArrayUtil.filter(
-					groupIds, groupId -> _isDepotGroup(Long.valueOf(groupId))));
+					groupIds,
+					groupId -> _isDepotGroup(GetterUtil.getLong(groupId))));
 
 			selResource = Group.class.getName();
 			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
