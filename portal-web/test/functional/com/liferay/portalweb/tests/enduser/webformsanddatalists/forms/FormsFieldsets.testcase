@@ -741,13 +741,65 @@ definition {
 	}
 
 	@description = "Verify that a Required Field Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveTheRequiredFieldProperty {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133470 PreserveTheRequiredFieldProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Text");
+
+		FormFields.enableSwitcher(fieldName = "Required Field");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+		
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
+
 
 	}
 
