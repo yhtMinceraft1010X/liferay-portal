@@ -66,6 +66,16 @@ definition {
 		Click(locator1 = "FormFields#OPTIONS_DELETE_ROW_BUTTON");
 	}
 
+	macro deleteSpecificOptionFromMultipleSelection {
+		Click(
+			key_valueOption = "${key_valueOption}",
+			locator1 = "FormFields#DELETE_OPTION_FROM_MULTIPLE_SELECTION");
+
+		AssertElementNotPresent(
+			key_valueOption = "${key_valueOption}",
+			locator1 = "FormFields#DELETE_OPTION_FROM_MULTIPLE_SELECTION");
+	}
+
 	macro disableCheckbox {
 		if (IsChecked(locator1 = "FormFields#CHECKBOX", key_fieldName = "${fieldName}")) {
 			Click(
@@ -1053,6 +1063,12 @@ definition {
 				locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
 				value1 = "${fieldValue}");
 		}
+	}
+
+	macro viewPredefinedValueDropdownContent{
+		AssertElementPresent(
+			locator1 = "FormFields#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT",
+			key_textContent = "${key_textContent}");
 	}
 
 	macro viewRadioLabel {

@@ -665,13 +665,45 @@ definition {
 	}
 
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132278 PredefinedValueIsResetWhenSelectedOptionIsDeleted pending implementation
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+		
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+		
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		Form.gotoAdvancedTab();
+ 
+		FormViewBuilder.selectSelectWithMultipleOptionsPredefined(
+			fieldName = "Multiple Selection",
+			selectOptionsList = "Option 1");
+
+		Form.gotoBasicTab();
+		
+		FormFields.deleteSpecificOptionFromMultipleSelection(key_valueOption = "Option 1");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.viewPredefinedValueDropdownContent(key_textContent = "Choose Options");
 
 	}
 
