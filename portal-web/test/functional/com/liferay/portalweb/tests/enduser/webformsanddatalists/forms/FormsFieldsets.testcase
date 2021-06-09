@@ -783,7 +783,7 @@ definition {
 		Form.gotoAddElementSet(
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "0");
-		
+
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
@@ -799,8 +799,6 @@ definition {
 		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
 
 		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
-
-
 	}
 
 	@description = "Verify that a Show as Switcher Property persists after being added to a Form via Fieldset"
