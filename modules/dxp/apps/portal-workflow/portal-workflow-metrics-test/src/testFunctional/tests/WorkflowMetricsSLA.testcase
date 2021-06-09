@@ -1,0 +1,338 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-89082 - Verify that a blocked SLA can be fixed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test BlockedSLACanBeFixed {
+
+		// TODO LRQA-67845 BlockedSLACanBeFixed pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify the system allow users to navigate between fields and buttons by pressing tab key considering the following order: Name > Description > Start > Pause > Stop > Days > Hours > Save button > Cancel button"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanNavigateByTabKeyBetweenFields {
+
+		// TODO LRQA-67863 CanNavigateByTabKeyBetweenFields pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that creating a SLA will not be reflected in completed instances"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CreatingSLANotReflectCompletedInstances {
+
+		// TODO LRQA-67874 CreatingSLANotReflectCompletedInstancese pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that deleting a SLA will not be reflected in all completed instances"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DeletingSLANotReflectCompletedInstances {
+
+		// TODO LRQA-67861 DeletingSLANotReflectCompletedInstances pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that deleting a SLA will be reflected in all instances In Progress"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DeletingSLARefelctInProgressInstances {
+
+		// TODO LRQA-67865 DeletingSLARefelctInProgressInstances pending implementation
+
+	}
+
+	@description = "LPS-89082 - Verify that the error alert will be displayed again when user enters the metrics page again after closing it"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ErrorAlertIsDisplayedAgainWhenClosed {
+
+		// TODO LRQA-67851 ErrorAlertIsDisplayedAgainWhenClosed pending implementation
+
+	}
+
+	@description = "LPS-89082 - Verify and click (if possible) the error messages (at metrics, SLA list, and SLA defintion page) when SLA is blocked due to workflow changes"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ErrorMessagesAreDisplayedAndClickableWhenSLABlocked {
+
+		// TODO LRQA-67856 ErrorMessagesAreDisplayedAndClickableWhenSLABlocked pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that the field Name should be in focus at the SLA page when the user selects to edit or to create a new SLA"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FieldNameInFocusAtSLAPage {
+
+		// TODO LRQA-67867 FieldNameInFocusAtSLAPage pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the multi-select-fields allow to hit enter key to select an option from the dropdown list"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test MultiSelectFieldsAllowHitEnterKeyToSelectOption {
+
+		// TODO LRQA-67877 MultiSelectFieldsAllowHitEnterKeyToSelectOption pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the multi-select-fields allow to navigate from the input field to the dropdown list vertically by using up/down keys"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test MultiSelectFieldsAllowNavigationByUpDownKeys {
+
+		// TODO LRQA-67876 MultiSelectFieldsAllowNavigationByUpDownKeys pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the multi-select-fields filter the dropdown list according to search terms"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MultiSelectFieldsFilterDropdownListAccordingSearchTerms {
+
+		// TODO LRQA-67873 MultiSelectFieldsFilterDropdownListAccordingSearchTerms pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the multi-select-fields provide feedback when typing terms that doesn't exist"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test MultiSelectFieldsProvideFeedbackWhenTypingNotExistentTerms {
+
+		// TODO LRQA-67871 MultiSelectFieldsProvideFeedbackWhenTypingNotExistentTerms pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test MultiSelectFieldsProvideFocusWhenFieldActive {
+
+		// TODO LRQA-67875 MultiSelectFieldsProvideFocusWhenFieldActive pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify the option for pause field is: On task: [task-name]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PauseFieldOptions {
+
+		// TODO LRQA-67883 PauseFieldOptions pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that the popover is displayed when hovering the pointer on the add button"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PopoverIsDisplayedWhenHoveringAddButton {
+
+		// TODO LRQA-67859 PopoverIsDisplayedWhenHoveringAddButton pending implementation
+
+	}
+
+	@description = "LPS-89416 - Verity the propagating info alert when updating a SLA"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PropagatingInfoAlertDisplayedWhenUpdatingSLA {
+
+		// TODO LRQA-67868 PropagatingInfoAlertDisplayedWhenUpdatingSLA pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the same option can't be selected in Start and Stop fields simultaneously"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SameOptionCantBeSelectedInStartStopFields {
+
+		// TODO LRQA-67879 SameOptionCantBeSelectedInStartStopFields pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify that the same task can't be selected in Start or Stop and Pause fields simultaneously"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SameTaskCantBeSelectedInStartStopPauseFields {
+
+		// TODO LRQA-67881 SameTaskCantBeSelectedInStartStopPauseFields pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that the SLA infos are correctly displayed on the table view"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SLAInfosAreCorrectlyDisplayed {
+
+		// TODO LRQA-67860 SLAInfosAreCorrectlyDisplayed pending implementation
+
+	}
+
+	@description = "LPS-89082 - Verify that the SLA list should group SLAs into Blocked and Running sections when there is at least 1 blocked SLA"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SLAListIsGroupedWhenSLABlocked {
+
+		// TODO LRQA-67849 SLAListIsGroupedWhenSLABlocked pending implementation
+
+	}
+
+	@description = "LPS-94760 - Verify that date format abbreviates the month and doesn't show year. (Example: Apr 25)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SLAProcessingDateAbbreviatesMonth {
+
+		// TODO LRQA-67848 SLAProcessingDateAbbreviatesMonth pending implementation
+
+	}
+
+	@description = "LPS-94760 - Verify that when there is an alert message on the page, the update date should be displayed bellow it"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SLAProcessingDateIsDisplayedUnderAlertMessage {
+
+		// TODO LRQA-67842 SLAProcessingDateIsDisplayedUnderAlertMessage pending implementation
+
+	}
+
+	@description = "LPS-94760 - Verify that when there is no SLA defined to the process, the message is not displayed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SLAProcessingDateIsNotDisplayedWhenNoSLA {
+
+		// TODO LRQA-67839 SLAProcessingDateIsNotDisplayedWhenNoSLA pending implementation
+
+	}
+
+	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
+
+		// TODO LRQA-67844 SLAProcessingTimeFormatIsFollowingSystemLanguage pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that the table view of SLAs are ordered by last modified (Desc)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SLAsAreOrderedByLasModifiedDesc {
+
+		// TODO LRQA-67864 SLAsAreOrderedByLasModifiedDesc pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify that the SLA settings is available when accessing the metrics page of a process"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SLASettingsAvailableOnMetricsPage {
+
+		// TODO LRQA-67847 SLASettingsAvailableOnMetricsPage pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify the options for start field are: Process begins, Enters task: [task-name], and Leaves task: [task-name]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StartFieldOptions {
+
+		// TODO LRQA-67882 StartFieldOptions pending implementation
+
+	}
+
+	@description = "LPS-89015 - Verify the options for stop field are: Process ends: [task-name], Enters task: [task-name], and Leaves task: [task-name]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StopFieldOptions {
+
+		// TODO LRQA-67884 StopFieldOptions pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify the successful message when creating a SLA"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test SuccessfulMessageDisplayedWhenCreatingSLA {
+
+		// TODO LRQA-67855 SuccessfulMessageDisplayedWhenCreatingSLA pending implementation
+
+	}
+
+	@description = "LPS-89014 - Verify the successful message when deleting a SLA"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test SuccessfulMessageDisplayedWhenDeletingSLA {
+
+		// TODO LRQA-67866 SuccessfulMessageDisplayedWhenDeletingSLA pending implementation
+
+	}
+
+	@description = "LPS-89416 - Verify that updating a SLA will not be reflected in completed instances"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UpdatingSLANotReflectCompletedInstances {
+
+		// TODO LRQA-67870 UpdatingSLANotReflectCompletedInstances pending implementation
+
+	}
+
+	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UpdatingSLARecalculateTimeInProgressInstances {
+
+		// TODO LRQA-67872 UpdatingSLARecalculateTimeInProgressInstances pending implementation
+
+	}
+
+	@description = "LPS-89016 - Verify that the warning alert will be displayed again when user enters the metrics page again after closing it"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test WarningAlertIsDisplayedAgainWhenClosed {
+
+		// TODO LRQA-67853 SWarningAlertIsDisplayedAgainWhenClosed pending implementation
+
+	}
+
+	@description = "LPS-89016 - Verify and click on the warning alert when there is no SLA"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test WarningAlertIsDisplayedAndClickableWhenNoSLA {
+
+		// TODO LRQA-67850 WarningAlertIsDisplayedAndClickableWhenNoSLA pending implementation
+
+	}
+
+}
