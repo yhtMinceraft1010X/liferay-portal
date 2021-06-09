@@ -4,6 +4,22 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#PAGINATION_BAR");
 	}
 
+	macro assertPaginationComponentPresent {
+		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_PREVIOUS_BUTTON");
+
+		for (var pageNumber : list "${pageNumberList}") {
+			var key_pageNumber = "${pageNumber}";
+
+			AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NUMBER_BUTTON");
+		}
+
+		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
+
+
+
+		
+	}
+
 	macro metricsWorkflowSearch {
 		var key_workflowSearchName = "${workflowSearchName}";
 

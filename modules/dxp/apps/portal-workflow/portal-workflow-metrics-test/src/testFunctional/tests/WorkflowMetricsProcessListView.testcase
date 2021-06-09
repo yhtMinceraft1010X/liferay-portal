@@ -101,11 +101,40 @@ definition {
 	}
 
 	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PaginationButtonIndicatesSelectedPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67517 PaginationButtonIndicatesSelectedPage pending implementation
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = "1");
+
+
+
 
 	}
 
