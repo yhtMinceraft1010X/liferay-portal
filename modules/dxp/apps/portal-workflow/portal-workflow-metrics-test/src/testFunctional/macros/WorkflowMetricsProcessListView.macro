@@ -14,10 +14,6 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
-
-
-
-		
 	}
 
 	macro metricsWorkflowSearch {
