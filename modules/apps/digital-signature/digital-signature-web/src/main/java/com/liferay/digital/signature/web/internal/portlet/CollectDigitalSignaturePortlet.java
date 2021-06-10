@@ -109,7 +109,7 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 
 		return LanguageUtil.format(
 			ResourceBundleUtil.getBundle("content.Language", getClass()),
-			(fileCount == 1) ? "x-and-other-x-file" : "x-and-other-x-files",
+			(fileCount == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
 			new String[] {fileEntryTitle, String.valueOf(fileCount)}, false);
 	}
 
