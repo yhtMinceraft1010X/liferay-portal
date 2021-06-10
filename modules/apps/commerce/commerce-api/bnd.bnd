@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.commerce.api
 Bundle-Version: 25.0.0
 Export-Package:\
 	com.liferay.commerce.address,\
+	com.liferay.commerce.checkout.helper,\
 	com.liferay.commerce.configuration,\
 	com.liferay.commerce.constants,\
 	com.liferay.commerce.context,\
