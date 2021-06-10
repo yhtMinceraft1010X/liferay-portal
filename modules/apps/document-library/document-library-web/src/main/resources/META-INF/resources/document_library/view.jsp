@@ -22,10 +22,6 @@ DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.get
 DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
 
 DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisplayContext, request, renderRequest, renderResponse);
-
-String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS, StringPool.COMMA);
-
-Boolean isDigitalSignatureEnabled = dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled();
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -57,7 +53,7 @@ Boolean isDigitalSignatureEnabled = dlAdminManagementToolbarDisplayContext.isDig
 				HashMapBuilder.<String, Object>put(
 					"collectDigitalSignaturePortlet", DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE
 				).put(
-					"digitalSignatureAllowedExtensions", digitalSignatureAllowedExtensions
+					"digitalSignatureAllowedExtensions", StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS)
 				).put(
 					"downloadEntryURL", dlViewDisplayContext.getDownloadEntryURL()
 				).put(
@@ -75,7 +71,7 @@ Boolean isDigitalSignatureEnabled = dlAdminManagementToolbarDisplayContext.isDig
 						).build()
 					).build()
 				).put(
-					"isDigitalSignatureEnabled", isDigitalSignatureEnabled
+					"isDigitalSignatureEnabled", dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled()
 				).put(
 					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
 				).put(
@@ -399,13 +395,13 @@ Boolean isDigitalSignatureEnabled = dlAdminManagementToolbarDisplayContext.isDig
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= isDigitalSignatureEnabled %>">
+<c:if test="<%= dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled() %>">
 	<div>
 		<react:component
 			module="document_library/js/digital-signature/DigitalSignature"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"digitalSignatureAllowedExtensions", digitalSignatureAllowedExtensions
+					"digitalSignatureAllowedExtensions", StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS)
 				).build()
 			%>'
 		/>
