@@ -14,10 +14,6 @@
 
 package com.liferay.document.library.web.internal.display.context.logic;
 
-import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
-import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
-import com.liferay.digital.signature.constants.DigitalSignatureConstants;
-import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
@@ -260,21 +256,6 @@ public class UIItemsBuilder {
 	}
 
 	public void addCollectDigitalSignatureMenuItem(List<MenuItem> menuItems) {
-		DigitalSignatureConfiguration digitalSignatureConfiguration =
-			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
-				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
-
-		if (!digitalSignatureConfiguration.enabled()) {
-			return;
-		}
-
-		if (!ArrayUtil.contains(
-				DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS,
-				_fileEntry.getExtension())) {
-
-			return;
-		}
-
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
@@ -284,23 +265,13 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
-					DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
+					"com_liferay_digital_signature_web_internal_portlet_" +
+						"CollectDigitalSignaturePortlet")
 			).setBackURL(
 				_getCurrentURL()
 			).setParameter(
 				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
 			).buildString());
-	}
-
-	public void addCollectDigitalSignatureToolbarItem(
-			List<ToolbarItem> toolbarItems)
-		throws PortalException {
-
-		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
-			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
-			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
-			null);
 	}
 
 	public void addCompareToMenuItem(List<MenuItem> menuItems)

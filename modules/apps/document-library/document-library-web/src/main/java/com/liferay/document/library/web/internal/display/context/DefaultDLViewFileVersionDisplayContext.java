@@ -201,8 +201,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	public List<ToolbarItem> getToolbarItems() throws PortalException {
 		List<ToolbarItem> toolbarItems = new ArrayList<>();
 
-		_uiItemsBuilder.addCollectDigitalSignatureToolbarItem(toolbarItems);
-
 		_uiItemsBuilder.addDownloadToolbarItem(toolbarItems);
 
 		_uiItemsBuilder.addEditToolbarItem(toolbarItems);
@@ -397,7 +395,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-			_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
+			if (false) {
+				_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
+			}
 
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
