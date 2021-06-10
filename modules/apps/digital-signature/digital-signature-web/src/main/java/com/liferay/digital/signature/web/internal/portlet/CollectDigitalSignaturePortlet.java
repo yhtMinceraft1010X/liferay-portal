@@ -70,19 +70,19 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(
-			ParamUtil.getString(renderRequest, "backURL"));
-
-		long[] fileEntryIds = ParamUtil.getLongValues(
-			renderRequest, "fileEntryId");
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(
+				ParamUtil.getString(renderRequest, "backURL"));
+
+			long[] fileEntryIds = ParamUtil.getLongValues(
+				renderRequest, "fileEntryId");
+
 			long fileEntryId = fileEntryIds[0];
 
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -94,23 +94,21 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			}
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
+			_log.error(portalException, portalException);
 		}
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	private String _getTitle(String fileEntryTitle, int fileCount) {
-		if (fileCount == 0) {
+	private String _getTitle(String fileEntryTitle, int count) {
+		if (count == 0) {
 			return fileEntryTitle;
 		}
 
 		return LanguageUtil.format(
 			ResourceBundleUtil.getBundle("content.Language", getClass()),
-			(fileCount == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
-			new String[] {fileEntryTitle, String.valueOf(fileCount)}, false);
+			(count == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
+			new String[] {fileEntryTitle, String.valueOf(count)}, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
