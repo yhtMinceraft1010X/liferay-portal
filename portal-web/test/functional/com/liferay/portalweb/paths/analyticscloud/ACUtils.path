@@ -17,7 +17,7 @@
 <!-- SEARCH_BAR -->
 <tr>
     <td>CLEAR_SEARCH_BAR_BUTTON</td>
-    <td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root btn btn-unstyled')]</td>
+    <td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
     <td></td>
 </tr>
 </tbody>
