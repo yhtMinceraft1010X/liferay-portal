@@ -91,7 +91,6 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 			).put(
 				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
 			).build());
-
 		searchContext.setCompanyId(_portal.getCompanyId(httpServletRequest));
 
 		return _cpDefinitionHelper.search(

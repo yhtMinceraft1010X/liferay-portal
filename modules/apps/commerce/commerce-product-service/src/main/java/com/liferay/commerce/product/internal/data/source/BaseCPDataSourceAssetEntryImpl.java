@@ -62,7 +62,6 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 			).put(
 				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
 			).build());
-
 		searchContext.setCompanyId(portal.getCompanyId(httpServletRequest));
 
 		return cpDefinitionHelper.search(
