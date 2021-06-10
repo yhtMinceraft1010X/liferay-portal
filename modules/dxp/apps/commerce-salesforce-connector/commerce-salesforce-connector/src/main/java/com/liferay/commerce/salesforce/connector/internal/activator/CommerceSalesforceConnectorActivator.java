@@ -17,7 +17,6 @@ package com.liferay.commerce.salesforce.connector.internal.activator;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -36,19 +35,16 @@ public class CommerceSalesforceConnectorActivator {
 
 	@Activate
 	protected void activate() throws Exception {
-		for (String connectorArchive : _ETL_SALESFORCE_CONNECTOR_ZIPS) {
-			_companyLocalService.forEachCompanyId(
-				companyId -> _createDispatchTrigger(
-					companyId, connectorArchive,
-					_getInputStream(connectorArchive)));
-		}
+		_createDispatchTriggers(
+			"etl-salesforce-account-connector-0.3.zip",
+			"etl-salesforce-order-connector-0.6.zip",
+			"etl-salesforce-price-list-connector-0.6.zip",
+			"etl-salesforce-product-connector-0.3.zip");
 	}
 
 	private void _createDispatchTrigger(
 			long companyId, String name, InputStream inputStream)
-		throws PortalException {
-
-		long userId = _userLocalService.getDefaultUserId(companyId);
+		throws Exception {
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.fetchDispatchTrigger(companyId, name);
@@ -56,6 +52,8 @@ public class CommerceSalesforceConnectorActivator {
 		if (dispatchTrigger != null) {
 			return;
 		}
+
+		long userId = _userLocalService.getDefaultUserId(companyId);
 
 		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 			userId, "talend", new UnicodeProperties(), name, true);
@@ -65,18 +63,15 @@ public class CommerceSalesforceConnectorActivator {
 			"application/zip", inputStream);
 	}
 
-	private InputStream _getInputStream(String name) {
-		Class<?> clazz = getClass();
+	private void _createDispatchTriggers(String... names) throws Exception {
+		for (String name : names) {
+			Class<?> clazz = getClass();
 
-		return clazz.getResourceAsStream("/" + name);
+			_companyLocalService.forEachCompanyId(
+				companyId -> _createDispatchTrigger(
+					companyId, name, clazz.getResourceAsStream("/" + name)));
+		}
 	}
-
-	private static final String[] _ETL_SALESFORCE_CONNECTOR_ZIPS = {
-		"etl-salesforce-account-connector-0.3.zip",
-		"etl-salesforce-order-connector-0.6.zip",
-		"etl-salesforce-price-list-connector-0.6.zip",
-		"etl-salesforce-product-connector-0.3.zip"
-	};
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
