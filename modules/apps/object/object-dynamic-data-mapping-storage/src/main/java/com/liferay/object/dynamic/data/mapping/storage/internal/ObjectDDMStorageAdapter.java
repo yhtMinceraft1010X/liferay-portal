@@ -140,6 +140,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			HashMap<String, Object> objectEntryValues = new HashMap<>();
 
+			objectEntryValues.put(
+				"ddmStorageId", ddmStorageAdapterSaveResponse.getPrimaryKey());
+
 			for (DDMFormFieldValue ddmFormValue :
 					ddmFormValues.getDDMFormFieldValues()) {
 
@@ -153,9 +156,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					StringUtil.toLowerCase(ddmFormField.getName()),
 					values.get(value.getDefaultLocale()));
 			}
-
-			objectEntryValues.put(
-				"ddmStorageId", ddmStorageAdapterSaveResponse.getPrimaryKey());
 
 			User user = _userLocalService.getUser(
 				ddmStorageAdapterSaveRequest.getUserId());
