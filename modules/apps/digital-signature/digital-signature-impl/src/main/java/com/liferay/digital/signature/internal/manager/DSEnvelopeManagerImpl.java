@@ -108,35 +108,38 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	@Override
 	public Page<DSEnvelope> getDSEnvelopesPage(
 		long companyId, long groupId, String fromDateString, String keywords,
-		String order, String status, Pagination pagination) {
+		String order, Pagination pagination, String status) {
 
 		if (Pattern.matches(
 				"[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}" +
 					"\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}",
 				keywords)) {
 
+			DSEnvelope dsEnvelope = getDSEnvelope(companyId, groupId, keywords);
+
+			if (Validator.isNull(dsEnvelope.getDSEnvelopeId())) {
+				return Page.of(Collections.emptyList(), pagination, 0);
+			}
+
 			return Page.of(
-				Collections.singletonList(
-					getDSEnvelope(companyId, groupId, keywords)),
-				pagination, 1);
+				Collections.singletonList(dsEnvelope), pagination, 1);
 		}
 
-		String query = StringBundler.concat(
-			"envelopes?from_date=", fromDateString, "&count=",
-			pagination.getPageSize(), "&start_position=",
+		String location = StringBundler.concat(
+			"envelopes?count=", pagination.getPageSize(), "&from_date=",
+			fromDateString, "&folder_types=sentitems&start_position=",
 			pagination.getStartPosition(),
-			"&include=custom_fields,documents,recipients",
-			"&folder_types=sentitems&order=", order);
-
-		if (!Validator.isBlank(status)) {
-			query = StringBundler.concat(query, "&status=", status);
-		}
+			"&include=custom_fields,documents,recipients&order=", order);
 
 		if (!Validator.isBlank(keywords)) {
-			query = StringBundler.concat(query, "&search_text=", keywords);
+			location = "&search_text=" + keywords;
 		}
 
-		JSONObject jsonObject = _dsHttp.get(companyId, groupId, query);
+		if (!Validator.isBlank(status)) {
+			location += "&status=" + status;
+		}
+
+		JSONObject jsonObject = _dsHttp.get(companyId, groupId, location);
 
 		return Page.of(
 			JSONUtil.toList(

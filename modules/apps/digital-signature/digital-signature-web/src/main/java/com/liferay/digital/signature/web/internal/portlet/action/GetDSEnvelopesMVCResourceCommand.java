@@ -65,10 +65,10 @@ public class GetDSEnvelopesMVCResourceCommand extends BaseMVCResourceCommand {
 			StringUtil.removeSubstring(
 				ParamUtil.getString(resourceRequest, "sort", "desc"),
 				"createdLocalDateTime:"),
-			ParamUtil.getString(resourceRequest, "status"),
 			Pagination.of(
 				ParamUtil.getInteger(resourceRequest, "page"),
-				ParamUtil.getInteger(resourceRequest, "pageSize")));
+				ParamUtil.getInteger(resourceRequest, "pageSize")),
+			ParamUtil.getString(resourceRequest, "status"));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, page.toString());
