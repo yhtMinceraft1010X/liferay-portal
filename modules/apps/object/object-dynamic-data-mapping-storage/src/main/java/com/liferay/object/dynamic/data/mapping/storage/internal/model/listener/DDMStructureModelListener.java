@@ -42,27 +42,15 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 	public void onAfterCreate(DDMStructure ddmStructure)
 		throws ModelListenerException {
 
-		if (!StringUtil.equals(ddmStructure.getStorageType(), "object")) {
-			return;
-		}
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-		List<ObjectField> objectFields = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			objectFields.add(
-				_createObjectField(
-					StringUtil.toLowerCase(ddmFormField.getName()),
-					StringUtil.upperCaseFirstLetter(
-						ddmFormField.getDataType())));
-		}
-
-		objectFields.add(_createObjectField("ddmStorageId", "Long"));
-
 		try {
+			if (!StringUtil.equals(ddmStructure.getStorageType(), "object")) {
+				return;
+			}
+
 			_objectDefinitionLocalService.addObjectDefinition(
 				ddmStructure.getUserId(),
-				"Structure" + ddmStructure.getStructureId(), objectFields);
+				"Structure" + ddmStructure.getStructureId(),
+				_createObjectFields(ddmStructure));
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -78,6 +66,24 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		objectField.setType(type);
 
 		return objectField;
+	}
+
+	private List<ObjectField> _createObjectFields(DDMStructure ddmStructure) {
+		List<ObjectField> objectFields = new ArrayList<>();
+
+		objectFields.add(_createObjectField("ddmStorageId", "Long"));
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			objectFields.add(
+				_createObjectField(
+					StringUtil.toLowerCase(ddmFormField.getName()),
+					StringUtil.upperCaseFirstLetter(
+						ddmFormField.getDataType())));
+		}
+
+		return objectFields;
 	}
 
 	@Reference
