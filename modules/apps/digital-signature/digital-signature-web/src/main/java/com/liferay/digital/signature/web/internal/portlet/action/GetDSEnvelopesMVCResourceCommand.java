@@ -56,12 +56,12 @@ public class GetDSEnvelopesMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(resourceRequest, "keywords");
-
 		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 			ParamUtil.getString(resourceRequest, "from_date", "2000-01-01"),
-			StringUtil.replace(keywords, CharPool.SPACE, CharPool.PLUS),
+			StringUtil.replace(
+				ParamUtil.getString(resourceRequest, "keywords"),
+				CharPool.SPACE, CharPool.PLUS),
 			StringUtil.removeSubstring(
 				ParamUtil.getString(resourceRequest, "sort", "desc"),
 				"createdLocalDateTime:"),
