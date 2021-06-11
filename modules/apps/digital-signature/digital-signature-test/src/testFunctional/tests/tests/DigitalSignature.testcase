@@ -1,0 +1,80 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Digital Signature";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginUI();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "category.digital-signature",
+			configurationName = "Digital Signature Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@priority = "5"
+	test DigitalSignatureCanBeEnabled {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+        var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+        var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+        var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+        var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+        var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.pivate.key");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
+			value1 = "${digitalSignatureApiUsername}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
+			value1 = "${digitalSignatureApiAccountId}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
+			value1 = "${digitalSignatureAccountBaseUri}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
+			value1 = "${digitalSignatureIntegrationKey}");
+
+		Type(
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
+			value1 = "${digitalSignatureRsaPrivateKey}");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+        AssertElementPresent(locator1 = "//span[contains(@class,'label-item')]");
+		
+	}
+}
