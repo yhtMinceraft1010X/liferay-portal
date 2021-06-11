@@ -3,7 +3,7 @@ definition {
 	@summary = "Navigates to a definition in the Definitions screen. \
 	@param definitionType the name of the definition that will be navigated to."
 	macro assertIndividualAttributesSource {
-		var key_DataSourceName = "${dataSourceName}";
+		var key_dataSourceName = "${dataSourceName}";
 
 		for (var attributeName : list "${attributeList}") {
 			Type(
@@ -22,12 +22,12 @@ definition {
 	}
 
 	macro goToDefinitionType {
-		var key_DefinitionType = "${definitionType}";
+		var key_definitionType = "${definitionType}";
 		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
 
 	macro openIndividualAttributeDetails {
-		var key_AttributeName = "${attributeName}";
+		var key_attributeName = "${attributeName}";
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
 	}
 
