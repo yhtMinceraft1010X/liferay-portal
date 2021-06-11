@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
-import com.liferay.questions.web.internal.seo.canonical.url.QuestionsLayoutSEOLinkManagerImpl;
+import com.liferay.questions.web.internal.layout.seo.QuestionsLayoutSEOLinkManagerImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

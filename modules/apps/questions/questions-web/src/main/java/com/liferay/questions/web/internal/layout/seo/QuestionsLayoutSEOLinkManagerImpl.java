@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.questions.web.internal.seo.canonical.url;
+package com.liferay.questions.web.internal.layout.seo;
 
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
