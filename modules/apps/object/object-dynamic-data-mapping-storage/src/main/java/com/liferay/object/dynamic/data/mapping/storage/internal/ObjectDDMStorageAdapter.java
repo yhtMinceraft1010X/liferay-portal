@@ -132,16 +132,16 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
+			HashMap<String, Object> objectEntryValues = new HashMap<>();
+
 			DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 				_ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 
-			DDMFormValues ddmFormValues =
-				ddmStorageAdapterSaveRequest.getDDMFormValues();
-
-			HashMap<String, Object> objectEntryValues = new HashMap<>();
-
 			objectEntryValues.put(
 				"ddmStorageId", ddmStorageAdapterSaveResponse.getPrimaryKey());
+
+			DDMFormValues ddmFormValues =
+				ddmStorageAdapterSaveRequest.getDDMFormValues();
 
 			for (DDMFormFieldValue ddmFormValue :
 					ddmFormValues.getDDMFormFieldValues()) {
@@ -159,7 +159,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			User user = _userLocalService.getUser(
 				ddmStorageAdapterSaveRequest.getUserId());
-
 			DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 			DefaultDTOConverterContext defaultDTOConverterContext =
