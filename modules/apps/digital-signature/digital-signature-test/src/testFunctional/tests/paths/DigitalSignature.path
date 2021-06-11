@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>DigitalSignature</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DigitalSignature</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DIGITAL_SIGNATURE_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${dsStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_RECIPIENTS_BADGE</td>
+	<td>//span[contains(@class, 'badge-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_NAVIGATE_NEXT</td>
+	<td>//button[contains(@aria-label, 'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_ENVELOPE_ID</td>
+	<td>//div[contains(@class, 'envelope-view__details') and contains(., 'Envelope ID')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_ENVELOPE_NAME</td>
+	<td>//a[contains(., '${envelopeName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -36,37 +36,7 @@ definition {
 
 	@priority = "5"
 	test DigitalSignatureCanBeEnabled {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-        var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-        var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-        var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-        var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-        var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.pivate.key");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
-			value1 = "${digitalSignatureApiUsername}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID",
-			value1 = "${digitalSignatureApiAccountId}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI",
-			value1 = "${digitalSignatureAccountBaseUri}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY",
-			value1 = "${digitalSignatureIntegrationKey}");
-
-		Type(
-			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY",
-			value1 = "${digitalSignatureRsaPrivateKey}");
-
-		SystemSettings.saveConfiguration();
+		DigitalSignature.enableDigitalSignature();
 
 		Navigator.openURL();
 
@@ -74,7 +44,58 @@ definition {
 			category = "Content & Data",
 			portlet = "Digital Signature");
 
-        AssertElementPresent(locator1 = "//span[contains(@class,'label-item')]");
+		var dsStatus = "Sent";
+
+        AssertElementPresent(
+			locator1 = "DigitalSignature#DIGITAL_SIGNATURE_STATUS",
+			dsStatus = "${dsStatus}");
 		
 	}
+
+	@priority = "3"
+	test HaveMoreRecipientsThanOne {
+		DigitalSignature.enableDigitalSignature();
+
+		Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
+
+	}
+
+	@priority = "3"
+	test CanNavigateBetweenPages {
+		DigitalSignature.enableDigitalSignature();
+
+		Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
+	}
+
+	@priority = "4"
+	test CanViewEnvelopeDetails {
+		DigitalSignature.enableDigitalSignature();
+
+		Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		var envelopeName = "Test";
+
+		Click(
+			envelopeName = "${envelopeName}",
+			locator1 = "DigitalSignature#DIGITAL_SIGNATURE_ENVELOPE_NAME");
+
+		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_ENVELOPE_ID");
+	}
+
 }
