@@ -57,17 +57,17 @@ public class CommerceSalesforceConnectorActivator {
 			return;
 		}
 
-		long userId = _userLocalService.getDefaultUserId(companyId);
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
 		File connectorArchiveFile = FileUtil.createTempFile(inputStream);
 
 		try (FileInputStream fileInputStream = new FileInputStream(
 				connectorArchiveFile)) {
 
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
 			TalendArchiveParserUtil.updateUnicodeProperties(
 				fileInputStream, unicodeProperties);
+
+			long userId = _userLocalService.getDefaultUserId(companyId);
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
 				userId, "talend", unicodeProperties, name, true);
