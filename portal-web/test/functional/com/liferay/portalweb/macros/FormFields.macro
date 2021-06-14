@@ -703,6 +703,21 @@ definition {
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
+	macro selectImageFromSite {
+		if (isSet(rowNumber)) {
+			Click(
+				key_rowNumber = "${rowNumber}",
+				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
+		}
+		else {
+			Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+		}
+
+		ItemSelector.selectSiteImage(
+			imageFileName = "${imageFileName}",
+			siteName = "${siteName}");
+	}
+
 	macro selectImageUpload {
 		WaitForElementPresent(locator1 = "FormFields#UPLOAD_ON_WIDGET");
 
@@ -720,21 +735,6 @@ definition {
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",
 			uploadFileName = "${fileName}");
-	}
-	
-	macro selectImageFromSite{
-		if(isSet(rowNumber)){
-			Click(
-				key_rowNumber = "${rowNumber}",
-				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
-		}
-		else {
-			Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
-		}
-
-		ItemSelector.selectSiteImage(
-			imageFileName = "${imageFileName}",
-			siteName = "${siteName}");
 	}
 
 	macro selectRadioOption {
