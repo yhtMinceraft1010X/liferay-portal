@@ -512,6 +512,22 @@ definition {
 		}
 	}
 
+	macro selectSiteImage {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		Click(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
+
+		Click(
+			key_siteName = "${siteName}",
+			locator1 = "ItemSelector#SITE_SELECTOR");
+
+		Click(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+	}
+
 	macro uploadFile {
 		var key_navTab = "${navTab}";
 		var key_uploadFileName = "${uploadFileName}";
