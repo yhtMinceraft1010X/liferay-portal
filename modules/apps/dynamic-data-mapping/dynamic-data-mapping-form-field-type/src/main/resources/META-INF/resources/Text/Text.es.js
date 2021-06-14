@@ -206,9 +206,6 @@ const Autocomplete = ({
 			) {
 				setVisible(false);
 			}
-			else {
-				setVisible(!!value);
-			}
 		}
 	}, [filteredItems, value, selectedItem]);
 
@@ -240,6 +237,9 @@ const Autocomplete = ({
 			event.stopPropagation();
 			inputRef.current.focus();
 		}
+		else {
+			setVisible(!!value);
+		}
 	};
 
 	return (
@@ -253,11 +253,23 @@ const Autocomplete = ({
 				name={name}
 				onBlur={onBlur}
 				onChange={(event) => {
+					setVisible(!!event.target.value);
 					setValue(event.target.value);
 					setSelectedItem(false);
 					onChange(event);
 				}}
-				onFocus={onFocus}
+				onFocus={(event) => {
+					if (
+						!(
+							selectedItem ||
+							(filteredItems.length === 1 &&
+								filteredItems.includes(value))
+						)
+					) {
+						setVisible(!!event.target.value);
+					}
+					onFocus(event);
+				}}
 				onKeyDown={(event) => {
 					if (
 						(event.key === 'Tab' || event.key === 'ArrowDown') &&
