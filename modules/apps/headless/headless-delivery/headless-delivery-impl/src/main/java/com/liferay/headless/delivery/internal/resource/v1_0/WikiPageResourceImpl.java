@@ -232,7 +232,7 @@ public class WikiPageResourceImpl
 			_wikiPageService.addPage(
 				wikiNodeId, wikiPage.getHeadline(), wikiPage.getContent(),
 				wikiPage.getHeadline(), true,
-				_mapEncodingFormat(wikiPage.getEncodingFormat()), null, null,
+				_toFormat(wikiPage.getEncodingFormat()), null, null,
 				serviceContext));
 	}
 
@@ -262,7 +262,7 @@ public class WikiPageResourceImpl
 				contextUser.getUserId(), parentWikiPage.getNodeId(),
 				wikiPage.getHeadline(), WikiPageConstants.VERSION_DEFAULT,
 				wikiPage.getContent(), wikiPage.getHeadline(), false,
-				_mapEncodingFormat(wikiPage.getEncodingFormat()), false,
+				_toFormat(wikiPage.getEncodingFormat()), false,
 				parentWikiPage.getTitle(), null, serviceContext));
 	}
 
@@ -288,7 +288,7 @@ public class WikiPageResourceImpl
 				externalReferenceCode, wikiPage.getWikiNodeId(),
 				wikiPage.getHeadline(), wikiPage.getContent(),
 				wikiPage.getDescription(), false,
-				_mapEncodingFormat(wikiPage.getEncodingFormat()), null, null,
+				_toFormat(wikiPage.getEncodingFormat()), null, null,
 				ServiceContextRequestUtil.createServiceContext(
 					wikiPage.getTaxonomyCategoryIds(), wikiPage.getKeywords(),
 					_getExpandoBridgeAttributes(wikiPage),
@@ -363,7 +363,7 @@ public class WikiPageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private String _mapEncodingFormat(String encodingFormat) {
+	private String _toFormat(String encodingFormat) {
 		if (encodingFormat.equals("text/x-wiki")) {
 			return "creole";
 		}
@@ -444,7 +444,7 @@ public class WikiPageResourceImpl
 				serviceBuilderWikiPage.getNodeId(), wikiPage.getHeadline(),
 				serviceBuilderWikiPage.getVersion(), wikiPage.getContent(),
 				wikiPage.getDescription(), true,
-				_mapEncodingFormat(wikiPage.getEncodingFormat()),
+				_toFormat(wikiPage.getEncodingFormat()),
 				serviceBuilderWikiPage.getParentTitle(),
 				serviceBuilderWikiPage.getRedirectTitle(), serviceContext));
 	}
