@@ -39,7 +39,7 @@ definition {
 	test DigitalSignatureDataPersistsInSiteSettings {
 		DigitalSignature.enableDigitalSignature();
 
-        Navigator.openURL();
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -49,36 +49,36 @@ definition {
 			key_itemName = "Digital Signature",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
-        var siteSettingsStrategy = "Always Inherit";
-        var digitalSignatureApiUsername = "${digitalSignatureApiUsername}";
-        var digitalSignatureApiAccountId = "${digitalSignatureApiAccountId}";
-        var digitalSignatureAccountBaseUri = "${digitalSignatureAccountBaseUri}";
-        var digitalSignatureIntegrationKey = "${digitalSignatureIntegrationKey}";
-        var digitalSignatureRsaPrivateKey = "${digitalSignatureRsaPrivateKey}";
+		var siteSettingsStrategy = "Always Inherit";
+		var digitalSignatureApiUsername = "${digitalSignatureApiUsername}";
+		var digitalSignatureApiAccountId = "${digitalSignatureApiAccountId}";
+		var digitalSignatureAccountBaseUri = "${digitalSignatureAccountBaseUri}";
+		var digitalSignatureIntegrationKey = "${digitalSignatureIntegrationKey}";
+		var digitalSignatureRsaPrivateKey = "${digitalSignatureRsaPrivateKey}";
 
-        AssertElementPresent(
+		AssertElementPresent(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
 			siteSettingsStrategy = "${siteSettingsStrategy}");
 
-        AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			digitalSignatureApiUsername = "${digitalSignatureApiUsername}",
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			digitalSignatureApiAccountId = "${digitalSignatureApiAccountId}",
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			digitalSignatureAccountBaseUri = "${digitalSignatureAccountBaseUri}",
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			digitalSignatureIntegrationKey = "${digitalSignatureIntegrationKey}",
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			digitalSignatureRsaPrivateKey = "${digitalSignatureRsaPrivateKey}",
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY");
 	}

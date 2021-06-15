@@ -1,15 +1,15 @@
-definition { 
+definition {
 
-    macro enableDigitalSignature {
-        Select(
+	macro enableDigitalSignature {
+		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
 
-        var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
-        var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
-        var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
-        var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
-        var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.pivate.key");
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.pivate.key");
 
 		Type(
 			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID",
@@ -32,6 +32,6 @@ definition {
 			value1 = "${digitalSignatureRsaPrivateKey}");
 
 		SystemSettings.saveConfiguration();
-    }
+	}
 
 }

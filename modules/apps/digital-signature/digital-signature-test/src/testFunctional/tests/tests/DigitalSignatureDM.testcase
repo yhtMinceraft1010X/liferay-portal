@@ -30,42 +30,17 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-            RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
-		    RecycleBin.emptyCP();
+			RecycleBin.emptyCP();
 
 			User.logoutPG();
 		}
 	}
 
-	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature via vertical ellipsis"
+	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature By button"
 	@priority = "5"
-	test CanCollectDigitalSignatureViaVerticalEllipsis {
-		DigitalSignature.enableDigitalSignature();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF");
-
-		var dmDocumentTitle = "DM Document PDF";
-
-		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${dmDocumentTitle}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-
-		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");		
-	}
-
-	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature via button"
-	@priority = "5"
-	test CanCollectDigitalSignatureViaButton {
+	test CanCollectDigitalSignatureByButton {
 		DigitalSignature.enableDigitalSignature();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -82,6 +57,31 @@ definition {
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
 
 		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
+	}
+
+	@description = "This is a test for LPS-131712. Verify if its possible collect Digital Signature By vertical ellipsis"
+	@priority = "5"
+	test CanCollectDigitalSignatureByVerticalEllipsis {
+		DigitalSignature.enableDigitalSignature();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF");
+
+		var dmDocumentTitle = "DM Document PDF";
+
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${dmDocumentTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
