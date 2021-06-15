@@ -16,7 +16,7 @@ definition {
 			portlet = "Instance Settings");
 
 		SystemSettings.gotoConfiguration(
-			configurationCategory = "category.digital-signature",
+			configurationCategory = "Digital Signature",
 			configurationName = "Digital Signature Configuration",
 			configurationScope = "Virtual Instance Scope");
 
@@ -34,6 +34,7 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-131712. Verify if Digital Signature can be enabled"
 	@priority = "5"
 	test DigitalSignatureCanBeEnabled {
 		DigitalSignature.enableDigitalSignature();
@@ -47,11 +48,12 @@ definition {
 		var dsStatus = "Sent";
 
         AssertElementPresent(
-			locator1 = "DigitalSignature#DIGITAL_SIGNATURE_STATUS",
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS",
 			dsStatus = "${dsStatus}");
 		
 	}
 
+	@description = "This is a test for LPS-131712. Verify if have more recipients than one"
 	@priority = "3"
 	test HaveMoreRecipientsThanOne {
 		DigitalSignature.enableDigitalSignature();
@@ -62,10 +64,11 @@ definition {
 			category = "Content & Data",
 			portlet = "Digital Signature");
 
-		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 
 	}
 
+	@description = "This is a test for LPS-131712. Verify if is possible navigate between pages"
 	@priority = "3"
 	test CanNavigateBetweenPages {
 		DigitalSignature.enableDigitalSignature();
@@ -76,9 +79,10 @@ definition {
 			category = "Content & Data",
 			portlet = "Digital Signature");
 
-		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_NAVIGATE_NEXT");
 	}
 
+	@description = "This is a test for LPS-131712. Verify if its possible view envelope details"
 	@priority = "4"
 	test CanViewEnvelopeDetails {
 		DigitalSignature.enableDigitalSignature();
@@ -93,9 +97,28 @@ definition {
 
 		Click(
 			envelopeName = "${envelopeName}",
-			locator1 = "DigitalSignature#DIGITAL_SIGNATURE_ENVELOPE_NAME");
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
 
-		AssertElementPresent(locator1 = "DigitalSignature#DIGITAL_SIGNATURE_ENVELOPE_ID");
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_ID");
 	}
 
+	@description = "This is a test for LPS-131712. Verify if its possible download envelopes"
+	@priority = "3"
+	test CanDownloadEnvelope {
+		DigitalSignature.enableDigitalSignature();
+
+		Navigator.openURL();
+
+        ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		var envelopeName = "Test";
+
+		Click(
+			envelopeName = "${envelopeName}",
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_ENVELOPE_NAME");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_DOWNLOAD_BUTTON");
+	}
 }
