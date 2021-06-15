@@ -81,6 +81,8 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 		}
 
 		if (!_startedBundleSymbolicNames.add(bundle.getSymbolicName())) {
+			_startedBundleSymbolicNames.remove(bundle.getSymbolicName());
+
 			return;
 		}
 
