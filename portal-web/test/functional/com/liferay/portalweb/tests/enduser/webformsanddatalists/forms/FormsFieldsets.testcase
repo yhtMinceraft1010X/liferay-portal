@@ -1645,7 +1645,6 @@ definition {
 		FormFields.viewSwitcherOption(
 			fieldName = "MultipleSelection",
 			optionValue = "Option 2");
-			
 	}
 
 	@description = "Verify that leaving a Fieldset without saving will prompt a notification warning the user that any unsaved changes wil be lost"

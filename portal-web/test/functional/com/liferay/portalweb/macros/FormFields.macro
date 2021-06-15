@@ -978,7 +978,7 @@ definition {
 	macro viewField {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#FIELD");		
+			locator1 = "FormFields#FIELD");
 	}
 
 	macro viewFieldHelpText {
