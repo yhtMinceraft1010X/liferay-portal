@@ -975,6 +975,12 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewField {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#FIELD");		
+	}
+
 	macro viewFieldHelpText {
 		AssertTextEquals(
 			key_fieldName = "${fieldName}",
@@ -1433,6 +1439,13 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "FormFields#LABEL",
 			value1 = "${fieldLabel}");
+	}
+
+	macro viewSwitcherOption {
+		var key_fieldName = "${fieldName}";
+		var key_optionValue = "${optionValue}";
+
+		AssertElementPresent(locator1 = "FormFields#SWITCHER_OPTION_IN_FIELD");
 	}
 
 	macro viewTextField {

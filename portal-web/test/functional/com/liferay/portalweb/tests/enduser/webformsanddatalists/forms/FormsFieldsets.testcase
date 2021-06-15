@@ -1565,14 +1565,87 @@ definition {
 	}
 
 	@description = "Verify that a Show as Switcher Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreserveTheShowAsSwitcherProperty {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133471 PreserveTheShowAsSwitcherProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Multiple Selection");
+
+		FormFields.enableCheckbox(fieldName = "showAsSwitcher");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		Form.closeSidebar();
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 1");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 2");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		FormFields.viewField(fieldName = "Text");
+
+		FormFields.viewField(fieldName = "MultipleSelection");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 1");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 1");
+
+		FormFields.viewSwitcherOption(
+			fieldName = "MultipleSelection",
+			optionValue = "Option 2");
+			
 	}
 
 	@description = "Verify that leaving a Fieldset without saving will prompt a notification warning the user that any unsaved changes wil be lost"

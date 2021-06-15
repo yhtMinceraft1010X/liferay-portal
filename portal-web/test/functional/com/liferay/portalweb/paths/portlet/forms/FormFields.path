@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ADD</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
@@ -622,6 +627,11 @@
 <tr>
 	<td>SWITCHER_OPTION</td>
 	<td>//input[contains(@value,'${key_switcherOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SWITCHER_OPTION_IN_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//span[@class='toggle-switch-bar']//..//span[text()='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>
