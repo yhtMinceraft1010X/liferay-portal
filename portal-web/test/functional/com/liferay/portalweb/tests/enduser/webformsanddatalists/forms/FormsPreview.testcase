@@ -317,13 +317,57 @@ definition {
 	}
 
 	@description = "Verify that a rule with an (Is empty) condition can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test IsEmptyRuleCanBePreviewed {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133805 IsEmptyRuleCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionRowNumber = "1",
+			conditionField = "Text",
+			conditionOperator = "Is empty");
+
+		FormRules.configureActionOptions(
+			actionRowNumber = "1",
+			action = "Show",
+			actionTarget = "Numeric");
+		
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewField(fieldName = "Numeric");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+		
+		FormFields.viewFieldHidden(fieldName = "Numeric");
+
 
 	}
 
