@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_DATE_RANGE_DROPDOWN_BY_TITLE</td>
+	<td>//div//span[contains(text(),'${key_title}')]/../../../..//button[contains(@class, 'dropdown-toggle filter-dropdown-button') and contains(text(),'${key_dateRange}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle filter-dropdown-button')])[6]</td>
 	<td></td>
