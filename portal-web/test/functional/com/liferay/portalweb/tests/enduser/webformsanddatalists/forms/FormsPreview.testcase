@@ -343,15 +343,15 @@ definition {
 		FormRules.addRule();
 
 		FormRules.configureConditionOptions(
-			conditionRowNumber = "1",
 			conditionField = "Text",
-			conditionOperator = "Is empty");
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
 
 		FormRules.configureActionOptions(
-			actionRowNumber = "1",
 			action = "Show",
+			actionRowNumber = "1",
 			actionTarget = "Numeric");
-		
+
 		FormRules.save();
 
 		FormsAdminNavigator.gotoFormBuilder();
@@ -365,10 +365,8 @@ definition {
 		FormFields.editText(
 			fieldName = "Text",
 			fieldValue = "Test");
-		
+
 		FormFields.viewFieldHidden(fieldName = "Numeric");
-
-
 	}
 
 	@description = "Verify that a rule with an (Is equal to) condition can be previewed"
