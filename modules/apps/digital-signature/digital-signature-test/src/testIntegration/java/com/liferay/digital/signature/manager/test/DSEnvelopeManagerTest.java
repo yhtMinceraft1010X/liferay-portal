@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -33,6 +34,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -53,8 +55,6 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testAddDSEnvelope() throws Exception {
-		Class<?> clazz = getClass();
-
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
@@ -64,8 +64,8 @@ public class DSEnvelopeManagerTest {
 							{
 								data = Base64.encode(
 									FileUtil.getBytes(
-										clazz.getResourceAsStream(
-											"dependencies/Document.pdf")));
+										getClass(),
+										"dependencies/Document.pdf"));
 								dsDocumentId = "1";
 								name = RandomTestUtil.randomString();
 							}
@@ -156,6 +156,10 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 
+		DSEnvelope dsEnvelope1Fetched = _dsEnvelopeManager.getDSEnvelope(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope1.getDSEnvelopeId());
+
 		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
@@ -183,35 +187,75 @@ public class DSEnvelopeManagerTest {
 						});
 					emailBlurb = RandomTestUtil.randomString();
 					emailSubject = RandomTestUtil.randomString();
-					name = dsEnvelope1.getName() + RandomTestUtil.randomInt();
+					name =
+						dsEnvelope1Fetched.getName() +
+							RandomTestUtil.randomInt();
 					senderEmailAddress =
 						RandomTestUtil.randomString() + "@liferay.com";
 					status = "sent";
 				}
 			});
 
-		if (false) {
-			_assertPage(
-				dsEnvelope1.getName(), "asc", 2,
+		DSEnvelope dsEnvelope2Fetched = _dsEnvelopeManager.getDSEnvelope(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope2.getDSEnvelopeId());
+
+		IdempotentRetryAssert.retryAssert(
+			2, TimeUnit.SECONDS,
+			() -> _assertPage(
+				dsEnvelope1Fetched.getName(), "asc", 2, "",
 				dsEnvelopes -> {
-					_assertEquals(dsEnvelope2, dsEnvelopes.get(0));
-					_assertEquals(dsEnvelope1, dsEnvelopes.get(1));
-				});
-			_assertPage(
-				dsEnvelope1.getName(), "desc", 2,
-				dsEnvelopes -> {
-					_assertEquals(dsEnvelope1, dsEnvelopes.get(0));
-					_assertEquals(dsEnvelope2, dsEnvelopes.get(1));
-				});
-			_assertPage(
-				dsEnvelope2.getName(), "desc", 1,
-				dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
-		}
+					_assertEquals(dsEnvelope1Fetched, dsEnvelopes.get(0));
+					_assertEquals(dsEnvelope2Fetched, dsEnvelopes.get(1));
+				}));
+
+		_assertPage(
+			dsEnvelope1Fetched.getName(), "desc", 2, "",
+			dsEnvelopes -> {
+				_assertEquals(dsEnvelope2Fetched, dsEnvelopes.get(0));
+				_assertEquals(dsEnvelope1Fetched, dsEnvelopes.get(1));
+			});
+
+		_assertPage(
+			dsEnvelope1Fetched.getDSEnvelopeId(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+
+		List<DSRecipient> dsRecipients = dsEnvelope1Fetched.getDSRecipients();
+
+		DSRecipient dsRecipient = dsRecipients.get(0);
+
+		_assertPage(
+			dsRecipient.getEmailAddress(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+
+		_assertPage(
+			dsEnvelope2Fetched.getEmailSubject(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope2Fetched, dsEnvelopes.get(0)));
+
+		_assertPage(
+			dsEnvelope2Fetched.getName(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope2Fetched, dsEnvelopes.get(0)));
+
+		_assertPage(
+			dsEnvelope1Fetched.getSenderEmailAddress(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+
+		_assertPage(
+			dsEnvelope2Fetched.getName(), "desc", 1,
+			dsEnvelope1Fetched.getStatus(),
+			dsEnvelopes -> _assertEquals(
+				dsEnvelope2Fetched, dsEnvelopes.get(0)));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new String[] {
-				dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()
+				dsEnvelope1Fetched.getDSEnvelopeId(),
+				dsEnvelope2Fetched.getDSEnvelopeId()
 			});
 	}
 
@@ -223,22 +267,32 @@ public class DSEnvelopeManagerTest {
 			actualDSEnvelope.getDSEnvelopeId());
 		Assert.assertEquals(
 			expectedDSEnvelope.getName(), actualDSEnvelope.getName());
+		Assert.assertEquals(
+			expectedDSEnvelope.getSenderEmailAddress(),
+			actualDSEnvelope.getSenderEmailAddress());
+		Assert.assertEquals(
+			expectedDSEnvelope.getStatus(), actualDSEnvelope.getStatus());
+		Assert.assertEquals(
+			expectedDSEnvelope.getEmailSubject(),
+			actualDSEnvelope.getEmailSubject());
 	}
 
-	private void _assertPage(
-			String keywords, String order, int expectedPageSize,
+	private Void _assertPage(
+			String keywords, String order, int expectedPageSize, String status,
 			UnsafeConsumer<List<DSEnvelope>, Exception> unsafeConsumer)
 		throws Exception {
 
 		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			"2021-01-01", keywords, order, Pagination.of(1, 2), "");
+			"2021-01-01", keywords, order, Pagination.of(1, 2), status);
 
-		Assert.assertEquals(expectedPageSize, page.getPageSize());
+		Assert.assertEquals(expectedPageSize, page.getTotalCount());
 
 		List<DSEnvelope> dsEnvelopes = (List<DSEnvelope>)page.getItems();
 
 		unsafeConsumer.accept(dsEnvelopes);
+
+		return null;
 	}
 
 	@Inject
