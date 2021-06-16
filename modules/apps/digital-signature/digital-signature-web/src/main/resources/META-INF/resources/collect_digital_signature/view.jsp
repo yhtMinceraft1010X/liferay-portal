@@ -35,7 +35,7 @@ if (digitalSignatureTitle != null) {
 			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
-				"fileEntries", (JSONArray)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES)
+				"fileEntries", request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES)
 			).build()
 		%>'
 	/>

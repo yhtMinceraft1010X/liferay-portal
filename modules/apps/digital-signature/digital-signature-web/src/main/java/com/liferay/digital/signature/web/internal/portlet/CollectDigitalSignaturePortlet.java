@@ -85,7 +85,22 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			long[] fileEntryIds = ParamUtil.getLongValues(
 				renderRequest, "fileEntryId");
 
-			JSONArray jsonArray = _getJSONArray(fileEntryIds);
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				ArrayUtil.toLongArray(fileEntryIds),
+				fileEntryId -> {
+					FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+						fileEntryId);
+
+					return JSONUtil.put(
+						"extension", fileEntry.getExtension()
+					).put(
+						"fileEntryId", fileEntryId
+					).put(
+						"groupId", fileEntry.getGroupId()
+					).put(
+						"title", fileEntry.getTitle()
+					);
+				});
 
 			renderRequest.setAttribute(
 				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES,
@@ -106,25 +121,6 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	private JSONArray _getJSONArray(long[] fileEntryIds) throws Exception {
-		return JSONUtil.toJSONArray(
-			ArrayUtil.toLongArray(fileEntryIds),
-			fileEntryId -> {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					fileEntryId);
-
-				return JSONUtil.put(
-					"extension", fileEntry.getExtension()
-				).put(
-					"fileEntryId", fileEntryId
-				).put(
-					"groupId", fileEntry.getGroupId()
-				).put(
-					"title", fileEntry.getTitle()
-				);
-			});
 	}
 
 	private String _getTitle(String fileEntryTitle, int count) {
