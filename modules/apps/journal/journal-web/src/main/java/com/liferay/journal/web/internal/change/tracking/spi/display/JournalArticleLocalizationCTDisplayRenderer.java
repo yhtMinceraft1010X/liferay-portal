@@ -57,11 +57,11 @@ public class JournalArticleLocalizationCTDisplayRenderer
 		throws PortalException {
 
 		return JournalArticleCTDisplayRenderer.getJournalArticleContent(
-			liferayPortletRequest, liferayPortletResponse,
 			_journalArticleLocalService.getJournalArticle(
 				journalArticleLocalization.getArticlePK()),
-			journalArticleLocalization.getLanguageId(),
-			_journalArticleLocalService);
+			_journalArticleLocalService,
+			journalArticleLocalization.getLanguageId(), liferayPortletRequest,
+			liferayPortletResponse);
 	}
 
 	@Override

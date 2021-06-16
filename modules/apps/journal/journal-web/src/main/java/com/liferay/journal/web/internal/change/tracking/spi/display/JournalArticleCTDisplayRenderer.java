@@ -63,8 +63,9 @@ public class JournalArticleCTDisplayRenderer
 		throws Exception {
 
 		return getJournalArticleContent(
-			liferayPortletRequest, liferayPortletResponse, journalArticle,
-			journalArticle.getDefaultLanguageId(), _journalArticleLocalService);
+			journalArticle, _journalArticleLocalService,
+			journalArticle.getDefaultLanguageId(), liferayPortletRequest,
+			liferayPortletResponse);
 	}
 
 	@Override
@@ -114,10 +115,9 @@ public class JournalArticleCTDisplayRenderer
 		throws Exception {
 
 		return getJournalArticleContent(
-			liferayPortletRequest, liferayPortletResponse,
-			previousJournalArticle,
-			currentJournalArticle.getDefaultLanguageId(),
-			_journalArticleLocalService);
+			previousJournalArticle, _journalArticleLocalService,
+			currentJournalArticle.getDefaultLanguageId(), liferayPortletRequest,
+			liferayPortletResponse);
 	}
 
 	@Override
@@ -164,10 +164,10 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	protected static String getJournalArticleContent(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			JournalArticle journalArticle, String languageId,
-			JournalArticleLocalService journalArticleLocalService)
+			JournalArticle journalArticle,
+			JournalArticleLocalService journalArticleLocalService,
+			String languageId, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException {
 
 		PortletRequestModel portletRequestModel = new PortletRequestModel(
