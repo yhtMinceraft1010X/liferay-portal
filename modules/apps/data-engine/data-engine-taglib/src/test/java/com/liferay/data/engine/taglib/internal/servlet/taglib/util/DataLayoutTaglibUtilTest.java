@@ -52,12 +52,6 @@ public class DataLayoutTaglibUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectMapper = new ObjectMapper() {
-			{
-				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
-			}
-		};
-
 		ReflectionTestUtil.setFieldValue(
 			_dataLayoutTaglibUtil, "_dataLayoutTaglibUtil",
 			_dataLayoutTaglibUtil);
@@ -166,7 +160,11 @@ public class DataLayoutTaglibUtilTest {
 		new DataLayoutTaglibUtil();
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	private ObjectMapper _objectMapper;
+	private ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+		}
+	};
 	private final Portal _portal = Mockito.mock(Portal.class);
 
 }
