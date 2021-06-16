@@ -839,6 +839,11 @@
 	<td>//div[contains(@data-field-name,'predefinedValue')]//div[contains(@class,'form-builder-select-field')]//div[contains(text(),'${key_textContent}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SIDEBAR_BASIC_HELP_TEXT</td>
+	<td>//input[contains(@name,'tip')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>
