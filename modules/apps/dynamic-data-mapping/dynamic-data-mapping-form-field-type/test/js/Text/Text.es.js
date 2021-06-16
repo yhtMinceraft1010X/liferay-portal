@@ -196,13 +196,13 @@ describe('Field Text', () => {
 			...defaultTextConfig,
 		};
 
-		render(
+		const {container} = render(
 			<div className="ddm-page-container-layout">
 				<TextWithProvider {...props} key="input" onChange={onChange} />
 			</div>
 		);
 
-		const input = document.body.querySelector('input');
+		const input = container.querySelector('input');
 
 		fireEvent.change(input, {
 			target: {
@@ -214,13 +214,13 @@ describe('Field Text', () => {
 			jest.runAllTimers();
 		});
 
-		const autocompleteDropdownMenu = document.body.querySelector(
+		const autocompleteDropdownMenu = document.querySelector(
 			'.autocomplete-dropdown-menu'
 		);
 
-		const classList = autocompleteDropdownMenu.classList;
-
-		expect(classList.contains('show')).toBeTruthy();
+		expect(
+			autocompleteDropdownMenu.classList.contains('show')
+		).toBeTruthy();
 	});
 
 	it('hides autocomplete dropdown menu when input is empty', () => {
@@ -236,13 +236,13 @@ describe('Field Text', () => {
 			...defaultTextConfig,
 		};
 
-		render(
+		const {container} = render(
 			<div className="ddm-page-container-layout">
 				<TextWithProvider {...props} key="input" onChange={onChange} />
 			</div>
 		);
 
-		const input = document.body.querySelector('input');
+		const input = container.querySelector('input');
 
 		fireEvent.change(input, {
 			target: {
@@ -254,13 +254,11 @@ describe('Field Text', () => {
 			jest.runAllTimers();
 		});
 
-		const autocompleteDropdownMenu = document.body.querySelector(
+		const autocompleteDropdownMenu = document.querySelector(
 			'.autocomplete-dropdown-menu'
 		);
 
-		const classList = autocompleteDropdownMenu.classList;
-
-		expect(classList.contains('show')).toBeFalsy();
+		expect(autocompleteDropdownMenu.classList.contains('show')).toBeFalsy();
 	});
 
 	it('hides autocomplete dropdown menu when focus is changed', () => {
@@ -276,13 +274,13 @@ describe('Field Text', () => {
 			...defaultTextConfig,
 		};
 
-		render(
+		const {container} = render(
 			<div className="ddm-page-container-layout">
 				<TextWithProvider {...props} key="input" onChange={onChange} />
 			</div>
 		);
 
-		const input = document.body.querySelector('input');
+		const input = container.querySelector('input');
 
 		fireEvent.change(input, {
 			target: {
@@ -294,13 +292,13 @@ describe('Field Text', () => {
 			jest.runAllTimers();
 		});
 
-		const autocompleteDropdownMenu = document.body.querySelector(
+		const autocompleteDropdownMenu = document.querySelector(
 			'.autocomplete-dropdown-menu'
 		);
 
-		const classList = autocompleteDropdownMenu.classList;
-
-		expect(classList.contains('show')).toBeTruthy();
+		expect(
+			autocompleteDropdownMenu.classList.contains('show')
+		).toBeTruthy();
 
 		const body = document.body;
 
@@ -310,7 +308,7 @@ describe('Field Text', () => {
 			jest.runAllTimers();
 		});
 
-		expect(classList.contains('show')).toBeFalsy();
+		expect(autocompleteDropdownMenu.classList.contains('show')).toBeFalsy();
 	});
 
 	it('renders Label if showLabel is true', () => {
