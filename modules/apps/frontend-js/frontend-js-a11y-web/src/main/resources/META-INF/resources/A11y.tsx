@@ -142,7 +142,7 @@ function Violation({target, violations}: ViolationProps) {
 					</div>
 					<div className="inline-item inline-item-after">
 						<span>
-							{Liferay.Language.get('accessibility-violation')}
+							{Liferay.Language.get('accessibility-violations')}
 						</span>
 					</div>
 				</>
