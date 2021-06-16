@@ -30,6 +30,10 @@
 }
 
 .dropdown-menu.show {
+	z-index: 40;
+}
+
+.ddm-select-dropdown.show {
 	z-index: 1200;
 }
 
