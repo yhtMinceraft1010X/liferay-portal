@@ -72,7 +72,7 @@ public class DataLayoutTaglibUtilTest {
 
 		JSONArray actualResultJSONArray =
 			_dataLayoutTaglibUtil.getFieldTypesJSONArray(
-				_httpServletRequest, Collections.singleton(_JOURNAL), true);
+				_httpServletRequest, Collections.singleton("journal"), true);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -88,7 +88,7 @@ public class DataLayoutTaglibUtilTest {
 
 		JSONArray actualResultJSONArray =
 			_dataLayoutTaglibUtil.getFieldTypesJSONArray(
-				_httpServletRequest, Collections.singleton(_JOURNAL), false);
+				_httpServletRequest, Collections.singleton("journal"), false);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -144,8 +144,6 @@ public class DataLayoutTaglibUtilTest {
 			_read("data-definition-field-types.json")
 		);
 	}
-
-	private static final String _JOURNAL = "journal";
 
 	private final DataDefinitionResource.Builder
 		_dataDefinitionResourceBuilder = Mockito.mock(
