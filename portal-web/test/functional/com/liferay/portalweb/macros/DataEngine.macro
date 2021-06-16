@@ -1386,6 +1386,19 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro toggleMultipleSelectionOption {
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		if (!(isSet(webContentMultipleSelectionFieldLabel))) {
+			var webContentMultipleSelectionFieldLabel = "Multiple Selection";
+		}
+
+		Click.clickAtNotVisible(
+			key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
+			key_optionValue = "${webContentMultipleSelection}",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";
