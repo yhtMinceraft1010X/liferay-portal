@@ -78,7 +78,9 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 				}
 			});
 
-		return dsEnvelope;
+		return getDSEnvelope(
+			companyId, groupId, dsEnvelope.getDSEnvelopeId(),
+			"custom_fields,recipients");
 	}
 
 	@Override
@@ -97,11 +99,19 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	public DSEnvelope getDSEnvelope(
 		long companyId, long groupId, String dsEnvelopeId) {
 
+		return getDSEnvelope(
+			companyId, groupId, dsEnvelopeId,
+			"custom_fields,documents,recipients");
+	}
+
+	@Override
+	public DSEnvelope getDSEnvelope(
+		long companyId, long groupId, String dsEnvelopeId, String include) {
+
 		JSONObject jsonObject = _dsHttp.get(
 			companyId, groupId,
 			StringBundler.concat(
-				"envelopes/", dsEnvelopeId,
-				"?include=custom_fields,documents,recipients"));
+				"envelopes/", dsEnvelopeId, "?include=", include));
 
 		return _toDSEnvelope(jsonObject);
 	}

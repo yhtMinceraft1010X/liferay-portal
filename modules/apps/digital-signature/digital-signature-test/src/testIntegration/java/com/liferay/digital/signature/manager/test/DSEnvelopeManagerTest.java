@@ -156,10 +156,6 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 
-		DSEnvelope dsEnvelope1Fetched = _dsEnvelopeManager.getDSEnvelope(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			dsEnvelope1.getDSEnvelopeId());
-
 		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
@@ -187,75 +183,61 @@ public class DSEnvelopeManagerTest {
 						});
 					emailBlurb = RandomTestUtil.randomString();
 					emailSubject = RandomTestUtil.randomString();
-					name =
-						dsEnvelope1Fetched.getName() +
-							RandomTestUtil.randomInt();
+					name = dsEnvelope1.getName() + RandomTestUtil.randomInt();
 					senderEmailAddress =
 						RandomTestUtil.randomString() + "@liferay.com";
 					status = "sent";
 				}
 			});
 
-		DSEnvelope dsEnvelope2Fetched = _dsEnvelopeManager.getDSEnvelope(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			dsEnvelope2.getDSEnvelopeId());
-
 		IdempotentRetryAssert.retryAssert(
 			2, TimeUnit.SECONDS,
 			() -> _assertPage(
-				dsEnvelope1Fetched.getName(), "asc", 2, "",
+				dsEnvelope1.getName(), "asc", 2, "",
 				dsEnvelopes -> {
-					_assertEquals(dsEnvelope1Fetched, dsEnvelopes.get(0));
-					_assertEquals(dsEnvelope2Fetched, dsEnvelopes.get(1));
+					_assertEquals(dsEnvelope1, dsEnvelopes.get(0));
+					_assertEquals(dsEnvelope2, dsEnvelopes.get(1));
 				}));
 
 		_assertPage(
-			dsEnvelope1Fetched.getName(), "desc", 2, "",
+			dsEnvelope1.getName(), "desc", 2, "",
 			dsEnvelopes -> {
-				_assertEquals(dsEnvelope2Fetched, dsEnvelopes.get(0));
-				_assertEquals(dsEnvelope1Fetched, dsEnvelopes.get(1));
+				_assertEquals(dsEnvelope2, dsEnvelopes.get(0));
+				_assertEquals(dsEnvelope1, dsEnvelopes.get(1));
 			});
 
 		_assertPage(
-			dsEnvelope1Fetched.getDSEnvelopeId(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+			dsEnvelope1.getDSEnvelopeId(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
 
-		List<DSRecipient> dsRecipients = dsEnvelope1Fetched.getDSRecipients();
+		List<DSRecipient> dsRecipients = dsEnvelope1.getDSRecipients();
 
 		DSRecipient dsRecipient = dsRecipients.get(0);
 
 		_assertPage(
 			dsRecipient.getEmailAddress(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
 
 		_assertPage(
-			dsEnvelope2Fetched.getEmailSubject(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope2Fetched, dsEnvelopes.get(0)));
+			dsEnvelope2.getEmailSubject(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
 
 		_assertPage(
-			dsEnvelope2Fetched.getName(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope2Fetched, dsEnvelopes.get(0)));
+			dsEnvelope2.getName(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
 
 		_assertPage(
-			dsEnvelope1Fetched.getSenderEmailAddress(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope1Fetched, dsEnvelopes.get(0)));
+			dsEnvelope2.getSenderEmailAddress(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
 
 		_assertPage(
-			dsEnvelope2Fetched.getName(), "desc", 1,
-			dsEnvelope1Fetched.getStatus(),
-			dsEnvelopes -> _assertEquals(
-				dsEnvelope2Fetched, dsEnvelopes.get(0)));
+			dsEnvelope2.getName(), "desc", 1, dsEnvelope1.getStatus(),
+			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new String[] {
-				dsEnvelope1Fetched.getDSEnvelopeId(),
-				dsEnvelope2Fetched.getDSEnvelopeId()
+				dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()
 			});
 	}
 
@@ -263,8 +245,14 @@ public class DSEnvelopeManagerTest {
 		DSEnvelope expectedDSEnvelope, DSEnvelope actualDSEnvelope) {
 
 		Assert.assertEquals(
+			expectedDSEnvelope.getCreatedLocalDateTime(),
+			actualDSEnvelope.getCreatedLocalDateTime());
+		Assert.assertEquals(
 			expectedDSEnvelope.getDSEnvelopeId(),
 			actualDSEnvelope.getDSEnvelopeId());
+		Assert.assertEquals(
+			expectedDSEnvelope.getEmailSubject(),
+			actualDSEnvelope.getEmailSubject());
 		Assert.assertEquals(
 			expectedDSEnvelope.getName(), actualDSEnvelope.getName());
 		Assert.assertEquals(
@@ -272,9 +260,6 @@ public class DSEnvelopeManagerTest {
 			actualDSEnvelope.getSenderEmailAddress());
 		Assert.assertEquals(
 			expectedDSEnvelope.getStatus(), actualDSEnvelope.getStatus());
-		Assert.assertEquals(
-			expectedDSEnvelope.getEmailSubject(),
-			actualDSEnvelope.getEmailSubject());
 	}
 
 	private Void _assertPage(
