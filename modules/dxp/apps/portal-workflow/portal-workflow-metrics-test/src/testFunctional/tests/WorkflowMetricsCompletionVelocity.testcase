@@ -66,12 +66,13 @@ definition {
 	}
 
 	@description = "LPS-97665 - Verify that info icon hover state and tooltip message"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test InfoIconDisplaysMessageOnHover {
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		// TODO LRQA-67658 InfoIconDisplaysMessageOnHover pending implementation
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
+		WorkflowMetrics.viewTooltipCompletionVelocity();
 	}
 
 	@description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"
