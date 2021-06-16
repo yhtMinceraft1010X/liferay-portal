@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.change.tracking.internal;
+package com.liferay.portal.change.tracking.internal.activator;
 
+import com.liferay.portal.change.tracking.internal.CTSQLTransformerImpl;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 
 import org.osgi.framework.BundleActivator;

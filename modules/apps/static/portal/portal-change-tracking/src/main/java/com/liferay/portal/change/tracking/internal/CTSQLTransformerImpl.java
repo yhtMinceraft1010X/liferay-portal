@@ -179,6 +179,39 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class CTSQLTransformerImpl implements CTSQLTransformer {
 
+	@SuppressWarnings("unchecked")
+	public void activate(BundleContext bundleContext) throws Exception {
+		_portalCache = PortalCacheHelperUtil.getPortalCache(
+			PortalCacheManagerNames.SINGLE_VM,
+			CTSQLTransformerImpl.class.getName());
+
+		_ctServiceServiceTracker = new ServiceTracker<>(
+			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class,
+			new CTServiceTrackerCustomizer(bundleContext));
+
+		_ctServiceServiceTracker.open();
+
+		_releaseServiceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", Release.class.getName(),
+					")(release.bundle.symbolic.name=",
+					"com.liferay.change.tracking.service)",
+					"(release.schema.version>=2.1.0))")),
+			null);
+
+		_releaseServiceTracker.open();
+	}
+
+	public void deactivate() {
+		_portalCache.removeAll();
+
+		_ctServiceServiceTracker.close();
+
+		_releaseServiceTracker.close();
+	}
+
 	@Override
 	public String transform(String sql) {
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
@@ -239,39 +272,6 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			throw new RuntimeException(
 				"Failed to parse sql for " + sql, jsqlParserException);
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	protected void activate(BundleContext bundleContext) throws Exception {
-		_portalCache = PortalCacheHelperUtil.getPortalCache(
-			PortalCacheManagerNames.SINGLE_VM,
-			CTSQLTransformerImpl.class.getName());
-
-		_ctServiceServiceTracker = new ServiceTracker<>(
-			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class,
-			new CTServiceTrackerCustomizer(bundleContext));
-
-		_ctServiceServiceTracker.open();
-
-		_releaseServiceTracker = new ServiceTracker<>(
-			bundleContext,
-			bundleContext.createFilter(
-				StringBundler.concat(
-					"(&(objectClass=", Release.class.getName(),
-					")(release.bundle.symbolic.name=",
-					"com.liferay.change.tracking.service)",
-					"(release.schema.version>=2.1.0))")),
-			null);
-
-		_releaseServiceTracker.open();
-	}
-
-	protected void deactivate() {
-		_portalCache.removeAll();
-
-		_ctServiceServiceTracker.close();
-
-		_releaseServiceTracker.close();
 	}
 
 	/**
