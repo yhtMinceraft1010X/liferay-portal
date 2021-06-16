@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -98,7 +97,7 @@ public class DataLayoutTaglibUtilTest {
 			_objectMapper.readTree(actualResultJSONArray.toString()));
 	}
 
-	private String _read(String fileName) throws IOException {
+	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -155,7 +154,7 @@ public class DataLayoutTaglibUtilTest {
 		new DataLayoutTaglibUtil();
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	private ObjectMapper _objectMapper = new ObjectMapper() {
+	private final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 		}
