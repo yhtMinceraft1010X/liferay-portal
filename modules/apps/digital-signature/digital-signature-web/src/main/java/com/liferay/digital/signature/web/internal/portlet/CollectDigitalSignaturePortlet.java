@@ -105,7 +105,6 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRIES,
 				jsonArray);
-
 			renderRequest.setAttribute(
 				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE,
 				_getTitle(
