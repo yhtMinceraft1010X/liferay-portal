@@ -77,7 +77,7 @@ public class MultiSessionErrors {
 			return true;
 		}
 
-		for (Class<?> clazz : _HIDE_DEFAULT_ERROR_MESSAGE_CLASSES) {
+		for (Class<?> clazz : _CLASSES_HIDE_DEFAULT_ERROR_MESSAGE) {
 			if (contains(portletRequest, clazz.getName())) {
 				return true;
 			}
@@ -94,7 +94,7 @@ public class MultiSessionErrors {
 		return false;
 	}
 
-	private static final Class<?>[] _HIDE_DEFAULT_ERROR_MESSAGE_CLASSES =
+	private static final Class<?>[] _CLASSES_HIDE_DEFAULT_ERROR_MESSAGE =
 		ArrayUtil.append(
 			new Class<?>[] {
 				NoSuchLayoutException.class, UserPasswordException.class
