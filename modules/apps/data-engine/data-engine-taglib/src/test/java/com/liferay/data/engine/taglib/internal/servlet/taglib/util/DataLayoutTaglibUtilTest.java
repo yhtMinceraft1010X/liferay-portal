@@ -53,16 +53,13 @@ public class DataLayoutTaglibUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			_dataLayoutTaglibUtil, "_dataLayoutTaglibUtil",
-			_dataLayoutTaglibUtil);
-
-		ReflectionTestUtil.setFieldValue(
-			_dataLayoutTaglibUtil, "_jsonFactory", new JSONFactoryImpl());
-
-		ReflectionTestUtil.setFieldValue(
 			_dataLayoutTaglibUtil, "_dataDefinitionResourceFactory",
 			_dataDefinitionResourceFactory);
-
+		ReflectionTestUtil.setFieldValue(
+			_dataLayoutTaglibUtil, "_dataLayoutTaglibUtil",
+			_dataLayoutTaglibUtil);
+		ReflectionTestUtil.setFieldValue(
+			_dataLayoutTaglibUtil, "_jsonFactory", new JSONFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			_dataLayoutTaglibUtil, "_portal", _portal);
 
