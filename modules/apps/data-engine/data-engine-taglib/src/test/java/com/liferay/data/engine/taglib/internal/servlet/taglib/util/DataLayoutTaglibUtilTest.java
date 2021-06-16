@@ -76,7 +76,7 @@ public class DataLayoutTaglibUtilTest {
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
-				read(
+				_read(
 					"data-definition-field-types-journal-scope-searchable-" +
 						"fields-disabled.json")),
 			_objectMapper.readTree(actualResultJSONArray.toString()));
@@ -92,13 +92,13 @@ public class DataLayoutTaglibUtilTest {
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
-				read(
+				_read(
 					"data-definition-field-types-journal-scope-searchable-" +
 						"fields-enabled.json")),
 			_objectMapper.readTree(actualResultJSONArray.toString()));
 	}
 
-	protected String read(String fileName) throws IOException {
+	private String _read(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(
@@ -141,7 +141,7 @@ public class DataLayoutTaglibUtilTest {
 			dataDefinitionResource.
 				getDataDefinitionDataDefinitionFieldFieldTypes()
 		).thenReturn(
-			read("data-definition-field-types.json")
+			_read("data-definition-field-types.json")
 		);
 	}
 
