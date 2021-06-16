@@ -108,10 +108,20 @@ public class DataLayoutTaglibUtilTest {
 	}
 
 	private void _setUpDataDefinitionResource() throws Exception {
+		DataDefinitionResource dataDefinitionResource = Mockito.mock(
+			DataDefinitionResource.class);
+
 		Mockito.when(
-			_dataDefinitionResourceFactory.create()
+			dataDefinitionResource.
+				getDataDefinitionDataDefinitionFieldFieldTypes()
 		).thenReturn(
-			_dataDefinitionResourceBuilder
+			_read("data-definition-field-types.json")
+		);
+
+		Mockito.when(
+			_dataDefinitionResourceBuilder.build()
+		).thenReturn(
+			dataDefinitionResource
 		);
 
 		Mockito.when(
@@ -128,20 +138,10 @@ public class DataLayoutTaglibUtilTest {
 			_dataDefinitionResourceBuilder
 		);
 
-		DataDefinitionResource dataDefinitionResource = Mockito.mock(
-			DataDefinitionResource.class);
-
 		Mockito.when(
-			_dataDefinitionResourceBuilder.build()
+			_dataDefinitionResourceFactory.create()
 		).thenReturn(
-			dataDefinitionResource
-		);
-
-		Mockito.when(
-			dataDefinitionResource.
-				getDataDefinitionDataDefinitionFieldFieldTypes()
-		).thenReturn(
-			_read("data-definition-field-types.json")
+			_dataDefinitionResourceBuilder
 		);
 	}
 
