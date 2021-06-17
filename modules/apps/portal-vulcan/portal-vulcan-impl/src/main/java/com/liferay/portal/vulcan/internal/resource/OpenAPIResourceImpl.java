@@ -197,7 +197,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 			@Override
 			public Optional<Operation> filterOperation(
-				Operation operation, ApiDescription api,
+				Operation operation, ApiDescription apiDescription,
 				Map<String, List<String>> params, Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
@@ -224,13 +224,14 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				operation.setOperationId(null);
 
 				return super.filterOperation(
-					operation, api, params, cookies, headers);
+					operation, apiDescription, params, cookies, headers);
 			}
 
 			@Override
 			public Optional<Parameter> filterParameter(
-				Parameter parameter, Operation operation, ApiDescription api,
-				Map<String, List<String>> params, Map<String, String> cookies,
+				Parameter parameter, Operation operation,
+				ApiDescription apiDescription, Map<String, List<String>> params,
+				Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
 				for (Map.Entry<String, String> entry :
@@ -251,32 +252,36 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				}
 
 				return super.filterParameter(
-					parameter, operation, api, params, cookies, headers);
+					parameter, operation, apiDescription, params, cookies,
+					headers);
 			}
 
 			@Override
 			public Optional<RequestBody> filterRequestBody(
 				RequestBody requestBody, Operation operation,
-				ApiDescription api, Map<String, List<String>> params,
+				ApiDescription apiDescription, Map<String, List<String>> params,
 				Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
 				_replaceContentReference(requestBody.getContent());
 
 				return super.filterRequestBody(
-					requestBody, operation, api, params, cookies, headers);
+					requestBody, operation, apiDescription, params, cookies,
+					headers);
 			}
 
 			@Override
 			public Optional<ApiResponse> filterResponse(
-				ApiResponse response, Operation operation, ApiDescription api,
-				Map<String, List<String>> params, Map<String, String> cookies,
+				ApiResponse response, Operation operation,
+				ApiDescription apiDescription, Map<String, List<String>> params,
+				Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
 				_replaceContentReference(response.getContent());
 
 				return super.filterResponse(
-					response, operation, api, params, cookies, headers);
+					response, operation, apiDescription, params, cookies,
+					headers);
 			}
 
 			@Override
@@ -304,24 +309,24 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 			@Override
 			public Optional<Schema> filterSchemaProperty(
-				Schema property, Schema schema, String propName,
+				Schema propertySchema, Schema schema, String propName,
 				Map<String, List<String>> params, Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
 				for (Map.Entry<String, String> entry :
 						schemaMappings.entrySet()) {
 
-					_replaceReference(entry, property);
+					_replaceReference(entry, propertySchema);
 
-					if (property instanceof ArraySchema) {
-						ArraySchema arraySchema = (ArraySchema)property;
+					if (propertySchema instanceof ArraySchema) {
+						ArraySchema arraySchema = (ArraySchema)propertySchema;
 
 						_replaceReference(entry, arraySchema.getItems());
 					}
 				}
 
 				return super.filterSchemaProperty(
-					property, schema, propName, params, cookies, headers);
+					propertySchema, schema, propName, params, cookies, headers);
 			}
 
 			private Schema<Object> _addSchema(DTOProperty dtoProperty) {
