@@ -125,10 +125,10 @@ public abstract class BaseClientTestCase {
 
 		String pAuthToken = parsePAuthToken(response);
 
-		Map<String, NewCookie> cookies = response.getCookies();
+		Map<String, NewCookie> newCookies = response.getCookies();
 
-		NewCookie cookieSupportNewCookie = cookies.get(CookieKeys.COOKIE_SUPPORT);
-		NewCookie jSessionIdNewCookie = cookies.get(CookieKeys.JSESSIONID);
+		NewCookie cookieSupportNewCookie = newCookies.get(CookieKeys.COOKIE_SUPPORT);
+		NewCookie jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
 
 		invocationBuilder = getInvocationBuilder(hostname, getLoginWebTarget());
 
@@ -143,9 +143,9 @@ public abstract class BaseClientTestCase {
 
 		response = invocationBuilder.post(Entity.form(formData));
 
-		cookies = response.getCookies();
+		newCookies = response.getCookies();
 
-		jSessionIdNewCookie = cookies.get(CookieKeys.JSESSIONID);
+		jSessionIdNewCookie = newCookies.get(CookieKeys.JSESSIONID);
 
 		if (jSessionIdNewCookie == null) {
 			return null;
