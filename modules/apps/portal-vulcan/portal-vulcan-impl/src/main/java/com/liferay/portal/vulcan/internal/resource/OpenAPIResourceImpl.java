@@ -176,8 +176,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 				Map<String, Schema> schemas = components.getSchemas();
 
-				Paths paths = openAPI.getPaths();
-
 				for (Map.Entry<String, String> entry :
 						schemaMappings.entrySet()) {
 
@@ -189,7 +187,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 					schemas.remove(key);
 
-					_replaceParameters(key, paths);
+					_replaceParameters(key, openAPI.getPaths());
 				}
 
 				return super.filterOpenAPI(openAPI, params, cookies, headers);
