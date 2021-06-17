@@ -127,9 +127,6 @@ definition {
 		AssertTextNotEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_ITEMS_VALUE",
 			value1 = "${velocityValueTotal}");
-
-
-			
 	}
 
 	macro assertChartTotalValuePerformanceByStep {
