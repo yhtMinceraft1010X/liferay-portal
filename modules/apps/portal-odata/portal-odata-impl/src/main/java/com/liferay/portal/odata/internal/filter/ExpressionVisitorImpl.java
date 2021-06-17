@@ -277,8 +277,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new QueryFilter(
 			_nestedFieldQueryHelper.getQuery(
 				entityField.getFilterableName(locale),
-				field -> new WildcardQueryImpl(
-					field,
+				fieldName -> new WildcardQueryImpl(
+					fieldName,
 					"*" + entityField.getFilterableValue(fieldValue) + "*")));
 	}
 
@@ -301,7 +301,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				new QueryFilter(
 					_nestedFieldQueryHelper.getQuery(
 						entityField.getFilterableName(locale),
-						field -> new WildcardQueryImpl(field, "*"))),
+						fieldName -> new WildcardQueryImpl(fieldName, "*"))),
 				BooleanClauseOccur.MUST_NOT);
 
 			return booleanFilter;
@@ -310,8 +310,8 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new QueryFilter(
 			_nestedFieldQueryHelper.getQuery(
 				entityField.getFilterableName(locale),
-				field -> new TermQueryImpl(
-					field, entityField.getFilterableValue(fieldValue))));
+				fieldName -> new TermQueryImpl(
+					fieldName, entityField.getFilterableValue(fieldValue))));
 	}
 
 	private Optional<Filter> _getFilterOptional(
@@ -368,9 +368,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new TermRangeQueryImpl(
-						field, entityField.getFilterableValue(fieldValue), null,
-						true, true)));
+					fieldName -> new TermRangeQueryImpl(
+						fieldName, entityField.getFilterableValue(fieldValue),
+						null, true, true)));
 		}
 
 		throw new UnsupportedOperationException(
@@ -395,9 +395,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new TermRangeQueryImpl(
-						field, entityField.getFilterableValue(fieldValue), null,
-						false, true)));
+					fieldName -> new TermRangeQueryImpl(
+						fieldName, entityField.getFilterableValue(fieldValue),
+						null, false, true)));
 		}
 
 		throw new UnsupportedOperationException(
@@ -415,8 +415,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				booleanQuery.add(
 					_nestedFieldQueryHelper.getQuery(
 						entityField.getFilterableName(locale),
-						field -> new TermQueryImpl(
-							field, entityField.getFilterableValue(fieldValue))),
+						fieldName -> new TermQueryImpl(
+							fieldName,
+							entityField.getFilterableValue(fieldValue))),
 					BooleanClauseOccur.SHOULD);
 			}
 		}
@@ -463,9 +464,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new TermRangeQueryImpl(
-						field, null, entityField.getFilterableValue(fieldValue),
-						false, true)));
+					fieldName -> new TermRangeQueryImpl(
+						fieldName, null,
+						entityField.getFilterableValue(fieldValue), false,
+						true)));
 		}
 
 		throw new UnsupportedOperationException(
@@ -490,9 +492,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new TermRangeQueryImpl(
-						field, null, entityField.getFilterableValue(fieldValue),
-						false, false)));
+					fieldName -> new TermRangeQueryImpl(
+						fieldName, null,
+						entityField.getFilterableValue(fieldValue), false,
+						false)));
 		}
 
 		throw new UnsupportedOperationException(
@@ -507,7 +510,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new WildcardQueryImpl(field, "*")));
+					fieldName -> new WildcardQueryImpl(fieldName, "*")));
 		}
 
 		BooleanFilter booleanFilter = new BooleanFilter();
@@ -516,8 +519,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					field -> new TermQueryImpl(
-						field, entityField.getFilterableValue(fieldValue)))),
+					fieldName -> new TermQueryImpl(
+						fieldName,
+						entityField.getFilterableValue(fieldValue)))),
 			BooleanClauseOccur.MUST_NOT);
 
 		return booleanFilter;
@@ -568,8 +572,9 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new QueryFilter(
 			_nestedFieldQueryHelper.getQuery(
 				entityField.getFilterableName(locale),
-				field -> new WildcardQueryImpl(
-					field, entityField.getFilterableValue(fieldValue) + "*")));
+				fieldName -> new WildcardQueryImpl(
+					fieldName,
+					entityField.getFilterableValue(fieldValue) + "*")));
 	}
 
 	private final EntityModel _entityModel;

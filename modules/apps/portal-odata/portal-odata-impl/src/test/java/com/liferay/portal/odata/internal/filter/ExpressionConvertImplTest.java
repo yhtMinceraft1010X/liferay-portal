@@ -123,7 +123,8 @@ public class ExpressionConvertImplTest {
 
 		List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
 
-		Assert.assertEquals(booleanClauses.toString(), 1, booleanClauses.size());
+		Assert.assertEquals(
+			booleanClauses.toString(), 1, booleanClauses.size());
 
 		BooleanClause<Query> booleanClause = booleanClauses.get(0);
 
