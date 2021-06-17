@@ -126,15 +126,15 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 		Map<String, NewCookie> cookies = response.getCookies();
 
-		NewCookie jSessionIdNewCookie = cookies.get(CookieKeys.JSESSIONID);
 		NewCookie cookieSupportNewCookie = cookies.get(CookieKeys.COOKIE_SUPPORT);
+		NewCookie jSessionIdNewCookie = cookies.get(CookieKeys.JSESSIONID);
 
 		invocationBuilder = _getWebTarget(
 			"c", "portal", "login"
 		).request();
 
-		invocationBuilder = invocationBuilder.cookie(jSessionIdNewCookie);
 		invocationBuilder = invocationBuilder.cookie(cookieSupportNewCookie);
+		invocationBuilder = invocationBuilder.cookie(jSessionIdNewCookie);
 
 		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
 
