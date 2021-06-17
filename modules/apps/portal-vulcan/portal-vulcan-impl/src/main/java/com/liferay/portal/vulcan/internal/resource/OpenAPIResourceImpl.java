@@ -208,9 +208,9 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 							schemaMappings.entrySet()) {
 
 						for (int i = 0; i < newTags.size(); i++) {
-							String tag = newTags.get(i);
+							if (Objects.equals(
+									entry.getKey(), newTags.get(i))) {
 
-							if (tag.equals(entry.getKey())) {
 								newTags.set(i, entry.getValue());
 							}
 						}
