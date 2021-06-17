@@ -74,12 +74,12 @@ public class UserModelListener extends BaseModelListener<User> {
 							_queries.term(
 								"tasks.assigneeType", User.class.getName()));
 
-						ScriptBuilder builder = _scripts.builder();
+						ScriptBuilder scriptBuilder = _scripts.builder();
 
 						searchEngineAdapter.execute(
 							new UpdateByQueryDocumentRequest(
 								_queries.nested("tasks", nestedBooleanQuery),
-								builder.idOrCode(
+								scriptBuilder.idOrCode(
 									StringUtil.read(
 										getClass(),
 										"dependencies/workflow-metrics-" +
