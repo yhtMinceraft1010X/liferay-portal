@@ -122,6 +122,9 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testGetDSEnvelopesPage() throws Exception {
+
+		// Set up
+
 		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
@@ -190,25 +193,23 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 
+		// DocuSign search is asynchronous and may not be ready immediately
+		// after adding envelopes
+
 		IdempotentRetryAssert.retryAssert(
 			2, TimeUnit.SECONDS,
 			() -> _assertPage(
 				dsEnvelope1.getName(), "asc", 2, "",
 				dsEnvelopes -> {
-					_assertEquals(dsEnvelope1, dsEnvelopes.get(0));
-					_assertEquals(dsEnvelope2, dsEnvelopes.get(1));
 				}));
 
-		_assertPage(
-			dsEnvelope1.getName(), "desc", 2, "",
-			dsEnvelopes -> {
-				_assertEquals(dsEnvelope2, dsEnvelopes.get(0));
-				_assertEquals(dsEnvelope1, dsEnvelopes.get(1));
-			});
+		// Assert digital signature envelope ID
 
 		_assertPage(
 			dsEnvelope1.getDSEnvelopeId(), "desc", 1, "",
 			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
+
+		// Assert digital signature recipient
 
 		List<DSRecipient> dsRecipients = dsEnvelope1.getDSRecipients();
 
@@ -218,21 +219,48 @@ public class DSEnvelopeManagerTest {
 			dsRecipient.getEmailAddress(), "desc", 1, "",
 			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
 
-		_assertPage(
-			dsEnvelope2.getEmailSubject(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
+		// Assert email subject
 
+		_assertPage(
+			dsEnvelope1.getEmailSubject(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
+
+		// Asert name and order
+
+		_assertPage(
+			dsEnvelope1.getName(), "asc", 2, "",
+			dsEnvelopes -> {
+				_assertEquals(dsEnvelope1, dsEnvelopes.get(0));
+				_assertEquals(dsEnvelope2, dsEnvelopes.get(1));
+			});
+
+		_assertPage(
+			dsEnvelope1.getName(), "desc", 2, "",
+			dsEnvelopes -> {
+				_assertEquals(dsEnvelope2, dsEnvelopes.get(0));
+				_assertEquals(dsEnvelope1, dsEnvelopes.get(1));
+			});
 		_assertPage(
 			dsEnvelope2.getName(), "desc", 1, "",
 			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
 
-		_assertPage(
-			dsEnvelope2.getSenderEmailAddress(), "desc", 1, "",
-			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
+		// Assert sender email address
 
+		_assertPage(
+			dsEnvelope1.getSenderEmailAddress(), "desc", 1, "",
+			dsEnvelopes -> _assertEquals(dsEnvelope1, dsEnvelopes.get(0)));
+
+		// Assert status
+
+		_assertPage(
+			dsEnvelope2.getName(), "desc", 0, "completed",
+			dsEnvelopes -> {
+			});
 		_assertPage(
 			dsEnvelope2.getName(), "desc", 1, dsEnvelope1.getStatus(),
 			dsEnvelopes -> _assertEquals(dsEnvelope2, dsEnvelopes.get(0)));
+
+		// Clean up
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -263,7 +291,8 @@ public class DSEnvelopeManagerTest {
 	}
 
 	private Void _assertPage(
-			String keywords, String order, int expectedPageSize, String status,
+			String keywords, String order, int expectedTotalCount,
+			String status,
 			UnsafeConsumer<List<DSEnvelope>, Exception> unsafeConsumer)
 		throws Exception {
 
@@ -271,9 +300,12 @@ public class DSEnvelopeManagerTest {
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			"2021-01-01", keywords, order, Pagination.of(1, 2), status);
 
-		Assert.assertEquals(expectedPageSize, page.getTotalCount());
+		Assert.assertEquals(expectedTotalCount, page.getTotalCount());
 
 		List<DSEnvelope> dsEnvelopes = (List<DSEnvelope>)page.getItems();
+
+		Assert.assertEquals(
+			dsEnvelopes.toString(), expectedTotalCount, dsEnvelopes.size());
 
 		unsafeConsumer.accept(dsEnvelopes);
 
