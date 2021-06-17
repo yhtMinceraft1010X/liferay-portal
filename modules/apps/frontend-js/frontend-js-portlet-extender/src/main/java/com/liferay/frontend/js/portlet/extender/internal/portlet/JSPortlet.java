@@ -144,12 +144,12 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		return StringPool.BLANK;
 	}
 
-	private String _escapeJsonString(String string) {
-		string = string.replaceAll(StringPool.DOUBLE_BACK_SLASH, "\\\\\\\\");
+	private String _escapeJSON(String json) {
+		json = json.replaceAll(StringPool.DOUBLE_BACK_SLASH, "\\\\\\\\");
 
-		string = string.replaceAll(StringPool.APOSTROPHE, "\\\\'");
+		json = json.replaceAll(StringPool.APOSTROPHE, "\\\\'");
 
-		return string;
+		return json;
 	}
 
 	private String _getPortletInstanceConfiguration(
@@ -180,11 +180,11 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 			}
 		}
 
-		return _escapeJsonString(portletPreferencesJSONObject.toJSONString());
+		return _escapeJSON(portletPreferencesJSONObject.toJSONString());
 	}
 
 	private String _getSystemConfiguration() {
-		return _escapeJsonString(
+		return _escapeJSON(
 			_jsonFactory.looseSerializeDeep(_configuration.get()));
 	}
 
