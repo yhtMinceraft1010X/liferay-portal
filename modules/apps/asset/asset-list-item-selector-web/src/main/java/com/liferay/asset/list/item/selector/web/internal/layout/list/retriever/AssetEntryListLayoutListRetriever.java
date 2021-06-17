@@ -70,11 +70,11 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsEntryIds = segmentsEntryIdsOptional.orElse(
 			new long[] {0});
 
-		Optional<Pagination> paginationOptional =
-			layoutListRetrieverContext.getPaginationOptional();
-
 		AssetEntryListInfoFilter assetEntryListInfoFilter =
 			_getAssetEntryListInfoFilter(layoutListRetrieverContext);
+
+		Optional<Pagination> paginationOptional =
+			layoutListRetrieverContext.getPaginationOptional();
 
 		Pagination pagination = paginationOptional.orElse(
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
