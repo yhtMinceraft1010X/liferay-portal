@@ -117,12 +117,69 @@ definition {
 	}
 
 	@description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ItemOutOfTimeFrameIsNotConsideredInVelocityResult {
+		property portal.acceptance = "true";
 
-		// TODO LRQA-67659 ItemOutOfTimeFrameIsNotConsideredInVelocityResult pending implementation
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Test Content",
+			entrySubtitle = "Subtitle",
+			entryTitle = "Test blog");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Test blog",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Test blog",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Today",
+			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
+			isPresent = "INST_HOUR");
+
+		WorkflowMetrics.assertChartTotalValueNotEquals(velocityValueTotal = "0");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Yesterday",
+			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
+			isPresent = "INST_HOUR");
+
+		WorkflowMetrics.assertChartTotalValue(
+			velocityUnitTotal = "inst / hour",
+			velocityValueTotal = "0");
+
+
+			
 	}
 
 	@description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
