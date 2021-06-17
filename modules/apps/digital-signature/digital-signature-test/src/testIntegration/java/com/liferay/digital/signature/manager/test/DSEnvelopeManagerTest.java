@@ -233,7 +233,6 @@ public class DSEnvelopeManagerTest {
 				_assertEquals(dsEnvelope1, dsEnvelopes.get(0));
 				_assertEquals(dsEnvelope2, dsEnvelopes.get(1));
 			});
-
 		_assertPage(
 			dsEnvelope1.getName(), "desc", 2, "",
 			dsEnvelopes -> {
