@@ -237,13 +237,13 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 					String parameterName = parameter.getName();
 
-					String entryName = StringUtil.lowerCaseFirstLetter(
+					String schemaName = StringUtil.lowerCaseFirstLetter(
 						entry.getKey());
 
-					if (parameterName.contains(entryName)) {
+					if (parameterName.contains(schemaName)) {
 						parameter.setName(
 							StringUtil.replace(
-								parameterName, entryName,
+								parameterName, schemaName,
 								StringUtil.lowerCaseFirstLetter(
 									entry.getValue())));
 					}
