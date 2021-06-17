@@ -43,9 +43,9 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 
 			runSQL(
 				StringBundler.concat(
-					"DELETE FROM SamlPeerBinding WHERE ",
-					"SamlPeerBinding.samlPeerBindingId NOT IN (SELECT ",
-					"samlPeerBindingId FROM SamlIdpSpSession)"));
+					"delete from SamlPeerBinding where ",
+					"SamlPeerBinding.samlPeerBindingId not in (select ",
+					"samlPeerBindingId from SamlIdpSpSession)"));
 
 			int samlSpSessionIdOffset = _getSamlSpSessionIdOffset();
 
