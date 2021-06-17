@@ -150,8 +150,8 @@ public class ObjectDefinitionGraphQLTest {
 							key,
 							HashMapBuilder.<String, Object>put(
 								"filter",
-								"\"userId eq " + TestPropsValues.getUserId() +
-									"\""
+								"\"" + _objectFieldName +
+									" eq 'peter@liferay.com'\""
 							).build(),
 							new GraphQLField(
 								"items", new GraphQLField(_objectFieldName))))),
@@ -184,8 +184,8 @@ public class ObjectDefinitionGraphQLTest {
 							key,
 							HashMapBuilder.<String, Object>put(
 								"filter",
-								"\"" + _objectFieldName +
-									" eq 'peter@liferay.com'\""
+								"\"userId eq " + TestPropsValues.getUserId() +
+									"\""
 							).build(),
 							new GraphQLField(
 								"items", new GraphQLField(_objectFieldName))))),
