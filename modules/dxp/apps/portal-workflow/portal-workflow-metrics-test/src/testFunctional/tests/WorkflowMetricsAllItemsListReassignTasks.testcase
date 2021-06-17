@@ -138,12 +138,73 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that the user is able to filter the info inside Select Tasks to Reassign by Step and Assignee, search for any of the available field values and the table is updated accordingly"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test UserCanFilterbyStepAndAssignee {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67840 UserCanFilterbyStepAndAssignee pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "UNTRACKED",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueProcessStep(workflowStep = "Review");
+
+		AssertElementPresent(
+			key_workflowFilter = "Review",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Review");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListReassignTasks#FILTER_CLEAR_ALL");
+
+		WorkflowMetricsAllItemsListReassignTasks.selectReassignTasksCardFilterValueAssignee(workflowAssignee = "Test Test");
+
+		AssertElementPresent(
+			key_workflowFilter = "Test Test",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Test Test");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListReassignTasks#FILTER_CLEAR_ALL");
+
+		AssertElementNotPresent(
+			key_workflowFilter = "Review",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Review");
+
+		AssertElementNotPresent(
+			key_workflowFilter = "Test Test",
+			locator1 = "WorkflowMetricsAllItemsListReassignTasks#METRICS_REASSIGN_TASKS_CARD_FILTER_ASSERT_FILTER",
+			value1 = "Test Test");
 	}
 
 	@description = "LPS-106219 - Verify that the user can filter, by Process Step, instances with pending tasks in parallel"
