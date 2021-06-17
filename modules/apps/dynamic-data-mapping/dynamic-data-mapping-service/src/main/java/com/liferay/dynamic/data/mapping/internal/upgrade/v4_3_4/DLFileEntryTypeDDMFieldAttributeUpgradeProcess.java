@@ -37,7 +37,6 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		_updateCheckboxFieldType();
-
 		_updateNumericFieldType();
 	}
 
