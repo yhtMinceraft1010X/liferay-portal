@@ -2033,10 +2033,10 @@ public class DLFolderUtil {
 	 * @param parentFolderId the parent folder ID
 	 * @return the matching document library folders
 	 */
-	public static List<DLFolder> findByF_C_P(
+	public static List<DLFolder> findByGtF_C_P(
 		long folderId, long companyId, long parentFolderId) {
 
-		return getPersistence().findByF_C_P(
+		return getPersistence().findByGtF_C_P(
 			folderId, companyId, parentFolderId);
 	}
 
@@ -2054,11 +2054,11 @@ public class DLFolderUtil {
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @return the range of matching document library folders
 	 */
-	public static List<DLFolder> findByF_C_P(
+	public static List<DLFolder> findByGtF_C_P(
 		long folderId, long companyId, long parentFolderId, int start,
 		int end) {
 
-		return getPersistence().findByF_C_P(
+		return getPersistence().findByGtF_C_P(
 			folderId, companyId, parentFolderId, start, end);
 	}
 
@@ -2077,11 +2077,11 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching document library folders
 	 */
-	public static List<DLFolder> findByF_C_P(
+	public static List<DLFolder> findByGtF_C_P(
 		long folderId, long companyId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().findByF_C_P(
+		return getPersistence().findByGtF_C_P(
 			folderId, companyId, parentFolderId, start, end, orderByComparator);
 	}
 
@@ -2101,11 +2101,11 @@ public class DLFolderUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
-	public static List<DLFolder> findByF_C_P(
+	public static List<DLFolder> findByGtF_C_P(
 		long folderId, long companyId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByF_C_P(
+		return getPersistence().findByGtF_C_P(
 			folderId, companyId, parentFolderId, start, end, orderByComparator,
 			useFinderCache);
 	}
@@ -2120,13 +2120,13 @@ public class DLFolderUtil {
 	 * @return the first matching document library folder
 	 * @throws NoSuchFolderException if a matching document library folder could not be found
 	 */
-	public static DLFolder findByF_C_P_First(
+	public static DLFolder findByGtF_C_P_First(
 			long folderId, long companyId, long parentFolderId,
 			OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().findByF_C_P_First(
+		return getPersistence().findByGtF_C_P_First(
 			folderId, companyId, parentFolderId, orderByComparator);
 	}
 
@@ -2139,11 +2139,11 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByF_C_P_First(
+	public static DLFolder fetchByGtF_C_P_First(
 		long folderId, long companyId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().fetchByF_C_P_First(
+		return getPersistence().fetchByGtF_C_P_First(
 			folderId, companyId, parentFolderId, orderByComparator);
 	}
 
@@ -2157,13 +2157,13 @@ public class DLFolderUtil {
 	 * @return the last matching document library folder
 	 * @throws NoSuchFolderException if a matching document library folder could not be found
 	 */
-	public static DLFolder findByF_C_P_Last(
+	public static DLFolder findByGtF_C_P_Last(
 			long folderId, long companyId, long parentFolderId,
 			OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().findByF_C_P_Last(
+		return getPersistence().findByGtF_C_P_Last(
 			folderId, companyId, parentFolderId, orderByComparator);
 	}
 
@@ -2176,11 +2176,11 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByF_C_P_Last(
+	public static DLFolder fetchByGtF_C_P_Last(
 		long folderId, long companyId, long parentFolderId,
 		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().fetchByF_C_P_Last(
+		return getPersistence().fetchByGtF_C_P_Last(
 			folderId, companyId, parentFolderId, orderByComparator);
 	}
 
@@ -2191,10 +2191,10 @@ public class DLFolderUtil {
 	 * @param companyId the company ID
 	 * @param parentFolderId the parent folder ID
 	 */
-	public static void removeByF_C_P(
+	public static void removeByGtF_C_P(
 		long folderId, long companyId, long parentFolderId) {
 
-		getPersistence().removeByF_C_P(folderId, companyId, parentFolderId);
+		getPersistence().removeByGtF_C_P(folderId, companyId, parentFolderId);
 	}
 
 	/**
@@ -2205,10 +2205,10 @@ public class DLFolderUtil {
 	 * @param parentFolderId the parent folder ID
 	 * @return the number of matching document library folders
 	 */
-	public static int countByF_C_P(
+	public static int countByGtF_C_P(
 		long folderId, long companyId, long parentFolderId) {
 
-		return getPersistence().countByF_C_P(
+		return getPersistence().countByGtF_C_P(
 			folderId, companyId, parentFolderId);
 	}
 
@@ -4139,11 +4139,11 @@ public class DLFolderUtil {
 	 * @param status the status
 	 * @return the matching document library folders
 	 */
-	public static List<DLFolder> findByG_M_T_H_NotS(
+	public static List<DLFolder> findByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status) {
 
-		return getPersistence().findByG_M_T_H_NotS(
+		return getPersistence().findByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status);
 	}
 
@@ -4163,11 +4163,11 @@ public class DLFolderUtil {
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @return the range of matching document library folders
 	 */
-	public static List<DLFolder> findByG_M_T_H_NotS(
+	public static List<DLFolder> findByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, int start, int end) {
 
-		return getPersistence().findByG_M_T_H_NotS(
+		return getPersistence().findByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end);
 	}
 
@@ -4188,12 +4188,12 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching document library folders
 	 */
-	public static List<DLFolder> findByG_M_T_H_NotS(
+	public static List<DLFolder> findByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().findByG_M_T_H_NotS(
+		return getPersistence().findByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end,
 			orderByComparator);
 	}
@@ -4216,12 +4216,12 @@ public class DLFolderUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
-	public static List<DLFolder> findByG_M_T_H_NotS(
+	public static List<DLFolder> findByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByG_M_T_H_NotS(
+		return getPersistence().findByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -4238,13 +4238,13 @@ public class DLFolderUtil {
 	 * @return the first matching document library folder
 	 * @throws NoSuchFolderException if a matching document library folder could not be found
 	 */
-	public static DLFolder findByG_M_T_H_NotS_First(
+	public static DLFolder findByG_M_LikeT_H_NotS_First(
 			long groupId, boolean mountPoint, String treePath, boolean hidden,
 			int status, OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().findByG_M_T_H_NotS_First(
+		return getPersistence().findByG_M_LikeT_H_NotS_First(
 			groupId, mountPoint, treePath, hidden, status, orderByComparator);
 	}
 
@@ -4259,11 +4259,11 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByG_M_T_H_NotS_First(
+	public static DLFolder fetchByG_M_LikeT_H_NotS_First(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().fetchByG_M_T_H_NotS_First(
+		return getPersistence().fetchByG_M_LikeT_H_NotS_First(
 			groupId, mountPoint, treePath, hidden, status, orderByComparator);
 	}
 
@@ -4279,13 +4279,13 @@ public class DLFolderUtil {
 	 * @return the last matching document library folder
 	 * @throws NoSuchFolderException if a matching document library folder could not be found
 	 */
-	public static DLFolder findByG_M_T_H_NotS_Last(
+	public static DLFolder findByG_M_LikeT_H_NotS_Last(
 			long groupId, boolean mountPoint, String treePath, boolean hidden,
 			int status, OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().findByG_M_T_H_NotS_Last(
+		return getPersistence().findByG_M_LikeT_H_NotS_Last(
 			groupId, mountPoint, treePath, hidden, status, orderByComparator);
 	}
 
@@ -4300,11 +4300,11 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByG_M_T_H_NotS_Last(
+	public static DLFolder fetchByG_M_LikeT_H_NotS_Last(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().fetchByG_M_T_H_NotS_Last(
+		return getPersistence().fetchByG_M_LikeT_H_NotS_Last(
 			groupId, mountPoint, treePath, hidden, status, orderByComparator);
 	}
 
@@ -4321,14 +4321,14 @@ public class DLFolderUtil {
 	 * @return the previous, current, and next document library folder
 	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	 */
-	public static DLFolder[] findByG_M_T_H_NotS_PrevAndNext(
+	public static DLFolder[] findByG_M_LikeT_H_NotS_PrevAndNext(
 			long folderId, long groupId, boolean mountPoint, String treePath,
 			boolean hidden, int status,
 			OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().findByG_M_T_H_NotS_PrevAndNext(
+		return getPersistence().findByG_M_LikeT_H_NotS_PrevAndNext(
 			folderId, groupId, mountPoint, treePath, hidden, status,
 			orderByComparator);
 	}
@@ -4343,11 +4343,11 @@ public class DLFolderUtil {
 	 * @param status the status
 	 * @return the matching document library folders that the user has permission to view
 	 */
-	public static List<DLFolder> filterFindByG_M_T_H_NotS(
+	public static List<DLFolder> filterFindByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status) {
 
-		return getPersistence().filterFindByG_M_T_H_NotS(
+		return getPersistence().filterFindByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status);
 	}
 
@@ -4367,11 +4367,11 @@ public class DLFolderUtil {
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @return the range of matching document library folders that the user has permission to view
 	 */
-	public static List<DLFolder> filterFindByG_M_T_H_NotS(
+	public static List<DLFolder> filterFindByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, int start, int end) {
 
-		return getPersistence().filterFindByG_M_T_H_NotS(
+		return getPersistence().filterFindByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end);
 	}
 
@@ -4392,12 +4392,12 @@ public class DLFolderUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching document library folders that the user has permission to view
 	 */
-	public static List<DLFolder> filterFindByG_M_T_H_NotS(
+	public static List<DLFolder> filterFindByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().filterFindByG_M_T_H_NotS(
+		return getPersistence().filterFindByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status, start, end,
 			orderByComparator);
 	}
@@ -4415,14 +4415,14 @@ public class DLFolderUtil {
 	 * @return the previous, current, and next document library folder
 	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
 	 */
-	public static DLFolder[] filterFindByG_M_T_H_NotS_PrevAndNext(
+	public static DLFolder[] filterFindByG_M_LikeT_H_NotS_PrevAndNext(
 			long folderId, long groupId, boolean mountPoint, String treePath,
 			boolean hidden, int status,
 			OrderByComparator<DLFolder> orderByComparator)
 		throws com.liferay.document.library.kernel.exception.
 			NoSuchFolderException {
 
-		return getPersistence().filterFindByG_M_T_H_NotS_PrevAndNext(
+		return getPersistence().filterFindByG_M_LikeT_H_NotS_PrevAndNext(
 			folderId, groupId, mountPoint, treePath, hidden, status,
 			orderByComparator);
 	}
@@ -4436,11 +4436,11 @@ public class DLFolderUtil {
 	 * @param hidden the hidden
 	 * @param status the status
 	 */
-	public static void removeByG_M_T_H_NotS(
+	public static void removeByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status) {
 
-		getPersistence().removeByG_M_T_H_NotS(
+		getPersistence().removeByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status);
 	}
 
@@ -4454,11 +4454,11 @@ public class DLFolderUtil {
 	 * @param status the status
 	 * @return the number of matching document library folders
 	 */
-	public static int countByG_M_T_H_NotS(
+	public static int countByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status) {
 
-		return getPersistence().countByG_M_T_H_NotS(
+		return getPersistence().countByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status);
 	}
 
@@ -4472,11 +4472,11 @@ public class DLFolderUtil {
 	 * @param status the status
 	 * @return the number of matching document library folders that the user has permission to view
 	 */
-	public static int filterCountByG_M_T_H_NotS(
+	public static int filterCountByG_M_LikeT_H_NotS(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
 		int status) {
 
-		return getPersistence().filterCountByG_M_T_H_NotS(
+		return getPersistence().filterCountByG_M_LikeT_H_NotS(
 			groupId, mountPoint, treePath, hidden, status);
 	}
 

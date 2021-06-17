@@ -327,12 +327,12 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByF_C_P() throws Exception {
-		_persistence.countByF_C_P(
+	public void testCountByGtF_C_P() throws Exception {
+		_persistence.countByGtF_C_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByF_C_P(0L, 0L, 0L);
+		_persistence.countByGtF_C_P(0L, 0L, 0L);
 	}
 
 	@Test
@@ -411,16 +411,16 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_M_T_H_NotS() throws Exception {
-		_persistence.countByG_M_T_H_NotS(
+	public void testCountByG_M_LikeT_H_NotS() throws Exception {
+		_persistence.countByG_M_LikeT_H_NotS(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
 
-		_persistence.countByG_M_T_H_NotS(
+		_persistence.countByG_M_LikeT_H_NotS(
 			0L, RandomTestUtil.randomBoolean(), "null",
 			RandomTestUtil.randomBoolean(), 0);
 
-		_persistence.countByG_M_T_H_NotS(
+		_persistence.countByG_M_LikeT_H_NotS(
 			0L, RandomTestUtil.randomBoolean(), (String)null,
 			RandomTestUtil.randomBoolean(), 0);
 	}
