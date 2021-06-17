@@ -81,7 +81,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 						samlSpSessionId + -samlSpSessionIdOffset +
 							latestSamlPeerBindingId;
 
-					String insertSql = StringBundler.concat(
+					String sql = StringBundler.concat(
 						"insert into SamlPeerBinding (samlPeerBindingId, ",
 						"companyId, createDate, userId, userName, deleted, ",
 						"samlNameIdFormat, samlNameIdNameQualifier, ",
@@ -90,7 +90,7 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 						"?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 					try (PreparedStatement insertPreparedStatement =
-							connection.prepareStatement(insertSql)) {
+							connection.prepareStatement(sql)) {
 
 						insertPreparedStatement.setInt(1, samlPeerBindingId);
 						insertPreparedStatement.setLong(2, companyId);
