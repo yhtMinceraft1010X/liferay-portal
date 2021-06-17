@@ -121,13 +121,13 @@ public class ExpressionConvertImplTest {
 
 		BooleanQuery booleanQuery = (BooleanQuery)queryFilter.getQuery();
 
-		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
+		List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
 
-		Assert.assertEquals(clauses.toString(), 1, clauses.size());
+		Assert.assertEquals(booleanClauses.toString(), 1, booleanClauses.size());
 
-		BooleanClause<Query> clause = clauses.get(0);
+		BooleanClause<Query> booleanClause = booleanClauses.get(0);
 
-		TermQuery termQuery = (TermQuery)clause.getClause();
+		TermQuery termQuery = (TermQuery)booleanClause.getClause();
 
 		QueryTerm queryTerm = termQuery.getQueryTerm();
 
