@@ -67,9 +67,9 @@ public class AssetEntryListInfoRequestItemProvider
 
 		Set<String> parameterNames = parameterMap.keySet();
 
-		Stream<String> parameterNameStream = parameterNames.stream();
+		Stream<String> parameterNamesStream = parameterNames.stream();
 
-		Set<String> categoryIdParameterNames = parameterNameStream.filter(
+		Set<String> categoryIdParameterNames = parameterNamesStream.filter(
 			parameterName -> parameterName.startsWith("categoryId_")
 		).collect(
 			Collectors.toSet()
