@@ -22,7 +22,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
-import com.liferay.portal.search.query.util.NestedFieldQueryHelper;
+import com.liferay.portal.search.query.NestedFieldQueryHelper;
 
 import java.text.Format;
 

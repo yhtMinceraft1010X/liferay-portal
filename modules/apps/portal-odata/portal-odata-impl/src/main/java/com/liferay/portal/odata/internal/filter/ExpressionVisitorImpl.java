@@ -49,7 +49,7 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
-import com.liferay.portal.search.query.util.NestedFieldQueryHelper;
+import com.liferay.portal.search.query.NestedFieldQueryHelper;
 
 import java.text.Format;
 import java.text.ParseException;

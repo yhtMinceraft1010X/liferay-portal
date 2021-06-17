@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.query.util;
+package com.liferay.portal.search.query;
 
 import com.liferay.portal.kernel.search.Query;
 

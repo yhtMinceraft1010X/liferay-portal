@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.query.util;
+package com.liferay.portal.search.internal.query;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.query.util.NestedFieldQueryHelper;
+import com.liferay.portal.search.query.NestedFieldQueryHelper;
 
 import java.util.function.Function;
 
