@@ -139,7 +139,6 @@ public class AssetCategoryLocalServiceTest {
 		Assert.assertEquals(
 			"Expected title does not match", expectedAssetCategoryTitle,
 			assetCategory.getTitle(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"Expected title map does not match", titleMap,
 			assetCategory.getTitleMap());
@@ -198,7 +197,6 @@ public class AssetCategoryLocalServiceTest {
 		Assert.assertEquals(
 			"Expected title does not match", expectedAssetCategoryTitle,
 			assetCategory.getTitle(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"Expected title map does not match", titleMap,
 			assetCategory.getTitleMap());
