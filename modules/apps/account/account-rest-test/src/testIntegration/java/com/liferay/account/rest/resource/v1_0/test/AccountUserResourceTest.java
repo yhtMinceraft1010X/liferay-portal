@@ -124,8 +124,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		List<User> removeUsers = users.subList(0, 2);
 
 		accountUserResource.deleteAccountUsersByEmailAddress(
-			_accountEntry.getAccountEntryId(),
-			_toUserEmailAddresses(removeUsers));
+			_accountEntry.getAccountEntryId(), _toEmailAddresses(removeUsers));
 
 		for (User user : removeUsers) {
 			Assert.assertNull(
@@ -165,7 +164,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		accountUserResource.
 			deleteAccountUsersByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
-				_toUserEmailAddresses(removeUsers));
+				_toEmailAddresses(removeUsers));
 
 		for (User user : removeUsers) {
 			Assert.assertNull(
@@ -254,7 +253,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		}
 
 		accountUserResource.postAccountUsersByEmailAddress(
-			_accountEntry.getAccountEntryId(), _toUserEmailAddresses(users));
+			_accountEntry.getAccountEntryId(), _toEmailAddresses(users));
 
 		for (User user : users) {
 			Assert.assertNotNull(
@@ -281,7 +280,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		accountUserResource.
 			postAccountUsersByExternalReferenceCodeByEmailAddress(
 				_accountEntry.getExternalReferenceCode(),
-				_toUserEmailAddresses(users));
+				_toEmailAddresses(users));
 
 		for (User user : users) {
 			Assert.assertNotNull(
@@ -377,7 +376,7 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 		return _accountEntry.getAccountEntryId();
 	}
 
-	private String[] _toUserEmailAddresses(List<User> users) {
+	private String[] _toEmailAddresses(List<User> users) {
 		return TransformUtil.transformToArray(
 			users, User::getEmailAddress, String.class);
 	}

@@ -82,20 +82,20 @@ public class AccountUserResourceImpl
 
 	@Override
 	public void deleteAccountUsersByEmailAddress(
-			Long accountId, String[] userEmailAddresses)
+			Long accountId, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			deleteAccountUserByEmailAddress(accountId, emailAddress);
 		}
 	}
 
 	@Override
 	public void deleteAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] userEmailAddresses)
+			String externalReferenceCode, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			deleteAccountUserByExternalReferenceCodeByEmailAddress(
 				externalReferenceCode, emailAddress);
 		}
@@ -214,20 +214,20 @@ public class AccountUserResourceImpl
 
 	@Override
 	public void postAccountUsersByEmailAddress(
-			Long accountId, String[] userEmailAddresses)
+			Long accountId, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			postAccountUserByEmailAddress(accountId, emailAddress);
 		}
 	}
 
 	@Override
 	public void postAccountUsersByExternalReferenceCodeByEmailAddress(
-			String externalReferenceCode, String[] userEmailAddresses)
+			String externalReferenceCode, String[] emailAddresses)
 		throws Exception {
 
-		for (String emailAddress : userEmailAddresses) {
+		for (String emailAddress : emailAddresses) {
 			postAccountUserByExternalReferenceCodeByEmailAddress(
 				externalReferenceCode, emailAddress);
 		}
