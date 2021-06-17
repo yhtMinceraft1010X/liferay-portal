@@ -1204,6 +1204,12 @@ definition {
 			locator1 = "Form#PAGINATION_NUMBER");
 	}
 
+	macro viewParagraphBodyContent {
+		AssertElementPresent(
+			key_bodyName = "${bodyName}",
+			locator1 = "FormFields#PARAGRAPH_SPECIFIC_FIELD_BY_BODY");
+	}
+
 	macro viewParagraphField {
 		if (!(isSet(fieldName))) {
 			var key_fieldName = "${fieldTitle}";
