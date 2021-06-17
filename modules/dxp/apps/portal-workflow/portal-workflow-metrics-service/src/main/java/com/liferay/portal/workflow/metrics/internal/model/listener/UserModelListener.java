@@ -52,52 +52,51 @@ public class UserModelListener extends BaseModelListener<User> {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				if (!Objects.equals(
+				if (Objects.equals(
 						currentUser.getFullName(), user.getFullName())) {
 
-					_workflowMetricsPortalExecutor.execute(
-						() -> {
-							BooleanQuery nestedBooleanQuery =
-								_queries.booleanQuery();
-
-							TermsQuery termsQuery = _queries.terms(
-								"tasks.assigneeIds");
-
-							termsQuery.addValues(
-								String.valueOf(user.getUserId()));
-
-							nestedBooleanQuery.addMustQueryClauses(termsQuery);
-
-							nestedBooleanQuery.addMustQueryClauses(
-								_queries.term(
-									"tasks.assigneeType",
-									User.class.getName()));
-
-							ScriptBuilder builder = _scripts.builder();
-
-							searchEngineAdapter.execute(
-								new UpdateByQueryDocumentRequest(
-									_queries.nested(
-										"tasks", nestedBooleanQuery),
-									builder.idOrCode(
-										StringUtil.read(
-											getClass(),
-											"dependencies/workflow-metrics-" +
-												"update-task-assignee-" +
-													"script.painless")
-									).language(
-										"painless"
-									).putParameter(
-										"userId", user.getUserId()
-									).putParameter(
-										"userName", user.getFullName()
-									).scriptType(
-										ScriptType.INLINE
-									).build(),
-									_instanceWorkflowMetricsIndex.getIndexName(
-										user.getCompanyId())));
-						});
+					return null;
 				}
+
+				_workflowMetricsPortalExecutor.execute(
+					() -> {
+						BooleanQuery nestedBooleanQuery =
+							_queries.booleanQuery();
+
+						TermsQuery termsQuery = _queries.terms(
+							"tasks.assigneeIds");
+
+						termsQuery.addValues(String.valueOf(user.getUserId()));
+
+						nestedBooleanQuery.addMustQueryClauses(termsQuery);
+
+						nestedBooleanQuery.addMustQueryClauses(
+							_queries.term(
+								"tasks.assigneeType", User.class.getName()));
+
+						ScriptBuilder builder = _scripts.builder();
+
+						searchEngineAdapter.execute(
+							new UpdateByQueryDocumentRequest(
+								_queries.nested("tasks", nestedBooleanQuery),
+								builder.idOrCode(
+									StringUtil.read(
+										getClass(),
+										"dependencies/workflow-metrics-" +
+											"update-task-assignee-" +
+												"script.painless")
+								).language(
+									"painless"
+								).putParameter(
+									"userId", user.getUserId()
+								).putParameter(
+									"userName", user.getFullName()
+								).scriptType(
+									ScriptType.INLINE
+								).build(),
+								_instanceWorkflowMetricsIndex.getIndexName(
+									user.getCompanyId())));
+					});
 
 				return null;
 			});
