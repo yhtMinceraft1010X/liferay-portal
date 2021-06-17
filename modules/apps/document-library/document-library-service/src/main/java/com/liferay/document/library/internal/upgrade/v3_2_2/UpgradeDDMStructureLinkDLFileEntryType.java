@@ -90,12 +90,15 @@ public class UpgradeDDMStructureLinkDLFileEntryType extends UpgradeProcess {
 				}
 
 				long companyId = resultSet1.getLong(4);
-				long dataDefinitionId = resultSet1.getLong(5);
 
 				preparedStatement4.setLong(1, companyId);
+
 				preparedStatement4.setLong(
 					2, PortalUtil.getClassNameId(DLFileEntryType.class));
 				preparedStatement4.setLong(3, fileEntryTypeId);
+
+				long dataDefinitionId = resultSet1.getLong(5);
+
 				preparedStatement4.setLong(4, dataDefinitionId);
 
 				try (ResultSet resultSet3 = preparedStatement4.executeQuery()) {
@@ -114,6 +117,7 @@ public class UpgradeDDMStructureLinkDLFileEntryType extends UpgradeProcess {
 				}
 
 				preparedStatement3.executeBatch();
+
 				preparedStatement5.executeBatch();
 			}
 		}
