@@ -372,19 +372,21 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			}
 
 			private void _replaceContentReference(Content content) {
-				if (content != null) {
-					for (io.swagger.v3.oas.models.media.MediaType mediaType :
-							content.values()) {
+				if (content == null) {
+					return;
+				}
 
-						for (Map.Entry<String, String> entry :
-								schemaMappings.entrySet()) {
+				for (io.swagger.v3.oas.models.media.MediaType mediaType :
+						content.values()) {
 
-							if (mediaType.getSchema() == null) {
-								continue;
-							}
+					for (Map.Entry<String, String> entry :
+							schemaMappings.entrySet()) {
 
-							_replaceReference(entry, mediaType.getSchema());
+						if (mediaType.getSchema() == null) {
+							continue;
 						}
+
+						_replaceReference(entry, mediaType.getSchema());
 					}
 				}
 			}
@@ -393,18 +395,20 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				String parameterName = StringUtil.lowerCaseFirstLetter(key);
 
 				for (String path : new ArrayList<>(paths.keySet())) {
-					if (path.contains(parameterName)) {
-						PathItem pathItem = paths.get(path);
-
-						paths.put(
-							path.replace(
-								parameterName,
-								StringUtil.lowerCaseFirstLetter(
-									schemaMappings.get(key))),
-							pathItem);
-
-						paths.remove(path);
+					if (!path.contains(parameterName)) {
+						continue;
 					}
+
+					PathItem pathItem = paths.get(path);
+
+					paths.put(
+						path.replace(
+							parameterName,
+							StringUtil.lowerCaseFirstLetter(
+								schemaMappings.get(key))),
+						pathItem);
+
+					paths.remove(path);
 				}
 			}
 
@@ -413,11 +417,12 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 				String ref = schema.get$ref();
 
-				if ((ref != null) && ref.contains(entry.getKey())) {
-					schema.set$ref(
-						StringUtil.replace(
-							ref, entry.getKey(), entry.getValue()));
+				if ((ref == null) || !ref.contains(entry.getKey())) {
+					return;
 				}
+
+				schema.set$ref(
+					StringUtil.replace(ref, entry.getKey(), entry.getValue()));
 			}
 
 		};
