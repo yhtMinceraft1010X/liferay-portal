@@ -509,7 +509,7 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="name" />
 		</finder>
-		<finder db-index="false" name="F_C_P" return-type="Collection">
+		<finder db-index="false" name="GtF_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="folderId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentFolderId" />
@@ -555,7 +555,7 @@
 			<finder-column name="hidden" />
 			<finder-column name="status" />
 		</finder>
-		<finder db-index="false" name="G_M_T_H_NotS" return-type="Collection">
+		<finder db-index="false" name="G_M_LikeT_H_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="mountPoint" />
 			<finder-column comparator="LIKE" name="treePath" />

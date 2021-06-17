@@ -1649,7 +1649,7 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (moveToTrash) {
-			dlFolders = dlFolderPersistence.findByG_M_T_H_NotS(
+			dlFolders = dlFolderPersistence.findByG_M_LikeT_H_NotS(
 				dlFolder.getGroupId(), false,
 				CustomSQLUtil.keywords(
 					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],

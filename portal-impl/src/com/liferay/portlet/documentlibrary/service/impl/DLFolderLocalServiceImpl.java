@@ -729,7 +729,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					long previousId, long companyId, long parentPrimaryKey,
 					int size) {
 
-					return dlFolderPersistence.findByF_C_P(
+					return dlFolderPersistence.findByGtF_C_P(
 						previousId, companyId, parentPrimaryKey,
 						QueryUtil.ALL_POS, size, new FolderIdComparator(true));
 				}
