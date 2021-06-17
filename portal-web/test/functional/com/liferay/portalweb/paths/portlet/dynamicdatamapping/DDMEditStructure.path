@@ -365,11 +365,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GRID_OPTIONS_OPTION_VALUE_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(.//label, '${key_gridField}')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTION_VALUE_FIELD</td>
 	<td>//div[contains(@class,'form-group')]//div[@class='ddm-field-options'][${key_rowNumber}]//input[contains(@class,'ddm-field-text')]</td>
 	<td></td>
