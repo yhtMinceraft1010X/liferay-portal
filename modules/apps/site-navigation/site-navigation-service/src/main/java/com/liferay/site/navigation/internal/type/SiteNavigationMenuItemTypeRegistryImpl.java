@@ -50,7 +50,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		String type) {
 
-		return _siteNavigationMenuItemTypesServiceTrackerMap.getService(type);
+		return _serviceTrackerMap.getService(type);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 			new ArrayList<>();
 
 		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-				_siteNavigationMenuItemTypesServiceTrackerList) {
+				_serviceTrackerList) {
 
 			siteNavigationMenuItemTypes.add(siteNavigationMenuItemType);
 		}
@@ -72,7 +72,7 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 		List<String> types = new ArrayList<>();
 
 		for (SiteNavigationMenuItemType siteNavigationMenuItemType :
-				_siteNavigationMenuItemTypesServiceTrackerList) {
+				_serviceTrackerList) {
 
 			types.add(siteNavigationMenuItemType.getType());
 		}
@@ -82,29 +82,25 @@ public class SiteNavigationMenuItemTypeRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_siteNavigationMenuItemTypesServiceTrackerList =
-			ServiceTrackerListFactory.open(
-				bundleContext, SiteNavigationMenuItemType.class,
-				new PropertyServiceReferenceComparator<>("service.ranking"));
-
-		_siteNavigationMenuItemTypesServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, SiteNavigationMenuItemType.class, null,
-				new PropertyServiceReferenceMapper<>(
-					"site.navigation.menu.item.type"));
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SiteNavigationMenuItemType.class,
+			new PropertyServiceReferenceComparator<>("service.ranking"));
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, SiteNavigationMenuItemType.class, null,
+			new PropertyServiceReferenceMapper<>(
+				"site.navigation.menu.item.type"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_siteNavigationMenuItemTypesServiceTrackerList.close();
-
-		_siteNavigationMenuItemTypesServiceTrackerMap.close();
+		_serviceTrackerList.close();
+		_serviceTrackerMap.close();
 	}
 
 	private ServiceTrackerList
 		<SiteNavigationMenuItemType, SiteNavigationMenuItemType>
-			_siteNavigationMenuItemTypesServiceTrackerList;
+			_serviceTrackerList;
 	private volatile ServiceTrackerMap<String, SiteNavigationMenuItemType>
-		_siteNavigationMenuItemTypesServiceTrackerMap;
+		_serviceTrackerMap;
 
 }
