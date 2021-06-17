@@ -1193,15 +1193,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editGridOptions {
-		var key_gridField = "${gridField}";
-		var key_rowNumber = "${rowNumber}";
-
-		Type(
-			locator1 = "DDMEditStructure#GRID_OPTIONS_OPTION_VALUE_FIELD",
-			value1 = "${optionValue}");
-	}
-
 	macro editImageFieldPredefinedValue {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
