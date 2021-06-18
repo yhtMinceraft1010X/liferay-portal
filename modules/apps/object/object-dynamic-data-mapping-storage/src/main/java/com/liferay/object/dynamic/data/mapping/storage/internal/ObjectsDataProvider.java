@@ -43,9 +43,12 @@ public class ObjectsDataProvider implements DDMDataProvider {
 			DDMDataProviderRequest ddmDataProviderRequest)
 		throws DDMDataProviderException {
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
-
 		try {
+			DDMDataProviderResponse.Builder builder =
+				DDMDataProviderResponse.Builder.newBuilder();
+
+			List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
 			List<ObjectDefinition> objectDefinitions =
 				_objectDefinitionLocalService.getObjectDefinitions(
 					0,
@@ -59,9 +62,6 @@ public class ObjectsDataProvider implements DDMDataProvider {
 							objectDefinition.getObjectDefinitionId()),
 						objectDefinition.getName()));
 			}
-
-			DDMDataProviderResponse.Builder builder =
-				DDMDataProviderResponse.Builder.newBuilder();
 
 			builder.withOutput("Default-Output", keyValuePairs);
 
