@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.dynamic.data.mapping.storage.internal;
+package com.liferay.object.dynamic.data.mapping.internal.storage;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
