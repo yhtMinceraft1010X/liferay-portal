@@ -54,15 +54,15 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		printWriter.print("<link data-senna-track=\"temporary\" href=\"");
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		printWriter.print("<link data-senna-track=\"temporary\" href=\"");
-
 		printWriter.print(
 			absolutePortalURLBuilder.forModule(
-				_bundleContext.getBundle(), _FILE_NAME
+				_bundleContext.getBundle(), "main.css"
 			).build());
 
 		printWriter.println("\" id=\"liferayCadminCSS\" rel=\"stylesheet\"");
@@ -94,8 +94,6 @@ public class CadminTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		return true;
 	}
-
-	private static final String _FILE_NAME = "main.css";
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
