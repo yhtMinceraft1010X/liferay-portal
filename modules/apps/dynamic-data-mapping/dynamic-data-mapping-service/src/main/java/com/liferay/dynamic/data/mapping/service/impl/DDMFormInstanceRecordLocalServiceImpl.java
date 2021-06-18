@@ -653,14 +653,14 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMStorageAdapterSaveRequest.Builder.newBuilder(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), ddmFormValues
-				).withStructureId(
-					ddmFormInstance.getStructureId()
-				).withUuid(
-					serviceContext.getUuid()
 				).withClassName(
 					DDMStorageLink.class.getName()
 				).withDDMFormInstance(
 					ddmFormInstance
+				).withStructureId(
+					ddmFormInstance.getStructureId()
+				).withUuid(
+					serviceContext.getUuid()
 				).build());
 
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
@@ -911,12 +911,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			DDMStorageAdapterSaveRequest.Builder.newBuilder(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				ddmFormValues
-			).withStructureId(
-				ddmFormInstance.getStructureId()
-			).withPrimaryKey(
-				ddmFormInstanceRecordVersion.getStorageId()
 			).withDDMFormInstance(
 				ddmFormInstance
+			).withPrimaryKey(
+				ddmFormInstanceRecordVersion.getStorageId()
+			).withStructureId(
+				ddmFormInstance.getStructureId()
 			).build());
 	}
 
