@@ -87,9 +87,71 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test FilterOptionsAreAlphabeticallyOrdered {
+		WorkflowMetrics.createUsersGroovy(numberOfUsers = "1");
 
-		// TODO LRQA-67880 FilterOptionsAreAlphabeticallyOrdered pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		var count = "0";
+		var blogTitle = "1";
+
+		while ("${count}" != "2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry",
+				entryTitle = "Blogs Entry ${blogTitle}");
+			var count = ${count} + 1;
+			var blogTitle = ${blogTitle} + 1;
+		}
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		WorkflowMetrics.goToReassignSelectTask();
+
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
+
+		Pause(locator1 = "1000");
+
+		Refresh();
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#REJECT_DROPDOWN");
+
+		Button.clickDone();
+
+		Pause(locator1 = "1000");
+
+		Refresh();
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+
+		Click(locator1 = "WorkflowAllItems#REASSIGN_ICON_2");
+
+		Click(
+			key_allItemsFilterName = "Process Step",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+		AssertTextEquals(
+			key_processFilter = "Review",
+			locator1 = "WorkflowAllItems#PROCESS_STEP_FILTER",
+			value1 = "Review");
+
+		AssertTextEquals(
+			key_processFilter = "Update",
+			locator1 = "WorkflowAllItems#PROCESS_STEP_FILTER",
+			value1 = "Update");
 	}
 
 	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the filter query should only be applied after the user moves the cursor out of the dropdown card"
