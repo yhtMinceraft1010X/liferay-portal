@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>CALENDAR_ICON</td>
+	<td>//div[@class="quick-action-menu"]//button[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_ALL_ITEMS_SELECT_ALL</td>
 	<td>//li[@class='nav-item ml-2']//label</td>
 	<td></td>
