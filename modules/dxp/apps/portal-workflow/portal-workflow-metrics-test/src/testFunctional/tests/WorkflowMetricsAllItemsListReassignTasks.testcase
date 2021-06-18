@@ -205,12 +205,51 @@ definition {
 	}
 
 	@description = "LPS-102664 - Verify that, in Select New Assignee table, there is a tooltip next to New Assignee title that says Possible assignees must have permissions to be assigned to the corresponding step"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test InfoIconDisplaysMessageOnHover {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67843 InfoIconDisplaysMessageOnHover pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry A",
+			entryTitle = "First Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry B",
+			entryTitle = "Second Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "First Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Second Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+
+		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+
+		AssertElementPresent(
+			key_tooltipMessage = "Possible assignees must have permissions to be assigned to the corresponding step.",
+			locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP_MESSAGE");
 	}
 
 	@description = "LPS-102664 - Verify that tasks within a single instance with concurrent pending tasks can be reassigned using the bulk reassign task modal"

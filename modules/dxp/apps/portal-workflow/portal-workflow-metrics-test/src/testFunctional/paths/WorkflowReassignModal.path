@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSION_TOOLTIP_MESSAGE</td>
+	<td>//span[contains(@title, '${key_tooltipMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEXT_PAGINATION_BUTTON</td>
 	<td>//div[@class='modal-body']//button[contains(@aria-label,'Next')]</td>
 	<td></td>
