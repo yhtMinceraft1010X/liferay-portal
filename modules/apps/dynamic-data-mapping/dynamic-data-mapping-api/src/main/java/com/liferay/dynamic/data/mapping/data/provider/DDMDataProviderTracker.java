@@ -31,26 +31,26 @@ import org.osgi.service.component.annotations.Deactivate;
 public class DDMDataProviderTracker {
 
 	public DDMDataProvider getDDMDataProvider(String type) {
-		_initializeDDMDataProviderTypeTrackerMap();
+		_initializeDDMDataProviderTypeServiceTrackerMap();
 
-		return _ddmDataProviderTypeTrackerMap.getService(type);
+		return _ddmDataProviderTypeServiceTrackerMap.getService(type);
 	}
 
 	public DDMDataProvider getDDMDataProviderByInstanceId(String instanceId) {
-		if (_ddmDataProviderInstanceIdTrackerMap == null) {
-			_ddmDataProviderInstanceIdTrackerMap =
+		if (_ddmDataProviderInstanceIdServiceTrackerMap == null) {
+			_ddmDataProviderInstanceIdServiceTrackerMap =
 				ServiceTrackerMapFactory.openSingleValueMap(
 					_bundleContext, DDMDataProvider.class,
 					"ddm.data.provider.instance.id");
 		}
 
-		return _ddmDataProviderInstanceIdTrackerMap.getService(instanceId);
+		return _ddmDataProviderInstanceIdServiceTrackerMap.getService(instanceId);
 	}
 
 	public Set<String> getDDMDataProviderTypes() {
-		_initializeDDMDataProviderTypeTrackerMap();
+		_initializeDDMDataProviderTypeServiceTrackerMap();
 
-		return _ddmDataProviderTypeTrackerMap.keySet();
+		return _ddmDataProviderTypeServiceTrackerMap.keySet();
 	}
 
 	@Activate
@@ -60,18 +60,18 @@ public class DDMDataProviderTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_ddmDataProviderInstanceIdTrackerMap != null) {
-			_ddmDataProviderInstanceIdTrackerMap.close();
+		if (_ddmDataProviderInstanceIdServiceTrackerMap != null) {
+			_ddmDataProviderInstanceIdServiceTrackerMap.close();
 		}
 
-		if (_ddmDataProviderTypeTrackerMap != null) {
-			_ddmDataProviderTypeTrackerMap.close();
+		if (_ddmDataProviderTypeServiceTrackerMap != null) {
+			_ddmDataProviderTypeServiceTrackerMap.close();
 		}
 	}
 
-	private void _initializeDDMDataProviderTypeTrackerMap() {
-		if (_ddmDataProviderTypeTrackerMap == null) {
-			_ddmDataProviderTypeTrackerMap =
+	private void _initializeDDMDataProviderTypeServiceTrackerMap() {
+		if (_ddmDataProviderTypeServiceTrackerMap == null) {
+			_ddmDataProviderTypeServiceTrackerMap =
 				ServiceTrackerMapFactory.openSingleValueMap(
 					_bundleContext, DDMDataProvider.class,
 					"ddm.data.provider.type");
@@ -80,8 +80,8 @@ public class DDMDataProviderTracker {
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, DDMDataProvider>
-		_ddmDataProviderInstanceIdTrackerMap;
+		_ddmDataProviderInstanceIdServiceTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>
-		_ddmDataProviderTypeTrackerMap;
+		_ddmDataProviderTypeServiceTrackerMap;
 
 }
