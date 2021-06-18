@@ -260,12 +260,54 @@ definition {
 	}
 
 	@description = "LPS-105497 - Verify that the current date/time is pre-populated into the Update Task Due Date form getting the data how it is in My Workflow Tasks"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CurrentDateTimeIsPrePopulated {
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
 
-		// TODO LRQA-67816 CurrentDateTimeIsPrePopulated pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
 
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		MouseOver(
+			key_workflowInstanceName = "Blogs Entry Title",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		MouseOver(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		Click(locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#DUE_DATE_BUTTON_ALL_ITEMS_LIST");
+
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST",
+			value1 = "${displayDate}");
+
+		var displayTimeHour = DateUtil.getCurrentHour();
+		var displayTimeMinute = "${displayTimeMinute}";
+		var displayTime = "${displayTimeHour}:${displayTimeMinute}";
+
+		AssertElementPresent(
+			locator1 = "WorkflowMetricsAllItemsListUpdateDueDate#NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST_TIME",
+			value1 = "${displayTime}");
 	}
 
 	@description = "LPS-105497 - Verify that when there is an unexpected error, the modal displays the specific error state message in the banner"

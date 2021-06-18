@@ -53,7 +53,17 @@
     <td>//div[contains(@class, 'modal-content')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST</td>
+    <td>//input[contains(@placeholder,'MM/DD/YYYY')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST_TIME</td>
+    <td>//input[contains(@placeholder, 'HH:mm am/pm')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>
-</html> 
+</html>
