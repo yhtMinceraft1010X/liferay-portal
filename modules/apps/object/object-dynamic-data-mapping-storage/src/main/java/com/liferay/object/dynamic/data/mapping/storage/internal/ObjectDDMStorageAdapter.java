@@ -38,6 +38,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -143,17 +144,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			DDMForm ddmForm = ddmFormValues.getDDMForm();
 
+			long objectDefinitionId = _getObjectDefinitionId(
+				ddmStorageAdapterSaveRequest);
+
 			DDMStorageAdapterSaveResponse ddmStorageAdapterSaveResponse =
 				_ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
-
-			DDMFormInstance ddmFormInstance =
-				ddmStorageAdapterSaveRequest.getDDMFormInstance();
-
-			DDMFormInstanceSettings ddmFormInstanceSettings =
-				ddmFormInstance.getSettingsModel();
-
-			long objectDefinitionId = Long.parseLong(
-				ddmFormInstanceSettings.objectDefinitionId());
 
 			ObjectEntry addObjectEntry = _objectEntryManager.addObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
@@ -185,6 +180,19 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			Collections.singletonMap(
 				"delete", Collections.singletonMap("delete", "")),
 			null, null, objectEntryId, locale, null, user);
+	}
+
+	private long _getObjectDefinitionId(
+			DDMStorageAdapterSaveRequest ddmStorageAdapterSaveRequest)
+		throws Exception {
+
+		DDMFormInstance ddmFormInstance =
+			ddmStorageAdapterSaveRequest.getDDMFormInstance();
+
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			ddmFormInstance.getSettingsModel();
+
+		return GetterUtil.getLong(ddmFormInstanceSettings.objectDefinitionId());
 	}
 
 	private Map<String, Object> _getObjectEntryProperties(
