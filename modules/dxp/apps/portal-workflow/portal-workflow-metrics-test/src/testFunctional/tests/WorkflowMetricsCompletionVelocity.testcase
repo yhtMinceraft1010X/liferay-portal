@@ -132,7 +132,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		JSONBlog.addEntry( entryContent = "Blogs Entry Content", entryTitle = "Blogs Entry Title");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -165,11 +167,6 @@ definition {
 		WorkflowMetrics.assertChartTotalValue(
 			velocityUnitTotal = "inst / hour",
 			velocityValueTotal = "0");
-
-
-
-
-
 	}
 
 	@description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
