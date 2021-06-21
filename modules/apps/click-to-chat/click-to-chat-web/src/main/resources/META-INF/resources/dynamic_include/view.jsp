@@ -20,25 +20,27 @@
 
 <script type="text/javascript">
 	(function () {
-		function changeVisible(selectors, hide) {
+		function handleVisibility(selectors, hide) {
 			let selectorsList = selectors.split(',');
 			if (hide) {
 				selectorsList.forEach((selector) => {
 					document
 						.querySelectorAll(selector)
-						.forEach((el) => el.classList.add('d-none'));
+						.forEach((el) => el.classList.add('d-none', 'invisible'));
 				});
 			}
 			else {
 				selectorsList.forEach((selector) => {
 					document
 						.querySelectorAll(selector)
-						.forEach((el) => el.classList.remove('d-none'));
+						.forEach((el) =>
+							el.classList.remove('d-none', 'invisible')
+						);
 				});
 			}
 		}
 
-		let providers = {
+		let clickToChatProviders = {
 			chatwoot: function (hide) {
 				if (hide) {
 					document
@@ -57,6 +59,7 @@
 			tawkto: function (hide) {
 				if (window.Tawk_API) {
 					if (hide) {
+						window.Tawk_API.minimize();
 						window.Tawk_API.hideWidget();
 					}
 					else if (typeof window.Tawk_API.showWidget === 'function') {
@@ -68,7 +71,7 @@
 			zendesk: '#launcher,#webWidget',
 		};
 
-		Object.entries(providers).forEach(([key, action]) => {
+		Object.entries(clickToChatProviders).forEach(([key, action]) => {
 			var hideElement = true;
 
 			if (key === '<%= clickToChatChatProviderId %>') {
@@ -76,10 +79,10 @@
 			}
 
 			if (typeof action === 'string') {
-				return changeVisible(action, hideElement);
+				return handleVisibility(action, hideElement);
 			}
 
-			action(!hideElement);
+			action(hideElement);
 		});
 	})();
 </script>
