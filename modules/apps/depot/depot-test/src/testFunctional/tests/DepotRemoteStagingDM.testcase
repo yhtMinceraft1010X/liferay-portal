@@ -1301,8 +1301,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
-
 		BlogsEntry.addSmallImage(
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpg",
@@ -1346,8 +1344,6 @@ definition {
 			siteName = "Site Name");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addSmallImage(
 			browseImage = "true",
@@ -2658,8 +2654,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Panel.expandPanel(panel = "Configuration");
-
 		BlogsEntry.addSmallImage(
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpg",
@@ -2703,8 +2697,6 @@ definition {
 			siteName = "Site Name");
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.removeSmallImage(uploadFileName = "Document_1.jpg");
 
