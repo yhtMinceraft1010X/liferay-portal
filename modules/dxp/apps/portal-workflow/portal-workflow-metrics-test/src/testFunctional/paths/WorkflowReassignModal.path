@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ASSIGNEE_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-toggle filter-dropdown-button btn btn-secondary') and contains(text(),'Assignee')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BULK_REASSIGN_MODAL</td>
 	<td>//div[contains(@class,'fade modal')]</td>
 	<td></td>
