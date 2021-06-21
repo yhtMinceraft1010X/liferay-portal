@@ -115,19 +115,19 @@ public class DLReferencesExportImportContentProcessor
 			stopStrings = _DL_REFERENCE_STOP_STRINGS;
 		}
 
-		int urlPatternEndPos = StringUtil.indexOfAny(
+		int urlPatternPos = StringUtil.indexOfAny(
 			content, stopStrings, beginPos, endPos);
 
-		if (urlPatternEndPos == -1) {
+		if (urlPatternPos == -1) {
 			if (endPos != content.length()) {
 				return null;
 			}
 
-			urlPatternEndPos = endPos;
+			urlPatternPos = endPos;
 		}
 
 		return new ObjectValuePair<>(
-			content.substring(beginPos, urlPatternEndPos), urlPatternEndPos);
+			content.substring(beginPos, urlPatternPos), urlPatternPos);
 	}
 
 	protected Map<String, String[]> getDLReferenceParameters(
