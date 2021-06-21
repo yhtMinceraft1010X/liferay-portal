@@ -117,19 +117,19 @@ public class ObjectDefinitionResourceImpl
 	private com.liferay.object.model.ObjectField _toObjectField(
 		ObjectField objectField) {
 
-		com.liferay.object.model.ObjectField existingObjectField =
+		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			_objectFieldLocalService.createObjectField(0L);
 
-		existingObjectField.setIndexed(
+		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
-		existingObjectField.setIndexedAsKeyword(
+		serviceBuilderObjectField.setIndexedAsKeyword(
 			GetterUtil.getBoolean(objectField.getIndexedAsKeyword()));
-		existingObjectField.setIndexedLanguageId(
+		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
-		existingObjectField.setName(objectField.getName());
-		existingObjectField.setType(objectField.getType());
+		serviceBuilderObjectField.setName(objectField.getName());
+		serviceBuilderObjectField.setType(objectField.getType());
 
-		return existingObjectField;
+		return serviceBuilderObjectField;
 	}
 
 	@Reference
