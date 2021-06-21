@@ -112,21 +112,21 @@ public class AssetCategoriesManagementToolbarDisplayContext
 	public String getAvailableActions(AssetCategory category)
 		throws PortalException {
 
-		List<String> availableActionsList = new ArrayList<>();
+		List<String> availableActions = new ArrayList<>();
 
 		if (_assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.UPDATE)) {
 
-			availableActionsList.add("setCategoryDisplayPageTemplate");
+			availableActions.add("setCategoryDisplayPageTemplate");
 		}
 
 		if (_assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.DELETE)) {
 
-			availableActionsList.add("deleteSelectedCategories");
+			availableActions.add("deleteSelectedCategories");
 		}
 
-		return StringUtil.merge(availableActionsList, StringPool.COMMA);
+		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
 	@Override
