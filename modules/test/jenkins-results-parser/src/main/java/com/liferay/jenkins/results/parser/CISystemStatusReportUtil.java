@@ -92,39 +92,24 @@ public class CISystemStatusReportUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		JSONObject relevantSuiteBuildDataJSONObject =
-			_getRelevantSuiteBuildDataJSONObject();
-
 		sb.append("var relevantSuiteBuildData = ");
-		sb.append(relevantSuiteBuildDataJSONObject.toString());
-
-		JSONObject topLevelTotalBuildDurationJSONObject =
-			_getTopLevelTotalBuildDurationJSONObject();
+		sb.append(String.valueOf(_getRelevantSuiteBuildDataJSONObject()));
 
 		sb.append("\nvar topLevelTotalBuildDurationData = ");
-		sb.append(topLevelTotalBuildDurationJSONObject.toString());
-
-		JSONObject topLevelActiveBuildDurationJSONObject =
-			_getTopLevelActiveBuildDurationJSONObject();
+		sb.append(String.valueOf(_getTopLevelTotalBuildDurationJSONObject()));
 
 		sb.append("\nvar topLevelActiveBuildDurationData = ");
-		sb.append(topLevelActiveBuildDurationJSONObject.toString());
-
-		JSONObject downstreamBuildDurationJSONObject =
-			_getDownstreamBuildDurationJSONObject();
+		sb.append(String.valueOf(_getTopLevelActiveBuildDurationJSONObject()));
 
 		sb.append("\nvar downstreamBuildDurationData = ");
-		sb.append(downstreamBuildDurationJSONObject.toString());
+		sb.append(String.valueOf(_getDownstreamBuildDurationJSONObject()));
 
 		sb.append("\nvar testrayDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
-		sb.append(");\nvar successRateData = ");
+		sb.append(");");
 
-		JSONArray successRateTableDataJSONArray =
-			_getSuccessRateDataJSONArray();
-
-		sb.append(successRateTableDataJSONArray.toString());
-
+		sb.append("\nvar successRateData = ");
+		sb.append(String.valueOf(_getSuccessRateDataJSONArray()));
 		sb.append(";");
 
 		JenkinsResultsParserUtil.write(filePath, sb.toString());
