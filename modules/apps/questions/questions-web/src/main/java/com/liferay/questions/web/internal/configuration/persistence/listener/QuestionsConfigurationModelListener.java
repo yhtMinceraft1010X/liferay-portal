@@ -77,15 +77,15 @@ public class QuestionsConfigurationModelListener
 				stream.collect(
 					Collectors.toMap(Function.identity(), properties::get)));
 
-			Configuration configuration = _getConfiguration();
-
-			Dictionary<String, Object> configurationProperties =
-				configuration.getProperties();
-
 			ComponentDescriptionDTO componentDescriptionDTO =
 				_serviceComponentRuntime.getComponentDescriptionDTO(
 					_bundleContext.getBundle(),
 					QuestionsLayoutSEOLinkManagerImpl.class.getName());
+
+			Configuration configuration = _getConfiguration();
+
+			Dictionary<String, Object> configurationProperties =
+				configuration.getProperties();
 
 			if (!Objects.equals(
 					GetterUtil.getString(
