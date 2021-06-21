@@ -2276,7 +2276,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						String group = excludeRule.getGroup();
 						String name = excludeRule.getModule();
 
-						File file;
+						File file = null;
 
 						if (_isTaglibDependency(group, name)) {
 							String fileName = name + ".jar";
