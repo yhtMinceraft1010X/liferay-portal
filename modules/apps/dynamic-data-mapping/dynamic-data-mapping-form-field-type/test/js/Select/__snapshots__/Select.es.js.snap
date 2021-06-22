@@ -3,7 +3,6 @@
 exports[`Select calls onChange callback when an item is selected using multiselect 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -320,7 +319,6 @@ exports[`Select calls onChange callback when an item is selected using multisele
 exports[`Select filters according to the input and calls onChange callback when an item is selected using search 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -587,7 +585,6 @@ exports[`Select filters according to the input and calls onChange callback when 
 exports[`Select has a help text 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -671,7 +668,6 @@ exports[`Select has a help text 1`] = `
     </span>
     <span
       class="sr-only"
-      id="undefined_fieldDetails"
     >
       Type something
       <br />
@@ -683,7 +679,6 @@ exports[`Select has a help text 1`] = `
 exports[`Select has a key 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -770,7 +765,6 @@ exports[`Select has a label 1`] = `
     class="form-group hide"
   >
     <label
-      aria-describedby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -856,7 +850,6 @@ exports[`Select has a label 1`] = `
 exports[`Select has a placeholder 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -940,7 +933,6 @@ exports[`Select has a placeholder 1`] = `
 exports[`Select has a predefinedValue 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1024,7 +1016,6 @@ exports[`Select has a predefinedValue 1`] = `
 exports[`Select has a value 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1108,7 +1099,7 @@ exports[`Select has a value 1`] = `
 exports[`Select has an id 1`] = `
 <div>
   <div
-    aria-labelledby="Id_fieldDetails"
+    aria-labelledby="Id"
     class="form-group hide"
     tabindex="0"
   >
@@ -1193,7 +1184,6 @@ exports[`Select has an id 1`] = `
 exports[`Select has class dropdown-opened when it's opened 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1277,7 +1267,6 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
 exports[`Select is closed by default 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1361,7 +1350,6 @@ exports[`Select is closed by default 1`] = `
 exports[`Select is not required 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1448,7 +1436,6 @@ exports[`Select puts an asterisk when field is required 1`] = `
     class="form-group hide"
   >
     <label
-      aria-describedby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -1540,7 +1527,6 @@ exports[`Select puts an asterisk when field is required 1`] = `
     />
     <span
       class="sr-only"
-      id="undefined_fieldDetails"
     >
       required
     </span>
@@ -1554,7 +1540,6 @@ exports[`Select renders Label if showLabel is true 1`] = `
     class="form-group hide"
   >
     <label
-      aria-describedby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -1640,7 +1625,6 @@ exports[`Select renders Label if showLabel is true 1`] = `
 exports[`Select renders no options when options come empty 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1724,7 +1708,6 @@ exports[`Select renders no options when options come empty 1`] = `
 exports[`Select renders options 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -1819,7 +1802,6 @@ exports[`Select renders options 1`] = `
 exports[`Select shows a search input when the number of options is more than the maximum allowed 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
