@@ -164,6 +164,17 @@ public class ContainerLayoutStructureItemMapper
 					ShadowConverter.convertToExternalValue(
 						containerStyledLayoutStructureItem.getShadow()));
 
+				setBorderColor(
+					() -> {
+						String borderColor =
+							containerStyledLayoutStructureItem.getBorderColor();
+
+						if (Validator.isNull(borderColor)) {
+							return null;
+						}
+
+						return borderColor;
+					});
 				setBorderWidth(
 					() -> {
 						String borderWidth =
@@ -174,6 +185,19 @@ public class ContainerLayoutStructureItemMapper
 						}
 
 						return GetterUtil.getInteger(borderWidth);
+					});
+				setContentDisplay(
+					() -> {
+						String contentDisplay =
+							containerStyledLayoutStructureItem.
+								getContentDisplay();
+
+						if (Validator.isNull(contentDisplay)) {
+							return null;
+						}
+
+						return ContentDisplay.create(
+							StringUtil.upperCaseFirstLetter(contentDisplay));
 					});
 				setMarginBottom(
 					() -> {
@@ -290,30 +314,6 @@ public class ContainerLayoutStructureItemMapper
 						return GetterUtil.getInteger(
 							PaddingConverter.convertToExternalValue(
 								paddingTop));
-					});
-				setBorderColor(
-					() -> {
-						String borderColor =
-							containerStyledLayoutStructureItem.getBorderColor();
-
-						if (Validator.isNull(borderColor)) {
-							return null;
-						}
-
-						return borderColor;
-					});
-				setContentDisplay(
-					() -> {
-						String contentDisplay =
-							containerStyledLayoutStructureItem.
-								getContentDisplay();
-
-						if (Validator.isNull(contentDisplay)) {
-							return null;
-						}
-
-						return ContentDisplay.create(
-							StringUtil.upperCaseFirstLetter(contentDisplay));
 					});
 				setWidthType(
 					() -> {
