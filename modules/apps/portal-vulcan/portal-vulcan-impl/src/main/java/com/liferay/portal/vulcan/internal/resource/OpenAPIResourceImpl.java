@@ -200,6 +200,21 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				Map<String, List<String>> params, Map<String, String> cookies,
 				Map<String, List<String>> headers) {
 
+				String operationId = operation.getOperationId();
+
+				for (Map.Entry<String, String> entry :
+						schemaMappings.entrySet()) {
+
+					operationId = StringUtil.replace(
+						operationId, TextFormatter.formatPlural(entry.getKey()),
+						TextFormatter.formatPlural(entry.getValue()));
+
+					operationId = StringUtil.replace(
+						operationId, entry.getKey(), entry.getValue());
+				}
+
+				operation.setOperationId(operationId);
+
 				List<String> tags = operation.getTags();
 
 				if (tags != null) {
@@ -219,21 +234,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 					operation.setTags(newTags);
 				}
-
-				String operationId = operation.getOperationId();
-
-				for (Map.Entry<String, String> entry :
-						schemaMappings.entrySet()) {
-
-					operationId = StringUtil.replace(
-						operationId, TextFormatter.formatPlural(entry.getKey()),
-						TextFormatter.formatPlural(entry.getValue()));
-
-					operationId = StringUtil.replace(
-						operationId, entry.getKey(), entry.getValue());
-				}
-
-				operation.setOperationId(operationId);
 
 				return super.filterOperation(
 					operation, apiDescription, params, cookies, headers);
