@@ -77,7 +77,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 			<div className="a11y-panel__sidebar--occurrence-description-wrapper">
 				<p className="text-secondary">
 					{Liferay.Language.get(
-						'please-open-the-devtools-in-the-browser-to-see-selected-occurrence'
+						'open-developer-tools-in-the-browser-to-see-the-selected-occurrence'
 					)}
 				</p>
 				<div className="my-3">

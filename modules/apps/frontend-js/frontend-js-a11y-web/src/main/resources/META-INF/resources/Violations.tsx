@@ -188,7 +188,7 @@ export default function Violations({
 							'there-are-no-accessibility-violations-in-this-page'
 					  )
 					: Liferay.Language.get(
-							'please-check-the-list-of-violated-rules-highlighted-on-the-page'
+							'check-the-list-of-violated-rules-highlighted-on-the-page'
 					  )}
 			</div>
 			{hasViolations && (

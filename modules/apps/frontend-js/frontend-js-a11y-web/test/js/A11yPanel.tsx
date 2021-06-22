@@ -302,7 +302,7 @@ describe('A11yPanel', () => {
 
 			expect(
 				getByText(
-					'please-open-the-devtools-in-the-browser-to-see-selected-occurrence'
+					'open-developer-tools-in-the-browser-to-see-the-selected-occurrence'
 				)
 			).toBeInTheDocument();
 
@@ -360,7 +360,7 @@ describe('A11yPanel', () => {
 
 			expect(
 				getByText(
-					'please-check-the-list-of-violated-rules-highlighted-on-the-page'
+					'check-the-list-of-violated-rules-highlighted-on-the-page'
 				)
 			).toBeInTheDocument();
 			expect(
