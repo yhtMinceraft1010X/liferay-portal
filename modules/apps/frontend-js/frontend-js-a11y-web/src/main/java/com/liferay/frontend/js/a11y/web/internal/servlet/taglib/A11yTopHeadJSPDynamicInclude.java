@@ -54,16 +54,16 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		ScriptData scriptData = new ScriptData();
+
 		List<String> denylist = new ArrayList<>(
 			Arrays.asList(
 				".a11y-overlay", ".a11y-popover", "#yui3-css-stamp",
 				".dropdown-menu", ".tooltip", "#tooltipContainer",
 				"[id*=senna_surface1-screen]:not([class=flipped])"));
 
-		String[] denylistConfig = _a11yConfiguration.denylist();
-
-		if (denylistConfig != null) {
-			Collections.addAll(denylist, denylistConfig);
+		if (_a11yConfiguration.denylist() != null) {
+			Collections.addAll(denylist, _a11yConfiguration.denylist());
 		}
 
 		if (!_a11yConfiguration.enableEditors()) {
@@ -83,10 +83,6 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 		if (!_a11yConfiguration.enableProductMenu()) {
 			denylist.add(".lfr-product-menu-panel");
 		}
-
-		String[] targetsArray = {_a11yConfiguration.target()};
-
-		String[] anyArray = {"*"};
 
 		JSONObject propsJSONObject = JSONUtil.put(
 			"axeOptions",
@@ -108,37 +104,36 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			JSONUtil.put(
 				"any",
 				JSONUtil.put(
-					"data-restore-title", anyArray
+					"data-restore-title", _STAR
 				).put(
-					"draggable", anyArray
+					"draggable", _STAR
 				).put(
-					"id", anyArray
+					"id", _STAR
 				)
 			).put(
-				"body", JSONUtil.put("class", anyArray)
+				"body", JSONUtil.put("class", _STAR)
 			).put(
 				"input",
 				JSONUtil.put(
-					"id", anyArray
+					"id", _STAR
 				).put(
-					"value", anyArray
+					"value", _STAR
 				)
 			)
 		).put(
 			"portletId", "frontend-js-a11y-web"
 		).put(
-			"targets", targetsArray
+			"targets", new String[] {_a11yConfiguration.target()}
 		);
 
-		ScriptData scriptData = new ScriptData();
-
-		String initModuleName = _npmResolver.resolveModuleName(
+		String resolvedModuleName = _npmResolver.resolveModuleName(
 			"@liferay/frontend-js-a11y-web/index");
 
 		scriptData.append(
 			null,
-			"FrontendA11y.default(" + propsJSONObject.toJSONString() + ")",
-			initModuleName + " as FrontendA11y", ScriptData.ModulesType.ES6);
+			"FrontendA11y.default(" + propsJSONObject.toString() + ")",
+			resolvedModuleName + " as FrontendA11y",
+			ScriptData.ModulesType.ES6);
 
 		scriptData.writeTo(httpServletResponse.getWriter());
 	}
@@ -159,6 +154,8 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 		_a11yConfiguration = ConfigurableUtil.createConfigurable(
 			A11yConfiguration.class, properties);
 	}
+
+	private static final String[] _STAR = {"*"};
 
 	private volatile A11yConfiguration _a11yConfiguration;
 
