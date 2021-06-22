@@ -233,8 +233,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test CheckTranslationOfDuplicatedFieldsetOnWebContent {
-		property portal.upstream = "quarantine";
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
