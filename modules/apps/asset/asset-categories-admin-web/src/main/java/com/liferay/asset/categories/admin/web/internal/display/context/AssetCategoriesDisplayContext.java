@@ -838,13 +838,15 @@ public class AssetCategoriesDisplayContext {
 			return _showSelectAssetDisplayPage;
 		}
 
-		_showSelectAssetDisplayPage = true;
+		boolean showSelectAssetDisplayPage = true;
 
 		Group group = _themeDisplay.getScopeGroup();
 
 		if (group.isCompany() || group.isDepot()) {
-			_showSelectAssetDisplayPage = false;
+			showSelectAssetDisplayPage = false;
 		}
+
+		_showSelectAssetDisplayPage = showSelectAssetDisplayPage;
 
 		return _showSelectAssetDisplayPage;
 	}
