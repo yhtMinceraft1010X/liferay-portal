@@ -408,9 +408,9 @@ public class JSONStorageEntryLocalServiceImpl
 
 	private void _removeChildJSONStorageEntries(
 		JSONStorageEntry jsonStorageEntry,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap) {
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap) {
 
-		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntryMap.get(
+		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			jsonStorageEntry.getPrimaryKey());
 
 		if (jsonStorageEntries == null) {
@@ -420,7 +420,7 @@ public class JSONStorageEntryLocalServiceImpl
 		Queue<JSONStorageEntry> queue = new LinkedList<>(jsonStorageEntries);
 
 		while ((jsonStorageEntry = queue.poll()) != null) {
-			jsonStorageEntries = jsonStorageEntryMap.get(
+			jsonStorageEntries = jsonStorageEntriesMap.get(
 				jsonStorageEntry.getPrimaryKey());
 
 			if (jsonStorageEntries != null) {
@@ -434,7 +434,7 @@ public class JSONStorageEntryLocalServiceImpl
 	private void _updateEmptyJSONStorageEntry(
 		long companyId, long classNameId, long classPK,
 		long parentJSONStorageEntryId, int index,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap,
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
 		List<JSONStorageEntry> jsonStorageEntries) {
 
 		JSONStorageEntry jsonStorageEntry = null;
@@ -446,7 +446,7 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntryPersistence.remove(jsonStorageEntries.get(i));
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntries.get(i), jsonStorageEntryMap);
+					jsonStorageEntries.get(i), jsonStorageEntriesMap);
 			}
 		}
 
@@ -478,16 +478,16 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntry);
 
 			_removeChildJSONStorageEntries(
-				jsonStorageEntry, jsonStorageEntryMap);
+				jsonStorageEntry, jsonStorageEntriesMap);
 		}
 	}
 
 	private void _updateJSONArray(
 		long companyId, long classNameId, long classPK,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap,
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
 		List<?> jsonArrayList, long parentJSONStorageEntryId) {
 
-		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntryMap.get(
+		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			parentJSONStorageEntryId);
 
 		int length = jsonArrayList.size();
@@ -505,13 +505,13 @@ public class JSONStorageEntryLocalServiceImpl
 
 			_updateJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId, i,
-				StringPool.BLANK, value, jsonStorageEntry, jsonStorageEntryMap);
+				StringPool.BLANK, value, jsonStorageEntry, jsonStorageEntriesMap);
 		}
 
 		if (length == 0) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId, 0,
-				jsonStorageEntryMap, jsonStorageEntries);
+				jsonStorageEntriesMap, jsonStorageEntries);
 		}
 		else if (jsonStorageEntries != null) {
 			for (int i = length; i < jsonStorageEntries.size(); i++) {
@@ -520,17 +520,17 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntryPersistence.remove(jsonStorageEntry);
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntry, jsonStorageEntryMap);
+					jsonStorageEntry, jsonStorageEntriesMap);
 			}
 		}
 	}
 
 	private void _updateJSONObject(
 		long companyId, long classNameId, long classPK,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap,
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
 		Map<String, Object> jsonObjectMap, long parentJSONStorageEntryId) {
 
-		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntryMap.get(
+		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			parentJSONStorageEntryId);
 
 		Set<String> keySet = jsonObjectMap.keySet();
@@ -556,13 +556,13 @@ public class JSONStorageEntryLocalServiceImpl
 			_updateJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
 				JSONStorageEntryConstants.INDEX_DEFAULT, key, value,
-				jsonStorageEntry, jsonStorageEntryMap);
+				jsonStorageEntry, jsonStorageEntriesMap);
 		}
 
 		if (keySet.isEmpty()) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
-				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntryMap,
+				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntriesMap,
 				jsonStorageEntries);
 		}
 		else if (jsonStorageEntries != null) {
@@ -571,7 +571,7 @@ public class JSONStorageEntryLocalServiceImpl
 					jsonStorageEntryPersistence.remove(jsonStorageEntry);
 
 					_removeChildJSONStorageEntries(
-						jsonStorageEntry, jsonStorageEntryMap);
+						jsonStorageEntry, jsonStorageEntriesMap);
 				}
 			}
 		}
@@ -581,10 +581,10 @@ public class JSONStorageEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK,
 		List<JSONStorageEntry> jsonStorageEntries, String json) {
 
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap = new HashMap<>();
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap = new HashMap<>();
 
 		for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-			List<JSONStorageEntry> values = jsonStorageEntryMap.computeIfAbsent(
+			List<JSONStorageEntry> values = jsonStorageEntriesMap.computeIfAbsent(
 				jsonStorageEntry.getParentJSONStorageEntryId(),
 				key -> new ArrayList<>());
 
@@ -598,13 +598,13 @@ public class JSONStorageEntryLocalServiceImpl
 
 		if (object instanceof List) {
 			_updateJSONArray(
-				companyId, classNameId, classPK, jsonStorageEntryMap,
+				companyId, classNameId, classPK, jsonStorageEntriesMap,
 				(List<?>)object,
 				JSONStorageEntryConstants.PARENT_JSON_STORAGE_ENTRY_ID_DEFAULT);
 		}
 		else if (object instanceof Map) {
 			_updateJSONObject(
-				companyId, classNameId, classPK, jsonStorageEntryMap,
+				companyId, classNameId, classPK, jsonStorageEntriesMap,
 				(Map<String, Object>)object,
 				JSONStorageEntryConstants.PARENT_JSON_STORAGE_ENTRY_ID_DEFAULT);
 		}
@@ -617,7 +617,7 @@ public class JSONStorageEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK,
 		long parentJSONStorageEntryId, int index, String key, Object value,
 		JSONStorageEntry jsonStorageEntry,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntryMap) {
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap) {
 
 		if (jsonStorageEntry == null) {
 			jsonStorageEntry = jsonStorageEntryPersistence.create(
@@ -639,14 +639,14 @@ public class JSONStorageEntryLocalServiceImpl
 			type = JSONStorageEntryConstants.TYPE_ARRAY;
 
 			_updateJSONArray(
-				companyId, classNameId, classPK, jsonStorageEntryMap,
+				companyId, classNameId, classPK, jsonStorageEntriesMap,
 				(List<?>)value, jsonStorageEntry.getPrimaryKey());
 		}
 		else if (value instanceof Map) {
 			type = JSONStorageEntryConstants.TYPE_OBJECT;
 
 			_updateJSONObject(
-				companyId, classNameId, classPK, jsonStorageEntryMap,
+				companyId, classNameId, classPK, jsonStorageEntriesMap,
 				(Map<String, Object>)value, jsonStorageEntry.getPrimaryKey());
 		}
 		else if (value != null) {
@@ -699,7 +699,7 @@ public class JSONStorageEntryLocalServiceImpl
 				(type != JSONStorageEntryConstants.TYPE_OBJECT)) {
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntry, jsonStorageEntryMap);
+					jsonStorageEntry, jsonStorageEntriesMap);
 			}
 		}
 	}
