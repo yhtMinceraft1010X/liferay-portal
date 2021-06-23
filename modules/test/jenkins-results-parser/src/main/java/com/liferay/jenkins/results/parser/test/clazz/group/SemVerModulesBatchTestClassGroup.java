@@ -84,7 +84,8 @@ public class SemVerModulesBatchTestClassGroup
 
 					@Override
 					public FileVisitResult preVisitDirectory(
-						Path filePath, BasicFileAttributes attrs) {
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
 
 						if (filePath.equals(baseDir.toPath())) {
 							return FileVisitResult.CONTINUE;

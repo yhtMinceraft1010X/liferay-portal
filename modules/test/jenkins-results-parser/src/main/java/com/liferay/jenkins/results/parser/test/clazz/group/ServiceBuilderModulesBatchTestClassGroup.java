@@ -98,7 +98,8 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 					@Override
 					public FileVisitResult preVisitDirectory(
-						Path filePath, BasicFileAttributes attrs) {
+						Path filePath,
+						BasicFileAttributes basicFileAttributes) {
 
 						File currentDirectory = filePath.toFile();
 						String filePathString = filePath.toString();
