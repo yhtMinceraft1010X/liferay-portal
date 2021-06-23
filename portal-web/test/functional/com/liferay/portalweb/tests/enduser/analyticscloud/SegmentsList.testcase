@@ -135,7 +135,6 @@ definition {
 		ACSegments.assertSegmentPresent(segmentName = "Static Segment Test");
 
 		ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test");
-
 	}
 
 }
