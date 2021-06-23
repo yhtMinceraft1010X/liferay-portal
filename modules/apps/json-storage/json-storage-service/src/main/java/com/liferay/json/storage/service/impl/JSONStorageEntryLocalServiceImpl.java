@@ -504,7 +504,7 @@ public class JSONStorageEntryLocalServiceImpl
 
 			_updateJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId, i,
-				StringPool.BLANK, value, jsonStorageEntry, jsonStorageEntriesMap);
+				StringPool.BLANK, value, jsonStorageEntriesMap, jsonStorageEntry);
 		}
 
 		if (length == 0) {
@@ -555,7 +555,7 @@ public class JSONStorageEntryLocalServiceImpl
 			_updateJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
 				JSONStorageEntryConstants.INDEX_DEFAULT, key, value,
-				jsonStorageEntry, jsonStorageEntriesMap);
+				jsonStorageEntriesMap, jsonStorageEntry);
 		}
 
 		if (set.isEmpty()) {
