@@ -1822,11 +1822,7 @@ definition {
 	}
 
 	macro subscribeToCurrentFolderCP {
-		Pause(locator1 = "3000");
-
 		Click.clickAt(locator1 = "Icon#INFO");
-
-		Pause(locator1 = "1000");
 
 		Click(locator1 = "Icon#SUBSCRIBE");
 
