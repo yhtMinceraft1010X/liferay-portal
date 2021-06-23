@@ -533,7 +533,7 @@ public class JSONStorageEntryLocalServiceImpl
 		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			parentJSONStorageEntryId);
 
-		Set<String> keySet = objects.keySet();
+		Set<String> set = objects.keySet();
 
 		for (Map.Entry<String, Object> entry : objects.entrySet()) {
 			String key = entry.getKey();
@@ -559,14 +559,14 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntry, jsonStorageEntriesMap);
 		}
 
-		if (keySet.isEmpty()) {
+		if (set.isEmpty()) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
 				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntries, jsonStorageEntriesMap);
 		}
 		else if (jsonStorageEntries != null) {
 			for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-				if (!keySet.contains(jsonStorageEntry.getKey())) {
+				if (!set.contains(jsonStorageEntry.getKey())) {
 					jsonStorageEntryPersistence.remove(jsonStorageEntry);
 
 					_removeChildJSONStorageEntries(
