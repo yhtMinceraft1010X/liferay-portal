@@ -616,8 +616,8 @@ public class JSONStorageEntryLocalServiceImpl
 	private void _updateJSONStorageEntry(
 		long companyId, long classNameId, long classPK,
 		long parentJSONStorageEntryId, int index, String key, Object value,
-		JSONStorageEntry jsonStorageEntry,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap) {
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
+		JSONStorageEntry jsonStorageEntry) {
 
 		if (jsonStorageEntry == null) {
 			jsonStorageEntry = jsonStorageEntryPersistence.create(
