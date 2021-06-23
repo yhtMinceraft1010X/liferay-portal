@@ -26,7 +26,8 @@ export const OriginalDocumentTag = ({id}) => {
 		);
 		if (imageContainer) {
 			setContainer(imageContainer);
-		} else {
+		}
+		else {
 			setContainer(
 				document.querySelector('.preview-file .preview-file-container')
 			);

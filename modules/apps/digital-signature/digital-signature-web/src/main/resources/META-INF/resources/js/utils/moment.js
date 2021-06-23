@@ -24,9 +24,10 @@ const getLanguage = () => {
 	return languages[language] || language;
 };
 
-const getDateFromUTC = (date) =>
+const toDateFromUTC = (date) =>
 	moment(moment.utc(date).toISOString()).locale(getLanguage());
 
-export const getDateFromNow = (date) => getDateFromUTC(date).fromNow();
+export const toDateFromNow = (date) => toDateFromUTC(date).fromNow();
 
-export const getDataLocalFormat = (date) => getDateFromUTC(date).format('l LT');
+export const toLocalDateTimeFormatted = (date) =>
+	toDateFromUTC(date).format('l LT');

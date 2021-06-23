@@ -28,7 +28,7 @@ import {AppContext} from '../../AppContext';
 import {BackButtonPortal} from '../../components/control-menu/ControlMenu';
 import DocumentPreviewerWrapper from '../../components/document-previewer/DocumentPreviewerWrapper';
 import {DOCUSIGN_STATUS} from '../../utils/contants';
-import {getDataLocalFormat} from '../../utils/moment';
+import {toLocalDateTimeFormatted} from '../../utils/moment';
 import {concatValues} from '../../utils/utils';
 
 const QuestionLine = ({children, className, colon = true, question}) => (
@@ -62,7 +62,7 @@ const EnvelopeDetail = ({
 			/>
 			<QuestionLine
 				colon={false}
-				question={getDataLocalFormat(createdLocalDateTime)}
+				question={toLocalDateTimeFormatted(createdLocalDateTime)}
 			/>
 		</div>
 		<QuestionLine question={Liferay.Language.get('to')}>
