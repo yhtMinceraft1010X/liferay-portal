@@ -528,14 +528,14 @@ public class JSONStorageEntryLocalServiceImpl
 	private void _updateJSONObject(
 		long companyId, long classNameId, long classPK,
 		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
-		Map<String, Object> jsonObjectMap, long parentJSONStorageEntryId) {
+		Map<String, Object> objects, long parentJSONStorageEntryId) {
 
 		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			parentJSONStorageEntryId);
 
-		Set<String> keySet = jsonObjectMap.keySet();
+		Set<String> keySet = objects.keySet();
 
-		for (Map.Entry<String, Object> entry : jsonObjectMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : objects.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
