@@ -125,7 +125,6 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
-
 		String fragmentEntryLinkNamespace = _getFragmentEntryLinkNamespace(
 			fragmentEntryLink);
 
