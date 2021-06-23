@@ -407,8 +407,8 @@ public class JSONStorageEntryLocalServiceImpl
 	}
 
 	private void _removeChildJSONStorageEntries(
-		JSONStorageEntry jsonStorageEntry,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap) {
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
+		JSONStorageEntry jsonStorageEntry) {
 
 		List<JSONStorageEntry> jsonStorageEntries = jsonStorageEntriesMap.get(
 			jsonStorageEntry.getPrimaryKey());
@@ -446,7 +446,7 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntryPersistence.remove(jsonStorageEntries.get(i));
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntries.get(i), jsonStorageEntriesMap);
+					jsonStorageEntriesMap, jsonStorageEntries.get(i));
 			}
 		}
 
@@ -478,7 +478,7 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntry);
 
 			_removeChildJSONStorageEntries(
-				jsonStorageEntry, jsonStorageEntriesMap);
+				jsonStorageEntriesMap, jsonStorageEntry);
 		}
 	}
 
@@ -520,7 +520,7 @@ public class JSONStorageEntryLocalServiceImpl
 				jsonStorageEntryPersistence.remove(jsonStorageEntry);
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntry, jsonStorageEntriesMap);
+					jsonStorageEntriesMap, jsonStorageEntry);
 			}
 		}
 	}
@@ -570,7 +570,7 @@ public class JSONStorageEntryLocalServiceImpl
 					jsonStorageEntryPersistence.remove(jsonStorageEntry);
 
 					_removeChildJSONStorageEntries(
-						jsonStorageEntry, jsonStorageEntriesMap);
+						jsonStorageEntriesMap, jsonStorageEntry);
 				}
 			}
 		}
@@ -698,7 +698,7 @@ public class JSONStorageEntryLocalServiceImpl
 				(type != JSONStorageEntryConstants.TYPE_OBJECT)) {
 
 				_removeChildJSONStorageEntries(
-					jsonStorageEntry, jsonStorageEntriesMap);
+					jsonStorageEntriesMap, jsonStorageEntry);
 			}
 		}
 	}
