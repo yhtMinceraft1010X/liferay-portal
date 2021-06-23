@@ -219,14 +219,14 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 	private class AuditLogContext implements LogContext {
 
 		public AuditLogContext() {
-			_contextThreadLocal = new CentralizedThreadLocal<>(
-				AuditLogContext.class + ".context",
+			_contexts = new CentralizedThreadLocal<>(
+				AuditLogContext.class + "._contexts",
 				HashMap<String, String>::new);
 		}
 
 		@Override
 		public Map<String, String> getContext() {
-			return _contextThreadLocal.get();
+			return _contexts.get();
 		}
 
 		@Override
@@ -238,7 +238,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			String clientIP, long companyId, String sessionId,
 			String serverName, Long userId, String xRequestId) {
 
-			_contextThreadLocal.set(
+			_contexts.set(
 				HashMapBuilder.put(
 					"clientIP", clientIP
 				).put(
@@ -282,7 +282,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 				).build());
 		}
 
-		private final ThreadLocal<Map<String, String>> _contextThreadLocal;
+		private final ThreadLocal<Map<String, String>> _contexts;
 
 	}
 
