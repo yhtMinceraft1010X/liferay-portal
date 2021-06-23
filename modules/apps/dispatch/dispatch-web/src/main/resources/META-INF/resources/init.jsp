@@ -71,9 +71,9 @@ page import="java.util.Date" %>
 <portlet:defineObjects />
 
 <%
-Format fastDateFormat = FastDateFormatFactoryUtil.getDateTime(themeDisplay.getLocale());
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
+
+Format fastDateFormat = FastDateFormatFactoryUtil.getDateTime(themeDisplay.getLocale());
 %>

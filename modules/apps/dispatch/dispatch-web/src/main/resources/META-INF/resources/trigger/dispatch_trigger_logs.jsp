@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
-
 DispatchLogDisplayContext dispatchLogDisplayContext = (DispatchLogDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DispatchTrigger dispatchTrigger = dispatchLogDisplayContext.getDispatchTrigger();
@@ -30,6 +28,8 @@ PortletURL portletURL = PortletURLBuilder.create(
 ).build();
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:management-toolbar

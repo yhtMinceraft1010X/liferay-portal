@@ -51,7 +51,6 @@ public class ViewDispatchLogManagementToolbarDisplayContext
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.putData("action", "deleteDispatchLogs");
-
 				dropdownItem.putData(
 					"deleteDispatchLogsURL",
 					PortletURLBuilder.createActionURL(
@@ -61,7 +60,6 @@ public class ViewDispatchLogManagementToolbarDisplayContext
 					).setNavigation(
 						getNavigation()
 					).buildString());
-
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
