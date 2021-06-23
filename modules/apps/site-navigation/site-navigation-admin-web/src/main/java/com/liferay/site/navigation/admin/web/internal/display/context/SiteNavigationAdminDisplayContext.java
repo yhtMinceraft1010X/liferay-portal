@@ -97,14 +97,6 @@ public class SiteNavigationAdminDisplayContext {
 			new DefaultSiteNavigationMenuItemTypeContext(
 				themeDisplay.getScopeGroup());
 
-		RenderRequest renderRequest =
-			(RenderRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		RenderResponse renderResponse =
-			(RenderResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		return new DropdownItemList() {
 			{
 				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
@@ -118,39 +110,9 @@ public class SiteNavigationAdminDisplayContext {
 					}
 
 					add(
-						dropdownItem -> {
-							dropdownItem.setData(
-								HashMapBuilder.<String, Object>put(
-									"addItemURL",
-									() -> {
-										if (!siteNavigationMenuItemType.
-												isItemSelector()) {
-
-											return null;
-										}
-
-										PortletURL addURL =
-											siteNavigationMenuItemType.
-												getAddURL(
-													renderRequest,
-													renderResponse);
-
-										return addURL.toString();
-									}
-								).put(
-									"href",
-									_getAddURL(siteNavigationMenuItemType)
-								).put(
-									"itemSelector",
-									siteNavigationMenuItemType.isItemSelector()
-								).put(
-									"siteNavigationMenuId",
-									getSiteNavigationMenuId()
-								).build());
-							dropdownItem.setLabel(
-								siteNavigationMenuItemType.getLabel(
-									themeDisplay.getLocale()));
-						});
+						dropdownItem -> _applyDropdownItem(
+							dropdownItem, siteNavigationMenuItemType,
+							themeDisplay));
 				}
 			}
 		};
@@ -423,6 +385,42 @@ public class SiteNavigationAdminDisplayContext {
 			ActionKeys.UPDATE);
 
 		return _updatePermission;
+	}
+
+	private void _applyDropdownItem(
+		DropdownItem dropdownItem,
+		SiteNavigationMenuItemType siteNavigationMenuItemType,
+		ThemeDisplay themeDisplay) {
+
+		dropdownItem.setData(
+			HashMapBuilder.<String, Object>put(
+				"addItemURL",
+				() -> {
+					if (!siteNavigationMenuItemType.isItemSelector()) {
+						return null;
+					}
+
+					RenderRequest renderRequest =
+						(RenderRequest)_httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_REQUEST);
+					RenderResponse renderResponse =
+						(RenderResponse)_httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+					PortletURL addURL = siteNavigationMenuItemType.getAddURL(
+						renderRequest, renderResponse);
+
+					return addURL.toString();
+				}
+			).put(
+				"href", _getAddURL(siteNavigationMenuItemType)
+			).put(
+				"itemSelector", siteNavigationMenuItemType.isItemSelector()
+			).put(
+				"siteNavigationMenuId", getSiteNavigationMenuId()
+			).build());
+		dropdownItem.setLabel(
+			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale()));
 	}
 
 	private String _getAddURL(
