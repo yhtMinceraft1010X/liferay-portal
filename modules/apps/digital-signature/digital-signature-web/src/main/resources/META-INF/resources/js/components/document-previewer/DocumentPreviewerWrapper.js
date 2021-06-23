@@ -15,6 +15,7 @@
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useState} from 'react';
 
+import {OriginalDocumentTag} from '../original-document-tag/OriginalDocumentTag';
 import EmptyState from '../table/EmptyState';
 import DocumentPreviewer from './DocumentPreviewer';
 import ImagePreviewer from './ImagePreviewer';
@@ -67,6 +68,8 @@ const DocumentPreviewerWrapper = ({fileEntries = []}) => {
 	return (
 		<>
 			<DocumentPreview fileEntry={fileEntry} />
+
+			<OriginalDocumentTag id={documentPage} />
 
 			<div className="align-items-center d-flex flex-column justify-content-center">
 				<ClayPaginationWithBasicItems

@@ -163,17 +163,19 @@ const ImagePreviewer = ({alt, imageURL}) => {
 	return (
 		<div className="preview-file">
 			<div
-				className="preview-file-container preview-file-max-height"
+				className="d-flex preview-file-container preview-file-max-height"
 				ref={imageContainer}
 			>
-				<img
-					alt={alt}
-					className="preview-file-image"
-					onLoad={handleImageLoad}
-					ref={image}
-					src={imageURL}
-					style={getImageStyles()}
-				/>
+				<div className="image-container">
+					<img
+						alt={alt}
+						className="preview-file-image"
+						onLoad={handleImageLoad}
+						ref={image}
+						src={imageURL}
+						style={getImageStyles()}
+					/>
+				</div>
 			</div>
 			<div className="preview-toolbar-container">
 				<ClayButton.Group className="floating-bar">

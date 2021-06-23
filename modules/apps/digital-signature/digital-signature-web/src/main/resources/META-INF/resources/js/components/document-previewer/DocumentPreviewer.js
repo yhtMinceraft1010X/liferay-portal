@@ -201,7 +201,9 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 	return (
 		<div className="preview-file">
 			<div
-				className="preview-file-container preview-file-max-height"
+				className={`preview-file-container preview-file-max-height ${
+					expanded && 'image-container-expanded'
+				}`}
 				ref={imageContainer}
 			>
 				{currentPageLoading ? (

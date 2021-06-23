@@ -76,6 +76,41 @@
 				font-weight: 600;
 			}
 		}
+
+		.preview-file {
+			display: flex;
+
+			.preview-file-container {
+				align-items: center;
+				margin: auto;
+
+				.image-container {
+					margin: auto;
+					position: relative;
+				}
+
+				.preview-file-image {
+					position: static;
+				}
+
+				.preview-image-mark {
+					cursor: alias;
+					opacity: 0.7;
+					position: absolute;
+					right: 0;
+					top: 0;
+					user-select: none;
+				}
+			}
+
+			.image-container-expanded {
+				.preview-image-mark {
+					right: 62px;
+					top: 17px;
+					transform: scale(2);
+				}
+			}
+		}
 	}
 
 	// This is a temporary code
