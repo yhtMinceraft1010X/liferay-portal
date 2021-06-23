@@ -115,7 +115,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			xRequestId = httpServletRequest.getHeader(HttpHeaders.X_REQUEST_ID);
 		}
 
-		if (!validateXRequestId(xRequestId)) {
+		if (!isValidXRequestId(xRequestId)) {
 			xRequestId = PortalUUIDUtil.generate();
 		}
 
@@ -165,7 +165,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		return httpServletRequest.getRemoteAddr();
 	}
 
-	protected boolean validateXRequestId(String xRequestId) {
+	protected boolean isValidXRequestId(String xRequestId) {
 		if (Validator.isBlank(xRequestId)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Incoming X-Request-Id is empty");
@@ -183,8 +183,6 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 			return false;
 		}
-
-		// non-printable characters should not be accepted
 
 		for (int i = 0; i < xRequestId.length(); ++i) {
 			if ((xRequestId.charAt(i) < 32) || (xRequestId.charAt(i) > 126)) {
