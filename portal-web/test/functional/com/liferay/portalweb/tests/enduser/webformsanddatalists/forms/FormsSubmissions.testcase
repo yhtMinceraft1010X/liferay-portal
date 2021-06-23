@@ -272,14 +272,52 @@ definition {
 	}
 
 	@description = "Verify that a Form can redirect a user after being submitted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRedirectUserAfterFormSubmission {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131026 CanRedirectUserAfterFormSubmission pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
+		SitePages.addPublicPage(
+			pageName = "Form Page 1",
+			sitePageType = "Widget Page");
+
+		var friendlyURL = SitePages.getFriendlyUrl();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureRedirectURL(URL = "${friendlyURL}");
+
+		Button.clickDone();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "test");
+
+		FormPortlet.submit();
+
+		Form.viewRedirectedURL(friendlyURL = "${friendlyURL}");
 	}
 
 	@description = "Verify that a Form can require user authentication before being accessed"

@@ -186,6 +186,16 @@ definition {
 		Button.clickDone();
 	}
 
+	macro configureRedirectURL {
+		AssertClick(
+			locator1 = "Form#SETTINGS_TAB_PERSONALIZATION",
+			value1 = "Personalization");
+
+		FormFields.editText(
+			fieldName = "redirectURL",
+			fieldValue = "${URL}");
+	}
+
 	macro configureRequireAuthentication {
 		FormFields.enableSwitcher(fieldName = "requireAuthentication");
 
@@ -966,6 +976,14 @@ definition {
 		var key_alertMessage = "The form was published successfully! Access it with this URL";
 
 		AssertVisible(locator1 = "Form#PUBLISH_UNPUBLISH_ICON_CLOSE");
+	}
+
+	macro viewRedirectedURL {
+		WaitForElementPresent(
+			key_navItem = "Home",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		AssertLocation(value1 = "${friendlyURL}");
 	}
 
 	macro viewRequiredFieldIndicator {
