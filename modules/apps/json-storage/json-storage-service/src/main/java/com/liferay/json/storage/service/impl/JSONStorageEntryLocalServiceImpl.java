@@ -63,7 +63,7 @@ public class JSONStorageEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK, String json) {
 
 		_updateJSONStorageEntries(
-			companyId, classNameId, classPK, Collections.emptyList(), json);
+			companyId, classNameId, classPK, json, Collections.emptyList());
 	}
 
 	@Override
@@ -152,9 +152,8 @@ public class JSONStorageEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK, String json) {
 
 		_updateJSONStorageEntries(
-			companyId, classNameId, classPK,
-			jsonStorageEntryPersistence.findByCN_CPK(classNameId, classPK),
-			json);
+			companyId, classNameId, classPK, json,
+			jsonStorageEntryPersistence.findByCN_CPK(classNameId, classPK));
 	}
 
 	private JSONSerializable _getJSONSerializable(
@@ -577,8 +576,8 @@ public class JSONStorageEntryLocalServiceImpl
 	}
 
 	private void _updateJSONStorageEntries(
-		long companyId, long classNameId, long classPK,
-		List<JSONStorageEntry> jsonStorageEntries, String json) {
+		long companyId, long classNameId, long classPK, String json,
+		List<JSONStorageEntry> jsonStorageEntries) {
 
 		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap = new HashMap<>();
 
