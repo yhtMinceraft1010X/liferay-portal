@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
 		"liferay.jackson=false",
 		"osgi.jaxrs.application.base=/frontend-view-state",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Frontend.View.State"
+		"osgi.jaxrs.name=Liferay.Frontend.View.State.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class FrontendViewStateApplication extends Application {
+public class FrontendViewStateRESTApplication extends Application {
 }
