@@ -251,7 +251,6 @@ public class DisplayPageSiteNavigationMenuItemType
 			SiteNavigationMenuItemTypeDisplayPageWebKeys.
 				LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER,
 			_layoutDisplayPageProviderTracker);
-
 		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);

@@ -55,12 +55,10 @@ public class DisplayPageSiteNavigationMenuTypeDisplayContext {
 			(InfoItemServiceTracker)httpServletRequest.getAttribute(
 				SiteNavigationMenuItemTypeDisplayPageWebKeys.
 					INFO_ITEM_SERVICE_TRACKER);
-
 		_layoutDisplayPageProviderTracker =
 			(LayoutDisplayPageProviderTracker)httpServletRequest.getAttribute(
 				SiteNavigationMenuItemTypeDisplayPageWebKeys.
 					LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER);
-
 		_siteNavigationMenuItem =
 			(SiteNavigationMenuItem)httpServletRequest.getAttribute(
 				SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
