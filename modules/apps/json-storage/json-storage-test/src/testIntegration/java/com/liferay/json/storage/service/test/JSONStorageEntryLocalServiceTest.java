@@ -53,10 +53,8 @@ public class JSONStorageEntryLocalServiceTest {
 	public void tearDown() {
 		_jsonStorageEntryLocalService.deleteJSONStorageEntries(
 			_CLASS_NAME_ID, _CLASS_PK_1);
-
 		_jsonStorageEntryLocalService.deleteJSONStorageEntries(
 			_CLASS_NAME_ID, _CLASS_PK_2);
-
 		_jsonStorageEntryLocalService.deleteJSONStorageEntries(
 			_CLASS_NAME_ID, _CLASS_PK_3);
 	}
@@ -139,10 +137,8 @@ public class JSONStorageEntryLocalServiceTest {
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_1,
 			"{\"object\": {\"array\": [1, 2],\"key 1\": \"value 1 a\", \"key " +
 				"2\": \"value 2\"}}");
-
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_2, "[2,3,4]");
-
 		_jsonStorageEntryLocalService.addJSONStorageEntries(
 			_COMPANY_ID, _CLASS_NAME_ID, _CLASS_PK_3,
 			"{\"object\": {\"array\": [], \"key 1\": \"value 1 b\", \"key " +
@@ -150,7 +146,6 @@ public class JSONStorageEntryLocalServiceTest {
 
 		_assertClassPKs(
 			Collections.emptyList(), new Object[] {"object"}, "value 1 a");
-
 		_assertClassPKs(
 			Collections.singletonList(_CLASS_PK_1),
 			new Object[] {"object", "key 1"}, "value 1 a");
@@ -163,14 +158,12 @@ public class JSONStorageEntryLocalServiceTest {
 		_assertClassPKs(
 			Collections.singletonList(_CLASS_PK_1),
 			new Object[] {null, "key 1"}, "value 1 a");
-
 		_assertClassPKs(
-			Arrays.asList(_CLASS_PK_1), new Object[] {"array", null}, 2);
+			Collections.singletonList(_CLASS_PK_1),
+			new Object[] {"array", null}, 2);
 		_assertClassPKs(
 			Collections.singletonList(_CLASS_PK_2), new Object[] {0}, 2);
-
 		_assertClassPKs(Arrays.asList(_CLASS_PK_1, _CLASS_PK_2), null, 2);
-
 		_assertClassPKs(
 			Arrays.asList(_CLASS_PK_1, _CLASS_PK_3),
 			new Object[] {"object", "key 2"}, "value 2");
@@ -230,7 +223,6 @@ public class JSONStorageEntryLocalServiceTest {
 			_CLASS_NAME_ID, _CLASS_PK_1);
 
 		Assert.assertEquals(1, jsonArray.length());
-
 		Assert.assertNull(jsonArray.get(0));
 	}
 
@@ -347,7 +339,6 @@ public class JSONStorageEntryLocalServiceTest {
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONArray(
 					_CLASS_NAME_ID, _CLASS_PK_1)));
-
 		_assertJSONEquals(
 			json,
 			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
@@ -408,7 +399,6 @@ public class JSONStorageEntryLocalServiceTest {
 		_assertJSONEquals(
 			json,
 			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
-
 		_assertJSONEquals(
 			json,
 			String.valueOf(
@@ -425,7 +415,6 @@ public class JSONStorageEntryLocalServiceTest {
 			String.valueOf(
 				_jsonStorageEntryLocalService.getJSONObject(
 					_CLASS_NAME_ID, _CLASS_PK_1)));
-
 		_assertJSONEquals(
 			json,
 			_jsonStorageEntryLocalService.getJSON(_CLASS_NAME_ID, _CLASS_PK_1));
@@ -439,7 +428,6 @@ public class JSONStorageEntryLocalServiceTest {
 			_jsonStorageEntryLocalService.getClassPKs(
 				_COMPANY_ID, _CLASS_NAME_ID, pathParts, value,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-
 		Assert.assertEquals(
 			expectedValues.size(),
 			_jsonStorageEntryLocalService.getClassPKsCount(
