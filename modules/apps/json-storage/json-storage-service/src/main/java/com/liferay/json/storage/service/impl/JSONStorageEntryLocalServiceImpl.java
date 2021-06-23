@@ -199,9 +199,7 @@ public class JSONStorageEntryLocalServiceImpl
 			else if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG) {
 				value = jsonStorageEntry.getValueLong();
 			}
-			else if (type ==
-						JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED) {
-
+			else if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED) {
 				value = String.valueOf(jsonStorageEntry.getValueLong());
 			}
 			else if (type == JSONStorageEntryConstants.TYPE_VALUE_STRING) {
@@ -504,7 +502,8 @@ public class JSONStorageEntryLocalServiceImpl
 
 			_updateJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId, i,
-				StringPool.BLANK, value, jsonStorageEntriesMap, jsonStorageEntry);
+				StringPool.BLANK, value, jsonStorageEntriesMap,
+				jsonStorageEntry);
 		}
 
 		if (length == 0) {
@@ -561,7 +560,8 @@ public class JSONStorageEntryLocalServiceImpl
 		if (set.isEmpty()) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
-				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntries, jsonStorageEntriesMap);
+				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntries,
+				jsonStorageEntriesMap);
 		}
 		else if (jsonStorageEntries != null) {
 			for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
@@ -579,12 +579,14 @@ public class JSONStorageEntryLocalServiceImpl
 		long companyId, long classNameId, long classPK, String json,
 		List<JSONStorageEntry> jsonStorageEntries) {
 
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap = new HashMap<>();
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap =
+			new HashMap<>();
 
 		for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-			List<JSONStorageEntry> values = jsonStorageEntriesMap.computeIfAbsent(
-				jsonStorageEntry.getParentJSONStorageEntryId(),
-				key -> new ArrayList<>());
+			List<JSONStorageEntry> values =
+				jsonStorageEntriesMap.computeIfAbsent(
+					jsonStorageEntry.getParentJSONStorageEntryId(),
+					key -> new ArrayList<>());
 
 			values.add(jsonStorageEntry);
 		}
