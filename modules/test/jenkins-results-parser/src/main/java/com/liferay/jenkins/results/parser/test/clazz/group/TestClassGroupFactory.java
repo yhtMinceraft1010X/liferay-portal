@@ -125,20 +125,22 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new IntegrationJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("junit-test-") ||
-					 batchName.startsWith(
-						 "modules-integration-project-templates-") ||
-					 batchName.startsWith("modules-unit-project-templates-")) {
+			else if (batchName.startsWith("js-test-") ||
+					 batchName.startsWith("portal-frontend-js-")) {
 
-				batchTestClassGroup = new JUnitBatchTestClassGroup(
+				batchTestClassGroup = new NPMTestBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("js-unit-")) {
 				batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("unit-")) {
-				batchTestClassGroup = new UnitJUnitBatchTestClassGroup(
+			else if (batchName.startsWith("junit-test-") ||
+					 batchName.startsWith(
+						 "modules-integration-project-templates-") ||
+					 batchName.startsWith("modules-unit-project-templates-")) {
+
+				batchTestClassGroup = new JUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-compile-")) {
@@ -185,12 +187,6 @@ public class TestClassGroupFactory {
 					new QAWebsitesFunctionalBatchTestClassGroup(
 						batchName, (QAWebsitesGitRepositoryJob)job);
 			}
-			else if (batchName.startsWith("js-test-") ||
-					 batchName.startsWith("portal-frontend-js-")) {
-
-				batchTestClassGroup = new NPMTestBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
 			else if (batchName.startsWith("rest-builder-")) {
 				batchTestClassGroup = new RESTBuilderModulesBatchTestClassGroup(
 					batchName, portalTestClassJob);
@@ -202,6 +198,10 @@ public class TestClassGroupFactory {
 			}
 			else if (batchName.startsWith("tck-")) {
 				batchTestClassGroup = new TCKJunitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+			else if (batchName.startsWith("unit-")) {
+				batchTestClassGroup = new UnitJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else {
