@@ -181,41 +181,43 @@ public class JSONStorageEntryLocalServiceImpl
 
 			int type = jsonStorageEntry.getType();
 
-			if (type != JSONStorageEntryConstants.TYPE_EMPTY) {
-				Object value = null;
+			if (type == JSONStorageEntryConstants.TYPE_EMPTY) {
+				continue;
+			}
 
-				if (type == JSONStorageEntryConstants.TYPE_ARRAY) {
-					value = map.computeIfAbsent(
-						jsonStorageEntry.getPrimaryKey(),
-						key -> _jsonFactory.createJSONArray());
-				}
-				else if (type == JSONStorageEntryConstants.TYPE_OBJECT) {
-					value = map.computeIfAbsent(
-						jsonStorageEntry.getPrimaryKey(),
-						key -> _jsonFactory.createJSONObject());
-				}
-				else if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG) {
-					value = jsonStorageEntry.getValueLong();
-				}
-				else if (type ==
-							JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED) {
+			Object value = null;
 
-					value = String.valueOf(jsonStorageEntry.getValueLong());
-				}
-				else if (type == JSONStorageEntryConstants.TYPE_VALUE_STRING) {
-					JSONDeserializer<?> jsonDeserializer =
-						_jsonFactory.createJSONDeserializer();
+			if (type == JSONStorageEntryConstants.TYPE_ARRAY) {
+				value = map.computeIfAbsent(
+					jsonStorageEntry.getPrimaryKey(),
+					key -> _jsonFactory.createJSONArray());
+			}
+			else if (type == JSONStorageEntryConstants.TYPE_OBJECT) {
+				value = map.computeIfAbsent(
+					jsonStorageEntry.getPrimaryKey(),
+					key -> _jsonFactory.createJSONObject());
+			}
+			else if (type == JSONStorageEntryConstants.TYPE_VALUE_LONG) {
+				value = jsonStorageEntry.getValueLong();
+			}
+			else if (type ==
+						JSONStorageEntryConstants.TYPE_VALUE_LONG_QUOTED) {
 
-					value = jsonDeserializer.deserialize(
-						jsonStorageEntry.getValueString());
-				}
+				value = String.valueOf(jsonStorageEntry.getValueLong());
+			}
+			else if (type == JSONStorageEntryConstants.TYPE_VALUE_STRING) {
+				JSONDeserializer<?> jsonDeserializer =
+					_jsonFactory.createJSONDeserializer();
 
-				if (jsonArray == null) {
-					jsonObject.put(jsonStorageEntry.getKey(), value);
-				}
-				else {
-					jsonArray.put(value);
-				}
+				value = jsonDeserializer.deserialize(
+					jsonStorageEntry.getValueString());
+			}
+
+			if (jsonArray == null) {
+				jsonObject.put(jsonStorageEntry.getKey(), value);
+			}
+			else {
+				jsonArray.put(value);
 			}
 		}
 
