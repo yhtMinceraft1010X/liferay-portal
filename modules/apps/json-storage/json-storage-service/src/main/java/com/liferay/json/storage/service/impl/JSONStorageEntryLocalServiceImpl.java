@@ -434,8 +434,8 @@ public class JSONStorageEntryLocalServiceImpl
 	private void _updateEmptyJSONStorageEntry(
 		long companyId, long classNameId, long classPK,
 		long parentJSONStorageEntryId, int index,
-		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap,
-		List<JSONStorageEntry> jsonStorageEntries) {
+		List<JSONStorageEntry> jsonStorageEntries,
+		Map<Long, List<JSONStorageEntry>> jsonStorageEntriesMap) {
 
 		JSONStorageEntry jsonStorageEntry = null;
 
@@ -511,7 +511,7 @@ public class JSONStorageEntryLocalServiceImpl
 		if (length == 0) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId, 0,
-				jsonStorageEntriesMap, jsonStorageEntries);
+				jsonStorageEntries, jsonStorageEntriesMap);
 		}
 		else if (jsonStorageEntries != null) {
 			for (int i = length; i < jsonStorageEntries.size(); i++) {
@@ -562,8 +562,7 @@ public class JSONStorageEntryLocalServiceImpl
 		if (keySet.isEmpty()) {
 			_updateEmptyJSONStorageEntry(
 				companyId, classNameId, classPK, parentJSONStorageEntryId,
-				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntriesMap,
-				jsonStorageEntries);
+				JSONStorageEntryConstants.INDEX_DEFAULT, jsonStorageEntries, jsonStorageEntriesMap);
 		}
 		else if (jsonStorageEntries != null) {
 			for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
