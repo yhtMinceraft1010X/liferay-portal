@@ -2,8 +2,8 @@ apiDir: "../frontend-view-state-rest-api/src/main/java"
 apiPackagePath: "com.liferay.frontend.view.state.rest"
 application:
     baseURI: "/frontend-view-state"
-    className: "FrontendViewStateApplication"
-    name: "Liferay.Frontend.View.State"
+    className: "FrontendViewStateRESTApplication"
+    name: "Liferay.Frontend.View.State.REST"
 author: "Javier Gamarra"
 generateBatch: false
 generateGraphQL: false
