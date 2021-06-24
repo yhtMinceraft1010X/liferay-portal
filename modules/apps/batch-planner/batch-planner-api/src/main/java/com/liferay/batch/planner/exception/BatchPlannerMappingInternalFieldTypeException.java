@@ -19,22 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Igor Beslic
  */
-public class RequiredBatchPlannerMappingFieldException extends PortalException {
+public class BatchPlannerMappingInternalFieldTypeException
+	extends PortalException {
 
-	public RequiredBatchPlannerMappingFieldException() {
+	public BatchPlannerMappingInternalFieldTypeException() {
 	}
 
-	public RequiredBatchPlannerMappingFieldException(String msg) {
+	public BatchPlannerMappingInternalFieldTypeException(String msg) {
 		super(msg);
 	}
 
-	public RequiredBatchPlannerMappingFieldException(
+	public BatchPlannerMappingInternalFieldTypeException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public RequiredBatchPlannerMappingFieldException(Throwable throwable) {
+	public BatchPlannerMappingInternalFieldTypeException(Throwable throwable) {
 		super(throwable);
 	}
 

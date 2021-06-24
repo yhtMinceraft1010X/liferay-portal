@@ -172,11 +172,15 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>BatchPlannerLogBatchEngineExportTaskERC</exception>
+		<exception>BatchPlannerLogBatchEngineImportTaskERC</exception>
+		<exception>BatchPlannerMappingExternalFieldName</exception>
+		<exception>BatchPlannerMappingExternalFieldType</exception>
+		<exception>BatchPlannerMappingInternalFieldName</exception>
+		<exception>BatchPlannerMappingInternalFieldType</exception>
 		<exception>BatchPlannerPlanExternalType</exception>
 		<exception>BatchPlannerPlanName</exception>
 		<exception>BatchPlannerPolicyName</exception>
 		<exception>DuplicateBatchPlannerPlan</exception>
-		<exception>RequiredBatchPlannerLogField</exception>
-		<exception>RequiredBatchPlannerMappingField</exception>
 	</exceptions>
 </service-builder>
