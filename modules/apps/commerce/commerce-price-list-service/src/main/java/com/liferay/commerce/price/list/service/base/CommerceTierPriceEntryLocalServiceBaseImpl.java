@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.base;
 
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
+import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
@@ -72,6 +73,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -94,7 +97,7 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTierPriceEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTierPriceEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -176,6 +179,13 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceTierPriceEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -298,10 +308,41 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	 */
 	@Override
+	public CommerceTierPriceEntry
+		fetchCommerceTierPriceEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return commerceTierPriceEntryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTierPriceEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntryByReferenceCode(
 		long companyId, String externalReferenceCode) {
 
-		return commerceTierPriceEntryPersistence.fetchByC_ERC(
+		return fetchCommerceTierPriceEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce tier price entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce tier price entry's external reference code
+	 * @return the matching commerce tier price entry
+	 * @throws PortalException if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry
+			getCommerceTierPriceEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceTierPriceEntryPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1170,11 +1211,15 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.price.list.model.CommerceTierPriceEntry",
 			commerceTierPriceEntryLocalService);
+
+		_setLocalServiceUtilService(commerceTierPriceEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.price.list.model.CommerceTierPriceEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1217,6 +1262,23 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceTierPriceEntryLocalService commerceTierPriceEntryLocalService) {
+
+		try {
+			Field field =
+				CommerceTierPriceEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceTierPriceEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

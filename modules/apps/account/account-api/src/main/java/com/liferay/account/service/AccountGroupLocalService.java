@@ -134,6 +134,9 @@ public interface AccountGroupLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -210,6 +213,14 @@ public interface AccountGroupLocalService
 	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup fetchAccountGroupByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchAccountGroupByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountGroup fetchAccountGroupByReferenceCode(
 		long companyId, String externalReferenceCode);
 
@@ -222,6 +233,19 @@ public interface AccountGroupLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountGroup getAccountGroup(long accountGroupId)
+		throws PortalException;
+
+	/**
+	 * Returns the account group with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the account group's external reference code
+	 * @return the matching account group
+	 * @throws PortalException if a matching account group could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup getAccountGroupByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

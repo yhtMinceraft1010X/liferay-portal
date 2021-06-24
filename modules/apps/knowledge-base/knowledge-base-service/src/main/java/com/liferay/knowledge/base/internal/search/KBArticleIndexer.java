@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -134,6 +136,9 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		document.addText(Field.DESCRIPTION, kbArticle.getDescription());
 		document.addKeyword(Field.FOLDER_ID, kbArticle.getKbFolderId());
 		document.addText(Field.TITLE, kbArticle.getTitle());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(kbArticle.buildTreePath(), CharPool.SLASH));
 		document.addKeyword("folderNames", getKBFolderNames(kbArticle));
 		document.addKeyword(
 			"parentMessageId", kbArticle.getParentResourcePrimKey());
@@ -181,10 +186,22 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
+		KBArticle kbArticle = kbArticleLocalService.fetchLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
 
-		reindexKBArticles(kbArticle);
+		if (kbArticle != null) {
+			reindexKBArticles(kbArticle);
+
+			return;
+		}
+
+		long kbArticleId = classPK;
+
+		kbArticle = kbArticleLocalService.fetchKBArticle(kbArticleId);
+
+		if (kbArticle != null) {
+			reindexKBArticles(kbArticle);
+		}
 	}
 
 	@Override

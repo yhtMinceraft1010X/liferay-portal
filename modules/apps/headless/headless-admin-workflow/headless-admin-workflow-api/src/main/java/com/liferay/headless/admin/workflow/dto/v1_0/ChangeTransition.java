@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChangeTransition")
+@GraphQLName(
+	description = "Represents a write-only schema to update a workflow's transition.",
+	value = "ChangeTransition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ChangeTransition")
 public class ChangeTransition implements Serializable {
@@ -206,6 +209,7 @@ public class ChangeTransition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition",
 		name = "x-class-name"
 	)
@@ -241,7 +245,7 @@ public class ChangeTransition implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -280,7 +284,7 @@ public class ChangeTransition implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

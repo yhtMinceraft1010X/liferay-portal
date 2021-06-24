@@ -138,6 +138,13 @@ public class CProductLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _cProductLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cProductLocalService.dynamicQuery();
 	}
@@ -243,6 +250,19 @@ public class CProductLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.product.model.CProduct
+		fetchCProductByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _cProductLocalService.fetchCProductByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCProductByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CProduct
 		fetchCProductByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -294,6 +314,24 @@ public class CProductLocalServiceWrapper
 
 		return _cProductLocalService.getCProductByCPInstanceUuid(
 			cpInstanceUuid);
+	}
+
+	/**
+	 * Returns the c product with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the c product's external reference code
+	 * @return the matching c product
+	 * @throws PortalException if a matching c product could not be found
+	 */
+	@Override
+	public com.liferay.commerce.product.model.CProduct
+			getCProductByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cProductLocalService.getCProductByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

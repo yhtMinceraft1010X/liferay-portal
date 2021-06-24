@@ -16,11 +16,11 @@ package com.liferay.commerce.internal.subscription;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
-import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -69,18 +69,38 @@ public class CommerceSubscriptionEntryHelperImpl
 					cpInstance.getCPSubscriptionInfo();
 
 				if (cpSubscriptionInfo != null) {
+					String subscriptionType = null;
+
+					CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+					if (cpInstance.isSubscriptionEnabled() ||
+						cpDefinition.isSubscriptionEnabled()) {
+
+						subscriptionType =
+							cpSubscriptionInfo.getSubscriptionType();
+					}
+
+					String deliverySubscriptionType = null;
+
+					if (cpInstance.isDeliverySubscriptionEnabled() ||
+						cpDefinition.isDeliverySubscriptionEnabled()) {
+
+						deliverySubscriptionType =
+							cpSubscriptionInfo.getDeliverySubscriptionType();
+					}
+
 					_commerceSubscriptionEntryLocalService.
 						addCommerceSubscriptionEntry(
 							commerceAccount.getUserId(),
 							commerceOrder.getGroupId(),
 							commerceOrderItem.getCommerceOrderItemId(),
 							cpSubscriptionInfo.getSubscriptionLength(),
-							cpSubscriptionInfo.getSubscriptionType(),
+							subscriptionType,
 							cpSubscriptionInfo.getMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
 								getSubscriptionTypeSettingsProperties(),
 							cpSubscriptionInfo.getDeliverySubscriptionLength(),
-							cpSubscriptionInfo.getDeliverySubscriptionType(),
+							deliverySubscriptionType,
 							cpSubscriptionInfo.
 								getDeliveryMaxSubscriptionCycles(),
 							cpSubscriptionInfo.
@@ -110,7 +130,7 @@ public class CommerceSubscriptionEntryHelperImpl
 		Date now = new Date();
 
 		Date nextIterationDate =
-			commerceSubscriptionEntry.getNextIterationDate();
+			commerceSubscriptionEntry.getDeliveryNextIterationDate();
 
 		CommerceOrderItem commerceOrderItem =
 			commerceSubscriptionEntry.fetchCommerceOrderItem();
@@ -119,12 +139,16 @@ public class CommerceSubscriptionEntryHelperImpl
 			if (Objects.equals(
 					CommerceSubscriptionEntryConstants.
 						SUBSCRIPTION_STATUS_ACTIVE,
-					commerceSubscriptionEntry.getSubscriptionStatus()) &&
-				Objects.equals(
-					CommerceSubscriptionEntryConstants.
-						SUBSCRIPTION_STATUS_ACTIVE,
 					commerceSubscriptionEntry.
-						getDeliverySubscriptionStatus())) {
+						getDeliverySubscriptionStatus()) &&
+				!Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_SUSPENDED,
+					commerceSubscriptionEntry.getSubscriptionStatus()) &&
+				!Objects.equals(
+					CommerceSubscriptionEntryConstants.
+						SUBSCRIPTION_STATUS_CANCELLED,
+					commerceSubscriptionEntry.getSubscriptionStatus())) {
 
 				_addShipment(commerceOrderItem);
 
@@ -199,18 +223,9 @@ public class CommerceSubscriptionEntryHelperImpl
 	private void _addShipment(CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
-		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
-
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-
-		_commerceShipmentLocalService.addCommerceDeliverySubscriptionShipment(
-			commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-			shippingAddress.getName(), shippingAddress.getDescription(),
-			shippingAddress.getStreet1(), shippingAddress.getStreet2(),
-			shippingAddress.getStreet3(), shippingAddress.getCity(),
-			shippingAddress.getZip(), shippingAddress.getCommerceRegionId(),
-			shippingAddress.getCommerceCountryId(),
-			shippingAddress.getPhoneNumber());
+		_commerceShipmentLocalService.addDeliverySubscriptionCommerceShipment(
+			commerceOrderItem.getUserId(),
+			commerceOrderItem.getCommerceOrderItemId());
 	}
 
 	private boolean _isNewSubscription(CommerceOrderItem commerceOrderItem) {

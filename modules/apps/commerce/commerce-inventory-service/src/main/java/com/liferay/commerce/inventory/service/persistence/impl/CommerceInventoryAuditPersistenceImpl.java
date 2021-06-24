@@ -1451,25 +1451,25 @@ public class CommerceInventoryAuditPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceInventoryAudit.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceInventoryAudit.setCreateDate(now);
+				commerceInventoryAudit.setCreateDate(date);
 			}
 			else {
 				commerceInventoryAudit.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceInventoryAuditModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceInventoryAudit.setModifiedDate(now);
+				commerceInventoryAudit.setModifiedDate(date);
 			}
 			else {
 				commerceInventoryAudit.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1945,6 +1945,13 @@ public class CommerceInventoryAuditPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1957,7 +1964,7 @@ public class CommerceInventoryAuditPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceInventoryAuditModelImpl commerceInventoryAuditModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1981,8 +1988,19 @@ public class CommerceInventoryAuditPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceInventoryAuditModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

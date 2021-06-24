@@ -47,7 +47,8 @@ public class YouTubeEditorEmbedProvider implements EditorEmbedProvider {
 	@Override
 	public String[] getURLSchemes() {
 		return new String[] {
-			"https?:\\/\\/(?:www\\.)?youtube.com\\/watch\\?v=(\\S*)$"
+			"https?:\\/\\/(?:www\\.)?(?:youtube\\.com|youtu.be)" +
+				"(?:\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(?:\\S*)?$"
 		};
 	}
 

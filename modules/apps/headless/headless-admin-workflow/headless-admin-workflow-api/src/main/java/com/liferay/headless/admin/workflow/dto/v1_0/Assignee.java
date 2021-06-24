@@ -160,6 +160,7 @@ public class Assignee implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.Assignee",
 		name = "x-class-name"
 	)
@@ -195,7 +196,7 @@ public class Assignee implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -234,7 +235,7 @@ public class Assignee implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

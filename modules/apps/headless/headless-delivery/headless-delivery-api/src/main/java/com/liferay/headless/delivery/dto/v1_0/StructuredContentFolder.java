@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StructuredContentFolder")
+@GraphQLName(
+	description = "Represents a folder that can be used to organize structured content.",
+	value = "StructuredContentFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a folder that can be used to organize structured content."
+	description = "Represents a folder that can be used to organize structured content.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "StructuredContentFolder")
 public class StructuredContentFolder implements Serializable {
@@ -745,6 +748,7 @@ public class StructuredContentFolder implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder",
 		name = "x-class-name"
 	)
@@ -814,7 +818,7 @@ public class StructuredContentFolder implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -853,7 +857,7 @@ public class StructuredContentFolder implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

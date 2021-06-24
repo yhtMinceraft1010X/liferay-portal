@@ -16,6 +16,7 @@ package com.liferay.blogs.service.base;
 
 import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
+import com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil;
 import com.liferay.blogs.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.blogs.service.persistence.BlogsStatsUserFinder;
@@ -47,10 +48,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,7 +75,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BlogsStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BlogsStatsUserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BlogsStatsUserLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -142,6 +146,13 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return blogsStatsUserPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -369,6 +380,11 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		return blogsStatsUserPersistence.update(blogsStatsUser);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -380,6 +396,8 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		blogsStatsUserLocalService = (BlogsStatsUserLocalService)aopProxy;
+
+		_setLocalServiceUtilService(blogsStatsUserLocalService);
 	}
 
 	/**
@@ -421,6 +439,22 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		BlogsStatsUserLocalService blogsStatsUserLocalService) {
+
+		try {
+			Field field = BlogsStatsUserLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, blogsStatsUserLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

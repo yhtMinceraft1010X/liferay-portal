@@ -146,9 +146,11 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
+			dataDefinitionResourceBuilder.user(
 				themeDisplay.getUser()
 			).build();
 
@@ -198,9 +200,11 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 			DLFileEntryType fileEntryType =
 				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
 
+			DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+				_dataDefinitionResourceFactory.create();
+
 			DataDefinitionResource dataDefinitionResource =
-				DataDefinitionResource.builder(
-				).user(
+				dataDefinitionResourceBuilder.user(
 					themeDisplay.getUser()
 				).build();
 
@@ -263,9 +267,11 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
+			dataDefinitionResourceBuilder.user(
 				themeDisplay.getUser()
 			).build();
 
@@ -294,6 +300,9 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		_dlFileEntryTypeLocalService.updateDDMStructureLinks(
 			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
 	}
+
+	@Reference
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Reference
 	private DLAppService _dlAppService;

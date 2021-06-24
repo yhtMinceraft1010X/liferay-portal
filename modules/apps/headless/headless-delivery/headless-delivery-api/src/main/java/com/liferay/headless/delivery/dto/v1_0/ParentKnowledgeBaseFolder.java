@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentKnowledgeBaseFolder")
+@GraphQLName(
+	description = "The folder's parent Knowledge Base folder, if it exists.",
+	value = "ParentKnowledgeBaseFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentKnowledgeBaseFolder")
 public class ParentKnowledgeBaseFolder implements Serializable {
@@ -166,6 +169,7 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder",
 		name = "x-class-name"
 	)
@@ -201,7 +205,7 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -240,7 +244,7 @@ public class ParentKnowledgeBaseFolder implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

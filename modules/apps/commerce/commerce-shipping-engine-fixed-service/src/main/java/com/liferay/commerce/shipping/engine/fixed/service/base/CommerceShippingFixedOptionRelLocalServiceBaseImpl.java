@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service.base;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
@@ -49,6 +50,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -72,7 +75,7 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceShippingFixedOptionRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceShippingFixedOptionRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -154,6 +157,13 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceShippingFixedOptionRelPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -659,11 +669,15 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel",
 			commerceShippingFixedOptionRelLocalService);
+
+		_setLocalServiceUtilService(commerceShippingFixedOptionRelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -706,6 +720,24 @@ public abstract class CommerceShippingFixedOptionRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceShippingFixedOptionRelLocalService
+			commerceShippingFixedOptionRelLocalService) {
+
+		try {
+			Field field =
+				CommerceShippingFixedOptionRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceShippingFixedOptionRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
@@ -91,6 +92,8 @@ import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -113,7 +116,7 @@ public abstract class UserLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>UserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.kernel.service.UserLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>UserLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>UserLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -183,6 +186,13 @@ public abstract class UserLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return userPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -295,10 +305,38 @@ public abstract class UserLocalServiceBaseImpl
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	@Override
-	public User fetchUserByReferenceCode(
+	public User fetchUserByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return userPersistence.fetchByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchUserByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public User fetchUserByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchUserByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the user with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the user's external reference code
+	 * @return the matching user
+	 * @throws PortalException if a matching user could not be found
+	 */
+	@Override
+	public User getUserByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return userPersistence.findByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**
@@ -2683,11 +2721,15 @@ public abstract class UserLocalServiceBaseImpl
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.User", userLocalService);
+
+		_setLocalServiceUtilService(userLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.User");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -2743,6 +2785,22 @@ public abstract class UserLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		UserLocalService userLocalService) {
+
+		try {
+			Field field = UserLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, userLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

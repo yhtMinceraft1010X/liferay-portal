@@ -16,17 +16,13 @@
 
 <%@ include file="/bookmarks/init.jsp" %>
 
-<%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
-%>
-
 <liferay-util:html-top
 	outputKey="social_bookmarks_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
+<div class="taglib-social-bookmarks" id="<%= PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE %>socialBookmarks">
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") || BrowserSnifferUtil.isMobile(request) %>'>
 			<clay:dropdown-menu
@@ -45,10 +41,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				<%
 				for (int i = 0; i < Math.min(types.length, maxInlineItems); i++) {
 					SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
-					String styleClass = "taglib-social-bookmark-" + types[i];
 				%>
 
-					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= "return " + SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) %>">
+					<li class="taglib-social-bookmark <%= "taglib-social-bookmark-" + types[i] %>" onClick="<%= "return " + SocialBookmarksTagUtil.getClickJSCall(className, classPK, types[i], socialBookmark.getPostURL(title, url), url) %>">
 						<liferay-social-bookmarks:bookmark
 							displayStyle="<%= displayStyle %>"
 							target="<%= target %>"
@@ -64,9 +59,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 
 			</ul>
 
-			<%
-			if (types.length > maxInlineItems) {
-			%>
+			<c:if test="<%= types.length > maxInlineItems %>">
 
 				<%
 				String[] remainingTypes = ArrayUtil.subset(types, maxInlineItems, types.length);
@@ -82,11 +75,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 					small="<%= true %>"
 					title="share"
 				/>
-
-			<%
-			}
-			%>
-
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </div>

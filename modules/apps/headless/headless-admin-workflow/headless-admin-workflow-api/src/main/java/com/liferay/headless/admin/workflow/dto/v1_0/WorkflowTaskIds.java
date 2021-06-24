@@ -132,6 +132,7 @@ public class WorkflowTaskIds implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskIds",
 		name = "x-class-name"
 	)
@@ -167,7 +168,7 @@ public class WorkflowTaskIds implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -206,7 +207,7 @@ public class WorkflowTaskIds implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.data.integration.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceDataIntegrationProcessLog. This utility wraps
@@ -37,12 +38,12 @@ public class CommerceDataIntegrationProcessLogServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessLogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.data.integration.model.
-		CommerceDataIntegrationProcessLog addCommerceDataIntegrationProcessLog(
+	public static CommerceDataIntegrationProcessLog
+			addCommerceDataIntegrationProcessLog(
 				long userId, long commerceDataIntegrationProcessId,
 				String error, String output, int status,
 				java.util.Date startDate, java.util.Date endDate)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceDataIntegrationProcessLog(
 			userId, commerceDataIntegrationProcessId, error, output, status,
@@ -51,28 +52,25 @@ public class CommerceDataIntegrationProcessLogServiceUtil {
 
 	public static void deleteCommerceDataIntegrationProcessLog(
 			long cDataIntegrationProcessLogId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDataIntegrationProcessLog(
 			cDataIntegrationProcessLogId);
 	}
 
-	public static com.liferay.commerce.data.integration.model.
-		CommerceDataIntegrationProcessLog getCommerceDataIntegrationProcessLog(
+	public static CommerceDataIntegrationProcessLog
+			getCommerceDataIntegrationProcessLog(
 				long cDataIntegrationProcessLogId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcessLog(
 			cDataIntegrationProcessLogId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcessLog>
-					getCommerceDataIntegrationProcessLogs(
-						long commerceDataIntegrationProcessId, int start,
-						int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDataIntegrationProcessLog>
+			getCommerceDataIntegrationProcessLogs(
+				long commerceDataIntegrationProcessId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcessLogs(
 			commerceDataIntegrationProcessId, start, end);
@@ -80,7 +78,7 @@ public class CommerceDataIntegrationProcessLogServiceUtil {
 
 	public static int getCommerceDataIntegrationProcessLogsCount(
 			long commerceDataIntegrationProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcessLogsCount(
 			commerceDataIntegrationProcessId);
@@ -95,41 +93,20 @@ public class CommerceDataIntegrationProcessLogServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.data.integration.model.
-		CommerceDataIntegrationProcessLog
-				updateCommerceDataIntegrationProcessLog(
-					long cDataIntegrationProcessLogId, String error,
-					String output, int status, java.util.Date endDate)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcessLog
+			updateCommerceDataIntegrationProcessLog(
+				long cDataIntegrationProcessLogId, String error, String output,
+				int status, java.util.Date endDate)
+		throws PortalException {
 
 		return getService().updateCommerceDataIntegrationProcessLog(
 			cDataIntegrationProcessLogId, error, output, status, endDate);
 	}
 
 	public static CommerceDataIntegrationProcessLogService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDataIntegrationProcessLogService,
-		 CommerceDataIntegrationProcessLogService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDataIntegrationProcessLogService.class);
-
-		ServiceTracker
-			<CommerceDataIntegrationProcessLogService,
-			 CommerceDataIntegrationProcessLogService> serviceTracker =
-				new ServiceTracker
-					<CommerceDataIntegrationProcessLogService,
-					 CommerceDataIntegrationProcessLogService>(
-						 bundle.getBundleContext(),
-						 CommerceDataIntegrationProcessLogService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDataIntegrationProcessLogService _service;
 
 }

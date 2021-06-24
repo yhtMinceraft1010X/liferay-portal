@@ -23,11 +23,14 @@ import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -36,6 +39,11 @@ import org.junit.Test;
  * @author André de Oliveira
  */
 public class GroupByTest extends BaseGroupByTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {

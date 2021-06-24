@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -52,17 +53,20 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -371,8 +375,9 @@ public class LayoutsAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle", "miller-columns");
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
+			LayoutAdminPortletKeys.GROUP_PAGES, "miller-columns");
 
 		return _displayStyle;
 	}
@@ -1316,8 +1321,27 @@ public class LayoutsAdminDisplayContext {
 			return _privateLayout;
 		}
 
-		_privateLayout = ParamUtil.getBoolean(
-			_liferayPortletRequest, "privateLayout");
+		String privateLayoutString = _liferayPortletRequest.getParameter(
+			"privateLayout");
+
+		if (Validator.isNotNull(privateLayoutString)) {
+			_privateLayout = GetterUtil.getBoolean(privateLayoutString);
+
+			return _privateLayout;
+		}
+
+		Boolean privateLayout = false;
+
+		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+			getSelGroupId(), false, 0);
+		int privateLayoutsCount = LayoutServiceUtil.getLayoutsCount(
+			getSelGroupId(), true, 0);
+
+		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
+			privateLayout = true;
+		}
+
+		_privateLayout = privateLayout;
 
 		return _privateLayout;
 	}
@@ -1537,6 +1561,29 @@ public class LayoutsAdminDisplayContext {
 		return LayoutPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), layout,
 			ActionKeys.PERMISSIONS);
+	}
+
+	public boolean isShowPrivatePages() throws PortalException {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isUser()) {
+			if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
+				return false;
+			}
+			else if (PropsValues.
+						LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED) {
+
+				boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
+					selGroup.getClassPK(), selGroup.getCompanyId(),
+					RoleConstants.POWER_USER, true);
+
+				if (!hasPowerUserRole) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public boolean isShowPublicPages() {

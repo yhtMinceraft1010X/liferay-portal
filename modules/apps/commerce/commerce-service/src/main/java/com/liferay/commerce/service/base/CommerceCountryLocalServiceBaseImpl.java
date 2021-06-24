@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -73,6 +74,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -95,7 +98,7 @@ public abstract class CommerceCountryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceCountryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceCountryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceCountryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceCountryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -170,6 +173,13 @@ public abstract class CommerceCountryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceCountryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -1427,11 +1437,15 @@ public abstract class CommerceCountryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.model.CommerceCountry",
 			commerceCountryLocalService);
+
+		_setLocalServiceUtilService(commerceCountryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.model.CommerceCountry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1473,6 +1487,23 @@ public abstract class CommerceCountryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceCountryLocalService commerceCountryLocalService) {
+
+		try {
+			Field field =
+				CommerceCountryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceCountryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

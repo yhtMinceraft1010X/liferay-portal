@@ -175,6 +175,9 @@ public interface FriendlyURLEntryLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -396,9 +399,19 @@ public interface FriendlyURLEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getUniqueUrlTitle(long, long, long, String, String)}
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId);
 
 	public void setMainFriendlyURLEntry(FriendlyURLEntry friendlyURLEntry);
 

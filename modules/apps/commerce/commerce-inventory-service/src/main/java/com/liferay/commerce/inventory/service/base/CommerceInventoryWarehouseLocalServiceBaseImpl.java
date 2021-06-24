@@ -16,6 +16,7 @@ package com.liferay.commerce.inventory.service.base;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryBookedQuantityPersistence;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
@@ -54,6 +55,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -76,7 +79,7 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceInventoryWarehouseLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceInventoryWarehouseLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -160,6 +163,13 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceInventoryWarehousePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -268,10 +278,41 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 	 */
 	@Override
 	public CommerceInventoryWarehouse
-		fetchCommerceInventoryWarehouseByReferenceCode(
+		fetchCommerceInventoryWarehouseByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
 		return commerceInventoryWarehousePersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceInventoryWarehouseByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceInventoryWarehouse
+		fetchCommerceInventoryWarehouseByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return fetchCommerceInventoryWarehouseByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce inventory warehouse with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory warehouse's external reference code
+	 * @return the matching commerce inventory warehouse
+	 * @throws PortalException if a matching commerce inventory warehouse could not be found
+	 */
+	@Override
+	public CommerceInventoryWarehouse
+			getCommerceInventoryWarehouseByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceInventoryWarehousePersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -893,11 +934,15 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
 			commerceInventoryWarehouseLocalService);
+
+		_setLocalServiceUtilService(commerceInventoryWarehouseLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.inventory.model.CommerceInventoryWarehouse");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -940,6 +985,24 @@ public abstract class CommerceInventoryWarehouseLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceInventoryWarehouseLocalService
+			commerceInventoryWarehouseLocalService) {
+
+		try {
+			Field field =
+				CommerceInventoryWarehouseLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceInventoryWarehouseLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

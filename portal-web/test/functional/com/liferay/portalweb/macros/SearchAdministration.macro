@@ -21,16 +21,12 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientVersion = selenium.getText("SearchAdmin#CLIENT_VERSION");
 		var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {
-			if (contains("${searchEngineVendor}", "Sidecar")) {
-				var curl = "http://localhost:9201/_tasks";
-			}
-			else {
-				var curl = "http://localhost:9200/_tasks";
-			}
+			var port = Elasticsearch.getServerPort();
+
+			var curl = "http://localhost:${port}/_tasks";
 		}
 
 		var reindexElapsedTime = "0";
@@ -67,7 +63,7 @@ definition {
 					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 				}
 
-				while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
+				while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.pauseIsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
 					Pause.pauseNoSPARefresh(locator1 = "10000");
 
 					var reindexElapsedTime = ${reindexElapsedTime} + 10;

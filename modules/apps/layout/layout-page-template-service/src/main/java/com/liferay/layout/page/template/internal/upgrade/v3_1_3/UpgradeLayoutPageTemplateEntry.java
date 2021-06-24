@@ -14,8 +14,6 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_1_3;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -29,28 +27,15 @@ public class UpgradeLayoutPageTemplateEntry extends UpgradeProcess {
 	}
 
 	protected void upgradeIndex() throws Exception {
-		try {
+		if (hasIndex("LayoutPageTemplateEntry", "IX_A075DAA4")) {
 			runSQL("drop index IX_A075DAA4 on LayoutPageTemplateEntry");
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
 
-		try {
+		if (!hasIndex("LayoutPageTemplateEntry", "IX_C3960EB1")) {
 			runSQL(
 				"create unique index IX_C3960EB1 on LayoutPageTemplateEntry (" +
 					"groupId, name, type_)");
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeLayoutPageTemplateEntry.class);
 
 }

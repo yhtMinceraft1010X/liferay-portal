@@ -151,3 +151,5 @@ else {
 		/>
 	</div>
 </clay:container-fluid>
+
+<%@ include file="/friendly_url_changed_message.jspf" %>

@@ -62,17 +62,9 @@ User selectedUser = commerceAccountDisplayContext.getSelectedUser();
 				%>
 
 				<aui:input bean="<%= displayEmailAddressUser %>" model="<%= User.class %>" name="emailAddress">
-
-					<%
-					if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED)) {
-					%>
-
+					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 						<aui:validator name="required" />
-
-					<%
-					}
-					%>
-
+					</c:if>
 				</aui:input>
 			</div>
 		</div>

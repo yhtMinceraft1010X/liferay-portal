@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
+import com.liferay.commerce.pricing.service.CommercePricingClassLocalServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder;
@@ -61,6 +62,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -83,7 +86,7 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePricingClassLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePricingClassLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePricingClassLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePricingClassLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -163,6 +166,13 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commercePricingClassPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -285,10 +295,40 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
 	 */
 	@Override
+	public CommercePricingClass
+		fetchCommercePricingClassByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return commercePricingClassPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePricingClassByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
 	public CommercePricingClass fetchCommercePricingClassByReferenceCode(
 		long companyId, String externalReferenceCode) {
 
-		return commercePricingClassPersistence.fetchByC_ERC(
+		return fetchCommercePricingClassByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce pricing class with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce pricing class's external reference code
+	 * @return the matching commerce pricing class
+	 * @throws PortalException if a matching commerce pricing class could not be found
+	 */
+	@Override
+	public CommercePricingClass getCommercePricingClassByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commercePricingClassPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -976,11 +1016,15 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.pricing.model.CommercePricingClass",
 			commercePricingClassLocalService);
+
+		_setLocalServiceUtilService(commercePricingClassLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.pricing.model.CommercePricingClass");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1023,6 +1067,23 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommercePricingClassLocalService commercePricingClassLocalService) {
+
+		try {
+			Field field =
+				CommercePricingClassLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePricingClassLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

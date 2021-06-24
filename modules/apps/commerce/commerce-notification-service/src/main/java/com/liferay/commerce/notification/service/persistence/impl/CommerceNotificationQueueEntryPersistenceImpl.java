@@ -3100,25 +3100,25 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceNotificationQueueEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceNotificationQueueEntry.setCreateDate(now);
+				commerceNotificationQueueEntry.setCreateDate(date);
 			}
 			else {
 				commerceNotificationQueueEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceNotificationQueueEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceNotificationQueueEntry.setModifiedDate(now);
+				commerceNotificationQueueEntry.setModifiedDate(date);
 			}
 			else {
 				commerceNotificationQueueEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3672,6 +3672,13 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 							getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3685,7 +3692,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceNotificationQueueEntryModelImpl
 				commerceNotificationQueueEntryModelImpl,
 			String[] columnNames, boolean original) {
@@ -3710,8 +3717,20 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
+					"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

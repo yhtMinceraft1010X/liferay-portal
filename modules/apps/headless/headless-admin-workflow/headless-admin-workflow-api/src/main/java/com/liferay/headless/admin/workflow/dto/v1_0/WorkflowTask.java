@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowTask")
+@GraphQLName(
+	description = "Represents a task to be executed in a workflow.",
+	value = "WorkflowTask"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowTask")
 public class WorkflowTask implements Serializable {
@@ -714,6 +717,7 @@ public class WorkflowTask implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask",
 		name = "x-class-name"
 	)
@@ -749,7 +753,7 @@ public class WorkflowTask implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -788,7 +792,7 @@ public class WorkflowTask implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

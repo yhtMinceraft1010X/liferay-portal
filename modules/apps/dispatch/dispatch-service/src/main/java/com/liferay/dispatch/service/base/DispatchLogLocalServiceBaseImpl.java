@@ -16,6 +16,7 @@ package com.liferay.dispatch.service.base;
 
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.service.DispatchLogLocalService;
+import com.liferay.dispatch.service.DispatchLogLocalServiceUtil;
 import com.liferay.dispatch.service.persistence.DispatchLogPersistence;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -45,10 +46,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +73,7 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DispatchLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dispatch.service.DispatchLogLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DispatchLogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DispatchLogLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -140,6 +144,13 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return dispatchLogPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -366,6 +377,11 @@ public abstract class DispatchLogLocalServiceBaseImpl
 		return dispatchLogPersistence.update(dispatchLog);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -377,6 +393,8 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dispatchLogLocalService = (DispatchLogLocalService)aopProxy;
+
+		_setLocalServiceUtilService(dispatchLogLocalService);
 	}
 
 	/**
@@ -418,6 +436,22 @@ public abstract class DispatchLogLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		DispatchLogLocalService dispatchLogLocalService) {
+
+		try {
+			Field field = DispatchLogLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, dispatchLogLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

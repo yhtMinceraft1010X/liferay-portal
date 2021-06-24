@@ -22,17 +22,25 @@ import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FileImpl;
 
 import java.lang.reflect.Constructor;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
  */
 public class BaseIntrabandPortalCacheManagerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testStubGeneration() throws Exception {

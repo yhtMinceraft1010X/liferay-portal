@@ -33,11 +33,14 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterGetResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveRequest;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterSaveResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,6 +56,11 @@ import org.powermock.api.mockito.PowerMockito;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class JSONDDMStorageAdapterTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

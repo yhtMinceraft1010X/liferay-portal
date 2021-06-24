@@ -215,7 +215,11 @@ public class I18nServlet extends HttpServlet {
 			}
 		}
 
-		String redirect = HttpUtil.encodePath(path);
+		String redirect = path;
+
+		if (path.equals(HttpUtil.decodePath(path))) {
+			redirect = HttpUtil.encodePath(path);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Redirect " + redirect);

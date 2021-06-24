@@ -3714,24 +3714,25 @@ public class PasswordPolicyPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (passwordPolicy.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				passwordPolicy.setCreateDate(now);
+				passwordPolicy.setCreateDate(date);
 			}
 			else {
-				passwordPolicy.setCreateDate(serviceContext.getCreateDate(now));
+				passwordPolicy.setCreateDate(
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!passwordPolicyModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				passwordPolicy.setModifiedDate(now);
+				passwordPolicy.setModifiedDate(date);
 			}
 			else {
 				passwordPolicy.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4261,7 +4262,7 @@ public class PasswordPolicyPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PasswordPolicyModelImpl passwordPolicyModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4284,8 +4285,8 @@ public class PasswordPolicyPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

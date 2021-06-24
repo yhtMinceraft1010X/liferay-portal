@@ -18,7 +18,6 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -46,20 +45,20 @@ import javax.portlet.RenderRequest;
  * @author guywandji
  * @author Alessio Antonio Rendina
  */
-public class DispatchTriggerDisplayContext {
+public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 
 	public DispatchTriggerDisplayContext(
 		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
 		RenderRequest renderRequest) {
 
+		super(renderRequest);
+
 		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 
-		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
-
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			_dispatchRequestHelper.getLocale());
+			dispatchRequestHelper.getLocale());
 	}
 
 	public String getDispatchTaskExecutorName(
@@ -84,7 +83,7 @@ public class DispatchTriggerDisplayContext {
 	}
 
 	public DispatchTrigger getDispatchTrigger() {
-		return _dispatchRequestHelper.getDispatchTrigger();
+		return dispatchRequestHelper.getDispatchTrigger();
 	}
 
 	public String getNextFireDateString(long dispatchTriggerId)
@@ -102,31 +101,31 @@ public class DispatchTriggerDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "modified-date");
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
-			_dispatchRequestHelper.getLiferayPortletResponse();
+			dispatchRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		String delta = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "delta");
+			dispatchRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "deltaEntry");
+			dispatchRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
@@ -138,7 +137,7 @@ public class DispatchTriggerDisplayContext {
 	public RowChecker getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(
-				_dispatchRequestHelper.getLiferayPortletResponse());
+				dispatchRequestHelper.getLiferayPortletResponse());
 		}
 
 		return _rowChecker;
@@ -152,7 +151,7 @@ public class DispatchTriggerDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
+			dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
 			null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-items-were-found");
@@ -163,13 +162,13 @@ public class DispatchTriggerDisplayContext {
 		_searchContainer.setRowChecker(getRowChecker());
 
 		int total = _dispatchTriggerLocalService.getDispatchTriggersCount(
-			_dispatchRequestHelper.getCompanyId());
+			dispatchRequestHelper.getCompanyId());
 
 		_searchContainer.setTotal(total);
 
 		List<DispatchTrigger> results =
 			_dispatchTriggerLocalService.getDispatchTriggers(
-				_dispatchRequestHelper.getCompanyId(),
+				dispatchRequestHelper.getCompanyId(),
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -178,7 +177,6 @@ public class DispatchTriggerDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
-	private final DispatchRequestHelper _dispatchRequestHelper;
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private RowChecker _rowChecker;

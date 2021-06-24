@@ -167,6 +167,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 language IDs
 	 * @see #getVirtualHostnames()
 	 */
-	public void setVirtualHostnames(java.util.TreeMap virtualHostnames);
+	public void setVirtualHostnames(
+		java.util.TreeMap<String, String> virtualHostnames);
 
 }

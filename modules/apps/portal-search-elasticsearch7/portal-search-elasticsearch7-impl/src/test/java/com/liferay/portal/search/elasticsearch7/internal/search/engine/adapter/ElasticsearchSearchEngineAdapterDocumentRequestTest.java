@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
@@ -45,6 +46,8 @@ import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
 
 import java.io.IOException;
 
@@ -68,6 +71,8 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -75,8 +80,15 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+
 		_elasticsearchFixture = new ElasticsearchFixture(
 			ElasticsearchSearchEngineAdapterDocumentRequestTest.class);
 

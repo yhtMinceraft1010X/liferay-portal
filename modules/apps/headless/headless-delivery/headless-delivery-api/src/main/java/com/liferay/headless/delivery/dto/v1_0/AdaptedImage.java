@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdaptedImage")
+@GraphQLName(
+	description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework.",
+	value = "AdaptedImage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AdaptedImage")
 public class AdaptedImage implements Serializable {
@@ -332,6 +335,7 @@ public class AdaptedImage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AdaptedImage",
 		name = "x-class-name"
 	)
@@ -367,7 +371,7 @@ public class AdaptedImage implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -406,7 +410,7 @@ public class AdaptedImage implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

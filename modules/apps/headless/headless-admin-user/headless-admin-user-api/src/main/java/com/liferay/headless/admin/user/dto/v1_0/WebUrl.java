@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WebUrl")
+@GraphQLName(
+	description = "Represents a URL to an external site. This is modeled internally as a `WebSite`.",
+	value = "WebUrl"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WebUrl")
 public class WebUrl implements Serializable {
@@ -244,6 +247,7 @@ public class WebUrl implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.WebUrl",
 		name = "x-class-name"
 	)
@@ -279,7 +283,7 @@ public class WebUrl implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -318,7 +322,7 @@ public class WebUrl implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

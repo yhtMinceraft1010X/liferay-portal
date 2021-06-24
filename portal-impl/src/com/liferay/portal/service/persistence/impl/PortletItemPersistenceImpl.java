@@ -1829,24 +1829,24 @@ public class PortletItemPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (portletItem.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				portletItem.setCreateDate(now);
+				portletItem.setCreateDate(date);
 			}
 			else {
-				portletItem.setCreateDate(serviceContext.getCreateDate(now));
+				portletItem.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!portletItemModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				portletItem.setModifiedDate(now);
+				portletItem.setModifiedDate(date);
 			}
 			else {
 				portletItem.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2328,7 +2328,7 @@ public class PortletItemPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PortletItemModelImpl portletItemModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2350,8 +2350,8 @@ public class PortletItemPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

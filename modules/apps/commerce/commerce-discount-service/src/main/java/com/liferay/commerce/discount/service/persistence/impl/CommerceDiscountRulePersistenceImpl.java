@@ -840,25 +840,25 @@ public class CommerceDiscountRulePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceDiscountRule.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceDiscountRule.setCreateDate(now);
+				commerceDiscountRule.setCreateDate(date);
 			}
 			else {
 				commerceDiscountRule.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceDiscountRuleModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceDiscountRule.setModifiedDate(now);
+				commerceDiscountRule.setModifiedDate(date);
 			}
 			else {
 				commerceDiscountRule.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1310,6 +1310,13 @@ public class CommerceDiscountRulePersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1322,7 +1329,7 @@ public class CommerceDiscountRulePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceDiscountRuleModelImpl commerceDiscountRuleModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1345,8 +1352,19 @@ public class CommerceDiscountRulePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceDiscountRuleModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

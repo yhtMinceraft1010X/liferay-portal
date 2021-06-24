@@ -109,15 +109,29 @@ public class OptionValueResourceImpl
 					externalReferenceCode);
 		}
 
-		return _upsertOptionValue(cpOption, optionValue);
+		return _addOrUpdateOptionValue(cpOption, optionValue);
 	}
 
 	@Override
 	public OptionValue postOptionIdOptionValue(Long id, OptionValue optionValue)
 		throws Exception {
 
-		return _upsertOptionValue(
+		return _addOrUpdateOptionValue(
 			_cpOptionService.getCPOption(id), optionValue);
+	}
+
+	private OptionValue _addOrUpdateOptionValue(
+			CPOption cpOption, OptionValue optionValue)
+		throws Exception {
+
+		CPOptionValue cpOptionValue = _cpOptionValueService.upsertCPOptionValue(
+			cpOption.getCPOptionId(),
+			LanguageUtils.getLocalizedMap(optionValue.getName()),
+			GetterUtil.get(optionValue.getPriority(), 0D), optionValue.getKey(),
+			optionValue.getExternalReferenceCode(),
+			_serviceContextHelper.getServiceContext());
+
+		return _toOptionValue(cpOptionValue.getCPOptionValueId());
 	}
 
 	private OptionValue _toOptionValue(Long cpOptionValueId) throws Exception {
@@ -138,20 +152,6 @@ public class OptionValueResourceImpl
 		}
 
 		return productOptionValues;
-	}
-
-	private OptionValue _upsertOptionValue(
-			CPOption cpOption, OptionValue optionValue)
-		throws Exception {
-
-		CPOptionValue cpOptionValue = _cpOptionValueService.upsertCPOptionValue(
-			cpOption.getCPOptionId(),
-			LanguageUtils.getLocalizedMap(optionValue.getName()),
-			GetterUtil.get(optionValue.getPriority(), 0D), optionValue.getKey(),
-			optionValue.getExternalReferenceCode(),
-			_serviceContextHelper.getServiceContext());
-
-		return _toOptionValue(cpOptionValue.getCPOptionValueId());
 	}
 
 	@Reference

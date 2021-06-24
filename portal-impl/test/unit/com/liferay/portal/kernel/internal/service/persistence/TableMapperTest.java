@@ -42,11 +42,13 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.PropsImpl;
 
@@ -70,6 +72,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -78,23 +81,26 @@ import org.junit.Test;
 public class TableMapperTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		new CodeCoverageAssertor() {
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new CodeCoverageAssertor() {
 
-			@Override
-			public void appendAssertClasses(List<Class<?>> assertClasses) {
-				assertClasses.clear();
+				@Override
+				public void appendAssertClasses(List<Class<?>> assertClasses) {
+					assertClasses.clear();
 
-				assertClasses.add(ReverseTableMapper.class);
-				assertClasses.add(TableMapperFactory.class);
-				assertClasses.add(TableMapperImpl.class);
+					assertClasses.add(ReverseTableMapper.class);
+					assertClasses.add(TableMapperFactory.class);
+					assertClasses.add(TableMapperImpl.class);
 
-				Collections.addAll(
-					assertClasses,
-					TableMapperFactory.class.getDeclaredClasses());
-			}
+					Collections.addAll(
+						assertClasses,
+						TableMapperFactory.class.getDeclaredClasses());
+				}
 
-		};
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {

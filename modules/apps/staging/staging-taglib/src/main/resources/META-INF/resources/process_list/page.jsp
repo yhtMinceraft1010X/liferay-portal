@@ -185,7 +185,7 @@
 	function <portlet:namespace />deleteEntries() {
 		if (
 			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>'
+				'<%= UnicodeLanguageUtil.get(request, "staging-are-you-sure-you-want-to-delete-the-selected-entries") %>'
 			)
 		) {
 			var form = document.<portlet:namespace />fm;

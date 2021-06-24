@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowTaskAssignToUser")
+@GraphQLName(
+	description = "Represents a write-only schema to assign a workflow task to a specific user.",
+	value = "WorkflowTaskAssignToUser"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowTaskAssignToUser")
 public class WorkflowTaskAssignToUser implements Serializable {
@@ -262,6 +265,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser",
 		name = "x-class-name"
 	)
@@ -297,7 +301,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -336,7 +340,7 @@ public class WorkflowTaskAssignToUser implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -86,8 +86,8 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/apps'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "active"),
@@ -121,8 +121,8 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}")
 	@Produces({"application/json", "application/xml"})
@@ -137,9 +137,9 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/app-builder/v1.0/apps/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -173,8 +173,8 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}")
 	@Produces({"application/json", "application/xml"})
@@ -191,12 +191,12 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "App")})
 	public App putApp(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId,
@@ -211,14 +211,14 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/apps/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "App")})
 	public Response putAppBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -248,9 +248,9 @@ public abstract class BaseAppResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}/deploy'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/deploy")
+	@PUT
 	@Tags(value = {@Tag(name = "App")})
 	public Response putAppDeploy(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
@@ -267,9 +267,9 @@ public abstract class BaseAppResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}/undeploy'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
 	@Path("/apps/{appId}/undeploy")
+	@PUT
 	@Tags(value = {@Tag(name = "App")})
 	public Response putAppUndeploy(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
@@ -285,8 +285,8 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -316,13 +316,13 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dataRecordCollectionId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/apps")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "App")})
 	public App postDataDefinitionApp(
@@ -339,8 +339,8 @@ public abstract class BaseAppResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/app-builder/v1.0/sites/{siteId}/apps'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -405,8 +405,9 @@ public abstract class BaseAppResourceImpl
 		throws Exception {
 
 		return getSiteAppsPage(
-			(Long)parameters.get("siteId"), (String)parameters.get("keywords"),
-			(String)parameters.get("scope"), pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			(String)parameters.get("keywords"), (String)parameters.get("scope"),
+			pagination, sorts);
 	}
 
 	@Override
@@ -440,7 +441,7 @@ public abstract class BaseAppResourceImpl
 		for (App app : apps) {
 			putApp(
 				app.getId() != null ? app.getId() :
-				(Long)parameters.get("appId"),
+					Long.parseLong((String)parameters.get("appId")),
 				app);
 		}
 	}

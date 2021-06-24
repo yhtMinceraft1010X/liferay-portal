@@ -33,7 +33,7 @@ public interface OSBCommerceProvisioningConfiguration {
 	public ApplicationProfile applicationProfile();
 
 	@Meta.AD(
-		deflt = "https://api.liferay.sh", name = "dxp-cloud-api-url",
+		deflt = "http://localhost:9999", name = "dxp-cloud-api-url",
 		required = false
 	)
 	public String dxpCloudAPIURL();
@@ -48,45 +48,15 @@ public interface OSBCommerceProvisioningConfiguration {
 	public String dxpCloudAPIUsername();
 
 	@Meta.AD(
-		deflt = "localhost", name = "osb-commerce-portal-instance-domain-name",
-		required = false
-	)
-	public String osbCommercePortalInstanceDomainName();
-
-	@Meta.AD(
-		deflt = "", name = "osb-commerce-portal-instance-oauth-client-id",
-		required = false
-	)
-	public String osbCommercePortalInstanceOAuthClientId();
-
-	@Meta.AD(
-		deflt = "", name = "osb-commerce-portal-instance-oauth-client-secret",
-		required = false
-	)
-	public String osbCommercePortalInstanceOAuthClientSecret();
-
-	@Meta.AD(
 		deflt = "8080", name = "osb-commerce-portal-instance-port",
 		required = false
 	)
 	public int osbCommercePortalInstancePort();
 
 	@Meta.AD(
-		deflt = "test", name = "osb-commerce-portal-instance-password",
-		required = false
-	)
-	public String osbCommercePortalInstancePassword();
-
-	@Meta.AD(
 		deflt = "http", name = "osb-commerce-portal-instance-protocol",
 		required = false
 	)
 	public String osbCommercePortalInstanceProtocol();
-
-	@Meta.AD(
-		deflt = "test@liferay.com",
-		name = "osb-commerce-portal-instance-username", required = false
-	)
-	public String osbCommercePortalInstanceUsername();
 
 }

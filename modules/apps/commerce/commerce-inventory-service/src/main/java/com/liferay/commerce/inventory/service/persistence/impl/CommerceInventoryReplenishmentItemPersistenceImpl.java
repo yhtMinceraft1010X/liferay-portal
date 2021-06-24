@@ -3296,27 +3296,27 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew &&
 			(commerceInventoryReplenishmentItem.getCreateDate() == null)) {
 
 			if (serviceContext == null) {
-				commerceInventoryReplenishmentItem.setCreateDate(now);
+				commerceInventoryReplenishmentItem.setCreateDate(date);
 			}
 			else {
 				commerceInventoryReplenishmentItem.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceInventoryReplenishmentItemModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceInventoryReplenishmentItem.setModifiedDate(now);
+				commerceInventoryReplenishmentItem.setModifiedDate(date);
 			}
 			else {
 				commerceInventoryReplenishmentItem.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3886,7 +3886,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceInventoryReplenishmentItemModelImpl
 				commerceInventoryReplenishmentItemModelImpl,
 			String[] columnNames, boolean original) {
@@ -3911,8 +3911,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -15,13 +15,19 @@ const IS_OPEN = 'is-open';
 const IS_SOLID = 'is-solid';
 const MAX_LEVEL = 5;
 const PARALLAX_CONTAINER = 'parallax';
+const SIGN_IN = 'sign-in';
 const SIGN_IN_BTN = 'sign-in-btn';
 const SIGN_IN_WRAPPER = 'sign-in-wrapper';
 const SOLID_AFTER_PIXELS = 56;
 
 const banner = window.document.querySelector(`#${BANNER}`);
-const scrollingElement = window.document.querySelector(`.${PARALLAX_CONTAINER}`);
+const scrollingElement = window.document.querySelector(
+	`.${PARALLAX_CONTAINER}`
+);
+const signInElement = window.document.querySelector(`.${SIGN_IN}`);
 const signInBtn = window.document.querySelector(`.${SIGN_IN_BTN}`);
+
+const CHECKOUT_PATH_MATCHER = '/checkout';
 
 function isButton(target) {
 	if (target.classList.contains(SIGN_IN_BTN)) {
@@ -67,6 +73,10 @@ function HeaderHandler() {
 
 	if (signInBtn) {
 		signInBtn.addEventListener('click', toggleSignIn);
+	}
+
+	if (window.location.href.includes(CHECKOUT_PATH_MATCHER)) {
+		signInElement.classList.add('invisible');
 	}
 }
 

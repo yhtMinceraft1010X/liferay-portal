@@ -3450,25 +3450,25 @@ public class LayoutSetBranchPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (layoutSetBranch.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				layoutSetBranch.setCreateDate(now);
+				layoutSetBranch.setCreateDate(date);
 			}
 			else {
 				layoutSetBranch.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!layoutSetBranchModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				layoutSetBranch.setModifiedDate(now);
+				layoutSetBranch.setModifiedDate(date);
 			}
 			else {
 				layoutSetBranch.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3992,6 +3992,13 @@ public class LayoutSetBranchPersistenceImpl
 						layoutSetBranchModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4004,7 +4011,7 @@ public class LayoutSetBranchPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutSetBranchModelImpl layoutSetBranchModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4027,8 +4034,19 @@ public class LayoutSetBranchPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= LayoutSetBranchModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

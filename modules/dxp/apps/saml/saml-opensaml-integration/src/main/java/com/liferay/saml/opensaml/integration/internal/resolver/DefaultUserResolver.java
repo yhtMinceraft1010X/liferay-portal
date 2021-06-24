@@ -387,24 +387,26 @@ public class DefaultUserResolver implements UserResolver {
 		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
 			user = importLdapUser(companyId, subjectNameIdentifier, authType);
 		}
-		else {
-			user = getUser(companyId, subjectNameIdentifier, authType);
 
-			if (user != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Found user " + user.toString());
-				}
+		if (user != null) {
+			return user;
+		}
 
-				user = updateUser(user, attributesMap, serviceContext);
+		user = getUser(companyId, subjectNameIdentifier, authType);
+
+		if (user != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Found user " + user.toString());
 			}
-			else {
-				user = addUser(
-					companyId, samlSpIdpConnection, attributesMap,
-					serviceContext);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Added user " + user.toString());
-				}
+			user = updateUser(user, attributesMap, serviceContext);
+		}
+		else {
+			user = addUser(
+				companyId, samlSpIdpConnection, attributesMap, serviceContext);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Added user " + user.toString());
 			}
 		}
 

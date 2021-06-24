@@ -104,10 +104,9 @@
 						String category = categoryLabels[i];
 						String[] sectionKeys = categorySectionKeys[i];
 						String[] sectionLabels = categorySectionLabels[i];
-
-						if (sectionKeys.length > 0) {
 					%>
 
+						<c:if test="<%= sectionKeys.length > 0 %>">
 							<c:if test="<%= Validator.isNotNull(category) %>">
 								<li class="list-group-item nav-header"><liferay-ui:message key="<%= category %>" /></li>
 							</c:if>
@@ -176,8 +175,9 @@
 							}
 							%>
 
+						</c:if>
+
 					<%
-						}
 					}
 					%>
 

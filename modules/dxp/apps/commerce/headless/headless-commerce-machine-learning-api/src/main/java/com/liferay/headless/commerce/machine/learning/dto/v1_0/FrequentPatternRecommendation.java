@@ -341,6 +341,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.FrequentPatternRecommendation",
 		name = "x-class-name"
 	)
@@ -376,7 +377,7 @@ public class FrequentPatternRecommendation implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -415,7 +416,7 @@ public class FrequentPatternRecommendation implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

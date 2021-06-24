@@ -29,8 +29,7 @@ public interface DXPCloudProvisioningClient extends Client {
 
 	public List<PortalInstance> getPortalInstances();
 
-	public PortalInstance postPortalInstance(
-		String domain, String portalInitializerKey);
+	public PortalInstance postPortalInstance(PortalInstance portalInstance);
 
 	public PortalInstance updatePortalInstance(
 		String domain, String portalInstanceId);

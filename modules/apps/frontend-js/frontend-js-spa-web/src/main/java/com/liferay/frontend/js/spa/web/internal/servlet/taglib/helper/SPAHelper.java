@@ -15,7 +15,6 @@
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper;
 
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration;
-import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfigurationUtil;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,13 +29,14 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,7 +81,7 @@ public class SPAHelper {
 	}
 
 	public String getExcludedPaths() {
-		return _SPA_EXCLUDED_PATHS;
+		return _spaExcludedPathsJSONArray.toString();
 	}
 
 	public ResourceBundle getLanguageResourceBundle(
@@ -204,6 +204,8 @@ public class SPAHelper {
 			SPAConfiguration.class, properties);
 
 		_cacheExpirationTime = _getCacheExpirationTime(_spaConfiguration);
+		_spaExcludedPathsJSONArray = _getExcludedPathsJSONArray(
+			_spaConfiguration);
 
 		Collections.addAll(
 			_navigationExceptionSelectors,
@@ -237,6 +239,8 @@ public class SPAHelper {
 			SPAConfiguration.class, properties);
 
 		_cacheExpirationTime = _getCacheExpirationTime(_spaConfiguration);
+		_spaExcludedPathsJSONArray = _getExcludedPathsJSONArray(
+			_spaConfiguration);
 
 		Collections.addAll(
 			_navigationExceptionSelectors,
@@ -263,9 +267,33 @@ public class SPAHelper {
 		return cacheExpirationTime;
 	}
 
+	private JSONArray _getExcludedPathsJSONArray(
+		SPAConfiguration spaConfiguration) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String excludedPath : _SPA_DEFAULT_EXCLUDED_PATHS) {
+			jsonArray.put(_portal.getPathContext() + excludedPath);
+		}
+
+		String[] customExcludedPaths = spaConfiguration.customExcludedPaths();
+
+		if (ArrayUtil.isEmpty(customExcludedPaths)) {
+			return jsonArray;
+		}
+
+		for (String customExcludedPath : customExcludedPaths) {
+			jsonArray.put(_portal.getPathContext() + customExcludedPath);
+		}
+
+		return jsonArray;
+	}
+
 	private static final String _REDIRECT_PARAM_NAME;
 
-	private static final String _SPA_EXCLUDED_PATHS;
+	private static final String[] _SPA_DEFAULT_EXCLUDED_PATHS = {
+		"/c/document_library", "/documents", "/image"
+	};
 
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
 		"javascript.single.page.application.navigation.exception.selector";
@@ -297,23 +325,17 @@ public class SPAHelper {
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
 
 		_REDIRECT_PARAM_NAME = portletNamespace.concat("redirect");
-
-		jsonArray = JSONFactoryUtil.createJSONArray();
-
-		String[] excludedPaths = StringUtil.split(
-			SPAConfigurationUtil.get("spa.excluded.paths"));
-
-		for (String excludedPath : excludedPaths) {
-			jsonArray.put(PortalUtil.getPathContext() + excludedPath);
-		}
-
-		_SPA_EXCLUDED_PATHS = jsonArray.toString();
 	}
 
 	private long _cacheExpirationTime;
 	private ServiceTracker<Object, Object> _navigationExceptionSelectorTracker;
+
+	@Reference
+	private Portal _portal;
+
 	private PortletLocalService _portletLocalService;
 	private SPAConfiguration _spaConfiguration;
+	private JSONArray _spaExcludedPathsJSONArray;
 
 	private static final class NavigationExceptionSelectorTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

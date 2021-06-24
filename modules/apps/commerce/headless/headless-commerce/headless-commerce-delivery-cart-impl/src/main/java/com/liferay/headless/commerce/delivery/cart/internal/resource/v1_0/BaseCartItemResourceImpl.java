@@ -88,9 +88,9 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Deletes an Cart Item by ID.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartItemId")}
 	)
@@ -112,9 +112,9 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -148,9 +148,9 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive information of the given Cart")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartItemId")}
 	)
@@ -170,13 +170,13 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Retrive information of the given Cart.")
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartItemId")}
 	)
+	@PATCH
 	@Path("/cart-items/{cartItemId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartItem")})
@@ -247,15 +247,15 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/{cartItemId}' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "update the given Cart.")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "cartItemId")}
 	)
 	@Path("/cart-items/{cartItemId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "CartItem")})
 	public CartItem putCartItem(
 			@NotNull @Parameter(hidden = true) @PathParam("cartItemId") Long
@@ -271,14 +271,14 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/cart-items/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/cart-items/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "CartItem")})
 	public Response putCartItemBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -307,9 +307,9 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/items'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrive cart items of a Cart.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "cartId"),
@@ -333,14 +333,14 @@ public abstract class BaseCartItemResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/items' -d $'{"cartItems": ___, "customFields": ___, "errorMessages": ___, "options": ___, "price": ___, "productId": ___, "quantity": ___, "settings": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Add new Items to a Cart, return the whole Cart updated."
 	)
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "cartId")})
 	@Path("/carts/{cartId}/items")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "CartItem")})
 	public CartItem postCartItem(
@@ -425,7 +425,7 @@ public abstract class BaseCartItemResourceImpl
 		for (CartItem cartItem : cartItems) {
 			putCartItem(
 				cartItem.getId() != null ? cartItem.getId() :
-				(Long)parameters.get("cartItemId"),
+					Long.parseLong((String)parameters.get("cartItemId")),
 				cartItem);
 		}
 	}

@@ -1598,25 +1598,25 @@ public class CommerceTaxFixedRatePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceTaxFixedRate.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceTaxFixedRate.setCreateDate(now);
+				commerceTaxFixedRate.setCreateDate(date);
 			}
 			else {
 				commerceTaxFixedRate.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceTaxFixedRateModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceTaxFixedRate.setModifiedDate(now);
+				commerceTaxFixedRate.setModifiedDate(date);
 			}
 			else {
 				commerceTaxFixedRate.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2091,6 +2091,13 @@ public class CommerceTaxFixedRatePersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2103,7 +2110,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2126,8 +2133,19 @@ public class CommerceTaxFixedRatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceTaxFixedRateModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

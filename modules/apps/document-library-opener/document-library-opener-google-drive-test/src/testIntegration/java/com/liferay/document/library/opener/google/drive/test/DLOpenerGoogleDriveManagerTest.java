@@ -17,6 +17,7 @@ package com.liferay.document.library.opener.google.drive.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -30,9 +31,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -52,8 +54,11 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Dictionary;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,11 +79,59 @@ public class DLOpenerGoogleDriveManagerTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyLocalServiceUtil.deleteCompany(_company);
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_user = UserTestUtil.addGroupAdminUser(_company.getGroup());
 
-		_user = UserTestUtil.addUser(_company);
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
+	@Test
+	public void testCheckInUploadsAnEmptyFileToGoogle() throws Exception {
+		_test(
+			_company.getCompanyId(), _user.getUserId(),
+			() -> {
+				FileEntry fileEntry = _addFileEntry();
+
+				DLOpenerGoogleDriveFileReference
+					dlOpenerGoogleDriveFileReference =
+						_dlOpenerGoogleDriveManager.create(
+							_user.getUserId(), fileEntry);
+
+				Assert.assertEquals(
+					"\ufeff",
+					FileUtil.read(
+						dlOpenerGoogleDriveFileReference.getContentFile()));
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_company.getCompanyId(), _company.getGroupId(),
+						_user.getUserId());
+
+				_dlAppService.checkInFileEntry(
+					fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
+					serviceContext);
+
+				Assert.assertFalse(
+					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));
+			});
 	}
 
 	@Test
@@ -197,9 +250,9 @@ public class DLOpenerGoogleDriveManagerTest {
 		return _dlAppLocalService.addFileEntry(
 			serviceContext.getUserId(), folder.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, "liferay.txt",
-			StringPool.BLANK, StringPool.BLANK, "liferay".getBytes(),
-			serviceContext);
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			"liferay".getBytes(), serviceContext);
 	}
 
 	private String _getAuthorizationToken() throws Exception {
@@ -269,11 +322,13 @@ public class DLOpenerGoogleDriveManagerTest {
 		}
 	}
 
-	@DeleteAfterTestRun
-	private Company _company;
+	private static Company _company;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	@Inject
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
@@ -281,6 +336,7 @@ public class DLOpenerGoogleDriveManagerTest {
 	@Inject
 	private Http _http;
 
+	private String _originalName;
 	private User _user;
 
 }

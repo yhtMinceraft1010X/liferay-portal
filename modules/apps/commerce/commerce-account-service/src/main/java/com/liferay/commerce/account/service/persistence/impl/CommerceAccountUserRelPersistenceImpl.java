@@ -1363,25 +1363,25 @@ public class CommerceAccountUserRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceAccountUserRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceAccountUserRel.setCreateDate(now);
+				commerceAccountUserRel.setCreateDate(date);
 			}
 			else {
 				commerceAccountUserRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceAccountUserRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceAccountUserRel.setModifiedDate(now);
+				commerceAccountUserRel.setModifiedDate(date);
 			}
 			else {
 				commerceAccountUserRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1857,6 +1857,13 @@ public class CommerceAccountUserRelPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1869,7 +1876,7 @@ public class CommerceAccountUserRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceAccountUserRelModelImpl commerceAccountUserRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1893,8 +1900,19 @@ public class CommerceAccountUserRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceAccountUserRelModelImpl.getColumnBitmask("userId");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

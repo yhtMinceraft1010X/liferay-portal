@@ -329,6 +329,7 @@ public class ProductInteractionRecommendation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductInteractionRecommendation",
 		name = "x-class-name"
 	)
@@ -364,7 +365,7 @@ public class ProductInteractionRecommendation implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -403,7 +404,7 @@ public class ProductInteractionRecommendation implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

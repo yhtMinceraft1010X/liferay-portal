@@ -4963,25 +4963,25 @@ public class MDRRuleGroupInstancePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mdrRuleGroupInstance.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mdrRuleGroupInstance.setCreateDate(now);
+				mdrRuleGroupInstance.setCreateDate(date);
 			}
 			else {
 				mdrRuleGroupInstance.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mdrRuleGroupInstanceModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mdrRuleGroupInstance.setModifiedDate(now);
+				mdrRuleGroupInstance.setModifiedDate(date);
 			}
 			else {
 				mdrRuleGroupInstance.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5616,7 +5616,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MDRRuleGroupInstanceModelImpl mdrRuleGroupInstanceModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5639,8 +5639,8 @@ public class MDRRuleGroupInstancePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

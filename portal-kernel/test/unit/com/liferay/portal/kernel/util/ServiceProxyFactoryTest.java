@@ -480,6 +480,7 @@ public class ServiceProxyFactoryTest {
 					private boolean _logged;
 
 				});
+
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			FutureTask<String> futureTask = new FutureTask<>(

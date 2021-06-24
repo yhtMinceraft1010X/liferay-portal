@@ -359,6 +359,7 @@ public class CommerceOrderDiscountV2Test {
 		).then(
 			"The final price will be calculated with the discounts"
 		);
+
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 

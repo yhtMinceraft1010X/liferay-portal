@@ -367,6 +367,39 @@ definition {
 			startDateTime = "${startDateTime}");
 	}
 
+	macro addRegularInCustomSite {
+		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
+
+		AssertNotChecked(locator1 = "CalendarEditEvent#ALL_DAY_CHECKBOX");
+
+		AssertNotChecked(locator1 = "CalendarEditEvent#REPEAT_CHECKBOX");
+
+		var endDate = selenium.getElementValue("CalendarEditEvent#END_DATE");
+		var endDateTime = selenium.getElementValue("CalendarEditEvent#END_DATE_TIME");
+		var startDate = selenium.getElementValue("CalendarEditEvent#START_DATE");
+		var startDateTime = selenium.getElementValue("CalendarEditEvent#START_DATE_TIME");
+
+		CalendarEvent.selectCalendar(calendarName = "${calendarName}");
+
+		if ("${optionSet}" == "true") {
+			CalendarEvent._options(
+				optionSetValue = "${optionSetValue}",
+				specificOptionSetValue = "${specificOptionSetValue}");
+		}
+		CalendarEvent.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "${siteName}");
+
+		CalendarScheduler._viewRegularEventTitleViaMonthView(
+			endDate = "${endDate}",
+			endDateTime = "${endDateTime}",
+			eventTitle = "${eventTitle}",
+			startDate = "${startDate}",
+			startDateTime = "${startDateTime}");
+	}
+
 	macro addRepeating {
 		CalendarEvent.editTitle(eventTitle = "${eventTitle}");
 
@@ -1466,6 +1499,18 @@ definition {
 		}
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewDetailsViaMailLink {
+		AssertTextEquals(
+			locator1 = "Portlet#H3_HEADER",
+			value1 = "${eventTitle}");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#START_DATE_FIELD");
+
+		AssertElementPresent(locator1 = "CalendarViewEventDetails#END_DATE_FIELD");
+
+		CalendarEvent.viewApprovedEventRSVPButtons();
 	}
 
 	macro viewEventNotToday {

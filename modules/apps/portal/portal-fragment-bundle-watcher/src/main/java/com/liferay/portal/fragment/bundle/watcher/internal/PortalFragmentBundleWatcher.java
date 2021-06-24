@@ -52,12 +52,7 @@ public class PortalFragmentBundleWatcher {
 
 			@Override
 			public String addingBundle(Bundle bundle, BundleEvent event) {
-				BundleRevision bundleRevision = bundle.adapt(
-					BundleRevision.class);
-
-				int types = bundleRevision.getTypes();
-
-				if ((types & BundleRevision.TYPE_FRAGMENT) == 0) {
+				if (!_isFragment(bundle)) {
 					return null;
 				}
 
@@ -74,7 +69,13 @@ public class PortalFragmentBundleWatcher {
 			FrameworkWiring.class);
 
 		_resolvedBundleListener = bundleEvent -> {
-			if (bundleEvent.getType() == BundleEvent.RESOLVED) {
+			Bundle bundleEventBundle = bundleEvent.getBundle();
+
+			if (((bundleEvent.getType() == BundleEvent.INSTALLED) &&
+				 (bundleEventBundle.getState() != Bundle.UNINSTALLED) &&
+				 _isFragment(bundleEventBundle)) ||
+				(bundleEvent.getType() == BundleEvent.RESOLVED)) {
+
 				Map<Bundle, String> installedFragmentBundles =
 					_installedFragmentBundleTracker.getTracked();
 
@@ -162,6 +163,19 @@ public class PortalFragmentBundleWatcher {
 		}
 
 		return fragmentHost;
+	}
+
+	/**
+	 * @see com.liferay.portal.file.install.internal.DirectoryWatcher#_isFragment
+	 */
+	private boolean _isFragment(Bundle bundle) {
+		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
+
+		if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) != 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private BundleContext _bundleContext;

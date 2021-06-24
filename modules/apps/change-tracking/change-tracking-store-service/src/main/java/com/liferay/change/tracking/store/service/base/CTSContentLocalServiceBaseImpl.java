@@ -17,6 +17,7 @@ package com.liferay.change.tracking.store.service.base;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.model.CTSContentDataBlobModel;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
+import com.liferay.change.tracking.store.service.CTSContentLocalServiceUtil;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
@@ -54,6 +55,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.sql.Blob;
 
 import java.util.List;
@@ -61,6 +64,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -81,7 +85,7 @@ public abstract class CTSContentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CTSContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.change.tracking.store.service.CTSContentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CTSContentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CTSContentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -152,6 +156,13 @@ public abstract class CTSContentLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return ctsContentPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -434,6 +445,11 @@ public abstract class CTSContentLocalServiceBaseImpl
 		}
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -445,6 +461,8 @@ public abstract class CTSContentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		ctsContentLocalService = (CTSContentLocalService)aopProxy;
+
+		_setLocalServiceUtilService(ctsContentLocalService);
 	}
 
 	/**
@@ -501,6 +519,22 @@ public abstract class CTSContentLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CTSContentLocalService ctsContentLocalService) {
+
+		try {
+			Field field = CTSContentLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, ctsContentLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

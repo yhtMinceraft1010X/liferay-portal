@@ -156,6 +156,9 @@ public interface CPTaxCategoryLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -232,6 +235,14 @@ public interface CPTaxCategoryLocalService
 	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTaxCategory fetchCPTaxCategoryByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPTaxCategoryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTaxCategory fetchCPTaxCategoryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
@@ -283,6 +294,19 @@ public interface CPTaxCategoryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTaxCategory getCPTaxCategory(long CPTaxCategoryId)
+		throws PortalException;
+
+	/**
+	 * Returns the cp tax category with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp tax category's external reference code
+	 * @return the matching cp tax category
+	 * @throws PortalException if a matching cp tax category could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTaxCategory getCPTaxCategoryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -85,6 +86,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -107,7 +110,7 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -181,6 +184,13 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceOrderPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -297,10 +307,39 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	 * @return the matching commerce order, or <code>null</code> if a matching commerce order could not be found
 	 */
 	@Override
-	public CommerceOrder fetchCommerceOrderByReferenceCode(
+	public CommerceOrder fetchCommerceOrderByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceOrderPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceOrder fetchCommerceOrderByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceOrderByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce order with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce order's external reference code
+	 * @return the matching commerce order
+	 * @throws PortalException if a matching commerce order could not be found
+	 */
+	@Override
+	public CommerceOrder getCommerceOrderByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceOrderPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1693,11 +1732,15 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.model.CommerceOrder",
 			commerceOrderLocalService);
+
+		_setLocalServiceUtilService(commerceOrderLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.model.CommerceOrder");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1739,6 +1782,22 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceOrderLocalService commerceOrderLocalService) {
+
+		try {
+			Field field = CommerceOrderLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceOrderLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

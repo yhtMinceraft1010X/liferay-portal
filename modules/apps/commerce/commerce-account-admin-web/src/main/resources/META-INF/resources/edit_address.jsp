@@ -26,9 +26,6 @@ int selectedType = CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
 if (commerceAddress != null) {
 	selectedType = commerceAddress.getType();
 }
-
-long commerceCountryId = commerceAccountAddressAdminDisplayContext.getCommerceCountryId();
-long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceRegionId();
 %>
 
 <portlet:actionURL name="/commerce_account_admin/edit_commerce_address" var="editCommerceAddressActionURL" />
@@ -146,7 +143,8 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 			selectDesc: 'nameCurrentValue',
 			selectId: 'commerceCountryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= commerceCountryId %>',
+			selectVal:
+				'<%= commerceAccountAddressAdminDisplayContext.getCommerceCountryId() %>',
 		},
 		{
 			select: '<portlet:namespace />commerceRegionId',
@@ -162,7 +160,8 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 			},
 			selectDesc: 'name',
 			selectId: 'commerceRegionId',
-			selectVal: '<%= commerceRegionId %>',
+			selectVal:
+				'<%= commerceAccountAddressAdminDisplayContext.getCommerceRegionId() %>',
 		},
 	]);
 </aui:script>

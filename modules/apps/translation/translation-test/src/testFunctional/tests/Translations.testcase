@@ -48,6 +48,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -222,6 +223,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -265,6 +267,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Contenidoweb",
 			descriptionTranslateion = "Descripcion",
+			encoding = "false",
 			titleTranslation = "Titulodelcontenidoweb",
 			translationFileName = "WebContentTitle-en_US-es_ES",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -284,6 +287,48 @@ definition {
 			webContentContent = "Contenidoweb",
 			webContentDescription = "Descripcion",
 			webContentTitle = "Titulodelcontenidoweb");
+	}
+
+	@description = "This ensures that a translated file(.xlf) after re-encoding it to UTF-8 can be imported."
+	@priority = "4"
+	test ImportWebContentWithUTF8 {
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan)");
+
+		Translations.translateFile(
+			contentTranslateion = "Webコンテンツ",
+			descriptionTranslateion = "説明",
+			encoding = "utf8",
+			titleTranslation = "Webコンテンツのタイトル",
+			translationFileName = "WebContentTitle-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle-en_US.zip",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.importTranslation(
+			fileName = "WebContentTitle-en_US-ja_JP_utf8.xlf",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.viewCP(
+			webContentContent = "Webコンテンツ",
+			webContentDescription = "説明",
+			webContentTitle = "Webコンテンツのタイトル");
 	}
 
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
@@ -308,6 +353,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "Internetinhalt",
 			descriptionTranslateion = "Beschreibung",
+			encoding = "false",
 			titleTranslation = "TiteldesWebinhalts",
 			translationFileName = "WebContentTitle-en_US-de_DE",
 			translationFileRename = "true",
@@ -356,6 +402,7 @@ definition {
 		Translations.translateFile(
 			contentTranslateion = "ContenuWeb",
 			descriptionTranslateion = "Ladescription",
+			encoding = "false",
 			titleTranslation = "TitreducontenuWeb",
 			translationFileName = "WebContentTitle-en_US-fr_FR",
 			translationZipFileName = "WebContentTitle-en_US.zip",
@@ -579,6 +626,71 @@ definition {
 			webContentText = "Mensaje de texto",
 			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
+	}
+
+	@description = "This ensures that the user can not translate a web content to an unavailable language."
+	@priority = "4"
+	test TranslateWCToUnavailableLanguage {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regrole Name");
+
+		for (var resourceNameIndex : list "com_liferay_journal_web_portlet_JournalPortlet,com.liferay.journal,com.liferay.journal.model.JournalArticle") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "${resourceNameIndex}",
+				roleTitle = "Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_translation_web_internal_portlet_TranslationPortlet",
+				roleTitle = "Regrole Name");
+		}
+
+		for (var resourceNameIndex : list "com.liferay.translation.zh_CN") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "TRANSLATE",
+				resourceName = "${resourceNameIndex}",
+				roleTitle = "Regrole Name");
+		}
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.configureCurrentLanguagesCP(
+			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
+			defaultSiteLanguage = "English (United States)");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Alert.viewInfoMessageSpecific(infoMessage = "You do not have permissions to translate to any of the available languages.");
 	}
 
 	@description = "This ensures that the user can not translate a web content without any languages permissions."

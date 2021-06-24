@@ -77,13 +77,7 @@ exports[`Grid has a label 1`] = `
         </table>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -180,7 +174,7 @@ exports[`Grid has a tip 1`] = `
 exports[`Grid has an id 1`] = `
 <div>
   <div
-    aria-labelledby="undefined_fieldDetails"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     tabindex="0"
   >
@@ -480,13 +474,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
         </table>
       </div>
     </div>
-    <span
-      class="sr-only"
-      id="undefined_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

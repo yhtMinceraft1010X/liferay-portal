@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Comment")
+@GraphQLName(
+	description = "Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.",
+	value = "Comment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Comment")
 public class Comment implements Serializable {
@@ -408,6 +411,7 @@ public class Comment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Comment",
 		name = "x-class-name"
 	)
@@ -443,7 +447,7 @@ public class Comment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -482,7 +486,7 @@ public class Comment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

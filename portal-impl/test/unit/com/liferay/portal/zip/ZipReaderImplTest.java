@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
@@ -31,12 +32,19 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
  */
 public class ZipReaderImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -309,8 +317,11 @@ public class ZipReaderImplTest {
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
-		try (InputStream is = zipReader.getEntryAsInputStream(filePath)) {
-			Assert.assertEquals(expectedContent, StreamUtil.toString(is));
+		try (InputStream inputStream = zipReader.getEntryAsInputStream(
+				filePath)) {
+
+			Assert.assertEquals(
+				expectedContent, StreamUtil.toString(inputStream));
 		}
 
 		zipReader.close();

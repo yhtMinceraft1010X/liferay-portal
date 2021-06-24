@@ -166,6 +166,7 @@ public class AppWorkflowRoleAssignment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowRoleAssignment",
 		name = "x-class-name"
 	)
@@ -201,7 +202,7 @@ public class AppWorkflowRoleAssignment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -240,7 +241,7 @@ public class AppWorkflowRoleAssignment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

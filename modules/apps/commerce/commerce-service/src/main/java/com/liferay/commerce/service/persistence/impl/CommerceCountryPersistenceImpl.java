@@ -4169,25 +4169,25 @@ public class CommerceCountryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceCountry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceCountry.setCreateDate(now);
+				commerceCountry.setCreateDate(date);
 			}
 			else {
 				commerceCountry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceCountryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceCountry.setModifiedDate(now);
+				commerceCountry.setModifiedDate(date);
 			}
 			else {
 				commerceCountry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4760,6 +4760,13 @@ public class CommerceCountryPersistenceImpl
 						commerceCountryModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4772,7 +4779,7 @@ public class CommerceCountryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceCountryModelImpl commerceCountryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4795,8 +4802,19 @@ public class CommerceCountryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceCountryModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

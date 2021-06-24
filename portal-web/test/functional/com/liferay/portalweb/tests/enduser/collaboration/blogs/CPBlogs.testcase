@@ -244,6 +244,36 @@ definition {
 		Button.clickPublish();
 	}
 
+	@description = "This test covers LPS-108029. It ensures that a blog entry can be edited from the search result."
+	@priority = "4"
+	test BlogEntryCanBeEditedFromSearchResult {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
+
+		Blogs.editEntryViaSearchResultDetails(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit",
+			searchAssetTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title Edit");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title Edit");
+	}
+
 	@priority = "5"
 	test DeleteBlogsEntries {
 		property portal.acceptance = "true";
@@ -517,6 +547,42 @@ definition {
 		BlogsNavigator.gotoBrowseImage();
 
 		ItemSelector.searchDMImages(imageFileName = "Document_1.jpg");
+	}
+
+	@description = "This test covers LPS-111741. It ensures that a blog entry can be added with the same blog image."
+	@priority = "4"
+	test TheSameBlogImageCanBeUsedForDifferentEntries {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content new",
+			entrySubtitle = "Blogs Entry Subtitle new",
+			entryTitle = "Blogs Entry Title new",
+			navTab = "Blog Images",
+			uploadedFileName = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title new");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blogs Entry Content new",
+			entrySubtitle = "Blogs Entry Subtitle new",
+			entryTitle = "Blogs Entry Title new",
+			uploadFileName = "Document_1");
 	}
 
 	@priority = "3"

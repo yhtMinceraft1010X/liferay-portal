@@ -160,7 +160,8 @@ public class ProductOptionResourceImpl
 					externalReferenceCode);
 		}
 
-		return Page.of(_upsertProductOptions(cpDefinition, productOptions));
+		return Page.of(
+			_addOrUpdateProductOptions(cpDefinition, productOptions));
 	}
 
 	@Override
@@ -176,7 +177,36 @@ public class ProductOptionResourceImpl
 				"Unable to find Product with ID: " + id);
 		}
 
-		return Page.of(_upsertProductOptions(cpDefinition, productOptions));
+		return Page.of(
+			_addOrUpdateProductOptions(cpDefinition, productOptions));
+	}
+
+	private List<ProductOption> _addOrUpdateProductOptions(
+			CPDefinition cpDefinition, ProductOption[] productOptions)
+		throws Exception {
+
+		for (ProductOption productOption : productOptions) {
+			ProductOptionUtil.upsertCPDefinitionOptionRel(
+				_cpDefinitionOptionRelService, _cpOptionService, productOption,
+				cpDefinition.getCPDefinitionId(),
+				_serviceContextHelper.getServiceContext(
+					cpDefinition.getGroupId()));
+		}
+
+		List<ProductOption> productOptionList = new ArrayList<>();
+
+		cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinition.getCPDefinitionId());
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinition.getCPDefinitionOptionRels()) {
+
+			productOptionList.add(
+				_toProductOption(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+		}
+
+		return productOptionList;
 	}
 
 	private ProductOption _toProductOption(Long cpDefinitionOptionRelId)
@@ -238,34 +268,6 @@ public class ProductOptionResourceImpl
 
 		return _toProductOption(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-	}
-
-	private List<ProductOption> _upsertProductOptions(
-			CPDefinition cpDefinition, ProductOption[] productOptions)
-		throws Exception {
-
-		for (ProductOption productOption : productOptions) {
-			ProductOptionUtil.upsertCPDefinitionOptionRel(
-				_cpDefinitionOptionRelService, _cpOptionService, productOption,
-				cpDefinition.getCPDefinitionId(),
-				_serviceContextHelper.getServiceContext(
-					cpDefinition.getGroupId()));
-		}
-
-		List<ProductOption> productOptionList = new ArrayList<>();
-
-		cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinition.getCPDefinitionId());
-
-		for (CPDefinitionOptionRel cpDefinitionOptionRel :
-				cpDefinition.getCPDefinitionOptionRels()) {
-
-			productOptionList.add(
-				_toProductOption(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
-		}
-
-		return productOptionList;
 	}
 
 	@Reference

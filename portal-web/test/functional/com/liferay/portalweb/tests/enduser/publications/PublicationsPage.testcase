@@ -48,7 +48,7 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -62,7 +62,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Publications.createNewPublication(publicationsName = "Publication Name 2");
+		Publications.createNewPublication(publicationName = "Publication Name 2");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -78,23 +78,23 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Widget",
-			publicationsSite = "Site Name",
-			publicationsTitle = "Asset Publisher",
-			publicationsType = "Added",
-			publicationsUser = "Test Test",
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Widget",
+			changeSite = "Site Name",
+			changeTitle = "Asset Publisher",
+			changeType = "Added",
+			changeUser = "Test Test",
 			showAllItems = "true");
 
-		Publications.gotoPublish(publicationsName = "Publication Name 2");
+		Publications.gotoPublish(publicationName = "Publication Name 2");
 
-		Publications.publishPublication(publicationsName = "Publication Name 2");
+		Publications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.selectPublication(publicationsName = "Publication Name");
+		Publications.selectPublication(publicationName = "Publication Name");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
 		Publications.workOnProduction();
 
@@ -133,7 +133,7 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
-		Publications.createNewPublication(publicationsName = "Publication Name 1");
+		Publications.createNewPublication(publicationName = "Publication Name 1");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -153,7 +153,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Publications.createNewPublication(publicationsName = "Publication Name 2");
+		Publications.createNewPublication(publicationName = "Publication Name 2");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -181,25 +181,25 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Publications.gotoPublish(publicationsName = "Publication Name 2");
+		Publications.gotoPublish(publicationName = "Publication Name 2");
 
-		Publications.publishPublication(publicationsName = "Publication Name 2");
+		Publications.publishPublication(publicationName = "Publication Name 2");
 
-		Publications.selectPublication(publicationsName = "Publication Name 1");
+		Publications.selectPublication(publicationName = "Publication Name 1");
 
-		Publications.gotoPublish(publicationsName = "Publication Name 1");
+		Publications.gotoPublish(publicationName = "Publication Name 1");
 
-		Publications.discardPublications(
-			conflictingPublications = "true",
-			entryTitle = "Content Page Name",
-			publicationsCategory = "Page",
-			publicationsTitle = "Content Page Name");
+		Publications.discardChanges(
+			changeCategory = "Page",
+			changeTitle = "Content Page Name",
+			conflictingChanges = "true",
+			entryTitle = "Content Page Name");
 
-		Publications.discardPublications(
-			conflictingPublications = "true",
-			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			publicationsCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			publicationsTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
+		Publications.discardChanges(
+			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
+			conflictingChanges = "true",
+			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
 		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 	}
@@ -214,7 +214,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -236,23 +236,23 @@ definition {
 
 		Page.viewNoPG(pageName = "Test Page");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Page",
-			publicationsSite = "Guest",
-			publicationsTitle = "Test Page",
-			publicationsType = "Deleted",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Page",
+			changeSite = "Guest",
+			changeTitle = "Test Page",
+			changeType = "Deleted",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaContextStyle(
-			publicationsCategory = "Page",
-			publicationsDescription = "Test Test deleted a Page in Guest",
-			publicationsTitle = "Test Page");
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Page",
+			changeDescription = "Test Test deleted a Page in Guest",
+			changeTitle = "Test Page");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -263,7 +263,7 @@ definition {
 	test PublishPrivateContentPageWithFragment {
 		property test.assert.warning.exceptions = "true";
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		JSONFragment.addFragmentCollection(
 			groupName = "Guest",
@@ -317,9 +317,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.gotoPrivateSitePage(
 			pageName = "Test Page",
@@ -340,7 +340,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Test Page");
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -360,11 +360,11 @@ definition {
 			key_friendlyURL = "/test-page",
 			locator1 = "SitePages#FRIENDLY_URL");
 
-		Publications.selectPublication(publicationsName = "Publication Name");
+		Publications.selectPublication(publicationName = "Publication Name");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 
@@ -383,7 +383,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		Publications.revertPublication(publicationsName = "Publication Name");
+		Publications.revertPublication(publicationName = "Publication Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "guest");
 

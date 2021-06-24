@@ -243,6 +243,22 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a use case for LPS-123822 and LPS-127611."
+	@priority = "4"
+	test ViewPiwik {
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Site.editPiwikCP(piwik = '''<script>alert(123);</script>''');
+
+		Open.openNoError(locator1 = "${portalURL}");
+
+		AssertConfirm(value1 = "123");
+	}
+
 	@priority = "4"
 	test ViewRecycleBin {
 		var entryTitle = '''<script>alert(123);</script>''';

@@ -66,9 +66,8 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{contentType}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Operation(description = "Submits a request for exporting items to a file.")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
@@ -79,6 +78,7 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 		}
 	)
 	@Path("/export-task/{className}/{contentType}")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public ExportTask postExportTask(
@@ -102,9 +102,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the export task.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
 	)
@@ -124,9 +124,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}/content'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the exported content.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
 	)

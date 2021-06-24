@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseMeasurementUnitResourceImpl
-	implements MeasurementUnitResource, EntityModelResource,
+	implements EntityModelResource, MeasurementUnitResource,
 			   VulcanBatchEngineTaskItemDelegate<MeasurementUnit> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "groupId"),
@@ -115,11 +115,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit' -d $'{"id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "groupId")})
 	@Path("/commerceAdminSiteSetting/{groupId}/measurementUnit")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MeasurementUnit")})
 	public MeasurementUnit postCommerceAdminSiteSettingGroupMeasurementUnit(
@@ -136,8 +136,8 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/measurementUnit/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -156,9 +156,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -196,8 +196,8 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/measurementUnit/{id}")
 	@Produces({"application/json", "application/xml"})
@@ -214,12 +214,12 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}' -d $'{"id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/measurementUnit/{id}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "MeasurementUnit")})
 	public Response putMeasurementUnit(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
@@ -236,9 +236,8 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "id"),
@@ -247,6 +246,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 	)
 	@Path("/measurementUnit/{id}/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "MeasurementUnit")})
 	public Response putMeasurementUnitBatch(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
@@ -345,7 +345,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 		for (MeasurementUnit measurementUnit : measurementUnits) {
 			putMeasurementUnit(
 				measurementUnit.getId() != null ? measurementUnit.getId() :
-				(Long)parameters.get("measurementUnitId"),
+					Long.parseLong((String)parameters.get("measurementUnitId")),
 				measurementUnit);
 		}
 	}

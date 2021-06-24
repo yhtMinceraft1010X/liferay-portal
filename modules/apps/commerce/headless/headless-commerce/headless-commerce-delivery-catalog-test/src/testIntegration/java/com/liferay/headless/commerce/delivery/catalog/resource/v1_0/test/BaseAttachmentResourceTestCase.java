@@ -201,7 +201,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Page<Attachment> page =
 			attachmentResource.getChannelProductAttachmentsPage(
 				testGetChannelProductAttachmentsPage_getChannelId(),
-				testGetChannelProductAttachmentsPage_getProductId(),
+				testGetChannelProductAttachmentsPage_getProductId(), null,
 				Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -220,7 +220,8 @@ public abstract class BaseAttachmentResourceTestCase {
 					randomIrrelevantAttachment());
 
 			page = attachmentResource.getChannelProductAttachmentsPage(
-				irrelevantChannelId, irrelevantProductId, Pagination.of(1, 2));
+				irrelevantChannelId, irrelevantProductId, null,
+				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -239,7 +240,7 @@ public abstract class BaseAttachmentResourceTestCase {
 				channelId, productId, randomAttachment());
 
 		page = attachmentResource.getChannelProductAttachmentsPage(
-			channelId, productId, Pagination.of(1, 2));
+			channelId, productId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -270,7 +271,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Page<Attachment> page1 =
 			attachmentResource.getChannelProductAttachmentsPage(
-				channelId, productId, Pagination.of(1, 2));
+				channelId, productId, null, Pagination.of(1, 2));
 
 		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
 
@@ -278,7 +279,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Page<Attachment> page2 =
 			attachmentResource.getChannelProductAttachmentsPage(
-				channelId, productId, Pagination.of(2, 2));
+				channelId, productId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -288,7 +289,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Page<Attachment> page3 =
 			attachmentResource.getChannelProductAttachmentsPage(
-				channelId, productId, Pagination.of(1, 3));
+				channelId, productId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(attachment1, attachment2, attachment3),
@@ -333,7 +334,7 @@ public abstract class BaseAttachmentResourceTestCase {
 	public void testGetChannelProductImagesPage() throws Exception {
 		Page<Attachment> page = attachmentResource.getChannelProductImagesPage(
 			testGetChannelProductImagesPage_getChannelId(),
-			testGetChannelProductImagesPage_getProductId(),
+			testGetChannelProductImagesPage_getProductId(), null,
 			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -352,7 +353,8 @@ public abstract class BaseAttachmentResourceTestCase {
 					randomIrrelevantAttachment());
 
 			page = attachmentResource.getChannelProductImagesPage(
-				irrelevantChannelId, irrelevantProductId, Pagination.of(1, 2));
+				irrelevantChannelId, irrelevantProductId, null,
+				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -369,7 +371,7 @@ public abstract class BaseAttachmentResourceTestCase {
 			channelId, productId, randomAttachment());
 
 		page = attachmentResource.getChannelProductImagesPage(
-			channelId, productId, Pagination.of(1, 2));
+			channelId, productId, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -396,14 +398,14 @@ public abstract class BaseAttachmentResourceTestCase {
 			channelId, productId, randomAttachment());
 
 		Page<Attachment> page1 = attachmentResource.getChannelProductImagesPage(
-			channelId, productId, Pagination.of(1, 2));
+			channelId, productId, null, Pagination.of(1, 2));
 
 		List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
 
 		Assert.assertEquals(attachments1.toString(), 2, attachments1.size());
 
 		Page<Attachment> page2 = attachmentResource.getChannelProductImagesPage(
-			channelId, productId, Pagination.of(2, 2));
+			channelId, productId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -412,7 +414,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Assert.assertEquals(attachments2.toString(), 1, attachments2.size());
 
 		Page<Attachment> page3 = attachmentResource.getChannelProductImagesPage(
-			channelId, productId, Pagination.of(1, 3));
+			channelId, productId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(attachment1, attachment2, attachment3),
@@ -625,7 +627,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.delivery.catalog.dto.v1_0.
 						Attachment.class)) {
 
@@ -660,7 +662,7 @@ public abstract class BaseAttachmentResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -819,6 +821,17 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1096,12 +1109,12 @@ public abstract class BaseAttachmentResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1111,10 +1124,10 @@ public abstract class BaseAttachmentResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

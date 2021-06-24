@@ -19,7 +19,6 @@
 <%
 CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long commerceDiscountId = commerceDiscountDisplayContext.getCommerceDiscountId();
 List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDisplayContext.getCommerceDiscountRuleTypes();
 %>
 
@@ -64,7 +63,7 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 					};
 
 					return CommerceDiscountRuleResource.addDiscountRule(
-						'<%= commerceDiscountId %>',
+						'<%= commerceDiscountDisplayContext.getCommerceDiscountId() %>',
 						discountRuleData
 					)
 						.then(function (payload) {

@@ -412,7 +412,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		String portletPreferencesXml = PortletPreferencesFactoryUtil.toXML(
 			jxPortletPreferences);
 
-		long plid = 0L;
+		long plid = 0;
 
 		if (jxPortletPreferences instanceof PortletPreferencesImpl) {
 			PortletPreferencesImpl portletPreferencesImpl =

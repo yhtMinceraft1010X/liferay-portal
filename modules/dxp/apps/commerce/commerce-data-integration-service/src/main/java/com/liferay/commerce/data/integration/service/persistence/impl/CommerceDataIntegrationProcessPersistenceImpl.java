@@ -2592,25 +2592,25 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceDataIntegrationProcess.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceDataIntegrationProcess.setCreateDate(now);
+				commerceDataIntegrationProcess.setCreateDate(date);
 			}
 			else {
 				commerceDataIntegrationProcess.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceDataIntegrationProcessModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceDataIntegrationProcess.setModifiedDate(now);
+				commerceDataIntegrationProcess.setModifiedDate(date);
 			}
 			else {
 				commerceDataIntegrationProcess.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3137,6 +3137,13 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 							getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3150,7 +3157,7 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceDataIntegrationProcessModelImpl
 				commerceDataIntegrationProcessModelImpl,
 			String[] columnNames, boolean original) {
@@ -3175,8 +3182,20 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+					"modifiedDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

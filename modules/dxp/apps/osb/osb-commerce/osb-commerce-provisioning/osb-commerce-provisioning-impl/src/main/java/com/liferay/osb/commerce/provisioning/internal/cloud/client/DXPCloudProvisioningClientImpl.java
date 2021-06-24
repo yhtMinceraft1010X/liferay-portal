@@ -67,23 +67,16 @@ public class DXPCloudProvisioningClientImpl
 	}
 
 	@Override
-	public PortalInstance postPortalInstance(
-		String domain, String initializerKey) {
-
+	public PortalInstance postPortalInstance(PortalInstance portalInstance) {
 		try {
 			URIBuilder uriBuilder = new URIBuilder(
 				_getProvisioningPortalInstancesURI());
-
-			uriBuilder.setParameter("initializerKey", initializerKey);
 
 			URI uri = uriBuilder.build();
 
 			return executePost(
 				getBasicAuthorizationHeader(_password, _userName),
-				HashMapBuilder.put(
-					"domain", domain
-				).build(),
-				uri.toString(), PortalInstance.class);
+				portalInstance, uri.toString(), PortalInstance.class);
 		}
 		catch (URISyntaxException uriSyntaxException) {
 			throw new SystemException(uriSyntaxException);

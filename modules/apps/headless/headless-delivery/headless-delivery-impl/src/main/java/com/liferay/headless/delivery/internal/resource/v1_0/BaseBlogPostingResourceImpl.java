@@ -89,11 +89,11 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the blog post and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
@@ -111,9 +111,9 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -147,9 +147,9 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the blog post.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
@@ -169,15 +169,15 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}' -d $'{"alternativeHeadline": ___, "articleBody": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "headline": ___, "image": ___, "keywords": ___, "taxonomyCategoryIds": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates the blog post using only the fields received in the request body. Any other fields are left untouched. Returns the updated blog post."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
+	@PATCH
 	@Path("/blog-postings/{blogPostingId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
@@ -265,17 +265,17 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}' -d $'{"alternativeHeadline": ___, "articleBody": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "headline": ___, "image": ___, "keywords": ___, "taxonomyCategoryIds": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the blog post with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting putBlogPosting(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
@@ -291,14 +291,14 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/blog-postings/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Response putBlogPostingBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -327,11 +327,11 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/my-rating'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the blog post rating of the user who authenticated the request."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
@@ -349,11 +349,11 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/my-rating'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the blog post rating of the user who authenticated the request."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
@@ -373,16 +373,16 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a new blog post rating by the user who authenticated the request."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}/my-rating")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Rating postBlogPostingMyRating(
@@ -399,17 +399,17 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/my-rating' -d $'{"ratingValue": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces an existing blog post rating by the user who authenticated the request."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "blogPostingId")}
 	)
 	@Path("/blog-postings/{blogPostingId}/my-rating")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Rating putBlogPostingMyRating(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
@@ -425,11 +425,11 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's blog postings. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -460,12 +460,12 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings' -d $'{"alternativeHeadline": ___, "articleBody": ___, "customFields": ___, "datePublished": ___, "description": ___, "friendlyUrlPath": ___, "headline": ___, "image": ___, "keywords": ___, "taxonomyCategoryIds": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new blog post.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-postings")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public BlogPosting postSiteBlogPosting(
@@ -481,9 +481,8 @@ public abstract class BaseBlogPostingResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -491,6 +490,7 @@ public abstract class BaseBlogPostingResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/blog-postings/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public Response postSiteBlogPostingBatch(
@@ -522,10 +522,10 @@ public abstract class BaseBlogPostingResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-postings/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void putSiteBlogPostingSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -538,10 +538,10 @@ public abstract class BaseBlogPostingResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/blog-postings/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "BlogPosting")})
 	public void putSiteBlogPostingUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
@@ -557,7 +557,7 @@ public abstract class BaseBlogPostingResourceImpl
 
 		for (BlogPosting blogPosting : blogPostings) {
 			postSiteBlogPosting(
-				Long.valueOf((String)parameters.get("siteId")), blogPosting);
+				Long.parseLong((String)parameters.get("siteId")), blogPosting);
 		}
 	}
 
@@ -594,8 +594,8 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return getSiteBlogPostingsPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -629,7 +629,7 @@ public abstract class BaseBlogPostingResourceImpl
 		for (BlogPosting blogPosting : blogPostings) {
 			putBlogPosting(
 				blogPosting.getId() != null ? blogPosting.getId() :
-				(Long)parameters.get("blogPostingId"),
+					Long.parseLong((String)parameters.get("blogPostingId")),
 				blogPosting);
 		}
 	}

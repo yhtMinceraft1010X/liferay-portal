@@ -16,6 +16,9 @@ import CardEntryRenderer from './CardEntryRenderer';
 
 function CardListRenderer({
 	commerceAccountId = GUEST_ID,
+	commerceChannelGroupId,
+	commerceChannelId,
+	commerceCurrencyCode,
 	cpEntries,
 	checkoutURL,
 	portletNamespace,
@@ -32,6 +35,9 @@ function CardListRenderer({
 					<CardEntryRenderer
 						checkoutURL={checkoutURL}
 						commerceAccountId={commerceAccountId}
+						commerceChannelId={commerceChannelId}
+						commerceChannelGroupId={commerceChannelGroupId}
+						commerceCurrencyCode={commerceCurrencyCode}
 						isFeatured={index === 1}
 						isTrial={index === 0}
 						namespace={portletNamespace}

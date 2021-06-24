@@ -77,7 +77,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseProcessResourceImpl
-	implements ProcessResource, EntityModelResource,
+	implements EntityModelResource, ProcessResource,
 			   VulcanBatchEngineTaskItemDelegate<Process> {
 
 	/**
@@ -85,10 +85,10 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes' -d $'{"active": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "id": ___, "name": ___, "title_i18n": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Path("/processes")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Process")})
 	public Process postProcess(Process process) throws Exception {
@@ -100,13 +100,13 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/processes/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Process")})
 	public Response postProcessBatch(
@@ -136,8 +136,8 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}")
 	@Produces({"application/json", "application/xml"})
@@ -153,9 +153,9 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -189,8 +189,8 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}")
 	@Produces({"application/json", "application/xml"})
@@ -208,12 +208,12 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}' -d $'{"active": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "id": ___, "name": ___, "title_i18n": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "Process")})
 	public void putProcess(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
@@ -227,14 +227,14 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/processes/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "Process")})
 	public Response putProcessBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -263,8 +263,8 @@ public abstract class BaseProcessResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/title'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/title")
 	@Produces("text/plain")
@@ -355,7 +355,7 @@ public abstract class BaseProcessResourceImpl
 		for (Process process : processes) {
 			putProcess(
 				process.getId() != null ? process.getId() :
-				(Long)parameters.get("processId"),
+					Long.parseLong((String)parameters.get("processId")),
 				process);
 		}
 	}

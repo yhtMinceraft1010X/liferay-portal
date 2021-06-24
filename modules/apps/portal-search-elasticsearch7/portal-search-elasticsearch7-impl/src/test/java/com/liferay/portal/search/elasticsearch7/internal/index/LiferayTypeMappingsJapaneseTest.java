@@ -14,13 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch7.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.elasticsearch7.internal.index.constants.LiferayTypeMappingsConstants;
 import com.liferay.portal.search.elasticsearch7.internal.query.QueryBuilderFactories;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -30,8 +34,15 @@ import org.junit.rules.TestName;
  */
 public class LiferayTypeMappingsJapaneseTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+
 		IndexName indexName = new IndexName(testName.getMethodName());
 
 		_liferayIndexFixture = new LiferayIndexFixture(_PREFIX, indexName);

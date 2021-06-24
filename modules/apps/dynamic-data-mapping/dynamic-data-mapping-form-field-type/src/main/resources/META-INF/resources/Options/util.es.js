@@ -77,22 +77,17 @@ export const isOptionValueGenerated = (
  * value in the fields, always incrementing an integer
  * in front of the value to be friendly for the user.
  */
-export const dedupValue = (
-	fields,
-	value,
-	id,
-	generateOptionValueUsingOptionLabel,
-	propertyName
-) => {
+export const dedupValue = (fields, value, id, generateValueUsingLabel) => {
 	let counter = 0;
 
 	const recursive = (fields, currentValue) => {
 		const field = fields.find(
-			(field) => field[propertyName] === currentValue
+			(field) =>
+				field.value?.toLowerCase() === currentValue?.toLowerCase()
 		);
 
 		if (field && field.id !== id) {
-			if (generateOptionValueUsingOptionLabel) {
+			if (generateValueUsingLabel) {
 				counter += 1;
 				recursive(fields, value + counter);
 			}
@@ -110,15 +105,35 @@ export const dedupValue = (
 	return value;
 };
 
-export const getDefaultOptionValue = (
-	generateOptionValueUsingOptionLabel,
-	optionLabel
+export const findDuplicateReference = (
+	fields,
+	currentIndex,
+	currentReference
 ) => {
-	const defaultValue = generateOptionValueUsingOptionLabel
+	return fields
+		.filter((field, index) => index !== currentIndex)
+		.some(
+			({reference}) =>
+				reference?.toLowerCase() === currentReference?.toLowerCase()
+		);
+};
+
+export const getDefaultOptionValue = (generateValueUsingLabel, optionLabel) => {
+	const defaultValue = generateValueUsingLabel
 		? optionLabel
 		: getDefaultFieldName(true);
 
 	return defaultValue;
+};
+
+export const normalizeReference = (fields, currentField, index) => {
+	const {reference, value} = currentField;
+
+	if (!reference || findDuplicateReference(fields, index, reference)) {
+		return value ? value : getDefaultFieldName(true);
+	}
+
+	return reference;
 };
 
 /**
@@ -127,67 +142,45 @@ export const getDefaultOptionValue = (
  * is to deduplicate the value if necessary.
  *
  * 1. If the current value is null, use the default value that can be the label
- * or the default option name, the parameter generateOptionValueUsingOptionLabel
+ * or the default option name, the parameter generateValueUsingLabel
  * decides which of these two values will be used.
  * 2. If the default value is null, use the string Option.
  */
 export const normalizeValue = (
 	fields,
 	currentField,
-	generateOptionValueUsingOptionLabel,
-	propertyName
+	generateValueUsingLabel
 ) => {
-	const {label} = currentField;
-	let value = currentField[propertyName]
-		? currentField[propertyName]
-		: getDefaultOptionValue(generateOptionValueUsingOptionLabel, label);
+	const {label, value: prevValue} = currentField;
+
+	let value = prevValue
+		? prevValue
+		: getDefaultOptionValue(generateValueUsingLabel, label);
 
 	if (!value) {
 		value = Liferay.Language.get('option');
 	}
 
-	value = dedupValue(
-		fields,
-		value,
-		currentField.id,
-		generateOptionValueUsingOptionLabel,
-		propertyName
-	);
+	value = dedupValue(fields, value, currentField.id, generateValueUsingLabel);
 
 	return normalizeFieldName(value);
 };
 
-export const normalizeFieldReference = (currentIndex, fields) => {
-	const duplicateReference = fields
-		.filter((field, index) => index !== currentIndex)
-		.some(({reference}) => reference === fields[currentIndex].reference);
+export const normalizeFields = (fields, generateValueUsingLabel) => {
+	return fields.map((field, index) => {
+		const value = normalizeValue(fields, field, generateValueUsingLabel);
 
-	if (duplicateReference) {
-		fields[currentIndex].reference = getDefaultFieldName(true);
-	}
-
-	return fields;
-};
-
-export const normalizeFields = (
-	fields,
-	generateOptionValueUsingOptionLabel
-) => {
-	return fields.map((field) => {
 		return {
 			...field,
-			reference: normalizeValue(
+			reference: normalizeReference(
 				fields,
-				field,
-				generateOptionValueUsingOptionLabel,
-				'reference'
+				{
+					...field,
+					value,
+				},
+				index
 			),
-			value: normalizeValue(
-				fields,
-				field,
-				generateOptionValueUsingOptionLabel,
-				'value'
-			),
+			value,
 		};
 	});
 };

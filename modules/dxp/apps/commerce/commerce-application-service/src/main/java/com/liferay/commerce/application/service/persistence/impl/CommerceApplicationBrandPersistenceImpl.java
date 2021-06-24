@@ -1222,25 +1222,25 @@ public class CommerceApplicationBrandPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceApplicationBrand.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceApplicationBrand.setCreateDate(now);
+				commerceApplicationBrand.setCreateDate(date);
 			}
 			else {
 				commerceApplicationBrand.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceApplicationBrandModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceApplicationBrand.setModifiedDate(now);
+				commerceApplicationBrand.setModifiedDate(date);
 			}
 			else {
 				commerceApplicationBrand.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1717,6 +1717,13 @@ public class CommerceApplicationBrandPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1729,7 +1736,7 @@ public class CommerceApplicationBrandPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceApplicationBrandModelImpl commerceApplicationBrandModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1753,8 +1760,19 @@ public class CommerceApplicationBrandPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceApplicationBrandModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

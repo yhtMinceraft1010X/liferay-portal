@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for CommerceCountry. This utility wraps
@@ -48,20 +56,19 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was added
 	 */
-	public static com.liferay.commerce.model.CommerceCountry addCommerceCountry(
-		com.liferay.commerce.model.CommerceCountry commerceCountry) {
+	public static CommerceCountry addCommerceCountry(
+		CommerceCountry commerceCountry) {
 
 		return getService().addCommerceCountry(commerceCountry);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry addCommerceCountry(
-			java.util.Map<java.util.Locale, String> nameMap,
-			boolean billingAllowed, boolean shippingAllowed,
-			String twoLettersISOCode, String threeLettersISOCode,
-			int numericISOCode, boolean subjectToVAT, double priority,
-			boolean active,
+	public static CommerceCountry addCommerceCountry(
+			Map<java.util.Locale, String> nameMap, boolean billingAllowed,
+			boolean shippingAllowed, String twoLettersISOCode,
+			String threeLettersISOCode, int numericISOCode,
+			boolean subjectToVAT, double priority, boolean active,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceCountry(
 			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
@@ -75,8 +82,8 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param commerceCountryId the primary key for the new commerce country
 	 * @return the new commerce country
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-		createCommerceCountry(long commerceCountryId) {
+	public static CommerceCountry createCommerceCountry(
+		long commerceCountryId) {
 
 		return getService().createCommerceCountry(commerceCountryId);
 	}
@@ -84,15 +91,15 @@ public class CommerceCountryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	public static void deleteCommerceCountries(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceCountries(companyId);
 	}
@@ -108,10 +115,9 @@ public class CommerceCountryLocalServiceUtil {
 	 * @return the commerce country that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-			deleteCommerceCountry(
-				com.liferay.commerce.model.CommerceCountry commerceCountry)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry deleteCommerceCountry(
+			CommerceCountry commerceCountry)
+		throws PortalException {
 
 		return getService().deleteCommerceCountry(commerceCountry);
 	}
@@ -127,9 +133,8 @@ public class CommerceCountryLocalServiceUtil {
 	 * @return the commerce country that was removed
 	 * @throws PortalException if a commerce country with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-			deleteCommerceCountry(long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry deleteCommerceCountry(long commerceCountryId)
+		throws PortalException {
 
 		return getService().deleteCommerceCountry(commerceCountryId);
 	}
@@ -137,23 +142,22 @@ public class CommerceCountryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -163,9 +167,7 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -181,9 +183,8 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -201,10 +202,9 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -216,9 +216,7 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -230,27 +228,25 @@ public class CommerceCountryLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry
-		fetchCommerceCountry(long commerceCountryId) {
-
+	public static CommerceCountry fetchCommerceCountry(long commerceCountryId) {
 		return getService().fetchCommerceCountry(commerceCountryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry
-			fetchCommerceCountry(long companyId, int numericISOCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry fetchCommerceCountry(
+			long companyId, int numericISOCode)
+		throws PortalException {
 
 		return getService().fetchCommerceCountry(companyId, numericISOCode);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry
-		fetchCommerceCountry(long companyId, String twoLettersISOCode) {
+	public static CommerceCountry fetchCommerceCountry(
+		long companyId, String twoLettersISOCode) {
 
 		return getService().fetchCommerceCountry(companyId, twoLettersISOCode);
 	}
@@ -262,8 +258,8 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-		fetchCommerceCountryByUuidAndCompanyId(String uuid, long companyId) {
+	public static CommerceCountry fetchCommerceCountryByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchCommerceCountryByUuidAndCompanyId(
 			uuid, companyId);
@@ -275,17 +271,15 @@ public class CommerceCountryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getBillingCommerceCountries(
-			long companyId, boolean billingAllowed, boolean active) {
+	public static List<CommerceCountry> getBillingCommerceCountries(
+		long companyId, boolean billingAllowed, boolean active) {
 
 		return getService().getBillingCommerceCountries(
 			companyId, billingAllowed, active);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getBillingCommerceCountriesByChannelId(
-			long commerceChannelId, int start, int end) {
+	public static List<CommerceCountry> getBillingCommerceCountriesByChannelId(
+		long commerceChannelId, int start, int end) {
 
 		return getService().getBillingCommerceCountriesByChannelId(
 			commerceChannelId, start, end);
@@ -302,35 +296,29 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce countries (not inclusive)
 	 * @return the range of commerce countries
 	 */
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getCommerceCountries(int start, int end) {
+	public static List<CommerceCountry> getCommerceCountries(
+		int start, int end) {
 
 		return getService().getCommerceCountries(start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getCommerceCountries(long companyId, boolean active) {
+	public static List<CommerceCountry> getCommerceCountries(
+		long companyId, boolean active) {
 
 		return getService().getCommerceCountries(companyId, active);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getCommerceCountries(
-			long companyId, boolean active, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceCountry>
-					orderByComparator) {
+	public static List<CommerceCountry> getCommerceCountries(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator) {
 
 		return getService().getCommerceCountries(
 			companyId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getCommerceCountries(
-			long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.commerce.model.CommerceCountry>
-					orderByComparator) {
+	public static List<CommerceCountry> getCommerceCountries(
+		long companyId, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator) {
 
 		return getService().getCommerceCountries(
 			companyId, start, end, orderByComparator);
@@ -362,16 +350,15 @@ public class CommerceCountryLocalServiceUtil {
 	 * @return the commerce country
 	 * @throws PortalException if a commerce country with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceCountry getCommerceCountry(
-			long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry getCommerceCountry(long commerceCountryId)
+		throws PortalException {
 
 		return getService().getCommerceCountry(commerceCountryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry getCommerceCountry(
+	public static CommerceCountry getCommerceCountry(
 			long companyId, String twoLettersISOCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceCountry(companyId, twoLettersISOCode);
 	}
@@ -384,9 +371,9 @@ public class CommerceCountryLocalServiceUtil {
 	 * @return the matching commerce country
 	 * @throws PortalException if a matching commerce country could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-			getCommerceCountryByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry getCommerceCountryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getCommerceCountryByUuidAndCompanyId(
 			uuid, companyId);
@@ -419,31 +406,28 @@ public class CommerceCountryLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getShippingCommerceCountries(
-			long companyId, boolean shippingAllowed, boolean active) {
+	public static List<CommerceCountry> getShippingCommerceCountries(
+		long companyId, boolean shippingAllowed, boolean active) {
 
 		return getService().getShippingCommerceCountries(
 			companyId, shippingAllowed, active);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getShippingCommerceCountriesByChannelId(
-			long commerceChannelId, int start, int end) {
+	public static List<CommerceCountry> getShippingCommerceCountriesByChannelId(
+		long commerceChannelId, int start, int end) {
 
 		return getService().getShippingCommerceCountriesByChannelId(
 			commerceChannelId, start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceCountry>
-		getWarehouseCommerceCountries(long companyId, boolean all) {
+	public static List<CommerceCountry> getWarehouseCommerceCountries(
+		long companyId, boolean all) {
 
 		return getService().getWarehouseCommerceCountries(companyId, all);
 	}
@@ -456,10 +440,10 @@ public class CommerceCountryLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceCountry> searchCommerceCountries(
+		<CommerceCountry> searchCommerceCountries(
 				long companyId, Boolean active, String keywords, int start,
 				int end, com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCommerceCountries(
 			companyId, active, keywords, start, end, sort);
@@ -470,16 +454,16 @@ public class CommerceCountryLocalServiceUtil {
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.commerce.model.CommerceCountry> searchCommerceCountries(
+		<CommerceCountry> searchCommerceCountries(
 				com.liferay.portal.kernel.search.SearchContext searchContext)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			throws PortalException {
 
 		return getService().searchCommerceCountries(searchContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry setActive(
+	public static CommerceCountry setActive(
 			long commerceCountryId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().setActive(commerceCountryId, active);
 	}
@@ -494,23 +478,20 @@ public class CommerceCountryLocalServiceUtil {
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was updated
 	 */
-	public static com.liferay.commerce.model.CommerceCountry
-		updateCommerceCountry(
-			com.liferay.commerce.model.CommerceCountry commerceCountry) {
+	public static CommerceCountry updateCommerceCountry(
+		CommerceCountry commerceCountry) {
 
 		return getService().updateCommerceCountry(commerceCountry);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry
-			updateCommerceCountry(
-				long commerceCountryId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				boolean billingAllowed, boolean shippingAllowed,
-				String twoLettersISOCode, String threeLettersISOCode,
-				int numericISOCode, boolean subjectToVAT, double priority,
-				boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry updateCommerceCountry(
+			long commerceCountryId, Map<java.util.Locale, String> nameMap,
+			boolean billingAllowed, boolean shippingAllowed,
+			String twoLettersISOCode, String threeLettersISOCode,
+			int numericISOCode, boolean subjectToVAT, double priority,
+			boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommerceCountry(
 			commerceCountryId, nameMap, billingAllowed, shippingAllowed,
@@ -518,37 +499,18 @@ public class CommerceCountryLocalServiceUtil {
 			subjectToVAT, priority, active, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceCountry
-			updateCommerceCountryChannelFilter(
-				long commerceCountryId, boolean enable)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceCountry updateCommerceCountryChannelFilter(
+			long commerceCountryId, boolean enable)
+		throws PortalException {
 
 		return getService().updateCommerceCountryChannelFilter(
 			commerceCountryId, enable);
 	}
 
 	public static CommerceCountryLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceCountryLocalService, CommerceCountryLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceCountryLocalService.class);
-
-		ServiceTracker<CommerceCountryLocalService, CommerceCountryLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceCountryLocalService, CommerceCountryLocalService>(
-						bundle.getBundleContext(),
-						CommerceCountryLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceCountryLocalService _service;
 
 }

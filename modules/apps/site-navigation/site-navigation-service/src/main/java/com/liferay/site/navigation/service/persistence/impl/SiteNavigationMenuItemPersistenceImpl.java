@@ -4469,25 +4469,25 @@ public class SiteNavigationMenuItemPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (siteNavigationMenuItem.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				siteNavigationMenuItem.setCreateDate(now);
+				siteNavigationMenuItem.setCreateDate(date);
 			}
 			else {
 				siteNavigationMenuItem.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!siteNavigationMenuItemModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				siteNavigationMenuItem.setModifiedDate(now);
+				siteNavigationMenuItem.setModifiedDate(date);
 			}
 			else {
 				siteNavigationMenuItem.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5113,7 +5113,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5137,8 +5137,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

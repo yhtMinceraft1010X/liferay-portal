@@ -2620,24 +2620,24 @@ public class KaleoTaskFormPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (kaleoTaskForm.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				kaleoTaskForm.setCreateDate(now);
+				kaleoTaskForm.setCreateDate(date);
 			}
 			else {
-				kaleoTaskForm.setCreateDate(serviceContext.getCreateDate(now));
+				kaleoTaskForm.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!kaleoTaskFormModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				kaleoTaskForm.setModifiedDate(now);
+				kaleoTaskForm.setModifiedDate(date);
 			}
 			else {
 				kaleoTaskForm.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3166,6 +3166,13 @@ public class KaleoTaskFormPersistenceImpl
 						kaleoTaskFormModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3177,7 +3184,7 @@ public class KaleoTaskFormPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KaleoTaskFormModelImpl kaleoTaskFormModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3200,8 +3207,19 @@ public class KaleoTaskFormPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= KaleoTaskFormModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SiteBrief")
+@GraphQLName(
+	description = "Represents a site's basic information.", value = "SiteBrief"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SiteBrief")
 public class SiteBrief implements Serializable {
@@ -202,6 +204,7 @@ public class SiteBrief implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.SiteBrief",
 		name = "x-class-name"
 	)
@@ -237,7 +240,7 @@ public class SiteBrief implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -276,7 +279,7 @@ public class SiteBrief implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

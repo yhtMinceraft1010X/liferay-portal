@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Calendar")
+@GraphQLName(
+	description = "https://www.schema.org/Calendar", value = "Calendar"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Calendar")
 public class Calendar implements Serializable {
@@ -204,6 +206,7 @@ public class Calendar implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar",
 		name = "x-class-name"
 	)
@@ -239,7 +242,7 @@ public class Calendar implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -278,7 +281,7 @@ public class Calendar implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

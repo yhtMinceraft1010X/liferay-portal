@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("HoursAvailable")
+@GraphQLName(
+	description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification.",
+	value = "HoursAvailable"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "HoursAvailable")
 public class HoursAvailable implements Serializable {
@@ -218,6 +221,7 @@ public class HoursAvailable implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.HoursAvailable",
 		name = "x-class-name"
 	)
@@ -253,7 +257,7 @@ public class HoursAvailable implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -292,7 +296,7 @@ public class HoursAvailable implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

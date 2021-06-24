@@ -302,23 +302,23 @@ public class AccountPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (account.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				account.setCreateDate(now);
+				account.setCreateDate(date);
 			}
 			else {
-				account.setCreateDate(serviceContext.getCreateDate(now));
+				account.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!accountModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				account.setModifiedDate(now);
+				account.setModifiedDate(date);
 			}
 			else {
-				account.setModifiedDate(serviceContext.getModifiedDate(now));
+				account.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -734,7 +734,7 @@ public class AccountPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AccountModelImpl accountModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -755,8 +755,8 @@ public class AccountPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

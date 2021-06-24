@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("NodeMetric")
+@GraphQLName(
+	description = "https://www.schema.org/NodeMetric", value = "NodeMetric"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NodeMetric")
 public class NodeMetric implements Serializable {
@@ -355,6 +357,7 @@ public class NodeMetric implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.NodeMetric",
 		name = "x-class-name"
 	)
@@ -390,7 +393,7 @@ public class NodeMetric implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -429,7 +432,7 @@ public class NodeMetric implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

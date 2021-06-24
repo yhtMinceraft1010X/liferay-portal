@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
 
 import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
 import org.elasticsearch.common.settings.Settings;
@@ -25,6 +28,8 @@ import org.elasticsearch.repositories.fs.FsRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -32,8 +37,15 @@ import org.junit.Test;
  */
 public class CreateSnapshotRepositoryRequestExecutorImplTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+
 		_elasticsearchFixture = new ElasticsearchFixture(
 			AnalyzeIndexRequestExecutorTest.class.getSimpleName());
 

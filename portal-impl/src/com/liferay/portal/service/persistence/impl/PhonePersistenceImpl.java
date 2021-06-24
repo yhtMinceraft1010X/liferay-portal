@@ -4133,23 +4133,23 @@ public class PhonePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (phone.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				phone.setCreateDate(now);
+				phone.setCreateDate(date);
 			}
 			else {
-				phone.setCreateDate(serviceContext.getCreateDate(now));
+				phone.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!phoneModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				phone.setModifiedDate(now);
+				phone.setModifiedDate(date);
 			}
 			else {
-				phone.setModifiedDate(serviceContext.getModifiedDate(now));
+				phone.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4704,6 +4704,13 @@ public class PhonePersistenceImpl
 						columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4715,7 +4722,7 @@ public class PhonePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PhoneModelImpl phoneModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4736,8 +4743,19 @@ public class PhonePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= PhoneModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

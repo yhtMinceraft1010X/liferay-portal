@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ObjectReviewed")
+@GraphQLName(
+	description = "Represents the resource modified by the current workflow.",
+	value = "ObjectReviewed"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ObjectReviewed")
 public class ObjectReviewed implements Serializable {
@@ -246,6 +249,7 @@ public class ObjectReviewed implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.ObjectReviewed",
 		name = "x-class-name"
 	)
@@ -281,7 +285,7 @@ public class ObjectReviewed implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -320,7 +324,7 @@ public class ObjectReviewed implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

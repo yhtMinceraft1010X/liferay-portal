@@ -5215,25 +5215,25 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (workflowMetricsSLADefinition.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				workflowMetricsSLADefinition.setCreateDate(now);
+				workflowMetricsSLADefinition.setCreateDate(date);
 			}
 			else {
 				workflowMetricsSLADefinition.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!workflowMetricsSLADefinitionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				workflowMetricsSLADefinition.setModifiedDate(now);
+				workflowMetricsSLADefinition.setModifiedDate(date);
 			}
 			else {
 				workflowMetricsSLADefinition.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5884,6 +5884,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5897,7 +5904,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			WorkflowMetricsSLADefinitionModelImpl
 				workflowMetricsSLADefinitionModelImpl,
 			String[] columnNames, boolean original) {
@@ -5922,8 +5929,20 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+					"modifiedDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

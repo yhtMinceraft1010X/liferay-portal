@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormPage")
+@GraphQLName(
+	description = "https://www.schema.org/FormPage", value = "FormPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormPage")
 public class FormPage implements Serializable {
@@ -333,6 +335,7 @@ public class FormPage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormPage",
 		name = "x-class-name"
 	)
@@ -368,7 +371,7 @@ public class FormPage implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -407,7 +410,7 @@ public class FormPage implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.DecimalFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -139,7 +141,14 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	public String getData() {
 		String type = getType();
 
-		if (type.equals("ddm-journal-article")) {
+		if (type.equals("ddm-decimal") || type.equals("ddm-number") ||
+			type.equals("numeric")) {
+
+			return _getNumericData();
+		}
+		else if (type.equals("ddm-journal-article") ||
+				 type.equals("journal_article")) {
+
 			return _getLatestArticleData();
 		}
 		else if (type.equals("document_library") || type.equals("image")) {
@@ -194,12 +203,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getUrl() {
-		String type = getType();
-
-		if (!type.equals("link_to_layout")) {
-			return StringPool.BLANK;
-		}
-
 		long layoutGroupId = 0;
 		long layoutId = 0;
 		String layoutType = StringPool.BLANK;
@@ -212,15 +215,24 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 				layoutGroupId = jsonObject.getLong("groupId");
 				layoutId = jsonObject.getLong("layoutId");
+				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
-				if (jsonObject.getBoolean("privateLayout")) {
+				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+					layoutGroupId, privateLayout, layoutId);
+
+				if (layout != null) {
+					return PortalUtil.getLayoutFriendlyURL(
+						layout, _themeDisplay);
+				}
+
+				if (privateLayout) {
 					layoutType = _LAYOUT_TYPE_PRIVATE_GROUP;
 				}
 				else {
 					layoutType = _LAYOUT_TYPE_PUBLIC;
 				}
 			}
-			catch (JSONException jsonException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Unable to parse JSON from data: " + data);
 				}
@@ -476,12 +488,6 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return getUrl();
 		}
 
-		String data = (String)get("data");
-
-		if (JSONUtil.isValid(data)) {
-			return getUrl();
-		}
-
 		String layoutType = getLayoutType();
 
 		if (Validator.isNull(layoutType)) {
@@ -515,6 +521,19 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 			return getUrl();
 		}
+	}
+
+	private String _getNumericData() {
+		String data = (String)get("data");
+
+		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
+			LocaleUtil.getMostRelevantLocale());
+
+		decimalFormat.setGroupingUsed(false);
+		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+		decimalFormat.setParseBigDecimal(true);
+
+		return decimalFormat.format(GetterUtil.getDouble(data));
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

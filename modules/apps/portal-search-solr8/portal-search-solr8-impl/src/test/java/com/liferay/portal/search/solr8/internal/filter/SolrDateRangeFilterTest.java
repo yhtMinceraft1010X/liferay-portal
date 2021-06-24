@@ -17,13 +17,21 @@ package com.liferay.portal.search.solr8.internal.filter;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.filter.BaseDateRangeFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Eric Yan
  */
 public class SolrDateRangeFilterTest extends BaseDateRangeFilterTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testMalformed() throws Exception {

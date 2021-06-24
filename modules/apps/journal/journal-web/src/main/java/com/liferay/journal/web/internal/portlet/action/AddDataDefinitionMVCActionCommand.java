@@ -31,6 +31,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -85,9 +86,11 @@ public class AddDataDefinitionMVCActionCommand
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			_dataDefinitionResourceFactory.create();
+
 		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
+			dataDefinitionResourceBuilder.user(
 				themeDisplay.getUser()
 			).build();
 
@@ -108,5 +111,8 @@ public class AddDataDefinitionMVCActionCommand
 				actionRequest, dataDefinitionValidationException.getClass());
 		}
 	}
+
+	@Reference
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 }

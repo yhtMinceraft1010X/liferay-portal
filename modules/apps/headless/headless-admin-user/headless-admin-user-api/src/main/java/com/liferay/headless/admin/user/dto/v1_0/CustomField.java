@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CustomField")
+@GraphQLName(
+	description = "Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).",
+	value = "CustomField"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomField")
 public class CustomField implements Serializable {
@@ -211,6 +214,7 @@ public class CustomField implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.CustomField",
 		name = "x-class-name"
 	)
@@ -246,7 +250,7 @@ public class CustomField implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -285,7 +289,7 @@ public class CustomField implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -216,7 +216,7 @@ public class AccountResourceImpl
 
 			},
 			document -> _toAccount(
-				_commerceAccountService.getCommerceAccount(
+				_commerceAccountService.fetchCommerceAccount(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
 	}
@@ -271,6 +271,18 @@ public class AccountResourceImpl
 					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL),
 				true, account.getExternalReferenceCode(),
 				_serviceContextHelper.getServiceContext());
+
+		if (account.getDefaultBillingAccountAddressId() > 0) {
+			_commerceAccountService.updateDefaultBillingAddress(
+				commerceAccount.getCommerceAccountId(),
+				account.getDefaultBillingAccountAddressId());
+		}
+
+		if (account.getDefaultShippingAccountAddressId() > 0) {
+			_commerceAccountService.updateDefaultShippingAddress(
+				commerceAccount.getCommerceAccountId(),
+				account.getDefaultShippingAccountAddressId());
+		}
 
 		// Expando
 
@@ -451,8 +463,8 @@ public class AccountResourceImpl
 			null, _getEmailAddress(account, commerceAccount),
 			GetterUtil.get(account.getTaxId(), commerceAccount.getTaxId()),
 			commerceAccount.isActive(),
-			commerceAccount.getDefaultBillingAddressId(),
-			commerceAccount.getDefaultShippingAddressId(),
+			account.getDefaultBillingAccountAddressId(),
+			account.getDefaultShippingAccountAddressId(),
 			account.getExternalReferenceCode(), serviceContext);
 
 		// Expando

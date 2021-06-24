@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AggregateRating")
+@GraphQLName(
+	description = "Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more information.",
+	value = "AggregateRating"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AggregateRating")
 public class AggregateRating implements Serializable {
@@ -282,6 +285,7 @@ public class AggregateRating implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AggregateRating",
 		name = "x-class-name"
 	)
@@ -317,7 +321,7 @@ public class AggregateRating implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -356,7 +360,7 @@ public class AggregateRating implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

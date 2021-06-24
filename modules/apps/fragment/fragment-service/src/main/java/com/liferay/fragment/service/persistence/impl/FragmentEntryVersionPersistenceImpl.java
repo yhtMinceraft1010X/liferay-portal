@@ -15343,25 +15343,25 @@ public class FragmentEntryVersionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (fragmentEntryVersion.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				fragmentEntryVersion.setCreateDate(now);
+				fragmentEntryVersion.setCreateDate(date);
 			}
 			else {
 				fragmentEntryVersion.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!fragmentEntryVersionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				fragmentEntryVersion.setModifiedDate(now);
+				fragmentEntryVersion.setModifiedDate(date);
 			}
 			else {
 				fragmentEntryVersion.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -16675,6 +16675,13 @@ public class FragmentEntryVersionPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -16687,7 +16694,7 @@ public class FragmentEntryVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			FragmentEntryVersionModelImpl fragmentEntryVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -16710,8 +16717,19 @@ public class FragmentEntryVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				FragmentEntryVersionModelImpl.getColumnBitmask("version");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

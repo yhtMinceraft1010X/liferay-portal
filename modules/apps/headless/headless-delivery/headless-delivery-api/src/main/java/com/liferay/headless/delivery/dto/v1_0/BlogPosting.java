@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("BlogPosting")
+@GraphQLName(
+	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.",
+	value = "BlogPosting"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"articleBody", "headline"},
-	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information."
+	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.",
+	requiredProperties = {"articleBody", "headline"}
 )
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting implements Serializable {
@@ -1073,6 +1076,7 @@ public class BlogPosting implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.BlogPosting",
 		name = "x-class-name"
 	)
@@ -1142,7 +1146,7 @@ public class BlogPosting implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -1181,7 +1185,7 @@ public class BlogPosting implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

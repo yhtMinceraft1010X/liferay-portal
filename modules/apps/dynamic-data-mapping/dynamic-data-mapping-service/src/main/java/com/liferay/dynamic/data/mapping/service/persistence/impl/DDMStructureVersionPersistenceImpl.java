@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -50,6 +52,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1497,11 +1500,23 @@ public class DDMStructureVersionPersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
+			DDMStructureVersion cachedDDMStructureVersion =
+				(DDMStructureVersion)entityCache.getResult(
 					DDMStructureVersionImpl.class,
-					ddmStructureVersion.getPrimaryKey()) == null) {
+					ddmStructureVersion.getPrimaryKey());
 
+			if (cachedDDMStructureVersion == null) {
 				cacheResult(ddmStructureVersion);
+			}
+			else {
+				DDMStructureVersionModelImpl ddmStructureVersionModelImpl =
+					(DDMStructureVersionModelImpl)ddmStructureVersion;
+				DDMStructureVersionModelImpl
+					cachedDDMStructureVersionModelImpl =
+						(DDMStructureVersionModelImpl)cachedDDMStructureVersion;
+
+				ddmStructureVersionModelImpl.setDDMForm(
+					cachedDDMStructureVersionModelImpl.getDDMForm());
 			}
 		}
 	}
@@ -1702,6 +1717,21 @@ public class DDMStructureVersionPersistenceImpl
 
 		DDMStructureVersionModelImpl ddmStructureVersionModelImpl =
 			(DDMStructureVersionModelImpl)ddmStructureVersion;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (ddmStructureVersion.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ddmStructureVersion.setCreateDate(date);
+			}
+			else {
+				ddmStructureVersion.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
 
 		Session session = null;
 
@@ -2429,7 +2459,7 @@ public class DDMStructureVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMStructureVersionModelImpl ddmStructureVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2452,8 +2482,8 @@ public class DDMStructureVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

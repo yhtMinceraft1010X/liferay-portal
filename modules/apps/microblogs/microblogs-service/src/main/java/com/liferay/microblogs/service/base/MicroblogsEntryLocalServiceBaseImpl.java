@@ -16,6 +16,7 @@ package com.liferay.microblogs.service.base;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
+import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryFinder;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -45,10 +46,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,7 +74,7 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>MicroblogsEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>MicroblogsEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>MicroblogsEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -145,6 +149,13 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return microblogsEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -374,6 +385,11 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 		return microblogsEntryPersistence.update(microblogsEntry);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -385,6 +401,8 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		microblogsEntryLocalService = (MicroblogsEntryLocalService)aopProxy;
+
+		_setLocalServiceUtilService(microblogsEntryLocalService);
 	}
 
 	/**
@@ -426,6 +444,23 @@ public abstract class MicroblogsEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		MicroblogsEntryLocalService microblogsEntryLocalService) {
+
+		try {
+			Field field =
+				MicroblogsEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, microblogsEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

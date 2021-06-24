@@ -10215,23 +10215,23 @@ public class RolePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (role.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				role.setCreateDate(now);
+				role.setCreateDate(date);
 			}
 			else {
-				role.setCreateDate(serviceContext.getCreateDate(now));
+				role.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!roleModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				role.setModifiedDate(now);
+				role.setModifiedDate(date);
 			}
 			else {
-				role.setModifiedDate(serviceContext.getModifiedDate(now));
+				role.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -11759,6 +11759,13 @@ public class RolePersistenceImpl
 						columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -11770,7 +11777,7 @@ public class RolePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			RoleModelImpl roleModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -11791,8 +11798,18 @@ public class RolePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= RoleModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

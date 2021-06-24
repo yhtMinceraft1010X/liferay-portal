@@ -5309,25 +5309,25 @@ public class CPAttachmentFileEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpAttachmentFileEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpAttachmentFileEntry.setCreateDate(now);
+				cpAttachmentFileEntry.setCreateDate(date);
 			}
 			else {
 				cpAttachmentFileEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpAttachmentFileEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpAttachmentFileEntry.setModifiedDate(now);
+				cpAttachmentFileEntry.setModifiedDate(date);
 			}
 			else {
 				cpAttachmentFileEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5940,6 +5940,13 @@ public class CPAttachmentFileEntryPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5952,7 +5959,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPAttachmentFileEntryModelImpl cpAttachmentFileEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5976,8 +5983,19 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CPAttachmentFileEntryModelImpl.getColumnBitmask("priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

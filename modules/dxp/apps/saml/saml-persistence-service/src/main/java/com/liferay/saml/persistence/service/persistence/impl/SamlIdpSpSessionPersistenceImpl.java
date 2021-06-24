@@ -1664,25 +1664,25 @@ public class SamlIdpSpSessionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (samlIdpSpSession.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				samlIdpSpSession.setCreateDate(now);
+				samlIdpSpSession.setCreateDate(date);
 			}
 			else {
 				samlIdpSpSession.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!samlIdpSpSessionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				samlIdpSpSession.setModifiedDate(now);
+				samlIdpSpSession.setModifiedDate(date);
 			}
 			else {
 				samlIdpSpSession.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2191,7 +2191,7 @@ public class SamlIdpSpSessionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SamlIdpSpSessionModelImpl samlIdpSpSessionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2214,8 +2214,8 @@ public class SamlIdpSpSessionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

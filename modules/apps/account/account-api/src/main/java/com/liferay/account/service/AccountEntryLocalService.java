@@ -184,6 +184,9 @@ public interface AccountEntryLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -260,6 +263,14 @@ public interface AccountEntryLocalService
 	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchAccountEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchAccountEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntry fetchAccountEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
@@ -302,6 +313,19 @@ public interface AccountEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntry getAccountEntry(long accountEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns the account entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the account entry's external reference code
+	 * @return the matching account entry
+	 * @throws PortalException if a matching account entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry getAccountEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

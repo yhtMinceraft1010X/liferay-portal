@@ -1,21 +1,21 @@
 definition {
 
 	macro assertDiscardIsUnavailableForInactivePublication {
-		if (isSet(publicationsOrder)) {
-			var publicationsOrder = "${publicationsOrder}";
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
 		}
 		else {
-			var publicationsOrder = "1";
+			var changeOrder = "1";
 		}
 
 		Click(
-			key_publicationsName = "${publicationsName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME");
+			key_publicationName = "${publicationName}",
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
 
 		Pause(locator1 = "1000");
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsTitle = "${publicationsTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
 		Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
@@ -29,7 +29,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",
@@ -46,7 +46,7 @@ definition {
 
 		Type(
 			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 
 		Button.clickCancel();
 	}
@@ -66,16 +66,16 @@ definition {
 			MenuItem.click(menuItem = "Create New Publication");
 		}
 
-		if (isSet(publicationsName)) {
+		if (isSet(publicationName)) {
 			Type(
 				locator1 = "Publications#PUBLICATION_NAME",
-				value1 = "${publicationsName}");
+				value1 = "${publicationName}");
 		}
 
-		if (isSet(publicationsDescription)) {
+		if (isSet(publicationDescription)) {
 			Type(
 				locator1 = "Publications#PUBLICATION_DESCRIPTION",
-				value1 = "${publicationsDescription}");
+				value1 = "${publicationDescription}");
 		}
 
 		Button.click(button = "Create");
@@ -87,7 +87,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
-			key_publicationsName = "${publicationsName}",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		ClickNoError(
@@ -111,15 +111,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro discardPublications {
-		if (isSet(publicationsOrder)) {
-			var publicationsOrder = "${publicationsOrder}";
+	macro discardChanges {
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
 		}
 		else {
-			var publicationsOrder = "1";
+			var changeOrder = "1";
 		}
 
-		if ("${conflictingPublications}" == "true") {
+		if ("${conflictingChanges}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
 				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");
@@ -127,8 +127,8 @@ definition {
 			MenuItem.click(menuItem = "Discard Change");
 		}
 		else {
-			var key_publicationsCategory = "${publicationsCategory}";
-			var key_publicationsTitle = "${publicationsTitle}";
+			var key_changeCategory = "${changeCategory}";
+			var key_changeTitle = "${changeTitle}";
 
 			Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE");
 
@@ -141,12 +141,12 @@ definition {
 
 		AssertElementPresent(locator1 = "Publications#DISCARDED_CHANGES_TITLE");
 
-		var key_publicationsCategory = "${publicationsCategory}";
-		var key_publicationsTitle = "${publicationsTitle}";
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_PUBLICATIONS_TITLE",
-			value1 = "${publicationsTitle}");
+			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
+			value1 = "${changeTitle}");
 
 		Click(
 			key_text = "Discard",
@@ -180,13 +180,13 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Publish");
 		}
-		else if ("${gotoReviewPublications}" == "true") {
-			Publications.gotoReviewPublications();
+		else if ("${gotoReviewChanges}" == "true") {
+			Publications.gotoReviewChanges();
 
 			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
 		}
@@ -197,7 +197,7 @@ definition {
 		}
 	}
 
-	macro gotoReviewPublications {
+	macro gotoReviewChanges {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
@@ -207,7 +207,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 		}
 		else {
@@ -263,7 +263,7 @@ definition {
 
 		Refresh();
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",
@@ -273,13 +273,13 @@ definition {
 	macro revertPublication {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		Click(locator1 = "Publications#LIST_REVERT_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_NAME",
-			value1 = "Revert &quot;${publicationsName}&quot;");
+			value1 = "Revert &quot;${publicationName}&quot;");
 
 		if ("${publishNow}" == "true") {
 			Click(
@@ -309,9 +309,9 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextPresent(
-			key_publicationsName = "Revert &quot;${publicationsName}&quot;",
+			key_publicationName = "Revert &quot;${publicationName}&quot;",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "Revert &quot;${publicationsName}&quot;");
+			value1 = "Revert &quot;${publicationName}&quot;");
 	}
 
 	macro schedulePublication {
@@ -324,13 +324,13 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Schedule");
 		}
-		else if ("${gotoReviewPublications}" == "true") {
-			Publications.gotoReviewPublications();
+		else if ("${gotoReviewChanges}" == "true") {
+			Publications.gotoReviewChanges();
 
 			Click(locator1 = "Publications#SCHEDULE_NAV_BAR");
 		}
@@ -340,7 +340,7 @@ definition {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			Click(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Reschedule");
@@ -410,13 +410,13 @@ definition {
 	}
 
 	macro search {
-		Search.searchCP(searchTerm = "${publicationsName}");
+		Search.searchCP(searchTerm = "${publicationName}");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME",
-			value1 = "${publicationsName}");
+			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
+			value1 = "${publicationName}");
 	}
 
 	macro selectPublication {
@@ -426,15 +426,15 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_PUBLICATION");
 
-		var key_publicationsName = "${publicationsName}";
+		var key_publicationName = "${publicationName}";
 
 		Click(
 			locator1 = "Publications#SELECT_PUBLICATION_NAME",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 
 		AssertTextPresent(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "${publicationsName}");
+			value1 = "${publicationName}");
 	}
 
 	macro unschedulePublication {
@@ -443,7 +443,7 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
-			key_publicationsName = "${publicationsName}",
+			key_publicationName = "${publicationName}",
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Unschedule");
@@ -472,14 +472,14 @@ definition {
 	macro viewPublicationsDiff {
 		if (contains("${entryTitle}", "modified")) {
 			AssertTextEquals.assertPartialText(
-				key_publicationsName = "Production",
+				key_publicationName = "Production",
 				locator1 = "Publications#PUBLICATION_NAME_IN_DIFF",
 				value1 = "Production");
 
 			AssertTextEquals.assertPartialText(
-				key_publicationsName = "${publicationsName}",
+				key_publicationName = "${publicationName}",
 				locator1 = "Publications#PUBLICATION_NAME_IN_DIFF",
-				value1 = "${publicationsName}");
+				value1 = "${publicationName}");
 
 			var key_columnName = "${columnName}";
 			var key_columnValueInProduction = "${columnValueInProduction}";

@@ -198,6 +198,14 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceAccountGroupCommerceAccountRelLocalService.
+			dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceAccountGroupCommerceAccountRelLocalService.
 			dynamicQuery();
@@ -326,6 +334,22 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 	public
 		com.liferay.commerce.account.model.
 			CommerceAccountGroupCommerceAccountRel
+				fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+					long companyId, String externalReferenceCode) {
+
+		return _commerceAccountGroupCommerceAccountRelLocalService.
+			fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public
+		com.liferay.commerce.account.model.
+			CommerceAccountGroupCommerceAccountRel
 				fetchCommerceAccountGroupCommerceAccountRelByReferenceCode(
 					long companyId, String externalReferenceCode) {
 
@@ -373,6 +397,27 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 		return _commerceAccountGroupCommerceAccountRelLocalService.
 			getCommerceAccountGroupCommerceAccountRel(
 				commerceAccountGroupId, commerceAccountId);
+	}
+
+	/**
+	 * Returns the commerce account group commerce account rel with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce account group commerce account rel's external reference code
+	 * @return the matching commerce account group commerce account rel
+	 * @throws PortalException if a matching commerce account group commerce account rel could not be found
+	 */
+	@Override
+	public
+		com.liferay.commerce.account.model.
+			CommerceAccountGroupCommerceAccountRel
+					getCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+						long companyId, String externalReferenceCode)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountGroupCommerceAccountRelLocalService.
+			getCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

@@ -176,6 +176,7 @@ public class CPInstanceLocalServiceTest {
 		).and(
 			"all product instances are APPROVED"
 		);
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			true);
@@ -394,28 +395,24 @@ public class CPInstanceLocalServiceTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				true, 2);
 
-		Map<Long, List<Long>>
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
-				HashMapBuilder.<Long, List<Long>>put(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					() -> {
-						List<CPDefinitionOptionValueRel>
-							cpDefinitionOptionValueRels =
-								cpDefinitionOptionRel.
-									getCPDefinitionOptionValueRels();
-
-						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-							cpDefinitionOptionValueRels.get(0);
-
-						return Arrays.asList(
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId());
-					}
-				).build();
-
 		CPTestUtil.addCPDefinitionCPInstance(
 			cpDefinition.getCPDefinitionId(),
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
+			HashMapBuilder.<Long, List<Long>>put(
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+				() -> {
+					List<CPDefinitionOptionValueRel>
+						cpDefinitionOptionValueRels =
+							cpDefinitionOptionRel.
+								getCPDefinitionOptionValueRels();
+
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+						cpDefinitionOptionValueRels.get(0);
+
+					return Arrays.asList(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
+				}
+			).build());
 
 		List<CPInstance> inactiveCPDefinitionInstances =
 			_cpInstanceLocalService.getCPDefinitionInstances(

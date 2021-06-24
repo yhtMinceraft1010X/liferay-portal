@@ -340,6 +340,13 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _organizationLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _organizationLocalService.dynamicQuery();
 	}
@@ -454,6 +461,19 @@ public class OrganizationLocalServiceWrapper
 	 * @param externalReferenceCode the organization's external reference code
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
+	@Override
+	public Organization fetchOrganizationByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return _organizationLocalService.
+			fetchOrganizationByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchOrganizationByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public Organization fetchOrganizationByReferenceCode(
 		long companyId, String externalReferenceCode) {
@@ -585,6 +605,23 @@ public class OrganizationLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _organizationLocalService.getOrganization(companyId, name);
+	}
+
+	/**
+	 * Returns the organization with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the organization's external reference code
+	 * @return the matching organization
+	 * @throws PortalException if a matching organization could not be found
+	 */
+	@Override
+	public Organization getOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _organizationLocalService.getOrganizationByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

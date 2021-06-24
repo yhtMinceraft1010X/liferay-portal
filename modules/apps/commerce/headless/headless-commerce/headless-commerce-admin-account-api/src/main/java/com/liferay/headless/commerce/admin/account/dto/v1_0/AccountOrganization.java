@@ -293,6 +293,7 @@ public class AccountOrganization implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization",
 		name = "x-class-name"
 	)
@@ -328,7 +329,7 @@ public class AccountOrganization implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -367,7 +368,7 @@ public class AccountOrganization implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

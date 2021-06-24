@@ -27,7 +27,9 @@ public class UpgradeDDMStructureLayout extends UpgradeProcess {
 		if (!hasColumn("DDMStructureLayout", "description") &&
 			!hasColumn("DDMStructureLayout", "name")) {
 
-			runSQL("drop index IX_B7158C0A on DDMStructureLayout");
+			if (hasIndex("DDMStructureLayout", "IX_B7158C0A")) {
+				runSQL("drop index IX_B7158C0A on DDMStructureLayout");
+			}
 
 			String template = StringUtil.read(
 				UpgradeDDMStructureLayout.class.getResourceAsStream(

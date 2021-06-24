@@ -4569,24 +4569,24 @@ public class KaleoInstancePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (kaleoInstance.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				kaleoInstance.setCreateDate(now);
+				kaleoInstance.setCreateDate(date);
 			}
 			else {
-				kaleoInstance.setCreateDate(serviceContext.getCreateDate(now));
+				kaleoInstance.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!kaleoInstanceModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				kaleoInstance.setModifiedDate(now);
+				kaleoInstance.setModifiedDate(date);
 			}
 			else {
 				kaleoInstance.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5205,6 +5205,13 @@ public class KaleoInstancePersistenceImpl
 						kaleoInstanceModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5216,7 +5223,7 @@ public class KaleoInstancePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KaleoInstanceModelImpl kaleoInstanceModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -5239,8 +5246,16 @@ public class KaleoInstancePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

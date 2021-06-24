@@ -30,7 +30,10 @@ CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/serv
 	<macrodef name="configure-blacklist-osgi-config">
 		<sequential>
 			<if>
-				<contains string="${env.CI_TEST_SUITE}" substring="portal-release" />
+				<or>
+					<contains string="${env.CI_TEST_SUITE}" substring="portal-release" />
+					<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-app-release" />
+				</or>
 				<then>
 					<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames="com.liferay.portal.search.elasticsearch7.api,com.liferay.portal.search.elasticsearch7.impl,com.liferay.portal.search.elasticsearch7.spi,com.liferay.portal.search.elasticsearch.monitoring.web,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ API,Liferay\ Commerce\ -\ Liferay\ Commerce\ -\ Impl,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ API,Liferay\ CE\ Commerce\ -\ Liferay\ CE\ Commerce\ -\ Impl"</echo>
 				</then>
@@ -163,6 +166,14 @@ SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 				<arg line="-storepass secret" />
 				<arg line="-validity 9999" />
 			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy-solr-app">
+		<sequential>
+			<ant antfile="build-test.xml" target="deploy-osgi-apps">
+				<property name="osgi.app.includes" value="portal-search-solr8" />
+			</ant>
 		</sequential>
 	</macrodef>
 
@@ -306,12 +317,6 @@ schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="deploy-solr">
-		<gradle-execute dir="modules/apps/portal-search-solr8" task="deploy">
-			<arg value="clean" />
-		</gradle-execute>
-	</target>
-
 	<target name="print-solr-indices">
 		<property name="solr.print.query">
 			<![CDATA[
@@ -353,14 +358,10 @@ schema=schema.xml</echo>
 		<echo></echo>
 	</target>
 
-	<target name="set-up-solr">
-		<antcall target="deploy-solr" />
-
-		<antcall target="start-solr" />
-	</target>
-
 	<target name="start-solr">
 		<lstopwatch action="start" name="start.solr" />
+
+		<deploy-solr-app />
 
 		<unzip-solr />
 

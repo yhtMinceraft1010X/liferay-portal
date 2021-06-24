@@ -19,15 +19,24 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseAggregationFilteringTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
+
 /**
  * @author André de Oliveira
  */
 public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	protected void addFacetProcessor(
 		String className, FacetProcessor<SolrQuery> facetProcessor,

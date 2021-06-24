@@ -450,6 +450,7 @@ public class AccountCategoryForecast implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast",
 		name = "x-class-name"
 	)
@@ -485,7 +486,7 @@ public class AccountCategoryForecast implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -524,7 +525,7 @@ public class AccountCategoryForecast implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

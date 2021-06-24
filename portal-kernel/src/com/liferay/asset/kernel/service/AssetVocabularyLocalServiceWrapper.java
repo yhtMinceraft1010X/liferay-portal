@@ -242,6 +242,13 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _assetVocabularyLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _assetVocabularyLocalService.dynamicQuery();
 	}
@@ -344,6 +351,19 @@ public class AssetVocabularyLocalServiceWrapper
 	 * @param externalReferenceCode the asset vocabulary's external reference code
 	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
 	 */
+	@Override
+	public AssetVocabulary fetchAssetVocabularyByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return _assetVocabularyLocalService.
+			fetchAssetVocabularyByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchAssetVocabularyByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public AssetVocabulary fetchAssetVocabularyByReferenceCode(
 		long companyId, String externalReferenceCode) {
@@ -456,6 +476,24 @@ public class AssetVocabularyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyLocalService.getAssetVocabulary(vocabularyId);
+	}
+
+	/**
+	 * Returns the asset vocabulary with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the asset vocabulary's external reference code
+	 * @return the matching asset vocabulary
+	 * @throws PortalException if a matching asset vocabulary could not be found
+	 */
+	@Override
+	public AssetVocabulary getAssetVocabularyByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyLocalService.
+			getAssetVocabularyByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

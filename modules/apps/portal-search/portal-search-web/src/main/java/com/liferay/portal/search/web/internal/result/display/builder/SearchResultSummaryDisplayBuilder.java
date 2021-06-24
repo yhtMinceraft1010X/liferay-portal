@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
@@ -291,6 +292,14 @@ public class SearchResultSummaryDisplayBuilder {
 		return this;
 	}
 
+	public SearchResultSummaryDisplayBuilder setUserLocalService(
+		UserLocalService userLocalService) {
+
+		_userLocalService = userLocalService;
+
+		return this;
+	}
+
 	protected String appendStagingLabel(
 		String title, AssetRenderer<?> assetRenderer) {
 
@@ -338,11 +347,13 @@ public class SearchResultSummaryDisplayBuilder {
 			return null;
 		}
 
-		return build(summary, className, classPK, assetRenderer);
+		return build(
+			summary, className, classPK, assetRendererFactory, assetRenderer);
 	}
 
 	protected SearchResultSummaryDisplayContext build(
 			Summary summary, String className, long classPK,
+			AssetRendererFactory<?> assetRendererFactory,
 			AssetRenderer<?> assetRenderer)
 		throws PortalException, PortletException {
 
@@ -362,6 +373,11 @@ public class SearchResultSummaryDisplayBuilder {
 		searchResultSummaryDisplayContext.setPortletURL(
 			_portletURLFactory.getPortletURL());
 
+		if (assetRenderer != null) {
+			searchResultSummaryDisplayContext.setTitle(
+				assetRenderer.getTitle(summary.getLocale()));
+		}
+
 		if (_abridged) {
 			return searchResultSummaryDisplayContext;
 		}
@@ -377,7 +393,9 @@ public class SearchResultSummaryDisplayBuilder {
 		buildCreationDateString(searchResultSummaryDisplayContext);
 		buildCreatorUserName(searchResultSummaryDisplayContext);
 		buildDocumentForm(searchResultSummaryDisplayContext);
-		buildImage(searchResultSummaryDisplayContext, className, classPK);
+		buildImage(
+			searchResultSummaryDisplayContext, assetRendererFactory,
+			assetRenderer);
 		buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		buildModelResource(searchResultSummaryDisplayContext, className);
 		buildUserPortrait(
@@ -577,22 +595,48 @@ public class SearchResultSummaryDisplayBuilder {
 
 	protected void buildImage(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		String className, long classPK) {
+		AssetRendererFactory<?> assetRendererFactory,
+		AssetRenderer<?> assetRenderer) {
 
 		if (!_imageRequested) {
 			return;
+		}
+
+		String iconCssClass = assetRendererFactory.getIconCssClass();
+
+		if (Validator.isNotNull(iconCssClass)) {
+			searchResultSummaryDisplayContext.setIconId(iconCssClass);
+			searchResultSummaryDisplayContext.setIconVisible(true);
+			searchResultSummaryDisplayContext.setPathThemeImages(
+				_themeDisplay.getPathThemeImages());
+		}
+
+		try {
+			String thumbnailURLString = assetRenderer.getThumbnailPath(
+				_renderRequest);
+
+			if (Validator.isNotNull(thumbnailURLString)) {
+				searchResultSummaryDisplayContext.setThumbnailURLString(
+					thumbnailURLString);
+				searchResultSummaryDisplayContext.setThumbnailVisible(true);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		SearchResultImage searchResultImage = new SearchResultImage() {
 
 			@Override
 			public String getClassName() {
-				return className;
+				return assetRenderer.getClassName();
 			}
 
 			@Override
 			public long getClassPK() {
-				return classPK;
+				return assetRenderer.getClassPK();
 			}
 
 			@Override
@@ -670,9 +714,18 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 
 		if (assetEntry != null) {
+			long assetEntryUserId = getAssetEntryUserId(assetEntry);
+
 			searchResultSummaryDisplayContext.setAssetEntryUserId(
-				getAssetEntryUserId(assetEntry));
-			searchResultSummaryDisplayContext.setUserPortraitVisible(true);
+				assetEntryUserId);
+
+			String portraitURLString = getPortraitURLString(assetEntryUserId);
+
+			if (portraitURLString != null) {
+				searchResultSummaryDisplayContext.setUserPortraitURLString(
+					portraitURLString);
+				searchResultSummaryDisplayContext.setUserPortraitVisible(true);
+			}
 		}
 	}
 
@@ -807,6 +860,23 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 
 		return IndexerRegistryUtil.getIndexer(className);
+	}
+
+	protected String getPortraitURLString(long userId) {
+		User user = _userLocalService.fetchUser(userId);
+
+		try {
+			if ((user == null) || (user.getPortraitId() == 0)) {
+				return null;
+			}
+
+			return user.getPortraitURL(_themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return null;
+		}
 	}
 
 	protected String getSearchResultViewURL(String className, long classPK) {
@@ -962,5 +1032,6 @@ public class SearchResultSummaryDisplayBuilder {
 	private SearchResultViewURLSupplier _searchResultViewURLSupplier;
 	private SummaryBuilderFactory _summaryBuilderFactory;
 	private ThemeDisplay _themeDisplay;
+	private UserLocalService _userLocalService;
 
 }

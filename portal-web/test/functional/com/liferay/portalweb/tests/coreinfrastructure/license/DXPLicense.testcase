@@ -1,0 +1,35 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property license.required = "true";
+	property portal.release = "true";
+	property portal.upstream = "false";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "License";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		SignIn.signInTestSetup();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test LiferayDXPLicenseExpire {
+		property dxp.license.file = "portal-dxp-license-custom-expiration-48-hours.xml";
+
+		Pause(locator1 = "300000");
+
+		Navigator.openURL();
+
+		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+	}
+
+}

@@ -4760,23 +4760,23 @@ public class AddressPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (address.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				address.setCreateDate(now);
+				address.setCreateDate(date);
 			}
 			else {
-				address.setCreateDate(serviceContext.getCreateDate(now));
+				address.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!addressModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				address.setModifiedDate(now);
+				address.setModifiedDate(date);
 			}
 			else {
-				address.setModifiedDate(serviceContext.getModifiedDate(now));
+				address.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5363,6 +5363,13 @@ public class AddressPersistenceImpl
 						addressModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5374,7 +5381,7 @@ public class AddressPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AddressModelImpl addressModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -5395,8 +5402,19 @@ public class AddressPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= AddressModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

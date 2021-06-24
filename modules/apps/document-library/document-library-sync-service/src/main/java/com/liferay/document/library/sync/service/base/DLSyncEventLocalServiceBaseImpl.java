@@ -16,6 +16,7 @@ package com.liferay.document.library.sync.service.base;
 
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
+import com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil;
 import com.liferay.document.library.sync.service.persistence.DLSyncEventPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -44,10 +45,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,7 +72,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>DLSyncEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>DLSyncEventLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>DLSyncEventLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -139,6 +143,13 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return dlSyncEventPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -363,6 +374,11 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		return dlSyncEventPersistence.update(dlSyncEvent);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -374,6 +390,8 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		dlSyncEventLocalService = (DLSyncEventLocalService)aopProxy;
+
+		_setLocalServiceUtilService(dlSyncEventLocalService);
 	}
 
 	/**
@@ -415,6 +433,22 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		DLSyncEventLocalService dlSyncEventLocalService) {
+
+		try {
+			Field field = DLSyncEventLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, dlSyncEventLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

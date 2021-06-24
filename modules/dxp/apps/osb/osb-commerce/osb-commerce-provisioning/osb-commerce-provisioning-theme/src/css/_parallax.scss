@@ -10,7 +10,9 @@
 	margin-top: -#{$navbar-commerce-height};
 
 	.has-control-menu & {
-		margin-top: calc(-1 * (#{$control-menu-height-desktop} + #{$navbar-commerce-height}));
+		margin-top: calc(
+			-1 * (#{$control-menu-height-desktop} + #{$navbar-commerce-height})
+		);
 	}
 
 	.parallax {

@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WorkflowLog")
+@GraphQLName(
+	description = "Represents the log containing the workflow's activity history (e.g., transitions, assignees, etc.).",
+	value = "WorkflowLog"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WorkflowLog")
 public class WorkflowLog implements Serializable {
@@ -584,6 +587,7 @@ public class WorkflowLog implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog",
 		name = "x-class-name"
 	)
@@ -654,7 +658,7 @@ public class WorkflowLog implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -693,7 +697,7 @@ public class WorkflowLog implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

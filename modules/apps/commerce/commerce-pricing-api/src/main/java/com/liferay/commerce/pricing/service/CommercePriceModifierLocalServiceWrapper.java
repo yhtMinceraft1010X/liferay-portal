@@ -226,6 +226,13 @@ public class CommercePriceModifierLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commercePriceModifierLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commercePriceModifierLocalService.dynamicQuery();
 	}
@@ -343,6 +350,20 @@ public class CommercePriceModifierLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePriceModifier
+		fetchCommercePriceModifierByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commercePriceModifierLocalService.
+			fetchCommercePriceModifierByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePriceModifierByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.pricing.model.CommercePriceModifier
 		fetchCommercePriceModifierByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -387,6 +408,25 @@ public class CommercePriceModifierLocalServiceWrapper
 
 		return _commercePriceModifierLocalService.getCommercePriceModifier(
 			commercePriceModifierId);
+	}
+
+	/**
+	 * Returns the commerce price modifier with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce price modifier's external reference code
+	 * @return the matching commerce price modifier
+	 * @throws PortalException if a matching commerce price modifier could not be found
+	 */
+	@Override
+	public com.liferay.commerce.pricing.model.CommercePriceModifier
+			getCommercePriceModifierByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceModifierLocalService.
+			getCommercePriceModifierByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

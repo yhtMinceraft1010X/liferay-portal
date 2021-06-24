@@ -872,25 +872,25 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceShippingFixedOption.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceShippingFixedOption.setCreateDate(now);
+				commerceShippingFixedOption.setCreateDate(date);
 			}
 			else {
 				commerceShippingFixedOption.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceShippingFixedOptionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceShippingFixedOption.setModifiedDate(now);
+				commerceShippingFixedOption.setModifiedDate(date);
 			}
 			else {
 				commerceShippingFixedOption.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1349,6 +1349,13 @@ public class CommerceShippingFixedOptionPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1362,7 +1369,7 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceShippingFixedOptionModelImpl
 				commerceShippingFixedOptionModelImpl,
 			String[] columnNames, boolean original) {
@@ -1387,8 +1394,20 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceShippingFixedOptionModelImpl.getColumnBitmask(
+					"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

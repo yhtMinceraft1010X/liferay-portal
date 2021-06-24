@@ -81,7 +81,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -1351,6 +1351,22 @@ public class JournalArticleLocalServiceImpl
 			_journalContentSearchLocalService.deleteArticleContentSearches(
 				article.getGroupId(), article.getArticleId());
 
+			// Friendly URL
+
+			long classNameId = classNameLocalService.getClassNameId(
+				JournalArticle.class);
+
+			List<FriendlyURLEntry> friendlyURLEntries =
+				friendlyURLEntryLocalService.getFriendlyURLEntries(
+					article.getGroupId(), classNameId,
+					article.getResourcePrimKey());
+
+			if (!friendlyURLEntries.isEmpty()) {
+				friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+					article.getGroupId(), JournalArticle.class,
+					article.getResourcePrimKey());
+			}
+
 			// Images
 
 			long folderId = article.getImagesFolderId();
@@ -1386,22 +1402,6 @@ public class JournalArticleLocalServiceImpl
 				_journalArticleResourceLocalService.
 					deleteJournalArticleResource(articleResource);
 			}
-		}
-
-		// Friendly URL
-
-		long classNameId = classNameLocalService.getClassNameId(
-			JournalArticle.class);
-
-		List<FriendlyURLEntry> friendlyURLEntries =
-			friendlyURLEntryLocalService.getFriendlyURLEntries(
-				article.getGroupId(), classNameId,
-				article.getResourcePrimKey());
-
-		if (!friendlyURLEntries.isEmpty()) {
-			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				article.getGroupId(), JournalArticle.class,
-				article.getResourcePrimKey());
 		}
 
 		// Article
@@ -2410,7 +2410,9 @@ public class JournalArticleLocalServiceImpl
 
 		Date displayDate = article.getDisplayDate();
 
-		if ((displayDate != null) && displayDate.after(now)) {
+		if ((displayDate != null) && displayDate.after(now) &&
+			!Objects.equals(viewMode, Constants.PREVIEW)) {
+
 			return null;
 		}
 
@@ -6051,7 +6053,8 @@ public class JournalArticleLocalServiceImpl
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				classNameLocalService.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey(), title);
+				article.getResourcePrimKey(), title,
+				LanguageUtil.getLanguageId(entry.getKey()));
 
 			friendlyURLMap.put(entry.getKey(), urlTitle);
 		}
@@ -6571,7 +6574,9 @@ public class JournalArticleLocalServiceImpl
 
 		article = journalArticlePersistence.update(article);
 
-		if (isExpireAllArticleVersions(article.getCompanyId())) {
+		if (isExpireAllArticleVersions(article.getCompanyId()) &&
+			(expirationDate != null) && expirationDate.before(now)) {
+
 			article = setArticlesExpirationDate(article);
 		}
 
@@ -7080,9 +7085,8 @@ public class JournalArticleLocalServiceImpl
 							new ArticleVersionComparator(true));
 
 					for (JournalArticle currentArticle : currentArticles) {
-						if ((currentArticle.getExpirationDate() == null) ||
-							(currentArticle.getVersion() >
-								article.getVersion())) {
+						if (currentArticle.getVersion() >
+								article.getVersion()) {
 
 							continue;
 						}
@@ -7157,16 +7161,6 @@ public class JournalArticleLocalServiceImpl
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setCommand(Constants.UPDATE);
-
-				String portletId = PortletProviderUtil.getPortletId(
-					JournalArticle.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				String layoutFullURL = _portal.getLayoutFullURL(
-					article.getGroupId(), portletId);
-
-				serviceContext.setLayoutFullURL(layoutFullURL);
-
 				serviceContext.setScopeGroupId(article.getGroupId());
 
 				journalArticleLocalService.updateStatus(
@@ -9090,12 +9084,32 @@ public class JournalArticleLocalServiceImpl
 				}
 			}
 
+			String languageId = LanguageUtil.getLanguageId(entry.getKey());
+
 			String urlTitle = friendlyURLEntryLocalService.getUniqueUrlTitle(
 				groupId,
 				classNameLocalService.getClassNameId(JournalArticle.class),
-				resourcePrimKey, friendlyURL);
+				resourcePrimKey, friendlyURL, languageId);
 
-			urlTitleMap.put(LocaleUtil.toLanguageId(entry.getKey()), urlTitle);
+			urlTitleMap.put(languageId, urlTitle);
+		}
+
+		for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
+			Locale key = entry.getKey();
+			String value = entry.getValue();
+
+			if (!urlTitleMap.containsKey(key) && Validator.isNotNull(value)) {
+				String languageId = LocaleUtil.toLanguageId(key);
+
+				String urlTitle =
+					friendlyURLEntryLocalService.getUniqueUrlTitle(
+						groupId,
+						classNameLocalService.getClassNameId(
+							JournalArticle.class),
+						resourcePrimKey, value, languageId);
+
+				urlTitleMap.put(languageId, urlTitle);
+			}
 		}
 
 		return urlTitleMap;
@@ -9135,10 +9149,11 @@ public class JournalArticleLocalServiceImpl
 			ddmStructureKey, true);
 
 		LayoutPageTemplateEntry defaultAssetDisplayPage =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				serviceContext.getScopeGroupId(),
-				classNameLocalService.getClassNameId(JournalArticle.class),
-				ddmStructure.getStructureId());
+			_layoutPageTemplateEntryLocalService.
+				fetchDefaultLayoutPageTemplateEntry(
+					serviceContext.getScopeGroupId(),
+					classNameLocalService.getClassNameId(JournalArticle.class),
+					ddmStructure.getStructureId());
 
 		if (defaultAssetDisplayPage != null) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
@@ -9235,7 +9250,8 @@ public class JournalArticleLocalServiceImpl
 	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

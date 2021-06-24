@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
+import com.liferay.commerce.service.CommerceAddressRestrictionLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -67,6 +68,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -89,7 +92,7 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAddressRestrictionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceAddressRestrictionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAddressRestrictionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressRestrictionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -171,6 +174,13 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceAddressRestrictionPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -1350,11 +1360,15 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.model.CommerceAddressRestriction",
 			commerceAddressRestrictionLocalService);
+
+		_setLocalServiceUtilService(commerceAddressRestrictionLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.model.CommerceAddressRestriction");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1397,6 +1411,24 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceAddressRestrictionLocalService
+			commerceAddressRestrictionLocalService) {
+
+		try {
+			Field field =
+				CommerceAddressRestrictionLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceAddressRestrictionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

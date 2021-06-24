@@ -11834,23 +11834,24 @@ public class MBCategoryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mbCategory.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mbCategory.setCreateDate(now);
+				mbCategory.setCreateDate(date);
 			}
 			else {
-				mbCategory.setCreateDate(serviceContext.getCreateDate(now));
+				mbCategory.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mbCategoryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mbCategory.setModifiedDate(now);
+				mbCategory.setModifiedDate(date);
 			}
 			else {
-				mbCategory.setModifiedDate(serviceContext.getModifiedDate(now));
+				mbCategory.setModifiedDate(
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -12762,6 +12763,13 @@ public class MBCategoryPersistenceImpl
 						mbCategoryModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -12773,7 +12781,7 @@ public class MBCategoryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MBCategoryModelImpl mbCategoryModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -12795,8 +12803,21 @@ public class MBCategoryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= MBCategoryModelImpl.getColumnBitmask(
+				"parentCategoryId");
+			orderByColumnsBitmask |= MBCategoryModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -213,8 +213,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 	private JSONObject _post(String serviceURL, String body) throws Exception {
 		Http.Options options = new Http.Options();
 
-		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(serviceURL);
 		options.setPost(true);
 

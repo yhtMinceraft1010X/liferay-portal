@@ -572,6 +572,12 @@ AUI.add(
 					var currentLocale = instance.get('displayLocale');
 					var displayLocale = event.item.getAttribute('data-value');
 
+					if (instance.get('localizable')) {
+						var form = instance.getForm();
+
+						form.addAvailableLanguageIds([displayLocale]);
+					}
+
 					instance.updateLocalizationMap(currentLocale);
 
 					instance.set('displayLocale', displayLocale);
@@ -1002,7 +1008,12 @@ AUI.add(
 
 					var fieldDefinition = instance.getFieldDefinition();
 
-					if (fieldDefinition && fieldDefinition.dataType == 'html') {
+					if (
+						fieldDefinition &&
+						(fieldDefinition.dataType == 'html' ||
+							fieldDefinition.type == 'ddm-geolocation' ||
+							fieldDefinition.type == 'ddm-separator')
+					) {
 						container._node.insertAdjacentHTML(
 							'afterbegin',
 							TPL_REPEATABLE_ICON
@@ -1049,12 +1060,6 @@ AUI.add(
 
 				repeat() {
 					var instance = this;
-
-					var field = instance.getFieldDefinition();
-
-					if (field.type === 'select') {
-						field.options.shift();
-					}
 
 					instance._getTemplate((fieldTemplate) => {
 						var field = instance.createField(fieldTemplate);
@@ -1207,6 +1212,14 @@ AUI.add(
 
 						var value;
 
+						if (dataType === 'html') {
+							var form = instance.getForm();
+
+							form.editorInitializingCount++;
+
+							form._toggleActionButtons(true);
+						}
+
 						if (instance.get('localizable')) {
 							if (!A.Object.isEmpty(localizationMap)) {
 								value =
@@ -1275,7 +1288,7 @@ AUI.add(
 
 						if (
 							locale === defaultLocale ||
-							(localizationMap[defaultLocale] &&
+							(localizationMap[defaultLocale] !== undefined &&
 								value !== localizationMap[defaultLocale]) ||
 							localizationMap[locale]
 						) {
@@ -2524,6 +2537,7 @@ AUI.add(
 							end = start + delta;
 
 							if (
+								cache.initialLoadedLayoutsCount <= start &&
 								start <= cache.total &&
 								start != cache.oldStart
 							) {
@@ -3123,8 +3137,11 @@ AUI.add(
 					if (!cache) {
 						var path = instance.get('selectedLayoutPath');
 
+						var initialLoadedLayoutsCount = layouts.length;
+
 						cache = {
 							end,
+							initialLoadedLayoutsCount,
 							layouts,
 							oldStart: 0,
 							path: path.slice(),
@@ -3668,10 +3685,7 @@ AUI.add(
 				_afterRenderTextHTMLField() {
 					var instance = this;
 
-					var container = instance.get('container');
-
-					container.placeAfter(instance.readOnlyText);
-					container.placeAfter(instance.readOnlyLabel);
+					instance.editorContainer.placeAfter(instance.readOnlyText);
 				},
 
 				getEditor() {
@@ -3693,15 +3707,20 @@ AUI.add(
 				initializer() {
 					var instance = this;
 
-					instance.readOnlyLabel = A.Node.create(
-						'<label class="control-label hide"></label>'
+					var editorComponentName =
+						instance.getInputName() + 'Editor';
+
+					instance.editorContainer = A.one(
+						'#' + editorComponentName + 'Container'
 					);
+
 					instance.readOnlyText = A.Node.create(
-						'<div class="hide"></div>'
+						'<div class="cke_editable hide"></div>'
 					);
 
 					instance.after({
-						render: instance._afterRenderTextHTMLField,
+						'liferay-ddm-field:render':
+							instance._afterRenderTextHTMLField,
 					});
 				},
 
@@ -3745,6 +3764,10 @@ AUI.add(
 							) {
 								editor.setHTML(value);
 							}
+
+							editor.getNativeEditor().once('dataReady', () => {
+								Liferay.fire('ddmEditorDataReady');
+							});
 						}
 					});
 				},
@@ -3752,19 +3775,13 @@ AUI.add(
 				syncReadOnlyUI() {
 					var instance = this;
 
-					instance.readOnlyLabel.html(
-						instance.getLabelNode().getHTML()
-					);
-					instance.readOnlyText.html(
-						'<p>' + instance.getValue() + '</p>'
-					);
+					instance.readOnlyText.html(instance.getValue());
 
 					var readOnly = instance.getReadOnly();
 
-					instance.readOnlyLabel.toggle(readOnly);
 					instance.readOnlyText.toggle(readOnly);
 
-					instance.get('container').toggle(!readOnly);
+					instance.editorContainer.toggle(!readOnly);
 				},
 			},
 		});
@@ -3877,16 +3894,10 @@ AUI.add(
 					var fieldOptions = fieldDefinition.options;
 
 					if (fieldOptions && fieldOptions[0]) {
-						if (fieldOptions[0].value === '') {
-							var displayLocale = instance.get('displayLocale');
-
-							fieldOptions[0].label[displayLocale] = '';
-						}
-						else {
-							fieldOptions.unshift(
-								instance._getPlaceholderOption()
-							);
-						}
+						fieldOptions = fieldOptions.filter(
+							(fieldOption) => fieldOption.value !== ''
+						);
+						fieldOptions.unshift(instance._getPlaceholderOption());
 					}
 
 					return fieldOptions;
@@ -3951,7 +3962,10 @@ AUI.add(
 									instance.get('displayLocale')
 								];
 
-							if (Lang.isValue(optionLabel)) {
+							if (
+								optionLabel !== '' &&
+								Lang.isValue(optionLabel)
+							) {
 								item.html(A.Escape.html(optionLabel));
 							}
 						});
@@ -4143,6 +4157,16 @@ AUI.add(
 					}
 				},
 
+				_onDDMEditorDataReady() {
+					var instance = this;
+
+					instance.editorInitializingCount--;
+
+					if (instance.editorInitializingCount == 0) {
+						instance._toggleActionButtons(false);
+					}
+				},
+
 				_onDefaultLocaleChanged(event) {
 					var instance = this;
 
@@ -4169,6 +4193,18 @@ AUI.add(
 					var instance = this;
 
 					instance.updateDDMFormInputValue();
+				},
+
+				_toggleActionButtons(disable) {
+					var instance = this;
+
+					var formId = instance.get('formNode').get('id');
+
+					var buttonList = document.querySelectorAll(
+						'#' + formId + ' button'
+					);
+
+					Liferay.Util.toggleDisabled(buttonList, disable);
 				},
 
 				_updateNestedLocalizationMaps(fields) {
@@ -4251,7 +4287,18 @@ AUI.add(
 							Liferay.on(
 								'inputLocalized:defaultLocaleChanged',
 								A.bind('_onDefaultLocaleChanged', instance)
-							)
+							),
+							Liferay.on(
+								'ddmEditorDataReady',
+								instance._onDDMEditorDataReady,
+								instance
+							),
+							Liferay.on('submitForm', () => {
+								Liferay.detach(
+									'ddmEditorDataReady',
+									instance._onDDMEditorDataReady
+								);
+							})
 						);
 
 						if (instance.get('synchronousFormSubmission')) {
@@ -4343,6 +4390,7 @@ AUI.add(
 				initializer() {
 					var instance = this;
 
+					instance.editorInitializingCount = 0;
 					instance.eventHandlers = [];
 					instance.newRepeatableInstances = [];
 					instance.repeatableInstances = {};
@@ -4593,6 +4641,7 @@ AUI.add(
 
 					drag.addInvalid('.alloy-editor');
 					drag.addInvalid('.cke');
+					drag.addInvalid('.lfr-map');
 					drag.addInvalid('.lfr-source-editor');
 				},
 

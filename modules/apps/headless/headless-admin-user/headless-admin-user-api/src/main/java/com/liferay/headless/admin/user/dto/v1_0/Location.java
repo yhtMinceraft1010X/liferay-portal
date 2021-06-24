@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Location")
+@GraphQLName(
+	description = "The organization's postal information (country and region).",
+	value = "Location"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Location")
 public class Location implements Serializable {
@@ -256,6 +259,7 @@ public class Location implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Location",
 		name = "x-class-name"
 	)
@@ -291,7 +295,7 @@ public class Location implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -330,7 +334,7 @@ public class Location implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

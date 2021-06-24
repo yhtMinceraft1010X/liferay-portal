@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RelatedContent")
+@GraphQLName(
+	description = "Represents a relationship between two resources, internally modeled as AssetLink.",
+	value = "RelatedContent"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RelatedContent")
 public class RelatedContent implements Serializable {
@@ -204,6 +207,7 @@ public class RelatedContent implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RelatedContent",
 		name = "x-class-name"
 	)
@@ -239,7 +243,7 @@ public class RelatedContent implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -278,7 +282,7 @@ public class RelatedContent implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -165,6 +165,7 @@ public class AppDeployment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.AppDeployment",
 		name = "x-class-name"
 	)
@@ -200,7 +201,7 @@ public class AppDeployment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -239,7 +240,7 @@ public class AppDeployment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

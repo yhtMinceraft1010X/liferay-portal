@@ -349,8 +349,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									window['<portlet:namespace />publishKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
 
-										<portlet:namespace />updateTitle();
-
 										<portlet:namespace />updateAction(
 											'<portlet:actionURL name="publishKaleoDefinitionVersion" />'
 										);
@@ -360,8 +358,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									window['<portlet:namespace />saveKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
-
-										<portlet:namespace />updateTitle();
 
 										<portlet:namespace />updateAction(
 											'<portlet:actionURL name="saveKaleoDefinitionVersion" />'
@@ -386,18 +382,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}
 										else {
 											content.value = <portlet:namespace />kaleoDesigner.getContent();
-										}
-									};
-
-									window['<portlet:namespace />updateTitle'] = function () {
-										var titleComponent = Liferay.component('<portlet:namespace />title');
-
-										var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
-
-										if (!titlePlaceholderInput.val()) {
-											titlePlaceholderInput.val(
-												'<liferay-ui:message key="untitled-workflow" />'
-											);
 										}
 									};
 
@@ -457,12 +441,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 											boundingBox: '#<portlet:namespace />propertyBuilder',
 											data: {
-
-												<%
-												long kaleoProcessId = ParamUtil.getLong(request, "kaleoProcessId");
-												%>
-
-												kaleoProcessId: '<%= kaleoProcessId %>',
+												kaleoProcessId:
+													'<%= ParamUtil.getLong(request, "kaleoProcessId") %>',
 											},
 
 											<c:if test="<%= Validator.isNotNull(content) %>">

@@ -2324,7 +2324,7 @@ public class TrashVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			TrashVersionModelImpl trashVersionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2346,8 +2346,8 @@ public class TrashVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -710,6 +710,13 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _cpInstanceLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cpInstanceLocalService.dynamicQuery();
 	}
@@ -822,6 +829,19 @@ public class CPInstanceLocalServiceWrapper
 	 * @param externalReferenceCode the cp instance's external reference code
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
+	@Override
+	public com.liferay.commerce.product.model.CPInstance
+		fetchCPInstanceByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPInstanceByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPInstance
 		fetchCPInstanceByReferenceCode(
@@ -945,6 +965,14 @@ public class CPInstanceLocalServiceWrapper
 		return _cpInstanceLocalService.getCPInstance(cpDefinitionId, sku);
 	}
 
+	/**
+	 * Returns the cp instance with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp instance's external reference code
+	 * @return the matching cp instance
+	 * @throws PortalException if a matching cp instance could not be found
+	 */
 	@Override
 	public com.liferay.commerce.product.model.CPInstance
 			getCPInstanceByExternalReferenceCode(

@@ -2205,23 +2205,23 @@ public class MDRActionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mdrAction.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mdrAction.setCreateDate(now);
+				mdrAction.setCreateDate(date);
 			}
 			else {
-				mdrAction.setCreateDate(serviceContext.getCreateDate(now));
+				mdrAction.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mdrActionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mdrAction.setModifiedDate(now);
+				mdrAction.setModifiedDate(date);
 			}
 			else {
-				mdrAction.setModifiedDate(serviceContext.getModifiedDate(now));
+				mdrAction.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2748,7 +2748,7 @@ public class MDRActionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MDRActionModelImpl mdrActionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2770,8 +2770,8 @@ public class MDRActionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

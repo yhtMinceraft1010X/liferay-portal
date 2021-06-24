@@ -3765,25 +3765,25 @@ public class FragmentCollectionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (fragmentCollection.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				fragmentCollection.setCreateDate(now);
+				fragmentCollection.setCreateDate(date);
 			}
 			else {
 				fragmentCollection.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!fragmentCollectionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				fragmentCollection.setModifiedDate(now);
+				fragmentCollection.setModifiedDate(date);
 			}
 			else {
 				fragmentCollection.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4543,6 +4543,13 @@ public class FragmentCollectionPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4555,7 +4562,7 @@ public class FragmentCollectionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			FragmentCollectionModelImpl fragmentCollectionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4578,8 +4585,19 @@ public class FragmentCollectionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				FragmentCollectionModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

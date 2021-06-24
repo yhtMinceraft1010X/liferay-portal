@@ -32,7 +32,7 @@ AUI.add(
 			String selLanguageId = LocaleUtil.toLanguageId(curLocale);
 		%>
 
-			available['<%= selLanguageId %>'] = '<%= curLocale.getDisplayName(locale) %>';
+			available['<%= selLanguageId %>'] = '<%= HtmlUtil.escapeJS(curLocale.getDisplayName(locale)) %>';
 			direction['<%= selLanguageId %>'] = '<%= LanguageUtil.get(curLocale, "lang.dir") %>';
 
 		<%

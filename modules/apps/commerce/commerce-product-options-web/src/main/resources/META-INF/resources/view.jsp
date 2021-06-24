@@ -18,9 +18,7 @@
 
 <%
 NPMResolver npmResolver = (NPMResolver)request.getAttribute("NPMResolver");
-%>
 
-<%
 NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(true);

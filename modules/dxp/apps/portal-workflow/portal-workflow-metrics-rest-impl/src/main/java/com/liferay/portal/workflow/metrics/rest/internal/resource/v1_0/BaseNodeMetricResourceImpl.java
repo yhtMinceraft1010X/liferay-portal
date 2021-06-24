@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseNodeMetricResourceImpl
-	implements NodeMetricResource, EntityModelResource,
+	implements EntityModelResource, NodeMetricResource,
 			   VulcanBatchEngineTaskItemDelegate<NodeMetric> {
 
 	/**
@@ -81,8 +81,8 @@ public abstract class BaseNodeMetricResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/metrics'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),

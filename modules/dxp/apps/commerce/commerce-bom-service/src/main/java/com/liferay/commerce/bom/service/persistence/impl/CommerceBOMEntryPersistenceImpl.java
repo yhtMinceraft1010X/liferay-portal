@@ -833,25 +833,25 @@ public class CommerceBOMEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceBOMEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceBOMEntry.setCreateDate(now);
+				commerceBOMEntry.setCreateDate(date);
 			}
 			else {
 				commerceBOMEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceBOMEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceBOMEntry.setModifiedDate(now);
+				commerceBOMEntry.setModifiedDate(date);
 			}
 			else {
 				commerceBOMEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1301,6 +1301,13 @@ public class CommerceBOMEntryPersistenceImpl
 						commerceBOMEntryModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1313,7 +1320,7 @@ public class CommerceBOMEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceBOMEntryModelImpl commerceBOMEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1336,8 +1343,19 @@ public class CommerceBOMEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceBOMEntryModelImpl.getColumnBitmask(
+				"number_");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

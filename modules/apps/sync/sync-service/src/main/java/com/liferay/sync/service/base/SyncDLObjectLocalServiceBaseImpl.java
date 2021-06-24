@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.SyncDLObjectLocalService;
+import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
 import com.liferay.sync.service.persistence.SyncDLFileVersionDiffPersistence;
 import com.liferay.sync.service.persistence.SyncDLObjectFinder;
 import com.liferay.sync.service.persistence.SyncDLObjectPersistence;
@@ -47,10 +48,13 @@ import com.liferay.sync.service.persistence.SyncDevicePersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,7 +75,7 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SyncDLObjectLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.sync.service.SyncDLObjectLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SyncDLObjectLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SyncDLObjectLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -142,6 +146,13 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return syncDLObjectPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -369,6 +380,11 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 		return syncDLObjectPersistence.update(syncDLObject);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -380,6 +396,8 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		syncDLObjectLocalService = (SyncDLObjectLocalService)aopProxy;
+
+		_setLocalServiceUtilService(syncDLObjectLocalService);
 	}
 
 	/**
@@ -421,6 +439,22 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		SyncDLObjectLocalService syncDLObjectLocalService) {
+
+		try {
+			Field field = SyncDLObjectLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, syncDLObjectLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

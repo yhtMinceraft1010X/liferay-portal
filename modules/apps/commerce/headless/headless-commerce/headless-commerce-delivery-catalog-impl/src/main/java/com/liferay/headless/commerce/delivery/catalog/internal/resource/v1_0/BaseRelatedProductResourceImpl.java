@@ -74,7 +74,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseRelatedProductResourceImpl
-	implements RelatedProductResource, EntityModelResource,
+	implements EntityModelResource, RelatedProductResource,
 			   VulcanBatchEngineTaskItemDelegate<RelatedProduct> {
 
 	/**
@@ -82,9 +82,9 @@ public abstract class BaseRelatedProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/related-products'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets a list of Related Products of a Product.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),

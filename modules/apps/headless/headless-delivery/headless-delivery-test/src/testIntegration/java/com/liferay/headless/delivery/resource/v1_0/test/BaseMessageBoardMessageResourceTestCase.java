@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -80,7 +78,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -259,27 +256,21 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						})),
 				"JSONObject/data", "Object/deleteMessageBoardMessage"));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN)) {
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"messageBoardMessage",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"messageBoardMessageId",
+								messageBoardMessage.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
 
-			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"messageBoardMessage",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"messageBoardMessageId",
-									messageBoardMessage.getId());
-							}
-						},
-						new GraphQLField("id"))),
-				"JSONArray/errors");
-
-			Assert.assertTrue(errorsJSONArray.length() > 0);
-		}
+		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
 	@Test
@@ -518,7 +509,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantParentMessageBoardMessageId =
 			testGetMessageBoardMessageMessageBoardMessagesPage_getIrrelevantParentMessageBoardMessageId();
 
-		if ((irrelevantParentMessageBoardMessageId != null)) {
+		if (irrelevantParentMessageBoardMessageId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantParentMessageBoardMessageId,
@@ -902,7 +893,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantMessageBoardThreadId =
 			testGetMessageBoardThreadMessageBoardMessagesPage_getIrrelevantMessageBoardThreadId();
 
-		if ((irrelevantMessageBoardThreadId != null)) {
+		if (irrelevantMessageBoardThreadId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetMessageBoardThreadMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantMessageBoardThreadId,
@@ -1282,7 +1273,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteMessageBoardMessagesPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			MessageBoardMessage irrelevantMessageBoardMessage =
 				testGetSiteMessageBoardMessagesPage_addMessageBoardMessage(
 					irrelevantSiteId, randomIrrelevantMessageBoardMessage());
@@ -2172,7 +2163,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		graphQLFields.add(new GraphQLField("siteId"));
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage.
 						class)) {
 
@@ -2207,7 +2198,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -2638,6 +2629,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		return true;
 	}
 
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -3022,12 +3024,12 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -3037,10 +3039,10 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

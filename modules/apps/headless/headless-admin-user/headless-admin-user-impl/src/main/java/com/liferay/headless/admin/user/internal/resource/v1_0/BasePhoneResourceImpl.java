@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BasePhoneResourceImpl
-	implements PhoneResource, EntityModelResource,
+	implements EntityModelResource, PhoneResource,
 			   VulcanBatchEngineTaskItemDelegate<Phone> {
 
 	/**
@@ -80,9 +80,9 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/phones'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the organization's phone numbers.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "organizationId")}
 	)
@@ -102,9 +102,9 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/phones/{phoneId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the phone number.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "phoneId")})
 	@Path("/phones/{phoneId}")
 	@Produces({"application/json", "application/xml"})
@@ -122,9 +122,9 @@ public abstract class BasePhoneResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the user's phone numbers.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)

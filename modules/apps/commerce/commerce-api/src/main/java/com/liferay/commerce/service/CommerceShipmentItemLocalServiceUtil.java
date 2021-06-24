@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceShipmentItem. This utility wraps
@@ -48,24 +55,31 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param commerceShipmentItem the commerce shipment item
 	 * @return the commerce shipment item that was added
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		addCommerceShipmentItem(
-			com.liferay.commerce.model.CommerceShipmentItem
-				commerceShipmentItem) {
+	public static CommerceShipmentItem addCommerceShipmentItem(
+		CommerceShipmentItem commerceShipmentItem) {
 
 		return getService().addCommerceShipmentItem(commerceShipmentItem);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			addCommerceShipmentItem(
-				long commerceShipmentId, long commerceOrderItemId,
-				long commerceInventoryWarehouseId, int quantity,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem addCommerceShipmentItem(
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceInventoryWarehouseId, int quantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().addCommerceShipmentItem(
 			commerceShipmentId, commerceOrderItemId,
 			commerceInventoryWarehouseId, quantity, serviceContext);
+	}
+
+	public static CommerceShipmentItem
+			addDeliverySubscriptionCommerceShipmentItem(
+				long groupId, long userId, long commerceShipmentId,
+				long commerceOrderItemId)
+		throws PortalException {
+
+		return getService().addDeliverySubscriptionCommerceShipmentItem(
+			groupId, userId, commerceShipmentId, commerceOrderItemId);
 	}
 
 	/**
@@ -74,8 +88,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param commerceShipmentItemId the primary key for the new commerce shipment item
 	 * @return the new commerce shipment item
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		createCommerceShipmentItem(long commerceShipmentItemId) {
+	public static CommerceShipmentItem createCommerceShipmentItem(
+		long commerceShipmentItemId) {
 
 		return getService().createCommerceShipmentItem(commerceShipmentItemId);
 	}
@@ -83,9 +97,9 @@ public class CommerceShipmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -100,20 +114,16 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param commerceShipmentItem the commerce shipment item
 	 * @return the commerce shipment item that was removed
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		deleteCommerceShipmentItem(
-			com.liferay.commerce.model.CommerceShipmentItem
-				commerceShipmentItem) {
+	public static CommerceShipmentItem deleteCommerceShipmentItem(
+		CommerceShipmentItem commerceShipmentItem) {
 
 		return getService().deleteCommerceShipmentItem(commerceShipmentItem);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			deleteCommerceShipmentItem(
-				com.liferay.commerce.model.CommerceShipmentItem
-					commerceShipmentItem,
-				boolean restoreStockQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem deleteCommerceShipmentItem(
+			CommerceShipmentItem commerceShipmentItem,
+			boolean restoreStockQuantity)
+		throws PortalException {
 
 		return getService().deleteCommerceShipmentItem(
 			commerceShipmentItem, restoreStockQuantity);
@@ -130,16 +140,16 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @return the commerce shipment item that was removed
 	 * @throws PortalException if a commerce shipment item with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			deleteCommerceShipmentItem(long commerceShipmentItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem deleteCommerceShipmentItem(
+			long commerceShipmentItemId)
+		throws PortalException {
 
 		return getService().deleteCommerceShipmentItem(commerceShipmentItemId);
 	}
 
 	public static void deleteCommerceShipmentItem(
 			long commerceShipmentItemId, boolean restoreStockQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceShipmentItem(
 			commerceShipmentItemId, restoreStockQuantity);
@@ -147,7 +157,7 @@ public class CommerceShipmentItemLocalServiceUtil {
 
 	public static void deleteCommerceShipmentItems(
 			long commerceShipmentId, boolean restoreStockQuantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceShipmentItems(
 			commerceShipmentId, restoreStockQuantity);
@@ -156,23 +166,22 @@ public class CommerceShipmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -182,9 +191,7 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -200,9 +207,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -220,10 +226,9 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -235,9 +240,7 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -249,22 +252,21 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		fetchCommerceShipmentItem(long commerceShipmentItemId) {
+	public static CommerceShipmentItem fetchCommerceShipmentItem(
+		long commerceShipmentItemId) {
 
 		return getService().fetchCommerceShipmentItem(commerceShipmentItemId);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		fetchCommerceShipmentItem(
-			long commerceShipmentId, long commerceOrderItemId,
-			long commerceInventoryWarehouseId) {
+	public static CommerceShipmentItem fetchCommerceShipmentItem(
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceInventoryWarehouseId) {
 
 		return getService().fetchCommerceShipmentItem(
 			commerceShipmentId, commerceOrderItemId,
@@ -284,9 +286,9 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @return the commerce shipment item
 	 * @throws PortalException if a commerce shipment item with the primary key could not be found
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			getCommerceShipmentItem(long commerceShipmentItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem getCommerceShipmentItem(
+			long commerceShipmentItemId)
+		throws PortalException {
 
 		return getService().getCommerceShipmentItem(commerceShipmentItemId);
 	}
@@ -302,9 +304,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce shipment items (not inclusive)
 	 * @return the range of commerce shipment items
 	 */
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItems(int start, int end) {
+	public static List<CommerceShipmentItem> getCommerceShipmentItems(
+		int start, int end) {
 
 		return getService().getCommerceShipmentItems(start, end);
 	}
@@ -313,43 +314,32 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @deprecated As of Athanasius (7.3.x)
 	 */
 	@Deprecated
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItems(long commerceOrderItemId) {
+	public static List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
 
 		return getService().getCommerceShipmentItems(commerceOrderItemId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItems(
-				long commerceShipmentId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceShipmentItem>
-						orderByComparator) {
+	public static List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceShipmentId, int start, int end,
+		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
 		return getService().getCommerceShipmentItems(
 			commerceShipmentId, start, end, orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItems(
-				long commerceShipmentId, long commerceOrderItemId, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceShipmentItem>
-						orderByComparator) {
+	public static List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceShipmentId, long commerceOrderItemId, int start, int end,
+		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
 		return getService().getCommerceShipmentItems(
 			commerceShipmentId, commerceOrderItemId, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItemsByCommerceOrderItemId(
-				long commerceOrderItemId) {
+	public static List<CommerceShipmentItem>
+		getCommerceShipmentItemsByCommerceOrderItemId(
+			long commerceOrderItemId) {
 
 		return getService().getCommerceShipmentItemsByCommerceOrderItemId(
 			commerceOrderItemId);
@@ -401,9 +391,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -418,57 +407,33 @@ public class CommerceShipmentItemLocalServiceUtil {
 	 * @param commerceShipmentItem the commerce shipment item
 	 * @return the commerce shipment item that was updated
 	 */
-	public static com.liferay.commerce.model.CommerceShipmentItem
-		updateCommerceShipmentItem(
-			com.liferay.commerce.model.CommerceShipmentItem
-				commerceShipmentItem) {
+	public static CommerceShipmentItem updateCommerceShipmentItem(
+		CommerceShipmentItem commerceShipmentItem) {
 
 		return getService().updateCommerceShipmentItem(commerceShipmentItem);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			updateCommerceShipmentItem(
-				long commerceShipmentItemId, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem updateCommerceShipmentItem(
+			long commerceShipmentItemId, int quantity)
+		throws PortalException {
 
 		return getService().updateCommerceShipmentItem(
 			commerceShipmentItemId, quantity);
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentItem
-			updateCommerceShipmentItem(
-				long commerceShipmentItemId, long commerceInventoryWarehouseId,
-				int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceShipmentItem updateCommerceShipmentItem(
+			long commerceShipmentItemId, long commerceInventoryWarehouseId,
+			int quantity)
+		throws PortalException {
 
 		return getService().updateCommerceShipmentItem(
 			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
 	public static CommerceShipmentItemLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceShipmentItemLocalService, CommerceShipmentItemLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceShipmentItemLocalService.class);
-
-		ServiceTracker
-			<CommerceShipmentItemLocalService, CommerceShipmentItemLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<CommerceShipmentItemLocalService,
-						 CommerceShipmentItemLocalService>(
-							 bundle.getBundleContext(),
-							 CommerceShipmentItemLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceShipmentItemLocalService _service;
 
 }

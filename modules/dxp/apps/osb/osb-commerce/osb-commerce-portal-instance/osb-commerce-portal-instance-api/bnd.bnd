@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OSB Commerce Portal Instance API
-Bundle-SymbolicName: com.liferay.osb.commerce.portal.instance.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.osb.commerce.portal.instance.constants

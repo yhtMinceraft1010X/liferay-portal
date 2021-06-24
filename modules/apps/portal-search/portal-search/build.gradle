@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
+	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-function")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-reflect")

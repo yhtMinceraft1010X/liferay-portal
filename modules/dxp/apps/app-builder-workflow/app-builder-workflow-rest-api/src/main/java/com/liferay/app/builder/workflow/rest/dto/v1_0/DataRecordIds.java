@@ -132,6 +132,7 @@ public class DataRecordIds implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.DataRecordIds",
 		name = "x-class-name"
 	)
@@ -167,7 +168,7 @@ public class DataRecordIds implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -206,7 +207,7 @@ public class DataRecordIds implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

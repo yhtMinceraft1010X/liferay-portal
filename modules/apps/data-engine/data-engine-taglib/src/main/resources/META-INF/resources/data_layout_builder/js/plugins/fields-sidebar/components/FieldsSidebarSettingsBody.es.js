@@ -44,7 +44,10 @@ export default function () {
 	const {
 		settingsContext: customObjectFieldSettingsContext,
 	} = focusedCustomObjectField;
-	const {settingsContext: fieldSettingsContext} = focusedField;
+	const {
+		settingsContext: fieldSettingsContext,
+		type: fieldType,
+	} = focusedField;
 	const hasFocusedCustomObjectField = !!customObjectFieldSettingsContext;
 	const settingsContext = hasFocusedCustomObjectField
 		? customObjectFieldSettingsContext
@@ -55,9 +58,10 @@ export default function () {
 			getFilteredSettingsContext({
 				config,
 				editingLanguageId,
+				fieldType,
 				settingsContext,
 			}),
-		[config, editingLanguageId, settingsContext]
+		[config, editingLanguageId, settingsContext, fieldType]
 	);
 
 	const dispatchEvent = (type, payload) => {

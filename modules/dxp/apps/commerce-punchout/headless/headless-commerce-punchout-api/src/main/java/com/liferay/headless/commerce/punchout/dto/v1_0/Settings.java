@@ -246,6 +246,7 @@ public class Settings implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.punchout.dto.v1_0.Settings",
 		name = "x-class-name"
 	)
@@ -281,7 +282,7 @@ public class Settings implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -320,7 +321,7 @@ public class Settings implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

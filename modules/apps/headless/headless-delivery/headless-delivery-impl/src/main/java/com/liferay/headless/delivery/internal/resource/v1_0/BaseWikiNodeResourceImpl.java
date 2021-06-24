@@ -79,19 +79,19 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseWikiNodeResourceImpl
-	implements WikiNodeResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<WikiNode> {
+	implements EntityModelResource, VulcanBatchEngineTaskItemDelegate<WikiNode>,
+			   WikiNodeResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the wiki node's of a site. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -122,12 +122,12 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new wiki node")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/wiki-nodes")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public WikiNode postSiteWikiNode(
@@ -143,9 +143,8 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/wiki-nodes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -153,6 +152,7 @@ public abstract class BaseWikiNodeResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/wiki-nodes/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public Response postSiteWikiNodeBatch(
@@ -183,11 +183,11 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the wiki node and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
@@ -205,9 +205,9 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -241,9 +241,9 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki node")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
@@ -263,17 +263,17 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}' -d $'{"description": ___, "name": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the wiki node with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-nodes/{wikiNodeId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public WikiNode putWikiNode(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
@@ -289,14 +289,14 @@ public abstract class BaseWikiNodeResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/wiki-nodes/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public Response putWikiNodeBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -326,12 +326,12 @@ public abstract class BaseWikiNodeResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-nodes/{wikiNodeId}/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void putWikiNodeSubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
@@ -345,12 +345,12 @@ public abstract class BaseWikiNodeResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-nodes/{wikiNodeId}/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiNodeId")}
 	)
 	@Path("/wiki-nodes/{wikiNodeId}/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "WikiNode")})
 	public void putWikiNodeUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
@@ -367,7 +367,7 @@ public abstract class BaseWikiNodeResourceImpl
 
 		for (WikiNode wikiNode : wikiNodes) {
 			postSiteWikiNode(
-				Long.valueOf((String)parameters.get("siteId")), wikiNode);
+				Long.parseLong((String)parameters.get("siteId")), wikiNode);
 		}
 	}
 
@@ -404,8 +404,8 @@ public abstract class BaseWikiNodeResourceImpl
 		throws Exception {
 
 		return getSiteWikiNodesPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -439,7 +439,7 @@ public abstract class BaseWikiNodeResourceImpl
 		for (WikiNode wikiNode : wikiNodes) {
 			putWikiNode(
 				wikiNode.getId() != null ? wikiNode.getId() :
-				(Long)parameters.get("wikiNodeId"),
+					Long.parseLong((String)parameters.get("wikiNodeId")),
 				wikiNode);
 		}
 	}

@@ -574,6 +574,117 @@ definition {
 			value1 = "blogs-entry-title");
 	}
 
+	@description = "This ensures that the cover image can be removed from the blog entry."
+	@priority = "4"
+	test CanRemoveCoverImageFromEntry {
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(
+			coverImageName = "Document_1.jpg",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.removeCoverImage(coverImageName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		AssertElementNotPresent(
+			key_coverImageName = "Document_1.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertElementNotPresent(
+			key_uploadFileName = "Document_1.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+	}
+
+	@description = "This ensures that the small image can be replaced."
+	@priority = "4"
+	test CanReplaceSmallImage {
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			browseImage = "true",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertVisible(
+			key_imageFileName = "Document_2.jpg",
+			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE",
+			value1 = "Document_2.jpg");
+	}
+
+	@description = "This test covers LPS-130735. It ensures that the caption of cover image can be viewed in blogs when the small image is removed."
+	@priority = "3"
+	test CanViewCaptionFieldAfterRemovingSmallImage {
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = "true",
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEditPG(
+			coverImageName = "Document_1.jpg",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.removeSmallImage(uploadFileName = "Document_2.jpg");
+
+		AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+
+		PortletEntry.publish();
+	}
+
 	@priority = "5"
 	test DeleteBlogsEntries {
 		for (var entryCount : list "1,2,3") {

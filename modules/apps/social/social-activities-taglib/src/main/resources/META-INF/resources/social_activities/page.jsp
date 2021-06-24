@@ -58,15 +58,11 @@
 
 			<%
 			daysBetween = curDaysBetween;
-
-			if (hasActivities) {
 			%>
 
+			<c:if test="<%= hasActivities %>">
 				</ul>
-
-			<%
-			}
-			%>
+			</c:if>
 
 			<ul class="list-unstyled">
 				<li class="splitter">

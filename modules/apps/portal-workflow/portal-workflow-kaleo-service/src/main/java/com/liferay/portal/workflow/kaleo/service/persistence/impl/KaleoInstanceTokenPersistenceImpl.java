@@ -3067,25 +3067,25 @@ public class KaleoInstanceTokenPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (kaleoInstanceToken.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				kaleoInstanceToken.setCreateDate(now);
+				kaleoInstanceToken.setCreateDate(date);
 			}
 			else {
 				kaleoInstanceToken.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!kaleoInstanceTokenModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				kaleoInstanceToken.setModifiedDate(now);
+				kaleoInstanceToken.setModifiedDate(date);
 			}
 			else {
 				kaleoInstanceToken.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3650,6 +3650,13 @@ public class KaleoInstanceTokenPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3662,7 +3669,7 @@ public class KaleoInstanceTokenPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KaleoInstanceTokenModelImpl kaleoInstanceTokenModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3685,8 +3692,16 @@ public class KaleoInstanceTokenPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

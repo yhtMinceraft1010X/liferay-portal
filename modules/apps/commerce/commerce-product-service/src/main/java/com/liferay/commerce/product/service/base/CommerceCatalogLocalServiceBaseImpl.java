@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -74,6 +75,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -96,7 +99,7 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceCatalogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceCatalogLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceCatalogLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -171,6 +174,13 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceCatalogPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -273,10 +283,39 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 	 * @return the matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
 	@Override
-	public CommerceCatalog fetchCommerceCatalogByReferenceCode(
+	public CommerceCatalog fetchCommerceCatalogByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceCatalogPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceCatalogByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceCatalog fetchCommerceCatalogByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceCatalogByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce catalog with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce catalog's external reference code
+	 * @return the matching commerce catalog
+	 * @throws PortalException if a matching commerce catalog could not be found
+	 */
+	@Override
+	public CommerceCatalog getCommerceCatalogByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceCatalogPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1621,11 +1660,15 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CommerceCatalog",
 			commerceCatalogLocalService);
+
+		_setLocalServiceUtilService(commerceCatalogLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CommerceCatalog");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1667,6 +1710,23 @@ public abstract class CommerceCatalogLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceCatalogLocalService commerceCatalogLocalService) {
+
+		try {
+			Field field =
+				CommerceCatalogLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceCatalogLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

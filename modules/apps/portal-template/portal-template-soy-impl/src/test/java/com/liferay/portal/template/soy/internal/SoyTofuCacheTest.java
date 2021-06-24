@@ -19,18 +19,26 @@ import com.google.template.soy.tofu.SoyTofu;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.template.soy.SoyTemplateResource;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Bruno Basto
  */
 public class SoyTofuCacheTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

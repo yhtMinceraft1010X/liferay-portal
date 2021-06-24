@@ -1286,10 +1286,22 @@ public class CompanyPersistenceImpl
 	@Override
 	public void cacheResult(List<Company> companies) {
 		for (Company company : companies) {
-			if (EntityCacheUtil.getResult(
-					CompanyImpl.class, company.getPrimaryKey()) == null) {
+			Company cachedCompany = (Company)EntityCacheUtil.getResult(
+				CompanyImpl.class, company.getPrimaryKey());
 
+			if (cachedCompany == null) {
 				cacheResult(company);
+			}
+			else {
+				CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
+				CompanyModelImpl cachedCompanyModelImpl =
+					(CompanyModelImpl)cachedCompany;
+
+				companyModelImpl.setCompanySecurityBag(
+					cachedCompanyModelImpl.getCompanySecurityBag());
+
+				companyModelImpl.setVirtualHostname(
+					cachedCompanyModelImpl.getVirtualHostname());
 			}
 		}
 	}
@@ -1953,7 +1965,7 @@ public class CompanyPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CompanyModelImpl companyModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1974,8 +1986,8 @@ public class CompanyPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -2492,23 +2492,24 @@ public class SyncDevicePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (syncDevice.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				syncDevice.setCreateDate(now);
+				syncDevice.setCreateDate(date);
 			}
 			else {
-				syncDevice.setCreateDate(serviceContext.getCreateDate(now));
+				syncDevice.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!syncDeviceModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				syncDevice.setModifiedDate(now);
+				syncDevice.setModifiedDate(date);
 			}
 			else {
-				syncDevice.setModifiedDate(serviceContext.getModifiedDate(now));
+				syncDevice.setModifiedDate(
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3034,7 +3035,7 @@ public class SyncDevicePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SyncDeviceModelImpl syncDeviceModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3056,8 +3057,8 @@ public class SyncDevicePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

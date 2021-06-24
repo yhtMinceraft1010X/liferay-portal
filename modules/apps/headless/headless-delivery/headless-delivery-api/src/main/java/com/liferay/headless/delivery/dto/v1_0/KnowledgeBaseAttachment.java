@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseAttachment")
+@GraphQLName(
+	description = "Represents a binary file attached to a Knowledge Base article.",
+	value = "KnowledgeBaseAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "KnowledgeBaseAttachment")
 public class KnowledgeBaseAttachment implements Serializable {
@@ -377,6 +380,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment",
 		name = "x-class-name"
 	)
@@ -412,7 +416,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -451,7 +455,7 @@ public class KnowledgeBaseAttachment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

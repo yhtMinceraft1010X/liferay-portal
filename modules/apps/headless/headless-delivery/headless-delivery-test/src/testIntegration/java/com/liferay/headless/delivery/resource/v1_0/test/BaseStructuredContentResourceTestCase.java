@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -57,8 +58,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -87,7 +86,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -248,7 +246,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryStructuredContentsPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetAssetLibraryStructuredContentsPage_addStructuredContent(
 					irrelevantAssetLibraryId,
@@ -609,7 +607,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantContentStructureId =
 			testGetContentStructureStructuredContentsPage_getIrrelevantContentStructureId();
 
-		if ((irrelevantContentStructureId != null)) {
+		if (irrelevantContentStructureId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetContentStructureStructuredContentsPage_addStructuredContent(
 					irrelevantContentStructureId,
@@ -955,7 +953,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteStructuredContentsPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetSiteStructuredContentsPage_addStructuredContent(
 					irrelevantSiteId, randomIrrelevantStructuredContent());
@@ -1496,16 +1494,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetSiteStructuredContentPermissionsPage() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		StructuredContent postStructuredContent =
-			testPostSiteStructuredContent_addStructuredContent(
-				randomStructuredContent());
-
 		Page<Permission> page =
 			structuredContentResource.getSiteStructuredContentPermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
+	}
+
+	protected StructuredContent
+			testGetSiteStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testPostSiteStructuredContent_addStructuredContent(
+			randomStructuredContent());
 	}
 
 	@Test
@@ -1514,16 +1515,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testPutSiteStructuredContentPermission_addStructuredContent();
 
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			structuredContentResource.
 				putSiteStructuredContentPermissionHttpResponse(
 					structuredContent.getSiteId(),
 					new Permission[] {
 						new Permission() {
 							{
-								setActionIds(new String[] {"VIEW"});
-								setRoleName("Guest");
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
 							}
 						}
 					}));
@@ -1569,7 +1573,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Long irrelevantStructuredContentFolderId =
 			testGetStructuredContentFolderStructuredContentsPage_getIrrelevantStructuredContentFolderId();
 
-		if ((irrelevantStructuredContentFolderId != null)) {
+		if (irrelevantStructuredContentFolderId != null) {
 			StructuredContent irrelevantStructuredContent =
 				testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
 					irrelevantStructuredContentFolderId,
@@ -1980,27 +1984,21 @@ public abstract class BaseStructuredContentResourceTestCase {
 						})),
 				"JSONObject/data", "Object/deleteStructuredContent"));
 
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN)) {
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"structuredContent",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"structuredContentId",
+								structuredContent.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
 
-			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"structuredContent",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"structuredContentId",
-									structuredContent.getId());
-							}
-						},
-						new GraphQLField("id"))),
-				"JSONArray/errors");
-
-			Assert.assertTrue(errorsJSONArray.length() > 0);
-		}
+		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
 	@Test
@@ -2166,7 +2164,22 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 	@Test
 	public void testGetStructuredContentPermissionsPage() throws Exception {
-		Assert.assertTrue(false);
+		StructuredContent postStructuredContent =
+			testGetStructuredContentPermissionsPage_addStructuredContent();
+
+		Page<Permission> page =
+			structuredContentResource.getStructuredContentPermissionsPage(
+				postStructuredContent.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected StructuredContent
+			testGetStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testPostSiteStructuredContent_addStructuredContent(
+			randomStructuredContent());
 	}
 
 	@Test
@@ -2175,8 +2188,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testPutStructuredContentPermission_addStructuredContent();
 
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			structuredContentResource.
 				putStructuredContentPermissionHttpResponse(
 					structuredContent.getId(),
@@ -2184,7 +2200,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 						new Permission() {
 							{
 								setActionIds(new String[] {"VIEW"});
-								setRoleName("Guest");
+								setRoleName(role.getName());
 							}
 						}
 					}));
@@ -2336,26 +2352,23 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			for (Object object : (Object[])value) {
 				if (arraySB.length() > 1) {
-					arraySB.append(",");
+					arraySB.append(", ");
 				}
 
 				arraySB.append("{");
 
 				Class<?> clazz = object.getClass();
 
-				for (Field field :
-						ReflectionUtil.getDeclaredFields(
-							clazz.getSuperclass())) {
-
+				for (Field field : getDeclaredFields(clazz.getSuperclass())) {
 					arraySB.append(field.getName());
 					arraySB.append(": ");
 
 					appendGraphQLFieldValue(arraySB, field.get(object));
 
-					arraySB.append(",");
+					arraySB.append(", ");
 				}
 
-				arraySB.setLength(arraySB.length() - 1);
+				arraySB.setLength(arraySB.length() - 2);
 
 				arraySB.append("}");
 			}
@@ -2392,9 +2405,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StringBuilder sb = new StringBuilder("{");
 
-		for (Field field :
-				ReflectionUtil.getDeclaredFields(StructuredContent.class)) {
-
+		for (Field field : getDeclaredFields(StructuredContent.class)) {
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
 
@@ -2842,7 +2853,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		graphQLFields.add(new GraphQLField("siteId"));
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.delivery.dto.v1_0.StructuredContent.
 						class)) {
 
@@ -2877,7 +2888,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -3337,6 +3348,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return true;
 	}
 
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -3779,12 +3801,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -3794,10 +3816,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

@@ -2666,25 +2666,25 @@ public class CalendarNotificationTemplatePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (calendarNotificationTemplate.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				calendarNotificationTemplate.setCreateDate(now);
+				calendarNotificationTemplate.setCreateDate(date);
 			}
 			else {
 				calendarNotificationTemplate.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!calendarNotificationTemplateModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				calendarNotificationTemplate.setModifiedDate(now);
+				calendarNotificationTemplate.setModifiedDate(date);
 			}
 			else {
 				calendarNotificationTemplate.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3256,7 +3256,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CalendarNotificationTemplateModelImpl
 				calendarNotificationTemplateModelImpl,
 			String[] columnNames, boolean original) {
@@ -3281,8 +3281,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

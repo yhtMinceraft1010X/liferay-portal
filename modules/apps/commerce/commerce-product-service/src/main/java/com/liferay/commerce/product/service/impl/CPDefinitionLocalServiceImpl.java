@@ -1981,7 +1981,7 @@ public class CPDefinitionLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.CONTENT, keywords
 			).put(
@@ -1997,13 +1997,11 @@ public class CPDefinitionLocalServiceImpl
 				LinkedHashMapBuilder.<String, Object>put(
 					"keywords", keywords
 				).build()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(companyId);
-		searchContext.setGroupIds(groupIds);
 		searchContext.setEnd(end);
+		searchContext.setGroupIds(groupIds);
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

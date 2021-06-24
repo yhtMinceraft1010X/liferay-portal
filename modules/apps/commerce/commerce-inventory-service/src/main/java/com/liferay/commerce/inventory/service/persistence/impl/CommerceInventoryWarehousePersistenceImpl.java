@@ -4692,25 +4692,25 @@ public class CommerceInventoryWarehousePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceInventoryWarehouse.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceInventoryWarehouse.setCreateDate(now);
+				commerceInventoryWarehouse.setCreateDate(date);
 			}
 			else {
 				commerceInventoryWarehouse.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceInventoryWarehouseModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceInventoryWarehouse.setModifiedDate(now);
+				commerceInventoryWarehouse.setModifiedDate(date);
 			}
 			else {
 				commerceInventoryWarehouse.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5274,6 +5274,13 @@ public class CommerceInventoryWarehousePersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5286,7 +5293,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceInventoryWarehouseModelImpl
 				commerceInventoryWarehouseModelImpl,
 			String[] columnNames, boolean original) {
@@ -5311,8 +5318,19 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceInventoryWarehouseModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

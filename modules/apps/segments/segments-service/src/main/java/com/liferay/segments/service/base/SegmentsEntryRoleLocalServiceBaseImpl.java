@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
+import com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
 import com.liferay.segments.service.persistence.SegmentsEntryRolePersistence;
@@ -53,10 +54,13 @@ import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,7 +82,7 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>SegmentsEntryRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.segments.service.SegmentsEntryRoleLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>SegmentsEntryRoleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>SegmentsEntryRoleLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -153,6 +157,13 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return segmentsEntryRolePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -386,6 +397,11 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 		return segmentsEntryRolePersistence.update(segmentsEntryRole);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -397,6 +413,8 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		segmentsEntryRoleLocalService = (SegmentsEntryRoleLocalService)aopProxy;
+
+		_setLocalServiceUtilService(segmentsEntryRoleLocalService);
 	}
 
 	/**
@@ -454,6 +472,23 @@ public abstract class SegmentsEntryRoleLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		SegmentsEntryRoleLocalService segmentsEntryRoleLocalService) {
+
+		try {
+			Field field =
+				SegmentsEntryRoleLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, segmentsEntryRoleLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

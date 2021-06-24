@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -51,6 +53,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -2471,6 +2474,21 @@ public class OAuth2AuthorizationPersistenceImpl
 		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl =
 			(OAuth2AuthorizationModelImpl)oAuth2Authorization;
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (oAuth2Authorization.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				oAuth2Authorization.setCreateDate(date);
+			}
+			else {
+				oAuth2Authorization.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
 		Session session = null;
 
 		try {
@@ -3361,7 +3379,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3384,8 +3402,8 @@ public class OAuth2AuthorizationPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -15,8 +15,6 @@
 (function () {
 	var Lang = AUI().Lang;
 
-	var IE9AndLater = AUI.Env.UA.ie >= 9;
-
 	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE =
 		'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
@@ -124,6 +122,17 @@
 			return pictureEl;
 		},
 
+		_isEmptySelection(editor) {
+			var selection = editor.getSelection();
+
+			var ranges = selection.getRanges();
+
+			return (
+				selection.getType() === CKEDITOR.SELECTION_NONE ||
+				(ranges.length === 1 && ranges[0].collapsed)
+			);
+		},
+
 		_onSelectedImageChange(editor, imageSrc, selectedItem) {
 			var instance = this;
 
@@ -148,32 +157,15 @@
 				);
 			}
 
-			if (IE9AndLater) {
-				if (!editor.window.$.AlloyEditor) {
-					var elementOuterHtml = element.getOuterHtml();
-					var emptySelectionMarkup = '&nbsp;';
+			var elementOuterHtml = element.getOuterHtml();
 
-					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
-				}
-				else {
-					editor.insertElement(element);
-				}
-			}
-			else {
-				editor.insertElement(element);
+			if (instance._isEmptySelection(editor)) {
+				elementOuterHtml += '<br />';
 			}
 
-			element = new CKEDITOR.dom.element('br');
-			editor.insertElement(element);
-			editor.getSelection();
+			editor.insertHtml(elementOuterHtml);
 
-			editor.fire('editorInteraction', {
-				nativeEvent: {},
-				selectionData: {
-					element,
-					region: element.getClientRect(),
-				},
-			});
+			editor.focus();
 		},
 
 		init(editor) {

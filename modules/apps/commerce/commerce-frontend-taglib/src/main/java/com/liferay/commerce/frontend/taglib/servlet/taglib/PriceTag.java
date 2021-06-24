@@ -57,9 +57,6 @@ public class PriceTag extends ComponentRendererTag {
 		try {
 			Map<String, Object> context = getContext();
 
-			long cpDefinitionId = (Long)context.getOrDefault(
-				"CPDefinitionId", 0);
-
 			long cpInstanceId = (Long)context.getOrDefault("CPInstanceId", 0);
 
 			int quantity = (Integer)context.getOrDefault("quantity", 1);
@@ -79,6 +76,9 @@ public class PriceTag extends ComponentRendererTag {
 					themeDisplay.getLocale());
 			}
 			else {
+				long cpDefinitionId = (Long)context.getOrDefault(
+					"CPDefinitionId", 0);
+
 				priceModel = _productHelper.getMinPrice(
 					cpDefinitionId, commerceContext, themeDisplay.getLocale());
 			}

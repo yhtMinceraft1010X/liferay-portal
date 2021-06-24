@@ -16,9 +16,6 @@ package com.liferay.saml.opensaml.integration.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -32,14 +29,13 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
@@ -62,14 +58,13 @@ import com.liferay.saml.util.PortletPropsKeys;
 
 import java.io.UnsupportedEncodingException;
 
-import java.lang.reflect.Field;
-
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -133,22 +128,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		identifiers.clear();
 
 		for (Class<?> serviceUtilClass : serviceUtilClasses) {
-			clearService(serviceUtilClass);
+			ReflectionTestUtil.setFieldValue(
+				serviceUtilClass, "_service", null);
 		}
 
 		ClassLoaderPool.unregister("saml-portlet");
-	}
-
-	protected void clearService(Class<?> serviceUtilClass) {
-		try {
-			Field field = serviceUtilClass.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(serviceUtilClass, null);
-		}
-		catch (Exception exception) {
-		}
 	}
 
 	protected Credential getCredential(String entityId) throws Exception {
@@ -277,34 +261,26 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected <T> T getMockPortalService(
 		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
-		return getMockService(
-			serviceUtilClass, serviceClass, portalBeanLocator);
+		return getMockService(serviceUtilClass, serviceClass);
 	}
 
 	protected <T> T getMockPortletService(
 		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
-		return getMockService(
-			serviceUtilClass, serviceClass, portletBeanLocator);
+		return getMockService(serviceUtilClass, serviceClass);
 	}
 
 	protected <T> T getMockService(
-		Class<?> serviceUtilClass, Class<T> serviceClass,
-		BeanLocator beanLocator) {
-
-		clearService(serviceUtilClass);
+		Class<?> serviceUtilClass, Class<T> serviceClass) {
 
 		serviceUtilClasses.add(serviceUtilClass);
 
-		T service = mock(serviceClass);
+		T serviceMock = mock(serviceClass);
 
-		when(
-			beanLocator.locate(serviceClass.getName())
-		).thenReturn(
-			service
-		);
+		ReflectionTestUtil.setFieldValue(
+			serviceUtilClass, "_service", serviceMock);
 
-		return service;
+		return serviceMock;
 	}
 
 	protected void prepareIdentityProvider(String entityId) {
@@ -579,15 +555,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				new String[] {"8080", "8443"})
 		);
 
-		portalBeanLocator = mock(BeanLocator.class);
-
-		PortalBeanLocatorUtil.setBeanLocator(portalBeanLocator);
-
-		portletBeanLocator = mock(BeanLocator.class);
-
-		PortletBeanLocatorUtil.setBeanLocator(
-			"saml-portlet", portletBeanLocator);
-
 		groupLocalService = getMockPortalService(
 			GroupLocalServiceUtil.class, GroupLocalService.class);
 
@@ -615,15 +582,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupProps() {
-		props = mock(Props.class);
-
-		PropsUtil.setProps(props);
-
-		when(
-			props.get(PropsKeys.LIFERAY_HOME)
-		).thenReturn(
-			System.getProperty("java.io.tmpdir")
-		);
+		PropsTestUtil.setProps(
+			HashMapBuilder.<String, Object>put(
+				PropsKeys.LIFERAY_HOME, System.getProperty("java.io.tmpdir")
+			).put(
+				"configuration.override.", new Properties()
+			).build());
 	}
 
 	protected void setupSamlBindings() {
@@ -686,9 +650,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected MetadataManagerImpl metadataManagerImpl;
 	protected ParserPool parserPool;
 	protected Portal portal;
-	protected BeanLocator portalBeanLocator;
-	protected BeanLocator portletBeanLocator;
-	protected Props props;
 	protected List<SamlBinding> samlBindings;
 	protected IdentifierGenerationStrategy samlIdentifierGenerator;
 	protected SamlProviderConfiguration samlProviderConfiguration;

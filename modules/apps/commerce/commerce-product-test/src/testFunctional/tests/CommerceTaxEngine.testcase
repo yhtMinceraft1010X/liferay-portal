@@ -1,0 +1,91 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"
+	@priority = "3"
+	test ConfigureChannelShippingTaxCategory {
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		Type(
+			key_fieldLabel = "Shipping Tax Category",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Channel");
+
+		AssertTextEquals(
+			key_fieldLabel = "Shipping Tax Category",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+	}
+
+	@description = "This is a test for COMMERCE-6264. Add/update/delete tax category from UI"
+	@priority = "3"
+	test TaxCategoryLifecycle {
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Tax Categories");
+
+		CommerceEntry.addTaxCategory(
+			keyDescription = "Test Description",
+			keyName = "Test",
+			keyReferenceCode = "Test Reference");
+
+		CommerceNavigator.gotoEntry(entryName = "Test");
+
+		CommerceEntry.editTaxCategory(
+			keyDescription = "Test Description2",
+			keyName = "Test2",
+			keyReferenceCode = "Test Reference2");
+
+		CommerceEntry.deleteTaxCategory(keyName = "Test2");
+	}
+
+}

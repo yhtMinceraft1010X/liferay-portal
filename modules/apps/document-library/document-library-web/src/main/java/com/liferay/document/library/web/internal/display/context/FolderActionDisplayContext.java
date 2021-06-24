@@ -28,6 +28,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -40,9 +42,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
@@ -66,12 +66,10 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderActionDisplayContext {
 
 	public FolderActionDisplayContext(
-		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest) {
 
 		_dlTrashHelper = dlTrashHelper;
 		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 	}
@@ -343,35 +341,6 @@ public class FolderActionDisplayContext {
 		return _dlRequestHelper.getScopeGroupId();
 	}
 
-	public String getRowURL(Folder folder) throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!DLFolderPermission.contains(
-				themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.ACCESS)) {
-
-			return StringPool.BLANK;
-		}
-
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			redirect = themeDisplay.getURLCurrent();
-		}
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/document_library/view_folder");
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"folderId", String.valueOf(folder.getFolderId()));
-
-		return portletURL.toString();
-	}
-
 	public String getViewSlideShowURL() throws WindowStateException {
 		LiferayPortletResponse liferayPortletResponse =
 			_dlRequestHelper.getLiferayPortletResponse();
@@ -485,20 +454,27 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isDeleteExpiredTemporaryFileEntriesActionVisible() {
-		Folder folder = _getFolder();
+		try {
+			Folder folder = _getFolder();
 
-		if (folder == null) {
+			if (folder == null) {
+				return false;
+			}
+
+			if (DLFolderUtil.isRepositoryRoot(folder) &&
+				folder.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				return true;
+			}
+
 			return false;
 		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-		if (DLFolderUtil.isRepositoryRoot(folder) &&
-			folder.isRepositoryCapabilityProvided(
-				TemporaryFileEntriesCapability.class)) {
-
-			return true;
+			return false;
 		}
-
-		return false;
 	}
 
 	public boolean isDeleteFolderActionVisible() throws PortalException {
@@ -649,17 +625,25 @@ public class FolderActionDisplayContext {
 	}
 
 	public boolean isTrashEnabled() throws PortalException {
-		Folder folder = _getFolder();
+		try {
+			Folder folder = _getFolder();
 
-		if (((folder == null) ||
-			 folder.isRepositoryCapabilityProvided(TrashCapability.class)) &&
-			_dlTrashHelper.isTrashEnabled(
-				_dlRequestHelper.getScopeGroupId(), _getRepositoryId())) {
+			if (((folder == null) ||
+				 folder.isRepositoryCapabilityProvided(
+					 TrashCapability.class)) &&
+				_dlTrashHelper.isTrashEnabled(
+					_dlRequestHelper.getScopeGroupId(), _getRepositoryId())) {
 
-			return true;
+				return true;
+			}
+
+			return false;
 		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-		return false;
+			return false;
+		}
 	}
 
 	public boolean isViewSlideShowActionVisible() throws PortalException {
@@ -883,11 +867,13 @@ public class FolderActionDisplayContext {
 		return true;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FolderActionDisplayContext.class);
+
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _randomNamespace;
 	private Long _repositoryId;
 	private Integer _status;

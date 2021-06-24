@@ -51,14 +51,13 @@ String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO
 						type = "video/ogv";
 					}
 				}
-
-				if (type != null) {
 			%>
 
+				<c:if test="<%= type != null %>">
 					<source src="<%= previewFileURL %>" type="<%= type %>" />
+				</c:if>
 
 			<%
-				}
 			}
 			%>
 

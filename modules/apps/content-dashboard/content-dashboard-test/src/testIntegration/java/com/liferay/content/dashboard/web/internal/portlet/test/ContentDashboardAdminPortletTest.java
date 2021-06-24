@@ -278,8 +278,8 @@ public class ContentDashboardAdminPortletTest {
 		Assert.assertTrue(
 			onClickConfiguration.contains(
 				HtmlUtil.escapeJS(
-					"mvcRenderCommandName=/edit_content_dashboard_" +
-						"configuration")));
+					"mvcRenderCommandName=" +
+						"/edit_content_dashboard_configuration")));
 	}
 
 	@Test
@@ -695,6 +695,7 @@ public class ContentDashboardAdminPortletTest {
 		try {
 			JournalArticle journalArticle = JournalTestUtil.addArticle(
 				user.getUserId(), _group.getGroupId(), 0);
+
 			JournalTestUtil.addArticle(
 				_user.getUserId(), _group.getGroupId(), 0);
 

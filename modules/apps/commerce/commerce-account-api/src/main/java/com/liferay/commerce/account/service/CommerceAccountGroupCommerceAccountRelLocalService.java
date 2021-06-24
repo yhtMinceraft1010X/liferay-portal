@@ -155,6 +155,9 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -239,6 +242,15 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccountGroupCommerceAccountRel
+		fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+			long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceAccountGroupCommerceAccountRel
 		fetchCommerceAccountGroupCommerceAccountRelByReferenceCode(
 			long companyId, String externalReferenceCode);
 
@@ -262,6 +274,20 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 	public CommerceAccountGroupCommerceAccountRel
 			getCommerceAccountGroupCommerceAccountRel(
 				long commerceAccountGroupId, long commerceAccountId)
+		throws PortalException;
+
+	/**
+	 * Returns the commerce account group commerce account rel with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce account group commerce account rel's external reference code
+	 * @return the matching commerce account group commerce account rel
+	 * @throws PortalException if a matching commerce account group commerce account rel could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceAccountGroupCommerceAccountRel
+			getCommerceAccountGroupCommerceAccountRelByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

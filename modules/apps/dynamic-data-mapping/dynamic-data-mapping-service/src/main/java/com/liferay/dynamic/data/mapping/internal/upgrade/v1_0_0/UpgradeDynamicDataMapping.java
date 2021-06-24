@@ -2198,20 +2198,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			int parentOffset = ddmFieldsCounter.get(fieldName);
 
-			Map<String, DDMFormField> nestedDDMFormFieldsMap =
-				ddmFormField.getNestedDDMFormFieldsMap();
-
 			String[] ddmFieldsDisplayValues = getDDMFieldsDisplayValues(
 				rootElement, true);
 
-			for (Map.Entry<String, DDMFormField> nestedDDMFormFieldEntry :
-					nestedDDMFormFieldsMap.entrySet()) {
+			List<DDMFormField> nestedDDMFormFields =
+				ddmFormField.getNestedDDMFormFields();
 
-				String nestedDDMFormFieldName =
-					nestedDDMFormFieldEntry.getKey();
-
-				DDMFormField nestedDDMFormField =
-					nestedDDMFormFieldEntry.getValue();
+			for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
+				String nestedDDMFormFieldName = nestedDDMFormField.getName();
 
 				int repetitions = countDDMFieldRepetitions(
 					ddmFieldsDisplayValues, nestedDDMFormFieldName, fieldName,
@@ -2682,10 +2676,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// File
 
-				try (InputStream is = new FileInputStream(file)) {
+				try (InputStream inputStream = new FileInputStream(file)) {
 					_store.addFile(
 						_companyId, dlFolderId, name, Store.VERSION_DEFAULT,
-						is);
+						inputStream);
 				}
 
 				file.delete();

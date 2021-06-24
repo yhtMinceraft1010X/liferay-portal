@@ -259,6 +259,13 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceTierPriceEntryLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceTierPriceEntryLocalService.dynamicQuery();
 	}
@@ -383,6 +390,20 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	 * @param externalReferenceCode the commerce tier price entry's external reference code
 	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	 */
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry
+		fetchCommerceTierPriceEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceTierPriceEntryLocalService.
+			fetchCommerceTierPriceEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTierPriceEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 		fetchCommerceTierPriceEntryByReferenceCode(
@@ -515,6 +536,25 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntry(
 			commerceTierPriceEntryId);
+	}
+
+	/**
+	 * Returns the commerce tier price entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce tier price entry's external reference code
+	 * @return the matching commerce tier price entry
+	 * @throws PortalException if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry
+			getCommerceTierPriceEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTierPriceEntryLocalService.
+			getCommerceTierPriceEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-const OSB_COMPONENTS_ROOT =
-	'osb-commerce-provisioning-theme-impl@1.0.0/js/components';
-
-function run(module, ...args) {
-	module.default(...args);
-}
-
 AUI().ready(() => {
+	const OSB_COMPONENTS_ROOT =
+		'osb-commerce-provisioning-theme-impl@1.0.0/js/components';
+
+	function run(module, ...args) {
+		module.default(...args);
+	}
+
 	Liferay.Loader.require(`${OSB_COMPONENTS_ROOT}/header/Header`, run);
 });

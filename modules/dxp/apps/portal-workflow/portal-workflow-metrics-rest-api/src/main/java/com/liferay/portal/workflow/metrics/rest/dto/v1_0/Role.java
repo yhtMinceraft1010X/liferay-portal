@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Role")
+@GraphQLName(description = "https://www.schema.org/Role", value = "Role")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Role")
 public class Role implements Serializable {
@@ -160,6 +160,7 @@ public class Role implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role",
 		name = "x-class-name"
 	)
@@ -195,7 +196,7 @@ public class Role implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -234,7 +235,7 @@ public class Role implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -17,7 +17,7 @@ Here are some of the types of changes documented in this file:
 * Deprecations or end of support: For example, warning that a certain
   feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through commit `ac8f7b9b47639`.*
+*This document has been reviewed through commit `980251208850b`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -59,11 +59,6 @@ horizontal rule):
 ---------------------------------------
 
 ```
-**80 Columns Rule:** Text should not exceed 80 columns. Keeping text within 80
-columns makes it easier to see the changes made between different versions of
-the document. Titles, links, and tables are exempt from this rule. Code samples
-must follow the column rules specified in Liferay's
-[Development Style](http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+development+style).
 
 The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.
@@ -129,6 +124,80 @@ There's no direct replacement for the `liferay.frontend.ProgressBar` component. 
 #### Why was this change made?
 
 The `liferay.frontend.ProgressBar` component was deprecated in 7.2 and is no longer used.
+
+---------------------------------------
+
+### AssetCategory's Tree Path Replaces Left/Right Category IDs
+- **Date:** 2019-Oct-08
+- **JIRA Ticket:** [LPS-102671](https://issues.liferay.com/browse/LPS-102671)
+
+#### What changed?
+
+Left and right category IDs in an `AssetCategory` have been removed and replaced with a single tree path.
+
+#### Who is affected?
+
+This affects anyone who uses left and right category IDs in `AssetCategory` and associated APIs.
+
+Left and right category IDs were primarily used for `AssetCategory`'s internal hierarchical tree.
+
+Existing `AssetCategory` service APIs remain the same, except `AssetCategoryLocalService::rebuildTree(long groupId, boolean force)`, which has been removed.
+
+These methods have been removed from `AssetCategoryUtil`:
+
+- `countAncestors`
+- `countDescendants`
+- `getAncestors`
+- `getDescendants`
+
+Methods related to left and right category IDs have been removed from `AssetEntryQuery`.
+
+Finder methods ending in `G_P_N_V` have been replaced with methods ending in `P_N_V`.
+
+#### How should I update my code?
+
+##### For left and right category IDs
+
+If you're using left and right category IDs, consider these options:
+
+- Adapt your code to use the new tree path
+- Explore whether a service API can be used to accomplish the same goal
+
+For example, instead of working with the category IDs via `category.getLeftCategoryId()` and `category.getRightCategoryId()`, you can get the tree path via `category.getTreePath()`. Then use the tree path.
+
+As a reference, this snippet `AssetCategoryLocalService` sets the tree path when adding a category:
+```
+if (parentCategory == null) {
+    category.setTreePath("/" + categoryId + "/");
+}
+else {
+    category.setTreePath(
+        parentCategory.getTreePath() + categoryId + "/");
+}
+```
+
+See [7.3.0-ga1 - AssetCategoryLocalServiceImpl.java#L122-L128](https://github.com/liferay/liferay-portal/blob/7.3.0-ga1/portal-impl/src/com/liferay/portlet/asset/service/impl/AssetCategoryLocalServiceImpl.java#L122-L128).
+
+##### For AssetCategoryLocalService#rebuildTree(long, boolean)
+
+Calls to `AssetCategoryLocalService#rebuildTree(long, boolean)` may be unnecessary. This method was mainly used to help maintain the internal hierarchical tree implmentation that has now been replaced.
+
+Consider re-evaluating your existing code to confirm whether your call to the `rebuildTree` method is still needed.
+
+##### For AssetCategoryUtil and AssetEntryQuery
+
+If you use methods removed from `AssetCategoryUtil` and `AssetEntryQuery`, consider these suggestions:
+
+- Re-evaluate your existing code
+- Explore whether an existing service API can accomplish the same goal
+
+##### For Finder Methods Involving G_P_N_V
+
+If you use `AssetCategory` finder methods that end in `G_P_N_V`, use the methods ending in `P_N_V` instead.
+
+#### Why was this change made?
+
+This change was made to improve the hierarchical tree implementation for AssetCategory.
 
 ---------------------------------------
 
@@ -748,6 +817,28 @@ This change was made because these properties are not useful for an entity.
 
 ---------------------------------------
 
+### Renamed Portal Properties "module.framework.properties.felix.fileinstall.\*" to "module.framework.properties.file.install.\*"
+- **Date:** 2020-Jul-13
+- **JIRA Ticket:** [LPS-115016](https://issues.liferay.com/browse/LPS-115016)
+
+#### What changed?
+
+Portal properties beginning with "module.framework.properties.felix.fileinstall" have been renamed to begin with "module.framework.properties.file.install".
+
+#### Who is affected?
+
+This affects anyone who has overridden `module.framework.properties.felix.fileinstall.*` portal property settings.
+
+#### How should I update my code?
+
+Rename properties starting with `module.framework.properties.felix.fileinstall.*` to start with `module.framework.properties.file.install.*`
+
+#### Why was this change made?
+
+This change was made to reflect the inlining of Apache Felix File Install. Liferay is now managing and maintaining this functionality.
+
+---------------------------------------
+
 ### Dynamic Data Mapping fields in Elasticsearch have changed to a nested document
 - **Date:** 2020-Jul-27
 - **JIRA Ticket:** [LPS-103224](https://issues.liferay.com/browse/LPS-103224)
@@ -783,6 +874,28 @@ You can also restore the legacy behavior from System Settings and continue using
 #### Why was this change made?
 
 This change was made to avoid the *Limit of total fields has been exceeded* Elasticsearch error that occurs if you have too many Dynamic Data Mapping structures.
+
+---------------------------------------
+
+### Moving Lexicon icons path
+- **Date:** 2020-Aug-17
+- **JIRA Ticket:** [LPS-115812](https://issues.liferay.com/browse/LPS-115812)
+
+### What changed?
+
+The path for the Lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
+
+### Who is affected
+
+This affects custom solutions that use the Lexicon icons path directly. The Gradle task for building the icons on the `lexicon` path will be removed.
+
+### How should I update my code?
+
+Update the path to reference `clay` instead of `lexicon`
+
+#### Why was this change made?
+
+This change was made to unify references to the icon sprite map.
 
 ---------------------------------------
 
@@ -837,28 +950,6 @@ This method was removed as part of a clean up refactor.
 
 ---------------------------------------
 
-### Moving Lexicon icons path
-- **Date:** 2020-Aug-17
-- **JIRA Ticket:** [LPS-115812](https://issues.liferay.com/browse/LPS-115812)
-
-### What changed?
-
-The path for the Lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
-
-### Who is affected
-
-This affects custom solutions that use the Lexicon icons path directly. The Gradle task for building the icons on the `lexicon` path will be removed.
-
-### How should I update my code?
-
-Update the path to reference `clay` instead of `lexicon`
-
-#### Why was this change made?
-
-This change was made to unify references to the icon sprite map.
-
----------------------------------------
-
 ### Replaced portal properties: view.count.enabled and buffered.increment.enabled
 - **Date:** 2020-Oct-01
 - **JIRA Ticket:** [LPS-120626](https://issues.liferay.com/browse/LPS-120626) and [LPS-121145](https://issues.liferay.com/browse/LPS-121145)
@@ -892,5 +983,27 @@ To use a configuration file, configure view counts in System Settings, save the 
 #### Why was this change made?
 
 This change was made to facilitate managing view count behavior.
+
+---------------------------------------
+
+### Removed Portal Property "module.framework.properties.file.install.optionalImportRefreshScope"
+- **Date:** 2020-Oct-11
+- **JIRA Ticket:** [LPS-122008](https://issues.liferay.com/browse/LPS-122008)
+
+#### What changed?
+
+Portal property `module.framework.properties.file.install.optionalImportRefreshScope` has been removed. File Install will now only checks managed bundles when scanning for bundles with optional packages that need to be refreshed.
+
+#### Who is affected?
+
+This affects anyone who has the portal property settings `module.framework.properties.file.install.optionalImportRefreshScope`.
+
+#### How should I update my code?
+
+Remove property `module.framework.properties.file.install.optionalImportRefreshScope`. File Install cannot be configured to use other behavior.
+
+#### Why was this change made?
+
+There are very few cases where alternate behavior was desirable. File Install is the primary way bundles are installed into Liferay, so it is now the bundle management default. Removing the old feature and its branching logic improves code maintainability and readability.
 
 ---------------------------------------

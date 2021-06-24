@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -173,7 +174,13 @@ public class PageElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
 				if (jsonParserFieldValue != null) {
 					pageElement.setPageElements(
-						(PageElement[])jsonParserFieldValue);
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> PageElementSerDes.toDTO((String)object)
+						).toArray(
+							size -> new PageElement[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -181,9 +188,6 @@ public class PageElementSerDes {
 					pageElement.setType(
 						PageElement.Type.create((String)jsonParserFieldValue));
 				}
-			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
 			}
 		}
 
@@ -213,7 +217,7 @@ public class PageElementSerDes {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -249,7 +253,7 @@ public class PageElementSerDes {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

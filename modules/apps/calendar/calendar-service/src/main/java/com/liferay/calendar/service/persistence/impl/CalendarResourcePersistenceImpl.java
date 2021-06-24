@@ -6474,25 +6474,25 @@ public class CalendarResourcePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (calendarResource.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				calendarResource.setCreateDate(now);
+				calendarResource.setCreateDate(date);
 			}
 			else {
 				calendarResource.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!calendarResourceModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				calendarResource.setModifiedDate(now);
+				calendarResource.setModifiedDate(date);
 			}
 			else {
 				calendarResource.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -7122,6 +7122,13 @@ public class CalendarResourcePersistenceImpl
 						calendarResourceModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -7134,7 +7141,7 @@ public class CalendarResourcePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CalendarResourceModelImpl calendarResourceModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -7157,8 +7164,19 @@ public class CalendarResourcePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CalendarResourceModelImpl.getColumnBitmask(
+				"code_");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.text.Format;
@@ -62,6 +63,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -78,6 +81,11 @@ import org.powermock.api.mockito.PowerMockito;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -262,36 +270,34 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 
 		localizedValue2.addString(locale, "Campo 2");
 
-		Map<String, DDMFormField> ddmFormFieldMap =
-			HashMapBuilder.<String, DDMFormField>put(
-				"field1",
-				() -> {
-					DDMFormField ddmFormField1 = new DDMFormField(
-						"field1", "text");
-
-					ddmFormField1.setFieldReference("reference1");
-
-					ddmFormField1.setLabel(localizedValue1);
-
-					return ddmFormField1;
-				}
-			).put(
-				"field2",
-				() -> {
-					DDMFormField ddmFormField2 = new DDMFormField(
-						"field2", "text");
-
-					ddmFormField2.setFieldReference("reference2");
-
-					ddmFormField2.setLabel(localizedValue2);
-
-					return ddmFormField2;
-				}
-			).build();
-
 		Map<String, String> ddmFormFieldsLabel =
 			ddmFormInstanceRecordExporterImpl.getDDMFormFieldsLabel(
-				ddmFormFieldMap, locale);
+				HashMapBuilder.<String, DDMFormField>put(
+					"field1",
+					() -> {
+						DDMFormField ddmFormField1 = new DDMFormField(
+							"field1", "text");
+
+						ddmFormField1.setFieldReference("reference1");
+
+						ddmFormField1.setLabel(localizedValue1);
+
+						return ddmFormField1;
+					}
+				).put(
+					"field2",
+					() -> {
+						DDMFormField ddmFormField2 = new DDMFormField(
+							"field2", "text");
+
+						ddmFormField2.setFieldReference("reference2");
+
+						ddmFormField2.setLabel(localizedValue2);
+
+						return ddmFormField2;
+					}
+				).build(),
+				locale);
 
 		Assert.assertEquals("Campo 1", ddmFormFieldsLabel.get("reference1"));
 		Assert.assertEquals("Campo 2", ddmFormFieldsLabel.get("reference2"));

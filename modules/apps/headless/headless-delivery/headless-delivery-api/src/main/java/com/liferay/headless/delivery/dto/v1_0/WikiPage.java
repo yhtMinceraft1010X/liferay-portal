@@ -51,11 +51,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WikiPage")
+@GraphQLName(description = "Represents a wiki page.", value = "WikiPage")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"encodingFormat", "headline"},
-	description = "Represents a wiki page."
+	description = "Represents a wiki page.",
+	requiredProperties = {"encodingFormat", "headline"}
 )
 @XmlRootElement(name = "WikiPage")
 public class WikiPage implements Serializable {
@@ -1026,6 +1026,7 @@ public class WikiPage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WikiPage",
 		name = "x-class-name"
 	)
@@ -1095,7 +1096,7 @@ public class WikiPage implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -1134,7 +1135,7 @@ public class WikiPage implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

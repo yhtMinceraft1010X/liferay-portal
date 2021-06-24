@@ -9,29 +9,50 @@
  * distribution rights of the Software.
  */
 
-import {fetch} from 'frontend-js-web';
-
-const ADD_TO_ORDER_ENDPOINT = '/o/commerce-ui/cart-item',
-	MAX_PRODUCT_QUANTITY = '1';
+import {
+	CommerceFrontendUtils,
+	CommerceServiceProvider
+} from 'commerce-frontend-js';
 
 export const GUEST_ID = '-1';
 export const TRIAL_SKU = 'TRIAL101';
 
-export function addToOrder(commerceAccountId, productId, options = '[]') {
-	const formData = new FormData();
+export const CHECKOUT_DEFAULT_LAYOUT_ENDPOINT = '/checkout';
+export const TRIAL_DEFAULT_LAYOUT_ENDPOINT = '/trial-registration';
 
-	formData.append('commerceAccountId', commerceAccountId);
-	formData.append('groupId', Liferay.ThemeDisplay.getScopeGroupId());
-	formData.append('languageId', Liferay.ThemeDisplay.getLanguageId());
-	formData.append('options', options);
-	formData.append('productId', productId);
-	formData.append('quantity', MAX_PRODUCT_QUANTITY);
+export const COMMERCE_CHECKOUT_PORTLET_ID =
+	'com_liferay_commerce_checkout_web_internal_portlet_' +
+	'CommerceCheckoutPortlet';
 
-	return fetch(ADD_TO_ORDER_ENDPOINT, {body: formData, method: 'POST'})
-		.then(({ok}) => (ok ? Promise.resolve() : Promise.reject()))
-		.catch((error) => {
-			console.error(error);
-		});
+export const COMMERCE_ORDER_COOKIE_IDENTIFIER =
+	'com.liferay.commerce.model.CommerceOrder#';
+
+const CartResource = CommerceServiceProvider.DeliveryCartAPI('v1');
+const {CommerceCookie} = CommerceFrontendUtils;
+
+const OSBCommerceOrderCookie = new CommerceCookie(
+	COMMERCE_ORDER_COOKIE_IDENTIFIER);
+
+export function addToOrder({
+	commerceAccountId: accountId,
+	commerceChannelGroupId: channelGroupId,
+	commerceChannelId: channelId,
+	commerceCurrencyCode: currencyCode,
+	skuId,
+}) {
+	return CartResource.createCartByChannelId(channelId, {
+		accountId,
+		cartItems: [{
+			options: '[]',
+			quantity: 1,
+			skuId,
+		}],
+		currencyCode,
+	}).then(({orderUUID}) => new Promise((resolve) => {
+		OSBCommerceOrderCookie.setValue(channelGroupId, orderUUID);
+
+		resolve({orderUUID});
+	}));
 }
 
 export function mapToFeatures(stringifiedJSON) {

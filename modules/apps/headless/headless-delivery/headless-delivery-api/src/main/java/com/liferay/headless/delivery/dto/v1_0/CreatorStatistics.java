@@ -46,7 +46,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("CreatorStatistics")
+@GraphQLName(
+	description = "Detailed info of the creator.", value = "CreatorStatistics"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CreatorStatistics")
 public class CreatorStatistics implements Serializable {
@@ -253,6 +255,7 @@ public class CreatorStatistics implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CreatorStatistics",
 		name = "x-class-name"
 	)
@@ -288,7 +291,7 @@ public class CreatorStatistics implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -327,7 +330,7 @@ public class CreatorStatistics implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -22436,23 +22436,23 @@ public class WikiPagePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (wikiPage.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				wikiPage.setCreateDate(now);
+				wikiPage.setCreateDate(date);
 			}
 			else {
-				wikiPage.setCreateDate(serviceContext.getCreateDate(now));
+				wikiPage.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!wikiPageModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				wikiPage.setModifiedDate(now);
+				wikiPage.setModifiedDate(date);
 			}
 			else {
-				wikiPage.setModifiedDate(serviceContext.getModifiedDate(now));
+				wikiPage.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -23693,6 +23693,13 @@ public class WikiPagePersistenceImpl
 						wikiPageModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -23704,7 +23711,7 @@ public class WikiPagePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			WikiPageModelImpl wikiPageModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -23725,8 +23732,23 @@ public class WikiPagePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= WikiPageModelImpl.getColumnBitmask(
+				"nodeId");
+			orderByColumnsBitmask |= WikiPageModelImpl.getColumnBitmask(
+				"title");
+			orderByColumnsBitmask |= WikiPageModelImpl.getColumnBitmask(
+				"version");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

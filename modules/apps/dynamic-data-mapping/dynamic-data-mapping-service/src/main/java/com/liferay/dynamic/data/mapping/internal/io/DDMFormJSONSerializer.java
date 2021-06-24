@@ -30,11 +30,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -105,6 +107,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 	protected void addFields(
 		JSONObject jsonObject, List<DDMFormField> ddmFormFields) {
 
+		_trim(ddmFormFields);
+
 		jsonObject.put("fields", fieldsToJSONArray(ddmFormFields));
 	}
 
@@ -114,6 +118,8 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		if (nestedDDMFormFields.isEmpty()) {
 			return;
 		}
+
+		_trim(nestedDDMFormFields);
 
 		jsonObject.put("nestedFields", fieldsToJSONArray(nestedDDMFormFields));
 	}
@@ -352,6 +358,57 @@ public class DDMFormJSONSerializer implements DDMFormSerializer {
 		}
 
 		return jsonObject;
+	}
+
+	private static void _trim(List<DDMFormField> ddmFormFields) {
+		if (ddmFormFields.isEmpty()) {
+			return;
+		}
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			LocalizedValue localizedValue = _trim(
+				ddmFormField.getPredefinedValue());
+
+			ddmFormField.setPredefinedValue(localizedValue);
+
+			localizedValue = _trim(ddmFormField.getStyle());
+
+			ddmFormField.setStyle(localizedValue);
+
+			localizedValue = _trim(ddmFormField.getTip());
+
+			ddmFormField.setTip(localizedValue);
+		}
+	}
+
+	private static LocalizedValue _trim(LocalizedValue rawLocalizedValue) {
+		if (rawLocalizedValue == null) {
+			return null;
+		}
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		Map<Locale, String> predefinedValuesMap = rawLocalizedValue.getValues();
+
+		for (Map.Entry<Locale, String> entry : predefinedValuesMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (value != null) {
+				value = StringUtil.trim(value);
+
+				if (value.length() == 0) {
+					localizedValue.addString(entry.getKey(), StringPool.BLANK);
+				}
+				else {
+					localizedValue.addString(entry.getKey(), entry.getValue());
+				}
+			}
+			else {
+				localizedValue.addString(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return localizedValue;
 	}
 
 	private boolean _isArray(Object value) {

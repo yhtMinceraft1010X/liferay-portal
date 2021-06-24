@@ -1479,6 +1479,8 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Test Site Name");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
 		DMDocument.addPG(
 			assetTitle = "Blogs Entry Title",
 			assetType = "Blogs Entry",

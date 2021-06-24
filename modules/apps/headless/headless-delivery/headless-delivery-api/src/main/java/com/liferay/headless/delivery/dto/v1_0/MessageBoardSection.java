@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardSection")
+@GraphQLName(
+	description = "Represents a section/folder on a message board, used to organize messages.",
+	value = "MessageBoardSection"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"title"},
-	description = "Represents a section/folder on a message board, used to organize messages."
+	description = "Represents a section/folder on a message board, used to organize messages.",
+	requiredProperties = {"title"}
 )
 @XmlRootElement(name = "MessageBoardSection")
 public class MessageBoardSection implements Serializable {
@@ -697,6 +700,7 @@ public class MessageBoardSection implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.MessageBoardSection",
 		name = "x-class-name"
 	)
@@ -766,7 +770,7 @@ public class MessageBoardSection implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -805,7 +809,7 @@ public class MessageBoardSection implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

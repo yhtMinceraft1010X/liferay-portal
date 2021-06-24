@@ -3,9 +3,11 @@
 <project basedir="." name="portal-test-analytics-cloud" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="start-analytics-cloud">
+	<macrodef name="create-analytics-cloud-docker-compose">
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
+
+			<delete file="${analytics.cloud.asah.dir}/docker-compose.test.yml" />
 
 			<copy
 				file="${analytics.cloud.asah.dir}/docker-compose.yml"
@@ -34,8 +36,14 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				match="\&quot;9090:9090\&quot;"
-				replace="&quot;${analytics.cloud.asah.prometheus.port}:9090&quot;"
+				match="http://\{service\}:8080"
+				replace="http://{service}:${analytics.cloud.faro.dxp.port}"
+			/>
+
+			<replaceregexp
+				file="${analytics.cloud.docker.test.yaml}"
+				match="\&quot;9090:8080\&quot;"
+				replace="&quot;${analytics.cloud.asah.trino.port}:8080&quot;"
 			/>
 
 			<replaceregexp
@@ -46,9 +54,14 @@
 
 			<replaceregexp
 				file="${analytics.cloud.docker.test.yaml}"
-				flags="g"
-				match="1536m"
-				replace="2048m"
+				match="http://wedeploy-elasticsearch:9200"
+				replace="http://wedeploy-elasticsearch:${analytics.cloud.asah.elasticsearch.port}"
+			/>
+
+			<replaceregexp
+				file="${analytics.cloud.docker.test.yaml}"
+				match="\&quot;9200:9200\&quot;"
+				replace="&quot;${analytics.cloud.asah.elasticsearch.port}:9200&quot;"
 			/>
 
 			<local name="short.hostname" />
@@ -71,6 +84,16 @@ networks:
             name: ${short.hostname}]]></echo>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-analytics-cloud">
+		<sequential>
+			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
+
+			<create-analytics-cloud-docker-compose />
+
+			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
 			<replaceregexp
 				file="${analytics.cloud.faro.dir}/build-ext.gradle"
@@ -97,7 +120,8 @@ networks:
 			/>
 
 			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_BACKEND_URL=${analytics.cloud.asah.backend.url}
-OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
+OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}
+OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 			<if>
 				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
@@ -165,6 +189,8 @@ OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
 
+			<create-analytics-cloud-docker-compose />
+
 			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
 			<execute dir="${analytics.cloud.asah.dir}">
@@ -180,6 +206,8 @@ OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}</echo>
 	</macrodef>
 
 	<target name="start-analytics-cloud">
+		<stop-analytics-cloud />
+
 		<start-analytics-cloud />
 	</target>
 

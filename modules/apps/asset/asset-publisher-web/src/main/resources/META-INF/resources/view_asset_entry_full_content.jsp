@@ -48,7 +48,7 @@ assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
-String title = assetRenderer.getTitle(locale);
+String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
 
 PortletURL viewFullContentURL = assetPublisherHelper.getBaseAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry);
 
@@ -66,41 +66,51 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 %>
 
 <div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
-	<div class="align-items-center d-flex mb-2">
-		<p class="component-title h4">
-			<c:if test="<%= showBackURL && Validator.isNotNull(redirect) %>">
-				<liferay-ui:icon
-					cssClass="header-back-to"
-					icon="angle-left"
-					markupView="lexicon"
-					url="<%= redirect %>"
-				/>
+
+	<%
+	String fullContentRedirect = themeDisplay.getURLCurrent();
+
+	if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName())) {
+		fullContentRedirect = redirect;
+	}
+
+	request.setAttribute("view.jsp-fullContentRedirect", fullContentRedirect);
+	%>
+
+	<liferay-util:buffer
+		var="assetActions"
+	>
+		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+	</liferay-util:buffer>
+
+	<c:if test="<%= (showBackURL && Validator.isNotNull(redirect)) || assetPublisherDisplayContext.isShowAssetTitle() || (!print && Validator.isNotNull(assetActions)) %>">
+		<div class="align-items-center d-flex mb-2">
+			<p class="component-title h4">
+				<c:if test="<%= showBackURL && Validator.isNotNull(redirect) %>">
+					<liferay-ui:icon
+						cssClass="header-back-to"
+						icon="angle-left"
+						markupView="lexicon"
+						url="<%= redirect %>"
+					/>
+				</c:if>
+
+				<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
+					<span class="asset-title d-inline">
+						<%= HtmlUtil.escape(title) %>
+					</span>
+				</c:if>
+			</p>
+
+			<c:if test="<%= !print %>">
+				<c:if test="<%= Validator.isNotNull(assetActions) %>">
+					<div class="d-inline-flex">
+						<%= assetActions %>
+					</div>
+				</c:if>
 			</c:if>
-
-			<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
-				<span class="asset-title d-inline">
-					<%= HtmlUtil.escape(title) %>
-				</span>
-			</c:if>
-		</p>
-
-		<c:if test="<%= !print %>">
-
-			<%
-			String fullContentRedirect = currentURL;
-
-			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(assetEntry.getCompanyId(), assetEntry.getGroupId(), assetEntry.getClassName())) {
-				fullContentRedirect = redirect;
-			}
-
-			request.setAttribute("view.jsp-fullContentRedirect", fullContentRedirect);
-			%>
-
-			<span class="d-inline-flex">
-				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-			</span>
-		</c:if>
-	</div>
+		</div>
+	</c:if>
 
 	<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
@@ -235,7 +245,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	</c:if>
 
 	<%
-	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
+	boolean showContextLink = assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible();
 	boolean showRatings = assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable();
 	%>
 

@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -124,14 +125,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long SIZE_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
+	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
 	public static final long IMAGEID_COLUMN_BITMASK = 2L;
@@ -410,8 +411,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -508,7 +515,9 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		for (Map.Entry<String, Object> entry :
 				_columnOriginalValues.entrySet()) {
 
-			if (entry.getValue() != getColumnValue(entry.getKey())) {
+			if (!Objects.equals(
+					entry.getValue(), getColumnValue(entry.getKey()))) {
+
 				_columnBitmask |= _columnBitmasks.get(entry.getKey());
 			}
 		}
@@ -633,6 +642,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
+		_setModifiedDate = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -747,6 +758,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private long _imageId;
 	private long _companyId;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _type;
 	private int _height;
 	private int _width;

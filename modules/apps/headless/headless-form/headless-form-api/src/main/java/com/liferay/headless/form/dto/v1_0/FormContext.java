@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormContext")
+@GraphQLName(
+	description = "https://www.schema.org/FormContext", value = "FormContext"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormContext")
 public class FormContext implements Serializable {
@@ -304,6 +306,7 @@ public class FormContext implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormContext",
 		name = "x-class-name"
 	)
@@ -339,7 +342,7 @@ public class FormContext implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -378,7 +381,7 @@ public class FormContext implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -408,6 +408,26 @@ definition {
 		DMPortlet.viewDefaultPG();
 	}
 
+	@description = "This test covers LPS-96652. It ensures that the PDF file can be added after enabling text extraction."
+	@priority = "4"
+	test AddPDFAfterEnablingTextExtraction {
+		property custom.properties = "text.extraction.fork.process.enabled=true${line.separator}text.extraction.fork.process.mime.types=application/x-tika-ooxml,application/pdf";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.pdf",
+			dmDocumentTitle = "Document_1.pdf");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.ExceptionInInitializerError");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.pdf",
+			dmDocumentType = "Basic Document");
+	}
+
 	@priority = "4"
 	test AddSubFolderImageAndDocument {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -544,10 +564,29 @@ definition {
 		DMDocument.cancelCheckoutPG(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
+	@description = "This test covers LPS-94508 and LPS-129430. It ensures that a tag can be created when selecting an item from autocomplete on a content page."
 	@priority = "5"
 	test CreateTagUsingAutocomplete {
-		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addMultiplePG(
+			contentPage = "true",
+			dmDocumentFileList = "Document_1.doc,Document_2.docx");
 
 		for (var tagName : list "tagone,tagtwo,tagthree") {
 			var key_dmDocumentTitle = "Document_1.doc";
@@ -562,7 +601,7 @@ definition {
 
 			DMDocument.viewTag(tagName = "${tagName}");
 
-			Navigator.gotoPage(pageName = "Documents and Media Page");
+			Navigator.gotoPage(pageName = "Test Content Page Name");
 		}
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -868,11 +907,28 @@ definition {
 		DMDocumentType.viewMenulistOption(dmDocumentTypeName = "DM Document Type Name Edit");
 	}
 
+	@description = "This test ensures that user can edit document in folder via a content page."
 	@priority = "5"
 	test EditFolderDocument {
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		PageEditor.clickPublish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		DMFolder.addPG(
+			contentPage = "true",
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
 
@@ -890,7 +946,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTitleEdit = "DM Document Title Edit");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		Navigator.gotoPage(pageName = "Test Content Page Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
@@ -1329,6 +1385,54 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This test covers LPS-102179. It ensures that the user can create a shortcut using a file from a different site after setting the root folder."
+	@priority = "3"
+	test ShortcutCanBeAddedToDocumentAfterSettingRootFolder {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "Test Folder",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.setRootFolder(dmRootFolderName = "Test Folder");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		DMDocument.addDMShortcutPG(
+			dmDocumentTitle = "DM Document Title",
+			siteName = "${siteName}");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This is a use case for LPS-51280"
 	@priority = "5"
 	test SubscribeToCommentAndViewEmailNotification {
@@ -1737,6 +1841,12 @@ definition {
 			groupName = "Site Name 2",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name 2");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",

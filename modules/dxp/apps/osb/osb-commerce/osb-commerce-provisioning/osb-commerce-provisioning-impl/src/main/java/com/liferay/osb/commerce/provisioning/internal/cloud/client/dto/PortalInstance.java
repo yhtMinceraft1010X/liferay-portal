@@ -14,7 +14,9 @@
 
 package com.liferay.osb.commerce.provisioning.internal.cloud.client.dto;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
+
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
@@ -31,6 +33,14 @@ public class PortalInstance {
 
 	public String getPortalInstanceId() {
 		return _portalInstanceId;
+	}
+
+	public String getPortalInstanceInitializerKey() {
+		return _portalInstanceInitializerKey;
+	}
+
+	public Map<String, String> getPortalInstanceInitializerPayload() {
+		return _portalInstanceInitializerPayload;
 	}
 
 	public String getVirtualHost() {
@@ -57,22 +67,48 @@ public class PortalInstance {
 		_portalInstanceId = portalInstanceId;
 	}
 
+	public void setPortalInstanceInitializerKey(
+		String portalInstanceInitializerKey) {
+
+		_portalInstanceInitializerKey = portalInstanceInitializerKey;
+	}
+
+	public void setPortalInstanceInitializerPayload(
+		Map<String, String> portalInstanceInitializerPayload) {
+
+		_portalInstanceInitializerPayload = portalInstanceInitializerPayload;
+	}
+
 	public void setVirtualHost(String virtualHost) {
 		_virtualHost = virtualHost;
 	}
 
 	@Override
 	public String toString() {
-		return StringBundler.concat(
-			"{\"active\":\"", _active, "\", \"companyId\":\"", _companyId,
-			"\",\"domain\":\"", _domain, "\",\"portalInstanceId\":\"",
-			_portalInstanceId, "\", \"virtualHost\":\"", _virtualHost, "\"}");
+		return JSONUtil.put(
+			"active", _active
+		).put(
+			"companyId", _companyId
+		).put(
+			"domain", _domain
+		).put(
+			"portalInstanceId", _portalInstanceId
+		).put(
+			"portalInstanceInitializerKey", _portalInstanceInitializerKey
+		).put(
+			"portalInstanceInitializerPayload",
+			_portalInstanceInitializerPayload
+		).put(
+			"virtualHost", _virtualHost
+		).toString();
 	}
 
 	private boolean _active;
 	private long _companyId;
 	private String _domain;
 	private String _portalInstanceId;
+	private String _portalInstanceInitializerKey;
+	private Map<String, String> _portalInstanceInitializerPayload;
 	private String _virtualHost;
 
 }

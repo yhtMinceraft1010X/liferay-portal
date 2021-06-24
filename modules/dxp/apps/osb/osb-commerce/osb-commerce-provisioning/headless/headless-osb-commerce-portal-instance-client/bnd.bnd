@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Headless OSB Commerce Portal Instance Client
-Bundle-SymbolicName: com.liferay.headless.osb.commerce.portal.instance.client
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.headless.osb.commerce.portal.instance.client.dto.v1_0,\
-	com.liferay.headless.osb.commerce.portal.instance.client.resource.v1_0

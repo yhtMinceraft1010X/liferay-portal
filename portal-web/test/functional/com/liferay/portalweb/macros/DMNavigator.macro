@@ -21,7 +21,12 @@ definition {
 	}
 
 	macro gotoAddDocumentTypePG {
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		if (isSet(contentPage)) {
+			LexiconEntry.gotoAdd();
+		}
+		else {
+			Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+		}
 
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
 

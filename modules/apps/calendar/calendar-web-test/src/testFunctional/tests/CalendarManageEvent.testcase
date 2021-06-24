@@ -749,6 +749,57 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-75292."
+	@priority = "5"
+	test ViewCalendarEventDetailViaMailLink {
+		property test.name.skip.portal.instance = "CalendarManageEvent#ViewCalendarEventDetailViaMailLink";
+		property test.smtp.server.enabled = "true";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
+
+		CalendarNavigator.gotoAddEvent();
+
+		CalendarEvent.addRegularInCustomSite(
+			eventTitle = "Calendar Event Title",
+			optionSet = "true",
+			optionSetValue = "inviteResource",
+			pageName = "Calendar Page",
+			siteName = "Site Name",
+			specificOptionSetValue = "userfn userln",
+			user = "userfn userln");
+
+		MockMock.openCalendatBodyLink(
+			asset = '''Calendar: Event Notification for "Calendar Event Title"''',
+			content = "You have been invited to event",
+			subject = '''Calendar: Event Notification for "Calendar Event Title"''');
+
+		CalendarEvent.viewDetailsViaMailLink(eventTitle = "Calendar Event Title");
+	}
+
 	@description = "This is a use case for LPS-51222."
 	@priority = "3"
 	test ViewCorrectCalendarOnEventSwitch {

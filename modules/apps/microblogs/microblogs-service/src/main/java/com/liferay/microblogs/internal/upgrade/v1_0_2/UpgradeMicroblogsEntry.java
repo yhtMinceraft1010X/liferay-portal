@@ -34,7 +34,9 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 				return;
 			}
 
-			runSQL("drop index IX_7ABB0AB3 on MicroblogsEntry");
+			if (hasIndex("MicroblogsEntry", "IX_7ABB0AB3")) {
+				runSQL("drop index IX_7ABB0AB3 on MicroblogsEntry");
+			}
 
 			runSQL("alter table MicroblogsEntry drop column receiverUserId");
 		}
@@ -53,7 +55,9 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 				"update MicroblogsEntry set parentMicroblogsEntryId = " +
 					"receiverMicroblogsEntryId");
 
-			runSQL("drop index IX_36CA3D37 on MicroblogsEntry");
+			if (hasIndex("MicroblogsEntry", "IX_36CA3D37")) {
+				runSQL("drop index IX_36CA3D37 on MicroblogsEntry");
+			}
 
 			runSQL(
 				"alter table MicroblogsEntry drop column " +

@@ -16,6 +16,7 @@ package com.liferay.akismet.service.base;
 
 import com.liferay.akismet.model.AkismetEntry;
 import com.liferay.akismet.service.AkismetEntryLocalService;
+import com.liferay.akismet.service.AkismetEntryLocalServiceUtil;
 import com.liferay.akismet.service.persistence.AkismetEntryPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -47,6 +48,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -69,7 +72,7 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AkismetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.akismet.service.AkismetEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AkismetEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AkismetEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -140,6 +143,13 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return akismetEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -539,11 +549,15 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.akismet.model.AkismetEntry", akismetEntryLocalService);
+
+		_setLocalServiceUtilService(akismetEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.akismet.model.AkismetEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -585,6 +599,22 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AkismetEntryLocalService akismetEntryLocalService) {
+
+		try {
+			Field field = AkismetEntryLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, akismetEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

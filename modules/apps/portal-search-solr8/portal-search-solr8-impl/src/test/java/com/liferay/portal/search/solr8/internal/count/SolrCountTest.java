@@ -17,11 +17,20 @@ package com.liferay.portal.search.solr8.internal.count;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.count.BaseCountTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author André de Oliveira
  */
 public class SolrCountTest extends BaseCountTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

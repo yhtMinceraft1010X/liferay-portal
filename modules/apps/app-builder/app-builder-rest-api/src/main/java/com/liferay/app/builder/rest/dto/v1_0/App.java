@@ -694,6 +694,7 @@ public class App implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.rest.dto.v1_0.App",
 		name = "x-class-name"
 	)
@@ -729,7 +730,7 @@ public class App implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -768,7 +769,7 @@ public class App implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

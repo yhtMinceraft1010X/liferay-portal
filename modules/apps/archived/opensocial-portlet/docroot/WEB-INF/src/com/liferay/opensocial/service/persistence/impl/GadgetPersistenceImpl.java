@@ -3388,23 +3388,23 @@ public class GadgetPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (gadget.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				gadget.setCreateDate(now);
+				gadget.setCreateDate(date);
 			}
 			else {
-				gadget.setCreateDate(serviceContext.getCreateDate(now));
+				gadget.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!gadgetModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				gadget.setModifiedDate(now);
+				gadget.setModifiedDate(date);
 			}
 			else {
-				gadget.setModifiedDate(serviceContext.getModifiedDate(now));
+				gadget.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3907,6 +3907,13 @@ public class GadgetPersistenceImpl
 						columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3918,7 +3925,7 @@ public class GadgetPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			GadgetModelImpl gadgetModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3939,8 +3946,18 @@ public class GadgetPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= GadgetModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -71,7 +73,8 @@ public class ViewScheduledDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
+		return SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, CTPortletKeys.PUBLICATIONS, "list");
 	}
 
 	public Date getPublishingDate(long ctCollectionId) throws PortalException {

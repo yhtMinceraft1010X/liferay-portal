@@ -8133,25 +8133,25 @@ public class AnnouncementsEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (announcementsEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				announcementsEntry.setCreateDate(now);
+				announcementsEntry.setCreateDate(date);
 			}
 			else {
 				announcementsEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!announcementsEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				announcementsEntry.setModifiedDate(now);
+				announcementsEntry.setModifiedDate(date);
 			}
 			else {
 				announcementsEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -8792,6 +8792,13 @@ public class AnnouncementsEntryPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -8804,7 +8811,7 @@ public class AnnouncementsEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AnnouncementsEntryModelImpl announcementsEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -8827,8 +8834,21 @@ public class AnnouncementsEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				AnnouncementsEntryModelImpl.getColumnBitmask("priority");
+			orderByColumnsBitmask |=
+				AnnouncementsEntryModelImpl.getColumnBitmask("modifiedDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

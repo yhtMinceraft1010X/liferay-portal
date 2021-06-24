@@ -271,9 +271,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			_getPredicate(companyId, status, keywords)
 		);
 
-		Long count = ctCollectionPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return ctCollectionPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override

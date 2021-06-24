@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Fragment API
 Bundle-SymbolicName: com.liferay.fragment.api
-Bundle-Version: 7.1.7
+Bundle-Version: 7.2.1
 Export-Package:\
 	com.liferay.fragment.configuration,\
 	com.liferay.fragment.constants,\

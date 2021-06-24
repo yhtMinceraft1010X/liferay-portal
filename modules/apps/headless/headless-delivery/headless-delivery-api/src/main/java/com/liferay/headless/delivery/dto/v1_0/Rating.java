@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Rating")
+@GraphQLName(
+	description = "Represents a rating/score received by any kind of asset. Properties follow the [Rating](https://schema.org/Rating) specification.",
+	value = "Rating"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Rating")
 public class Rating implements Serializable {
@@ -414,6 +417,7 @@ public class Rating implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Rating",
 		name = "x-class-name"
 	)
@@ -449,7 +453,7 @@ public class Rating implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -488,7 +492,7 @@ public class Rating implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

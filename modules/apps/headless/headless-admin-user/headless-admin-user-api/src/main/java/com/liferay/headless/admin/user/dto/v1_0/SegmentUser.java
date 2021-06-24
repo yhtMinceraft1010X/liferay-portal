@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SegmentUser")
+@GraphQLName(
+	description = "Represents a user who belongs to a segment.",
+	value = "SegmentUser"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SegmentUser")
 public class SegmentUser implements Serializable {
@@ -202,6 +205,7 @@ public class SegmentUser implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.SegmentUser",
 		name = "x-class-name"
 	)
@@ -237,7 +241,7 @@ public class SegmentUser implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -276,7 +280,7 @@ public class SegmentUser implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

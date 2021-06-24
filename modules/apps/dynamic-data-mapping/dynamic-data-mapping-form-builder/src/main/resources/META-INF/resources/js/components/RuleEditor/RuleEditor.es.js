@@ -1554,7 +1554,7 @@ class RuleEditor extends Component {
 		let allFieldsFilled = true;
 
 		calculateActions.forEach(({expression}) => {
-			if (expression && expression.length == 0) {
+			if (!expression || expression?.length == 0) {
 				allFieldsFilled = false;
 			}
 		});

@@ -3618,7 +3618,7 @@ public class SocialActivityCounterPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SocialActivityCounterModelImpl socialActivityCounterModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3642,8 +3642,8 @@ public class SocialActivityCounterPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

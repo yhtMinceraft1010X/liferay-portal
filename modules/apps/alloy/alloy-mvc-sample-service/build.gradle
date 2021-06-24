@@ -1,0 +1,14 @@
+buildService {
+	apiDir = "../alloy-mvc-sample-api/src/main/java"
+	testDir = "../alloy-mvc-sample-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:alloy:alloy-mvc-sample-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-sql-dsl-api")
+	compileOnly project(":core:petra:petra-string")
+}

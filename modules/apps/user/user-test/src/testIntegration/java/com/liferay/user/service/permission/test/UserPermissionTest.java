@@ -71,7 +71,7 @@ public class UserPermissionTest {
 	}
 
 	@Test
-	public void testOrganizationManageUsersPermission() throws Exception {
+	public void testOrganizationActionIds() throws Exception {
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
 

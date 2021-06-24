@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property license.required = "true";
 	property portal.release = "true";
 	property portal.upstream = "false";
 	property test.run.environment = "EE";
@@ -18,6 +19,14 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+	}
+
+	@priority = "4"
+	test AggregatedKeys {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-aggregated.xml";
+
+		CommerceLicense.viewCommerceAvailable();
 	}
 
 	@description = "This is a test for covering the following LPS-121306 and LPS-128094."
@@ -42,6 +51,39 @@ definition {
 
 			var count = ${count} + 1;
 		}
+	}
+
+	@priority = "4"
+	test CombinedXML {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-dxp-license-developer-combined.xml";
+		property dxp.license.file = "dxp-license-dummy.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
+	@priority = "4"
+	test DeleteEnterpriseLicenseModule {
+		property commerce.enabled = "true";
+
+		Portlet.shutdownServer();
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.delete("${liferayHome}/osgi/static/com.liferay.portal.license.enterprise.app.jar");
+		FileUtil.delete("${liferayHome}/osgi/marketplace/Liferay Foundation - Liferay License Manager - Impl.lpkg");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.api.jar");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.impl.jar");
+		FileUtil.delete("${liferayHome}/osgi/core/com.liferay.portal.app.license.resolver.hook.jar");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-static-impl-license-jar -DliferayHome=${liferayHome}");
+
+		Portlet.startServer(keepOSGiState = "false");
+
+		User.firstLoginPG();
+
+		CommerceLicense.viewCommerceMissing();
 	}
 
 	@priority = "3"
@@ -77,17 +119,32 @@ definition {
 
 		License.deleteLicenseFile(licenseFileName = "portal-commerce-license.xml");
 
-		Portlet.startServer(deleteLiferayHome = "false");
+		Portlet.startServer(commerceEnabled = "false");
 
 		User.firstLoginPG();
 
 		CommerceLicense.viewCommerceMissing();
 	}
 
+	@priority = "3"
+	test DeployCommerceLicenseBinaryFile {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-binary-license-developer.li";
+		property dxp.license.file = "dxp-binary-license-developer.li";
+
+		AssertConsoleTextNotPresent(value1 = "Processing ci-license.xml");
+		AssertConsoleTextNotPresent(value1 = "Processing ci-portal-commerce-license.xml");
+
+		Pause(locator1 = "200000");
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@ignore = "true"
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
 		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-production.xml";
 		property deploy.lcs.token.file = "true";
 
 		Pause(locator1 = "60000");
@@ -97,11 +154,180 @@ definition {
 		CommerceLicense.executeSmoke();
 	}
 
+	@priority = "4"
+	test DeployToOSGIDirectory {
+		property commerce.enabled = "true";
+		property deploy.license.osgi.directory = "true";
+
+		CommerceLicense.executeSmoke();
+	}
+
 	@priority = "5"
-	test ViewCommerceDisabled {
+	test EnableCommerceAfterPortalStarts {
 		property commerce.enabled = "false";
 
 		CommerceLicense.viewCommerceMissing();
+
+		CommerceLicense.deployCommerceLicense();
+
+		CommerceLicense.executeSmoke();
+	}
+
+	@priority = "4"
+	test MatchHostName {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-production.xml";
+		property commerce.license.property = "hostname";
+		property dxp.license.file = "dxp-license-production.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
+	@priority = "4"
+	test MatchIPAddress {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-production.xml";
+		property commerce.license.property = "ip-address";
+		property dxp.license.file = "dxp-license-production.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
+	@priority = "4"
+	test MatchMacAddress {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-production.xml";
+		property commerce.license.property = "mac-address";
+		property dxp.license.file = "dxp-license-production.xml";
+
+		CommerceLicense.viewCommerceAvailable();
+	}
+
+	@priority = "4"
+	test ModuleLicenseExpiration {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
+		property commerce.license.property = "expired";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		Pause(locator1 = "300000");
+
+		CommerceLicense.viewCommerceExpired();
+	}
+
+	@priority = "4"
+	test ModuleLicenseExpirationNonAdmin {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
+		property commerce.license.property = "expired";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Category Manager",
+			userEmailAddress = "userea@liferay.com");
+
+		Pause(locator1 = "300000");
+
+		ProductMenu.gotoSite(site = "Minium");
+
+		AssertElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "The activation key for Liferay Commerce Subscription Production has expired. Please contact your administrator.");
+
+		CommerceLicense.viewCommerceExpired();
+	}
+
+	@description = "This is a test for covering the following LPS-120477"
+	@priority = "4"
+	test ModuleLicenseExpirationNotShownToNonAdmin {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
+		property commerce.license.property = "expiration-warning";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}login.secure.forgot.password=false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Alert.viewErrorMessage(errorMessage = "Update your activation key for Liferay Commerce Subscription Development");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.editUserSiteCP(
+			siteName = "Minium",
+			userScreenName = "usersn");
+
+		Click(locator1 = "Icon#BACK");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Category Manager",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "userea@liferay.com");
+
+		AssertElementNotPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Update your activation key for Liferay Commerce Subscription Development");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		AssertElementNotPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Update your activation key for Liferay Commerce Subscription Development");
+	}
+
+	@description = "This is a test for covering the following LPS-113419"
+	@priority = "4"
+	test ModuleLicenseExpirationWarning {
+		property commerce.enabled = "true";
+		property commerce.license.file = "commerce-license-developer-custom-expiration.xml";
+		property commerce.license.property = "expiration-warning";
+
+		CommerceLicense.viewCommerceAvailable();
+
+		CommerceLicense.viewWarningExpirationDate();
 	}
 
 	@priority = "5"

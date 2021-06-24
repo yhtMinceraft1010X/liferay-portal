@@ -82,9 +82,8 @@ public abstract class BaseAssigneeMetricResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignees/metrics' -d $'{"completed": ___, "dateEnd": ___, "dateStart": ___, "instanceIds": ___, "keywords": ___, "roleIds": ___, "taskNames": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -94,6 +93,7 @@ public abstract class BaseAssigneeMetricResourceImpl
 		}
 	)
 	@Path("/processes/{processId}/assignees/metrics")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AssigneeMetric")})
 	public Page<AssigneeMetric> postProcessAssigneeMetricsPage(

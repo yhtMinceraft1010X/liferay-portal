@@ -14,7 +14,16 @@
 
 package com.liferay.powwow.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.powwow.model.PowwowMeeting;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for PowwowMeeting. This utility wraps
@@ -35,15 +44,14 @@ public class PowwowMeetingLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
+	public static PowwowMeeting addPowwowMeeting(
 			long userId, long groupId, long powwowServerId, String name,
 			String description, String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+			Map<String, Serializable> providerTypeMetadataMap,
 			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
+			List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addPowwowMeeting(
 			userId, groupId, powwowServerId, name, description, providerType,
@@ -61,24 +69,20 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param powwowMeeting the powwow meeting
 	 * @return the powwow meeting that was added
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
-
+	public static PowwowMeeting addPowwowMeeting(PowwowMeeting powwowMeeting) {
 		return getService().addPowwowMeeting(powwowMeeting);
 	}
 
-	public static void checkPowwowMeetings()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static void checkPowwowMeetings() throws PortalException {
 		getService().checkPowwowMeetings();
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -89,19 +93,16 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param powwowMeetingId the primary key for the new powwow meeting
 	 * @return the new powwow meeting
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting createPowwowMeeting(
-		long powwowMeetingId) {
-
+	public static PowwowMeeting createPowwowMeeting(long powwowMeetingId) {
 		return getService().createPowwowMeeting(powwowMeetingId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
@@ -117,9 +118,8 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @return the powwow meeting that was removed
 	 * @throws PortalException if a powwow meeting with the primary key could not be found
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-			long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting deletePowwowMeeting(long powwowMeetingId)
+		throws PortalException {
 
 		return getService().deletePowwowMeeting(powwowMeetingId);
 	}
@@ -135,16 +135,13 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @return the powwow meeting that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting deletePowwowMeeting(
-			com.liferay.powwow.model.PowwowMeeting powwowMeeting)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting deletePowwowMeeting(PowwowMeeting powwowMeeting)
+		throws PortalException {
 
 		return getService().deletePowwowMeeting(powwowMeeting);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
-
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -154,9 +151,7 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -172,9 +167,8 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -192,10 +186,9 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -207,9 +200,7 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -221,15 +212,13 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting fetchPowwowMeeting(
-		long powwowMeetingId) {
-
+	public static PowwowMeeting fetchPowwowMeeting(long powwowMeetingId) {
 		return getService().fetchPowwowMeeting(powwowMeetingId);
 	}
 
@@ -255,11 +244,9 @@ public class PowwowMeetingLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getParticipantPowwowMeetings(
-			long userId, int[] statuses, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.powwow.model.PowwowMeeting> orderByComparator) {
+	public static List<PowwowMeeting> getParticipantPowwowMeetings(
+		long userId, int[] statuses, int start, int end,
+		OrderByComparator<PowwowMeeting> orderByComparator) {
 
 		return getService().getParticipantPowwowMeetings(
 			userId, statuses, start, end, orderByComparator);
@@ -274,9 +261,8 @@ public class PowwowMeetingLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -288,16 +274,13 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @return the powwow meeting
 	 * @throws PortalException if a powwow meeting with the primary key could not be found
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting getPowwowMeeting(
-			long powwowMeetingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting getPowwowMeeting(long powwowMeetingId)
+		throws PortalException {
 
 		return getService().getPowwowMeeting(powwowMeetingId);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(int status) {
-
+	public static List<PowwowMeeting> getPowwowMeetings(int status) {
 		return getService().getPowwowMeetings(status);
 	}
 
@@ -312,27 +295,22 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param end the upper bound of the range of powwow meetings (not inclusive)
 	 * @return the range of powwow meetings
 	 */
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(int start, int end) {
-
+	public static List<PowwowMeeting> getPowwowMeetings(int start, int end) {
 		return getService().getPowwowMeetings(start, end);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(
-			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.powwow.model.PowwowMeeting> orderByComparator) {
+	public static List<PowwowMeeting> getPowwowMeetings(
+		long groupId, int start, int end,
+		OrderByComparator<PowwowMeeting> orderByComparator) {
 
 		return getService().getPowwowMeetings(
 			groupId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.powwow.model.PowwowMeeting>
-		getPowwowMeetings(
-			long groupId, long userId, String name, String description,
-			int status, boolean andSearch, int start, int end,
-			String orderByField, String orderByType) {
+	public static List<PowwowMeeting> getPowwowMeetings(
+		long groupId, long userId, String name, String description, int status,
+		boolean andSearch, int start, int end, String orderByField,
+		String orderByType) {
 
 		return getService().getPowwowMeetings(
 			groupId, userId, name, description, status, andSearch, start, end,
@@ -368,15 +346,14 @@ public class PowwowMeetingLocalServiceUtil {
 		return getService().getUserPowwowMeetingsCount(userId, status);
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
+	public static PowwowMeeting updatePowwowMeeting(
 			long powwowMeetingId, long powwowServerId, String name,
 			String description, String providerType,
-			java.util.Map<String, java.io.Serializable> providerTypeMetadataMap,
+			Map<String, Serializable> providerTypeMetadataMap,
 			String languageId, long calendarBookingId, int status,
-			java.util.List<com.liferay.powwow.model.PowwowParticipant>
-				powwowParticipants,
+			List<com.liferay.powwow.model.PowwowParticipant> powwowParticipants,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updatePowwowMeeting(
 			powwowMeetingId, powwowServerId, name, description, providerType,
@@ -394,15 +371,14 @@ public class PowwowMeetingLocalServiceUtil {
 	 * @param powwowMeeting the powwow meeting
 	 * @return the powwow meeting that was updated
 	 */
-	public static com.liferay.powwow.model.PowwowMeeting updatePowwowMeeting(
-		com.liferay.powwow.model.PowwowMeeting powwowMeeting) {
+	public static PowwowMeeting updatePowwowMeeting(
+		PowwowMeeting powwowMeeting) {
 
 		return getService().updatePowwowMeeting(powwowMeeting);
 	}
 
-	public static com.liferay.powwow.model.PowwowMeeting updateStatus(
-			long powwowMeetingId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PowwowMeeting updateStatus(long powwowMeetingId, int status)
+		throws PortalException {
 
 		return getService().updateStatus(powwowMeetingId, status);
 	}
@@ -412,15 +388,9 @@ public class PowwowMeetingLocalServiceUtil {
 	}
 
 	public static PowwowMeetingLocalService getService() {
-		if (_service == null) {
-			_service = (PowwowMeetingLocalService)PortletBeanLocatorUtil.locate(
-				ServletContextUtil.getServletContextName(),
-				PowwowMeetingLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static PowwowMeetingLocalService _service;
+	private static volatile PowwowMeetingLocalService _service;
 
 }

@@ -86,6 +86,12 @@ public interface CommerceShipmentItemLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceShipmentItem addDeliverySubscriptionCommerceShipmentItem(
+			long groupId, long userId, long commerceShipmentId,
+			long commerceOrderItemId)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *
@@ -156,6 +162,9 @@ public interface CommerceShipmentItemLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();

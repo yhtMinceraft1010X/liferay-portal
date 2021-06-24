@@ -136,6 +136,28 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                dateCreated:
+                    description:
+                        The account's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The account's most recent modification date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                defaultBillingAccountAddressId:
+                    example: 10130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                defaultShippingAccountAddressId:
+                    example: 10131
+                    format: int64
+                    minimum: 0
+                    type: integer
                 emailAddresses:
                     example:
                         - joe.1@commerce.com
@@ -455,7 +477,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Account API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.account.client', and version '3.0.12'."
+        artifact ID 'com.liferay.headless.commerce.admin.account.client', and version '3.0.16'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

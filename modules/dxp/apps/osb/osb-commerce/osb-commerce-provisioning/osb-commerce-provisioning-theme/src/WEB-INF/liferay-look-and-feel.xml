@@ -6,6 +6,14 @@
 		<version>7.3.0+</version>
 	</compatibility>
 	<theme id="osb-commerce-provisioning" name="OSB Commerce Provisioning">
+		<layout-templates>
+			<custom>
+				<layout-template id="osb_commerce_checkout" name="OSB Commerce Checkout">
+					<template-path>/templates/layout/osb_commerce_checkout.tpl</template-path>
+					<thumbnail-path>/images/thumbnail.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
 		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,gray-dark,secondary,light,lighter,white" />
@@ -21,10 +29,10 @@
 			<role-name>User</role-name>
 		</roles>
 		<portlet-decorator id="barebone" name="Barebone">
+			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>
 		<portlet-decorator id="borderless" name="Borderless">
-			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-borderless</portlet-decorator-css-class>
 		</portlet-decorator>
 		<portlet-decorator id="decorate" name="Decorate">

@@ -177,7 +177,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		privateLayout="<%= layoutsTreeDisplayContext.isPrivateLayout() %>"
 		rootLinkTemplate='<a class="{cssClass}" href="javascript:void(0);" id="{id}" title="{title}">{label}</a>'
 		rootNodeName="<%= siteGroup.getLayoutRootNodeName(layoutsTreeDisplayContext.isPrivateLayout(), locale) %>"
-		selPlid="<%= plid %>"
+		selPlid="<%= layoutsTreeDisplayContext.getSelPlid() %>"
 		treeId="pagesTree"
 	/>
 

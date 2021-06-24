@@ -1919,25 +1919,25 @@ public class CommerceDiscountRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceDiscountRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceDiscountRel.setCreateDate(now);
+				commerceDiscountRel.setCreateDate(date);
 			}
 			else {
 				commerceDiscountRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceDiscountRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceDiscountRel.setModifiedDate(now);
+				commerceDiscountRel.setModifiedDate(date);
 			}
 			else {
 				commerceDiscountRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2417,6 +2417,13 @@ public class CommerceDiscountRelPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2429,7 +2436,7 @@ public class CommerceDiscountRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceDiscountRelModelImpl commerceDiscountRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2452,8 +2459,19 @@ public class CommerceDiscountRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceDiscountRelModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -3031,24 +3031,24 @@ public class MDRRuleGroupPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mdrRuleGroup.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mdrRuleGroup.setCreateDate(now);
+				mdrRuleGroup.setCreateDate(date);
 			}
 			else {
-				mdrRuleGroup.setCreateDate(serviceContext.getCreateDate(now));
+				mdrRuleGroup.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mdrRuleGroupModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mdrRuleGroup.setModifiedDate(now);
+				mdrRuleGroup.setModifiedDate(date);
 			}
 			else {
 				mdrRuleGroup.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3590,6 +3590,13 @@ public class MDRRuleGroupPersistenceImpl
 						mdrRuleGroupModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3601,7 +3608,7 @@ public class MDRRuleGroupPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MDRRuleGroupModelImpl mdrRuleGroupModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3623,8 +3630,19 @@ public class MDRRuleGroupPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= MDRRuleGroupModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

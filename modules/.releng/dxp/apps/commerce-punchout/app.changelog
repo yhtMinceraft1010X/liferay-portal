@@ -15,3 +15,22 @@ app.artifacts-1.0.0=\
 app.change.log-1.0.0=COMMERCE-3731 COMMERCE-4113 COMMERCE-4341 COMMERCE-4396 LPS-117377
 
 app.git.id-1.0.0=5c088f41a7be5a4e142b5a75ba773c779bab515c
+
+#
+# Liferay App Version 3.0.0
+#
+
+app.artifacts-3.0.0=\
+	com.liferay.commerce.punchout.api-4.0.10.jar,\
+	com.liferay.commerce.punchout.lang-3.0.14.jar,\
+	com.liferay.commerce.punchout.oauth2.provider.api-4.1.0.jar,\
+	com.liferay.commerce.punchout.oauth2.provider.rest-3.0.14.jar,\
+	com.liferay.commerce.punchout.portal.security.auto.login-3.0.14.jar,\
+	com.liferay.commerce.punchout.service-3.0.9.jar,\
+	com.liferay.commerce.punchout.web-3.0.10.jar,\
+	com.liferay.headless.commerce.punchout.api-4.1.2.jar,\
+	com.liferay.headless.commerce.punchout.impl-3.0.11.jar
+
+app.change.log-3.0.0=COMMERCE-4052 COMMERCE-4072 COMMERCE-4620 COMMERCE-5565 COMMERCE-6168 LPS-105380 LPS-115709 LPS-115714 LPS-122605 LPS-128311 LPS-129477 LPS-129711 LPS-77699 LRQA-51488
+
+app.git.id-3.0.0=a4b0c61a6299c7ea64940172da9ebf6ab8c12476

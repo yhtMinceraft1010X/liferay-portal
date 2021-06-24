@@ -1625,25 +1625,25 @@ public class CommerceTaxMethodPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceTaxMethod.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceTaxMethod.setCreateDate(now);
+				commerceTaxMethod.setCreateDate(date);
 			}
 			else {
 				commerceTaxMethod.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceTaxMethodModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceTaxMethod.setModifiedDate(now);
+				commerceTaxMethod.setModifiedDate(date);
 			}
 			else {
 				commerceTaxMethod.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2120,6 +2120,13 @@ public class CommerceTaxMethodPersistenceImpl
 						commerceTaxMethodModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2132,7 +2139,7 @@ public class CommerceTaxMethodPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceTaxMethodModelImpl commerceTaxMethodModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2155,8 +2162,19 @@ public class CommerceTaxMethodPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceTaxMethodModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

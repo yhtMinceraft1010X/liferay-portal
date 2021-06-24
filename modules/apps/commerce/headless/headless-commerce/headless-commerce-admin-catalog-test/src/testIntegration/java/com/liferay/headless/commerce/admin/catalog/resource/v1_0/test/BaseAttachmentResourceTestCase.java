@@ -212,7 +212,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeAttachmentsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Attachment irrelevantAttachment =
 				testGetProductByExternalReferenceCodeAttachmentsPage_addAttachment(
 					irrelevantExternalReferenceCode,
@@ -406,7 +406,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetProductByExternalReferenceCodeImagesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			Attachment irrelevantAttachment =
 				testGetProductByExternalReferenceCodeImagesPage_addAttachment(
 					irrelevantExternalReferenceCode,
@@ -590,7 +590,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Long id = testGetProductIdAttachmentsPage_getId();
 		Long irrelevantId = testGetProductIdAttachmentsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Attachment irrelevantAttachment =
 				testGetProductIdAttachmentsPage_addAttachment(
 					irrelevantId, randomIrrelevantAttachment());
@@ -748,7 +748,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Long id = testGetProductIdImagesPage_getId();
 		Long irrelevantId = testGetProductIdImagesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			Attachment irrelevantAttachment =
 				testGetProductIdImagesPage_addAttachment(
 					irrelevantId, randomIrrelevantAttachment());
@@ -1076,7 +1076,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.catalog.dto.v1_0.
 						Attachment.class)) {
 
@@ -1111,7 +1111,7 @@ public abstract class BaseAttachmentResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -1284,6 +1284,17 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1567,12 +1578,12 @@ public abstract class BaseAttachmentResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1582,10 +1593,10 @@ public abstract class BaseAttachmentResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

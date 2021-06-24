@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -271,6 +272,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String friendlyName = StringPool.BLANK;
 
 		if (nameMap != null) {
+			nameMap = _normalizeNameMap(nameMap);
+
 			groupKey = nameMap.get(LocaleUtil.getDefault());
 			friendlyName = nameMap.get(LocaleUtil.getDefault());
 
@@ -3692,13 +3695,17 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupKeyException();
 		}
 
-		if ((nameMap != null) &&
-			Validator.isNotNull(
-				nameMap.get(
-					LocaleUtil.fromLanguageId(group.getDefaultLanguageId())))) {
+		if (nameMap != null) {
+			nameMap = _normalizeNameMap(nameMap);
 
-			groupKey = nameMap.get(
-				LocaleUtil.fromLanguageId(group.getDefaultLanguageId()));
+			if (Validator.isNotNull(
+					nameMap.get(
+						LocaleUtil.fromLanguageId(
+							group.getDefaultLanguageId())))) {
+
+				groupKey = nameMap.get(
+					LocaleUtil.fromLanguageId(group.getDefaultLanguageId()));
+			}
 		}
 
 		friendlyURL = getFriendlyURL(
@@ -4336,14 +4343,34 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		if (_log.isDebugEnabled() && !params.isEmpty()) {
-			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
+		String actionId = (String)params.remove("actionId");
+
+		if (actionId != null) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			for (Group group : groups) {
+				try {
+					if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
+						GroupPermissionUtil.contains(
+							permissionChecker, group.getGroupId(), actionId)) {
+
+						joinedGroups.add(group);
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to check permission for group " +
+								group.getGroupId(),
+							portalException);
+					}
+				}
+			}
 		}
 
-		if (joinedGroups.size() > groups.size()) {
-			groups.retainAll(joinedGroups);
-
-			return groups;
+		if (_log.isDebugEnabled() && !params.isEmpty()) {
+			_log.debug("Unprocessed parameters " + MapUtil.toString(params));
 		}
 
 		joinedGroups.retainAll(groups);
@@ -5171,6 +5198,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected File publicLARFile;
+
+	private Map<Locale, String> _normalizeNameMap(Map<Locale, String> nameMap) {
+		Map<Locale, String> normalizedNameMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				normalizedNameMap.put(entry.getKey(), StringUtil.trim(value));
+			}
+		}
+
+		return normalizedNameMap;
+	}
 
 	private void _validateGroupKeyChange(long groupId, String typeSettings)
 		throws PortalException {

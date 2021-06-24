@@ -234,6 +234,11 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getDisplayStyle() {
+		return _journalDDMTemplateDisplayContext.getDisplayStyle();
+	}
+
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "icon"};
 	}

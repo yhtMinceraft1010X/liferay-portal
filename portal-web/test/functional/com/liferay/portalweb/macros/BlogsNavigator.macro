@@ -93,7 +93,12 @@ definition {
 				item = "Edit");
 		}
 
-		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
+		if (isSet(coverImageName)) {
+			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+		}
+		else {
+			AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");
+		}
 	}
 
 	macro gotoEntryCP {

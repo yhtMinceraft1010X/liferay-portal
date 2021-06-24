@@ -1429,11 +1429,12 @@ public class PortalImpl implements Portal {
 
 		if (forceLayoutFriendlyURL ||
 			((!layout.isFirstParent() || Validator.isNotNull(parametersURL)) &&
-			 (groupFriendlyURL.contains(
-				 siteGroup.getFriendlyURL() +
-					 themeDisplay.getLayoutFriendlyURL(layout)) ||
-			  groupFriendlyURL.endsWith(
-				  StringPool.SLASH + layout.getLayoutId())))) {
+			 _requiresLayoutFriendlyURL(
+				 siteGroup.getFriendlyURL(),
+				 themeDisplay.getLayoutFriendlyURL(layout),
+				 groupFriendlyURL)) ||
+			groupFriendlyURL.endsWith(
+				StringPool.SLASH + layout.getLayoutId())) {
 
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;
 		}
@@ -3563,7 +3564,10 @@ public class PortalImpl implements Portal {
 		HttpServletRequest originalHttpServletRequest =
 			getOriginalServletRequest(httpServletRequest);
 
-		if (originalHttpServletRequest.getPathInfo() == null) {
+		StringBuffer originRequestURL =
+			originalHttpServletRequest.getRequestURL();
+
+		if (originRequestURL.indexOf(_PUBLIC_GROUP_SERVLET_MAPPING) < 0) {
 			requestURI = originalHttpServletRequest.getRequestURI();
 		}
 
@@ -3632,7 +3636,9 @@ public class PortalImpl implements Portal {
 
 			String i18nPath = StringPool.SLASH + i18nPathLanguageId;
 
-			localizedFriendlyURL += i18nPath;
+			if (!requestURI.contains(i18nPath)) {
+				localizedFriendlyURL += i18nPath;
+			}
 		}
 
 		localizedFriendlyURL += requestURI;
@@ -6608,8 +6614,8 @@ public class PortalImpl implements Portal {
 		}
 
 		if (exception instanceof NoSuchImageException) {
-			if (_logWebServerServlet.isWarnEnabled()) {
-				_logWebServerServlet.warn(exception, exception);
+			if (_webServerServletLog.isWarnEnabled()) {
+				_webServerServletLog.warn(exception, exception);
 			}
 		}
 		else if (exception instanceof PortalException) {
@@ -8683,8 +8689,25 @@ public class PortalImpl implements Portal {
 		return group;
 	}
 
-	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(
-		WebServerServlet.class);
+	private boolean _requiresLayoutFriendlyURL(
+		String siteGroupFriendlyURL, String layoutFriendlyURL,
+		String groupFriendlyURL) {
+
+		if (groupFriendlyURL.contains(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+			if (groupFriendlyURL.contains(
+					StringBundler.concat(
+						_PUBLIC_GROUP_SERVLET_MAPPING, siteGroupFriendlyURL,
+						layoutFriendlyURL))) {
+
+				return true;
+			}
+		}
+		else if (groupFriendlyURL.contains(layoutFriendlyURL)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
 
@@ -8717,6 +8740,8 @@ public class PortalImpl implements Portal {
 	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static final Date _upTime = new Date();
+	private static final Log _webServerServletLog = LogFactoryUtil.getLog(
+		WebServerServlet.class);
 
 	static {
 		Locale locale = LocaleUtil.getDefault();

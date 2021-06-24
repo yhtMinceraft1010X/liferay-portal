@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentStructure")
+@GraphQLName(
+	description = "Represents the content structure that backs structured content. This defines which form fields are available and the possible types and values.",
+	value = "ContentStructure"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentStructure")
 public class ContentStructure implements Serializable {
@@ -610,6 +613,7 @@ public class ContentStructure implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentStructure",
 		name = "x-class-name"
 	)
@@ -645,7 +649,7 @@ public class ContentStructure implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -684,7 +688,7 @@ public class ContentStructure implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

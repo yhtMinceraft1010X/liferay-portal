@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -25,6 +26,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -33,6 +36,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Igor Spasic
  */
 public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -186,29 +194,28 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		}
 
 		expectedMap.put("page", 3);
+		expectedMap.put(
+			"data",
+			LinkedHashMapBuilder.<String, Object>put(
+				"array",
+				() -> {
+					List<Integer> list = new ArrayList<>();
 
-		Map<String, Object> data = LinkedHashMapBuilder.<String, Object>put(
-			"array",
-			() -> {
-				List<Integer> list = new ArrayList<>();
+					list.add(9);
+					list.add(5);
+					list.add(7);
 
-				list.add(9);
-				list.add(5);
-				list.add(7);
-
-				return list;
-			}
-		).put(
-			"id", 2
-		).put(
-			"height", 8
-		).put(
-			"XXX2", "Welcome 3 to star"
-		).put(
-			"name", "life"
-		).build();
-
-		expectedMap.put("data", data);
+					return list;
+				}
+			).put(
+				"id", 2
+			).put(
+				"height", 8
+			).put(
+				"XXX2", "Welcome 3 to star"
+			).put(
+				"name", "life"
+			).build());
 
 		List<Map<String, Object>> resultList = new ArrayList<>();
 

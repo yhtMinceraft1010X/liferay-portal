@@ -104,8 +104,10 @@ public class UpdateDataRecordMVCResourceCommand
 			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		DataRecordResource dataRecordResource = DataRecordResource.builder(
-		).user(
+		DataRecordResource.Builder dataRecordResourceBuilder =
+			_dataRecordResourceFactory.create();
+
+		DataRecordResource dataRecordResource = dataRecordResourceBuilder.user(
 			themeDisplay.getUser()
 		).build();
 
@@ -114,6 +116,9 @@ public class UpdateDataRecordMVCResourceCommand
 			DataRecord.toDTO(
 				ParamUtil.getString(resourceRequest, "dataRecord")));
 	}
+
+	@Reference
+	private DataRecordResource.Factory _dataRecordResourceFactory;
 
 	@Reference
 	private WorkflowTaskManager _workflowTaskManager;

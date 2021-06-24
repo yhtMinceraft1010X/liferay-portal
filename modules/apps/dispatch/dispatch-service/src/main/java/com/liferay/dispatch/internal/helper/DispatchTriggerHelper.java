@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.Date;
 
@@ -68,9 +69,19 @@ public class DispatchTriggerHelper {
 		long dispatchTriggerId, StorageType storageType) {
 
 		try {
-			_schedulerEngineHelper.delete(
-				_getJobName(dispatchTriggerId),
-				_getGroupName(dispatchTriggerId), storageType);
+			String jobName = _getJobName(dispatchTriggerId);
+			String groupName = _getGroupName(dispatchTriggerId);
+
+			_schedulerEngineHelper.delete(jobName, groupName, storageType);
+
+			SchedulerResponse scheduledJob =
+				_schedulerEngineHelper.getScheduledJob(
+					jobName, groupName, storageType);
+
+			while (scheduledJob != null) {
+				scheduledJob = _schedulerEngineHelper.getScheduledJob(
+					jobName, groupName, storageType);
+			}
 		}
 		catch (SchedulerException schedulerException) {
 			_log.error(

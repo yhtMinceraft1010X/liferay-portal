@@ -4542,7 +4542,7 @@ public class Query {
 		}
 
 		@GraphQLField(description = "")
-		public NavigationMenu parentNavigationMenu() throws Exception {
+		public NavigationMenu parentNavigationMenuItem() throws Exception {
 			if (_navigationMenuItem.getParentNavigationMenuId() == null) {
 				return null;
 			}

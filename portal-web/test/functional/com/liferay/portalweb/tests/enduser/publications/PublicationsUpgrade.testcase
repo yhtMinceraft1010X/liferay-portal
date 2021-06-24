@@ -28,7 +28,7 @@ definition {
 		property test.run.environment = "EE";
 
 		AssertTextPresent(
-			key_publicationsName = "Publication 2 Name",
+			key_publicationName = "Publication 2 Name",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Publication 2 Name");
 
@@ -39,34 +39,34 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "History");
 
-		Publications.revertPublication(publicationsName = "Publication 1 Name");
+		Publications.revertPublication(publicationName = "Publication 1 Name");
 
 		AssertTextPresent(
-			key_publicationsName = "Revert &quot;Publication 1 Name&quot;",
+			key_publicationName = "Revert &quot;Publication 1 Name&quot;",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
 			value1 = "Revert &quot;Publication 1 Name&quot;");
 
-		Publications.selectPublication(publicationsName = "Publication 2 Name");
+		Publications.selectPublication(publicationName = "Publication 2 Name");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Web Content Article",
-			publicationsSite = "Guest",
-			publicationsTitle = "WC WebContent Title 2 Edit",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title 2 Edit",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Page",
-			publicationsSite = "Guest",
-			publicationsTitle = "Test Page",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Page",
+			changeSite = "Guest",
+			changeTitle = "Test Page",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		Publications.gotoPublish(publicationsName = "Publication 2 Name");
+		Publications.gotoPublish(publicationName = "Publication 2 Name");
 
-		Publications.publishPublication(publicationsName = "Publication 2 Name");
+		Publications.publishPublication(publicationName = "Publication 2 Name");
 	}
 
 }

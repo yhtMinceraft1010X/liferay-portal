@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentDocument")
+@GraphQLName(
+	description = "Represents a document (binary data and metadata) associated with structured content. Properties follow the [Media Object](https://schema.org/MediaObject) specification.",
+	value = "ContentDocument"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentDocument")
 public class ContentDocument implements Serializable {
@@ -502,6 +505,7 @@ public class ContentDocument implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentDocument",
 		name = "x-class-name"
 	)
@@ -537,7 +541,7 @@ public class ContentDocument implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -576,7 +580,7 @@ public class ContentDocument implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

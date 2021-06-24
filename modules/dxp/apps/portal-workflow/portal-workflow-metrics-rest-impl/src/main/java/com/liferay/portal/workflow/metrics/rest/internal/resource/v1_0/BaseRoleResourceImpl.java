@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseRoleResourceImpl
-	implements RoleResource, EntityModelResource,
+	implements EntityModelResource, RoleResource,
 			   VulcanBatchEngineTaskItemDelegate<Role> {
 
 	/**
@@ -80,8 +80,8 @@ public abstract class BaseRoleResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/roles'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -138,8 +138,8 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		return getProcessRolesPage(
-			(Long)parameters.get("processId"),
-			(Boolean)parameters.get("completed"));
+			Long.parseLong((String)parameters.get("processId")),
+			Boolean.parseBoolean((String)parameters.get("completed")));
 	}
 
 	@Override

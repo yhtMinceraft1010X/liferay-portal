@@ -93,13 +93,17 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 		<c:if test="<%= (cpSku != null) && !cpContentHelper.hasChildCPDefinitions(cpCatalogEntry.getCPDefinitionId()) %>">
 			<div class="autofit-row product-actions">
 				<div class="autofit-col autofit-col-expand">
-					<liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" name="<%= quantityInputId %>" useSelect="<%= false %>" />
+					<liferay-commerce:quantity-input
+						CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
+						name="<%= quantityInputId %>"
+						useSelect="<%= false %>"
+					/>
 
 					<liferay-commerce-cart:add-to-cart
 						CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 						CPInstanceId="<%= cpSku.getCPInstanceId() %>"
 						elementClasses="btn-block btn-primary text-truncate"
-						taglibQuantityInputId='<%= liferayPortletResponse.getNamespace() + quantityInputId %>'
+						taglibQuantityInputId="<%= liferayPortletResponse.getNamespace() + quantityInputId %>"
 					/>
 				</div>
 			</div>

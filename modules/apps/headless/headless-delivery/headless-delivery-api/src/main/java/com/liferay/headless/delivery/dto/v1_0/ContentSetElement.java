@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentSetElement")
+@GraphQLName(
+	description = "Represents each member of a content set and can contain different types of assets.",
+	value = "ContentSetElement"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ContentSetElement")
 public class ContentSetElement implements Serializable {
@@ -285,6 +288,7 @@ public class ContentSetElement implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentSetElement",
 		name = "x-class-name"
 	)
@@ -320,7 +324,7 @@ public class ContentSetElement implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -359,7 +363,7 @@ public class ContentSetElement implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

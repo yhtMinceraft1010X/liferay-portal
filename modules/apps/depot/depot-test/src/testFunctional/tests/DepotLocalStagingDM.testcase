@@ -346,6 +346,12 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
 		DMDocument.addDocumentTypePG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",

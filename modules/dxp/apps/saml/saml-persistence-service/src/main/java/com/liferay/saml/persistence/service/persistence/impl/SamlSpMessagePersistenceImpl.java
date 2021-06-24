@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1170,6 +1172,20 @@ public class SamlSpMessagePersistenceImpl
 		SamlSpMessageModelImpl samlSpMessageModelImpl =
 			(SamlSpMessageModelImpl)samlSpMessage;
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (samlSpMessage.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				samlSpMessage.setCreateDate(date);
+			}
+			else {
+				samlSpMessage.setCreateDate(serviceContext.getCreateDate(date));
+			}
+		}
+
 		Session session = null;
 
 		try {
@@ -1650,7 +1666,7 @@ public class SamlSpMessagePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SamlSpMessageModelImpl samlSpMessageModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1673,8 +1689,8 @@ public class SamlSpMessagePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

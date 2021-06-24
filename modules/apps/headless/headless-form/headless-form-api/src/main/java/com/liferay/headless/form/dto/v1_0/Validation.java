@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Validation")
+@GraphQLName(
+	description = "https://www.schema.org/FormFieldValidation",
+	value = "Validation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Validation")
 public class Validation implements Serializable {
@@ -246,6 +249,7 @@ public class Validation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.Validation",
 		name = "x-class-name"
 	)
@@ -281,7 +285,7 @@ public class Validation implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -320,7 +324,7 @@ public class Validation implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

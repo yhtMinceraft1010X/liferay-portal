@@ -105,12 +105,13 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 	}
 	%>
 
-	<%
-	if (Validator.isNotNull(errorSection)) {
+	<c:if test="<%= Validator.isNotNull(errorSection) %>">
+
+		<%
 		String currentTab = (String)request.getAttribute(FormNavigatorWebKeys.CURRENT_TAB);
 
 		request.setAttribute(FormNavigatorWebKeys.ERROR_TAB, currentTab);
-	%>
+		%>
 
 		<aui:script sandbox="<%= true %>">
 			var focusField;
@@ -153,9 +154,5 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 				}
 			});
 		</aui:script>
-
-	<%
-	}
-	%>
-
+	</c:if>
 </liferay-frontend:fieldset-group>

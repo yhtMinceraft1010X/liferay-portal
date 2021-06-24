@@ -2460,23 +2460,23 @@ public class CProductPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cProduct.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cProduct.setCreateDate(now);
+				cProduct.setCreateDate(date);
 			}
 			else {
-				cProduct.setCreateDate(serviceContext.getCreateDate(now));
+				cProduct.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cProductModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cProduct.setModifiedDate(now);
+				cProduct.setModifiedDate(date);
 			}
 			else {
-				cProduct.setModifiedDate(serviceContext.getModifiedDate(now));
+				cProduct.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2973,6 +2973,13 @@ public class CProductPersistenceImpl
 						cProductModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2984,7 +2991,7 @@ public class CProductPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CProductModelImpl cProductModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3005,8 +3012,19 @@ public class CProductPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CProductModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

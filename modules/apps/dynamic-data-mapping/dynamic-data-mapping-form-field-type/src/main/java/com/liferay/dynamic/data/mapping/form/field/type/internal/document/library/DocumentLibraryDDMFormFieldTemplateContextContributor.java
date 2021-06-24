@@ -231,14 +231,19 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
 		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+			GetterUtil.getString(
+				portal.getPortletId(httpServletRequest),
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM));
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/dynamic_data_mapping_form/upload_file_entry");
 		portletURL.setParameter(
 			"formInstanceId",
-			ParamUtil.getString(httpServletRequest, "formInstanceId"));
+			ParamUtil.getString(
+				httpServletRequest, "formInstanceId",
+				String.valueOf(
+					ddmFormFieldRenderingContext.getDDMFormInstanceId())));
 		portletURL.setParameter(
 			"groupId",
 			String.valueOf(

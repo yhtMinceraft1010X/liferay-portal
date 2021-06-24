@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("WikiPageAttachment")
+@GraphQLName(
+	description = "A binary file attached to a wiki page.",
+	value = "WikiPageAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WikiPageAttachment")
 public class WikiPageAttachment implements Serializable {
@@ -376,6 +379,7 @@ public class WikiPageAttachment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment",
 		name = "x-class-name"
 	)
@@ -411,7 +415,7 @@ public class WikiPageAttachment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -450,7 +454,7 @@ public class WikiPageAttachment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

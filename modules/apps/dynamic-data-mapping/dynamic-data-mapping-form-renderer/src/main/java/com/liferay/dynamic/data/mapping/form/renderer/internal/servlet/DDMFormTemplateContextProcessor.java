@@ -231,6 +231,22 @@ public class DDMFormTemplateContextProcessor {
 		traversePages(_jsonObject.getJSONArray("pages"));
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	protected void setdDDMFormFieldSetRowsProperty(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		JSONArray jsonArray = jsonObject.getJSONArray("rows");
+
+		if (jsonArray == null) {
+			return;
+		}
+
+		ddmFormField.setProperty("rows", jsonArray.toString());
+	}
+
 	protected void setDDMFormDefaultLocale() {
 		_ddmForm.setDefaultLocale(_locale);
 	}
@@ -406,6 +422,23 @@ public class DDMFormTemplateContextProcessor {
 		boolean required, DDMFormField ddmFormField) {
 
 		ddmFormField.setRequired(required);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	protected void setDDMFormFieldRowsProperty(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		String type = jsonObject.getString("type");
+
+		if (type.equals("grid")) {
+			setDDMFormFieldPropertyOptions(jsonObject, ddmFormField, "rows");
+		}
+		else if (type.equals("fieldset")) {
+			setdDDMFormFieldSetRowsProperty(jsonObject, ddmFormField);
+		}
 	}
 
 	protected void setDDMFormFieldText(

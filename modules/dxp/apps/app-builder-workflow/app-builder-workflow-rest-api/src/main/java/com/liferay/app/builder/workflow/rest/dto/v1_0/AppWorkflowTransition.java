@@ -205,6 +205,7 @@ public class AppWorkflowTransition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition",
 		name = "x-class-name"
 	)
@@ -240,7 +241,7 @@ public class AppWorkflowTransition implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -279,7 +280,7 @@ public class AppWorkflowTransition implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

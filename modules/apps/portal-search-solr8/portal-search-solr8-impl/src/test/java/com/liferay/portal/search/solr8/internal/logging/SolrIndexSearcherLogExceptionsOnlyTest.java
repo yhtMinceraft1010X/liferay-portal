@@ -18,15 +18,20 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.solr8.internal.SolrIndexSearcher;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
+import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.logging.ExpectedLogTestRule;
+import com.liferay.portal.search.test.util.logging.ExpectedLog;
+import com.liferay.portal.search.test.util.logging.ExpectedLogMethodTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.logging.Level;
-
+import org.junit.Assume;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -36,23 +41,37 @@ import org.junit.Test;
 public class SolrIndexSearcherLogExceptionsOnlyTest
 	extends BaseIndexingTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			ExpectedLogMethodTestRule.INSTANCE, LiferayUnitTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Assume.assumeTrue(
+			SolrUnitTestRequirements.isSolrExternallyStartedByDeveloper());
+	}
+
+	@ExpectedLog(
+		expectedClass = SolrIndexSearcher.class,
+		expectedLevel = ExpectedLog.Level.WARNING,
+		expectedLog = "Cannot parse '+f^eld:text'"
+	)
 	@Test
 	public void testExceptionOnlyLoggedWhenQueryMalformedSearch() {
-		expectedLogTestRule.expectMessage("Cannot parse '+f^eld:text'");
-
 		search(createSearchContext(), getMalformedQuery());
 	}
 
+	@ExpectedLog(
+		expectedClass = SolrIndexSearcher.class,
+		expectedLevel = ExpectedLog.Level.WARNING,
+		expectedLog = "Cannot parse '+f^eld:text'"
+	)
 	@Test
 	public void testExceptionOnlyLoggedWhenQueryMalformedSearchCount() {
-		expectedLogTestRule.expectMessage("Cannot parse '+f^eld:text'");
-
 		searchCount(createSearchContext(), getMalformedQuery());
 	}
-
-	@Rule
-	public ExpectedLogTestRule expectedLogTestRule = ExpectedLogTestRule.with(
-		SolrIndexSearcher.class, Level.WARNING);
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

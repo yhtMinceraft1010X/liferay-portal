@@ -4189,25 +4189,25 @@ public class CPDefinitionLinkPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpDefinitionLink.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpDefinitionLink.setCreateDate(now);
+				cpDefinitionLink.setCreateDate(date);
 			}
 			else {
 				cpDefinitionLink.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpDefinitionLinkModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpDefinitionLink.setModifiedDate(now);
+				cpDefinitionLink.setModifiedDate(date);
 			}
 			else {
 				cpDefinitionLink.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4773,6 +4773,13 @@ public class CPDefinitionLinkPersistenceImpl
 						cpDefinitionLinkModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4785,7 +4792,7 @@ public class CPDefinitionLinkPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4808,8 +4815,19 @@ public class CPDefinitionLinkPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CPDefinitionLinkModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

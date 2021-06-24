@@ -6841,25 +6841,25 @@ public class CommerceDiscountPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceDiscount.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceDiscount.setCreateDate(now);
+				commerceDiscount.setCreateDate(date);
 			}
 			else {
 				commerceDiscount.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceDiscountModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceDiscount.setModifiedDate(now);
+				commerceDiscount.setModifiedDate(date);
 			}
 			else {
 				commerceDiscount.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -7447,6 +7447,13 @@ public class CommerceDiscountPersistenceImpl
 						commerceDiscountModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -7459,7 +7466,7 @@ public class CommerceDiscountPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceDiscountModelImpl commerceDiscountModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -7482,8 +7489,19 @@ public class CommerceDiscountPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceDiscountModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

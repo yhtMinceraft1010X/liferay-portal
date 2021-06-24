@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardAttachment")
+@GraphQLName(
+	description = "A binary file attached to a message on a message board (`MessageBoardMessage`).",
+	value = "MessageBoardAttachment"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardAttachment")
 public class MessageBoardAttachment implements Serializable {
@@ -377,6 +380,7 @@ public class MessageBoardAttachment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment",
 		name = "x-class-name"
 	)
@@ -412,7 +416,7 @@ public class MessageBoardAttachment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -451,7 +455,7 @@ public class MessageBoardAttachment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

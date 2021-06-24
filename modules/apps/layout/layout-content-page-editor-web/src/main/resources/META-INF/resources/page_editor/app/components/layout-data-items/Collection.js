@@ -145,10 +145,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const languageId = useSelector((state) => state.languageId);
 
-	const segmentsExperienceId = useSelector(
-		(state) => state.segmentsExperienceId
-	);
-
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
 	useEffect(() => {
@@ -159,7 +155,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				listItemStyle: collectionConfig.listItemStyle || null,
 				listStyle: collectionConfig.listStyle,
 				onNetworkStatus: dispatch,
-				segmentsExperienceId,
 				size: collectionConfig.numberOfItems,
 				templateKey: collectionConfig.templateKey || null,
 			})
@@ -184,7 +179,6 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 		collectionConfig.templateKey,
 		dispatch,
 		languageId,
-		segmentsExperienceId,
 	]);
 
 	return (

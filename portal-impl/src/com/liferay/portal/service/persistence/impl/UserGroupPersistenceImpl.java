@@ -6408,23 +6408,23 @@ public class UserGroupPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (userGroup.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				userGroup.setCreateDate(now);
+				userGroup.setCreateDate(date);
 			}
 			else {
-				userGroup.setCreateDate(serviceContext.getCreateDate(now));
+				userGroup.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!userGroupModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				userGroup.setModifiedDate(now);
+				userGroup.setModifiedDate(date);
 			}
 			else {
-				userGroup.setModifiedDate(serviceContext.getModifiedDate(now));
+				userGroup.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -8151,6 +8151,13 @@ public class UserGroupPersistenceImpl
 						userGroupModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -8162,7 +8169,7 @@ public class UserGroupPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			UserGroupModelImpl userGroupModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -8184,8 +8191,19 @@ public class UserGroupPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= UserGroupModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder mvcc-enabled="true" package-path="com.liferay.alloy.mvc.sample">
+	<namespace>AlloyMVCSample</namespace>
+	<entity local-service="true" name="TodoItem" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="todoItemId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="todoListId" type="long" />
+		<column name="description" type="String" />
+		<column name="priority" type="int" />
+		<column name="status" type="int" />
+	</entity>
+	<entity local-service="true" name="TodoList" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="todoListId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+	</entity>
+</service-builder>

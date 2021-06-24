@@ -842,8 +842,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			_httpServletRequest.getSession(), _portletContext, _portletName,
 			plid);
 
-		String remoteUser = httpServletRequest.getRemoteUser();
-
 		String userPrincipalStrategy = portlet.getUserPrincipalStrategy();
 
 		if (userPrincipalStrategy.equals(
@@ -863,6 +861,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 		else {
+			String remoteUser = httpServletRequest.getRemoteUser();
 			long userId = PortalUtil.getUserId(httpServletRequest);
 
 			if ((userId > 0) && (remoteUser == null)) {

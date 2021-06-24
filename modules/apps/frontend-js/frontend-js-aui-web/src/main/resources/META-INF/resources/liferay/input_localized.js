@@ -659,6 +659,24 @@ AUI.add(
 
 					instance._updateTranslationStatus(selectedLanguageId);
 				},
+
+				updateInputPlaceholder(editor) {
+					var instance = this;
+
+					var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
+
+					var nativeEditor = editor.getNativeEditor();
+
+					var newPlaceholder = A.one(
+						'#' + nativeEditor.element.getId()
+					);
+
+					if (inputPlaceholder.compareTo(newPlaceholder)) {
+						return;
+					}
+
+					instance.set(STR_INPUT_PLACEHOLDER, newPlaceholder);
+				},
 			},
 
 			register(id, config) {

@@ -6,7 +6,7 @@
 		"@clayui/modal": "3.8.0",
 		"@liferay/amd-loader": "4.3.1",
 		"clay": "2.18.1",
-		"clay-alert": "2.22.1",
+		"clay-alert": "2.22.2",
 		"lodash.escape": "4.0.1",
 		"lodash.groupby": "4.6.0",
 		"lodash.isequal": "4.5.0",
@@ -41,5 +41,5 @@
 		"test": "liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "4.0.39"
+	"version": "4.0.43"
 }

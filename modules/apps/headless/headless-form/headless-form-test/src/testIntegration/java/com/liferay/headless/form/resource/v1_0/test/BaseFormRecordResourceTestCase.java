@@ -279,7 +279,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Long irrelevantFormId =
 			testGetFormFormRecordsPage_getIrrelevantFormId();
 
-		if ((irrelevantFormId != null)) {
+		if (irrelevantFormId != null) {
 			FormRecord irrelevantFormRecord =
 				testGetFormFormRecordsPage_addFormRecord(
 					irrelevantFormId, randomIrrelevantFormRecord());
@@ -598,7 +598,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.form.dto.v1_0.FormRecord.class)) {
 
 			if (!ArrayUtil.contains(
@@ -632,7 +632,7 @@ public abstract class BaseFormRecordResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -770,6 +770,17 @@ public abstract class BaseFormRecordResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1051,12 +1062,12 @@ public abstract class BaseFormRecordResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1066,10 +1077,10 @@ public abstract class BaseFormRecordResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

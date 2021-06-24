@@ -151,11 +151,22 @@ definition {
 
 		BlogsNavigator.gotoSelectFile();
 
-		ItemSelector.uploadFile(
-			navTab = "${navTab}",
-			uploadFileName = "${uploadFileName}");
+		if (isSet(uploadedFileName)) {
+			ItemSelector.selectBlogImage(
+				imageFileName = "${uploadedFileName}",
+				navTab = "${navTab}");
+		}
+		else {
+			ItemSelector.uploadFile(
+				navTab = "${navTab}",
+				uploadFileName = "${uploadFileName}");
+		}
 
 		Pause(locator1 = "5000");
+
+		if (isSet(captionField)) {
+			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+		}
 
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
@@ -401,6 +412,24 @@ definition {
 				key_toggleSwitchLabel = "Send Email Entry Updated",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
+
+		PortletEntry.publish();
+	}
+
+	macro editEntryViaSearchResultDetails {
+		MouseOver(
+			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			value1 = "${searchAssetTitle}");
+
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		BlogsEntry.editEntryContent(
+			entryContent = "${entryContent}",
+			entryContentEdit = "${entryContentEdit}",
+			entrySubtitle = "${entrySubtitle}",
+			entrySubtitleEdit = "${entrySubtitleEdit}",
+			entryTitle = "${entryTitle}",
+			entryTitleEdit = "${entryTitleEdit}");
 
 		PortletEntry.publish();
 	}

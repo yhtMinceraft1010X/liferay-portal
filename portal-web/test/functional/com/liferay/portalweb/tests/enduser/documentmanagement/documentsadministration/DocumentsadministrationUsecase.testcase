@@ -357,6 +357,12 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
@@ -455,6 +461,12 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
@@ -784,6 +796,175 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION");
 	}
 
+	@description = "This test covers LPS-100096. It ensures that a document type cannot be edited without permissions."
+	@priority = "4"
+	test EntryCanNotBeEditedWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Depot Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Depot Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Depot Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Depot Regrole Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Type Name");
+
+		Pause(locator1 = "3000");
+
+		var documentTypeURL = selenium.getLocation();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.viewNoEntryMenu(rowEntry = "DM Document Type Name");
+
+		Navigator.openSpecificURL(url = "${documentTypeURL}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "You do not have the required permissions.");
+	}
+
+	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
+	@priority = "3"
+	test GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#GifFileCanBeAddedToEditorAfterDisablingGifMimeTypeInAM";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Adaptive Media",
+			configurationName = "Images",
+			configurationScope = "System Scope");
+
+		Click(
+			key_fieldValue = "image/gif",
+			locator1 = "DDMField#REMOVE_SPECIFIC_REPEATED_FIELD");
+
+		SystemSettings.saveConfiguration();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			entryContent = "Blogs Entry Content",
+			navTab = "Documents and Media",
+			uploadFileName = "static.gif");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "static.gif");
+	}
+
+	@description = "This test covers LPS-106905. It ensures that a site admin user is able to select an image from the global site in WCD."
+	@priority = "3"
+	test ImageFromGlobalSiteCanBeSelectedWithPermissionsInWCD {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Site Name",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		WebContent.addPGViaWCD(
+			embedImage = "true",
+			imageFileName = "Document_1.png",
+			siteName = "Global",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.png",
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+	}
+
 	@priority = "5"
 	test ImportAudioAndLimitPermissionsToSubfolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -957,6 +1138,99 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMPortlet.configureDisplaySettingsPG(currentDisplayStyleViews = "");
+	}
+
+	@description = "This case covers LPS-97708. It ensures that a document can be restored from the Recycle Bin even if its original folder no longer exists."
+	@priority = "3"
+	test RestoreDocumentWithoutOriginalFolder {
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.moveToRecycleBinCP(
+			assetType = "Document",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.moveToRecycleBinCP(
+			assetType = "Documents Folder",
+			dmFolderName = "DM Folder Name");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "DM Folder Name",
+			assetType = "Documents Folder",
+			multipleAssets = "true");
+
+		RecycleBin.restoreContentWithoutOriginalFolder(
+			assetName = "DM Document Title",
+			assetRestoreLocation = "Home",
+			assetType = "Document");
+
+		AssertTextNotPresent(value1 = "NoSuchFolderException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This is a use case for LPS-98669."
+	@priority = "4"
+	test SelectLinkToPagePage {
+		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "${pageName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Link to Page",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			linkedPageName = "P11",
+			linkFieldName = "LinktoPage");
+
+		Click(
+			key_dmDocumentTitle = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			key_fieldName = "LinktoPage",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "P11");
 	}
 
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
@@ -1570,6 +1844,12 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Organization Name");
+
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");
@@ -1775,6 +2055,10 @@ definition {
 			groupName = "Guest",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

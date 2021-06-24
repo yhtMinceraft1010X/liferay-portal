@@ -415,6 +415,7 @@ public class Experiment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.segments.asah.rest.dto.v1_0.Experiment",
 		name = "x-class-name"
 	)
@@ -450,7 +451,7 @@ public class Experiment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -489,7 +490,7 @@ public class Experiment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -3682,25 +3682,25 @@ public class DLFileEntryTypePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (dlFileEntryType.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				dlFileEntryType.setCreateDate(now);
+				dlFileEntryType.setCreateDate(date);
 			}
 			else {
 				dlFileEntryType.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!dlFileEntryTypeModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				dlFileEntryType.setModifiedDate(now);
+				dlFileEntryType.setModifiedDate(date);
 			}
 			else {
 				dlFileEntryType.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4803,7 +4803,7 @@ public class DLFileEntryTypePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4826,8 +4826,8 @@ public class DLFileEntryTypePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

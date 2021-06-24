@@ -25,12 +25,15 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +42,8 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -47,6 +52,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -311,6 +321,13 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
 		).set(
 			_ddmFormValuesDeserializer, new JSONFactoryImpl()
+		);
+
+		field(
+			DDMFormValuesJSONDeserializer.class, "_serviceTrackerMap"
+		).set(
+			_ddmFormValuesDeserializer,
+			ProxyFactory.newDummyInstance(ServiceTrackerMap.class)
 		);
 	}
 

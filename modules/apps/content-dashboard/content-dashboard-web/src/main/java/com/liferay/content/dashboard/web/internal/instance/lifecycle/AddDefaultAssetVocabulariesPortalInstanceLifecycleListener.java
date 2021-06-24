@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -67,7 +69,8 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				company.getGroupId(), name);
+				company.getGroupId(),
+				StringUtil.toLowerCase(GetterUtil.getString(name)));
 
 		if (assetVocabulary != null) {
 			return;

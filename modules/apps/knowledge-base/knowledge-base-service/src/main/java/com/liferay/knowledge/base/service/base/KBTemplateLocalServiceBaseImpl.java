@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
+import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
@@ -55,10 +56,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -79,7 +83,7 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>KBTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>KBTemplateLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>KBTemplateLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -153,6 +157,13 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return kbTemplatePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -508,6 +519,11 @@ public abstract class KBTemplateLocalServiceBaseImpl
 		return kbTemplatePersistence.update(kbTemplate);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -519,6 +535,8 @@ public abstract class KBTemplateLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		kbTemplateLocalService = (KBTemplateLocalService)aopProxy;
+
+		_setLocalServiceUtilService(kbTemplateLocalService);
 	}
 
 	/**
@@ -560,6 +578,22 @@ public abstract class KBTemplateLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		KBTemplateLocalService kbTemplateLocalService) {
+
+		try {
+			Field field = KBTemplateLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, kbTemplateLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

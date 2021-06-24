@@ -54,14 +54,18 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -83,7 +87,7 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>TranslationEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.translation.service.TranslationEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>TranslationEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>TranslationEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -158,6 +162,13 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return translationEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -579,6 +590,11 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 		return translationEntryPersistence.update(translationEntry);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -590,6 +606,8 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		translationEntryLocalService = (TranslationEntryLocalService)aopProxy;
+
+		_setLocalServiceUtilService(translationEntryLocalService);
 	}
 
 	/**
@@ -631,6 +649,23 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		TranslationEntryLocalService translationEntryLocalService) {
+
+		try {
+			Field field =
+				TranslationEntryLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, translationEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

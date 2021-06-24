@@ -2318,10 +2318,24 @@ public class LayoutSetPersistenceImpl
 				continue;
 			}
 
-			if (EntityCacheUtil.getResult(
-					LayoutSetImpl.class, layoutSet.getPrimaryKey()) == null) {
+			LayoutSet cachedLayoutSet = (LayoutSet)EntityCacheUtil.getResult(
+				LayoutSetImpl.class, layoutSet.getPrimaryKey());
 
+			if (cachedLayoutSet == null) {
 				cacheResult(layoutSet);
+			}
+			else {
+				LayoutSetModelImpl layoutSetModelImpl =
+					(LayoutSetModelImpl)layoutSet;
+				LayoutSetModelImpl cachedLayoutSetModelImpl =
+					(LayoutSetModelImpl)cachedLayoutSet;
+
+				layoutSetModelImpl.setCompanyFallbackVirtualHostname(
+					cachedLayoutSetModelImpl.
+						getCompanyFallbackVirtualHostname());
+
+				layoutSetModelImpl.setVirtualHostnames(
+					cachedLayoutSetModelImpl.getVirtualHostnames());
 			}
 		}
 	}
@@ -2523,23 +2537,23 @@ public class LayoutSetPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (layoutSet.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				layoutSet.setCreateDate(now);
+				layoutSet.setCreateDate(date);
 			}
 			else {
-				layoutSet.setCreateDate(serviceContext.getCreateDate(now));
+				layoutSet.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!layoutSetModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				layoutSet.setModifiedDate(now);
+				layoutSet.setModifiedDate(date);
 			}
 			else {
-				layoutSet.setModifiedDate(serviceContext.getModifiedDate(now));
+				layoutSet.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3245,7 +3259,7 @@ public class LayoutSetPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutSetModelImpl layoutSetModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3267,8 +3281,8 @@ public class LayoutSetPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

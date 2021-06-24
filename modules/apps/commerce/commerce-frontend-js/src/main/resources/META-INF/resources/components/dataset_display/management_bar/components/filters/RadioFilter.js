@@ -30,6 +30,10 @@ function getOdataString(value, key, exclude) {
 		typeof value === 'string' ? `'${value}'` : value
 	}`;
 }
+
+function isDefined(itemValue) {
+	return itemValue !== undefined && itemValue !== null;
+}
 function RadioFilter(props) {
 	const [itemValue, setItemValue] = useState(
 		props.value && props.value.itemValue
@@ -41,9 +45,9 @@ function RadioFilter(props) {
 	let submitDisabled = true;
 
 	if (
-		(!props.value && itemValue) ||
+		(!props.value && isDefined(itemValue)) ||
 		(props.value && props.value.itemValue !== itemValue) ||
-		(props.value && itemValue && props.value.exclude !== exclude)
+		(props.value && isDefined(itemValue) && props.value.exclude !== exclude)
 	) {
 		submitDisabled = false;
 	}
@@ -71,7 +75,7 @@ function RadioFilter(props) {
 				<div className="inline-scroller mb-n2 mx-n2 px-2">
 					<ClayRadioGroup
 						onSelectedValueChange={setItemValue}
-						selectedValue={itemValue || ''}
+						selectedValue={isDefined(itemValue) ? itemValue : ''}
 					>
 						{props.items.map((item) => (
 							<ClayRadio

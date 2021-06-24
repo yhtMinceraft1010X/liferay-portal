@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.service.base;
 
 import com.liferay.commerce.discount.model.CommerceDiscountUsageEntry;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalServiceUtil;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelFinder;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder;
@@ -57,6 +58,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -79,7 +82,7 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceDiscountUsageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceDiscountUsageEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceDiscountUsageEntryLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -161,6 +164,13 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceDiscountUsageEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -929,11 +939,15 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.discount.model.CommerceDiscountUsageEntry",
 			commerceDiscountUsageEntryLocalService);
+
+		_setLocalServiceUtilService(commerceDiscountUsageEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.discount.model.CommerceDiscountUsageEntry");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -976,6 +990,24 @@ public abstract class CommerceDiscountUsageEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceDiscountUsageEntryLocalService
+			commerceDiscountUsageEntryLocalService) {
+
+		try {
+			Field field =
+				CommerceDiscountUsageEntryLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceDiscountUsageEntryLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

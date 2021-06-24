@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.spring.osgi;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
 import java.io.Serializable;
@@ -27,12 +28,19 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
 public class OSGiBeanPropertiesTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

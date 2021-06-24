@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
@@ -77,7 +77,6 @@ public class SelectorIntrabandTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			AspectJNewEnvTestRule.INSTANCE,
 			new CodeCoverageAssertor() {
 
 				@Override
@@ -85,7 +84,8 @@ public class SelectorIntrabandTest {
 					assertClasses.add(SelectionKeyRegistrationReference.class);
 				}
 
-			});
+			},
+			LiferayUnitTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -1112,12 +1112,12 @@ public class SelectorIntrabandTest {
 				Assert.assertSame(requestDatagram, sendingQueue.peek());
 			}
 
-			Datagram receiveDatagram = IntrabandTestUtil.readDatagramFully(
+			Datagram receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
 				scatteringByteChannel);
 
-			Assert.assertEquals(_TYPE, receiveDatagram.getType());
+			Assert.assertEquals(_TYPE, receiveDatagram1.getType());
 
-			ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+			ByteBuffer dataByteBuffer = receiveDatagram1.getDataByteBuffer();
 
 			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
@@ -1157,21 +1157,21 @@ public class SelectorIntrabandTest {
 				Assert.assertSame(requestDatagram2, datagrams[1]);
 			}
 
-			Datagram receiveDatagram1 = IntrabandTestUtil.readDatagramFully(
-				scatteringByteChannel);
-
-			Assert.assertEquals(_TYPE, receiveDatagram1.getType());
-
-			dataByteBuffer = receiveDatagram1.getDataByteBuffer();
-
-			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
-
 			Datagram receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
 				scatteringByteChannel);
 
 			Assert.assertEquals(_TYPE, receiveDatagram2.getType());
 
 			dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+
+			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
+
+			Datagram receiveDatagram3 = IntrabandTestUtil.readDatagramFully(
+				scatteringByteChannel);
+
+			Assert.assertEquals(_TYPE, receiveDatagram3.getType());
+
+			dataByteBuffer = receiveDatagram3.getDataByteBuffer();
 
 			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
@@ -1227,12 +1227,12 @@ public class SelectorIntrabandTest {
 				Assert.assertSame(requestDatagram2, sendingQueue.peek());
 			}
 
-			receiveDatagram2 = IntrabandTestUtil.readDatagramFully(
+			receiveDatagram3 = IntrabandTestUtil.readDatagramFully(
 				scatteringByteChannel);
 
-			Assert.assertEquals(_TYPE, receiveDatagram2.getType());
+			Assert.assertEquals(_TYPE, receiveDatagram3.getType());
 
-			dataByteBuffer = receiveDatagram2.getDataByteBuffer();
+			dataByteBuffer = receiveDatagram3.getDataByteBuffer();
 
 			Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
@@ -1250,14 +1250,14 @@ public class SelectorIntrabandTest {
 				registrationReference,
 				Datagram.createRequestDatagram(_TYPE, hugeBuffer));
 
-			receiveDatagram = DatagramUtil.createReceiveDatagram();
+			receiveDatagram1 = DatagramUtil.createReceiveDatagram();
 
 			channelContext = (ChannelContext)writeSelectionKey.attachment();
 
 			int count = 0;
 
 			while (!DatagramUtil.readFrom(
-						receiveDatagram, scatteringByteChannel)) {
+						receiveDatagram1, scatteringByteChannel)) {
 
 				count++;
 			}
@@ -1268,7 +1268,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertTrue(sendingQueue.isEmpty());
 
-			dataByteBuffer = receiveDatagram.getDataByteBuffer();
+			dataByteBuffer = receiveDatagram1.getDataByteBuffer();
 
 			Assert.assertArrayEquals(
 				hugeBuffer.array(), dataByteBuffer.array());

@@ -290,6 +290,7 @@ public class PortalInstance implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.portal.instances.dto.v1_0.PortalInstance",
 		name = "x-class-name"
 	)
@@ -325,7 +326,7 @@ public class PortalInstance implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -364,7 +365,7 @@ public class PortalInstance implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

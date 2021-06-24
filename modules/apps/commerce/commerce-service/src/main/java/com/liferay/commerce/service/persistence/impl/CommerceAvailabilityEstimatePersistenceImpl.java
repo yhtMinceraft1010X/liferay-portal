@@ -2010,25 +2010,25 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceAvailabilityEstimate.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceAvailabilityEstimate.setCreateDate(now);
+				commerceAvailabilityEstimate.setCreateDate(date);
 			}
 			else {
 				commerceAvailabilityEstimate.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceAvailabilityEstimateModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceAvailabilityEstimate.setModifiedDate(now);
+				commerceAvailabilityEstimate.setModifiedDate(date);
 			}
 			else {
 				commerceAvailabilityEstimate.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2528,6 +2528,13 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2541,7 +2548,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceAvailabilityEstimateModelImpl
 				commerceAvailabilityEstimateModelImpl,
 			String[] columnNames, boolean original) {
@@ -2566,8 +2573,19 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceAvailabilityEstimateModelImpl.getColumnBitmask("title");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

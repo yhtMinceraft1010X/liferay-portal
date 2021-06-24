@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -73,6 +74,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -95,7 +98,7 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceChannelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceChannelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -170,6 +173,13 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceChannelPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -272,10 +282,39 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	 * @return the matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
 	 */
 	@Override
-	public CommerceChannel fetchCommerceChannelByReferenceCode(
+	public CommerceChannel fetchCommerceChannelByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceChannelPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceChannelByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceChannel fetchCommerceChannelByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceChannelByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce channel with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce channel's external reference code
+	 * @return the matching commerce channel
+	 * @throws PortalException if a matching commerce channel could not be found
+	 */
+	@Override
+	public CommerceChannel getCommerceChannelByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceChannelPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1579,11 +1618,15 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CommerceChannel",
 			commerceChannelLocalService);
+
+		_setLocalServiceUtilService(commerceChannelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CommerceChannel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1625,6 +1668,23 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceChannelLocalService commerceChannelLocalService) {
+
+		try {
+			Field field =
+				CommerceChannelLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceChannelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

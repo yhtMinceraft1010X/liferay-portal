@@ -111,6 +111,9 @@ public class SearchResultContentDisplayBuilder {
 				searchResultContentDisplayContext.setIconURLString(
 					editPortletURL.toString());
 			}
+
+			searchResultContentDisplayContext.setShowExtraInfo(
+				_type.equals("document"));
 		}
 
 		return searchResultContentDisplayContext;

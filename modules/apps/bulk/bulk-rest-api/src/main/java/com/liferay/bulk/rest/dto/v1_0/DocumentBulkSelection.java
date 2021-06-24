@@ -179,6 +179,7 @@ public class DocumentBulkSelection implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.DocumentBulkSelection",
 		name = "x-class-name"
 	)
@@ -214,7 +215,7 @@ public class DocumentBulkSelection implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -253,7 +254,7 @@ public class DocumentBulkSelection implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

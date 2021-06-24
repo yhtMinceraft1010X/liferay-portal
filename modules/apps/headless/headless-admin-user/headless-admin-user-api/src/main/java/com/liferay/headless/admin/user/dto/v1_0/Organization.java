@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Organization")
+@GraphQLName(
+	description = "Represents an organization. Organizations can contain other organizations (suborganizations). Properties follow the [Organization](https://schema.org/Organization) specification.",
+	value = "Organization"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Organization")
 public class Organization implements Serializable {
@@ -718,6 +721,7 @@ public class Organization implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Organization",
 		name = "x-class-name"
 	)
@@ -753,7 +757,7 @@ public class Organization implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -792,7 +796,7 @@ public class Organization implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

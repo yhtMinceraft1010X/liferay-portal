@@ -19,7 +19,6 @@
 <%
 CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute("liferay-commerce:order-transitions:commerceOrder");
 List<ObjectValuePair<Long, String>> commerceOrderTransitionOVPs = (List<ObjectValuePair<Long, String>>)request.getAttribute("liferay-commerce:order-transitions:commerceOrderTransitionOVPs");
-String cssClass = (String)request.getAttribute("liferay-commerce:order-transitions:cssClass");
 %>
 
 <c:if test="<%= !commerceOrderTransitionOVPs.isEmpty() %>">
@@ -32,7 +31,7 @@ String cssClass = (String)request.getAttribute("liferay-commerce:order-transitio
 			String transitionName = transitionOVP.getValue();
 		%>
 
-			<button class="<%= cssClass %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionOVP.getValue() %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
+			<button class="<%= (String)request.getAttribute("liferay-commerce:order-transitions:cssClass") %> transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionOVP.getValue() %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
 				<%= LanguageUtil.get(request, transitionName) %>
 			</button>
 

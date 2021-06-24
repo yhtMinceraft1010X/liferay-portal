@@ -198,6 +198,7 @@ public class SelectionScope implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.SelectionScope",
 		name = "x-class-name"
 	)
@@ -233,7 +234,7 @@ public class SelectionScope implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -272,7 +273,7 @@ public class SelectionScope implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -32,6 +32,8 @@ import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -48,6 +50,7 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -157,16 +160,37 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public String getCommerceSubscriptionEntryStartDate() {
+		Date showDate = null;
+
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
 			getCommerceSubscriptionEntry();
+
+		Date deliveryStartDate =
+			commerceSubscriptionEntry.getDeliveryStartDate();
+		Date startDate = commerceSubscriptionEntry.getStartDate();
+
+		if ((deliveryStartDate != null) && (startDate != null)) {
+			showDate =
+				startDate.before(deliveryStartDate) ? startDate :
+					deliveryStartDate;
+		}
+		else if ((deliveryStartDate != null) && (startDate == null)) {
+			showDate = deliveryStartDate;
+		}
+		else if ((deliveryStartDate == null) && (startDate != null)) {
+			showDate = startDate;
+		}
+		else {
+			return "";
+		}
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
-			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+			DateFormat.MEDIUM, DateFormat.SHORT, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		return dateTimeFormat.format(commerceSubscriptionEntry.getStartDate());
+		return dateTimeFormat.format(showDate);
 	}
 
 	public CPSubscriptionType getCPSubscriptionType(String subscriptionType) {
@@ -365,21 +389,31 @@ public class CommerceSubscriptionEntryDisplayContext {
 	}
 
 	public boolean isPaymentMethodActive(String engineKey) {
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			_commercePaymentMethodGroupRelLocalService.
-				fetchCommercePaymentMethodGroupRel(
-					_cpRequestHelper.getScopeGroupId(), engineKey);
+		try {
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					fetchCommercePaymentMethodGroupRel(
+						_cpRequestHelper.getChannelGroupId(), engineKey);
 
-		if (commercePaymentMethodGroupRel == null) {
-			return false;
+			if (commercePaymentMethodGroupRel == null) {
+				return false;
+			}
+
+			return commercePaymentMethodGroupRel.isActive();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException.getMessage(), portalException);
 		}
 
-		return commercePaymentMethodGroupRel.isActive();
+		return false;
 	}
 
 	protected String getNavigation() {
 		return ParamUtil.getString(_httpServletRequest, "navigation", "all");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceSubscriptionEntryDisplayContext.class);
 
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;
 	private final CommercePaymentMethodGroupRelLocalService

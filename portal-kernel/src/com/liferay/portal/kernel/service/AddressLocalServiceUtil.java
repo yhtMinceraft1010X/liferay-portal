@@ -14,7 +14,16 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for Address. This utility wraps
@@ -46,18 +55,16 @@ public class AddressLocalServiceUtil {
 	 * @param address the address
 	 * @return the address that was added
 	 */
-	public static com.liferay.portal.kernel.model.Address addAddress(
-		com.liferay.portal.kernel.model.Address address) {
-
+	public static Address addAddress(Address address) {
 		return getService().addAddress(address);
 	}
 
-	public static com.liferay.portal.kernel.model.Address addAddress(
+	public static Address addAddress(
 			long userId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
 			long regionId, long countryId, long typeId, boolean mailing,
 			boolean primary, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addAddress(
 			userId, className, classPK, street1, street2, street3, city, zip,
@@ -70,18 +77,16 @@ public class AddressLocalServiceUtil {
 	 * @param addressId the primary key for the new address
 	 * @return the new address
 	 */
-	public static com.liferay.portal.kernel.model.Address createAddress(
-		long addressId) {
-
+	public static Address createAddress(long addressId) {
 		return getService().createAddress(addressId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -96,9 +101,7 @@ public class AddressLocalServiceUtil {
 	 * @param address the address
 	 * @return the address that was removed
 	 */
-	public static com.liferay.portal.kernel.model.Address deleteAddress(
-		com.liferay.portal.kernel.model.Address address) {
-
+	public static Address deleteAddress(Address address) {
 		return getService().deleteAddress(address);
 	}
 
@@ -113,10 +116,7 @@ public class AddressLocalServiceUtil {
 	 * @return the address that was removed
 	 * @throws PortalException if a address with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Address deleteAddress(
-			long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Address deleteAddress(long addressId) throws PortalException {
 		return getService().deleteAddress(addressId);
 	}
 
@@ -129,23 +129,22 @@ public class AddressLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -155,9 +154,7 @@ public class AddressLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -173,9 +170,8 @@ public class AddressLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -193,10 +189,9 @@ public class AddressLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -208,9 +203,7 @@ public class AddressLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -222,15 +215,13 @@ public class AddressLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.Address fetchAddress(
-		long addressId) {
-
+	public static Address fetchAddress(long addressId) {
 		return getService().fetchAddress(addressId);
 	}
 
@@ -241,8 +232,8 @@ public class AddressLocalServiceUtil {
 	 * @param companyId the primary key of the company
 	 * @return the matching address, or <code>null</code> if a matching address could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Address
-		fetchAddressByUuidAndCompanyId(String uuid, long companyId) {
+	public static Address fetchAddressByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
 	}
@@ -260,10 +251,7 @@ public class AddressLocalServiceUtil {
 	 * @return the address
 	 * @throws PortalException if a address with the primary key could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Address getAddress(
-			long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public static Address getAddress(long addressId) throws PortalException {
 		return getService().getAddress(addressId);
 	}
 
@@ -275,16 +263,14 @@ public class AddressLocalServiceUtil {
 	 * @return the matching address
 	 * @throws PortalException if a matching address could not be found
 	 */
-	public static com.liferay.portal.kernel.model.Address
-			getAddressByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static Address getAddressByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
 		return getService().getAddressByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Address>
-		getAddresses() {
-
+	public static List<Address> getAddresses() {
 		return getService().getAddresses();
 	}
 
@@ -299,14 +285,12 @@ public class AddressLocalServiceUtil {
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of addresses
 	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Address>
-		getAddresses(int start, int end) {
-
+	public static List<Address> getAddresses(int start, int end) {
 		return getService().getAddresses(start, end);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Address>
-		getAddresses(long companyId, String className, long classPK) {
+	public static List<Address> getAddresses(
+		long companyId, String className, long classPK) {
 
 		return getService().getAddresses(companyId, className, classPK);
 	}
@@ -347,9 +331,8 @@ public class AddressLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -364,17 +347,15 @@ public class AddressLocalServiceUtil {
 	 * @param address the address
 	 * @return the address that was updated
 	 */
-	public static com.liferay.portal.kernel.model.Address updateAddress(
-		com.liferay.portal.kernel.model.Address address) {
-
+	public static Address updateAddress(Address address) {
 		return getService().updateAddress(address);
 	}
 
-	public static com.liferay.portal.kernel.model.Address updateAddress(
+	public static Address updateAddress(
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId, long typeId,
 			boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().updateAddress(
 			addressId, street1, street2, street3, city, zip, regionId,
@@ -382,14 +363,9 @@ public class AddressLocalServiceUtil {
 	}
 
 	public static AddressLocalService getService() {
-		if (_service == null) {
-			_service = (AddressLocalService)PortalBeanLocatorUtil.locate(
-				AddressLocalService.class.getName());
-		}
-
 		return _service;
 	}
 
-	private static AddressLocalService _service;
+	private static volatile AddressLocalService _service;
 
 }

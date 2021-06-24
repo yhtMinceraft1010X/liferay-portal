@@ -62,13 +62,18 @@ if (end > total) {
 	end = total;
 }
 
-String deltaURL = HttpUtil.removeParameter(url, namespace + deltaParam);
+if (deltaConfigurable) {
+	url = HttpUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
+}
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
-
-if (forcePost && (portletURL != null)) {
-	url = url.split(namespace)[0];
 %>
+
+<c:if test="<%= forcePost && (portletURL != null) %>">
+
+	<%
+	url = url.split(namespace)[0];
+	%>
 
 	<liferay-util:html-bottom>
 		<form action="<%= HtmlUtil.escapeAttribute(url) %>" id="<%= randomNamespace + namespace %>pageIteratorFm" method="post" name="<%= randomNamespace + namespace %>pageIteratorFm">
@@ -76,10 +81,7 @@ if (forcePost && (portletURL != null)) {
 			<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
 		</form>
 	</liferay-util:html-bottom>
-
-<%
-}
-%>
+</c:if>
 
 <c:if test="<%= (total > delta) || (total > PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES[0]) %>">
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
@@ -99,11 +101,7 @@ if (forcePost && (portletURL != null)) {
 							continue;
 						}
 
-						String curDeltaURL = deltaURL + urlAnchor;
-
-						if (curDelta != delta) {
-							curDeltaURL = HttpUtil.addParameter(deltaURL + urlAnchor, namespace + deltaParam, curDelta);
-						}
+						String curDeltaURL = HttpUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 					%>
 
 						<li>
@@ -255,8 +253,8 @@ if (forcePost && (portletURL != null)) {
 					for (int i = 2; i < ((initialPages > (cur - 1)) ? cur - 1 : initialPages); i++) {
 					%>
 
-						<li class="page-item">
-							<a class="dropdown-icon page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /></span><%= i %></a>
+						<li>
+							<a class="dropdown-icon" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /></span><%= i %></a>
 						</li>
 
 					<%
@@ -303,8 +301,8 @@ if (forcePost && (portletURL != null)) {
 					for (int i = cur + 2; i < ((cur + 2) + remainingPages); i++) {
 					%>
 
-						<li class="page-item">
-							<a class="dropdown-icon page-link" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /></span><%= i %></a>
+						<li>
+							<a class="dropdown-icon" href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /></span><%= i %></a>
 						</li>
 
 					<%
@@ -385,4 +383,5 @@ private String _getHREF(String formName, String curParam, int cur, String jsCall
 private String _getOnClick(String namespace, String curParam, int cur) {
 	return "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "','" + cur + "');";
 }
+
 %>

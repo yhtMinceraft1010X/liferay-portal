@@ -403,7 +403,7 @@ public class CommerceCountryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.ENTRY_CLASS_PK, keywords
 			).put(
@@ -416,9 +416,7 @@ public class CommerceCountryLocalServiceImpl
 				"threeLettersISOCode", keywords
 			).put(
 				"twoLettersISOCode", keywords
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);

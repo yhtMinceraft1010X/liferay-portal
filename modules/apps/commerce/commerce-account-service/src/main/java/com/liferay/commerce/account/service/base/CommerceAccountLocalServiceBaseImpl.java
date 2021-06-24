@@ -16,6 +16,7 @@ package com.liferay.commerce.account.service.base;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
 import com.liferay.commerce.account.service.persistence.CommerceAccountFinder;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder;
@@ -59,6 +60,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -81,7 +84,7 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAccountLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAccountLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAccountLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -156,6 +159,13 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceAccountPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -258,10 +268,39 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 	 * @return the matching commerce account, or <code>null</code> if a matching commerce account could not be found
 	 */
 	@Override
-	public CommerceAccount fetchCommerceAccountByReferenceCode(
+	public CommerceAccount fetchCommerceAccountByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceAccountPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceAccount fetchCommerceAccountByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceAccountByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce account with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce account's external reference code
+	 * @return the matching commerce account
+	 * @throws PortalException if a matching commerce account could not be found
+	 */
+	@Override
+	public CommerceAccount getCommerceAccountByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceAccountPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1064,11 +1103,15 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.account.model.CommerceAccount",
 			commerceAccountLocalService);
+
+		_setLocalServiceUtilService(commerceAccountLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.account.model.CommerceAccount");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1110,6 +1153,23 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceAccountLocalService commerceAccountLocalService) {
+
+		try {
+			Field field =
+				CommerceAccountLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceAccountLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

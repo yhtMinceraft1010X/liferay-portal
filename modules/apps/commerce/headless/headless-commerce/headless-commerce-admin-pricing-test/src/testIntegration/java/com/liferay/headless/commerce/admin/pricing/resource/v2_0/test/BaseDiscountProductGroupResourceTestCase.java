@@ -234,7 +234,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountProductGroupsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountProductGroup irrelevantDiscountProductGroup =
 				testGetDiscountByExternalReferenceCodeDiscountProductGroupsPage_addDiscountProductGroup(
 					irrelevantExternalReferenceCode,
@@ -393,7 +393,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountProductGroupsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountProductGroup irrelevantDiscountProductGroup =
 				testGetDiscountIdDiscountProductGroupsPage_addDiscountProductGroup(
 					irrelevantId, randomIrrelevantDiscountProductGroup());
@@ -912,7 +912,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.pricing.dto.v2_0.
 						DiscountProductGroup.class)) {
 
@@ -947,7 +947,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -1093,6 +1093,17 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1308,12 +1319,12 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1323,10 +1334,10 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

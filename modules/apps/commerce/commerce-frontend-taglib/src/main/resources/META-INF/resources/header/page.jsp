@@ -300,10 +300,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									label="<%= LanguageUtil.get(request, action.getLabel()) %>"
 								/>
 
-								<%
-								if (submitCheck && Validator.isNotNull(action.getFormId())) {
-								%>
-
+								<c:if test="<%= submitCheck && Validator.isNotNull(action.getFormId()) %>">
 									<aui:script>
 										document
 											.getElementById('<%= actionId %>')
@@ -318,10 +315,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 												submitForm(form);
 											});
 									</aui:script>
-
-								<%
-								}
-								%>
+								</c:if>
 
 							<%
 							}

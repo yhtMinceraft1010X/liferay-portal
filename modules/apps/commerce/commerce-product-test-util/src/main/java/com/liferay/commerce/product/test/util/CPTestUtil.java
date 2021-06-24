@@ -489,6 +489,10 @@ public class CPTestUtil {
 			cpDefinition.getCPDefinitionId(), sku);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), use addCPInstanceWithRandomSku
+	 */
+	@Deprecated
 	public static CPInstance addCPInstanceWithSku(long groupId)
 		throws PortalException {
 
@@ -644,7 +648,7 @@ public class CPTestUtil {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes =
+		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, status
 			).put(
@@ -659,9 +663,7 @@ public class CPTestUtil {
 						return StringPool.STAR;
 					}
 				).build()
-			).build();
-
-		searchContext.setAttributes(attributes);
+			).build());
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setGroupIds(new long[] {group.getGroupId()});
@@ -909,7 +911,7 @@ public class CPTestUtil {
 		Map<Locale, String> urlTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
 		boolean shippable = true;
-		boolean freeShipping = RandomTestUtil.randomBoolean();
+		boolean freeShipping = false;
 		boolean shipSeparately = RandomTestUtil.randomBoolean();
 		double shippingExtraPrice = RandomTestUtil.randomDouble();
 		double width = RandomTestUtil.randomDouble();

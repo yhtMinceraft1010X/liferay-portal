@@ -12783,23 +12783,23 @@ public class DLFolderPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (dlFolder.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				dlFolder.setCreateDate(now);
+				dlFolder.setCreateDate(date);
 			}
 			else {
-				dlFolder.setCreateDate(serviceContext.getCreateDate(now));
+				dlFolder.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!dlFolderModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				dlFolder.setModifiedDate(now);
+				dlFolder.setModifiedDate(date);
 			}
 			else {
-				dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
+				dlFolder.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -14163,6 +14163,13 @@ public class DLFolderPersistenceImpl
 						dlFolderModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -14174,7 +14181,7 @@ public class DLFolderPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DLFolderModelImpl dlFolderModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -14195,8 +14202,20 @@ public class DLFolderPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= DLFolderModelImpl.getColumnBitmask(
+				"parentFolderId");
+			orderByColumnsBitmask |= DLFolderModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

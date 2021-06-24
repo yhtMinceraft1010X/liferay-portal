@@ -45,10 +45,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -72,7 +75,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>RatingsStatsLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>RatingsStatsLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>RatingsStatsLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -143,6 +146,13 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return ratingsStatsPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -601,11 +611,15 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.ratings.kernel.model.RatingsStats",
 			ratingsStatsLocalService);
+
+		_setLocalServiceUtilService(ratingsStatsLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.ratings.kernel.model.RatingsStats");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -662,6 +676,22 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		RatingsStatsLocalService ratingsStatsLocalService) {
+
+		try {
+			Field field = RatingsStatsLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, ratingsStatsLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

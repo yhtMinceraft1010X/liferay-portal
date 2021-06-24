@@ -3687,23 +3687,23 @@ public class CPOptionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpOption.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpOption.setCreateDate(now);
+				cpOption.setCreateDate(date);
 			}
 			else {
-				cpOption.setCreateDate(serviceContext.getCreateDate(now));
+				cpOption.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpOptionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpOption.setModifiedDate(now);
+				cpOption.setModifiedDate(date);
 			}
 			else {
-				cpOption.setModifiedDate(serviceContext.getModifiedDate(now));
+				cpOption.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4223,6 +4223,13 @@ public class CPOptionPersistenceImpl
 						cpOptionModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4234,7 +4241,7 @@ public class CPOptionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPOptionModelImpl cpOptionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4255,8 +4262,18 @@ public class CPOptionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CPOptionModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

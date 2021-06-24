@@ -159,6 +159,38 @@ definition {
 		Page.assertCanonicalURL(portalURL = "localhost:8080/chinese-canonical-url");
 	}
 
+	@description = "This test covers LPS-122797. It ensures that the Canonical URL does not have a limit of 75 characters."
+	@priority = "4"
+	test SetCustomURLWith76Characters {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Canonical URL Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Canonical URL Test Page");
+
+		Navigator.gotoNavTab(navTab = "SEO");
+
+		Click(
+			checkboxName = "Use Custom Canonical URL",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "http://mycustomizedcharactersurl.com/mydesiredmorethan75charactersurlfortest");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL",
+			value1 = "http://mycustomizedcharactersurl.com/mydesiredmorethan75charactersurlfortest");
+	}
+
 	@priority = "5"
 	test SetDefaultURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetDefaultURLAtSystemLevel";
@@ -241,6 +273,33 @@ definition {
 		Page.assertAlternateURL(
 			locale = "es",
 			portalURL = "${portalURL}");
+	}
+
+	@description = "This test covers LPS-127840. It ensures that the Canonical URL has page name."
+	@priority = "3"
+	test ViewPageNameInCanonicalURL {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "CanonicalURL#ViewPageNameInCanonicalURL";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Page1");
+
+		SitePages.addPublicPage(pageName = "Page2");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/page2");
+
+		Page.assertCanonicalURL(portalURL = "http://www.able.com:8080/page2");
 	}
 
 }

@@ -662,6 +662,20 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editPiwikCP {
+		AssertClick(
+			locator1 = "SitesEditSite#MENU_ADVANCED_TAB",
+			value1 = "Advanced");
+
+		Panel.expandPanel(panel = "Analytics");
+
+		Type(
+			locator1 = "TextInput#PIWIK",
+			value1 = "${piwik}");
+
+		PortletEntry.save();
+	}
+
 	macro getSiteId {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1281,6 +1295,8 @@ definition {
 		var key_tableEntry = "${orgName}";
 
 		Navigator.gotoNavItem(navItem = "Organizations");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",

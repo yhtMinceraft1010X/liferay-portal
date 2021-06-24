@@ -14,9 +14,16 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AccountEntryUserRel. This utility wraps
@@ -48,28 +55,25 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param accountEntryUserRel the account entry user rel
 	 * @return the account entry user rel that was added
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-		addAccountEntryUserRel(
-			com.liferay.account.model.AccountEntryUserRel accountEntryUserRel) {
+	public static AccountEntryUserRel addAccountEntryUserRel(
+		AccountEntryUserRel accountEntryUserRel) {
 
 		return getService().addAccountEntryUserRel(accountEntryUserRel);
 	}
 
-	public static com.liferay.account.model.AccountEntryUserRel
-			addAccountEntryUserRel(long accountEntryId, long accountUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
 
 		return getService().addAccountEntryUserRel(
 			accountEntryId, accountUserId);
 	}
 
-	public static com.liferay.account.model.AccountEntryUserRel
-			addAccountEntryUserRel(
-				long accountEntryId, long creatorUserId, String screenName,
-				String emailAddress, java.util.Locale locale, String firstName,
-				String middleName, String lastName, long prefixId,
-				long suffixId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, java.util.Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
 
 		return getService().addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
@@ -78,18 +82,16 @@ public class AccountEntryUserRelLocalServiceUtil {
 
 	public static void addAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addAccountEntryUserRels(accountEntryId, accountUserIds);
 	}
 
-	public static com.liferay.account.model.AccountEntryUserRel
-			addPersonTypeAccountEntryUserRel(
-				long accountEntryId, long creatorUserId, String screenName,
-				String emailAddress, java.util.Locale locale, String firstName,
-				String middleName, String lastName, long prefixId,
-				long suffixId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountEntryUserRel addPersonTypeAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, java.util.Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
 
 		return getService().addPersonTypeAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
@@ -102,8 +104,8 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-		createAccountEntryUserRel(long accountEntryUserRelId) {
+	public static AccountEntryUserRel createAccountEntryUserRel(
+		long accountEntryUserRelId) {
 
 		return getService().createAccountEntryUserRel(accountEntryUserRelId);
 	}
@@ -111,9 +113,9 @@ public class AccountEntryUserRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -128,9 +130,8 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param accountEntryUserRel the account entry user rel
 	 * @return the account entry user rel that was removed
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-		deleteAccountEntryUserRel(
-			com.liferay.account.model.AccountEntryUserRel accountEntryUserRel) {
+	public static AccountEntryUserRel deleteAccountEntryUserRel(
+		AccountEntryUserRel accountEntryUserRel) {
 
 		return getService().deleteAccountEntryUserRel(accountEntryUserRel);
 	}
@@ -146,16 +147,16 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @return the account entry user rel that was removed
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-			deleteAccountEntryUserRel(long accountEntryUserRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountEntryUserRel deleteAccountEntryUserRel(
+			long accountEntryUserRelId)
+		throws PortalException {
 
 		return getService().deleteAccountEntryUserRel(accountEntryUserRelId);
 	}
 
 	public static void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAccountEntryUserRels(accountEntryId, accountUserIds);
 	}
@@ -169,23 +170,22 @@ public class AccountEntryUserRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -195,9 +195,7 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -213,9 +211,8 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -233,10 +230,9 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -248,9 +244,7 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -262,14 +256,14 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.account.model.AccountEntryUserRel
-		fetchAccountEntryUserRel(long accountEntryUserRelId) {
+	public static AccountEntryUserRel fetchAccountEntryUserRel(
+		long accountEntryUserRelId) {
 
 		return getService().fetchAccountEntryUserRel(accountEntryUserRelId);
 	}
@@ -281,9 +275,9 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @return the account entry user rel
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-			getAccountEntryUserRel(long accountEntryUserRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountEntryUserRel getAccountEntryUserRel(
+			long accountEntryUserRelId)
+		throws PortalException {
 
 		return getService().getAccountEntryUserRel(accountEntryUserRelId);
 	}
@@ -299,20 +293,20 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param end the upper bound of the range of account entry user rels (not inclusive)
 	 * @return the range of account entry user rels
 	 */
-	public static java.util.List<com.liferay.account.model.AccountEntryUserRel>
-		getAccountEntryUserRels(int start, int end) {
+	public static List<AccountEntryUserRel> getAccountEntryUserRels(
+		int start, int end) {
 
 		return getService().getAccountEntryUserRels(start, end);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountEntryUserRel>
+	public static List<AccountEntryUserRel>
 		getAccountEntryUserRelsByAccountEntryId(long accountEntryId) {
 
 		return getService().getAccountEntryUserRelsByAccountEntryId(
 			accountEntryId);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountEntryUserRel>
+	public static List<AccountEntryUserRel>
 		getAccountEntryUserRelsByAccountUserId(long accountUserId) {
 
 		return getService().getAccountEntryUserRelsByAccountUserId(
@@ -360,9 +354,8 @@ public class AccountEntryUserRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -375,7 +368,7 @@ public class AccountEntryUserRelLocalServiceUtil {
 
 	public static void setPersonTypeAccountEntryUser(
 			long accountEntryId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().setPersonTypeAccountEntryUser(accountEntryId, userId);
 	}
@@ -390,9 +383,8 @@ public class AccountEntryUserRelLocalServiceUtil {
 	 * @param accountEntryUserRel the account entry user rel
 	 * @return the account entry user rel that was updated
 	 */
-	public static com.liferay.account.model.AccountEntryUserRel
-		updateAccountEntryUserRel(
-			com.liferay.account.model.AccountEntryUserRel accountEntryUserRel) {
+	public static AccountEntryUserRel updateAccountEntryUserRel(
+		AccountEntryUserRel accountEntryUserRel) {
 
 		return getService().updateAccountEntryUserRel(accountEntryUserRel);
 	}
@@ -400,36 +392,16 @@ public class AccountEntryUserRelLocalServiceUtil {
 	public static void updateAccountEntryUserRels(
 			long[] addAccountEntryIds, long[] deleteAccountEntryIds,
 			long accountUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().updateAccountEntryUserRels(
 			addAccountEntryIds, deleteAccountEntryIds, accountUserId);
 	}
 
 	public static AccountEntryUserRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AccountEntryUserRelLocalService, AccountEntryUserRelLocalService>
-			_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AccountEntryUserRelLocalService.class);
-
-		ServiceTracker
-			<AccountEntryUserRelLocalService, AccountEntryUserRelLocalService>
-				serviceTracker =
-					new ServiceTracker
-						<AccountEntryUserRelLocalService,
-						 AccountEntryUserRelLocalService>(
-							 bundle.getBundleContext(),
-							 AccountEntryUserRelLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountEntryUserRelLocalService _service;
 
 }

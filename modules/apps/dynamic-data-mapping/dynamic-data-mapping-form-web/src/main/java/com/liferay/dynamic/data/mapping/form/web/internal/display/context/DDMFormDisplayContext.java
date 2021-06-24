@@ -222,6 +222,8 @@ public class DDMFormDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(ddmForm);
 
+		ddmFormRenderingContext.setDDMFormInstanceId(
+			ddmFormInstance.getFormInstanceId());
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion = null;

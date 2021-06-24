@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Site")
+@GraphQLName(
+	description = "Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.",
+	value = "Site"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Site")
 public class Site implements Serializable {
@@ -586,6 +589,7 @@ public class Site implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Site",
 		name = "x-class-name"
 	)
@@ -621,7 +625,7 @@ public class Site implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -660,7 +664,7 @@ public class Site implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

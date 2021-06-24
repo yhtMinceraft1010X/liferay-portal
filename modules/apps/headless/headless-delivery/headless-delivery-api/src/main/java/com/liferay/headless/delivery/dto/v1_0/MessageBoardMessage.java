@@ -50,7 +50,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("MessageBoardMessage")
+@GraphQLName(
+	description = "Represents a message on a message board. Properties follow the [Discussion Forum Posting](https://schema.org/DiscussionForumPosting) specification.",
+	value = "MessageBoardMessage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MessageBoardMessage")
 public class MessageBoardMessage implements Serializable {
@@ -1125,6 +1128,7 @@ public class MessageBoardMessage implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage",
 		name = "x-class-name"
 	)
@@ -1194,7 +1198,7 @@ public class MessageBoardMessage implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -1233,7 +1237,7 @@ public class MessageBoardMessage implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

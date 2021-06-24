@@ -67,3 +67,8 @@ a4461ad30e93c49b09be3a5a1f882a699a7c4d51^..38aa028e6322a1f298b56415a804e7cc2984d
 # Bundle Version 4.0.18
 #
 d54bc25b7a3d76e6d7cdb32dd15428e56fd1bc94^..d70ccd3a41b0e1e7dd6bcaf71a4dd318ea9344eb=LPS-77699
+
+#
+# Bundle Version 4.0.20
+#
+d70ccd3a41b0e1e7dd6bcaf71a4dd318ea9344eb^..faf2788a90b6d92ceb21fddddee2e3f4c5ddb26c=LPS-77699 LRQA-51488

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Language")
+@GraphQLName(
+	description = "Describes a specific language in the platform",
+	value = "Language"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Language")
 public class Language implements Serializable {
@@ -326,6 +329,7 @@ public class Language implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Language",
 		name = "x-class-name"
 	)
@@ -361,7 +365,7 @@ public class Language implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -400,7 +404,7 @@ public class Language implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

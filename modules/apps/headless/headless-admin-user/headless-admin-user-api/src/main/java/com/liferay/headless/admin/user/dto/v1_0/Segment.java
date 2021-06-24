@@ -48,11 +48,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Segment")
+@GraphQLName(
+	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.",
+	value = "Segment"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"criteria", "name"},
-	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users."
+	description = "Represents a set of users that meet certain criteria. Segments may be used to create customized experiences for users.",
+	requiredProperties = {"criteria", "name"}
 )
 @XmlRootElement(name = "Segment")
 public class Segment implements Serializable {
@@ -423,6 +426,7 @@ public class Segment implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Segment",
 		name = "x-class-name"
 	)
@@ -458,7 +462,7 @@ public class Segment implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -497,7 +501,7 @@ public class Segment implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

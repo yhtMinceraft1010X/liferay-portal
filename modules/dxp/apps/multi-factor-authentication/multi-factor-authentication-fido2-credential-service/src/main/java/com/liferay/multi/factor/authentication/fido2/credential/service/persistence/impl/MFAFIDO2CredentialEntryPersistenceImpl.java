@@ -1600,25 +1600,25 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mfaFIDO2CredentialEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mfaFIDO2CredentialEntry.setCreateDate(now);
+				mfaFIDO2CredentialEntry.setCreateDate(date);
 			}
 			else {
 				mfaFIDO2CredentialEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mfaFIDO2CredentialEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mfaFIDO2CredentialEntry.setModifiedDate(now);
+				mfaFIDO2CredentialEntry.setModifiedDate(date);
 			}
 			else {
 				mfaFIDO2CredentialEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2132,7 +2132,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MFAFIDO2CredentialEntryModelImpl mfaFIDO2CredentialEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2156,8 +2156,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

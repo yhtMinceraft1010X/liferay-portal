@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.service.base;
 
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
+import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalServiceUtil;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRatePersistence;
@@ -49,6 +50,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -72,7 +75,7 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateAddressRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceTaxFixedRateAddressRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceTaxFixedRateAddressRelLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -154,6 +157,13 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceTaxFixedRateAddressRelPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -655,11 +665,15 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel",
 			commerceTaxFixedRateAddressRelLocalService);
+
+		_setLocalServiceUtilService(commerceTaxFixedRateAddressRelLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -702,6 +716,24 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceTaxFixedRateAddressRelLocalService
+			commerceTaxFixedRateAddressRelLocalService) {
+
+		try {
+			Field field =
+				CommerceTaxFixedRateAddressRelLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceTaxFixedRateAddressRelLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

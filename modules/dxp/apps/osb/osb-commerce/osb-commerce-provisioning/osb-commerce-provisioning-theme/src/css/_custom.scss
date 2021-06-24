@@ -18,6 +18,7 @@ body {
 
 #wrapper {
 	@import 'components/banner';
+	@import 'components/checkout';
 	@import 'components/card_entry';
 	@import 'components/cart_summary';
 	@import 'components/commerce_accounts_portlet';
@@ -54,7 +55,7 @@ body {
 	}
 
 	main {
-		padding: 8rem 0 0 0;
+		padding: 8rem 0 0;
 	}
 
 	#addAccountModal,

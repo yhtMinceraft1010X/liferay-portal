@@ -19,6 +19,10 @@
 		padding: 0 3rem;
 		text-align: center;
 
+		.cart-summary-coupon-code .btn-secondary {
+			height: 100%;
+		}
+
 		.cart-summary-subtotal,
 		.cart-summary-discount,
 		.cart-summary-total {

@@ -14,9 +14,16 @@
 
 package com.liferay.commerce.data.integration.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for CommerceDataIntegrationProcess. This utility wraps
@@ -48,25 +55,21 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param commerceDataIntegrationProcess the commerce data integration process
 	 * @return the commerce data integration process that was added
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
-				com.liferay.commerce.data.integration.model.
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
+	public static CommerceDataIntegrationProcess
+		addCommerceDataIntegrationProcess(
+			CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
 
 		return getService().addCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcess);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
-					long userId, String name, String type,
-					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsUnicodeProperties,
-					boolean system)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			addCommerceDataIntegrationProcess(
+				long userId, String name, String type,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
+				boolean system)
+		throws PortalException {
 
 		return getService().addCommerceDataIntegrationProcess(
 			userId, name, type, typeSettingsUnicodeProperties, system);
@@ -78,10 +81,9 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param commerceDataIntegrationProcessId the primary key for the new commerce data integration process
 	 * @return the new commerce data integration process
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess createCommerceDataIntegrationProcess(
-				long commerceDataIntegrationProcessId) {
+	public static CommerceDataIntegrationProcess
+		createCommerceDataIntegrationProcess(
+			long commerceDataIntegrationProcessId) {
 
 		return getService().createCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
@@ -90,9 +92,9 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -108,13 +110,10 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @return the commerce data integration process that was removed
 	 * @throws PortalException
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess deleteCommerceDataIntegrationProcess(
-					com.liferay.commerce.data.integration.model.
-						CommerceDataIntegrationProcess
-							commerceDataIntegrationProcess)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			deleteCommerceDataIntegrationProcess(
+				CommerceDataIntegrationProcess commerceDataIntegrationProcess)
+		throws PortalException {
 
 		return getService().deleteCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcess);
@@ -131,11 +130,10 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @return the commerce data integration process that was removed
 	 * @throws PortalException if a commerce data integration process with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess deleteCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			deleteCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId)
+		throws PortalException {
 
 		return getService().deleteCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
@@ -144,23 +142,22 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -170,9 +167,7 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -188,9 +183,8 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -208,10 +202,9 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -223,9 +216,7 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -237,25 +228,22 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess fetchCommerceDataIntegrationProcess(
-				long commerceDataIntegrationProcessId) {
+	public static CommerceDataIntegrationProcess
+		fetchCommerceDataIntegrationProcess(
+			long commerceDataIntegrationProcessId) {
 
 		return getService().fetchCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess fetchCommerceDataIntegrationProcess(
-				long companyId, String name) {
+	public static CommerceDataIntegrationProcess
+		fetchCommerceDataIntegrationProcess(long companyId, String name) {
 
 		return getService().fetchCommerceDataIntegrationProcess(
 			companyId, name);
@@ -274,11 +262,10 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @return the commerce data integration process
 	 * @throws PortalException if a commerce data integration process with the primary key could not be found
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess getCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			getCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId)
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
@@ -295,18 +282,15 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param end the upper bound of the range of commerce data integration processes (not inclusive)
 	 * @return the range of commerce data integration processes
 	 */
-	public static java.util.List
-		<com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess> getCommerceDataIntegrationProcesses(
-				int start, int end) {
+	public static List<CommerceDataIntegrationProcess>
+		getCommerceDataIntegrationProcesses(int start, int end) {
 
 		return getService().getCommerceDataIntegrationProcesses(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess> getCommerceDataIntegrationProcesses(
-				long companyId, int start, int end) {
+	public static List<CommerceDataIntegrationProcess>
+		getCommerceDataIntegrationProcesses(
+			long companyId, int start, int end) {
 
 		return getService().getCommerceDataIntegrationProcesses(
 			companyId, start, end);
@@ -344,9 +328,8 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -361,41 +344,34 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	 * @param commerceDataIntegrationProcess the commerce data integration process
 	 * @return the commerce data integration process that was updated
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
-				com.liferay.commerce.data.integration.model.
-					CommerceDataIntegrationProcess
-						commerceDataIntegrationProcess) {
+	public static CommerceDataIntegrationProcess
+		updateCommerceDataIntegrationProcess(
+			CommerceDataIntegrationProcess commerceDataIntegrationProcess) {
 
 		return getService().updateCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcess);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId, String name,
-					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsUnicodeProperties)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			updateCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId, String name,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties)
+		throws PortalException {
 
 		return getService().updateCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId, name,
 			typeSettingsUnicodeProperties);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess
-					updateCommerceDataIntegrationProcessTrigger(
-						long commerceDataIntegrationProcessId, boolean active,
-						String cronExpression, int startDateMonth,
-						int startDateDay, int startDateYear, int startDateHour,
-						int startDateMinute, int endDateMonth, int endDateDay,
-						int endDateYear, int endDateHour, int endDateMinute,
-						boolean neverEnd)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			updateCommerceDataIntegrationProcessTrigger(
+				long commerceDataIntegrationProcessId, boolean active,
+				String cronExpression, int startDateMonth, int startDateDay,
+				int startDateYear, int startDateHour, int startDateMinute,
+				int endDateMonth, int endDateDay, int endDateYear,
+				int endDateHour, int endDateMinute, boolean neverEnd)
+		throws PortalException {
 
 		return getService().updateCommerceDataIntegrationProcessTrigger(
 			commerceDataIntegrationProcessId, active, cronExpression,
@@ -405,30 +381,9 @@ public class CommerceDataIntegrationProcessLocalServiceUtil {
 	}
 
 	public static CommerceDataIntegrationProcessLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDataIntegrationProcessLocalService,
-		 CommerceDataIntegrationProcessLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDataIntegrationProcessLocalService.class);
-
-		ServiceTracker
-			<CommerceDataIntegrationProcessLocalService,
-			 CommerceDataIntegrationProcessLocalService> serviceTracker =
-				new ServiceTracker
-					<CommerceDataIntegrationProcessLocalService,
-					 CommerceDataIntegrationProcessLocalService>(
-						 bundle.getBundleContext(),
-						 CommerceDataIntegrationProcessLocalService.class,
-						 null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDataIntegrationProcessLocalService _service;
 
 }

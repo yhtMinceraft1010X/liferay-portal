@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RenderedContent")
+@GraphQLName(
+	description = "A list of rendered structured content, which results from using a template to process the content and return HTML.",
+	value = "RenderedContent"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RenderedContent")
 public class RenderedContent implements Serializable {
@@ -305,6 +308,7 @@ public class RenderedContent implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RenderedContent",
 		name = "x-class-name"
 	)
@@ -340,7 +344,7 @@ public class RenderedContent implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -379,7 +383,7 @@ public class RenderedContent implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

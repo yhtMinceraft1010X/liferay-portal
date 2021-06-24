@@ -1571,25 +1571,25 @@ public class WorkflowInstanceLinkPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (workflowInstanceLink.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				workflowInstanceLink.setCreateDate(now);
+				workflowInstanceLink.setCreateDate(date);
 			}
 			else {
 				workflowInstanceLink.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!workflowInstanceLinkModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				workflowInstanceLink.setModifiedDate(now);
+				workflowInstanceLink.setModifiedDate(date);
 			}
 			else {
 				workflowInstanceLink.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2264,6 +2264,13 @@ public class WorkflowInstanceLinkPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2276,7 +2283,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2299,8 +2306,19 @@ public class WorkflowInstanceLinkPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				WorkflowInstanceLinkModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

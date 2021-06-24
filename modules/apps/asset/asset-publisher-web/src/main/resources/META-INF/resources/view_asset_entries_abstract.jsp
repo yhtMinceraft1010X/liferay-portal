@@ -54,7 +54,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
 
 	try {
-		String title = assetRenderer.getTitle(locale);
+		String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
 
 		String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
 
@@ -80,11 +80,19 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 							</span>
 						</c:otherwise>
 					</c:choose>
-
-					<span class="d-inline-flex">
-						<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-					</span>
 				</p>
+
+				<liferay-util:buffer
+					var="assetActions"
+				>
+					<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+				</liferay-util:buffer>
+
+				<c:if test="<%= Validator.isNotNull(assetActions) %>">
+					<div class="d-inline-flex">
+						<%= assetActions %>
+					</div>
+				</c:if>
 			</div>
 
 			<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>

@@ -1157,24 +1157,24 @@ public class OAuthConsumerPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (oAuthConsumer.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				oAuthConsumer.setCreateDate(now);
+				oAuthConsumer.setCreateDate(date);
 			}
 			else {
-				oAuthConsumer.setCreateDate(serviceContext.getCreateDate(now));
+				oAuthConsumer.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!oAuthConsumerModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				oAuthConsumer.setModifiedDate(now);
+				oAuthConsumer.setModifiedDate(date);
 			}
 			else {
 				oAuthConsumer.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1613,6 +1613,13 @@ public class OAuthConsumerPersistenceImpl
 						oAuthConsumerModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1624,7 +1631,7 @@ public class OAuthConsumerPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuthConsumerModelImpl oAuthConsumerModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1647,8 +1654,19 @@ public class OAuthConsumerPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= OAuthConsumerModelImpl.getColumnBitmask(
+				"serviceName");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

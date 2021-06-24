@@ -76,7 +76,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseNodeResourceImpl
-	implements NodeResource, EntityModelResource,
+	implements EntityModelResource, NodeResource,
 			   VulcanBatchEngineTaskItemDelegate<Node> {
 
 	/**
@@ -84,8 +84,8 @@ public abstract class BaseNodeResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/nodes")
 	@Produces({"application/json", "application/xml"})
@@ -103,11 +103,11 @@ public abstract class BaseNodeResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes' -d $'{"dateCreated": ___, "dateModified": ___, "id": ___, "initial": ___, "name": ___, "processId": ___, "processVersion": ___, "terminal": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/nodes")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Node")})
 	public Node postProcessNode(
@@ -124,9 +124,8 @@ public abstract class BaseNodeResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -134,6 +133,7 @@ public abstract class BaseNodeResourceImpl
 		}
 	)
 	@Path("/processes/{processId}/nodes/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Node")})
 	public Response postProcessNodeBatch(
@@ -165,8 +165,8 @@ public abstract class BaseNodeResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/{nodeId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -192,7 +192,7 @@ public abstract class BaseNodeResourceImpl
 
 		for (Node node : nodes) {
 			postProcessNode(
-				Long.valueOf((String)parameters.get("processId")), node);
+				Long.parseLong((String)parameters.get("processId")), node);
 		}
 	}
 
@@ -224,7 +224,8 @@ public abstract class BaseNodeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessNodesPage((Long)parameters.get("processId"));
+		return getProcessNodesPage(
+			Long.parseLong((String)parameters.get("processId")));
 	}
 
 	@Override

@@ -73,8 +73,8 @@ public class GoogleDocsDLFileEntryTypeHelper {
 	private DDMStructure _addGoogleDocsDDMStructure() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(_company.getGroupId());
 
 		long defaultUserId = _userLocalService.getDefaultUserId(
@@ -116,8 +116,8 @@ public class GoogleDocsDLFileEntryTypeHelper {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(_company.getGroupId());
 		serviceContext.setUserId(defaultUserId);
 

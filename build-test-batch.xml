@@ -408,6 +408,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 								</then>
 							</if>
 
+							<get-browser-property property.name="browser.docker.image" />
+
+							<if>
+								<isset property="browser.docker.image" />
+								<then>
+									<stop-docker-browser />
+
+									<start-docker-browser />
+								</then>
+							</if>
+
 							<antcall inheritall="false" target="copy-optional-jars">
 								<param name="database.type" value="@{database.type}" />
 								<param name="todir" value="lib/development" />
@@ -434,6 +445,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 									<antcall target="stop-app-server" />
 
 									<delete failonerror="false" file=".testable.portal.started" />
+								</then>
+							</if>
+
+							<get-browser-property property.name="browser.docker.image" />
+
+							<if>
+								<isset property="browser.docker.image" />
+								<then>
+									<stop-docker-browser />
 								</then>
 							</if>
 
@@ -549,7 +569,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<beanshell>
 				<![CDATA[
 					import org.apache.commons.io.FileUtils;
-
 					import org.apache.commons.lang.StringUtils;
 
 					String projectDir = project.getProperty("project.dir");
@@ -942,17 +961,29 @@ mariadb.executable=${mariadb.executable}]]></echo>
 	</macrodef>
 
 	<macrodef name="prepare-suite-search-engine">
-		<attribute name="suite.name" />
-
 		<sequential>
-			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
+			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+			<if>
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+				</then>
+			</if>
 
 			<if>
 				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
-					<property name="com.liferay.portal.search.solr8.test.unit.started" value="true" />
+					<ant antfile="build-test-solr.xml" target="start-solr" />
 
-					<ant antfile="build-test-solr.xml" target="set-up-solr" />
+					<property name="test.batch.name" unless:set="test.batch.name" value="${env.TEST_BATCH_NAME}" />
+
+					<if>
+						<contains string="${test.batch.name}" substring="unit" />
+						<then>
+							<property name="run.solr.unit.tests" value="true" />
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -1414,10 +1445,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 					<lstopwatch action="total" name="run.batch.test.tear.down" />
 
-					<print-gc-logs
-						tomcat.gc.log="@{tomcat.gc.log}"
-						tsant.gc.log="@{tsant.gc.log}"
-					/>
+					<antcall target="print-gc-logs">
+						<param name="tomcat.gc.log" value="@{tomcat.gc.log}" />
+						<param name="tsant.gc.log" value="@{tsant.gc.log}" />
+					</antcall>
 				</finally>
 			</trycatch>
 
@@ -1686,6 +1717,12 @@ app.server.type=@{app.server.type}]]></echo>
 								</gradle-execute>
 
 								<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+
+								<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Dportal.build=true" />
+									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+								</gradle-execute>
 
 								<ant dir="portal-test" inheritAll="false" target="jar" />
 
@@ -2805,7 +2842,11 @@ log.sanitizer.enabled=false</echo>
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
 
-							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home" />
+							<get-test-batch-app-server-start-executable-arg-line />
+
+							<antcall inheritAll="false" target="start-app-server-preserve-liferay-home">
+								<param name="app.server.start.executable.arg.line" value="${test.batch.app.server.start.executable.arg.line}" />
+							</antcall>
 
 							<deploy-release-dependency-modules-post-startup />
 
@@ -2955,12 +2996,7 @@ log.sanitizer.enabled=false</echo>
 						</else>
 					</if>
 
-					<if>
-						<isset property="env.CI_TEST_SUITE" />
-						<then>
-							<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-						</then>
-					</if>
+					<prepare-suite-search-engine />
 
 					<antcall inheritAll="false" target="record-test-class-file-names">
 						<param name="test.class.groups.size" value="${test.batch.size}" />
@@ -3439,6 +3475,13 @@ log.sanitizer.enabled=false</echo>
 
 	<macrodef name="stop-suite-search-engine">
 		<sequential>
+			<if>
+				<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+				</then>
+			</if>
+
 			<if>
 				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
@@ -4282,6 +4325,18 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-db2111-jdk8">
+		<antcall target="functional-bundle-tomcat-db2111-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-hypersonic20-jdk8">
+		<antcall target="functional-bundle-tomcat-hypersonic20-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-mariadb102-jdk8">
+		<antcall target="functional-bundle-tomcat-mariadb102-jdk8" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
@@ -4292,6 +4347,14 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-smoke-bundle-tomcat-mysql57-jdk11_open">
 		<antcall target="functional-bundle-tomcat-mysql57-jdk11_open" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-oracle193-jdk8">
+		<antcall target="functional-bundle-tomcat-oracle193-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-postgresql11-jdk8">
+		<antcall target="functional-bundle-tomcat-postgresql11-jdk8" />
 	</target>
 
 	<target name="functional-smoke-bundle-weblogic-mysql57-jdk8">
@@ -4538,6 +4601,18 @@ log.sanitizer.enabled=false</echo>
 		<run-functional-test app.server.type="wildfly" app.server.version="17.0.0" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
+	<target name="functional-smoke-wildfly220-mariadb104-jdk8">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="22.0.0" />
+
+		<run-functional-test app.server.type="wildfly" app.server.version="22.0.0" database.type="mariadb" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-wildfly220-mariadb104-jdk11_open">
+		<set-app-server-version-number app.server.type="wildfly" app.server.version="22.0.0" />
+
+		<run-functional-test app.server.type="wildfly" app.server.version="22.0.0" database.type="mariadb" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-suse15-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
@@ -4667,6 +4742,10 @@ log.sanitizer.enabled=false</echo>
 	</target>
 
 	<target name="functional-ubuntu18-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-ubuntu20-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
@@ -5713,7 +5792,7 @@ log.sanitizer.enabled=false</echo>
 				<gradle-execute dir="modules" task="test">
 					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg if:set="com.liferay.portal.search.solr8.test.unit.started" value="-Dcom.liferay.portal.search.solr8.test.unit.started=${com.liferay.portal.search.solr8.test.unit.started}" />
+					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
@@ -5723,16 +5802,11 @@ log.sanitizer.enabled=false</echo>
 			<test-set-up>
 				<setup-test-environment />
 
+				<prepare-suite-search-engine />
+
 				<antcall inheritAll="false" target="record-test-class-file-names">
 					<param name="test.class.groups.size" value="${test.batch.size}" />
 				</antcall>
-
-				<if>
-					<isset property="env.CI_TEST_SUITE" />
-					<then>
-						<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-					</then>
-				</if>
 			</test-set-up>
 
 			<test-tear-down>

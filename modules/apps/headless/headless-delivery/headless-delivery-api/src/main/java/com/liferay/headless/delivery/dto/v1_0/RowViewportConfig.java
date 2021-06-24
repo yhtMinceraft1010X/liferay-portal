@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RowViewportConfig")
+@GraphQLName(
+	description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports",
+	value = "RowViewportConfig"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "RowViewportConfig")
 public class RowViewportConfig implements Serializable {
@@ -205,6 +208,7 @@ public class RowViewportConfig implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewportConfig",
 		name = "x-class-name"
 	)
@@ -240,7 +244,7 @@ public class RowViewportConfig implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -279,7 +283,7 @@ public class RowViewportConfig implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

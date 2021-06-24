@@ -507,10 +507,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						if (fileEntryMetadata != null) {
 							ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 						}
-
-						if (ddmFormValues != null) {
 				%>
 
+						<c:if test="<%= ddmFormValues != null %>">
 							<liferay-ui:panel
 								collapsible="<%= true %>"
 								cssClass="lfr-asset-metadata"
@@ -531,9 +530,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									showEmptyFieldLabel="<%= false %>"
 								/>
 							</liferay-ui:panel>
+						</c:if>
 
 				<%
-						}
 					}
 				}
 				catch (Exception e) {

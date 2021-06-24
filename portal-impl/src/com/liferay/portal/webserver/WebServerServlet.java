@@ -982,8 +982,6 @@ public class WebServerServlet extends HttpServlet {
 
 		boolean converted = false;
 
-		String targetExtension = ParamUtil.getString(
-			httpServletRequest, "targetExtension");
 		int imageThumbnail = ParamUtil.getInteger(
 			httpServletRequest, "imageThumbnail");
 		int documentThumbnail = ParamUtil.getInteger(
@@ -1089,6 +1087,9 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else {
+			String targetExtension = ParamUtil.getString(
+				httpServletRequest, "targetExtension");
+
 			inputStream = fileVersion.getContentStream(true);
 			contentLength = fileVersion.getSize();
 

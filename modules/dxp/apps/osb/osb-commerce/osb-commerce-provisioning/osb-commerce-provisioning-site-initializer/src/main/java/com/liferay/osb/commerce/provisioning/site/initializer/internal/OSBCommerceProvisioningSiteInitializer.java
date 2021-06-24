@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
@@ -146,6 +147,8 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 
 			_initializeLayoutFragments(serviceContext);
 
+			_initializeCheckoutPortletLayout(serviceContext);
+
 			_initCommerce(serviceContext);
 		}
 		catch (Exception exception) {
@@ -178,8 +181,8 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 
 			byte[] bytes = null;
 
-			try (InputStream is = url.openStream()) {
-				bytes = FileUtil.getBytes(is);
+			try (InputStream inputStream = url.openStream()) {
+				bytes = FileUtil.getBytes(inputStream);
 			}
 
 			String fileName = FileUtil.getShortFileName(url.getPath());
@@ -383,9 +386,18 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 		}
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
+		String layoutType = layout.getType();
+
+		if (layoutType.equals(LayoutConstants.TYPE_PORTLET)) {
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), layout.getTypeSettings());
+		}
+		else {
+			_layoutLocalService.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), new Date());
+		}
 	}
 
 	private CommerceCatalog _createCatalog(ServiceContext serviceContext)
@@ -456,8 +468,8 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 
 		byte[] bytes = null;
 
-		try (InputStream is = url.openStream()) {
-			bytes = FileUtil.getBytes(is);
+		try (InputStream inputStream = url.openStream()) {
+			bytes = FileUtil.getBytes(inputStream);
 		}
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
@@ -558,6 +570,40 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _initializeCheckoutPortletLayout(ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.addLayout(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "checkout", "Checkout",
+			null, LayoutConstants.TYPE_PORTLET, true, "/checkout",
+			serviceContext);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(
+			0, "osb_commerce_checkout", false);
+
+		layoutTypePortlet.addPortletId(
+			serviceContext.getUserId(),
+			"com_liferay_commerce_checkout_web_internal_portlet_" +
+				"CommerceCheckoutPortlet",
+			"column-1", 0, false);
+
+		layoutTypePortlet.addPortletId(
+			serviceContext.getUserId(),
+			"com_liferay_osb_commerce_provisioning_web_portlet_CheckoutPortlet",
+			"column-2", 0, false);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				_copyLayout(layout);
+
+				return null;
+			});
+	}
+
 	private void _initializeLayoutFragments(ServiceContext serviceContext)
 		throws Exception {
 
@@ -590,10 +636,6 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 		_addLayout(
 			fragmentCollection, layoutPageTemplateCollection, "Billing",
 			"billing", true, serviceContext);
-
-		_addLayout(
-			fragmentCollection, layoutPageTemplateCollection, "Checkout",
-			"checkout", true, serviceContext);
 	}
 
 	private void _updateLogo(ServiceContext serviceContext) throws Exception {
@@ -601,8 +643,8 @@ public class OSBCommerceProvisioningSiteInitializer implements SiteInitializer {
 
 		byte[] bytes = null;
 
-		try (InputStream is = url.openStream()) {
-			bytes = FileUtil.getBytes(is);
+		try (InputStream inputStream = url.openStream()) {
+			bytes = FileUtil.getBytes(inputStream);
 		}
 
 		_layoutSetLocalService.updateLogo(

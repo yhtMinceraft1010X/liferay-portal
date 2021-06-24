@@ -132,6 +132,10 @@ definition {
 	macro configureEmbeddedSearchBar {
 		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(searchScope)) {

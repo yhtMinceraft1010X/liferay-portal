@@ -337,28 +337,24 @@ public class CPInstanceHelperTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
 
-		Map<Long, List<Long>>
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
-				HashMapBuilder.<Long, List<Long>>put(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					() -> {
-						List<CPDefinitionOptionValueRel>
-							cpDefinitionOptionValueRels =
-								cpDefinitionOptionRel.
-									getCPDefinitionOptionValueRels();
-
-						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-							cpDefinitionOptionValueRels.get(0);
-
-						return Arrays.asList(
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId());
-					}
-				).build();
-
 		CPTestUtil.addCPDefinitionCPInstance(
 			cpDefinition.getCPDefinitionId(),
-			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds);
+			HashMapBuilder.<Long, List<Long>>put(
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+				() -> {
+					List<CPDefinitionOptionValueRel>
+						cpDefinitionOptionValueRels =
+							cpDefinitionOptionRel.
+								getCPDefinitionOptionValueRels();
+
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+						cpDefinitionOptionValueRels.get(0);
+
+					return Arrays.asList(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
+				}
+			).build());
 
 		List<CPInstance> approvedCPDefinitionInstances =
 			_cpInstanceLocalService.getCPDefinitionInstances(
@@ -517,6 +513,7 @@ public class CPInstanceHelperTest {
 
 		while (iterator.hasNext()) {
 			String optionKey = iterator.next();
+
 			sb.append(StringPool.OPEN_CURLY_BRACE);
 			sb.append("\"key\":");
 			sb.append(StringPool.QUOTE);

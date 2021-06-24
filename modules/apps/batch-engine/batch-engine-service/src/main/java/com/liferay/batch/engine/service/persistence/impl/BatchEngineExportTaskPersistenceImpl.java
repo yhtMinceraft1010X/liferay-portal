@@ -2029,25 +2029,25 @@ public class BatchEngineExportTaskPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (batchEngineExportTask.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				batchEngineExportTask.setCreateDate(now);
+				batchEngineExportTask.setCreateDate(date);
 			}
 			else {
 				batchEngineExportTask.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!batchEngineExportTaskModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				batchEngineExportTask.setModifiedDate(now);
+				batchEngineExportTask.setModifiedDate(date);
 			}
 			else {
 				batchEngineExportTask.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2580,7 +2580,7 @@ public class BatchEngineExportTaskPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			BatchEngineExportTaskModelImpl batchEngineExportTaskModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2604,8 +2604,8 @@ public class BatchEngineExportTaskPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

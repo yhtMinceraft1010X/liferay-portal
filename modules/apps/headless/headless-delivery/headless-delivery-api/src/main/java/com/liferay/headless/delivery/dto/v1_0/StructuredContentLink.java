@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StructuredContentLink")
+@GraphQLName(
+	description = "A link to structured content on the server.",
+	value = "StructuredContentLink"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StructuredContentLink")
 public class StructuredContentLink implements Serializable {
@@ -254,6 +257,7 @@ public class StructuredContentLink implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.StructuredContentLink",
 		name = "x-class-name"
 	)
@@ -289,7 +293,7 @@ public class StructuredContentLink implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -328,7 +332,7 @@ public class StructuredContentLink implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

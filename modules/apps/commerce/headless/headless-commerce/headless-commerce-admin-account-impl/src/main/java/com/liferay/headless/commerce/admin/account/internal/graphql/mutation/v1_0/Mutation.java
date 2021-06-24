@@ -185,8 +185,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		value = "postAccountByExternalReferenceCodeLogoExternalReferenceCodeMultipartBody",
-		description = "null"
+		description = "null",
+		value = "postAccountByExternalReferenceCodeLogoExternalReferenceCodeMultipartBody"
 	)
 	public Response createAccountByExternalReferenceCodeLogo(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
@@ -235,7 +235,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	@GraphQLName(value = "postAccountLogoIdMultipartBody", description = "null")
+	@GraphQLName(description = "null", value = "postAccountLogoIdMultipartBody")
 	public Response createAccountLogo(
 			@GraphQLName("id") Long id,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)

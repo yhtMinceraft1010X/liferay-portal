@@ -1819,7 +1819,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew &&
 			(commerceNotificationTemplateCommerceAccountGroupRel.
@@ -1827,11 +1827,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 			if (serviceContext == null) {
 				commerceNotificationTemplateCommerceAccountGroupRel.
-					setCreateDate(now);
+					setCreateDate(date);
 			}
 			else {
 				commerceNotificationTemplateCommerceAccountGroupRel.
-					setCreateDate(serviceContext.getCreateDate(now));
+					setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
@@ -1840,11 +1840,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 			if (serviceContext == null) {
 				commerceNotificationTemplateCommerceAccountGroupRel.
-					setModifiedDate(now);
+					setModifiedDate(date);
 			}
 			else {
 				commerceNotificationTemplateCommerceAccountGroupRel.
-					setModifiedDate(serviceContext.getModifiedDate(now));
+					setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2385,6 +2385,13 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 							getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2398,7 +2405,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 				commerceNotificationTemplateCommerceAccountGroupRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -2423,8 +2430,20 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
+					getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

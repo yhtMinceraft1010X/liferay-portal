@@ -220,7 +220,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
-			if (!_assetPublisherWebConfiguration.dynamicExportEnabled()) {
+			if (!_assetPublisherWebConfiguration.dynamicExportEnabled() ||
+				layout.isTypeAssetDisplay()) {
+
 				return;
 			}
 

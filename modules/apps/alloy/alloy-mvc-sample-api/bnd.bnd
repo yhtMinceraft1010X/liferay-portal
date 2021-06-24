@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Alloy MVC Sample API
+Bundle-SymbolicName: com.liferay.alloy.mvc.sample.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.alloy.mvc.sample.exception,\
+	com.liferay.alloy.mvc.sample.model,\
+	com.liferay.alloy.mvc.sample.service,\
+	com.liferay.alloy.mvc.sample.service.persistence

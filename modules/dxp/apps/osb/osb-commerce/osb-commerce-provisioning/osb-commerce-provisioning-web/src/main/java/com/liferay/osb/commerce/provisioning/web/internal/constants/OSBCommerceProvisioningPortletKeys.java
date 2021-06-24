@@ -22,6 +22,9 @@ public class OSBCommerceProvisioningPortletKeys {
 	public static final String BILLING =
 		"com_liferay_osb_commerce_provisioning_web_portlet_BillingPortlet";
 
+	public static final String CHECKOUT =
+		"com_liferay_osb_commerce_provisioning_web_portlet_CheckoutPortlet";
+
 	public static final String PLAN_MANAGEMENT =
 		"com_liferay_osb_commerce_provisioning_web_portlet_" +
 			"PlanManagementPortlet";

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portlet.internal.PortalContextImpl;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletURL;
@@ -47,6 +48,8 @@ import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -57,6 +60,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Cristina González
  */
 public class DLEditFileShortcutDisplayContextTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

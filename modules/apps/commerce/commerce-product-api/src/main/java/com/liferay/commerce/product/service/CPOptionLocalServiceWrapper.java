@@ -150,6 +150,13 @@ public class CPOptionLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _cpOptionLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cpOptionLocalService.dynamicQuery();
 	}
@@ -272,6 +279,19 @@ public class CPOptionLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.product.model.CPOption
+		fetchCPOptionByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _cpOptionLocalService.fetchCPOptionByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPOptionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPOption
 		fetchCPOptionByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -334,6 +354,24 @@ public class CPOptionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpOptionLocalService.getCPOption(companyId, key);
+	}
+
+	/**
+	 * Returns the cp option with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp option's external reference code
+	 * @return the matching cp option
+	 * @throws PortalException if a matching cp option could not be found
+	 */
+	@Override
+	public com.liferay.commerce.product.model.CPOption
+			getCPOptionByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionLocalService.getCPOptionByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

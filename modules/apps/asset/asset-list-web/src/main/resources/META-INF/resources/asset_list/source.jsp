@@ -510,10 +510,11 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 		<%
 		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
-			String className = editAssetListDisplayContext.getClassName(curRendererFactory);
 		%>
 
-			<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);
+			<portlet:namespace />toggle<%= editAssetListDisplayContext.getClassName(curRendererFactory) %>(
+				removeOrderBySubtype
+			);
 
 		<%
 		}

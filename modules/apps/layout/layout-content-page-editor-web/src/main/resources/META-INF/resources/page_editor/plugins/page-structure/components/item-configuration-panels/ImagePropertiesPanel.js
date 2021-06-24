@@ -106,7 +106,11 @@ export function ImagePropertiesPanel({item}) {
 			processorKey
 		);
 
-		return content?.url ?? content;
+		if (typeof content === 'string') {
+			return content;
+		}
+
+		return content?.url;
 	});
 
 	const imageTitle =

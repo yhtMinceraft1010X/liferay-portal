@@ -2289,25 +2289,25 @@ public class SegmentsEntryRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (segmentsEntryRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				segmentsEntryRel.setCreateDate(now);
+				segmentsEntryRel.setCreateDate(date);
 			}
 			else {
 				segmentsEntryRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!segmentsEntryRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				segmentsEntryRel.setModifiedDate(now);
+				segmentsEntryRel.setModifiedDate(date);
 			}
 			else {
 				segmentsEntryRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3042,7 +3042,7 @@ public class SegmentsEntryRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SegmentsEntryRelModelImpl segmentsEntryRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3065,8 +3065,8 @@ public class SegmentsEntryRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

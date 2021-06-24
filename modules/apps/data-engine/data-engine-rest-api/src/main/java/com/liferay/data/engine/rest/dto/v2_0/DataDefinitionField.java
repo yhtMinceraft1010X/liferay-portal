@@ -46,7 +46,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DataDefinitionField")
+@GraphQLName(
+	description = "Represents the value of each field in data definition.",
+	value = "DataDefinitionField"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DataDefinitionField")
 public class DataDefinitionField implements Serializable {
@@ -739,6 +742,7 @@ public class DataDefinitionField implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField",
 		name = "x-class-name"
 	)
@@ -808,7 +812,7 @@ public class DataDefinitionField implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -847,7 +851,7 @@ public class DataDefinitionField implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

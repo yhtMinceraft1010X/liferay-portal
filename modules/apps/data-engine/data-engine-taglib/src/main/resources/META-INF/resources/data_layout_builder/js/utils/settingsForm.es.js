@@ -29,6 +29,7 @@ const getPredefinedValues = ({locale, localizedValue, options}) => {
 export const getFilteredSettingsContext = ({
 	config,
 	editingLanguageId,
+	fieldType,
 	settingsContext,
 }) => {
 	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
@@ -40,9 +41,13 @@ export const getFilteredSettingsContext = ({
 
 	const visitor = new PagesVisitor(pages);
 
+	const unsupportedRepeatableFieldset =
+		fieldType === 'fieldset' ? ['repeatable'] : [];
+
 	const unsupportedProperties = [
 		...config.unimplementedProperties,
 		...config.disabledProperties,
+		...unsupportedRepeatableFieldset,
 	];
 
 	return {

@@ -78,7 +78,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseInstanceResourceImpl
-	implements InstanceResource, EntityModelResource,
+	implements EntityModelResource, InstanceResource,
 			   VulcanBatchEngineTaskItemDelegate<Instance> {
 
 	/**
@@ -86,8 +86,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -132,11 +132,11 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
 	@Path("/processes/{processId}/instances")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
 	public Instance postProcessInstance(
@@ -153,9 +153,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -163,6 +162,7 @@ public abstract class BaseInstanceResourceImpl
 		}
 	)
 	@Path("/processes/{processId}/instances/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "Instance")})
 	public Response postProcessInstanceBatch(
@@ -194,8 +194,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -218,8 +218,8 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
@@ -244,15 +244,15 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.PATH, name = "instanceId")
 		}
 	)
+	@PATCH
 	@Path("/processes/{processId}/instances/{instanceId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
@@ -270,15 +270,15 @@ public abstract class BaseInstanceResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}/complete' -d $'{"assetTitle_i18n": ___, "assetType_i18n": ___, "className": ___, "classPK": ___, "completed": ___, "creator": ___, "dateCompletion": ___, "dateCreated": ___, "dateModified": ___, "duration": ___, "id": ___, "processId": ___, "processVersion": ___, "transitions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
 			@Parameter(in = ParameterIn.PATH, name = "instanceId")
 		}
 	)
+	@PATCH
 	@Path("/processes/{processId}/instances/{instanceId}/complete")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Instance")})
@@ -300,7 +300,7 @@ public abstract class BaseInstanceResourceImpl
 
 		for (Instance instance : instances) {
 			postProcessInstance(
-				Long.valueOf((String)parameters.get("processId")), instance);
+				Long.parseLong((String)parameters.get("processId")), instance);
 		}
 	}
 
@@ -333,12 +333,12 @@ public abstract class BaseInstanceResourceImpl
 		throws Exception {
 
 		return getProcessInstancesPage(
-			(Long)parameters.get("processId"),
+			Long.parseLong((String)parameters.get("processId")),
 			(Long[])parameters.get("assigneeIds"),
 			(Long[])parameters.get("classPKs"),
-			(Boolean)parameters.get("completed"),
-			(java.util.Date)parameters.get("dateEnd"),
-			(java.util.Date)parameters.get("dateStart"),
+			Boolean.parseBoolean((String)parameters.get("completed")),
+			new java.util.Date((String)parameters.get("dateEnd")),
+			new java.util.Date((String)parameters.get("dateStart")),
 			(String[])parameters.get("slaStatuses"),
 			(String[])parameters.get("taskNames"), pagination);
 	}

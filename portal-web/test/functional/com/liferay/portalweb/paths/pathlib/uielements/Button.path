@@ -340,7 +340,7 @@
 </tr>
 <tr>
 	<td>I_AGREE_LOCALIZED</td>
-	<td>//button[contains(.,'${key_localizedAgree}')]</td>
+	<td>//button[contains(.,"${key_localizedAgree}")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -391,6 +391,11 @@
 <tr>
 	<td>LOCALIZATION_GENERIC</td>
 	<td>//div[contains(@class,'form-group')]//div[contains(@class,'localized')]//button[contains(@class,'localized')] | //button[contains(@class,'localized')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCALIZATION_GENERIC_2</td>
+	<td>xpath=(//div[contains(@class,'form-group')]//div[contains(@class,'localized')]//button[contains(@class,'localized')])[2]</td>
 	<td></td>
 </tr>
 <tr>

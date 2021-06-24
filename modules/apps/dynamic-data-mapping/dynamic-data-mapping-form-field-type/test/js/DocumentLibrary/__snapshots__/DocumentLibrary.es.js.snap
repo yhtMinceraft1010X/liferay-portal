@@ -118,13 +118,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
         value="{}"
       />
     </div>
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -292,7 +286,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
 exports[`Field DocumentLibrary has an id 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
+    aria-labelledby="ID_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -502,13 +496,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
         value="{}"
       />
     </div>
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

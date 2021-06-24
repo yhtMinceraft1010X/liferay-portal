@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssigneeBulkSelection")
+@GraphQLName(
+	description = "https://schema.org/AssigneeBulkSelection",
+	value = "AssigneeBulkSelection"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssigneeBulkSelection")
 public class AssigneeBulkSelection implements Serializable {
@@ -133,6 +136,7 @@ public class AssigneeBulkSelection implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection",
 		name = "x-class-name"
 	)
@@ -168,7 +172,7 @@ public class AssigneeBulkSelection implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -207,7 +211,7 @@ public class AssigneeBulkSelection implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

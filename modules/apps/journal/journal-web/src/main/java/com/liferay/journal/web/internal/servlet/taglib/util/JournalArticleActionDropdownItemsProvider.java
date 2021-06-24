@@ -36,7 +36,6 @@ import com.liferay.journal.web.internal.security.permission.resource.JournalArti
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -560,17 +559,16 @@ public class JournalArticleActionDropdownItemsProvider {
 		if (AssetDisplayPageUtil.hasAssetDisplayPage(
 				_themeDisplay.getScopeGroupId(), assetEntry)) {
 
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(
+			String previewURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 					assetEntry.getClassName(), assetEntry.getClassPK(),
-					_themeDisplay));
-			sb.append(StringPool.SLASH);
-			sb.append(_article.getId());
+					_themeDisplay);
+
+			previewURL = HttpUtil.addParameter(
+				previewURL, "p_l_mode", Constants.PREVIEW);
 
 			return HttpUtil.addParameter(
-				sb.toString(), "p_l_mode", Constants.PREVIEW);
+				previewURL, "version", _article.getId());
 		}
 
 		if (Validator.isNull(_article.getDDMTemplateKey())) {

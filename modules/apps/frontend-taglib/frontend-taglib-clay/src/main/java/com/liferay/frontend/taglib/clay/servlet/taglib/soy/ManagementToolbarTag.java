@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -437,8 +438,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		}
 	}
 
-	private Map<String, Object> _getSearchData(String searchActionURL) {
-		Map<String, Object> searchData = new HashMap<>();
+	private Map<String, List<Object>> _getSearchData(String searchActionURL) {
+		Map<String, List<Object>> searchData = new HashMap<>();
 
 		String[] parameters = StringUtil.split(
 			HttpUtil.getQueryString(searchActionURL), CharPool.AMPERSAND);
@@ -457,6 +458,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 			String parameterName = parameterParts[0];
 
+			if (parameterName.contains(StringPool.PERIOD)) {
+				continue;
+			}
+
 			String parameterValue = StringPool.BLANK;
 
 			if (parameterParts.length > 1) {
@@ -465,7 +470,15 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 			parameterValue = HttpUtil.decodeURL(parameterValue);
 
-			searchData.put(parameterName, parameterValue);
+			List<Object> parameterValues = searchData.get(parameterName);
+
+			if (parameterValues == null) {
+				parameterValues = new LinkedList<>();
+
+				searchData.put(parameterName, parameterValues);
+			}
+
+			parameterValues.add(parameterValue);
 		}
 
 		return searchData;

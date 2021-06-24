@@ -22,12 +22,15 @@ import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.test.util.groupby.BaseGroupByTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -35,6 +38,11 @@ import org.junit.Test;
  * @author Tibor Lipusz
  */
 public class GroupByTest extends BaseGroupByTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {
@@ -182,15 +190,14 @@ public class GroupByTest extends BaseGroupByTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest =
+						GroupByRequest groupByRequest1 =
 							groupByRequestFactory.getGroupByRequest(
 								GROUP_FIELD);
-
 						GroupByRequest groupByRequest2 =
 							groupByRequestFactory.getGroupByRequest(SORT_FIELD);
 
 						searchRequestBuilder.groupByRequests(
-							groupByRequest, groupByRequest2);
+							groupByRequest1, groupByRequest2);
 					});
 
 				indexingTestHelper.search();

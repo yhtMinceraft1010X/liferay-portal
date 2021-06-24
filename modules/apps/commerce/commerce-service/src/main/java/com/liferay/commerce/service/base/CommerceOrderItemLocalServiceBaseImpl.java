@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -69,6 +70,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -91,7 +94,7 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceOrderItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceOrderItemLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceOrderItemLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -168,6 +171,13 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceOrderItemPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -271,10 +281,39 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
 	@Override
-	public CommerceOrderItem fetchCommerceOrderItemByReferenceCode(
+	public CommerceOrderItem fetchCommerceOrderItemByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceOrderItemPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceOrderItem fetchCommerceOrderItemByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceOrderItemByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce order item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce order item's external reference code
+	 * @return the matching commerce order item
+	 * @throws PortalException if a matching commerce order item could not be found
+	 */
+	@Override
+	public CommerceOrderItem getCommerceOrderItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceOrderItemPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1436,11 +1475,15 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.model.CommerceOrderItem",
 			commerceOrderItemLocalService);
+
+		_setLocalServiceUtilService(commerceOrderItemLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.model.CommerceOrderItem");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1483,6 +1526,23 @@ public abstract class CommerceOrderItemLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceOrderItemLocalService commerceOrderItemLocalService) {
+
+		try {
+			Field field =
+				CommerceOrderItemLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceOrderItemLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

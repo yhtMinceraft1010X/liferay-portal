@@ -136,6 +136,7 @@ public class FragmentSettingsAllowed implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentSettingsAllowed",
 		name = "x-class-name"
 	)
@@ -171,7 +172,7 @@ public class FragmentSettingsAllowed implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -210,7 +211,7 @@ public class FragmentSettingsAllowed implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

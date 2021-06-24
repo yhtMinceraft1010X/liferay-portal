@@ -169,11 +169,9 @@
 						StringBundler sb = new StringBundler();
 
 						_buildSitesList(rootGroup, group, branchGroups, themeDisplay, 1, displayStyle.equals("list-hierarchy"), true, sb);
-
-						String content = sb.toString();
 						%>
 
-						<%= content %>
+						<%= sb.toString() %>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

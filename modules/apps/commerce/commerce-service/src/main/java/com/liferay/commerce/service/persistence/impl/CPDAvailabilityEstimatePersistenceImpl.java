@@ -2235,25 +2235,25 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpdAvailabilityEstimate.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpdAvailabilityEstimate.setCreateDate(now);
+				cpdAvailabilityEstimate.setCreateDate(date);
 			}
 			else {
 				cpdAvailabilityEstimate.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpdAvailabilityEstimateModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpdAvailabilityEstimate.setModifiedDate(now);
+				cpdAvailabilityEstimate.setModifiedDate(date);
 			}
 			else {
 				cpdAvailabilityEstimate.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2775,7 +2775,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPDAvailabilityEstimateModelImpl cpdAvailabilityEstimateModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2799,8 +2799,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

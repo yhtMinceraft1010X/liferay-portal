@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FormStructure")
+@GraphQLName(
+	description = "https://www.schema.org/FormStructure",
+	value = "FormStructure"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "FormStructure")
 public class FormStructure implements Serializable {
@@ -593,6 +596,7 @@ public class FormStructure implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormStructure",
 		name = "x-class-name"
 	)
@@ -628,7 +632,7 @@ public class FormStructure implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -667,7 +671,7 @@ public class FormStructure implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

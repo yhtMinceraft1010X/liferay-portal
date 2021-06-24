@@ -1382,25 +1382,25 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceAccountOrganizationRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceAccountOrganizationRel.setCreateDate(now);
+				commerceAccountOrganizationRel.setCreateDate(date);
 			}
 			else {
 				commerceAccountOrganizationRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceAccountOrganizationRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceAccountOrganizationRel.setModifiedDate(now);
+				commerceAccountOrganizationRel.setModifiedDate(date);
 			}
 			else {
 				commerceAccountOrganizationRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1884,6 +1884,13 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 							getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1897,7 +1904,7 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceAccountOrganizationRelModelImpl
 				commerceAccountOrganizationRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -1922,8 +1929,20 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceAccountOrganizationRelModelImpl.getColumnBitmask(
+					"userId");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

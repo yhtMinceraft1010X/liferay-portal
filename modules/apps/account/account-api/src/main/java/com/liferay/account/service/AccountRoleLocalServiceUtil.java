@@ -14,9 +14,17 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.account.model.AccountRole;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for AccountRole. This utility wraps
@@ -48,17 +56,15 @@ public class AccountRoleLocalServiceUtil {
 	 * @param accountRole the account role
 	 * @return the account role that was added
 	 */
-	public static com.liferay.account.model.AccountRole addAccountRole(
-		com.liferay.account.model.AccountRole accountRole) {
-
+	public static AccountRole addAccountRole(AccountRole accountRole) {
 		return getService().addAccountRole(accountRole);
 	}
 
-	public static com.liferay.account.model.AccountRole addAccountRole(
+	public static AccountRole addAccountRole(
 			long userId, long accountEntryId, String name,
-			java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			Map<java.util.Locale, String> titleMap,
+			Map<java.util.Locale, String> descriptionMap)
+		throws PortalException {
 
 		return getService().addAccountRole(
 			userId, accountEntryId, name, titleMap, descriptionMap);
@@ -66,7 +72,7 @@ public class AccountRoleLocalServiceUtil {
 
 	public static void associateUser(
 			long accountEntryId, long accountRoleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().associateUser(accountEntryId, accountRoleId, userId);
 	}
@@ -77,18 +83,16 @@ public class AccountRoleLocalServiceUtil {
 	 * @param accountRoleId the primary key for the new account role
 	 * @return the new account role
 	 */
-	public static com.liferay.account.model.AccountRole createAccountRole(
-		long accountRoleId) {
-
+	public static AccountRole createAccountRole(long accountRoleId) {
 		return getService().createAccountRole(accountRoleId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -104,9 +108,8 @@ public class AccountRoleLocalServiceUtil {
 	 * @return the account role that was removed
 	 * @throws PortalException
 	 */
-	public static com.liferay.account.model.AccountRole deleteAccountRole(
-			com.liferay.account.model.AccountRole accountRole)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountRole deleteAccountRole(AccountRole accountRole)
+		throws PortalException {
 
 		return getService().deleteAccountRole(accountRole);
 	}
@@ -122,9 +125,8 @@ public class AccountRoleLocalServiceUtil {
 	 * @return the account role that was removed
 	 * @throws PortalException if a account role with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountRole deleteAccountRole(
-			long accountRoleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountRole deleteAccountRole(long accountRoleId)
+		throws PortalException {
 
 		return getService().deleteAccountRole(accountRoleId);
 	}
@@ -136,23 +138,22 @@ public class AccountRoleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -162,9 +163,7 @@ public class AccountRoleLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -180,9 +179,8 @@ public class AccountRoleLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -200,10 +198,9 @@ public class AccountRoleLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -215,9 +212,7 @@ public class AccountRoleLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -229,21 +224,17 @@ public class AccountRoleLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.account.model.AccountRole fetchAccountRole(
-		long accountRoleId) {
-
+	public static AccountRole fetchAccountRole(long accountRoleId) {
 		return getService().fetchAccountRole(accountRoleId);
 	}
 
-	public static com.liferay.account.model.AccountRole
-		fetchAccountRoleByRoleId(long roleId) {
-
+	public static AccountRole fetchAccountRoleByRoleId(long roleId) {
 		return getService().fetchAccountRoleByRoleId(roleId);
 	}
 
@@ -254,16 +245,14 @@ public class AccountRoleLocalServiceUtil {
 	 * @return the account role
 	 * @throws PortalException if a account role with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountRole getAccountRole(
-			long accountRoleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountRole getAccountRole(long accountRoleId)
+		throws PortalException {
 
 		return getService().getAccountRole(accountRoleId);
 	}
 
-	public static com.liferay.account.model.AccountRole getAccountRoleByRoleId(
-			long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountRole getAccountRoleByRoleId(long roleId)
+		throws PortalException {
 
 		return getService().getAccountRoleByRoleId(roleId);
 	}
@@ -279,21 +268,19 @@ public class AccountRoleLocalServiceUtil {
 	 * @param end the upper bound of the range of account roles (not inclusive)
 	 * @return the range of account roles
 	 */
-	public static java.util.List<com.liferay.account.model.AccountRole>
-		getAccountRoles(int start, int end) {
-
+	public static List<AccountRole> getAccountRoles(int start, int end) {
 		return getService().getAccountRoles(start, end);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountRole>
-			getAccountRoles(long accountEntryId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<AccountRole> getAccountRoles(
+			long accountEntryId, long userId)
+		throws PortalException {
 
 		return getService().getAccountRoles(accountEntryId, userId);
 	}
 
-	public static java.util.List<com.liferay.account.model.AccountRole>
-		getAccountRolesByAccountEntryIds(long[] accountEntryIds) {
+	public static List<AccountRole> getAccountRolesByAccountEntryIds(
+		long[] accountEntryIds) {
 
 		return getService().getAccountRolesByAccountEntryIds(accountEntryIds);
 	}
@@ -332,28 +319,25 @@ public class AccountRoleLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.account.model.AccountRole> searchAccountRoles(
+		<AccountRole> searchAccountRoles(
 			long accountEntryId, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator) {
+			OrderByComparator<?> orderByComparator) {
 
 		return getService().searchAccountRoles(
 			accountEntryId, keywords, start, end, orderByComparator);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<com.liferay.account.model.AccountRole> searchAccountRoles(
+		<AccountRole> searchAccountRoles(
 			long[] accountEntryIds, String keywords, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator) {
+			OrderByComparator<?> orderByComparator) {
 
 		return getService().searchAccountRoles(
 			accountEntryIds, keywords, start, end, orderByComparator);
@@ -361,7 +345,7 @@ public class AccountRoleLocalServiceUtil {
 
 	public static void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().unassociateUser(accountEntryId, accountRoleId, userId);
 	}
@@ -376,32 +360,14 @@ public class AccountRoleLocalServiceUtil {
 	 * @param accountRole the account role
 	 * @return the account role that was updated
 	 */
-	public static com.liferay.account.model.AccountRole updateAccountRole(
-		com.liferay.account.model.AccountRole accountRole) {
-
+	public static AccountRole updateAccountRole(AccountRole accountRole) {
 		return getService().updateAccountRole(accountRole);
 	}
 
 	public static AccountRoleLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AccountRoleLocalService, AccountRoleLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AccountRoleLocalService.class);
-
-		ServiceTracker<AccountRoleLocalService, AccountRoleLocalService>
-			serviceTracker =
-				new ServiceTracker
-					<AccountRoleLocalService, AccountRoleLocalService>(
-						bundle.getBundleContext(),
-						AccountRoleLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountRoleLocalService _service;
 
 }

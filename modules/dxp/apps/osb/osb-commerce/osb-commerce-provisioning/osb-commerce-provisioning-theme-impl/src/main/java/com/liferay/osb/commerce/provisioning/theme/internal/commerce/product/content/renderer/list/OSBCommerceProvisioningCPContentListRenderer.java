@@ -14,6 +14,9 @@
 
 package com.liferay.osb.commerce.provisioning.theme.internal.commerce.product.content.renderer.list;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
@@ -98,7 +101,14 @@ public class OSBCommerceProvisioningCPContentListRenderer
 	}
 
 	private Map<String, Object> _getCPEntriesMap(
-		HttpServletRequest httpServletRequest) {
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		long commerceChannelId = commerceContext.getCommerceChannelId();
 
 		return HashMapBuilder.<String, Object>put(
 			"checkoutURL",
@@ -115,6 +125,20 @@ public class OSBCommerceProvisioningCPContentListRenderer
 			"commerceAccountId",
 			() -> _commerceThemeHttpHelper.getCurrentCommerceAccountId(
 				httpServletRequest)
+		).put(
+			"commerceChannelGroupId",
+			() -> _commerceThemeHttpHelper.getCommerceChannelGroupId(
+				commerceChannelId)
+		).put(
+			"commerceChannelId", commerceChannelId
+		).put(
+			"commerceCurrencyCode",
+			() -> {
+				CommerceCurrency commerceCurrency =
+					commerceContext.getCommerceCurrency();
+
+				return commerceCurrency.getCode();
+			}
 		).put(
 			"cpEntries",
 			() -> {

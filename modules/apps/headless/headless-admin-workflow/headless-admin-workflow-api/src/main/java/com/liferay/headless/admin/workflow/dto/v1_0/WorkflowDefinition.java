@@ -379,6 +379,7 @@ public class WorkflowDefinition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition",
 		name = "x-class-name"
 	)
@@ -414,7 +415,7 @@ public class WorkflowDefinition implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -453,7 +454,7 @@ public class WorkflowDefinition implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

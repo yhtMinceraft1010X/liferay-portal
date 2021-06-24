@@ -53,13 +53,13 @@ public class CurrencyConverterUtil {
 	}
 
 	public static CurrencyConverter getCurrencyConverter(String symbol) {
-		WebCacheItem wci = new CurrencyConverterWebCacheItem(symbol);
+		WebCacheItem webCacheItem = new CurrencyConverterWebCacheItem(symbol);
 
 		String key =
 			CurrencyConverterUtil.class.getName() + StringPool.PERIOD + symbol;
 
 		try {
-			return (CurrencyConverter)WebCachePoolUtil.get(key, wci);
+			return (CurrencyConverter)WebCachePoolUtil.get(key, webCacheItem);
 		}
 		catch (ClassCastException classCastException) {
 			WebCachePoolUtil.remove(key);

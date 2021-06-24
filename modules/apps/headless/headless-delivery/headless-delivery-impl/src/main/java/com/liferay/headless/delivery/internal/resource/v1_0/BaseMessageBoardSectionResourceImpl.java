@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseMessageBoardSectionResourceImpl
-	implements MessageBoardSectionResource, EntityModelResource,
+	implements EntityModelResource, MessageBoardSectionResource,
 			   VulcanBatchEngineTaskItemDelegate<MessageBoardSection> {
 
 	/**
@@ -88,11 +88,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the message board section and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -103,7 +103,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void deleteMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId)
 		throws Exception {
 	}
 
@@ -112,9 +113,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -148,9 +149,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the message board section.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -161,7 +162,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection getMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId)
 		throws Exception {
 
 		return new MessageBoardSection();
@@ -172,23 +174,24 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}' -d $'{"customFields": ___, "description": ___, "parentMessageBoardSectionId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
 		}
 	)
+	@PATCH
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection patchMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -261,12 +264,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}' -d $'{"customFields": ___, "description": ___, "parentMessageBoardSectionId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the message board section with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -274,10 +276,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection putMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -289,14 +293,14 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/message-board-sections/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Response putMessageBoardSectionBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -326,7 +330,6 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -334,10 +337,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void putMessageBoardSectionSubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId)
 		throws Exception {
 	}
 
@@ -347,7 +352,6 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
@@ -355,10 +359,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	)
 	@Path("/message-board-sections/{messageBoardSectionId}/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public void putMessageBoardSectionUnsubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+			@PathParam("messageBoardSectionId")
+			Long messageBoardSectionId)
 		throws Exception {
 	}
 
@@ -367,11 +373,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{parentMessageBoardSectionId}/message-board-sections'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -392,8 +398,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("parentMessageBoardSectionId") Long
-					parentMessageBoardSectionId,
+				@PathParam("parentMessageBoardSectionId")
+				Long parentMessageBoardSectionId,
 				@Parameter(hidden = true) @QueryParam("search") String search,
 				@Context com.liferay.portal.vulcan.aggregation.Aggregation
 					aggregation,
@@ -409,12 +415,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{parentMessageBoardSectionId}/message-board-sections' -d $'{"customFields": ___, "description": ___, "parentMessageBoardSectionId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a new message board section in the parent section."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -425,12 +430,13 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path(
 		"/message-board-sections/{parentMessageBoardSectionId}/message-board-sections"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postMessageBoardSectionMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("parentMessageBoardSectionId") Long
-				parentMessageBoardSectionId,
+			@PathParam("parentMessageBoardSectionId")
+			Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
 		throws Exception {
 
@@ -442,11 +448,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-sections'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's message board sections. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -479,12 +485,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-sections' -d $'{"customFields": ___, "description": ___, "parentMessageBoardSectionId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new message board section.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/message-board-sections")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public MessageBoardSection postSiteMessageBoardSection(
@@ -500,9 +506,8 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/message-board-sections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -510,6 +515,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/message-board-sections/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
 	public Response postSiteMessageBoardSectionBatch(
@@ -544,7 +550,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 		for (MessageBoardSection messageBoardSection : messageBoardSections) {
 			postSiteMessageBoardSection(
-				Long.valueOf((String)parameters.get("siteId")),
+				Long.parseLong((String)parameters.get("siteId")),
 				messageBoardSection);
 		}
 	}
@@ -582,8 +588,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		throws Exception {
 
 		return getSiteMessageBoardSectionsPage(
-			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, null, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -617,8 +624,9 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		for (MessageBoardSection messageBoardSection : messageBoardSections) {
 			putMessageBoardSection(
 				messageBoardSection.getId() != null ?
-				messageBoardSection.getId() :
-				(Long)parameters.get("messageBoardSectionId"),
+					messageBoardSection.getId() :
+						Long.parseLong(
+							(String)parameters.get("messageBoardSectionId")),
 				messageBoardSection);
 		}
 	}

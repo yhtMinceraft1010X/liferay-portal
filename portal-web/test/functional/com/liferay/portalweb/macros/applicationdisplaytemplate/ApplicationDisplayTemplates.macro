@@ -164,6 +164,14 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro editADTScript {
+		Type.sendKeysAceEditor(
+			locator1 = "TextArea#ACE_EDITOR",
+			value1 = "${adtScript}");
+
+		PortletEntry.save();
+	}
+
 	macro editWidgetTemplate {
 		SiteAdmin.viewPortletTitle(portletTitle = "${oldWidgetTemplateName}");
 
@@ -190,6 +198,14 @@ definition {
 
 	macro openWidgetTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet");
+	}
+
+	macro searchGlobalADT {
+		Search.searchCP(searchTerm = "${templateName}");
+
+		AssertTextEquals(
+			locator1 = "ApplicationDisplayTemplates#ADT_TABLE_NAME_1",
+			value1 = "${templateName}");
 	}
 
 	macro selectPortletADT {

@@ -57,6 +57,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.net.URI;
@@ -405,8 +406,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Navigate to Control Panel > Configuration > Gogo Shell and " +
-					"enter \"lb\" to see all bundles");
+				"Navigate to Control Panel > System > Gogo Shell and enter " +
+					"\"lb\" to see all bundles");
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -1290,7 +1291,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if ((boolean)canTransformURLMethod.invoke(
 					configurationFileInstaller, file)) {
 
-				transformURLMethod.invoke(configurationFileInstaller, file);
+				try {
+					transformURLMethod.invoke(configurationFileInstaller, file);
+				}
+				catch (InvocationTargetException invocationTargetException) {
+					_log.error(
+						"Unable to install " + file, invocationTargetException);
+				}
 			}
 		}
 	}

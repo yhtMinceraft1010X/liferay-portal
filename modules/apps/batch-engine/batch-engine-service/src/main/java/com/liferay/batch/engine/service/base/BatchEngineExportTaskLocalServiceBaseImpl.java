@@ -17,6 +17,7 @@ package com.liferay.batch.engine.service.base;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineExportTaskContentBlobModel;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.batch.engine.service.persistence.BatchEngineExportTaskPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -57,6 +58,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.sql.Blob;
 
 import java.util.List;
@@ -64,6 +67,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -85,7 +89,7 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>BatchEngineExportTaskLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>BatchEngineExportTaskLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>BatchEngineExportTaskLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -163,6 +167,13 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return batchEngineExportTaskPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -568,6 +579,11 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 		}
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -580,6 +596,8 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		batchEngineExportTaskLocalService =
 			(BatchEngineExportTaskLocalService)aopProxy;
+
+		_setLocalServiceUtilService(batchEngineExportTaskLocalService);
 	}
 
 	/**
@@ -622,6 +640,23 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService) {
+
+		try {
+			Field field =
+				BatchEngineExportTaskLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, batchEngineExportTaskLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

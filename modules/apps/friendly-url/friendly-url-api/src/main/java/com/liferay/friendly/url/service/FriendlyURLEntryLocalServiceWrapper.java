@@ -207,6 +207,13 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _friendlyURLEntryLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _friendlyURLEntryLocalService.dynamicQuery();
 	}
@@ -555,12 +562,26 @@ public class FriendlyURLEntryLocalServiceWrapper
 		return _friendlyURLEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getUniqueUrlTitle(long, long, long, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
 			groupId, classNameId, classPK, urlTitle);
+	}
+
+	@Override
+	public String getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String urlTitle,
+		String languageId) {
+
+		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			groupId, classNameId, classPK, urlTitle, languageId);
 	}
 
 	@Override

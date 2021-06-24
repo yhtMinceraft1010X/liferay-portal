@@ -19,6 +19,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
       />
       <div
         class="input-group clay-color"
+        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"
@@ -28,7 +29,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
           >
             <button
               aria-label="Select a color"
-              class="btn clay-color-btn dropdown-toggle"
+              class="clay-color-btn dropdown-toggle btn"
               disabled=""
               style="background: rgb(0, 0, 0);"
               title="000000"
@@ -78,6 +79,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       />
       <div
         class="input-group clay-color"
+        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"
@@ -87,7 +89,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
           >
             <button
               aria-label="Select a color"
-              class="btn clay-color-btn dropdown-toggle"
+              class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
               title="000000"
               type="button"
@@ -152,6 +154,7 @@ exports[`Field Color Picker renders field with label 1`] = `
       />
       <div
         class="input-group clay-color"
+        style=""
       >
         <div
           class="input-group-item input-group-item-shrink input-group-prepend"
@@ -161,7 +164,7 @@ exports[`Field Color Picker renders field with label 1`] = `
           >
             <button
               aria-label="Select a color"
-              class="btn clay-color-btn dropdown-toggle"
+              class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
               title="000000"
               type="button"
@@ -195,8 +198,6 @@ exports[`Field Color Picker renders field with label 1`] = `
       class="sr-only"
       id="colorPicker_fieldDetails"
     >
-      label
-      <br />
       Helptext
       <br />
     </span>

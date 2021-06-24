@@ -48,7 +48,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Role")
+@GraphQLName(
+	description = "Represents a relationship between a user and a company or site. This follows the [`Role`](https://www.schema.org/Role) specification.",
+	value = "Role"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Role")
 public class Role implements Serializable {
@@ -516,6 +519,7 @@ public class Role implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Role",
 		name = "x-class-name"
 	)
@@ -551,7 +555,7 @@ public class Role implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -590,7 +594,7 @@ public class Role implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

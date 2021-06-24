@@ -3720,25 +3720,25 @@ public class DDMDataProviderInstancePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (ddmDataProviderInstance.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				ddmDataProviderInstance.setCreateDate(now);
+				ddmDataProviderInstance.setCreateDate(date);
 			}
 			else {
 				ddmDataProviderInstance.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!ddmDataProviderInstanceModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				ddmDataProviderInstance.setModifiedDate(now);
+				ddmDataProviderInstance.setModifiedDate(date);
 			}
 			else {
 				ddmDataProviderInstance.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4542,7 +4542,7 @@ public class DDMDataProviderInstancePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4566,8 +4566,8 @@ public class DDMDataProviderInstancePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

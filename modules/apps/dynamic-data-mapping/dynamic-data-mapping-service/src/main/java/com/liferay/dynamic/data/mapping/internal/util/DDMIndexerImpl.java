@@ -53,6 +53,13 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.NestedSort;
+import com.liferay.portal.search.sort.Sort;
+import com.liferay.portal.search.sort.SortBuilderFactory;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 
 import java.io.Serializable;
 
@@ -160,17 +167,124 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	@Override
+	public Sort createDDMStructureFieldSort(
+			DDMStructure ddmStructure, String fieldName, Locale locale,
+			SortOrder sortOrder)
+		throws PortalException {
+
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
+
+		if (GetterUtil.getBoolean(ddmFormField.getProperty("localizable"))) {
+			if (locale == null) {
+				throw new IllegalArgumentException(
+					"Locale cannot be null if the dynamic data mapping form " +
+						"field is localizable");
+			}
+		}
+		else {
+			locale = null;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			sb.append(
+				encodeName(ddmStructure.getStructureId(), fieldName, locale));
+		}
+		else {
+			sb.append(DDMIndexer.DDM_FIELD_ARRAY);
+			sb.append(StringPool.PERIOD);
+
+			String indexType = ddmStructure.getFieldProperty(
+				fieldName, "indexType");
+
+			sb.append(getValueFieldName(indexType, locale));
+		}
+
+		sb.append(StringPool.UNDERLINE);
+
+		String ddmFormFieldType = ddmFormField.getType();
+
+		if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
+			Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
+			Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER) ||
+			Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMERIC)) {
+
+			sb.append("Number");
+		}
+		else {
+			sb.append("String");
+		}
+
+		FieldSort fieldSort = sorts.field(
+			com.liferay.portal.kernel.search.Field.getSortableFieldName(
+				sb.toString()),
+			sortOrder);
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			return fieldSort;
+		}
+
+		NestedSort nestedSort = sorts.nested(DDMIndexer.DDM_FIELD_ARRAY);
+
+		nestedSort.setFilterQuery(
+			queries.term(
+				StringBundler.concat(
+					DDMIndexer.DDM_FIELD_ARRAY, StringPool.PERIOD,
+					DDMIndexer.DDM_FIELD_NAME),
+				encodeName(ddmStructure.getStructureId(), fieldName, locale)));
+
+		fieldSort.setNestedSort(nestedSort);
+
+		return fieldSort;
+	}
+
+	@Override
+	public Sort createDDMStructureFieldSort(
+			String ddmStructureFieldName, Locale locale, SortOrder sortOrder)
+		throws PortalException {
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
+
+		long ddmStructureId = GetterUtil.getLong(ddmStructureFieldNameParts[2]);
+
+		String fieldName = StringUtil.replaceLast(
+			ddmStructureFieldNameParts[3],
+			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
+			StringPool.BLANK);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		return createDDMStructureFieldSort(
+			ddmStructure, fieldName, locale, sortOrder);
+	}
+
+	public QueryFilter createFieldValueQueryFilter(
+			DDMStructure ddmStructure, String fieldName, Locale locale,
+			Serializable value)
+		throws Exception {
+
+		String indexType = ddmStructure.getFieldProperty(
+			fieldName, "indexType");
+
+		return createFieldValueQueryFilter(
+			ddmStructure,
+			encodeName(ddmStructure.getStructureId(), fieldName, locale), value,
+			fieldName, indexType, locale);
+	}
+
+	@Override
 	public QueryFilter createFieldValueQueryFilter(
 			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
 			Locale locale)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
 		String[] ddmStructureFieldNameParts = StringUtil.split(
 			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
 
-		DDMStructure structure = _ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 		String fieldName = StringUtil.replaceLast(
@@ -178,34 +292,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
 			StringPool.BLANK);
 
-		if (structure.hasField(fieldName)) {
-			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
-				ddmStructureFieldValue, structure.getFieldType(fieldName));
-		}
-
-		if (ddmStructureFieldValue instanceof String[]) {
-			String[] ddmStructureFieldValueArray =
-				(String[])ddmStructureFieldValue;
-
-			for (String ddmStructureFieldValueString :
-					ddmStructureFieldValueArray) {
-
-				addFieldValueRequiredTerm(
-					booleanQuery, ddmStructureFieldName,
-					ddmStructureFieldValueString, locale);
-			}
-		}
-		else {
-			addFieldValueRequiredTerm(
-				booleanQuery, ddmStructureFieldName,
-				String.valueOf(ddmStructureFieldValue), locale);
-		}
-
-		if (isLegacyDDMIndexFieldsEnabled()) {
-			return new QueryFilter(booleanQuery);
-		}
-
-		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
+		return createFieldValueQueryFilter(
+			ddmStructure, ddmStructureFieldName, ddmStructureFieldValue,
+			fieldName, ddmStructureFieldNameParts[1], locale);
 	}
 
 	@Override
@@ -374,7 +463,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	protected void addFieldValueRequiredTerm(
 		BooleanQuery booleanQuery, String ddmStructureFieldName,
-		String ddmStructureFieldValue, Locale locale) {
+		String ddmStructureFieldValue, String indexType, Locale locale) {
 
 		if (isLegacyDDMIndexFieldsEnabled()) {
 			booleanQuery.addRequiredTerm(
@@ -384,19 +473,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 			return;
 		}
 
-		String[] ddmStructureFieldNameParts = StringUtil.split(
-			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
-
-		String valueFieldName = getValueFieldName(
-			ddmStructureFieldNameParts[1], locale);
-
 		booleanQuery.addRequiredTerm(
 			StringBundler.concat(
 				DDM_FIELD_ARRAY, StringPool.PERIOD, DDM_FIELD_NAME),
 			ddmStructureFieldName);
 		booleanQuery.addRequiredTerm(
 			StringBundler.concat(
-				DDM_FIELD_ARRAY, StringPool.PERIOD, valueFieldName),
+				DDM_FIELD_ARRAY, StringPool.PERIOD,
+				getValueFieldName(indexType, locale)),
 			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 	}
 
@@ -557,6 +641,44 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return ddmField;
 	}
 
+	protected QueryFilter createFieldValueQueryFilter(
+			DDMStructure ddmStructure, String ddmStructureFieldName,
+			Serializable ddmStructureFieldValue, String fieldName,
+			String indexType, Locale locale)
+		throws Exception {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		if (ddmStructure.hasField(fieldName)) {
+			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
+				ddmStructureFieldValue, ddmStructure.getFieldType(fieldName));
+		}
+
+		if (ddmStructureFieldValue instanceof String[]) {
+			String[] ddmStructureFieldValueArray =
+				(String[])ddmStructureFieldValue;
+
+			for (String ddmStructureFieldValueString :
+					ddmStructureFieldValueArray) {
+
+				addFieldValueRequiredTerm(
+					booleanQuery, ddmStructureFieldName,
+					ddmStructureFieldValueString, indexType, locale);
+			}
+		}
+		else {
+			addFieldValueRequiredTerm(
+				booleanQuery, ddmStructureFieldName,
+				String.valueOf(ddmStructureFieldValue), indexType, locale);
+		}
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			return new QueryFilter(booleanQuery);
+		}
+
+		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
+	}
+
 	protected String encodeName(
 		long ddmStructureId, String fieldName, Locale locale,
 		String indexType) {
@@ -617,7 +739,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 	}
 
 	@Reference
+	protected Queries queries;
+
+	@Reference
 	protected SearchEngineInformation searchEngineInformation;
+
+	@Reference
+	protected SortBuilderFactory sortBuilderFactory;
+
+	@Reference
+	protected Sorts sorts;
 
 	private void _createSortableTextField(
 		Document document, String name, String sortableValueString) {

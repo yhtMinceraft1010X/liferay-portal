@@ -201,6 +201,9 @@ public interface CommerceTierPriceEntryLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -286,6 +289,15 @@ public interface CommerceTierPriceEntryLocalService
 	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTierPriceEntry
+		fetchCommerceTierPriceEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceTierPriceEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
@@ -357,6 +369,20 @@ public interface CommerceTierPriceEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
 			long commerceTierPriceEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns the commerce tier price entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce tier price entry's external reference code
+	 * @return the matching commerce tier price entry
+	 * @throws PortalException if a matching commerce tier price entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTierPriceEntry
+			getCommerceTierPriceEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

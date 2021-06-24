@@ -31,7 +31,7 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 	<c:when test="<%= cpInstance != null %>">
 		<commerce-ui:add-to-cart
 			CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
-			id="<%= PortalUtil.generateRandomKey(request, "add-to-cart") %>"
+			id='<%= PortalUtil.generateRandomKey(request, "add-to-cart") %>'
 		/>
 	</c:when>
 	<c:otherwise>

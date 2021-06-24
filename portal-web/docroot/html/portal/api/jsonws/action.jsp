@@ -114,10 +114,7 @@ String signature = ParamUtil.getString(request, "signature");
 		<div class="lfr-api-parameters lfr-api-section">
 			<h3><liferay-ui:message key="parameters" /></h3>
 
-			<%
-			if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-			%>
-
+			<c:if test="<%= PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED %>">
 				<div class="lfr-api-param">
 					<span class="lfr-api-param-name">
 						p_auth
@@ -130,10 +127,9 @@ String signature = ParamUtil.getString(request, "signature");
 						authentication token used to validate the request
 					</p>
 				</div>
+			</c:if>
 
 			<%
-			}
-
 			MethodParameter[] methodParameters = jsonWebServiceActionMapping.getMethodParameters();
 
 			for (int i = 0; i < methodParameters.length; i++) {
@@ -305,16 +301,11 @@ String signature = ParamUtil.getString(request, "signature");
 			</aui:script>
 
 			<aui:form action="<%= jsonWSPath + jsonWebServiceActionMapping.getPath() %>" enctype="<%= enctype %>" method="<%= jsonWebServiceActionMapping.getMethod() %>" name="execute">
-
-				<%
-				if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-				%>
-
+				<c:if test="<%= PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED %>">
 					<aui:input id='<%= "field" + methodParameters.length %>' label="p_auth" name="p_auth" readonly="true" suffix="String" value="<%= AuthTokenUtil.getToken(request) %>" />
+				</c:if>
 
 				<%
-				}
-
 				for (int i = 0; i < methodParameters.length; i++) {
 					MethodParameter methodParameter = methodParameters[i];
 
@@ -334,47 +325,54 @@ String signature = ParamUtil.getString(request, "signature");
 					else {
 						methodParameterTypeClassName = methodParameterTypeClass.getName();
 					}
-
-					if (methodParameterTypeClass.equals(File.class)) {
 				%>
 
-						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" suffix="<%= methodParameterTypeClassName %>" type="file" />
+					<c:choose>
+						<c:when test="<%= methodParameterTypeClass.equals(File.class) %>">
+	
+	
+							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" suffix="<%= methodParameterTypeClassName %>" type="file" />
+	
+	
+						</c:when>
+	
+						<c:when test="<%= methodParameterTypeClass.equals(boolean.class) || methodParameterTypeClass.equals(Boolean.class) %>">
+	
+	
+							<aui:field-wrapper label="<%= methodParameterName %>">
+								<aui:input checked="<%= true %>" id='<%= "fieldTrue" + i %>' inlineField="<%= true %>" label="<%= Boolean.TRUE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= true %>" />
+	
+								<aui:input id='<%= "fieldFalse" + i %>' inlineField="<%= true %>" label="<%= Boolean.FALSE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= false %>" />
+	
+								<span class="suffix"><%= methodParameterTypeClassName %></span>
+							</aui:field-wrapper>
+	
+	
+						</c:when>
+	
+						<c:when test="<%= methodParameterTypeClass.isArray() || methodParameterTypeClass.isEnum() || methodParameterTypeClass.isPrimitive() || methodParameterTypeClass.equals(Byte.class) || methodParameterTypeClass.equals(Character.class) || methodParameterTypeClass.equals(Date.class) || methodParameterTypeClass.equals(Double.class) || methodParameterTypeClass.equals(Float.class) || methodParameterTypeClass.equals(Integer.class) || methodParameterTypeClass.equals(List.class) || methodParameterTypeClass.equals(Locale.class) || methodParameterTypeClass.equals(Long.class) || methodParameterTypeClass.equals(Map.class) || methodParameterTypeClass.equals(Short.class) || methodParameterTypeClass.equals(String.class) || methodParameterTypeClass.equals(Void.class) %>">
 
-					<%
-					}
-					else if (methodParameterTypeClass.equals(boolean.class) || methodParameterTypeClass.equals(Boolean.class)) {
-					%>
+							<%
+							int size = 10;
 
-						<aui:field-wrapper label="<%= methodParameterName %>">
-							<aui:input checked="<%= true %>" id='<%= "fieldTrue" + i %>' inlineField="<%= true %>" label="<%= Boolean.TRUE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= true %>" />
-
-							<aui:input id='<%= "fieldFalse" + i %>' inlineField="<%= true %>" label="<%= Boolean.FALSE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= false %>" />
-
-							<span class="suffix"><%= methodParameterTypeClassName %></span>
-						</aui:field-wrapper>
-
-					<%
-					}
-					else if (methodParameterTypeClass.isArray() || methodParameterTypeClass.isEnum() || methodParameterTypeClass.isPrimitive() || methodParameterTypeClass.equals(Byte.class) || methodParameterTypeClass.equals(Character.class) || methodParameterTypeClass.equals(Date.class) || methodParameterTypeClass.equals(Double.class) || methodParameterTypeClass.equals(Float.class) || methodParameterTypeClass.equals(Integer.class) || methodParameterTypeClass.equals(List.class) || methodParameterTypeClass.equals(Locale.class) || methodParameterTypeClass.equals(Long.class) || methodParameterTypeClass.equals(Map.class) || methodParameterTypeClass.equals(Short.class) || methodParameterTypeClass.equals(String.class) || methodParameterTypeClass.equals(Void.class)) {
-						int size = 10;
-
-						if (methodParameterTypeClass.equals(String.class)) {
-							size = 60;
-						}
-					%>
-
-						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" rows="1" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" type="textarea" />
-
-					<%
-					}
-					else {
-					%>
-
-						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name='<%= "+" + methodParameterName %>' size="<%= 10 %>" suffix="<%= methodParameterTypeClassName %>" />
-
-					<%
-					}
-					%>
+							if (methodParameterTypeClass.equals(String.class)) {
+								size = 60;
+							}
+							%>
+	
+							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" rows="1" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" type="textarea" />
+	
+	
+						</c:when>
+	
+						<c:otherwise>
+	
+	
+							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name='<%= "+" + methodParameterName %>' size="<%= 10 %>" suffix="<%= methodParameterTypeClassName %>" />
+	
+	
+						</c:otherwise>
+					</c:choose>
 
 					<aui:script>
 

@@ -1663,25 +1663,25 @@ public class CommerceOrderNotePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceOrderNote.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceOrderNote.setCreateDate(now);
+				commerceOrderNote.setCreateDate(date);
 			}
 			else {
 				commerceOrderNote.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceOrderNoteModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceOrderNote.setModifiedDate(now);
+				commerceOrderNote.setModifiedDate(date);
 			}
 			else {
 				commerceOrderNote.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2150,6 +2150,13 @@ public class CommerceOrderNotePersistenceImpl
 						commerceOrderNoteModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2162,7 +2169,7 @@ public class CommerceOrderNotePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceOrderNoteModelImpl commerceOrderNoteModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2185,8 +2192,19 @@ public class CommerceOrderNotePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceOrderNoteModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

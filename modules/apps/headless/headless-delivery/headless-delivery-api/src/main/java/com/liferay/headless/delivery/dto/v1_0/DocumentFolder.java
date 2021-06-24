@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DocumentFolder")
+@GraphQLName(
+	description = "Represents a document folder that can contain documents and other folders.",
+	value = "DocumentFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a document folder that can contain documents and other folders."
+	description = "Represents a document folder that can contain documents and other folders.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "DocumentFolder")
 public class DocumentFolder implements Serializable {
@@ -723,6 +726,7 @@ public class DocumentFolder implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DocumentFolder",
 		name = "x-class-name"
 	)
@@ -792,7 +796,7 @@ public class DocumentFolder implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -831,7 +835,7 @@ public class DocumentFolder implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

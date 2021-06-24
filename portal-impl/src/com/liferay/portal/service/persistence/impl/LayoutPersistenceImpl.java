@@ -15663,23 +15663,23 @@ public class LayoutPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (layout.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				layout.setCreateDate(now);
+				layout.setCreateDate(date);
 			}
 			else {
-				layout.setCreateDate(serviceContext.getCreateDate(now));
+				layout.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!layoutModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				layout.setModifiedDate(now);
+				layout.setModifiedDate(date);
 			}
 			else {
-				layout.setModifiedDate(serviceContext.getModifiedDate(now));
+				layout.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -16784,6 +16784,13 @@ public class LayoutPersistenceImpl
 						columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -16795,7 +16802,7 @@ public class LayoutPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutModelImpl layoutModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -16816,8 +16823,21 @@ public class LayoutPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= LayoutModelImpl.getColumnBitmask(
+				"parentLayoutId");
+			orderByColumnsBitmask |= LayoutModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.osb.commerce.provisioning.internal.cloud.client;
 
-import com.liferay.osb.commerce.provisioning.configuration.ApplicationProfile;
 import com.liferay.osb.commerce.provisioning.configuration.OSBCommerceProvisioningConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry;
@@ -40,16 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DXPCloudClientClientFactory {
 
 	public DXPCloudProvisioningClient getDXPCloudClient() {
-		if (_osbCommerceProvisioningConfiguration.applicationProfile() ==
-				ApplicationProfile.DEVELOPMENT) {
-
-			return new DXPCloudProvisioningClientMockImpl(
-				_companyLocalService, _portal,
-				_portalInstanceInitializerRegistry,
-				_portalInstancesLocalService, _roleLocalService,
-				_userLocalService);
-		}
-
 		return new DXPCloudProvisioningClientImpl(
 			_osbCommerceProvisioningConfiguration.dxpCloudAPIURL(),
 			_osbCommerceProvisioningConfiguration.dxpCloudAPIPassword(),

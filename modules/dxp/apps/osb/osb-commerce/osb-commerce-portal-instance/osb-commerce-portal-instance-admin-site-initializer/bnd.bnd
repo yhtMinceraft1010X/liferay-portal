@@ -1,4 +1,0 @@
-Bundle-Name: Liferay OSB Commerce Portal Instance Admin Site Initializer
-Bundle-SymbolicName: com.liferay.osb.commerce.portal.instance.admin.site.initializer
-Bundle-Version: 1.0.0
-Web-ContextPath: /osb-commerce-portal-instance-admin-site-initializer

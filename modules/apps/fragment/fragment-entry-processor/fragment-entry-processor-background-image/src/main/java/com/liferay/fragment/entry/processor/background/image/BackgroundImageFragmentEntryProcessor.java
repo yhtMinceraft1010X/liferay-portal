@@ -112,32 +112,12 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
-					fragmentEntryProcessorContext.getMode())) {
+			Object fieldValue = _getFieldValue(
+				editableValueJSONObject, infoDisplaysFieldValues,
+				fragmentEntryProcessorContext);
 
-				String mappedField = editableValueJSONObject.getString(
-					"mappedField");
-
-				Optional<Map<String, Object>> fieldValuesOptional =
-					fragmentEntryProcessorContext.getFieldValuesOptional();
-
-				Map<String, Object> fieldValues = fieldValuesOptional.orElse(
-					new HashMap<>());
-
-				value = _getImageURL(fieldValues.get(mappedField));
-			}
-
-			if (_fragmentEntryProcessorHelper.isMapped(
-					editableValueJSONObject)) {
-
-				Object fieldValue =
-					_fragmentEntryProcessorHelper.getMappedValue(
-						editableValueJSONObject, infoDisplaysFieldValues,
-						fragmentEntryProcessorContext);
-
-				if (fieldValue != null) {
-					value = _getImageURL(fieldValue);
-				}
+			if (fieldValue != null) {
+				value = _getImageURL(fieldValue);
 			}
 
 			if (Validator.isNull(value)) {
@@ -216,6 +196,43 @@ public class BackgroundImageFragmentEntryProcessor
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private Object _getFieldValue(
+			JSONObject editableValueJSONObject,
+			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
+				fragmentEntryProcessorContext.getMode())) {
+
+			String mappedField = editableValueJSONObject.getString(
+				"mappedField");
+
+			Optional<Map<String, Object>> fieldValuesOptional =
+				fragmentEntryProcessorContext.getFieldValuesOptional();
+
+			Map<String, Object> fieldValues = fieldValuesOptional.orElse(
+				new HashMap<>());
+
+			return fieldValues.get(mappedField);
+		}
+		else if (_fragmentEntryProcessorHelper.isMapped(
+					editableValueJSONObject)) {
+
+			return _fragmentEntryProcessorHelper.getMappedValue(
+				editableValueJSONObject, infoDisplaysFieldValues,
+				fragmentEntryProcessorContext);
+		}
+		else if (_fragmentEntryProcessorHelper.isMappedCollection(
+					editableValueJSONObject)) {
+
+			return _fragmentEntryProcessorHelper.getMappedCollectionValue(
+				editableValueJSONObject, fragmentEntryProcessorContext);
+		}
+
+		return null;
 	}
 
 	private String _getImageURL(Object fieldValue) {

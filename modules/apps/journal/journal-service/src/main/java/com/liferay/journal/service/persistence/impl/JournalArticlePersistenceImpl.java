@@ -32678,11 +32678,21 @@ public class JournalArticlePersistenceImpl
 				continue;
 			}
 
-			if (entityCache.getResult(
-					JournalArticleImpl.class, journalArticle.getPrimaryKey()) ==
-						null) {
+			JournalArticle cachedJournalArticle =
+				(JournalArticle)entityCache.getResult(
+					JournalArticleImpl.class, journalArticle.getPrimaryKey());
 
+			if (cachedJournalArticle == null) {
 				cacheResult(journalArticle);
+			}
+			else {
+				JournalArticleModelImpl journalArticleModelImpl =
+					(JournalArticleModelImpl)journalArticle;
+				JournalArticleModelImpl cachedJournalArticleModelImpl =
+					(JournalArticleModelImpl)cachedJournalArticle;
+
+				journalArticleModelImpl.setDocument(
+					cachedJournalArticleModelImpl.getDocument());
 			}
 		}
 	}
@@ -32910,24 +32920,25 @@ public class JournalArticlePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (journalArticle.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				journalArticle.setCreateDate(now);
+				journalArticle.setCreateDate(date);
 			}
 			else {
-				journalArticle.setCreateDate(serviceContext.getCreateDate(now));
+				journalArticle.setCreateDate(
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!journalArticleModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				journalArticle.setModifiedDate(now);
+				journalArticle.setModifiedDate(date);
 			}
 			else {
 				journalArticle.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -34408,6 +34419,13 @@ public class JournalArticlePersistenceImpl
 						journalArticleModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -34420,7 +34438,7 @@ public class JournalArticlePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			JournalArticleModelImpl journalArticleModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -34443,8 +34461,21 @@ public class JournalArticlePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= JournalArticleModelImpl.getColumnBitmask(
+				"articleId");
+			orderByColumnsBitmask |= JournalArticleModelImpl.getColumnBitmask(
+				"version");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

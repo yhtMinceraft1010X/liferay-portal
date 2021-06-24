@@ -193,21 +193,23 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		return JSONUtil.putAll(
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "small"), "p", "small", 1),
+				LanguageUtil.get(resourceBundle, "small"), "span", "small",
+				_CKEDITOR_STYLE_INLINE),
 			getStyleFormatJSONObject(
-				LanguageUtil.get(resourceBundle, "lead"), "p", "lead", 1),
+				LanguageUtil.get(resourceBundle, "lead"), "span", "lead",
+				_CKEDITOR_STYLE_INLINE),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
-				null, 1),
+				null, _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
-				null, 1),
+				null, _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
-				null, 1),
+				null, _CKEDITOR_STYLE_BLOCK),
 			getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
-				null, 1));
+				null, _CKEDITOR_STYLE_BLOCK));
 	}
 
 	protected JSONObject getStyleFormatsJSONObject(Locale locale) {
@@ -325,6 +327,10 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		return itemSelectorCriterion;
 	}
+
+	private static final int _CKEDITOR_STYLE_BLOCK = 1;
+
+	private static final int _CKEDITOR_STYLE_INLINE = 2;
 
 	@Reference
 	private ItemSelector _itemSelector;

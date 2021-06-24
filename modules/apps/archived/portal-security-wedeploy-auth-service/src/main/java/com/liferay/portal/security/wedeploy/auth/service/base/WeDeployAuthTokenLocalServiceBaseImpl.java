@@ -40,15 +40,19 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken;
 import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalService;
+import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalServiceUtil;
 import com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthAppPersistence;
 import com.liferay.portal.security.wedeploy.auth.service.persistence.WeDeployAuthTokenPersistence;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,7 +74,7 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>WeDeployAuthTokenLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthTokenLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>WeDeployAuthTokenLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>WeDeployAuthTokenLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -145,6 +149,13 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return weDeployAuthTokenPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -378,6 +389,11 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 		return weDeployAuthTokenPersistence.update(weDeployAuthToken);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -389,6 +405,8 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		weDeployAuthTokenLocalService = (WeDeployAuthTokenLocalService)aopProxy;
+
+		_setLocalServiceUtilService(weDeployAuthTokenLocalService);
 	}
 
 	/**
@@ -431,6 +449,23 @@ public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		WeDeployAuthTokenLocalService weDeployAuthTokenLocalService) {
+
+		try {
+			Field field =
+				WeDeployAuthTokenLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, weDeployAuthTokenLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

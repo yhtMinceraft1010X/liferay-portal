@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -45,6 +47,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -2870,6 +2873,21 @@ public class DDLRecordVersionPersistenceImpl
 		DDLRecordVersionModelImpl ddlRecordVersionModelImpl =
 			(DDLRecordVersionModelImpl)ddlRecordVersion;
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (ddlRecordVersion.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ddlRecordVersion.setCreateDate(date);
+			}
+			else {
+				ddlRecordVersion.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
 		Session session = null;
 
 		try {
@@ -3425,7 +3443,7 @@ public class DDLRecordVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDLRecordVersionModelImpl ddlRecordVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3448,8 +3466,8 @@ public class DDLRecordVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

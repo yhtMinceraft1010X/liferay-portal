@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
+import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -79,6 +80,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -101,7 +104,7 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPOptionValueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPOptionValueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPOptionValueLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -175,6 +178,13 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return cpOptionValuePersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -292,10 +302,39 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 	 * @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
 	 */
 	@Override
-	public CPOptionValue fetchCPOptionValueByReferenceCode(
+	public CPOptionValue fetchCPOptionValueByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return cpOptionValuePersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPOptionValueByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CPOptionValue fetchCPOptionValueByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCPOptionValueByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the cp option value with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp option value's external reference code
+	 * @return the matching cp option value
+	 * @throws PortalException if a matching cp option value could not be found
+	 */
+	@Override
+	public CPOptionValue getCPOptionValueByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return cpOptionValuePersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1683,11 +1722,15 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CPOptionValue",
 			cpOptionValueLocalService);
+
+		_setLocalServiceUtilService(cpOptionValueLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CPOptionValue");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1729,6 +1772,22 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CPOptionValueLocalService cpOptionValueLocalService) {
+
+		try {
+			Field field = CPOptionValueLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cpOptionValueLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

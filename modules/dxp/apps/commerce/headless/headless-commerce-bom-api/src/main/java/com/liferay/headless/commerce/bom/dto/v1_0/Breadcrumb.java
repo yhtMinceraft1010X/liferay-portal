@@ -166,6 +166,7 @@ public class Breadcrumb implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Breadcrumb",
 		name = "x-class-name"
 	)
@@ -201,7 +202,7 @@ public class Breadcrumb implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -240,7 +241,7 @@ public class Breadcrumb implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

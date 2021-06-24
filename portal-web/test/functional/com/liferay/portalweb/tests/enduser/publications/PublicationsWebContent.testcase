@@ -36,7 +36,7 @@ definition {
 
 	@priority = "4"
 	test PublishExpiredWebContentViaWCD {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -86,9 +86,9 @@ definition {
 			expiredContent = "true",
 			webContentTitle = "WC WebContent Title");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.gotoPage(pageName = "Test Page");
 
@@ -99,7 +99,7 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithCategory {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -137,9 +137,9 @@ definition {
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
-			publicationsName = "Publication Name");
+			publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -154,7 +154,7 @@ definition {
 	test PublishWebContentWithDMAndImageFields {
 		property test.assert.warning.exceptions = "true";
 
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -223,40 +223,40 @@ definition {
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Structure",
-			publicationsSite = "Guest",
-			publicationsTitle = "WC Structure Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "WC Structure Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Dynamic Data Mapping Template",
-			publicationsSite = "Guest",
-			publicationsTitle = "WC Template Name",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Guest",
+			changeTitle = "WC Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsSite = "Guest",
-			publicationsTitle = "DM Document Title",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Document",
-			publicationsOrder = "2",
-			publicationsSite = "Guest",
-			publicationsTitle = "Document_1.jpg",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeOrder = "2",
+			changeSite = "Guest",
+			changeTitle = "Document_1.jpg",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -271,7 +271,7 @@ definition {
 
 	@priority = "4"
 	test PublishWebContentWithFriendlyURL {
-		Publications.createNewPublication(publicationsName = "Publication Name");
+		Publications.createNewPublication(publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -317,18 +317,18 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "WC WebContent Title");
 
-		Publications.gotoReviewPublications();
+		Publications.gotoReviewChanges();
 
-		PublicationsChanges.viewPublicationsViaChangesStyle(
-			publicationsCategory = "Widget",
-			publicationsSite = "Guest",
-			publicationsTitle = "Asset Publisher on Test Page",
-			publicationsType = "Added",
-			publicationsUser = "Test Test");
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Widget",
+			changeSite = "Guest",
+			changeTitle = "Asset Publisher on Test Page",
+			changeType = "Added",
+			changeUser = "Test Test");
 
-		Publications.gotoPublish(publicationsName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
-		Publications.publishPublication(publicationsName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/-/friendlyUrl");
 

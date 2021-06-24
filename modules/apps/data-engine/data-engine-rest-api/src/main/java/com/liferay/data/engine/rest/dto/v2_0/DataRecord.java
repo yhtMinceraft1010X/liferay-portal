@@ -44,7 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DataRecord")
+@GraphQLName(
+	description = "https://www.schema.org/DataRecord", value = "DataRecord"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DataRecord")
 public class DataRecord implements Serializable {
@@ -200,6 +202,7 @@ public class DataRecord implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataRecord",
 		name = "x-class-name"
 	)
@@ -235,7 +238,7 @@ public class DataRecord implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -274,7 +277,7 @@ public class DataRecord implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

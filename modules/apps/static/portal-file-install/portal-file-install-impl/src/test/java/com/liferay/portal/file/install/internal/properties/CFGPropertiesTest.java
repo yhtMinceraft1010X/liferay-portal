@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -43,7 +43,7 @@ public class CFGPropertiesTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testException() throws IOException {
@@ -153,6 +153,20 @@ public class CFGPropertiesTest {
 		Assert.assertEquals("testValue", cfgProperties.get("testKey"));
 
 		_assertSave(cfgProperties, line);
+	}
+
+	@Test
+	public void testLoadConfigFormat() throws IOException {
+		String line = "testKey1=T\"testValue1\"";
+
+		try {
+			_createCFGProperties(line);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Detected .config format in .cfg file in line: " + line,
+				illegalArgumentException.getMessage());
+		}
 	}
 
 	@NewEnv(type = NewEnv.Type.JVM)

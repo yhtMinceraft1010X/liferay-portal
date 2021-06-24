@@ -451,9 +451,7 @@ definition {
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.pptx");
 
-		OneDrive.editTitle(
-			dmDocumentTitle = "Powerpoint Presentation Title Edited",
-			dmDocumentTypeName = "PowerPoint");
+		OneDrive.editTitle(dmDocumentTitle = "Powerpoint Presentation Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -493,9 +491,7 @@ definition {
 
 		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
 
-		OneDrive.editTitle(
-			dmDocumentTitle = "Word Doc Title Edited",
-			dmDocumentTypeName = "Word");
+		OneDrive.editTitle(dmDocumentTitle = "Word Doc Title Edited");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

@@ -3682,24 +3682,24 @@ public class SubscriptionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (subscription.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				subscription.setCreateDate(now);
+				subscription.setCreateDate(date);
 			}
 			else {
-				subscription.setCreateDate(serviceContext.getCreateDate(now));
+				subscription.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!subscriptionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				subscription.setModifiedDate(now);
+				subscription.setModifiedDate(date);
 			}
 			else {
 				subscription.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4494,7 +4494,7 @@ public class SubscriptionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SubscriptionModelImpl subscriptionModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4516,8 +4516,8 @@ public class SubscriptionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

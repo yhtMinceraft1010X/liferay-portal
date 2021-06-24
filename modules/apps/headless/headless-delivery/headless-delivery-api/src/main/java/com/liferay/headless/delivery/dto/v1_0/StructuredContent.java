@@ -52,11 +52,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("StructuredContent")
+@GraphQLName(
+	description = "Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`.",
+	value = "StructuredContent"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"contentStructureId", "title"},
-	description = "Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`."
+	description = "Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is modeled internally as a `JournalArticle`.",
+	requiredProperties = {"contentStructureId", "title"}
 )
 @XmlRootElement(name = "StructuredContent")
 public class StructuredContent implements Serializable {
@@ -1416,6 +1419,7 @@ public class StructuredContent implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.StructuredContent",
 		name = "x-class-name"
 	)
@@ -1485,7 +1489,7 @@ public class StructuredContent implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -1524,7 +1528,7 @@ public class StructuredContent implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

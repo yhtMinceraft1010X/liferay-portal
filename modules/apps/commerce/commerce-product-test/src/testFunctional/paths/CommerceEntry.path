@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_SKU</td>
+	<td>//div[@class="cp-information"]//span[contains(text(),'${key_productSKU}')]//following::p[contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_IMAGE_SELECT_FILE</td>
 	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
 	<td></td>

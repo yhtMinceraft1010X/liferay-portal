@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEGMENT_FIELDS_TYPE</td>
+	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'${key_typeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SESSION_MENU</td>
 	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'Session')]</td>
 	<td></td>

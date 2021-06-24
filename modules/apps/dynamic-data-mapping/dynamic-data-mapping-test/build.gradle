@@ -12,6 +12,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.json", name: "json", version: "20180813"
+	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile group: "xerces", name: "xercesImpl", version: "2.12.0"
@@ -27,6 +28,7 @@ dependencies {
 	testCompile project(":apps:portal-template:portal-template-soy-api")
 	testCompile project(":apps:portal:portal-aop-api")
 	testCompile project(":apps:view-count:view-count-api")
+	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")

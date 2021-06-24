@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("DefaultValue")
+@GraphQLName(
+	description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue",
+	value = "DefaultValue"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultValue")
 public class DefaultValue implements Serializable {
@@ -168,6 +171,7 @@ public class DefaultValue implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DefaultValue",
 		name = "x-class-name"
 	)
@@ -203,7 +207,7 @@ public class DefaultValue implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -242,7 +246,7 @@ public class DefaultValue implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

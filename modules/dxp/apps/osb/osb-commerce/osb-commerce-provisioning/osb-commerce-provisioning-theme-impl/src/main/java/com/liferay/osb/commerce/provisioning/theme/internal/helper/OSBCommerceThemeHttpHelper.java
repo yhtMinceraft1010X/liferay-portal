@@ -17,6 +17,8 @@ package com.liferay.osb.commerce.provisioning.theme.internal.helper;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.osb.commerce.provisioning.OSBCommercePortalInstanceStatus;
 import com.liferay.osb.commerce.provisioning.constants.OSBCommercePortalInstanceConstants;
@@ -35,6 +37,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = OSBCommerceThemeHttpHelper.class)
 public class OSBCommerceThemeHttpHelper {
+
+	public long getCommerceChannelGroupId(long commerceChannelId)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
+
+		return commerceChannel.getGroupId();
+	}
 
 	public long getCurrentCommerceAccountId(
 			HttpServletRequest httpServletRequest)
@@ -97,6 +108,9 @@ public class OSBCommerceThemeHttpHelper {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceSubscriptionEntryLocalService

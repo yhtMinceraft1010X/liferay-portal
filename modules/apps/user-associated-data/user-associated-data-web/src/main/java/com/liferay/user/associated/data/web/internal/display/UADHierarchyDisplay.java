@@ -319,8 +319,6 @@ public class UADHierarchyDisplay {
 
 		Object container = uadDisplay.get(primaryKey);
 
-		Class<?> parentContainerClass = uadDisplay.getParentContainerClass();
-
 		String parentContainerId = String.valueOf(
 			uadDisplay.getParentContainerId(container));
 
@@ -333,8 +331,13 @@ public class UADHierarchyDisplay {
 			portletURL.setParameter(
 				"mvcRenderCommandName",
 				"/user_associated_data/view_uad_hierarchy");
+
+			Class<?> parentContainerClass =
+				uadDisplay.getParentContainerClass();
+
 			portletURL.setParameter(
 				"parentContainerClass", parentContainerClass.getName());
+
 			portletURL.setParameter("parentContainerId", parentContainerId);
 		}
 

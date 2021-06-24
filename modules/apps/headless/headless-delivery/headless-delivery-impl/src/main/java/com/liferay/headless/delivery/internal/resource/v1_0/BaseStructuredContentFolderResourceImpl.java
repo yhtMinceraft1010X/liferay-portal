@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseStructuredContentFolderResourceImpl
-	implements StructuredContentFolderResource, EntityModelResource,
+	implements EntityModelResource, StructuredContentFolderResource,
 			   VulcanBatchEngineTaskItemDelegate<StructuredContentFolder> {
 
 	/**
@@ -88,8 +88,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
@@ -125,13 +125,13 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentStructuredContentFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "assetLibraryId")}
 	)
 	@Path("/asset-libraries/{assetLibraryId}/structured-content-folders")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder postAssetLibraryStructuredContentFolder(
@@ -148,9 +148,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "assetLibraryId"),
@@ -158,6 +157,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path("/asset-libraries/{assetLibraryId}/structured-content-folders/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Response postAssetLibraryStructuredContentFolderBatch(
@@ -190,11 +190,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site's structured content folders. Results can be paginated, filtered, searched, flattened, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -227,12 +227,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentStructuredContentFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new structured content folder.")
-	@POST
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/structured-content-folders")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder postSiteStructuredContentFolder(
@@ -248,9 +248,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -258,6 +257,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@Path("/sites/{siteId}/structured-content-folders/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Response postSiteStructuredContentFolderBatch(
@@ -289,11 +289,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the parent structured content folder's subfolders. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -314,8 +314,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
+				@PathParam("parentStructuredContentFolderId")
+				Long parentStructuredContentFolderId,
 				@Parameter(hidden = true) @QueryParam("search") String search,
 				@Context com.liferay.portal.vulcan.aggregation.Aggregation
 					aggregation,
@@ -331,12 +331,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentStructuredContentFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Creates a new structured content folder in an existing folder."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -347,13 +346,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Path(
 		"/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders"
 	)
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder
 			postStructuredContentFolderStructuredContentFolder(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("parentStructuredContentFolderId") Long
-					parentStructuredContentFolderId,
+				@PathParam("parentStructuredContentFolderId")
+				Long parentStructuredContentFolderId,
 				StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -365,11 +365,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the structured content folder and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -382,8 +382,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void deleteStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId)
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId)
 		throws Exception {
 	}
 
@@ -392,9 +392,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -428,9 +428,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the structured content folder.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -443,8 +443,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder getStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId)
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId)
 		throws Exception {
 
 		return new StructuredContentFolder();
@@ -455,12 +455,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentStructuredContentFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -468,13 +467,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			)
 		}
 	)
+	@PATCH
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder patchStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId,
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -556,12 +556,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentStructuredContentFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the structured content folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(
@@ -571,11 +570,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public StructuredContentFolder putStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId,
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId,
 			StructuredContentFolder structuredContentFolder)
 		throws Exception {
 
@@ -587,14 +587,14 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/structured-content-folders/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public Response putStructuredContentFolderBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -624,7 +624,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(
@@ -634,11 +633,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}/subscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void putStructuredContentFolderSubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId)
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId)
 		throws Exception {
 	}
 
@@ -648,7 +648,6 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/unsubscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(
@@ -658,11 +657,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	)
 	@Path("/structured-content-folders/{structuredContentFolderId}/unsubscribe")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
 	public void putStructuredContentFolderUnsubscribe(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("structuredContentFolderId") Long
-				structuredContentFolderId)
+			@PathParam("structuredContentFolderId")
+			Long structuredContentFolderId)
 		throws Exception {
 	}
 
@@ -678,7 +678,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				structuredContentFolders) {
 
 			postSiteStructuredContentFolder(
-				Long.valueOf((String)parameters.get("siteId")),
+				Long.parseLong((String)parameters.get("siteId")),
 				structuredContentFolder);
 		}
 	}
@@ -719,8 +719,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return getSiteStructuredContentFoldersPage(
-			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, null, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -757,8 +758,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 			putStructuredContentFolder(
 				structuredContentFolder.getId() != null ?
-				structuredContentFolder.getId() :
-				(Long)parameters.get("structuredContentFolderId"),
+					structuredContentFolder.getId() :
+						Long.parseLong(
+							(String)parameters.get(
+								"structuredContentFolderId")),
 				structuredContentFolder);
 		}
 	}

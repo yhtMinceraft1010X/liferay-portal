@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Transition")
+@GraphQLName(
+	description = "Represents the transition to be launched by the task's workflow.",
+	value = "Transition"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Transition")
 public class Transition implements Serializable {
@@ -166,6 +169,7 @@ public class Transition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition",
 		name = "x-class-name"
 	)
@@ -201,7 +205,7 @@ public class Transition implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -240,7 +244,7 @@ public class Transition implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

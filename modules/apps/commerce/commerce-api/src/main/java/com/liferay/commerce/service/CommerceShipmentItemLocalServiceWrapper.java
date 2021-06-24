@@ -66,6 +66,18 @@ public class CommerceShipmentItemLocalServiceWrapper
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			addDeliverySubscriptionCommerceShipmentItem(
+				long groupId, long userId, long commerceShipmentId,
+				long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.
+			addDeliverySubscriptionCommerceShipmentItem(
+				groupId, userId, commerceShipmentId, commerceOrderItemId);
+	}
+
 	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *
@@ -177,6 +189,13 @@ public class CommerceShipmentItemLocalServiceWrapper
 	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _commerceShipmentItemLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceShipmentItemLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override

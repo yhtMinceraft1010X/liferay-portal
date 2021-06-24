@@ -137,8 +137,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 				deleteFragmentCompositionsAndFragmentEntriesURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/fragment/delete_fragment_compositions_and_fragment_" +
-						"entries");
+					"/fragment" +
+						"/delete_fragment_compositions_and_fragment_entries");
 				deleteFragmentCompositionsAndFragmentEntriesURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
 
@@ -152,8 +152,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 					liferayPortletResponse.createResourceURL();
 
 				exportFragmentCompositionsAndFragmentEntriesURL.setResourceID(
-					"/fragment/export_fragment_compositions_and_fragment_" +
-						"entries");
+					"/fragment" +
+						"/export_fragment_compositions_and_fragment_entries");
 
 				return exportFragmentCompositionsAndFragmentEntriesURL.
 					toString();
@@ -169,8 +169,8 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 				moveFragmentCompositionsAndFragmentEntriesURL.setParameter(
 					ActionRequest.ACTION_NAME,
-					"/fragment/move_fragment_compositions_and_fragment_" +
-						"entries");
+					"/fragment" +
+						"/move_fragment_compositions_and_fragment_entries");
 				moveFragmentCompositionsAndFragmentEntriesURL.setParameter(
 					"redirect", themeDisplay.getURLCurrent());
 

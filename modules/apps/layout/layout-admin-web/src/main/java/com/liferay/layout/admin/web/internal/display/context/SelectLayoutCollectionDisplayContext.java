@@ -113,10 +113,6 @@ public class SelectLayoutCollectionDisplayContext {
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(orderByType);
 
-		long[] groupIds = {_themeDisplay.getScopeGroupId()};
-
-		List<String> types = _getInfoItemFormProviderClassNames();
-
 		List<AssetListEntry> assetListEntries = null;
 
 		int assetListEntriesCount = 0;
@@ -132,6 +128,10 @@ public class SelectLayoutCollectionDisplayContext {
 					_themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
+			long[] groupIds = {_themeDisplay.getScopeGroupId()};
+
+			List<String> types = _getInfoItemFormProviderClassNames();
+
 			assetListEntries = AssetListEntryServiceUtil.getAssetListEntries(
 				groupIds, types.toArray(new String[0]),
 				searchContainer.getStart(), searchContainer.getEnd(),

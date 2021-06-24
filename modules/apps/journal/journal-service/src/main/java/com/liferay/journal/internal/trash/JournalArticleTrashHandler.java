@@ -128,6 +128,13 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			return null;
 		}
 
+		JournalFolder parentFolder = _journalFolderLocalService.fetchFolder(
+			parentFolderId);
+
+		if (parentFolder == null) {
+			return null;
+		}
+
 		return getContainerModel(parentFolderId);
 	}
 

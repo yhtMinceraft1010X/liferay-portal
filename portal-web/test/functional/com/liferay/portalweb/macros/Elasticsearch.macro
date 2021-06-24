@@ -12,20 +12,20 @@ definition {
 		return "${clientVersion}";
 	}
 
+	macro getServerPort {
+		var remoteEnabled = Elasticsearch.isRemoteMode();
+
+		if ("${remoteEnabled}" == "true") {
+			return "9200";
+		}
+		else {
+			return "9201";
+		}
+	}
+
 	macro getServerVersion {
 		if (!(isSet(port))) {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			var fileContent = FileUtil.read("${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config");
-
-			var remoteMode = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
-
-			if ("${remoteMode}" == "true") {
-				var port = "9200";
-			}
-			else {
-				var port = "9201";
-			}
+			var port = Elasticsearch.getServerPort();
 		}
 
 		var curl = "http://localhost:${port}";
@@ -37,6 +37,30 @@ definition {
 		echo("Version of the Elasticsearch server on port ${port}: ${serverVersion}");
 
 		return "${serverVersion}";
+	}
+
+	macro isRemoteMode {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var fileLocation = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
+
+		var fileExists = FileUtil.exists("${fileLocation}");
+
+		if ("${fileExists}" == "true") {
+			var fileContent = FileUtil.read("${fileLocation}");
+
+			var productionModeEnabled = RegexUtil.replace("${fileContent}", "productionModeEnabled=&quot;(.*)&quot;", "1");
+
+			if ("${productionModeEnabled}" == "true") {
+				return "true";
+			}
+			else {
+				return "false";
+			}
+		}
+		else {
+			return "false";
+		}
 	}
 
 	macro viewClusterStatus {

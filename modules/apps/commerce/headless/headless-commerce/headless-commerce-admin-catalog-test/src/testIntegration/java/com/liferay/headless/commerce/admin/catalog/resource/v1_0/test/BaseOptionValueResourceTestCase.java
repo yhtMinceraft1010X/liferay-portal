@@ -210,7 +210,7 @@ public abstract class BaseOptionValueResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetOptionByExternalReferenceCodeOptionValuesPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			OptionValue irrelevantOptionValue =
 				testGetOptionByExternalReferenceCodeOptionValuesPage_addOptionValue(
 					irrelevantExternalReferenceCode,
@@ -357,7 +357,7 @@ public abstract class BaseOptionValueResourceTestCase {
 		Long id = testGetOptionIdOptionValuesPage_getId();
 		Long irrelevantId = testGetOptionIdOptionValuesPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			OptionValue irrelevantOptionValue =
 				testGetOptionIdOptionValuesPage_addOptionValue(
 					irrelevantId, randomIrrelevantOptionValue());
@@ -609,7 +609,7 @@ public abstract class BaseOptionValueResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.catalog.dto.v1_0.
 						OptionValue.class)) {
 
@@ -644,7 +644,7 @@ public abstract class BaseOptionValueResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -755,6 +755,17 @@ public abstract class BaseOptionValueResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -945,12 +956,12 @@ public abstract class BaseOptionValueResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -960,10 +971,10 @@ public abstract class BaseOptionValueResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

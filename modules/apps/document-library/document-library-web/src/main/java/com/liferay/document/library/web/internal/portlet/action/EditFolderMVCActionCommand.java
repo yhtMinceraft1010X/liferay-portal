@@ -170,7 +170,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				if (folder.isRepositoryCapabilityProvided(
 						TrashCapability.class)) {
 
-					_dlTrashService.moveFolderToTrash(deleteFolderId);
+					folder = _dlTrashService.moveFolderToTrash(deleteFolderId);
 
 					trashedModels.add((DLFolder)folder.getModel());
 				}
@@ -221,7 +221,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFolder.class.getName(), actionRequest);
+			actionRequest);
 
 		if (folderId <= 0) {
 

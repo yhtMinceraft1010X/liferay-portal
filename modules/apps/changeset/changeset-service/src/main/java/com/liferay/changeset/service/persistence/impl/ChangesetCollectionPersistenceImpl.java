@@ -2719,25 +2719,25 @@ public class ChangesetCollectionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (changesetCollection.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				changesetCollection.setCreateDate(now);
+				changesetCollection.setCreateDate(date);
 			}
 			else {
 				changesetCollection.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!changesetCollectionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				changesetCollection.setModifiedDate(now);
+				changesetCollection.setModifiedDate(date);
 			}
 			else {
 				changesetCollection.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3283,7 +3283,7 @@ public class ChangesetCollectionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			ChangesetCollectionModelImpl changesetCollectionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3306,8 +3306,8 @@ public class ChangesetCollectionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

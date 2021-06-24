@@ -5594,24 +5594,24 @@ public class SharingEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (sharingEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				sharingEntry.setCreateDate(now);
+				sharingEntry.setCreateDate(date);
 			}
 			else {
-				sharingEntry.setCreateDate(serviceContext.getCreateDate(now));
+				sharingEntry.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!sharingEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				sharingEntry.setModifiedDate(now);
+				sharingEntry.setModifiedDate(date);
 			}
 			else {
 				sharingEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -6263,7 +6263,7 @@ public class SharingEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SharingEntryModelImpl sharingEntryModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -6285,8 +6285,8 @@ public class SharingEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

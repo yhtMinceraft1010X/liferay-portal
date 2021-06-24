@@ -453,13 +453,13 @@ public class LayoutStagedModelDataHandler
 		long groupId = GetterUtil.getLong(
 			referenceElement.attributeValue("group-id"));
 
-		groupId = MapUtil.getLong(groupIds, groupId);
+		long targetGroupId = MapUtil.getLong(groupIds, groupId);
 
 		boolean privateLayout = GetterUtil.getBoolean(
 			referenceElement.attributeValue("private-layout"));
 
 		Layout existingLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			uuid, groupId, privateLayout);
+			uuid, targetGroupId, privateLayout);
 
 		if (existingLayout == null) {
 			return;
@@ -474,9 +474,8 @@ public class LayoutStagedModelDataHandler
 
 		layoutPlids.put(plid, existingLayout.getPlid());
 
-		if ((existingLayout.getGroupId() != portletDataContext.getGroupId()) ||
-			(existingLayout.isPrivateLayout() !=
-				portletDataContext.isPrivateLayout())) {
+		if ((groupId != portletDataContext.getSourceGroupId()) ||
+			(privateLayout != portletDataContext.isPrivateLayout())) {
 
 			return;
 		}
@@ -496,7 +495,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		final long groupId = portletDataContext.getGroupId();
+		long groupId = portletDataContext.getGroupId();
 		long userId = portletDataContext.getUserId(layout.getUserUuid());
 
 		Element layoutElement =
@@ -507,7 +506,13 @@ public class LayoutStagedModelDataHandler
 
 		long oldLayoutId = layoutId;
 
-		final boolean privateLayout = portletDataContext.isPrivateLayout();
+		boolean privateLayout = false;
+
+		if (portletDataContext.isPrivateLayout() &&
+			!layout.isTypeAssetDisplay()) {
+
+			privateLayout = true;
+		}
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
@@ -751,11 +756,13 @@ public class LayoutStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, masterLayoutElement);
 
-			Layout masterLayout = layouts.get(
-				GetterUtil.getLong(
-					layoutElement.attributeValue("master-layout-id")));
+			long masterLayoutPlid = GetterUtil.getLong(
+				layoutElement.attributeValue("master-layout-plid"));
 
-			importedLayout.setMasterLayoutPlid(masterLayout.getPlid());
+			long importedMasterLayoutPlid = MapUtil.getLong(
+				layoutPlids, masterLayoutPlid, masterLayoutPlid);
+
+			importedLayout.setMasterLayoutPlid(importedMasterLayoutPlid);
 		}
 
 		long parentPlid = layout.getParentPlid();
@@ -871,7 +878,8 @@ public class LayoutStagedModelDataHandler
 				if (!ExportImportThreadLocal.
 						isInitialLayoutStagingInProcess()) {
 
-					final long finalParentLayoutId = parentLayoutId;
+					long finalParentLayoutId = parentLayoutId;
+					boolean finalPrivateLayout = privateLayout;
 
 					priority = TransactionInvokerUtil.invoke(
 						_transactionConfig,
@@ -881,7 +889,7 @@ public class LayoutStagedModelDataHandler
 							public Integer call() throws Exception {
 								return _layoutLocalServiceHelper.
 									getNextPriority(
-										groupId, privateLayout,
+										groupId, finalPrivateLayout,
 										finalParentLayoutId, null, -1);
 							}
 
@@ -913,9 +921,9 @@ public class LayoutStagedModelDataHandler
 
 		fixImportTypeSettings(importedLayout);
 
-		importTheme(portletDataContext, layout, importedLayout);
-
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
+
+		importTheme(portletDataContext, layout, importedLayout);
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
@@ -1836,6 +1844,11 @@ public class LayoutStagedModelDataHandler
 			importedLayout.setThemeId(layout.getThemeId());
 			importedLayout.setColorSchemeId(layout.getColorSchemeId());
 			importedLayout.setCss(layout.getCss());
+
+			_layoutLocalService.updateLookAndFeel(
+				importedLayout.getGroupId(), importedLayout.isPrivateLayout(),
+				importedLayout.getLayoutId(), layout.getThemeId(),
+				layout.getColorSchemeId(), layout.getCss());
 		}
 	}
 
@@ -2346,7 +2359,7 @@ public class LayoutStagedModelDataHandler
 		layoutElement.addAttribute(
 			"master-layout-uuid", masterLayout.getUuid());
 		layoutElement.addAttribute(
-			"master-layout-id", String.valueOf(masterLayout.getLayoutId()));
+			"master-layout-plid", String.valueOf(masterLayout.getPlid()));
 	}
 
 	private List<FriendlyURLEntry> _getFriendlyURLEntries(

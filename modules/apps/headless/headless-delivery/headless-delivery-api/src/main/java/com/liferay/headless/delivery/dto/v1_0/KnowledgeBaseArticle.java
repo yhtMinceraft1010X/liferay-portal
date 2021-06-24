@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseArticle")
+@GraphQLName(
+	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
+	value = "KnowledgeBaseArticle"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"articleBody", "title"},
-	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API."
+	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
+	requiredProperties = {"articleBody", "title"}
 )
 @XmlRootElement(name = "KnowledgeBaseArticle")
 public class KnowledgeBaseArticle implements Serializable {
@@ -1118,6 +1121,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle",
 		name = "x-class-name"
 	)
@@ -1187,7 +1191,7 @@ public class KnowledgeBaseArticle implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -1226,7 +1230,7 @@ public class KnowledgeBaseArticle implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -5214,25 +5214,25 @@ public class CommerceAddressPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceAddress.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceAddress.setCreateDate(now);
+				commerceAddress.setCreateDate(date);
 			}
 			else {
 				commerceAddress.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceAddressModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceAddress.setModifiedDate(now);
+				commerceAddress.setModifiedDate(date);
 			}
 			else {
 				commerceAddress.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5871,6 +5871,13 @@ public class CommerceAddressPersistenceImpl
 						commerceAddressModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5883,7 +5890,7 @@ public class CommerceAddressPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceAddressModelImpl commerceAddressModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -5906,8 +5913,19 @@ public class CommerceAddressPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceAddressModelImpl.getColumnBitmask(
+				"createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

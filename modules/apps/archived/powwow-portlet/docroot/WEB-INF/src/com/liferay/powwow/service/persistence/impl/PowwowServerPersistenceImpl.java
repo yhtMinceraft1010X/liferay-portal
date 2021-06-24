@@ -887,24 +887,24 @@ public class PowwowServerPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (powwowServer.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				powwowServer.setCreateDate(now);
+				powwowServer.setCreateDate(date);
 			}
 			else {
-				powwowServer.setCreateDate(serviceContext.getCreateDate(now));
+				powwowServer.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!powwowServerModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				powwowServer.setModifiedDate(now);
+				powwowServer.setModifiedDate(date);
 			}
 			else {
 				powwowServer.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1339,6 +1339,13 @@ public class PowwowServerPersistenceImpl
 						powwowServerModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1350,7 +1357,7 @@ public class PowwowServerPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PowwowServerModelImpl powwowServerModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1372,8 +1379,19 @@ public class PowwowServerPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= PowwowServerModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

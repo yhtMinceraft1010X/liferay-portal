@@ -3186,25 +3186,25 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (assetListEntrySegmentsEntryRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				assetListEntrySegmentsEntryRel.setCreateDate(now);
+				assetListEntrySegmentsEntryRel.setCreateDate(date);
 			}
 			else {
 				assetListEntrySegmentsEntryRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!assetListEntrySegmentsEntryRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				assetListEntrySegmentsEntryRel.setModifiedDate(now);
+				assetListEntrySegmentsEntryRel.setModifiedDate(date);
 			}
 			else {
 				assetListEntrySegmentsEntryRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4002,7 +4002,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AssetListEntrySegmentsEntryRelModelImpl
 				assetListEntrySegmentsEntryRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -4027,8 +4027,8 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

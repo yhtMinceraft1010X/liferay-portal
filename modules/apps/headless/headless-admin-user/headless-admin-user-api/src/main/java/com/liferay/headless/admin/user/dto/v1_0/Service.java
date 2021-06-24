@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Service")
+@GraphQLName(
+	description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.",
+	value = "Service"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Service")
 public class Service implements Serializable {
@@ -184,6 +187,7 @@ public class Service implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Service",
 		name = "x-class-name"
 	)
@@ -219,7 +223,7 @@ public class Service implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -258,7 +262,7 @@ public class Service implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

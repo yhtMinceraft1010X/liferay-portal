@@ -37,7 +37,10 @@ import org.junit.runners.model.Statement;
 
 /**
  * @author André de Oliveira
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             ExpectedLogMethodTestRule}
  */
+@Deprecated
 public class ExpectedLogTestRule implements TestRule {
 
 	public static ExpectedLogTestRule none() {

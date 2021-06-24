@@ -1069,23 +1069,23 @@ public class FolderPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (folder.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				folder.setCreateDate(now);
+				folder.setCreateDate(date);
 			}
 			else {
-				folder.setCreateDate(serviceContext.getCreateDate(now));
+				folder.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!folderModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				folder.setModifiedDate(now);
+				folder.setModifiedDate(date);
 			}
 			else {
-				folder.setModifiedDate(serviceContext.getModifiedDate(now));
+				folder.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1550,6 +1550,13 @@ public class FolderPersistenceImpl
 						columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1561,7 +1568,7 @@ public class FolderPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			FolderModelImpl folderModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1582,8 +1589,19 @@ public class FolderPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= FolderModelImpl.getColumnBitmask(
+				"fullName");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

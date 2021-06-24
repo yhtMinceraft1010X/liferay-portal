@@ -57,6 +57,25 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This test covers LPS-130154. It ensures that the user can search for a document based on the content."
+	@priority = "4"
+	test CanSearchForDocumentBasedOnContent {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_5.txt",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_5.txt");
+
+		AssertConsoleTextNotPresent(value1 = "WriteLimitReachedException");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "gJybWNXR76fTX0TlIu8mFP2dNVtTGdq");
+
+		DMDocument.viewSearchResultsCP(dmDocumentTitle = "Document_5.txt");
+	}
+
 	@description = "This test covers LPS-88313 and LPS-92145. It ensures that a user can check in a document without changing versions."
 	@priority = "5"
 	test CheckInDocumentAsCurrentVersion {
@@ -350,6 +369,39 @@ definition {
 			dmFolderNameEdit = "DM Folder Name Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder Name Name");
+	}
+
+	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
+	@priority = "3"
+	test FileSizeCanBeDisplayedCorrectlyInDifferentVersions {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_1.txt",
+			dmDocumentFileNameEdit = "Document_1.txt",
+			dmDocumentTitle = "Document_2",
+			dmDocumentTitleEdit = "Document_1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewFileSizeByVersion(
+			dmDocumentSize = "30 KB",
+			dmDocumentVersionNumber = "1.0");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewFileSizeByVersion(
+			dmDocumentSize = "259 B",
+			dmDocumentVersionNumber = "2.0");
 	}
 
 	@description = "This test covers LPS-94820. This test ensures that only the last two checked in versions of a file are kept when the max version limit is set."
@@ -701,9 +753,6 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
-	@description = "This ensures that the SVG file can be previewed."
-	@priority = "5"
-
 	test PreviewSVG {
 		property portal.acceptance = "true";
 
@@ -737,6 +786,50 @@ definition {
 		Search.searchCP(searchTerm = "DM Document Title");
 
 		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test covers LPS-101908. It makes sure that all elements selected on different pages can be checked out and checked in."
+	@priority = "3"
+	test SelectAllAndCheckIn {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Commerce_Black.jpg");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.click(menuItem = "Checkout");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+			AssertElementPresent(
+				key_dmDocumentTitle = "${dmDocumentFileList}",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+		}
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		DMDocument.checkinManagementBar(allFiles = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentFileList : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black") {
+			AssertElementNotPresent(
+				key_dmDocumentTitle = "${dmDocumentFileList}",
+				locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+		}
 	}
 
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."

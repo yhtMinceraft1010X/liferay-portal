@@ -42,6 +42,7 @@ import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedR
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
@@ -59,6 +60,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
@@ -72,13 +75,18 @@ import org.mockito.MockitoAnnotations;
  */
 public class SearchResultsPortletTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
 		setUpHtmlUtil();
 		setUpPortletSharedSearchResponse();
-		setUpProps();
+		setUpPropsUtil();
 		setUpSearchSettings();
 
 		_portletURLFactory = createPortletURLFactory();
@@ -345,7 +353,7 @@ public class SearchResultsPortletTest {
 		);
 	}
 
-	protected void setUpProps() {
+	protected void setUpPropsUtil() {
 		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 

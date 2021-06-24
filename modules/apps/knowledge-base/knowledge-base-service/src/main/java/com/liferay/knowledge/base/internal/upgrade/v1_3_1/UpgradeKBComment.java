@@ -27,7 +27,9 @@ public class UpgradeKBComment extends UpgradeProcess {
 	}
 
 	protected void upgradeIndexes() throws Exception {
-		runSQL("drop index IX_FD56A55D on KBComment");
+		if (hasIndex("KBComment", "IX_FD56A55D")) {
+			runSQL("drop index IX_FD56A55D on KBComment");
+		}
 
 		runSQL(
 			"create index IX_FD56A55D on KBComment(userId, classNameId, " +

@@ -116,7 +116,8 @@ public class DDMFormDisplayExportImportTest
 				).put(
 					"groupId",
 					new String[] {String.valueOf(ddmFormInstance.getGroupId())}
-				).build());
+				).build(),
+				false);
 
 		DDMFormInstance importedDDMFormInstance =
 			DDMFormInstanceLocalServiceUtil.

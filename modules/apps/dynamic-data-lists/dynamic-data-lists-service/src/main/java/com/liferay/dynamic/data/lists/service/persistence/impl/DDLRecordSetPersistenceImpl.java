@@ -3836,11 +3836,21 @@ public class DDLRecordSetPersistenceImpl
 	@Override
 	public void cacheResult(List<DDLRecordSet> ddlRecordSets) {
 		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
-			if (entityCache.getResult(
-					DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey()) ==
-						null) {
+			DDLRecordSet cachedDDLRecordSet =
+				(DDLRecordSet)entityCache.getResult(
+					DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey());
 
+			if (cachedDDLRecordSet == null) {
 				cacheResult(ddlRecordSet);
+			}
+			else {
+				DDLRecordSetModelImpl ddlRecordSetModelImpl =
+					(DDLRecordSetModelImpl)ddlRecordSet;
+				DDLRecordSetModelImpl cachedDDLRecordSetModelImpl =
+					(DDLRecordSetModelImpl)cachedDDLRecordSet;
+
+				ddlRecordSetModelImpl.setDDMFormValues(
+					cachedDDLRecordSetModelImpl.getDDMFormValues());
 			}
 		}
 	}
@@ -4054,24 +4064,24 @@ public class DDLRecordSetPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (ddlRecordSet.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				ddlRecordSet.setCreateDate(now);
+				ddlRecordSet.setCreateDate(date);
 			}
 			else {
-				ddlRecordSet.setCreateDate(serviceContext.getCreateDate(now));
+				ddlRecordSet.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!ddlRecordSetModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				ddlRecordSet.setModifiedDate(now);
+				ddlRecordSet.setModifiedDate(date);
 			}
 			else {
 				ddlRecordSet.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4657,7 +4667,7 @@ public class DDLRecordSetPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDLRecordSetModelImpl ddlRecordSetModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -4679,8 +4689,8 @@ public class DDLRecordSetPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

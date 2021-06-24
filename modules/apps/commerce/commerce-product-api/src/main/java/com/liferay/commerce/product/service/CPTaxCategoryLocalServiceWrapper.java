@@ -168,6 +168,13 @@ public class CPTaxCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _cpTaxCategoryLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cpTaxCategoryLocalService.dynamicQuery();
 	}
@@ -274,6 +281,20 @@ public class CPTaxCategoryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.product.model.CPTaxCategory
+		fetchCPTaxCategoryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _cpTaxCategoryLocalService.
+			fetchCPTaxCategoryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPTaxCategoryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPTaxCategory
 		fetchCPTaxCategoryByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -362,6 +383,25 @@ public class CPTaxCategoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpTaxCategoryLocalService.getCPTaxCategory(CPTaxCategoryId);
+	}
+
+	/**
+	 * Returns the cp tax category with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp tax category's external reference code
+	 * @return the matching cp tax category
+	 * @throws PortalException if a matching cp tax category could not be found
+	 */
+	@Override
+	public com.liferay.commerce.product.model.CPTaxCategory
+			getCPTaxCategoryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryLocalService.
+			getCPTaxCategoryByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	@Override

@@ -44,7 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("UserAccountContactInformation")
+@GraphQLName(
+	description = "The user's contact information.",
+	value = "UserAccountContactInformation"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "UserAccountContactInformation")
 public class UserAccountContactInformation implements Serializable {
@@ -547,6 +550,7 @@ public class UserAccountContactInformation implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation",
 		name = "x-class-name"
 	)
@@ -582,7 +586,7 @@ public class UserAccountContactInformation implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -621,7 +625,7 @@ public class UserAccountContactInformation implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

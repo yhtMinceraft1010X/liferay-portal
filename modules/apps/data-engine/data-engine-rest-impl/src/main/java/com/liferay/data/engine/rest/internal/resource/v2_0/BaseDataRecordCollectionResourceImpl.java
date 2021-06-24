@@ -19,6 +19,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -27,8 +28,11 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
@@ -91,8 +95,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collection'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
@@ -112,8 +116,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -128,7 +132,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	public Page<DataRecordCollection>
 			getDataDefinitionDataRecordCollectionsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataDefinitionId") Long dataDefinitionId,
+				@PathParam("dataDefinitionId")
+				Long dataDefinitionId,
 				@Parameter(hidden = true) @QueryParam("keywords") String
 					keywords,
 				@Context Pagination pagination)
@@ -142,13 +147,13 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections' -d $'{"dataDefinitionId": ___, "dataRecordCollectionKey": ___, "description": ___, "id": ___, "name": ___, "siteId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection postDataDefinitionDataRecordCollection(
@@ -165,9 +170,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -175,6 +179,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-record-collections/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public Response postDataDefinitionDataRecordCollectionBatch(
@@ -206,8 +211,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -218,7 +223,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public void deleteDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+			Long dataRecordCollectionId)
 		throws Exception {
 	}
 
@@ -227,9 +233,9 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -263,8 +269,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -275,7 +281,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection getDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+			Long dataRecordCollectionId)
 		throws Exception {
 
 		return new DataRecordCollection();
@@ -286,9 +293,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}' -d $'{"dataDefinitionId": ___, "dataRecordCollectionKey": ___, "description": ___, "id": ___, "name": ___, "siteId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -296,10 +302,12 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public DataRecordCollection putDataRecordCollection(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
+			@PathParam("dataRecordCollectionId")
+			Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
 		throws Exception {
 
@@ -311,14 +319,14 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/data-record-collections/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public Response putDataRecordCollectionBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -347,8 +355,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId"),
@@ -361,29 +369,35 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getDataRecordCollectionPermissionsPage(
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataRecordCollectionId") Long
-					dataRecordCollectionId,
+				@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId,
 				@Parameter(hidden = true) @QueryParam("roleNames") String
 					roleNames)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
 			dataRecordCollectionId);
+		Long resourceId = getPermissionCheckerResourceId(
+			dataRecordCollectionId);
 
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
-			dataRecordCollectionId,
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
 			getPermissionCheckerGroupId(dataRecordCollectionId));
 
-		return Page.of(
-			transform(
-				PermissionUtil.getRoles(
-					contextCompany, roleLocalService,
-					StringUtil.split(roleNames)),
-				role -> PermissionUtil.toPermission(
-					contextCompany.getCompanyId(), dataRecordCollectionId,
-					resourceActionLocalService.getResourceActions(resourceName),
-					resourceName, resourcePermissionLocalService, role)));
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getDataRecordCollectionPermissionsPage", resourceName,
+					resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putDataRecordCollectionPermission",
+					resourceName, resourceId)
+			).build(),
+			resourceId, resourceName, roleNames);
 	}
 
 	/**
@@ -392,7 +406,6 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
-	@PUT
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -400,29 +413,48 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	)
 	@Path("/data-record-collections/{dataRecordCollectionId}/permissions")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void putDataRecordCollectionPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDataRecordCollectionPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
 			dataRecordCollectionId);
+		Long resourceId = getPermissionCheckerResourceId(
+			dataRecordCollectionId);
 
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
-			dataRecordCollectionId,
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
 			getPermissionCheckerGroupId(dataRecordCollectionId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
-			String.valueOf(dataRecordCollectionId),
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(dataRecordCollectionId), resourceName,
+			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions,
-				dataRecordCollectionId, resourceName,
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService));
+				contextCompany.getCompanyId(), permissions, resourceId,
+				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getDataRecordCollectionPermissionsPage", resourceName,
+					resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putDataRecordCollectionPermission",
+					resourceName, resourceId)
+			).build(),
+			resourceId, resourceName, null);
 	}
 
 	/**
@@ -430,8 +462,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataRecordCollectionId")
@@ -444,7 +476,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
 	public String getDataRecordCollectionPermissionByCurrentUser(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId") Long dataRecordCollectionId)
+			@PathParam("dataRecordCollectionId")
+			Long dataRecordCollectionId)
 		throws Exception {
 
 		return StringPool.BLANK;
@@ -455,8 +488,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -473,8 +506,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
 					siteId,
 				@NotNull @Parameter(hidden = true)
-				@PathParam("dataRecordCollectionKey") String
-					dataRecordCollectionKey)
+				@PathParam("dataRecordCollectionKey")
+				String dataRecordCollectionKey)
 		throws Exception {
 
 		return new DataRecordCollection();
@@ -491,7 +524,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 				dataRecordCollections) {
 
 			postDataDefinitionDataRecordCollection(
-				Long.valueOf((String)parameters.get("dataDefinitionId")),
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataRecordCollection);
 		}
 	}
@@ -531,7 +564,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		throws Exception {
 
 		return getDataDefinitionDataRecordCollectionsPage(
-			(Long)parameters.get("dataDefinitionId"),
+			Long.parseLong((String)parameters.get("dataDefinitionId")),
 			(String)parameters.get("keywords"), pagination);
 	}
 
@@ -568,8 +601,9 @@ public abstract class BaseDataRecordCollectionResourceImpl
 
 			putDataRecordCollection(
 				dataRecordCollection.getId() != null ?
-				dataRecordCollection.getId() :
-				(Long)parameters.get("dataRecordCollectionId"),
+					dataRecordCollection.getId() :
+						Long.parseLong(
+							(String)parameters.get("dataRecordCollectionId")),
 				dataRecordCollection);
 		}
 	}
@@ -592,11 +626,47 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			"This method needs to be implemented");
 	}
 
+	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+		return GetterUtil.getLong(id);
+	}
+
 	protected String getPermissionCheckerResourceName(Object id)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Page<com.liferay.portal.vulcan.permission.Permission>
+			toPermissionPage(
+				Map<String, Map<String, String>> actions, long id,
+				String resourceName, String roleNames)
+		throws Exception {
+
+		List<ResourceAction> resourceActions =
+			resourceActionLocalService.getResourceActions(resourceName);
+
+		if (Validator.isNotNull(roleNames)) {
+			return Page.of(
+				actions,
+				transform(
+					PermissionUtil.getRoles(
+						contextCompany, roleLocalService,
+						StringUtil.split(roleNames)),
+					role -> PermissionUtil.toPermission(
+						contextCompany.getCompanyId(), id, resourceActions,
+						resourceName, resourcePermissionLocalService, role)));
+		}
+
+		return Page.of(
+			actions,
+			transform(
+				PermissionUtil.getResourcePermissions(
+					contextCompany.getCompanyId(), id, resourceName,
+					resourcePermissionLocalService),
+				resourcePermission -> PermissionUtil.toPermission(
+					resourceActions, resourcePermission,
+					roleLocalService.getRole(resourcePermission.getRoleId()))));
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

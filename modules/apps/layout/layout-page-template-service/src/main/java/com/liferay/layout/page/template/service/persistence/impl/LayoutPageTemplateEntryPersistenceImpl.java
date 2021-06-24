@@ -24022,25 +24022,25 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (layoutPageTemplateEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				layoutPageTemplateEntry.setCreateDate(now);
+				layoutPageTemplateEntry.setCreateDate(date);
 			}
 			else {
 				layoutPageTemplateEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!layoutPageTemplateEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				layoutPageTemplateEntry.setModifiedDate(now);
+				layoutPageTemplateEntry.setModifiedDate(date);
 			}
 			else {
 				layoutPageTemplateEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -25353,6 +25353,13 @@ public class LayoutPageTemplateEntryPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -25365,7 +25372,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutPageTemplateEntryModelImpl layoutPageTemplateEntryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -25389,8 +25396,19 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				LayoutPageTemplateEntryModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

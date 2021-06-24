@@ -3239,7 +3239,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '3.0.10'."
+        'com.liferay.headless.delivery.client', and version '3.0.15'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -3682,7 +3682,7 @@ paths:
                                 type: array
                     description:
                         ""
-            tags: [ "Language" ]
+            tags: ["Language"]
     "/asset-libraries/{assetLibraryId}/structured-content-folders":
         get:
             operationId: getAssetLibraryStructuredContentFoldersPage
@@ -7987,7 +7987,7 @@ paths:
                                 type: array
                     description:
                         ""
-            tags: [ "Language" ]
+            tags: ["Language"]
     "/sites/{siteId}/message-board-messages":
         # @review
         get:

@@ -125,6 +125,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -135,6 +136,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
@@ -143,6 +145,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
@@ -693,7 +697,31 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected long getSegmentsExperienceId() {
-		return SegmentsExperienceConstants.ID_DEFAULT;
+		if (_segmentsExperienceId != null) {
+			return _segmentsExperienceId;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		// LPS-131416
+
+		long segmentsExperienceId = GetterUtil.getLong(
+			unicodeProperties.getProperty("segmentsExperienceId"),
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		_segmentsExperienceId = Optional.ofNullable(
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				segmentsExperienceId)
+		).map(
+			SegmentsExperience::getSegmentsExperienceId
+		).orElse(
+			SegmentsExperienceConstants.ID_DEFAULT
+		);
+
+		return _segmentsExperienceId;
 	}
 
 	protected List<Map<String, Object>> getSidebarPanels(int layoutType) {
@@ -1516,6 +1544,36 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.setIsolated(isolated);
 		}
 
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		for (long fragmentEntryLinkId : fragmentLayoutStructureItems.keySet()) {
+			if (fragmentEntryLinksMap.containsKey(
+					String.valueOf(fragmentEntryLinkId))) {
+
+				continue;
+			}
+
+			fragmentEntryLinksMap.put(
+				String.valueOf(fragmentEntryLinkId),
+				JSONUtil.put(
+					"configuration", JSONFactoryUtil.createJSONObject()
+				).put(
+					"content", StringPool.BLANK
+				).put(
+					"defaultConfigurationValues",
+					JSONFactoryUtil.createJSONObject()
+				).put(
+					"editableValues", JSONFactoryUtil.createJSONObject()
+				).put(
+					"error", Boolean.TRUE
+				).put(
+					"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId)
+				));
+		}
+
 		_fragmentEntryLinks = fragmentEntryLinksMap;
 
 		return _fragmentEntryLinks;
@@ -2252,6 +2310,7 @@ public class ContentPageEditorDisplayContext {
 	private String _redirect;
 	private final RenderResponse _renderResponse;
 	private final ResourceBundleLoader _resourceBundleLoader;
+	private Long _segmentsExperienceId;
 	private List<Map<String, Object>> _sidebarPanels;
 	private ItemSelectorCriterion _urlItemSelectorCriterion;
 

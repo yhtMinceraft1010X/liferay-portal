@@ -1,0 +1,55 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Commerce";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
+
+	@description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
+	@priority = "3"
+	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		AssertElementNotPresent(
+			key_productName = "Break Fluid",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+
+		AssertElementNotPresent(
+			key_productName = "Break Fluid",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+		AssertElementNotPresent(
+			key_productName = "Break Fluid",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
+
+		AssertElementNotPresent(
+			key_productSKU = "MIN93016A",
+			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+	}
+
+}

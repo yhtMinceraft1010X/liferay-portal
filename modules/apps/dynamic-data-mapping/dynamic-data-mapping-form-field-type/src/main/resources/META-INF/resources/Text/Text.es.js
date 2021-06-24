@@ -83,6 +83,7 @@ const Text = ({
 
 	return (
 		<ClayInput
+			aria-labelledby={id}
 			className="ddm-field-text"
 			disabled={disabled}
 			id={id}
@@ -127,6 +128,7 @@ const Textarea = ({
 
 	return (
 		<textarea
+			aria-labelledby={id}
 			className="ddm-field-text form-control"
 			disabled={disabled}
 			id={id}
@@ -222,6 +224,7 @@ const Autocomplete = ({
 	return (
 		<ClayAutocomplete>
 			<ClayAutocomplete.Input
+				aria-labelledby={id}
 				disabled={disabled}
 				id={id}
 				name={name}
@@ -338,6 +341,8 @@ const Main = ({
 				: `singleline`
 		];
 
+	const fieldDetailsId = id ? id + '_fieldDetails' : name + '_fieldDetails';
+
 	return (
 		<FieldBase
 			{...otherProps}
@@ -351,7 +356,7 @@ const Main = ({
 				disabled={readOnly}
 				editingLanguageId={editingLanguageId}
 				fieldName={fieldName}
-				id={id}
+				id={fieldDetailsId}
 				localizable={localizable}
 				localizedValue={localizedValue}
 				name={name}

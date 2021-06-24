@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxonomyVocabulary")
+@GraphQLName(
+	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
+	value = "TaxonomyVocabulary"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.)."
+	description = "Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification, sorting, etc.).",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "TaxonomyVocabulary")
 public class TaxonomyVocabulary implements Serializable {
@@ -759,6 +762,7 @@ public class TaxonomyVocabulary implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary",
 		name = "x-class-name"
 	)
@@ -828,7 +832,7 @@ public class TaxonomyVocabulary implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -867,7 +871,7 @@ public class TaxonomyVocabulary implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -99,19 +99,18 @@ renderResponse.setTitle(headerTitle);
 
 							for (RepositoryConfiguration.Parameter repositoryConfigurationParameter : repositoryConfiguration.getParameters()) {
 								String parameterValue = typeSettingsProperties.getProperty(repositoryConfigurationParameter.getName());
-
-								if (Validator.isNotNull(parameterValue)) {
 							%>
 
+								<c:if test="<%= Validator.isNotNull(parameterValue) %>">
 									<dt>
 										<%= HtmlUtil.escape(repositoryConfigurationParameter.getLabel(locale)) %>
 									</dt>
 									<dd>
 										<%= HtmlUtil.escape(parameterValue) %>
 									</dd>
+								</c:if>
 
 							<%
-								}
 							}
 							%>
 
@@ -141,10 +140,9 @@ renderResponse.setTitle(headerTitle);
 		<%
 		for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
 			try {
-				String repositoryClassDefinitionId = RepositoryClassDefinitionUtil.getRepositoryClassDefinitionId(repositoryClassDefinition);
 		%>
 
-				<div class="settings-parameters" id="<portlet:namespace />repository-<%= repositoryClassDefinitionId %>-configuration">
+				<div class="settings-parameters" id="<portlet:namespace />repository-<%= RepositoryClassDefinitionUtil.getRepositoryClassDefinitionId(repositoryClassDefinition) %>-configuration">
 
 					<%
 					RepositoryConfiguration repositoryConfiguration = repositoryClassDefinition.getRepositoryConfiguration();

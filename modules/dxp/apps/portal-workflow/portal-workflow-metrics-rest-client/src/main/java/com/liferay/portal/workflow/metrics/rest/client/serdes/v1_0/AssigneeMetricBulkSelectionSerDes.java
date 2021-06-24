@@ -349,9 +349,6 @@ public class AssigneeMetricBulkSelectionSerDes {
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
-			else if (jsonParserFieldName.equals("status")) {
-				throw new IllegalArgumentException();
-			}
 		}
 
 	}
@@ -380,7 +377,7 @@ public class AssigneeMetricBulkSelectionSerDes {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -416,7 +413,7 @@ public class AssigneeMetricBulkSelectionSerDes {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

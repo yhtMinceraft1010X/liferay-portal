@@ -2657,23 +2657,23 @@ public class AppPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (app.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				app.setCreateDate(now);
+				app.setCreateDate(date);
 			}
 			else {
-				app.setCreateDate(serviceContext.getCreateDate(now));
+				app.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!appModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				app.setModifiedDate(now);
+				app.setModifiedDate(date);
 			}
 			else {
-				app.setModifiedDate(serviceContext.getModifiedDate(now));
+				app.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3211,7 +3211,7 @@ public class AppPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AppModelImpl appModelImpl, String[] columnNames, boolean original) {
 
 			Object[] arguments = new Object[columnNames.length];
@@ -3231,8 +3231,8 @@ public class AppPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

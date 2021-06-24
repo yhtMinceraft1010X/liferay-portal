@@ -3535,25 +3535,25 @@ public class CommercePricingClassPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commercePricingClass.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commercePricingClass.setCreateDate(now);
+				commercePricingClass.setCreateDate(date);
 			}
 			else {
 				commercePricingClass.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commercePricingClassModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commercePricingClass.setModifiedDate(now);
+				commercePricingClass.setModifiedDate(date);
 			}
 			else {
 				commercePricingClass.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4077,6 +4077,13 @@ public class CommercePricingClassPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4089,7 +4096,7 @@ public class CommercePricingClassPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommercePricingClassModelImpl commercePricingClassModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4112,8 +4119,19 @@ public class CommercePricingClassPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommercePricingClassModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -235,7 +235,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetPriceModifierByExternalReferenceCodePriceModifierProductsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			PriceModifierProduct irrelevantPriceModifierProduct =
 				testGetPriceModifierByExternalReferenceCodePriceModifierProductsPage_addPriceModifierProduct(
 					irrelevantExternalReferenceCode,
@@ -398,7 +398,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		Long irrelevantId =
 			testGetPriceModifierIdPriceModifierProductsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			PriceModifierProduct irrelevantPriceModifierProduct =
 				testGetPriceModifierIdPriceModifierProductsPage_addPriceModifierProduct(
 					irrelevantId, randomIrrelevantPriceModifierProduct());
@@ -922,7 +922,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.pricing.dto.v2_0.
 						PriceModifierProduct.class)) {
 
@@ -957,7 +957,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -1102,6 +1102,17 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1317,12 +1328,12 @@ public abstract class BasePriceModifierProductResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1332,10 +1343,10 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

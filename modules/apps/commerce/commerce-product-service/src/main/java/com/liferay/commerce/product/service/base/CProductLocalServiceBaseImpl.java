@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.service.CProductLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -78,6 +79,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -100,7 +103,7 @@ public abstract class CProductLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CProductLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CProductLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CProductLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CProductLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -170,6 +173,13 @@ public abstract class CProductLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return cProductPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -284,10 +294,39 @@ public abstract class CProductLocalServiceBaseImpl
 	 * @return the matching c product, or <code>null</code> if a matching c product could not be found
 	 */
 	@Override
-	public CProduct fetchCProductByReferenceCode(
+	public CProduct fetchCProductByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return cProductPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCProductByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CProduct fetchCProductByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCProductByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the c product with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the c product's external reference code
+	 * @return the matching c product
+	 * @throws PortalException if a matching c product could not be found
+	 */
+	@Override
+	public CProduct getCProductByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return cProductPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1658,11 +1697,15 @@ public abstract class CProductLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CProduct",
 			cProductLocalService);
+
+		_setLocalServiceUtilService(cProductLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CProduct");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1704,6 +1747,22 @@ public abstract class CProductLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CProductLocalService cProductLocalService) {
+
+		try {
+			Field field = CProductLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cProductLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

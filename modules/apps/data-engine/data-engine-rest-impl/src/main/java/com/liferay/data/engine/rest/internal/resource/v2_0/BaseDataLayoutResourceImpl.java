@@ -87,8 +87,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
@@ -106,8 +106,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -135,13 +135,13 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts' -d $'{"contentType": ___, "dataDefinitionId": ___, "dataLayoutKey": ___, "dataLayoutPages": ___, "dataRules": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "id": ___, "name": ___, "paginationMode": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-layouts")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout postDataDefinitionDataLayout(
@@ -158,9 +158,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-layouts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
@@ -168,6 +167,7 @@ public abstract class BaseDataLayoutResourceImpl
 		}
 	)
 	@Path("/data-definitions/{dataDefinitionId}/data-layouts/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public Response postDataDefinitionDataLayoutBatch(
@@ -199,8 +199,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
@@ -218,9 +218,9 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -254,8 +254,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
@@ -275,14 +275,14 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}' -d $'{"contentType": ___, "dataDefinitionId": ___, "dataLayoutKey": ___, "dataLayoutPages": ___, "dataRules": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "id": ___, "name": ___, "paginationMode": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
 	@Path("/data-layouts/{dataLayoutId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public DataLayout putDataLayout(
 			@NotNull @Parameter(hidden = true) @PathParam("dataLayoutId") Long
@@ -298,14 +298,14 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/data-layouts/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public Response putDataLayoutBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -334,13 +334,13 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-layouts/{dataLayoutId}/context' -d $'{"containerId": ___, "dataRecordValues": ___, "namespace": ___, "pathThemeImages": ___, "readOnly": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "dataLayoutId")}
 	)
 	@Path("/data-layouts/{dataLayoutId}/context")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DataLayout")})
 	public Response postDataLayoutContext(
@@ -359,8 +359,8 @@ public abstract class BaseDataLayoutResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-layouts/by-content-type/{contentType}/by-data-layout-key/{dataLayoutKey}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -393,7 +393,7 @@ public abstract class BaseDataLayoutResourceImpl
 
 		for (DataLayout dataLayout : dataLayouts) {
 			postDataDefinitionDataLayout(
-				Long.valueOf((String)parameters.get("dataDefinitionId")),
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataLayout);
 		}
 	}
@@ -431,7 +431,7 @@ public abstract class BaseDataLayoutResourceImpl
 		throws Exception {
 
 		return getDataDefinitionDataLayoutsPage(
-			(Long)parameters.get("dataDefinitionId"),
+			Long.parseLong((String)parameters.get("dataDefinitionId")),
 			(String)parameters.get("keywords"), pagination, sorts);
 	}
 
@@ -466,7 +466,7 @@ public abstract class BaseDataLayoutResourceImpl
 		for (DataLayout dataLayout : dataLayouts) {
 			putDataLayout(
 				dataLayout.getId() != null ? dataLayout.getId() :
-				(Long)parameters.get("dataLayoutId"),
+					Long.parseLong((String)parameters.get("dataLayoutId")),
 				dataLayout);
 		}
 	}

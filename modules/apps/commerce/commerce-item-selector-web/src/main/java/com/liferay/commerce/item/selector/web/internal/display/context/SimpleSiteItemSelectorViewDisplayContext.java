@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -128,13 +127,6 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setSearch(_search);
 
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build();
-
 		int total = _groupService.searchCount(
 			cpRequestHelper.getCompanyId(), null, null, new String[0]);
 		List<Group> groups = _groupService.search(
@@ -143,8 +135,13 @@ public class SimpleSiteItemSelectorViewDisplayContext
 				ClassNameLocalServiceUtil.getClassNameId(Group.class),
 				ClassNameLocalServiceUtil.getClassNameId(Organization.class)
 			},
-			null, params, searchContainer.getStart(), searchContainer.getEnd(),
-			null);
+			null,
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"site", true
+			).build(),
+			searchContainer.getStart(), searchContainer.getEnd(), null);
 
 		searchContainer.setTotal(total);
 		searchContainer.setResults(groups);

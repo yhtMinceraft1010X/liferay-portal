@@ -28,6 +28,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -177,6 +181,128 @@ public class Account implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, ?> customFields;
+
+	@Schema(description = "The account's creation date.")
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The account's creation date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateCreated;
+
+	@Schema(description = "The account's most recent modification date.")
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The account's most recent modification date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateModified;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getDefaultBillingAccountAddressId() {
+		return defaultBillingAccountAddressId;
+	}
+
+	public void setDefaultBillingAccountAddressId(
+		Long defaultBillingAccountAddressId) {
+
+		this.defaultBillingAccountAddressId = defaultBillingAccountAddressId;
+	}
+
+	@JsonIgnore
+	public void setDefaultBillingAccountAddressId(
+		UnsafeSupplier<Long, Exception>
+			defaultBillingAccountAddressIdUnsafeSupplier) {
+
+		try {
+			defaultBillingAccountAddressId =
+				defaultBillingAccountAddressIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long defaultBillingAccountAddressId;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getDefaultShippingAccountAddressId() {
+		return defaultShippingAccountAddressId;
+	}
+
+	public void setDefaultShippingAccountAddressId(
+		Long defaultShippingAccountAddressId) {
+
+		this.defaultShippingAccountAddressId = defaultShippingAccountAddressId;
+	}
+
+	@JsonIgnore
+	public void setDefaultShippingAccountAddressId(
+		UnsafeSupplier<Long, Exception>
+			defaultShippingAccountAddressIdUnsafeSupplier) {
+
+		try {
+			defaultShippingAccountAddressId =
+				defaultShippingAccountAddressIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long defaultShippingAccountAddressId;
 
 	@Schema
 	public String[] getEmailAddresses() {
@@ -455,6 +581,9 @@ public class Account implements Serializable {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		if (accountAddresses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -523,6 +652,54 @@ public class Account implements Serializable {
 			sb.append("\"customFields\": ");
 
 			sb.append(_toJSON(customFields));
+		}
+
+		if (dateCreated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
+
+			sb.append("\"");
+		}
+
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		if (defaultBillingAccountAddressId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultBillingAccountAddressId\": ");
+
+			sb.append(defaultBillingAccountAddressId);
+		}
+
+		if (defaultShippingAccountAddressId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultShippingAccountAddressId\": ");
+
+			sb.append(defaultShippingAccountAddressId);
 		}
 
 		if (emailAddresses != null) {
@@ -651,6 +828,7 @@ public class Account implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.Account",
 		name = "x-class-name"
 	)
@@ -686,7 +864,7 @@ public class Account implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -725,7 +903,7 @@ public class Account implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

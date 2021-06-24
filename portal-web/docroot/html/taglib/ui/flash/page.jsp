@@ -19,25 +19,9 @@
 <%
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-String allowFullScreen = (String)request.getAttribute("liferay-ui:flash:allowFullScreen");
-String allowScriptAccess = (String)request.getAttribute("liferay-ui:flash:allowScriptAccess");
-String base = (String)request.getAttribute("liferay-ui:flash:base");
-String bgcolor = (String)request.getAttribute("liferay-ui:flash:bgcolor");
-String devicefont = (String)request.getAttribute("liferay-ui:flash:devicefont");
-String flashvars = (String)request.getAttribute("liferay-ui:flash:flashvars");
 String height = (String)request.getAttribute("liferay-ui:flash:height");
-String id = (String)request.getAttribute("liferay-ui:flash:id");
-String loop = (String)request.getAttribute("liferay-ui:flash:loop");
-String menu = (String)request.getAttribute("liferay-ui:flash:menu");
-String movie = (String)request.getAttribute("liferay-ui:flash:movie");
-String play = (String)request.getAttribute("liferay-ui:flash:play");
-String quality = (String)request.getAttribute("liferay-ui:flash:quality");
-String salign = (String)request.getAttribute("liferay-ui:flash:salign");
-String scale = (String)request.getAttribute("liferay-ui:flash:scale");
-String swliveconnect = (String)request.getAttribute("liferay-ui:flash:swliveconnect");
 String version = (String)request.getAttribute("liferay-ui:flash:version");
 String width = (String)request.getAttribute("liferay-ui:flash:width");
-String wmode = (String)request.getAttribute("liferay-ui:flash:wmode");
 %>
 
 <div id="<%= randomNamespace %>flashcontent" style="height: <%= height %>; width: <%= width %>;"></div>
@@ -47,24 +31,24 @@ String wmode = (String)request.getAttribute("liferay-ui:flash:wmode");
 		{
 			boundingBox: '#<%= randomNamespace %>flashcontent',
 			fixedAttributes: {
-				allowFullScreen: '<%= allowFullScreen %>',
-				allowScriptAccess: '<%= allowScriptAccess %>',
-				base: '<%= base %>',
-				bgcolor: '<%= bgcolor %>',
-				devicefont: '<%= devicefont %>',
-				loop: '<%= loop %>',
-				menu: '<%= menu %>',
-				play: '<%= play %>',
-				quality: '<%= quality %>',
-				salign: '<%= salign %>',
-				scale: '<%= scale %>',
-				swliveconnect: '<%= swliveconnect %>',
-				wmode: '<%= wmode %>'
+				allowFullScreen: '<%= (String)request.getAttribute("liferay-ui:flash:allowFullScreen") %>',
+				allowScriptAccess: '<%= (String)request.getAttribute("liferay-ui:flash:allowScriptAccess") %>',
+				base: '<%= (String)request.getAttribute("liferay-ui:flash:base") %>',
+				bgcolor: '<%= (String)request.getAttribute("liferay-ui:flash:bgcolor") %>',
+				devicefont: '<%= (String)request.getAttribute("liferay-ui:flash:devicefont") %>',
+				loop: '<%= (String)request.getAttribute("liferay-ui:flash:loop") %>',
+				menu: '<%= (String)request.getAttribute("liferay-ui:flash:menu") %>',
+				play: '<%= (String)request.getAttribute("liferay-ui:flash:play") %>',
+				quality: '<%= (String)request.getAttribute("liferay-ui:flash:quality") %>',
+				salign: '<%= (String)request.getAttribute("liferay-ui:flash:salign") %>',
+				scale: '<%= (String)request.getAttribute("liferay-ui:flash:scale") %>',
+				swliveconnect: '<%= (String)request.getAttribute("liferay-ui:flash:swliveconnect") %>',
+				wmode: '<%= (String)request.getAttribute("liferay-ui:flash:wmode") %>'
 			},
-			flashVars: '<%= flashvars %>',
+			flashVars: '<%= (String)request.getAttribute("liferay-ui:flash:flashvars") %>',
 			height: '<%= height %>',
-			id: '<%= id %>',
-			url: '<%= movie %>',
+			id: '<%= (String)request.getAttribute("liferay-ui:flash:id") %>',
+			url: '<%= (String)request.getAttribute("liferay-ui:flash:movie") %>',
 			version: <%= version %>,
 			width: '<%= width %>'
 		}

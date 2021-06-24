@@ -56,10 +56,10 @@ public class AssetEntryListLayoutListRetriever
 			return Collections.emptyList();
 		}
 
-		Optional<long[]> segmentsExperienceIdsOptional =
-			layoutListRetrieverContext.getSegmentsExperienceIdsOptional();
+		Optional<long[]> segmentsEntryIdsOptional =
+			layoutListRetrieverContext.getSegmentsEntryIdsOptional();
 
-		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
+		long[] segmentsEntryIds = segmentsEntryIdsOptional.orElse(
 			new long[] {0});
 
 		Optional<Pagination> paginationOptional =
@@ -70,7 +70,7 @@ public class AssetEntryListLayoutListRetriever
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsExperienceIds[0], pagination.getStart(),
+				assetListEntry, segmentsEntryIds, pagination.getStart(),
 				pagination.getEnd());
 
 		if (Objects.equals(
@@ -96,14 +96,14 @@ public class AssetEntryListLayoutListRetriever
 			return 0;
 		}
 
-		Optional<long[]> segmentsExperienceIdsOptional =
-			layoutListRetrieverContext.getSegmentsExperienceIdsOptional();
+		Optional<long[]> segmentsEntryIdsOptional =
+			layoutListRetrieverContext.getSegmentsEntryIdsOptional();
 
-		long[] segmentsExperienceIds = segmentsExperienceIdsOptional.orElse(
+		long[] segmentsEntryIds = segmentsEntryIdsOptional.orElse(
 			new long[] {0});
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
-			assetListEntry, segmentsExperienceIds[0]);
+			assetListEntry, segmentsEntryIds);
 	}
 
 	private List<Object> _toAssetObjects(List<AssetEntry> assetEntries) {

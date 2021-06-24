@@ -4,8 +4,8 @@
 		"@clayui/button": "3.5.0",
 		"@clayui/icon": "3.1.0",
 		"@clayui/modal": "3.8.0",
-		"clay-button": "2.22.1",
-		"clay-icon": "2.22.1",
+		"clay-button": "2.22.2",
+		"clay-icon": "2.22.2",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",
 		"metal-soy": "2.16.8",
@@ -22,5 +22,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "5.0.30"
+	"version": "5.0.32"
 }

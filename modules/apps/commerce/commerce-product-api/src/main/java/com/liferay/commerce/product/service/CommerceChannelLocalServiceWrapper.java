@@ -159,6 +159,13 @@ public class CommerceChannelLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceChannelLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceChannelLocalService.dynamicQuery();
 	}
@@ -275,6 +282,20 @@ public class CommerceChannelLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
+		fetchCommerceChannelByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceChannelLocalService.
+			fetchCommerceChannelByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceChannelByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
 		fetchCommerceChannelByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -311,6 +332,25 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.getCommerceChannel(
 			commerceChannelId);
+	}
+
+	/**
+	 * Returns the commerce channel with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce channel's external reference code
+	 * @return the matching commerce channel
+	 * @throws PortalException if a matching commerce channel could not be found
+	 */
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannelByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.
+			getCommerceChannelByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	@Override

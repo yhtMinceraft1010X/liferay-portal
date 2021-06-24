@@ -1960,25 +1960,25 @@ public class CPDefinitionInventoryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpDefinitionInventory.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpDefinitionInventory.setCreateDate(now);
+				cpDefinitionInventory.setCreateDate(date);
 			}
 			else {
 				cpDefinitionInventory.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpDefinitionInventoryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpDefinitionInventory.setModifiedDate(now);
+				cpDefinitionInventory.setModifiedDate(date);
 			}
 			else {
 				cpDefinitionInventory.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2484,7 +2484,7 @@ public class CPDefinitionInventoryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPDefinitionInventoryModelImpl cpDefinitionInventoryModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2508,8 +2508,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

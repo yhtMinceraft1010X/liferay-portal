@@ -56,8 +56,11 @@ export const FieldSet = ({fields, item = {}, label, onValueSelect, values}) => {
 							field.type &&
 							FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-						const fieldValue =
-							values[field.name] || field.defaultValue;
+						const fieldValue = Object.keys(values).includes(
+							field.name
+						)
+							? values[field.name]
+							: field.defaultValue;
 
 						const visible =
 							!field.dependencies ||

@@ -17,11 +17,20 @@ package com.liferay.portal.search.solr8.internal.suggest;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.suggest.BaseSuggestTestCase;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author André de Oliveira
  */
 public class SolrSuggestTest extends BaseSuggestTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

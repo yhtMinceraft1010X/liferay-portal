@@ -2284,25 +2284,25 @@ public class AssetCategoryPropertyPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (assetCategoryProperty.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				assetCategoryProperty.setCreateDate(now);
+				assetCategoryProperty.setCreateDate(date);
 			}
 			else {
 				assetCategoryProperty.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!assetCategoryPropertyModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				assetCategoryProperty.setModifiedDate(now);
+				assetCategoryProperty.setModifiedDate(date);
 			}
 			else {
 				assetCategoryProperty.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3031,6 +3031,13 @@ public class AssetCategoryPropertyPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3043,7 +3050,7 @@ public class AssetCategoryPropertyPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3067,8 +3074,19 @@ public class AssetCategoryPropertyPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				AssetCategoryPropertyModelImpl.getColumnBitmask("key_");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

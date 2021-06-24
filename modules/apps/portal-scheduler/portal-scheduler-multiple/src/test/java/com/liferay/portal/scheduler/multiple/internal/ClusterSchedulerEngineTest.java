@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -82,6 +82,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -95,9 +96,14 @@ import org.mockito.stubbing.Answer;
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ClusterSchedulerEngineTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
-		setUpProps();
+		setUpPropsUtil();
 
 		setUpSchedulerEngineHelperUtil();
 		setUpClusterSchedulerEngine();
@@ -1735,10 +1741,6 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
-
 	@Aspect
 	public static class ClusterableContextThreadLocalAdvice {
 
@@ -1867,7 +1869,7 @@ public class ClusterSchedulerEngineTest {
 			_clusterSchedulerEngine, "_memoryClusteredJobs");
 	}
 
-	protected void setUpProps() {
+	protected void setUpPropsUtil() {
 		_props = PropsTestUtil.setProps(
 			PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT, "100");
 	}

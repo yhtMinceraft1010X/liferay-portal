@@ -113,6 +113,10 @@ public class AuthVerifierPipeline {
 
 		String requestURI = httpServletRequest.getRequestURI();
 
+		String pathContext = PortalUtil.getPathContext();
+
+		requestURI = requestURI.substring(pathContext.length());
+
 		String contextPath = httpServletRequest.getContextPath();
 
 		if (requestURI.equals(contextPath)) {

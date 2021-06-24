@@ -183,6 +183,13 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceInventoryWarehouseLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceInventoryWarehouseLocalService.dynamicQuery();
 	}
@@ -292,6 +299,20 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+		fetchCommerceInventoryWarehouseByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceInventoryWarehouseLocalService.
+			fetchCommerceInventoryWarehouseByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceInventoryWarehouseByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
 		fetchCommerceInventoryWarehouseByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -334,6 +355,25 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 
 		return _commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouse(commerceInventoryWarehouseId);
+	}
+
+	/**
+	 * Returns the commerce inventory warehouse with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory warehouse's external reference code
+	 * @return the matching commerce inventory warehouse
+	 * @throws PortalException if a matching commerce inventory warehouse could not be found
+	 */
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouse
+			getCommerceInventoryWarehouseByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseLocalService.
+			getCommerceInventoryWarehouseByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

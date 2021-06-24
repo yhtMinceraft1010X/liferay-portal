@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
@@ -203,6 +204,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 				if (Validator.isNull(valueString)) {
 					return null;
+				}
+
+				if (locale.equals(LocaleUtil.ROOT)) {
+					locale = LocaleUtil.getSiteDefault();
 				}
 
 				DateFormat dateFormat = DateFormat.getDateInstance(

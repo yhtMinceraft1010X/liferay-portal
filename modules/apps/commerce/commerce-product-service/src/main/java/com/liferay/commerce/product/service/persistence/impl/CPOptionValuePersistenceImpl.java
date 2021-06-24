@@ -2994,24 +2994,24 @@ public class CPOptionValuePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpOptionValue.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpOptionValue.setCreateDate(now);
+				cpOptionValue.setCreateDate(date);
 			}
 			else {
-				cpOptionValue.setCreateDate(serviceContext.getCreateDate(now));
+				cpOptionValue.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpOptionValueModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpOptionValue.setModifiedDate(now);
+				cpOptionValue.setModifiedDate(date);
 			}
 			else {
 				cpOptionValue.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3529,6 +3529,13 @@ public class CPOptionValuePersistenceImpl
 						cpOptionValueModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3540,7 +3547,7 @@ public class CPOptionValuePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPOptionValueModelImpl cpOptionValueModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3563,8 +3570,21 @@ public class CPOptionValuePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CPOptionValueModelImpl.getColumnBitmask(
+				"priority");
+			orderByColumnsBitmask |= CPOptionValueModelImpl.getColumnBitmask(
+				"name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

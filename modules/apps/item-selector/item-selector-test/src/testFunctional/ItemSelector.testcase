@@ -246,6 +246,124 @@ definition {
 			viewNoLocationInfo = "Site Name");
 	}
 
+	@description = "This test ensures that web content using a structure can be filtered from the current depot."
+	@priority = "5"
+	test FilterCustomWCFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "Web Content Title",
+			assetType = "WC Structure Name",
+			itemSubtype = "WC Structure Name",
+			itemType = "Web Content Article");
+	}
+
+	@description = "This test ensures that a folder can be filtered from the current depot."
+	@priority = "5"
+	test FilterFolderFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpeg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "DM Folder Name",
+			assetType = "Documents Folder",
+			itemType = "Documents Folder");
+	}
+
+	@description = "This test ensures that a document can be filtered from the current depot."
+	@priority = "5"
+	test FilterImageFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "Document_1.jpeg",
+			assetType = "Basic Document",
+			itemSubtype = "Basic Document",
+			itemType = "Document");
+	}
+
 	@description = "This test ensures that web contents can filter by the current site in the item selector."
 	@priority = "5"
 	test FilterWCByCurrentSite {
@@ -304,6 +422,66 @@ definition {
 			noWebContentTitle = "Web Content From Depot",
 			viewNoLocationInfo = "Site Name",
 			webContentTitle = "Web Content From Site");
+	}
+
+	@description = "This test ensures that the web content folder can be filtered from the current depot."
+	@priority = "5"
+	test FilterWCFolderFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addFolder(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			folderName = "WC Folder Name",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "WC Folder Name",
+			assetType = "Web Content Folder",
+			itemType = "Web Content Folder");
+	}
+
+	@description = "This test ensures that web content can be filtered from the current depot."
+	@priority = "5"
+	test FilterWCFromCurrentDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC WebContent Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		ItemSelector.viewFilteredResultsViaAssetLists(
+			assetListName = "Depot Manual Asset List",
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article");
 	}
 
 	@description = "This ensures that the background image of a fragment can be added."
@@ -470,6 +648,76 @@ definition {
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
 
 		AssertVisible(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
+	}
+
+	@description = "This test covers LPS-96564. It ensures that a private site cannot be viewed by a non-site member in calendar widget."
+	@priority = "4"
+	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(
+			membershipType = "Private",
+			siteName = "Site A");
+
+		JSONGroup.addGroup(groupName = "Site X");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.gotoAddPage(userName = "userfn userln");
+
+		SitePages.addPrivatePage(pageName = "Private Test Page");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Private Test Page",
+			url = "${portalURL}/user/usersn/private-test-page");
+
+		Portlet.addPG(portletName = "Calendar");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSpecificURLPage(
+			pageName = "Private Test Page",
+			url = "${portalURL}/user/usersn/private-test-page");
+
+		CalendarNavigator.gotoAddEvent();
+
+		Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Item",
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertClick(
+			key_breadcrumbName = "Sites and Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+			value1 = "Sites and Libraries");
+
+		LexiconCard.viewCardPresent(card = "Site X");
+
+		LexiconCard.viewCardNotPresent(card = "Site A");
 	}
 
 	@priority = "4"

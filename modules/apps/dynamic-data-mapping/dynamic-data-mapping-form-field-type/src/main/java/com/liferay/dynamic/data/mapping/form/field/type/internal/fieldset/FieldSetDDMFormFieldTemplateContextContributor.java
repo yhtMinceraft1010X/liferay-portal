@@ -160,6 +160,48 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		return jsonFactory.createJSONArray();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	protected JSONArray getRowsJSONArray(
+		DDMFormField ddmFormField, List<Object> nestedFields) {
+
+		String rows = GetterUtil.getString(ddmFormField.getProperty("rows"));
+
+		if (Validator.isNotNull(rows) || nestedFields.isEmpty()) {
+			return getJSONArray(rows);
+		}
+
+		JSONArray rowsJSONArray = jsonFactory.createJSONArray();
+
+		Stream<Object> visibleFieldsStream = nestedFields.stream();
+
+		List<Object> visibleNestedFields = visibleFieldsStream.filter(
+			this::isNestedFieldVisible
+		).collect(
+			Collectors.toList()
+		);
+
+		if (!visibleNestedFields.isEmpty()) {
+			rowsJSONArray.put(createRowJSONObject(visibleNestedFields));
+		}
+
+		Stream<Object> invisibleFieldsStream = nestedFields.stream();
+
+		List<Object> invisibleNestedFields = invisibleFieldsStream.filter(
+			nestedFieldContext -> !isNestedFieldVisible(nestedFieldContext)
+		).collect(
+			Collectors.toList()
+		);
+
+		if (!invisibleNestedFields.isEmpty()) {
+			rowsJSONArray.put(createRowJSONObject(invisibleNestedFields));
+		}
+
+		return rowsJSONArray;
+	}
+
 	protected JSONArray getRowsJSONArray(List<Object> nestedFields) {
 		JSONArray rowsJSONArray = jsonFactory.createJSONArray();
 

@@ -6,6 +6,9 @@
 			},
 			"frontend-js-web": {
 				"/": ">=3.0.0"
+			},
+			"osb-commerce-provisioning-theme-impl": {
+				"/": ">=1.0.0"
 			}
 		}
 	}

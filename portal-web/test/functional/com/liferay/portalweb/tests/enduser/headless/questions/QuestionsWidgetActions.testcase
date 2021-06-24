@@ -44,7 +44,7 @@ definition {
 
 	@description = "Validate if the user can create a question with an AL image."
 	@priority = "4"
-	test AddQuestionWithALImage {
+	test AddQuestionWithDepotImage {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -642,6 +642,10 @@ definition {
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
 
+		AssertElementPresent(
+			key_questionTitle = "Question1",
+			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
+
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = "Question1");
@@ -650,7 +654,9 @@ definition {
 			key_answerBodyContent = "This is my answer",
 			locator1 = "Questions#ANSWER_BODY");
 
-		Questions.viewLockedQuestion(questionTitle = "Question1");
+		Questions.viewLockedQuestion(
+			lockedStatus = "true",
+			questionTitle = "Question1");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
@@ -663,6 +669,10 @@ definition {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementNotPresent(
+			key_questionTitle = "Question1",
+			locator1 = "Questions#QUESTIONS_LIST_LOCKED_ICON");
 
 		Questions.gotoDetails(
 			questionTabField = "Questions",
@@ -694,6 +704,11 @@ definition {
 				titleField = "Question${num}");
 		}
 
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Quesions Body 5",
+			categoryName = "Questions Test Category",
+			titleField = "Questions Title 5");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Questions Test Category");
@@ -701,7 +716,15 @@ definition {
 		Pause(locator = "3000");
 
 		Questions.search(
-			resultsInfo = '''4 Results for "test"''',
+			resultsInfo = '''1 Results for "questions title 5"''',
+			searchKey = "Questions Title 5");
+
+		Questions.viewSearchResults(questionsList = "Questions Title 5");
+
+		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+
+		Questions.search(
+			resultsInfo = '''5 Results for "test"''',
 			searchKey = "Test");
 
 		Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
@@ -728,7 +751,7 @@ definition {
 
 		Questions.viewSearchResults(questionsList = "Question1");
 
-		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4");
+		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4,Questions Title 5");
 
 		Questions.search(
 			noQuestionsResults = "true",
@@ -741,6 +764,10 @@ definition {
 				key_questionTitle = "Question${num}",
 				locator1 = "Questions#QUESTIONS_TITLE");
 		}
+
+		AssertVisible(
+			key_questionTitle = "Questions Title 5",
+			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
 	@description = "Validate if the user can subscribe and unsubscribe from the question."
@@ -925,6 +952,100 @@ definition {
 		AssertElementPresent(
 			key_questionTabField = "My Activity",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+	}
+
+	@description = "Validate if the user can view the statistics."
+	@priority = "3"
+	test ViewCreatorStatistics {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Content Question Text",
+			categoryName = "Questions Test Category",
+			titleField = "Question Title");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question Title");
+
+		Questions.viewStatistics(
+			headerName = "Youngling",
+			itemNameList = "Posts,Join Date,Last Post Date",
+			userName = "Test Test");
+	}
+
+	@description = "Validate if the user can view the question after changing the subtopic using the breadcrumb filter."
+	@priority = "3"
+	test ViewQuestionAfterChangingSubTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category1",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Subcategory Description",
+			categoryName = "Questions Test Category2",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category2");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Subcategory Description",
+			categoryName = "Questions Test Category3",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Question Body 2",
+			categoryName = "Questions Test Category1",
+			subCategoryName = "Questions Test Category2",
+			titleField = "Question 2");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category1");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category1",
+			subTopicName = "Questions Test Category2");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category2",
+			subTopicName = "Questions Test Category3");
+
+		Questions.changeTopic(
+			gotoParentTopic = "Questions Test Category2",
+			multipleSubTopics = "true");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
+
+		AssertElementPresent(
+			key_questionTitle = "Question 2",
+			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
 	@description = "Validate if the user can filter by votes."

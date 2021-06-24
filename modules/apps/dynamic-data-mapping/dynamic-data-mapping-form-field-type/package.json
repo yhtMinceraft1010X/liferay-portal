@@ -7,12 +7,12 @@
 		"@clayui/table": "3.1.0",
 		"axios": "0.21.1",
 		"classnames": "2.2.6",
-		"clay-button": "2.22.1",
-		"clay-checkbox": "2.22.1",
-		"clay-dropdown": "2.22.1",
-		"clay-icon": "2.22.1",
-		"clay-label": "2.22.1",
-		"clay-radio": "2.22.1",
+		"clay-button": "2.22.2",
+		"clay-checkbox": "2.22.2",
+		"clay-dropdown": "2.22.3",
+		"clay-icon": "2.22.2",
+		"clay-label": "2.22.2",
+		"clay-radio": "2.22.2",
 		"frontend-editor-ckeditor-web": "*",
 		"frontend-js-web": "*",
 		"leaflet": "1.2.0",
@@ -49,5 +49,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "5.0.68"
+	"version": "5.0.73"
 }

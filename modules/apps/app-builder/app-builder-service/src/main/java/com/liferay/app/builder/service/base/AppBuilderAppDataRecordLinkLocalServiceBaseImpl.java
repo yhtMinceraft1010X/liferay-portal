@@ -16,6 +16,7 @@ package com.liferay.app.builder.service.base;
 
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
+import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalServiceUtil;
 import com.liferay.app.builder.service.persistence.AppBuilderAppDataRecordLinkPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -44,10 +45,13 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +73,7 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AppBuilderAppDataRecordLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AppBuilderAppDataRecordLinkLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AppBuilderAppDataRecordLinkLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -151,6 +155,13 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return appBuilderAppDataRecordLinkPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -397,6 +408,11 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 			appBuilderAppDataRecordLink);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_setLocalServiceUtilService(null);
+	}
+
 	@Override
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
@@ -409,6 +425,8 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		appBuilderAppDataRecordLinkLocalService =
 			(AppBuilderAppDataRecordLinkLocalService)aopProxy;
+
+		_setLocalServiceUtilService(appBuilderAppDataRecordLinkLocalService);
 	}
 
 	/**
@@ -451,6 +469,24 @@ public abstract class AppBuilderAppDataRecordLinkLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		AppBuilderAppDataRecordLinkLocalService
+			appBuilderAppDataRecordLinkLocalService) {
+
+		try {
+			Field field =
+				AppBuilderAppDataRecordLinkLocalServiceUtil.class.
+					getDeclaredField("_service");
+
+			field.setAccessible(true);
+
+			field.set(null, appBuilderAppDataRecordLinkLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

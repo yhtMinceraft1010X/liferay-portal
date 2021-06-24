@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.solr8.internal.SolrQuerySuggester;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -30,6 +33,11 @@ import org.mockito.Mockito;
  * @author André de Oliveira
  */
 public class SolrQuerySuggesterSafeguardsTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testErrorReturnsEmptyResults() throws Exception {

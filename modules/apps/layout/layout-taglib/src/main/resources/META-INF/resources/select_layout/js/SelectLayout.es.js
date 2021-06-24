@@ -86,6 +86,8 @@ const SelectLayout = ({
 		}
 	};
 
+	const empty = nodes.length === 0;
+
 	return (
 		<div className="select-layout">
 			<ClayManagementToolbar>
@@ -98,6 +100,7 @@ const SelectLayout = ({
 						<ClayInput.GroupItem>
 							<ClayInput
 								className="form-control input-group-inset input-group-inset-after"
+								disabled={empty}
 								name={`${namespace}filterKeywords`}
 								onInput={(event) => {
 									setFilterQuery(
@@ -110,11 +113,13 @@ const SelectLayout = ({
 							<ClayInput.GroupInsetItem after tag="span">
 								<ClayButtonWithIcon
 									className="navbar-breakpoint-d-none"
+									disabled={empty}
 									displayType="unstyled"
 									symbol="times"
 								/>
 								<ClayButtonWithIcon
 									className="navbar-breakpoint-d-block"
+									disabled={empty}
 									displayType="unstyled"
 									symbol="search"
 								/>
@@ -123,26 +128,41 @@ const SelectLayout = ({
 					</ClayInput.Group>
 				</ClayManagementToolbar.Search>
 			</ClayManagementToolbar>
-
 			<ClayLayout.ContainerFluid
 				className="layouts-selector"
 				id={`${namespace}selectLayoutFm`}
 			>
 				<fieldset className="panel-body">
-					<div
-						className="layout-tree"
-						id={`${namespace}layoutContainer`}
-					>
-						<Treeview
-							NodeComponent={Treeview.Card}
-							filterQuery={filterQuery}
-							multiSelection={multiSelection}
-							nodes={nodes}
-							onSelectedNodesChange={handleSelectionChange}
-						/>
-					</div>
+					{empty ? (
+						<EmptyState />
+					) : (
+						<div
+							className="layout-tree"
+							id={`${namespace}layoutContainer`}
+						>
+							<Treeview
+								NodeComponent={Treeview.Card}
+								filterQuery={filterQuery}
+								multiSelection={multiSelection}
+								nodes={nodes}
+								onSelectedNodesChange={handleSelectionChange}
+							/>
+						</div>
+					)}
 				</fieldset>
 			</ClayLayout.ContainerFluid>
+		</div>
+	);
+};
+
+const EmptyState = () => {
+	return (
+		<div className="sheet taglib-empty-result-message">
+			<div className="taglib-empty-result-message-header"></div>
+
+			<div className="sheet-text text-center">
+				{Liferay.Language.get('there-are-no-pages')}
+			</div>
 		</div>
 	);
 };

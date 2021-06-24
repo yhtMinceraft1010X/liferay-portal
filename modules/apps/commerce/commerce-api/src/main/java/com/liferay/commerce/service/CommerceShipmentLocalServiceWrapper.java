@@ -33,6 +33,10 @@ public class CommerceShipmentLocalServiceWrapper
 		_commerceShipmentLocalService = commerceShipmentLocalService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.model.CommerceShipment
 			addCommerceDeliverySubscriptionShipment(
@@ -88,6 +92,17 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.addCommerceShipment(
 			commerceOrderId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+			addDeliverySubscriptionCommerceShipment(
+				long userId, long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.
+			addDeliverySubscriptionCommerceShipment(
+				userId, commerceOrderItemId);
 	}
 
 	/**
@@ -179,6 +194,13 @@ public class CommerceShipmentLocalServiceWrapper
 	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _commerceShipmentLocalService.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceShipmentLocalService.dslQueryCount(dslQuery);
 	}
 
 	@Override
@@ -461,6 +483,15 @@ public class CommerceShipmentLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+			reprocessCommerceShipment(long commerceShipmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.reprocessCommerceShipment(
+			commerceShipmentId);
 	}
 
 	@Override

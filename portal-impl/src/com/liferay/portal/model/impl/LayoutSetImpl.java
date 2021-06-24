@@ -379,7 +379,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	 * @see   #getVirtualHostnames()
 	 */
 	@Override
-	public void setVirtualHostnames(TreeMap virtualHostnames) {
+	public void setVirtualHostnames(TreeMap<String, String> virtualHostnames) {
 		_virtualHostnames = virtualHostnames;
 	}
 

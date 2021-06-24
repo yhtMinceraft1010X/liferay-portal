@@ -13,6 +13,7 @@
  */
 
 import AJAX from '../AJAX/index';
+import CommerceCookie from '../cookies';
 import * as Events from '../eventsDefinitions';
 import * as FormUtils from '../forms/index';
 import * as BaseUtils from '../index';
@@ -20,6 +21,7 @@ import * as BaseUtils from '../index';
 export default {
 	AJAX,
 	BaseUtils,
+	CommerceCookie,
 	Events,
 	FormUtils,
 };

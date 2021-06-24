@@ -142,6 +142,13 @@ public class SamlSpSessionLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _samlSpSessionLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _samlSpSessionLocalService.dynamicQuery();
 	}
@@ -255,6 +262,19 @@ public class SamlSpSessionLocalServiceWrapper
 			samlSpSessionKey);
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpSession
+		fetchSamlSpSessionBySessionIndex(long companyId, String sessionIndex) {
+
+		return _samlSpSessionLocalService.fetchSamlSpSessionBySessionIndex(
+			companyId, sessionIndex);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchSamlSpSessionBySessionIndex(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession
 		fetchSamlSpSessionBySessionIndex(String sessionIndex) {

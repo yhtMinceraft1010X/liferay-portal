@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
@@ -356,7 +357,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		if (!ArrayUtil.isEmpty(allTagNames)) {
 			assetEntries = _filterAssetTagNamesAssetEntries(
-				assetEntries, allTagNames);
+				assetEntries, _normalizeAssetTagNames(allTagNames));
 		}
 
 		return assetEntries;
@@ -510,6 +511,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 			if (Objects.equals(queryName, "assetTags") && queryContains &&
 				(queryAndOperator || (queryValues.length == 1))) {
+
+				queryValues = _normalizeAssetTagNames(queryValues);
 
 				Collections.addAll(allAssetTagNames, queryValues);
 			}
@@ -1155,6 +1158,19 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return false;
 	}
 
+	private String[] _normalizeAssetTagNames(String[] assetTagNames) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return assetTagNames;
+		}
+
+		for (int i = 0; i < assetTagNames.length; i++) {
+			assetTagNames[i] = StringUtil.toLowerCase(
+				StringUtil.trim(assetTagNames[i]));
+		}
+
+		return assetTagNames;
+	}
+
 	private void _removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -1259,16 +1275,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			}
 			else {
 				if (queryContains && queryAndOperator) {
-					allAssetTagNames = queryValues;
+					allAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else if (queryContains && !queryAndOperator) {
-					anyAssetTagNames = queryValues;
+					anyAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else if (!queryContains && queryAndOperator) {
-					notAllAssetTagNames = queryValues;
+					notAllAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else {
-					notAnyAssetTagNames = queryValues;
+					notAnyAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 			}
 		}
@@ -1288,7 +1304,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		assetEntryQuery.setAllKeywords(allKeywords);
 
 		if (overrideAllAssetTagNames != null) {
-			allAssetTagNames = overrideAllAssetTagNames;
+			allAssetTagNames = _normalizeAssetTagNames(
+				overrideAllAssetTagNames);
 		}
 
 		long[] siteGroupIds = _getSiteGroupIds(scopeGroupIds);

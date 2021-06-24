@@ -4002,7 +4002,7 @@ public class UserGroupGroupRolePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			UserGroupGroupRoleModelImpl userGroupGroupRoleModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4025,8 +4025,8 @@ public class UserGroupGroupRolePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

@@ -30,8 +30,8 @@ import {
 	dedupValue,
 	getDefaultOptionValue,
 	isOptionValueGenerated,
-	normalizeFieldReference,
 	normalizeFields,
+	normalizeReference,
 	random,
 } from './util.es';
 
@@ -284,7 +284,12 @@ const Options = ({
 	};
 
 	const checkValidReference = (fields, value, fieldName) => {
-		const field = fields.find((field) => field['reference'] === value);
+		const field = fields
+			.filter(({value}) => value !== fieldName)
+			.find(
+				({reference}) =>
+					reference?.toLowerCase() === value?.toLowerCase()
+			);
 
 		return field ? fieldName : null;
 	};
@@ -374,12 +379,13 @@ const Options = ({
 	const normalize = (fields, index) => {
 		clearError();
 
-		return [
-			normalizeFields(
-				normalizeFieldReference(index, fields),
-				generateOptionValueUsingOptionLabel
-			),
-		];
+		fields[index]['reference'] = normalizeReference(
+			fields,
+			fields[index],
+			index
+		);
+
+		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
 	};
 
 	const composedAdd = compose(clone, dedup, add, set);
@@ -391,7 +397,7 @@ const Options = ({
 	const handleConfirmDelete = (index, option) => {
 		if (
 			builderRules &&
-			RulesSupport.findRuleByFieldName(option, builderRules)
+			RulesSupport.findRuleByFieldName(option, null, builderRules)
 		) {
 			openModal({
 				bodyHTML: Liferay.Language.get(

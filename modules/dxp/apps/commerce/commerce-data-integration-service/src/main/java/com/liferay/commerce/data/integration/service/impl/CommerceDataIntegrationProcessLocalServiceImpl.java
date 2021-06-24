@@ -248,7 +248,7 @@ public class CommerceDataIntegrationProcessLocalServiceImpl
 
 		if (Validator.isNull(name)) {
 			throw new CommerceDataIntegrationProcessNameException(
-				"Commerce data integration process name cannot be null for" +
+				"Commerce data integration process name cannot be null for " +
 					"company " + companyId);
 		}
 

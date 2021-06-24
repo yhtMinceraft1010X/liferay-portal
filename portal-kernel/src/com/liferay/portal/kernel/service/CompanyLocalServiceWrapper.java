@@ -237,6 +237,13 @@ public class CompanyLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _companyLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _companyLocalService.dynamicQuery();
 	}
@@ -358,6 +365,44 @@ public class CompanyLocalServiceWrapper
 		java.lang.String virtualHostname) {
 
 		return _companyLocalService.fetchCompanyByVirtualHost(virtualHostname);
+	}
+
+	@Override
+	public <E extends java.lang.Exception> void forEachCompany(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer)
+		throws E {
+
+		_companyLocalService.forEachCompany(unsafeConsumer);
+	}
+
+	@Override
+	public <E extends java.lang.Exception> void forEachCompany(
+			com.liferay.petra.function.UnsafeConsumer
+				<com.liferay.portal.kernel.model.Company, E> unsafeConsumer,
+			java.util.List<com.liferay.portal.kernel.model.Company> companies)
+		throws E {
+
+		_companyLocalService.forEachCompany(unsafeConsumer, companies);
+	}
+
+	@Override
+	public <E extends java.lang.Exception> void forEachCompanyId(
+			com.liferay.petra.function.UnsafeConsumer<java.lang.Long, E>
+				unsafeConsumer)
+		throws E {
+
+		_companyLocalService.forEachCompanyId(unsafeConsumer);
+	}
+
+	@Override
+	public <E extends java.lang.Exception> void forEachCompanyId(
+			com.liferay.petra.function.UnsafeConsumer<java.lang.Long, E>
+				unsafeConsumer,
+			long[] companyIds)
+		throws E {
+
+		_companyLocalService.forEachCompanyId(unsafeConsumer, companyIds);
 	}
 
 	@Override

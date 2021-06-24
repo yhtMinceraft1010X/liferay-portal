@@ -1102,24 +1102,24 @@ public class AccountGroupPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (accountGroup.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				accountGroup.setCreateDate(now);
+				accountGroup.setCreateDate(date);
 			}
 			else {
-				accountGroup.setCreateDate(serviceContext.getCreateDate(now));
+				accountGroup.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!accountGroupModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				accountGroup.setModifiedDate(now);
+				accountGroup.setModifiedDate(date);
 			}
 			else {
 				accountGroup.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1599,7 +1599,7 @@ public class AccountGroupPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			AccountGroupModelImpl accountGroupModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -1621,8 +1621,8 @@ public class AccountGroupPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

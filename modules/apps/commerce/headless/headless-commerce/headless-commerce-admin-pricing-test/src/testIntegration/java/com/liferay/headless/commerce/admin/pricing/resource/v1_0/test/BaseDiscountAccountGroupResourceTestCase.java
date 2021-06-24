@@ -255,7 +255,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		String irrelevantExternalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountAccountGroupsPage_getIrrelevantExternalReferenceCode();
 
-		if ((irrelevantExternalReferenceCode != null)) {
+		if (irrelevantExternalReferenceCode != null) {
 			DiscountAccountGroup irrelevantDiscountAccountGroup =
 				testGetDiscountByExternalReferenceCodeDiscountAccountGroupsPage_addDiscountAccountGroup(
 					irrelevantExternalReferenceCode,
@@ -420,7 +420,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		Long irrelevantId =
 			testGetDiscountIdDiscountAccountGroupsPage_getIrrelevantId();
 
-		if ((irrelevantId != null)) {
+		if (irrelevantId != null) {
 			DiscountAccountGroup irrelevantDiscountAccountGroup =
 				testGetDiscountIdDiscountAccountGroupsPage_addDiscountAccountGroup(
 					irrelevantId, randomIrrelevantDiscountAccountGroup());
@@ -720,7 +720,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.pricing.dto.v1_0.
 						DiscountAccountGroup.class)) {
 
@@ -755,7 +755,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -877,6 +877,17 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1082,12 +1093,12 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1097,10 +1108,10 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

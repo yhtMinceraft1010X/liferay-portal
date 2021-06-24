@@ -2532,24 +2532,24 @@ public class MBMailingListPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (mbMailingList.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				mbMailingList.setCreateDate(now);
+				mbMailingList.setCreateDate(date);
 			}
 			else {
-				mbMailingList.setCreateDate(serviceContext.getCreateDate(now));
+				mbMailingList.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!mbMailingListModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				mbMailingList.setModifiedDate(now);
+				mbMailingList.setModifiedDate(date);
 			}
 			else {
 				mbMailingList.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3304,7 +3304,7 @@ public class MBMailingListPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			MBMailingListModelImpl mbMailingListModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3327,8 +3327,8 @@ public class MBMailingListPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

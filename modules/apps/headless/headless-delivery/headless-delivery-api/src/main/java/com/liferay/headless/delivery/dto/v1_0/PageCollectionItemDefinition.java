@@ -128,6 +128,7 @@ public class PageCollectionItemDefinition implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageCollectionItemDefinition",
 		name = "x-class-name"
 	)
@@ -163,7 +164,7 @@ public class PageCollectionItemDefinition implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -202,7 +203,7 @@ public class PageCollectionItemDefinition implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

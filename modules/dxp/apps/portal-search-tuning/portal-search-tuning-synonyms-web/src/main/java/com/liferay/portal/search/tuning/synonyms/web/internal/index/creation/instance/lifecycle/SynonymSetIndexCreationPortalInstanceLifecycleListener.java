@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
+import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexCreator;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.name.SynonymSetIndexName;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.FilterToIndexSynchronizer;
 
 import java.util.Objects;

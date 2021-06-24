@@ -1,0 +1,43 @@
+.osb-commerce-checkout {
+	.commerce-checkout {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - #{$navbar-commerce-height});
+		justify-content: center;
+
+		@media only screen and (min-width: 1280px) {
+			width: 85%;
+		}
+
+		&-info {
+			display: none;
+		}
+
+		&-summary {
+			flex: 0 0 100%;
+			max-width: 100%;
+		}
+
+		.form-group-autofit .form-group-item {
+			margin: 0 !important;
+			padding: 0 5px;
+		}
+
+		.button-holder {
+			padding: 0 5px;
+		}
+	}
+
+	.mini-cart {
+		top: -$navbar-commerce-height;
+		width: 100%;
+	}
+
+	.portlet {
+		margin: 0;
+
+		&-content {
+			padding: 0 1rem;
+		}
+	}
+}

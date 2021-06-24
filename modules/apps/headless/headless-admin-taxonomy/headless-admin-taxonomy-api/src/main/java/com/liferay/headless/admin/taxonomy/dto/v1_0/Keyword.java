@@ -49,11 +49,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Keyword")
+@GraphQLName(
+	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
+	value = "Keyword"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification."
+	description = "Represents a keyword that describes content. Properties follow the [keywords](https://schema.org/keywords) specification.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "Keyword")
 public class Keyword implements Serializable {
@@ -462,6 +465,7 @@ public class Keyword implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword",
 		name = "x-class-name"
 	)
@@ -497,7 +501,7 @@ public class Keyword implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -536,7 +540,7 @@ public class Keyword implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

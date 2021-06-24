@@ -3966,10 +3966,9 @@ public class StagingImpl implements Staging {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to set recent layout revision ID",
-						"with layout set branch ", layoutSetBranchId,
-						" and PLID ", plid, " and layout branch ",
-						layoutBranchId),
+						"Unable to set recent layout revision ID with layout ",
+						"set branch ", layoutSetBranchId, " and PLID ", plid,
+						" and layout branch ", layoutBranchId),
 					portalException);
 			}
 		}

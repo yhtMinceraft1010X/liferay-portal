@@ -218,6 +218,14 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceInventoryWarehouseItemLocalService.dslQueryCount(
+			dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceInventoryWarehouseItemLocalService.dynamicQuery();
 	}
@@ -339,6 +347,20 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+		fetchCommerceInventoryWarehouseItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			fetchCommerceInventoryWarehouseItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceInventoryWarehouseItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 		fetchCommerceInventoryWarehouseItemByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -370,6 +392,25 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
+	}
+
+	/**
+	 * Returns the commerce inventory warehouse item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory warehouse item's external reference code
+	 * @return the matching commerce inventory warehouse item
+	 * @throws PortalException if a matching commerce inventory warehouse item could not be found
+	 */
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.base;
 
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
@@ -79,6 +80,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -101,7 +104,7 @@ public abstract class CPOptionLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CPOptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.product.service.CPOptionLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CPOptionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CPOptionLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -171,6 +174,13 @@ public abstract class CPOptionLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return cpOptionPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -287,10 +297,39 @@ public abstract class CPOptionLocalServiceBaseImpl
 	 * @return the matching cp option, or <code>null</code> if a matching cp option could not be found
 	 */
 	@Override
-	public CPOption fetchCPOptionByReferenceCode(
+	public CPOption fetchCPOptionByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return cpOptionPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPOptionByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CPOption fetchCPOptionByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCPOptionByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the cp option with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp option's external reference code
+	 * @return the matching cp option
+	 * @throws PortalException if a matching cp option could not be found
+	 */
+	@Override
+	public CPOption getCPOptionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return cpOptionPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1671,11 +1710,15 @@ public abstract class CPOptionLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.product.model.CPOption",
 			cpOptionLocalService);
+
+		_setLocalServiceUtilService(cpOptionLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.product.model.CPOption");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1717,6 +1760,22 @@ public abstract class CPOptionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CPOptionLocalService cpOptionLocalService) {
+
+		try {
+			Field field = CPOptionLocalServiceUtil.class.getDeclaredField(
+				"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, cpOptionLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

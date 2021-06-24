@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ReindexStatus")
+@GraphQLName(
+	description = "https://www.schema.org/ReindexStatus",
+	value = "ReindexStatus"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ReindexStatus")
 public class ReindexStatus implements Serializable {
@@ -162,6 +165,7 @@ public class ReindexStatus implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.ReindexStatus",
 		name = "x-class-name"
 	)
@@ -197,7 +201,7 @@ public class ReindexStatus implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -236,7 +240,7 @@ public class ReindexStatus implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

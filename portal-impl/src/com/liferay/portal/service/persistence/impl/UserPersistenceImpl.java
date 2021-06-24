@@ -8584,23 +8584,23 @@ public class UserPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (user.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				user.setCreateDate(now);
+				user.setCreateDate(date);
 			}
 			else {
-				user.setCreateDate(serviceContext.getCreateDate(now));
+				user.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!userModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				user.setModifiedDate(now);
+				user.setModifiedDate(date);
 			}
 			else {
-				user.setModifiedDate(serviceContext.getModifiedDate(now));
+				user.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -11188,7 +11188,7 @@ public class UserPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			UserModelImpl userModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -11209,8 +11209,8 @@ public class UserPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

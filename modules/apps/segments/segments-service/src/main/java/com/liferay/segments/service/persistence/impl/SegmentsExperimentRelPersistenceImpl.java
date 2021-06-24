@@ -1150,25 +1150,25 @@ public class SegmentsExperimentRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (segmentsExperimentRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				segmentsExperimentRel.setCreateDate(now);
+				segmentsExperimentRel.setCreateDate(date);
 			}
 			else {
 				segmentsExperimentRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!segmentsExperimentRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				segmentsExperimentRel.setModifiedDate(now);
+				segmentsExperimentRel.setModifiedDate(date);
 			}
 			else {
 				segmentsExperimentRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1873,7 +1873,7 @@ public class SegmentsExperimentRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			SegmentsExperimentRelModelImpl segmentsExperimentRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1897,8 +1897,8 @@ public class SegmentsExperimentRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

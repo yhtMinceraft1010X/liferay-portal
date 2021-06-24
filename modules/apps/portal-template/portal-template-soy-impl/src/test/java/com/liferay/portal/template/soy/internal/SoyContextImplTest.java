@@ -16,6 +16,7 @@ package com.liferay.portal.template.soy.internal;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,12 +24,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class SoyContextImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testClear() {

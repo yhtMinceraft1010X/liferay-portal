@@ -204,6 +204,7 @@ public class ProductTaxConfiguration implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration",
 		name = "x-class-name"
 	)
@@ -239,7 +240,7 @@ public class ProductTaxConfiguration implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -278,7 +279,7 @@ public class ProductTaxConfiguration implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

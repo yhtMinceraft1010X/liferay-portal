@@ -156,6 +156,9 @@ public interface CommerceCatalogLocalService
 	public <T> T dslQuery(DSLQuery dslQuery);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int dslQueryCount(DSLQuery dslQuery);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -228,9 +231,6 @@ public interface CommerceCatalogLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCatalog fetchCommerceCatalog(long commerceCatalogId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCatalog fetchCommerceCatalogByGroupId(long groupId);
-
 	/**
 	 * Returns the commerce catalog with the matching external reference code and company.
 	 *
@@ -239,8 +239,25 @@ public interface CommerceCatalogLocalService
 	 * @return the matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCatalog fetchCommerceCatalogByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCatalog fetchCommerceCatalogByGroupId(long groupId);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceCatalogByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCatalog fetchCommerceCatalogByReferenceCode(
 		long companyId, String externalReferenceCode);
+
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceCatalog forceDeleteCommerceCatalog(
+			CommerceCatalog commerceCatalog)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -254,6 +271,19 @@ public interface CommerceCatalogLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCatalog getCommerceCatalog(long commerceCatalogId)
+		throws PortalException;
+
+	/**
+	 * Returns the commerce catalog with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce catalog's external reference code
+	 * @return the matching commerce catalog
+	 * @throws PortalException if a matching commerce catalog could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCatalog getCommerceCatalogByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

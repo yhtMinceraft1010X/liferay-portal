@@ -4670,25 +4670,25 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceMLForecastAlertEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceMLForecastAlertEntry.setCreateDate(now);
+				commerceMLForecastAlertEntry.setCreateDate(date);
 			}
 			else {
 				commerceMLForecastAlertEntry.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceMLForecastAlertEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceMLForecastAlertEntry.setModifiedDate(now);
+				commerceMLForecastAlertEntry.setModifiedDate(date);
 			}
 			else {
 				commerceMLForecastAlertEntry.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5276,6 +5276,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5289,7 +5296,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceMLForecastAlertEntryModelImpl
 				commerceMLForecastAlertEntryModelImpl,
 			String[] columnNames, boolean original) {
@@ -5314,8 +5321,20 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+					"timestamp");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

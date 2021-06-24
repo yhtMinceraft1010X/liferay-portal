@@ -19,7 +19,9 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,6 +34,7 @@ import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -40,8 +43,10 @@ import org.junit.Test;
 public class SerializableObjectWrapperTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
 	public void testEquals() throws Exception {
@@ -163,19 +168,24 @@ public class SerializableObjectWrapperTest {
 			SerializableObjectWrapper serializableObjectWrapper)
 		throws Exception {
 
-		try (UnsyncByteArrayOutputStream ubaos =
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream()) {
 
-			try (ObjectOutputStream oos = new ObjectOutputStream(ubaos)) {
-				oos.writeObject(serializableObjectWrapper);
+			try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+					unsyncByteArrayOutputStream)) {
+
+				objectOutputStream.writeObject(serializableObjectWrapper);
 			}
 
-			try (UnsyncByteArrayInputStream ubais =
+			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 					new UnsyncByteArrayInputStream(
-						ubaos.unsafeGetByteArray(), 0, ubaos.size());
-				ObjectInputStream ois = new ObjectInputStream(ubais)) {
+						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+						unsyncByteArrayOutputStream.size());
+				ObjectInputStream objectInputStream = new ObjectInputStream(
+					unsyncByteArrayInputStream)) {
 
-				return (SerializableObjectWrapper)ois.readObject();
+				return (SerializableObjectWrapper)
+					objectInputStream.readObject();
 			}
 		}
 	}

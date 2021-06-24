@@ -344,6 +344,13 @@ public class CommerceDiscountLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceDiscountLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceDiscountLocalService.dynamicQuery();
 	}
@@ -472,6 +479,20 @@ public class CommerceDiscountLocalServiceWrapper
 	 * @param externalReferenceCode the commerce discount's external reference code
 	 * @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
 	 */
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscount
+		fetchCommerceDiscountByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceDiscountLocalService.
+			fetchCommerceDiscountByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceDiscountByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount
 		fetchCommerceDiscountByReferenceCode(
@@ -636,6 +657,25 @@ public class CommerceDiscountLocalServiceWrapper
 
 		return _commerceDiscountLocalService.getCommerceDiscount(
 			commerceDiscountId);
+	}
+
+	/**
+	 * Returns the commerce discount with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce discount's external reference code
+	 * @return the matching commerce discount
+	 * @throws PortalException if a matching commerce discount could not be found
+	 */
+	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscount
+			getCommerceDiscountByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountLocalService.
+			getCommerceDiscountByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

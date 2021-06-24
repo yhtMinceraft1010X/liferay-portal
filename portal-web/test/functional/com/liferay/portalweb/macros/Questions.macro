@@ -531,6 +531,10 @@ definition {
 				key_text = "${text}",
 				locator1 = "Button#ANY");
 		}
+
+		if (isSet(lockedStatus)) {
+			AssertElementPresent(locator1 = "Questions#QUESTIONS_LOCKED_ANSWER_TEXT");
+		}
 	}
 
 	macro viewNoSearchResults {
@@ -561,6 +565,22 @@ definition {
 				key_questionTitle = "${questionTitle}",
 				locator1 = "Questions#QUESTIONS_TITLE",
 				value1 = "${questionTitle}");
+		}
+	}
+
+	macro viewStatistics {
+		MouseOver(
+			key_userName = "${userName}",
+			locator1 = "Questions#QUESTIONS_STATISTICS_USER_NAME");
+
+		AssertElementPresent(
+			key_headerName = "${headerName}",
+			locator1 = "Questions#QUESTIONS_STATISTICS_HEADER");
+
+		for (var itemNameList : list "${itemNameList}") {
+			AssertElementPresent(
+				key_itemName = "${itemNameList}",
+				locator1 = "Questions#QUESTIONS_STATISTICS_ITEM");
 		}
 	}
 

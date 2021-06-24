@@ -80,7 +80,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseUserAccountResourceImpl
-	implements UserAccountResource, EntityModelResource,
+	implements EntityModelResource, UserAccountResource,
 			   VulcanBatchEngineTaskItemDelegate<UserAccount> {
 
 	/**
@@ -88,11 +88,11 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/my-user-account'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves information about the user who made the request."
 	)
+	@Override
 	@Path("/my-user-account")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
@@ -105,11 +105,11 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/user-accounts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the organization's members (users). Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "organizationId"),
@@ -139,11 +139,11 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the site members' user accounts. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -172,11 +172,11 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(
 		description = "Retrieves the user accounts. Results can be paginated, filtered, searched, and sorted."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
@@ -203,11 +203,11 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new user account")
-	@POST
+	@Override
 	@Path("/user-accounts")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {})
 	public UserAccount postUserAccount(UserAccount userAccount)
@@ -221,13 +221,13 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/user-accounts/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {})
 	public Response postUserAccountBatch(
@@ -257,9 +257,9 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(description = "Deletes the user account")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -277,9 +277,9 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -313,9 +313,9 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the user account.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
@@ -335,15 +335,15 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Updates the user account with information sent in the request body. Only the provided fields are updated."
 	)
-	@PATCH
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
+	@PATCH
 	@Path("/user-accounts/{userAccountId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {})
@@ -383,6 +383,10 @@ public abstract class BaseUserAccountResourceImpl
 
 		if (userAccount.getDateModified() != null) {
 			existingUserAccount.setDateModified(userAccount.getDateModified());
+		}
+
+		if (userAccount.getEmailAddress() != null) {
+			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());
 		}
 
 		if (userAccount.getFamilyName() != null) {
@@ -433,17 +437,17 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/{userAccountId}' -d $'{"additionalName": ___, "alternateName": ___, "birthDate": ___, "customFields": ___, "emailAddress": ___, "familyName": ___, "givenName": ___, "honorificPrefix": ___, "honorificSuffix": ___, "jobTitle": ___, "userAccountContactInformation": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
 		description = "Replaces the user account with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "userAccountId")}
 	)
 	@Path("/user-accounts/{userAccountId}")
 	@Produces({"application/json", "application/xml"})
+	@PUT
 	@Tags(value = {})
 	public UserAccount putUserAccount(
 			@NotNull @Parameter(hidden = true) @PathParam("userAccountId") Long
@@ -459,14 +463,14 @@ public abstract class BaseUserAccountResourceImpl
 	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@PUT
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
 	@Path("/user-accounts/batch")
 	@Produces("application/json")
+	@PUT
 	@Tags(value = {})
 	public Response putUserAccountBatch(
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
@@ -535,7 +539,8 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return getSiteUserAccountsPage(
-			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, filter,
+			pagination, sorts);
 	}
 
 	@Override
@@ -569,7 +574,7 @@ public abstract class BaseUserAccountResourceImpl
 		for (UserAccount userAccount : userAccounts) {
 			putUserAccount(
 				userAccount.getId() != null ? userAccount.getId() :
-				(Long)parameters.get("userAccountId"),
+					Long.parseLong((String)parameters.get("userAccountId")),
 				userAccount);
 		}
 	}

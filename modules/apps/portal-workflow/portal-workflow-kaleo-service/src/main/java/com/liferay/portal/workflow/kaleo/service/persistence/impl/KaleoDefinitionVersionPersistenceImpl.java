@@ -1746,25 +1746,25 @@ public class KaleoDefinitionVersionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (kaleoDefinitionVersion.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				kaleoDefinitionVersion.setCreateDate(now);
+				kaleoDefinitionVersion.setCreateDate(date);
 			}
 			else {
 				kaleoDefinitionVersion.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!kaleoDefinitionVersionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				kaleoDefinitionVersion.setModifiedDate(now);
+				kaleoDefinitionVersion.setModifiedDate(date);
 			}
 			else {
 				kaleoDefinitionVersion.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2284,7 +2284,7 @@ public class KaleoDefinitionVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KaleoDefinitionVersionModelImpl kaleoDefinitionVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2308,8 +2308,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

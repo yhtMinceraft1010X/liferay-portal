@@ -17,10 +17,13 @@ package com.liferay.commerce.payment.internal.servlet;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,13 +99,9 @@ public class CommercePaymentServlet extends HttpServlet {
 			CommercePaymentResult commercePaymentResult = _startPayment(
 				httpServletRequest);
 
-			if (!commercePaymentResult.isSuccess()) {
-				httpServletResponse.sendRedirect(_nextUrl);
+			if (commercePaymentResult.isSuccess() &&
+				commercePaymentResult.isOnlineRedirect()) {
 
-				return;
-			}
-
-			if (commercePaymentResult.isOnlineRedirect()) {
 				URL portalURL = new URL(
 					_portal.getPortalURL(httpServletRequest));
 
@@ -151,6 +150,33 @@ public class CommercePaymentServlet extends HttpServlet {
 
 				httpServletResponse.sendRedirect(_nextUrl);
 			}
+
+			if (commercePaymentResult.isSuccess() &&
+				(CommercePaymentConstants.
+					COMMERCE_PAYMENT_METHOD_TYPE_ONLINE_STANDARD ==
+						commercePaymentMethodType)) {
+
+				if (commerceOrder.isSubscriptionOrder()) {
+					_commerceSubscriptionEngine.completeRecurringPayment(
+						_commerceOrderId,
+						commercePaymentResult.getAuthTransactionId(),
+						httpServletRequest);
+				}
+				else {
+					_commercePaymentEngine.completePayment(
+						_commerceOrderId,
+						commercePaymentResult.getAuthTransactionId(),
+						httpServletRequest);
+				}
+
+				httpServletResponse.sendRedirect(_nextUrl);
+			}
+
+			if (!commercePaymentResult.isSuccess() &&
+				!httpServletResponse.isCommitted()) {
+
+				httpServletResponse.sendRedirect(_nextUrl);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -186,6 +212,26 @@ public class CommercePaymentServlet extends HttpServlet {
 		return map;
 	}
 
+	private boolean _isDeliveryOnlySubscription(CommerceOrder commerceOrder)
+		throws Exception {
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			CPInstance cpInstance = commerceOrderItem.getCPInstance();
+
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			if (cpInstance.isSubscriptionEnabled() ||
+				cpDefinition.isSubscriptionEnabled()) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private CommercePaymentResult _startPayment(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -193,7 +239,9 @@ public class CommercePaymentServlet extends HttpServlet {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			_commerceOrderId);
 
-		if (commerceOrder.isSubscriptionOrder()) {
+		if (commerceOrder.isSubscriptionOrder() &&
+			!_isDeliveryOnlySubscription(commerceOrder)) {
+
 			return _commerceSubscriptionEngine.processRecurringPayment(
 				_commerceOrderId, _nextUrl, httpServletRequest);
 		}

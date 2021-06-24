@@ -650,11 +650,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			if (url != null) {
 				String location = url.toString();
 
-				try (BufferedInputStream inputStream = new BufferedInputStream(
-						url.openStream())) {
+				try (BufferedInputStream bufferedInputStream =
+						new BufferedInputStream(url.openStream())) {
 
 					bundle = _installOrUpdateBundle(
-						location, inputStream, checksum, modified);
+						location, bufferedInputStream, checksum, modified);
 
 					artifact.setBundleId(bundle.getBundleId());
 				}
@@ -821,6 +821,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
+	/**
+	 * @see com.liferay.portal.fragment.bundle.watcher.internal.PortalFragmentBundleWatcher#_isFragment
+	 */
 	private boolean _isFragment(Bundle bundle) {
 		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
 

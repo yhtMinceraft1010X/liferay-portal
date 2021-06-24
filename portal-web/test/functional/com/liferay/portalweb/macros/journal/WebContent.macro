@@ -29,6 +29,26 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		if (isSet(embedImage)) {
+			var key_imageFileName = "${imageFileName}";
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+			AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites and Libraries");
+
+			AssertClick(
+				key_siteName = "${siteName}",
+				locator1 = "ItemSelector#SITE_SELECTOR",
+				value1 = "${siteName}");
+
+			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
+
 		if (isSet(viewableBy)) {
 			Panel.expandPanel(panel = "Permissions");
 
@@ -248,6 +268,9 @@ definition {
 		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = "${portletNameScoped}");
 
 		WebContent.addCP(
+			embedImage = "${embedImage}",
+			imageFileName = "${imageFileName}",
+			siteName = "${siteName}",
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
@@ -625,7 +648,11 @@ definition {
 				value1 = "Select");
 
 			while (IsElementNotPresent(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO")) {
-				Click(locator1 = "WC#LINK_TO_PAGE_NEXT_PAGE");
+				RunScript(locator1 = "document.querySelector('.top-ended').scrollTop = 1000");
+
+				if (IsElementNotPresent(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO")) {
+					Click(locator1 = "WC#LINK_TO_PAGE_NEXT_PAGE");
+				}
 			}
 
 			Click(locator1 = "WC#LINK_TO_PAGE_SELECT_PAGE_RADIO");

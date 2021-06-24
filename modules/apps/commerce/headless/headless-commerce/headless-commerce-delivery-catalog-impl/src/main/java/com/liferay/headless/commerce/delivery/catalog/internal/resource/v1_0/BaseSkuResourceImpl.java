@@ -74,7 +74,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSkuResourceImpl
-	implements SkuResource, EntityModelResource,
+	implements EntityModelResource, SkuResource,
 			   VulcanBatchEngineTaskItemDelegate<Sku> {
 
 	/**
@@ -82,9 +82,9 @@ public abstract class BaseSkuResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/skus'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves products from selected channel.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),

@@ -3876,25 +3876,25 @@ public class CommerceCurrencyPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceCurrency.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceCurrency.setCreateDate(now);
+				commerceCurrency.setCreateDate(date);
 			}
 			else {
 				commerceCurrency.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceCurrencyModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceCurrency.setModifiedDate(now);
+				commerceCurrency.setModifiedDate(date);
 			}
 			else {
 				commerceCurrency.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4451,6 +4451,13 @@ public class CommerceCurrencyPersistenceImpl
 						commerceCurrencyModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4463,7 +4470,7 @@ public class CommerceCurrencyPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceCurrencyModelImpl commerceCurrencyModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4486,8 +4493,19 @@ public class CommerceCurrencyPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceCurrencyModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

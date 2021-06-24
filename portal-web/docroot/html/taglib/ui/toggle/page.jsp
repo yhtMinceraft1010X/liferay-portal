@@ -18,18 +18,13 @@
 
 <%
 String id = (String)request.getAttribute("liferay-ui:toggle:id");
-String showImage = (String)request.getAttribute("liferay-ui:toggle:showImage");
-String hideImage = (String)request.getAttribute("liferay-ui:toggle:hideImage");
 String showMessage = (String)request.getAttribute("liferay-ui:toggle:showMessage");
-String hideMessage = (String)request.getAttribute("liferay-ui:toggle:hideMessage");
 String stateVar = (String)request.getAttribute("liferay-ui:toggle:stateVar");
-String defaultStateValue = (String)request.getAttribute("liferay-ui:toggle:defaultStateValue");
-String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultMessage");
 %>
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(showMessage) %>">
-		<a href="javascript:<%= stateVar %>Toggle();" id="<%= id %>_message"><%= defaultMessage %></a>
+		<a href="javascript:<%= stateVar %>Toggle();" id="<%= id %>_message"><%= (String)request.getAttribute("liferay-ui:toggle:defaultMessage") %></a>
 	</c:when>
 	<c:otherwise>
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="toggle" />" id="<%= id %>_image" onclick="<%= stateVar %>Toggle();" src="<%= (String)request.getAttribute("liferay-ui:toggle:defaultImage") %>" style="margin: 0px;" />
@@ -37,7 +32,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 </c:choose>
 
 <aui:script>
-	var <%= stateVar %> = '<%= defaultStateValue %>';
+	var <%= stateVar %> = '<%= (String)request.getAttribute("liferay-ui:toggle:defaultStateValue") %>';
 
 	window.<%= stateVar %>Toggle = function(state, saveState) {
 		var A = AUI();
@@ -56,7 +51,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 					document.getElementById('<%= id %>_message').innerHTML = '<%= showMessage %>';
 				</c:when>
 				<c:otherwise>
-					document.getElementById('<%= id %>_image').src = '<%= showImage %>';
+					document.getElementById('<%= id %>_image').src = '<%= (String)request.getAttribute("liferay-ui:toggle:showImage") %>';
 				</c:otherwise>
 			</c:choose>
 
@@ -79,10 +74,10 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(showMessage) %>">
-					document.getElementById('<%= id %>_message').innerHTML = '<%= hideMessage %>';
+					document.getElementById('<%= id %>_message').innerHTML = '<%= (String)request.getAttribute("liferay-ui:toggle:hideMessage") %>';
 				</c:when>
 				<c:otherwise>
-					document.getElementById('<%= id %>_image').src = '<%= hideImage %>';
+					document.getElementById('<%= id %>_image').src = '<%= (String)request.getAttribute("liferay-ui:toggle:hideImage") %>';
 				</c:otherwise>
 			</c:choose>
 

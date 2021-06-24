@@ -45,6 +45,10 @@ public class DDMFormRenderingContext {
 		return _containerId;
 	}
 
+	public long getDDMFormInstanceId() {
+		return _ddmFormInstanceId;
+	}
+
 	public DDMFormValues getDDMFormValues() {
 		return _ddmFormValues;
 	}
@@ -121,6 +125,10 @@ public class DDMFormRenderingContext {
 		_containerId = containerId;
 	}
 
+	public void setDDMFormInstanceId(long ddmFormInstanceId) {
+		_ddmFormInstanceId = ddmFormInstanceId;
+	}
+
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
 	}
@@ -191,6 +199,7 @@ public class DDMFormRenderingContext {
 
 	private String _cancelLabel;
 	private String _containerId;
+	private long _ddmFormInstanceId;
 	private DDMFormValues _ddmFormValues;
 	private long _ddmStructureLayoutId;
 	private long _groupId;

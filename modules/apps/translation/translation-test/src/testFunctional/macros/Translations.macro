@@ -193,7 +193,7 @@ definition {
 	macro translateFile {
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
+			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
 	macro viewBaseFields {
@@ -391,11 +391,25 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Import Translation");
 		}
 		else {
-			MenuItem.viewPresent(menuItem = "Translate");
+			AssertTextEquals(
+				index = "6",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "Translate");
 
-			MenuItem.viewPresent(menuItem = "Export for Translation");
+			AssertTextEquals(
+				index = "7",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "Export for Translation");
 
-			MenuItem.viewPresent(menuItem = "Import Translation");
+			AssertTextEquals(
+				index = "8",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "Import Translation");
+
+			AssertTextEquals(
+				index = "9",
+				locator1 = "MenuItem#DROPDOWN_MENU_ITEM_SPECIFIC",
+				value1 = "View History");
 		}
 	}
 

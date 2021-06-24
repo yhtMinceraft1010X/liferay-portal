@@ -245,6 +245,7 @@ public class AvailabilityEstimate implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate",
 		name = "x-class-name"
 	)
@@ -280,7 +281,7 @@ public class AvailabilityEstimate implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -319,7 +320,7 @@ public class AvailabilityEstimate implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

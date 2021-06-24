@@ -13,21 +13,15 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Media Gallery Page");
 
-		SitePages.addPublicPage(pageName = "Media Gallery Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Media Gallery Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Media Gallery Page");
-
-		Portlet.addPG(portletName = "Media Gallery");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
@@ -321,6 +315,20 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "asdf");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
+	}
+
+	@description = "This test covers LPS-107521. It ensures that the SVG file can be viewed."
+	@priority = "4"
+	test ViewSVG {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.svg",
+			groupName = "Guest",
+			mimeType = "image/svg+xml",
+			sourceFileName = "Document_1.svg");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.svg");
 	}
 
 	@description = "This test covers LPS-89361. It ensures that video can be played via media gallery."

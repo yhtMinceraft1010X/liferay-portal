@@ -101,8 +101,6 @@ public class GetCollectionFieldMVCResourceCommand
 			resourceRequest, "listItemStyle");
 		String templateKey = ParamUtil.getString(
 			resourceRequest, "templateKey");
-		long segmentsExperienceId = ParamUtil.getLong(
-			resourceRequest, "segmentsExperienceId");
 		int size = ParamUtil.getInteger(resourceRequest, "size");
 
 		try {
@@ -110,7 +108,7 @@ public class GetCollectionFieldMVCResourceCommand
 				_portal.getHttpServletRequest(resourceRequest),
 				_portal.getHttpServletResponse(resourceResponse), languageId,
 				layoutObjectReference, listStyle, listItemStyle, templateKey,
-				segmentsExperienceId, size);
+				size);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get collection field", exception);
@@ -129,8 +127,7 @@ public class GetCollectionFieldMVCResourceCommand
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String languageId,
 			String layoutObjectReference, String listStyle,
-			String listItemStyle, String templateKey, long segmentsExperienceId,
-			int size)
+			String listItemStyle, String templateKey, int size)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -155,9 +152,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(size, 0));
-				defaultLayoutListRetrieverContext.
-					setSegmentsExperienceIdsOptional(
-						new long[] {segmentsExperienceId});
 
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(

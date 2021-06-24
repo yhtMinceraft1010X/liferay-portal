@@ -1459,17 +1459,17 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew &&
 			(commerceApplicationModelCProductRel.getCreateDate() == null)) {
 
 			if (serviceContext == null) {
-				commerceApplicationModelCProductRel.setCreateDate(now);
+				commerceApplicationModelCProductRel.setCreateDate(date);
 			}
 			else {
 				commerceApplicationModelCProductRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
@@ -1477,11 +1477,11 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 				hasSetModifiedDate()) {
 
 			if (serviceContext == null) {
-				commerceApplicationModelCProductRel.setModifiedDate(now);
+				commerceApplicationModelCProductRel.setModifiedDate(date);
 			}
 			else {
 				commerceApplicationModelCProductRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1992,7 +1992,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceApplicationModelCProductRelModelImpl
 				commerceApplicationModelCProductRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -2017,8 +2017,8 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

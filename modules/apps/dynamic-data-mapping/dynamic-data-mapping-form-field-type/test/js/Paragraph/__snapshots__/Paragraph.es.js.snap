@@ -42,13 +42,7 @@ exports[`Field Paragraph has a label 1`] = `
         class="liferay-ddm-form-field-paragraph-text"
       />
     </div>
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      label
-      <br />
-    </span>
+    
   </div>
 </div>
 `;
@@ -98,7 +92,7 @@ exports[`Field Paragraph has a value 1`] = `
 exports[`Field Paragraph has an id 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
@@ -179,13 +173,7 @@ exports[`Field Paragraph renders Label if showLabel is true 1`] = `
         class="liferay-ddm-form-field-paragraph-text"
       />
     </div>
-    <span
-      class="sr-only"
-      id="textField_fieldDetails"
-    >
-      text
-      <br />
-    </span>
+    
   </div>
 </div>
 `;

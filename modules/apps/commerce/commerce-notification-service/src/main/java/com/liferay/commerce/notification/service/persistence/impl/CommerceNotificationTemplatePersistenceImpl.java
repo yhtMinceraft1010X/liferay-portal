@@ -4737,25 +4737,25 @@ public class CommerceNotificationTemplatePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceNotificationTemplate.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceNotificationTemplate.setCreateDate(now);
+				commerceNotificationTemplate.setCreateDate(date);
 			}
 			else {
 				commerceNotificationTemplate.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceNotificationTemplateModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceNotificationTemplate.setModifiedDate(now);
+				commerceNotificationTemplate.setModifiedDate(date);
 			}
 			else {
 				commerceNotificationTemplate.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -5339,6 +5339,13 @@ public class CommerceNotificationTemplatePersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -5352,7 +5359,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceNotificationTemplateModelImpl
 				commerceNotificationTemplateModelImpl,
 			String[] columnNames, boolean original) {
@@ -5377,8 +5384,22 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceNotificationTemplateModelImpl.getColumnBitmask(
+					"modifiedDate");
+			orderByColumnsBitmask |=
+				CommerceNotificationTemplateModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

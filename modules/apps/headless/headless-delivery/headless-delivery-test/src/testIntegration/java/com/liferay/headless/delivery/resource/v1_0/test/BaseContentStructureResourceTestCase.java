@@ -233,7 +233,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long irrelevantAssetLibraryId =
 			testGetAssetLibraryContentStructuresPage_getIrrelevantAssetLibraryId();
 
-		if ((irrelevantAssetLibraryId != null)) {
+		if (irrelevantAssetLibraryId != null) {
 			ContentStructure irrelevantContentStructure =
 				testGetAssetLibraryContentStructuresPage_addContentStructure(
 					irrelevantAssetLibraryId,
@@ -626,7 +626,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long irrelevantSiteId =
 			testGetSiteContentStructuresPage_getIrrelevantSiteId();
 
-		if ((irrelevantSiteId != null)) {
+		if (irrelevantSiteId != null) {
 			ContentStructure irrelevantContentStructure =
 				testGetSiteContentStructuresPage_addContentStructure(
 					irrelevantSiteId, randomIrrelevantContentStructure());
@@ -1172,7 +1172,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		graphQLFields.add(new GraphQLField("siteId"));
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.delivery.dto.v1_0.ContentStructure.
 						class)) {
 
@@ -1207,7 +1207,7 @@ public abstract class BaseContentStructureResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -1377,6 +1377,17 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -1675,12 +1686,12 @@ public abstract class BaseContentStructureResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -1690,10 +1701,10 @@ public abstract class BaseContentStructureResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

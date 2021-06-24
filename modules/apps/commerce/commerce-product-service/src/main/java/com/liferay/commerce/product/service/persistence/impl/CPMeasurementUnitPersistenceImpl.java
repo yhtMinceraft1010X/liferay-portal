@@ -3632,25 +3632,25 @@ public class CPMeasurementUnitPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (cpMeasurementUnit.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				cpMeasurementUnit.setCreateDate(now);
+				cpMeasurementUnit.setCreateDate(date);
 			}
 			else {
 				cpMeasurementUnit.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!cpMeasurementUnitModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				cpMeasurementUnit.setModifiedDate(now);
+				cpMeasurementUnit.setModifiedDate(date);
 			}
 			else {
 				cpMeasurementUnit.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -4205,6 +4205,13 @@ public class CPMeasurementUnitPersistenceImpl
 						cpMeasurementUnitModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -4217,7 +4224,7 @@ public class CPMeasurementUnitPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CPMeasurementUnitModelImpl cpMeasurementUnitModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -4240,8 +4247,19 @@ public class CPMeasurementUnitPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CPMeasurementUnitModelImpl.getColumnBitmask("priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

@@ -18,10 +18,13 @@
 
 <%
 int mod = list.size() % rowLength;
-
-if (mod > 0) {
-	for (int i = mod; i < rowLength; i++) {
 %>
+
+<c:if test="<%= mod > 0 %>">
+
+	<%
+	for (int i = mod; i < rowLength; i++) {
+	%>
 
 		<td></td>
 
@@ -30,9 +33,6 @@ if (mod > 0) {
 	%>
 
 	</tr>
-
-<%
-}
-%>
+</c:if>
 
 </table>

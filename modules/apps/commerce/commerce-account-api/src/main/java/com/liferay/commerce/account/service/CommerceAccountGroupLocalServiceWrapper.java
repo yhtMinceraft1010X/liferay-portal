@@ -160,6 +160,13 @@ public class CommerceAccountGroupLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceAccountGroupLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceAccountGroupLocalService.dynamicQuery();
 	}
@@ -277,6 +284,20 @@ public class CommerceAccountGroupLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccountGroup
+		fetchCommerceAccountGroupByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceAccountGroupLocalService.
+			fetchCommerceAccountGroupByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountGroupByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccountGroup
 		fetchCommerceAccountGroupByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -306,6 +327,25 @@ public class CommerceAccountGroupLocalServiceWrapper
 
 		return _commerceAccountGroupLocalService.getCommerceAccountGroup(
 			commerceAccountGroupId);
+	}
+
+	/**
+	 * Returns the commerce account group with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce account group's external reference code
+	 * @return the matching commerce account group
+	 * @throws PortalException if a matching commerce account group could not be found
+	 */
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccountGroup
+			getCommerceAccountGroupByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountGroupLocalService.
+			getCommerceAccountGroupByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

@@ -43,7 +43,6 @@ import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -151,38 +150,37 @@ public class MiniumCPCompareListRenderer implements CPContentListRenderer {
 			"ProductsCompare.render",
 			"commerce-frontend-taglib/products_compare/ProductsCompare.es");
 
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"compareProductsURL",
-			cpCompareContentHelper.getCompareProductsURL(themeDisplay)
-		).put(
-			"editCompareProductActionURL",
-			() -> {
-				PortletURL editCompareProductActionURL =
-					PortletURLFactoryUtil.create(
-						httpServletRequest,
-						CPPortletKeys.CP_COMPARE_CONTENT_WEB,
-						PortletRequest.ACTION_PHASE);
-
-				editCompareProductActionURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/cp_compare_content_web/edit_compare_product");
-
-				return editCompareProductActionURL.toString();
-			}
-		).put(
-			"limit", limit
-		).put(
-			"portletNamespace",
-			_portal.getPortletNamespace(CPPortletKeys.CP_COMPARE_CONTENT_WEB)
-		).put(
-			"products", products
-		).put(
-			"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg"
-		).build();
-
 		_soyComponentRenderer.renderSoyComponent(
 			httpServletRequest, httpServletResponse, componentDescriptor,
-			context);
+			HashMapBuilder.<String, Object>put(
+				"compareProductsURL",
+				cpCompareContentHelper.getCompareProductsURL(themeDisplay)
+			).put(
+				"editCompareProductActionURL",
+				() -> {
+					PortletURL editCompareProductActionURL =
+						PortletURLFactoryUtil.create(
+							httpServletRequest,
+							CPPortletKeys.CP_COMPARE_CONTENT_WEB,
+							PortletRequest.ACTION_PHASE);
+
+					editCompareProductActionURL.setParameter(
+						ActionRequest.ACTION_NAME,
+						"/cp_compare_content_web/edit_compare_product");
+
+					return editCompareProductActionURL.toString();
+				}
+			).put(
+				"limit", limit
+			).put(
+				"portletNamespace",
+				_portal.getPortletNamespace(
+					CPPortletKeys.CP_COMPARE_CONTENT_WEB)
+			).put(
+				"products", products
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg"
+			).build());
 	}
 
 	@Reference

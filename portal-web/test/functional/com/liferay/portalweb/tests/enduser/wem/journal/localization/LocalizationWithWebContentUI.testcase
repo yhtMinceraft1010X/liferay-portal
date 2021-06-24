@@ -171,6 +171,32 @@ definition {
 			webContentTitle = "WC Titulo");
 	}
 
+	@description = "This is a use case for LPS-130977."
+	@priority = "3"
+	test ViewTranslationWithoutTextChanged {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC Content",
+			webContentTitle = "WC Title");
+
+		PortletEntry.changeLocale(locale = "fi-FI");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "WC Title",
+			menuItem = "Delete Translations...");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_rowEntry = "suomi",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+	}
+
 	@priority = "4"
 	test WebContentAdministrationLocalization {
 		property test.name.skip.portal.instance = "LocalizationWithWebContentUI#WebContentAdministrationLocalization";

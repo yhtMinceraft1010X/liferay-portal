@@ -3777,7 +3777,7 @@ public class DDMStorageLinkPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMStorageLinkModelImpl ddmStorageLinkModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3800,8 +3800,8 @@ public class DDMStorageLinkPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

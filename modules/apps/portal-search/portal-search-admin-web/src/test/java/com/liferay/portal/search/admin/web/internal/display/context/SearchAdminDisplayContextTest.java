@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
@@ -33,6 +34,8 @@ import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -42,6 +45,11 @@ import org.mockito.Mockito;
  * @author Adam Brandizzi
  */
 public class SearchAdminDisplayContextTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

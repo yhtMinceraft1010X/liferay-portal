@@ -293,6 +293,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit",
 		name = "x-class-name"
 	)
@@ -328,7 +329,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -367,7 +368,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

@@ -1229,25 +1229,25 @@ public class CommerceBOMDefinitionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceBOMDefinition.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceBOMDefinition.setCreateDate(now);
+				commerceBOMDefinition.setCreateDate(date);
 			}
 			else {
 				commerceBOMDefinition.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceBOMDefinitionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceBOMDefinition.setModifiedDate(now);
+				commerceBOMDefinition.setModifiedDate(date);
 			}
 			else {
 				commerceBOMDefinition.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1718,6 +1718,13 @@ public class CommerceBOMDefinitionPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -1730,7 +1737,7 @@ public class CommerceBOMDefinitionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceBOMDefinitionModelImpl commerceBOMDefinitionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -1754,8 +1761,19 @@ public class CommerceBOMDefinitionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceBOMDefinitionModelImpl.getColumnBitmask("name");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

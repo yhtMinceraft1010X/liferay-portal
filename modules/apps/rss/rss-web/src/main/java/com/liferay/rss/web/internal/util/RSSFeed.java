@@ -141,10 +141,11 @@ public class RSSFeed {
 			return _syndFeed;
 		}
 
-		WebCacheItem wci = new RSSWebCacheItem(_rssWebCacheConfiguration, _url);
+		WebCacheItem webCacheItem = new RSSWebCacheItem(
+			_rssWebCacheConfiguration, _url);
 
 		_syndFeed = (SyndFeed)WebCachePoolUtil.get(
-			RSSFeed.class.getName() + StringPool.PERIOD + _url, wci);
+			RSSFeed.class.getName() + StringPool.PERIOD + _url, webCacheItem);
 
 		return _syndFeed;
 	}

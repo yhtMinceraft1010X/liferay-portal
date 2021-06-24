@@ -25,9 +25,10 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.name.SynonymSetIndexNameBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.portlet.ActionURL;
 import javax.portlet.RenderRequest;
@@ -38,7 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -51,6 +54,11 @@ import org.mockito.MockitoAnnotations;
  */
 @Ignore
 public class SynonymsDisplayContextTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	public void mockSynonymSets(String... synonymSets) {
 		Mockito.when(

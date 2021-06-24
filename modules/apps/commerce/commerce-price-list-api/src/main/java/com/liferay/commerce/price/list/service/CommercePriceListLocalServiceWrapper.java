@@ -384,6 +384,13 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commercePriceListLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commercePriceListLocalService.dynamicQuery();
 	}
@@ -544,6 +551,20 @@ public class CommercePriceListLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceList
+		fetchCommercePriceListByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commercePriceListLocalService.
+			fetchCommercePriceListByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePriceListByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
 		fetchCommercePriceListByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -694,6 +715,25 @@ public class CommercePriceListLocalServiceWrapper
 
 		return _commercePriceListLocalService.getCommercePriceListByChannelId(
 			groupId, type, commerceChannelId);
+	}
+
+	/**
+	 * Returns the commerce price list with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce price list's external reference code
+	 * @return the matching commerce price list
+	 * @throws PortalException if a matching commerce price list could not be found
+	 */
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList
+			getCommercePriceListByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListLocalService.
+			getCommercePriceListByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	@Override

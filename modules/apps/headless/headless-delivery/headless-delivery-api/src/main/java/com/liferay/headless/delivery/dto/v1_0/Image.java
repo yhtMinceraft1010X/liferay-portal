@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Image")
+@GraphQLName(description = "The blog post's cover image.", value = "Image")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Image")
 public class Image implements Serializable {
@@ -256,6 +256,7 @@ public class Image implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Image",
 		name = "x-class-name"
 	)
@@ -291,7 +292,7 @@ public class Image implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -330,7 +331,7 @@ public class Image implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

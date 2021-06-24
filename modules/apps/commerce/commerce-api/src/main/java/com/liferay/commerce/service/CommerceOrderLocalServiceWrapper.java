@@ -251,6 +251,13 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceOrderLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceOrderLocalService.dynamicQuery();
 	}
@@ -396,6 +403,20 @@ public class CommerceOrderLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.model.CommerceOrder
+		fetchCommerceOrderByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceOrderLocalService.
+			fetchCommerceOrderByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceOrderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.model.CommerceOrder
 		fetchCommerceOrderByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -438,6 +459,25 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+	}
+
+	/**
+	 * Returns the commerce order with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce order's external reference code
+	 * @return the matching commerce order
+	 * @throws PortalException if a matching commerce order could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrder
+			getCommerceOrderByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.
+			getCommerceOrderByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

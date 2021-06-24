@@ -363,8 +363,19 @@ public class LayoutSetBranchLocalServiceImpl
 		List<LayoutSetBranch> layoutSetBranches =
 			layoutSetBranchPersistence.findByG_P(groupId, privateLayout);
 
+		LayoutSetBranch masterLayoutSetBranch = null;
+
 		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
-			deleteLayoutSetBranch(layoutSetBranch, includeMaster);
+			if (layoutSetBranch.isMaster()) {
+				masterLayoutSetBranch = layoutSetBranch;
+			}
+			else {
+				deleteLayoutSetBranch(layoutSetBranch, includeMaster);
+			}
+		}
+
+		if (masterLayoutSetBranch != null) {
+			deleteLayoutSetBranch(masterLayoutSetBranch, includeMaster);
 		}
 	}
 

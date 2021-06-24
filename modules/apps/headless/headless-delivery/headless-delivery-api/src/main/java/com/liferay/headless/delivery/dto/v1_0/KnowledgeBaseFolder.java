@@ -51,11 +51,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("KnowledgeBaseFolder")
+@GraphQLName(
+	description = "Represents a folder for organizing Knowledge Base articles.",
+	value = "KnowledgeBaseFolder"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	requiredProperties = {"name"},
-	description = "Represents a folder for organizing Knowledge Base articles."
+	description = "Represents a folder for organizing Knowledge Base articles.",
+	requiredProperties = {"name"}
 )
 @XmlRootElement(name = "KnowledgeBaseFolder")
 public class KnowledgeBaseFolder implements Serializable {
@@ -712,6 +715,7 @@ public class KnowledgeBaseFolder implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder",
 		name = "x-class-name"
 	)
@@ -781,7 +785,7 @@ public class KnowledgeBaseFolder implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -820,7 +824,7 @@ public class KnowledgeBaseFolder implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

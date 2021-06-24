@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -59,6 +60,8 @@ import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -87,6 +90,11 @@ import org.quartz.spi.JobFactory;
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class QuartzSchedulerEngineTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws SchedulerException {
 		Thread currentThread = Thread.currentThread();
@@ -99,7 +107,7 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
-		_quartzSchedulerEngine.setProps(setUpProps());
+		_quartzSchedulerEngine.setProps(setUpPropsUtil());
 
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_jsonFactory", setUpJSONFactory());
@@ -678,7 +686,7 @@ public class QuartzSchedulerEngineTest {
 		portalUUIDUtil.setPortalUUID(portalUUID);
 	}
 
-	protected Props setUpProps() {
+	protected Props setUpPropsUtil() {
 		return PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "true");
 	}
 

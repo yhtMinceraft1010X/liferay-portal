@@ -14,9 +14,16 @@
 
 package com.liferay.account.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.account.model.AccountGroupAccountEntryRel;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
  * Provides the local service utility for AccountGroupAccountEntryRel. This utility wraps
@@ -48,19 +55,16 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param accountGroupAccountEntryRel the account group account entry rel
 	 * @return the account group account entry rel that was added
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		addAccountGroupAccountEntryRel(
-			com.liferay.account.model.AccountGroupAccountEntryRel
-				accountGroupAccountEntryRel) {
+	public static AccountGroupAccountEntryRel addAccountGroupAccountEntryRel(
+		AccountGroupAccountEntryRel accountGroupAccountEntryRel) {
 
 		return getService().addAccountGroupAccountEntryRel(
 			accountGroupAccountEntryRel);
 	}
 
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-			addAccountGroupAccountEntryRel(
-				long accountGroupId, long accountEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountGroupAccountEntryRel addAccountGroupAccountEntryRel(
+			long accountGroupId, long accountEntryId)
+		throws PortalException {
 
 		return getService().addAccountGroupAccountEntryRel(
 			accountGroupId, accountEntryId);
@@ -68,7 +72,7 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 
 	public static void addAccountGroupAccountEntryRels(
 			long accountGroupId, long[] accountEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().addAccountGroupAccountEntryRels(
 			accountGroupId, accountEntryIds);
@@ -80,8 +84,8 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param AccountGroupAccountEntryRelId the primary key for the new account group account entry rel
 	 * @return the new account group account entry rel
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		createAccountGroupAccountEntryRel(long AccountGroupAccountEntryRelId) {
+	public static AccountGroupAccountEntryRel createAccountGroupAccountEntryRel(
+		long AccountGroupAccountEntryRelId) {
 
 		return getService().createAccountGroupAccountEntryRel(
 			AccountGroupAccountEntryRelId);
@@ -90,9 +94,9 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			createPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
 	}
@@ -107,10 +111,8 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param accountGroupAccountEntryRel the account group account entry rel
 	 * @return the account group account entry rel that was removed
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		deleteAccountGroupAccountEntryRel(
-			com.liferay.account.model.AccountGroupAccountEntryRel
-				accountGroupAccountEntryRel) {
+	public static AccountGroupAccountEntryRel deleteAccountGroupAccountEntryRel(
+		AccountGroupAccountEntryRel accountGroupAccountEntryRel) {
 
 		return getService().deleteAccountGroupAccountEntryRel(
 			accountGroupAccountEntryRel);
@@ -127,10 +129,9 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @return the account group account entry rel that was removed
 	 * @throws PortalException if a account group account entry rel with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-			deleteAccountGroupAccountEntryRel(
-				long AccountGroupAccountEntryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountGroupAccountEntryRel deleteAccountGroupAccountEntryRel(
+			long AccountGroupAccountEntryRelId)
+		throws PortalException {
 
 		return getService().deleteAccountGroupAccountEntryRel(
 			AccountGroupAccountEntryRelId);
@@ -138,7 +139,7 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 
 	public static void deleteAccountGroupAccountEntryRels(
 			long accountGroupId, long[] accountEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteAccountGroupAccountEntryRels(
 			accountGroupId, accountEntryIds);
@@ -147,23 +148,22 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static <T> T dslQuery(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
+	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
+	}
 
+	public static DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
 
@@ -173,9 +173,7 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -191,9 +189,8 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
@@ -211,10 +208,9 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
@@ -226,9 +222,7 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -240,22 +234,21 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @return the number of rows matching the dynamic query
 	 */
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		fetchAccountGroupAccountEntryRel(long AccountGroupAccountEntryRelId) {
+	public static AccountGroupAccountEntryRel fetchAccountGroupAccountEntryRel(
+		long AccountGroupAccountEntryRelId) {
 
 		return getService().fetchAccountGroupAccountEntryRel(
 			AccountGroupAccountEntryRelId);
 	}
 
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		fetchAccountGroupAccountEntryRel(
-			long accountGroupId, long accountEntryId) {
+	public static AccountGroupAccountEntryRel fetchAccountGroupAccountEntryRel(
+		long accountGroupId, long accountEntryId) {
 
 		return getService().fetchAccountGroupAccountEntryRel(
 			accountGroupId, accountEntryId);
@@ -268,9 +261,9 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @return the account group account entry rel
 	 * @throws PortalException if a account group account entry rel with the primary key could not be found
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-			getAccountGroupAccountEntryRel(long AccountGroupAccountEntryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static AccountGroupAccountEntryRel getAccountGroupAccountEntryRel(
+			long AccountGroupAccountEntryRelId)
+		throws PortalException {
 
 		return getService().getAccountGroupAccountEntryRel(
 			AccountGroupAccountEntryRelId);
@@ -287,26 +280,21 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param end the upper bound of the range of account group account entry rels (not inclusive)
 	 * @return the range of account group account entry rels
 	 */
-	public static java.util.List
-		<com.liferay.account.model.AccountGroupAccountEntryRel>
-			getAccountGroupAccountEntryRels(int start, int end) {
+	public static List<AccountGroupAccountEntryRel>
+		getAccountGroupAccountEntryRels(int start, int end) {
 
 		return getService().getAccountGroupAccountEntryRels(start, end);
 	}
 
-	public static java.util.List
-		<com.liferay.account.model.AccountGroupAccountEntryRel>
-			getAccountGroupAccountEntryRelsByAccountEntryId(
-				long accountEntryId) {
+	public static List<AccountGroupAccountEntryRel>
+		getAccountGroupAccountEntryRelsByAccountEntryId(long accountEntryId) {
 
 		return getService().getAccountGroupAccountEntryRelsByAccountEntryId(
 			accountEntryId);
 	}
 
-	public static java.util.List
-		<com.liferay.account.model.AccountGroupAccountEntryRel>
-			getAccountGroupAccountEntryRelsByAccountGroupId(
-				long accountGroupId) {
+	public static List<AccountGroupAccountEntryRel>
+		getAccountGroupAccountEntryRelsByAccountGroupId(long accountGroupId) {
 
 		return getService().getAccountGroupAccountEntryRelsByAccountGroupId(
 			accountGroupId);
@@ -354,9 +342,8 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
@@ -371,39 +358,17 @@ public class AccountGroupAccountEntryRelLocalServiceUtil {
 	 * @param accountGroupAccountEntryRel the account group account entry rel
 	 * @return the account group account entry rel that was updated
 	 */
-	public static com.liferay.account.model.AccountGroupAccountEntryRel
-		updateAccountGroupAccountEntryRel(
-			com.liferay.account.model.AccountGroupAccountEntryRel
-				accountGroupAccountEntryRel) {
+	public static AccountGroupAccountEntryRel updateAccountGroupAccountEntryRel(
+		AccountGroupAccountEntryRel accountGroupAccountEntryRel) {
 
 		return getService().updateAccountGroupAccountEntryRel(
 			accountGroupAccountEntryRel);
 	}
 
 	public static AccountGroupAccountEntryRelLocalService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<AccountGroupAccountEntryRelLocalService,
-		 AccountGroupAccountEntryRelLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AccountGroupAccountEntryRelLocalService.class);
-
-		ServiceTracker
-			<AccountGroupAccountEntryRelLocalService,
-			 AccountGroupAccountEntryRelLocalService> serviceTracker =
-				new ServiceTracker
-					<AccountGroupAccountEntryRelLocalService,
-					 AccountGroupAccountEntryRelLocalService>(
-						 bundle.getBundleContext(),
-						 AccountGroupAccountEntryRelLocalService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile AccountGroupAccountEntryRelLocalService _service;
 
 }

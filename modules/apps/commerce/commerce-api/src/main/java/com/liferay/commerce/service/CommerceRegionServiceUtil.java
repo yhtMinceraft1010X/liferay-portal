@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceRegion. This utility wraps
@@ -37,77 +39,69 @@ public class CommerceRegionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceRegionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CommerceRegion addCommerceRegion(
+	public static CommerceRegion addCommerceRegion(
 			long commerceCountryId, String name, String code, double priority,
 			boolean active,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().addCommerceRegion(
 			commerceCountryId, name, code, priority, active, serviceContext);
 	}
 
 	public static void deleteCommerceRegion(long commerceRegionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceRegion(commerceRegionId);
 	}
 
-	public static com.liferay.commerce.model.CommerceRegion getCommerceRegion(
-			long commerceRegionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceRegion getCommerceRegion(long commerceRegionId)
+		throws PortalException {
 
 		return getService().getCommerceRegion(commerceRegionId);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion>
-		getCommerceRegions(long commerceCountryId, boolean active) {
+	public static List<CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active) {
 
 		return getService().getCommerceRegions(commerceCountryId, active);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion>
-			getCommerceRegions(
-				long commerceCountryId, boolean active, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceRegion>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceRegion> getCommerceRegions(
+			long commerceCountryId, boolean active, int start, int end,
+			OrderByComparator<CommerceRegion> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceRegions(
 			commerceCountryId, active, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion>
-			getCommerceRegions(
-				long commerceCountryId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.model.CommerceRegion>
-						orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceRegion> getCommerceRegions(
+			long commerceCountryId, int start, int end,
+			OrderByComparator<CommerceRegion> orderByComparator)
+		throws PortalException {
 
 		return getService().getCommerceRegions(
 			commerceCountryId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion>
-			getCommerceRegions(
-				long companyId, String countryTwoLettersISOCode, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceRegion> getCommerceRegions(
+			long companyId, String countryTwoLettersISOCode, boolean active)
+		throws PortalException {
 
 		return getService().getCommerceRegions(
 			companyId, countryTwoLettersISOCode, active);
 	}
 
 	public static int getCommerceRegionsCount(long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceRegionsCount(commerceCountryId);
 	}
 
 	public static int getCommerceRegionsCount(
 			long commerceCountryId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceRegionsCount(commerceCountryId, active);
 	}
@@ -121,44 +115,27 @@ public class CommerceRegionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.commerce.model.CommerceRegion setActive(
+	public static CommerceRegion setActive(
 			long commerceRegionId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().setActive(commerceRegionId, active);
 	}
 
-	public static com.liferay.commerce.model.CommerceRegion
-			updateCommerceRegion(
-				long commerceRegionId, String name, String code,
-				double priority, boolean active,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceRegion updateCommerceRegion(
+			long commerceRegionId, String name, String code, double priority,
+			boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
 
 		return getService().updateCommerceRegion(
 			commerceRegionId, name, code, priority, active, serviceContext);
 	}
 
 	public static CommerceRegionService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<CommerceRegionService, CommerceRegionService>
-		_serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CommerceRegionService.class);
-
-		ServiceTracker<CommerceRegionService, CommerceRegionService>
-			serviceTracker =
-				new ServiceTracker
-					<CommerceRegionService, CommerceRegionService>(
-						bundle.getBundleContext(), CommerceRegionService.class,
-						null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceRegionService _service;
 
 }

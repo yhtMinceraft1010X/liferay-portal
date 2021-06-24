@@ -14,7 +14,13 @@ import classnames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React, {createRef, useEffect, useState} from 'react';
 
-import {TRIAL_SKU, addToOrder} from '../../helper/index';
+import {
+	CHECKOUT_DEFAULT_LAYOUT_ENDPOINT,
+	COMMERCE_CHECKOUT_PORTLET_ID,
+	TRIAL_DEFAULT_LAYOUT_ENDPOINT,
+	TRIAL_SKU,
+	addToOrder
+} from '../../helper/index';
 import SubscriptionEntry from '../subscription_entry/index';
 
 const PRODUCT_HIGHLIGHT = 'highlightProduct';
@@ -22,11 +28,15 @@ const PRODUCT_HIGHLIGHT = 'highlightProduct';
 function CardEntryRenderer({
 	checkoutURL,
 	commerceAccountId,
+	commerceChannelGroupId,
+	commerceChannelId,
+	commerceCurrencyCode,
 	detailURL,
 	isFeatured,
 	namespace,
 	productId,
 	sku,
+	skuId,
 	...entry
 }) {
 	const [isHighlighted, setIsHighlighted] = useState(isFeatured),
@@ -75,18 +85,37 @@ function CardEntryRenderer({
 								? 'primary'
 								: 'secondary'
 						}
-						onClick={() => {
-							addToOrder(commerceAccountId, productId).then(
-								() => {
-									const to =
-										TRIAL_SKU === sku
-											? `${Liferay.ThemeDisplay.getCanonicalURL()}/trial-registration`
-											: checkoutURL;
+						onClick={() => addToOrder({
+							commerceAccountId,
+							commerceChannelGroupId,
+							commerceChannelId,
+							commerceCurrencyCode,
+							skuId,
+						}).then(
+							({orderUUID}) => {
+								let to = Liferay.ThemeDisplay.getCanonicalURL();
 
-									navigate(to);
+								if (TRIAL_SKU === sku) {
+									to += TRIAL_DEFAULT_LAYOUT_ENDPOINT;
 								}
-							);
-						}}
+								else {
+									to = new URL(`${
+										to.replace('web', 'group')
+									}${CHECKOUT_DEFAULT_LAYOUT_ENDPOINT}`);
+
+									to.searchParams.set(
+										`_${
+											COMMERCE_CHECKOUT_PORTLET_ID
+										}_commerceOrderUuid`,
+										orderUUID
+									);
+
+									to = to.toString();
+								}
+
+								window.location.href = to;
+							}
+						)}
 					>
 						{Liferay.Language.get(
 							TRIAL_SKU === sku ? 'start-trial' : 'subscribe'

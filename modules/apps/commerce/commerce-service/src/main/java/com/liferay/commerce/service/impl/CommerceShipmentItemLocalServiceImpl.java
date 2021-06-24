@@ -106,6 +106,32 @@ public class CommerceShipmentItemLocalServiceImpl
 		return commerceShipmentItem;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceShipmentItem addDeliverySubscriptionCommerceShipmentItem(
+			long groupId, long userId, long commerceShipmentId,
+			long commerceOrderItemId)
+		throws PortalException {
+
+		long commerceShipmentItemId = counterLocalService.increment();
+
+		CommerceShipmentItem commerceShipmentItem =
+			commerceShipmentItemPersistence.create(commerceShipmentItemId);
+
+		commerceShipmentItem.setGroupId(groupId);
+
+		User user = userLocalService.getUser(userId);
+
+		commerceShipmentItem.setCompanyId(user.getCompanyId());
+		commerceShipmentItem.setUserId(user.getUserId());
+		commerceShipmentItem.setUserName(user.getFullName());
+
+		commerceShipmentItem.setCommerceShipmentId(commerceShipmentId);
+		commerceShipmentItem.setCommerceOrderItemId(commerceOrderItemId);
+
+		return commerceShipmentItemPersistence.update(commerceShipmentItem);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

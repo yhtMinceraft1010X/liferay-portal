@@ -31,7 +31,9 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
 	<div class="row">
 		<div class="col-md-6 col-xs-12">
-			<commerce-ui:gallery CPDefinitionId="<%= cpDefinitionId %>" />
+			<commerce-ui:gallery
+				CPDefinitionId="<%= cpDefinitionId %>"
+			/>
 		</div>
 
 		<div class="col-md-6 col-xs-12">
@@ -197,16 +199,19 @@ List<CPMedia> cpAttachmentFileEntries = cpContentHelper.getCPAttachmentFileEntri
 
 				<%
 				attachmentsCount = attachmentsCount + 1;
-
-				if (attachmentsCount >= 2) {
 				%>
 
+				<c:if test="<%= attachmentsCount >= 2 %>">
 					<dt class="specification-empty specification-term"></dt>
 					<dd class="specification-desc specification-empty"></dd>
 
-			<%
+					<%
 					attachmentsCount = 0;
-				}
+					%>
+
+				</c:if>
+
+			<%
 			}
 			%>
 

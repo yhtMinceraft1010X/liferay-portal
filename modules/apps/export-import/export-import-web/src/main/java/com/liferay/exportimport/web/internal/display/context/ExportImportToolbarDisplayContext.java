@@ -110,7 +110,10 @@ public class ExportImportToolbarDisplayContext {
 							"liveGroupId",
 							String.valueOf(
 								groupDisplayContextHelper.getLiveGroupId()),
-							"privateLayout", Boolean.FALSE.toString(),
+							"privateLayout",
+							ParamUtil.getString(
+								_httpServletRequest, "privateLayout",
+								Boolean.FALSE.toString()),
 							"displayStyle",
 							ParamUtil.getString(
 								_httpServletRequest, "displayStyle",

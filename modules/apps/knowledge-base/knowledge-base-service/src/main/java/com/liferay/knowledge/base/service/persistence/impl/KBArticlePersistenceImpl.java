@@ -33681,23 +33681,23 @@ public class KBArticlePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (kbArticle.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				kbArticle.setCreateDate(now);
+				kbArticle.setCreateDate(date);
 			}
 			else {
-				kbArticle.setCreateDate(serviceContext.getCreateDate(now));
+				kbArticle.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!kbArticleModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				kbArticle.setModifiedDate(now);
+				kbArticle.setModifiedDate(date);
 			}
 			else {
-				kbArticle.setModifiedDate(serviceContext.getModifiedDate(now));
+				kbArticle.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -34968,6 +34968,13 @@ public class KBArticlePersistenceImpl
 						kbArticleModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -34979,7 +34986,7 @@ public class KBArticlePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			KBArticleModelImpl kbArticleModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -35001,8 +35008,19 @@ public class KBArticlePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= KBArticleModelImpl.getColumnBitmask(
+				"modifiedDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

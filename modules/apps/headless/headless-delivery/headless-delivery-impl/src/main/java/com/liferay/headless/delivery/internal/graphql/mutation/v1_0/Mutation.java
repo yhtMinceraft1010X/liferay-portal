@@ -60,6 +60,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.function.BiFunction;
 
@@ -436,8 +437,8 @@ public class Mutation {
 		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postSiteBlogPostingImageSiteIdMultipartBody",
-		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata."
+		description = "Creates a blog post image. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`blogPostingImage`) with the metadata.",
+		value = "postSiteBlogPostingImageSiteIdMultipartBody"
 	)
 	public BlogPostingImage createSiteBlogPostingImage(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -623,8 +624,8 @@ public class Mutation {
 
 	@GraphQLField
 	@GraphQLName(
-		value = "postAssetLibraryDocumentAssetLibraryIdMultipartBody",
-		description = "null"
+		description = "null",
+		value = "postAssetLibraryDocumentAssetLibraryIdMultipartBody"
 	)
 	public Document createAssetLibraryDocument(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
@@ -658,8 +659,8 @@ public class Mutation {
 		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postDocumentFolderDocumentDocumentFolderIdMultipartBody",
-		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+		description = "Creates a new document inside the folder identified by `documentFolderId`. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "postDocumentFolderDocumentDocumentFolderIdMultipartBody"
 	)
 	public Document createDocumentFolderDocument(
 			@GraphQLName("documentFolderId") Long documentFolderId,
@@ -720,8 +721,8 @@ public class Mutation {
 		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	@GraphQLName(
-		value = "patchDocumentDocumentIdMultipartBody",
-		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+		description = "Updates only the fields received in the request body, leaving any other fields untouched. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "patchDocumentDocumentIdMultipartBody"
 	)
 	public Document patchDocument(
 			@GraphQLName("documentId") Long documentId,
@@ -739,8 +740,8 @@ public class Mutation {
 		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	@GraphQLName(
-		value = "putDocumentDocumentIdMultipartBody",
-		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+		description = "Replaces the document with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "putDocumentDocumentIdMultipartBody"
 	)
 	public Document updateDocument(
 			@GraphQLName("documentId") Long documentId,
@@ -818,8 +819,8 @@ public class Mutation {
 		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postSiteDocumentSiteIdMultipartBody",
-		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata."
+		description = "Creates a new document. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`document`) with the metadata.",
+		value = "postSiteDocumentSiteIdMultipartBody"
 	)
 	public Document createSiteDocument(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
@@ -1304,8 +1305,8 @@ public class Mutation {
 		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody",
-		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+		description = "Creates a new attachment for an existing knowledge base article. The request body must be `multipart/form-data` with two parts, a `file` part with the file's bytes, and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
+		value = "postKnowledgeBaseArticleKnowledgeBaseAttachmentKnowledgeBaseArticleIdMultipartBody"
 	)
 	public KnowledgeBaseAttachment
 			createKnowledgeBaseArticleKnowledgeBaseAttachment(
@@ -1537,8 +1538,8 @@ public class Mutation {
 		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody",
-		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata."
+		description = "Creates an attachment for the message board message. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`MessageBoardAttachment`) with the metadata.",
+		value = "postMessageBoardMessageMessageBoardAttachmentMessageBoardMessageIdMultipartBody"
 	)
 	public MessageBoardAttachment
 			createMessageBoardMessageMessageBoardAttachment(
@@ -1578,8 +1579,8 @@ public class Mutation {
 		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody",
-		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+		description = "Creates a new attachment for the message board thread. The request body should be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
+		value = "postMessageBoardThreadMessageBoardAttachmentMessageBoardThreadIdMultipartBody"
 	)
 	public MessageBoardAttachment
 			createMessageBoardThreadMessageBoardAttachment(
@@ -2353,20 +2354,25 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateSiteStructuredContentPermission(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("permissions")
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteStructuredContentPermission(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.putSiteStructuredContentPermission(
-					Long.valueOf(siteKey), permissions));
+			structuredContentResource -> {
+				Page paginationPage =
+					structuredContentResource.
+						putSiteStructuredContentPermission(
+							Long.valueOf(siteKey), permissions);
 
-		return true;
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -2532,20 +2538,24 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateStructuredContentPermission(
-			@GraphQLName("structuredContentId") Long structuredContentId,
-			@GraphQLName("permissions")
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateStructuredContentPermission(
+				@GraphQLName("structuredContentId") Long structuredContentId,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_structuredContentResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			structuredContentResource ->
-				structuredContentResource.putStructuredContentPermission(
-					structuredContentId, permissions));
+			structuredContentResource -> {
+				Page paginationPage =
+					structuredContentResource.putStructuredContentPermission(
+						structuredContentId, permissions);
 
-		return true;
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField
@@ -3048,8 +3058,8 @@ public class Mutation {
 		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
 	)
 	@GraphQLName(
-		value = "postWikiPageWikiPageAttachmentWikiPageIdMultipartBody",
-		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
+		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata.",
+		value = "postWikiPageWikiPageAttachmentWikiPageIdMultipartBody"
 	)
 	public WikiPageAttachment createWikiPageWikiPageAttachment(
 			@GraphQLName("wikiPageId") Long wikiPageId,

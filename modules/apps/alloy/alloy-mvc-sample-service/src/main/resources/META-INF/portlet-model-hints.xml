@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.alloy.mvc.sample.model.TodoItem">
+		<field name="mvccVersion" type="long" />
+		<field name="todoItemId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="todoListId" type="long" />
+		<field name="description" type="String" />
+		<field name="priority" type="int" />
+		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.alloy.mvc.sample.model.TodoList">
+		<field name="mvccVersion" type="long" />
+		<field name="todoListId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+	</model>
+</model-hints>

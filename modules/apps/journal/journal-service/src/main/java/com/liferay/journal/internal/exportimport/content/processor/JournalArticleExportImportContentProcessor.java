@@ -111,6 +111,11 @@ public class JournalArticleExportImportContentProcessor
 			sb.toString());
 
 		if (Validator.isNotNull(processedContent)) {
+			Element entityElement = portletDataContext.getExportDataElement(
+				stagedModel);
+
+			entityElement.addAttribute("cached", "true");
+
 			return processedContent;
 		}
 
@@ -165,6 +170,16 @@ public class JournalArticleExportImportContentProcessor
 		Fields fields = _getDDMStructureFields(ddmStructure, content);
 
 		if (fields == null) {
+			return content;
+		}
+
+		Element entityElement = portletDataContext.getImportDataElement(
+			stagedModel);
+
+		if (GetterUtil.getBoolean(entityElement.attributeValue("cached"))) {
+			portletDataContext.removePrimaryKey(
+				ExportImportPathUtil.getModelPath(stagedModel));
+
 			return content;
 		}
 

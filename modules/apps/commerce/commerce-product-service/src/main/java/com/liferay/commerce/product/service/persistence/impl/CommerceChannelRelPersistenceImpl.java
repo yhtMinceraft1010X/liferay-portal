@@ -1641,25 +1641,25 @@ public class CommerceChannelRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceChannelRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceChannelRel.setCreateDate(now);
+				commerceChannelRel.setCreateDate(date);
 			}
 			else {
 				commerceChannelRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceChannelRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceChannelRel.setModifiedDate(now);
+				commerceChannelRel.setModifiedDate(date);
 			}
 			else {
 				commerceChannelRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2135,6 +2135,13 @@ public class CommerceChannelRelPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2147,7 +2154,7 @@ public class CommerceChannelRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceChannelRelModelImpl commerceChannelRelModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2170,8 +2177,19 @@ public class CommerceChannelRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceChannelRelModelImpl.getColumnBitmask("createDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

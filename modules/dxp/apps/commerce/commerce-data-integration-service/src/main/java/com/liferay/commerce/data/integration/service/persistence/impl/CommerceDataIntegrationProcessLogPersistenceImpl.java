@@ -1478,27 +1478,27 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew &&
 			(commerceDataIntegrationProcessLog.getCreateDate() == null)) {
 
 			if (serviceContext == null) {
-				commerceDataIntegrationProcessLog.setCreateDate(now);
+				commerceDataIntegrationProcessLog.setCreateDate(date);
 			}
 			else {
 				commerceDataIntegrationProcessLog.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceDataIntegrationProcessLogModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceDataIntegrationProcessLog.setModifiedDate(now);
+				commerceDataIntegrationProcessLog.setModifiedDate(date);
 			}
 			else {
 				commerceDataIntegrationProcessLog.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -1991,6 +1991,13 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 							getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2004,7 +2011,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceDataIntegrationProcessLogModelImpl
 				commerceDataIntegrationProcessLogModelImpl,
 			String[] columnNames, boolean original) {
@@ -2029,8 +2036,20 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+					"modifiedDate");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

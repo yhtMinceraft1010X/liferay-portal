@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetType")
+@GraphQLName(
+	description = "Represents the asset type associated with a `TaxonomyCategory`.",
+	value = "AssetType"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AssetType")
 public class AssetType implements Serializable {
@@ -208,6 +211,7 @@ public class AssetType implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType",
 		name = "x-class-name"
 	)
@@ -243,7 +247,7 @@ public class AssetType implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -282,7 +286,7 @@ public class AssetType implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

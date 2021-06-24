@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.internal.facet.FacetImpl;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,19 @@ import junit.framework.Assert;
 
 import org.apache.solr.common.util.NamedList;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Bryan Engler
  */
 public class FacetCollectorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testSolrFacetFieldCollectorCountType() {

@@ -271,16 +271,13 @@ portletURL.setParameter("searchContainerId", searchContainerId);
 						List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
 
 						for (FileEntry fileEntry : attachmentsFileEntries) {
-						%>
-
-							<%
 							StringBundler sb = new StringBundler(4);
 
 							sb.append(fileEntry.getTitle());
 							sb.append(StringPool.OPEN_PARENTHESIS);
 							sb.append(LanguageUtil.formatStorageSize(fileEntry.getSize(), locale));
 							sb.append(StringPool.CLOSE_PARENTHESIS);
-							%>
+						%>
 
 							<liferay-ui:icon
 								icon="download"

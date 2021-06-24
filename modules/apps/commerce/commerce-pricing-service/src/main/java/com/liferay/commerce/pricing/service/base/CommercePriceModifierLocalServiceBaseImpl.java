@@ -16,6 +16,7 @@ package com.liferay.commerce.pricing.service.base;
 
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
+import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelFinder;
@@ -71,6 +72,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -93,7 +96,7 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommercePriceModifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommercePriceModifierLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommercePriceModifierLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -173,6 +176,13 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commercePriceModifierPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -294,10 +304,41 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 	 * @return the matching commerce price modifier, or <code>null</code> if a matching commerce price modifier could not be found
 	 */
 	@Override
+	public CommercePriceModifier
+		fetchCommercePriceModifierByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return commercePriceModifierPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommercePriceModifierByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
 	public CommercePriceModifier fetchCommercePriceModifierByReferenceCode(
 		long companyId, String externalReferenceCode) {
 
-		return commercePriceModifierPersistence.fetchByC_ERC(
+		return fetchCommercePriceModifierByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce price modifier with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce price modifier's external reference code
+	 * @return the matching commerce price modifier
+	 * @throws PortalException if a matching commerce price modifier could not be found
+	 */
+	@Override
+	public CommercePriceModifier
+			getCommercePriceModifierByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commercePriceModifierPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1125,11 +1166,15 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.pricing.model.CommercePriceModifier",
 			commercePriceModifierLocalService);
+
+		_setLocalServiceUtilService(commercePriceModifierLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.pricing.model.CommercePriceModifier");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1172,6 +1217,23 @@ public abstract class CommercePriceModifierLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommercePriceModifierLocalService commercePriceModifierLocalService) {
+
+		try {
+			Field field =
+				CommercePriceModifierLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commercePriceModifierLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

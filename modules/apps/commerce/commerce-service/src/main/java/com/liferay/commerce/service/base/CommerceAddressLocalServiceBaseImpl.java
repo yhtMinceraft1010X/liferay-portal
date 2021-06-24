@@ -16,6 +16,7 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
@@ -67,6 +68,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -89,7 +92,7 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>CommerceAddressLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.service.CommerceAddressLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>CommerceAddressLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceAddressLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -164,6 +167,13 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return commerceAddressPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -266,10 +276,39 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 	 * @return the matching commerce address, or <code>null</code> if a matching commerce address could not be found
 	 */
 	@Override
-	public CommerceAddress fetchCommerceAddressByReferenceCode(
+	public CommerceAddress fetchCommerceAddressByExternalReferenceCode(
 		long companyId, String externalReferenceCode) {
 
 		return commerceAddressPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAddressByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceAddress fetchCommerceAddressByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceAddressByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce address with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce address's external reference code
+	 * @return the matching commerce address
+	 * @throws PortalException if a matching commerce address could not be found
+	 */
+	@Override
+	public CommerceAddress getCommerceAddressByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceAddressPersistence.findByC_ERC(
 			companyId, externalReferenceCode);
 	}
 
@@ -1338,11 +1377,15 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.model.CommerceAddress",
 			commerceAddressLocalService);
+
+		_setLocalServiceUtilService(commerceAddressLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.commerce.model.CommerceAddress");
+
+		_setLocalServiceUtilService(null);
 	}
 
 	/**
@@ -1384,6 +1427,23 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _setLocalServiceUtilService(
+		CommerceAddressLocalService commerceAddressLocalService) {
+
+		try {
+			Field field =
+				CommerceAddressLocalServiceUtil.class.getDeclaredField(
+					"_service");
+
+			field.setAccessible(true);
+
+			field.set(null, commerceAddressLocalService);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

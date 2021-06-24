@@ -10,18 +10,20 @@
  */
 
 import ClayButton from '@clayui/button';
-import {MiniCartContext} from 'commerce-frontend-js';
+import {CommerceComponents} from 'commerce-frontend-js';
 import {navigate} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {hasURLComponent, mapToFeatures} from '../../helper/index';
 import SubscriptionEntry from '../subscription_entry/index';
 
-function CartSummary() {
-	const {cartState, spritemap} = useContext(MiniCartContext),
-		{cartItems, summary} = cartState,
-		[subscriptionEntry] = cartItems;
+const {MiniCartContext} = CommerceComponents;
 
+function CartSummary() {
+	const {cartState, spritemap} = useContext(MiniCartContext);
+
+	const {cartItems, summary} = cartState;
+	const [subscriptionEntry] = cartItems;
 	const [subscribeEnabled, setSubscribeEnabled] = useState(false);
 
 	useEffect(() => {
@@ -85,12 +87,12 @@ function CartSummary() {
 				</div>
 
 				<div className={'cart-summary-discount'}>
-					<span>{Liferay.Language.get('discount')}:</span>
+					<span>{Liferay.Language.get('discount')}</span>
 					<span>{totalDiscountValueFormatted}</span>
 				</div>
 
 				<div className={'cart-summary-total'}>
-					<span>{Liferay.Language.get('total')}:</span>
+					<span>{Liferay.Language.get('total')}</span>
 					<span>{totalFormatted}</span>
 				</div>
 			</div>

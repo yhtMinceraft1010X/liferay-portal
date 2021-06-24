@@ -24,9 +24,7 @@ String mode = (String)request.getAttribute("liferay-layout:render-fragment-layou
 boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout:render-fragment-layout:showPreview"));
 
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
-%>
 
-<%
 try {
 	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 %>

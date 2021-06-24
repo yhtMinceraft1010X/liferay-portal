@@ -73,7 +73,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseSegmentUserResourceImpl
-	implements SegmentUserResource, EntityModelResource,
+	implements EntityModelResource, SegmentUserResource,
 			   VulcanBatchEngineTaskItemDelegate<SegmentUser> {
 
 	/**
@@ -81,9 +81,9 @@ public abstract class BaseSegmentUserResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Gets a segment's users.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "segmentId"),

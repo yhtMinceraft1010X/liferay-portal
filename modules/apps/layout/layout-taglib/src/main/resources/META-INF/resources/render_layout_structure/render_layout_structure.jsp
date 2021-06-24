@@ -190,25 +190,27 @@ for (String childrenItemId : childrenItemIds) {
 
 				<%
 				FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-				if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
-					continue;
-				}
-
-				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-				if (fragmentEntryLink == null) {
-					continue;
-				}
-
-				FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-				DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
 				%>
 
-				<div class="<%= renderLayoutStructureDisplayContext.getCssClass(fragmentStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(fragmentStyledLayoutStructureItem) %>">
-					<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-				</div>
+				<c:if test="<%= fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() > 0 %>">
+
+					<%
+					FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+					%>
+
+					<c:if test="<%= fragmentEntryLink != null %>">
+
+						<%
+						FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+						DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
+						%>
+
+						<div class="<%= renderLayoutStructureDisplayContext.getCssClass(fragmentStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(fragmentStyledLayoutStructureItem) %>">
+							<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+						</div>
+					</c:if>
+				</c:if>
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">

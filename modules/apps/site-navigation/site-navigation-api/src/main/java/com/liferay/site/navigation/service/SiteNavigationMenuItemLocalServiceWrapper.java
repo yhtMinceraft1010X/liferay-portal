@@ -179,6 +179,13 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _siteNavigationMenuItemLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _siteNavigationMenuItemLocalService.dynamicQuery();
 	}

@@ -233,6 +233,13 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _accountEntryLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _accountEntryLocalService.dynamicQuery();
 	}
@@ -338,6 +345,20 @@ public class AccountEntryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntry
+		fetchAccountEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _accountEntryLocalService.
+			fetchAccountEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchAccountEntryByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.account.model.AccountEntry
 		fetchAccountEntryByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -403,6 +424,24 @@ public class AccountEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.getAccountEntry(accountEntryId);
+	}
+
+	/**
+	 * Returns the account entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the account entry's external reference code
+	 * @return the matching account entry
+	 * @throws PortalException if a matching account entry could not be found
+	 */
+	@Override
+	public com.liferay.account.model.AccountEntry
+			getAccountEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	@Override

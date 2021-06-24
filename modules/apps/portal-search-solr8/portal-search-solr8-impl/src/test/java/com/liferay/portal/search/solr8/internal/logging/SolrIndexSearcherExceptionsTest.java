@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.search.solr8.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,6 +35,11 @@ import org.junit.rules.ExpectedException;
  * @author Bryan Engler
  */
 public class SolrIndexSearcherExceptionsTest extends BaseIndexingTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testExceptionThrownWhenQueryMalformedSearch() {

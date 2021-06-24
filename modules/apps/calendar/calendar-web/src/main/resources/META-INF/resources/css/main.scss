@@ -442,6 +442,16 @@
 	}
 }
 
+.col-md-4 .calendar-portlet .popover.scheduler-event-recorder-popover {
+	max-width: 232px;
+}
+
+.modal-open .modal {
+	min-height: 570px;
+	min-width: 870px;
+	overflow-y: hidden !important;
+}
+
 .portal-popup .calendar-portlet .fieldset {
 	margin-bottom: 2em;
 }
@@ -1030,5 +1040,11 @@
 	.scheduler-base-views {
 		margin-bottom: 20px;
 		margin-top: 20px;
+	}
+}
+
+@media (min-width: 767px) {
+	.portal-popup .calendar-portlet .dialog-footer {
+		position: relative;
 	}
 }

@@ -1911,25 +1911,25 @@ public class PowwowParticipantPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (powwowParticipant.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				powwowParticipant.setCreateDate(now);
+				powwowParticipant.setCreateDate(date);
 			}
 			else {
 				powwowParticipant.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!powwowParticipantModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				powwowParticipant.setModifiedDate(now);
+				powwowParticipant.setModifiedDate(date);
 			}
 			else {
 				powwowParticipant.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2422,7 +2422,7 @@ public class PowwowParticipantPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			PowwowParticipantModelImpl powwowParticipantModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2445,8 +2445,8 @@ public class PowwowParticipantPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

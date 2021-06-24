@@ -1917,24 +1917,24 @@ public class LayoutSEOSitePersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (layoutSEOSite.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				layoutSEOSite.setCreateDate(now);
+				layoutSEOSite.setCreateDate(date);
 			}
 			else {
-				layoutSEOSite.setCreateDate(serviceContext.getCreateDate(now));
+				layoutSEOSite.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!layoutSEOSiteModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				layoutSEOSite.setModifiedDate(now);
+				layoutSEOSite.setModifiedDate(date);
 			}
 			else {
 				layoutSEOSite.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2452,7 +2452,7 @@ public class LayoutSEOSitePersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			LayoutSEOSiteModelImpl layoutSEOSiteModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -2475,8 +2475,8 @@ public class LayoutSEOSitePersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

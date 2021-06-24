@@ -32,7 +32,7 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 
 				<div class="minium-product-tiles__item">
 					<liferay-commerce-product:product-list-entry-renderer
-						CPCatalogEntry = "<%= cpCatalogEntry %>"
+						CPCatalogEntry="<%= cpCatalogEntry %>"
 					/>
 				</div>
 

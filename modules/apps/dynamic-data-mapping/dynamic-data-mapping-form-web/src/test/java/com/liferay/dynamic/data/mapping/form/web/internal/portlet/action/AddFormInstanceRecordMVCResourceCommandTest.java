@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
 import java.io.IOException;
@@ -43,6 +44,8 @@ import javax.portlet.ResourceRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -57,13 +60,18 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(MockitoJUnitRunner.class)
 public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormContextToDDMFormValues();
 
 		setUpAddFormInstanceRecordMVCResourceCommand();
 		setUpDDMFormInstance();
-		setUpProps();
+		setUpPropsUtil();
 		setUpLanguageUtil();
 	}
 
@@ -184,7 +192,7 @@ public class AddFormInstanceRecordMVCResourceCommandTest extends PowerMockito {
 		languageUtil.setLanguage(_language);
 	}
 
-	protected void setUpProps() {
+	protected void setUpPropsUtil() {
 		PropsUtil.setProps(new PropsImpl());
 	}
 

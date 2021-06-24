@@ -2764,24 +2764,25 @@ public class CommerceRegionPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commerceRegion.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commerceRegion.setCreateDate(now);
+				commerceRegion.setCreateDate(date);
 			}
 			else {
-				commerceRegion.setCreateDate(serviceContext.getCreateDate(now));
+				commerceRegion.setCreateDate(
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commerceRegionModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commerceRegion.setModifiedDate(now);
+				commerceRegion.setModifiedDate(date);
 			}
 			else {
 				commerceRegion.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3291,6 +3292,13 @@ public class CommerceRegionPersistenceImpl
 						commerceRegionModelImpl.getColumnBitmask(columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -3303,7 +3311,7 @@ public class CommerceRegionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommerceRegionModelImpl commerceRegionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -3326,8 +3334,19 @@ public class CommerceRegionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |= CommerceRegionModelImpl.getColumnBitmask(
+				"priority");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

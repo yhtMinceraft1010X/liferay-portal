@@ -2275,25 +2275,25 @@ public class CommercePriceListChannelRelPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (commercePriceListChannelRel.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				commercePriceListChannelRel.setCreateDate(now);
+				commercePriceListChannelRel.setCreateDate(date);
 			}
 			else {
 				commercePriceListChannelRel.setCreateDate(
-					serviceContext.getCreateDate(now));
+					serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!commercePriceListChannelRelModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				commercePriceListChannelRel.setModifiedDate(now);
+				commercePriceListChannelRel.setModifiedDate(date);
 			}
 			else {
 				commercePriceListChannelRel.setModifiedDate(
-					serviceContext.getModifiedDate(now));
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -2806,6 +2806,13 @@ public class CommercePriceListChannelRelPersistenceImpl
 							columnName);
 				}
 
+				if (finderPath.isBaseModelResult() &&
+					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+						finderPath.getCacheName())) {
+
+					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+				}
+
 				_finderPathColumnBitmasksCache.put(
 					finderPath, finderPathColumnBitmask);
 			}
@@ -2819,7 +2826,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			CommercePriceListChannelRelModelImpl
 				commercePriceListChannelRelModelImpl,
 			String[] columnNames, boolean original) {
@@ -2844,8 +2851,19 @@ public class CommercePriceListChannelRelPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
+
+		private static final long _ORDER_BY_COLUMNS_BITMASK;
+
+		static {
+			long orderByColumnsBitmask = 0;
+
+			orderByColumnsBitmask |=
+				CommercePriceListChannelRelModelImpl.getColumnBitmask("order_");
+
+			_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
+		}
 
 	}
 

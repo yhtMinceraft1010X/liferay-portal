@@ -237,6 +237,10 @@
 		<finder name="SessionIndex" return-type="SamlSpSession">
 			<finder-column name="sessionIndex" />
 		</finder>
+		<finder name="C_SI" return-type="SamlSpSession">
+			<finder-column name="companyId" />
+			<finder-column name="sessionIndex" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateSamlIdpSpConnectionSamlSpEntityId</exception>

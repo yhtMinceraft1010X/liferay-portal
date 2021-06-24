@@ -140,6 +140,7 @@ public class WorkflowTaskTransitions implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskTransitions",
 		name = "x-class-name"
 	)
@@ -175,7 +176,7 @@ public class WorkflowTaskTransitions implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -214,7 +215,7 @@ public class WorkflowTaskTransitions implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

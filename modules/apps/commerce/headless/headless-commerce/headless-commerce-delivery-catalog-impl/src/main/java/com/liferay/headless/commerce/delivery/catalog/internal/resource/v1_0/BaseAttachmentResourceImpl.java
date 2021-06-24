@@ -60,6 +60,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -80,12 +81,13 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
 			@Parameter(in = ParameterIn.PATH, name = "productId"),
+			@Parameter(in = ParameterIn.QUERY, name = "accountId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -98,6 +100,7 @@ public abstract class BaseAttachmentResourceImpl
 				channelId,
 			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
 				productId,
+			@Parameter(hidden = true) @QueryParam("accountId") Long accountId,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -109,12 +112,13 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/images'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "channelId"),
 			@Parameter(in = ParameterIn.PATH, name = "productId"),
+			@Parameter(in = ParameterIn.QUERY, name = "accountId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -127,6 +131,7 @@ public abstract class BaseAttachmentResourceImpl
 				channelId,
 			@NotNull @Parameter(hidden = true) @PathParam("productId") Long
 				productId,
+			@Parameter(hidden = true) @QueryParam("accountId") Long accountId,
 			@Context Pagination pagination)
 		throws Exception {
 

@@ -496,16 +496,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeCoverImage {
+		Click(locator1 = "BlogsEntry#REMOVE_IMAGE");
+
+		AssertElementNotPresent(
+			key_coverImageName = "${coverImageName}",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+	}
+
 	macro removeSmallImage {
 		Click(locator1 = "Button#REMOVE_IMAGE");
 
 		AssertElementNotPresent(
 			key_smallImage = "${uploadFileName}",
 			locator1 = "BlogsEntry#SMALL_IMAGE");
-
-		AssertTextEquals(
-			locator1 = "Button#SELECT",
-			value1 = "Select File");
 	}
 
 	macro removeViewPermissionsPG {

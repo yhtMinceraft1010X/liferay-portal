@@ -33,7 +33,6 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -57,6 +56,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -426,8 +426,8 @@ public class JournalArticleAssetRenderer
 
 			if (Validator.isNotNull(friendlyURL)) {
 				if (!_article.isApproved()) {
-					friendlyURL =
-						friendlyURL + StringPool.SLASH + _article.getId();
+					friendlyURL = HttpUtil.addParameter(
+						friendlyURL, "version", _article.getId());
 				}
 
 				return friendlyURL;
@@ -439,18 +439,20 @@ public class JournalArticleAssetRenderer
 				group.getGroupId(), layout.isPrivateLayout()),
 			themeDisplay);
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append(groupFriendlyURL);
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(_article.getUrlTitle(themeDisplay.getLocale()));
 
+		String friendlyURL = sb.toString();
+
 		if (!_article.isApproved()) {
-			sb.append(StringPool.SLASH);
-			sb.append(_article.getId());
+			friendlyURL = HttpUtil.addParameter(
+				friendlyURL, "version", _article.getId());
 		}
 
-		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
+		return PortalUtil.addPreservedParameters(themeDisplay, friendlyURL);
 	}
 
 	@Override
@@ -579,16 +581,20 @@ public class JournalArticleAssetRenderer
 		String viewMode = ParamUtil.getString(
 			httpServletRequest, "viewMode", Constants.VIEW);
 
-		String languageId = LanguageUtil.getLanguageId(httpServletRequest);
+		String languageId = ParamUtil.getString(
+			httpServletRequest, "languageId");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay != null) &&
+		if (Validator.isNull(languageId) && (themeDisplay != null) &&
 			Validator.isNotNull(themeDisplay.getLanguageId())) {
 
 			languageId = themeDisplay.getLanguageId();
+		}
+		else {
+			languageId = LanguageUtil.getLanguageId(httpServletRequest);
 		}
 
 		int articlePage = ParamUtil.getInteger(httpServletRequest, "page", 1);

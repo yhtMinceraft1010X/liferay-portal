@@ -72,7 +72,7 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseLanguageResourceImpl
-	implements LanguageResource, EntityModelResource,
+	implements EntityModelResource, LanguageResource,
 			   VulcanBatchEngineTaskItemDelegate<Language> {
 
 	/**
@@ -80,9 +80,9 @@ public abstract class BaseLanguageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/languages'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the asset libraries languages.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "assetLibraryId")}
 	)
@@ -102,9 +102,9 @@ public abstract class BaseLanguageResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/languages'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the site's languages.")
+	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
 	@Path("/sites/{siteId}/languages")
 	@Produces({"application/json", "application/xml"})
@@ -152,7 +152,8 @@ public abstract class BaseLanguageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteLanguagesPage((Long)parameters.get("siteId"));
+		return getSiteLanguagesPage(
+			Long.parseLong((String)parameters.get("siteId")));
 	}
 
 	@Override

@@ -78,19 +78,20 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseWikiPageAttachmentResourceImpl
-	implements WikiPageAttachmentResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<WikiPageAttachment> {
+	implements EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<WikiPageAttachment>,
+			   WikiPageAttachmentResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/{wikiPageAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@DELETE
 	@Operation(
 		description = "Deletes the wiki page attachment and returns a 204 if the operation succeeds."
 	)
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "wikiPageAttachmentId")
@@ -101,7 +102,8 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
 	public void deleteWikiPageAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("wikiPageAttachmentId") Long wikiPageAttachmentId)
+			@PathParam("wikiPageAttachmentId")
+			Long wikiPageAttachmentId)
 		throws Exception {
 	}
 
@@ -110,9 +112,9 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
 	@DELETE
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
@@ -146,9 +148,9 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/{wikiPageAttachmentId}'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki page attachment.")
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "wikiPageAttachmentId")
@@ -159,7 +161,8 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
 	public WikiPageAttachment getWikiPageAttachment(
 			@NotNull @Parameter(hidden = true)
-			@PathParam("wikiPageAttachmentId") Long wikiPageAttachmentId)
+			@PathParam("wikiPageAttachmentId")
+			Long wikiPageAttachmentId)
 		throws Exception {
 
 		return new WikiPageAttachment();
@@ -170,9 +173,9 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@GET
 	@Operation(description = "Retrieves the wiki page's attachments.")
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
@@ -192,16 +195,16 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("multipart/form-data")
 	@Operation(
 		description = "Creates an attachment for the wiki page. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`WikiPageAttachment`) with the metadata."
 	)
-	@POST
+	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
 	)
 	@Path("/wiki-pages/{wikiPageId}/wiki-page-attachments")
+	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
 	public WikiPageAttachment postWikiPageWikiPageAttachment(
@@ -218,9 +221,8 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{wikiPageId}/wiki-page-attachments/batch'  -u 'test@liferay.com:test'
 	 */
-	@Override
 	@Consumes("application/json")
-	@POST
+	@Override
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "wikiPageId"),
@@ -228,6 +230,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		}
 	)
 	@Path("/wiki-pages/{wikiPageId}/wiki-page-attachments/batch")
+	@POST
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "WikiPageAttachment")})
 	public Response postWikiPageWikiPageAttachmentBatch(
@@ -264,7 +267,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 
 		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
 			postWikiPageWikiPageAttachment(
-				Long.valueOf((String)parameters.get("wikiPageId")), null);
+				Long.parseLong((String)parameters.get("wikiPageId")), null);
 		}
 	}
 
@@ -301,7 +304,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		throws Exception {
 
 		return getWikiPageWikiPageAttachmentsPage(
-			(Long)parameters.get("wikiPageId"));
+			Long.parseLong((String)parameters.get("wikiPageId")));
 	}
 
 	@Override

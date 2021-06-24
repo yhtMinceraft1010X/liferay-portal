@@ -1,10 +1,10 @@
-@component-name = "portal-workflow"
+@component-name = "portal-workflow-ee"
 definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
-	property testray.main.component.name = "Workflow";
+	property testray.main.component.name = "Workflow Metrics";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -368,6 +368,7 @@ definition {
 	@description = "Apply filter for workload distribution for all assignees(LRQA-53632)"
 	@priority = "5"
 	test ApplyFilterForWorkloadDistribution {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -504,11 +505,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createBlogInstances(
-			numberOfBlogInstances = "6",
-			numberOfUsers = "6");
+		WorkflowMetrics.createBlogInstances(numberOfBlogInstances = "6");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 
@@ -526,7 +525,7 @@ definition {
 
 		WorkflowMetrics.selectNewAssigneePagination(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2,Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5,Blogs Entry: Blogs Entry Title 6");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
@@ -684,22 +683,30 @@ definition {
 
 		WorkflowMetrics.bulkReassignSetup();
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
+
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
+
 		WorkflowMetrics.assertSelectTasksModalTable();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
+
 		WorkflowMetrics.assertNewAssigneeModalTable();
+
 		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
+
 		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5");
+
 		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "Test Test");
-		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		AssertElementPresent(
 			key_workflowInstanceAssignee = "Test Test",
@@ -749,25 +756,116 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.bulkReassignSetup();
+
 		WorkflowMetrics.bulkReassignExceptionsSetup(site = "${siteName}");
-		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.assertBulkCount();
+
 		WorkflowMetrics.goToBulkReassignSelectTasks();
+
 		WorkflowMetrics.checkWorkflowTaskCrossover();
+
 		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+
 		Click(
 			key_itemName = "Blogs Entry: Blogs Entry Title 1",
 			locator1 = "WorkflowReassignModal#NEW_ASSIGNEE");
+
 		AssertElementNotPresent(
 			key_nameOfAssignee = "Test Test",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+
 		Type(
 			key_itemName = "Blogs Entry: Blogs Entry Title 1",
 			locator1 = "WorkflowReassignModal#NEW_ASSIGNEE",
 			value1 = "Test");
+
 		AssertElementPresent(
 			key_nameOfAssignee = "No results were found.",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+	}
+
+	@description = "LRQA-57667 - Automate LPS-108138: As a Operation Manager, I want to transition a multi-task workflow instance while analyzing my process metrics"
+	@priority = "5"
+	test BulkTransitionWorkflowTasks {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#BulkTransitionWorkflowInstances";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_quarterly_reports_review_process.xml",
+			workflowDefinitionTitle = "Fork Reviews Workflow");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Fork Reviews Workflow",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createBlogInstances(numberOfBlogInstances = "1");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Fork Reviews Workflow");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 5");
+
+		WorkflowMetrics.assertTransitionTaskPresent(taskName = "Board Member Review 6");
+
+		WorkflowMetrics.assertTransitionTaskOptionPresent(
+			taskName = "Board Member Review 5",
+			transitionOption = "Approve 5");
+
+		for (var transitionNumber : list "1,2,3,4,6") {
+			WorkflowMetrics.assertTransitionTaskOptionNotPresent(
+				taskName = "Board Member Review 5",
+				transitionOption = "Approve ${transitionNumber}");
+		}
+
+		WorkflowMetrics.assertTransitionTaskOptionPresent(
+			taskName = "Board Member Review 6",
+			transitionOption = "Approve 6");
+
+		for (var transitionNumber : list "1,2,3,4,5") {
+			WorkflowMetrics.assertTransitionTaskOptionNotPresent(
+				taskName = "Board Member Review 6",
+				transitionOption = "Approve ${transitionNumber}");
+		}
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Board Member Review 5",
+			transitionOption = "Approve 5");
+
+		WorkflowMetrics.selectTransition(
+			taskName = "Board Member Review 6",
+			transitionOption = "Approve 6");
+
+		Button.clickDone();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Board Member Review 5");
+
+		Workflow.viewCompletedTask(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Board Member Review 6");
 	}
 
 	@description = "LRQA-57939 - Automate LPS-105498: As a Operation Manager, I want to bulk update the due date my workflow instances while analyzing my process metrics"
@@ -802,9 +900,12 @@ definition {
 				workflowTask = "Review");
 		}
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.goToUpdateDueDateTasks();
+
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL_MODAL");
+
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 
 		Type(
@@ -826,6 +927,7 @@ definition {
 				workflowTask = "Review");
 
 			Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title ${blogNumber}");
+
 			WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
 		}
 	}
@@ -877,9 +979,11 @@ definition {
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title1");
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title2");
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry Title3");
@@ -973,7 +1077,9 @@ definition {
 			key_rowName = "Review",
 			key_rowNumber = "2",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_REORDER");
+
 		AssertElementPresent(
 			key_rowName = "Review",
 			key_rowNumber = "1",
@@ -982,7 +1088,9 @@ definition {
 			key_rowName = "Update",
 			key_rowNumber = "2",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_TIME_REORDER");
+
 		AssertElementPresent(
 			key_rowName = "Review",
 			key_rowNumber = "1",
@@ -991,11 +1099,14 @@ definition {
 			key_rowName = "Update",
 			key_rowNumber = "2",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_TIME_REORDER");
+
 		AssertElementPresent(
 			key_rowName = "Review",
 			key_rowNumber = "2",
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_REORDER");
 	}
 
@@ -1355,8 +1466,11 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		WorkflowMetrics.singleReassignSetup(site = "${siteName}");
-		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.goToReassignSelectTask();
+
 		WorkflowMetrics.assertNewAssigneeModalTable();
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
@@ -1364,28 +1478,38 @@ definition {
 		WorkflowMetrics.assertAssignees();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1");
+
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");
+
 		Click(
 			locator1 = "WorkflowAllItems#REASSIGN_ICON",
 			task = "1");
+
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
+
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+
 		WorkflowMetrics.assertNoAssignees();
 
 		Click(locator1 = "WorkflowReassignModal#CLOSE_MODAL_BUTTON");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
-		WorkflowMetrics.goToWorkflowAllItems();
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
 		Click(locator1 = "WorkflowAllItems#CLEAR_ALL_BUTTON");
+
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");
+
 		AssertElementNotPresent(
 			locator1 = "WorkflowAllItems#REASSIGN_ICON",
 			task = "1");
@@ -2040,7 +2164,7 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 		WorkflowMetrics.goToUpdateDueDateTasks();
 
 		Type(
@@ -2061,7 +2185,137 @@ definition {
 			workflowTask = "Review");
 
 		Workflow.gotoTaskDetails(workflowAssetTitle = "Blogs Entry Title");
+
 		WorkflowAsset.assertDueDate(date = "4/11/${futureYearShort} 4:30 PM");
+	}
+
+	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
+	@priority = "4"
+	test UpdateDueDateInvalidDateTime {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		var currentYear = DateUtil.getCurrentYear();
+		var futureYear = ${currentYear} + 1;
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToUpdateDueDateTasks();
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Done");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+			value1 = "88/88/8888");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "@disable");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
+			value1 = "04/09/${futureYear}");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Done");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "Done");
+
+		Type(
+			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
+			value1 = "99:99 PM");
+
+		AssertElementPresent(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			value1 = "@disable");
+	}
+
+	@description = "LRQA-60717 - Automate LPS-105497: As a Operation Manager, I want to update the due date a workflow instance while analyzing my process metrics"
+	@priority = "4"
+	test UpdateDueDateUnassignedUser {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "Test Test",
+			isNotPresent = "userfn userln",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Review");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_DROPDOWN_DISABLED");
+
+		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
+
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#DUE_DATE_ICON");
 	}
 
 	@description = "LRQA-53646 - Automate LPS-88573: Search and order the reports list"
@@ -2076,18 +2330,31 @@ definition {
 			portlet = "Process Builder");
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
+
 		PortletEntry.publish();
+
 		Navigator.gotoBack();
+
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
+
 		PortletEntry.publish();
+
 		Navigator.gotoBack();
+
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
+
 		PortletEntry.publish();
+
 		Navigator.gotoBack();
+
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 4");
+
 		PortletEntry.publish();
+
 		Navigator.gotoBack();
+
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Workflow 3");
+
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "New Workflow 4");
 
 		ApplicationsMenu.gotoPortlet(
@@ -2096,9 +2363,13 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 1");
+
 		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 2");
+
 		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 3");
+
 		WorkflowMetrics.assertWorkflowProcessPresent(workflowProcessName = "New Workflow 4");
 	}
 
@@ -2370,6 +2641,7 @@ definition {
 			portlet = "Search");
 
 		WorkflowMetrics.goToFieldMappingsTab();
+
 		WorkflowMetrics.assertMetricsIndexes(companyId = "${companyId}");
 	}
 
@@ -2679,7 +2951,9 @@ definition {
 			workflowTask = "Review");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
 		WorkflowMetrics.fillSLAForm(
@@ -2731,6 +3005,7 @@ definition {
 			workflowTask = "Review");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		WorkflowMetrics.waitForCompletedSLA(

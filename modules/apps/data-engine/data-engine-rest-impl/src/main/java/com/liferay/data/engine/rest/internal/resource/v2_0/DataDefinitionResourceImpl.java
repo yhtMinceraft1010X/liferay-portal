@@ -117,7 +117,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -177,9 +176,11 @@ public class DataDefinitionResourceImpl
 
 		dataLayoutResource.deleteDataLayoutsDataDefinition(dataDefinitionId);
 
+		DataListViewResource.Builder dataListViewResourceBuilder =
+			_dataListViewResourceFactory.create();
+
 		DataListViewResource dataListViewResource =
-			DataListViewResource.builder(
-			).checkPermissions(
+			dataListViewResourceBuilder.checkPermissions(
 				false
 			).user(
 				contextUser
@@ -708,27 +709,6 @@ public class DataDefinitionResourceImpl
 	}
 
 	@Override
-	public void putDataDefinitionPermission(
-			Long dataDefinitionId, Permission[] permissions)
-		throws Exception {
-
-		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
-			ActionKeys.PERMISSIONS);
-
-		String resourceName = getPermissionCheckerResourceName(
-			dataDefinitionId);
-
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
-			String.valueOf(dataDefinitionId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, dataDefinitionId,
-				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService));
-	}
-
-	@Override
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			(long)id);
@@ -891,9 +871,10 @@ public class DataDefinitionResourceImpl
 	}
 
 	private DataLayoutResource _getDataLayoutResource(boolean checkPermission) {
-		DataLayoutResource.Builder builder = DataLayoutResource.builder();
+		DataLayoutResource.Builder dataLayoutResourceBuilder =
+			_dataLayoutResourceFactory.create();
 
-		return builder.checkPermissions(
+		return dataLayoutResourceBuilder.checkPermissions(
 			checkPermission
 		).user(
 			contextUser
@@ -903,10 +884,11 @@ public class DataDefinitionResourceImpl
 	private DataRecordCollectionResource _getDataRecordCollectionResource(
 		boolean checkPermission) {
 
-		DataRecordCollectionResource.Builder builder =
-			DataRecordCollectionResource.builder();
+		DataRecordCollectionResource.Builder
+			dataRecordCollectionResourceBuilder =
+				_dataRecordCollectionResourceFactory.create();
 
-		return builder.checkPermissions(
+		return dataRecordCollectionResourceBuilder.checkPermissions(
 			checkPermission
 		).user(
 			contextUser
@@ -1309,9 +1291,11 @@ public class DataDefinitionResourceImpl
 			Set<Long> deDataListViewIds, String[] removedFieldNames)
 		throws Exception {
 
+		DataListViewResource.Builder dataListViewResourceBuilder =
+			_dataListViewResourceFactory.create();
+
 		DataListViewResource dataListViewResource =
-			DataListViewResource.builder(
-			).checkPermissions(
+			dataListViewResourceBuilder.checkPermissions(
 				false
 			).user(
 				contextUser
@@ -1779,6 +1763,16 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
+
+	@Reference
+	private DataLayoutResource.Factory _dataLayoutResourceFactory;
+
+	@Reference
+	private DataListViewResource.Factory _dataListViewResourceFactory;
+
+	@Reference
+	private DataRecordCollectionResource.Factory
+		_dataRecordCollectionResourceFactory;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

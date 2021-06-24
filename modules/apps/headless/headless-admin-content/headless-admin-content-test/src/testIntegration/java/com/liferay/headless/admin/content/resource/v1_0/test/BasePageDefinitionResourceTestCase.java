@@ -249,6 +249,22 @@ public abstract class BasePageDefinitionResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("pageElement", additionalAssertFieldName)) {
+				if (pageDefinition.getPageElement() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("settings", additionalAssertFieldName)) {
+				if (pageDefinition.getSettings() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -282,7 +298,7 @@ public abstract class BasePageDefinitionResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.delivery.dto.v1_0.PageDefinition.
 						class)) {
 
@@ -317,7 +333,7 @@ public abstract class BasePageDefinitionResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -340,6 +356,28 @@ public abstract class BasePageDefinitionResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("pageElement", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageDefinition1.getPageElement(),
+						pageDefinition2.getPageElement())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("settings", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageDefinition1.getSettings(),
+						pageDefinition2.getSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
@@ -373,6 +411,17 @@ public abstract class BasePageDefinitionResourceTestCase {
 		}
 
 		return false;
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected java.util.Collection<EntityField> getEntityFields()
@@ -425,6 +474,16 @@ public abstract class BasePageDefinitionResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("pageElement")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("settings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
@@ -528,12 +587,12 @@ public abstract class BasePageDefinitionResourceTestCase {
 						_parameterMap.entrySet()) {
 
 					sb.append(entry.getKey());
-					sb.append(":");
+					sb.append(": ");
 					sb.append(entry.getValue());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append(")");
 			}
@@ -543,10 +602,10 @@ public abstract class BasePageDefinitionResourceTestCase {
 
 				for (GraphQLField graphQLField : _graphQLFields) {
 					sb.append(graphQLField.toString());
-					sb.append(",");
+					sb.append(", ");
 				}
 
-				sb.setLength(sb.length() - 1);
+				sb.setLength(sb.length() - 2);
 
 				sb.append("}");
 			}

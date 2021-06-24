@@ -180,7 +180,7 @@ public class CTCollectionServiceTest {
 
 			Assert.assertTrue(resultSet.next());
 
-			Assert.assertEquals(0, resultSet.getLong(1));
+			Assert.assertEquals(0, resultSet.getInt(1));
 		}
 	}
 

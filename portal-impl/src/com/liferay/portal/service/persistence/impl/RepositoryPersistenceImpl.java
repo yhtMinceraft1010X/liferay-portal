@@ -2500,23 +2500,24 @@ public class RepositoryPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (repository.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				repository.setCreateDate(now);
+				repository.setCreateDate(date);
 			}
 			else {
-				repository.setCreateDate(serviceContext.getCreateDate(now));
+				repository.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!repositoryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				repository.setModifiedDate(now);
+				repository.setModifiedDate(date);
 			}
 			else {
-				repository.setModifiedDate(serviceContext.getModifiedDate(now));
+				repository.setModifiedDate(
+					serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3026,7 +3027,7 @@ public class RepositoryPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			RepositoryModelImpl repositoryModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3048,8 +3049,8 @@ public class RepositoryPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

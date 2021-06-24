@@ -42,7 +42,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ParentTaxonomyVocabulary")
+@GraphQLName(
+	description = "The parent category's `TaxonomyVocabulary`, if such a parent category exists.",
+	value = "ParentTaxonomyVocabulary"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ParentTaxonomyVocabulary")
 public class ParentTaxonomyVocabulary implements Serializable {
@@ -161,6 +164,7 @@ public class ParentTaxonomyVocabulary implements Serializable {
 	}
 
 	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary",
 		name = "x-class-name"
 	)
@@ -196,7 +200,7 @@ public class ParentTaxonomyVocabulary implements Serializable {
 
 			sb.append("\"");
 			sb.append(entry.getKey());
-			sb.append("\":");
+			sb.append("\": ");
 
 			Object value = entry.getValue();
 
@@ -235,7 +239,7 @@ public class ParentTaxonomyVocabulary implements Serializable {
 			}
 
 			if (iterator.hasNext()) {
-				sb.append(",");
+				sb.append(", ");
 			}
 		}
 

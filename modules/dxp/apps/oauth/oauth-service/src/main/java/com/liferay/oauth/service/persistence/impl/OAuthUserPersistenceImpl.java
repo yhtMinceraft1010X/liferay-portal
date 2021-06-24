@@ -2527,23 +2527,23 @@ public class OAuthUserPersistenceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+		Date date = new Date();
 
 		if (isNew && (oAuthUser.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				oAuthUser.setCreateDate(now);
+				oAuthUser.setCreateDate(date);
 			}
 			else {
-				oAuthUser.setCreateDate(serviceContext.getCreateDate(now));
+				oAuthUser.setCreateDate(serviceContext.getCreateDate(date));
 			}
 		}
 
 		if (!oAuthUserModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				oAuthUser.setModifiedDate(now);
+				oAuthUser.setModifiedDate(date);
 			}
 			else {
-				oAuthUser.setModifiedDate(serviceContext.getModifiedDate(now));
+				oAuthUser.setModifiedDate(serviceContext.getModifiedDate(date));
 			}
 		}
 
@@ -3074,7 +3074,7 @@ public class OAuthUserPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			OAuthUserModelImpl oAuthUserModelImpl, String[] columnNames,
 			boolean original) {
 
@@ -3096,8 +3096,8 @@ public class OAuthUserPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 

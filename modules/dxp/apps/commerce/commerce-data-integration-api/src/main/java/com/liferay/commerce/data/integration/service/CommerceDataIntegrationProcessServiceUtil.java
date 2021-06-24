@@ -14,9 +14,10 @@
 
 package com.liferay.commerce.data.integration.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
+import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * Provides the remote service utility for CommerceDataIntegrationProcess. This utility wraps
@@ -37,13 +38,12 @@ public class CommerceDataIntegrationProcessServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.data.integration.service.impl.CommerceDataIntegrationProcessServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess addCommerceDataIntegrationProcess(
-					long userId, String name, String type,
-					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsUnicodeProperties)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			addCommerceDataIntegrationProcess(
+				long userId, String name, String type,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties)
+		throws PortalException {
 
 		return getService().addCommerceDataIntegrationProcess(
 			userId, name, type, typeSettingsUnicodeProperties);
@@ -51,44 +51,41 @@ public class CommerceDataIntegrationProcessServiceUtil {
 
 	public static void deleteCommerceDataIntegrationProcess(
 			long commerceDataIntegrationProcessId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		getService().deleteCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess fetchCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			fetchCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId)
+		throws PortalException {
 
 		return getService().fetchCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess getCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			getCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId)
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId);
 	}
 
-	public static java.util.List
-		<com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess> getCommerceDataIntegrationProcesses(
-					long companyId, int start, int end)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static List<CommerceDataIntegrationProcess>
+			getCommerceDataIntegrationProcesses(
+				long companyId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcesses(
 			companyId, start, end);
 	}
 
 	public static int getCommerceDataIntegrationProcessesCount(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
 		return getService().getCommerceDataIntegrationProcessesCount(companyId);
 	}
@@ -102,30 +99,26 @@ public class CommerceDataIntegrationProcessServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess updateCommerceDataIntegrationProcess(
-					long commerceDataIntegrationProcessId, String name,
-					com.liferay.portal.kernel.util.UnicodeProperties
-						typeSettingsUnicodeProperties)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			updateCommerceDataIntegrationProcess(
+				long commerceDataIntegrationProcessId, String name,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties)
+		throws PortalException {
 
 		return getService().updateCommerceDataIntegrationProcess(
 			commerceDataIntegrationProcessId, name,
 			typeSettingsUnicodeProperties);
 	}
 
-	public static
-		com.liferay.commerce.data.integration.model.
-			CommerceDataIntegrationProcess
-					updateCommerceDataIntegrationProcessTrigger(
-						long commerceDataIntegrationProcessId, boolean active,
-						String cronExpression, int startDateMonth,
-						int startDateDay, int startDateYear, int startDateHour,
-						int startDateMinute, int endDateMonth, int endDateDay,
-						int endDateYear, int endDateHour, int endDateMinute,
-						boolean neverEnd)
-				throws com.liferay.portal.kernel.exception.PortalException {
+	public static CommerceDataIntegrationProcess
+			updateCommerceDataIntegrationProcessTrigger(
+				long commerceDataIntegrationProcessId, boolean active,
+				String cronExpression, int startDateMonth, int startDateDay,
+				int startDateYear, int startDateHour, int startDateMinute,
+				int endDateMonth, int endDateDay, int endDateYear,
+				int endDateHour, int endDateMinute, boolean neverEnd)
+		throws PortalException {
 
 		return getService().updateCommerceDataIntegrationProcessTrigger(
 			commerceDataIntegrationProcessId, active, cronExpression,
@@ -135,29 +128,9 @@ public class CommerceDataIntegrationProcessServiceUtil {
 	}
 
 	public static CommerceDataIntegrationProcessService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker
-		<CommerceDataIntegrationProcessService,
-		 CommerceDataIntegrationProcessService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CommerceDataIntegrationProcessService.class);
-
-		ServiceTracker
-			<CommerceDataIntegrationProcessService,
-			 CommerceDataIntegrationProcessService> serviceTracker =
-				new ServiceTracker
-					<CommerceDataIntegrationProcessService,
-					 CommerceDataIntegrationProcessService>(
-						 bundle.getBundleContext(),
-						 CommerceDataIntegrationProcessService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
-	}
+	private static volatile CommerceDataIntegrationProcessService _service;
 
 }

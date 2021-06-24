@@ -15,6 +15,7 @@
 package com.liferay.petra.json.validator;
 
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.InputStream;
@@ -22,6 +23,7 @@ import java.io.InputStream;
 import org.hamcrest.core.StringStartsWith;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -30,6 +32,11 @@ import org.junit.rules.ExpectedException;
  * @author Rubén Pulido
  */
 public class JSONValidatorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {

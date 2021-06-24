@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -35,7 +36,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -50,6 +51,8 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.comparator.UserIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,8 +60,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Field;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
@@ -72,6 +75,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Michael C. Han
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UserLocalServiceTest {
 
@@ -82,10 +86,10 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetCompanyUsers() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		Company company = CompanyTestUtil.addCompany();
 
 		List<User> companyUsers = _userLocalService.getCompanyUsers(
-			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
 
@@ -96,40 +100,40 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetGroupUsers() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_addUsers(20);
+		long[] userIds = _addUsers(20);
 
-		_userLocalService.addGroupUsers(_group.getGroupId(), _users);
+		_userLocalService.addGroupUsers(group.getGroupId(), userIds);
 
-		List<User> allGroupUsers = _userLocalService.getGroupUsers(
-			_group.getGroupId());
+		long[] allGroupUserIds = _userLocalService.getGroupUserIds(
+			group.getGroupId());
 
 		Assert.assertEquals(
-			allGroupUsers.toString(), _users.size() + 1, allGroupUsers.size());
-		Assert.assertTrue(allGroupUsers.containsAll(_users));
+			allGroupUserIds.toString(), userIds.length + 1,
+			allGroupUserIds.length);
+		Assert.assertTrue(ArrayUtil.containsAll(allGroupUserIds, userIds));
 
 		int start = 5;
 		int delta = 5;
 
 		List<User> partialGroupUsers = _userLocalService.getGroupUsers(
-			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
+			group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
 			start + delta, null);
 
 		Assert.assertEquals(
 			partialGroupUsers.toString(), delta, partialGroupUsers.size());
-		Assert.assertTrue(allGroupUsers.containsAll(partialGroupUsers));
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				allGroupUserIds,
+				ListUtil.toLongArray(
+					partialGroupUsers, User.USER_ID_ACCESSOR)));
 	}
 
 	@Test
 	public void testGetNoAnnouncementsDeliveries() throws Exception {
 		User user1 = UserTestUtil.addUser();
-
-		_users.add(user1);
-
 		User user2 = UserTestUtil.addUser();
-
-		_users.add(user2);
 
 		_announcementsDeliveryLocalService.addUserDelivery(
 			user1.getUserId(), "general");
@@ -144,8 +148,6 @@ public class UserLocalServiceTest {
 	@Test
 	public void testGetNoGroups() throws Exception {
 		User user = UserTestUtil.addUser();
-
-		_users.add(user);
 
 		_groupLocalService.deleteGroup(user.getGroupId());
 
@@ -168,8 +170,6 @@ public class UserLocalServiceTest {
 
 			Organization organization = OrganizationTestUtil.addOrganization();
 
-			_organizations.add(organization);
-
 			_userLocalService.addOrganizationUsers(
 				organization.getOrganizationId(), commonUserIds);
 			_userLocalService.addOrganizationUsers(
@@ -190,8 +190,6 @@ public class UserLocalServiceTest {
 			long[] uniqueUserIds = _addUsers(userGroupIterations);
 
 			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-			_userGroups.add(userGroup);
 
 			_userLocalService.addUserGroupUsers(
 				userGroup.getUserGroupId(), commonUserIds);
@@ -250,49 +248,55 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testGetOrganizationUsers() throws Exception {
-		_organization = OrganizationTestUtil.addOrganization();
+		Organization organization = OrganizationTestUtil.addOrganization();
 
-		_addUsers(20);
+		long[] userIds = _addUsers(20);
 
 		_userLocalService.addOrganizationUsers(
-			_organization.getOrganizationId(), _users);
+			organization.getOrganizationId(), userIds);
 
-		List<User> organizationUsers = _userLocalService.getOrganizationUsers(
-			_organization.getOrganizationId());
+		long[] organizationUserIds = _userLocalService.getOrganizationUserIds(
+			organization.getOrganizationId());
 
 		Assert.assertEquals(
-			organizationUsers.toString(), _users.size(),
-			organizationUsers.size());
-		Assert.assertTrue(organizationUsers.containsAll(_users));
+			organizationUserIds.toString(), userIds.length,
+			organizationUserIds.length);
+		Assert.assertTrue(ArrayUtil.containsAll(organizationUserIds, userIds));
 
 		int start = 5;
 		int delta = 5;
 
-		organizationUsers = _userLocalService.getOrganizationUsers(
-			_organization.getOrganizationId(),
-			WorkflowConstants.STATUS_APPROVED, start, start + delta, null);
+		List<User> organizationUsers = _userLocalService.getOrganizationUsers(
+			organization.getOrganizationId(), WorkflowConstants.STATUS_APPROVED,
+			start, start + delta, null);
 
 		Assert.assertEquals(
 			organizationUsers.toString(), delta, organizationUsers.size());
-		Assert.assertTrue(_users.containsAll(organizationUsers));
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				userIds,
+				ListUtil.toLongArray(
+					organizationUsers, User.USER_ID_ACCESSOR)));
 	}
 
 	@Test
 	public void testGetUserGroupUsers() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		_userGroups.add(userGroup);
+		long[] userIds = _addUsers(20);
 
-		_addUsers(20);
-
-		_userLocalService.addUserGroupUsers(userGroup.getUserGroupId(), _users);
+		_userLocalService.addUserGroupUsers(
+			userGroup.getUserGroupId(), userIds);
 
 		List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
 			userGroup.getUserGroupId());
 
 		Assert.assertEquals(
-			userGroupUsers.toString(), _users.size(), userGroupUsers.size());
-		Assert.assertTrue(userGroupUsers.containsAll(_users));
+			userGroupUsers.toString(), userIds.length, userGroupUsers.size());
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				ListUtil.toLongArray(userGroupUsers, User.USER_ID_ACCESSOR),
+				userIds));
 
 		int start = 5;
 		int delta = 5;
@@ -302,7 +306,10 @@ public class UserLocalServiceTest {
 
 		Assert.assertEquals(
 			userGroupUsers.toString(), delta, userGroupUsers.size());
-		Assert.assertTrue(_users.containsAll(userGroupUsers));
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				userIds,
+				ListUtil.toLongArray(userGroupUsers, User.USER_ID_ACCESSOR)));
 	}
 
 	@Test
@@ -368,6 +375,56 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchWithGroupId() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		UserTestUtil.addUser(company);
+		UserTestUtil.addUser(company);
+
+		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
+
+		Group group = GroupTestUtil.addGroup(
+			company.getCompanyId(), adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		User groupAdminUser = UserTestUtil.addGroupAdminUser(group);
+
+		List<User> companyUsers = _userLocalService.getCompanyUsers(
+			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		PermissionChecker oldPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(groupAdminUser));
+
+		try {
+			LinkedHashMap<String, Object> userParams =
+				LinkedHashMapBuilder.<String, Object>put(
+					com.liferay.portal.kernel.search.Field.GROUP_ID,
+					group.getGroupId()
+				).build();
+
+			int count = _userLocalService.searchCount(
+				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				userParams);
+
+			Assert.assertEquals(companyUsers.size(), count);
+
+			List<User> users = _userLocalService.search(
+				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
+				userParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new UserIdComparator());
+
+			Assert.assertEquals(users.toString(), count, users.size());
+			Assert.assertTrue(users.containsAll(companyUsers));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
+		}
+	}
+
+	@Test
 	public void testSetRoleUsers() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -395,27 +452,27 @@ public class UserLocalServiceTest {
 
 	@Test(expected = RequiredRoleException.MustNotRemoveLastAdministator.class)
 	public void testUnsetRoleUsersLastAdministratorRole() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		UserTestUtil.addUser(_group.getGroupId());
+		UserTestUtil.addUser(group.getGroupId());
 
 		List<User> groupUsers = _userLocalService.getGroupUsers(
-			_group.getGroupId());
+			group.getGroupId());
 
 		Role role = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.ADMINISTRATOR);
+			group.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		_userLocalService.unsetRoleUsers(role.getRoleId(), groupUsers);
 	}
 
 	@Test(expected = RequiredRoleException.MustNotRemoveUserRole.class)
 	public void testUnsetRoleUsersUserRole() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		User user = UserTestUtil.addUser(_group.getGroupId());
+		User user = UserTestUtil.addUser(group.getGroupId());
 
 		Role role = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.USER);
+			group.getCompanyId(), RoleConstants.USER);
 
 		_userLocalService.unsetRoleUsers(
 			role.getRoleId(), new long[] {user.getUserId()});
@@ -424,8 +481,6 @@ public class UserLocalServiceTest {
 	@Test
 	public void testUpdateUser() throws Exception {
 		User user = UserTestUtil.addUser();
-
-		_users.add(user);
 
 		TransactionConfig transactionConfig = TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
@@ -469,8 +524,6 @@ public class UserLocalServiceTest {
 		for (int i = 0; i < numberOfUsers; i++) {
 			User user = UserTestUtil.addUser();
 
-			_users.add(user);
-
 			userIds[i] = user.getUserId();
 		}
 
@@ -481,31 +534,13 @@ public class UserLocalServiceTest {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 
-	@DeleteAfterTestRun
-	private Company _company;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@DeleteAfterTestRun
-	private Organization _organization;
-
-	@DeleteAfterTestRun
-	private final List<Organization> _organizations = new ArrayList<>();
 
 	@Inject
 	private RoleLocalService _roleLocalService;
 
-	@DeleteAfterTestRun
-	private final List<UserGroup> _userGroups = new ArrayList<>();
-
 	@Inject
 	private UserLocalService _userLocalService;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

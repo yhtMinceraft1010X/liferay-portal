@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -50,6 +52,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1728,6 +1731,21 @@ public class DDMFormInstanceVersionPersistenceImpl
 		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl =
 			(DDMFormInstanceVersionModelImpl)ddmFormInstanceVersion;
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (ddmFormInstanceVersion.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ddmFormInstanceVersion.setCreateDate(date);
+			}
+			else {
+				ddmFormInstanceVersion.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
 		Session session = null;
 
 		try {
@@ -2460,7 +2478,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			return null;
 		}
 
-		private Object[] _getValue(
+		private static Object[] _getValue(
 			DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl,
 			String[] columnNames, boolean original) {
 
@@ -2484,8 +2502,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 			return arguments;
 		}
 
-		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
-			new ConcurrentHashMap<>();
+		private static final Map<FinderPath, Long>
+			_finderPathColumnBitmasksCache = new ConcurrentHashMap<>();
 
 	}
 
