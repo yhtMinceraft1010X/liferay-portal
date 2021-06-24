@@ -266,8 +266,10 @@ public class LuceneRepositorySearchQueryTermBuilder
 		}
 
 		@Override
-		protected TokenStream normalize(String fieldName, TokenStream in) {
-			return new LowerCaseFilter(in);
+		protected TokenStream normalize(
+			String fieldName, TokenStream tokenStream) {
+
+			return new LowerCaseFilter(tokenStream);
 		}
 
 	}
