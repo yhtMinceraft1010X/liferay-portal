@@ -1,5 +1,5 @@
 {
-	"cdn": {
+	"general": {
 		"en_US": {
 			"message": "Help me configure a CDN.",
 			"url": "https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/setting-up-liferay/using-a-cdn.html"
