@@ -61,9 +61,9 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setCompanyId(user.getCompanyId());
 		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setUserName(user.getFullName());
+		batchPlannerPlan.setExport(export);
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setName(name);
-		batchPlannerPlan.setExport(export);
 
 		batchPlannerPlan = batchPlannerPlanPersistence.update(batchPlannerPlan);
 

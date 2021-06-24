@@ -109,11 +109,11 @@
 		<!-- Other fields -->
 
 		<column name="active" type="boolean" />
+		<column name="export" type="boolean" />
 		<column name="externalType" type="String" />
 		<column name="externalURL" type="String" />
 		<column name="internalClassName" type="String" />
 		<column name="name" type="String" />
-		<column name="export" type="boolean" />
 
 		<!-- Order -->
 
