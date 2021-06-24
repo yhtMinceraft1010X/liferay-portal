@@ -135,7 +135,6 @@ public class QuestionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TAG_SELECTOR_URL,
 			_getTagSelectorURL(renderRequest, renderResponse));
-
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
 
