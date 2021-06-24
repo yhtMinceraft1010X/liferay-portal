@@ -81,16 +81,18 @@ public class ProductSpecificationUtil {
 			cpSpecificationOptionService.fetchCPSpecificationOption(
 				companyId, specificationKey);
 
-		Map<Locale, String> hashMap = HashMapBuilder.put(
+		Map<Locale, String> map = HashMapBuilder.put(
 			serviceContext.getLocale(),
 			() -> {
-				String[] splits = StringUtil.split(
+				String[] specificationKeyParts = StringUtil.split(
 					specificationKey, CharPool.DASH);
 
-				StringBundler sb = new StringBundler(splits.length);
+				StringBundler sb = new StringBundler(
+					specificationKeyParts.length);
 
-				for (String split : splits) {
-					sb.append(StringUtil.upperCaseFirstLetter(split));
+				for (String specificationKeyPart : specificationKeyParts) {
+					sb.append(
+						StringUtil.upperCaseFirstLetter(specificationKeyPart));
 					sb.append(CharPool.SPACE);
 				}
 
@@ -101,8 +103,8 @@ public class ProductSpecificationUtil {
 		if (cpSpecificationOption == null) {
 			cpSpecificationOption =
 				cpSpecificationOptionService.addCPSpecificationOption(
-					getCPOptionCategoryId(productSpecification), hashMap,
-					hashMap, false, specificationKey, serviceContext);
+					getCPOptionCategoryId(productSpecification), map, map,
+					false, specificationKey, serviceContext);
 		}
 
 		return cpSpecificationOption.getCPSpecificationOptionId();
