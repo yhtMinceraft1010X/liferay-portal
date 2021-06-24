@@ -14,9 +14,11 @@
 
 package com.liferay.batch.planner.service.impl;
 
-import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
+import com.liferay.batch.planner.exception.BatchPlannerMappingExternalFieldNameException;
+import com.liferay.batch.planner.exception.BatchPlannerMappingExternalFieldTypeException;
+import com.liferay.batch.planner.exception.BatchPlannerMappingInternalFieldNameException;
+import com.liferay.batch.planner.exception.BatchPlannerMappingInternalFieldTypeException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
-import com.liferay.batch.planner.exception.RequiredBatchPlannerMappingFieldException;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.service.base.BatchPlannerMappingLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -47,18 +49,25 @@ public class BatchPlannerMappingLocalServiceImpl
 			String internalFieldType, String script)
 		throws PortalException {
 
-		_validateRequiredField("externalFieldName", externalFieldName);
-		_validateRequiredField("externalFieldType", externalFieldType);
-		_validateRequiredField("internalFieldName", internalFieldName);
-		_validateRequiredField("internalFieldType", internalFieldType);
-
-		_validateBatchPlannerMapping(
-			batchPlannerPlanId, externalFieldName, internalFieldName);
-
 		BatchPlannerMapping batchPlannerMapping =
-			batchPlannerMappingPersistence.create(
-				counterLocalService.increment(
-					BatchPlannerMapping.class.getName()));
+			batchPlannerMappingPersistence.fetchByBPPI_EFN_IFN(
+				batchPlannerPlanId, externalFieldName, internalFieldName);
+
+		if (batchPlannerMapping != null) {
+			throw new DuplicateBatchPlannerPlanException(
+				StringBundler.concat(
+					"Batch planner mapping with external field name \"",
+					externalFieldName, "\" and internal field name \"",
+					internalFieldName, "\" already exists"));
+		}
+
+		_validateExternalFieldName(externalFieldName);
+		_validateExternalFieldType(externalFieldType);
+		_validateInternalFieldName(internalFieldName);
+		_validateInternalFieldType(internalFieldType);
+
+		batchPlannerMapping = batchPlannerMappingPersistence.create(
+			counterLocalService.increment(BatchPlannerMapping.class.getName()));
 
 		User user = userLocalService.getUser(userId);
 
@@ -96,43 +105,71 @@ public class BatchPlannerMappingLocalServiceImpl
 			batchPlannerPlanId);
 	}
 
-	private void _validateBatchPlannerMapping(
-			long batchPlannerPlanId, String externalName, String internalName)
+	private void _validateExternalFieldName(String externalFieldName)
 		throws PortalException {
 
-		BatchPlannerMapping batchPlannerMapping =
-			batchPlannerMappingPersistence.fetchByBPPI_EFN_IFN(
-				batchPlannerPlanId, externalName, internalName);
-
-		if (batchPlannerMapping == null) {
-			return;
-		}
-
-		throw new DuplicateBatchPlannerPlanException(
-			StringBundler.concat(
-				"Batch planner mapping with external field name \"",
-				externalName, "\" and internal field name \"", internalName,
-				"\" already exists for batch planner plan ",
-				batchPlannerPlanId));
-	}
-
-	private void _validateRequiredField(String name, String value)
-		throws PortalException {
-
-		if (Validator.isNull(value)) {
-			throw new RequiredBatchPlannerMappingFieldException(
-				StringBundler.concat(
-					"Batch planner mapping field \"", name, "\" is null"));
+		if (Validator.isNull(externalFieldName)) {
+			throw new BatchPlannerMappingExternalFieldNameException(
+				"External field name is null");
 		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			BatchPlannerMapping.class.getName(), name);
+			BatchPlannerMapping.class.getName(), "externalFieldName");
 
-		if (value.length() > maxLength) {
-			throw new BatchPlannerPlanNameException(
-				StringBundler.concat(
-					"Batch planner mapping field \"", name,
-					"\" must not be longer than ", maxLength));
+		if (externalFieldName.length() > maxLength) {
+			throw new BatchPlannerMappingExternalFieldNameException(
+				"External field name is too long");
+		}
+	}
+
+	private void _validateExternalFieldType(String externalFieldType)
+		throws PortalException {
+
+		if (Validator.isNull(externalFieldType)) {
+			throw new BatchPlannerMappingExternalFieldTypeException(
+				"External field type is null");
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			BatchPlannerMapping.class.getName(), "externalFieldType");
+
+		if (externalFieldType.length() > maxLength) {
+			throw new BatchPlannerMappingExternalFieldTypeException(
+				"External field type is too long");
+		}
+	}
+
+	private void _validateInternalFieldName(String internalFieldName)
+		throws PortalException {
+
+		if (Validator.isNull(internalFieldName)) {
+			throw new BatchPlannerMappingInternalFieldNameException(
+				"Internal field name is null");
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			BatchPlannerMapping.class.getName(), "internalFieldName");
+
+		if (internalFieldName.length() > maxLength) {
+			throw new BatchPlannerMappingInternalFieldNameException(
+				"Internal field name is too long");
+		}
+	}
+
+	private void _validateInternalFieldType(String internalFieldType)
+		throws PortalException {
+
+		if (Validator.isNull(internalFieldType)) {
+			throw new BatchPlannerMappingInternalFieldTypeException(
+				"Internal field type is null");
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			BatchPlannerMapping.class.getName(), "internalFieldType");
+
+		if (internalFieldType.length() > maxLength) {
+			throw new BatchPlannerMappingInternalFieldTypeException(
+				"Internal field type is too long");
 		}
 	}
 
