@@ -728,7 +728,7 @@ public class ProductResourceImpl
 			}
 		}
 
-		// Related Products
+		// Related products
 
 		RelatedProduct[] relatedProducts = product.getRelatedProducts();
 
@@ -870,7 +870,7 @@ public class ProductResourceImpl
 			}
 		}
 
-		// Account Groups visibility
+		// Account groups visibility
 
 		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
 			cpDefinition.getCPDefinitionId(),
