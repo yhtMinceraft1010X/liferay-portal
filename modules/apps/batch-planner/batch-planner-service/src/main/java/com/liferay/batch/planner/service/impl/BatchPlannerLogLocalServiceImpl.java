@@ -133,7 +133,7 @@ public class BatchPlannerLogLocalServiceImpl
 		}
 
 		int maxLength = ModelHintsUtil.getMaxLength(
-			BatchPlannerMapping.class.getName(), name);
+			BatchPlannerLog.class.getName(), name);
 
 		if (value.length() > maxLength) {
 			throw new RequiredBatchPlannerLogFieldException(
