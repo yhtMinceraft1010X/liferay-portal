@@ -14,12 +14,11 @@
 
 package com.liferay.batch.planner.service.impl;
 
-import com.liferay.batch.planner.exception.RequiredBatchPlannerLogFieldException;
+import com.liferay.batch.planner.exception.BatchPlannerLogBatchEngineExportTaskERCException;
+import com.liferay.batch.planner.exception.BatchPlannerLogBatchEngineImportTaskERCException;
 import com.liferay.batch.planner.model.BatchPlannerLog;
-import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerLogLocalServiceBaseImpl;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -49,20 +48,48 @@ public class BatchPlannerLogLocalServiceImpl
 			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 
 		if (batchPlannerPlan.isExport()) {
-			_validateMutuallyExclusiveField(
-				"batchEngineImportERC", batchEngineImportERC,
-				batchPlannerPlan.isExport());
+			if (Validator.isNotNull(batchEngineImportERC)) {
+				throw new BatchPlannerLogBatchEngineImportTaskERCException(
+					"Batch engine import task external reference code must " +
+						"not be set during export");
+			}
 
-			_validateRequiredField(
-				"batchEngineExportERC", batchEngineExportERC);
+			if (Validator.isNull(batchEngineExportERC)) {
+				throw new BatchPlannerLogBatchEngineExportTaskERCException(
+					"Batch engine export task external reference code must " +
+						"be set during export");
+			}
+
+			int maxLength = ModelHintsUtil.getMaxLength(
+				BatchPlannerLog.class.getName(), "batchEngineExportERC");
+
+			if (batchEngineExportERC.length() > maxLength) {
+				throw new BatchPlannerLogBatchEngineExportTaskERCException(
+					"Batch engine export task external reference code is too " +
+						"long");
+			}
 		}
 		else {
-			_validateMutuallyExclusiveField(
-				"batchEngineExportERC", batchEngineExportERC,
-				batchPlannerPlan.isExport());
+			if (Validator.isNotNull(batchEngineExportERC)) {
+				throw new BatchPlannerLogBatchEngineExportTaskERCException(
+					"Batch engine export task external reference code must " +
+						"not be set during import");
+			}
 
-			_validateRequiredField(
-				"batchEngineImportERC", batchEngineImportERC);
+			if (Validator.isNull(batchEngineImportERC)) {
+				throw new BatchPlannerLogBatchEngineImportTaskERCException(
+					"Batch engine import task external reference code must " +
+						"be set during import");
+			}
+
+			int maxLength = ModelHintsUtil.getMaxLength(
+				BatchPlannerLog.class.getName(), "batchEngineImportERC");
+
+			if (batchEngineImportERC.length() > maxLength) {
+				throw new BatchPlannerLogBatchEngineImportTaskERCException(
+					"Batch engine import task external reference code is too " +
+						"long");
+			}
 		}
 
 		BatchPlannerLog batchPlannerLog = batchPlannerLogPersistence.create(
@@ -107,40 +134,6 @@ public class BatchPlannerLogLocalServiceImpl
 		batchPlannerLog.setStatus(status);
 
 		return batchPlannerLogPersistence.update(batchPlannerLog);
-	}
-
-	private void _validateMutuallyExclusiveField(
-			String name, String value, boolean export)
-		throws PortalException {
-
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		throw new RequiredBatchPlannerLogFieldException(
-			StringBundler.concat(
-				"Batch planner log field \"", name, "\" must be null if field ",
-				"\"export\" is ", export));
-	}
-
-	private void _validateRequiredField(String name, String value)
-		throws PortalException {
-
-		if (Validator.isNull(value)) {
-			throw new RequiredBatchPlannerLogFieldException(
-				StringBundler.concat(
-					"Batch planner log field \"", name, "\" is null"));
-		}
-
-		int maxLength = ModelHintsUtil.getMaxLength(
-			BatchPlannerLog.class.getName(), name);
-
-		if (value.length() > maxLength) {
-			throw new RequiredBatchPlannerLogFieldException(
-				StringBundler.concat(
-					"Batch planner log field \"", name,
-					"\" must not be longer than ", maxLength));
-		}
 	}
 
 }
