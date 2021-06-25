@@ -38,12 +38,12 @@ public class GooglePlacesUtil {
 	public static String getGooglePlacesAPIKey(
 		long companyId, long groupId, GroupLocalService groupLocalService) {
 
-		String defaultGooglePlacesAPIKey = getGooglePlacesAPIKey(companyId);
+		String googlePlacesAPIKey = getGooglePlacesAPIKey(companyId);
 
 		Group group = groupLocalService.fetchGroup(groupId);
 
 		if (group == null) {
-			return defaultGooglePlacesAPIKey;
+			return googlePlacesAPIKey;
 		}
 
 		if (group.isStagingGroup()) {
@@ -53,7 +53,7 @@ public class GooglePlacesUtil {
 		return GetterUtil.getString(
 			group.getTypeSettingsProperty(
 				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY),
-			defaultGooglePlacesAPIKey);
+			googlePlacesAPIKey);
 	}
 
 }
