@@ -741,7 +741,7 @@ public class DataLayoutTaglibUtil {
 				ddmForm = _getDDMForm();
 			}
 
-			_defaultLocale = ddmForm.getDefaultLocale();
+			Locale defaultLocale = ddmForm.getDefaultLocale();
 
 			Map<String, Object> ddmFormTemplateContext =
 				_ddmFormTemplateContextFactory.create(
@@ -750,14 +750,14 @@ public class DataLayoutTaglibUtil {
 						{
 							setHttpServletRequest(_httpServletRequest);
 							setHttpServletResponse(_httpServletResponse);
-							setLocale(_defaultLocale);
+							setLocale(defaultLocale);
 							setPortletNamespace(StringPool.BLANK);
 						}
 					});
 
 			_populateDDMFormFieldSettingsContext(
 				ddmForm.getDDMFormFieldsMap(true), ddmFormTemplateContext,
-				_defaultLocale);
+				defaultLocale);
 
 			ddmFormTemplateContext.put("rules", _getDataRulesJSONArray());
 
@@ -1121,7 +1121,6 @@ public class DataLayoutTaglibUtil {
 
 		private final Set<Locale> _availableLocales;
 		private final DataLayout _dataLayout;
-		private Locale _defaultLocale;
 		private final HttpServletRequest _httpServletRequest;
 		private final HttpServletResponse _httpServletResponse;
 
