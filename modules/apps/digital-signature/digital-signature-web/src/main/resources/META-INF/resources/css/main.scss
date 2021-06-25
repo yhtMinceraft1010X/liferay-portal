@@ -80,14 +80,6 @@
 		.preview-file {
 			display: flex;
 
-			.image-container-expanded {
-				.preview-image-mark {
-					right: 62px;
-					top: 17px;
-					transform: scale(2);
-				}
-			}
-
 			.preview-file-container {
 				align-items: center;
 				margin: auto;
@@ -108,6 +100,14 @@
 					right: 0;
 					top: 0;
 					user-select: none;
+				}
+			}
+
+			.image-container-expanded {
+				.preview-image-mark {
+					right: 62px;
+					top: 17px;
+					transform: scale(2);
 				}
 			}
 		}
