@@ -38,6 +38,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
+	@priority = "5"
+	test CategorieShowInTable{
+		property portal.acceptance = "true";
+
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Content Dashboard and filtering category") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			ContentDashboard.filterByCategory(
+				categoryName = "Test",
+				filterOption = "Categories");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Test");
+		}
+	}
+
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofApprovedWebContent {
@@ -1287,7 +1327,7 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
 
-	@description = "Validate if the user can order by Modification Date"
+	@descrip	ion = "Validate if the user can order by Modification Date"
 	@priority = "5"
 	test OrderByModificationDate {
 		for (var count : list "1,2,3,4,5") {
