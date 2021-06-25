@@ -27,13 +27,13 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -152,8 +152,9 @@ public class AMImageValidatorImpl implements AMImageValidator {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Could not validate DDMFormvalues for " +
-							fileVersion.getFileVersionId());
+						"Unable to validate dynamic data mapping form values " +
+							"for file version " +
+								fileVersion.getFileVersionId());
 				}
 
 				if (_log.isDebugEnabled()) {
@@ -166,10 +167,9 @@ public class AMImageValidatorImpl implements AMImageValidator {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"DDMFormValues not found for ",
-							String.valueOf(fileVersion.getFileVersionId()),
-							" in the structure ",
-							ddmStructure.getStructureKey()));
+							"Unable to find dynamic data mapping form values ",
+							"for ", fileVersion.getFileVersionId(),
+							" in structure ", ddmStructure.getStructureKey()));
 				}
 
 				if (_log.isDebugEnabled()) {
