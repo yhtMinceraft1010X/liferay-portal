@@ -40,7 +40,7 @@ definition {
 
 	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
 	@priority = "5"
-	test CategorieShowInTable{
+	test CategorieShowInTable {
 		property portal.acceptance = "true";
 
 		task ("Adding vocabulary and category") {
