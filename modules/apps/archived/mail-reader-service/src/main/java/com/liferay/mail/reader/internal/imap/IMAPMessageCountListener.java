@@ -82,13 +82,13 @@ public class IMAPMessageCountListener implements MessageCountListener {
 				FolderLocalServiceUtil.getFolder(
 					_account.getAccountId(), jxFolder.getFullName());
 
-			long[] remoteMessageUIds = _imapAccessor.getMessageUIDs(
+			long[] remoteMessageUIDs = _imapAccessor.getMessageUIDs(
 				jxFolder, jxMessages);
 
-			for (long remoteMessageUId : remoteMessageUIds) {
+			for (long remoteMessageUID : remoteMessageUIDs) {
 				com.liferay.mail.reader.model.Message message =
 					MessageLocalServiceUtil.getMessage(
-						folder.getFolderId(), remoteMessageUId);
+						folder.getFolderId(), remoteMessageUID);
 
 				MessageLocalServiceUtil.deleteMessage(message.getMessageId());
 			}

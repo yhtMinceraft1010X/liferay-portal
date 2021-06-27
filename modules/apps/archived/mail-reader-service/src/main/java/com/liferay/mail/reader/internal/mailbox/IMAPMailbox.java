@@ -435,21 +435,21 @@ public class IMAPMailbox extends BaseMailbox {
 			long folderId, int pageNumber, int messagesPerPage)
 		throws PortalException {
 
-		long[] remoteMessageUIds = _imapAccessor.getMessageUIDs(
+		long[] remoteMessageUIDs = _imapAccessor.getMessageUIDs(
 			folderId, pageNumber, messagesPerPage);
 
 		List<Long> missingRemoteMessageIdsList = new ArrayList<>();
 
-		for (long remoteMessageUId : remoteMessageUIds) {
+		for (long remoteMessageUID : remoteMessageUIDs) {
 			try {
-				MessageLocalServiceUtil.getMessage(folderId, remoteMessageUId);
+				MessageLocalServiceUtil.getMessage(folderId, remoteMessageUID);
 			}
 			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(noSuchMessageException, noSuchMessageException);
 				}
 
-				missingRemoteMessageIdsList.add(remoteMessageUId);
+				missingRemoteMessageIdsList.add(remoteMessageUID);
 			}
 		}
 
