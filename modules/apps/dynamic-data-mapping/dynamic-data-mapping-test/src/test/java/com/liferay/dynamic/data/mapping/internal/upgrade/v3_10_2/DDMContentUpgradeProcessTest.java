@@ -56,13 +56,11 @@ public class DDMContentUpgradeProcessTest
 				ddmFormJSONDeserializer, ddmFormValuesJSONDeserializer,
 				ddmFormValuesJSONSerializer, jsonFactory);
 
-		String data = read("ddm-content-data.json");
-
-		String definition = read("ddm-structure-version-definition.json");
-
 		JSONAssert.assertEquals(
 			read("updated-ddm-content-data.json"),
-			ddmContentUpgradeProcess.upgradeDDMContentData(data, definition),
+			ddmContentUpgradeProcess.upgradeDDMContentData(
+				read("ddm-content-data.json"),
+				read("ddm-structure-version-definition.json")),
 			false);
 	}
 

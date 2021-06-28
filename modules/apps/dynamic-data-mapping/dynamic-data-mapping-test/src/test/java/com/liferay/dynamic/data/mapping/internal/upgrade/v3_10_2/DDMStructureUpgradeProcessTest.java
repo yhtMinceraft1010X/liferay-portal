@@ -46,12 +46,10 @@ public class DDMStructureUpgradeProcessTest
 				ddmFormLayoutJSONSerializer, ddmFormJSONSerializer,
 				jsonFactory);
 
-		String definition = read("ddm-structure-layout-definition.json");
-
 		JSONAssert.assertEquals(
 			read("updated-ddm-structure-layout-definition.json"),
 			ddmStructureUpgradeProcess.upgradeDDMStructureLayoutDefinition(
-				definition),
+				read("ddm-structure-layout-definition.json")),
 			false);
 	}
 
@@ -65,12 +63,10 @@ public class DDMStructureUpgradeProcessTest
 				ddmFormLayoutJSONSerializer, ddmFormJSONSerializer,
 				jsonFactory);
 
-		String definition = read("ddm-structure-version-definition.json");
-
 		JSONAssert.assertEquals(
 			read("updated-ddm-structure-version-definition.json"),
 			ddmStructureUpgradeProcess.upgradeDDMStructureVersionDefinition(
-				definition),
+				read("ddm-structure-version-definition.json")),
 			false);
 	}
 

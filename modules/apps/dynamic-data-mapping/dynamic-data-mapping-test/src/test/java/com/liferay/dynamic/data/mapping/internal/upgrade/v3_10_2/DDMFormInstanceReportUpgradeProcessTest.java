@@ -43,12 +43,11 @@ public class DDMFormInstanceReportUpgradeProcessTest
 			ddmFormInstanceReportUpgradeProcess =
 				new DDMFormInstanceReportUpgradeProcess(jsonFactory);
 
-		String data = read("ddm-form-instance-report-data.json");
-
 		JSONAssert.assertEquals(
 			read("updated-ddm-form-instance-report-data.json"),
 			ddmFormInstanceReportUpgradeProcess.
-				upgradeDDMFormInstanceReportData(data),
+				upgradeDDMFormInstanceReportData(
+					read("ddm-form-instance-report-data.json")),
 			false);
 	}
 
