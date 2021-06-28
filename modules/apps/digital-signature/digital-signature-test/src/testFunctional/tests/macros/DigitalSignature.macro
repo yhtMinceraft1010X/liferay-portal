@@ -127,6 +127,24 @@ definition {
 		Button.click(button = "Send");
 	}
 
+	macro deleteEnvelope {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Digital Signature");
+
+		Click(
+			key_text = "${envelopeName}",
+			locator1 = "Link#ANY");
+
+		AssertElementPresent(locator1 = "TextInput#HIDDEN");
+
+		var value = selenium.getElementValue("TextInput#HIDDEN");
+
+		Navigator.openSpecificURL(url = "${value}");
+	}
+
 	macro enableDigitalSignature {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -159,22 +177,6 @@ definition {
 			value1 = "${digitalSignatureRsaPrivateKey}");
 
 		SystemSettings.saveConfiguration();
-	}
-
-	macro deleteEnvelope {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Digital Signature");
-
-		Click(locator1 = "Link#ANY", key_text = "${envelopeName}");
-
-		AssertElementPresent(locator1 = "TextInput#HIDDEN");
-
-		var value = selenium.getElementValue("TextInput#HIDDEN");
-
-		Navigator.openSpecificURL(url = "${value}");
 	}
 
 }

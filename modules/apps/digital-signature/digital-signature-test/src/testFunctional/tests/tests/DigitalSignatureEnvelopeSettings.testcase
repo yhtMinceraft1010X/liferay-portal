@@ -34,6 +34,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-133105. Verify if its possible add more than 1 valid documents in a new Envelope"
+	@priority = "5"
+	test CanAddMoreThan1Document {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DigitalSignature.createEnvelopeWith2Documents(
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test Envelope Name",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+
+		DigitalSignature.deleteEnvelope(envelopeName = "Test Envelope Name");
+	}
+
 	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
 	@priority = "4"
 	test CanAddOnly10Recipients {
@@ -97,6 +124,30 @@ definition {
 			recipientFullName = "Recipient Full Name");
 
 		Alert.viewErrorMessage(errorMessage = "There was an error in processing your request.  Please try again later.");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+	}
+
+	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
+	@priority = "5"
+	test CanViewErrorMessageForUnsuporttedFiles {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Document_2.mp4",
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test Envelope Name",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -203,57 +254,6 @@ definition {
 		AssertElementPresent(
 			fieldLabel = "Recipient Full Name",
 			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-	}
-
-	@description = "This is a test for LPS-133105. Verify if its possible add more than 1 valid documents in a new Envelope"
-	@priority = "5"
-	test CanAddMoreThan1Document {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		DigitalSignature.createEnvelopeWith2Documents(
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
-
-		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.emptyCP();
-
-		DigitalSignature.deleteEnvelope(envelopeName = "Test Envelope Name");
-	}
-
-	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
-	@priority = "5"
-	test CanViewErrorMessageForUnsuporttedFiles {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		DigitalSignature.createEnvelope(
-			dmDocumentFile = "Document_2.mp4",
-			emailMessage = "Email Message",
-			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
-			recipientEmail = "test@liferay.com",
-			recipientFullName = "Recipient Full Name");
-
-		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
-
-		RecycleBin.emptyCP();
 	}
 
 }
