@@ -69,4 +69,6 @@ public interface ObjectDefinition
 
 	public String getRESTContextPath();
 
+	public String getShortName();
+
 }

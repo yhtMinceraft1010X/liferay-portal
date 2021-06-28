@@ -54,6 +54,8 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean> system = createColumn(
+		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 
 	private ObjectDefinitionTable() {
 		super("ObjectDefinition", ObjectDefinitionTable::new);

@@ -52,6 +52,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("system", isSystem());
 
 		return attributes;
 	}
@@ -110,6 +111,12 @@ public class ObjectDefinitionWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 	}
 
@@ -213,6 +220,21 @@ public class ObjectDefinitionWrapper
 		return model.getRESTContextPath();
 	}
 
+	@Override
+	public String getShortName() {
+		return model.getShortName();
+	}
+
+	/**
+	 * Returns the system of this object definition.
+	 *
+	 * @return the system of this object definition
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
 	/**
 	 * Returns the user ID of this object definition.
 	 *
@@ -251,6 +273,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object definition is system.
+	 *
+	 * @return <code>true</code> if this object definition is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -326,6 +358,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this object definition is system.
+	 *
+	 * @param system the system of this object definition
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

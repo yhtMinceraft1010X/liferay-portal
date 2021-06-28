@@ -140,6 +140,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
+
 		_objectDefinitions.add(_persistence.update(newObjectDefinition));
 
 		ObjectDefinition existingObjectDefinition =
@@ -170,6 +172,9 @@ public class ObjectDefinitionPersistenceTest {
 			Time.getShortTimestamp(newObjectDefinition.getModifiedDate()));
 		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
+		Assert.assertEquals(
+			existingObjectDefinition.isSystem(),
+			newObjectDefinition.isSystem());
 	}
 
 	@Test
@@ -195,6 +200,13 @@ public class ObjectDefinitionPersistenceTest {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
 		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountBySystem() throws Exception {
+		_persistence.countBySystem(RandomTestUtil.randomBoolean());
+
+		_persistence.countBySystem(RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -234,7 +246,7 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true);
+			true, "system", true);
 	}
 
 	@Test
@@ -538,6 +550,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectDefinition.setName(RandomTestUtil.randomString());
+
+		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
 
 		_objectDefinitions.add(_persistence.update(objectDefinition));
 

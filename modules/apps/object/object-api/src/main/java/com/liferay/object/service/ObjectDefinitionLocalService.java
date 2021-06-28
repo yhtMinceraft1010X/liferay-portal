@@ -66,7 +66,8 @@ public interface ObjectDefinitionLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object definition local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectDefinitionLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectDefinition addObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields)
+			long userId, String name, boolean system,
+			List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -299,8 +300,11 @@ public interface ObjectDefinitionLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getSystemObjectDefinitions(boolean system);
+
 	@Clusterable
-	public void undeployObjectDefinition(long objectDefinitionId);
+	public void undeployObjectDefinition(ObjectDefinition objectDefinition);
 
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
