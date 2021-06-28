@@ -303,7 +303,7 @@ definition {
 	@description = "This test ensures add fields, translate, edit fieldset, check propagation, translate from different language."
 	@priority = "5"
 	test CreateEditAndDeleteLocalizedFieldset {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -341,8 +341,6 @@ definition {
 			fieldNameList = "Text,Numeric,Date",
 			fieldsetName = "New Fieldset Test",
 			localeList = "pt-BR");
-
-		Refresh();
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
