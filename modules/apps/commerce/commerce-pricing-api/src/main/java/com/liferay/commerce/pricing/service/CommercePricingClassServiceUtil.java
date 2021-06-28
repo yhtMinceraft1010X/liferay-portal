@@ -42,13 +42,8 @@ public class CommercePricingClassServiceUtil {
 	 */
 
 	/**
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public static CommercePricingClass addCommercePricingClass(
@@ -62,14 +57,8 @@ public class CommercePricingClassServiceUtil {
 	}
 
 	/**
-	 * @param externalReferenceCode
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public static CommercePricingClass addCommercePricingClass(

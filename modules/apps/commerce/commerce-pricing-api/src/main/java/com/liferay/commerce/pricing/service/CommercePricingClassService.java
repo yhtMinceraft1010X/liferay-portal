@@ -68,13 +68,8 @@ public interface CommercePricingClassService extends BaseService {
 	 */
 
 	/**
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public CommercePricingClass addCommercePricingClass(
@@ -83,14 +78,8 @@ public interface CommercePricingClassService extends BaseService {
 		throws PortalException;
 
 	/**
-	 * @param externalReferenceCode
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public CommercePricingClass addCommercePricingClass(

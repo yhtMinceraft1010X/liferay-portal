@@ -57,7 +57,6 @@ import java.util.stream.Stream;
 
 /**
  * @author Riccardo Alberti
- * @see CommercePricingClassLocalServiceBaseImpl
  */
 public class CommercePricingClassLocalServiceImpl
 	extends CommercePricingClassLocalServiceBaseImpl {

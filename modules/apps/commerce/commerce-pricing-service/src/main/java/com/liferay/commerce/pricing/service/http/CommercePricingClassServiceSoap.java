@@ -68,13 +68,8 @@ import java.util.Map;
 public class CommercePricingClassServiceSoap {
 
 	/**
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap
@@ -108,14 +103,8 @@ public class CommercePricingClassServiceSoap {
 	}
 
 	/**
-	 * @param externalReferenceCode
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap

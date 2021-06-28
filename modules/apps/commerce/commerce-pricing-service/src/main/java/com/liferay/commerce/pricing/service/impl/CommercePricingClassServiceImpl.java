@@ -42,21 +42,13 @@ import java.util.Map;
 
 /**
  * @author Riccardo Alberti
- * @see CommercePricingClassServiceBaseImpl
  */
 public class CommercePricingClassServiceImpl
 	extends CommercePricingClassServiceBaseImpl {
 
 	/**
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 *
-	 * @throws PortalException
-	 *
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -70,16 +62,8 @@ public class CommercePricingClassServiceImpl
 	}
 
 	/**
-	 * @param externalReferenceCode
-	 * @param userId
-	 * @param titleMap
-	 * @param descriptionMap
-	 * @param serviceContext
-	 * @return
-	 *
-	 * @throws PortalException
-	 *
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addCommercePricingClass(String, Map, Map, ServiceContext)}
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #addCommercePricingClass(String, Map, Map, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
