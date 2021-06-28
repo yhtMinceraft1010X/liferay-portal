@@ -44,7 +44,7 @@ public class ObjectDefinitionPanelApp extends BasePanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _objectDefinition.getName();
+		return _objectDefinition.getShortName();
 	}
 
 	@Override

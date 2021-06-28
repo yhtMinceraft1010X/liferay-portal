@@ -64,7 +64,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.extension.select",
 						"(osgi.jaxrs.name=Liferay.Vulcan)"
 					).put(
-						"osgi.jaxrs.name", objectDefinition.getName()
+						"osgi.jaxrs.name", objectDefinition.getShortName()
 					).build()),
 				_objectEntryResourceComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -73,12 +73,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"batch.engine.task.item.delegate", "true"
 					).put(
 						"batch.engine.task.item.delegate.name",
-						objectDefinition.getName()
+						objectDefinition.getShortName()
 					).put(
 						"osgi.jaxrs.resource", "true"
 					).put(
 						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
+						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
+							")"
 					).build())));
 
 		return Arrays.asList(
@@ -87,7 +88,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectDefinitionContextProvider(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(

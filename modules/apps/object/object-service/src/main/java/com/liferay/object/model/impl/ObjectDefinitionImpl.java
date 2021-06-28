@@ -41,7 +41,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	@Override
 	public String getDBTableName() {
 		return StringBundler.concat(
-			"O_", getCompanyId(), StringPool.UNDERLINE, getName());
+			"O_", getCompanyId(), StringPool.UNDERLINE, getShortName());
 	}
 
 	@Override
@@ -51,12 +51,36 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return TextFormatter.format(getName() + "Id", TextFormatter.I);
+		if (isSystem()) {
+			return TextFormatter.format(getName() + "Id", TextFormatter.I);
+		}
+
+		return "c_" +
+			TextFormatter.format(getShortName() + "Id", TextFormatter.I);
 	}
 
 	@Override
 	public String getRESTContextPath() {
-		return TextFormatter.formatPlural(StringUtil.toLowerCase(getName()));
+		return TextFormatter.formatPlural(
+			StringUtil.toLowerCase(getShortName()));
+	}
+
+	@Override
+	public String getShortName() {
+		String shortName = getName();
+
+		if (shortName.startsWith("C_")) {
+			shortName = shortName.substring(2);
+		}
+
+		return shortName;
+	}
+
+	@Override
+	public boolean isSystem() {
+		String name = getName();
+
+		return !name.startsWith("C_");
 	}
 
 }

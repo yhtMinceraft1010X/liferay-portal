@@ -70,7 +70,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
 			objectDefinition.getPrimaryKeyColumnName(),
 			objectDefinition.getObjectDefinitionId(), objectEntryManager,
-			objectDefinition.getName());
+			objectDefinition.getShortName());
 	}
 
 	@Override

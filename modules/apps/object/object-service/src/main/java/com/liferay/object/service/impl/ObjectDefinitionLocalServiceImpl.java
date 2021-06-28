@@ -65,13 +65,19 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition addObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields)
+			long userId, String name, List<ObjectField> objectFields,
+			boolean system)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
+
 		name = StringUtil.trim(name);
 
-		_validateName(user.getCompanyId(), name);
+		if (!system) {
+			name = "C_" + name;
+		}
+
+		_validateName(user.getCompanyId(), name, system);
 
 		long objectDefinitionId = counterLocalService.increment();
 
@@ -303,6 +309,10 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _createTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
+		if (objectDefinition.isSystem()) {
+			return;
+		}
+
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			new DynamicObjectDefinitionTable(objectDefinition, objectFields);
 
@@ -310,6 +320,10 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _dropTable(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return;
+		}
+
 		String sql = "drop table " + objectDefinition.getDBTableName();
 
 		if (_log.isDebugEnabled()) {
@@ -319,23 +333,45 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(sql);
 	}
 
-	private void _validateName(long companyId, String name)
+	private void _validateName(long companyId, String name, boolean system)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
 			throw new ObjectDefinitionNameException("Name is null");
 		}
 
+		if (system && (name.startsWith("C_") || name.startsWith("c_"))) {
+			throw new ObjectDefinitionNameException(
+				"System names must not start with \"C_\"");
+		}
+		else if (!system && !name.startsWith("C_")) {
+			throw new ObjectDefinitionNameException(
+				"Nonsystem names must start with \"C_\"");
+		}
+
 		char[] nameCharArray = name.toCharArray();
 
-		for (char c : nameCharArray) {
+		for (int i = 0; i < nameCharArray.length; i++) {
+			if (!system) {
+
+				// Skip C_
+
+				if ((i == 0) || (i == 1)) {
+					continue;
+				}
+			}
+
+			char c = nameCharArray[i];
+
 			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
 				throw new ObjectDefinitionNameException(
 					"Name must only contain letters and digits");
 			}
 		}
 
-		if (!Character.isUpperCase(nameCharArray[0])) {
+		if ((system && !Character.isUpperCase(nameCharArray[0])) ||
+			(!system && !Character.isUpperCase(nameCharArray[2]))) {
+
 			throw new ObjectDefinitionNameException(
 				"The first character of a name must be an upper case letter");
 		}
