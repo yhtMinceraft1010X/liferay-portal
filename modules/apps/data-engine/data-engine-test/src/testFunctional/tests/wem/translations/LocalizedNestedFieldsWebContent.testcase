@@ -809,6 +809,8 @@ definition {
 	@description = "This test ensures that the translations persists for all fields nested."
 	@priority = "5"
 	test TranslateWebContentWithAllFieldsNested {
+		property portal.upstream = "quarantine";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
