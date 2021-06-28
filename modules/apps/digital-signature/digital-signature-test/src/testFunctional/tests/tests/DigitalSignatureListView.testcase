@@ -140,4 +140,32 @@ definition {
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
 	}
 
+	@description = "This is a test for LPS-133595. Verify if the Create Date column shows the date correctly after created one envelope in local Timezone "
+	@priority = "4"
+	test CanViewCorrectDate {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DigitalSignature.createEnvelope(
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			emailMessage = "Email Message",
+			emailSubject = "Email Subject",
+			envelopeName = "Test Envelope Name",
+			recipientEmail = "test@liferay.com",
+			recipientFullName = "Recipient Full Name");
+
+		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
+
+		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECENT_CREATE_DATE");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+
+		DigitalSignature.deleteEnvelope(envelopeName = "Test Envelope Name");
+	}
+
 }

@@ -15,6 +15,11 @@
 	<td>//*//div[contains(@class,'card card-interactive')]//*[contains(text(),'${dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_UNSUPORTTED_FILE</td>
+	<td>//p[contains(., 'This file extension is not supported by DocuSign.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
