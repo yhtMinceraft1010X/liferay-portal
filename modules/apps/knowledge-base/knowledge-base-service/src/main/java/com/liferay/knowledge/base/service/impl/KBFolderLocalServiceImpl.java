@@ -418,8 +418,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		if (kbFolder != null) {
 			throw new DuplicateKBFolderExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate KBFolder external reference code ",
-					externalReferenceCode, "in group ", groupId));
+					"Duplicate knowledge base folder external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

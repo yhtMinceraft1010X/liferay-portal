@@ -2057,7 +2057,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new DuplicateKBArticleExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate knowledge base article external reference code ",
-					externalReferenceCode, "in group ", groupId));
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

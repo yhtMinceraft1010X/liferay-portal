@@ -3442,7 +3442,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			throw new DuplicatePageExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate page external reference code ",
-					externalReferenceCode, "in group ", groupId));
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

@@ -664,7 +664,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			throw new DuplicateNodeExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate node external reference code ",
-					externalReferenceCode, "in group ", groupId));
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 
