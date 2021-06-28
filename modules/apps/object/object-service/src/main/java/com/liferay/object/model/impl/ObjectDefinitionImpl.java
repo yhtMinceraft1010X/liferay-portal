@@ -30,22 +30,38 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getClassName() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return getDBTableName();
 	}
 
 	@Override
 	public String getDBPrimaryKeyColumnName() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return getPrimaryKeyColumnName() + StringPool.UNDERLINE;
 	}
 
 	@Override
 	public String getDBTableName() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return StringBundler.concat(
 			"O_", getCompanyId(), StringPool.UNDERLINE, getShortName());
 	}
 
 	@Override
 	public String getPortletId() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return getDBTableName();
 	}
 
@@ -61,6 +77,10 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getRESTContextPath() {
+		if (isSystem()) {
+			throw new UnsupportedOperationException();
+		}
+
 		return TextFormatter.formatPlural(
 			StringUtil.toLowerCase(getShortName()));
 	}

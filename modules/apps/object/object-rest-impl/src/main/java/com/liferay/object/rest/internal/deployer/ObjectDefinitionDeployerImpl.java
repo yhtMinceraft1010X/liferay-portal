@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ObjectDefinitionDeployer.class)
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
+	@Override
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
@@ -110,9 +111,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	@Override
-	public void undeploy(long objectDefinitionId) {
+	public void undeploy(ObjectDefinition objectDefinition) {
 		List<ComponentInstance> componentInstances = _componentInstancesMap.get(
-			objectDefinitionId);
+			objectDefinition.getObjectDefinitionId());
 
 		for (ComponentInstance componentInstance : componentInstances) {
 			componentInstance.dispose();

@@ -143,14 +143,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_objectFieldPersistence.removeByObjectDefinitionId(objectDefinitionId);
 
-		objectDefinition = objectDefinitionPersistence.remove(objectDefinition);
+		objectDefinitionPersistence.remove(objectDefinition);
 
 		_dropTable(objectDefinition);
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				objectDefinitionLocalService.undeployObjectDefinition(
-					objectDefinitionId);
+					objectDefinition);
 
 				return null;
 			});
@@ -161,6 +161,10 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return;
+		}
+
 		for (Map.Entry
 				<ObjectDefinitionDeployer,
 				 Map<Long, List<ServiceRegistration<?>>>> entry :
@@ -265,7 +269,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Clusterable
 	@Override
-	public void undeployObjectDefinition(long objectDefinitionId) {
+	public void undeployObjectDefinition(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return;
+		}
+
 		for (Map.Entry
 				<ObjectDefinitionDeployer,
 				 Map<Long, List<ServiceRegistration<?>>>> entry :
@@ -273,13 +281,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 			ObjectDefinitionDeployer objectDefinitionDeployer = entry.getKey();
 
-			objectDefinitionDeployer.undeploy(objectDefinitionId);
+			objectDefinitionDeployer.undeploy(objectDefinition);
 
 			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 				entry.getValue();
 
 			List<ServiceRegistration<?>> serviceRegistrations =
-				serviceRegistrationsMap.remove(objectDefinitionId);
+				serviceRegistrationsMap.remove(
+					objectDefinition.getObjectDefinitionId());
 
 			if (serviceRegistrations != null) {
 				for (ServiceRegistration<?> serviceRegistration :
