@@ -208,9 +208,9 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 		themeDisplay.setCompany(company);
 
-		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
