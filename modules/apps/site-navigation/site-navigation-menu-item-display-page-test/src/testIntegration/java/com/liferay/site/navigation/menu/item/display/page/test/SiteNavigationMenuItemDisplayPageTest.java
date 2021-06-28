@@ -130,16 +130,6 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				siteNavigationMenuItem.getType());
-
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				_portal.getClassName(
@@ -148,6 +138,16 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.get("classPK")),
 				themeDisplay);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Assert.assertEquals(
 			friendlyURL,
