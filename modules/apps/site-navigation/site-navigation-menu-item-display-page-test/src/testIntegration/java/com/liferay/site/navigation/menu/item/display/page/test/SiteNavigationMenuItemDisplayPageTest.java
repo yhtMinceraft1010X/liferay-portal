@@ -82,9 +82,10 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
-		AssetVocabulary assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), _serviceContext);
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), _serviceContext);
 
 		_assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -216,6 +217,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		return themeDisplay;
 	}
 
+	private AssetCategory _assetCategory;
+
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -233,8 +236,6 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	private AssetCategory _assetCategory;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
