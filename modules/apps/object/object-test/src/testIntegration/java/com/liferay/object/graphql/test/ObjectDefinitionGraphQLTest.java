@@ -76,7 +76,8 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 				TestPropsValues.getUserId(), _objectDefinitionName,
 				Collections.singletonList(
-					_createObjectField(_objectFieldName, "String")));
+					_createObjectField(_objectFieldName, "String")),
+				false);
 
 		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),

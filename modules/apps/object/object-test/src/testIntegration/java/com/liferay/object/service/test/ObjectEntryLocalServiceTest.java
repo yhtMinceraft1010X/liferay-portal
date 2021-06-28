@@ -86,7 +86,7 @@ public class ObjectEntryLocalServiceTest {
 		_irrelevantObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 				TestPropsValues.getUserId(), "Irrelevant",
-				Collections.<ObjectField>emptyList());
+				Collections.<ObjectField>emptyList(), false);
 
 		List<ObjectField> objectFields = Arrays.asList(
 			_createObjectField(true, false, "ageOfDeath", "Long"),
@@ -105,7 +105,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				TestPropsValues.getUserId(), "Test", objectFields);
+				TestPropsValues.getUserId(), "Test", objectFields, false);
 	}
 
 	@Test
@@ -338,7 +338,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(null, values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), values.get("testId"));
+			objectEntry.getObjectEntryId(), values.get("c_testId"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		try {
@@ -617,7 +617,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(null, values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), values.get("testId"));
+			objectEntry.getObjectEntryId(), values.get("c_testId"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		Calendar calendar = new GregorianCalendar();
@@ -668,7 +668,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), values.get("testId"));
+			objectEntry.getObjectEntryId(), values.get("c_testId"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		ObjectEntryLocalServiceUtil.updateObjectEntry(
@@ -697,7 +697,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
 		Assert.assertEquals(65D, values.get("weight"));
 		Assert.assertEquals(
-			objectEntry.getObjectEntryId(), values.get("testId"));
+			objectEntry.getObjectEntryId(), values.get("c_testId"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		try {
@@ -719,9 +719,9 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryLocalServiceUtil.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
-					"invalidName", ""
+					"c_testId", ""
 				).put(
-					"testId", ""
+					"invalidName", ""
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 

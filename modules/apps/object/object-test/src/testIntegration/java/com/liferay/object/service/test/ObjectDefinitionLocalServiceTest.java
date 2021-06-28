@@ -50,7 +50,7 @@ public class ObjectDefinitionLocalServiceTest {
 		// Name is null
 
 		try {
-			_testAddObjectDefinition("");
+			_testAddObjectDefinition("", true);
 
 			Assert.fail();
 		}
@@ -59,12 +59,45 @@ public class ObjectDefinitionLocalServiceTest {
 				"Name is null", objectDefinitionNameException.getMessage());
 		}
 
+		// System names must not start with "C_"
+
+		try {
+			_testAddObjectDefinition("C_Test", true);
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.assertEquals(
+				"System names must not start with \"C_\"",
+				objectDefinitionNameException.getMessage());
+		}
+
+		try {
+			_testAddObjectDefinition("c_Test", true);
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.assertEquals(
+				"System names must not start with \"C_\"",
+				objectDefinitionNameException.getMessage());
+		}
+
+		// Nonsystem names are automatically prepended with with "C_"
+
+		try {
+			_testAddObjectDefinition("Test", false);
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.fail();
+		}
+
 		// Name must only contain letters and digits
 
-		_testAddObjectDefinition(" Test ");
+		_testAddObjectDefinition(" Test ", true);
 
 		try {
-			_testAddObjectDefinition("Tes t");
+			_testAddObjectDefinition("Tes t", true);
 
 			Assert.fail();
 		}
@@ -75,7 +108,7 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		try {
-			_testAddObjectDefinition("Tes-t");
+			_testAddObjectDefinition("Tes-t", true);
 
 			Assert.fail();
 		}
@@ -85,10 +118,34 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		// First character
+		_testAddObjectDefinition(" Test ", false);
 
 		try {
-			_testAddObjectDefinition("test");
+			_testAddObjectDefinition("Tes t", false);
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.assertEquals(
+				"Name must only contain letters and digits",
+				objectDefinitionNameException.getMessage());
+		}
+
+		try {
+			_testAddObjectDefinition("Tes-t", false);
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.assertEquals(
+				"Name must only contain letters and digits",
+				objectDefinitionNameException.getMessage());
+		}
+
+		// The first character of a name must be an upper case letter
+
+		try {
+			_testAddObjectDefinition("test", true);
 
 			Assert.fail();
 		}
@@ -98,13 +155,25 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		// Name has a 40 character limit
+		try {
+			_testAddObjectDefinition("test", false);
 
-		_testAddObjectDefinition("A123456789a123456789a123456789a1234567891");
+			Assert.fail();
+		}
+		catch (ObjectDefinitionNameException objectDefinitionNameException) {
+			Assert.assertEquals(
+				"The first character of a name must be an upper case letter",
+				objectDefinitionNameException.getMessage());
+		}
+
+		// Names must be less than 41 characters
+
+		_testAddObjectDefinition(
+			"A123456789a123456789a123456789a1234567891", true);
 
 		try {
 			_testAddObjectDefinition(
-				"A123456789a123456789a123456789a12345678912");
+				"A123456789a123456789a123456789a12345678912", true);
 
 			Assert.fail();
 		}
@@ -114,14 +183,14 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		// Name is a duplicate
+		// Duplicate name
 
 		ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 			TestPropsValues.getUserId(), "Test",
-			Collections.<ObjectField>emptyList());
+			Collections.<ObjectField>emptyList(), true);
 
 		try {
-			_testAddObjectDefinition("Test");
+			_testAddObjectDefinition("Test", true);
 		}
 		catch (DuplicateObjectDefinitionException
 					duplicateObjectDefinitionException) {
@@ -130,16 +199,33 @@ public class ObjectDefinitionLocalServiceTest {
 				"Duplicate name Test",
 				duplicateObjectDefinitionException.getMessage());
 		}
+
+		ObjectDefinitionLocalServiceUtil.addObjectDefinition(
+			TestPropsValues.getUserId(), "Test",
+			Collections.<ObjectField>emptyList(), false);
+
+		try {
+			_testAddObjectDefinition("Test", false);
+		}
+		catch (DuplicateObjectDefinitionException
+					duplicateObjectDefinitionException) {
+
+			Assert.assertEquals(
+				"Duplicate name C_Test",
+				duplicateObjectDefinitionException.getMessage());
+		}
 	}
 
-	private void _testAddObjectDefinition(String name) throws Exception {
+	private void _testAddObjectDefinition(String name, boolean system)
+		throws Exception {
+
 		ObjectDefinition objectDefinition = null;
 
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 					TestPropsValues.getUserId(), name,
-					Collections.<ObjectField>emptyList());
+					Collections.<ObjectField>emptyList(), system);
 		}
 		finally {
 			if (objectDefinition != null) {
