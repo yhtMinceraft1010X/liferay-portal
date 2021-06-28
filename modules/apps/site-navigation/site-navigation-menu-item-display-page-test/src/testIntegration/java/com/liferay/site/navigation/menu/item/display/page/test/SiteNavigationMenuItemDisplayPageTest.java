@@ -82,13 +82,13 @@ public class SiteNavigationMenuItemDisplayPageTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
-		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), _serviceContext);
 
-		_category = _assetCategoryLocalService.addCategory(
+		_assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(), vocabulary.getVocabularyId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			_serviceContext);
 	}
 
@@ -114,7 +114,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			String.valueOf(
 				_portal.getClassNameId(AssetCategory.class.getName())));
 		typeSettingsUnicodeProperties.setProperty(
-			"classPK", String.valueOf(_category.getCategoryId()));
+			"classPK", String.valueOf(_assetCategory.getCategoryId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -170,7 +170,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 			String.valueOf(
 				_portal.getClassNameId(AssetCategory.class.getName())));
 		typeSettingsUnicodeProperties.setProperty(
-			"classPK", String.valueOf(_category.getCategoryId()));
+			"classPK", String.valueOf(_assetCategory.getCategoryId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -234,7 +234,7 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
-	private AssetCategory _category;
+	private AssetCategory _assetCategory;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
