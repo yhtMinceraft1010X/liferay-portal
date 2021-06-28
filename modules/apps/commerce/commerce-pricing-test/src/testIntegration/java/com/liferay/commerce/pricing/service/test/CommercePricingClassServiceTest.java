@@ -62,7 +62,6 @@ public class CommercePricingClassServiceTest {
 			CommercePricingClassActionKeys.ADD_COMMERCE_PRICING_CLASS);
 
 		User user1 = UserTestUtil.addUser();
-		User user2 = UserTestUtil.addUser();
 
 		UserTestUtil.setUser(user1);
 
@@ -78,6 +77,8 @@ public class CommercePricingClassServiceTest {
 		Assert.assertNotNull(
 			_commercePricingClassService.getCommercePricingClass(
 				commercePricingClass1.getCommercePricingClassId()));
+
+		User user2 = UserTestUtil.addUser();
 
 		UserTestUtil.setUser(user2);
 
