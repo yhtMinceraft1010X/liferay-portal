@@ -342,14 +342,20 @@ definition {
 	}
 
 	@description = "Verify that a Form's Success Page can be restored"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DefaultSuccessPageCanBeRestored {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131035 DefaultSuccessPageCanBeRestored pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.deleteSuccessPage(formPageNumber = "2");
+
+		Form.addSuccessPageForm();
 	}
 
 	@description = "Verify that the Submit button's default value is restored if the Submit Button Label is left blank"

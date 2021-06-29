@@ -40,6 +40,18 @@ definition {
 			value1 = "Add Success Page");
 	}
 
+	macro addSuccessPageForm {
+		Click(locator1 = "Form#SUCCESS_PAGE_ADD");
+
+		AssertTextEquals(
+			locator1 = "Form#SUCCESS_PAGE_TITLE_FIELD",
+			value1 = "Thank you.");
+
+		AssertTextEquals(
+			locator1 = "Form#SUCCESS_PAGE_DESCRIPTION_FIELD",
+			value1 = "Your information was successfully received. Thank you for filling out the form.");
+	}
+
 	macro addTextField {
 		if (isSet(formPageNumber)) {
 			Form.gotoAddField(
