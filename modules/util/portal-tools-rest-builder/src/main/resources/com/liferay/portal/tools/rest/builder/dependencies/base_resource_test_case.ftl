@@ -1,7 +1,5 @@
 package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 
-import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
-
 <#list allExternalSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.client.dto.${escapedVersion}.${schemaName};
 	import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
@@ -18,6 +16,7 @@ import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
 import ${configYAML.apiPackagePath}.client.permission.Permission;
+import ${configYAML.apiPackagePath}.client.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

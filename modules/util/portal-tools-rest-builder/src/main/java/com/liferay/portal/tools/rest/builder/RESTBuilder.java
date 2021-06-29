@@ -1935,23 +1935,23 @@ public class RESTBuilder {
 		Set<String> relatedSchemaNames) {
 
 		context.put("schema", schema);
-		context.put("schemaName", schemaName);
 
 		String javaType = javaDataTypeMap.get(schemaName);
 
 		if (javaType == null) {
-			context.put("schemaJavaType", "Object");
 			context.put("schemaClientJavaType", "Object");
+			context.put("schemaJavaType", "Object");
 		}
 		else {
-			context.put("schemaJavaType", javaType);
 			context.put(
 				"schemaClientJavaType",
 				StringBundler.concat(
 					_configYAML.getApiPackagePath(), ".client.dto.",
 					escapedVersion, ".", schemaName));
+			context.put("schemaJavaType", javaType);
 		}
 
+		context.put("schemaName", schemaName);
 		context.put("schemaNames", TextFormatter.formatPlural(schemaName));
 		context.put(
 			"schemaPath", TextFormatter.format(schemaName, TextFormatter.K));
