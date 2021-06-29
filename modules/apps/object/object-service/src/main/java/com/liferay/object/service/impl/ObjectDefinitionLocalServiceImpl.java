@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -63,8 +64,24 @@ public class ObjectDefinitionLocalServiceImpl
 	extends ObjectDefinitionLocalServiceBaseImpl {
 
 	@Override
-	public ObjectDefinition addObjectDefinition(
-			long userId, String name, boolean system,
+	public ObjectDefinition addCustomObjectDefinition(
+			long userId, String name, List<ObjectField> objectFields)
+		throws PortalException {
+
+		return _addObjectDefinition(userId, name, false, 0, objectFields);
+	}
+
+	@Override
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, String name, int version,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		return _addObjectDefinition(userId, name, true, version, objectFields);
+	}
+
+	private ObjectDefinition _addObjectDefinition(
+			long userId, String name, boolean system, int version,
 			List<ObjectField> objectFields)
 		throws PortalException {
 
@@ -77,6 +94,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		_validateName(user.getCompanyId(), name, system);
+		_validateVersion(system, version);
 
 		long objectDefinitionId = counterLocalService.increment();
 
@@ -88,6 +106,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setName(name);
 		objectDefinition.setSystem(system);
+		objectDefinition.setVersion(version);
 
 		ObjectDefinition updatedObjectDefinition =
 			objectDefinitionPersistence.update(objectDefinition);
@@ -196,8 +215,13 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectDefinition> getSystemObjectDefinitions(boolean system) {
-		return objectDefinitionPersistence.findBySystem(system);
+	public List<ObjectDefinition> getCustomObjectDefinitions() {
+		return objectDefinitionPersistence.findBySystem(false);
+	}
+
+	@Override
+	public List<ObjectDefinition> getSystemObjectDefinitions() {
+		return objectDefinitionPersistence.findBySystem(true);
 	}
 
 	@Override
@@ -221,8 +245,7 @@ public class ObjectDefinitionLocalServiceImpl
 						serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 					List<ObjectDefinition> objectDefinitions =
-						objectDefinitionLocalService.getSystemObjectDefinitions(
-							false);
+						objectDefinitionLocalService.getCustomObjectDefinitions();
 
 					for (ObjectDefinition objectDefinition :
 							objectDefinitions) {
@@ -356,11 +379,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (system && (name.startsWith("C_") || name.startsWith("c_"))) {
 			throw new ObjectDefinitionNameException(
-				"System names must not start with \"C_\"");
+				"System object definition names must not start with \"C_\"");
 		}
 		else if (!system && !name.startsWith("C_")) {
 			throw new ObjectDefinitionNameException(
-				"Nonsystem names must start with \"C_\"");
+				"Custom object definition names must start with \"C_\"");
 		}
 
 		char[] nameCharArray = name.toCharArray();
@@ -398,6 +421,23 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinitionPersistence.fetchByC_N(companyId, name) != null) {
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
+		}
+	}
+
+	private void _validateVersion(boolean system, int version)
+		throws PortalException {
+
+		if (system) {
+			if (version <= 0) {
+				throw new ObjectDefinitionVersionException(
+					"System object definition versions must greater than 0");
+			}
+		}
+		else {
+			if (version != 0) {
+				throw new ObjectDefinitionVersionException(
+					"Custom object definition versions must be 0");
+			}
 		}
 	}
 

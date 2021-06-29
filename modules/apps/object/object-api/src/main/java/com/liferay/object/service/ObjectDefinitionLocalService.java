@@ -65,9 +65,8 @@ public interface ObjectDefinitionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object definition local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectDefinitionLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public ObjectDefinition addObjectDefinition(
-			long userId, String name, boolean system,
-			List<ObjectField> objectFields)
+	public ObjectDefinition addCustomObjectDefinition(
+			long userId, String name, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**
@@ -83,6 +82,11 @@ public interface ObjectDefinitionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition addObjectDefinition(
 		ObjectDefinition objectDefinition);
+
+	public ObjectDefinition addSystemObjectDefinition(
+			long userId, String name, int version,
+			List<ObjectField> objectFields)
+		throws PortalException;
 
 	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.

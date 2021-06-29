@@ -44,13 +44,13 @@ public class ObjectDefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectDefinition addObjectDefinition(
-			long userId, String name, boolean system,
+	public static ObjectDefinition addCustomObjectDefinition(
+			long userId, String name,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
-		return getService().addObjectDefinition(
-			userId, name, system, objectFields);
+		return getService().addCustomObjectDefinition(
+			userId, name, objectFields);
 	}
 
 	/**
@@ -67,6 +67,15 @@ public class ObjectDefinitionLocalServiceUtil {
 		ObjectDefinition objectDefinition) {
 
 		return getService().addObjectDefinition(objectDefinition);
+	}
+
+	public static ObjectDefinition addSystemObjectDefinition(
+			long userId, String name, int version,
+			List<com.liferay.object.model.ObjectField> objectFields)
+		throws PortalException {
+
+		return getService().addSystemObjectDefinition(
+			userId, name, version, objectFields);
 	}
 
 	/**

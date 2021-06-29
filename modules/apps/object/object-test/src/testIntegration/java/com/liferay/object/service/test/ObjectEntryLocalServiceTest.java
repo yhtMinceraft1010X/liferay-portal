@@ -84,8 +84,8 @@ public class ObjectEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_irrelevantObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				TestPropsValues.getUserId(), "Irrelevant", false,
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), "Irrelevant",
 				Collections.<ObjectField>emptyList());
 
 		List<ObjectField> objectFields = Arrays.asList(
@@ -104,8 +104,8 @@ public class ObjectEntryLocalServiceTest {
 			_createObjectField(true, false, "weight", "Double"));
 
 		_objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				TestPropsValues.getUserId(), "Test", false, objectFields);
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), "Test", objectFields);
 	}
 
 	@Test

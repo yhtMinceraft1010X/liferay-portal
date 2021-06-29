@@ -181,6 +181,7 @@
 		<exception>DuplicateObjectDefinition</exception>
 		<exception>DuplicateObjectField</exception>
 		<exception>ObjectDefinitionName</exception>
+		<exception>ObjectDefinitionVersion</exception>
 		<exception>ObjectEntryValues</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldType</exception>

@@ -73,8 +73,8 @@ public class ObjectDefinitionResourceImpl
 		throws Exception {
 
 		return _toObjectDefinition(
-			_objectDefinitionLocalService.addObjectDefinition(
-				contextUser.getUserId(), objectDefinition.getName(), false,
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				contextUser.getUserId(), objectDefinition.getName(),
 				transformToList(
 					objectDefinition.getObjectFields(), this::_toObjectField)));
 	}

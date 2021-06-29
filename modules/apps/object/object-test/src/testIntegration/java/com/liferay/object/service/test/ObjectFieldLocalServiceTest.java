@@ -208,8 +208,8 @@ public class ObjectFieldLocalServiceTest {
 
 		try {
 			objectDefinition =
-				ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-					TestPropsValues.getUserId(), "Test", true,
+				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+					TestPropsValues.getUserId(), "Test", 1,
 					Arrays.asList(objectFields));
 		}
 		finally {

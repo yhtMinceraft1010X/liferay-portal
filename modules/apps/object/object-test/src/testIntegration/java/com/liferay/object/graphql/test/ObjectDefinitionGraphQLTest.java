@@ -73,8 +73,8 @@ public class ObjectDefinitionGraphQLTest {
 		_objectFieldName = "a" + RandomTestUtil.randomString(5);
 
 		_objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				TestPropsValues.getUserId(), _objectDefinitionName, false,
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), _objectDefinitionName,
 				Collections.singletonList(
 					_createObjectField(_objectFieldName, "String")));
 

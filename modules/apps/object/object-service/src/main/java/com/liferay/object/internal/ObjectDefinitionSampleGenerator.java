@@ -78,8 +78,8 @@ public class ObjectDefinitionSampleGenerator {
 		}
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addObjectDefinition(
-				user.getUserId(), "SampleObjectDefinition", false,
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				user.getUserId(), "SampleObjectDefinition",
 				Arrays.asList(
 					_createObjectField("able", "Long"),
 					_createObjectField("baker", "Boolean"),

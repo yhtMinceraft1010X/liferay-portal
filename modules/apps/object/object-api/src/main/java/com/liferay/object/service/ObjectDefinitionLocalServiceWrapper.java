@@ -34,13 +34,13 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectDefinition addObjectDefinition(
-			long userId, String name, boolean system,
+	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
+			long userId, String name,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectDefinitionLocalService.addObjectDefinition(
-			userId, name, system, objectFields);
+		return _objectDefinitionLocalService.addCustomObjectDefinition(
+			userId, name, objectFields);
 	}
 
 	/**
@@ -59,6 +59,16 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectDefinition);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
+			long userId, String name, int version,
+			java.util.List<com.liferay.object.model.ObjectField> objectFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.addSystemObjectDefinition(
+			userId, name, version, objectFields);
 	}
 
 	/**
