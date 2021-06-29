@@ -9,7 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 	}
 
 	tearDown {
@@ -329,8 +329,9 @@ definition {
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
 	@priority = "4"
 	test CanEditFormattingStyle {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanEditFormattingStyle";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -467,8 +468,9 @@ definition {
 	@description = "Verify that a link to a URL can be added to the Body Text"
 	@priority = "5"
 	test CanSupportALinkToAURL {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportALinkToAURL";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -509,8 +511,9 @@ definition {
 	@description = "Verify that Bulleted Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportBulletedLists {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportBulletedLists";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -604,8 +607,9 @@ definition {
 	@description = "Verify that an Image can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportImages {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportImages";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -643,8 +647,9 @@ definition {
 	@description = "Verify that Numbered Lists can be added to the Body Text"
 	@priority = "5"
 	test CanSupportNumberedLists {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportNumberedLists";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -699,8 +704,9 @@ definition {
 	@description = "Verify that a Table can be created in the Body Text"
 	@priority = "4"
 	test CanSupportTables {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportTables";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -740,8 +746,9 @@ definition {
 	@description = "Verify that a Video can be uploaded to the Body Text"
 	@priority = "5"
 	test CanSupportVideos {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanSupportVideos";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -791,8 +798,9 @@ definition {
 	@description = "Verify that inputs to the Body Text can be undone and redone"
 	@priority = "5"
 	test CanUndoAndRedo {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#CanUndoAndRedo";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -881,8 +889,9 @@ definition {
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
 	@priority = "5"
 	test TextCanBeBoldedItalicizedAndUnderlined {
-		property forms.functional = "quarantine";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsParagraphField#TextCanBeBoldedItalicizedAndUnderlined";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
