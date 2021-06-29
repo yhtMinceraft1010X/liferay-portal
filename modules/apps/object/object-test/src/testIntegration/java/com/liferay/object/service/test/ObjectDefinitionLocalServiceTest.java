@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -50,37 +51,13 @@ public class ObjectDefinitionLocalServiceTest {
 		// Name is null
 
 		try {
-			_testAddSystemObjectDefinition("");
+			_testAddCustomObjectDefinition("");
 
 			Assert.fail();
 		}
 		catch (ObjectDefinitionNameException objectDefinitionNameException) {
 			Assert.assertEquals(
 				"Name is null", objectDefinitionNameException.getMessage());
-		}
-
-		// System object definition names must not start with "C_"
-
-		try {
-			_testAddSystemObjectDefinition("C_Test");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"System object definition names must not start with \"C_\"",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
-			_testAddSystemObjectDefinition("c_Test");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"System object definition names must not start with \"C_\"",
-				objectDefinitionNameException.getMessage());
 		}
 
 		// Custom object definition names are automatically prepended with
@@ -94,30 +71,6 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		// Name must only contain letters and digits
-
-		_testAddSystemObjectDefinition(" Test ");
-
-		try {
-			_testAddSystemObjectDefinition("Tes t");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
-			_testAddSystemObjectDefinition("Tes-t");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
 
 		_testAddCustomObjectDefinition(" Test ");
 
@@ -146,17 +99,6 @@ public class ObjectDefinitionLocalServiceTest {
 		// The first character of a name must be an upper case letter
 
 		try {
-			_testAddSystemObjectDefinition("test");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"The first character of a name must be an upper case letter",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
 			_testAddCustomObjectDefinition("test");
 
 			Assert.fail();
@@ -169,11 +111,11 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Names must be less than 41 characters
 
-		_testAddSystemObjectDefinition(
+		_testAddCustomObjectDefinition(
 			"A123456789a123456789a123456789a1234567891");
 
 		try {
-			_testAddSystemObjectDefinition(
+			_testAddCustomObjectDefinition(
 				"A123456789a123456789a123456789a12345678912");
 
 			Assert.fail();
@@ -185,21 +127,6 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		// Duplicate name
-
-		ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			TestPropsValues.getUserId(), "Test", 1,
-			Collections.<ObjectField>emptyList());
-
-		try {
-			_testAddSystemObjectDefinition("Test");
-		}
-		catch (DuplicateObjectDefinitionException
-					duplicateObjectDefinitionException) {
-
-			Assert.assertEquals(
-				"Duplicate name Test",
-				duplicateObjectDefinitionException.getMessage());
-		}
 
 		ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			TestPropsValues.getUserId(), "Test",
@@ -256,16 +183,6 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		// Custom object definition names are automatically prepended with
-		// with "C_"
-
-		try {
-			_testAddCustomObjectDefinition("Test");
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			throw objectDefinitionNameException;
-		}
-
 		// Name must only contain letters and digits
 
 		_testAddSystemObjectDefinition(" Test ");
@@ -292,45 +209,10 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinitionNameException.getMessage());
 		}
 
-		_testAddCustomObjectDefinition(" Test ");
-
-		try {
-			_testAddCustomObjectDefinition("Tes t");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
-			_testAddCustomObjectDefinition("Tes-t");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectDefinitionNameException.getMessage());
-		}
-
 		// The first character of a name must be an upper case letter
 
 		try {
 			_testAddSystemObjectDefinition("test");
-
-			Assert.fail();
-		}
-		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.assertEquals(
-				"The first character of a name must be an upper case letter",
-				objectDefinitionNameException.getMessage());
-		}
-
-		try {
-			_testAddCustomObjectDefinition("test");
 
 			Assert.fail();
 		}
@@ -374,19 +256,32 @@ public class ObjectDefinitionLocalServiceTest {
 				duplicateObjectDefinitionException.getMessage());
 		}
 
-		ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), "Test",
-			Collections.<ObjectField>emptyList());
+		// System object definition versions must greater than 0
 
 		try {
-			_testAddCustomObjectDefinition("Test");
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Aaa", -1,
+				Collections.<ObjectField>emptyList());
 		}
-		catch (DuplicateObjectDefinitionException
-					duplicateObjectDefinitionException) {
+		catch (ObjectDefinitionVersionException
+					objectDefinitionVersionException) {
 
 			Assert.assertEquals(
-				"Duplicate name C_Test",
-				duplicateObjectDefinitionException.getMessage());
+				"System object definition versions must greater than 0",
+				objectDefinitionVersionException.getMessage());
+		}
+
+		try {
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), "Aaa", 0,
+				Collections.<ObjectField>emptyList());
+		}
+		catch (ObjectDefinitionVersionException
+					objectDefinitionVersionException) {
+
+			Assert.assertEquals(
+				"System object definition versions must greater than 0",
+				objectDefinitionVersionException.getMessage());
 		}
 	}
 

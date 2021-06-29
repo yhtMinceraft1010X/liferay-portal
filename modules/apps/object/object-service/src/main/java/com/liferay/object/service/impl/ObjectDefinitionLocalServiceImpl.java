@@ -378,6 +378,10 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionNameException("Name is null");
 		}
 
+		if (!system && name.equals("C_")) {
+			throw new ObjectDefinitionNameException("Name is null");
+		}
+
 		if (system && (name.startsWith("C_") || name.startsWith("c_"))) {
 			throw new ObjectDefinitionNameException(
 				"System object definition names must not start with \"C_\"");
@@ -414,7 +418,9 @@ public class ObjectDefinitionLocalServiceImpl
 				"The first character of a name must be an upper case letter");
 		}
 
-		if (nameCharArray.length > 41) {
+		if ((system && (nameCharArray.length > 41)) ||
+			(!system && (nameCharArray.length > 43))) {
+
 			throw new ObjectDefinitionNameException(
 				"Names must be less than 41 characters");
 		}
