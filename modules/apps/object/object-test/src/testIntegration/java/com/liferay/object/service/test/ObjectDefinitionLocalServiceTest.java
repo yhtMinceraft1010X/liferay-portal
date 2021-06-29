@@ -21,11 +21,18 @@ import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.sql.Connection;
+
 import java.util.Collections;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -142,6 +149,15 @@ public class ObjectDefinitionLocalServiceTest {
 				"Duplicate name C_Test",
 				duplicateObjectDefinitionException.getMessage());
 		}
+
+		// Database table name
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), _randomName(),
+				Collections.<ObjectField>emptyList());
+
+		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
 	}
 
 	@Test
@@ -260,7 +276,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Aaa", -1,
+				TestPropsValues.getUserId(), _randomName(), -1,
 				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
@@ -273,7 +289,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Aaa", 0,
+				TestPropsValues.getUserId(), _randomName(), 0,
 				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
@@ -283,6 +299,34 @@ public class ObjectDefinitionLocalServiceTest {
 				"System object definition versions must greater than 0",
 				objectDefinitionVersionException.getMessage());
 		}
+
+		// Database table name
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), _randomName(), 1,
+				Collections.<ObjectField>emptyList());
+
+		try {
+			objectDefinition.getDBTableName();
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertNotNull(unsupportedOperationException);
+		}
+	}
+
+	private boolean _hasTable(String tableName) throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasTable(tableName);
+		}
+	}
+
+	private String _randomName() {
+		return StringUtil.upperCase(RandomStringUtils.randomAlphabetic(8));
 	}
 
 	private void _testAddCustomObjectDefinition(String name) throws Exception {
