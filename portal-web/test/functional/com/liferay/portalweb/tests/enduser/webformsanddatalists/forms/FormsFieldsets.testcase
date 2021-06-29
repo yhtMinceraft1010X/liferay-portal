@@ -1490,14 +1490,69 @@ definition {
 	}
 
 	@description = "Verify that a Hide Label Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveTheHideLabelProperty {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133472 PreserveTheHideLabelProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Text");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		Form.closeSidebar();
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Text");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormFields.viewField(fieldName = "Numeric");
+
+		AssertElementPresent(
+			key_fieldLabel = "Text",
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Text");
 	}
 
 	@description = "Verify that an Inline Property persists after being added to a Form via Fieldset"
