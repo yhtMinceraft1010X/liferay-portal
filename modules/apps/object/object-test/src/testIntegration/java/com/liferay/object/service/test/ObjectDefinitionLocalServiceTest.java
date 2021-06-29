@@ -186,8 +186,8 @@ public class ObjectDefinitionLocalServiceTest {
 		// Duplicate name
 
 		ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-			TestPropsValues.getUserId(), "Test",
-			Collections.<ObjectField>emptyList(), true);
+			TestPropsValues.getUserId(), "Test", true,
+			Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddObjectDefinition("Test", true);
@@ -201,8 +201,8 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-			TestPropsValues.getUserId(), "Test",
-			Collections.<ObjectField>emptyList(), false);
+			TestPropsValues.getUserId(), "Test", false,
+			Collections.<ObjectField>emptyList());
 
 		try {
 			_testAddObjectDefinition("Test", false);
@@ -224,8 +224,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-					TestPropsValues.getUserId(), name,
-					Collections.<ObjectField>emptyList(), system);
+					TestPropsValues.getUserId(), name, system,
+					Collections.<ObjectField>emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {

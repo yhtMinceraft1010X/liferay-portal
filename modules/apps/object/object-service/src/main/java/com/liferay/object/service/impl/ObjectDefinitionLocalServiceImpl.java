@@ -64,8 +64,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition addObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields,
-			boolean system)
+			long userId, String name, boolean system,
+			List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -221,8 +221,8 @@ public class ObjectDefinitionLocalServiceImpl
 						serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 					List<ObjectDefinition> objectDefinitions =
-						objectDefinitionLocalService.
-							getSystemObjectDefinitions(false);
+						objectDefinitionLocalService.getSystemObjectDefinitions(
+							false);
 
 					for (ObjectDefinition objectDefinition :
 							objectDefinitions) {

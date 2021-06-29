@@ -74,10 +74,9 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionLocalService.addObjectDefinition(
-				contextUser.getUserId(), objectDefinition.getName(),
+				contextUser.getUserId(), objectDefinition.getName(), false,
 				transformToList(
-					objectDefinition.getObjectFields(), this::_toObjectField),
-				false));
+					objectDefinition.getObjectFields(), this::_toObjectField)));
 	}
 
 	private static ObjectField _toObjectField(

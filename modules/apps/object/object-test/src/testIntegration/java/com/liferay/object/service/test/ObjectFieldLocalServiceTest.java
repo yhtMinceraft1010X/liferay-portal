@@ -209,8 +209,8 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-					TestPropsValues.getUserId(), "Test",
-					Arrays.asList(objectFields), true);
+					TestPropsValues.getUserId(), "Test", true,
+					Arrays.asList(objectFields));
 		}
 		finally {
 			if (objectDefinition != null) {
