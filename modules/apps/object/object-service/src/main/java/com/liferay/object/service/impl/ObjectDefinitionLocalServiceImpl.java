@@ -80,61 +80,6 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(userId, name, true, version, objectFields);
 	}
 
-	private ObjectDefinition _addObjectDefinition(
-			long userId, String name, boolean system, int version,
-			List<ObjectField> objectFields)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		name = StringUtil.trim(name);
-
-		if (!system) {
-			name = "C_" + name;
-		}
-
-		_validateName(user.getCompanyId(), name, system);
-		_validateVersion(system, version);
-
-		long objectDefinitionId = counterLocalService.increment();
-
-		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
-			objectDefinitionId);
-
-		objectDefinition.setCompanyId(user.getCompanyId());
-		objectDefinition.setUserId(user.getUserId());
-		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setName(name);
-		objectDefinition.setSystem(system);
-		objectDefinition.setVersion(version);
-
-		ObjectDefinition updatedObjectDefinition =
-			objectDefinitionPersistence.update(objectDefinition);
-
-		for (ObjectField objectField : objectFields) {
-			_objectFieldLocalService.addObjectField(
-				userId, objectDefinitionId, objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
-				objectField.getIndexedLanguageId(), objectField.getName(),
-				objectField.getType());
-		}
-
-		objectFields = _objectFieldPersistence.findByObjectDefinitionId(
-			objectDefinitionId);
-
-		_createTable(updatedObjectDefinition, objectFields);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				objectDefinitionLocalService.deployObjectDefinition(
-					updatedObjectDefinition);
-
-				return null;
-			});
-
-		return updatedObjectDefinition;
-	}
-
 	@Override
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException {
@@ -201,6 +146,11 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinition> getCustomObjectDefinitions() {
+		return objectDefinitionPersistence.findBySystem(false);
+	}
+
+	@Override
 	public ObjectDefinition getObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 
@@ -212,11 +162,6 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return objectDefinitionPersistence.countByCompanyId(companyId);
-	}
-
-	@Override
-	public List<ObjectDefinition> getCustomObjectDefinitions() {
-		return objectDefinitionPersistence.findBySystem(false);
 	}
 
 	@Override
@@ -245,7 +190,8 @@ public class ObjectDefinitionLocalServiceImpl
 						serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 					List<ObjectDefinition> objectDefinitions =
-						objectDefinitionLocalService.getCustomObjectDefinitions();
+						objectDefinitionLocalService.
+							getCustomObjectDefinitions();
 
 					for (ObjectDefinition objectDefinition :
 							objectDefinitions) {
@@ -341,6 +287,61 @@ public class ObjectDefinitionLocalServiceImpl
 		if (_objectDefinitionDeployerServiceTracker != null) {
 			_objectDefinitionDeployerServiceTracker.close();
 		}
+	}
+
+	private ObjectDefinition _addObjectDefinition(
+			long userId, String name, boolean system, int version,
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		name = StringUtil.trim(name);
+
+		if (!system) {
+			name = "C_" + name;
+		}
+
+		_validateName(user.getCompanyId(), name, system);
+		_validateVersion(system, version);
+
+		long objectDefinitionId = counterLocalService.increment();
+
+		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
+			objectDefinitionId);
+
+		objectDefinition.setCompanyId(user.getCompanyId());
+		objectDefinition.setUserId(user.getUserId());
+		objectDefinition.setUserName(user.getFullName());
+		objectDefinition.setName(name);
+		objectDefinition.setSystem(system);
+		objectDefinition.setVersion(version);
+
+		ObjectDefinition updatedObjectDefinition =
+			objectDefinitionPersistence.update(objectDefinition);
+
+		for (ObjectField objectField : objectFields) {
+			_objectFieldLocalService.addObjectField(
+				userId, objectDefinitionId, objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getName(),
+				objectField.getType());
+		}
+
+		objectFields = _objectFieldPersistence.findByObjectDefinitionId(
+			objectDefinitionId);
+
+		_createTable(updatedObjectDefinition, objectFields);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				objectDefinitionLocalService.deployObjectDefinition(
+					updatedObjectDefinition);
+
+				return null;
+			});
+
+		return updatedObjectDefinition;
 	}
 
 	private void _createTable(
