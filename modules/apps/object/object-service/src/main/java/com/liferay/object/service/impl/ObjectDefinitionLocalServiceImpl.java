@@ -28,7 +28,6 @@ import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -88,6 +87,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
 		objectDefinition.setName(name);
+		objectDefinition.setSystem(system);
 
 		ObjectDefinition updatedObjectDefinition =
 			objectDefinitionPersistence.update(objectDefinition);
@@ -196,6 +196,11 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinition> getSystemObjectDefinitions(boolean system) {
+		return objectDefinitionPersistence.findBySystem(system);
+	}
+
+	@Override
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
@@ -216,8 +221,8 @@ public class ObjectDefinitionLocalServiceImpl
 						serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 					List<ObjectDefinition> objectDefinitions =
-						objectDefinitionLocalService.getObjectDefinitions(
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						objectDefinitionLocalService.
+							getSystemObjectDefinitions(false);
 
 					for (ObjectDefinition objectDefinition :
 							objectDefinitions) {

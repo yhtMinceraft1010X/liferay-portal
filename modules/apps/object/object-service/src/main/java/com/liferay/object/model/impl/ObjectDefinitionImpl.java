@@ -96,11 +96,4 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		return shortName;
 	}
 
-	@Override
-	public boolean isSystem() {
-		String name = getName();
-
-		return !name.startsWith("C_");
-	}
-
 }
