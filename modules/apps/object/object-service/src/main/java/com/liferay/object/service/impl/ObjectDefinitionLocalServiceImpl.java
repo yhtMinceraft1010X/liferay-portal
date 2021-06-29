@@ -28,6 +28,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -77,6 +79,76 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition addOrUpdateSystemObjectDefinition(
+			long companyId,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.fetchByC_N(
+				companyId, systemObjectDefinitionMetadata.getName());
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getVersion() ==
+				systemObjectDefinitionMetadata.getVersion())) {
+
+			return objectDefinition;
+		}
+
+		long userId = _userLocalService.getDefaultUserId(companyId);
+
+		if (objectDefinition == null) {
+			return addSystemObjectDefinition(
+				userId, systemObjectDefinitionMetadata.getDBTableName(),
+				systemObjectDefinitionMetadata.getName(),
+				systemObjectDefinitionMetadata.getPKObjectFieldDBColumnName(),
+				systemObjectDefinitionMetadata.getPKObjectFieldName(),
+				systemObjectDefinitionMetadata.getVersion(),
+				systemObjectDefinitionMetadata.getObjectFields());
+		}
+
+		objectDefinition.setVersion(
+			systemObjectDefinitionMetadata.getVersion());
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		List<ObjectField> newObjectFields =
+			systemObjectDefinitionMetadata.getObjectFields();
+
+		List<ObjectField> oldObjectFields =
+			_objectFieldPersistence.findByObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField oldObjectField : oldObjectFields) {
+			if (!_hasObjectField(newObjectFields, oldObjectField)) {
+				_objectFieldPersistence.remove(oldObjectField);
+			}
+		}
+
+		for (ObjectField newObjectField : newObjectFields) {
+			ObjectField oldObjectField = _objectFieldPersistence.fetchByODI_N(
+				objectDefinition.getObjectDefinitionId(),
+				newObjectField.getName());
+
+			if (oldObjectField == null) {
+				_objectFieldLocalService.addObjectField(
+					userId, objectDefinition.getObjectDefinitionId(),
+					newObjectField.getDBColumnName(), false, false, "",
+					newObjectField.getName(), newObjectField.getType());
+			}
+			else {
+				if (!Objects.equals(oldObjectField, newObjectField.getType())) {
+					oldObjectField.setType(newObjectField.getType());
+
+					_objectFieldPersistence.update(oldObjectField);
+				}
+			}
+		}
+
+		return objectDefinition;
+	}
+
+	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -86,6 +158,18 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(
 			userId, dbTableName, name, pkObjectFieldDBColumnName,
 			pkObjectFieldName, true, version, objectFields);
+	}
+
+	@Override
+	public void deleteCompanyObjectDefinitions(long companyId)
+		throws PortalException {
+
+		List<ObjectDefinition> objectDefinitions =
+			objectDefinitionPersistence.findByCompanyId(companyId);
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			deleteObjectDefinition(objectDefinition);
+		}
 	}
 
 	@Override
@@ -105,27 +189,31 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
-		List<ObjectEntry> objectEntries =
-			_objectEntryPersistence.findByObjectDefinitionId(
-				objectDefinitionId);
+		if (!objectDefinition.isSystem()) {
+			List<ObjectEntry> objectEntries =
+				_objectEntryPersistence.findByObjectDefinitionId(
+					objectDefinitionId);
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+			for (ObjectEntry objectEntry : objectEntries) {
+				_objectEntryLocalService.deleteObjectEntry(objectEntry);
+			}
 		}
 
 		_objectFieldPersistence.removeByObjectDefinitionId(objectDefinitionId);
 
 		objectDefinitionPersistence.remove(objectDefinition);
 
-		_dropTable(objectDefinition);
+		if (!objectDefinition.isSystem()) {
+			_dropTable(objectDefinition);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				objectDefinitionLocalService.undeployObjectDefinition(
-					objectDefinition);
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					objectDefinitionLocalService.undeployObjectDefinition(
+						objectDefinition);
 
-				return null;
-			});
+					return null;
+				});
+		}
 
 		return objectDefinition;
 	}
@@ -375,25 +463,23 @@ public class ObjectDefinitionLocalServiceImpl
 		objectFields = _objectFieldPersistence.findByObjectDefinitionId(
 			objectDefinitionId);
 
-		_createTable(updatedObjectDefinition, objectFields);
+		if (!objectDefinition.isSystem()) {
+			_createTable(updatedObjectDefinition, objectFields);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				objectDefinitionLocalService.deployObjectDefinition(
-					updatedObjectDefinition);
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					objectDefinitionLocalService.deployObjectDefinition(
+						updatedObjectDefinition);
 
-				return null;
-			});
+					return null;
+				});
+		}
 
 		return updatedObjectDefinition;
 	}
 
 	private void _createTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
-
-		if (objectDefinition.isSystem()) {
-			return;
-		}
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			new DynamicObjectDefinitionTable(objectDefinition, objectFields);
@@ -402,10 +488,6 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _dropTable(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
-			return;
-		}
-
 		String sql = "drop table " + objectDefinition.getDBTableName();
 
 		if (_log.isDebugEnabled()) {
@@ -413,6 +495,20 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		runSQL(sql);
+	}
+
+	private boolean _hasObjectField(
+		List<ObjectField> newObjectFields, ObjectField oldObjectField) {
+
+		for (ObjectField newObjectField : newObjectFields) {
+			if (Objects.equals(
+					newObjectField.getName(), oldObjectField.getName())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _validateName(long companyId, String name, boolean system)

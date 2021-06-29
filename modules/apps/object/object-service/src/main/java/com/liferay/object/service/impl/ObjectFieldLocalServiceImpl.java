@@ -72,7 +72,7 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateName(objectDefinition, name);
-		_validateType(type);
+		validateType(type);
 
 		ObjectField objectField = objectFieldPersistence.create(
 			counterLocalService.increment());
@@ -98,6 +98,13 @@ public class ObjectFieldLocalServiceImpl
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
 		return objectFieldPersistence.findByObjectDefinitionId(
 			objectDefinitionId);
+	}
+
+	@Override
+	public void validateType(String type) throws PortalException {
+		if (!_types.contains(type)) {
+			throw new ObjectFieldTypeException("Invalid type " + type);
+		}
 	}
 
 	private void _validateIndexed(
@@ -161,12 +168,6 @@ public class ObjectFieldLocalServiceImpl
 
 		if (objectField != null) {
 			throw new DuplicateObjectFieldException("Duplicate name " + name);
-		}
-	}
-
-	private void _validateType(String type) throws PortalException {
-		if (!_types.contains(type)) {
-			throw new ObjectFieldTypeException("Invalid type " + type);
 		}
 	}
 
