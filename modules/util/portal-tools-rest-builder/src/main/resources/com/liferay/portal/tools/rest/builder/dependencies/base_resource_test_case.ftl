@@ -1789,12 +1789,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				List<GraphQLField> graphQLFields = getGraphQLFields();
 
-				<#if properties?keys?seq_contains("id")>
-					graphQLFields.add(new GraphQLField("id"));
-				</#if>
-
 				<#if properties?keys?seq_contains("externalReferenceCode")>
 					graphQLFields.add(new GraphQLField("externalReferenceCode"));
+				</#if>
+
+				<#if properties?keys?seq_contains("id")>
+					graphQLFields.add(new GraphQLField("id"));
 				</#if>
 
 				return jsonDeserializer.deserialize(
