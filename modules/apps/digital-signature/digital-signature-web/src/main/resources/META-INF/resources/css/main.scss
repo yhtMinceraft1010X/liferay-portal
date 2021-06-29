@@ -77,6 +77,13 @@
 			}
 		}
 
+		.unavailable-preview {
+			background-color: $background-default;
+			flex: 1;
+			max-width: 670px;
+			padding: 115px 0;
+		}
+
 		.preview-file {
 			display: flex;
 

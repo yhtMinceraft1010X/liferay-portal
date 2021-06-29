@@ -25,11 +25,17 @@ const UnavailablePreview = ({
 		'the-envelope-does-not-have-a-document-to-preview'
 	),
 }) => (
-	<EmptyState
-		className="mb-2 mt-4"
-		description={description}
-		title={Liferay.Language.get('no-preview-available')}
-	/>
+	<div className="preview-file">
+		<div className="preview-file-container unavailable-preview">
+			<EmptyState
+				className="mb-2 mt-4"
+				description={description}
+				title={Liferay.Language.get('no-preview-available')}
+			/>
+
+			<OriginalDocumentTag />
+		</div>
+	</div>
 );
 
 const DocumentPreview = ({fileEntry}) => {
