@@ -89,7 +89,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_testAddObjectDefinition("Test", false);
 		}
 		catch (ObjectDefinitionNameException objectDefinitionNameException) {
-			Assert.fail();
+			throw objectDefinitionNameException;
 		}
 
 		// Name must only contain letters and digits
