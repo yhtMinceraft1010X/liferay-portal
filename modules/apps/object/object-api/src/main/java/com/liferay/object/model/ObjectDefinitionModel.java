@@ -240,4 +240,18 @@ public interface ObjectDefinitionModel
 	 */
 	public void setSystem(boolean system);
 
+	/**
+	 * Returns the version of this object definition.
+	 *
+	 * @return the version of this object definition
+	 */
+	public int getVersion();
+
+	/**
+	 * Sets the version of this object definition.
+	 *
+	 * @param version the version of this object definition
+	 */
+	public void setVersion(int version);
+
 }

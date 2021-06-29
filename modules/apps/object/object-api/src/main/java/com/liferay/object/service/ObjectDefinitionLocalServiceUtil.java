@@ -254,6 +254,10 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<ObjectDefinition> getCustomObjectDefinitions() {
+		return getService().getCustomObjectDefinitions();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -348,10 +352,8 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static List<ObjectDefinition> getSystemObjectDefinitions(
-		boolean system) {
-
-		return getService().getSystemObjectDefinitions(system);
+	public static List<ObjectDefinition> getSystemObjectDefinitions() {
+		return getService().getSystemObjectDefinitions();
 	}
 
 	public static void undeployObjectDefinition(

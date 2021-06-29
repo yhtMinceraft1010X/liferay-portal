@@ -142,6 +142,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setVersion(RandomTestUtil.nextInt());
+
 		_objectDefinitions.add(_persistence.update(newObjectDefinition));
 
 		ObjectDefinition existingObjectDefinition =
@@ -175,6 +177,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isSystem(),
 			newObjectDefinition.isSystem());
+		Assert.assertEquals(
+			existingObjectDefinition.getVersion(),
+			newObjectDefinition.getVersion());
 	}
 
 	@Test
@@ -246,7 +251,7 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "system", true);
+			true, "system", true, "version", true);
 	}
 
 	@Test
@@ -552,6 +557,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setName(RandomTestUtil.randomString());
 
 		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
+
+		objectDefinition.setVersion(RandomTestUtil.nextInt());
 
 		_objectDefinitions.add(_persistence.update(objectDefinition));
 

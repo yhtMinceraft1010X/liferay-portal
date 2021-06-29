@@ -8,7 +8,8 @@ create table ObjectDefinition (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	system_ BOOLEAN
+	system_ BOOLEAN,
+	version INTEGER
 );
 
 create table ObjectEntry (

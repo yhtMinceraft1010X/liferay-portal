@@ -12,6 +12,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="system" type="boolean" />
+		<field name="version" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectEntry">
 		<field name="mvccVersion" type="long" />

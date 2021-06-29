@@ -79,7 +79,8 @@ public class ObjectDefinitionModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"system_", Types.BOOLEAN}
+		{"name", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"version", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -96,10 +97,11 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,system_ BOOLEAN)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,system_ BOOLEAN,version INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -178,6 +180,7 @@ public class ObjectDefinitionModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setSystem(soapModel.isSystem());
+		model.setVersion(soapModel.getVersion());
 
 		return model;
 	}
@@ -383,6 +386,11 @@ public class ObjectDefinitionModelImpl
 		attributeSetterBiConsumers.put(
 			"system",
 			(BiConsumer<ObjectDefinition, Boolean>)ObjectDefinition::setSystem);
+		attributeGetterFunctions.put("version", ObjectDefinition::getVersion);
+		attributeSetterBiConsumers.put(
+			"version",
+			(BiConsumer<ObjectDefinition, Integer>)
+				ObjectDefinition::setVersion);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -621,6 +629,21 @@ public class ObjectDefinitionModelImpl
 			this.<Boolean>getColumnOriginalValue("system_"));
 	}
 
+	@JSON
+	@Override
+	public int getVersion() {
+		return _version;
+	}
+
+	@Override
+	public void setVersion(int version) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_version = version;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -693,6 +716,7 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setModifiedDate(getModifiedDate());
 		objectDefinitionImpl.setName(getName());
 		objectDefinitionImpl.setSystem(isSystem());
+		objectDefinitionImpl.setVersion(getVersion());
 
 		objectDefinitionImpl.resetOriginalValues();
 
@@ -823,6 +847,8 @@ public class ObjectDefinitionModelImpl
 
 		objectDefinitionCacheModel.system = isSystem();
 
+		objectDefinitionCacheModel.version = getVersion();
+
 		return objectDefinitionCacheModel;
 	}
 
@@ -907,6 +933,7 @@ public class ObjectDefinitionModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private boolean _system;
+	private int _version;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -947,6 +974,7 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("version", _version);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -990,6 +1018,8 @@ public class ObjectDefinitionModelImpl
 		columnBitmasks.put("name", 256L);
 
 		columnBitmasks.put("system_", 512L);
+
+		columnBitmasks.put("version", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

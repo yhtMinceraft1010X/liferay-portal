@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(name);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append("}");
 
 		return sb.toString();
@@ -151,6 +153,7 @@ public class ObjectDefinitionCacheModel
 		}
 
 		objectDefinitionImpl.setSystem(system);
+		objectDefinitionImpl.setVersion(version);
 
 		objectDefinitionImpl.resetOriginalValues();
 
@@ -173,6 +176,8 @@ public class ObjectDefinitionCacheModel
 		name = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
+
+		version = objectInput.readInt();
 	}
 
 	@Override
@@ -210,6 +215,8 @@ public class ObjectDefinitionCacheModel
 		}
 
 		objectOutput.writeBoolean(system);
+
+		objectOutput.writeInt(version);
 	}
 
 	public long mvccVersion;
@@ -222,5 +229,6 @@ public class ObjectDefinitionCacheModel
 	public long modifiedDate;
 	public String name;
 	public boolean system;
+	public int version;
 
 }

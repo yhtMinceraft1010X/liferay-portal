@@ -230,6 +230,9 @@ public interface ObjectDefinitionLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getCustomObjectDefinitions();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -301,7 +304,7 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectDefinition> getSystemObjectDefinitions(boolean system);
+	public List<ObjectDefinition> getSystemObjectDefinitions();
 
 	@Clusterable
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition);

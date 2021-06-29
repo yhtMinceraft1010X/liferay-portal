@@ -53,6 +53,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("system", isSystem());
+		attributes.put("version", getVersion());
 
 		return attributes;
 	}
@@ -117,6 +118,12 @@ public class ObjectDefinitionWrapper
 
 		if (system != null) {
 			setSystem(system);
+		}
+
+		Integer version = (Integer)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 	}
 
@@ -276,6 +283,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns the version of this object definition.
+	 *
+	 * @return the version of this object definition
+	 */
+	@Override
+	public int getVersion() {
+		return model.getVersion();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is system.
 	 *
 	 * @return <code>true</code> if this object definition is system; <code>false</code> otherwise
@@ -408,6 +425,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets the version of this object definition.
+	 *
+	 * @param version the version of this object definition
+	 */
+	@Override
+	public void setVersion(int version) {
+		model.setVersion(version);
 	}
 
 	@Override

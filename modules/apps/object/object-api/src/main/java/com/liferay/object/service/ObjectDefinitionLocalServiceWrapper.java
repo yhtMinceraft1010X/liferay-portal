@@ -280,6 +280,13 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getCustomObjectDefinitions() {
+
+		return _objectDefinitionLocalService.getCustomObjectDefinitions();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -389,9 +396,9 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectDefinition>
-		getSystemObjectDefinitions(boolean system) {
+		getSystemObjectDefinitions() {
 
-		return _objectDefinitionLocalService.getSystemObjectDefinitions(system);
+		return _objectDefinitionLocalService.getSystemObjectDefinitions();
 	}
 
 	@Override
