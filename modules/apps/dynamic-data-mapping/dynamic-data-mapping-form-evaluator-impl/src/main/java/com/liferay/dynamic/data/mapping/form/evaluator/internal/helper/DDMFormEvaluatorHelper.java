@@ -852,11 +852,10 @@ public class DDMFormEvaluatorHelper {
 	private Stream<DDMFormEvaluatorFieldContextKey>
 		_getDDMFormEvaluatorFieldContextKey(String name) {
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
-			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
-				name);
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(name);
 
-		return ddmFormFieldContextKeySet.stream();
+		return ddmFormFieldContextKeys.stream();
 	}
 
 	private Object _getFieldPropertyResponseValue(

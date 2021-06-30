@@ -166,16 +166,16 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	}
 
 	protected Object getFieldLocalizedValue(String fieldName) {
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
-			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		if (SetUtil.isEmpty(ddmFormFieldContextKeySet)) {
+		if (SetUtil.isEmpty(ddmFormFieldContextKeys)) {
 			return null;
 		}
 
 		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-			ddmFormFieldContextKeySet.iterator();
+			ddmFormFieldContextKeys.iterator();
 
 		return getFieldLocalizedValue(iterator.next());
 	}
@@ -225,27 +225,27 @@ public class DDMFormEvaluatorExpressionFieldAccessor
 	protected Object getFieldPropertyChanged(
 		String fieldName, String property) {
 
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
-			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
-		if (SetUtil.isEmpty(ddmFormFieldContextKeySet)) {
+		if (SetUtil.isEmpty(ddmFormFieldContextKeys)) {
 			return null;
 		}
 
 		Iterator<DDMFormEvaluatorFieldContextKey> iterator =
-			ddmFormFieldContextKeySet.iterator();
+			ddmFormFieldContextKeys.iterator();
 
 		return getFieldPropertyChanged(iterator.next(), property);
 	}
 
 	protected Object getFieldValues(String fieldName) {
-		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeySet =
-			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeySet(
+		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
+			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(
 				fieldName);
 
 		Stream<DDMFormEvaluatorFieldContextKey> stream =
-			ddmFormFieldContextKeySet.stream();
+			ddmFormFieldContextKeys.stream();
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(fieldName);
