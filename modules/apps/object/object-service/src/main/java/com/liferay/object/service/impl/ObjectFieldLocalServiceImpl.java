@@ -144,7 +144,7 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		if (StringUtil.equalsIgnoreCase(
-				objectDefinition.getPrimaryKeyColumnName(), name)) {
+				objectDefinition.getPKObjectFieldName(), name)) {
 
 			throw new ReservedObjectFieldException("Reserved name " + name);
 		}

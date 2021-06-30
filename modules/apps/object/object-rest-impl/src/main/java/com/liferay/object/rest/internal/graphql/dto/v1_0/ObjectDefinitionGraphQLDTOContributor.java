@@ -56,7 +56,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
-				objectDefinition.getPrimaryKeyColumnName(), Long.class));
+				objectDefinition.getPKObjectFieldName(), Long.class));
 
 		for (ObjectField objectField : objectFields) {
 			graphQLDTOProperties.add(
@@ -68,7 +68,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return new ObjectDefinitionGraphQLDTOContributor(
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
-			objectDefinition.getPrimaryKeyColumnName(),
+			objectDefinition.getPKObjectFieldName(),
 			objectDefinition.getObjectDefinitionId(), objectEntryManager,
 			objectDefinition.getShortName());
 	}

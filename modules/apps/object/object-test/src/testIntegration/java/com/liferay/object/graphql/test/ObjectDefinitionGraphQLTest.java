@@ -116,7 +116,7 @@ public class ObjectDefinitionGraphQLTest {
 			new GraphQLField(
 				"delete" + _objectDefinitionName,
 				HashMapBuilder.<String, Object>put(
-					_objectDefinition.getPrimaryKeyColumnName(),
+					_objectDefinition.getPKObjectFieldName(),
 					_objectEntry.getObjectEntryId()
 				).build()));
 
@@ -230,7 +230,7 @@ public class ObjectDefinitionGraphQLTest {
 						new GraphQLField(
 							key,
 							HashMapBuilder.<String, Object>put(
-								_objectDefinition.getPrimaryKeyColumnName(),
+								_objectDefinition.getPKObjectFieldName(),
 								_objectEntry.getObjectEntryId()
 							).build(),
 							new GraphQLField(_objectFieldName)))),
@@ -254,7 +254,7 @@ public class ObjectDefinitionGraphQLTest {
 					).build(),
 					new GraphQLField(_objectFieldName),
 					new GraphQLField(
-						_objectDefinition.getPrimaryKeyColumnName()))));
+						_objectDefinition.getPKObjectFieldName()))));
 
 		Assert.assertEquals(
 			value,
@@ -268,7 +268,7 @@ public class ObjectDefinitionGraphQLTest {
 		Long objectEntryId = JSONUtil.getValueAsLong(
 			jsonObject, "JSONObject/data",
 			"JSONObject/create" + _objectDefinitionName,
-			"Object/" + _objectDefinition.getPrimaryKeyColumnName());
+			"Object/" + _objectDefinition.getPKObjectFieldName());
 
 		Assert.assertEquals(
 			value,
@@ -283,7 +283,7 @@ public class ObjectDefinitionGraphQLTest {
 								StringBundler.concat(
 									"{", _objectFieldName, ": \"", value, "\"}")
 							).put(
-								_objectDefinition.getPrimaryKeyColumnName(),
+								_objectDefinition.getPKObjectFieldName(),
 								String.valueOf(objectEntryId)
 							).build(),
 							new GraphQLField(_objectFieldName)))),

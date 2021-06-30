@@ -437,7 +437,7 @@ public class ObjectEntryLocalServiceImpl
 		runSQL(
 			StringBundler.concat(
 				"delete from ", objectDefinition.getDBTableName(), " where ",
-				objectDefinition.getDBPrimaryKeyColumnName(), " = ",
+				objectDefinition.getPKObjectFieldDBColumnName(), " = ",
 				objectEntry.getObjectEntryId()));
 	}
 
@@ -545,7 +545,7 @@ public class ObjectEntryLocalServiceImpl
 		sb.append("insert into ");
 		sb.append(objectDefinition.getDBTableName());
 		sb.append(" (");
-		sb.append(objectDefinition.getDBPrimaryKeyColumnName());
+		sb.append(objectDefinition.getPKObjectFieldDBColumnName());
 
 		int count = 1;
 
@@ -915,7 +915,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		sb.append(" where ");
-		sb.append(objectDefinition.getDBPrimaryKeyColumnName());
+		sb.append(objectDefinition.getPKObjectFieldDBColumnName());
 		sb.append(" = ?");
 
 		String sql = sb.toString();
