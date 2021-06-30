@@ -241,15 +241,16 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Fields Group Edit");
+			fieldFieldLabelEdit = "Fields Group Edited");
 
 		DDLDataDefinition.save();
 
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
-		AssertElementPresent(
-			key_FieldGroupLabel = "Fields Group Edit",
-			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR");
+		DataEngine.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group Edited",
+			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This test ensures it's possible to edit a field's property for a field inside a field group."
