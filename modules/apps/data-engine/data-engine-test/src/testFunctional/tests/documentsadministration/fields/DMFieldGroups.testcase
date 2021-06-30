@@ -83,13 +83,10 @@ definition {
 
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		AssertElementPresent(
-			key_FieldGroupLabel = "Fields Group",
-			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR");
-
-		FormFields.assertFieldsVisibleInFieldGroup(
+		DataEngine.assertFieldsGroup(
+			fieldGroupDepth = "1",
 			fieldGroupLabel = "Fields Group",
-			fieldGroupLabelList = "Text,Numeric");
+			fieldsLabelList = "Text,Numeric");
 	}
 
 	@description = "This test ensures it's possible to delete a field group on a Document Type."
