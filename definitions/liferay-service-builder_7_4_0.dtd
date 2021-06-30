@@ -381,11 +381,26 @@ from the column name.
 >
 
 <!--
+The method-name value is used to override the default getter/setter method
+names.
+
+For example:
+
+<column method-name="FOOBar" name="fooBar" type="String" />
+
+The above column specifies that there will be a getter called pojo.getFOOBar()
+instead of the default pojo.getFooBar().
+-->
+<!ATTLIST column
+	method-name CDATA #IMPLIED
+>
+
+<!--
 The type value specifies whether the column is a String, Boolean, or int, etc.
 
 For example:
 
-<column name="companyId" db-name="companyId" type="String" />
+<column db-name="companyId" name="companyId" type="String" />
 
 The above column specifies that there will be a getter called
 pojo.getCompanyId() that will return a String.
