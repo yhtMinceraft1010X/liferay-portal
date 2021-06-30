@@ -115,6 +115,8 @@ public class AssetCategoryAdminPortletTest {
 				).build(),
 				null, assetVocabulary.getVocabularyId(), null, serviceContext);
 
+		assetCategories.add(childAssetCategory1);
+
 		AssetCategory childAssetCategory2 =
 			_assetCategoryLocalService.addCategory(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -124,7 +126,6 @@ public class AssetCategoryAdminPortletTest {
 				).build(),
 				null, assetVocabulary.getVocabularyId(), null, serviceContext);
 
-		assetCategories.add(childAssetCategory1);
 		assetCategories.add(childAssetCategory2);
 
 		_testSetCategoryDisplayPageTemplate(assetCategories);
@@ -149,12 +150,14 @@ public class AssetCategoryAdminPortletTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
+
+		assetCategories.add(assetCategory1);
+
 		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			serviceContext);
 
-		assetCategories.add(assetCategory1);
 		assetCategories.add(assetCategory2);
 
 		_testSetCategoryDisplayPageTemplate(assetCategories);
