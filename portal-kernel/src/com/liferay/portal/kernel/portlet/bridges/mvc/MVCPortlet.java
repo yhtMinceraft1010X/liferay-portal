@@ -646,20 +646,20 @@ public class MVCPortlet extends LiferayPortlet {
 	private Set<String> _getJspPaths(String path) {
 		PortletContext portletContext = getPortletContext();
 
-		Set<String> pathsSet = _visitResources(portletContext, path, "*.jsp");
+		Set<String> paths = _visitResources(portletContext, path, "*.jsp");
 
-		if (pathsSet == null) {
-			pathsSet = _visitResources(portletContext, path, "*.jspx");
+		if (paths == null) {
+			paths = _visitResources(portletContext, path, "*.jspx");
 		}
 		else {
-			pathsSet.addAll(_visitResources(portletContext, path, "*.jspx"));
+			paths.addAll(_visitResources(portletContext, path, "*.jspx"));
 		}
 
-		if (pathsSet != null) {
-			return pathsSet;
+		if (paths != null) {
+			return paths;
 		}
 
-		Set<String> paths = new HashSet<>();
+		paths = new HashSet<>();
 
 		Queue<String> queue = new ArrayDeque<>();
 
