@@ -226,13 +226,10 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		Click(
+		DataEngine.assertFieldsGroup(
+			fieldGroupDepth = "2",
 			fieldGroupLabel = "Copy of Fields Group",
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Copy of Fields Group");
+			fieldsLabelList = "Copy of Date,Copy of Numeric");
 	}
 
 	@description = "This test ensure user can edit the field group label."
