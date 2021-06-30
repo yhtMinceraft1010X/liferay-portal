@@ -335,7 +335,7 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Field Group Edit");
+			fieldFieldLabelEdit = "Fields Group Edited");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
@@ -346,15 +346,15 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertTextEquals(
-			key_FieldGroupLabel = "Field Group Edit",
-			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
-			value1 = "Field Group Edit");
+		DataEngine.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group Edited",
+			fieldsLabelList = "Text");
 
-		AssertTextEquals(
-			key_FieldGroupLabel = "Fields Group",
-			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
-			value1 = "Fields Group");
+		DataEngine.assertFieldsGroup(
+			fieldGroupDepth = "2",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Numeric,Date");
 	}
 
 	@description = "This test validates that a collapsible field group can be collapsed when uploading a Document and Media."
