@@ -140,6 +140,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
+		newObjectField.setDBColumnName(RandomTestUtil.randomString());
+
 		newObjectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		newObjectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
@@ -178,6 +180,9 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(
 			existingObjectField.getObjectDefinitionId(),
 			newObjectField.getObjectDefinitionId());
+		Assert.assertEquals(
+			existingObjectField.getDBColumnName(),
+			newObjectField.getDBColumnName());
 		Assert.assertEquals(
 			existingObjectField.isIndexed(), newObjectField.isIndexed());
 		Assert.assertEquals(
@@ -254,8 +259,8 @@ public class ObjectFieldPersistenceTest {
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "indexed", true, "indexedAsKeyword", true,
-			"indexedLanguageId", true, "name", true, "type", true);
+			true, "dbColumnName", true, "indexed", true, "indexedAsKeyword",
+			true, "indexedLanguageId", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -550,6 +555,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectField.setObjectDefinitionId(RandomTestUtil.nextLong());
+
+		objectField.setDBColumnName(RandomTestUtil.randomString());
 
 		objectField.setIndexed(RandomTestUtil.randomBoolean());
 

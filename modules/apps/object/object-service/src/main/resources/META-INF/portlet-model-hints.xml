@@ -10,7 +10,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="dbTableName" type="String" />
 		<field name="name" type="String" />
+		<field name="pkObjectFieldDBColumnName" type="String" />
+		<field name="pkObjectFieldName" type="String" />
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />
 	</model>
@@ -41,6 +44,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
+		<field name="dbColumnName" type="String" />
 		<field name="indexed" type="boolean" />
 		<field name="indexedAsKeyword" type="boolean" />
 		<field name="indexedLanguageId" type="String" />

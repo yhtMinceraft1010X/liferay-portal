@@ -205,6 +205,21 @@ public interface ObjectDefinitionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the db table name of this object definition.
+	 *
+	 * @return the db table name of this object definition
+	 */
+	@AutoEscape
+	public String getDBTableName();
+
+	/**
+	 * Sets the db table name of this object definition.
+	 *
+	 * @param dbTableName the db table name of this object definition
+	 */
+	public void setDBTableName(String dbTableName);
+
+	/**
 	 * Returns the name of this object definition.
 	 *
 	 * @return the name of this object definition
@@ -218,6 +233,36 @@ public interface ObjectDefinitionModel
 	 * @param name the name of this object definition
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the pk object field db column name of this object definition.
+	 *
+	 * @return the pk object field db column name of this object definition
+	 */
+	@AutoEscape
+	public String getPKObjectFieldDBColumnName();
+
+	/**
+	 * Sets the pk object field db column name of this object definition.
+	 *
+	 * @param pkObjectFieldDBColumnName the pk object field db column name of this object definition
+	 */
+	public void setPKObjectFieldDBColumnName(String pkObjectFieldDBColumnName);
+
+	/**
+	 * Returns the pk object field name of this object definition.
+	 *
+	 * @return the pk object field name of this object definition
+	 */
+	@AutoEscape
+	public String getPKObjectFieldName();
+
+	/**
+	 * Sets the pk object field name of this object definition.
+	 *
+	 * @param pkObjectFieldName the pk object field name of this object definition
+	 */
+	public void setPKObjectFieldName(String pkObjectFieldName);
 
 	/**
 	 * Returns the system of this object definition.

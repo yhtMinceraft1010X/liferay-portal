@@ -138,7 +138,14 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectDefinition.setDBTableName(RandomTestUtil.randomString());
+
 		newObjectDefinition.setName(RandomTestUtil.randomString());
+
+		newObjectDefinition.setPKObjectFieldDBColumnName(
+			RandomTestUtil.randomString());
+
+		newObjectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
 
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
 
@@ -173,7 +180,16 @@ public class ObjectDefinitionPersistenceTest {
 			Time.getShortTimestamp(existingObjectDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newObjectDefinition.getModifiedDate()));
 		Assert.assertEquals(
+			existingObjectDefinition.getDBTableName(),
+			newObjectDefinition.getDBTableName());
+		Assert.assertEquals(
 			existingObjectDefinition.getName(), newObjectDefinition.getName());
+		Assert.assertEquals(
+			existingObjectDefinition.getPKObjectFieldDBColumnName(),
+			newObjectDefinition.getPKObjectFieldDBColumnName());
+		Assert.assertEquals(
+			existingObjectDefinition.getPKObjectFieldName(),
+			newObjectDefinition.getPKObjectFieldName());
 		Assert.assertEquals(
 			existingObjectDefinition.isSystem(),
 			newObjectDefinition.isSystem());
@@ -250,8 +266,9 @@ public class ObjectDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"objectDefinitionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "system", true, "version", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"dbTableName", true, "name", true, "pkObjectFieldDBColumnName",
+			true, "pkObjectFieldName", true, "system", true, "version", true);
 	}
 
 	@Test
@@ -554,7 +571,14 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		objectDefinition.setDBTableName(RandomTestUtil.randomString());
+
 		objectDefinition.setName(RandomTestUtil.randomString());
+
+		objectDefinition.setPKObjectFieldDBColumnName(
+			RandomTestUtil.randomString());
+
+		objectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
 
 		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
 

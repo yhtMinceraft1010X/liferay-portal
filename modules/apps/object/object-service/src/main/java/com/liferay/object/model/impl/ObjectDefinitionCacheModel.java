@@ -78,7 +78,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,8 +96,14 @@ public class ObjectDefinitionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", dbTableName=");
+		sb.append(dbTableName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", pkObjectFieldDBColumnName=");
+		sb.append(pkObjectFieldDBColumnName);
+		sb.append(", pkObjectFieldName=");
+		sb.append(pkObjectFieldName);
 		sb.append(", system=");
 		sb.append(system);
 		sb.append(", version=");
@@ -145,11 +151,33 @@ public class ObjectDefinitionCacheModel
 			objectDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (dbTableName == null) {
+			objectDefinitionImpl.setDBTableName("");
+		}
+		else {
+			objectDefinitionImpl.setDBTableName(dbTableName);
+		}
+
 		if (name == null) {
 			objectDefinitionImpl.setName("");
 		}
 		else {
 			objectDefinitionImpl.setName(name);
+		}
+
+		if (pkObjectFieldDBColumnName == null) {
+			objectDefinitionImpl.setPKObjectFieldDBColumnName("");
+		}
+		else {
+			objectDefinitionImpl.setPKObjectFieldDBColumnName(
+				pkObjectFieldDBColumnName);
+		}
+
+		if (pkObjectFieldName == null) {
+			objectDefinitionImpl.setPKObjectFieldName("");
+		}
+		else {
+			objectDefinitionImpl.setPKObjectFieldName(pkObjectFieldName);
 		}
 
 		objectDefinitionImpl.setSystem(system);
@@ -173,7 +201,10 @@ public class ObjectDefinitionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		dbTableName = objectInput.readUTF();
 		name = objectInput.readUTF();
+		pkObjectFieldDBColumnName = objectInput.readUTF();
+		pkObjectFieldName = objectInput.readUTF();
 
 		system = objectInput.readBoolean();
 
@@ -207,11 +238,32 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (dbTableName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dbTableName);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
+		}
+
+		if (pkObjectFieldDBColumnName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(pkObjectFieldDBColumnName);
+		}
+
+		if (pkObjectFieldName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(pkObjectFieldName);
 		}
 
 		objectOutput.writeBoolean(system);
@@ -227,7 +279,10 @@ public class ObjectDefinitionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String dbTableName;
 	public String name;
+	public String pkObjectFieldDBColumnName;
+	public String pkObjectFieldName;
 	public boolean system;
 	public int version;
 

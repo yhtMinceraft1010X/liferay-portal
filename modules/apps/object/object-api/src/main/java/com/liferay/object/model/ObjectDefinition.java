@@ -59,13 +59,7 @@ public interface ObjectDefinition
 
 	public String getClassName();
 
-	public String getDBPrimaryKeyColumnName();
-
-	public String getDBTableName();
-
 	public String getPortletId();
-
-	public String getPrimaryKeyColumnName();
 
 	public String getRESTContextPath();
 

@@ -79,7 +79,9 @@ public class ObjectDefinitionModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"dbTableName", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"pkObjectFieldDBColumnName", Types.VARCHAR},
+		{"pkObjectFieldName", Types.VARCHAR}, {"system_", Types.BOOLEAN},
 		{"version", Types.INTEGER}
 	};
 
@@ -95,13 +97,16 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pkObjectFieldDBColumnName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pkObjectFieldName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,system_ BOOLEAN,version INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,system_ BOOLEAN,version INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -178,7 +183,11 @@ public class ObjectDefinitionModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDBTableName(soapModel.getDBTableName());
 		model.setName(soapModel.getName());
+		model.setPKObjectFieldDBColumnName(
+			soapModel.getPKObjectFieldDBColumnName());
+		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
 		model.setSystem(soapModel.isSystem());
 		model.setVersion(soapModel.getVersion());
 
@@ -378,10 +387,29 @@ public class ObjectDefinitionModelImpl
 			"modifiedDate",
 			(BiConsumer<ObjectDefinition, Date>)
 				ObjectDefinition::setModifiedDate);
+		attributeGetterFunctions.put(
+			"dbTableName", ObjectDefinition::getDBTableName);
+		attributeSetterBiConsumers.put(
+			"dbTableName",
+			(BiConsumer<ObjectDefinition, String>)
+				ObjectDefinition::setDBTableName);
 		attributeGetterFunctions.put("name", ObjectDefinition::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<ObjectDefinition, String>)ObjectDefinition::setName);
+		attributeGetterFunctions.put(
+			"pkObjectFieldDBColumnName",
+			ObjectDefinition::getPKObjectFieldDBColumnName);
+		attributeSetterBiConsumers.put(
+			"pkObjectFieldDBColumnName",
+			(BiConsumer<ObjectDefinition, String>)
+				ObjectDefinition::setPKObjectFieldDBColumnName);
+		attributeGetterFunctions.put(
+			"pkObjectFieldName", ObjectDefinition::getPKObjectFieldName);
+		attributeSetterBiConsumers.put(
+			"pkObjectFieldName",
+			(BiConsumer<ObjectDefinition, String>)
+				ObjectDefinition::setPKObjectFieldName);
 		attributeGetterFunctions.put("system", ObjectDefinition::getSystem);
 		attributeSetterBiConsumers.put(
 			"system",
@@ -571,6 +599,26 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public String getDBTableName() {
+		if (_dbTableName == null) {
+			return "";
+		}
+		else {
+			return _dbTableName;
+		}
+	}
+
+	@Override
+	public void setDBTableName(String dbTableName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dbTableName = dbTableName;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -596,6 +644,46 @@ public class ObjectDefinitionModelImpl
 	@Deprecated
 	public String getOriginalName() {
 		return getColumnOriginalValue("name");
+	}
+
+	@JSON
+	@Override
+	public String getPKObjectFieldDBColumnName() {
+		if (_pkObjectFieldDBColumnName == null) {
+			return "";
+		}
+		else {
+			return _pkObjectFieldDBColumnName;
+		}
+	}
+
+	@Override
+	public void setPKObjectFieldDBColumnName(String pkObjectFieldDBColumnName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_pkObjectFieldDBColumnName = pkObjectFieldDBColumnName;
+	}
+
+	@JSON
+	@Override
+	public String getPKObjectFieldName() {
+		if (_pkObjectFieldName == null) {
+			return "";
+		}
+		else {
+			return _pkObjectFieldName;
+		}
+	}
+
+	@Override
+	public void setPKObjectFieldName(String pkObjectFieldName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_pkObjectFieldName = pkObjectFieldName;
 	}
 
 	@JSON
@@ -714,7 +802,11 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setUserName(getUserName());
 		objectDefinitionImpl.setCreateDate(getCreateDate());
 		objectDefinitionImpl.setModifiedDate(getModifiedDate());
+		objectDefinitionImpl.setDBTableName(getDBTableName());
 		objectDefinitionImpl.setName(getName());
+		objectDefinitionImpl.setPKObjectFieldDBColumnName(
+			getPKObjectFieldDBColumnName());
+		objectDefinitionImpl.setPKObjectFieldName(getPKObjectFieldName());
 		objectDefinitionImpl.setSystem(isSystem());
 		objectDefinitionImpl.setVersion(getVersion());
 
@@ -837,12 +929,40 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		objectDefinitionCacheModel.dbTableName = getDBTableName();
+
+		String dbTableName = objectDefinitionCacheModel.dbTableName;
+
+		if ((dbTableName != null) && (dbTableName.length() == 0)) {
+			objectDefinitionCacheModel.dbTableName = null;
+		}
+
 		objectDefinitionCacheModel.name = getName();
 
 		String name = objectDefinitionCacheModel.name;
 
 		if ((name != null) && (name.length() == 0)) {
 			objectDefinitionCacheModel.name = null;
+		}
+
+		objectDefinitionCacheModel.pkObjectFieldDBColumnName =
+			getPKObjectFieldDBColumnName();
+
+		String pkObjectFieldDBColumnName =
+			objectDefinitionCacheModel.pkObjectFieldDBColumnName;
+
+		if ((pkObjectFieldDBColumnName != null) &&
+			(pkObjectFieldDBColumnName.length() == 0)) {
+
+			objectDefinitionCacheModel.pkObjectFieldDBColumnName = null;
+		}
+
+		objectDefinitionCacheModel.pkObjectFieldName = getPKObjectFieldName();
+
+		String pkObjectFieldName = objectDefinitionCacheModel.pkObjectFieldName;
+
+		if ((pkObjectFieldName != null) && (pkObjectFieldName.length() == 0)) {
+			objectDefinitionCacheModel.pkObjectFieldName = null;
 		}
 
 		objectDefinitionCacheModel.system = isSystem();
@@ -931,7 +1051,10 @@ public class ObjectDefinitionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _dbTableName;
 	private String _name;
+	private String _pkObjectFieldDBColumnName;
+	private String _pkObjectFieldName;
 	private boolean _system;
 	private int _version;
 
@@ -972,7 +1095,11 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put(
+			"pkObjectFieldDBColumnName", _pkObjectFieldDBColumnName);
+		_columnOriginalValues.put("pkObjectFieldName", _pkObjectFieldName);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("version", _version);
 	}
@@ -1015,11 +1142,17 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("dbTableName", 256L);
 
-		columnBitmasks.put("system_", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("version", 1024L);
+		columnBitmasks.put("pkObjectFieldDBColumnName", 1024L);
+
+		columnBitmasks.put("pkObjectFieldName", 2048L);
+
+		columnBitmasks.put("system_", 4096L);
+
+		columnBitmasks.put("version", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

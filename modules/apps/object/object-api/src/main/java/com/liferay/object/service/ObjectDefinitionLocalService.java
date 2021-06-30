@@ -84,8 +84,9 @@ public interface ObjectDefinitionLocalService
 		ObjectDefinition objectDefinition);
 
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String name, int version,
-			List<ObjectField> objectFields)
+			long userId, String dbTableName, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			int version, List<ObjectField> objectFields)
 		throws PortalException;
 
 	/**

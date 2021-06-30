@@ -52,6 +52,8 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 		createColumn(
 			"objectDefinitionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, String> dbColumnName = createColumn(
+		"dbColumnName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, Boolean> indexed = createColumn(
 		"indexed", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, Boolean> indexedAsKeyword =

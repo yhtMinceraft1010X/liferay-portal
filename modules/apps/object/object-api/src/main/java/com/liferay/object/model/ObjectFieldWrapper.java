@@ -52,6 +52,7 @@ public class ObjectFieldWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
+		attributes.put("dbColumnName", getDBColumnName());
 		attributes.put("indexed", isIndexed());
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
@@ -117,6 +118,12 @@ public class ObjectFieldWrapper
 			setObjectDefinitionId(objectDefinitionId);
 		}
 
+		String dbColumnName = (String)attributes.get("dbColumnName");
+
+		if (dbColumnName != null) {
+			setDBColumnName(dbColumnName);
+		}
+
 		Boolean indexed = (Boolean)attributes.get("indexed");
 
 		if (indexed != null) {
@@ -168,6 +175,11 @@ public class ObjectFieldWrapper
 		return model.getCreateDate();
 	}
 
+	/**
+	 * Returns the db column name of this object field.
+	 *
+	 * @return the db column name of this object field
+	 */
 	@Override
 	public String getDBColumnName() {
 		return model.getDBColumnName();
@@ -356,6 +368,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the db column name of this object field.
+	 *
+	 * @param dbColumnName the db column name of this object field
+	 */
+	@Override
+	public void setDBColumnName(String dbColumnName) {
+		model.setDBColumnName(dbColumnName);
 	}
 
 	/**

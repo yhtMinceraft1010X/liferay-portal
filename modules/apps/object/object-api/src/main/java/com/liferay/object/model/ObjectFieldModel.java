@@ -219,6 +219,21 @@ public interface ObjectFieldModel
 	public void setObjectDefinitionId(long objectDefinitionId);
 
 	/**
+	 * Returns the db column name of this object field.
+	 *
+	 * @return the db column name of this object field
+	 */
+	@AutoEscape
+	public String getDBColumnName();
+
+	/**
+	 * Sets the db column name of this object field.
+	 *
+	 * @param dbColumnName the db column name of this object field
+	 */
+	public void setDBColumnName(String dbColumnName);
+
+	/**
 	 * Returns the indexed of this object field.
 	 *
 	 * @return the indexed of this object field

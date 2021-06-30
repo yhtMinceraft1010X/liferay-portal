@@ -70,12 +70,15 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static ObjectDefinition addSystemObjectDefinition(
-			long userId, String name, int version,
+			long userId, String dbTableName, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			int version,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
 		return getService().addSystemObjectDefinition(
-			userId, name, version, objectFields);
+			userId, dbTableName, name, pkObjectFieldDBColumnName,
+			pkObjectFieldName, version, objectFields);
 	}
 
 	/**
