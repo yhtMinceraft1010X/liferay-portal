@@ -51,17 +51,27 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public ObjectField addObjectField(
-			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId, String name,
-			String type)
+			long userId, long objectDefinitionId, String dbColumnName,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String name, String type)
 		throws PortalException {
-
-		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 
 		name = StringUtil.trim(name);
 
-		_validateName(objectDefinitionId, name);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		if (objectDefinition.isSystem()) {
+			if (dbColumnName == null) {
+				dbColumnName = name;
+			}
+		}
+		else {
+			dbColumnName = name + StringPool.UNDERLINE;
+		}
+
+		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
+		_validateName(objectDefinition, name);
 		_validateType(type);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -74,7 +84,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setUserName(user.getFullName());
 
 		objectField.setObjectDefinitionId(objectDefinitionId);
-		objectField.setDBColumnName(name + StringPool.UNDERLINE);
+		objectField.setDBColumnName(dbColumnName);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
@@ -110,7 +120,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateName(long objectDefinitionId, String name)
+	private void _validateName(ObjectDefinition objectDefinition, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -140,18 +150,16 @@ public class ObjectFieldLocalServiceImpl
 			throw new ReservedObjectFieldException("Reserved name " + name);
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
 		if (StringUtil.equalsIgnoreCase(
 				objectDefinition.getPKObjectFieldName(), name)) {
 
 			throw new ReservedObjectFieldException("Reserved name " + name);
 		}
 
-		if (objectFieldPersistence.fetchByODI_N(objectDefinitionId, name) !=
-				null) {
+		ObjectField objectField = objectFieldPersistence.fetchByODI_N(
+			objectDefinition.getObjectDefinitionId(), name);
 
+		if (objectField != null) {
 			throw new DuplicateObjectFieldException("Duplicate name " + name);
 		}
 	}

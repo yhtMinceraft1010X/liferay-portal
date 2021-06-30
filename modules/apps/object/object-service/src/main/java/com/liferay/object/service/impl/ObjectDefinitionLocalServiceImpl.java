@@ -72,16 +72,20 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, String name, List<ObjectField> objectFields)
 		throws PortalException {
 
-		return _addObjectDefinition(userId, name, false, 0, objectFields);
+		return _addObjectDefinition(
+			userId, null, name, null, null, false, 0, objectFields);
 	}
 
 	@Override
 	public ObjectDefinition addSystemObjectDefinition(
-			long userId, String name, int version,
-			List<ObjectField> objectFields)
+			long userId, String dbTableName, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			int version, List<ObjectField> objectFields)
 		throws PortalException {
 
-		return _addObjectDefinition(userId, name, true, version, objectFields);
+		return _addObjectDefinition(
+			userId, dbTableName, name, pkObjectFieldDBColumnName,
+			pkObjectFieldName, true, version, objectFields);
 	}
 
 	@Override
@@ -294,8 +298,9 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private ObjectDefinition _addObjectDefinition(
-			long userId, String name, boolean system, int version,
-			List<ObjectField> objectFields)
+			long userId, String dbTableName, String name,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			boolean system, int version, List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -304,6 +309,37 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (!system) {
 			name = "C_" + name;
+		}
+
+		String shortName = ObjectDefinitionImpl.getShortName(name);
+
+		if (dbTableName == null) {
+			if (system) {
+				dbTableName = name;
+			}
+			else {
+				dbTableName = StringBundler.concat(
+					"O_", user.getCompanyId(), StringPool.UNDERLINE, shortName);
+			}
+		}
+
+		if (pkObjectFieldName == null) {
+			pkObjectFieldName = TextFormatter.format(
+				shortName + "Id", TextFormatter.I);
+
+			if (!system) {
+				pkObjectFieldName = "c_" + pkObjectFieldName;
+			}
+		}
+
+		if (pkObjectFieldDBColumnName == null) {
+			if (system) {
+				pkObjectFieldDBColumnName = pkObjectFieldName;
+			}
+			else {
+				pkObjectFieldDBColumnName =
+					pkObjectFieldName + StringPool.UNDERLINE;
+			}
 		}
 
 		_validateName(user.getCompanyId(), name, system);
@@ -317,26 +353,11 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
-
-		String shortName = ObjectDefinitionImpl.getShortName(name);
-
-		objectDefinition.setDBTableName(
-			StringBundler.concat(
-				"O_", user.getCompanyId(), StringPool.UNDERLINE, shortName));
-
+		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setName(name);
-
-		String pkObjectFieldName = TextFormatter.format(
-			shortName + "Id", TextFormatter.I);
-
-		if (!system) {
-			pkObjectFieldName = "c_" + pkObjectFieldName;
-		}
-
 		objectDefinition.setPKObjectFieldDBColumnName(
-			pkObjectFieldName + StringPool.UNDERLINE);
+			pkObjectFieldDBColumnName);
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
-
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 
@@ -345,8 +366,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldLocalService.addObjectField(
-				userId, objectDefinitionId, objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				userId, objectDefinitionId, objectField.getDBColumnName(),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getName(),
 				objectField.getType());
 		}

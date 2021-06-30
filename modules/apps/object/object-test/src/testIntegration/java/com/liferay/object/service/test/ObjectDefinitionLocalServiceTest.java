@@ -21,6 +21,7 @@ import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,6 +31,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -150,13 +152,23 @@ public class ObjectDefinitionLocalServiceTest {
 				duplicateObjectDefinitionException.getMessage());
 		}
 
-		// Database table name
+		// Database table
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _randomName(),
-				Collections.<ObjectField>emptyList());
+				Arrays.asList(
+					_createObjectField("able", "String"),
+					_createObjectField("baker", "String")));
 
+		Assert.assertEquals(
+			false, _hasColumn(objectDefinition.getDBTableName(), "able"));
+		Assert.assertEquals(
+			true, _hasColumn(objectDefinition.getDBTableName(), "able_"));
+		Assert.assertEquals(
+			false, _hasColumn(objectDefinition.getDBTableName(), "baker"));
+		Assert.assertEquals(
+			true, _hasColumn(objectDefinition.getDBTableName(), "baker_"));
 		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
 	}
 
@@ -258,7 +270,7 @@ public class ObjectDefinitionLocalServiceTest {
 		// Duplicate name
 
 		ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			TestPropsValues.getUserId(), "Test", 1,
+			TestPropsValues.getUserId(), null, "Test", null, null, 1,
 			Collections.<ObjectField>emptyList());
 
 		try {
@@ -276,8 +288,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), _randomName(), -1,
-				Collections.<ObjectField>emptyList());
+				TestPropsValues.getUserId(), null, _randomName(), null, null,
+				-1, Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
 					objectDefinitionVersionException) {
@@ -289,7 +301,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		try {
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), _randomName(), 0,
+				TestPropsValues.getUserId(), null, _randomName(), null, null, 0,
 				Collections.<ObjectField>emptyList());
 		}
 		catch (ObjectDefinitionVersionException
@@ -304,11 +316,31 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				TestPropsValues.getUserId(), _randomName(), 1,
+				TestPropsValues.getUserId(), null, _randomName(), null, null, 1,
 				Collections.<ObjectField>emptyList());
 
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getDBTableName()));
+	}
+
+	private ObjectField _createObjectField(String name, String type) {
+		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
+			0);
+
+		objectField.setName(name);
+		objectField.setType(type);
+
+		return objectField;
+	}
+
+	private boolean _hasColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasColumn(tableName, columnName);
+		}
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {
@@ -346,7 +378,7 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-					TestPropsValues.getUserId(), name, 1,
+					TestPropsValues.getUserId(), null, name, null, null, 1,
 					Collections.<ObjectField>emptyList());
 		}
 		finally {

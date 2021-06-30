@@ -209,7 +209,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-					TestPropsValues.getUserId(), "Test", 1,
+					TestPropsValues.getUserId(), null, "Test", null, null, 1,
 					Arrays.asList(objectFields));
 		}
 		finally {
