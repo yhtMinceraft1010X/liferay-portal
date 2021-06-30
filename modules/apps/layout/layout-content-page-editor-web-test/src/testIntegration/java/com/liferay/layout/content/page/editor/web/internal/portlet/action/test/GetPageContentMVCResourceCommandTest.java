@@ -411,7 +411,11 @@ public class GetPageContentMVCResourceCommandTest {
 	private MockLiferayResourceRequest _getMockLiferayPortletResourceRequest()
 		throws Exception {
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
+
+		mockLiferayResourceRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG, null);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -419,17 +423,14 @@ public class GetPageContentMVCResourceCommandTest {
 		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayResourceResponse());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
-
-		mockLiferayResourceRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG, null);
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
