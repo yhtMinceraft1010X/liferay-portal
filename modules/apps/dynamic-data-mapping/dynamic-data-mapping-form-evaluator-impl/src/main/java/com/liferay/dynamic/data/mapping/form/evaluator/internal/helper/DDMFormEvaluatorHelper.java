@@ -611,7 +611,7 @@ public class DDMFormEvaluatorHelper {
 		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
 
 		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
 		).filter(
 			this::filterVisibleFieldsMarkedAsRequired
 		).filter(
@@ -651,7 +651,7 @@ public class DDMFormEvaluatorHelper {
 		Stream<Map.Entry<String, DDMFormField>> stream = entrySet.stream();
 
 		stream.flatMap(
-			entry -> _getDDMFormEvaluatorFieldContextKey(entry.getKey())
+			entry -> _getDDMFormEvaluatorFieldContextKeysStream(entry.getKey())
 		).filter(
 			this::isFieldWithConfirmationFieldAndVisible
 		).filter(
@@ -671,7 +671,7 @@ public class DDMFormEvaluatorHelper {
 			ddmFormFieldValidations = ddmFormFieldStream.filter(
 				this::filterFieldsWithDDMFormFieldValidation
 			).flatMap(
-				ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+				ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
 					ddmFormField.getName())
 			).collect(
 				Collectors.toMap(
@@ -810,7 +810,7 @@ public class DDMFormEvaluatorHelper {
 		stream.filter(
 			this::_isIntegerNumericField
 		).flatMap(
-			ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+			ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
 				ddmFormField.getName())
 		).filter(
 			this::_filterVisibleFieldsWithInputMask
@@ -850,7 +850,7 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	private Stream<DDMFormEvaluatorFieldContextKey>
-		_getDDMFormEvaluatorFieldContextKey(String name) {
+		_getDDMFormEvaluatorFieldContextKeysStream(String name) {
 
 		Set<DDMFormEvaluatorFieldContextKey> ddmFormFieldContextKeys =
 			_ddmFormEvaluatorFormValuesHelper.getDDMFormFieldContextKeys(name);
@@ -985,7 +985,7 @@ public class DDMFormEvaluatorHelper {
 		stream.filter(
 			this::_isNumericField
 		).flatMap(
-			ddmFormField -> _getDDMFormEvaluatorFieldContextKey(
+			ddmFormField -> _getDDMFormEvaluatorFieldContextKeysStream(
 				ddmFormField.getName())
 		).forEach(
 			this::_localizeDDMFormFieldValue
