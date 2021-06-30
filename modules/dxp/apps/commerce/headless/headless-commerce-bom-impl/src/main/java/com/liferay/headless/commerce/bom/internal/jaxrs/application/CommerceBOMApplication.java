@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @generated
  */
 @Component(
+	enabled = false,
 	property = {
 		"liferay.jackson=false", "osgi.jaxrs.application.base=/commerce-bom",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
