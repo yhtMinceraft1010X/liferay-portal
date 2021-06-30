@@ -128,14 +128,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Edit");
 
-		Click(
-			index = "1",
-			key_fieldLabel = "Fields Group",
-			locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED");
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		DataEngine.delete(fieldsGroupLabel = "Fields Group");
 
 		DDLDataDefinition.save();
 
