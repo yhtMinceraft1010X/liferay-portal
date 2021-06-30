@@ -307,14 +307,8 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), _randomName(), 1,
 				Collections.<ObjectField>emptyList());
 
-		try {
-			objectDefinition.getDBTableName();
-
-			Assert.fail();
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertNotNull(unsupportedOperationException);
-		}
+		Assert.assertEquals(
+			false, _hasTable(objectDefinition.getDBTableName()));
 	}
 
 	private boolean _hasTable(String tableName) throws Exception {

@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -73,6 +74,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setUserName(user.getFullName());
 
 		objectField.setObjectDefinitionId(objectDefinitionId);
+		objectField.setDBColumnName(name + StringPool.UNDERLINE);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);

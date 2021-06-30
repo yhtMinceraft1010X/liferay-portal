@@ -22,11 +22,14 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -313,7 +317,26 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setCompanyId(user.getCompanyId());
 		objectDefinition.setUserId(user.getUserId());
 		objectDefinition.setUserName(user.getFullName());
+
+		String shortName = ObjectDefinitionImpl.getShortName(name);
+
+		objectDefinition.setDBTableName(
+			StringBundler.concat(
+				"O_", user.getCompanyId(), StringPool.UNDERLINE, shortName));
+
 		objectDefinition.setName(name);
+
+		String pkObjectFieldName = TextFormatter.format(
+			shortName + "Id", TextFormatter.I);
+
+		if (!system) {
+			pkObjectFieldName = "c_" + pkObjectFieldName;
+		}
+
+		objectDefinition.setPKObjectFieldDBColumnName(
+			pkObjectFieldName + StringPool.UNDERLINE);
+		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
+
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 

@@ -20,7 +20,10 @@
 
 		<!-- Other fields -->
 
+		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column name="name" type="String" />
+		<column method-name="PKObjectFieldDBColumnName" name="pkObjectFieldDBColumnName" type="String" />
+		<column method-name="PKObjectFieldName" name="pkObjectFieldName" type="String" />
 		<column name="system" type="boolean" />
 		<column name="version" type="int" />
 
@@ -99,6 +102,7 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
+		<column method-name="DBColumnName" name="dbColumnName" type="String" />
 		<column name="indexed" type="boolean" />
 		<column name="indexedAsKeyword" type="boolean" />
 		<column name="indexedLanguageId" type="String" />
