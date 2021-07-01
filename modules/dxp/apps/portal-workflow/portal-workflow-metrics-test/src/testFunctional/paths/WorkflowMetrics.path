@@ -296,6 +296,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_STEP_TOOLTIP</td>
+	<td>//div[contains(@class,'flex-row autofit-row')]/span[@title='View the average completion time and percentage of SLA breaches over the selected time period for each step of the workflow process.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_DASHBOARD_TAB</td>
 	<td>//li[contains(@class,'nav-item')]//a[contains(@href, 'dashboard')]</td>
 	<td></td>

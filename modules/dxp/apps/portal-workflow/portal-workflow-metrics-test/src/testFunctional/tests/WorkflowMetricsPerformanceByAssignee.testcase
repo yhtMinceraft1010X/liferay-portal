@@ -386,11 +386,15 @@ definition {
 	}
 
 	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test InfoIconDisplaysMessageOnHover {
 
-		// TODO LRQA-67693 InfoIconDisplaysMessageOnHover pending implementation
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetricsPerformanceByStep.viewPerformanceByStepTooltip();
+
+
+
 
 	}
 
