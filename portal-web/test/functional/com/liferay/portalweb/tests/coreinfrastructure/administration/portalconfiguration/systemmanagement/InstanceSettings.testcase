@@ -170,6 +170,79 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
+	@description = "This test specify the Terms of Use content by web content posted in a new site and assert the Terms of Use content updated when a new user login."
+	@priority = "3"
+	test CanSpecifyTheTermsofUseWebContent {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONGroup.addGroup(groupName = "Terms of Use Site");
+
+		JSONWebcontent.addWebContent(
+			content = "This is a new terms of use items posted in Terms of Use Site.",
+			groupName = "Terms of Use Site",
+			title = "Terms of Use WC Title");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Terms of Use",
+			configurationScope = "Virtual Instance Scope");
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "Terms of Use Site",
+			title = "Terms of Use WC Title");
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Terms of Use Site");
+
+		FormFields.viewCheckboxChecked(fieldName = "terms-of-use-required");
+
+		FormFields.editText(
+			fieldName = "group-id",
+			fieldValue = "${groupId}");
+
+		FormFields.editText(
+			fieldName = "article-id",
+			fieldValue = "${articleId}");
+
+		PortletEntry.save();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		Navigator.openURL();
+
+		Navigator.gotoLoginPage();
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "userea@liferay.com");
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "test");
+
+		AssertClick(
+			locator1 = "Button#SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementNotPresent(locator1 = "Button#SIGN_IN");
+
+		Portlet.viewPortletPresentPG(portletContent = "This is a new terms of use items posted in Terms of Use Site.");
+
+		User.acceptEndUserLicenseAgreement();
+
+		User.answerPasswordReminder();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+	}
+
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
 		ApplicationsMenu.gotoPortlet(
