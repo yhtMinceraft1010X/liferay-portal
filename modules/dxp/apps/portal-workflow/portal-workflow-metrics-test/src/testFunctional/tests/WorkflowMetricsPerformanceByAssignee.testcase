@@ -388,14 +388,9 @@ definition {
 	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
 	@priority = "2"
 	test InfoIconDisplaysMessageOnHover {
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetricsPerformanceByStep.viewPerformanceByStepTooltip();
-
-
-
-
 	}
 
 	@description = "LPS-99441 - Verify that when there are no completed items, the table inside Performance by Assignee page is displaying the specific empty state"
