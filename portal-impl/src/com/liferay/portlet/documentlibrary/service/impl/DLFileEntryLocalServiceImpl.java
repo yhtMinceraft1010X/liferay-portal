@@ -249,7 +249,7 @@ public class DLFileEntryLocalServiceImpl
 
 		long fileEntryId = counterLocalService.increment();
 
-		if (externalReferenceCode == null) {
+		if (Validator.isNull(externalReferenceCode)) {
 			externalReferenceCode = String.valueOf(fileEntryId);
 		}
 
