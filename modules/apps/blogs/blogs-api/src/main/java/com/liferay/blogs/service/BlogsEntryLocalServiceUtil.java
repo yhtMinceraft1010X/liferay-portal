@@ -48,12 +48,12 @@ public class BlogsEntryLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			addAttachmentFileEntry(
-				BlogsEntry blogsEntry, long userId, String fileName,
-				String mimeType, InputStream inputStream)
+				BlogsEntry entry, long userId, String fileName, String mimeType,
+				InputStream inputStream)
 		throws PortalException {
 
 		return getService().addAttachmentFileEntry(
-			blogsEntry, userId, fileName, mimeType, inputStream);
+			entry, userId, fileName, mimeType, inputStream);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.Folder
