@@ -157,19 +157,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public FileEntry addAttachmentFileEntry(
-			BlogsEntry blogsEntry, long userId, String fileName,
+			BlogsEntry entry, long userId, String fileName,
 			String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Folder folder = addAttachmentsFolder(userId, blogsEntry.getGroupId());
+		Folder folder = addAttachmentsFolder(userId, entry.getGroupId());
 
 		String uniqueFileName = _uniqueFileNameProvider.provide(
 			fileName,
 			curFileName -> _hasFileEntry(
-				blogsEntry.getGroupId(), folder.getFolderId(), curFileName));
+				entry.getGroupId(), folder.getFolderId(), curFileName));
 
 		return _portletFileRepository.addPortletFileEntry(
-			blogsEntry.getGroupId(), userId, null, 0,
+			entry.getGroupId(), userId, null, 0,
 			BlogsConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
 			uniqueFileName, mimeType, true);
 	}
@@ -2346,13 +2346,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		BlogsEntry blogsEntry = blogsEntryPersistence.fetchByG_ERC(
+		BlogsEntry entry = blogsEntryPersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);
 
-		if (blogsEntry != null) {
+		if (entry != null) {
 			throw new DuplicateEntryExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate BlogsEntry external reference code ",
+					"Duplicate blogs entry external reference code ",
 					externalReferenceCode, " in group ", groupId));
 		}
 	}
