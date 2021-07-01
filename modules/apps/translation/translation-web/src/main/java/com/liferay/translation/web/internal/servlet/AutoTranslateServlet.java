@@ -91,7 +91,7 @@ public class AutoTranslateServlet extends HttpServlet {
 				_language.get(
 					_resourceBundleLoader.loadResourceBundle(
 						_portal.getLocale(httpServletRequest)),
-					"there-is-a-problem-with-the-translation-service,-please-" +
+					"there-is-a-problem-with-the-translation-service.-please-" +
 						"contact-your-administrator"));
 		}
 	}
