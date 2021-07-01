@@ -303,7 +303,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			return;
 		}
 
-		DSLQuery ctEntryQuery = DSLQueryFactoryUtil.select(
+		DSLQuery ctEntryDSLQuery = DSLQueryFactoryUtil.select(
 			CTEntryTable.INSTANCE.modelClassPK
 		).from(
 			CTEntryTable.INSTANCE
@@ -344,7 +344,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				}
 
 				DSLQuery nextDSLQuery = _getMissingRequirementsDSLQuery(
-					ctEntryQuery, tableJoinHolder);
+					ctEntryDSLQuery, tableJoinHolder);
 
 				if (dslQuery == null) {
 					dslQuery = nextDSLQuery;
@@ -503,7 +503,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	}
 
 	private DSLQuery _getMissingRequirementsDSLQuery(
-		DSLQuery ctEntryQuery, TableJoinHolder tableJoinHolder) {
+		DSLQuery ctEntryDSLQuery, TableJoinHolder tableJoinHolder) {
 
 		WhereStep whereStep = tableJoinHolder.getMissingRequirementWhereStep();
 
@@ -555,7 +555,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		return joinStep.where(
 			missingRequirementWherePredicate.and(
 				childPKColumn.in(
-					ctEntryQuery
+					ctEntryDSLQuery
 				).and(
 					ctCollectionIdColumn.eq(_sourceCTCollectionId)
 				)));
