@@ -128,7 +128,7 @@ public class AccountEntryModelResourcePermission
 			}
 		}
 
-		long accountEntryGroupId = 0L;
+		long accountEntryGroupId = 0;
 
 		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
 			accountEntryId);
