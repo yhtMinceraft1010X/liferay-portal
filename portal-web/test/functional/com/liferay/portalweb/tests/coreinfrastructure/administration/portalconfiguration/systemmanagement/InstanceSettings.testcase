@@ -117,6 +117,59 @@ definition {
 			userScreenName = "test");
 	}
 
+	@description = "This test disable the Terms of Use via UI and assert the Terms of Use not required when a new user login."
+	@priority = "3"
+	test CanChangeTheTermsOfUseNotRequired {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "Terms of Use",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "terms-of-use-required");
+
+		FormFields.disableCheckbox(fieldName = "terms-of-use-required");
+
+		PortletEntry.save();
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			requireReset = "false",
+			userEmailAddress = "userea1@liferay.com");
+
+		User.logoutPG();
+
+		Navigator.openURL();
+
+		Navigator.gotoLoginPage();
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "userea@liferay.com");
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = "test");
+
+		AssertClick(
+			locator1 = "Button#SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementNotPresent(locator1 = "Button#SIGN_IN");
+
+		AssertElementNotPresent(locator1 = "Button#I_AGREE");
+
+		User.answerPasswordReminder();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+	}
+
 	@priority = "5"
 	test EditDefaultUserAssociationsOrganizationSites {
 		ApplicationsMenu.gotoPortlet(
