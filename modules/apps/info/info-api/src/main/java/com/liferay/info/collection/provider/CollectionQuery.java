@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 public class CollectionQuery {
 
-	public Optional<InfoFilter> getInfoFiltersOptional() {
+	public Optional<InfoFilter> getInfoFilterOptional() {
 		return Optional.ofNullable(_infoFilter);
 	}
 
