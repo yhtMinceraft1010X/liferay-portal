@@ -69,6 +69,16 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().addObjectDefinition(objectDefinition);
 	}
 
+	public static ObjectDefinition addOrUpdateSystemObjectDefinition(
+			long companyId,
+			com.liferay.object.system.SystemObjectDefinitionMetadata
+				systemObjectDefinitionMetadata)
+		throws PortalException {
+
+		return getService().addOrUpdateSystemObjectDefinition(
+			companyId, systemObjectDefinitionMetadata);
+	}
+
 	public static ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -101,6 +111,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteCompanyObjectDefinitions(long companyId)
+		throws PortalException {
+
+		getService().deleteCompanyObjectDefinitions(companyId);
 	}
 
 	/**

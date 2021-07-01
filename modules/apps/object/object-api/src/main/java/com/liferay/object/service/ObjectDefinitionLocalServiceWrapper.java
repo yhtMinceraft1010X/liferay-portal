@@ -62,6 +62,18 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition
+			addOrUpdateSystemObjectDefinition(
+				long companyId,
+				com.liferay.object.system.SystemObjectDefinitionMetadata
+					systemObjectDefinitionMetadata)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.addOrUpdateSystemObjectDefinition(
+			companyId, systemObjectDefinitionMetadata);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -98,6 +110,13 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteCompanyObjectDefinitions(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectDefinitionLocalService.deleteCompanyObjectDefinitions(companyId);
 	}
 
 	/**

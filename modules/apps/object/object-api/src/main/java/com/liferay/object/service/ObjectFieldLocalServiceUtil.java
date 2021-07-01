@@ -341,6 +341,10 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().updateObjectField(objectField);
 	}
 
+	public static void validateType(String type) throws PortalException {
+		getService().validateType(type);
+	}
+
 	public static ObjectFieldLocalService getService() {
 		return _service;
 	}

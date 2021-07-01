@@ -387,6 +387,13 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public void validateType(String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldLocalService.validateType(type);
+	}
+
+	@Override
 	public ObjectFieldLocalService getWrappedService() {
 		return _objectFieldLocalService;
 	}

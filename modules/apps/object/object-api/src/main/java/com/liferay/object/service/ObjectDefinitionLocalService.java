@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -83,6 +84,11 @@ public interface ObjectDefinitionLocalService
 	public ObjectDefinition addObjectDefinition(
 		ObjectDefinition objectDefinition);
 
+	public ObjectDefinition addOrUpdateSystemObjectDefinition(
+			long companyId,
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
+		throws PortalException;
+
 	public ObjectDefinition addSystemObjectDefinition(
 			long userId, String dbTableName, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
@@ -102,6 +108,9 @@ public interface ObjectDefinitionLocalService
 	 * @throws PortalException
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public void deleteCompanyObjectDefinitions(long companyId)
 		throws PortalException;
 
 	/**
