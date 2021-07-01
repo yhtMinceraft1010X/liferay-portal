@@ -276,7 +276,6 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 			Group group = _groupLocalService.fetchGroup(
 				serviceContext.getScopeGroupId());
-
 			User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 			return new DefaultInfoListProviderContext(group, user);
