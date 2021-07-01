@@ -1278,7 +1278,7 @@ public class LayoutsAdminDisplayContext {
 	public boolean isDraft() {
 		Layout layout = getSelLayout();
 
-		if (layout.isSystem() && layout.isDraftLayout()) {
+		if (layout.isDraftLayout() && layout.isSystem()) {
 			return true;
 		}
 
