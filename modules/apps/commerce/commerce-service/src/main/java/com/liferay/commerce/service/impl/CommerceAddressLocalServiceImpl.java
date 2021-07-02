@@ -157,7 +157,6 @@ public class CommerceAddressLocalServiceImpl
 
 		commerceAddress.setNew(true);
 		commerceAddress.setPrimaryKey(commerceAddressId);
-
 		commerceAddress.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return commerceAddress;

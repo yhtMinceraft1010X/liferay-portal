@@ -123,22 +123,24 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _setPhoneNumber(Address address, String phoneNumber) {
-		if (phoneNumber != null) {
-			ListType listType = ListTypeLocalServiceUtil.getListType(
-				"phone-number", ListTypeConstants.ADDRESS_PHONE);
+		if (phoneNumber == null) {
+			return;
+		}
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ListType listType = ListTypeLocalServiceUtil.getListType(
+			"phone-number", ListTypeConstants.ADDRESS_PHONE);
 
-			try {
-				PhoneLocalServiceUtil.addPhone(
-					serviceContext.getUserId(), Address.class.getName(),
-					address.getAddressId(), phoneNumber, null,
-					listType.getListTypeId(), false, serviceContext);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-			}
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			PhoneLocalServiceUtil.addPhone(
+				serviceContext.getUserId(), Address.class.getName(),
+				address.getAddressId(), phoneNumber, null,
+				listType.getListTypeId(), false, serviceContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 
