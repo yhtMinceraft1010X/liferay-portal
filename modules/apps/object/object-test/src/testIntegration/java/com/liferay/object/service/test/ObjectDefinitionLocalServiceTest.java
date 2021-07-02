@@ -16,7 +16,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
-import com.liferay.object.exception.NoSuchFieldException;
+import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
@@ -225,8 +225,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchFieldException noSuchFieldException) {
-			Assert.assertNotNull(noSuchFieldException);
+		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
 		_assertObjectField(
@@ -270,8 +270,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchFieldException noSuchFieldException) {
-			Assert.assertNotNull(noSuchFieldException);
+		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
 		_assertObjectField(objectDefinition, "archived", "archived", "Boolean");

@@ -17,7 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.object.exception.NoSuchEntryException;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -172,11 +172,11 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryException noSuchEntryException) {
+		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			Assert.assertEquals(
 				"No ObjectEntry exists with the primary key " +
 					objectEntry1.getObjectEntryId(),
-				noSuchEntryException.getMessage());
+				noSuchObjectEntryException.getMessage());
 		}
 
 		try {
@@ -194,11 +194,11 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryException noSuchEntryException) {
+		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			Assert.assertEquals(
 				"No ObjectEntry exists with the primary key " +
 					objectEntry1.getObjectEntryId(),
-				noSuchEntryException.getMessage());
+				noSuchObjectEntryException.getMessage());
 		}
 
 		_assertCount(2);
@@ -346,10 +346,10 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryException noSuchEntryException) {
+		catch (NoSuchObjectEntryException noSuchObjectEntryException) {
 			Assert.assertEquals(
 				"No ObjectEntry exists with the primary key 0",
-				noSuchEntryException.getMessage());
+				noSuchObjectEntryException.getMessage());
 		}
 	}
 
