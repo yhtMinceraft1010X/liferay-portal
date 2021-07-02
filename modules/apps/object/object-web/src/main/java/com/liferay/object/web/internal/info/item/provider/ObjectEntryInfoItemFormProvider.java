@@ -124,26 +124,36 @@ public class ObjectEntryInfoItemFormProvider
 					locale, ObjectEntry.class.getName()));
 		}
 
-		try {
-			return InfoForm.builder(
-			).infoFieldSetEntry(
-				_getBasicInformationInfoFieldSet()
-			).<NoSuchObjectDefinitionException>infoFieldSetEntry(
-				consumer -> {
-					if (objectDefinitionId != 0) {
-						consumer.accept(
-							_getObjectDefinitionInfoFieldSet(
-								objectDefinitionId));
-					}
+		return InfoForm.builder(
+		).infoFieldSetEntry(
+			_getBasicInformationInfoFieldSet()
+		).<NoSuchFormVariationException>infoFieldSetEntry(
+			consumer -> {
+				if (objectDefinitionId != 0) {
+					consumer.accept(
+						_getObjectDefinitionInfoFieldSet(objectDefinitionId));
 				}
-			).infoFieldSetEntry(
-				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-					ObjectEntry.class.getName())
-			).labelInfoLocalizedValue(
-				infoLocalizedValueBuilder.build()
-			).name(
-				ObjectEntry.class.getName()
-			).build();
+			}
+		).infoFieldSetEntry(
+			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+				ObjectEntry.class.getName())
+		).labelInfoLocalizedValue(
+			infoLocalizedValueBuilder.build()
+		).name(
+			ObjectEntry.class.getName()
+		).build();
+	}
+
+	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
+			long objectDefinitionId)
+		throws NoSuchFormVariationException {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
 		}
 		catch (NoSuchObjectDefinitionException
 					noSuchObjectDefinitionException) {
@@ -152,51 +162,32 @@ public class ObjectEntryInfoItemFormProvider
 				String.valueOf(objectDefinitionId),
 				noSuchObjectDefinitionException);
 		}
-	}
-
-	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
-			long objectDefinitionId)
-		throws NoSuchObjectDefinitionException {
-
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
-			InfoLocalizedValue<String> fieldSetNameInfoLocalizedValue =
-				InfoLocalizedValue.singleValue(objectDefinition.getName());
-
-			return InfoFieldSet.builder(
-			).infoFieldSetEntry(
-				consumer -> {
-					for (ObjectField objectField :
-							_objectFieldLocalService.getObjectFields(
-								objectDefinitionId)) {
-
-						consumer.accept(
-							InfoFieldSet.builder(
-							).name(
-								objectField.getName()
-							).labelInfoLocalizedValue(
-								InfoLocalizedValue.singleValue(
-									objectField.getName())
-							).build());
-					}
-				}
-			).labelInfoLocalizedValue(
-				fieldSetNameInfoLocalizedValue
-			).name(
-				objectDefinition.getName()
-			).build();
-		}
-		catch (NoSuchObjectDefinitionException
-					noSuchObjectDefinitionException) {
-
-			throw noSuchObjectDefinitionException;
-		}
 		catch (PortalException portalException) {
 			throw new RuntimeException("Unexpected exception", portalException);
 		}
+
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			consumer -> {
+				for (ObjectField objectField :
+						_objectFieldLocalService.getObjectFields(
+							objectDefinitionId)) {
+
+					consumer.accept(
+						InfoFieldSet.builder(
+						).name(
+							objectField.getName()
+						).labelInfoLocalizedValue(
+							InfoLocalizedValue.singleValue(
+								objectField.getName())
+						).build());
+				}
+			}
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.singleValue(objectDefinition.getName())
+		).name(
+			objectDefinition.getName()
+		).build();
 	}
 
 	@Reference

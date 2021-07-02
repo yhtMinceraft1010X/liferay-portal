@@ -15,17 +15,13 @@
 package com.liferay.object.web.internal.info.item.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
-import java.io.Serializable;
-
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -55,21 +51,16 @@ public class ObjectEntryBasicInfoItemRenderer
 		ObjectEntry objectEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		long objectDefinitionId = objectEntry.getObjectDefinitionId();
-
 		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-			Map<String, Serializable> objectEntryValues =
-				_objectEntryLocalService.getValues(objectEntry);
-
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
+				ObjectWebKeys.OBJECT_DEFINITION,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()));
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_VALUES, objectEntryValues);
+				ObjectWebKeys.OBJECT_ENTRY_VALUES,
+				_objectEntryLocalService.getValues(objectEntry));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
