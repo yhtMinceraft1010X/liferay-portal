@@ -714,6 +714,9 @@ public class ServiceBuilder {
 
 			_mvccEnabled = GetterUtil.getBoolean(
 				rootElement.attributeValue("mvcc-enabled"));
+			_shortNoSuchExceptionEnabled = GetterUtil.getBoolean(
+				rootElement.attributeValue("short-no-such-exception-enabled"),
+				true);
 
 			Element authorElement = rootElement.element("author");
 
@@ -1365,14 +1368,16 @@ public class ServiceBuilder {
 	public String getNoSuchEntityException(Entity entity) {
 		String noSuchEntityException = entity.getName();
 
-		String portletShortName = entity.getPortletShortName();
+		if (_shortNoSuchExceptionEnabled) {
+			String portletShortName = entity.getPortletShortName();
 
-		if (Validator.isNull(portletShortName) ||
-			(noSuchEntityException.startsWith(portletShortName) &&
-			 !noSuchEntityException.equals(portletShortName))) {
+			if (Validator.isNull(portletShortName) ||
+				(noSuchEntityException.startsWith(portletShortName) &&
+				 !noSuchEntityException.equals(portletShortName))) {
 
-			noSuchEntityException = noSuchEntityException.substring(
-				portletShortName.length());
+				noSuchEntityException = noSuchEntityException.substring(
+					portletShortName.length());
+			}
 		}
 
 		return "NoSuch" + noSuchEntityException;
@@ -7968,6 +7973,7 @@ public class ServiceBuilder {
 	private Set<String> _resourceActionModels = new HashSet<>();
 	private String _resourcesDirName;
 	private String _serviceOutputPath;
+	private boolean _shortNoSuchExceptionEnabled;
 	private String _springFileName;
 	private String[] _springNamespaces;
 	private String _sqlDirName;
