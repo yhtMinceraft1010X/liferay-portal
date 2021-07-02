@@ -45,7 +45,7 @@ public class FutureDatesFunctionTest {
 		Assert.assertFalse(
 			futureDatesFunction.apply(
 				yesterdayLocalDate.toString(),
-				"{'startsFrom':'responseDate'}"));
+				"{'startsFrom': 'responseDate'}"));
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class FutureDatesFunctionTest {
 		FutureDatesFunction futureDatesFunction = new FutureDatesFunction();
 
 		Assert.assertFalse(
-			futureDatesFunction.apply(null, "{'startsFrom':'responseDate'}"));
+			futureDatesFunction.apply(null, "{'startsFrom': 'responseDate'}"));
 	}
 
 	@Test
@@ -66,7 +66,8 @@ public class FutureDatesFunctionTest {
 
 		Assert.assertTrue(
 			futureDatesFunction.apply(
-				tomorrowLocalDate.toString(), "{'startsFrom':'responseDate'}"));
+				tomorrowLocalDate.toString(),
+				"{'startsFrom': 'responseDate'}"));
 	}
 
 }
