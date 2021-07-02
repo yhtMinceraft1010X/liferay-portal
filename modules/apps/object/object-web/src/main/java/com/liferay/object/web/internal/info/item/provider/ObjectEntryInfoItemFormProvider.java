@@ -109,7 +109,8 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
-	private InfoFieldSet _getDefinitionFieldSet(long objectDefinitionId)
+	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
+			long objectDefinitionId)
 		throws NoSuchObjectDefinitionException {
 
 		try {
@@ -176,7 +177,7 @@ public class ObjectEntryInfoItemFormProvider
 				consumer -> {
 					if (objectDefinitionId != 0) {
 						consumer.accept(
-							_getDefinitionFieldSet(objectDefinitionId));
+							_getObjectDefinitionInfoFieldSet(objectDefinitionId));
 					}
 				}
 			).infoFieldSetEntry(
