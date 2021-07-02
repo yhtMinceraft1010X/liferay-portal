@@ -94,17 +94,14 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
 
-			ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
-				_getDTOConverterContext(
-					ddmStorageAdapterGetRequest.getPrimaryKey(), null,
-					ddmForm.getDefaultLocale()),
-				ddmStorageAdapterGetRequest.getPrimaryKey());
-
-			DDMFormValues ddmFormValues = _getDDMFormValues(
-				ddmForm, objectEntry);
-
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
-				ddmFormValues
+				_getDDMFormValues(
+					ddmForm,
+					_objectEntryManager.getObjectEntry(
+						_getDTOConverterContext(
+							ddmStorageAdapterGetRequest.getPrimaryKey(), null,
+							ddmForm.getDefaultLocale()),
+						ddmStorageAdapterGetRequest.getPrimaryKey()))
 			).build();
 		}
 		catch (Exception exception) {
