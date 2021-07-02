@@ -153,7 +153,6 @@ public class SchemaValidator {
 		options.addOption(
 			"s", "schema-prefix", true,
 			"Schema prefix for nondefault databases.");
-
 		options.addRequiredOption(
 			"d", "db-schema", true, "Default database schema name.");
 		options.addRequiredOption(
