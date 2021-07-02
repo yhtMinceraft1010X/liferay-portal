@@ -64,7 +64,7 @@ public class ObjectEntryBasicInfoItemRenderer
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/info/item/renderer/object.jsp");
+					"/info/item/renderer/object_entry.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
