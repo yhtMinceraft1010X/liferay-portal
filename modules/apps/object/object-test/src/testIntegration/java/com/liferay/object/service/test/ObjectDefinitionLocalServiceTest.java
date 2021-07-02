@@ -16,12 +16,14 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
+import com.liferay.object.exception.NoSuchFieldException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +35,7 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -170,6 +173,114 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			true, _hasColumn(objectDefinition.getDBTableName(), "baker_"));
 		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
+	}
+
+	@Test
+	public void testAddOrUpdateSystemObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addOrUpdateSystemObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				new BaseSystemObjectDefinitionMetadata() {
+					{
+						objectFieldLocalService =
+							ObjectFieldLocalServiceUtil.getService();
+					}
+
+					@Override
+					public String getName() {
+						return "UserNotificationEvent";
+					}
+
+					@Override
+					public List<ObjectField> getObjectFields() {
+						return Arrays.asList(
+							createObjectField("actionRequired", "Boolean"),
+							createObjectField("deliveryType", "Long"),
+							createObjectField("type_", "type", "String"));
+					}
+
+					@Override
+					public int getVersion() {
+						return 1;
+					}
+
+				});
+
+		Assert.assertEquals(
+			"UserNotificationEvent", objectDefinition.getDBTableName());
+		Assert.assertEquals(
+			"userNotificationEventId",
+			objectDefinition.getPKObjectFieldDBColumnName());
+		Assert.assertEquals(
+			"userNotificationEventId", objectDefinition.getPKObjectFieldName());
+		Assert.assertEquals(objectDefinition.isSystem(), true);
+		Assert.assertEquals(1, objectDefinition.getVersion());
+
+		_assertObjectField(
+			objectDefinition, "actionRequired", "actionRequired", "Boolean");
+
+		try {
+			ObjectFieldLocalServiceUtil.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "archived");
+
+			Assert.fail();
+		}
+		catch (NoSuchFieldException noSuchFieldException) {
+			Assert.assertNotNull(noSuchFieldException);
+		}
+
+		_assertObjectField(
+			objectDefinition, "deliveryType", "deliveryType", "Long");
+		_assertObjectField(objectDefinition, "type_", "type", "String");
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addOrUpdateSystemObjectDefinition(
+				TestPropsValues.getCompanyId(),
+				new BaseSystemObjectDefinitionMetadata() {
+					{
+						objectFieldLocalService =
+							ObjectFieldLocalServiceUtil.getService();
+					}
+
+					@Override
+					public String getName() {
+						return "UserNotificationEvent";
+					}
+
+					@Override
+					public List<ObjectField> getObjectFields() {
+						return Arrays.asList(
+							createObjectField("archived", "Boolean"),
+							createObjectField("deliveryType", "Long"),
+							createObjectField("type_", "type", "String"));
+					}
+
+					@Override
+					public int getVersion() {
+						return 2;
+					}
+
+				});
+
+		Assert.assertEquals(2, objectDefinition.getVersion());
+
+		try {
+			ObjectFieldLocalServiceUtil.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "actionRequired");
+
+			Assert.fail();
+		}
+		catch (NoSuchFieldException noSuchFieldException) {
+			Assert.assertNotNull(noSuchFieldException);
+		}
+
+		_assertObjectField(objectDefinition, "archived", "archived", "Boolean");
+		_assertObjectField(
+			objectDefinition, "deliveryType", "deliveryType", "Long");
+		_assertObjectField(objectDefinition, "type_", "type", "String");
+
+		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+			objectDefinition);
 	}
 
 	@Test
@@ -321,6 +432,21 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getDBTableName()));
+	}
+
+	private void _assertObjectField(
+			ObjectDefinition objectDefinition, String dbColumnName, String name,
+			String type)
+		throws Exception {
+
+		ObjectField objectField = ObjectFieldLocalServiceUtil.getObjectField(
+			objectDefinition.getObjectDefinitionId(), name);
+
+		Assert.assertEquals(dbColumnName, objectField.getDBColumnName());
+		Assert.assertEquals(false, objectField.isIndexed());
+		Assert.assertEquals(false, objectField.isIndexedAsKeyword());
+		Assert.assertEquals("", objectField.getIndexedLanguageId());
+		Assert.assertEquals(type, objectField.getType());
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
