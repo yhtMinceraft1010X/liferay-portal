@@ -23,6 +23,6 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";
 
-	public static final String OBJECT_VALUES = "OBJECT_VALUES";
+	public static final String OBJECT_ENTRY_VALUES = "OBJECT_ENTRY_VALUES";
 
 }

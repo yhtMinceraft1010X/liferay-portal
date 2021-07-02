@@ -61,7 +61,7 @@ public class ObjectEntryBasicInfoItemRenderer
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectDefinitionId);
-			Map<String, Serializable> objectValues =
+			Map<String, Serializable> objectEntryValues =
 				_objectEntryLocalService.getValues(objectEntry);
 
 			httpServletRequest.setAttribute(
@@ -69,7 +69,7 @@ public class ObjectEntryBasicInfoItemRenderer
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_VALUES, objectValues);
+				ObjectWebKeys.OBJECT_ENTRY_VALUES, objectEntryValues);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(

@@ -19,7 +19,7 @@
 <%
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectEntry objectEntry = (ObjectEntry)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY);
-Map<String, Serializable> objectValues = (Map<String, Serializable>)request.getAttribute(ObjectWebKeys.OBJECT_VALUES);
+Map<String, Serializable> objectEntryValues = (Map<String, Serializable>)request.getAttribute(ObjectWebKeys.OBJECT_ENTRY_VALUES);
 %>
 
 <h3>
@@ -30,7 +30,7 @@ Map<String, Serializable> objectValues = (Map<String, Serializable>)request.getA
 	<ul>
 
 		<%
-		for (Map.Entry<String, Serializable> entry : objectValues.entrySet()) {
+		for (Map.Entry<String, Serializable> entry : objectEntryValues.entrySet()) {
 		%>
 
 			<li>
