@@ -48,8 +48,6 @@ public class FixPackBuilderGitRepositoryJob
 
 		super(jobName, buildProfile);
 
-		System.out.println("i made it here");
-
 		_testSuiteName = testSuiteName;
 
 		_upstreamBranchName = upstreamBranchName;
