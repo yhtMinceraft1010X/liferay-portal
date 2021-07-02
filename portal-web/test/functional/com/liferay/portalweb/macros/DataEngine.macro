@@ -1372,6 +1372,65 @@ definition {
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
+	macro toggleShowLabel {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (IsElementPresent(locator1 = "Modal#MODAL")) {
+			if (isSet(fieldLabel)) {
+				AssertClick.assertPartialTextClickAt(
+					index = "${index}",
+					key_fieldLabel = "${fieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
+					value1 = "${fieldLabel}");
+			}
+			else {
+				Click(
+					index = "${index}",
+					locator1 = "DataEngineBuilder#FIELD_CONTAINER_IN_MODAL_INDEXED");
+			}
+		}
+		else {
+			if (isSet(fieldLabel)) {
+				AssertClick.assertPartialTextClickAt(
+					index = "${index}",
+					key_fieldLabel = "${fieldLabel}",
+					locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
+					value1 = "${fieldLabel}");
+			}
+			else {
+				Click(
+					index = "${index}",
+					locator1 = "DataEngineBuilder#FIELD_CONTAINER_INDEXED");
+			}
+		}
+
+		if (IsTextEqual(locator1 = "DataEngineBuilder#SIDEBAR_FIELD_NAME_BUTTON", value1 = "Fields Group")) {
+			var tab = "Basic";
+		}
+		else {
+			var tab = "Advanced";
+		}
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "${tab}")) {
+			Navigator.gotoNavTab(navTab = "${tab}");
+		}
+
+		if (IsChecked(checkboxName = "Show Label", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else {
+			Check.checkToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";
