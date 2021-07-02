@@ -23,6 +23,7 @@ import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,26 +48,19 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getObjectEntryInfoFieldValues(
 		ObjectEntry objectEntry) {
 
-		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
-
-		objectEntryFieldValues.add(
+		return Arrays.asList(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.createDateInfoField,
-				objectEntry.getCreateDate()));
-		objectEntryFieldValues.add(
+				objectEntry.getCreateDate()),
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.modifiedDateInfoField,
-				objectEntry.getModifiedDate()));
-		objectEntryFieldValues.add(
+				objectEntry.getModifiedDate()),
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.publishDateInfoField,
-				objectEntry.getLastPublishDate()));
-		objectEntryFieldValues.add(
+				objectEntry.getLastPublishDate()),
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.userNameInfoField,
 				objectEntry.getUserName()));
-
-		return objectEntryFieldValues;
 	}
 
 }
