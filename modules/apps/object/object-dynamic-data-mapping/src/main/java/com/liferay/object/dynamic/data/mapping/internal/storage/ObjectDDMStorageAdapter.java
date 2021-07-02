@@ -154,10 +154,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 		ddmFormValues.addAvailableLocale(ddmForm.getDefaultLocale());
 
-		Map<String, Object> properties = objectEntry.getProperties();
-
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
+		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
