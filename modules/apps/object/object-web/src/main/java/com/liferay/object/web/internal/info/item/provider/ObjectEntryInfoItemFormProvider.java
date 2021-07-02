@@ -20,7 +20,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.object.exception.NoSuchDefinitionException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -110,7 +110,7 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private InfoFieldSet _getDefinitionFieldSet(long objectDefinitionId)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		try {
 			ObjectDefinition objectDefinition =
@@ -143,8 +143,10 @@ public class ObjectEntryInfoItemFormProvider
 				objectDefinition.getName()
 			).build();
 		}
-		catch (NoSuchDefinitionException noSuchDefinitionException) {
-			throw noSuchDefinitionException;
+		catch (NoSuchObjectDefinitionException
+					noSuchObjectDefinitionException) {
+
+			throw noSuchObjectDefinitionException;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException("Unexpected exception", portalException);
@@ -170,7 +172,7 @@ public class ObjectEntryInfoItemFormProvider
 			return InfoForm.builder(
 			).infoFieldSetEntry(
 				_getBasicInformationInfoFieldSet()
-			).<NoSuchDefinitionException>infoFieldSetEntry(
+			).<NoSuchObjectDefinitionException>infoFieldSetEntry(
 				consumer -> {
 					if (objectDefinitionId != 0) {
 						consumer.accept(
@@ -186,9 +188,12 @@ public class ObjectEntryInfoItemFormProvider
 				ObjectEntry.class.getName()
 			).build();
 		}
-		catch (NoSuchDefinitionException noSuchDefinitionException) {
+		catch (NoSuchObjectDefinitionException
+					noSuchObjectDefinitionException) {
+
 			throw new NoSuchFormVariationException(
-				String.valueOf(objectDefinitionId), noSuchDefinitionException);
+				String.valueOf(objectDefinitionId),
+				noSuchObjectDefinitionException);
 		}
 	}
 

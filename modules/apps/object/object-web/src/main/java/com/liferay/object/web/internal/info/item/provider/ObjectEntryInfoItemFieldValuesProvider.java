@@ -21,9 +21,8 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
