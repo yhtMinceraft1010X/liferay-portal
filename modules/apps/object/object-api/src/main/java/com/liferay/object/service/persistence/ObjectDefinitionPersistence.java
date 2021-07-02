@@ -14,7 +14,7 @@
 
 package com.liferay.object.service.persistence;
 
-import com.liferay.object.exception.NoSuchDefinitionException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -108,13 +108,13 @@ public interface ObjectDefinitionPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByUuid_First(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the first object definition in the ordered set where uuid = &#63;.
@@ -134,13 +134,13 @@ public interface ObjectDefinitionPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByUuid_Last(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the last object definition in the ordered set where uuid = &#63;.
@@ -161,13 +161,13 @@ public interface ObjectDefinitionPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition[] findByUuid_PrevAndNext(
 			long objectDefinitionId, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Removes all the object definitions where uuid = &#63; from the database.
@@ -257,13 +257,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByUuid_C_First(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the first object definition in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -285,13 +285,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByUuid_C_Last(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the last object definition in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -314,13 +314,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition[] findByUuid_C_PrevAndNext(
 			long objectDefinitionId, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Removes all the object definitions where uuid = &#63; and companyId = &#63; from the database.
@@ -406,13 +406,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByCompanyId_First(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the first object definition in the ordered set where companyId = &#63;.
@@ -432,13 +432,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByCompanyId_Last(
 			long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the last object definition in the ordered set where companyId = &#63;.
@@ -459,13 +459,13 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition[] findByCompanyId_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Removes all the object definitions where companyId = &#63; from the database.
@@ -549,13 +549,13 @@ public interface ObjectDefinitionPersistence
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findBySystem_First(
 			boolean system,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the first object definition in the ordered set where system = &#63;.
@@ -575,13 +575,13 @@ public interface ObjectDefinitionPersistence
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findBySystem_Last(
 			boolean system,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the last object definition in the ordered set where system = &#63;.
@@ -602,13 +602,13 @@ public interface ObjectDefinitionPersistence
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition[] findBySystem_PrevAndNext(
 			long objectDefinitionId, boolean system,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Removes all the object definitions where system = &#63; from the database.
@@ -626,15 +626,15 @@ public interface ObjectDefinitionPersistence
 	public int countBySystem(boolean system);
 
 	/**
-	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public ObjectDefinition findByC_N(long companyId, String name)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the object definition where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -664,7 +664,7 @@ public interface ObjectDefinitionPersistence
 	 * @return the object definition that was removed
 	 */
 	public ObjectDefinition removeByC_N(long companyId, String name)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the number of object definitions where companyId = &#63; and name = &#63;.
@@ -702,22 +702,22 @@ public interface ObjectDefinitionPersistence
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition that was removed
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition remove(long objectDefinitionId)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	public ObjectDefinition updateImpl(ObjectDefinition objectDefinition);
 
 	/**
-	 * Returns the object definition with the primary key or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition with the primary key or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public ObjectDefinition findByPrimaryKey(long objectDefinitionId)
-		throws NoSuchDefinitionException;
+		throws NoSuchObjectDefinitionException;
 
 	/**
 	 * Returns the object definition with the primary key or returns <code>null</code> if it could not be found.

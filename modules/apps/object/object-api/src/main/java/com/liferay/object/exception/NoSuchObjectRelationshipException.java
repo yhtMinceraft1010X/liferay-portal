@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Marco Leo
  */
-public class NoSuchRelationshipException extends NoSuchModelException {
+public class NoSuchObjectRelationshipException extends NoSuchModelException {
 
-	public NoSuchRelationshipException() {
+	public NoSuchObjectRelationshipException() {
 	}
 
-	public NoSuchRelationshipException(String msg) {
+	public NoSuchObjectRelationshipException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchRelationshipException(String msg, Throwable throwable) {
+	public NoSuchObjectRelationshipException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchRelationshipException(Throwable throwable) {
+	public NoSuchObjectRelationshipException(Throwable throwable) {
 		super(throwable);
 	}
 

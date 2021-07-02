@@ -15,7 +15,7 @@
 package com.liferay.object.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.exception.NoSuchFieldException;
+import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -241,7 +241,7 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(existingObjectField, newObjectField);
 	}
 
-	@Test(expected = NoSuchFieldException.class)
+	@Test(expected = NoSuchObjectFieldException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Marco Leo
  */
-public class NoSuchLayoutException extends NoSuchModelException {
+public class NoSuchObjectEntryException extends NoSuchModelException {
 
-	public NoSuchLayoutException() {
+	public NoSuchObjectEntryException() {
 	}
 
-	public NoSuchLayoutException(String msg) {
+	public NoSuchObjectEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchLayoutException(String msg, Throwable throwable) {
+	public NoSuchObjectEntryException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchLayoutException(Throwable throwable) {
+	public NoSuchObjectEntryException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.object.service.persistence.impl;
 
-import com.liferay.object.exception.NoSuchDefinitionException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
@@ -283,12 +283,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByUuid_First(
 			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByUuid_First(
 			uuid, orderByComparator);
@@ -306,7 +306,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -335,12 +335,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByUuid_Last(
 			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByUuid_Last(
 			uuid, orderByComparator);
@@ -358,7 +358,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -395,13 +395,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition[] findByUuid_PrevAndNext(
 			long objectDefinitionId, String uuid,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -834,13 +834,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -861,7 +861,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -894,13 +894,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -921,7 +921,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -961,13 +961,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition[] findByUuid_C_PrevAndNext(
 			long objectDefinitionId, String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1392,13 +1392,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByCompanyId_First(
 			long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByCompanyId_First(
 			companyId, orderByComparator);
@@ -1416,7 +1416,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -1446,13 +1446,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByCompanyId_Last(
 			companyId, orderByComparator);
@@ -1470,7 +1470,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -1507,13 +1507,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition[] findByCompanyId_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = findByPrimaryKey(
 			objectDefinitionId);
@@ -1890,13 +1890,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findBySystem_First(
 			boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchBySystem_First(
 			system, orderByComparator);
@@ -1914,7 +1914,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -1944,13 +1944,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findBySystem_Last(
 			boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchBySystem_Last(
 			system, orderByComparator);
@@ -1968,7 +1968,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchDefinitionException(sb.toString());
+		throw new NoSuchObjectDefinitionException(sb.toString());
 	}
 
 	/**
@@ -2005,13 +2005,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition[] findBySystem_PrevAndNext(
 			long objectDefinitionId, boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = findByPrimaryKey(
 			objectDefinitionId);
@@ -2222,16 +2222,16 @@ public class ObjectDefinitionPersistenceImpl
 	private FinderPath _finderPathCountByC_N;
 
 	/**
-	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
 	public ObjectDefinition findByC_N(long companyId, String name)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByC_N(companyId, name);
 
@@ -2252,7 +2252,7 @@ public class ObjectDefinitionPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchDefinitionException(sb.toString());
+			throw new NoSuchObjectDefinitionException(sb.toString());
 		}
 
 		return objectDefinition;
@@ -2397,7 +2397,7 @@ public class ObjectDefinitionPersistenceImpl
 	 */
 	@Override
 	public ObjectDefinition removeByC_N(long companyId, String name)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = findByC_N(companyId, name);
 
@@ -2615,11 +2615,11 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition that was removed
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition remove(long objectDefinitionId)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		return remove((Serializable)objectDefinitionId);
 	}
@@ -2629,11 +2629,11 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the object definition
 	 * @return the object definition that was removed
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition remove(Serializable primaryKey)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		Session session = null;
 
@@ -2648,13 +2648,13 @@ public class ObjectDefinitionPersistenceImpl
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchDefinitionException(
+				throw new NoSuchObjectDefinitionException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(objectDefinition);
 		}
-		catch (NoSuchDefinitionException noSuchEntityException) {
+		catch (NoSuchObjectDefinitionException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -2790,11 +2790,11 @@ public class ObjectDefinitionPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the object definition
 	 * @return the object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		ObjectDefinition objectDefinition = fetchByPrimaryKey(primaryKey);
 
@@ -2803,7 +2803,7 @@ public class ObjectDefinitionPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchDefinitionException(
+			throw new NoSuchObjectDefinitionException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -2811,15 +2811,15 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the object definition with the primary key or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition with the primary key or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
 	public ObjectDefinition findByPrimaryKey(long objectDefinitionId)
-		throws NoSuchDefinitionException {
+		throws NoSuchObjectDefinitionException {
 
 		return findByPrimaryKey((Serializable)objectDefinitionId);
 	}

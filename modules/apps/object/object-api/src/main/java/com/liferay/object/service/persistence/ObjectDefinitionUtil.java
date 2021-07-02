@@ -200,11 +200,11 @@ public class ObjectDefinitionUtil {
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByUuid_First(
 			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -228,11 +228,11 @@ public class ObjectDefinitionUtil {
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByUuid_Last(
 			String uuid, OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -257,12 +257,12 @@ public class ObjectDefinitionUtil {
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition[] findByUuid_PrevAndNext(
 			long objectDefinitionId, String uuid,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_PrevAndNext(
 			objectDefinitionId, uuid, orderByComparator);
@@ -372,12 +372,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -406,12 +406,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -441,12 +441,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition[] findByUuid_C_PrevAndNext(
 			long objectDefinitionId, String uuid, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByUuid_C_PrevAndNext(
 			objectDefinitionId, uuid, companyId, orderByComparator);
@@ -551,12 +551,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByCompanyId_First(
 			long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByCompanyId_First(
 			companyId, orderByComparator);
@@ -582,12 +582,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByCompanyId_Last(
 			companyId, orderByComparator);
@@ -614,12 +614,12 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition[] findByCompanyId_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByCompanyId_PrevAndNext(
 			objectDefinitionId, companyId, orderByComparator);
@@ -722,12 +722,12 @@ public class ObjectDefinitionUtil {
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findBySystem_First(
 			boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findBySystem_First(system, orderByComparator);
 	}
@@ -751,12 +751,12 @@ public class ObjectDefinitionUtil {
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findBySystem_Last(
 			boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findBySystem_Last(system, orderByComparator);
 	}
@@ -781,12 +781,12 @@ public class ObjectDefinitionUtil {
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition[] findBySystem_PrevAndNext(
 			long objectDefinitionId, boolean system,
 			OrderByComparator<ObjectDefinition> orderByComparator)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findBySystem_PrevAndNext(
 			objectDefinitionId, system, orderByComparator);
@@ -812,15 +812,15 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching object definition
-	 * @throws NoSuchDefinitionException if a matching object definition could not be found
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	public static ObjectDefinition findByC_N(long companyId, String name)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByC_N(companyId, name);
 	}
@@ -858,7 +858,7 @@ public class ObjectDefinitionUtil {
 	 * @return the object definition that was removed
 	 */
 	public static ObjectDefinition removeByC_N(long companyId, String name)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().removeByC_N(companyId, name);
 	}
@@ -907,10 +907,10 @@ public class ObjectDefinitionUtil {
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition that was removed
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition remove(long objectDefinitionId)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().remove(objectDefinitionId);
 	}
@@ -922,14 +922,14 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Returns the object definition with the primary key or throws a <code>NoSuchDefinitionException</code> if it could not be found.
+	 * Returns the object definition with the primary key or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.
 	 *
 	 * @param objectDefinitionId the primary key of the object definition
 	 * @return the object definition
-	 * @throws NoSuchDefinitionException if a object definition with the primary key could not be found
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	public static ObjectDefinition findByPrimaryKey(long objectDefinitionId)
-		throws com.liferay.object.exception.NoSuchDefinitionException {
+		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
 		return getPersistence().findByPrimaryKey(objectDefinitionId);
 	}

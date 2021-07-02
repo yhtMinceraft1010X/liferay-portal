@@ -15,7 +15,7 @@
 package com.liferay.object.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.exception.NoSuchDefinitionException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -249,7 +249,7 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(existingObjectDefinition, newObjectDefinition);
 	}
 
-	@Test(expected = NoSuchDefinitionException.class)
+	@Test(expected = NoSuchObjectDefinitionException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
