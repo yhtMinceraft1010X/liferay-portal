@@ -71,7 +71,7 @@ public class ObjectEntryInfoItemFormProvider
 			throw new RuntimeException(
 				StringBundler.concat(
 					"Unable to get object definition ", objectDefinitionId,
-					"for object entry ", objectEntry.getObjectEntryId()),
+					" for object entry ", objectEntry.getObjectEntryId()),
 				portalException);
 		}
 	}
