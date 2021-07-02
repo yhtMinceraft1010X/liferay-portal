@@ -130,10 +130,10 @@ public class SchemaValidator {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				query);
-			ResultSet resultSet1 = preparedStatement.executeQuery()) {
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (resultSet1.next()) {
-				count = resultSet1.getInt(1);
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);
 
 				if (tableName.equals("DLFileEntryType") && (count == 1)) {
 					return 0;
