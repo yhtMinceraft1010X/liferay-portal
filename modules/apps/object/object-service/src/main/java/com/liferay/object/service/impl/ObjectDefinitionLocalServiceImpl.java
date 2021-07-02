@@ -401,7 +401,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
-		if (dbTableName == null) {
+		if (Validator.isNull(dbTableName)) {
 			if (system) {
 				dbTableName = name;
 			}
@@ -411,7 +411,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		if (pkObjectFieldName == null) {
+		if (Validator.isNull(pkObjectFieldName)) {
 			pkObjectFieldName = TextFormatter.format(
 				shortName + "Id", TextFormatter.I);
 
@@ -420,7 +420,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		if (pkObjectFieldDBColumnName == null) {
+		if (Validator.isNull(pkObjectFieldDBColumnName)) {
 			if (system) {
 				pkObjectFieldDBColumnName = pkObjectFieldName;
 			}

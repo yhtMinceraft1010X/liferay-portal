@@ -62,7 +62,7 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		if (objectDefinition.isSystem()) {
-			if (dbColumnName == null) {
+			if (Validator.isNull(dbColumnName)) {
 				dbColumnName = name;
 			}
 		}
@@ -92,6 +92,13 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);
+	}
+
+	@Override
+	public ObjectField getObjectField(long objectDefinitionId, String name)
+		throws PortalException {
+
+		return objectFieldPersistence.findByODI_N(objectDefinitionId, name);
 	}
 
 	@Override
