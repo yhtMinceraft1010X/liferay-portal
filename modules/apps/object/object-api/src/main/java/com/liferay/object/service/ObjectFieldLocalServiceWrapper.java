@@ -296,6 +296,15 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.getObjectField(objectFieldId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField getObjectField(
+			long objectDefinitionId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.getObjectField(
+			objectDefinitionId, name);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *
