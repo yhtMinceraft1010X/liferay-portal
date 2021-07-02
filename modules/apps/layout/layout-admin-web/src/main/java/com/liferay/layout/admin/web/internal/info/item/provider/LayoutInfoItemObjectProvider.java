@@ -41,7 +41,7 @@ public class LayoutInfoItemObjectProvider
 		}
 		catch (PortalException portalException) {
 			throw new NoSuchInfoItemException(
-				"No layout found with plid " + classPK, portalException);
+				"No layout found with PLID " + classPK, portalException);
 		}
 	}
 
