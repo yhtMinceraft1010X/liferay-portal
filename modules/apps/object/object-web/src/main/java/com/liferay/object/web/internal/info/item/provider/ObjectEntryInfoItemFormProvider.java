@@ -109,6 +109,51 @@ public class ObjectEntryInfoItemFormProvider
 		).build();
 	}
 
+	private InfoForm _getInfoForm(long objectDefinitionId)
+		throws NoSuchFormVariationException {
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
+			InfoLocalizedValue.builder();
+
+		for (Locale locale : availableLocales) {
+			infoLocalizedValueBuilder.value(
+				locale,
+				ResourceActionsUtil.getModelResource(
+					locale, ObjectEntry.class.getName()));
+		}
+
+		try {
+			return InfoForm.builder(
+			).infoFieldSetEntry(
+				_getBasicInformationInfoFieldSet()
+			).<NoSuchObjectDefinitionException>infoFieldSetEntry(
+				consumer -> {
+					if (objectDefinitionId != 0) {
+						consumer.accept(
+							_getObjectDefinitionInfoFieldSet(
+								objectDefinitionId));
+					}
+				}
+			).infoFieldSetEntry(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+					ObjectEntry.class.getName())
+			).labelInfoLocalizedValue(
+				infoLocalizedValueBuilder.build()
+			).name(
+				ObjectEntry.class.getName()
+			).build();
+		}
+		catch (NoSuchObjectDefinitionException
+					noSuchObjectDefinitionException) {
+
+			throw new NoSuchFormVariationException(
+				String.valueOf(objectDefinitionId),
+				noSuchObjectDefinitionException);
+		}
+	}
+
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(
 			long objectDefinitionId)
 		throws NoSuchObjectDefinitionException {
@@ -151,50 +196,6 @@ public class ObjectEntryInfoItemFormProvider
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException("Unexpected exception", portalException);
-		}
-	}
-
-	private InfoForm _getInfoForm(long objectDefinitionId)
-		throws NoSuchFormVariationException {
-
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-
-		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
-			InfoLocalizedValue.builder();
-
-		for (Locale locale : availableLocales) {
-			infoLocalizedValueBuilder.value(
-				locale,
-				ResourceActionsUtil.getModelResource(
-					locale, ObjectEntry.class.getName()));
-		}
-
-		try {
-			return InfoForm.builder(
-			).infoFieldSetEntry(
-				_getBasicInformationInfoFieldSet()
-			).<NoSuchObjectDefinitionException>infoFieldSetEntry(
-				consumer -> {
-					if (objectDefinitionId != 0) {
-						consumer.accept(
-							_getObjectDefinitionInfoFieldSet(objectDefinitionId));
-					}
-				}
-			).infoFieldSetEntry(
-				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-					ObjectEntry.class.getName())
-			).labelInfoLocalizedValue(
-				infoLocalizedValueBuilder.build()
-			).name(
-				ObjectEntry.class.getName()
-			).build();
-		}
-		catch (NoSuchObjectDefinitionException
-					noSuchObjectDefinitionException) {
-
-			throw new NoSuchFormVariationException(
-				String.valueOf(objectDefinitionId),
-				noSuchObjectDefinitionException);
 		}
 	}
 
