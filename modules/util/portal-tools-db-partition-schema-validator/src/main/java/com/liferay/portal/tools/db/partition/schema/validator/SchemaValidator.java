@@ -149,15 +149,16 @@ public class SchemaValidator {
 
 		options.addOption("a", "debug", false, "Print all log traces.");
 		options.addOption("h", "help", false, "Print help message.");
-		options.addOption("j", "jdbc-url", true, "JDBC url.");
+		options.addOption("j", "jdbc-url", true, "Set the JDBC url.");
 		options.addOption(
 			"s", "schema-prefix", true,
-			"Schema prefix for nondefault databases.");
+			"Set the schema prefix for nondefault databases.");
 		options.addRequiredOption(
-			"d", "db-schema", true, "Default database schema name.");
+			"d", "db-schema", true, "Set the default database schema name.");
 		options.addRequiredOption(
-			"p", "password", true, "Database user password.");
-		options.addRequiredOption("u", "user", true, "Database user name.");
+			"p", "password", true, "Set database user password.");
+		options.addRequiredOption(
+			"u", "user", true, "Set the database user name.");
 
 		return options;
 	}
@@ -184,7 +185,7 @@ public class SchemaValidator {
 		throws Exception {
 
 		System.out.println(
-			"# Validating schema " + schemaName + " for company ID " +
+			"Validating schema " + schemaName + " for company ID " +
 				companyId);
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
