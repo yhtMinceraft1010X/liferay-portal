@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = InfoListRenderer.class)
-public class BorderedObjectEntryBasicListInfoListRenderer
+public class ObjectEntryBorderedBasicInfoListRenderer
 	implements BorderedBasicInfoListRenderer<ObjectEntry> {
 
 	@Override
@@ -109,6 +109,6 @@ public class BorderedObjectEntryBasicListInfoListRenderer
 	protected InfoItemRendererTracker infoItemRendererTracker;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BorderedObjectEntryBasicListInfoListRenderer.class);
+		ObjectEntryBorderedBasicInfoListRenderer.class);
 
 }
