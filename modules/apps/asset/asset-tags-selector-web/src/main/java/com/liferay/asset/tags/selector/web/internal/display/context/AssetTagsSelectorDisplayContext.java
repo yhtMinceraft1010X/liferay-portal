@@ -140,7 +140,7 @@ public class AssetTagsSelectorDisplayContext {
 			tagsSearchContainer.getEnd(),
 			tagsSearchContainer.getOrderByComparator());
 
-		List<AssetTag> filteredTags = _removeDuplicatedAssetTags(tags);
+		List<AssetTag> filteredTags = _removeDuplicateAssetTags(tags);
 
 		tagsSearchContainer.setTotal(filteredTags.size());
 
@@ -202,7 +202,7 @@ public class AssetTagsSelectorDisplayContext {
 		return _orderByCol;
 	}
 
-	private List<AssetTag> _removeDuplicatedAssetTags(List<AssetTag> tags) {
+	private List<AssetTag> _removeDuplicateAssetTags(List<AssetTag> tags) {
 		HashMap<String, AssetTag> filteredTags = new HashMap<>();
 
 		for (AssetTag tag : tags) {
