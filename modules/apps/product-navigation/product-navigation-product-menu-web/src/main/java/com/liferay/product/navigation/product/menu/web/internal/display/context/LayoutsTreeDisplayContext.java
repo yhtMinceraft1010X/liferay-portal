@@ -96,11 +96,9 @@ public class LayoutsTreeDisplayContext {
 
 		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
-
 		_namespace = PortalUtil.getPortletNamespace(
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
-
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
