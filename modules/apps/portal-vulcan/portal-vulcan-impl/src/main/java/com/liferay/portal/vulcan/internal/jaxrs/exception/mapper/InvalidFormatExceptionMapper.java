@@ -66,7 +66,7 @@ public class InvalidFormatExceptionMapper
 
 		return new Problem(
 			invalidFormatException.getLocalizedMessage(),
-			Response.Status.BAD_REQUEST, message, "InvalidFormat");
+			Response.Status.BAD_REQUEST, message, "InvalidFormatException");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
