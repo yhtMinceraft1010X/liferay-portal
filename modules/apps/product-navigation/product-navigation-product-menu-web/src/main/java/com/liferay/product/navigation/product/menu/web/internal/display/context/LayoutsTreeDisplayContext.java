@@ -88,6 +88,11 @@ public class LayoutsTreeDisplayContext {
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
+		_siteNavigationMenuItemTypeRegistry =
+			siteNavigationMenuItemTypeRegistry;
+		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
+		_siteNavigationMenuItemLocalService =
+			siteNavigationMenuItemLocalService;
 
 		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);
@@ -96,14 +101,7 @@ public class LayoutsTreeDisplayContext {
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
-		_siteNavigationMenuItemLocalService =
-			siteNavigationMenuItemLocalService;
-		_siteNavigationMenuItemTypeRegistry =
-			siteNavigationMenuItemTypeRegistry;
-
 		_siteNavigationMenuItemTypesMap = new HashMap<>();
-
-		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
