@@ -63,6 +63,31 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
 
+	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
+	@priority = "5"
+	test CanCollectDigitalSignatureByVerticalEllipsis {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
+			dmDocumentTitle = "DM Document PDF");
+
+		var dmDocumentTitle = "DM Document PDF";
+
+		Click.waitForMenuToggleJSClick(
+			key_rowEntry = "${dmDocumentTitle}",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
+	}
+
 	@description = "This is a test for LPS-135089. Verify if its possible get multiple signatures from diferent documents in DM"
 	@priority = "5"
 	test CanGetMultipleSignaturesByButton {
@@ -89,31 +114,6 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1");
 
 		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
-	}
-
-	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
-	@priority = "5"
-	test CanCollectDigitalSignatureByVerticalEllipsis {
-		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF");
-
-		var dmDocumentTitle = "DM Document PDF";
-
-		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${dmDocumentTitle}",
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-
-		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_ELLIPSIS_COLLECT_BUTTON");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
 
 	@description = "This is a test for LPS-133993. Verify if not supported file disable the Digital Signature collect icon"
