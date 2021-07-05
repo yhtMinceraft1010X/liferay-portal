@@ -101,8 +101,6 @@ public class LayoutsTreeDisplayContext {
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
-		_siteNavigationMenuItemTypesMap = new HashMap<>();
-
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -850,7 +848,7 @@ public class LayoutsTreeDisplayContext {
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
 	private final Map<String, SiteNavigationMenuItemType>
-		_siteNavigationMenuItemTypesMap;
+		_siteNavigationMenuItemTypesMap = new HashMap<>();
 	private JSONArray _siteNavigationMenuJSONArray;
 	private final SiteNavigationMenuLocalService
 		_siteNavigationMenuLocalService;
