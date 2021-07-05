@@ -44,10 +44,10 @@ public class UserSystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("emailAddress", "String"),
-			createObjectField("firstName", "String"),
-			createObjectField("middleName", "String"),
-			createObjectField("uuid_", "uuid", "String"));
+			createObjectField("emailAddress", true, "String"),
+			createObjectField("firstName", true, "String"),
+			createObjectField("middleName", false, "String"),
+			createObjectField("uuid_", "uuid", false, "String"));
 	}
 
 	@Override

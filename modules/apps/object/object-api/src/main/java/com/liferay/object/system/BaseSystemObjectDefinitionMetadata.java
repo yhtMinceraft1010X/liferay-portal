@@ -26,12 +26,14 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseSystemObjectDefinitionMetadata
 	implements SystemObjectDefinitionMetadata {
 
-	protected ObjectField createObjectField(String name, String type) {
-		return createObjectField(null, name, type);
+	protected ObjectField createObjectField(
+		String name, boolean required, String type) {
+
+		return createObjectField(null, name, required, type);
 	}
 
 	protected ObjectField createObjectField(
-		String dbColumnName, String name, String type) {
+		String dbColumnName, String name, boolean required, String type) {
 
 		ObjectField objectField = objectFieldLocalService.createObjectField(0);
 
@@ -39,6 +41,7 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		objectField.setIndexed(false);
 		objectField.setIndexedAsKeyword(false);
 		objectField.setName(name);
+		objectField.setRequired(required);
 		objectField.setType(type);
 
 		return objectField;

@@ -194,9 +194,10 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField("actionRequired", "Boolean"),
-							createObjectField("deliveryType", "Long"),
-							createObjectField("type_", "type", "String"));
+							createObjectField(
+								"actionRequired", true, "Boolean"),
+							createObjectField("deliveryType", false, "Long"),
+							createObjectField("type_", "type", true, "String"));
 					}
 
 					@Override
@@ -217,7 +218,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(1, objectDefinition.getVersion());
 
 		_assertObjectField(
-			objectDefinition, "actionRequired", "actionRequired", "Boolean");
+			objectDefinition, "actionRequired", "actionRequired", true,
+			"Boolean");
 
 		try {
 			ObjectFieldLocalServiceUtil.getObjectField(
@@ -230,8 +232,8 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		_assertObjectField(
-			objectDefinition, "deliveryType", "deliveryType", "Long");
-		_assertObjectField(objectDefinition, "type_", "type", "String");
+			objectDefinition, "deliveryType", "deliveryType", false, "Long");
+		_assertObjectField(objectDefinition, "type_", "type", true, "String");
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addOrUpdateSystemObjectDefinition(
@@ -250,9 +252,10 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public List<ObjectField> getObjectFields() {
 						return Arrays.asList(
-							createObjectField("archived", "Boolean"),
-							createObjectField("deliveryType", "Long"),
-							createObjectField("type_", "type", "String"));
+							createObjectField("archived", true, "Boolean"),
+							createObjectField("deliveryType", true, "Long"),
+							createObjectField(
+								"type_", "type", false, "String"));
 					}
 
 					@Override
@@ -274,10 +277,11 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		_assertObjectField(objectDefinition, "archived", "archived", "Boolean");
 		_assertObjectField(
-			objectDefinition, "deliveryType", "deliveryType", "Long");
-		_assertObjectField(objectDefinition, "type_", "type", "String");
+			objectDefinition, "archived", "archived", true, "Boolean");
+		_assertObjectField(
+			objectDefinition, "deliveryType", "deliveryType", true, "Long");
+		_assertObjectField(objectDefinition, "type_", "type", false, "String");
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition);
@@ -436,7 +440,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName, String name,
-			String type)
+			boolean required, String type)
 		throws Exception {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.getObjectField(
@@ -446,6 +450,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(false, objectField.isIndexed());
 		Assert.assertEquals(false, objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
+		Assert.assertEquals(required, objectField.isRequired());
 		Assert.assertEquals(type, objectField.getType());
 	}
 

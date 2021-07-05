@@ -89,19 +89,21 @@ public class ObjectEntryLocalServiceTest {
 				Collections.<ObjectField>emptyList());
 
 		List<ObjectField> objectFields = Arrays.asList(
-			_createObjectField(true, false, "ageOfDeath", "Long"),
-			_createObjectField(true, false, "authorOfGospel", "Boolean"),
-			_createObjectField(true, false, "birthday", "Date"),
-			_createObjectField(true, true, "emailAddress", "String"),
-			_createObjectField(true, true, "emailAddressDomain", "String"),
-			_createObjectField(true, false, "firstName", "String"),
-			_createObjectField(true, false, "height", "Double"),
-			_createObjectField(true, false, "lastName", "String"),
-			_createObjectField(true, false, "middleName", "String"),
-			_createObjectField(true, false, "numberOfBooksWritten", "Integer"),
-			_createObjectField(false, false, "portrait", "Blob"),
-			_createObjectField(true, false, "speed", "BigDecimal"),
-			_createObjectField(true, false, "weight", "Double"));
+			_createObjectField(true, false, "ageOfDeath", false, "Long"),
+			_createObjectField(true, false, "authorOfGospel", false, "Boolean"),
+			_createObjectField(true, false, "birthday", false, "Date"),
+			_createObjectField(true, true, "emailAddress", true, "String"),
+			_createObjectField(
+				true, true, "emailAddressDomain", false, "String"),
+			_createObjectField(true, false, "firstName", false, "String"),
+			_createObjectField(true, false, "height", false, "Double"),
+			_createObjectField(true, false, "lastName", false, "String"),
+			_createObjectField(true, false, "middleName", false, "String"),
+			_createObjectField(
+				true, false, "numberOfBooksWritten", false, "Integer"),
+			_createObjectField(false, false, "portrait", false, "Blob"),
+			_createObjectField(true, false, "speed", false, "BigDecimal"),
+			_createObjectField(true, false, "weight", false, "Double"));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
@@ -138,6 +140,21 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(3);
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Judas"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"emailAddress\"",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test
@@ -798,7 +815,8 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String name, String type) {
+		boolean indexed, boolean indexedAsKeyword, String name,
+		boolean required, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
@@ -806,6 +824,7 @@ public class ObjectEntryLocalServiceTest {
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setName(name);
+		objectField.setRequired(required);
 		objectField.setType(type);
 
 		return objectField;

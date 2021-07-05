@@ -134,10 +134,12 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectFieldLocalService.addObjectField(
 					userId, objectDefinition.getObjectDefinitionId(),
 					newObjectField.getDBColumnName(), false, false, "",
-					newObjectField.getName(), newObjectField.getType());
+					newObjectField.getName(), newObjectField.isRequired(),
+					newObjectField.getType());
 			}
 			else {
 				if (!Objects.equals(oldObjectField, newObjectField.getType())) {
+					oldObjectField.setRequired(newObjectField.isRequired());
 					oldObjectField.setType(newObjectField.getType());
 
 					_objectFieldPersistence.update(oldObjectField);
@@ -457,7 +459,7 @@ public class ObjectDefinitionLocalServiceImpl
 				userId, objectDefinitionId, objectField.getDBColumnName(),
 				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(), objectField.getName(),
-				objectField.getType());
+				objectField.isRequired(), objectField.getType());
 		}
 
 		objectFields = _objectFieldPersistence.findByObjectDefinitionId(

@@ -53,7 +53,7 @@ public class ObjectFieldLocalServiceImpl
 	public ObjectField addObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, String type)
+			String name, boolean required, String type)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -89,6 +89,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
 		objectField.setName(name);
+		objectField.setRequired(required);
 		objectField.setType(type);
 
 		return objectFieldPersistence.update(objectField);

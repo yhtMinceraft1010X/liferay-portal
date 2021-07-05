@@ -560,10 +560,16 @@ public class ObjectEntryLocalServiceImpl
 			Object value = values.get(objectField.getName());
 
 			if (value == null) {
+				if (objectField.isRequired()) {
+					throw new ObjectEntryValuesException(
+						"No value was provided for required object field \"" +
+							objectField.getName() + "\"");
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"No value was provided for object field " +
-							objectField.getName());
+						"No value was provided for object field \"" +
+							objectField.getName() + "\"");
 				}
 
 				continue;
@@ -891,8 +897,8 @@ public class ObjectEntryLocalServiceImpl
 			if (value == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"No value was provided for object field " +
-							objectField.getName());
+						"No value was provided for object field \"" +
+							objectField.getName() + "\"");
 				}
 
 				continue;
