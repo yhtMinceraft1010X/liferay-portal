@@ -12,6 +12,8 @@
  * details.
  */
 
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const required = (value) => {
 	if (!value) {
 		return Liferay.Language.get('this-field-is-required');
@@ -40,7 +42,7 @@ const maxLength = (value, max) => {
 };
 
 const isEmail = (value) =>
-	/^[^\s@]+@[^\s@]+$/.test(value)
+	EMAIL_REGEX.test(value)
 		? undefined
 		: Liferay.Language.get('please-enter-a-valid-email-address');
 
