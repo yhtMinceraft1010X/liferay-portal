@@ -359,6 +359,19 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 			JSONObject journalArticleJSONObject =
 				JSONFactoryUtil.createJSONObject(content);
 
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(),
+				journalArticleJSONObject.getString("name"));
+
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				_serviceContext.getTimeZone());
+
+			int displayDateMonth = calendar.get(Calendar.MONTH);
+			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
+			int displayDateYear = calendar.get(Calendar.YEAR);
+			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
+			int displayDateMinute = calendar.get(Calendar.MINUTE);
+
 			List<String> assetTagNames = new ArrayList<>();
 
 			JSONArray assetTagNamesJSONArray =
@@ -372,19 +385,6 @@ public class InsuranceSiteInitializer implements SiteInitializer {
 
 			_serviceContext.setAssetTagNames(
 				assetTagNames.toArray(new String[0]));
-
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				_serviceContext.getTimeZone());
-
-			int displayDateMonth = calendar.get(Calendar.MONTH);
-			int displayDateDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int displayDateYear = calendar.get(Calendar.YEAR);
-			int displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int displayDateMinute = calendar.get(Calendar.MINUTE);
-
-			Map<Locale, String> titleMap = Collections.singletonMap(
-				LocaleUtil.getSiteDefault(),
-				journalArticleJSONObject.getString("name"));
 
 			_journalArticleLocalService.addArticle(
 				null, _serviceContext.getUserId(),
