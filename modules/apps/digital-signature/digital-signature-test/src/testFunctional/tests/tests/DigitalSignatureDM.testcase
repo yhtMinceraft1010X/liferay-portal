@@ -63,6 +63,34 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = "DM Document PDF");
 	}
 
+	@description = "This is a test for LPS-135089. Verify if its possible get multiple signatures from diferent documents in DM"
+	@priority = "5"
+	test CanGetMultipleSignaturesByButton {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");
+
+		Click(
+			dmDocumentTitle = "Document_1",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		Click(
+			dmDocumentTitle = "Document_2",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
+
+		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SEND_BUTTON");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
+	}
+
 	@description = "This is a test for LPS-133993. Verify if its possible collect Digital Signature By vertical ellipsis"
 	@priority = "5"
 	test CanCollectDigitalSignatureByVerticalEllipsis {

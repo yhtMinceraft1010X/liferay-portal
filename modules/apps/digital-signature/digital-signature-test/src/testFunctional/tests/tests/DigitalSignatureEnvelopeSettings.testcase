@@ -42,7 +42,7 @@ definition {
 		DigitalSignature.createEnvelopeWith2Documents(
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
+			envelopeName = "Poshi Test Envelope Name",
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
@@ -58,7 +58,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		DigitalSignature.deleteEnvelope(envelopeName = "Test Envelope Name");
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test Envelope Name");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if its possible only maximum of 10 recipients can be added"
@@ -109,6 +109,42 @@ definition {
 		AssertElementPresent(locator1 = "Button#TRASH_DISABLED");
 	}
 
+	@description = "This is a test for LPS-133105. Verify if adding more than 1 valid and 1 invalid documents will prevent collecting the digital signature"
+	@priority = "5"
+	test CanInvalidDocumentPreventCollectingDS {
+		DigitalSignature.enableDigitalSignature(siteStrategy = "Always Inherit");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
+
+		Click(
+			dmDocumentTitle = "Document_1",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		Click(
+			dmDocumentTitle = "Document_2",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		Click(
+			dmDocumentTitle = "Document_3",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+
+		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON_DISABLED");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.emptyCP();
+	}
+
 	@description = "This is a test for LPS-131425. Verify if Error message appear"
 	@ignore = "true"
 	@priority = "4"
@@ -119,7 +155,7 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
+			envelopeName = "Poshi Test Envelope Name",
 			recipientEmail = "test@liferay",
 			recipientFullName = "Recipient Full Name");
 
@@ -132,6 +168,8 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
+
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test Envelope Name");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if unsuportted files Error message appear"
@@ -143,7 +181,7 @@ definition {
 			dmDocumentFile = "Document_2.mp4",
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
+			envelopeName = "Poshi Test Envelope Name",
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
@@ -156,6 +194,8 @@ definition {
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
 		RecycleBin.emptyCP();
+
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test Envelope Name");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Success Message appear"
@@ -167,7 +207,7 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
 			emailMessage = "Email Message",
 			emailSubject = "Email Subject",
-			envelopeName = "Test Envelope Name",
+			envelopeName = "Poshi Test Envelope Name",
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
@@ -181,7 +221,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		DigitalSignature.deleteEnvelope(envelopeName = "Test Envelope Name");
+		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test Envelope Name");
 	}
 
 	@description = "This is a test for LPS-131425. Verify if Email Subject field is required"
