@@ -520,7 +520,7 @@ public class JournalArticleModelValidator
 		if (!articles.isEmpty()) {
 			throw new DuplicateArticleExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate article external reference code ",
+					"Duplicate journal article external reference code ",
 					externalReferenceCode, "in group ", groupId));
 		}
 	}
