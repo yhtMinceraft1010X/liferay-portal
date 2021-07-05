@@ -59,7 +59,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -251,7 +250,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), "This is a test folder.",
 			serviceContext);
 
-		HashMap<Locale, String> titleMap = HashMapBuilder.put(
+		Map<Locale, String> titleMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), "Test Article"
 		).build();
 
