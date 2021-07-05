@@ -245,6 +245,16 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			String content, ServiceContext serviceContext)
 		throws Exception {
 
+		JournalFolder journalFolder = _journalFolderLocalService.addFolder(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), "This is a test folder.",
+			serviceContext);
+
+		HashMap<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.getSiteDefault(), "Test Article"
+		).build();
+
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			"content", "string", "text", true, "textarea",
 			new Locale[] {LocaleUtil.getSiteDefault()},
@@ -260,16 +270,6 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			PortalUtil.getClassNameId(DDMStructure.class),
 			ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
-
-		JournalFolder journalFolder = _journalFolderLocalService.addFolder(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), "This is a test folder.",
-			serviceContext);
-
-		HashMap<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), "Test Article"
-		).build();
 
 		return _journalArticleLocalService.addArticle(
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
