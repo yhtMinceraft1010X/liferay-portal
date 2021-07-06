@@ -213,21 +213,19 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		String[] headers = headerLine.split(delimiter);
 
-		int matches = 0;
+		if (batchPlannerMappings.size() != headers.length) {
+			return _getHeaders(batchPlannerMappings);
+		}
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			if (ArrayUtil.contains(
+			if (!ArrayUtil.contains(
 					headers, batchPlannerMapping.getExternalFieldName())) {
 
-				matches++;
+				return _getHeaders(batchPlannerMappings);
 			}
 		}
 
-		if (matches == batchPlannerMappings.size()) {
-			return headers;
-		}
-
-		return _getHeaders(batchPlannerMappings);
+		return headers;
 	}
 
 	private File _getJSONLineFile(long batchPlannerPlanId) throws Exception {
