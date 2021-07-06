@@ -253,7 +253,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap,
 		String[] columns) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			2 + (batchPlannerMappingsMap.size() * 6));
 
 		sb.append(CharPool.OPEN_CURLY_BRACE);
 
