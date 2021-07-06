@@ -165,7 +165,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		String[] headers = _getHeaders(
-			delimiter, headerLine, batchPlannerMappings);
+			batchPlannerMappings, delimiter, headerLine);
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			for (int i = 0; i < headers.length; i++) {
@@ -204,8 +204,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private String[] _getHeaders(
-		String delimiter, String headerLine,
-		List<BatchPlannerMapping> batchPlannerMappings) {
+		List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
+		String headerLine) {
 
 		if (Validator.isNull(headerLine)) {
 			return _getHeaders(batchPlannerMappings);
