@@ -26,6 +26,7 @@ import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,7 +117,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append(CharPool.OPEN_CURLY_BRACE);
 
 		Set<Integer> indexes = map.keySet();
 
@@ -127,17 +128,18 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			BatchPlannerMapping batchPlannerMapping = map.get(idx);
 
-			sb.append(
-				String.format(
-					"\"%s\": \"%s\"",
-					batchPlannerMapping.getInternalFieldName(), columns[idx]));
+			sb.append(CharPool.QUOTE);
+			sb.append(batchPlannerMapping.getInternalFieldName());
+			sb.append("\": \"");
+			sb.append(columns[idx]);
+			sb.append(CharPool.QUOTE);
 
 			if (iterator.hasNext()) {
-				sb.append(StringPool.COMMA);
+				sb.append(CharPool.COMMA);
 			}
 		}
 
-		sb.append(StringPool.CLOSE_CURLY_BRACE);
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}
