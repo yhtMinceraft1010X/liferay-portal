@@ -65,7 +65,6 @@ public class ProcessVersionResourceImpl extends BaseProcessVersionResourceImpl {
 					_queries.term("processId", processId))));
 
 		searchSearchRequest.setSelectedFieldNames("versions");
-
 		searchSearchRequest.setSize(1);
 
 		return Page.of(
