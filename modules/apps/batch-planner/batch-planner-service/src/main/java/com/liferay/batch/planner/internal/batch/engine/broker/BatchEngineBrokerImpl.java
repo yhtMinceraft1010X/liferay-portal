@@ -111,21 +111,21 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerPlanId, true);
 	}
 
-	private String _asJSONLine(
-		String[] columns, Map<Integer, BatchPlannerMapping> mappingMap) {
+	private String _asJSON(
+		String[] columns, Map<Integer, BatchPlannerMapping> map) {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
-		Set<Integer> indexes = mappingMap.keySet();
+		Set<Integer> indexes = map.keySet();
 
 		Iterator<Integer> iterator = indexes.iterator();
 
 		while (iterator.hasNext()) {
 			Integer idx = iterator.next();
 
-			BatchPlannerMapping batchPlannerMapping = mappingMap.get(idx);
+			BatchPlannerMapping batchPlannerMapping = map.get(idx);
 
 			sb.append(
 				_getJSONKeyValue(
@@ -154,7 +154,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		return policies;
 	}
 
-	private Map<Integer, BatchPlannerMapping> _asMappingMap(
+	private Map<Integer, BatchPlannerMapping> _asMap(
 			String delimiter, String headerLine,
 			List<BatchPlannerMapping> batchPlannerMappings)
 		throws PortalException {
@@ -162,7 +162,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		String[] headers = _getHeaders(
 			delimiter, headerLine, batchPlannerMappings);
 
-		Map<Integer, BatchPlannerMapping> mappingMap = new HashMap<>();
+		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			int idx = _indexOf(
@@ -172,15 +172,15 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				continue;
 			}
 
-			mappingMap.put(idx, batchPlannerMapping);
+			map.put(idx, batchPlannerMapping);
 		}
 
-		if (mappingMap.isEmpty()) {
+		if (map.isEmpty()) {
 			throw new BatchPlannerMappingExternalFieldNameException(
 				"Unable to match external field names with header names");
 		}
 
-		return mappingMap;
+		return map;
 	}
 
 	private String[] _getHeaders(
@@ -255,7 +255,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			String delimiter = GetterUtil.getString(
 				policies.get("delimiter"), StringPool.SEMICOLON);
 
-			Map<Integer, BatchPlannerMapping> mappingMap = _asMappingMap(
+			Map<Integer, BatchPlannerMapping> map = _asMap(
 				delimiter, line,
 				_batchPlannerMappingLocalService.getBatchPlannerMappings(
 					batchPlannerPlanId));
@@ -267,7 +267,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			while (line != null) {
 				String[] columns = line.split(delimiter);
 
-				bufferedWriter.append(_asJSONLine(columns, mappingMap));
+				bufferedWriter.append(_asJSON(columns, map));
 
 				bufferedWriter.newLine();
 
