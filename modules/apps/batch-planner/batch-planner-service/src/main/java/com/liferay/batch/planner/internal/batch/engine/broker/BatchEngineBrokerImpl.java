@@ -170,7 +170,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				String[] columns = line.split(delimiter);
 
 				bufferedWriter.append(
-					_toJSON(columns, batchPlannerMappingsMap));
+					_toJSON(batchPlannerMappingsMap, columns));
 
 				bufferedWriter.newLine();
 
@@ -251,8 +251,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private String _toJSON(
-		String[] columns,
-		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap) {
+		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap,
+		String[] columns) {
 
 		StringBundler sb = new StringBundler();
 
