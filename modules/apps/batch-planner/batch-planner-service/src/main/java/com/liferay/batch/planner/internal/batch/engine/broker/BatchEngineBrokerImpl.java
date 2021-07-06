@@ -223,7 +223,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			String headerNamesString)
 		throws PortalException {
 
-		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap = new HashMap<>();
+		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap =
+			new HashMap<>();
 
 		String[] headerNames = _getHeaderNames(
 			batchPlannerMappings, delimiter, headerNamesString);
