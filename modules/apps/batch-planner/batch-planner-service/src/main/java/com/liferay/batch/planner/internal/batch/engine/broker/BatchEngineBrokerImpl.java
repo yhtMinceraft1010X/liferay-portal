@@ -84,7 +84,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
 
-		File file = _getJSONLineFile(batchPlannerPlanId);
+		File file = _getJSONLFile(batchPlannerPlanId);
 
 		_importTaskResource.setContextCompany(
 			_companyLocalService.getCompany(
@@ -223,7 +223,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		return headerNames;
 	}
 
-	private File _getJSONLineFile(long batchPlannerPlanId) throws Exception {
+	private File _getJSONLFile(long batchPlannerPlanId) throws Exception {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
