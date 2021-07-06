@@ -223,14 +223,11 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private File _getJSONLFile(long batchPlannerPlanId) throws Exception {
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.getBatchPlannerPlan(
-				batchPlannerPlanId);
-
 		File jsonlFile = FileUtil.createTempFile(
 			String.valueOf(batchPlannerPlanId), "jsonl");
-		List<BatchPlannerPolicy> batchPlannerPolicies =
-			_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
 
 		try (FileReader fileReader = new FileReader(
@@ -240,6 +237,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			String line = null;
+
+			List<BatchPlannerPolicy> batchPlannerPolicies =
+				_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
+					batchPlannerPlanId);
 
 			if (GetterUtil.getBoolean(_getBatchPlannerPolicyValue(batchPlannerPolicies, "hasColumnHeaders"))) {
 				line = bufferedReader.readLine();
