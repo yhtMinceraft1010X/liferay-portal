@@ -168,24 +168,16 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			int idx = -1;
-
 			for (int i = 0; i < headers.length; i++) {
 				if (Objects.equals(
 						headers[i],
 						batchPlannerMapping.getExternalFieldName())) {
 
-					idx = i;
+					map.put(i, batchPlannerMapping);
 
 					break;
 				}
 			}
-
-			if (idx < 0) {
-				continue;
-			}
-
-			map.put(idx, batchPlannerMapping);
 		}
 
 		if (map.isEmpty()) {
