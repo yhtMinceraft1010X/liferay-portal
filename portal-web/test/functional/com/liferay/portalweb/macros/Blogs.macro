@@ -126,6 +126,26 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro addEntryWithCustomURL {
+		if (isSet(siteURLKey)) {
+			BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");
+		}
+		else {
+			BlogsNavigator.gotoAddEntry();
+		}
+
+		BlogsEntry.addEntryContent(
+			entryContent = "${entryContent}",
+			entrySubtitle = "${entrySubtitle}",
+			entryTitle = "${entryTitle}");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "${customURL}");
+
+		PortletEntry.publish();
+	}
+
 	macro addEntryWithHTML {
 		BlogsNavigator.gotoAddEntry();
 
