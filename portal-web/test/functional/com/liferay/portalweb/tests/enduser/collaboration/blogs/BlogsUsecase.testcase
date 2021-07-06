@@ -153,9 +153,9 @@ definition {
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
 	}
 
-	@description = "This test covers LPS-102178. It checks that a blog entry can be saved as draft automatically when the custom URL same with the removed one."
+	@description = "This test covers LPS-102178. It checks that a blog entry can be saved as draft automatically when the custom URL is the same as the removed one."
 	@priority = "3"
-	test CanAutoSaveEntryAsDraftWhenCustomURLSameWithRemovedOne {
+	test CanAutoSaveDuplicateCustomURL {
 		Blogs.addEntryWithCustomURL(
 			customURL = "my-custom-url",
 			entryContent = "Blog Entry Content",
