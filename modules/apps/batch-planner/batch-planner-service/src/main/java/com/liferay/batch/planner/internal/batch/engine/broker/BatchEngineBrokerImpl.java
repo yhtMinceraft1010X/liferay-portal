@@ -79,72 +79,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 	}
 
-	private void _submit(long batchPlannerPlanId) throws Exception {
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.getBatchPlannerPlan(
-				batchPlannerPlanId);
-
-		File file = _getJSONLFile(batchPlannerPlanId);
-
-		_importTaskResource.setContextCompany(
-			_companyLocalService.getCompany(
-				batchPlannerPlan.getCompanyId()));
-		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
-		_importTaskResource.setContextUser(
-			_userLocalService.getUser(batchPlannerPlan.getUserId()));
-
-		ImportTask importTask = _importTaskResource.postImportTask(
-			batchPlannerPlan.getInternalClassName(), null, null,
-			"batch-planner-plan-" + batchPlannerPlanId,
-			MultipartBody.of(
-				Collections.singletonMap(
-					"file",
-					new BinaryFile(
-						"application/json", file.getName(),
-						new FileInputStream(file), file.length())),
-				null, Collections.emptyMap()));
-
-		_batchPlannerLogLocalService.addBatchPlannerLog(
-			batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
-			String.valueOf(importTask.getId()), null, (int)file.length(),
-			1);
-
-		_batchPlannerPlanLocalService.updateActive(
-			batchPlannerPlanId, true);
-	}
-
-	private String _toJSON(
-		String[] columns, Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap) {
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(CharPool.OPEN_CURLY_BRACE);
-
-		Set<Integer> indexes = batchPlannerMappingsMap.keySet();
-
-		Iterator<Integer> iterator = indexes.iterator();
-
-		while (iterator.hasNext()) {
-			Integer idx = iterator.next();
-
-			BatchPlannerMapping batchPlannerMapping = batchPlannerMappingsMap.get(idx);
-
-			sb.append(CharPool.QUOTE);
-			sb.append(batchPlannerMapping.getInternalFieldName());
-			sb.append("\": \"");
-			sb.append(columns[idx]);
-			sb.append(CharPool.QUOTE);
-
-			if (iterator.hasNext()) {
-				sb.append(CharPool.COMMA);
-			}
-		}
-
-		sb.append(CharPool.CLOSE_CURLY_BRACE);
-
-		return sb.toString();
-	}
-
 	private String _getBatchPlannerPolicyValue(
 		List<BatchPlannerPolicy> batchPlannerPolicies, String name) {
 
@@ -155,37 +89,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 
 		return null;
-	}
-
-	private Map<Integer, BatchPlannerMapping> _toBatchPlannerMappingsMap(
-			List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
-			String headerNamesString)
-		throws PortalException {
-
-		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
-
-		String[] headerNames = _getHeaderNames(
-			batchPlannerMappings, delimiter, headerNamesString);
-
-		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			for (int i = 0; i < headerNames.length; i++) {
-				if (Objects.equals(
-						batchPlannerMapping.getExternalFieldName(),
-						headerNames[i])) {
-
-					map.put(i, batchPlannerMapping);
-
-					break;
-				}
-			}
-		}
-
-		if (map.isEmpty()) {
-			throw new BatchPlannerMappingExternalFieldNameException(
-				"Unable to map external field names to header names");
-		}
-
-		return map;
 	}
 
 	private String[] _getHeaderNames(
@@ -242,17 +145,22 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
 					batchPlannerPlanId);
 
-			if (GetterUtil.getBoolean(_getBatchPlannerPolicyValue(batchPlannerPolicies, "hasColumnHeaders"))) {
+			if (GetterUtil.getBoolean(
+					_getBatchPlannerPolicyValue(
+						batchPlannerPolicies, "hasColumnHeaders"))) {
+
 				line = bufferedReader.readLine();
 			}
 
 			String delimiter = GetterUtil.getString(
-				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"), StringPool.SEMICOLON);
+				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"),
+				StringPool.SEMICOLON);
 
-			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap = _toBatchPlannerMappingsMap(
-				_batchPlannerMappingLocalService.getBatchPlannerMappings(
-					batchPlannerPlanId),
-				delimiter, line);
+			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap =
+				_toBatchPlannerMappingsMap(
+					_batchPlannerMappingLocalService.getBatchPlannerMappings(
+						batchPlannerPlanId),
+					delimiter, line);
 
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
@@ -261,7 +169,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			while (line != null) {
 				String[] columns = line.split(delimiter);
 
-				bufferedWriter.append(_toJSON(columns, batchPlannerMappingsMap));
+				bufferedWriter.append(
+					_toJSON(columns, batchPlannerMappingsMap));
 
 				bufferedWriter.newLine();
 
@@ -277,6 +186,102 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			throw exception;
 		}
+	}
+
+	private void _submit(long batchPlannerPlanId) throws Exception {
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.getBatchPlannerPlan(
+				batchPlannerPlanId);
+
+		File file = _getJSONLFile(batchPlannerPlanId);
+
+		_importTaskResource.setContextCompany(
+			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
+		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
+		_importTaskResource.setContextUser(
+			_userLocalService.getUser(batchPlannerPlan.getUserId()));
+
+		ImportTask importTask = _importTaskResource.postImportTask(
+			batchPlannerPlan.getInternalClassName(), null, null,
+			"batch-planner-plan-" + batchPlannerPlanId,
+			MultipartBody.of(
+				Collections.singletonMap(
+					"file",
+					new BinaryFile(
+						"application/json", file.getName(),
+						new FileInputStream(file), file.length())),
+				null, Collections.emptyMap()));
+
+		_batchPlannerLogLocalService.addBatchPlannerLog(
+			batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
+			String.valueOf(importTask.getId()), null, (int)file.length(), 1);
+
+		_batchPlannerPlanLocalService.updateActive(batchPlannerPlanId, true);
+	}
+
+	private Map<Integer, BatchPlannerMapping> _toBatchPlannerMappingsMap(
+			List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
+			String headerNamesString)
+		throws PortalException {
+
+		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
+
+		String[] headerNames = _getHeaderNames(
+			batchPlannerMappings, delimiter, headerNamesString);
+
+		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
+			for (int i = 0; i < headerNames.length; i++) {
+				if (Objects.equals(
+						batchPlannerMapping.getExternalFieldName(),
+						headerNames[i])) {
+
+					map.put(i, batchPlannerMapping);
+
+					break;
+				}
+			}
+		}
+
+		if (map.isEmpty()) {
+			throw new BatchPlannerMappingExternalFieldNameException(
+				"Unable to map external field names to header names");
+		}
+
+		return map;
+	}
+
+	private String _toJSON(
+		String[] columns,
+		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(CharPool.OPEN_CURLY_BRACE);
+
+		Set<Integer> indexes = batchPlannerMappingsMap.keySet();
+
+		Iterator<Integer> iterator = indexes.iterator();
+
+		while (iterator.hasNext()) {
+			Integer idx = iterator.next();
+
+			BatchPlannerMapping batchPlannerMapping =
+				batchPlannerMappingsMap.get(idx);
+
+			sb.append(CharPool.QUOTE);
+			sb.append(batchPlannerMapping.getInternalFieldName());
+			sb.append("\": \"");
+			sb.append(columns[idx]);
+			sb.append(CharPool.QUOTE);
+
+			if (iterator.hasNext()) {
+				sb.append(CharPool.COMMA);
+			}
+		}
+
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
