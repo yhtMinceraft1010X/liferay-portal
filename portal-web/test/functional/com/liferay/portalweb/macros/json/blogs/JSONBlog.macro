@@ -234,6 +234,33 @@ definition {
 		echo("## * Blogs ID: ${entryId}");
 	}
 
+	macro moveEntryToTrash {
+		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
+
+		var entryId = JSONBlog.getBlogEntryId(
+			friendlyURL = "${friendlyURL}",
+			entryTitle = "${entryTitle}",
+			groupName = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/blogs.blogsentry/move-entry-to-trash \
+			-u ${userEmailAddress}:${userPassword} \
+			-d entryId=${entryId} \
+		''';
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	macro uploadBlogImage {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
