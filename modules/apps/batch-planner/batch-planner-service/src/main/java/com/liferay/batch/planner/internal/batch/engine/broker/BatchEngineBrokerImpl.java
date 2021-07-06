@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -191,16 +192,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	private String[] _getHeaders(
 		List<BatchPlannerMapping> batchPlannerMappings) {
 
-		String[] headers = new String[batchPlannerMappings.size()];
-
-		for (int i = 0; i < batchPlannerMappings.size(); i++) {
-			BatchPlannerMapping batchPlannerMapping = batchPlannerMappings.get(
-				i);
-
-			headers[i] = batchPlannerMapping.getExternalFieldName();
-		}
-
-		return headers;
+		return TransformUtil.transformToArray(
+			batchPlannerMappings,
+			batchPlannerMapping -> batchPlannerMapping.getExternalFieldName(),
+			String.class);
 	}
 
 	private String[] _getHeaders(
