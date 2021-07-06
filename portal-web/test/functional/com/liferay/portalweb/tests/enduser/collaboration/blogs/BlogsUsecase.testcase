@@ -153,6 +153,43 @@ definition {
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
 	}
 
+	@description = "This test covers LPS-102178. It checks that a blog entry can be saved as draft automatically when the custom URL same with the removed one."
+	@priority = "3"
+	test CanAutoSaveEntryAsDraftWhenCustomURLSameWithRemovedOne {
+		Blogs.addEntryWithCustomURL(
+			customURL = "my-custom-url",
+			entryContent = "Blog Entry Content",
+			entryTitle = "Blog Entry Title",
+			siteURLKey = "guest");
+
+		JSONBlog.moveEntryToTrash(
+			entryTitle = "Blog Entry Title",
+			friendlyURL = "my-custom-url",
+			groupName = "Guest");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blog Entry Content New",
+			entryTitle = "Blog Entry Title New");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addCustomURL(customURL = "my-custom-url");
+
+		BlogsEntry.autoSaveDraft();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		BlogsNavigator.gotoEntryCP(
+			entryStatus = "Draft",
+			entryTitle = "Blog Entry Title New");
+
+		BlogsEntry.viewEntryCP(
+			entryContent = "Blog Entry Content New",
+			entryTitle = "Blog Entry Title New");
+	}
+
 	@description = "This checks that a user can change the publish date for a scheduled entry to the present and publish it."
 	@priority = "4"
 	@refactordone
