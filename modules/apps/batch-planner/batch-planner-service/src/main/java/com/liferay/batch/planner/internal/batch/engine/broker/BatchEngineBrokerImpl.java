@@ -223,7 +223,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			String headerNamesString)
 		throws PortalException {
 
-		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
+		Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap = new HashMap<>();
 
 		String[] headerNames = _getHeaderNames(
 			batchPlannerMappings, delimiter, headerNamesString);
@@ -234,19 +234,19 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 						batchPlannerMapping.getExternalFieldName(),
 						headerNames[i])) {
 
-					map.put(i, batchPlannerMapping);
+					batchPlannerMappingsMap.put(i, batchPlannerMapping);
 
 					break;
 				}
 			}
 		}
 
-		if (map.isEmpty()) {
+		if (batchPlannerMappingsMap.isEmpty()) {
 			throw new BatchPlannerMappingExternalFieldNameException(
 				"Unable to map external field names to header names");
 		}
 
-		return map;
+		return batchPlannerMappingsMap;
 	}
 
 	private String _toJSON(
