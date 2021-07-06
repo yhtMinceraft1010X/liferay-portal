@@ -56,7 +56,7 @@ public class JSONBatchEngineTaskProgressImpl
 			}
 		}
 		catch (Exception exception) {
-			_log.error("Unable to calculate total items", exception);
+			_log.error("Unable to get total items count", exception);
 		}
 		finally {
 			try {

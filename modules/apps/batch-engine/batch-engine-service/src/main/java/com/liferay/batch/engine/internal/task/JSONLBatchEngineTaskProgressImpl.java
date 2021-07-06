@@ -41,7 +41,7 @@ public class JSONLBatchEngineTaskProgressImpl
 			}
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to calculate total items", ioException);
+			_log.error("Unable to get total items count", ioException);
 		}
 		finally {
 			try {
