@@ -159,8 +159,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private Map<Integer, BatchPlannerMapping> _asMap(
-			String delimiter, String headersString,
-			List<BatchPlannerMapping> batchPlannerMappings)
+			List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
+			String headersString)
 		throws PortalException {
 
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
@@ -250,9 +250,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				policies.get("delimiter"), StringPool.SEMICOLON);
 
 			Map<Integer, BatchPlannerMapping> map = _asMap(
-				delimiter, line,
 				_batchPlannerMappingLocalService.getBatchPlannerMappings(
-					batchPlannerPlanId));
+					batchPlannerPlanId),
+				delimiter, line);
 
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
