@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JSONObject jsonObject = JSONFactoryUtil.createJSONObject("{height: 500px, width: 100%}");
-%>
-
 <div id="shop-by-diagram" />
 
 <react:component
@@ -30,7 +26,12 @@ JSONObject jsonObject = JSONFactoryUtil.createJSONObject("{height: 500px, width:
 		).put(
 			"enableResetZoom", true
 		).put(
-			"imageSettings", jsonObject
+			"imageSettings",
+			JSONUtil.put(
+				"height", "500px"
+			).put(
+				"width", "100%"
+			)
 		).put(
 			"imageURL", "https://i0.wp.com/detoxicrecenze.com/wp-content/uploads/2018/05/straight-6-engine-diagram-460-ford-engine-diagram-wiring-info-e280a2-of-straight-6-engine-diagram.jpg"
 		).put(
