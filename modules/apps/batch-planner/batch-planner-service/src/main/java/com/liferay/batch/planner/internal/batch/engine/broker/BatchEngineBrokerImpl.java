@@ -167,10 +167,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			line = bufferedReader.readLine();
 
 			while (line != null) {
-				String[] columns = line.split(delimiter);
-
 				bufferedWriter.append(
-					_toJSON(batchPlannerMappingsMap, columns));
+					_toJSON(batchPlannerMappingsMap, line.split(delimiter)));
 
 				bufferedWriter.newLine();
 
