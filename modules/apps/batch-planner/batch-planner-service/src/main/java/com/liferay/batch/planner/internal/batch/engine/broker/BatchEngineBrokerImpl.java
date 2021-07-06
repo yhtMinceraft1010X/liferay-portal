@@ -158,14 +158,14 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private Map<Integer, BatchPlannerMapping> _asMap(
-			String delimiter, String headerLine,
+			String delimiter, String headersString,
 			List<BatchPlannerMapping> batchPlannerMappings)
 		throws PortalException {
 
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		String[] headers = _getHeaders(
-			batchPlannerMappings, delimiter, headerLine);
+			batchPlannerMappings, delimiter, headersString);
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			for (int i = 0; i < headers.length; i++) {
@@ -205,13 +205,13 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 	private String[] _getHeaders(
 		List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
-		String headerLine) {
+		String headersString) {
 
-		if (Validator.isNull(headerLine)) {
+		if (Validator.isNull(headersString)) {
 			return _getHeaders(batchPlannerMappings);
 		}
 
-		String[] headers = headerLine.split(delimiter);
+		String[] headers = headersString.split(delimiter);
 
 		if (batchPlannerMappings.size() != headers.length) {
 			return _getHeaders(batchPlannerMappings);
