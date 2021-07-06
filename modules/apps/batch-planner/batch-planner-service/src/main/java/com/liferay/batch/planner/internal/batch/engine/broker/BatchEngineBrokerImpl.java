@@ -171,8 +171,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			for (int i = 0; i < headers.length; i++) {
 				if (Objects.equals(
-						headers[i],
-						batchPlannerMapping.getExternalFieldName())) {
+						batchPlannerMapping.getExternalFieldName(),
+						headers[i])) {
 
 					map.put(i, batchPlannerMapping);
 
