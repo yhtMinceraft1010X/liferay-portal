@@ -168,8 +168,18 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			int idx = _indexOf(
-				headers, batchPlannerMapping.getExternalFieldName());
+			int idx = -1;
+
+			for (int i = 0; i < headers.length; i++) {
+				if (Objects.equals(
+						headers[i],
+						batchPlannerMapping.getExternalFieldName())) {
+
+					idx = i;
+
+					break;
+				}
+			}
 
 			if (idx < 0) {
 				continue;
@@ -282,16 +292,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			throw exception;
 		}
-	}
-
-	private int _indexOf(String[] array, String value) {
-		for (int i = 0; i < array.length; i++) {
-			if (Objects.equals(value, array[i])) {
-				return i;
-			}
-		}
-
-		return -1;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
