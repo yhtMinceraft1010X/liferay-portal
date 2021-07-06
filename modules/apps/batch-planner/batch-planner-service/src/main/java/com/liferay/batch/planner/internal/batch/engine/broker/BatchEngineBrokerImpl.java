@@ -160,19 +160,19 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 	private Map<Integer, BatchPlannerMapping> _asMap(
 			List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
-			String headersString)
+			String headerNamesString)
 		throws PortalException {
 
 		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
-		String[] headers = _getHeaders(
-			batchPlannerMappings, delimiter, headersString);
+		String[] headerNames = _getHeaderNames(
+			batchPlannerMappings, delimiter, headerNamesString);
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			for (int i = 0; i < headers.length; i++) {
+			for (int i = 0; i < headerNames.length; i++) {
 				if (Objects.equals(
 						batchPlannerMapping.getExternalFieldName(),
-						headers[i])) {
+						headerNames[i])) {
 
 					map.put(i, batchPlannerMapping);
 
@@ -183,13 +183,13 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		if (map.isEmpty()) {
 			throw new BatchPlannerMappingExternalFieldNameException(
-				"Unable to match external field names with header names");
+				"Unable to map external field names to header names");
 		}
 
 		return map;
 	}
 
-	private String[] _getHeaders(
+	private String[] _getHeaderNames(
 		List<BatchPlannerMapping> batchPlannerMappings) {
 
 		return TransformUtil.transformToArray(
@@ -198,29 +198,29 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			String.class);
 	}
 
-	private String[] _getHeaders(
+	private String[] _getHeaderNames(
 		List<BatchPlannerMapping> batchPlannerMappings, String delimiter,
-		String headersString) {
+		String headerNamesString) {
 
-		if (Validator.isNull(headersString)) {
-			return _getHeaders(batchPlannerMappings);
+		if (Validator.isNull(headerNamesString)) {
+			return _getHeaderNames(batchPlannerMappings);
 		}
 
-		String[] headers = headersString.split(delimiter);
+		String[] headerNames = headerNamesString.split(delimiter);
 
-		if (batchPlannerMappings.size() != headers.length) {
-			return _getHeaders(batchPlannerMappings);
+		if (batchPlannerMappings.size() != headerNames.length) {
+			return _getHeaderNames(batchPlannerMappings);
 		}
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			if (!ArrayUtil.contains(
-					headers, batchPlannerMapping.getExternalFieldName())) {
+					headerNames, batchPlannerMapping.getExternalFieldName())) {
 
-				return _getHeaders(batchPlannerMappings);
+				return _getHeaderNames(batchPlannerMappings);
 			}
 		}
 
-		return headers;
+		return headerNames;
 	}
 
 	private File _getJSONLineFile(long batchPlannerPlanId) throws Exception {
