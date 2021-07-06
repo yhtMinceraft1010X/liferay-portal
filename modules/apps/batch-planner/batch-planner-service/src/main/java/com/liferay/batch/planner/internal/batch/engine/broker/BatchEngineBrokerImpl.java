@@ -68,44 +68,48 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 	public void submit(long batchPlannerPlanId) {
 		try {
-			BatchPlannerPlan batchPlannerPlan =
-				_batchPlannerPlanLocalService.getBatchPlannerPlan(
-					batchPlannerPlanId);
-
-			File file = _getJSONLineFile(batchPlannerPlanId);
-
-			_importTaskResource.setContextCompany(
-				_companyLocalService.getCompany(
-					batchPlannerPlan.getCompanyId()));
-			_importTaskResource.setContextUser(
-				_userLocalService.getUser(batchPlannerPlan.getUserId()));
-
-			_importTaskResource.setContextUriInfo(new EmptyUriInfo());
-
-			ImportTask importTask = _importTaskResource.postImportTask(
-				batchPlannerPlan.getInternalClassName(), null, null,
-				"batch-planner-plan-" + batchPlannerPlanId,
-				MultipartBody.of(
-					Collections.singletonMap(
-						"file",
-						new BinaryFile(
-							"application/json", file.getName(),
-							new FileInputStream(file), file.length())),
-					null, Collections.emptyMap()));
-
-			_batchPlannerLogLocalService.addBatchPlannerLog(
-				batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
-				String.valueOf(importTask.getId()), null, (int)file.length(),
-				1);
-
-			_batchPlannerPlanLocalService.updateActive(
-				batchPlannerPlanId, true);
+			_submit(batchPlannerPlanId);
 		}
 		catch (Exception exception) {
 			_log.error(
 				"Unable to execute batch planner plan ID " + batchPlannerPlanId,
 				exception);
 		}
+	}
+
+	private void _submit(long batchPlannerPlanId) throws Exception {
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.getBatchPlannerPlan(
+				batchPlannerPlanId);
+
+		File file = _getJSONLineFile(batchPlannerPlanId);
+
+		_importTaskResource.setContextCompany(
+			_companyLocalService.getCompany(
+				batchPlannerPlan.getCompanyId()));
+		_importTaskResource.setContextUser(
+			_userLocalService.getUser(batchPlannerPlan.getUserId()));
+
+		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
+
+		ImportTask importTask = _importTaskResource.postImportTask(
+			batchPlannerPlan.getInternalClassName(), null, null,
+			"batch-planner-plan-" + batchPlannerPlanId,
+			MultipartBody.of(
+				Collections.singletonMap(
+					"file",
+					new BinaryFile(
+						"application/json", file.getName(),
+						new FileInputStream(file), file.length())),
+				null, Collections.emptyMap()));
+
+		_batchPlannerLogLocalService.addBatchPlannerLog(
+			batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
+			String.valueOf(importTask.getId()), null, (int)file.length(),
+			1);
+
+		_batchPlannerPlanLocalService.updateActive(
+			batchPlannerPlanId, true);
 	}
 
 	private String _asJSONLine(
