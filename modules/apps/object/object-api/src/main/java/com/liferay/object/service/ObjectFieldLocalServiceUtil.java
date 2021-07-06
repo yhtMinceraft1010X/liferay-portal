@@ -47,12 +47,12 @@ public class ObjectFieldLocalServiceUtil {
 	public static ObjectField addObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, String type)
+			String name, boolean required, String type)
 		throws PortalException {
 
 		return getService().addObjectField(
 			userId, objectDefinitionId, dbColumnName, indexed, indexedAsKeyword,
-			indexedLanguageId, name, type);
+			indexedLanguageId, name, required, type);
 	}
 
 	/**

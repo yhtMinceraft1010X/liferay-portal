@@ -77,7 +77,7 @@ public class ObjectFieldModelImpl
 		{"objectDefinitionId", Types.BIGINT}, {"dbColumnName", Types.VARCHAR},
 		{"indexed", Types.BOOLEAN}, {"indexedAsKeyword", Types.BOOLEAN},
 		{"indexedLanguageId", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"type_", Types.VARCHAR}
+		{"required", Types.BOOLEAN}, {"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,11 +98,12 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("indexedAsKeyword", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("indexedLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,name VARCHAR(75) null,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -338,6 +339,10 @@ public class ObjectFieldModelImpl
 		attributeGetterFunctions.put("name", ObjectField::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
+		attributeGetterFunctions.put("required", ObjectField::getRequired);
+		attributeSetterBiConsumers.put(
+			"required",
+			(BiConsumer<ObjectField, Boolean>)ObjectField::setRequired);
 		attributeGetterFunctions.put("type", ObjectField::getType);
 		attributeSetterBiConsumers.put(
 			"type", (BiConsumer<ObjectField, String>)ObjectField::setType);
@@ -640,6 +645,25 @@ public class ObjectFieldModelImpl
 	}
 
 	@Override
+	public boolean getRequired() {
+		return _required;
+	}
+
+	@Override
+	public boolean isRequired() {
+		return _required;
+	}
+
+	@Override
+	public void setRequired(boolean required) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_required = required;
+	}
+
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -734,6 +758,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setIndexedAsKeyword(isIndexedAsKeyword());
 		objectFieldImpl.setIndexedLanguageId(getIndexedLanguageId());
 		objectFieldImpl.setName(getName());
+		objectFieldImpl.setRequired(isRequired());
 		objectFieldImpl.setType(getType());
 
 		objectFieldImpl.resetOriginalValues();
@@ -885,6 +910,8 @@ public class ObjectFieldModelImpl
 			objectFieldCacheModel.name = null;
 		}
 
+		objectFieldCacheModel.required = isRequired();
+
 		objectFieldCacheModel.type = getType();
 
 		String type = objectFieldCacheModel.type;
@@ -981,6 +1008,7 @@ public class ObjectFieldModelImpl
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;
 	private String _name;
+	private boolean _required;
 	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1026,6 +1054,7 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("indexedAsKeyword", _indexedAsKeyword);
 		_columnOriginalValues.put("indexedLanguageId", _indexedLanguageId);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("required", _required);
 		_columnOriginalValues.put("type_", _type);
 	}
 
@@ -1079,7 +1108,9 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("required", 16384L);
+
+		columnBitmasks.put("type_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

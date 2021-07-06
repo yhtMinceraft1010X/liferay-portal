@@ -48,6 +48,7 @@ create table ObjectField (
 	indexedAsKeyword BOOLEAN,
 	indexedLanguageId VARCHAR(75) null,
 	name VARCHAR(75) null,
+	required BOOLEAN,
 	type_ VARCHAR(75) null
 );
 

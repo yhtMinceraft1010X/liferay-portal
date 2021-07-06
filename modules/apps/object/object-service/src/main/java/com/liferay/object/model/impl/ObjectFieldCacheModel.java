@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class ObjectFieldCacheModel
 		sb.append(indexedLanguageId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", required=");
+		sb.append(required);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -178,6 +180,8 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setName(name);
 		}
 
+		objectFieldImpl.setRequired(required);
+
 		if (type == null) {
 			objectFieldImpl.setType("");
 		}
@@ -212,6 +216,8 @@ public class ObjectFieldCacheModel
 		indexedAsKeyword = objectInput.readBoolean();
 		indexedLanguageId = objectInput.readUTF();
 		name = objectInput.readUTF();
+
+		required = objectInput.readBoolean();
 		type = objectInput.readUTF();
 	}
 
@@ -269,6 +275,8 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeBoolean(required);
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -291,6 +299,7 @@ public class ObjectFieldCacheModel
 	public boolean indexedAsKeyword;
 	public String indexedLanguageId;
 	public String name;
+	public boolean required;
 	public String type;
 
 }

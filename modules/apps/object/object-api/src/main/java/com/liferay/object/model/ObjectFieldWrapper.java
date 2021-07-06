@@ -57,6 +57,7 @@ public class ObjectFieldWrapper
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
 		attributes.put("indexedLanguageId", getIndexedLanguageId());
 		attributes.put("name", getName());
+		attributes.put("required", isRequired());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -146,6 +147,12 @@ public class ObjectFieldWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean required = (Boolean)attributes.get("required");
+
+		if (required != null) {
+			setRequired(required);
 		}
 
 		String type = (String)attributes.get("type");
@@ -276,6 +283,16 @@ public class ObjectFieldWrapper
 	}
 
 	/**
+	 * Returns the required of this object field.
+	 *
+	 * @return the required of this object field
+	 */
+	@Override
+	public boolean getRequired() {
+		return model.getRequired();
+	}
+
+	/**
 	 * Returns the type of this object field.
 	 *
 	 * @return the type of this object field
@@ -343,6 +360,16 @@ public class ObjectFieldWrapper
 	@Override
 	public boolean isIndexedAsKeyword() {
 		return model.isIndexedAsKeyword();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object field is required.
+	 *
+	 * @return <code>true</code> if this object field is required; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isRequired() {
+		return model.isRequired();
 	}
 
 	@Override
@@ -468,6 +495,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this object field is required.
+	 *
+	 * @param required the required of this object field
+	 */
+	@Override
+	public void setRequired(boolean required) {
+		model.setRequired(required);
 	}
 
 	/**

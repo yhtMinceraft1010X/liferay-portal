@@ -306,6 +306,27 @@ public interface ObjectFieldModel
 	public void setName(String name);
 
 	/**
+	 * Returns the required of this object field.
+	 *
+	 * @return the required of this object field
+	 */
+	public boolean getRequired();
+
+	/**
+	 * Returns <code>true</code> if this object field is required.
+	 *
+	 * @return <code>true</code> if this object field is required; <code>false</code> otherwise
+	 */
+	public boolean isRequired();
+
+	/**
+	 * Sets whether this object field is required.
+	 *
+	 * @param required the required of this object field
+	 */
+	public void setRequired(boolean required);
+
+	/**
 	 * Returns the type of this object field.
 	 *
 	 * @return the type of this object field

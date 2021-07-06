@@ -66,7 +66,7 @@ public interface ObjectFieldLocalService
 	public ObjectField addObjectField(
 			long userId, long objectDefinitionId, String dbColumnName,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, String type)
+			String name, boolean required, String type)
 		throws PortalException;
 
 	/**

@@ -47,6 +47,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
 		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
 		soapModel.setName(model.getName());
+		soapModel.setRequired(model.isRequired());
 		soapModel.setType(model.getType());
 
 		return soapModel;
@@ -221,6 +222,18 @@ public class ObjectFieldSoap implements Serializable {
 		_name = name;
 	}
 
+	public boolean getRequired() {
+		return _required;
+	}
+
+	public boolean isRequired() {
+		return _required;
+	}
+
+	public void setRequired(boolean required) {
+		_required = required;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -243,6 +256,7 @@ public class ObjectFieldSoap implements Serializable {
 	private boolean _indexedAsKeyword;
 	private String _indexedLanguageId;
 	private String _name;
+	private boolean _required;
 	private String _type;
 
 }
