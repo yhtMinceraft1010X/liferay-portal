@@ -137,13 +137,17 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				new File(new URI(batchPlannerPlan.getExternalURL())));
 			FileWriter fileWriter = new FileWriter(jsonlFile)) {
 
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-			String line = null;
-
 			List<BatchPlannerPolicy> batchPlannerPolicies =
 				_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
 					batchPlannerPlanId);
+
+			String delimiter = GetterUtil.getString(
+				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"),
+				StringPool.SEMICOLON);
+
+			String line = null;
+
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
 
 			if (GetterUtil.getBoolean(
 					_getBatchPlannerPolicyValue(
@@ -151,10 +155,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 				line = bufferedReader.readLine();
 			}
-
-			String delimiter = GetterUtil.getString(
-				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"),
-				StringPool.SEMICOLON);
 
 			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap =
 				_toBatchPlannerMappingsMap(
