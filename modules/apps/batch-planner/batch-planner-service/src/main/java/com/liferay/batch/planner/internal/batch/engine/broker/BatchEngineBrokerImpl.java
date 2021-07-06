@@ -147,14 +147,14 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	private Map<String, String> _asMap(
 		List<BatchPlannerPolicy> batchPlannerPolicies) {
 
-		Map<String, String> policies = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 
 		for (BatchPlannerPolicy batchPlannerPolicy : batchPlannerPolicies) {
-			policies.put(
+			map.put(
 				batchPlannerPolicy.getName(), batchPlannerPolicy.getValue());
 		}
 
-		return policies;
+		return map;
 	}
 
 	private Map<Integer, BatchPlannerMapping> _asMap(
@@ -162,10 +162,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			List<BatchPlannerMapping> batchPlannerMappings)
 		throws PortalException {
 
+		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
+
 		String[] headers = _getHeaders(
 			delimiter, headerLine, batchPlannerMappings);
-
-		Map<Integer, BatchPlannerMapping> map = new HashMap<>();
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			for (int i = 0; i < headers.length; i++) {
