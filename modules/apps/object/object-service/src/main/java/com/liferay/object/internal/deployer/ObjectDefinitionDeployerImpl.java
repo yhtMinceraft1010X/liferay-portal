@@ -43,17 +43,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		return Arrays.asList(
 			_bundleContext.registerService(
+				InfoListProvider.class,
+				new ObjectEntryInfoListProvider(
+					objectDefinition, _objectEntryLocalService),
+				null),
+			_bundleContext.registerService(
 				WorkflowHandler.class,
 				new ObjectEntryWorkflowHandler(
 					objectDefinition, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
-				).build()),
-			_bundleContext.registerService(
-				InfoListProvider.class,
-				new ObjectEntryInfoListProvider(
-					objectDefinition, _objectEntryLocalService),
-				null));
+				).build()));
 	}
 
 	@Activate
