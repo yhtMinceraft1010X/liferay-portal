@@ -88,11 +88,11 @@ public class LayoutsTreeDisplayContext {
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
+		_siteNavigationMenuItemLocalService =
+			siteNavigationMenuItemLocalService;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
-		_siteNavigationMenuItemLocalService =
-			siteNavigationMenuItemLocalService;
 
 		_groupProvider = (GroupProvider)liferayPortletRequest.getAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER);

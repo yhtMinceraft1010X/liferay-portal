@@ -170,7 +170,7 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		return HashMapBuilder.put(
+		return HashMapBuilder.<String, DDMFormValues>put(
 			_ddmStructure.getStructureKey(), ddmFormValues
 		).build();
 	}
