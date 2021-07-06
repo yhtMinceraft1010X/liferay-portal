@@ -87,10 +87,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextCompany(
 			_companyLocalService.getCompany(
 				batchPlannerPlan.getCompanyId()));
+		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
-
-		_importTaskResource.setContextUriInfo(new EmptyUriInfo());
 
 		ImportTask importTask = _importTaskResource.postImportTask(
 			batchPlannerPlan.getInternalClassName(), null, null,
