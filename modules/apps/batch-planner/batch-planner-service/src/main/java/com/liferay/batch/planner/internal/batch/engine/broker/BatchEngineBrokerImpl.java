@@ -145,17 +145,16 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		return sb.toString();
 	}
 
-	private Map<String, String> _asMap(
-		List<BatchPlannerPolicy> batchPlannerPolicies) {
-
-		Map<String, String> map = new HashMap<>();
+	private String _getBatchPlannerPolicyValue(
+		List<BatchPlannerPolicy> batchPlannerPolicies, String name) {
 
 		for (BatchPlannerPolicy batchPlannerPolicy : batchPlannerPolicies) {
-			map.put(
-				batchPlannerPolicy.getName(), batchPlannerPolicy.getValue());
+			if (Objects.equals(batchPlannerPolicy.getName(), name)) {
+				return batchPlannerPolicy.getValue();
+			}
 		}
 
-		return map;
+		return null;
 	}
 
 	private Map<Integer, BatchPlannerMapping> _toBatchPlannerMappingsMap(
@@ -230,9 +229,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		File jsonlFile = FileUtil.createTempFile(
 			String.valueOf(batchPlannerPlanId), "jsonl");
-		Map<String, String> policies = _asMap(
+		List<BatchPlannerPolicy> batchPlannerPolicies =
 			_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
-				batchPlannerPlanId));
+				batchPlannerPlanId);
 
 		try (FileReader fileReader = new FileReader(
 				new File(new URI(batchPlannerPlan.getExternalURL())));
@@ -242,12 +241,12 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 			String line = null;
 
-			if (GetterUtil.getBoolean(policies.get("hasColumnHeaders"))) {
+			if (GetterUtil.getBoolean(_getBatchPlannerPolicyValue(batchPlannerPolicies, "hasColumnHeaders"))) {
 				line = bufferedReader.readLine();
 			}
 
 			String delimiter = GetterUtil.getString(
-				policies.get("delimiter"), StringPool.SEMICOLON);
+				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"), StringPool.SEMICOLON);
 
 			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap = _toBatchPlannerMappingsMap(
 				_batchPlannerMappingLocalService.getBatchPlannerMappings(
