@@ -80,16 +80,16 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 			"content.Language", getClass());
 
 		try {
-			String configuration = StringUtil.read(
+			String json = StringUtil.read(
 				getClass(),
 				"/com/liferay/fragment/renderer/collection/filter/internal" +
 					"/dependencies/configuration.json");
 
 			JSONObject configurationJSONObject =
-				JSONFactoryUtil.createJSONObject(configuration);
+				JSONFactoryUtil.createJSONObject(json);
 
 			String filterPlaceholder = _getFilterPlaceholder(
-				configuration, fragmentRendererContext, resourceBundle);
+				json, fragmentRendererContext, resourceBundle);
 
 			JSONObject filterTypeOptionsJSONObject =
 				_filterTypeOptionsJSONObject(configurationJSONObject);
