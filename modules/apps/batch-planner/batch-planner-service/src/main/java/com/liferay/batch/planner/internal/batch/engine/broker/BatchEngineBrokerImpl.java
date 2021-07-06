@@ -257,15 +257,17 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		sb.append(CharPool.OPEN_CURLY_BRACE);
 
-		Set<Integer> indexes = batchPlannerMappingsMap.keySet();
+		Set<Map.Entry<Integer, BatchPlannerMapping>> set =
+			batchPlannerMappingsMap.entrySet();
 
-		Iterator<Integer> iterator = indexes.iterator();
+		Iterator<Map.Entry<Integer, BatchPlannerMapping>> iterator =
+			set.iterator();
 
 		while (iterator.hasNext()) {
-			Integer idx = iterator.next();
+			Map.Entry<Integer, BatchPlannerMapping> entry = iterator.next();
 
-			BatchPlannerMapping batchPlannerMapping =
-				batchPlannerMappingsMap.get(idx);
+			Integer idx = entry.getKey();
+			BatchPlannerMapping batchPlannerMapping = entry.getValue();
 
 			sb.append(CharPool.QUOTE);
 			sb.append(batchPlannerMapping.getInternalFieldName());
