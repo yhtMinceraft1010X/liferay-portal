@@ -128,7 +128,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			BatchPlannerMapping batchPlannerMapping = map.get(idx);
 
 			sb.append(
-				_getJSONKeyValue(
+				String.format(
+					"\"%s\": \"%s\"",
 					batchPlannerMapping.getInternalFieldName(), columns[idx]));
 
 			if (iterator.hasNext()) {
@@ -223,10 +224,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 
 		return _getHeaders(batchPlannerMappings);
-	}
-
-	private String _getJSONKeyValue(String key, String value) {
-		return String.format("\"%s\": \"%s\"", key, value);
 	}
 
 	private File _getJSONLineFile(long batchPlannerPlanId) throws Exception {
