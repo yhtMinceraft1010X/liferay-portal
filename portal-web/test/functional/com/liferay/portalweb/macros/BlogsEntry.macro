@@ -245,9 +245,7 @@ definition {
 	}
 
 	macro autoSaveDraft {
-		Pause(locator1 = "30000");
-
-		AssertElementPresent(locator1 = "Message#DRAFT_AUTO_SAVE");
+		WaitForElementPresent(locator1 = "Message#DRAFT_AUTO_SAVE");
 	}
 
 	macro editContent {
