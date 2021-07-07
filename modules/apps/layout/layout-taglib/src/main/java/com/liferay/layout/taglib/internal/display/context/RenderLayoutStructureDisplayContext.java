@@ -756,7 +756,7 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append("background-position: 50% 50%; background-repeat: ");
 			styleSB.append("no-repeat; background-size: cover; ");
 			styleSB.append("background-image: url(");
-			styleSB.append(PortalUtil.getPathContext() + backgroundImage);
+			styleSB.append(backgroundImage);
 			styleSB.append(");");
 		}
 
@@ -1066,7 +1066,7 @@ public class RenderLayoutStructureDisplayContext {
 		String backgroundImageURL = jsonObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
-			return backgroundImageURL;
+			return PortalUtil.getPathContext() + backgroundImageURL;
 		}
 
 		return StringPool.BLANK;
