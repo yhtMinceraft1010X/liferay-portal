@@ -46,10 +46,11 @@ public class LearnResourcesTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testURLConnectivity() throws Exception {
+	public void testURLs() throws Exception {
 		Path learnResourcesPath = Paths.get("../../../", "learn-resources");
 
 		learnResourcesPath = learnResourcesPath.toAbsolutePath();
+
 		learnResourcesPath = learnResourcesPath.normalize();
 
 		Assert.assertTrue(Files.exists(learnResourcesPath));
