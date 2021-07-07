@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Locale;
-
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -56,8 +54,6 @@ public class GetCollectionFiltersMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
-
 		JSONArray fragmentCollectionFiltersJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
@@ -67,7 +63,9 @@ public class GetCollectionFiltersMVCResourceCommand
 
 			fragmentCollectionFiltersJSONArray.put(
 				JSONUtil.put(
-					"label", fragmentCollectionFilter.getLabel(locale)));
+					"label",
+					fragmentCollectionFilter.getLabel(
+						themeDisplay.getLocale())));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
