@@ -107,17 +107,9 @@ public class JSONUtilTest {
 
 	@Test
 	public void testGetValue() {
-		JSONObject jsonObject = JSONUtil.put(
-			"alpha", JSONUtil.put("beta", JSONUtil.put("gamma")));
 
-		Assert.assertEquals(
-			"gamma",
-			JSONUtil.getValue(
-				jsonObject, "JSONObject/alpha", "JSONArray/beta", "Object/0"));
-	}
+		// Nested JSON array
 
-	@Test
-	public void testGetValueWithNestedJSONArray() {
 		JSONObject jsonObject = JSONUtil.put(
 			"alpha",
 			JSONUtil.put("beta", JSONUtil.put(JSONUtil.put("gamma", "delta"))));
@@ -127,6 +119,16 @@ public class JSONUtilTest {
 			JSONUtil.getValue(
 				jsonObject, "JSONObject/alpha", "JSONArray/beta",
 				"JSONObject/0", "Object/gamma"));
+
+		// Nested JSON object
+
+		jsonObject = JSONUtil.put(
+			"alpha", JSONUtil.put("beta", JSONUtil.put("gamma")));
+
+		Assert.assertEquals(
+			"gamma",
+			JSONUtil.getValue(
+				jsonObject, "JSONObject/alpha", "JSONArray/beta", "Object/0"));
 	}
 
 	@Test
