@@ -249,6 +249,21 @@
 </tr>
 <!--DATE-->
 <tr>
+	<td>DATE_CALENDAR</td>
+	<td>//button[contains(@class,'date-picker-dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_CALENDAR_DAY</td>
+	<td>//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()='${key_valueDay}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_CALENDAR_FIELD</td>
+	<td>//select[@name='${key_valueName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATE_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text']</td>
 	<td></td>
