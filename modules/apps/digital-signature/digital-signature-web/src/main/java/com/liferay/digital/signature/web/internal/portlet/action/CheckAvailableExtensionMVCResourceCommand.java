@@ -58,11 +58,11 @@ public class CheckAvailableExtensionMVCResourceCommand
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"invalidFileExtensions",
-				_jsonArray(
+				_toJSONArray(
 					ParamUtil.getLongValues(resourceRequest, "fileEntryIds"))));
 	}
 
-	private JSONArray _jsonArray(long[] fileEntryIds) {
+	private JSONArray _toJSONArray(long[] fileEntryIds) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (long fileEntryId : fileEntryIds) {
