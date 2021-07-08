@@ -116,13 +116,12 @@ public class DLAdminManagementToolbarDisplayContext
 			return null;
 		}
 
-		boolean enableOnBulk = _isEnableOnBulk();
-		boolean stagedActions = _isStagedActions();
-		User user = _themeDisplay.getUser();
-
 		DigitalSignatureConfiguration digitalSignatureConfiguration =
 			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
 				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
+		boolean enableOnBulk = _isEnableOnBulk();
+		boolean stagedActions = _isStagedActions();
+		User user = _themeDisplay.getUser();
 
 		return DropdownItemListBuilder.add(
 			() -> digitalSignatureConfiguration.enabled() && stagedActions,
