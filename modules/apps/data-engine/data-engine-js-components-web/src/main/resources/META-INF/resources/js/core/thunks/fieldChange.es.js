@@ -101,8 +101,8 @@ export default function fieldChange({
 
 				if (REVALIDATE_UPDATES.length > 0) {
 
-					// All non-evaluable operations that were performed after the request
-					// was sent are used here to revalidate the new data.
+					// All nonevaluable operations that were performed after the request
+					// was sent are used here to revalidate the new data
 
 					REVALIDATE_UPDATES.forEach((item) => {
 						evaluatedPages = getEditedPages({
