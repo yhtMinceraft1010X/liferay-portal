@@ -181,6 +181,20 @@ definition {
 			locator1 = "FormFields#COLOR_SWATCH_ITEM");
 	}
 
+	macro editColorField {
+		Type(
+			key_fieldName = "${fieldName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#COLOR_FIELD_BY_ROW",
+			value1 = "${colorValue}");
+
+		FormFields.viewColorField(
+			colorValue = "${colorValue}",
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}",
+			rowNumber = "${rowNumber}");
+	}
+
 	macro editConfirmationFieldText {
 		AssertElementPresent.assertVisible(
 			key_fieldName = "${fieldName}",
@@ -756,6 +770,23 @@ definition {
 			locator1 = "FormFields#CHECKBOX_OPTION_LABEL");
 	}
 
+	macro selectColorFromColorPicker {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#COLOR_PICKER_BY_ROW");
+
+		Click(
+			key_colorSwatchItem = "${colorValue}",
+			locator1 = "FormFields#COLOR_SWATCH_ITEM");
+
+		FormFields.viewColorField(
+			colorValue = "${colorValue}",
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}",
+			rowNumber = "${rowNumber}");
+	}
+
 	macro selectDataProviderOutputType {
 		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
@@ -1013,6 +1044,20 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#CHECKBOX");
+	}
+
+	macro viewColorField {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#COLOR_FIELD_BY_ROW",
+			value1 = "${colorValue}");
+
+		AssertElementPresent(
+			key_colorValue = "${colorValue}",
+			key_fieldLabel = "${fieldLabel}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#COLOR_FROM_COLOR_PICKER_BY_ROW");
 	}
 
 	macro viewColorLabel {

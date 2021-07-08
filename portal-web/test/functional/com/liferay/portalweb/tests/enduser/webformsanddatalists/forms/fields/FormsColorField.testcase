@@ -232,14 +232,61 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
-		property forms.functional = "false";
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133136 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Color");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldRepeatable();
+
+		AssertElementPresent(
+			key_fieldName = "Color",
+			key_repeatableFieldNumber = "1",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Color",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewColorField(
+			colorValue = "000000",
+			fieldLabel = "Color",
+			fieldName = "Color",
+			rowNumber = "2");
+
+		FormFields.editColorField(
+			colorValue = "FF0D0D",
+			fieldLabel = "Color",
+			fieldName = "Color",
+			rowNumber = "1");
+
+		FormFields.selectColorFromColorPicker(
+			colorValue = "FF0D0D",
+			fieldLabel = "Color",
+			fieldName = "Color",
+			rowNumber = "2");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Form can be submitted with the Color Field"
