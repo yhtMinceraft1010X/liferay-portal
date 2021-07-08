@@ -1440,33 +1440,36 @@ public class WebServerServlet extends HttpServlet {
 			FileEntry fileEntry, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		if (fileEntry != null) {
-			FileVersion fileVersion = fileEntry.getFileVersion();
+		if (fileEntry == null) {
+			return;
+		}
 
-			if (fileVersion.isExpired()) {
-				User user = _getUser(httpServletRequest);
+		FileVersion fileVersion = fileEntry.getFileVersion();
 
-				PermissionChecker permissionChecker = _getPermissionChecker(
-					httpServletRequest);
+		if (!fileVersion.isExpired()) {
+			return;
+		}
 
-				if (!permissionChecker.isContentReviewer(
-						user.getCompanyId(), fileVersion.getGroupId()) &&
-					!Objects.equals(
-						fileVersion.getUserId(), user.getUserId())) {
+		User user = _getUser(httpServletRequest);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"The file entry ", fileEntry.getFileEntryId(),
-								" is expired, only users with content review ",
-								"permissions can access to it."));
-					}
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			httpServletRequest);
 
-					throw new FileEntryExpiredException(
-						"The file entry " + fileEntry.getFileEntryId() +
-							" is expired and user has no review permission");
-				}
+		if (!permissionChecker.isContentReviewer(
+				user.getCompanyId(), fileVersion.getGroupId()) &&
+			!Objects.equals(fileVersion.getUserId(), user.getUserId())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"The file entry ", fileEntry.getFileEntryId(),
+						" is expired. Only users with content review ",
+						"permission can access it."));
 			}
+
+			throw new FileEntryExpiredException(
+				"The file entry " + fileEntry.getFileEntryId() +
+					" is expired and the user does not have review permission");
 		}
 	}
 
