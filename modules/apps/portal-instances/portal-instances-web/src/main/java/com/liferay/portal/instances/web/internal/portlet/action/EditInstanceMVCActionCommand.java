@@ -176,7 +176,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				if (portalInstanceInitializer == null) {
 					throw new PortalException(
-						"Invalid initializer key " +
+						"Invalid portal instance initializer key " +
 							portalInstanceInitializerKey);
 				}
 
