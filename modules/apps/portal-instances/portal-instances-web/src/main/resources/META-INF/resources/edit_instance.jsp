@@ -23,8 +23,6 @@ Company selCompany = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
 long companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
 
-PortalInstanceInitializerRegistry portalInstanceInitializerRegistry = (PortalInstanceInitializerRegistry)request.getAttribute(PortalInstancesWebKeys.PORTAL_INSTANCE_INITIALIZER_REGISTRY);
-
 VirtualHost virtualHost = null;
 
 try {
@@ -79,6 +77,8 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 				<aui:select label="virtual-instance-initializer" name="portalInstanceInitializerKey" showEmptyOption="<%= true %>">
 
 					<%
+					PortalInstanceInitializerRegistry portalInstanceInitializerRegistry = (PortalInstanceInitializerRegistry)request.getAttribute(PortalInstancesWebKeys.PORTAL_INSTANCE_INITIALIZER_REGISTRY);
+
 					for (PortalInstanceInitializer portalInstanceInitializer : portalInstanceInitializerRegistry.getPortalInstanceInitializers(true)) {
 					%>
 
