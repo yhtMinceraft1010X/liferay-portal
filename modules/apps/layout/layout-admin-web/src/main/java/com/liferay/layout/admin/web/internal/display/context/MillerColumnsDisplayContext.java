@@ -646,7 +646,7 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"plid", layout.getPlid()
 				).put(
-					"url", _ENABLE_DROPDOWN_URL
+					"url", "#enable"
 				));
 		}
 
@@ -955,8 +955,6 @@ public class MillerColumnsDisplayContext {
 
 		return false;
 	}
-
-	private static final String _ENABLE_DROPDOWN_URL = "#enable";
 
 	private final FFLayoutTranslationConfiguration
 		_ffLayoutTranslationConfiguration;
