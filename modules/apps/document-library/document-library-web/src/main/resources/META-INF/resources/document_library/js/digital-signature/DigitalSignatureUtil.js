@@ -60,7 +60,7 @@ const _invalidFileCountContent = (
 ) => `<div class="alert alert-warning">
 		${Liferay.Util.sub(
 			Liferay.Language.get(
-				'you-have-exceeded-the-maximum-amount-of-x-files-to-attach-to-the-digital-signature-envelope'
+				'you-have-exceeded-the-maximum-amount-of-x-files-allowed-per-envelope'
 			),
 			MAXIMUM_SELECTED_FILES
 		)}
