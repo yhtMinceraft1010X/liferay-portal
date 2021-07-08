@@ -91,6 +91,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#AddASpecificationAndVerifyIfIsPresent";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
