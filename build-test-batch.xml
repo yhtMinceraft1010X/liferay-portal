@@ -3828,9 +3828,9 @@ log.sanitizer.enabled=false</echo>
 
 						<exec executable="diff" failonerror="false" outputproperty="database.changes.master">
 							<arg value="-B" />
-							<arg value="--unchanged-line-format=" />
-							<arg value="--old-line-format=" />
 							<arg value="--new-line-format='%L'" />
+							<arg value="--old-line-format=" />
+							<arg value="--unchanged-line-format=" />
 							<arg value="upgraded.sql" />
 							<arg value="fresh.sql" />
 						</exec>
