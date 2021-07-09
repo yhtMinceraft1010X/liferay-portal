@@ -27,25 +27,7 @@ definition {
 	@description = "This is a stubbed description"
 	@ignore = "true"
 	@priority = "5"
-	test CanSetLabelPlaceholderAndHelpText {
-
-		// TODO pending implementation
-
-	}
-
-	@description = "This is a stubbed description"
-	@ignore = "true"
-	@priority = "3"
-	test CanSetLabelBeShownHidden {
-
-		// TODO pending implementation
-
-	}
-
-	@description = "This is a stubbed description"
-	@ignore = "true"
-	@priority = "3"
-	test CanBeSingleLineMultipleLine {
+	test CanBeDeleted {
 
 		// TODO pending implementation
 
@@ -62,31 +44,71 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
+	@priority = "3"
+	test CanBeSingleLineMultipleLine {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanDefalutSearchablePropertyBeDisabled {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanDefalutSearchablePropertyBeKeyword {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetLabelBeShownHidden {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
 	@priority = "5"
-	test CanBeDeleted {
+	test CanSetLabelPlaceholderAndHelpText {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
 	}
-
-	@description = "This is a stubbed description"
-	@ignore = "true"
-	@priority = "3"
-	test CanDefalutSearchablePropertyBeDisabled{
-
-		// TODO pending implementation
-
-	}
-
-	@description = "This is a stubbed description"
-	@ignore = "true"
-	@priority = "3"
-	test CanDefalutSearchablePropertyBeKeyword{
-
-		// TODO pending implementation
-
-	}
-
-
 
 }
