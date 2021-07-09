@@ -973,6 +973,21 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldType{
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		Check.checkNotVisible(
+			key_fieldFieldLabel = "Field Type",
+			key_optionValue = "${fieldType}",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+
 	macro editFieldsetsCollapsible {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",
@@ -1376,6 +1391,18 @@ definition {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "${searchableType}",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+	}
+
+	macro viewFieldType {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldFieldLabel = "Field Type",
+			key_optionValue = "${fieldType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
