@@ -118,27 +118,23 @@ definition {
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.png,Document_3.odt");
 
-		Click(
-			dmDocumentTitle = "Document_1",
-			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+		PortletEntry.selectAll();
 
-		Click(
-			dmDocumentTitle = "Document_2",
-			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 
-		Click(
-			dmDocumentTitle = "Document_3",
-			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_SELECT_DOCUMENT");
+		var modalTitle = "File Extensions Not Supported";
 
-		AssertElementPresent(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON_DISABLED");
+		AssertElementPresent(
+			value1 = "${modalTitle}",
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.deleteCP(dmDocumentTitle = "Document_1");
+		PortletEntry.selectAll();
 
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2");
+		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-		DMDocument.deleteCP(dmDocumentTitle = "Document_3");
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
