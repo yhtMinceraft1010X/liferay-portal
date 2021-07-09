@@ -103,6 +103,7 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 								_dlFileEntryTypeLocalService.
 									updateDLFileEntryType(dlFileEntryType);
 							});
+
 						actionableDynamicQuery.performActions();
 					}
 				}
