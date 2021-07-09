@@ -579,15 +579,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 							#!/bin/bash
 
 							mysqldump \
-							--compact \
-							--no-data \
-							--order-by-primary \
-							--password=${database.mysql.password} \
-							--skip-comments \
-							--skip-extended-insert \
-							--user=${database.mysql.username} \
-							${database.mysql.schema} > \
-							${docker.src.file.path}
+								--compact \
+								--no-data \
+								--order-by-primary \
+								--password=${database.mysql.password} \
+								--skip-comments \
+								--skip-extended-insert \
+								--user=${database.mysql.username} \
+								${database.mysql.schema} > \
+								${docker.src.file.path}
 
 							sed -i "s/Warning: Using a password on the command line interface can be insecure.//g" ${docker.src.file.path}
 						]]>
