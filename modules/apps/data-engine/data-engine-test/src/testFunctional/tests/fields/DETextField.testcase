@@ -35,6 +35,15 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
+	@priority = "5"
+	test CanBeEdited {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
 	@priority = "4"
 	test CanBeDuplicated {
 
