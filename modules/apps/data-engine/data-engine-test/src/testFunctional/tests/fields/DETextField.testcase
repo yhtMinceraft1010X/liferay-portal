@@ -103,9 +103,33 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanSetLabelBeShownHidden {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Text");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 	}
 
 	@description = "This is a stubbed description"
