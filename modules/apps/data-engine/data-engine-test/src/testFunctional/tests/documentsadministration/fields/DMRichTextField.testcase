@@ -45,7 +45,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoNavTab(navTab = "Documents and Media");
+		Navigator.gotoNavTab(navTab = "Files");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
@@ -116,7 +116,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentsAndMedia();
+		Navigator.gotoNavItem(navItem = "Files");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
@@ -249,7 +249,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentsAndMedia();
+		Navigator.gotoNavItem(navItem = "Files");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
@@ -281,7 +281,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentsAndMedia();
+		Navigator.gotoNavItem(navItem = "Files");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
