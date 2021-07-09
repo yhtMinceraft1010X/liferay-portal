@@ -125,8 +125,8 @@ definition {
 		var modalTitle = "File Extensions Not Supported";
 
 		AssertElementPresent(
-			value1 = "${modalTitle}",
-			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE");
+			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_TITLE",
+			value1 = "${modalTitle}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
