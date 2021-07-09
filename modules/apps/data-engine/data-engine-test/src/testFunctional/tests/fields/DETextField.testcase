@@ -161,9 +161,33 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanDefalutSearchablePropertyBeKeyword {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
 
-		// TODO pending implementation
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope");
 
+		FormFields.viewCheckboxChecked(fieldName = "Structure Fields Indexable Enable");
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Text",
+			searchableType = "Keyword");
 	}
 
 	@description = "This is a stubbed description"
