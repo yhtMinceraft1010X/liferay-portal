@@ -120,9 +120,39 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanBeSingleLineMultipleLine {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldType(
+			fieldFieldLabel = "Text",
+			fieldlineType = "Multiple Lines");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldType(
+			fieldFieldLabel = "Text",
+			fieldlineType = "Multiple Lines");
+
+		DataEngine.editFieldType(
+			fieldFieldLabel = "Text",
+			fieldlineType = "Single Line");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldType(
+			fieldFieldLabel = "Text",
+			fieldlineType = "Single Line");
 	}
 
 	@description = "This is a stubbed description"
