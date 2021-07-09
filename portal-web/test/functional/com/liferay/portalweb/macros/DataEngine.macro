@@ -1334,6 +1334,15 @@ definition {
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "${fieldHelp}");
 		}
+		if (isSet(fieldPlaceholder)) {
+			key_fieldLabel = "Placeholder";
+
+			Click(locator1 = "Sidebar#DDM_ANY");
+
+			AssertTextEquals(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldPlaceholder}");
+		}
 	}
 
 	macro viewFieldReference {
