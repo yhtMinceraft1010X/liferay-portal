@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_GROUP_FIELD_WITH_DEPTH</td>
+	<td>//div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][contains(@class, 'ddm-label')][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}] | //div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][not(contains(@class, 'ddm-label'))][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth} + 1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_NESTED</td>
 	<td>//label[normalize-space(text())='${key_fieldsGroupLabel}']/following::div//label[normalize-space(text())='${key_fieldFieldLabel}'] | //label[normalize-space(text())='${key_fieldsGroupLabel}']/following::div//legend[normalize-space(text())='${key_fieldFieldLabel}']</td>
 	<td></td>
@@ -53,11 +58,6 @@
 <tr>
 	<td>SIDEBAR_FIELD_NAME_BUTTON</td>
 	<td>//div[contains(@class,'sidebar-header')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_FIELDS_GROUP_FIELD_WITH_DEPTH</td>
-	<td>//div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][contains(@class, 'ddm-label')][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}] | //div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][not(contains(@class, 'ddm-label'))][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth} + 1]</td>
 	<td></td>
 </tr>
 </tbody>

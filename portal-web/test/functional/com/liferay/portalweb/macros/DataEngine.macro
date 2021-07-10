@@ -648,7 +648,7 @@ definition {
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldGroupDepth = "${fieldGroupDepth}",
 				key_fieldGroupLabel = "${fieldGroupLabel}",
-				locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIELD_WITH_DEPTH");
+				locator1 = "DataEngineBuilder#FIELDS_GROUP_FIELD_WITH_DEPTH");
 		}
 	}
 
