@@ -200,6 +200,38 @@ definition {
 			searchableType = "Disable");
 	}
 
+	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
+	@priority = "3"
+	test CanSetDefaultSearchablePropertyToKeyword {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Structure Fields Indexable Enable");
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Select from List",
+			searchableType = "Keyword");
+	}
+
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
