@@ -26,6 +26,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be edited."
+	@priority = "5"
+	test CanEditLabelAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "Select from List Edited");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List Edited",
+			fieldHelp = "Help Text Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List Edited",
+			fieldHelp = "Help Text Edited",
+			fieldName = "Select from List");
+	}
+
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
@@ -50,4 +87,5 @@ definition {
 			fieldHelp = "Help Text",
 			fieldName = "Select from List");
 	}
+
 }
