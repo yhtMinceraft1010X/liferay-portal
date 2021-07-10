@@ -1210,6 +1210,31 @@ definition {
 			locator2 = "Form#ADD_FIELD_POSITION_1");
 	}
 
+	macro removeFieldOption {
+		if (isSet(fieldFieldLabel)) {
+			AssertClick.assertPartialTextClickAt(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = "${fieldFieldLabel}");
+		}
+
+		if (isSet(optionFieldLabel)) {
+			Click(
+				index = "${index}",
+				key_optionFieldLabel = "${optionFieldLabel}",
+				locator1 = "DataEngineBuilder#OPTION_REMOVE_BUTTON_WITH_LABEL_INDEXED");
+		}
+		else {
+			Click(
+				index = "${index}",
+				locator1 = "DataEngineBuilder#OPTION_REMOVE_BUTTON_INDEXED");
+		}
+
+		if (isSet(fieldFieldLabel)) {
+			Click(locator1 = "Sidebar#BACK");
+		}
+	}
+
 	macro tearDownInstance {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
