@@ -86,7 +86,7 @@ definition {
 
 	@description = "Verify that Label and Help text can be edited"
 	@priority = "5"
-	test CanBeEdited {
+	test CanEditLabelPlaceholderAndHelpText {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -123,7 +123,7 @@ definition {
 
 	@description = "Verify that Text field can be set as Single line or Multiple line"
 	@priority = "3"
-	test CanBeSingleLineMultipleLine {
+	test CanBeSingleOrMultipleLine {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -159,7 +159,7 @@ definition {
 
 	@description = "Verify Default Searchable property is Disable when System Setting is left unchecked"
 	@priority = "3"
-	test CanDefalutSearchablePropertyBeDisabled {
+	test CanSetDefaultSearchablePropertyToDisable {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -191,7 +191,7 @@ definition {
 
 	@description = "Verify Default Searchable property is Keyword when System Setting is checked"
 	@priority = "3"
-	test CanDefalutSearchablePropertyBeKeyword {
+	test CanSetDefaultSearchablePropertyToKeyword {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -254,7 +254,7 @@ definition {
 
 	@description = "Verify that Label can be shown/hidden"
 	@priority = "3"
-	test CanSetLabelToShownHidden {
+	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
