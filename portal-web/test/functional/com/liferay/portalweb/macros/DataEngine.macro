@@ -1349,11 +1349,8 @@ definition {
 		}
 
 		if (isSet(fieldPlaceholder)) {
-			key_fieldLabel = "Placeholder";
-
-			Click(locator1 = "Sidebar#DDM_ANY");
-
 			AssertTextEquals(
+				key_fieldLabel = "Placeholder",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${fieldPlaceholder}");
 		}
