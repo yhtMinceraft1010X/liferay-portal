@@ -93,7 +93,8 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text");
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
 
 		WebContentStructures.saveCP();
 
@@ -105,7 +106,8 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text Edited",
-			fieldHelp = "Help Text Edited");
+			fieldHelp = "Help Text Edited",
+			fieldPlaceholder = "Placeholder Text Edited");
 
 		WebContentStructures.saveCP();
 
@@ -114,7 +116,8 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Text Edited",
 			fieldHelp = "Help Text Edited",
-			fieldName = "Text");
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text Edited");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Text field can be set as Single line or Multiple line."
