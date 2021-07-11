@@ -65,10 +65,6 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
 		DataEngine.duplicate(fieldFieldLabel = "Text");
 
 		WebContentStructures.saveCP();
@@ -231,10 +227,6 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
