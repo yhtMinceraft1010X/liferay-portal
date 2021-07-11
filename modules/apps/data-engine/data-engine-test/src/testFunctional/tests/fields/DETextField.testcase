@@ -140,8 +140,8 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldType(
-			fieldFieldLabel = "Text",
-			fieldlineType = "Multiple Lines");
+			fieldLabel = "Text",
+			fieldLineType = "Multiple Lines");
 
 		DataEngine.editFieldType(
 			fieldLabel = "Text",
@@ -152,8 +152,8 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
 		DataEngine.viewFieldType(
-			fieldFieldLabel = "Text",
-			fieldlineType = "Single Line");
+			fieldLabel = "Text",
+			fieldLineType = "Single Line");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."

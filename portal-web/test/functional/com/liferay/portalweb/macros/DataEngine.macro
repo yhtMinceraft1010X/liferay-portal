@@ -1431,15 +1431,31 @@ definition {
 	}
 
 	macro viewFieldType {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (IsElementPresent(locator1 = "Modal#MODAL")) {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Field Type",
-			key_optionValue = "${fieldlineType}",
+			key_optionValue = "${fieldLineType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro viewNestedField {
