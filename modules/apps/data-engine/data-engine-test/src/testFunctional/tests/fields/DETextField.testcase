@@ -198,7 +198,7 @@ definition {
 			configurationName = "Administration",
 			configurationScope = "System Scope");
 
-		FormFields.viewCheckboxChecked(fieldName = "Structure Fields Indexable Enable");
+		FormFields.enableCheckbox(fieldName = "Structure Fields Indexable Enable");
 
 		SystemSettings.saveConfiguration();
 
