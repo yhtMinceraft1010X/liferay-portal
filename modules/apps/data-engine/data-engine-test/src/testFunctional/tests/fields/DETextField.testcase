@@ -132,8 +132,8 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.editFieldType(
-			fieldFieldLabel = "Text",
-			fieldlineType = "Multiple Lines");
+			fieldLabel = "Text",
+			fieldLineType = "Multiple Lines");
 
 		WebContentStructures.saveCP();
 
@@ -144,8 +144,8 @@ definition {
 			fieldlineType = "Multiple Lines");
 
 		DataEngine.editFieldType(
-			fieldFieldLabel = "Text",
-			fieldlineType = "Single Line");
+			fieldLabel = "Text",
+			fieldLineType = "Single Line");
 
 		WebContentStructures.saveCP();
 
