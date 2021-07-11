@@ -80,6 +80,42 @@ definition {
 			fieldName = "Text");
 	}
 
+	@description = "This is a test for LRQA-68539. This test verifies that Text field can be set as Single line or Multiple line."
+	@priority = "3"
+	test CanBeSingleOrMultipleLine {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldType(
+			fieldLabel = "Text",
+			fieldLineType = "Multiple Lines");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldType(
+			fieldLabel = "Text",
+			fieldLineType = "Multiple Lines");
+
+		DataEngine.editFieldType(
+			fieldLabel = "Text",
+			fieldLineType = "Single Line");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldType(
+			fieldLabel = "Text",
+			fieldLineType = "Single Line");
+	}
+
 	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelPlaceholderAndHelpText {
@@ -118,42 +154,6 @@ definition {
 			fieldHelp = "Help Text Edited",
 			fieldName = "Text",
 			fieldPlaceholder = "Placeholder Text Edited");
-	}
-
-	@description = "This is a test for LRQA-68539. This test verifies that Text field can be set as Single line or Multiple line."
-	@priority = "3"
-	test CanBeSingleOrMultipleLine {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.editFieldType(
-			fieldLabel = "Text",
-			fieldLineType = "Multiple Lines");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewFieldType(
-			fieldLabel = "Text",
-			fieldLineType = "Multiple Lines");
-
-		DataEngine.editFieldType(
-			fieldLabel = "Text",
-			fieldLineType = "Single Line");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewFieldType(
-			fieldLabel = "Text",
-			fieldLineType = "Single Line");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
