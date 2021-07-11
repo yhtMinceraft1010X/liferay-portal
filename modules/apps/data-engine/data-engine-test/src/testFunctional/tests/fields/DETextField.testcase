@@ -11,6 +11,8 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -27,8 +29,6 @@ definition {
 	@description = "Verify that is possible to delete the field"
 	@priority = "5"
 	test CanBeDeleted {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -57,8 +57,6 @@ definition {
 	@description = "Verify that is possible to duplicate the field"
 	@priority = "4"
 	test CanBeDuplicated {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -89,8 +87,6 @@ definition {
 	@description = "Verify that Label and Help text can be edited"
 	@priority = "5"
 	test CanBeEdited {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -128,8 +124,6 @@ definition {
 	@description = "Verify that Text field can be set as Single line or Multiple line"
 	@priority = "3"
 	test CanBeSingleLineMultipleLine {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -230,8 +224,6 @@ definition {
 	@description = "Verify that Label, Placeholder text and Help text can be set"
 	@priority = "5"
 	test CanSetLabelPlaceholderAndHelpText {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -263,8 +255,6 @@ definition {
 	@description = "Verify that Label can be shown/hidden"
 	@priority = "3"
 	test CanSetLabelToShownHidden {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
