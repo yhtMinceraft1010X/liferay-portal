@@ -26,11 +26,73 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
-	@priority = "3"
+	@priority = "5"
 	test CanSetLabelPlaceholderAndHelpText {
 
 		// TODO pending implementation
 
 	}
 
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanEditLabelPlaceholderAndHelpText {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetLabelToShownOrHidden {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanSetDecimalOrInteger {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeDuplicated {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetDefaultSearchablePropertyToDisable {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetDefaultSearchablePropertyToKeyword {
+
+		// TODO pending implementation
+
+	}
 }
