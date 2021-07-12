@@ -22,6 +22,8 @@ import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.After;
@@ -45,6 +47,9 @@ public class ObjectDefinitionResourceTest
 					objectDefinition.getId());
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
 			}
 		}
 	}
@@ -152,6 +157,9 @@ public class ObjectDefinitionResourceTest
 
 		return objectDefinition;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionResourceTest.class);
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
