@@ -197,7 +197,6 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DENumericField#CanSetDefaultSearchablePropertyToDisable";
@@ -233,11 +232,37 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToKeyword {
+		property test.name.skip.portal.instance = "DENumericField#CanSetDefaultSearchablePropertyToKeyword";
 
-		// TODO pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Administration",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Structure Fields Indexable Enable");
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Numeric",
+			searchableType = "Keyword");
 
 	}
 }
