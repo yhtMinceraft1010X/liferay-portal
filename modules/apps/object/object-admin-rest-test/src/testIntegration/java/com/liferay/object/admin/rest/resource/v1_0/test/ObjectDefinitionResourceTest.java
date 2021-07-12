@@ -41,10 +41,10 @@ public class ObjectDefinitionResourceTest
 	@After
 	@Override
 	public void tearDown() {
-		if (objectDefinition != null) {
+		if (_objectDefinition != null) {
 			try {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition.getId());
+					_objectDefinition.getId());
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -96,7 +96,7 @@ public class ObjectDefinitionResourceTest
 			totalCount + 1, objectDefinitionsJSONObject.get("totalCount"));
 	}
 
-	public ObjectDefinition objectDefinition;
+	private ObjectDefinition _objectDefinition;
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -152,10 +152,10 @@ public class ObjectDefinitionResourceTest
 			ObjectDefinition randomObjectDefinition)
 		throws Exception {
 
-		objectDefinition = objectDefinitionResource.postObjectDefinition(
+		_objectDefinition = objectDefinitionResource.postObjectDefinition(
 			randomObjectDefinition);
 
-		return objectDefinition;
+		return _objectDefinition;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
