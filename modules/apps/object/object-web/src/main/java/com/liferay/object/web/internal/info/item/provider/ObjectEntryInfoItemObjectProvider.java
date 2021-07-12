@@ -53,7 +53,9 @@ public class ObjectEntryInfoItemObjectProvider
 			classPKInfoItemIdentifier.getClassPK());
 
 		if (objectEntry == null) {
-			throw new NoSuchInfoItemException("Invalid infoItemIdentifier");
+			throw new NoSuchInfoItemException(
+				"Unable to get object entry " +
+					classPKInfoItemIdentifier.getClassPK());
 		}
 
 		return objectEntry;
