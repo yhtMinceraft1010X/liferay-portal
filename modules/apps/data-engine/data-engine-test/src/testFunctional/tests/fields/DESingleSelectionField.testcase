@@ -26,13 +26,29 @@ definition {
 		}
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
-	@priority = "3"
+	@description = "This is a test for LRQA-68571. This test verifies that Label and Help text can be set."
+	@priority = "5"
 	test CanSetLabelAndHelpText {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text",
+			fieldName = "Single Selection");
 	}
 
 }
