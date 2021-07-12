@@ -45,9 +45,6 @@ public class UpgradeReport {
 		warningMessages.add(message);
 	}
 
-	public void generateReport() {
-	}
-
 	private final Map<String, ArrayList<String>> _errorMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, ArrayList<String>> _eventMessages =
