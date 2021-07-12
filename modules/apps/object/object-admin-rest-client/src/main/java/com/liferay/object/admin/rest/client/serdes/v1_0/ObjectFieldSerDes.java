@@ -113,6 +113,16 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getRequired() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"required\": ");
+
+			sb.append(objectField.getRequired());
+		}
+
 		if (objectField.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +195,13 @@ public class ObjectFieldSerDes {
 			map.put("name", String.valueOf(objectField.getName()));
 		}
 
+		if (objectField.getRequired() == null) {
+			map.put("required", null);
+		}
+		else {
+			map.put("required", String.valueOf(objectField.getRequired()));
+		}
+
 		if (objectField.getType() == null) {
 			map.put("type", null);
 		}
@@ -239,6 +256,11 @@ public class ObjectFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					objectField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "required")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setRequired((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
