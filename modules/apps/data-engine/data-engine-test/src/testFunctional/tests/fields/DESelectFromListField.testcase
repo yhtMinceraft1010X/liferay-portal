@@ -171,6 +171,8 @@ definition {
 	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
+		property test.name.skip.portal.instance = "DESelectFromListField#CanSetDefaultSearchablePropertyToDisable";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -203,6 +205,8 @@ definition {
 	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Keyword' when System Setting is checked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToKeyword {
+		property test.name.skip.portal.instance = "DESelectFromListField#CanSetDefaultSearchablePropertyToKeyword";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
