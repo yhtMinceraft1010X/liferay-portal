@@ -134,8 +134,7 @@ public class ObjectEntryItemSelectorView
 						objectEntry.getObjectDefinitionId());
 			}
 			catch (PortalException portalException) {
-				throw new RuntimeException(
-					"Unexpected exception", portalException);
+				throw new RuntimeException(portalException);
 			}
 		}
 
