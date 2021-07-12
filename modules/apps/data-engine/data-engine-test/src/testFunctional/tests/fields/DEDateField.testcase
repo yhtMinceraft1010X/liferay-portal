@@ -31,7 +31,26 @@ definition {
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
+
+        WebContentStructures.addCP(structureName = "WC Structure Title");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Date",
+            fieldName = "Date");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Date",
+            fieldHelp = "Help Text");
+
+        WebContentStructures.saveCP();
+
+        WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+		
+        DataEngine.viewField(
+            fieldFieldLabel = "Date",
+            fieldHelp = "Help Text",
+            fieldName = "Date");
 
 	}
 
