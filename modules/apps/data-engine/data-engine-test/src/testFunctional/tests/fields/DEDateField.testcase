@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 
@@ -55,7 +54,6 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 
@@ -95,11 +93,29 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Date");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Date");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
 
 	}
 
