@@ -118,4 +118,35 @@ definition {
 			fieldName = "Single Selection");
 	}
 
+	@description = "This is a test for LRQA-68571. This test verifies that multiple options can be set."
+	@priority = "5"
+	test CanSetMultipleOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Single Selection",
+				index = "${index}",
+				optionValue = "Option ${index}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.assertFieldOptionLabels(
+			fieldFieldLabel = "Single Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+	}
+
 }
