@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Sam Ziemer
  */
 @Component(
-	immediate = true, property = "appender.name=UpgradeLogAppender",
+	immediate = true, property = "appender.name=UpgradeReportLogAppender",
 	service = Appender.class
 )
-public class UpgradeLogAppender implements Appender {
+public class UpgradeReportLogAppender implements Appender {
 
 	@Override
 	public void append(LogEvent logEvent) {
@@ -75,7 +75,7 @@ public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public String getName() {
-		return "UpgradeLogAppender";
+		return "UpgradeReportLogAppender";
 	}
 
 	@Override

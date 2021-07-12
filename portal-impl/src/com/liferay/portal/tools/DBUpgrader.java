@@ -130,7 +130,7 @@ public class DBUpgrader {
 					ProxyModeThreadLocal.setWithSafeCloseable(false)) {
 
 				if (PropsValues.UPGRADE_REPORT_ENABLED) {
-					_startUpgradeLogAppender();
+					_startUpgradeReportLogAppender();
 				}
 
 				upgrade();
@@ -153,7 +153,7 @@ public class DBUpgrader {
 		}
 		finally {
 			if (PropsValues.UPGRADE_REPORT_ENABLED) {
-				_stopUpgradeLogAppender();
+				_stopUpgradeReportLogAppender();
 			}
 		}
 	}
@@ -262,7 +262,7 @@ public class DBUpgrader {
 			).build());
 	}
 
-	private static void _startUpgradeLogAppender() {
+	private static void _startUpgradeReportLogAppender() {
 		final ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
@@ -293,11 +293,11 @@ public class DBUpgrader {
 		serviceDependencyManager.registerDependencies(
 			registry.getFilter(
 				StringBundler.concat(
-					"(&(appender.name=UpgradeLogAppender)(objectClass=",
+					"(&(appender.name=UpgradeReportLogAppender)(objectClass=",
 					Appender.class.getName(), "))")));
 	}
 
-	private static void _stopUpgradeLogAppender() {
+	private static void _stopUpgradeReportLogAppender() {
 		if (_appender != null) {
 			_appender.stop();
 		}
