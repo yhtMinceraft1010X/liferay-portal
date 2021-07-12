@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.internal.log;
+package com.liferay.portal.upgrade.internal.apache.logging.log4j.core;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.internal.report.UpgradeReport;
