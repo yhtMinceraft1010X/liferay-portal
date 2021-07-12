@@ -19,6 +19,8 @@ import com.liferay.portal.upgrade.internal.report.UpgradeReport;
 
 import java.io.Serializable;
 
+import java.util.Objects;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
@@ -41,22 +43,20 @@ public class UpgradeLogAppender implements Appender {
 
 	@Override
 	public void append(LogEvent event) {
-		String loggerName = event.getLoggerName();
-
 		Message message = event.getMessage();
 
-		String formattedMessage = message.getFormattedMessage();
-
 		if (event.getLevel() == Level.INFO) {
-			if (loggerName.equals(UpgradeProcess.class.getName())) {
-				_upgradeReport.addEventMessage(loggerName, formattedMessage);
+			if (Objects.equals(
+					event.getLoggerName(), UpgradeProcess.class.getName())) {
+
+				_upgradeReport.addEventMessage(event.getLoggerName(), message.getFormattedMessage());
 			}
 		}
 		else if (event.getLevel() == Level.WARN) {
-			_upgradeReport.addWarningMessage(loggerName, formattedMessage);
+			_upgradeReport.addWarningMessage(event.getLoggerName(), message.getFormattedMessage());
 		}
 		else if (event.getLevel() == Level.ERROR) {
-			_upgradeReport.addErrorMessage(loggerName, formattedMessage);
+			_upgradeReport.addErrorMessage(event.getLoggerName(), message.getFormattedMessage());
 		}
 	}
 
