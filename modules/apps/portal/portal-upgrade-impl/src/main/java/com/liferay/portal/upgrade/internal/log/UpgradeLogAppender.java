@@ -45,7 +45,10 @@ public class UpgradeLogAppender implements Appender {
 	public void append(LogEvent logEvent) {
 		Message message = logEvent.getMessage();
 
-		if (logEvent.getLevel() == Level.INFO) {
+		if (logEvent.getLevel() == Level.ERROR) {
+			_upgradeReport.addErrorMessage(logEvent.getLoggerName(), message.getFormattedMessage());
+		}
+		else if (logEvent.getLevel() == Level.INFO) {
 			if (Objects.equals(
 					logEvent.getLoggerName(), UpgradeProcess.class.getName())) {
 
@@ -54,9 +57,6 @@ public class UpgradeLogAppender implements Appender {
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
 			_upgradeReport.addWarningMessage(logEvent.getLoggerName(), message.getFormattedMessage());
-		}
-		else if (logEvent.getLevel() == Level.ERROR) {
-			_upgradeReport.addErrorMessage(logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
 
