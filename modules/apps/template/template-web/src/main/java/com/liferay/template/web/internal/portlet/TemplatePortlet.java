@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE_PORTLET,
+		"javax.portlet.name=" + TemplatePortletKeys.TEMPLATE,
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class

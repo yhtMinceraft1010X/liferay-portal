@@ -19,7 +19,7 @@ package com.liferay.template.web.internal.constants;
  */
 public class TemplatePortletKeys {
 
-	public static final String TEMPLATE_PORTLET =
+	public static final String TEMPLATE =
 		"com_liferay_template_web_internal_portlet_TemplatePortlet";
 
 }

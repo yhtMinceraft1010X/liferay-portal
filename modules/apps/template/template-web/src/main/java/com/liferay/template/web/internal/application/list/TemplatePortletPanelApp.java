@@ -38,12 +38,12 @@ public class TemplatePortletPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return TemplatePortletKeys.TEMPLATE_PORTLET;
+		return TemplatePortletKeys.TEMPLATE;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + TemplatePortletKeys.TEMPLATE_PORTLET + ")",
+		target = "(javax.portlet.name=" + TemplatePortletKeys.TEMPLATE + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {
