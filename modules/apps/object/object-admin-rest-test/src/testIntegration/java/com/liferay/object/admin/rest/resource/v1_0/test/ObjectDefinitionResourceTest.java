@@ -96,8 +96,6 @@ public class ObjectDefinitionResourceTest
 			totalCount + 1, objectDefinitionsJSONObject.get("totalCount"));
 	}
 
-	private ObjectDefinition _objectDefinition;
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
@@ -160,6 +158,8 @@ public class ObjectDefinitionResourceTest
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionResourceTest.class);
+
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
