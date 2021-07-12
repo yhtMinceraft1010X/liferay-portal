@@ -1184,7 +1184,6 @@ public class ContentPageEditorDisplayContext {
 			List<FragmentComposition> fragmentCompositions =
 				fragmentCollectionContributor.getFragmentCompositions(
 					themeDisplay.getLocale());
-
 			List<FragmentEntry> fragmentEntries =
 				fragmentCollectionContributor.getFragmentEntries(
 					themeDisplay.getLocale());
