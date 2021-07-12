@@ -47,23 +47,23 @@ public class TemplateDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), _INFORMATION_TEMPLATES));
+					Objects.equals(_getTabs1(), "information-templates"));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "tabs1",
-					_INFORMATION_TEMPLATES);
+					"information-templates");
 				navigationItem.setLabel(
 					LanguageUtil.get(
-						_httpServletRequest, _INFORMATION_TEMPLATES));
+						_httpServletRequest, "information-templates"));
 			}
 		).add(
 			navigationItem -> {
 				navigationItem.setActive(
-					Objects.equals(_getTabs1(), _WIDGET_TEMPLATES));
+					Objects.equals(_getTabs1(), "widget-templates"));
 				navigationItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "tabs1",
-					_WIDGET_TEMPLATES);
+					"widget-templates");
 				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, _WIDGET_TEMPLATES));
+					LanguageUtil.get(_httpServletRequest, "widget-templates"));
 			}
 		).build();
 	}
@@ -74,15 +74,10 @@ public class TemplateDisplayContext {
 		}
 
 		_tabs1 = ParamUtil.getString(
-			_liferayPortletRequest, "tabs1", _INFORMATION_TEMPLATES);
+			_liferayPortletRequest, "tabs1", "information-templates");
 
 		return _tabs1;
 	}
-
-	private static final String _INFORMATION_TEMPLATES =
-		"information-templates";
-
-	private static final String _WIDGET_TEMPLATES = "widget-templates";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
