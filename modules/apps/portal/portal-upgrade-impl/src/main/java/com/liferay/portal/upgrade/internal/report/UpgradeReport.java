@@ -24,35 +24,35 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UpgradeReport {
 
-	public void addError(String loggerName, String message) {
-		List<String> errors = _errors.computeIfAbsent(
+	public void addErrorMessage(String loggerName, String message) {
+		List<String> errorMessages = _errorMessages.computeIfAbsent(
 			loggerName, key -> new ArrayList<>());
 
-		errors.add(message);
+		errorMessages.add(message);
 	}
 
-	public void addEvent(String loggerName, String message) {
-		List<String> events = _events.computeIfAbsent(
+	public void addEventMessage(String loggerName, String message) {
+		List<String> eventMessages = _eventMessages.computeIfAbsent(
 			loggerName, key -> new ArrayList<>());
 
-		events.add(message);
+		eventMessages.add(message);
 	}
 
-	public void addWarning(String loggerName, String message) {
-		List<String> warnings = _warnings.computeIfAbsent(
+	public void addWarningMessage(String loggerName, String message) {
+		List<String> warningMessages = _warningMessages.computeIfAbsent(
 			loggerName, key -> new ArrayList<>());
 
-		warnings.add(message);
+		warningMessages.add(message);
 	}
 
 	public void generateReport() {
 	}
 
-	private final Map<String, ArrayList<String>> _errors =
+	private final Map<String, ArrayList<String>> _errorMessages =
 		new ConcurrentHashMap<>();
-	private final Map<String, ArrayList<String>> _events =
+	private final Map<String, ArrayList<String>> _eventMessages =
 		new ConcurrentHashMap<>();
-	private final Map<String, ArrayList<String>> _warnings =
+	private final Map<String, ArrayList<String>> _warningMessages =
 		new ConcurrentHashMap<>();
 
 }

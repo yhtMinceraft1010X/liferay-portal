@@ -49,14 +49,14 @@ public class UpgradeLogAppender implements Appender {
 
 		if (event.getLevel() == Level.INFO) {
 			if (loggerName.equals(UpgradeProcess.class.getName())) {
-				_upgradeReport.addEvent(loggerName, formattedMessage);
+				_upgradeReport.addEventMessage(loggerName, formattedMessage);
 			}
 		}
 		else if (event.getLevel() == Level.WARN) {
-			_upgradeReport.addWarning(loggerName, formattedMessage);
+			_upgradeReport.addWarningMessage(loggerName, formattedMessage);
 		}
 		else if (event.getLevel() == Level.ERROR) {
-			_upgradeReport.addError(loggerName, formattedMessage);
+			_upgradeReport.addErrorMessage(loggerName, formattedMessage);
 		}
 	}
 
