@@ -43,7 +43,8 @@ public class ObjectEntryInfoItemObjectProvider
 		throws NoSuchInfoItemException {
 
 		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			throw new NoSuchInfoItemException("Invalid infoItemIdentifier");
+			throw new NoSuchInfoItemException(
+				"Unsupported info item identifier type " + infoItemIdentifier);
 		}
 
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
