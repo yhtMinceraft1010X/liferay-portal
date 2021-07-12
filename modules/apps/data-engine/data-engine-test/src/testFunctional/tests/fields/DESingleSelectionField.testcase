@@ -88,4 +88,34 @@ definition {
 			fieldName = "Single Selection");
 	}
 
+	@description = "This is a test for LRQA-68571. This test verifies that Label can be shown or hidden."
+	@priority = "3"
+	test CanSetLabelToShownOrHidden {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Single Selection");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+	}
+
 }
