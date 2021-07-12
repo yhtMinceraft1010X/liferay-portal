@@ -263,7 +263,7 @@ public class DBUpgrader {
 	}
 
 	private static void _startUpgradeReportLogAppender() {
-		final ServiceDependencyManager serviceDependencyManager =
+		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
 		Registry registry = RegistryUtil.getRegistry();
