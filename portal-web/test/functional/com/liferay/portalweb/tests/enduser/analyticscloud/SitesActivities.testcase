@@ -1,0 +1,8 @@
+@description = "Bug ID: LRAC-7996 | Automation ID: LRAC-8110 | Test Summary: Assert Sites Activity loads activity data properly when the time filter is set to 'Last 24 hours'"
+@ignore = "true"
+@priority = "5"
+        test CanLoadDataProperlyWhenTimeFilterIsLast24Hours {
+
+  // TODO LRAC-8110 CanLoadDataProperlyWhenTimeFilterIsLast24Hours pending implementation
+
+}
