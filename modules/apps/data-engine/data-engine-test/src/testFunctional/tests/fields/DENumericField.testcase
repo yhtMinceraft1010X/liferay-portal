@@ -27,11 +27,31 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanSetLabelPlaceholderAndHelpText {
 
-		// TODO pending implementation
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldName = "Numeric",
+			fieldPlaceholder = "Placeholder Text");
 
 	}
 
