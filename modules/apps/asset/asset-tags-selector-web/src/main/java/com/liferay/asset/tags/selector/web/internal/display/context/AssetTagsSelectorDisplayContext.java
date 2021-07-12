@@ -30,6 +30,7 @@ import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -203,7 +204,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	private List<AssetTag> _removeDuplicateAssetTags(List<AssetTag> tags) {
-		LinkedHashMap<String, AssetTag> filteredTags = new LinkedHashMap<>();
+		Map<String, AssetTag> filteredTags = new LinkedHashMap<>();
 
 		for (AssetTag tag : tags) {
 			String tagName = tag.getName();
