@@ -42,21 +42,21 @@ import org.osgi.service.component.annotations.Component;
 public class UpgradeLogAppender implements Appender {
 
 	@Override
-	public void append(LogEvent event) {
-		Message message = event.getMessage();
+	public void append(LogEvent logEvent) {
+		Message message = logEvent.getMessage();
 
-		if (event.getLevel() == Level.INFO) {
+		if (logEvent.getLevel() == Level.INFO) {
 			if (Objects.equals(
-					event.getLoggerName(), UpgradeProcess.class.getName())) {
+					logEvent.getLoggerName(), UpgradeProcess.class.getName())) {
 
-				_upgradeReport.addEventMessage(event.getLoggerName(), message.getFormattedMessage());
+				_upgradeReport.addEventMessage(logEvent.getLoggerName(), message.getFormattedMessage());
 			}
 		}
-		else if (event.getLevel() == Level.WARN) {
-			_upgradeReport.addWarningMessage(event.getLoggerName(), message.getFormattedMessage());
+		else if (logEvent.getLevel() == Level.WARN) {
+			_upgradeReport.addWarningMessage(logEvent.getLoggerName(), message.getFormattedMessage());
 		}
-		else if (event.getLevel() == Level.ERROR) {
-			_upgradeReport.addErrorMessage(event.getLoggerName(), message.getFormattedMessage());
+		else if (logEvent.getLevel() == Level.ERROR) {
+			_upgradeReport.addErrorMessage(logEvent.getLoggerName(), message.getFormattedMessage());
 		}
 	}
 
