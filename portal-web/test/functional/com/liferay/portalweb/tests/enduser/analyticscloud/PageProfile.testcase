@@ -1,8 +1,8 @@
 @description = "Feature ID: Legacy | Automation ID: LRAC-8112 | Test Summary: Assert clicking on a page in the pages lists navigates to the page profile"
 @ignore = "true"
 @priority = "5"
-        test ClickOnPageInPagesListsNavigatesToPageProfile {
+test ClickOnPageInPagesListsNavigatesToPageProfile {
 
-  // TODO LRAC-8112 ClickOnPageInPagesListsNavigatesToPageProfile pending implementation
+	// TODO LRAC-8112 ClickOnPageInPagesListsNavigatesToPageProfile pending implementation
 
 }

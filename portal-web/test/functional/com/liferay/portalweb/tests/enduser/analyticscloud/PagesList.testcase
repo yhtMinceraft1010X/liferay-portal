@@ -1,8 +1,8 @@
 @description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 @ignore = "true"
 @priority = "5"
-        test ShowsListOfPages {
+test ShowsListOfPages {
 
-  // TODO LRAC-8111 ShowsListOfPages pending implementation
+	// TODO LRAC-8111 ShowsListOfPages pending implementation
 
 }

@@ -134,17 +134,17 @@ definition {
 @description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
 @ignore = "true"
 @priority = "5"
-        test ViewAllFormsShownInAssetList {
+test ViewAllFormsShownInAssetList {
 
-  // TODO LRAC-8120 ViewAllFormsShownInAssetList pending implementation
+	// TODO LRAC-8120 ViewAllFormsShownInAssetList pending implementation
 
 }
 
 @description = "Feature ID: Legacy | Automation ID: LRAC-8121 | Test Summary: Assert clicking a form in the forms list navigates to the form overview page"
 @ignore = "true"
 @priority = "5"
-        test CanNavigatesToFormsOverviewPage {
+test CanNavigatesToFormsOverviewPage {
 
-  // TODO LRAC-8121 CanNavigatesToFormsOverviewPage pending implementation
+	// TODO LRAC-8121 CanNavigatesToFormsOverviewPage pending implementation
 
 }

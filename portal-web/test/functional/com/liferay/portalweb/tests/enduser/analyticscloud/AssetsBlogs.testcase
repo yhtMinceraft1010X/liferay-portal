@@ -36,6 +36,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
+	@ignore = "true"
+	@priority = "5"
+	test CanNavigatesToBlogsOverviewPage {
+
+		// TODO LRAC-8113 CanNavigatesToBlogsOverviewPage pending implementation
+
+	}
+
 	@description = "View all blogs in the property in assets"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {
@@ -120,21 +129,4 @@ definition {
 			matricTitle = "Views",
 			value1 = "4");
 	}
-
-@description = "Feature ID: Legacy | Automation ID: LRAC-8113 | Test Summary: Assert clicking a blog in the blogs list navigates to the blogs overview page"
-@ignore = "true"
-@priority = "5"
-        test CanNavigatesToBlogsOverviewPage {
-
-  // TODO LRAC-8113 CanNavigatesToBlogsOverviewPage pending implementation
-
-}
-
-@description = "Feature ID: Legacy | Automation ID: LRAC-8114 | Test Summary: Assert blogs known individuals list shows individuals who have viewed the blog"
-@ignore = "true"
-@priority = "5"
-        test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
-
-  // TODO LRAC-8114 KnownIndividualsListShowsIndividualsWhoHaveViewedBlog pending implementation
-
 }

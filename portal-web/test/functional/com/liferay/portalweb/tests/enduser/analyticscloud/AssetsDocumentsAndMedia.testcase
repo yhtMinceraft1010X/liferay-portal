@@ -36,6 +36,24 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8116 | Test Summary: Assert clicking a document in the documents and media list navigates to the documents overview page"
+	@ignore = "true"
+	@priority = "5"
+	test CanNavigatesToDocumentsOverviewPage {
+
+		// TODO LRAC-8116 CanNavigatesToDocumentsOverviewPage pending implementation
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAllDocumentsAndMediaShownInAssetList {
+
+		// TODO LRAC-8115 ViewAllDocumentsAndMediaShownInAssetList pending implementation
+
+	}
+
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
@@ -72,30 +90,4 @@ definition {
 			matricTitle = "Previews",
 			value1 = "4");
 	}
-
-@description = "Feature ID: Legacy | Automation ID: LRAC-8115 | Test Summary: Assert document list shows all of the documents and media assets in a list"
-@ignore = "true"
-@priority = "5"
-        test ViewAllDocumentsAndMediaShownInAssetList {
-
-  // TODO LRAC-8115 ViewAllDocumentsAndMediaShownInAssetList pending implementation
-
-}
-
-@description = "Feature ID: Legacy | Automation ID: LRAC-8116 | Test Summary: Assert clicking a document in the documents and media list navigates to the documents overview page"
-@ignore = "true"
-@priority = "5"
-        test CanNavigatesToDocumentsOverviewPage {
-
-  // TODO LRAC-8116 CanNavigatesToDocumentsOverviewPage pending implementation
-
-}
-
-@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Assert document known individuals list shows the individuals who have viewed the blog"
-@ignore = "true"
-@priority = "5"
-        test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-
-  // TODO LRAC-8118 KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments pending implementation
-
 }
