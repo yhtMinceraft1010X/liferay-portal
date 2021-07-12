@@ -270,17 +270,19 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 	}
 
-	private Object _getValue(Locale locale, String type, String value) {
-		if (Objects.equals(type, "BigDecimal")) {
+	private Object _getValue(
+		Locale locale, String objectFieldType, String value) {
+
+		if (Objects.equals(objectFieldType, "BigDecimal")) {
 			return GetterUtil.get(value, BigDecimal.ZERO);
 		}
-		else if (Objects.equals(type, "Blob")) {
+		else if (Objects.equals(objectFieldType, "Blob")) {
 			return value.getBytes();
 		}
-		else if (Objects.equals(type, "Boolean")) {
+		else if (Objects.equals(objectFieldType, "Boolean")) {
 			return GetterUtil.getBoolean(value);
 		}
-		else if (Objects.equals(type, "Date")) {
+		else if (Objects.equals(objectFieldType, "Date")) {
 			try {
 				return DateUtil.parseDate("yyyy-MM-dd", value, locale);
 			}
@@ -292,13 +294,13 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				return value;
 			}
 		}
-		else if (Objects.equals(type, "Double")) {
+		else if (Objects.equals(objectFieldType, "Double")) {
 			return GetterUtil.getDouble(value);
 		}
-		else if (Objects.equals(type, "Integer")) {
+		else if (Objects.equals(objectFieldType, "Integer")) {
 			return GetterUtil.getInteger(value);
 		}
-		else if (Objects.equals(type, "Long")) {
+		else if (Objects.equals(objectFieldType, "Long")) {
 			return GetterUtil.getLong(value);
 		}
 		else {
