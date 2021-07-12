@@ -235,9 +235,10 @@ public class ObjectEntryItemSelectorView
 				_objectEntryLocalService.getObjectEntries(
 					searchContainer.getStart(), searchContainer.getEnd());
 
+			searchContainer.setResults(objectEntries);
+
 			searchContainer.setTotal(
 				_objectEntryLocalService.getObjectEntriesCount());
-			searchContainer.setResults(objectEntries);
 
 			return searchContainer;
 		}
