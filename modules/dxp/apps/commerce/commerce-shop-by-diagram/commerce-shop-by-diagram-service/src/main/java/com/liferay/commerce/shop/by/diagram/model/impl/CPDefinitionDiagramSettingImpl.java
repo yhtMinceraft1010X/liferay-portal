@@ -15,22 +15,11 @@
 package com.liferay.commerce.shop.by.diagram.model.impl;
 
 /**
- * The extended model implementation for the CPDefinitionDiagramSetting service. Represents a row in the &quot;CPDefinitionDiagramSetting&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting</code> interface.
- * </p>
- *
  * @author Andrea Sbarra
  */
 public class CPDefinitionDiagramSettingImpl
 	extends CPDefinitionDiagramSettingBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a cp definition diagram setting model instance should use the {@link com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramSetting} interface instead.
-	 */
 	public CPDefinitionDiagramSettingImpl() {
 	}
 
