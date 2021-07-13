@@ -118,4 +118,35 @@ definition {
 			fieldName = "Multiple Selection");
 	}
 
+	@description = "This is a test for LRQA-68572. This test verifies that multiple options can be set."
+	@priority = "5"
+	test CanSetMultipleOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Multiple Selection",
+				index = "${index}",
+				optionValue = "Option ${index}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.assertFieldOptionLabels(
+			fieldFieldLabel = "Multiple Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+	}
+
 }
