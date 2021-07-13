@@ -18,36 +18,19 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import org.junit.BeforeClass;
 
 /**
  * @author Matija Petanjek
  */
 public abstract class BaseBatchEngineTaskProgressTestCase {
 
-	@BeforeClass
-	public static void setUpClass() {
-		productJSON = JSONUtil.put(
-			"active", true
-		).put(
-			"catalogId", 111
-		).put(
-			"name", MapUtil.singletonDictionary("en_US", "Test Product")
-		).put(
-			"productType", "simple"
-		).put(
-			"tags", new String[0]
-		).put(
-			"workflowStatusInfo", MapUtil.singletonDictionary("code", 0)
-		).toString();
-	}
-
-	protected byte[] compressContent(byte[] content, String contentType)
+	protected InputStream compress(String content, String contentType)
 		throws Exception {
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
@@ -61,15 +44,30 @@ public abstract class BaseBatchEngineTaskProgressTestCase {
 
 				zipOutputStream.putNextEntry(zipEntry);
 
-				zipOutputStream.write(content, 0, content.length);
+				byte[] bytes = content.getBytes();
+
+				zipOutputStream.write(bytes, 0, bytes.length);
 			}
 
-			return byteArrayOutputStream.toByteArray();
+			return new ByteArrayInputStream(
+				byteArrayOutputStream.toByteArray());
 		}
 	}
 
-	protected static final int PRODUCTS_COUNT = 10;
+	protected static final String PRODUCT_JSON = JSONUtil.put(
+		"active", true
+	).put(
+		"catalogId", 111
+	).put(
+		"name", MapUtil.singletonDictionary("en_US", "Test Product")
+	).put(
+		"productType", "simple"
+	).put(
+		"tags", new String[0]
+	).put(
+		"workflowStatusInfo", MapUtil.singletonDictionary("code", 0)
+	).toString();
 
-	protected static String productJSON;
+	protected static final int PRODUCTS_COUNT = 10;
 
 }

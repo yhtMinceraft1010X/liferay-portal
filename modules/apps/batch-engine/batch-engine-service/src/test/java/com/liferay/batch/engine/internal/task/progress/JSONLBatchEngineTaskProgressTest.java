@@ -19,8 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.ByteArrayInputStream;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -38,43 +36,30 @@ public class JSONLBatchEngineTaskProgressTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetTotalItemsCountFromEmptyJSONLFile() throws Exception {
-		String productsJSONL = _getProductsJSONL(0);
-
-		int totalItemsCount = _batchEngineTaskProgress.getTotalItemsCount(
-			new ByteArrayInputStream(
-				compressContent(
-					productsJSONL.getBytes(),
-					BatchEngineTaskContentType.JSONL.toString())));
-
-		Assert.assertEquals(0, totalItemsCount);
+	public void testGetTotalItemsCount() throws Exception {
+		_testGetTotalItemsCount(0);
+		_testGetTotalItemsCount(PRODUCTS_COUNT);
 	}
 
-	@Test
-	public void testGetTotalItemsCountFromJSONLFile() throws Exception {
-		String productsJSONL = _getProductsJSONL(PRODUCTS_COUNT);
+	private void _testGetTotalItemsCount(int expectedTotalItemsCount)
+		throws Exception {
 
-		int totalItemsCount = _batchEngineTaskProgress.getTotalItemsCount(
-			new ByteArrayInputStream(
-				compressContent(
-					productsJSONL.getBytes(),
-					BatchEngineTaskContentType.JSONL.toString())));
-
-		Assert.assertEquals(PRODUCTS_COUNT, totalItemsCount);
-	}
-
-	private String _getProductsJSONL(int productsCount) {
 		StringBundler sb = new StringBundler();
 
-		for (int i = 0; i < productsCount; i++) {
-			sb.append(productJSON);
+		for (int i = 0; i < expectedTotalItemsCount; i++) {
+			sb.append(PRODUCT_JSON);
 
 			if (i < (PRODUCTS_COUNT - 1)) {
 				sb.append(StringPool.NEW_LINE);
 			}
 		}
 
-		return sb.toString();
+		Assert.assertEquals(
+			expectedTotalItemsCount,
+			_batchEngineTaskProgress.getTotalItemsCount(
+				compress(
+					sb.toString(),
+					BatchEngineTaskContentType.JSONL.toString())));
 	}
 
 	private static final BatchEngineTaskProgress _batchEngineTaskProgress =

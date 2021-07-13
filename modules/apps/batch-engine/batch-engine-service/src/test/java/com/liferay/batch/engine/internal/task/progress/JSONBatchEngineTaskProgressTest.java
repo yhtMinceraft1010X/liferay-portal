@@ -19,8 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.ByteArrayInputStream;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -38,62 +36,38 @@ public class JSONBatchEngineTaskProgressTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetTotalItemsCountFromEmptyJSONFile() throws Exception {
-		String productsJSON = _getProductsJSON(0, false);
-
-		int totalItemsCount = _batchEngineTaskProgress.getTotalItemsCount(
-			new ByteArrayInputStream(
-				compressContent(
-					productsJSON.getBytes(),
-					BatchEngineTaskContentType.JSON.toString())));
-
-		Assert.assertEquals(0, totalItemsCount);
+	public void testGetTotalItems() throws Exception {
+		_testGetTotalItemsCount(0, true);
+		_testGetTotalItemsCount(PRODUCTS_COUNT, false);
+		_testGetTotalItemsCount(PRODUCTS_COUNT, true);
 	}
 
-	@Test
-	public void testGetTotalItemsCountFromInvalidJSONFile() throws Exception {
-		String productsJSON = _getProductsJSON(PRODUCTS_COUNT, true);
+	private void _testGetTotalItemsCount(
+			int expectedTotalItemsCount, boolean invalidJSONSyntax)
+		throws Exception {
 
-		int totalItemsCount = _batchEngineTaskProgress.getTotalItemsCount(
-			new ByteArrayInputStream(
-				compressContent(
-					productsJSON.getBytes(),
-					BatchEngineTaskContentType.JSON.toString())));
-
-		Assert.assertEquals(0, totalItemsCount);
-	}
-
-	@Test
-	public void testGetTotalItemsCountFromJSONFile() throws Exception {
-		String productsJSON = _getProductsJSON(PRODUCTS_COUNT, false);
-
-		int totalItemsCount = _batchEngineTaskProgress.getTotalItemsCount(
-			new ByteArrayInputStream(
-				compressContent(
-					productsJSON.getBytes(),
-					BatchEngineTaskContentType.JSON.toString())));
-
-		Assert.assertEquals(PRODUCTS_COUNT, totalItemsCount);
-	}
-
-	private String _getProductsJSON(int productsCount, boolean invalidJson) {
 		StringBundler sb = new StringBundler();
 
 		sb.append(StringPool.OPEN_BRACKET);
 
-		for (int i = 0; i < productsCount; i++) {
-			sb.append(productJSON);
+		for (int i = 0; i < expectedTotalItemsCount; i++) {
+			sb.append(PRODUCT_JSON);
 
 			if (i < (PRODUCTS_COUNT - 1)) {
 				sb.append(StringPool.COMMA);
 			}
 		}
 
-		if (!invalidJson) {
+		if (!invalidJSONSyntax) {
 			sb.append(StringPool.CLOSE_BRACKET);
 		}
 
-		return sb.toString();
+		Assert.assertEquals(
+			expectedTotalItemsCount,
+			_batchEngineTaskProgress.getTotalItemsCount(
+				compress(
+					sb.toString(),
+					BatchEngineTaskContentType.JSON.toString())));
 	}
 
 	private static final BatchEngineTaskProgress _batchEngineTaskProgress =
