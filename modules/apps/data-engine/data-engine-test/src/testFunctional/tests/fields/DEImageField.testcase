@@ -180,7 +180,6 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 
@@ -217,11 +216,37 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToKeyword {
+		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToKeyword";
 
-		// TODO pending implementation
+        ApplicationsMenu.gotoPortlet(
+            category = "Configuration",
+            panel = "Control Panel",
+            portlet = "System Settings");
+
+        SystemSettings.gotoConfiguration(
+            configurationCategory = "Web Content",
+            configurationName = "Administration",
+            configurationScope = "System Scope");
+
+        FormFields.enableCheckbox(fieldName = "Structure Fields Indexable Enable");
+
+        SystemSettings.saveConfiguration();
+
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(structureName = "WC Structure Title");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Image",
+            fieldName = "Image");
+
+        DataEngine.viewFieldSearchable(
+            fieldFieldLabel = "Image",
+            searchableType = "Text");
 
 	}
 
