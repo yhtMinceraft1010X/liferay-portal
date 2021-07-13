@@ -681,6 +681,25 @@ definition {
 		}
 	}
 
+	macro assertInlineOptions {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		for (var optionLabel : list "${optionLabelList}") {
+			AssertElementPresent(
+				fieldIndex = "${fieldIndex}",
+				key_fieldLabel = "${fieldLabel}",
+				key_optionLabel = "${optionLabel}",
+				locator1 = "DataEngineBuilder#OPTIONS_INLINE_INDEXED",
+				optionIndex = "${optionIndex}");
+		}
+	}
+
 	macro assertLocalizableField {
 		var checkboxName = "Localizable";
 
@@ -709,6 +728,25 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX_UNCHECKED");
 
 		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro assertNonInlineOptions {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		for (var optionLabel : list "${optionLabelList}") {
+			AssertElementPresent(
+				fieldIndex = "${fieldIndex}",
+				key_fieldLabel = "${fieldLabel}",
+				key_optionLabel = "${optionLabel}",
+				locator1 = "DataEngineBuilder#OPTIONS_NOT_INLINE_INDEXED",
+				optionIndex = "${optionIndex}");
+		}
 	}
 
 	macro assertNonLocalizableField {
