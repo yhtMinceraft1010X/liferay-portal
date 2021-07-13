@@ -90,7 +90,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
 
 									Date parentDiscussionCreateDate = parentDiscussionComment.getCreateDate();
-
 									User parentMessageUser = parentDiscussionComment.getUser();
 									%>
 
