@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 
 import javax.portlet.PortletURL;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface TranslationURLProvider {
 
 	public PortletURL getImportTranslationURL(
