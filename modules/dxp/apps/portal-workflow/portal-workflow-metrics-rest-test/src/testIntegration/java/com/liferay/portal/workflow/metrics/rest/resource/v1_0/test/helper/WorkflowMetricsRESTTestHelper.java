@@ -223,25 +223,25 @@ public class WorkflowMetricsRESTTestHelper {
 
 		String randomString = RandomTestUtil.randomString();
 
-		NodeMetric nodeMetric = new NodeMetric() {
-			{
-				durationAvg = Objects.equals(status, "COMPLETED") ? 1000L : 0L;
-				instanceCount = 1L;
-				node = new Node() {
-					{
-						id = RandomTestUtil.randomLong();
-						label = randomString;
-						name = randomString;
-					}
-				};
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-			}
-		};
-
 		return addNodeMetric(
-			assignee, companyId, instanceSuplier, nodeMetric, processId, status,
-			user, "1.0");
+			assignee, companyId, instanceSuplier,
+			new NodeMetric() {
+				{
+					durationAvg =
+						Objects.equals(status, "COMPLETED") ? 1000L : 0L;
+					instanceCount = 1L;
+					node = new Node() {
+						{
+							id = RandomTestUtil.randomLong();
+							label = randomString;
+							name = randomString;
+						}
+					};
+					onTimeInstanceCount = 0L;
+					overdueInstanceCount = 0L;
+				}
+			},
+			processId, status, user, "1.0");
 	}
 
 	public NodeMetric addNodeMetric(
