@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be set"
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 
@@ -53,7 +53,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 
@@ -92,7 +92,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that Label can be shown/hidden"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
@@ -123,7 +123,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that is possible to duplicate the field"
 	@priority = "4"
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
@@ -150,7 +150,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that is possible to delete the field"
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -179,7 +179,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 
@@ -215,9 +215,9 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Text when System Setting is checked"
 	@priority = "3"
-	test CanSetDefaultSearchablePropertyToKeyword {
+	test CanSetDefaultSearchablePropertyToText {
 		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToKeyword";
 
         ApplicationsMenu.gotoPortlet(
