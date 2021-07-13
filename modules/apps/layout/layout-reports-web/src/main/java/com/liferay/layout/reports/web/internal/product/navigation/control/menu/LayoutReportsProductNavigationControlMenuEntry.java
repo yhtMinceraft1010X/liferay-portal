@@ -299,27 +299,24 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean webContentEditPermission = permissionChecker.hasPermission(
-			themeDisplay.getScopeGroup(), JournalArticle.class.getName(),
-			JournalArticle.class.getName(), ActionKeys.UPDATE);
+		if (permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(), JournalArticle.class.getName(),
+				JournalArticle.class.getName(), ActionKeys.UPDATE)) {
 
-		if (webContentEditPermission) {
 			return true;
 		}
 
-		boolean blogsEditPermission = permissionChecker.hasPermission(
-			themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
-			BlogsEntry.class.getName(), ActionKeys.UPDATE);
+		if (permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
+				BlogsEntry.class.getName(), ActionKeys.UPDATE)) {
 
-		if (blogsEditPermission) {
 			return true;
 		}
 
-		boolean documentEditPermission = permissionChecker.hasPermission(
-			themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
-			DLFileEntry.class.getName(), ActionKeys.UPDATE);
+		if (permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
+				DLFileEntry.class.getName(), ActionKeys.UPDATE)) {
 
-		if (documentEditPermission) {
 			return true;
 		}
 
