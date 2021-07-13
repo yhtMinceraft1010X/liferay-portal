@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal;
+package com.liferay.batch.engine.internal.util;
 
 import java.io.IOException;
 import java.io.InputStream;

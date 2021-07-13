@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.internal.task.progress;
 
-import com.liferay.batch.engine.internal.ZipInputStreamUtil;
+import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
