@@ -300,22 +300,14 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			themeDisplay.getPermissionChecker();
 
 		if (permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
+				BlogsEntry.class.getName(), ActionKeys.UPDATE) ||
+			permissionChecker.hasPermission(
+				themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
+				DLFileEntry.class.getName(), ActionKeys.UPDATE) ||
+			permissionChecker.hasPermission(
 				themeDisplay.getScopeGroup(), JournalArticle.class.getName(),
 				JournalArticle.class.getName(), ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), BlogsEntry.class.getName(),
-				BlogsEntry.class.getName(), ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		if (permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), DLFileEntry.class.getName(),
-				DLFileEntry.class.getName(), ActionKeys.UPDATE)) {
 
 			return true;
 		}
