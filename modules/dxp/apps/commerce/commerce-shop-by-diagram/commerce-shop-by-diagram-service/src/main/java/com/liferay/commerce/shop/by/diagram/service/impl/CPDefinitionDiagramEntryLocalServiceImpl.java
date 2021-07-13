@@ -154,7 +154,7 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 		throws PortalException {
 
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
-			cpDefinitionDiagramEntryPersistence.fetchByC_N(
+			cpDefinitionDiagramEntryPersistence.fetchByCPDI_N(
 				cpDefinitionId, number);
 
 		if (!Objects.equals(
