@@ -39,8 +39,10 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 			_cpDefinitionDiagramEntryLocalService.
 				deleteCPDefinitionDiagramEntries(
 					cpDefinition.getCPDefinitionId());
+
 			_cpDefinitionDiagramPinLocalService.deleteCPDefinitionDiagramPins(
 				cpDefinition.getCPDefinitionId());
+
 			_cpDefinitionDiagramSettingLocalService.
 				deleteCPDefinitionDiagramSettingByCPDefinitionId(
 					cpDefinition.getCPDefinitionId());
