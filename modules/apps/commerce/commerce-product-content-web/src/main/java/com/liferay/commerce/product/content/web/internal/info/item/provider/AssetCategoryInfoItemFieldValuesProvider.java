@@ -96,7 +96,6 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					).values(
 						assetCategory.getTitleMap()
 					).build()));
-
 			assetCategoryInfoFieldValues.add(
 				new InfoFieldValue<>(
 					AssetCategoryInfoItemFields.descriptionInfoField,
@@ -168,10 +167,8 @@ public class AssetCategoryInfoItemFieldValuesProvider
 
 				String groupFriendlyURL = _portal.getGroupFriendlyURL(
 					themeDisplay.getLayoutSet(), themeDisplay);
-
 				String separator = _cpFriendlyURL.getAssetCategoryURLSeparator(
 					themeDisplay.getCompanyId());
-
 				String languageId = LanguageUtil.getLanguageId(
 					themeDisplay.getLocale());
 
