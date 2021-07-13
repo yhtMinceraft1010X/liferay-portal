@@ -92,8 +92,8 @@
 
 		<!-- Other fields -->
 
-		<column name="CPDefinitionId" type="long" />
 		<column name="CPAttachmentFileEntryId" type="long" />
+		<column name="CPDefinitionId" type="long" />
 		<column name="color" type="String" />
 		<column name="radius" type="double" />
 		<column name="type" type="String" />
