@@ -26,10 +26,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-68646. This test verifies that Label and Help text can be set"
+	@description = "This is a test for LRQA-68646. This test verifies that is possible to delete the field"
 	@priority = "5"
-	test CanSetLabelAndHelpText {
-
+	test CanBeDeleted {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -38,9 +37,35 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 
-		DataEngine.editFieldTip(
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.delete(fieldFieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Rich Text");
+	}
+
+	@description = "This is a test for LRQA-68646. This test verifies that is possible to duplicate the field"
+	@priority = "4"
+	test CanBeDuplicated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Help Text");
+			fieldName = "Rich Text");
+
+		DataEngine.duplicate(fieldFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -48,15 +73,16 @@ definition {
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Help Text",
 			fieldName = "Rich Text");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Rich Text",
+			fieldName = "Rich Text");
 	}
 
 	@description = "This is a test for LRQA-68646. This test verifies that Label and Help text can be edited"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -89,96 +115,6 @@ definition {
 			fieldFieldLabel = "Rich Text Edited",
 			fieldHelp = "Help Text Edited",
 			fieldName = "Rich Text");
-
-	}
-
-	@description = "This is a test for LRQA-68646. This test verifies that Label can be shown/hidden"
-	@priority = "3"
-	test CanSetLabelToShownOrHidden {
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
-		DataEngine.toggleShowLabel(fieldLabel = "Rich Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Rich Text");
-
-		DataEngine.toggleShowLabel();
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-	}
-
-	@description = "This is a test for LRQA-68646. This test verifies that is possible to duplicate the field"
-	@priority = "4"
-	test CanBeDuplicated {
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
-		DataEngine.duplicate(fieldFieldLabel = "Rich Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Copy of Rich Text",
-			fieldName = "Rich Text");
-
-	}
-
-	@description = "This is a test for LRQA-68646. This test verifies that is possible to delete the field"
-	@priority = "5"
-	test CanBeDeleted {
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.delete(fieldFieldLabel = "Rich Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Rich Text");
-
 	}
 
 	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
@@ -213,7 +149,6 @@ definition {
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Rich Text",
 			searchableType = "Disable");
-
 	}
 
 	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Text when System Setting is checked"
@@ -248,7 +183,61 @@ definition {
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Rich Text",
 			searchableType = "Text");
+	}
 
+	@description = "This is a test for LRQA-68646. This test verifies that Label and Help text can be set"
+	@priority = "5"
+	test CanSetLabelAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text",
+			fieldName = "Rich Text");
+	}
+
+	@description = "This is a test for LRQA-68646. This test verifies that Label can be shown/hidden"
+	@priority = "3"
+	test CanSetLabelToShownOrHidden {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Rich Text");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
 	}
 
 }
