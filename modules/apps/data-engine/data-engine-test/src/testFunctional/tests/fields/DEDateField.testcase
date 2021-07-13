@@ -38,8 +38,8 @@ definition {
 			fieldName = "Date");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		WebContentStructures.saveCP();
 
