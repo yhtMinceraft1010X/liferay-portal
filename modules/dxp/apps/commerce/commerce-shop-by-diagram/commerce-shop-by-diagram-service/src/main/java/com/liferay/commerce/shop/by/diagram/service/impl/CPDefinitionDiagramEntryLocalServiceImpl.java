@@ -97,15 +97,13 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 	public CPDefinitionDiagramEntry deleteCPDefinitionDiagramEntry(
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry) {
 
-		// Expando
+		cpDefinitionDiagramEntry = cpDefinitionDiagramEntryPersistence.remove(
+			cpDefinitionDiagramEntry);
 
 		expandoRowLocalService.deleteRows(
 			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId());
 
-		// Commerce product definition diagram entry
-
-		return cpDefinitionDiagramEntryPersistence.remove(
-			cpDefinitionDiagramEntry);
+		return cpDefinitionDiagramEntry;
 	}
 
 	@Override
