@@ -1,5 +1,6 @@
 @component-name = "portal-analytics-cloud"
 definition {
+
 	property analytics.cloud.enabled = "true";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
@@ -43,4 +44,5 @@ definition {
 		// TODO LRAC-8110 CanLoadDataProperlyWhenTimeFilterIsLast24Hours pending implementation
 
 	}
+
 }
