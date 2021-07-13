@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that Label and Help text can be set"
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 
@@ -53,7 +53,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that Label and Help text can be edited"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 
@@ -92,7 +92,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that Label can be shown/hidden"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 
@@ -123,7 +123,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that is possible to duplicate the field"
 	@priority = "4"
 	test CanBeDuplicated {
 
@@ -151,7 +151,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that is possible to delete the field"
 	@priority = "5"
 	test CanBeDeleted {
 
@@ -181,7 +181,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DERichTextField#CanSetDefaultSearchablePropertyToDisable";
@@ -216,7 +216,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68646. This test verifies that Default Searchable property is Text when System Setting is checked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToText {
 		property test.name.skip.portal.instance = "DERichTextField#CanSetDefaultSearchablePropertyToKeyword";
