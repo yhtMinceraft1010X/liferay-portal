@@ -36,14 +36,85 @@ definition {
 	}
 
 	@description = "Verify that a Rule Condition can be deleted"
-	@ignore = "True"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-134381 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Text");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
+
+		FormRules.gotoEdit(ruleNumber = "1");
+
+		FormRules.addCondition();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "2",
+			conditionValueType = "Value");
+
+		FormRules.deleteCondition(conditionRowNumber = "1");
+
+		FormRules.viewConditionNotPresent(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			conditionRowNumber = "1");
+
+		FormRules.viewConditionPresent(
+			conditionField = "Text",
+			conditionFieldValue = "Test",
+			conditionOperator = "Contains",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Require",
+			actionTarget = "Text",
+			conditionField = "Text",
+			conditionFieldConstant = "Test",
+			conditionOperator = "Contains",
+			ruleNumber = "1");
+
+		FormRules.viewConditionSummaryNotPresent(
+			conditionField = "Text",
+			conditionOperator = "Is empty",
+			ruleNumber = "1");
 	}
 
 	@description = "Verify that a Rule Condition can be edited"
