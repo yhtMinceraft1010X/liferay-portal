@@ -42,16 +42,15 @@ public class CPDefinitionDiagramTypeOrderComparator
 		ServiceWrapper<CPDefinitionDiagramType> serviceWrapper1,
 		ServiceWrapper<CPDefinitionDiagramType> serviceWrapper2) {
 
-		int displayOrder1 = MapUtil.getInteger(
-			serviceWrapper1.getProperties(),
-			"commerce.product.definition.diagram.type.order",
-			Integer.MAX_VALUE);
-		int displayOrder2 = MapUtil.getInteger(
-			serviceWrapper2.getProperties(),
-			"commerce.product.definition.diagram.type.order",
-			Integer.MAX_VALUE);
-
-		int value = Integer.compare(displayOrder1, displayOrder2);
+		int value = Integer.compare(
+			MapUtil.getInteger(
+				serviceWrapper1.getProperties(),
+				"commerce.product.definition.diagram.type.order",
+				Integer.MAX_VALUE),
+			MapUtil.getInteger(
+				serviceWrapper2.getProperties(),
+				"commerce.product.definition.diagram.type.order",
+				Integer.MAX_VALUE));
 
 		if (_ascending) {
 			return value;
