@@ -80,6 +80,45 @@ definition {
 			fieldName = "Single Selection");
 	}
 
+	@description = "This is a test for LRQA-68571. This test verifies that is possible to change inline layout setting."
+	@priority = "3"
+	test CanBeInlined {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Single Selection",
+				index = "${index}",
+				optionValue = "Option ${index}");
+		}
+
+		DataEngine.toggleInline(fieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertNonInlineOptions(
+			fieldLabel = "Single Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+
+		DataEngine.toggleInline(fieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertInlineOptions(
+			fieldLabel = "Single Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+	}
+
 	@description = "This is a test for LRQA-68571. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
