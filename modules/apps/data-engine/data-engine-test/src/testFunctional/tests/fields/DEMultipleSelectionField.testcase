@@ -26,6 +26,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68572. This test verifies that is possible to duplicate the field."
+	@priority = "4"
+	test CanBeDuplicated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.duplicate(fieldFieldLabel = "Multiple Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Multiple Selection",
+			fieldName = "Multiple Selection");
+	}
+
 	@description = "This is a test for LRQA-68572. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
