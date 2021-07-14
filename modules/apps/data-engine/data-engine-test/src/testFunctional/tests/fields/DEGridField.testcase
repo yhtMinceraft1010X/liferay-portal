@@ -118,4 +118,50 @@ definition {
 			fieldName = "Grid");
 	}
 
+	@description = "This is a test for LRQA-68573. This test verifies that multiple options on Column and Row can be set."
+	@priority = "5"
+	test CanSetMultipleOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Grid",
+				index = "${index}",
+				optionFieldLabel = "Rows",
+				optionValue = "Option ${index}");
+		}
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Grid",
+				index = "${index}",
+				optionFieldLabel = "Columns",
+				optionValue = "Option ${index}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.assertFieldOptionLabels(
+			fieldFieldLabel = "Grid",
+			optionFieldLabel = "Rows",
+			optionLabelList = "Option 1,Option 2,Option 3");
+
+		DataEngine.assertFieldOptionLabels(
+			fieldFieldLabel = "Grid",
+			optionFieldLabel = "Columns",
+			optionLabelList = "Option 1,Option 2,Option 3");
+	}
+
 }
