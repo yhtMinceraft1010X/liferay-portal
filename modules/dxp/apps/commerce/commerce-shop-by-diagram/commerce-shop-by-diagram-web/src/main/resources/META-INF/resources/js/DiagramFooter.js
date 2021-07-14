@@ -42,7 +42,9 @@ const DiagramFooter = ({
 					<span className="inline-item inline-item-before">
 						<ClayIcon symbol="pin" />
 					</span>
+
 					{Liferay.Language.get('add-pin')}
+					
 				</ClayButton>
 			)}
 			<ClayButton className="mr-3">

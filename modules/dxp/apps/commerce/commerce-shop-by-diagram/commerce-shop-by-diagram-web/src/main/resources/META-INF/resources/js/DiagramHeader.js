@@ -61,9 +61,7 @@ const DiagramHeader = ({
 							>
 								<ClayColorPicker
 									colors={customColors}
-									label={Liferay.Language.get(
-										'custom-colors'
-									)}
+									label={Liferay.Language.get('custom-color')}
 									max={100}
 									name={`${namespace}diagram-color-picker`}
 									onColorsChange={setCustomColors}
@@ -75,9 +73,7 @@ const DiagramHeader = ({
 									}}
 									showHex={true}
 									step={1}
-									title={Liferay.Language.get(
-										'custom-colors'
-									)}
+									title={Liferay.Language.get('custom-color')}
 									useNative={
 										newPinSettings.colorPicker.useNative
 									}
@@ -130,7 +126,6 @@ const DiagramHeader = ({
 
 									<ClayButton
 										block
-										displayType="primary"
 										onClick={() => setAddPinHandler(true)}
 									>
 										{Liferay.Language.get('add-pin')}
@@ -141,6 +136,7 @@ const DiagramHeader = ({
 					</ClayDropDown>
 				</div>
 			)}
+
 			<ClayButton
 				className="auto-mapping my-auto pull-right"
 				displayType="secondary"
