@@ -548,6 +548,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro assertCheckboxOptions {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		for (var optionLabel : list "${optionLabelList}") {
+			AssertElementPresent(
+				fieldIndex = "${fieldIndex}",
+				key_fieldLabel = "${fieldLabel}",
+				key_optionLabel = "${optionLabel}",
+				locator1 = "DataEngineBuilder#OPTIONS_CHECKBOX_INDEXED",
+				optionIndex = "${optionIndex}");
+		}
+	}
+
 	macro assertFieldNotPresent {
 		if (isSet(fieldFieldLabel)) {
 			AssertElementNotPresent(
