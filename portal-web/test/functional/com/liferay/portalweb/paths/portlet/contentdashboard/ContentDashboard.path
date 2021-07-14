@@ -324,6 +324,11 @@
 	<td>//a[contains(@label,'View')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PANEL_INFO_VIEW</td>
+	<td>//*[contains(@title,'View')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
