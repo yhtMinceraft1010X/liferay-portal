@@ -66,13 +66,6 @@ public class ObjectDefinitionSampleGenerator {
 
 		Company company = companies.get(0);
 
-		int count = _objectDefinitionLocalService.getObjectDefinitionsCount(
-			company.getCompanyId());
-
-		if (count > 0) {
-			return;
-		}
-
 		User user = _userLocalService.fetchUserByEmailAddress(
 			company.getCompanyId(), "test@liferay.com");
 
@@ -81,6 +74,14 @@ public class ObjectDefinitionSampleGenerator {
 		}
 
 		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				company.getCompanyId(), "C_SampleObjectDefinition");
+
+		if (objectDefinition != null) {
+			return;
+		}
+
+		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user.getUserId(), "SampleObjectDefinition",
 				Arrays.asList(
@@ -95,6 +96,10 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField("item", "Double"),
 					_createObjectField("jig", "Integer"),
 					_createObjectField("king", "BigDecimal")));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				user.getUserId(), objectDefinition.getObjectDefinitionId());
 
 		for (int i = 0; i < 100; i++) {
 			_objectEntryLocalService.addObjectEntry(

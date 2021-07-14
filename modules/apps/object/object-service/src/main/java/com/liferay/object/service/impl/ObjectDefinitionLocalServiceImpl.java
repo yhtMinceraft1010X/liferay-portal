@@ -251,6 +251,11 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition fetchObjectDefinition(long companyId, String name) {
+		return objectDefinitionPersistence.fetchByC_N(companyId, name);
+	}
+
+	@Override
 	public List<ObjectDefinition> getCustomObjectDefinitions(int status) {
 		return objectDefinitionPersistence.findByS_S(false, status);
 	}

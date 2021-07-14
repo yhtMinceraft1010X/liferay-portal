@@ -140,9 +140,14 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Duplicate name
 
-		ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), "Test",
-			Collections.<ObjectField>emptyList());
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), "Test",
+				Collections.<ObjectField>emptyList());
+
+		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
 
 		try {
 			_testAddCustomObjectDefinition("Test");
@@ -157,12 +162,17 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Database table
 
-		ObjectDefinition objectDefinition =
+		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), _randomName(),
 				Arrays.asList(
 					_createObjectField("able", "String"),
 					_createObjectField("baker", "String")));
+
+		objectDefinition =
+			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
 
 		Assert.assertEquals(
 			false, _hasColumn(objectDefinition.getDBTableName(), "able"));
@@ -494,6 +504,11 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 					TestPropsValues.getUserId(), name,
 					Collections.<ObjectField>emptyList());
+
+			objectDefinition =
+				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+					TestPropsValues.getUserId(),
+					objectDefinition.getObjectDefinitionId());
 		}
 		finally {
 			if (objectDefinition != null) {
