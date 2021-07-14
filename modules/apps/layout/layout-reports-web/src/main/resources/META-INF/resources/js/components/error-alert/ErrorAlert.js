@@ -69,7 +69,7 @@ const ErrorAlert = () => {
 				{pageCanNotBeAudited && (
 					<span className="ml-1">
 						{Liferay.Language.get(
-							'page-not-accessible-from-internet'
+							'page-is-not-accessible-from-the-internet-or-is-not-indexed'
 						)}
 					</span>
 				)}
