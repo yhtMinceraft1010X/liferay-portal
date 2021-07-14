@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.commerce.shop.by.diagram.constants,\
 	com.liferay.commerce.shop.by.diagram.exception,\
 	com.liferay.commerce.shop.by.diagram.model,\
-	com.liferay.commerce.shop.by.diagram.search,\
 	com.liferay.commerce.shop.by.diagram.service,\
 	com.liferay.commerce.shop.by.diagram.service.persistence,\
 	com.liferay.commerce.shop.by.diagram.type
