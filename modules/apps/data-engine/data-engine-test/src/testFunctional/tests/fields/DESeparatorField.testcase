@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68681. This test verifies that is possible to delete the field"
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -54,7 +54,7 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Separator");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68681. This test verifies that is possible to duplicate the field"
 	@priority = "4"
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
@@ -80,7 +80,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68681. This test verifies that Label and Help text can be edited"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -117,7 +117,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68681. This test verifies that Label and Help text can be set"
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -142,7 +142,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-68681. This test verifies that Label can be shown or hidden"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
