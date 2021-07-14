@@ -128,9 +128,31 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Web Content");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
 	}
 
 }
