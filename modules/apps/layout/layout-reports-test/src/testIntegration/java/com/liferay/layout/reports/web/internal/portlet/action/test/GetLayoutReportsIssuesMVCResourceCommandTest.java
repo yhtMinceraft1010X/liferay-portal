@@ -78,10 +78,10 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 
 					String url = "http://localhost:8080/test";
 
-					String cacheKey = LocaleUtil.getDefault() + "-" + url;
+					String key = LocaleUtil.getDefault() + "-" + url;
 
 					try {
-						portalCache.put(cacheKey, JSONUtil.put("test", "test"));
+						portalCache.put(key, JSONUtil.put("test", "test"));
 
 						JSONObject jsonObject = _serveResource(
 							LayoutTestUtil.addLayout(
@@ -96,7 +96,7 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 							layoutReportsIssuesJSONObject.getString("test"));
 					}
 					finally {
-						portalCache.remove(cacheKey);
+						portalCache.remove(key);
 					}
 				});
 	}
