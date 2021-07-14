@@ -36,12 +36,29 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "4"
 	test CanBeDuplicated {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.duplicate(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Web Content",
+			fieldName = "Web Content");
 	}
 
 	@description = "This is a stubbed description"
