@@ -26,8 +26,62 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
+	@priority = "5"
+	test CanBeDeleted {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanBeDuplicated {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanEditLabelAndHelpText {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetDefaultSearchablePropertyToDisable {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetDefaultSearchablePropertyToKeyword {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
 	@priority = "3"
 	test CanSetLabelAndHelpText {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetLabelToShownOrHidden {
 
 		// TODO pending implementation
 
