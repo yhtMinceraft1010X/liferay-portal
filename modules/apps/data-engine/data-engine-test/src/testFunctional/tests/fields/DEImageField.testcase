@@ -154,7 +154,7 @@ definition {
 	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Text when System Setting is checked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToText {
-		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToKeyword";
+		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToText";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
