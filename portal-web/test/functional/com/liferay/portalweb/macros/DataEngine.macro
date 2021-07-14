@@ -741,6 +741,25 @@ definition {
 			locator1 = "DataEngineRenderer#WEB_CONTENT_DISABLED_FIELD");
 	}
 
+	macro assertSwitcherOptions {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		for (var optionLabel : list "${optionLabelList}") {
+			AssertElementPresent(
+				fieldIndex = "${fieldIndex}",
+				key_fieldLabel = "${fieldLabel}",
+				key_optionLabel = "${optionLabel}",
+				locator1 = "DataEngineBuilder#OPTIONS_SWITCHER_INDEXED",
+				optionIndex = "${optionIndex}");
+		}
+	}
+
 	macro createNewFieldset {
 		DataEngine.gotoCreateNewFieldset();
 
