@@ -26,6 +26,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68573. This test verifies that is possible to duplicate the field."
+	@priority = "4"
+	test CanBeDuplicated {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.duplicate(fieldFieldLabel = "Grid");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Grid",
+			fieldName = "Grid");
+	}
+
 	@description = "This is a test for LRQA-68573. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
