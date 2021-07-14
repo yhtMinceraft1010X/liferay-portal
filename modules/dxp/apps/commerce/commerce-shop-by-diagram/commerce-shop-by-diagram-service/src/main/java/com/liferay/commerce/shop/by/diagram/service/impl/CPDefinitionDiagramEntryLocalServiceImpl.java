@@ -121,7 +121,7 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 			long cpDefinitionId, int number)
 		throws PortalException {
 
-		return cpDefinitionDiagramEntryPersistence.findByC_N(
+		return cpDefinitionDiagramEntryPersistence.findByCPDI_N(
 			cpDefinitionId, number);
 	}
 
