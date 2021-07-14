@@ -26,7 +26,7 @@ import org.junit.Before;
 /**
  * @author Ivica Cardic
  */
-public abstract class BaseBatchEngineImportTaskItemReaderTestCase {
+public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 
 	@Before
 	public void setUp() {

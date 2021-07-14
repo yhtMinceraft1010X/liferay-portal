@@ -28,7 +28,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * @author Matija Petanjek
  */
-public abstract class BaseBatchEngineTaskProgressTestCase {
+public abstract class BaseBatchEngineTaskProgressImplTestCase {
 
 	protected InputStream compress(String content, String contentType)
 		throws Exception {

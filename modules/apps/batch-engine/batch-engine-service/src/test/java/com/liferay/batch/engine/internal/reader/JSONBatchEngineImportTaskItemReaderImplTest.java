@@ -33,7 +33,7 @@ import org.junit.Test;
  * @author Ivica Cardic
  */
 public class JSONBatchEngineImportTaskItemReaderImplTest
-	extends BaseBatchEngineImportTaskItemReaderTestCase {
+	extends BaseBatchEngineImportTaskItemReaderImplTestCase {
 
 	@ClassRule
 	@Rule

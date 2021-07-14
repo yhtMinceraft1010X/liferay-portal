@@ -37,7 +37,7 @@ import org.junit.Before;
 /**
  * @author Ivica Cardic
  */
-public abstract class BaseBatchEngineExportTaskItemWriterTestCase {
+public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 	@Before
 	public void setUp() {

@@ -38,7 +38,7 @@ import org.junit.Test;
  * @author Ivica Cardic
  */
 public class CSVBatchEngineExportTaskItemWriterImplTest
-	extends BaseBatchEngineExportTaskItemWriterTestCase {
+	extends BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 	@ClassRule
 	@Rule

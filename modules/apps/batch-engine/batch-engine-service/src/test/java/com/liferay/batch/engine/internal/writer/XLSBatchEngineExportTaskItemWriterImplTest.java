@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author Ivica Cardic
  */
 public class XLSBatchEngineExportTaskItemWriterImplTest
-	extends BaseBatchEngineExportTaskItemWriterTestCase {
+	extends BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 	@ClassRule
 	@Rule

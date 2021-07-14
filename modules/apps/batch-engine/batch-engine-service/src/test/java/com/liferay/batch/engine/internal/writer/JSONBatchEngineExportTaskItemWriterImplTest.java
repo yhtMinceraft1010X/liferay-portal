@@ -33,7 +33,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Ivica Cardic
  */
 public class JSONBatchEngineExportTaskItemWriterImplTest
-	extends BaseBatchEngineExportTaskItemWriterTestCase {
+	extends BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 	@ClassRule
 	@Rule

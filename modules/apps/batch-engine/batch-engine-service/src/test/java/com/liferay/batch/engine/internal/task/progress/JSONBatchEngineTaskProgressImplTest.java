@@ -28,7 +28,7 @@ import org.junit.Test;
  * @author Matija Petanjek
  */
 public class JSONBatchEngineTaskProgressImplTest
-	extends BaseBatchEngineTaskProgressTestCase {
+	extends BaseBatchEngineTaskProgressImplTestCase {
 
 	@ClassRule
 	@Rule

@@ -42,7 +42,7 @@ import org.junit.Test;
  * @author Ivica Cardic
  */
 public class XLSBatchEngineImportTaskItemReaderImplTest
-	extends BaseBatchEngineImportTaskItemReaderTestCase {
+	extends BaseBatchEngineImportTaskItemReaderImplTestCase {
 
 	@ClassRule
 	@Rule

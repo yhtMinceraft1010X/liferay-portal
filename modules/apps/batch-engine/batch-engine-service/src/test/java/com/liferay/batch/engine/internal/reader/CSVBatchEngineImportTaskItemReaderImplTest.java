@@ -35,7 +35,7 @@ import org.junit.Test;
  * @author Ivica Cardic
  */
 public class CSVBatchEngineImportTaskItemReaderImplTest
-	extends BaseBatchEngineImportTaskItemReaderTestCase {
+	extends BaseBatchEngineImportTaskItemReaderImplTestCase {
 
 	@ClassRule
 	@Rule
