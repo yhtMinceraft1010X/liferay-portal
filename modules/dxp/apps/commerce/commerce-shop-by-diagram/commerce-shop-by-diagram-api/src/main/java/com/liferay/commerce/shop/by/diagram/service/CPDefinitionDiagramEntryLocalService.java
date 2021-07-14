@@ -79,7 +79,6 @@ public interface CPDefinitionDiagramEntryLocalService
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long userId, long cpDefinitionId, String cpInstanceUuid,
 			long cProductId, boolean diagram, int number, int quantity,
@@ -295,7 +294,6 @@ public interface CPDefinitionDiagramEntryLocalService
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
 			long cProductId, boolean diagram, int number, int quantity,
