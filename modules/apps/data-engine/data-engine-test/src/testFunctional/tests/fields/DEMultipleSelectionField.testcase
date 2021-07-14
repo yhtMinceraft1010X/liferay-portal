@@ -310,4 +310,43 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "This is a test for LRQA-68572. This test verifies that is possible to change inline layout setting."
+	@priority = "3"
+	test CanShowAsSwitcher {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		for (var index : list "1,2,3") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Multiple Selection",
+				index = "${index}",
+				optionValue = "Option ${index}");
+		}
+
+		DataEngine.toggleShowAsSwitcher(fieldLabel = "Multiple Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertSwitcherOptions(
+			fieldLabel = "Multiple Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+
+		DataEngine.toggleShowAsSwitcher(fieldLabel = "Multiple Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertCheckboxOptions(
+			fieldLabel = "Multiple Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+	}
+
 }
