@@ -51,9 +51,9 @@ public class CPDefinitionDiagramSettingLocalServiceImpl
 		cpDefinitionDiagramSetting.setCompanyId(user.getCompanyId());
 		cpDefinitionDiagramSetting.setUserId(user.getUserId());
 		cpDefinitionDiagramSetting.setUserName(user.getFullName());
-		cpDefinitionDiagramSetting.setCPDefinitionId(cpDefinitionId);
 		cpDefinitionDiagramSetting.setCPAttachmentFileEntryId(
 			cpAttachmentFileEntryId);
+		cpDefinitionDiagramSetting.setCPDefinitionId(cpDefinitionId);
 		cpDefinitionDiagramSetting.setColor(color);
 		cpDefinitionDiagramSetting.setRadius(radius);
 		cpDefinitionDiagramSetting.setType(type);
