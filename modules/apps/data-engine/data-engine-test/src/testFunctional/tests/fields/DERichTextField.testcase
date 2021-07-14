@@ -210,7 +210,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a test for LRQA-68646. This test verifies that Label can be shown/hidden"
+	@description = "This is a test for LRQA-68646. This test verifies that Label can be shown or hidden."
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
