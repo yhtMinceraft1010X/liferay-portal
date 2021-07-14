@@ -133,7 +133,7 @@ definition {
 
 		DataEngine.editNumericType(
 			fieldLabel = "Numeric",
-			fieldLineType = "Decimal");
+			fieldNumericType = "Decimal");
 
 		WebContentStructures.saveCP();
 
@@ -141,11 +141,11 @@ definition {
 
 		DataEngine.viewNumericType(
 			fieldLabel = "Numeric",
-			fieldLineType = "Decimal");
+			fieldNumericType = "Decimal");
 
 		DataEngine.editNumericType(
 			fieldLabel = "Numeric",
-			fieldLineType = "Integer");
+			fieldNumericType = "Integer");
 
 		WebContentStructures.saveCP();
 
@@ -153,7 +153,7 @@ definition {
 
 		DataEngine.viewNumericType(
 			fieldLabel = "Numeric",
-			fieldLineType = "Integer");
+			fieldNumericType = "Integer");
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"

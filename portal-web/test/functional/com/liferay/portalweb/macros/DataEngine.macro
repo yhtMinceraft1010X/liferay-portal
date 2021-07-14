@@ -1239,9 +1239,10 @@ definition {
 				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
 				value1 = "${fieldLabel}");
 		}
+
 		Check.checkNotVisible(
 			key_fieldFieldLabel = "My numeric type is:",
-			key_optionValue = "${fieldLineType}",
+			key_optionValue = "${fieldNumericType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -1620,7 +1621,7 @@ definition {
 
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "My numeric type is:",
-			key_optionValue = "${fieldLineType}",
+			key_optionValue = "${fieldNumericType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		Click(locator1 = "Sidebar#BACK");
