@@ -26,6 +26,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68573. This test verifies that Label and Help text can be edited."
+	@priority = "5"
+	test CanEditLabelAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "Grid Edited");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid Edited",
+			fieldHelp = "Help Text Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid Edited",
+			fieldHelp = "Help Text Edited",
+			fieldName = "Grid");
+	}
+
 	@description = "This is a test for LRQA-68573. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
