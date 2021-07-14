@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.internal.instance.lifecycle;
+package com.liferay.translation.internal.security.permission;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -30,15 +30,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia Garcia
  */
 @Component(
-	immediate = true, service = TranslationResourceActionsInitializer.class
+	immediate = true, service = TranslationResourceActionsActivator.class
 )
-public class TranslationResourceActionsInitializer {
+public class TranslationResourceActionsActivator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
 		String xml = StringUtil.read(
-			TranslationResourceActionsInitializer.class.getClassLoader(),
-			"/com/liferay/translation/internal/instance/lifecycle" +
+			TranslationResourceActionsActivator.class.getClassLoader(),
+			"/com/liferay/translation/internal/security/permission" +
 				"/dependencies/resource-actions.xml.tpl");
 
 		String[] languageIds = ArrayUtil.sortedUnique(PropsValues.LOCALES);
