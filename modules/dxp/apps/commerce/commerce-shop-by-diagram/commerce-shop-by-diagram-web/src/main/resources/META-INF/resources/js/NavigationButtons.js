@@ -24,18 +24,24 @@ const NavigationButtons = ({moveController, position}) => {
 				top: position.top,
 			}}
 		>
-			<div className="box top" onClick={() => moveController('up')}>
+			<button className="box top" onClick={() => moveController('up')}>
 				<ClayIcon className="icon" symbol="angle-left" />
-			</div>
-			<div className="box right" onClick={() => moveController('right')}>
+			</button>
+			<button
+				className="box right"
+				onClick={() => moveController('right')}
+			>
 				<ClayIcon className="icon" symbol="angle-up" />
-			</div>
-			<div className="box left" onClick={() => moveController('left')}>
+			</button>
+			<button className="box left" onClick={() => moveController('left')}>
 				<ClayIcon className="icon" symbol="angle-down" />
-			</div>
-			<div className="bottom box" onClick={() => moveController('down')}>
+			</button>
+			<button
+				className="bottom box"
+				onClick={() => moveController('down')}
+			>
 				<ClayIcon className="icon" symbol="angle-down" />
-			</div>
+			</button>
 		</div>
 	);
 };

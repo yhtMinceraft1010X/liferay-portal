@@ -44,7 +44,6 @@ const DiagramFooter = ({
 					</span>
 
 					{Liferay.Language.get('add-pin')}
-					
 				</ClayButton>
 			)}
 			<ClayButton className="mr-3">
