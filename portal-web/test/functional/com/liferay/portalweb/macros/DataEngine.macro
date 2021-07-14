@@ -1413,6 +1413,42 @@ definition {
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
+	macro toggleShowAsSwitcher {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (IsElementPresent(locator1 = "Modal#MODAL")) {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
+
+		Navigator.gotoNavTab(navTab = "Basic");
+
+		if (IsChecked(checkboxName = "Show as a Switcher", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show as a Switcher",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else {
+			Check.checkToggleSwitch(
+				checkboxName = "Show as a Switcher",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro toggleShowLabel {
 		if (!(isSet(index))) {
 			var index = "1";
