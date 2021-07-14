@@ -79,7 +79,7 @@ public class SessionErrors {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("key=" + key);
+			_log.debug("Adding key " + key);
 		}
 
 		map.put(key, key);
@@ -100,7 +100,7 @@ public class SessionErrors {
 			}
 
 			_log.debug(
-				StringBundler.concat("key=", key, ", value=", value),
+				StringBundler.concat("Adding key ", key, " with value ", value),
 				exception);
 		}
 
@@ -127,7 +127,8 @@ public class SessionErrors {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"portletId=", portletRequest.getWindowID(), ", key=", key));
+					"Adding key ", key, " to portlet ",
+					portletRequest.getWindowID()));
 		}
 
 		map.put(key, key);
@@ -151,8 +152,8 @@ public class SessionErrors {
 
 			_log.debug(
 				StringBundler.concat(
-					"portletId=", portletRequest.getWindowID(), ", key=", key,
-					", value=", value),
+					"Adding key ", key, " to portlet ",
+					portletRequest.getWindowID(), " with value ", value),
 				exception);
 		}
 
