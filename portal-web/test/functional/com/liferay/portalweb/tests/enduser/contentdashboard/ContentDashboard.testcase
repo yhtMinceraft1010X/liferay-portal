@@ -1362,6 +1362,41 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no tags.");
 	}
 
+	@description = "LPS-117419 When the item selector for tags displays all available tags and there's a tag that is created in two different sites with the same name, the repeated tag shows only once, the filter results retrieve contents labeled with those categories from the two sites and there's only one filter applied"
+	@priority = "5"
+	test FilterTheListOfContentsByTag {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "test",
+			webContentContent = "Web Content Tag1 ",
+			webContentTitle = "Web Content Title");
+
+		JSONGroup.addGroup(groupName = "Test Site Name 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name 2");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "test",
+			webContentContent = "Web Content Tag1",
+			webContentTitle = "Web Content Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		ContentDashboard.filterByTag(
+			filterOption = "Tags",
+			tagName = "test");
+	}
+
 	@description = "LPS-116840 When a user with update permissions clicks on the edit icon, the user is led to the web editor"
 	@priority = "5"
 	test IconEdit {
@@ -1974,41 +2009,5 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC Title");
 	}
-
-	@description = "LPS-117419 When the item selector for tags displays all available tags and there's a tag that is created in two different sites with the same name, the repeated tag shows only once, the filter results retrieve contents labeled with those categories from the two sites and there's only one filter applied"
-	@priority = "5"
-	test FilterTheListOfContentsByTag {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "test",
-			webContentContent = "Web Content Tag1 ",
-			webContentTitle = "Web Content Title");
-
-		JSONGroup.addGroup(groupName = "Test Site Name 2");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name 2");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "test",
-			webContentContent = "Web Content Tag1",
-			webContentTitle = "Web Content Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		ContentDashboard.filterByTag(
-			filterOption = "Tags",
-			tagName = "test");
-	}
-
 
 }
