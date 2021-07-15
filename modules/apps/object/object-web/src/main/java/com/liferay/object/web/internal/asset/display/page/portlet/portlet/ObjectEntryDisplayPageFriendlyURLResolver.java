@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.info.display.contributor.portlet;
+package com.liferay.object.web.internal.asset.display.page.portlet.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
