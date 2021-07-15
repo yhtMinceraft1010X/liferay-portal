@@ -29,10 +29,10 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	implements LayoutDisplayPageObjectProvider<ObjectEntry> {
 
 	public ObjectEntryLayoutDisplayPageObjectProvider(
-		ObjectEntry objectEntry, ObjectDefinition objectDefinition) {
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
-		_objectEntry = objectEntry;
 		_objectDefinition = objectDefinition;
+		_objectEntry = objectEntry;
 	}
 
 	@Override

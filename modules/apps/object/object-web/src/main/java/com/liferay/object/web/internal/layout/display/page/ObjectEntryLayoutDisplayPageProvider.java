@@ -56,7 +56,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 					objectEntry.getObjectDefinitionId());
 
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				objectEntry, objectDefinition);
+				objectDefinition, objectEntry);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
