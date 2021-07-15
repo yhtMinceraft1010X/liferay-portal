@@ -17,14 +17,12 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,22 +38,14 @@ public class ObjectEntryInfoItemFormVariationsProvider
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId) {
 
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
-
-		List<ObjectDefinition> objectDefinitions =
+		return TransformUtil.transform(
 			_objectDefinitionLocalService.getObjectDefinitions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			infoItemFormVariations.add(
-				new InfoItemFormVariation(
-					String.valueOf(objectDefinition.getObjectDefinitionId()),
-					InfoLocalizedValue.localize(
-						ObjectEntryInfoItemFormVariationsProvider.class,
-						objectDefinition.getName())));
-		}
-
-		return infoItemFormVariations;
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			objectDefinition -> new InfoItemFormVariation(
+				String.valueOf(objectDefinition.getObjectDefinitionId()),
+				InfoLocalizedValue.localize(
+					ObjectEntryInfoItemFormVariationsProvider.class,
+					objectDefinition.getName())));
 	}
 
 	@Reference
