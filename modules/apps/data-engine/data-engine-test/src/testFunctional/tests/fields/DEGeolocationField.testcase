@@ -26,6 +26,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68679. This test verifies that Label and Help text can be edited."
+	@priority = "5"
+	test CanEditLabelAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Geolocation",
+			fieldFieldLabelEdit = "Geolocation Edited");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation Edited",
+			fieldHelp = "Help Text Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Geolocation Edited",
+			fieldHelp = "Help Text Edited",
+			fieldName = "Geolocation");
+	}
+
 	@description = "This is a test for LRQA-68679. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
