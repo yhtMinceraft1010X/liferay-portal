@@ -47,27 +47,27 @@ public class ObjectMapperContextResolver
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			enable(SerializationFeature.INDENT_OUTPUT);
+			registerModule(
+				new SimpleModule() {
+					{
+						addSerializer(
+							JSONArray.class,
+							new JSONArrayStdSerializer(JSONArray.class));
+						addSerializer(
+							JSONObject.class,
+							new JSONObjectStdSerializer(JSONObject.class));
+					}
+				});
 			setDateFormat(new ISO8601DateFormat());
+			setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							SimpleBeanPropertyFilter.serializeAll());
+					}
+				});
 			setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-
-			SimpleModule simpleModule = new SimpleModule();
-
-			simpleModule.addSerializer(
-				JSONArray.class, new JSONArrayStdSerializer(JSONArray.class));
-
-			simpleModule.addSerializer(
-				JSONObject.class,
-				new JSONObjectStdSerializer(JSONObject.class));
-
-			registerModule(simpleModule);
-
-			SimpleFilterProvider simpleFilterProvider =
-				new SimpleFilterProvider();
-
-			simpleFilterProvider.addFilter(
-				"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
-
-			setFilterProvider(simpleFilterProvider);
 		}
 	};
 
