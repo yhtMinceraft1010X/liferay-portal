@@ -103,15 +103,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"ObjectDefinitionContextProvider"
 				).build()),
 			_bundleContext.registerService(
-				GraphQLDTOContributor.class,
-				ObjectDefinitionGraphQLDTOContributor.of(
-					objectDefinition, _objectEntryManager,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId())),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"dto.name", objectDefinition.getDBTableName()
-				).build()),
-			_bundleContext.registerService(
 				ExceptionMapper.class, new RequiredObjectFieldExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
@@ -122,6 +113,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"osgi.jaxrs.name",
 					objectDefinition.getRESTContextPath() +
 						"RequiredObjectFieldExceptionMapper"
+				).build()),
+			_bundleContext.registerService(
+				GraphQLDTOContributor.class,
+				ObjectDefinitionGraphQLDTOContributor.of(
+					objectDefinition, _objectEntryManager,
+					_objectFieldLocalService.getObjectFields(
+						objectDefinition.getObjectDefinitionId())),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"dto.name", objectDefinition.getDBTableName()
 				).build()));
 	}
 
