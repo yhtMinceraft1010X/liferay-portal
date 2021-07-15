@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68658. This test verifies that is possible to delete the field"
-	@ignore = "true"
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -212,7 +211,6 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-68658. This test verifies that Label can be shown or hidden"
-	@ignore = "true"
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
