@@ -370,9 +370,7 @@ public class MainServlet extends HttpServlet {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize themes");
-		}
 
-		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize web settings");
 		}
 
@@ -551,9 +549,7 @@ public class MainServlet extends HttpServlet {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Handle non-serializable request");
-		}
 
-		if (_log.isDebugEnabled()) {
 			_log.debug("Encrypt request");
 		}
 
