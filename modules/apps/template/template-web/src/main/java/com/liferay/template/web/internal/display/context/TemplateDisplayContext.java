@@ -65,7 +65,6 @@ public class TemplateDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
-
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -145,27 +144,25 @@ public class TemplateDisplayContext {
 		ddmTemplateSearchContainer.setOrderByType(_getOrderByType());
 		ddmTemplateSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_liferayPortletResponse));
-
-		List<DDMTemplate> results = DDMTemplateServiceUtil.search(
-			_themeDisplay.getCompanyId(),
-			new long[] {_themeDisplay.getScopeGroupId()},
-			TemplateHandlerRegistryUtil.getClassNameIds(), null,
-			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY, ddmTemplateSearchContainer.getStart(),
-			ddmTemplateSearchContainer.getEnd(),
-			ddmTemplateSearchContainer.getOrderByComparator());
-
-		int total = DDMTemplateServiceUtil.searchCount(
-			_themeDisplay.getCompanyId(),
-			new long[] {_themeDisplay.getScopeGroupId()},
-			TemplateHandlerRegistryUtil.getClassNameIds(), null,
-			PortalUtil.getClassNameId(PortletDisplayTemplate.class),
-			_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-			WorkflowConstants.STATUS_ANY);
-
-		ddmTemplateSearchContainer.setResults(results);
-		ddmTemplateSearchContainer.setTotal(total);
+		ddmTemplateSearchContainer.setResults(
+			DDMTemplateServiceUtil.search(
+				_themeDisplay.getCompanyId(),
+				new long[] {_themeDisplay.getScopeGroupId()},
+				TemplateHandlerRegistryUtil.getClassNameIds(), null,
+				PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+				WorkflowConstants.STATUS_ANY,
+				ddmTemplateSearchContainer.getStart(),
+				ddmTemplateSearchContainer.getEnd(),
+				ddmTemplateSearchContainer.getOrderByComparator()));
+		ddmTemplateSearchContainer.setTotal(
+			DDMTemplateServiceUtil.searchCount(
+				_themeDisplay.getCompanyId(),
+				new long[] {_themeDisplay.getScopeGroupId()},
+				TemplateHandlerRegistryUtil.getClassNameIds(), null,
+				PortalUtil.getClassNameId(PortletDisplayTemplate.class),
+				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+				WorkflowConstants.STATUS_ANY));
 
 		_ddmTemplateSearchContainer = ddmTemplateSearchContainer;
 
