@@ -206,15 +206,15 @@ public class LayoutsSEODisplayContext {
 	public Map<Locale, String> getDefaultPageTitleWithSuffixMap()
 		throws PortalException {
 
-		Map<Locale, String> pageTitleMap = getDefaultPageTitleMap();
+		Map<Locale, String> defaultPageTitleMap = getDefaultPageTitleMap();
 
 		String pageTitleSuffix = getPageTitleSuffix();
 
 		if (Validator.isNull(pageTitleSuffix)) {
-			return pageTitleMap;
+			return defaultPageTitleMap;
 		}
 
-		Set<Map.Entry<Locale, String>> set = pageTitleMap.entrySet();
+		Set<Map.Entry<Locale, String>> set = defaultPageTitleMap.entrySet();
 
 		Stream<Map.Entry<Locale, String>> stream = set.stream();
 
