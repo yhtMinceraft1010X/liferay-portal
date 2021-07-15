@@ -248,6 +248,8 @@ definition {
 	}
 
 	macro addDataDefinitionWithDB2 {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Dynamic Data Lists",
