@@ -18,8 +18,8 @@ import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,7 +34,7 @@ public class ObjectEntryInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		return ListUtil.fromArray(_displayPageInfoItemCapability);
+		return Arrays.asList(_displayPageInfoItemCapability);
 	}
 
 	@Reference
