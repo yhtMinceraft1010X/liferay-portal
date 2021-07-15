@@ -22,10 +22,23 @@ const DiagramHeader = ({
 	isAdmin,
 	namespace,
 	newPinSettings,
-	radiusChoice,
 	setAddNewPinState,
 	setAddPinHandler,
 }) => {
+	const RADIUS_CHOICE = [
+		{
+			label: Liferay.Language.get('small'),
+			value: 10,
+		},
+		{
+			label: Liferay.Language.get('medium'),
+			value: 20,
+		},
+		{
+			label: Liferay.Language.get('large'),
+			value: 30,
+		},
+	];
 	const [active, setActive] = useState(false);
 	const [customColors, setCustomColors] = useState(
 		newPinSettings.colorPicker.defaultColors
@@ -45,7 +58,7 @@ const DiagramHeader = ({
 						onActiveChange={setActive}
 						trigger={
 							<ClayButton
-								alt={Liferay.Language.get(
+								aria-label={Liferay.Language.get(
 									'click-to-select-custom-diameter'
 								)}
 								className="ml-3 select-diameter"
@@ -88,9 +101,9 @@ const DiagramHeader = ({
 							<ClayDropDown.Group
 								header={Liferay.Language.get('select-radius')}
 							>
-								{radiusChoice.map((item, i) => (
+								{RADIUS_CHOICE.map((item) => (
 									<ClayDropDown.Item
-										key={i}
+										key={item.value}
 										onClick={() => {
 											setAddNewPinState({
 												fill: addNewPinState.fill,
@@ -138,6 +151,7 @@ const DiagramHeader = ({
 			)}
 
 			<ClayButton
+				aria-label={Liferay.Language.get('auto-mapping')}
 				className="auto-mapping my-auto pull-right"
 				displayType="secondary"
 			>

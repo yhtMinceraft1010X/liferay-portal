@@ -283,10 +283,7 @@ const ImagePins = ({
 				.data(cPins)
 				.enter()
 				.append('g')
-				.attr(
-					'transform',
-					(attr) => 'translate(' + attr.cx + ',' + attr.cy + ')'
-				)
+				.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
 				.attr('cx', (attr) => attr.cx)
 				.attr('cy', (attr) => attr.cy)
 				.attr('id', (attr) => attr.id)
@@ -319,31 +316,31 @@ const ImagePins = ({
 		if (isAdmin) {
 			select('#newPin').on('click', handleAddPin);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
+		addNewPinState,
 		addPinHandler,
-		removePinHandler,
 		changedScale,
 		cPins,
 		execZoomIn,
-		resetZoom,
 		selectedOption,
-		setResetZoom,
-		zoomOutHandler,
-		zoomInHandler,
+		isAdmin,
 		enablePanZoom,
 		imageSettings,
 		navigationController,
+		removePinHandler,
+		handleAddPin,
+		resetZoom,
+		setAddPinHandler,
 		setChangedScale,
+		setCpins,
+		setResetZoom,
+		setRemovePinHandler,
+		setShowTooltip,
 		setSelectedOption,
 		setZoomInHandler,
 		setZoomOutHandler,
-		handleAddPin,
-		setShowTooltip,
-		setCpins,
-		addNewPinState,
-		setRemovePinHandler,
-		setAddPinHandler,
+		zoomOutHandler,
+		zoomInHandler,
 	]);
 
 	return (
