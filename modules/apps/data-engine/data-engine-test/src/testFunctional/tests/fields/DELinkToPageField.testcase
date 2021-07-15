@@ -88,4 +88,34 @@ definition {
 			fieldName = "Link to Page");
 	}
 
+	@description = "This is a test for LRQA-68680. This test verifies that Label can be shown or hidden."
+	@priority = "3"
+	test CanSetLabelToShownOrHidden {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.toggleShowLabel(fieldLabel = "Link to Page");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Link to Page");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+	}
+
 }
