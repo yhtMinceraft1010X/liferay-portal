@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that is possible to delete the field"
+	@description = "This is a test for LRQA-68658. This test verifies that is possible to delete the field."
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -54,7 +54,7 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Web Content");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that is possible to duplicate the field"
+	@description = "This is a test for LRQA-68658. This test verifies that is possible to duplicate the field."
 	@priority = "4"
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
@@ -80,7 +80,7 @@ definition {
 			fieldName = "Web Content");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be edited"
+	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -117,7 +117,7 @@ definition {
 			fieldName = "Web Content");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that Verify Default Searchable property is Disable when System Setting is left unchecked"
+	@description = "This is a test for LRQA-68658. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEWebContentField#CanSetDefaultSearchablePropertyToDisable";
@@ -151,7 +151,7 @@ definition {
 			searchableType = "Disable");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that Default Searchable property is Keyword when System Setting is left checked"
+	@description = "This is a test for LRQA-68658. This test verifies that Default Searchable property is Keyword when System Setting is left checked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEWebContentField#CanSetDefaultSearchablePropertyToKeyword";
@@ -185,7 +185,7 @@ definition {
 			searchableType = "Keyword");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be set"
+	@description = "This is a test for LRQA-68658. This test verifies that Label and Help text can be set."
 	@priority = "3"
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -210,7 +210,7 @@ definition {
 			fieldName = "Web Content");
 	}
 
-	@description = "This is a test for LRQA-68658. This test verifies that Label can be shown or hidden"
+	@description = "This is a test for LRQA-68658. This test verifies that Label can be shown or hidden."
 	@priority = "3"
 	test CanSetLabelToShownOrHidden {
 		NavItem.gotoStructures();
