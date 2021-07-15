@@ -1366,7 +1366,9 @@ definition {
 	@priority = "5"
 	test FilterTheListOfContentsByTag {
 		property portal.acceptance = "true";
+        
 
+		task ("Adding the tag to the web content of the first site") {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -1375,7 +1377,9 @@ definition {
 			tagNameList = "test",
 			webContentContent = "Web Content Tag1 ",
 			webContentTitle = "Web Content Title");
+		}
 
+		task("Adding the tag the web content of the second site"){
 		JSONGroup.addGroup(groupName = "Test Site Name 2");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name 2");
@@ -1386,7 +1390,9 @@ definition {
 			tagNameList = "test",
 			webContentContent = "Web Content Tag1",
 			webContentTitle = "Web Content Title");
+		} 
 
+		task("navigate to the content dashboard, filter by tags and make sure there is only one tag"){
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -1395,6 +1401,8 @@ definition {
 		ContentDashboard.filterByTag(
 			filterOption = "Tags",
 			tagName = "test");
+		}
+			
 	}
 
 	@description = "LPS-116840 When a user with update permissions clicks on the edit icon, the user is led to the web editor"
