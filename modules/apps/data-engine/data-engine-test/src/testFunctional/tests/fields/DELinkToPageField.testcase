@@ -26,6 +26,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68680. This test verifies that Label and Help text can be edited."
+	@priority = "5"
+	test CanEditLabelAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "Link to Page Edited");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page Edited",
+			fieldHelp = "Help Text Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page Edited",
+			fieldHelp = "Help Text Edited",
+			fieldName = "Link to Page");
+	}
+
 	@description = "This is a test for LRQA-68680. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
