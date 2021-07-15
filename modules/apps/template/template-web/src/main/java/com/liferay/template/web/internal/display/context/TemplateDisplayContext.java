@@ -223,13 +223,13 @@ public class TemplateDisplayContext {
 	}
 
 	private OrderByComparator<DDMTemplate> _getTemplateOrderByComparator() {
+		OrderByComparator<DDMTemplate> orderByComparator = null;
+
 		boolean orderByAsc = false;
 
 		if (Objects.equals(_getOrderByType(), "asc")) {
 			orderByAsc = true;
 		}
-
-		OrderByComparator<DDMTemplate> orderByComparator = null;
 
 		if (Objects.equals(_getOrderByCol(), "id")) {
 			orderByComparator = new TemplateIdComparator(orderByAsc);
