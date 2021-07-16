@@ -71,6 +71,7 @@
 
 		<!-- Other fields -->
 
+		<column name="externalReferenceCode" type="String" />
 		<column name="objectDefinitionId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
@@ -82,6 +83,11 @@
 
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
+		</finder>
+		<finder name="G_C_ERC" return-type="ObjectEntry">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="externalReferenceCode" />
 		</finder>
 
 		<!-- Order -->
