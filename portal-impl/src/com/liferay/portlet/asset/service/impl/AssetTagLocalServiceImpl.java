@@ -682,19 +682,15 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		throws PortalException {
 
 		throw new UnsupportedOperationException(
-			StringBundler.concat(
-				"This method is provided by the com.liferay.asset.tags.",
-				"internal.service.AssetTagLocalServiceWrapper in the ",
-				"asset-tags-service module"));
+			"This method is implemented in com.liferay.asset.tags.internal." +
+				"service.AssetTagLocalServiceWrapper");
 	}
 
 	@Override
 	public void unsubscribeTag(long userId, long tagId) throws PortalException {
 		throw new UnsupportedOperationException(
-			StringBundler.concat(
-				"This method is provided by the com.liferay.asset.tags.",
-				"internal.service.AssetTagLocalServiceWrapper in the ",
-				"asset-tags-service module"));
+			"This method is implemented in com.liferay.asset.tags.internal." +
+				"service.AssetTagLocalServiceWrapper");
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
