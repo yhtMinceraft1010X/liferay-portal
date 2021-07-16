@@ -57,30 +57,20 @@ public class PaginationBarTag extends BaseContainerTag {
 		}
 
 		if (_paginationBarLabels == null) {
-			StringBundler sb = new StringBundler(11);
-
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
-
-			sb.append(LanguageUtil.get(resourceBundle, "showing"));
-			sb.append(" {0} ");
-			sb.append(
-				StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
-			sb.append(" {1} ");
-			sb.append(LanguageUtil.get(resourceBundle, "of"));
-			sb.append(" {2}");
-
 			PaginationBarLabels paginationBarLabels = new PaginationBarLabels();
 
-			paginationBarLabels.setPaginationResults(sb.toString());
+			paginationBarLabels.setPaginationResults(
+				StringBundler.concat(
+					LanguageUtil.get(resourceBundle, "showing"), " {0} ",
+					StringUtil.toLowerCase(
+						LanguageUtil.get(resourceBundle, "to")),
+					" {1} ", LanguageUtil.get(resourceBundle, "of"), " {2}"));
 
-			sb = new StringBundler(3);
+			String perPageItems =
+				"{0} " + LanguageUtil.get(resourceBundle, "items");
 
-			sb.append("{0} ");
-			sb.append(LanguageUtil.get(resourceBundle, "items"));
-
-			paginationBarLabels.setPerPageItems(sb.toString());
-			paginationBarLabels.setSelectPerPageItems(sb.toString());
+			paginationBarLabels.setPerPageItems(perPageItems);
+			paginationBarLabels.setSelectPerPageItems(perPageItems);
 
 			setPaginationBarLabels(paginationBarLabels);
 		}
