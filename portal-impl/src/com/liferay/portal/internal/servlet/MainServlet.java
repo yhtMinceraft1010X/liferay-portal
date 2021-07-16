@@ -369,8 +369,6 @@ public class MainServlet extends HttpServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize themes");
-
 			_log.debug("Initialize web settings");
 		}
 
@@ -548,8 +546,6 @@ public class MainServlet extends HttpServlet {
 		httpServletRequest.setAttribute(WebKeys.CTX, getServletContext());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Handle non-serializable request");
-
 			_log.debug("Encrypt request");
 		}
 
