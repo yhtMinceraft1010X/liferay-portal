@@ -62,7 +62,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 	protected void removeServiceData(
 			String buildNamespace, String[] bundleSymbolicNames,
-			String[] classNames, String[] tables)
+			String[] classNames, String[] tableNames)
 		throws Exception {
 
 		_deleteFromClassName(classNames);
@@ -75,7 +75,7 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 		_deleteFromServiceComponent(buildNamespace);
 
-		_dropTables(tables);
+		_dropTables(tableNames);
 	}
 
 	private void _deleteFrom(
