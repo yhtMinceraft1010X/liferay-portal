@@ -84,9 +84,9 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 
 		for (String fieldValue : fieldValues) {
 			runSQL(
-				String.format(
-					"delete from %s where %s = '%s'", tableName, fieldName,
-					fieldValue));
+				StringBundler.concat(
+					"delete from ", tableName, " where ", fieldName, " = '",
+					fieldValue, "'"));
 		}
 	}
 
