@@ -54,70 +54,75 @@ public class LayoutTypeSettingsUtil {
 						selectPreparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
-						long plid = resultSet.getLong(1);
-						String typeSettings = resultSet.getString(2);
-
-						UnicodeProperties unicodeProperties =
-							new UnicodeProperties(true);
-
-						unicodeProperties.fastLoad(typeSettings);
-
-						Set<Map.Entry<String, String>> entrySet =
-							unicodeProperties.entrySet();
-
-						Iterator<Map.Entry<String, String>> iterator =
-							entrySet.iterator();
-
-						while (iterator.hasNext()) {
-							Map.Entry<String, String> entry = iterator.next();
-
-							String value = entry.getValue();
-
-							if (!value.contains(portletId)) {
-								continue;
-							}
-
-							List<String> parts = StringUtil.split(
-								value, CharPool.COMMA);
-
-							if (parts.size() <= 1) {
-								iterator.remove();
-
-								continue;
-							}
-
-							StringBundler sb = new StringBundler(
-								(2 * parts.size()) - 2);
-
-							for (String part : parts) {
-								if (!part.startsWith(portletId)) {
-									sb.append(part);
-									sb.append(StringPool.COMMA);
-								}
-							}
-
-							if (sb.index() == 0) {
-								iterator.remove();
-
-								continue;
-							}
-
-							sb.setIndex(sb.index() - 1);
-
-							entry.setValue(sb.toString());
-						}
-
-						updatePreparedStatement.setString(
-							1, unicodeProperties.toString());
-						updatePreparedStatement.setLong(2, plid);
-
-						updatePreparedStatement.addBatch();
+						_removePortletId(
+							portletId, resultSet, updatePreparedStatement);
 					}
 				}
 			}
 
 			updatePreparedStatement.executeBatch();
 		}
+	}
+
+	private static void _removePortletId(
+			String portletId, ResultSet resultSet,
+			PreparedStatement updatePreparedStatement)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		String typeSettings = resultSet.getString(2);
+
+		unicodeProperties.fastLoad(typeSettings);
+
+		Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
+
+		Iterator<Map.Entry<String, String>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
+
+			String value = entry.getValue();
+
+			if (!value.contains(portletId)) {
+				return;
+			}
+
+			List<String> parts = StringUtil.split(value, CharPool.COMMA);
+
+			if (parts.size() <= 1) {
+				iterator.remove();
+
+				return;
+			}
+
+			StringBundler sb = new StringBundler((2 * parts.size()) - 2);
+
+			for (String part : parts) {
+				if (!part.startsWith(portletId)) {
+					sb.append(part);
+					sb.append(StringPool.COMMA);
+				}
+			}
+
+			if (sb.index() == 0) {
+				iterator.remove();
+
+				return;
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			entry.setValue(sb.toString());
+		}
+
+		updatePreparedStatement.setString(1, unicodeProperties.toString());
+
+		long plid = resultSet.getLong(1);
+
+		updatePreparedStatement.setLong(2, plid);
+
+		updatePreparedStatement.addBatch();
 	}
 
 }
