@@ -20,26 +20,11 @@
 	<p>A pagination bar provides navigation through datasets.</p>
 </blockquote>
 
-<%
-List<PaginationBarDelta> paginationBarDeltas = new ArrayList<>();
-
-paginationBarDeltas.add(new PaginationBarDelta(10));
-paginationBarDeltas.add(new PaginationBarDelta(20));
-paginationBarDeltas.add(new PaginationBarDelta(30));
-paginationBarDeltas.add(new PaginationBarDelta(50));
-
-List<Integer> disabledPages = new ArrayList<>();
-
-disabledPages.add(5);
-disabledPages.add(6);
-disabledPages.add(7);
-%>
-
 <clay:pagination-bar
 	activePage="<%= 1 %>"
-	disabledPages="<%= disabledPages %>"
+	disabledPages="<%= Arrays.asList(5, 6, 7) %>"
 	ellipsisBuffer="<%= 3 %>"
-	paginationBarDeltas="<%= paginationBarDeltas %>"
+	paginationBarDeltas="<%= Arrays.asList(new PaginationBarDelta(10), new PaginationBarDelta(20), new PaginationBarDelta(30), new PaginationBarDelta(50)) %>"
 	paginationBarLabels='<%= new PaginationBarLabels("Showing {0} - {1} of {2}", "{0} items", "{0} items") %>'
 	totalItems="<%= 100 %>"
 />

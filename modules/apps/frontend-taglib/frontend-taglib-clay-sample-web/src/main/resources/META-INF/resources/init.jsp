@@ -38,6 +38,7 @@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarL
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Arrays" %><%@
 page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
