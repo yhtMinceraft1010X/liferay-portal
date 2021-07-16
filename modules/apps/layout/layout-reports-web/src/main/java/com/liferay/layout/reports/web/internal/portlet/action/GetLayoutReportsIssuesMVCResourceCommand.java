@@ -295,13 +295,13 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			_layoutReportsIssuesPortalCache.get(cacheKey);
 
 		if (layoutReportsIssuesJSONObject != null) {
-			Format dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			Format format = DateFormatFactoryUtil.getSimpleDateFormat(
 				"MMMM d, yyyy HH:mm a", resourceBundle.getLocale(),
 				themeDisplay.getTimeZone());
 
 			layoutReportsIssuesJSONObject.put(
 				"date",
-				dateFormat.format(
+				format.format(
 					new Date(
 						layoutReportsIssuesJSONObject.getLong("timestamp"))));
 		}
