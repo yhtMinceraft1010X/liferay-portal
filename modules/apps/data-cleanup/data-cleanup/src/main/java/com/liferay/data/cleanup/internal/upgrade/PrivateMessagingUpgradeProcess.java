@@ -33,14 +33,14 @@ public class PrivateMessagingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_deleteMBThreads();
+
 		removePortletData(
 			new String[] {"com.liferay.social.privatemessaging.web"}, null,
 			new String[] {
 				"com_liferay_social_privatemessaging_web_portlet_" +
 					"PrivateMessagingPortlet"
 			});
-
-		_deleteMBThreads();
 
 		removeServiceData(
 			"PM", new String[] {"com.liferay.social.privatemessaging.service"},

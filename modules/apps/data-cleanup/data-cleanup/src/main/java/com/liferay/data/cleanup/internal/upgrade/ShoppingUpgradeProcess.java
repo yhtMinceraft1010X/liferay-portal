@@ -32,13 +32,13 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		removePortletData(
-			new String[] {"com.liferay.shopping.web"}, null,
-			new String[] {"com_liferay_shopping_web_portlet_ShoppingPortlet"});
-
 		_deleteFromShoppingItem("smallImage");
 		_deleteFromShoppingItem("mediumImage");
 		_deleteFromShoppingItem("largeImage");
+
+		removePortletData(
+			new String[] {"com.liferay.shopping.web"}, null,
+			new String[] {"com_liferay_shopping_web_portlet_ShoppingPortlet"});
 
 		removeServiceData(
 			"Shopping", new String[] {"com.liferay.shopping.service"},
