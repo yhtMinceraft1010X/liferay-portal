@@ -79,14 +79,14 @@ public abstract class BaseUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _deleteFrom(
-			String tableName, String fieldName, String... fieldValues)
+			String tableName, String columnName, String... columnValues)
 		throws Exception {
 
-		for (String fieldValue : fieldValues) {
+		for (String columnValue : columnValues) {
 			runSQL(
 				StringBundler.concat(
-					"delete from ", tableName, " where ", fieldName, " = '",
-					fieldValue, "'"));
+					"delete from ", tableName, " where ", columnName, " = '",
+					columnValue, "'"));
 		}
 	}
 
