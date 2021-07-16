@@ -223,6 +223,13 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(3);
+
+		// TODO Test where group ID is not 0
+
+		// TODO Test where group ID does not belong to right company
+
+		// TODO Test object entries scoped to company vs. scoped to group
+
 	}
 
 	@Test
