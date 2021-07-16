@@ -63,22 +63,12 @@ public class PaginationBarTag extends BaseContainerTag {
 				TagResourceBundleUtil.getResourceBundle(pageContext);
 
 			sb.append(LanguageUtil.get(resourceBundle, "showing"));
-
-			sb.append(StringPool.SPACE);
-			sb.append("{0}");
-			sb.append(StringPool.SPACE);
-
+			sb.append(" {0} ");
 			sb.append(
 				StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
-
-			sb.append(StringPool.SPACE);
-			sb.append("{1}");
-			sb.append(StringPool.SPACE);
-
+			sb.append(" {1} ");
 			sb.append(LanguageUtil.get(resourceBundle, "of"));
-
-			sb.append(StringPool.SPACE);
-			sb.append("{2}");
+			sb.append(" {2}");
 
 			PaginationBarLabels paginationBarLabels = new PaginationBarLabels();
 
@@ -86,8 +76,7 @@ public class PaginationBarTag extends BaseContainerTag {
 
 			sb = new StringBundler(3);
 
-			sb.append("{0}");
-			sb.append(StringPool.SPACE);
+			sb.append("{0} ");
 			sb.append(LanguageUtil.get(resourceBundle, "items"));
 
 			paginationBarLabels.setPerPageItems(sb.toString());
