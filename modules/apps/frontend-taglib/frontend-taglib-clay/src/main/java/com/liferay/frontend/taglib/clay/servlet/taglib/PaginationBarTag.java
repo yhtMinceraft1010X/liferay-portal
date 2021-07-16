@@ -177,7 +177,6 @@ public class PaginationBarTag extends BaseContainerTag {
 
 		jspWriter.write("<div class=\"pagination-bar\"><div class=\"");
 		jspWriter.write("dropdown pagination-items-per-page\">");
-
 		jspWriter.write("<button class=\"dropdown-toggle btn btn-unstyled\"");
 		jspWriter.write(" type=\"button\">");
 		jspWriter.write(_activeDelta.toString());
@@ -198,24 +197,17 @@ public class PaginationBarTag extends BaseContainerTag {
 		jspWriter.write("</button></div><div class=\"pagination-results\">");
 
 		jspWriter.write(LanguageUtil.get(resourceBundle, "showing"));
-		jspWriter.write(StringPool.SPACE);
-		jspWriter.write("1");
-		jspWriter.write(StringPool.SPACE);
-
+		jspWriter.write(" 1 ");
 		jspWriter.write(
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "to")));
-
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(_activeDelta.toString());
 		jspWriter.write(StringPool.SPACE);
-
 		jspWriter.write(
 			StringUtil.toLowerCase(LanguageUtil.get(resourceBundle, "of")));
-
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(_totalItems.toString());
 		jspWriter.write(StringPool.SPACE);
-
 		jspWriter.write("</div><ul class=\"pagination pagination-root\">");
 		jspWriter.write("<li class=\"page-item disabled\">");
 
