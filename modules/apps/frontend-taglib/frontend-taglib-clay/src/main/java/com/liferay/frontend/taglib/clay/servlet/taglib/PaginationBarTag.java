@@ -59,6 +59,9 @@ public class PaginationBarTag extends BaseContainerTag {
 		if (_paginationBarLabels == null) {
 			PaginationBarLabels paginationBarLabels = new PaginationBarLabels();
 
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			paginationBarLabels.setPaginationResults(
 				StringBundler.concat(
 					LanguageUtil.get(resourceBundle, "showing"), " {0} ",
@@ -195,7 +198,6 @@ public class PaginationBarTag extends BaseContainerTag {
 		iconTag.doTag(pageContext);
 
 		jspWriter.write("</button></div><div class=\"pagination-results\">");
-
 		jspWriter.write(LanguageUtil.get(resourceBundle, "showing"));
 		jspWriter.write(" 1 ");
 		jspWriter.write(
