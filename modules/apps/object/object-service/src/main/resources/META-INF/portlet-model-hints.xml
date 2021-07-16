@@ -28,6 +28,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />

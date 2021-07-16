@@ -26,6 +26,7 @@ create table ObjectEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	externalReferenceCode VARCHAR(75) null,
 	objectDefinitionId LONG,
 	lastPublishDate DATE null,
 	status INTEGER,
