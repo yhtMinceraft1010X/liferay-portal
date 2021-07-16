@@ -66,7 +66,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with external reference code: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -91,7 +91,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return Page.of(
@@ -150,7 +150,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with external reference code: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -167,7 +167,7 @@ public class DiagramEntryResourceImpl extends BaseDiagramEntryResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _addDiagramEntry(cpDefinition.getCPDefinitionId(), diagramEntry);

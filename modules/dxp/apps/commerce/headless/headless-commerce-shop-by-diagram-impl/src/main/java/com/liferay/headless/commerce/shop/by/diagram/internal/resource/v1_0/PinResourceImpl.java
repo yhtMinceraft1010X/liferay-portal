@@ -87,7 +87,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return Page.of(
@@ -129,7 +129,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with external reference code: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -143,7 +143,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _addPin(cpDefinition.getCPDefinitionId(), pin);

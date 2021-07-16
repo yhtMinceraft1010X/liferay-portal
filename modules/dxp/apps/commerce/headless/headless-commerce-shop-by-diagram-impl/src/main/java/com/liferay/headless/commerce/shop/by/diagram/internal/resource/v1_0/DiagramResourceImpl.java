@@ -51,7 +51,7 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with external reference code: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -71,7 +71,7 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		CPDefinitionDiagramSetting cpDefinitionDiagramSetting =
@@ -95,7 +95,7 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with external reference code: " +
+				"Unable to find product with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -111,7 +111,7 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
-				"Unable to find product with ID: " + productId);
+				"Unable to find product with ID " + productId);
 		}
 
 		return _addOrUpdateDiagram(cpDefinition.getCPDefinitionId(), diagram);
