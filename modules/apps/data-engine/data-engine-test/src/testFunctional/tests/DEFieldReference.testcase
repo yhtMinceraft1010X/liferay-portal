@@ -80,4 +80,39 @@ definition {
 			fieldReference = "${originalFieldReference}");
 	}
 
+	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be the same for two fields."
+	@priority = "5"
+	test CanNotBeTheSameForTwoFields {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEStructure.addField(
+			fieldLabel = "First Text",
+			fieldName = "Text");
+
+		DEStructure.editFieldReference(
+			fieldLabel = "First Text",
+			fieldReference = "TextReference");
+
+		DEStructure.addField(
+			fieldLabel = "Second Text",
+			fieldName = "Text");
+
+		var originalFieldReference = DEStructure.getFieldReference(fieldLabel = "Second Text");
+
+		DEStructure.editFieldReference(
+			assertErrorMessage = "This reference is already being used. Try a different one.",
+			fieldLabel = "Second Text",
+			fieldReference = "TextReference");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.assertFieldReference(
+			fieldLabel = "Second Text",
+			fieldReference = "${originalFieldReference}");
+	}
+
 }
