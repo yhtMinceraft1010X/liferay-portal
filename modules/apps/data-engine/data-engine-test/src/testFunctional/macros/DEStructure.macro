@@ -1,0 +1,29 @@
+definition {
+
+	macro addField {
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fields");
+
+		if (!(isSet(fieldLocation))) {
+			var fieldLocation = "last()";
+		}
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldLocation = "${fieldLocation}",
+			key_fieldName = "${fieldName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "Sidebar#ADD_FIELD_POSITION",
+			value1 = "${fieldName}");
+
+		WaitForVisible(locator1 = "Sidebar#BACK");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldLabel}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+}
