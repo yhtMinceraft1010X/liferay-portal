@@ -54,4 +54,30 @@ definition {
 			fieldReference = "TextReference");
 	}
 
+	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be blank."
+	@priority = "5"
+	test CanNotBeBlank {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEStructure.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		var originalFieldReference = DEStructure.getFieldReference(fieldLabel = "Text");
+
+		DEStructure.editFieldReference(
+			fieldLabel = "Text",
+			fieldReference = "");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.assertFieldReference(
+			fieldLabel = "Text",
+			fieldReference = "${originalFieldReference}");
+	}
+
 }
