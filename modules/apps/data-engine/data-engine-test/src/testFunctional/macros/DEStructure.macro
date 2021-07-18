@@ -26,6 +26,24 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro assertFieldReference {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		DEStructure.openField(
+			fieldLabel = "${fieldLabel}",
+			index = "${index}");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			locator1 = "Sidebar#DDM_FIELD_REFERENCE",
+			value1 = "${fieldReference}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldReference {
 		if (!(isSet(index))) {
 			var index = "1";

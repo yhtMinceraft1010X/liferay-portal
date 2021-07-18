@@ -87,9 +87,8 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Geolocation",
 			fieldReference = "GeolocationReference");
 
 		DataEngine.editFieldReference(
@@ -101,9 +100,8 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Geolocation",
-			fieldName = "Geolocation",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Geolocation",
 			fieldReference = "GeolocationReferenceValidCharacters");
 	}
 

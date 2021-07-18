@@ -120,9 +120,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Separator",
 			fieldReference = "EditedSeparatorValidCharacters");
 	}
 

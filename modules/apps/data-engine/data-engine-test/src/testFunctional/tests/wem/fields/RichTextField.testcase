@@ -235,9 +235,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Rich Text",
 			fieldReference = "TestValidReference");
 
 		DataEngine.editFieldReference(
@@ -249,9 +248,8 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Rich Text",
 			fieldReference = "TestInvalidReference");
 	}
 

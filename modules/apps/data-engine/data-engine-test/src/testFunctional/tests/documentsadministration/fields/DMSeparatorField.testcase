@@ -109,9 +109,8 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Separator",
 			fieldReference = "${assertFieldReference}");
 
 		Button.clickSave();
@@ -145,9 +144,8 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
 
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
+		DEStructure.assertFieldReference(
+			fieldLabel = "Separator",
 			fieldReference = "${assertFieldReference}");
 
 		Button.clickSave();
