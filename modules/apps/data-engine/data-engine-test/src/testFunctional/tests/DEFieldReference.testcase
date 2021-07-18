@@ -112,6 +112,38 @@ definition {
 			fieldReference = "${originalFieldReference}");
 	}
 
+	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be blank for the Options of a field."
+	@priority = "5"
+	test CanNotBeBlankForOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEStructure.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEStructure.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1");
+
+		var originalOptionReference = DEStructure.getOptionReference(
+			fieldLabel = "Single Selection",
+			optionIndex = "1");
+
+		DEStructure.editOptionReferences(
+			fieldLabel = "Single Selection",
+			optionReferenceList = "");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.assertOptionReferences(
+			fieldLabel = "Single Selection",
+			optionReferenceList = "${originalOptionReference}");
+	}
+
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be the same for two fields."
 	@priority = "5"
 	test CanNotBeTheSameForTwoFields {
