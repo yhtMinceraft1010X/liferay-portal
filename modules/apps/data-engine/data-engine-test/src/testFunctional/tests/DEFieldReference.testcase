@@ -179,4 +179,40 @@ definition {
 			fieldReference = "${originalFieldReference}");
 	}
 
+	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be the same for two Options of fields."
+	@priority = "5"
+	test CanNotBeTheSameForTwoOptionsOfFields {
+		property portal.upstream = "quarantine";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEStructure.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEStructure.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2");
+
+		var originalOptionReference = DEStructure.getOptionReference(
+			fieldLabel = "Single Selection",
+			optionIndex = "2");
+
+		DEStructure.editOptionReferences(
+			assertErrorMessage = "This reference is already being used. Try a different one.",
+			assertOptionIndex = "2",
+			fieldLabel = "Single Selection",
+			optionReferenceList = "OptionReference,OptionReference");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.assertOptionReferences(
+			fieldLabel = "Single Selection",
+			optionReferenceList = "OptionReference,${originalOptionReference}");
+	}
+
 }
