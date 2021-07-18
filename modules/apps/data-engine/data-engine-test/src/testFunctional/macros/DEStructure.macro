@@ -26,6 +26,38 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldOptions {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		DEStructure.openField(
+			fieldLabel = "${fieldLabel}",
+			index = "${index}");
+
+		var optionIndex = "1";
+
+		for (var optionValue : list "${optionValueList}") {
+			if (isSet(optionFieldLabel)) {
+				Type(
+					index = "${optionIndex}",
+					key_optionFieldLabel = "${optionFieldLabel}",
+					locator1 = "Sidebar#OPTION_INPUT",
+					value1 = "${optionValue}");
+			}
+			else {
+				Type(
+					index = "${optionIndex}",
+					locator1 = "Sidebar#OPTION_INPUT_WITHOUT_LABEL",
+					value1 = "${optionValue}");
+			}
+
+			var optionIndex = ${optionIndex} + 1;
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro assertFieldReference {
 		if (!(isSet(index))) {
 			var index = "1";
