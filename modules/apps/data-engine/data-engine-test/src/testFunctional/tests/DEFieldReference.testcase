@@ -54,6 +54,38 @@ definition {
 			fieldReference = "TextReference");
 	}
 
+	@description = "This is a test for LRQA-68737. This test verifies that the field reference can be edited for the Options of a field."
+	@priority = "5"
+	test CanEditReferenceForOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEStructure.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEStructure.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.editOptionReferences(
+			fieldLabel = "Single Selection",
+			optionReferenceList = "OptionReference1,OptionReference2,OptionReference3");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEStructure.assertOptionReferences(
+			fieldLabel = "Single Selection",
+			optionReferenceList = "OptionReference1,OptionReference2,OptionReference3");
+	}
+
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be blank."
 	@priority = "5"
 	test CanNotBeBlank {
