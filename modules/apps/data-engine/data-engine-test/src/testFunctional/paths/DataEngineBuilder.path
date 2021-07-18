@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_REFERENCE_ERROR</td>
+	<td>//div[@data-field-name='fieldReference']//div[contains(@class,'form-feedback-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS_GROUP_FIELD_WITH_DEPTH</td>
 	<td>//div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][contains(@class, 'ddm-label')][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}] | //div[contains(@class, 'fields-group')]//label[text()='${key_fieldGroupLabel}'][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth}]/..//label[text()='${key_fieldFieldLabel}'][not(contains(@class, 'ddm-label'))][count(ancestor::div[contains(@class, 'fields-group')]) = ${key_fieldGroupDepth} + 1]</td>
 	<td></td>
