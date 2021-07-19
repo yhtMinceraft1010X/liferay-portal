@@ -210,6 +210,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinitionPersistence.remove(objectDefinition);
 
+		resourceLocalService.deleteResource(
+			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			objectDefinition.getObjectDefinitionId());
+
 		if (!objectDefinition.isSystem()) {
 			_dropTable(objectDefinition);
 
@@ -221,11 +226,6 @@ public class ObjectDefinitionLocalServiceImpl
 					return null;
 				});
 		}
-
-		resourceLocalService.deleteResource(
-			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			objectDefinition.getObjectDefinitionId());
 
 		return objectDefinition;
 	}
