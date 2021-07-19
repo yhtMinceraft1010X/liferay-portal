@@ -52,11 +52,12 @@ public class ObjectDefinitionServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_guestUser = _userLocalService.getDefaultUser(
+		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_siteAdminUser = TestPropsValues.getUser();
+		_user = TestPropsValues.getUser();
 
-		_setUpPermissionThreadLocal();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@After
@@ -66,11 +67,8 @@ public class ObjectDefinitionServiceTest {
 
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
-
-		// Must have ADD_ENTRY permission
-
 		try {
-			_testAddCustomObjectDefinition(_guestUser);
+			_testAddCustomObjectDefinition(_defaultUser);
 
 			Assert.fail();
 		}
@@ -79,22 +77,17 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _guestUser.getUserId() +
+					"User " + _defaultUser.getUserId() +
 						" must have ADD_ENTRY permission for"));
 		}
 
-		// Add Custom Object Definition
-
-		_testAddCustomObjectDefinition(_siteAdminUser);
+		_testAddCustomObjectDefinition(_user);
 	}
 
 	@Test
 	public void testDeleteObjectDefinition() throws Exception {
-
-		// Must have DELETE permission
-
 		try {
-			_testDeleteObjectDefinition(_guestUser);
+			_testDeleteObjectDefinition(_defaultUser);
 
 			Assert.fail();
 		}
@@ -103,35 +96,28 @@ public class ObjectDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _guestUser.getUserId() +
+					"User " + _defaultUser.getUserId() +
 						" must have DELETE permission for"));
 		}
 
-		// Delete Object Definition
-
-		_testDeleteObjectDefinition(_siteAdminUser);
+		_testDeleteObjectDefinition(_user);
 	}
 
 	@Test
 	public void testGetObjectDefinition() throws Exception {
-
-		// Must have VIEW permission
-
 		try {
-			_testGetObjectDefinition(_guestUser);
+			_testGetObjectDefinition(_defaultUser);
 		}
 		catch (PrincipalException.MustHavePermission principalException) {
 			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _guestUser.getUserId() +
+					"User " + _defaultUser.getUserId() +
 						" must have VIEW permission for"));
 		}
 
-		// Get Object Definition
-
-		_testGetObjectDefinition(_siteAdminUser);
+		_testGetObjectDefinition(_user);
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(User user)
@@ -145,21 +131,12 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private void _setPermissionCheckerUser(User user) {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-	}
-
-	private void _setUpPermissionThreadLocal() {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-	}
-
 	private void _testAddCustomObjectDefinition(User user) throws Exception {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			_setPermissionCheckerUser(user);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
@@ -182,7 +159,8 @@ public class ObjectDefinitionServiceTest {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			_setPermissionCheckerUser(user);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			objectDefinition = _addCustomObjectDefinition(user);
 
@@ -202,7 +180,8 @@ public class ObjectDefinitionServiceTest {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			_setPermissionCheckerUser(user);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
 			objectDefinition = _addCustomObjectDefinition(user);
 
@@ -217,9 +196,9 @@ public class ObjectDefinitionServiceTest {
 		}
 	}
 
-	private User _guestUser;
+	private User _defaultUser;
 	private PermissionChecker _originalPermissionChecker;
-	private User _siteAdminUser;
+	private User _user;
 
 	@Inject(type = UserLocalService.class)
 	private UserLocalService _userLocalService;
