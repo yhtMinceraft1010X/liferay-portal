@@ -22,14 +22,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
 import com.liferay.object.admin.rest.client.pagination.Page;
-import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectDefinitionSerDes;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
+import com.liferay.object.admin.rest.client.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectFieldSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,7 +69,6 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -84,7 +83,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseObjectDefinitionResourceTestCase {
+public abstract class BaseObjectFieldResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -105,12 +104,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_objectDefinitionResource.setContextCompany(testCompany);
+		_objectFieldResource.setContextCompany(testCompany);
 
-		ObjectDefinitionResource.Builder builder =
-			ObjectDefinitionResource.builder();
+		ObjectFieldResource.Builder builder = ObjectFieldResource.builder();
 
-		objectDefinitionResource = builder.authentication(
+		objectFieldResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -141,13 +139,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 		};
 
-		ObjectDefinition objectDefinition1 = randomObjectDefinition();
+		ObjectField objectField1 = randomObjectField();
 
-		String json = objectMapper.writeValueAsString(objectDefinition1);
+		String json = objectMapper.writeValueAsString(objectField1);
 
-		ObjectDefinition objectDefinition2 = ObjectDefinitionSerDes.toDTO(json);
+		ObjectField objectField2 = ObjectFieldSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(objectDefinition1, objectDefinition2));
+		Assert.assertTrue(equals(objectField1, objectField2));
 	}
 
 	@Test
@@ -167,10 +165,10 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 		};
 
-		ObjectDefinition objectDefinition = randomObjectDefinition();
+		ObjectField objectField = randomObjectField();
 
-		String json1 = objectMapper.writeValueAsString(objectDefinition);
-		String json2 = ObjectDefinitionSerDes.toJSON(objectDefinition);
+		String json1 = objectMapper.writeValueAsString(objectField);
+		String json2 = ObjectFieldSerDes.toJSON(objectField);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -180,209 +178,144 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		ObjectDefinition objectDefinition = randomObjectDefinition();
+		ObjectField objectField = randomObjectField();
 
-		objectDefinition.setName(regex);
+		objectField.setIndexedLanguageId(regex);
+		objectField.setName(regex);
+		objectField.setType(regex);
 
-		String json = ObjectDefinitionSerDes.toJSON(objectDefinition);
+		String json = ObjectFieldSerDes.toJSON(objectField);
 
 		Assert.assertFalse(json.contains(regex));
 
-		objectDefinition = ObjectDefinitionSerDes.toDTO(json);
+		objectField = ObjectFieldSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, objectDefinition.getName());
+		Assert.assertEquals(regex, objectField.getIndexedLanguageId());
+		Assert.assertEquals(regex, objectField.getName());
+		Assert.assertEquals(regex, objectField.getType());
 	}
 
 	@Test
-	public void testGetObjectDefinitionsPage() throws Exception {
-		Assert.assertTrue(false);
-	}
+	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
+		Page<ObjectField> page =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
+				Pagination.of(1, 2));
 
-	@Test
-	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
-		GraphQLField graphQLField = new GraphQLField(
-			"objectDefinitions",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 2);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
+		Assert.assertEquals(0, page.getTotalCount());
 
-		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
+		Long irrelevantObjectDefinitionId =
+			testGetObjectDefinitionObjectFieldsPage_getIrrelevantObjectDefinitionId();
 
-		Assert.assertEquals(0, objectDefinitionsJSONObject.get("totalCount"));
+		if (irrelevantObjectDefinitionId != null) {
+			ObjectField irrelevantObjectField =
+				testGetObjectDefinitionObjectFieldsPage_addObjectField(
+					irrelevantObjectDefinitionId,
+					randomIrrelevantObjectField());
 
-		ObjectDefinition objectDefinition1 =
-			testGraphQLObjectDefinition_addObjectDefinition();
-		ObjectDefinition objectDefinition2 =
-			testGraphQLObjectDefinition_addObjectDefinition();
+			page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				irrelevantObjectDefinitionId, Pagination.of(1, 2));
 
-		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/objectDefinitions");
+			Assert.assertEquals(1, page.getTotalCount());
 
-		Assert.assertEquals(2, objectDefinitionsJSONObject.get("totalCount"));
+			assertEquals(
+				Arrays.asList(irrelevantObjectField),
+				(List<ObjectField>)page.getItems());
+			assertValid(page);
+		}
+
+		ObjectField objectField1 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		ObjectField objectField2 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
+			objectDefinitionId, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(objectDefinition1, objectDefinition2),
-			Arrays.asList(
-				ObjectDefinitionSerDes.toDTOs(
-					objectDefinitionsJSONObject.getString("items"))));
+			Arrays.asList(objectField1, objectField2),
+			(List<ObjectField>)page.getItems());
+		assertValid(page);
 	}
 
 	@Test
-	public void testPostObjectDefinition() throws Exception {
-		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+	public void testGetObjectDefinitionObjectFieldsPageWithPagination()
+		throws Exception {
 
-		ObjectDefinition postObjectDefinition =
-			testPostObjectDefinition_addObjectDefinition(
-				randomObjectDefinition);
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
 
-		assertEquals(randomObjectDefinition, postObjectDefinition);
-		assertValid(postObjectDefinition);
+		ObjectField objectField1 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		ObjectField objectField2 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		ObjectField objectField3 =
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				objectDefinitionId, randomObjectField());
+
+		Page<ObjectField> page1 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, Pagination.of(1, 2));
+
+		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
+
+		Assert.assertEquals(objectFields1.toString(), 2, objectFields1.size());
+
+		Page<ObjectField> page2 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
+
+		Assert.assertEquals(objectFields2.toString(), 1, objectFields2.size());
+
+		Page<ObjectField> page3 =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(objectField1, objectField2, objectField3),
+			(List<ObjectField>)page3.getItems());
 	}
 
-	protected ObjectDefinition testPostObjectDefinition_addObjectDefinition(
-			ObjectDefinition objectDefinition)
+	protected ObjectField
+			testGetObjectDefinitionObjectFieldsPage_addObjectField(
+				Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testDeleteObjectDefinition() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectDefinition objectDefinition =
-			testDeleteObjectDefinition_addObjectDefinition();
-
-		assertHttpResponseStatusCode(
-			204,
-			objectDefinitionResource.deleteObjectDefinitionHttpResponse(
-				objectDefinition.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			objectDefinitionResource.getObjectDefinitionHttpResponse(
-				objectDefinition.getId()));
-
-		assertHttpResponseStatusCode(
-			404, objectDefinitionResource.getObjectDefinitionHttpResponse(0L));
-	}
-
-	protected ObjectDefinition testDeleteObjectDefinition_addObjectDefinition()
+	protected Long
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testGraphQLDeleteObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
-			testGraphQLObjectDefinition_addObjectDefinition();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteObjectDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"objectDefinitionId",
-									objectDefinition.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteObjectDefinition"));
-
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"objectDefinition",
-					new HashMap<String, Object>() {
-						{
-							put("objectDefinitionId", objectDefinition.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray.length() > 0);
-	}
-
-	@Test
-	public void testGetObjectDefinition() throws Exception {
-		ObjectDefinition postObjectDefinition =
-			testGetObjectDefinition_addObjectDefinition();
-
-		ObjectDefinition getObjectDefinition =
-			objectDefinitionResource.getObjectDefinition(
-				postObjectDefinition.getId());
-
-		assertEquals(postObjectDefinition, getObjectDefinition);
-		assertValid(getObjectDefinition);
-	}
-
-	protected ObjectDefinition testGetObjectDefinition_addObjectDefinition()
+	protected Long
+			testGetObjectDefinitionObjectFieldsPage_getIrrelevantObjectDefinitionId()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return null;
 	}
 
-	@Test
-	public void testGraphQLGetObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
-			testGraphQLObjectDefinition_addObjectDefinition();
-
-		Assert.assertTrue(
-			equals(
-				objectDefinition,
-				ObjectDefinitionSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"objectDefinition",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"objectDefinitionId",
-											objectDefinition.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/objectDefinition"))));
-	}
-
-	@Test
-	public void testGraphQLGetObjectDefinitionNotFound() throws Exception {
-		Long irrelevantObjectDefinitionId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"objectDefinition",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"objectDefinitionId",
-									irrelevantObjectDefinitionId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
+	protected ObjectField testGraphQLObjectField_addObjectField()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -398,41 +331,36 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected void assertEquals(
-		ObjectDefinition objectDefinition1,
-		ObjectDefinition objectDefinition2) {
+		ObjectField objectField1, ObjectField objectField2) {
 
 		Assert.assertTrue(
-			objectDefinition1 + " does not equal " + objectDefinition2,
-			equals(objectDefinition1, objectDefinition2));
+			objectField1 + " does not equal " + objectField2,
+			equals(objectField1, objectField2));
 	}
 
 	protected void assertEquals(
-		List<ObjectDefinition> objectDefinitions1,
-		List<ObjectDefinition> objectDefinitions2) {
+		List<ObjectField> objectFields1, List<ObjectField> objectFields2) {
 
-		Assert.assertEquals(
-			objectDefinitions1.size(), objectDefinitions2.size());
+		Assert.assertEquals(objectFields1.size(), objectFields2.size());
 
-		for (int i = 0; i < objectDefinitions1.size(); i++) {
-			ObjectDefinition objectDefinition1 = objectDefinitions1.get(i);
-			ObjectDefinition objectDefinition2 = objectDefinitions2.get(i);
+		for (int i = 0; i < objectFields1.size(); i++) {
+			ObjectField objectField1 = objectFields1.get(i);
+			ObjectField objectField2 = objectFields2.get(i);
 
-			assertEquals(objectDefinition1, objectDefinition2);
+			assertEquals(objectField1, objectField2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ObjectDefinition> objectDefinitions1,
-		List<ObjectDefinition> objectDefinitions2) {
+		List<ObjectField> objectFields1, List<ObjectField> objectFields2) {
 
-		Assert.assertEquals(
-			objectDefinitions1.size(), objectDefinitions2.size());
+		Assert.assertEquals(objectFields1.size(), objectFields2.size());
 
-		for (ObjectDefinition objectDefinition1 : objectDefinitions1) {
+		for (ObjectField objectField1 : objectFields1) {
 			boolean contains = false;
 
-			for (ObjectDefinition objectDefinition2 : objectDefinitions2) {
-				if (equals(objectDefinition1, objectDefinition2)) {
+			for (ObjectField objectField2 : objectFields2) {
+				if (equals(objectField1, objectField2)) {
 					contains = true;
 
 					break;
@@ -440,25 +368,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				objectDefinitions2 + " does not contain " + objectDefinition1,
-				contains);
+				objectFields2 + " does not contain " + objectField1, contains);
 		}
 	}
 
-	protected void assertValid(ObjectDefinition objectDefinition)
-		throws Exception {
-
+	protected void assertValid(ObjectField objectField) throws Exception {
 		boolean valid = true;
 
-		if (objectDefinition.getDateCreated() == null) {
-			valid = false;
-		}
-
-		if (objectDefinition.getDateModified() == null) {
-			valid = false;
-		}
-
-		if (objectDefinition.getId() == null) {
+		if (objectField.getId() == null) {
 			valid = false;
 		}
 
@@ -466,7 +383,33 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
-				if (objectDefinition.getActions() == null) {
+				if (objectField.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("indexed", additionalAssertFieldName)) {
+				if (objectField.getIndexed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("indexedAsKeyword", additionalAssertFieldName)) {
+				if (objectField.getIndexedAsKeyword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"indexedLanguageId", additionalAssertFieldName)) {
+
+				if (objectField.getIndexedLanguageId() == null) {
 					valid = false;
 				}
 
@@ -474,31 +417,23 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (objectDefinition.getName() == null) {
+				if (objectField.getName() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("objectFields", additionalAssertFieldName)) {
-				if (objectDefinition.getObjectFields() == null) {
+			if (Objects.equals("required", additionalAssertFieldName)) {
+				if (objectField.getRequired() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
-				if (objectDefinition.getStatus() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("system", additionalAssertFieldName)) {
-				if (objectDefinition.getSystem() == null) {
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (objectField.getType() == null) {
 					valid = false;
 				}
 
@@ -513,13 +448,12 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ObjectDefinition> page) {
+	protected void assertValid(Page<ObjectField> page) {
 		boolean valid = false;
 
-		java.util.Collection<ObjectDefinition> objectDefinitions =
-			page.getItems();
+		java.util.Collection<ObjectField> objectFields = page.getItems();
 
-		int size = objectDefinitions.size();
+		int size = objectFields.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -540,8 +474,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		for (Field field :
 				getDeclaredFields(
-					com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.
-						class)) {
+					com.liferay.object.admin.rest.dto.v1_0.ObjectField.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -589,10 +522,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected boolean equals(
-		ObjectDefinition objectDefinition1,
-		ObjectDefinition objectDefinition2) {
+		ObjectField objectField1, ObjectField objectField2) {
 
-		if (objectDefinition1 == objectDefinition2) {
+		if (objectField1 == objectField2) {
 			return true;
 		}
 
@@ -601,30 +533,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)objectDefinition1.getActions(),
-						(Map)objectDefinition2.getActions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						objectDefinition1.getDateCreated(),
-						objectDefinition2.getDateCreated())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dateModified", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						objectDefinition1.getDateModified(),
-						objectDefinition2.getDateModified())) {
+						(Map)objectField1.getActions(),
+						(Map)objectField2.getActions())) {
 
 					return false;
 				}
@@ -634,7 +544,41 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						objectDefinition1.getId(), objectDefinition2.getId())) {
+						objectField1.getId(), objectField2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("indexed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectField1.getIndexed(), objectField2.getIndexed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("indexedAsKeyword", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectField1.getIndexedAsKeyword(),
+						objectField2.getIndexedAsKeyword())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"indexedLanguageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectField1.getIndexedLanguageId(),
+						objectField2.getIndexedLanguageId())) {
 
 					return false;
 				}
@@ -644,8 +588,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						objectDefinition1.getName(),
-						objectDefinition2.getName())) {
+						objectField1.getName(), objectField2.getName())) {
 
 					return false;
 				}
@@ -653,10 +596,10 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("objectFields", additionalAssertFieldName)) {
+			if (Objects.equals("required", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						objectDefinition1.getObjectFields(),
-						objectDefinition2.getObjectFields())) {
+						objectField1.getRequired(),
+						objectField2.getRequired())) {
 
 					return false;
 				}
@@ -664,21 +607,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
+			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						objectDefinition1.getStatus(),
-						objectDefinition2.getStatus())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("system", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						objectDefinition1.getSystem(),
-						objectDefinition2.getSystem())) {
+						objectField1.getType(), objectField2.getType())) {
 
 					return false;
 				}
@@ -734,13 +665,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_objectDefinitionResource instanceof EntityModelResource)) {
+		if (!(_objectFieldResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_objectDefinitionResource;
+			(EntityModelResource)_objectFieldResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -769,8 +700,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		ObjectDefinition objectDefinition) {
+		EntityField entityField, String operator, ObjectField objectField) {
 
 		StringBundler sb = new StringBundler();
 
@@ -787,100 +717,48 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("dateCreated")) {
-			if (operator.equals("between")) {
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(
-							objectDefinition.getDateCreated(), -2)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(
-							objectDefinition.getDateCreated(), 2)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(
-					_dateFormat.format(objectDefinition.getDateCreated()));
-			}
-
-			return sb.toString();
-		}
-
-		if (entityFieldName.equals("dateModified")) {
-			if (operator.equals("between")) {
-				sb = new StringBundler();
-
-				sb.append("(");
-				sb.append(entityFieldName);
-				sb.append(" gt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(
-							objectDefinition.getDateModified(), -2)));
-				sb.append(" and ");
-				sb.append(entityFieldName);
-				sb.append(" lt ");
-				sb.append(
-					_dateFormat.format(
-						DateUtils.addSeconds(
-							objectDefinition.getDateModified(), 2)));
-				sb.append(")");
-			}
-			else {
-				sb.append(entityFieldName);
-
-				sb.append(" ");
-				sb.append(operator);
-				sb.append(" ");
-
-				sb.append(
-					_dateFormat.format(objectDefinition.getDateModified()));
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("name")) {
+		if (entityFieldName.equals("indexed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("indexedAsKeyword")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("indexedLanguageId")) {
 			sb.append("'");
-			sb.append(String.valueOf(objectDefinition.getName()));
+			sb.append(String.valueOf(objectField.getIndexedLanguageId()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("objectFields")) {
+		if (entityFieldName.equals("name")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectField.getName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("required")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("status")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
+		if (entityFieldName.equals("type")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectField.getType()));
+			sb.append("'");
 
-		if (entityFieldName.equals("system")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -924,32 +802,32 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected ObjectDefinition randomObjectDefinition() throws Exception {
-		return new ObjectDefinition() {
+	protected ObjectField randomObjectField() throws Exception {
+		return new ObjectField() {
 			{
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				indexed = RandomTestUtil.randomBoolean();
+				indexedAsKeyword = RandomTestUtil.randomBoolean();
+				indexedLanguageId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				system = RandomTestUtil.randomBoolean();
+				required = RandomTestUtil.randomBoolean();
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected ObjectDefinition randomIrrelevantObjectDefinition()
-		throws Exception {
+	protected ObjectField randomIrrelevantObjectField() throws Exception {
+		ObjectField randomIrrelevantObjectField = randomObjectField();
 
-		ObjectDefinition randomIrrelevantObjectDefinition =
-			randomObjectDefinition();
-
-		return randomIrrelevantObjectDefinition;
+		return randomIrrelevantObjectField;
 	}
 
-	protected ObjectDefinition randomPatchObjectDefinition() throws Exception {
-		return randomObjectDefinition();
+	protected ObjectField randomPatchObjectField() throws Exception {
+		return randomObjectField();
 	}
 
-	protected ObjectDefinitionResource objectDefinitionResource;
+	protected ObjectFieldResource objectFieldResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -1026,7 +904,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseObjectDefinitionResourceTestCase.class);
+		BaseObjectFieldResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -1043,7 +921,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource
-		_objectDefinitionResource;
+	private com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource
+		_objectFieldResource;
 
 }
