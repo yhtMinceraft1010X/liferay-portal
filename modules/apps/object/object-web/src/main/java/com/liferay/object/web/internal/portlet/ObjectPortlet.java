@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.portlet;
 
-import com.liferay.object.constants.ObjectsPortletKeys;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -33,12 +33,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ObjectsPortletKeys.OBJECT_DEFINITIONS_ADMIN,
+		"javax.portlet.name=" + ObjectPortletKeys.OBJECT,
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class
 )
-public class ObjectDefinitionsAdminPortlet extends MVCPortlet {
+public class ObjectPortlet extends MVCPortlet {
 
 	@Override
 	public void render(

@@ -17,9 +17,9 @@ package com.liferay.object.constants;
 /**
  * @author Marco Leo
  */
-public class ObjectsPortletKeys {
+public class ObjectPortletKeys {
 
-	public static final String OBJECT_DEFINITIONS_ADMIN =
-		"com_liferay_object_web_portlet_ObjectDefinitionsAdminPortlet";
+	public static final String OBJECT =
+		"com_liferay_object_web_portlet_ObjectPortlet";
 
 }
