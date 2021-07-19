@@ -78,31 +78,33 @@ public class LayoutInfoItemFieldValuesProvider
 			JSONObject processorJSONObject = jsonObject.getJSONObject(
 				processorKey);
 
-			if (processorJSONObject.has(name)) {
-				JSONObject valuesJSONObject = processorJSONObject.getJSONObject(
-					name);
-
-				Map<Locale, String> valuesMap = new HashMap<>();
-
-				for (String languageId : valuesJSONObject.keySet()) {
-					if (!languageId.equals("config") &&
-						!languageId.equals("defaultValue")) {
-
-						valuesMap.put(
-							LocaleUtil.fromLanguageId(languageId),
-							valuesJSONObject.getString(languageId));
-					}
-				}
-
-				valuesMap.computeIfAbsent(
-					LocaleUtil.fromLanguageId(defaultLanguageId),
-					locale -> valuesJSONObject.getString("defaultValue"));
-
-				return InfoLocalizedValue.<String>builder(
-				).values(
-					valuesMap
-				).build();
+			if (!processorJSONObject.has(name)) {
+				continue;
 			}
+
+			JSONObject valuesJSONObject = processorJSONObject.getJSONObject(
+				name);
+
+			Map<Locale, String> valuesMap = new HashMap<>();
+
+			for (String languageId : valuesJSONObject.keySet()) {
+				if (!languageId.equals("config") &&
+					!languageId.equals("defaultValue")) {
+
+					valuesMap.put(
+						LocaleUtil.fromLanguageId(languageId),
+						valuesJSONObject.getString(languageId));
+				}
+			}
+
+			valuesMap.computeIfAbsent(
+				LocaleUtil.fromLanguageId(defaultLanguageId),
+				locale -> valuesJSONObject.getString("defaultValue"));
+
+			return InfoLocalizedValue.<String>builder(
+			).values(
+				valuesMap
+			).build();
 		}
 
 		return InfoLocalizedValue.singleValue(StringPool.BLANK);
