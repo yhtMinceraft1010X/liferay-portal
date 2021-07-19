@@ -632,7 +632,6 @@ public class PortalImplCanonicalURLTest {
 				_createThemeDisplay(
 					portalDomain, group, Http.HTTP_PORT, secure),
 				layout, forceLayoutFriendlyURL));
-
 		Assert.assertEquals(
 			_generateURL(
 				expectedPortalDomain, port, StringPool.BLANK,
