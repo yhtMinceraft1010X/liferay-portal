@@ -101,8 +101,6 @@ public class CalendarBookingCTDisplayRenderer
 
 		CalendarBooking calendarBooking = displayBuilder.getModel();
 
-		Locale locale = displayBuilder.getLocale();
-
 		DisplayContext<CalendarBooking> displayContext =
 			displayBuilder.getDisplayContext();
 
@@ -120,12 +118,13 @@ public class CalendarBookingCTDisplayRenderer
 		}
 
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			locale, timeZone);
+			displayBuilder.getLocale(), timeZone);
 
 		displayBuilder.display(
-			"title", calendarBooking.getTitle(locale)
+			"title", calendarBooking.getTitle(displayBuilder.getLocale())
 		).display(
-			"description", calendarBooking.getDescription(locale), false
+			"description",
+			calendarBooking.getDescription(displayBuilder.getLocale()), false
 		).display(
 			"status", calendarBooking.getStatus()
 		).display(
@@ -172,7 +171,9 @@ public class CalendarBookingCTDisplayRenderer
 						CalendarResource calendarResource =
 							childCalendarBooking.getCalendarResource();
 
-						sb.append(calendarResource.getName(locale));
+						sb.append(
+							calendarResource.getName(
+								displayBuilder.getLocale()));
 
 						sb.append(StringPool.COMMA_AND_SPACE);
 					}
