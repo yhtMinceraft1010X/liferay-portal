@@ -710,10 +710,9 @@ public class ViewChangesDisplayContext {
 		long classPK, long modelClassNameId) {
 
 		return StringBundler.concat(
-			"Missing model from ", _ctCollection.getName(),
-			": {ctCollectionId=", _ctCollection.getCtCollectionId(),
-			", classPK=", classPK, ", modelClassNameId=", modelClassNameId,
-			"}");
+			"Missing model from ", _ctCollection.getName(), ": {classPK=",
+			classPK, ", ctCollectionId=", _ctCollection.getCtCollectionId(),
+			", modelClassNameId=", modelClassNameId, "}");
 	}
 
 	private Set<Long> _getRootClassNameIds(CTClosure ctClosure) {
