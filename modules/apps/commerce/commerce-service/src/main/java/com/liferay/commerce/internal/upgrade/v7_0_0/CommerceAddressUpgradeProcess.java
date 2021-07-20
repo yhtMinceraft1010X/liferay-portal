@@ -62,9 +62,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address.setClassPK(resultSet.getLong("classPK"));
 				address.setCountryId(resultSet.getLong("countryId"));
 				address.setRegionId(resultSet.getLong("regionId"));
-
-				_setAddressTypeId(address, resultSet.getInt("type_"));
-
+				address.setTypeId(_getTypeId(resultSet.getInt("type_")));
 				address.setCity(resultSet.getString("city"));
 				address.setDescription(resultSet.getString("description"));
 				address.setLatitude(resultSet.getDouble("latitude"));
@@ -88,24 +86,19 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _setAddressTypeId(Address address, int commerceAddressType) {
+	private int _getTypeId(int commerceAddressType) {
 		if (CommerceAddressConstants.ADDRESS_TYPE_BILLING ==
 				commerceAddressType) {
 
-			address.setTypeId(14000);
+			return 14000;
+		}
+		else if (CommerceAddressConstants.ADDRESS_TYPE_SHIPPING ==
+					commerceAddressType) {
 
-			return;
+			return 14002;
 		}
 
-		if (CommerceAddressConstants.ADDRESS_TYPE_SHIPPING ==
-				commerceAddressType) {
-
-			address.setTypeId(14002);
-
-			return;
-		}
-
-		address.setTypeId(14001);
+		return 14001;
 	}
 
 	private void _setDefaultBilling(Address address, boolean defaultBilling) {
