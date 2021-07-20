@@ -347,15 +347,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			companyLocalService.getCompanies(false), Company::getCompanyId);
 
 		deployRemotePortlet(
-			portlet, categoryNames, eagerDestroy, true, companyIds);
+			companyIds, portlet, categoryNames, eagerDestroy, true);
 
 		return portlet;
 	}
 
 	@Override
 	public Portlet deployRemotePortlet(
-			Portlet portlet, String[] categoryNames, boolean eagerDestroy,
-			boolean clearCache, long[] companyIds)
+			long[] companyIds, Portlet portlet, String[] categoryNames,
+			boolean eagerDestroy, boolean clearCache)
 		throws PortalException {
 
 		_portletsMap.put(portlet.getRootPortletId(), portlet);
@@ -372,7 +372,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		companyLocalService.forEachCompanyId(
 			companyId -> {
-				_deployRemotePortlet(portlet, categoryNames, companyId);
+				_deployRemotePortlet(companyId, portlet, categoryNames);
 
 				portletPersistence.flush();
 			},
@@ -2720,7 +2720,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	private void _deployRemotePortlet(
-			Portlet portlet, String[] categoryNames, Long companyId)
+			long companyId, Portlet portlet, String[] categoryNames)
 		throws PortalException {
 
 		Portlet companyPortletModel = (Portlet)portlet.clone();
