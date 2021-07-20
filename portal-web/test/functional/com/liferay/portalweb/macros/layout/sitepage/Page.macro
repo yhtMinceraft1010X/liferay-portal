@@ -473,7 +473,7 @@ definition {
 		Alert.closeMessage(messageType = "SUCCESS");
 	}
 
-	macro selectFilterInCollectionCategoryFilter {
+	macro selectFilterInCollectionFilter {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = "${columnNumber}",
