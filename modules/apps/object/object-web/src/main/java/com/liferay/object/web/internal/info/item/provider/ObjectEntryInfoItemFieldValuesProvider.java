@@ -101,9 +101,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getObjectEntryInfoFieldValues(
 		ObjectEntry objectEntry) {
 
-		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
-
 		try {
+			List<InfoFieldValue<Object>> objectEntryFieldValues =
+				new ArrayList<>();
+
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
 					ObjectEntryInfoItemFields.createDateInfoField,
@@ -147,12 +148,12 @@ public class ObjectEntryInfoItemFieldValuesProvider
 								getClass(), objectField.getName())
 						).build(),
 						values.get(objectField.getName()))));
+
+			return objectEntryFieldValues;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
-
-		return objectEntryFieldValues;
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
