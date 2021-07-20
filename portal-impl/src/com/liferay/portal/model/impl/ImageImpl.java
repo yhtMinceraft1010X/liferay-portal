@@ -62,8 +62,7 @@ public class ImageImpl extends ImageBaseImpl {
 				Image image = ImageLocalServiceUtil.getImage(imageId);
 
 				inputStream = DLStoreUtil.getFileAsStream(
-					image.getCompanyId(), _DEFAULT_REPOSITORY_ID,
-					getFileName());
+					image.getCompanyId(), _REPOSITORY_ID, getFileName());
 			}
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
@@ -86,7 +85,7 @@ public class ImageImpl extends ImageBaseImpl {
 		return getImageId() + StringPool.PERIOD + getType();
 	}
 
-	private static final long _DEFAULT_REPOSITORY_ID = 0;
+	private static final long _REPOSITORY_ID = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageImpl.class);
 

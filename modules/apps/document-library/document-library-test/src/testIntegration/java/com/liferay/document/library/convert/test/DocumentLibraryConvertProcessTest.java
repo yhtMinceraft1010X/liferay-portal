@@ -209,8 +209,8 @@ public class DocumentLibraryConvertProcessTest {
 		_convertProcess.convert();
 
 		_dlContentLocalService.getContent(
-			_group.getCompanyId(), _DEFAULT_REPOSITORY_ID,
-			_image.getImageId() + ".jpg", Store.VERSION_DEFAULT);
+			_group.getCompanyId(), _REPOSITORY_ID, _image.getImageId() + ".jpg",
+			Store.VERSION_DEFAULT);
 	}
 
 	@Test
@@ -354,7 +354,7 @@ public class DocumentLibraryConvertProcessTest {
 	private static final String _CLASS_NAME_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.FileSystemStore";
 
-	private static final long _DEFAULT_REPOSITORY_ID = 0;
+	private static final long _REPOSITORY_ID = 0;
 
 	private static StoreFactory _storeFactory;
 

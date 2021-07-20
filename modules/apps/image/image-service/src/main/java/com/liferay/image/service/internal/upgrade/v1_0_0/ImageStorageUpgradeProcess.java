@@ -52,16 +52,16 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 				String fileName = _getFileName(image);
 
 				try (InputStream inputStream = store.getFileAsStream(
-						CompanyConstants.SYSTEM, _DEFAULT_REPOSITORY_ID,
-						fileName, StringPool.BLANK)) {
+						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
+						StringPool.BLANK)) {
 
 					store.addFile(
-						image.getCompanyId(), _DEFAULT_REPOSITORY_ID, fileName,
+						image.getCompanyId(), _REPOSITORY_ID, fileName,
 						Store.VERSION_DEFAULT, inputStream);
 
 					store.deleteFile(
-						CompanyConstants.SYSTEM, _DEFAULT_REPOSITORY_ID,
-						fileName, Store.VERSION_DEFAULT);
+						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
+						Store.VERSION_DEFAULT);
 				}
 				catch (Exception exception) {
 					_log.error(exception, exception);
@@ -75,7 +75,7 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 		return image.getImageId() + StringPool.PERIOD + image.getType();
 	}
 
-	private static final long _DEFAULT_REPOSITORY_ID = 0;
+	private static final long _REPOSITORY_ID = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageStorageUpgradeProcess.class);

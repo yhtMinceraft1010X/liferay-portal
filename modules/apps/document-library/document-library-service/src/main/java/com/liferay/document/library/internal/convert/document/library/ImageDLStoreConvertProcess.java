@@ -66,7 +66,7 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 				try {
 					transferFile(
 						sourceStore, targetStore, image.getCompanyId(),
-						_DEFAULT_REPOSITORY_ID, fileName, Store.VERSION_DEFAULT,
+						_REPOSITORY_ID, fileName, Store.VERSION_DEFAULT,
 						delete);
 				}
 				catch (Exception exception) {
@@ -77,7 +77,7 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static final long _DEFAULT_REPOSITORY_ID = 0L;
+	private static final long _REPOSITORY_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageDLStoreConvertProcess.class);
