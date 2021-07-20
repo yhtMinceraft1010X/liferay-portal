@@ -231,8 +231,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		throws PortalException {
 
 		if ((companyId == CompanyConstants.SYSTEM) && _log.isWarnEnabled()) {
-			_log.warn(
-				String.format("Saving Image %d in System company", imageId));
+			_log.warn("Associating image " + imageId + " to a system company");
 		}
 
 		validate(type);
@@ -336,9 +335,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		if (image == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					String.format(
-						"Found reference to image %d in System company.",
-						imageId));
+					"Image " + imageId + " is associated to a system company");
 			}
 
 			return CompanyConstants.SYSTEM;
