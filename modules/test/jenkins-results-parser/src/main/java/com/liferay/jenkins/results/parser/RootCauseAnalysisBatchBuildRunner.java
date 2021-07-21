@@ -53,25 +53,25 @@ public class RootCauseAnalysisBatchBuildRunner
 	}
 
 	private List<String> _getPortalCherryPickSHAs() {
+		List<String> portalCherryPickSHAs = new ArrayList<>();
+
 		BuildData buildData = getBuildData();
 
 		Map<String, String> topLevelBuildParameters =
 			buildData.getTopLevelBuildParameters();
 
-		String portalCherryPickSHAs = topLevelBuildParameters.get(
+		String portalCherryPickSHAsString = topLevelBuildParameters.get(
 			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
 
-		List<String> portalCherryPickSHAList = new ArrayList<>();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAs)) {
-			return portalCherryPickSHAList;
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAsString)) {
+			return portalCherryPickSHAs;
 		}
 
-		for (String portalCherryPickSHA : portalCherryPickSHAs.split(",")) {
-			portalCherryPickSHAList.add(portalCherryPickSHA.trim());
+		for (String portalCherryPickSHA : portalCherryPickSHAsString.split(",")) {
+			portalCherryPickSHAs.add(portalCherryPickSHA.trim());
 		}
 
-		return portalCherryPickSHAList;
+		return portalCherryPickSHAs;
 	}
 
 	private static final String _NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS =
