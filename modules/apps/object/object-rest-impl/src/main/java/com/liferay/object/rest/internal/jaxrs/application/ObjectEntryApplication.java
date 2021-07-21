@@ -108,8 +108,8 @@ public class ObjectEntryApplication extends Application {
 	}
 
 	private String _applicationName;
-	private Long _companyId;
-	private Long _objectDefinitionId;
+	private long _companyId;
+	private long _objectDefinitionId;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
