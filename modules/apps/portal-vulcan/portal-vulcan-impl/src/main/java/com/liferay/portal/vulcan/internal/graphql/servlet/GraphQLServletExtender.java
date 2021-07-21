@@ -767,19 +767,19 @@ public class GraphQLServletExtender {
 	private GraphQLArgument _addArgument(
 		Object defaultValue, GraphQLInputType graphQLInputType, String name) {
 
-		GraphQLArgument.Builder builder = GraphQLArgument.newArgument();
+		GraphQLArgument.Builder graphQLArgumentBuilder = GraphQLArgument.newArgument();
 
 		if (defaultValue != null) {
-			builder.defaultValue(defaultValue);
+			graphQLArgumentBuilder.defaultValue(defaultValue);
 		}
 
-		builder.name(
+		graphQLArgumentBuilder.name(
 			name
 		).type(
 			graphQLInputType
 		);
 
-		return builder.build();
+		return graphQLArgumentBuilder.build();
 	}
 
 	private void _collectObjectFields(
@@ -2526,10 +2526,10 @@ public class GraphQLServletExtender {
 			).map(
 				parameter -> {
 					if (_isMultipartBody(parameter)) {
-						GraphQLArgument.Builder builder =
+						GraphQLArgument.Builder graphQLArgumentBuilder =
 							new GraphQLArgument.Builder();
 
-						return builder.type(
+						return graphQLArgumentBuilder.type(
 							new GraphQLList(ApolloScalars.Upload)
 						).name(
 							"multipartBody"
@@ -2554,29 +2554,29 @@ public class GraphQLServletExtender {
 
 			DirectiveWirer directiveWirer = new DirectiveWirer();
 
-			GraphQLArgument.Builder builder = GraphQLArgument.newArgument();
+			GraphQLArgument.Builder graphQLArgumentBuilder = GraphQLArgument.newArgument();
 
 			String graphQLName = _getGraphQLNameValue(parameter);
 
 			if (graphQLName != null) {
-				builder.name(NamingKit.toGraphqlName(graphQLName));
+				graphQLArgumentBuilder.name(NamingKit.toGraphqlName(graphQLName));
 			}
 			else {
-				builder.name(NamingKit.toGraphqlName(parameter.getName()));
+				graphQLArgumentBuilder.name(NamingKit.toGraphqlName(parameter.getName()));
 			}
 
-			builder.type(graphQLInputType);
+			graphQLArgumentBuilder.type(graphQLInputType);
 
 			DirectivesBuilder directivesBuilder = new DirectivesBuilder(
 				parameter, _processingElementsContainer);
 
-			builder.withDirectives(directivesBuilder.build());
+			graphQLArgumentBuilder.withDirectives(directivesBuilder.build());
 
 			DirectiveWiringMapRetriever directiveWiringMapRetriever =
 				new DirectiveWiringMapRetriever();
 
 			return (GraphQLArgument)directiveWirer.wire(
-				builder.build(),
+				graphQLArgumentBuilder.build(),
 				directiveWiringMapRetriever.getDirectiveWiringMap(
 					parameter, _processingElementsContainer),
 				_processingElementsContainer.getCodeRegistryBuilder(),
@@ -2905,10 +2905,10 @@ public class GraphQLServletExtender {
 				ProcessingElementsContainer processingElementsContainer)
 			throws GraphQLAnnotationsException {
 
-			GraphQLFieldDefinition.Builder builder =
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 				GraphQLFieldDefinition.newFieldDefinition();
 
-			builder.deprecate(
+			graphQLFieldDefinitionBuilder.deprecate(
 				new DeprecateBuilder(
 					field
 				).build());
@@ -2916,19 +2916,19 @@ public class GraphQLServletExtender {
 			GraphQLField graphQLField = field.getAnnotation(GraphQLField.class);
 
 			if (graphQLField != null) {
-				builder.description(graphQLField.description());
+				graphQLFieldDefinitionBuilder.description(graphQLField.description());
 			}
 
-			builder.name(
+			graphQLFieldDefinitionBuilder.name(
 				new FieldNameBuilder(
 					field
 				).build());
-			builder.type(
+			graphQLFieldDefinitionBuilder.type(
 				(GraphQLOutputType)_defaultTypeFunction.buildType(
 					field.getType(), field.getAnnotatedType(),
 					processingElementsContainer));
 
-			return builder.build();
+			return graphQLFieldDefinitionBuilder.build();
 		}
 
 		@Override
