@@ -2837,10 +2837,11 @@ public class GraphQLServletExtender {
 			DataFetcherExceptionHandlerParameters
 				dataFetcherExceptionHandlerParameters) {
 
-			DataFetcherExceptionHandlerResult.Builder builder =
-				DataFetcherExceptionHandlerResult.newResult();
+			DataFetcherExceptionHandlerResult.Builder
+				dataFetcherExceptionHandlerResultBuilder =
+					DataFetcherExceptionHandlerResult.newResult();
 
-			return builder.error(
+			return dataFetcherExceptionHandlerResultBuilder.error(
 				new ExceptionWhileDataFetching(
 					dataFetcherExceptionHandlerParameters.getPath(),
 					dataFetcherExceptionHandlerParameters.getException(),
