@@ -1152,8 +1152,8 @@ public class GraphQLServletExtender {
 				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
 				queryGraphQLObjectTypeBuilder, graphQLSchemaBuilder);
 			_registerInterfaces(
-				graphQLSchemaBuilder, processingElementsContainer,
-				queryGraphQLObjectTypeBuilder);
+				processingElementsContainer, queryGraphQLObjectTypeBuilder,
+				graphQLSchemaBuilder);
 			_registerNamespace(
 				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder, false, processingElementsContainer,
@@ -1965,9 +1965,9 @@ public class GraphQLServletExtender {
 	}
 
 	private void _registerInterfaces(
-		GraphQLSchema.Builder graphQLSchemaBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder,
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		try {
 			Map<String, GraphQLType> graphQLTypes =
