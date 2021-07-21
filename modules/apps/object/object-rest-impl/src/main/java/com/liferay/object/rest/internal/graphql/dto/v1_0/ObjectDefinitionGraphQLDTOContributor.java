@@ -93,6 +93,11 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
 	public Map<String, Object> getDTO(
 			DTOConverterContext dtoConverterContext, long id)
 		throws Exception {
@@ -142,11 +147,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public String getNamespace() {
-		return _namespace;
-	}
-
-	@Override
 	public String getResourceName() {
 		return _resourceName;
 	}
@@ -169,14 +169,13 @@ public class ObjectDefinitionGraphQLDTOContributor
 		long objectDefinitionId, ObjectEntryManager objectEntryManager,
 		String resourceName) {
 
+		_companyId = companyId;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
 		_objectDefinitionId = objectDefinitionId;
 		_objectEntryManager = objectEntryManager;
 		_resourceName = resourceName;
-
-		_namespace = "O_" + companyId;
 	}
 
 	private Map<String, Object> _toMap(ObjectEntry objectEntry) {
@@ -220,10 +219,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 			"String", String.class
 		).build();
 
+	private final long _companyId;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
-	private final String _namespace;
 	private final long _objectDefinitionId;
 	private final ObjectEntryManager _objectEntryManager;
 	private final String _resourceName;
