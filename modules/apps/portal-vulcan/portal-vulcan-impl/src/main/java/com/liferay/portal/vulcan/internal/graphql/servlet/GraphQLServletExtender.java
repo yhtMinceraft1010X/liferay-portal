@@ -829,8 +829,8 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLObjectType.Builder _createGraphQLObjectTypeBuilder(
-		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
-		String name, String typeName) {
+		String name, String typeName,
+		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders) {
 
 		graphQLObjectTypeBuilders.putIfAbsent(
 			name, new GraphQLObjectType.Builder().name(typeName));
@@ -1741,12 +1741,12 @@ public class GraphQLServletExtender {
 
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
 			_createGraphQLObjectTypeBuilder(
-				mutationGraphQLObjectTypeBuilders, namespace,
-				"Mutation" + namespace);
+				namespace, "Mutation" + namespace,
+				mutationGraphQLObjectTypeBuilders);
 		String mutationParentType = "Mutation" + namespace;
 		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 			_createGraphQLObjectTypeBuilder(
-				queryGraphQLObjectTypeBuilders, namespace, namespace);
+				namespace, namespace, queryGraphQLObjectTypeBuilders);
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();
