@@ -1929,10 +1929,10 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer,
 		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
-		Map<String, GraphQLObjectType.Builder>
-			mutationGraphQLObjectTypeBuilders = new HashMap<>();
 		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders =
 			new HashMap<>();
+		Map<String, GraphQLObjectType.Builder>
+			mutationGraphQLObjectTypeBuilders = new HashMap<>();
 
 		for (GraphQLDTOContributor graphQLDTOContributor :
 				_graphQLDTOContributorServiceTrackerMap.values()) {
