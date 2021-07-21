@@ -24,12 +24,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Javier de Arcos
  */
-@ProviderType
 public interface GraphQLDTOContributor<D, R> {
 
 	public R createDTO(D dto, DTOConverterContext dtoConverterContext)
