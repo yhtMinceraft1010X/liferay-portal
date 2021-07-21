@@ -783,9 +783,9 @@ public class GraphQLServletExtender {
 	}
 
 	private void _collectObjectFields(
+		GraphQLObjectType.Builder builder,
 		Map<String, Configuration> configurations,
 		Function<ServletData, Object> function,
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
@@ -820,7 +820,7 @@ public class GraphQLServletExtender {
 
 				Class<?> clazz = method.getDeclaringClass();
 
-				graphQLObjectTypeBuilder.field(
+				builder.field(
 					_graphQLFieldRetriever.getField(
 						clazz.getSimpleName(), method,
 						processingElementsContainer));
@@ -1142,10 +1142,10 @@ public class GraphQLServletExtender {
 				ConfigurationUtil.getConfigurations(_configurationAdmin);
 
 			_collectObjectFields(
-				configurations, ServletData::getMutation,
-				mutationGraphQLObjectTypeBuilder, processingElementsContainer, servletDatas);
+				mutationGraphQLObjectTypeBuilder, configurations, ServletData::getMutation,
+				processingElementsContainer, servletDatas);
 			_collectObjectFields(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
+				queryGraphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
 			_registerGraphQLDTOContributors(
