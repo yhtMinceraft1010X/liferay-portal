@@ -74,9 +74,10 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 			while (resultSet.next()) {
 				long fullImageId = resultSet.getLong("fullImageId");
 
+				_imageLocalService.deleteImage(fullImageId);
+
 				long thumbnailId = resultSet.getLong("thumbnailId");
 
-				_imageLocalService.deleteImage(fullImageId);
 				_imageLocalService.deleteImage(thumbnailId);
 			}
 		}
