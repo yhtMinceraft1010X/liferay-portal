@@ -1743,8 +1743,8 @@ public class GraphQLServletExtender {
 		ProcessingElementsContainer processingElementsContainer,
 		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders) {
 
-		String namespace = "O_" + graphQLDTOContributor.getCompanyId();
-
+		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
+			processingElementsContainer.getCodeRegistryBuilder();
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
 			_createGraphQLObjectTypeBuilder(
 				mutationGraphQLObjectTypeBuilders, namespace,
@@ -1753,13 +1753,10 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 			_createGraphQLObjectTypeBuilder(
 				queryGraphQLObjectTypeBuilders, namespace, namespace);
-
-		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
-			processingElementsContainer.getCodeRegistryBuilder();
+		String namespace = "O_" + graphQLDTOContributor.getCompanyId();
+		String resourceName = graphQLDTOContributor.getResourceName();
 
 		// Create
-
-		String resourceName = graphQLDTOContributor.getResourceName();
 
 		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
 			graphQLDTOContributor.getGraphQLDTOProperties(),
