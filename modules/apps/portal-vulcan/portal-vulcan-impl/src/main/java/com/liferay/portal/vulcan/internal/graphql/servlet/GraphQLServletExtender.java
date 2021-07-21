@@ -783,7 +783,7 @@ public class GraphQLServletExtender {
 	}
 
 	private void _collectObjectFields(
-		GraphQLObjectType.Builder builder,
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
 		Map<String, Configuration> configurations,
 		Function<ServletData, Object> function,
 		ProcessingElementsContainer processingElementsContainer,
@@ -820,7 +820,7 @@ public class GraphQLServletExtender {
 
 				Class<?> clazz = method.getDeclaringClass();
 
-				builder.field(
+				graphQLObjectTypeBuilder.field(
 					_graphQLFieldRetriever.getField(
 						clazz.getSimpleName(), method,
 						processingElementsContainer));
@@ -1562,10 +1562,10 @@ public class GraphQLServletExtender {
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
 		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
-		GraphQLInputObjectType.Builder builder =
+		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
 
-		builder.name("Input" + graphQLDTOContributor.getResourceName());
+		graphQLInputObjectTypeBuilder.name("Input" + graphQLDTOContributor.getResourceName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
@@ -1573,7 +1573,7 @@ public class GraphQLServletExtender {
 			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
 				GraphQLInputObjectField.newInputObjectField();
 
-			builder.field(
+			graphQLInputObjectTypeBuilder.field(
 				graphQLInputObjectFieldBuilder.name(
 					graphQLDTOProperty.getName()
 				).type(
@@ -1581,44 +1581,44 @@ public class GraphQLServletExtender {
 				).build());
 		}
 
-		return builder.build();
+		return graphQLInputObjectTypeBuilder.build();
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
 		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
-		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
 
-		builder.name(graphQLDTOContributor.getResourceName());
+		graphQLObjectTypeBuilder.name(graphQLDTOContributor.getResourceName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			builder.field(
+			graphQLObjectTypeBuilder.field(
 				_addField(
 					_toGraphQLScalarType(graphQLDTOProperty.getTypeClass()),
 					graphQLDTOProperty.getName()));
 		}
 
-		return builder.build();
+		return graphQLObjectTypeBuilder.build();
 	}
 
 	private GraphQLObjectType _getPageGraphQLObjectType(
 		GraphQLType facetGraphQLType, GraphQLType objectGraphQLType,
 		String name) {
 
-		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
 
-		builder.field(_addField(_mapGraphQLScalarType, "actions"));
-		builder.field(_addField(GraphQLList.list(facetGraphQLType), "facets"));
-		builder.field(_addField(GraphQLList.list(objectGraphQLType), "items"));
-		builder.field(_addField(Scalars.GraphQLLong, "lastPage"));
-		builder.field(_addField(Scalars.GraphQLLong, "page"));
-		builder.field(_addField(Scalars.GraphQLLong, "pageSize"));
-		builder.field(_addField(Scalars.GraphQLLong, "totalCount"));
-		builder.name(name + "Page");
+		graphQLObjectTypeBuilder.field(_addField(_mapGraphQLScalarType, "actions"));
+		graphQLObjectTypeBuilder.field(_addField(GraphQLList.list(facetGraphQLType), "facets"));
+		graphQLObjectTypeBuilder.field(_addField(GraphQLList.list(objectGraphQLType), "items"));
+		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "lastPage"));
+		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "page"));
+		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "pageSize"));
+		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "totalCount"));
+		graphQLObjectTypeBuilder.name(name + "Page");
 
-		return builder.build();
+		return graphQLObjectTypeBuilder.build();
 	}
 
 	private Object _getScopeChecker() {
@@ -1918,11 +1918,11 @@ public class GraphQLServletExtender {
 			queryGraphQLObjectTypeBuilder.field(
 				_createNodeGraphQLFieldDefinition(graphQLInterfaceType));
 
-			GraphQLCodeRegistry.Builder builder =
+			GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 				processingElementsContainer.getCodeRegistryBuilder();
 
 			graphQLSchemaBuilder.codeRegistry(
-				builder.dataFetcher(
+				graphQLCodeRegistryBuilder.dataFetcher(
 					FieldCoordinates.coordinates("query", "graphQLNode"),
 					new NodeDataFetcher()
 				).typeResolver(
@@ -1951,7 +1951,7 @@ public class GraphQLServletExtender {
 					_replaceFieldDefinition(
 						graphQLInterfaceType, graphQLObjectType);
 					_replaceFieldNodes(
-						builder, graphQLInterfaceType, graphQLObjectType,
+						graphQLCodeRegistryBuilder, graphQLInterfaceType, graphQLObjectType,
 						graphQLSchemaBuilder);
 					_replaceInterface(graphQLInterfaceType, graphQLObjectType);
 				}
@@ -2074,7 +2074,7 @@ public class GraphQLServletExtender {
 	}
 
 	private void _replaceFieldNodes(
-			GraphQLCodeRegistry.Builder builder,
+			GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 			GraphQLInterfaceType graphQLInterfaceType,
 			GraphQLObjectType graphQLObjectType,
 			GraphQLSchema.Builder graphQLSchemaBuilder)
@@ -2096,7 +2096,7 @@ public class GraphQLServletExtender {
 			"graphQLNode", _addField(graphQLInterfaceType, "graphQLNode"));
 
 		graphQLSchemaBuilder.codeRegistry(
-			builder.dataFetcher(
+			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(
 					graphQLObjectType.getName(), "graphQLNode"),
 				new GraphQLNodePropertyDataFetcher()
