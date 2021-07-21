@@ -287,7 +287,8 @@ public class DefaultExportImportContentProcessorTest {
 				Assert.assertTrue(
 					content,
 					content.contains(
-						"[$dl-reference=" + entry + "$,$include-uuid=false$]") ||
+						"[$dl-reference=" + entry +
+							"$,$include-uuid=false$]") ||
 					content.contains(
 						"[$dl-reference=" + entry + "$,$include-uuid=true$]"));
 
