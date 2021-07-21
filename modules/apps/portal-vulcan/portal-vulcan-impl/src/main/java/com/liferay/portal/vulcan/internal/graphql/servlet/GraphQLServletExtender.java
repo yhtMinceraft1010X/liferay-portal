@@ -1143,27 +1143,30 @@ public class GraphQLServletExtender {
 
 			_collectObjectFields(
 				configurations, ServletData::getMutation,
-				mutationGraphQLObjectTypeBuilder, processingElementsContainer, servletDatas);
+				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				servletDatas);
 			_collectObjectFields(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
-				processingElementsContainer, servletDatas);
+				configurations, ServletData::getQuery,
+				queryGraphQLObjectTypeBuilder, processingElementsContainer,
+				servletDatas);
 
 			_registerGraphQLDTOContributors(
-				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, processingElementsContainer,
-				queryGraphQLObjectTypeBuilder);
+				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder,
+				processingElementsContainer, queryGraphQLObjectTypeBuilder);
 			_registerInterfaces(
 				graphQLSchemaBuilder, processingElementsContainer,
 				queryGraphQLObjectTypeBuilder);
 			_registerNamespace(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
-				graphQLSchemaBuilder, false, processingElementsContainer,
-				servletDatas);
+				configurations, ServletData::getQuery,
+				queryGraphQLObjectTypeBuilder, graphQLSchemaBuilder, false,
+				processingElementsContainer, servletDatas);
 			_registerNamespace(
-				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
-				graphQLSchemaBuilder, true, processingElementsContainer,
-				servletDatas);
+				configurations, ServletData::getMutation,
+				mutationGraphQLObjectTypeBuilder, graphQLSchemaBuilder, true,
+				processingElementsContainer, servletDatas);
 
-			graphQLSchemaBuilder.mutation(mutationGraphQLObjectTypeBuilder.build());
+			graphQLSchemaBuilder.mutation(
+				mutationGraphQLObjectTypeBuilder.build());
 			graphQLSchemaBuilder.query(queryGraphQLObjectTypeBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
@@ -1945,7 +1948,8 @@ public class GraphQLServletExtender {
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
 		GraphQLSchema.Builder graphQLSchemaBuilder,
-		GraphQLObjectType.Builder parentGraphQLObjectTypeBuilder, String parentName) {
+		GraphQLObjectType.Builder parentGraphQLObjectTypeBuilder,
+		String parentName) {
 
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
 				graphQLObjectTypeBuilders.entrySet()) {
