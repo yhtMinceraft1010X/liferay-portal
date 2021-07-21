@@ -80,7 +80,7 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 			if (StringUtil.startsWith(name, "O_")) {
 				String[] nameParts = StringUtil.split(name, "_");
 
-				long companyId = GetterUtil.getLong(nameParts[1]);
+				Long companyId = GetterUtil.getLong(nameParts[1]);
 
 				if (_contextCompany.getCompanyId() != companyId) {
 					continue;
