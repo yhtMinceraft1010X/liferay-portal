@@ -783,9 +783,9 @@ public class GraphQLServletExtender {
 	}
 
 	private void _collectObjectFields(
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
 		Map<String, Configuration> configurations,
 		Function<ServletData, Object> function,
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
@@ -1074,6 +1074,14 @@ public class GraphQLServletExtender {
 
 			_registeredClassNames.clear();
 
+			Map<String, Configuration> configurations =
+				ConfigurationUtil.getConfigurations(_configurationAdmin);
+
+			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
+				GraphQLObjectType.newObject();
+
+			mutationGraphQLObjectTypeBuilder.name("mutation");
+
 			ProcessingElementsContainer processingElementsContainer =
 				new ProcessingElementsContainer(_defaultTypeFunction);
 
@@ -1112,28 +1120,21 @@ public class GraphQLServletExtender {
 				}
 			}
 
-			GraphQLSchema.Builder graphQLSchemaBuilder =
-				GraphQLSchema.newSchema();
-
-			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
-				GraphQLObjectType.newObject();
-
-			mutationGraphQLObjectTypeBuilder.name("mutation");
+			_collectObjectFields(
+				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
+				processingElementsContainer, servletDatas);
 
 			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
 
 			queryGraphQLObjectTypeBuilder.name("query");
 
-			Map<String, Configuration> configurations =
-				ConfigurationUtil.getConfigurations(_configurationAdmin);
+			_collectObjectFields(
+				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
+				processingElementsContainer, servletDatas);
 
-			_collectObjectFields(
-				mutationGraphQLObjectTypeBuilder, configurations, ServletData::getMutation,
-				processingElementsContainer, servletDatas);
-			_collectObjectFields(
-				queryGraphQLObjectTypeBuilder, configurations, ServletData::getQuery,
-				processingElementsContainer, servletDatas);
+			GraphQLSchema.Builder graphQLSchemaBuilder =
+				GraphQLSchema.newSchema();
 
 			_registerGraphQLDTOContributors(
 				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, processingElementsContainer,
