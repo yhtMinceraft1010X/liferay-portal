@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -29,6 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "categorization-configuration-name"
 )
+@ProviderType
 public interface AssetCategoriesCompanyConfiguration {
 
 	@Meta.AD(
@@ -38,9 +41,6 @@ public interface AssetCategoriesCompanyConfiguration {
 	)
 	public String linkToDocumentationURL();
 
-	/**
-	 * Specifies the maximum number of categories that can be created per vocabulary.
-	 */
 	@Meta.AD(
 		deflt = "150",
 		description = "maximum-number-of-categories-per-vocabulary-description",
