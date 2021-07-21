@@ -111,6 +111,18 @@ public class ObjectDefinitionResourceImpl
 
 		HashMapBuilder.HashMapWrapper<String, Map<String, String>> mapBuilder =
 			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				() -> {
+					if (objectDefinition.isSystem()) {
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.DELETE, objectDefinition.getObjectDefinitionId(),
+						"deleteObjectDefinition",
+						_objectDefinitionModelResourcePermission);
+				}
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
@@ -123,15 +135,6 @@ public class ObjectDefinitionResourceImpl
 					"postObjectDefinition",
 					_objectDefinitionModelResourcePermission)
 			);
-
-		if (!objectDefinition.isSystem()) {
-			mapBuilder.put(
-				"delete",
-				addAction(
-					ActionKeys.DELETE, objectDefinition.getObjectDefinitionId(),
-					"deleteObjectDefinition",
-					_objectDefinitionModelResourcePermission));
-		}
 
 		return new ObjectDefinition() {
 			{
