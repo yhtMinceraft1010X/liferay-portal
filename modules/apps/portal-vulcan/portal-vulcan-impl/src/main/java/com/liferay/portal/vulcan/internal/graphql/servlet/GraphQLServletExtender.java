@@ -1944,7 +1944,7 @@ public class GraphQLServletExtender {
 	private void _registerGraphQLObjectTypeBuilders(
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
-		GraphQLObjectType.Builder parentGraphQLObjectTypeBuilder, String parentName,
+		GraphQLObjectType.Builder parentBuilder, String parentName,
 		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
@@ -1953,7 +1953,7 @@ public class GraphQLServletExtender {
 			String namespaceName = entry.getKey();
 			GraphQLObjectType.Builder namespaceBuilder = entry.getValue();
 
-			parentGraphQLObjectTypeBuilder.field(
+			parentBuilder.field(
 				_addField(namespaceBuilder.build(), namespaceName));
 
 			graphQLSchemaBuilder.codeRegistry(
