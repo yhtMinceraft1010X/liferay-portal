@@ -60,6 +60,8 @@ public interface LayoutSEOCompanyConfiguration {
 	/**
 	 * Sets the configuration to allow the site admins to configure if hreflang
 	 * tags in pages are filled only for the translated languages.
+	 *
+	 * @review
 	 */
 	@Meta.AD(
 		deflt = "false",

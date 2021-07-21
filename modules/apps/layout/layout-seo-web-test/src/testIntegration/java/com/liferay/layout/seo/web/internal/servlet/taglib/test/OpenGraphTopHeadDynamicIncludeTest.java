@@ -1436,9 +1436,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Stream<String> stream = Arrays.stream(
 			infoItemLanguagesProvider.getAvailableLanguageIds(_layout));
 
-		Stream<Locale> localeStream = stream.map(LocaleUtil::fromLanguageId);
+		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
 
-		return localeStream.collect(Collectors.toSet());
+		return localesStream.collect(Collectors.toSet());
 	}
 
 	private long _getDDMStructureId() throws Exception {

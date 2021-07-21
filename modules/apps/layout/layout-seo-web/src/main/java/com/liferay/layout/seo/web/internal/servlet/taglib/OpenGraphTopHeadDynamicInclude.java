@@ -312,11 +312,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
-			FFSEOInlineFieldMapping.class, properties);
 		_ffLayoutTranslatedLanguagesConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFLayoutTranslatedLanguagesConfiguration.class, properties);
+		_ffSEOInlineFieldMapping = ConfigurableUtil.createConfigurable(
+			FFSEOInlineFieldMapping.class, properties);
 
 		_openGraphImageProvider = new OpenGraphImageProvider(
 			_ddmStructureLocalService, _dlAppLocalService,
@@ -372,9 +372,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		Stream<String> stream = Arrays.stream(
 			infoItemLanguagesProvider.getAvailableLanguageIds(layout));
 
-		Stream<Locale> localeStream = stream.map(LocaleUtil::fromLanguageId);
+		Stream<Locale> localesStream = stream.map(LocaleUtil::fromLanguageId);
 
-		return localeStream.collect(Collectors.toSet());
+		return localesStream.collect(Collectors.toSet());
 	}
 
 	private String _getDefaultDescriptionTemplate() {
