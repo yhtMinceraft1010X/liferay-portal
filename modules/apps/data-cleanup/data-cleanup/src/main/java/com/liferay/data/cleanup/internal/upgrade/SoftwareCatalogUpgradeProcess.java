@@ -100,13 +100,13 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 				_mbMessageLocalService.deleteDiscussionMessages(
 					scProductEntryClassName, productEntryId);
 
+				_ratingsStatsLocalService.deleteStats(
+					scProductEntryClassName, productEntryId);
+
 				long companyId = resultSet.getLong("companyId");
 
 				_subscriptionLocalService.deleteSubscriptions(
 					companyId, scProductEntryClassName, productEntryId);
-
-				_ratingsStatsLocalService.deleteStats(
-					scProductEntryClassName, productEntryId);
 			}
 		}
 	}
