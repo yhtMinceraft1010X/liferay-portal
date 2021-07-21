@@ -78,9 +78,9 @@ public class HeadlessDiscoveryOpenAPIApplication extends Application {
 			String name = applicationDTO.name;
 
 			if (StringUtil.startsWith(name, "O_")) {
-				String[] nameChunks = StringUtil.split(name, "_");
+				String[] nameParts = StringUtil.split(name, "_");
 
-				Long companyId = GetterUtil.getLong(nameChunks[1]);
+				Long companyId = GetterUtil.getLong(nameParts[1]);
 
 				if (_contextCompany.getCompanyId() != companyId) {
 					continue;
