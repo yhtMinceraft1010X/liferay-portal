@@ -493,9 +493,9 @@ public class DLReferencesExportImportContentProcessor
 			}
 
 			while (content.contains(
-						"[$dl-reference=" + path + "$,$include-uuid=true$]") ||
+						"[$dl-reference=" + path + "$,$include-uuid=false$]") ||
 				   content.contains(
-					   "[$dl-reference=" + path + "$,$include-uuid=false$]")) {
+					   "[$dl-reference=" + path + "$,$include-uuid=true$]")) {
 
 				try {
 					StagedModelDataHandlerUtil.importReferenceStagedModel(
@@ -586,19 +586,19 @@ public class DLReferencesExportImportContentProcessor
 					0, url.lastIndexOf(StringPool.SLASH));
 
 				String exportedReferenceWithUUID =
-					"[$dl-reference=" + path + "$,$include-uuid=true$]";
-				String exportedReferenceWithoutUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=false$]";
+				String exportedReferenceWithoutUUID =
+					"[$dl-reference=" + path + "$,$include-uuid=true$]";
 
 				if (content.startsWith("[#dl-reference=", endPos)) {
 					endPos = content.indexOf("#,#include-uuid=", beginPos) + 2;
 
 					exportedReferenceWithUUID =
 						content.substring(beginPos, endPos) +
-							"#include-uuid=true#]";
+							"#include-uuid=false#]";
 					exportedReferenceWithoutUUID =
 						content.substring(beginPos, endPos) +
-							"#include-uuid=false#]";
+							"#include-uuid=true#]";
 				}
 
 				content = StringUtil.replace(
