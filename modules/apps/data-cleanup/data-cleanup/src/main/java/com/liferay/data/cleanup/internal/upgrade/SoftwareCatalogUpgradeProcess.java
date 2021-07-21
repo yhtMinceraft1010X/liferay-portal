@@ -87,7 +87,7 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 			return;
 		}
 
-		String scProductEntryClassName =
+		String className =
 			"com.liferay.portlet.softwarecatalog.model.SCProductEntry";
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -98,15 +98,15 @@ public class SoftwareCatalogUpgradeProcess extends BaseUpgradeProcess {
 				long productEntryId = resultSet.getLong("productEntryId");
 
 				_mbMessageLocalService.deleteDiscussionMessages(
-					scProductEntryClassName, productEntryId);
+					className, productEntryId);
 
 				_ratingsStatsLocalService.deleteStats(
-					scProductEntryClassName, productEntryId);
+					className, productEntryId);
 
 				long companyId = resultSet.getLong("companyId");
 
 				_subscriptionLocalService.deleteSubscriptions(
-					companyId, scProductEntryClassName, productEntryId);
+					companyId, className, productEntryId);
 			}
 		}
 	}
