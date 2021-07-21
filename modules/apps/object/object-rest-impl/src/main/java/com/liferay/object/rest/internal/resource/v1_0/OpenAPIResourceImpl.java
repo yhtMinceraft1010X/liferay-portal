@@ -65,10 +65,11 @@ public class OpenAPIResourceImpl {
 			_openAPISchemaFilter, _resourceClasses, type, _uriInfo);
 	}
 
+	private final long _companyId;
+
 	@Context
 	private Company _contextCompany;
 
-	private final long _companyId;
 	private final OpenAPIResource _openAPIResource;
 	private final OpenAPISchemaFilter _openAPISchemaFilter;
 	private final Set<Class<?>> _resourceClasses;

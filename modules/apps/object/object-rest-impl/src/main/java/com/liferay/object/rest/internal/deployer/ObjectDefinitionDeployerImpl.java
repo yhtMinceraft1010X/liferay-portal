@@ -65,7 +65,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"liferay.object.definition.id",
 						objectDefinition.getObjectDefinitionId()
 					).put(
-						"liferay.object.definition.name",
+						"liferay.object.definition.short.name",
 						objectDefinition.getShortName()
 					).put(
 						"osgi.jaxrs.application.base",
