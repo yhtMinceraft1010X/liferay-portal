@@ -45,13 +45,6 @@ public class ObjectDefinitionServiceImpl
 	extends ObjectDefinitionServiceBaseImpl {
 
 	@Override
-	public ObjectDefinition addCustomObjectDefinition(long userId, String name)
-		throws PortalException {
-
-		return addCustomObjectDefinition(userId, name, null);
-	}
-
-	@Override
 	public ObjectDefinition addCustomObjectDefinition(
 			long userId, String name, List<ObjectField> objectFields)
 		throws PortalException {
