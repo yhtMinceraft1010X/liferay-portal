@@ -63,11 +63,15 @@ public class RootCauseAnalysisBatchBuildRunner
 		String portalCherryPickSHAsString = topLevelBuildParameters.get(
 			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAsString)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				portalCherryPickSHAsString)) {
+
 			return portalCherryPickSHAs;
 		}
 
-		for (String portalCherryPickSHA : portalCherryPickSHAsString.split(",")) {
+		for (String portalCherryPickSHA :
+				portalCherryPickSHAsString.split(",")) {
+
 			portalCherryPickSHAs.add(portalCherryPickSHA.trim());
 		}
 

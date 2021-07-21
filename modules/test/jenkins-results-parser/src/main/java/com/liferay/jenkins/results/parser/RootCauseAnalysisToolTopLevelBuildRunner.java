@@ -247,7 +247,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		String portalBranchSHAsString = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS);
 
-		if ((portalBranchSHAsString == null) || portalBranchSHAsString.isEmpty()) {
+		if ((portalBranchSHAsString == null) ||
+			portalBranchSHAsString.isEmpty()) {
+
 			WorkspaceGitRepository workspaceGitRepository =
 				_getWorkspaceGitRepository();
 
@@ -301,11 +303,15 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		String portalCherryPickSHAsString = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAsString)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				portalCherryPickSHAsString)) {
+
 			return portalCherryPickSHAList;
 		}
 
-		for (String portalCherryPickSHA : portalCherryPickSHAsString.split(",")) {
+		for (String portalCherryPickSHA :
+				portalCherryPickSHAsString.split(",")) {
+
 			portalCherryPickSHAList.add(portalCherryPickSHA.trim());
 		}
 
