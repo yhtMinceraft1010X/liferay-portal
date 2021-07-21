@@ -688,16 +688,16 @@ public class GraphQLServletExtender {
 		GraphQLOutputType graphQLOutputType, String name,
 		GraphQLArgument... graphQLArguments) {
 
-		GraphQLFieldDefinition.Builder builder =
+		GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 			GraphQLFieldDefinition.newFieldDefinition();
 
 		if (graphQLArguments != null) {
 			for (GraphQLArgument graphQLArgument : graphQLArguments) {
-				builder.argument(graphQLArgument);
+				graphQLFieldDefinitionBuilder.argument(graphQLArgument);
 			}
 		}
 
-		return builder.name(
+		return graphQLFieldDefinitionBuilder.name(
 			name
 		).type(
 			graphQLOutputType
@@ -2502,13 +2502,13 @@ public class GraphQLServletExtender {
 	private static class LiferayArgumentBuilder extends ArgumentBuilder {
 
 		public LiferayArgumentBuilder(
-			Method method, TypeFunction typeFunction,
-			GraphQLFieldDefinition.Builder builder,
-			ProcessingElementsContainer processingElementsContainer,
-			GraphQLOutputType graphQLOutputType) {
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder,
+			GraphQLOutputType graphQLOutputType,
+			Method method, ProcessingElementsContainer processingElementsContainer,
+			TypeFunction typeFunction) {
 
 			super(
-				method, typeFunction, builder, processingElementsContainer,
+				method, typeFunction, graphQLFieldDefinitionBuilder, processingElementsContainer,
 				graphQLOutputType);
 
 			_method = method;
@@ -2936,7 +2936,7 @@ public class GraphQLServletExtender {
 			String parentName, Method method,
 			ProcessingElementsContainer processingElementsContainer) {
 
-			GraphQLFieldDefinition.Builder builder =
+			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 				GraphQLFieldDefinition.newFieldDefinition();
 
 			MethodTypeBuilder methodTypeBuilder = new MethodTypeBuilder(
@@ -2947,32 +2947,31 @@ public class GraphQLServletExtender {
 				(GraphQLOutputType)methodTypeBuilder.build();
 
 			ArgumentBuilder argumentBuilder = new LiferayArgumentBuilder(
-				method, processingElementsContainer.getDefaultTypeFunction(),
-				builder, processingElementsContainer, graphQLOutputType);
+				graphQLFieldDefinitionBuilder, graphQLOutputType, method, processingElementsContainer, processingElementsContainer.getDefaultTypeFunction());
 
-			builder.arguments(argumentBuilder.build());
+			graphQLFieldDefinitionBuilder.arguments(argumentBuilder.build());
 
-			builder.dataFetcher(new LiferayMethodDataFetcher(method));
+			graphQLFieldDefinitionBuilder.dataFetcher(new LiferayMethodDataFetcher(method));
 
 			DeprecateBuilder deprecateBuilder = new LiferayDeprecateBuilder(
 				method);
 
-			builder.deprecate(deprecateBuilder.build());
+			graphQLFieldDefinitionBuilder.deprecate(deprecateBuilder.build());
 
 			GraphQLField graphQLField = method.getAnnotation(
 				GraphQLField.class);
 
 			if (graphQLField != null) {
-				builder.description(graphQLField.description());
+				graphQLFieldDefinitionBuilder.description(graphQLField.description());
 			}
 
 			MethodNameBuilder methodNameBuilder = new MethodNameBuilder(method);
 
-			builder.name(methodNameBuilder.build());
+			graphQLFieldDefinitionBuilder.name(methodNameBuilder.build());
 
-			builder.type(graphQLOutputType);
+			graphQLFieldDefinitionBuilder.type(graphQLOutputType);
 
-			return builder.build();
+			return graphQLFieldDefinitionBuilder.build();
 		}
 
 	}
