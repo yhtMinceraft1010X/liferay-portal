@@ -244,10 +244,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private List<String> _getPortalBranchSHAs() {
-		String portalBranchSHAs = getBuildParameter(
+		String portalBranchSHAsString = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BRANCH_SHAS);
 
-		if ((portalBranchSHAs == null) || portalBranchSHAs.isEmpty()) {
+		if ((portalBranchSHAsString == null) || portalBranchSHAsString.isEmpty()) {
 			WorkspaceGitRepository workspaceGitRepository =
 				_getWorkspaceGitRepository();
 
@@ -261,7 +261,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			return Collections.singletonList(localGitCommit.getSHA());
 		}
 
-		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAs);
+		Matcher matcher = _compareURLPattern.matcher(portalBranchSHAsString);
 
 		if (matcher.find()) {
 			WorkspaceGitRepository workspaceGitRepository =
@@ -275,37 +275,37 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 				workspaceGitRepository.partitionLocalGitCommits(
 					rangeLocalGitCommits, _getMaxCommitGroupCount());
 
-			List<String> portalBranchSHAList = new ArrayList<>();
+			List<String> portalBranchSHAs = new ArrayList<>();
 
 			for (List<LocalGitCommit> localGitCommits : localGitCommitsLists) {
 				LocalGitCommit localGitCommit = localGitCommits.get(0);
 
-				portalBranchSHAList.add(localGitCommit.getSHA());
+				portalBranchSHAs.add(localGitCommit.getSHA());
 			}
 
-			return portalBranchSHAList;
+			return portalBranchSHAs;
 		}
 
-		List<String> portalBranchSHAList = new ArrayList<>();
+		List<String> portalBranchSHAs = new ArrayList<>();
 
-		for (String portalBranchSHA : portalBranchSHAs.split(",")) {
-			portalBranchSHAList.add(portalBranchSHA.trim());
+		for (String portalBranchSHA : portalBranchSHAsString.split(",")) {
+			portalBranchSHAs.add(portalBranchSHA.trim());
 		}
 
-		return portalBranchSHAList;
+		return portalBranchSHAs;
 	}
 
 	private List<String> _getPortalCherryPickSHAs() {
-		String portalCherryPickSHAs = getBuildParameter(
-			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
-
 		List<String> portalCherryPickSHAList = new ArrayList<>();
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAs)) {
+		String portalCherryPickSHAsString = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_CHERRY_PICK_SHAS);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalCherryPickSHAsString)) {
 			return portalCherryPickSHAList;
 		}
 
-		for (String portalCherryPickSHA : portalCherryPickSHAs.split(",")) {
+		for (String portalCherryPickSHA : portalCherryPickSHAsString.split(",")) {
 			portalCherryPickSHAList.add(portalCherryPickSHA.trim());
 		}
 
