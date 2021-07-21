@@ -1087,22 +1087,6 @@ public class GraphQLServletExtender {
 
 			_registeredClassNames.clear();
 
-			Map<String, Configuration> configurations =
-				ConfigurationUtil.getConfigurations(_configurationAdmin);
-
-			GraphQLSchema.Builder graphQLSchemaBuilder =
-				GraphQLSchema.newSchema();
-
-			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
-				GraphQLObjectType.newObject();
-
-			mutationGraphQLObjectTypeBuilder.name("mutation");
-
-			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
-				GraphQLObjectType.newObject();
-
-			queryGraphQLObjectTypeBuilder.name("query");
-
 			ProcessingElementsContainer processingElementsContainer =
 				new ProcessingElementsContainer(_defaultTypeFunction);
 
@@ -1140,6 +1124,22 @@ public class GraphQLServletExtender {
 					}
 				}
 			}
+
+			GraphQLSchema.Builder graphQLSchemaBuilder =
+				GraphQLSchema.newSchema();
+
+			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
+				GraphQLObjectType.newObject();
+
+			mutationGraphQLObjectTypeBuilder.name("mutation");
+
+			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
+				GraphQLObjectType.newObject();
+
+			queryGraphQLObjectTypeBuilder.name("query");
+
+			Map<String, Configuration> configurations =
+				ConfigurationUtil.getConfigurations(_configurationAdmin);
 
 			_collectObjectFields(
 				configurations, ServletData::getMutation,
