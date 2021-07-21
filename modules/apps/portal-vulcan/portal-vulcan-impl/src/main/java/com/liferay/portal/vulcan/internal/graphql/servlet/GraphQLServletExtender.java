@@ -1596,7 +1596,7 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
-		List<GraphQLDTOProperty> graphQLDTOProperties, String name) {
+		String name, List<GraphQLDTOProperty> graphQLDTOProperties) {
 
 		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
@@ -1759,8 +1759,8 @@ public class GraphQLServletExtender {
 		String resourceName = graphQLDTOContributor.getResourceName();
 
 		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
-			graphQLDTOContributor.getGraphQLDTOProperties(),
-			namespace + resourceName);
+			namespace + resourceName,
+			graphQLDTOContributor.getGraphQLDTOProperties());
 
 		String createName = "create" + resourceName;
 
