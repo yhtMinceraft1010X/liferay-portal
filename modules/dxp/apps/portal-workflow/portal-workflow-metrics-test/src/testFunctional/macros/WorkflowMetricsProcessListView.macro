@@ -17,15 +17,10 @@ definition {
 	}
 
 	macro assertTooltipMessage {
-
 		AssertElementPresent(
 			key_sectionName = "${sectionName}",
 			key_tooltipMessage = "${tooltipMessage}",
 			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_TOOLTIP_MESSAGE");
-
-
-
-
 	}
 
 	macro changePagination {
