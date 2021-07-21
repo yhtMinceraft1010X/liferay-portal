@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -109,36 +107,36 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
-		HashMapBuilder.HashMapWrapper<String, Map<String, String>> mapBuilder =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"delete",
-				() -> {
-					if (objectDefinition.isSystem()) {
-						return null;
-					}
-
-					return addAction(
-						ActionKeys.DELETE, objectDefinition.getObjectDefinitionId(),
-						"deleteObjectDefinition",
-						_objectDefinitionModelResourcePermission);
-				}
-			).put(
-				"get",
-				addAction(
-					ActionKeys.VIEW, objectDefinition.getObjectDefinitionId(),
-					"getObjectDefinition",
-					_objectDefinitionModelResourcePermission)
-			).put(
-				"update",
-				addAction(
-					ActionKeys.UPDATE, objectDefinition.getObjectDefinitionId(),
-					"postObjectDefinition",
-					_objectDefinitionModelResourcePermission)
-			);
-
 		return new ObjectDefinition() {
 			{
-				actions = mapBuilder.build();
+				actions = HashMapBuilder.put(
+					"delete",
+					() -> {
+						if (objectDefinition.isSystem()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.DELETE,
+							objectDefinition.getObjectDefinitionId(),
+							"deleteObjectDefinition",
+							_objectDefinitionModelResourcePermission);
+					}
+				).put(
+					"get",
+					addAction(
+						ActionKeys.VIEW,
+						objectDefinition.getObjectDefinitionId(),
+						"getObjectDefinition",
+						_objectDefinitionModelResourcePermission)
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE,
+						objectDefinition.getObjectDefinitionId(),
+						"postObjectDefinition",
+						_objectDefinitionModelResourcePermission)
+				).build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
 				id = objectDefinition.getObjectDefinitionId();
