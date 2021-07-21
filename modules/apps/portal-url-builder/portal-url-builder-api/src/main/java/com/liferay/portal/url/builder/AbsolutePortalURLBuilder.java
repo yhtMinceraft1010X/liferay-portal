@@ -71,7 +71,7 @@ public interface AbsolutePortalURLBuilder {
 	 *
 	 * <p>
 	 * If the requested module resource is a JavaScript file or a stylesheet,
-	 * better use {@link #forModuleScript(Bundle, String)} or {@link
+	 * use {@link #forModuleScript(Bundle, String)} or {@link
 	 * #forModuleStylesheet(Bundle, String)} instead.
 	 * </p>
 	 *
@@ -181,13 +181,6 @@ public interface AbsolutePortalURLBuilder {
 	/**
 	 * Returns a URL builder for OSGi whiteboard servlet instances. This method
 	 * requires the servlet class to be annotated with the OSGi {@code
-	 * @Component}. OSGi whiteboard servlets live in {@code
-	 * com.liferay.portal.kernel.util.Portal#PATH_MODULE}.
-	 *
-	 * <p>
-	 * Whiteboard resources are always retrieved from Portal, even if a CDN host
-	 * is present.
-	 * </p>
 	 *
 	 * @param  servletPattern the value of the {@code
 	 *         osgi.http.whiteboard.servlet.pattern} property
