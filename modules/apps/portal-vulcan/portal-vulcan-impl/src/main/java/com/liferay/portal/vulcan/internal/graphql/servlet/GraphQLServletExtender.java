@@ -767,7 +767,8 @@ public class GraphQLServletExtender {
 	private GraphQLArgument _addArgument(
 		Object defaultValue, GraphQLInputType graphQLInputType, String name) {
 
-		GraphQLArgument.Builder graphQLArgumentBuilder = GraphQLArgument.newArgument();
+		GraphQLArgument.Builder graphQLArgumentBuilder =
+			GraphQLArgument.newArgument();
 
 		if (defaultValue != null) {
 			graphQLArgumentBuilder.defaultValue(defaultValue);
@@ -1121,8 +1122,9 @@ public class GraphQLServletExtender {
 			}
 
 			_collectObjectFields(
-				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
-				processingElementsContainer, servletDatas);
+				configurations, ServletData::getMutation,
+				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				servletDatas);
 
 			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
@@ -1130,27 +1132,30 @@ public class GraphQLServletExtender {
 			queryGraphQLObjectTypeBuilder.name("query");
 
 			_collectObjectFields(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
-				processingElementsContainer, servletDatas);
+				configurations, ServletData::getQuery,
+				queryGraphQLObjectTypeBuilder, processingElementsContainer,
+				servletDatas);
 
 			GraphQLSchema.Builder graphQLSchemaBuilder =
 				GraphQLSchema.newSchema();
 
 			_registerGraphQLDTOContributors(
-				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, processingElementsContainer,
-				queryGraphQLObjectTypeBuilder);
+				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder,
+				processingElementsContainer, queryGraphQLObjectTypeBuilder);
 			_registerInterfaces(
-				graphQLSchemaBuilder, processingElementsContainer, queryGraphQLObjectTypeBuilder);
+				graphQLSchemaBuilder, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder);
 			_registerNamespace(
-				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
-				graphQLSchemaBuilder, true, processingElementsContainer,
-				servletDatas);
+				configurations, ServletData::getMutation,
+				mutationGraphQLObjectTypeBuilder, graphQLSchemaBuilder, true,
+				processingElementsContainer, servletDatas);
 			_registerNamespace(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
-				graphQLSchemaBuilder, false, processingElementsContainer,
-				servletDatas);
+				configurations, ServletData::getQuery,
+				queryGraphQLObjectTypeBuilder, graphQLSchemaBuilder, false,
+				processingElementsContainer, servletDatas);
 
-			graphQLSchemaBuilder.mutation(mutationGraphQLObjectTypeBuilder.build());
+			graphQLSchemaBuilder.mutation(
+				mutationGraphQLObjectTypeBuilder.build());
 			graphQLSchemaBuilder.query(queryGraphQLObjectTypeBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
@@ -1566,7 +1571,8 @@ public class GraphQLServletExtender {
 		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
 
-		graphQLInputObjectTypeBuilder.name("Input" + graphQLDTOContributor.getResourceName());
+		graphQLInputObjectTypeBuilder.name(
+			"Input" + graphQLDTOContributor.getResourceName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
@@ -1588,7 +1594,8 @@ public class GraphQLServletExtender {
 	private GraphQLObjectType _getGraphQLObjectType(
 		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			new GraphQLObjectType.Builder();
 
 		graphQLObjectTypeBuilder.name(graphQLDTOContributor.getResourceName());
 
@@ -1608,15 +1615,22 @@ public class GraphQLServletExtender {
 		GraphQLType facetGraphQLType, GraphQLType objectGraphQLType,
 		String name) {
 
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder = new GraphQLObjectType.Builder();
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			new GraphQLObjectType.Builder();
 
-		graphQLObjectTypeBuilder.field(_addField(_mapGraphQLScalarType, "actions"));
-		graphQLObjectTypeBuilder.field(_addField(GraphQLList.list(facetGraphQLType), "facets"));
-		graphQLObjectTypeBuilder.field(_addField(GraphQLList.list(objectGraphQLType), "items"));
-		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "lastPage"));
+		graphQLObjectTypeBuilder.field(
+			_addField(_mapGraphQLScalarType, "actions"));
+		graphQLObjectTypeBuilder.field(
+			_addField(GraphQLList.list(facetGraphQLType), "facets"));
+		graphQLObjectTypeBuilder.field(
+			_addField(GraphQLList.list(objectGraphQLType), "items"));
+		graphQLObjectTypeBuilder.field(
+			_addField(Scalars.GraphQLLong, "lastPage"));
 		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "page"));
-		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "pageSize"));
-		graphQLObjectTypeBuilder.field(_addField(Scalars.GraphQLLong, "totalCount"));
+		graphQLObjectTypeBuilder.field(
+			_addField(Scalars.GraphQLLong, "pageSize"));
+		graphQLObjectTypeBuilder.field(
+			_addField(Scalars.GraphQLLong, "totalCount"));
 		graphQLObjectTypeBuilder.name(name + "Page");
 
 		return graphQLObjectTypeBuilder.build();
@@ -1898,7 +1912,8 @@ public class GraphQLServletExtender {
 
 			_registerGraphQLDTOContributor(
 				graphQLDTOContributor, mutationGraphQLObjectTypeBuilder,
-				processingElementsContainer, queryBuilder, graphQLSchemaBuilder);
+				processingElementsContainer, queryBuilder,
+				graphQLSchemaBuilder);
 		}
 	}
 
@@ -1952,8 +1967,8 @@ public class GraphQLServletExtender {
 					_replaceFieldDefinition(
 						graphQLInterfaceType, graphQLObjectType);
 					_replaceFieldNodes(
-						graphQLCodeRegistryBuilder, graphQLInterfaceType, graphQLObjectType,
-						graphQLSchemaBuilder);
+						graphQLCodeRegistryBuilder, graphQLInterfaceType,
+						graphQLObjectType, graphQLSchemaBuilder);
 					_replaceInterface(graphQLInterfaceType, graphQLObjectType);
 				}
 			}
@@ -2504,17 +2519,17 @@ public class GraphQLServletExtender {
 
 		public LiferayArgumentBuilder(
 			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder,
-			GraphQLOutputType graphQLOutputType,
-			Method method, ProcessingElementsContainer processingElementsContainer,
+			GraphQLOutputType graphQLOutputType, Method method,
+			ProcessingElementsContainer processingElementsContainer,
 			TypeFunction typeFunction) {
 
 			super(
-				method, typeFunction, graphQLFieldDefinitionBuilder, processingElementsContainer,
-				graphQLOutputType);
+				method, typeFunction, graphQLFieldDefinitionBuilder,
+				processingElementsContainer, graphQLOutputType);
 
 			_method = method;
-			_typeFunction = typeFunction;
 			_processingElementsContainer = processingElementsContainer;
+			_typeFunction = typeFunction;
 		}
 
 		@Override
@@ -2555,15 +2570,18 @@ public class GraphQLServletExtender {
 
 			DirectiveWirer directiveWirer = new DirectiveWirer();
 
-			GraphQLArgument.Builder graphQLArgumentBuilder = GraphQLArgument.newArgument();
+			GraphQLArgument.Builder graphQLArgumentBuilder =
+				GraphQLArgument.newArgument();
 
 			String graphQLName = _getGraphQLNameValue(parameter);
 
 			if (graphQLName != null) {
-				graphQLArgumentBuilder.name(NamingKit.toGraphqlName(graphQLName));
+				graphQLArgumentBuilder.name(
+					NamingKit.toGraphqlName(graphQLName));
 			}
 			else {
-				graphQLArgumentBuilder.name(NamingKit.toGraphqlName(parameter.getName()));
+				graphQLArgumentBuilder.name(
+					NamingKit.toGraphqlName(parameter.getName()));
 			}
 
 			graphQLArgumentBuilder.type(graphQLInputType);
@@ -2918,7 +2936,8 @@ public class GraphQLServletExtender {
 			GraphQLField graphQLField = field.getAnnotation(GraphQLField.class);
 
 			if (graphQLField != null) {
-				graphQLFieldDefinitionBuilder.description(graphQLField.description());
+				graphQLFieldDefinitionBuilder.description(
+					graphQLField.description());
 			}
 
 			graphQLFieldDefinitionBuilder.name(
@@ -2949,11 +2968,14 @@ public class GraphQLServletExtender {
 				(GraphQLOutputType)methodTypeBuilder.build();
 
 			ArgumentBuilder argumentBuilder = new LiferayArgumentBuilder(
-				graphQLFieldDefinitionBuilder, graphQLOutputType, method, processingElementsContainer, processingElementsContainer.getDefaultTypeFunction());
+				graphQLFieldDefinitionBuilder, graphQLOutputType, method,
+				processingElementsContainer,
+				processingElementsContainer.getDefaultTypeFunction());
 
 			graphQLFieldDefinitionBuilder.arguments(argumentBuilder.build());
 
-			graphQLFieldDefinitionBuilder.dataFetcher(new LiferayMethodDataFetcher(method));
+			graphQLFieldDefinitionBuilder.dataFetcher(
+				new LiferayMethodDataFetcher(method));
 
 			DeprecateBuilder deprecateBuilder = new LiferayDeprecateBuilder(
 				method);
@@ -2964,7 +2986,8 @@ public class GraphQLServletExtender {
 				GraphQLField.class);
 
 			if (graphQLField != null) {
-				graphQLFieldDefinitionBuilder.description(graphQLField.description());
+				graphQLFieldDefinitionBuilder.description(
+					graphQLField.description());
 			}
 
 			MethodNameBuilder methodNameBuilder = new MethodNameBuilder(method);
