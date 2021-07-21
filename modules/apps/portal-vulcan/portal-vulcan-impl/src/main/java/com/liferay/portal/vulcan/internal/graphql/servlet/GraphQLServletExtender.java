@@ -1149,8 +1149,8 @@ public class GraphQLServletExtender {
 				processingElementsContainer, servletDatas);
 
 			_registerGraphQLDTOContributors(
-				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
-				queryGraphQLObjectTypeBuilder, graphQLSchemaBuilder);
+				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder);
 			_registerInterfaces(
 				graphQLSchemaBuilder, processingElementsContainer,
 				queryGraphQLObjectTypeBuilder);
@@ -1911,10 +1911,10 @@ public class GraphQLServletExtender {
 	}
 
 	private void _registerGraphQLDTOContributors(
+		GraphQLSchema.Builder graphQLSchemaBuilder,
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder,
-		GraphQLSchema.Builder graphQLSchemaBuilder) {
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
 		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders =
 			new HashMap<>();
