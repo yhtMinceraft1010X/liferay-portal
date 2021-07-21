@@ -67,7 +67,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 		}
 
 		return new ObjectDefinitionGraphQLDTOContributor(
-			objectDefinition.getCompanyId(),
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
 			objectDefinition.getPKObjectFieldName(),
 			objectDefinition.getObjectDefinitionId(), objectEntryManager,
@@ -90,11 +89,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_objectEntryManager.deleteObjectEntry(id);
 
 		return true;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
 	}
 
 	@Override
@@ -164,12 +158,10 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(
-		long companyId, EntityModel entityModel,
-		List<GraphQLDTOProperty> graphQLDTOProperties, String idName,
-		long objectDefinitionId, ObjectEntryManager objectEntryManager,
-		String resourceName) {
+		EntityModel entityModel, List<GraphQLDTOProperty> graphQLDTOProperties,
+		String idName, long objectDefinitionId,
+		ObjectEntryManager objectEntryManager, String resourceName) {
 
-		_companyId = companyId;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
 		_idName = idName;
@@ -219,7 +211,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 			"String", String.class
 		).build();
 
-	private final long _companyId;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
 	private final String _idName;
