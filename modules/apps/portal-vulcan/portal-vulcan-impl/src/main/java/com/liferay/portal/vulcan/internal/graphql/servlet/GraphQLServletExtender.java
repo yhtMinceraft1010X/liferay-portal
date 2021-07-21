@@ -1573,7 +1573,7 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		String name, List<GraphQLDTOProperty> graphQLDTOProperties) {
+		List<GraphQLDTOProperty> graphQLDTOProperties, String name) {
 
 		GraphQLInputObjectType.Builder builder =
 			new GraphQLInputObjectType.Builder();
@@ -1765,8 +1765,8 @@ public class GraphQLServletExtender {
 		String createName = "create" + resourceName;
 
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
-			"Input" + namespace + resourceName,
-			graphQLDTOContributor.getGraphQLDTOProperties());
+			graphQLDTOContributor.getGraphQLDTOProperties(),
+			"Input" + namespace + resourceName);
 
 		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
