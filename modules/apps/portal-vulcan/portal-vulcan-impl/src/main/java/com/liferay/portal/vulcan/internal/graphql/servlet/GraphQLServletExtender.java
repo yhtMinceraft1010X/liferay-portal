@@ -1738,7 +1738,7 @@ public class GraphQLServletExtender {
 			mutationGraphQLObjectTypeBuilders,
 		ProcessingElementsContainer processingElementsContainer,
 		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders,
-		GraphQLSchema.Builder schemaBuilder) {
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		String namespace = "O_" + graphQLDTOContributor.getCompanyId();
 
@@ -1773,7 +1773,7 @@ public class GraphQLServletExtender {
 				graphQLObjectType, createName,
 				_addArgument(graphQLInputType, resourceName)));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(mutationParentType, createName),
 				(DataFetcher<Object>)
@@ -1793,7 +1793,7 @@ public class GraphQLServletExtender {
 				Scalars.GraphQLBoolean, deleteName,
 				_addArgument(Scalars.GraphQLLong, idName)));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(mutationParentType, deleteName),
 				(DataFetcher<Object>)
@@ -1809,7 +1809,7 @@ public class GraphQLServletExtender {
 			_addField(
 				graphQLObjectType, getName,
 				_addArgument(Scalars.GraphQLLong, idName)));
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(namespace, getName),
 				(DataFetcher<Object>)
@@ -1839,7 +1839,7 @@ public class GraphQLServletExtender {
 				_addArgument(Scalars.GraphQLString, "search"),
 				_addArgument(Scalars.GraphQLString, "sort")));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(namespace, listName),
 				(DataFetcher<Object>)dataFetchingEnvironment -> {
@@ -1897,7 +1897,7 @@ public class GraphQLServletExtender {
 				_addArgument(graphQLInputType, resourceName),
 				_addArgument(Scalars.GraphQLLong, idName)));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(mutationParentType, updateName),
 				(DataFetcher<Object>)
@@ -1913,8 +1913,8 @@ public class GraphQLServletExtender {
 	private void _registerGraphQLDTOContributors(
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder schemaBuilder) {
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder,
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders =
 			new HashMap<>();
@@ -1927,7 +1927,7 @@ public class GraphQLServletExtender {
 			_registerGraphQLDTOContributor(
 				graphQLDTOContributor, mutationGraphQLObjectTypeBuilders,
 				processingElementsContainer, queryGraphQLObjectTypeBuilders,
-				schemaBuilder);
+				graphQLSchemaBuilder);
 		}
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
@@ -1935,17 +1935,17 @@ public class GraphQLServletExtender {
 
 		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, queryGraphQLObjectTypeBuilders,
-			queryBuilder, "query", schemaBuilder);
+			queryGraphQLObjectTypeBuilder, "query", graphQLSchemaBuilder);
 		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, mutationGraphQLObjectTypeBuilders,
-			mutationGraphQLObjectTypeBuilder, "mutation", schemaBuilder);
+			mutationGraphQLObjectTypeBuilder, "mutation", graphQLSchemaBuilder);
 	}
 
 	private void _registerGraphQLObjectTypeBuilders(
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
 		GraphQLObjectType.Builder parentBuilder, String parentName,
-		GraphQLSchema.Builder schemaBuilder) {
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
 				graphQLObjectTypeBuilders.entrySet()) {
@@ -1956,7 +1956,7 @@ public class GraphQLServletExtender {
 			parentBuilder.field(
 				_addField(namespaceBuilder.build(), namespaceName));
 
-			schemaBuilder.codeRegistry(
+			graphQLSchemaBuilder.codeRegistry(
 				graphQLCodeRegistryBuilder.dataFetcher(
 					FieldCoordinates.coordinates(parentName, namespaceName),
 					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
