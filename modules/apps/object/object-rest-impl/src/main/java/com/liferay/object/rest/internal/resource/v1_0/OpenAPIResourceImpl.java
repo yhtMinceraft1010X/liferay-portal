@@ -39,7 +39,7 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		Long companyId, OpenAPIResource openAPIResource,
+		long companyId, OpenAPIResource openAPIResource,
 		OpenAPISchemaFilter openAPISchemaFilter,
 		Set<Class<?>> resourceClasses) {
 
