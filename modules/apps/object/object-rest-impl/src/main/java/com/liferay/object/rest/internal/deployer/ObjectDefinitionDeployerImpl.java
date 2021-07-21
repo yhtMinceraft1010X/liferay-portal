@@ -59,14 +59,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"liferay.jackson", false
 					).put(
-						"liferay.object.definition.company.id",
-						objectDefinition.getCompanyId()
-					).put(
 						"liferay.object.definition.id",
 						objectDefinition.getObjectDefinitionId()
-					).put(
-						"liferay.object.definition.name",
-						objectDefinition.getShortName()
 					).put(
 						"osgi.jaxrs.application.base",
 						"/" + objectDefinition.getRESTContextPath()
@@ -74,7 +68,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.extension.select",
 						"(osgi.jaxrs.name=Liferay.Vulcan)"
 					).put(
-						"osgi.jaxrs.name", objectDefinition.getDBTableName()
+						"osgi.jaxrs.name", objectDefinition.getShortName()
 					).build()),
 				_objectEntryResourceComponentFactory.newInstance(
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -83,13 +77,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"batch.engine.task.item.delegate", "true"
 					).put(
 						"batch.engine.task.item.delegate.name",
-						objectDefinition.getDBTableName()
+						objectDefinition.getShortName()
 					).put(
 						"osgi.jaxrs.resource", "true"
 					).put(
 						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" +
-							objectDefinition.getDBTableName() + ")"
+						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
+							")"
 					).build())));
 
 		return Arrays.asList(
@@ -98,28 +92,26 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectDefinitionContextProvider(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + objectDefinition.getDBTableName() +
-						")"
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
 					"enabled", "false"
 				).put(
 					"osgi.jaxrs.name",
-					objectDefinition.getDBTableName() +
+					objectDefinition.getRESTContextPath() +
 						"ObjectDefinitionContextProvider"
 				).build()),
 			_bundleContext.registerService(
 				ExceptionMapper.class, new RequiredObjectFieldExceptionMapper(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
-					"(osgi.jaxrs.name=" + objectDefinition.getDBTableName() +
-						")"
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
 				).put(
 					"osgi.jaxrs.extension", "true"
 				).put(
 					"osgi.jaxrs.name",
-					objectDefinition.getDBTableName() +
+					objectDefinition.getRESTContextPath() +
 						"RequiredObjectFieldExceptionMapper"
 				).build()),
 			_bundleContext.registerService(
