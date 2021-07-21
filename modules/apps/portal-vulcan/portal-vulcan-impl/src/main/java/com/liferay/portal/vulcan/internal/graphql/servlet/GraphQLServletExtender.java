@@ -1734,11 +1734,11 @@ public class GraphQLServletExtender {
 
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
-		ProcessingElementsContainer processingElementsContainer,
-		GraphQLSchema.Builder schemaBuilder,
-		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders,
 		Map<String, GraphQLObjectType.Builder>
-			mutationGraphQLObjectTypeBuilders) {
+			mutationGraphQLObjectTypeBuilders,
+		ProcessingElementsContainer processingElementsContainer,
+		Map<String, GraphQLObjectType.Builder> queryGraphQLObjectTypeBuilders,
+		GraphQLSchema.Builder schemaBuilder) {
 
 		String namespace = "O_" + graphQLDTOContributor.getCompanyId();
 
@@ -1925,9 +1925,9 @@ public class GraphQLServletExtender {
 				_graphQLDTOContributorServiceTrackerMap.values()) {
 
 			_registerGraphQLDTOContributor(
-				graphQLDTOContributor, processingElementsContainer,
-				schemaBuilder, queryGraphQLObjectTypeBuilders,
-				mutationGraphQLObjectTypeBuilders);
+				graphQLDTOContributor, mutationGraphQLObjectTypeBuilders,
+				processingElementsContainer, queryGraphQLObjectTypeBuilders,
+				schemaBuilder);
 		}
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
