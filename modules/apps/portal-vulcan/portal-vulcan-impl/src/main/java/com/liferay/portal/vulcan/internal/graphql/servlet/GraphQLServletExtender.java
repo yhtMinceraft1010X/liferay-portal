@@ -1128,43 +1128,43 @@ public class GraphQLServletExtender {
 			GraphQLSchema.Builder graphQLSchemaBuilder =
 				GraphQLSchema.newSchema();
 
-			GraphQLObjectType.Builder mutationBuilder =
+			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
 
-			mutationBuilder.name("mutation");
+			mutationGraphQLObjectTypeBuilder.name("mutation");
 
-			GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
 
-			graphQLObjectTypeBuilder.name("query");
+			queryGraphQLObjectTypeBuilder.name("query");
 
 			Map<String, Configuration> configurations =
 				ConfigurationUtil.getConfigurations(_configurationAdmin);
 
 			_collectObjectFields(
-				mutationBuilder, configurations, ServletData::getMutation,
+				mutationGraphQLObjectTypeBuilder, configurations, ServletData::getMutation,
 				processingElementsContainer, servletDatas);
 			_collectObjectFields(
-				graphQLObjectTypeBuilder, configurations, ServletData::getQuery,
+				queryGraphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
 			_registerGraphQLDTOContributors(
-				mutationBuilder, processingElementsContainer,
-				graphQLObjectTypeBuilder, graphQLSchemaBuilder);
+				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder, graphQLSchemaBuilder);
 			_registerInterfaces(
-				processingElementsContainer, graphQLObjectTypeBuilder,
+				processingElementsContainer, queryGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder);
 			_registerNamespace(
-				configurations, ServletData::getQuery, graphQLObjectTypeBuilder,
+				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder, false, processingElementsContainer,
 				servletDatas);
 			_registerNamespace(
-				configurations, ServletData::getMutation, mutationBuilder,
+				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder, true, processingElementsContainer,
 				servletDatas);
 
-			graphQLSchemaBuilder.mutation(mutationBuilder.build());
-			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
+			graphQLSchemaBuilder.mutation(mutationGraphQLObjectTypeBuilder.build());
+			graphQLSchemaBuilder.query(queryGraphQLObjectTypeBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
 				GraphQLConfiguration.with(graphQLSchemaBuilder.build());
@@ -1911,7 +1911,7 @@ public class GraphQLServletExtender {
 	}
 
 	private void _registerGraphQLDTOContributors(
-		GraphQLObjectType.Builder mutationBuilder,
+		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
 		GraphQLObjectType.Builder queryBuilder,
 		GraphQLSchema.Builder schemaBuilder) {
@@ -1938,7 +1938,7 @@ public class GraphQLServletExtender {
 			queryBuilder, "query", schemaBuilder);
 		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, mutationGraphQLObjectTypeBuilders,
-			mutationBuilder, "mutation", schemaBuilder);
+			mutationGraphQLObjectTypeBuilder, "mutation", schemaBuilder);
 	}
 
 	private void _registerGraphQLObjectTypeBuilders(
@@ -1966,7 +1966,7 @@ public class GraphQLServletExtender {
 
 	private void _registerInterfaces(
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder,
 		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		try {
@@ -1978,7 +1978,7 @@ public class GraphQLServletExtender {
 
 			graphQLTypes.put("GraphQLNode", graphQLInterfaceType);
 
-			graphQLObjectTypeBuilder.field(
+			queryGraphQLObjectTypeBuilder.field(
 				_createNodeGraphQLFieldDefinition(graphQLInterfaceType));
 
 			GraphQLCodeRegistry.Builder builder =
