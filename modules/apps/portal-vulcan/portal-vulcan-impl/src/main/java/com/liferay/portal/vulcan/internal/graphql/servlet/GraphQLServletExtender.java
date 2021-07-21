@@ -1740,10 +1740,10 @@ public class GraphQLServletExtender {
 
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
+		GraphQLSchema.Builder graphQLSchemaBuilder,
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder graphQLSchemaBuilder) {
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
 		// Create
 
@@ -1797,7 +1797,7 @@ public class GraphQLServletExtender {
 
 		String getName = StringUtil.lowerCaseFirstLetter(resourceName);
 
-		queryBuilder.field(
+		queryGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, getName,
 				_addArgument(Scalars.GraphQLLong, idName)));
@@ -1817,7 +1817,7 @@ public class GraphQLServletExtender {
 		String listName = StringUtil.lowerCaseFirstLetter(
 			TextFormatter.formatPlural(resourceName));
 
-		queryBuilder.field(
+		queryGraphQLObjectTypeBuilder.field(
 			_addField(
 				_getPageGraphQLObjectType(
 					graphQLTypes.get("Facet"), graphQLObjectType, resourceName),
@@ -1905,15 +1905,15 @@ public class GraphQLServletExtender {
 		GraphQLSchema.Builder graphQLSchemaBuilder,
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder) {
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
 		for (GraphQLDTOContributor graphQLDTOContributor :
 				_graphQLDTOContributorServiceTrackerMap.values()) {
 
 			_registerGraphQLDTOContributor(
-				graphQLDTOContributor, mutationGraphQLObjectTypeBuilder,
-				processingElementsContainer, queryBuilder,
-				graphQLSchemaBuilder);
+				graphQLDTOContributor, graphQLSchemaBuilder,
+				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder);
 		}
 	}
 
