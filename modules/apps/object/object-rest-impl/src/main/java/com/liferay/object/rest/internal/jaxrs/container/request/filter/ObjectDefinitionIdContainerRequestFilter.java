@@ -34,9 +34,9 @@ public class ObjectDefinitionIdContainerRequestFilter
 	implements ContainerRequestFilter {
 
 	public ObjectDefinitionIdContainerRequestFilter(
-		String dbTableName, Long objectDefinitionId) {
+		String objectDefinitionDBTableName, Long objectDefinitionId) {
 
-		_dbTableName = dbTableName;
+		_objectDefinitionDBTableName = objectDefinitionDBTableName;
 		_objectDefinitionId = objectDefinitionId;
 	}
 
@@ -58,12 +58,13 @@ public class ObjectDefinitionIdContainerRequestFilter
 			uriBuilder.queryParam(entry.getKey(), entry.getValue());
 		}
 
-		uriBuilder.queryParam("taskItemDelegateName", _dbTableName);
+		uriBuilder.queryParam(
+			"taskItemDelegateName", _objectDefinitionDBTableName);
 
 		containerRequestContext.setRequestUri(uriBuilder.build());
 	}
 
-	private final String _dbTableName;
+	private final String _objectDefinitionDBTableName;
 	private final Long _objectDefinitionId;
 
 }
