@@ -56,7 +56,8 @@ public class ObjectEntryApplication extends Application {
 				_applicationName, _objectDefinitionId));
 		objects.add(
 			new OpenAPIResourceImpl(
-				_companyId, _openAPIResource, _getOpenAPISchemaFilter(),
+				_objectDefinitionCompanyId, _openAPIResource,
+				_getOpenAPISchemaFilter(),
 				new HashSet<Class<?>>() {
 					{
 						add(ObjectEntryResourceImpl.class);
@@ -70,12 +71,15 @@ public class ObjectEntryApplication extends Application {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_applicationName = (String)properties.get("osgi.jaxrs.name");
-		_companyId = (Long)properties.get(
+
+		_objectDefinitionCompanyId = (Long)properties.get(
 			"liferay.object.definition.company.id");
+
+		_objectDefinitionName = (String)properties.get(
+			"liferay.object.definition.name");
+
 		_objectDefinitionId = (Long)properties.get(
 			"liferay.object.definition.id");
-		_objectDefinitionShortName = (String)properties.get(
-			"liferay.object.definition.short.name");
 
 		_objectFields = _objectFieldLocalService.getObjectFields(
 			_objectDefinitionId);
@@ -99,22 +103,22 @@ public class ObjectEntryApplication extends Application {
 		openAPISchemaFilter.setDTOProperty(dtoProperty);
 		openAPISchemaFilter.setSchemaMappings(
 			HashMapBuilder.put(
-				"ObjectEntry", _objectDefinitionShortName
+				"ObjectEntry", _objectDefinitionName
 			).put(
-				"PageObjectEntry", "Page" + _objectDefinitionShortName
+				"PageObjectEntry", "Page" + _objectDefinitionName
 			).build());
 
 		return openAPISchemaFilter;
 	}
 
 	private String _applicationName;
-	private Long _companyId;
+	private Long _objectDefinitionCompanyId;
 	private Long _objectDefinitionId;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private String _objectDefinitionShortName;
+	private String _objectDefinitionName;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
