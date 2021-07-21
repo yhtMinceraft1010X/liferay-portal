@@ -1964,9 +1964,9 @@ public class GraphQLServletExtender {
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
 				graphQLObjectTypeBuilders.entrySet()) {
 
+			String namespace = entry.getKey();
 			GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 				entry.getValue();
-			String namespace = entry.getKey();
 
 			parentGraphQLObjectTypeBuilder.field(
 				_addField(graphQLObjectTypeBuilder.build(), namespace));
