@@ -1935,17 +1935,17 @@ public class GraphQLServletExtender {
 
 		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, mutationGraphQLObjectTypeBuilders,
-			graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, "mutation");
+			mutationGraphQLObjectTypeBuilder, "mutation", graphQLSchemaBuilder);
 		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, queryGraphQLObjectTypeBuilders,
-			graphQLSchemaBuilder, queryGraphQLObjectTypeBuilder, "query");
+			queryGraphQLObjectTypeBuilder, "query", graphQLSchemaBuilder);
 	}
 
 	private void _registerGraphQLObjectTypeBuilders(
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder,
 		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
-		GraphQLSchema.Builder graphQLSchemaBuilder,
-		GraphQLObjectType.Builder parentGraphQLObjectTypeBuilder, String parentName) {
+		GraphQLObjectType.Builder parentGraphQLObjectTypeBuilder, String parentName,
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
 				graphQLObjectTypeBuilders.entrySet()) {
