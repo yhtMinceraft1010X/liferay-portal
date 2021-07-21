@@ -85,8 +85,8 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 					maximumNumberOfCategoriesPerVocabulary()) {
 
 			throw new AssetCategoryLimitException(
-				"Unable to exceed maximum number of allowed categories for " +
-					"vocabulary: " + vocabularyId);
+				"Unable to exceed maximum number of allowed asset categories " +
+					"for asset vocabulary " + vocabularyId);
 		}
 
 		AssetCategory assetCategory = super.addCategory(
