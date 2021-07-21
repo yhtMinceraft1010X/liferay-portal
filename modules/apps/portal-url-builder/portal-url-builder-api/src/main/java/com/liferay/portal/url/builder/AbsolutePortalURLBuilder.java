@@ -16,6 +16,7 @@ package com.liferay.portal.url.builder;
 
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 
 /**
@@ -32,6 +33,7 @@ import org.osgi.framework.Bundle;
  * @author Iván Zaera Avellón
  * @see    BuildableAbsolutePortalURLBuilder
  */
+@ProviderType
 public interface AbsolutePortalURLBuilder {
 
 	/**
