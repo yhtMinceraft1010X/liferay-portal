@@ -79,8 +79,9 @@ public class DataCleanup implements UpgradeStepRegistrator {
 				MailReaderUpgradeProcess::new);
 
 			_cleanUpModuleData(
-				_dataCleanupConfiguration::cleanUpOpenSocialModuleData,
-				"opensocial-portlet", OpenSocialUpgradeProcess::new);
+				_dataCleanupConfiguration::cleanUpShoppingModuleData,
+				"com.liferay.shopping.service",
+				() -> new ShoppingUpgradeProcess(_imageLocalService));
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpPrivateMessagingModuleData,
@@ -96,13 +97,12 @@ public class DataCleanup implements UpgradeStepRegistrator {
 					_ratingsStatsLocalService, _subscriptionLocalService));
 
 			_cleanUpModuleData(
-				_dataCleanupConfiguration::cleanUpShoppingModuleData,
-				"com.liferay.shopping.service",
-				() -> new ShoppingUpgradeProcess(_imageLocalService));
-
-			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpTwitterModuleData,
 				"com.liferay.twitter.service", TwitterUpgradeProcess::new);
+
+			_cleanUpModuleData(
+				_dataCleanupConfiguration::cleanUpOpenSocialModuleData,
+				"opensocial-portlet", OpenSocialUpgradeProcess::new);
 		}
 		catch (UpgradeException upgradeException) {
 			ReflectionUtil.throwException(upgradeException);

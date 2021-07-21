@@ -263,7 +263,7 @@ public class DataCleanupTest {
 		"com.liferay.hello.world.web", "com.liferay.invitation.web",
 		"com.liferay.mail.reader.service", "com.liferay.shopping.service",
 		"com.liferay.social.privatemessaging.service",
-		"com.liferay.twitter.service", "com.liferay.softwarecatalog.service",
+		"com.liferay.softwarecatalog.service", "com.liferay.twitter.service",
 		"opensocial-portlet"
 	};
 
