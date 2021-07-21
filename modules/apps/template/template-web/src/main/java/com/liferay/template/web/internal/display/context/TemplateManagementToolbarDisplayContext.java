@@ -199,7 +199,7 @@ public class TemplateManagementToolbarDisplayContext
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to check permission for resourceName " +
+					"Unable to check permission for resource name " +
 						resourceName,
 					portalException);
 			}
