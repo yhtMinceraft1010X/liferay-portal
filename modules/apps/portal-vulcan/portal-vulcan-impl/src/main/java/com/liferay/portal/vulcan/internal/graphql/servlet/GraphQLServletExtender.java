@@ -1954,15 +1954,15 @@ public class GraphQLServletExtender {
 		for (Map.Entry<String, GraphQLObjectType.Builder> entry :
 				graphQLObjectTypeBuilders.entrySet()) {
 
-			String namespaceName = entry.getKey();
+			String namespace = entry.getKey();
 			GraphQLObjectType.Builder namespaceBuilder = entry.getValue();
 
 			parentGraphQLObjectTypeBuilder.field(
-				_addField(namespaceBuilder.build(), namespaceName));
+				_addField(namespaceBuilder.build(), namespace));
 
 			graphQLSchemaBuilder.codeRegistry(
 				graphQLCodeRegistryBuilder.dataFetcher(
-					FieldCoordinates.coordinates(parentName, namespaceName),
+					FieldCoordinates.coordinates(parentName, namespace),
 					(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
 				).build());
 		}
