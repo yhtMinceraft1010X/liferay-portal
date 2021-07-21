@@ -1115,10 +1115,10 @@ public class GraphQLServletExtender {
 			GraphQLSchema.Builder graphQLSchemaBuilder =
 				GraphQLSchema.newSchema();
 
-			GraphQLObjectType.Builder mutationBuilder =
+			GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
 
-			mutationBuilder.name("mutation");
+			mutationGraphQLObjectTypeBuilder.name("mutation");
 
 			GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
@@ -1129,15 +1129,15 @@ public class GraphQLServletExtender {
 				ConfigurationUtil.getConfigurations(_configurationAdmin);
 
 			_collectObjectFields(
-				mutationBuilder, configurations, ServletData::getMutation,
+				mutationGraphQLObjectTypeBuilder, configurations, ServletData::getMutation,
 				processingElementsContainer, servletDatas);
 			_collectObjectFields(
 				graphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
 			_registerGraphQLDTOContributors(
-				mutationBuilder, processingElementsContainer,
-				graphQLObjectTypeBuilder, graphQLSchemaBuilder);
+				graphQLSchemaBuilder, mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				graphQLObjectTypeBuilder);
 			_registerInterfaces(
 				processingElementsContainer, graphQLObjectTypeBuilder,
 				graphQLSchemaBuilder);
@@ -1146,11 +1146,11 @@ public class GraphQLServletExtender {
 				graphQLSchemaBuilder, false, processingElementsContainer,
 				servletDatas);
 			_registerNamespace(
-				configurations, ServletData::getMutation, mutationBuilder,
+				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder, true, processingElementsContainer,
 				servletDatas);
 
-			graphQLSchemaBuilder.mutation(mutationBuilder.build());
+			graphQLSchemaBuilder.mutation(mutationGraphQLObjectTypeBuilder.build());
 			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
@@ -1726,10 +1726,10 @@ public class GraphQLServletExtender {
 
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
-		GraphQLObjectType.Builder mutationBuilder,
+		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
 		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder schemaBuilder) {
+		GraphQLSchema.Builder graphQLSchemaBuilder) {
 
 		// Create
 
@@ -1743,7 +1743,7 @@ public class GraphQLServletExtender {
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
 			graphQLDTOContributor);
 
-		mutationBuilder.field(
+		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, createName,
 				_addArgument(graphQLInputType, resourceName)));
@@ -1751,7 +1751,7 @@ public class GraphQLServletExtender {
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", createName),
 				(DataFetcher<Object>)
@@ -1766,12 +1766,12 @@ public class GraphQLServletExtender {
 
 		String idName = graphQLDTOContributor.getIdName();
 
-		mutationBuilder.field(
+		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				Scalars.GraphQLBoolean, deleteName,
 				_addArgument(Scalars.GraphQLLong, idName)));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", deleteName),
 				(DataFetcher<Object>)
@@ -1787,7 +1787,7 @@ public class GraphQLServletExtender {
 			_addField(
 				graphQLObjectType, getName,
 				_addArgument(Scalars.GraphQLLong, idName)));
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("query", getName),
 				(DataFetcher<Object>)
@@ -1816,7 +1816,7 @@ public class GraphQLServletExtender {
 				_addArgument(Scalars.GraphQLString, "search"),
 				_addArgument(Scalars.GraphQLString, "sort")));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("query", listName),
 				(DataFetcher<Object>)dataFetchingEnvironment -> {
@@ -1868,13 +1868,13 @@ public class GraphQLServletExtender {
 
 		String updateName = "update" + resourceName;
 
-		mutationBuilder.field(
+		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, updateName,
 				_addArgument(graphQLInputType, resourceName),
 				_addArgument(Scalars.GraphQLLong, idName)));
 
-		schemaBuilder.codeRegistry(
+		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", updateName),
 				(DataFetcher<Object>)
@@ -1888,17 +1888,17 @@ public class GraphQLServletExtender {
 	}
 
 	private void _registerGraphQLDTOContributors(
-		GraphQLObjectType.Builder mutationBuilder,
+		GraphQLSchema.Builder graphQLSchemaBuilder,
+		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder schemaBuilder) {
+		GraphQLObjectType.Builder queryBuilder) {
 
 		for (GraphQLDTOContributor graphQLDTOContributor :
 				_graphQLDTOContributorServiceTrackerMap.values()) {
 
 			_registerGraphQLDTOContributor(
-				graphQLDTOContributor, mutationBuilder,
-				processingElementsContainer, queryBuilder, schemaBuilder);
+				graphQLDTOContributor, mutationGraphQLObjectTypeBuilder,
+				processingElementsContainer, queryBuilder, graphQLSchemaBuilder);
 		}
 	}
 
