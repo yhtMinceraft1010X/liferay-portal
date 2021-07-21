@@ -1965,10 +1965,11 @@ public class GraphQLServletExtender {
 				graphQLObjectTypeBuilders.entrySet()) {
 
 			String namespace = entry.getKey();
-			GraphQLObjectType.Builder namespaceBuilder = entry.getValue();
+			GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+				entry.getValue();
 
 			parentGraphQLObjectTypeBuilder.field(
-				_addField(namespaceBuilder.build(), namespace));
+				_addField(graphQLObjectTypeBuilder.build(), namespace));
 
 			graphQLSchemaBuilder.codeRegistry(
 				graphQLCodeRegistryBuilder.dataFetcher(
