@@ -39,11 +39,11 @@ import javax.ws.rs.core.UriInfo;
 public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(
-		Long objectDefinitionCompanyId, OpenAPIResource openAPIResource,
+		Long companyId, OpenAPIResource openAPIResource,
 		OpenAPISchemaFilter openAPISchemaFilter,
 		Set<Class<?>> resourceClasses) {
 
-		_objectDefinitionCompanyId = objectDefinitionCompanyId;
+		_companyId = companyId;
 		_openAPIResource = openAPIResource;
 		_openAPISchemaFilter = openAPISchemaFilter;
 		_resourceClasses = resourceClasses;
@@ -55,7 +55,7 @@ public class OpenAPIResourceImpl {
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
 
-		if (_contextCompany.getCompanyId() != _objectDefinitionCompanyId) {
+		if (_contextCompany.getCompanyId() != _companyId) {
 			return Response.status(
 				404
 			).build();
@@ -68,7 +68,7 @@ public class OpenAPIResourceImpl {
 	@Context
 	private Company _contextCompany;
 
-	private final Long _objectDefinitionCompanyId;
+	private final Long _companyId;
 	private final OpenAPIResource _openAPIResource;
 	private final OpenAPISchemaFilter _openAPISchemaFilter;
 	private final Set<Class<?>> _resourceClasses;
