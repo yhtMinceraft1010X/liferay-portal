@@ -832,11 +832,8 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLObjectType.Builder> graphQLObjectTypeBuilders,
 		String name, String typeName) {
 
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
-			new GraphQLObjectType.Builder();
-
 		graphQLObjectTypeBuilders.putIfAbsent(
-			name, graphQLObjectTypeBuilder.name(typeName));
+			name, new GraphQLObjectType.Builder().name(typeName));
 
 		return graphQLObjectTypeBuilders.get(name);
 	}
