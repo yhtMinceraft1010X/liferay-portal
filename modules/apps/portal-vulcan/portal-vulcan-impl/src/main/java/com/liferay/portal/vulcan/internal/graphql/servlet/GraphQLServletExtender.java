@@ -1141,12 +1141,12 @@ public class GraphQLServletExtender {
 			_registerInterfaces(
 				graphQLSchemaBuilder, processingElementsContainer, queryGraphQLObjectTypeBuilder);
 			_registerNamespace(
-				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
-				graphQLSchemaBuilder, false, processingElementsContainer,
-				servletDatas);
-			_registerNamespace(
 				configurations, ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
 				graphQLSchemaBuilder, true, processingElementsContainer,
+				servletDatas);
+			_registerNamespace(
+				configurations, ServletData::getQuery, queryGraphQLObjectTypeBuilder,
+				graphQLSchemaBuilder, false, processingElementsContainer,
 				servletDatas);
 
 			graphQLSchemaBuilder.mutation(mutationGraphQLObjectTypeBuilder.build());
