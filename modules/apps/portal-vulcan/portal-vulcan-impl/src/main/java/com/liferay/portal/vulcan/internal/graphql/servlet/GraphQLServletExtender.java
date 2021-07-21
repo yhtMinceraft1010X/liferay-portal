@@ -1934,11 +1934,11 @@ public class GraphQLServletExtender {
 			processingElementsContainer.getCodeRegistryBuilder();
 
 		_registerGraphQLObjectTypeBuilders(
-			graphQLCodeRegistryBuilder, queryGraphQLObjectTypeBuilders,
-			queryGraphQLObjectTypeBuilder, "query", graphQLSchemaBuilder);
-		_registerGraphQLObjectTypeBuilders(
 			graphQLCodeRegistryBuilder, mutationGraphQLObjectTypeBuilders,
 			mutationGraphQLObjectTypeBuilder, "mutation", graphQLSchemaBuilder);
+		_registerGraphQLObjectTypeBuilders(
+			graphQLCodeRegistryBuilder, queryGraphQLObjectTypeBuilders,
+			queryGraphQLObjectTypeBuilder, "query", graphQLSchemaBuilder);
 	}
 
 	private void _registerGraphQLObjectTypeBuilders(
