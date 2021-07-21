@@ -85,7 +85,7 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 					maximumNumberOfCategoriesPerVocabulary()) {
 
 			throw new AssetCategoryLimitException(
-				"Unable to exceed maximum number of allowed categories for" +
+				"Unable to exceed maximum number of allowed categories for " +
 					"vocabulary: " + vocabularyId);
 		}
 

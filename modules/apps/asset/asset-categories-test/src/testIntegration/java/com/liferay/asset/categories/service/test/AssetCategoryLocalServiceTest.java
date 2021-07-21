@@ -163,17 +163,14 @@ public class AssetCategoryLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
-
 			_assetCategoryLocalService.addCategory(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
-
 			_assetCategoryLocalService.addCategory(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
 				_assetVocabulary.getVocabularyId(), new ServiceContext());
-
 			_assetCategoryLocalService.addCategory(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
