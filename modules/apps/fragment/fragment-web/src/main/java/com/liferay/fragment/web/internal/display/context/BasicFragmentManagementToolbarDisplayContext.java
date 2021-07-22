@@ -105,7 +105,6 @@ public class BasicFragmentManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -123,7 +122,6 @@ public class BasicFragmentManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();

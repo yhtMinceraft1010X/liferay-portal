@@ -72,7 +72,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -103,7 +102,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 									_httpServletRequest, "permissions"));
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(

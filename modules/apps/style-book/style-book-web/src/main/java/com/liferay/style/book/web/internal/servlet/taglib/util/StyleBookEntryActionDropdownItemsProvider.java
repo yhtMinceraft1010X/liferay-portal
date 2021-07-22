@@ -98,7 +98,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					).add(
 						_getRenameStyleBookEntrytActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -109,7 +108,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					).add(
 						_getCopyStyleBookEntryActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -118,7 +116,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						_getDeleteStyleBookEntryActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();

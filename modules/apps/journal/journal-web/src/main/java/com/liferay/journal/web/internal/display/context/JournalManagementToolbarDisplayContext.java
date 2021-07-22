@@ -105,7 +105,6 @@ public class JournalManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(

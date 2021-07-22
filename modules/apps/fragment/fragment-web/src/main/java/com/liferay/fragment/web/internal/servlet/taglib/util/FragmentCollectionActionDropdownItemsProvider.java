@@ -112,7 +112,6 @@ public class FragmentCollectionActionDropdownItemsProvider {
 									_httpServletRequest, "import"));
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(

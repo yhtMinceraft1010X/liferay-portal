@@ -90,7 +90,6 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 						() -> hasManageFragmentEntriesPermission,
 						_getRenameFragmentCompositionActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -103,7 +102,6 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 						() -> hasManageFragmentEntriesPermission,
 						_getMoveFragmentCompositionActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -113,7 +111,6 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 						() -> hasManageFragmentEntriesPermission,
 						_getDeleteFragmentCompositionActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
