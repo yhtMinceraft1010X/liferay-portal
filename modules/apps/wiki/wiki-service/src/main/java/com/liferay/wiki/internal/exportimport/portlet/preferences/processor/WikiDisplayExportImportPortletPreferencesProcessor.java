@@ -181,7 +181,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			_wikiPageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
 			actionableDynamicQuery.getAddCriteriaMethod();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
