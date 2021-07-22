@@ -23,6 +23,11 @@ definition {
 			widgetName = "${widgetName}");
 	}
 
+	macro assertXAxisTimedGraph {
+		var key_parentName = "${parentName}";
+		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");
+	}
+
 	macro clearSearchBar {
 		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
 	}
@@ -228,11 +233,6 @@ definition {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	macro assertXAxisTimedGraph {
-		var key_parentName = "${parentName}";
-		AssertElementPresent(locator1="ACUtils#SVG_TIMED_GRAPH");
 	}
 
 }

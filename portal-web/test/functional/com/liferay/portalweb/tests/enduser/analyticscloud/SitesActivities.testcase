@@ -9,7 +9,7 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-		
+
 		ACSettings.takeTokenFromAnalyticsCloud();
 
 		TestCase.setUpPortalInstance();
