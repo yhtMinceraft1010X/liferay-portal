@@ -69,7 +69,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					DropdownItemListBuilder.add(
 						_getEditStyleBookEntryActionUnsafeConsumer()
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
