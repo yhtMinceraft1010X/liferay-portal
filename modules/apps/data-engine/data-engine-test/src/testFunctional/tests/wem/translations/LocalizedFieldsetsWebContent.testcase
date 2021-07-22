@@ -309,15 +309,15 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Numeric",
-			fieldsetName = "New Fieldset Test");
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset Test");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset Test");
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
 		DataEngine.addFields(fieldNameList = "Date");
 
@@ -335,16 +335,12 @@ definition {
 
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text,Numeric,Date",
-			fieldsetName = "New Fieldset Test",
+			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
-
-		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "New Fieldset Test",
-			fieldsetLabelEdit = "New Fieldset Test pt-BR");
 
 		WebContentStructures.saveCP();
 
@@ -356,11 +352,11 @@ definition {
 
 		DataEngine.viewFieldset(
 			fieldNameList = "Text,Numeric,Date",
-			fieldsetName = "New Fieldset Test");
+			fieldsetName = "New Fieldset");
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text,Numeric,Date",
-			fieldsetName = "New Fieldset Test",
+			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
 		WebContentStructures.saveCP();
@@ -419,7 +415,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.delete(fieldsetLabel = "New Fieldset Test");
+		DataEngine.delete(fieldsetLabel = "New Fieldset");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -427,14 +423,14 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset Test");
+		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset");
 
 		Button.clickCancel();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertElementNotPresent(
-			key_fieldsetName = "New Fieldset Test",
+			key_fieldsetName = "New Fieldset",
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
 
 		WebContentStructures.saveCP();
