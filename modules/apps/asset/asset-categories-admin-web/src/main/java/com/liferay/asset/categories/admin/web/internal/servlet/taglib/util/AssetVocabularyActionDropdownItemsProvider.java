@@ -94,7 +94,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 										vocabulary.getVocabularyId()),
 									LiferayWindowState.POP_UP.toString(), null,
 									_httpServletRequest));
-
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "permissions"));
