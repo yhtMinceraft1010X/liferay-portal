@@ -333,9 +333,6 @@ definition {
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewStatusViaDetails(status = "Approved");
-
-
-		
 	}
 
 	@description = "Verify that the user can approve calendar events on Single Approver workflow"
