@@ -230,4 +230,9 @@ definition {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
 
+	macro assertXAxisTimedGraph {
+		var key_parentName = "${parentName}";
+		AssertElementPresent(locator1="ACUtils#SVG_TIMED_GRAPH");
+	}
+
 }
