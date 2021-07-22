@@ -74,7 +74,10 @@ public class AssetCategoriesManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						this::_isSetDisplayPageTemplateEnabled,
 						dropdownItem -> {
-							PortletURL setCategoryDisplayPageTemplateURL =
+							dropdownItem.putData(
+								"action", "setCategoryDisplayPageTemplate");
+							dropdownItem.putData(
+								"setCategoryDisplayPageTemplateURL",
 								PortletURLBuilder.createRenderURL(
 									liferayPortletResponse
 								).setMVCPath(
@@ -89,13 +92,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 									"vocabularyId",
 									_assetCategoriesDisplayContext.
 										getVocabularyId()
-								).build();
-
-							dropdownItem.putData(
-								"action", "setCategoryDisplayPageTemplate");
-							dropdownItem.putData(
-								"setCategoryDisplayPageTemplateURL",
-								setCategoryDisplayPageTemplateURL.toString());
+								).buildString());
 							dropdownItem.setIcon("page");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -104,7 +101,6 @@ public class AssetCategoriesManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
@@ -120,7 +116,6 @@ public class AssetCategoriesManagementToolbarDisplayContext
 							dropdownItem.setQuickAction(true);
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
