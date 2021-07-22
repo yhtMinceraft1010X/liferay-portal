@@ -9,16 +9,14 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
+		
 		ACSettings.takeTokenFromAnalyticsCloud();
 
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
 
-		ACUtils.addSiteAndPage();
-
-		ACUtils.createBlogsAndAddToPage();
+		ACUtils.launchAC();
 	}
 
 	tearDown {
@@ -29,9 +27,6 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
 
 		ACUtils.tearDownAC();
 	}
@@ -40,9 +35,9 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanLoadDataProperlyWhenTimeFilterIsLast24Hours {
-
-		// TODO LRAC-8110 CanLoadDataProperlyWhenTimeFilterIsLast24Hours pending implementation
-
+		ACTimeFilter.clickTimeFilterButton();
+		ACTimeFilter.setLast24Hours();
+		ACUtils.assertXAxisTimedGraph(parentName = "Beryl Commerce Activities");
 	}
 
 }
