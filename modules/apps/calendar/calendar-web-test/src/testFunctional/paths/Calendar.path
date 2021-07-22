@@ -501,6 +501,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_ALL_DAY_2</td>
+	<td>//div[contains(@class,'calendar-portlet-event')]/div[contains(@class,'scheduler-event-content') and contains(.,'${key_eventTitle}')]/../../div[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_BACKGROUND_COLOR</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'${key_backgroundColor}')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
