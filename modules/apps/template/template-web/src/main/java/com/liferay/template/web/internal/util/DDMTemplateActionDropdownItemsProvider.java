@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 public class DDMTemplateActionDropdownItemsProvider {
 
 	public DDMTemplateActionDropdownItemsProvider(
+		boolean addDDMTemplateEnable,
 		DDMTemplate ddmTemplate, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		boolean addDDMTemplateEnable) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_ddmTemplate = ddmTemplate;
 		_httpServletRequest = httpServletRequest;

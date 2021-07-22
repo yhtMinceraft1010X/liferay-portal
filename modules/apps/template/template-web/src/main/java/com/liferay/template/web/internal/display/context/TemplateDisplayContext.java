@@ -82,8 +82,8 @@ public class TemplateDisplayContext {
 		DDMTemplateActionDropdownItemsProvider
 			ddmTemplateActionDropdownItemsProvider =
 				new DDMTemplateActionDropdownItemsProvider(
-					ddmTemplate, _httpServletRequest, _liferayPortletResponse,
-					isAddDDMTemplateEnabled());
+					isAddDDMTemplateEnabled(), ddmTemplate, _httpServletRequest,
+					_liferayPortletResponse);
 
 		return ddmTemplateActionDropdownItemsProvider.getActionDropdownItems();
 	}
