@@ -67,7 +67,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								).setParameter(
 									"vocabularyId", vocabulary.getVocabularyId()
 								).buildString());
-
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -83,7 +82,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "permissionsVocabulary");
-
 							dropdownItem.putData(
 								"permissionsVocabularyURL",
 								PermissionsURLTag.doTag(
@@ -111,7 +109,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 						() -> _hasPermission(vocabulary, ActionKeys.DELETE),
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteVocabulary");
-
 							dropdownItem.putData(
 								"deleteVocabularyURL",
 								PortletURLBuilder.createActionURL(
@@ -128,7 +125,6 @@ public class AssetVocabularyActionDropdownItemsProvider {
 									_httpServletRequest, "delete"));
 						}
 					).build());
-
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
