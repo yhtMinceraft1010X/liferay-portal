@@ -171,8 +171,8 @@ public class PortletDisplayTemplatePortletDataHandler
 	}
 
 	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
-		final PortletDataContext portletDataContext, final Long[] classNameIds,
-		final StagedModelType stagedModelType) {
+		PortletDataContext portletDataContext, Long[] classNameIds,
+		StagedModelType stagedModelType) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ddmTemplateLocalService.getExportActionableDynamicQuery(

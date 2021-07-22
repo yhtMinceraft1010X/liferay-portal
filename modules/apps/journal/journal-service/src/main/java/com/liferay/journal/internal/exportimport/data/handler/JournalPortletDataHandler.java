@@ -249,7 +249,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			final PortletDataContext portletDataContext, String portletId,
+			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -457,13 +457,13 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getArticleActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_journalArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		final ExportActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+		ExportActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
@@ -519,7 +519,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDDMStructureActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ddmStructureLocalService.getExportActionableDynamicQuery(
@@ -563,7 +563,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
-		final PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext) {
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_ddmTemplateLocalService.getExportActionableDynamicQuery(

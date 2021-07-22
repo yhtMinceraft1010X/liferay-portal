@@ -174,8 +174,8 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 	}
 
 	protected ActionableDynamicQuery getPageActionableDynamicQuery(
-		final PortletDataContext portletDataContext, final long nodeId,
-		final String portletId) {
+		PortletDataContext portletDataContext, long nodeId,
+		String portletId) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_wikiPageLocalService.getExportActionableDynamicQuery(
