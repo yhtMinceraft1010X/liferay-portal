@@ -196,7 +196,7 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			_ddmTemplateLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
 			exportActionableDynamicQuery.getAddCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddCriteriaMethod(
@@ -219,7 +219,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 					typeProperty.eq(
 						DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
 			});
-
 		exportActionableDynamicQuery.setStagedModelType(stagedModelType);
 
 		return exportActionableDynamicQuery;
