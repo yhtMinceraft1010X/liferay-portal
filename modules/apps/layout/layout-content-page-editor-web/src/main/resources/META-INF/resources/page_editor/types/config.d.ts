@@ -116,8 +116,8 @@ export interface Config {
 	getAvailableTemplatesURL: string;
 	getCollectionFieldURL: string;
 	getCollectionFiltersURL: string;
-	getCollectionMappingFieldsURL: string;
 	getCollectionItemCountURL: string;
+	getCollectionMappingFieldsURL: string;
 	getExperienceUsedPortletsURL: string;
 	getIframeContentCssURL: string;
 	getIframeContentURL: string;
