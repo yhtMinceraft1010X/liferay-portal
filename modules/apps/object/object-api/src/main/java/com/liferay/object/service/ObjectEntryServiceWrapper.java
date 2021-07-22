@@ -30,6 +30,38 @@ public class ObjectEntryServiceWrapper
 		_objectEntryService = objectEntryService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntry addObjectEntry(
+			long userId, long groupId, long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.addObjectEntry(
+			userId, groupId, objectDefinitionId, values, serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
+			String externalReferenceCode, long userId, long groupId,
+			long objectDefinitionId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.addOrUpdateObjectEntry(
+			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry deleteObjectEntry(
+			long objectEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.deleteObjectEntry(objectEntryId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
