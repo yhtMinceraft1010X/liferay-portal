@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.Dictionary;
+import java.util.Objects;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -52,16 +53,12 @@ public class ConfigurationUtil {
 				continue;
 			}
 
-			Class<?> returnType = method.getReturnType();
-
-			if (!returnType.equals(Boolean.TYPE)) {
+			if (!Objects.equals(method.getReturnType(), Boolean.TYPE)) {
 				continue;
 			}
 
-			String key = method.getName();
-
-			if (properties.get(key) != null) {
-				newProperties.put(key, false);
+			if (properties.get(method.getName()) != null) {
+				newProperties.put(method.getName(), false);
 			}
 		}
 
