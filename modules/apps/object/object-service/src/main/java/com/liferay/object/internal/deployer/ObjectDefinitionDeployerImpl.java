@@ -83,9 +83,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"resource.name", objectDefinition.getResourceName()
+					"com.liferay.object", "true"
 				).put(
-					"object", "true"
+					"resource.name", objectDefinition.getResourceName()
 				).build()),
 			_bundleContext.registerService(
 				ModelResourcePermission.class,
@@ -93,9 +93,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition.getClassName(), _objectEntryLocalService,
 					portletResourcePermission),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
+					"com.liferay.object", "true"
 				).put(
-					"object", "true"
+					"model.class.name", objectDefinition.getClassName()
 				).build()));
 	}
 

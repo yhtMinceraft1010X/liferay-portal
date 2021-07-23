@@ -137,7 +137,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(model.class.name=*)(object=true))"
+		target = "(&(com.liferay.object=true)(model.class.name=*))"
 	)
 	protected void setModelResourcePermission(
 		ModelResourcePermission<ObjectEntry> modelResourcePermission,
@@ -152,7 +152,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(resource.name=*)(object=true))"
+		target = "(&(com.liferay.object=true)(resource.name=*))"
 	)
 	protected void setPortletResourcePermission(
 		PortletResourcePermission portletResourcePermission,
