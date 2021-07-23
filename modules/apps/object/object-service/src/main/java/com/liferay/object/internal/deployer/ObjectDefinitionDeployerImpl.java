@@ -117,14 +117,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private void _importResourceAction(ObjectDefinition objectDefinition)
 		throws DocumentException, IOException, ResourceActionsException {
 
-		String xml = StringUtil.read(
-			ObjectDefinitionDeployerImpl.class.getClassLoader(),
-			"resource-actions/resource-actions.xml.tpl");
-
 		_resourceActions.populateModelResources(
 			SAXReaderUtil.read(
 				StringUtil.replace(
-					xml,
+					StringUtil.read(
+						ObjectDefinitionDeployerImpl.class.getClassLoader(),
+						"resource-actions/resource-actions.xml.tpl"),
 					new String[] {
 						"[$MODEL_NAME$]",
 						"[$RESOURCE_NAME$]"
