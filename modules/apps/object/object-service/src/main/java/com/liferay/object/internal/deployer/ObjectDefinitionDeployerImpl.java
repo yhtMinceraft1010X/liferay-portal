@@ -18,7 +18,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
-import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletPermissionLogic;
+import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -65,7 +65,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		PortletResourcePermission portletResourcePermission =
 			PortletResourcePermissionFactory.create(
 				objectDefinition.getResourceName(),
-				new ObjectEntryPortletPermissionLogic());
+				new ObjectEntryPortletResourcePermissionLogic());
 
 		return Arrays.asList(
 			_bundleContext.registerService(
