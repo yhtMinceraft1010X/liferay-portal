@@ -74,10 +74,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition, _objectEntryLocalService),
 				null),
 			_bundleContext.registerService(
-				WorkflowHandler.class,
-				new ObjectEntryWorkflowHandler(
-					objectDefinition, _objectEntryLocalService),
+				ModelResourcePermission.class,
+				new ObjectEntryModelResourcePermission(
+					objectDefinition.getClassName(), _objectEntryLocalService,
+					portletResourcePermission),
 				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.object", "true"
+				).put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
@@ -88,13 +91,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"resource.name", objectDefinition.getResourceName()
 				).build()),
 			_bundleContext.registerService(
-				ModelResourcePermission.class,
-				new ObjectEntryModelResourcePermission(
-					objectDefinition.getClassName(), _objectEntryLocalService,
-					portletResourcePermission),
+				WorkflowHandler.class,
+				new ObjectEntryWorkflowHandler(
+					objectDefinition, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"com.liferay.object", "true"
-				).put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()));
 	}
