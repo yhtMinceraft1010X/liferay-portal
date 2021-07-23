@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
 public class ObjectEntryModelResourcePermission
 	implements ModelResourcePermission<ObjectEntry> {
@@ -68,17 +69,10 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		long groupId = 0;
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
-		if (objectEntry != null) {
-			groupId = objectEntry.getGroupId();
-		}
-
-		return permissionChecker.hasPermission(
-			groupId, _modelName, objectEntryId, actionId);
+		return contains(permissionChecker, objectEntry, actionId);
 	}
 
 	@Override
@@ -87,8 +81,9 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker, objectEntry.getObjectEntryId(), actionId);
+		return permissionChecker.hasPermission(
+			objectEntry.getGroupId(), _modelName,
+			objectEntry.getObjectEntryId(), actionId);
 	}
 
 	@Override
