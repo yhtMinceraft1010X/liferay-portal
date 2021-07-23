@@ -22,7 +22,6 @@ import com.liferay.object.internal.security.permission.resource.ObjectEntryPortl
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-
-import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -105,7 +101,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private void _readResourceActions(ObjectDefinition objectDefinition)
-		throws DocumentException, IOException, ResourceActionsException {
+		throws Exception {
 
 		_resourceActions.populateModelResources(
 			SAXReaderUtil.read(
@@ -113,10 +109,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					StringUtil.read(
 						ObjectDefinitionDeployerImpl.class.getClassLoader(),
 						"resource-actions/resource-actions.xml.tpl"),
-					new String[] {
-						"[$MODEL_NAME$]",
-						"[$RESOURCE_NAME$]"
-					},
+					new String[] {"[$MODEL_NAME$]", "[$RESOURCE_NAME$]"},
 					new String[] {
 						objectDefinition.getClassName(),
 						objectDefinition.getResourceName()
