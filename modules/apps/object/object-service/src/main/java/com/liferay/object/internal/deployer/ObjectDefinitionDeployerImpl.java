@@ -99,16 +99,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()));
 	}
 
-	@Override
-	public void undeploy(ObjectDefinition objectDefinition) {
-
-		//TODO Should we remove the resource actions at each
-
-		// undeploy or just if we delete the object?
-		// How does it works in portal?
-
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
