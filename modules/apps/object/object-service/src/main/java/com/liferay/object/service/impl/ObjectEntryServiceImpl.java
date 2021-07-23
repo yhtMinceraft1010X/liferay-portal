@@ -113,9 +113,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission,
 		Map<String, Object> properties) {
 
-		String resourceName = (String)properties.get("model.class.name");
+		String className = (String)properties.get("model.class.name");
 
-		_modelResourcePermissions.put(resourceName, modelResourcePermission);
+		_modelResourcePermissions.put(className, modelResourcePermission);
 	}
 
 	@Reference(
@@ -138,9 +138,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission,
 		Map<String, Object> properties) {
 
-		String resourceName = (String)properties.get("resource.name");
+		String className = (String)properties.get("model.class.name");
 
-		_modelResourcePermissions.remove(resourceName);
+		_modelResourcePermissions.remove(className);
 	}
 
 	protected void unsetPortletResourcePermission(
