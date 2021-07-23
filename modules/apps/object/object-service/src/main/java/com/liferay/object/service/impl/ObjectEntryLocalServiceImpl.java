@@ -142,7 +142,14 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
 
-		addResources(objectEntry);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		_resourceLocalService.addResources(
+			objectEntry.getCompanyId(), objectEntry.getGroupId(),
+			objectEntry.getUserId(), objectDefinition.getClassName(),
+			objectEntry.getPrimaryKey(), false, false, false);
 
 		updateAsset(
 			serviceContext.getUserId(), objectEntry,
@@ -188,18 +195,6 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return objectEntryPersistence.update(objectEntry);
-	}
-
-	@Override
-	public void addResources(ObjectEntry objectEntry) throws PortalException {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		_resourceLocalService.addResources(
-			objectEntry.getCompanyId(), objectEntry.getGroupId(),
-			objectEntry.getUserId(), objectDefinition.getClassName(),
-			objectEntry.getPrimaryKey(), false, false, false);
 	}
 
 	@Override
