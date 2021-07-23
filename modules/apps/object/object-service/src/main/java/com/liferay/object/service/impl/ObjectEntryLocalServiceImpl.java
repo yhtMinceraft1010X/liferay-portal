@@ -219,12 +219,12 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_assetEntryLocalService.deleteEntry(
-			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
-
 		_resourceLocalService.deleteResource(
 			objectEntry.getCompanyId(), objectDefinition.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, objectEntry.getObjectEntryId());
+
+		_assetEntryLocalService.deleteEntry(
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_deleteFromTable(objectDefinition, objectEntry);
 
