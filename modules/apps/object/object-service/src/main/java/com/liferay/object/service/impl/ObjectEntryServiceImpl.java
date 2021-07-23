@@ -30,7 +30,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -182,13 +181,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, actionId);
 	}
 
-	private final ConcurrentMap<String, ModelResourcePermission<ObjectEntry>>
+	private final Map<String, ModelResourcePermission<ObjectEntry>>
 		_modelResourcePermissions = new ConcurrentHashMap<>();
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private final ConcurrentMap<String, PortletResourcePermission>
+	private final Map<String, PortletResourcePermission>
 		_portletResourcePermissions = new ConcurrentHashMap<>();
 
 }
