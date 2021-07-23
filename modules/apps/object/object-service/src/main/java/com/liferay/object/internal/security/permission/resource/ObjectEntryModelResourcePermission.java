@@ -68,17 +68,17 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		long groupId = 0;
+
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			objectEntryId);
 
-		long objectEntryGroupId = 0;
-
 		if (objectEntry != null) {
-			objectEntryGroupId = objectEntry.getGroupId();
+			groupId = objectEntry.getGroupId();
 		}
 
 		return permissionChecker.hasPermission(
-			objectEntryGroupId, _modelName, objectEntryId, actionId);
+			groupId, _modelName, objectEntryId, actionId);
 	}
 
 	@Override
