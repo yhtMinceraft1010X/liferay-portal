@@ -119,7 +119,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		String xml = StringUtil.read(
 			ObjectDefinitionDeployerImpl.class.getClassLoader(),
-			_DEPENDENCIES_PATH + "resource-actions.xml.tpl");
+			"resource-actions/resource-actions.xml.tpl");
 
 		_resourceActions.populateModelResources(
 			SAXReaderUtil.read(
@@ -128,8 +128,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						xml, "[$RESOURCE_NAME$]", objectDefinition.getName()),
 					"[$MODEL_NAME$]", objectDefinition.getDBTableName())));
 	}
-
-	private static final String _DEPENDENCIES_PATH = "resource-actions/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionDeployerImpl.class);
