@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.info.list.provider;
+package com.liferay.object.internal.info.collection.provider;
 
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;

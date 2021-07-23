@@ -16,7 +16,7 @@ package com.liferay.object.internal.deployer;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.info.list.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
+import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
