@@ -57,7 +57,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
-		checkPortletResourcePermission(
+		_checkPortletResourcePermission(
 			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		return objectEntryLocalService.addObjectEntry(
@@ -75,11 +75,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			groupId, serviceContext.getCompanyId(), externalReferenceCode);
 
 		if (objectEntry == null) {
-			checkPortletResourcePermission(
+			_checkPortletResourcePermission(
 				groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 		}
 		else {
-			checkModelResourcePermission(
+			_checkModelResourcePermission(
 				objectDefinitionId, objectEntry.getObjectEntryId(),
 				ActionKeys.UPDATE);
 		}
@@ -96,41 +96,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
-		checkModelResourcePermission(
+		_checkModelResourcePermission(
 			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
 			ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntryId);
-	}
-
-	protected void checkModelResourcePermission(
-			long objectDefinitionId, long objectEntryId, String actionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_modelResourcePermissions.get(objectDefinition.getClassName());
-
-		modelResourcePermission.check(
-			getPermissionChecker(), objectEntryId, actionId);
-	}
-
-	protected void checkPortletResourcePermission(
-			long groupId, long objectDefinitionId, String actionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		PortletResourcePermission portletResourcePermission =
-			_portletResourcePermissions.get(objectDefinition.getResourceName());
-
-		portletResourcePermission.check(
-			getPermissionChecker(), groupId, actionId);
 	}
 
 	@Reference(
@@ -180,6 +150,36 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		String resourceName = (String)properties.get("resource.name");
 
 		_portletResourcePermissions.remove(resourceName);
+	}
+
+	private void _checkModelResourcePermission(
+			long objectDefinitionId, long objectEntryId, String actionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			_modelResourcePermissions.get(objectDefinition.getClassName());
+
+		modelResourcePermission.check(
+			getPermissionChecker(), objectEntryId, actionId);
+	}
+
+	private void _checkPortletResourcePermission(
+			long groupId, long objectDefinitionId, String actionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		PortletResourcePermission portletResourcePermission =
+			_portletResourcePermissions.get(objectDefinition.getResourceName());
+
+		portletResourcePermission.check(
+			getPermissionChecker(), groupId, actionId);
 	}
 
 	private final ConcurrentMap<String, ModelResourcePermission<ObjectEntry>>
