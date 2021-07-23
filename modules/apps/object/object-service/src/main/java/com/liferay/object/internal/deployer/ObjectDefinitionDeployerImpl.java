@@ -125,8 +125,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			SAXReaderUtil.read(
 				StringUtil.replace(
 					StringUtil.replace(
-						xml, "[$RESOURCE_NAME$]", objectDefinition.getName()),
-					"[$MODEL_NAME$]", objectDefinition.getDBTableName())));
+						xml, "[$RESOURCE_NAME$]", objectDefinition.getResourceName()),
+					"[$MODEL_NAME$]", objectDefinition.getClassName())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
