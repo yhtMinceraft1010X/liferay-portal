@@ -22,8 +22,7 @@ import com.liferay.object.internal.security.permission.resource.ObjectEntryPortl
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -55,7 +54,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_readResourceActions(objectDefinition);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			return ReflectionUtil.throwException(exception);
 		}
 
 		PortletResourcePermission portletResourcePermission =
@@ -115,9 +114,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition.getResourceName()
 					})));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectDefinitionDeployerImpl.class);
 
 	private BundleContext _bundleContext;
 
