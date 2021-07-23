@@ -15,7 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectActionKeys;
-import com.liferay.object.constants.ObjectsConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -116,9 +116,7 @@ public class ObjectDefinitionServiceImpl
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 
-	@Reference(
-		target = "(resource.name=" + ObjectsConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + ObjectConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.security.permission.resource;
 
-import com.liferay.object.constants.ObjectsConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -94,9 +94,7 @@ public class ObjectDefinitionModelResourcePermission
 		return _portletResourcePermission;
 	}
 
-	@Reference(
-		target = "(resource.name=" + ObjectsConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + ObjectConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

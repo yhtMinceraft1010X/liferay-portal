@@ -17,7 +17,7 @@ package com.liferay.object.constants;
 /**
  * @author Gabriel Albuquerque
  */
-public class ObjectsConstants {
+public class ObjectConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.object";
 

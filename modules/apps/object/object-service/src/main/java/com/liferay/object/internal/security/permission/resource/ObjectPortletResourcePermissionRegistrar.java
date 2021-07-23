@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.security.permission.resource;
 
-import com.liferay.object.constants.ObjectsConstants;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -39,10 +39,10 @@ public class ObjectPortletResourcePermissionRegistrar {
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				ObjectsConstants.RESOURCE_NAME,
+				ObjectConstants.RESOURCE_NAME,
 				new ObjectDefinitionPortletResourcePermissionLogic()),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"resource.name", ObjectsConstants.RESOURCE_NAME
+				"resource.name", ObjectConstants.RESOURCE_NAME
 			).build());
 	}
 
