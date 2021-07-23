@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 public class ObjectEntryPortletPermissionLogic
 	implements PortletResourcePermissionLogic {
 
-	public ObjectEntryPortletPermissionLogic() {
-	}
-
 	@Override
 	public Boolean contains(
 		PermissionChecker permissionChecker, String name, Group group,
