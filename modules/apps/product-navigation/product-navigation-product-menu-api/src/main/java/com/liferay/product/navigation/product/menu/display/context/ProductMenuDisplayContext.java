@@ -55,7 +55,6 @@ public class ProductMenuDisplayContext {
 		_portletResponse = portletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(_portletRequest);
-
 		_panelAppRegistry = (PanelAppRegistry)_portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
 		_panelCategoryHelper =
@@ -180,15 +179,15 @@ public class ProductMenuDisplayContext {
 		String ppid = ParamUtil.getString(originalHttpServletRequest, "p_p_id");
 		String mvcRenderCommandName = ParamUtil.getString(
 			originalHttpServletRequest,
-			PortalUtil.getPortletNamespace(_GROUP_PAGES) +
+			PortalUtil.getPortletNamespace(_PORTLET_NAME) +
 				"mvcRenderCommandName");
 		String mvcPath = ParamUtil.getString(
 			originalHttpServletRequest, "mvcPath");
 
-		if (!ppid.equals(_GROUP_PAGES) ||
-			(ppid.equals(_GROUP_PAGES) &&
+		if (!ppid.equals(_PORTLET_NAME) ||
+			(ppid.equals(_PORTLET_NAME) &&
 			 Validator.isNotNull(mvcRenderCommandName)) ||
-			(ppid.equals(_GROUP_PAGES) && Validator.isNotNull(mvcPath))) {
+			(ppid.equals(_PORTLET_NAME) && Validator.isNotNull(mvcPath))) {
 
 			return true;
 		}
@@ -242,7 +241,7 @@ public class ProductMenuDisplayContext {
 		return _enableApplicationsMenu;
 	}
 
-	private static final String _GROUP_PAGES =
+	private static final String _PORTLET_NAME =
 		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
