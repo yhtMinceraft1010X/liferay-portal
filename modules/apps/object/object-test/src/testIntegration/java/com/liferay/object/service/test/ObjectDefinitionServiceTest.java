@@ -78,7 +78,7 @@ public class ObjectDefinitionServiceTest {
 			Assert.assertTrue(
 				message.contains(
 					"User " + _defaultUser.getUserId() +
-						" must have ADD_ENTRY permission for"));
+						" must have ADD_OBJECT_DEFINITION permission for"));
 		}
 
 		_testAddCustomObjectDefinition(_user);

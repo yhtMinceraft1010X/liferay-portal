@@ -14,6 +14,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectsConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -50,7 +51,8 @@ public class ObjectDefinitionServiceImpl
 		throws PortalException {
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
+			getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
 			userId, name, objectFields);

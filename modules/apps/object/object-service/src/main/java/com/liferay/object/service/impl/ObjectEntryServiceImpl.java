@@ -14,6 +14,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -57,7 +58,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		checkPortletResourcePermission(
-			groupId, objectDefinitionId, ActionKeys.ADD_ENTRY);
+			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		return objectEntryLocalService.addObjectEntry(
 			userId, groupId, objectDefinitionId, values, serviceContext);
@@ -75,7 +76,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (objectEntry == null) {
 			checkPortletResourcePermission(
-				groupId, objectDefinitionId, ActionKeys.ADD_ENTRY);
+				groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 		}
 		else {
 			checkModelResourcePermission(
