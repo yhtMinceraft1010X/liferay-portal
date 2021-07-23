@@ -56,7 +56,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectDefinition objectDefinition) {
 
 		try {
-			_importResourceAction(objectDefinition);
+			_readResourceActions(objectDefinition);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -104,7 +104,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 	}
 
-	private void _importResourceAction(ObjectDefinition objectDefinition)
+	private void _readResourceActions(ObjectDefinition objectDefinition)
 		throws DocumentException, IOException, ResourceActionsException {
 
 		_resourceActions.populateModelResources(
