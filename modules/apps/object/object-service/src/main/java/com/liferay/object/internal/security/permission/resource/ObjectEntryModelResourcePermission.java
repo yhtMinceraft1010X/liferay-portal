@@ -83,12 +83,12 @@ public class ObjectEntryModelResourcePermission
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, ObjectEntry accountEntry,
+			PermissionChecker permissionChecker, ObjectEntry objectEntry,
 			String actionId)
 		throws PortalException {
 
 		return contains(
-			permissionChecker, accountEntry.getObjectEntryId(), actionId);
+			permissionChecker, objectEntry.getObjectEntryId(), actionId);
 	}
 
 	@Override
