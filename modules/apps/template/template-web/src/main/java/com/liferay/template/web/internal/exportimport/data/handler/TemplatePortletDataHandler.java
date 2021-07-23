@@ -219,7 +219,6 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 					typeProperty.eq(
 						DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY));
 			});
-
 		exportActionableDynamicQuery.setStagedModelType(stagedModelType);
 
 		return exportActionableDynamicQuery;
