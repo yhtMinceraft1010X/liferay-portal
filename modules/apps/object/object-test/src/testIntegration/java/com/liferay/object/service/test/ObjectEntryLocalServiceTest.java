@@ -93,26 +93,33 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_irrelevantObjectDefinition.getObjectDefinitionId());
 
-		List<ObjectField> objectFields = Arrays.asList(
-			_createObjectField(true, false, "ageOfDeath", false, "Long"),
-			_createObjectField(true, false, "authorOfGospel", false, "Boolean"),
-			_createObjectField(true, false, "birthday", false, "Date"),
-			_createObjectField(true, true, "emailAddress", true, "String"),
-			_createObjectField(
-				true, true, "emailAddressDomain", false, "String"),
-			_createObjectField(true, false, "firstName", false, "String"),
-			_createObjectField(true, false, "height", false, "Double"),
-			_createObjectField(true, false, "lastName", false, "String"),
-			_createObjectField(true, false, "middleName", false, "String"),
-			_createObjectField(
-				true, false, "numberOfBooksWritten", false, "Integer"),
-			_createObjectField(false, false, "portrait", false, "Blob"),
-			_createObjectField(true, false, "speed", false, "BigDecimal"),
-			_createObjectField(true, false, "weight", false, "Double"));
-
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test", objectFields);
+				TestPropsValues.getUserId(), "Test",
+				Arrays.asList(
+					_createObjectField(
+						true, false, "ageOfDeath", false, "Long"),
+					_createObjectField(
+						true, false, "authorOfGospel", false, "Boolean"),
+					_createObjectField(true, false, "birthday", false, "Date"),
+					_createObjectField(
+						true, true, "emailAddress", true, "String"),
+					_createObjectField(
+						true, true, "emailAddressDomain", false, "String"),
+					_createObjectField(
+						true, false, "firstName", false, "String"),
+					_createObjectField(true, false, "height", false, "Double"),
+					_createObjectField(
+						true, false, "lastName", false, "String"),
+					_createObjectField(
+						true, false, "middleName", false, "String"),
+					_createObjectField(
+						true, false, "numberOfBooksWritten", false, "Integer"),
+					_createObjectField(false, false, "portrait", false, "Blob"),
+					_createObjectField(
+						true, false, "speed", false, "BigDecimal"),
+					_createObjectField(
+						true, false, "weight", false, "Double")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(

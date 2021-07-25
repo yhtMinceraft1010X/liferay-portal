@@ -39,7 +39,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -71,13 +70,14 @@ public class ObjectEntryServiceTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		List<ObjectField> objectFields = Arrays.asList(
-			_createObjectField(true, false, "firstName", false, "String"),
-			_createObjectField(true, false, "lastName", false, "String"));
-
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), "Test", objectFields);
+				TestPropsValues.getUserId(), "Test",
+				Arrays.asList(
+					_createObjectField(
+						true, false, "firstName", false, "String"),
+					_createObjectField(
+						true, false, "lastName", false, "String")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
