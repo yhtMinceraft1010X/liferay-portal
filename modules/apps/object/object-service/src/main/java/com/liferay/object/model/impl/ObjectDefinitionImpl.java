@@ -49,7 +49,8 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return "com_liferay_object_" + getObjectDefinitionId() + "Portlet";
+		return "com_liferay_object_web_internal_portlet_" +
+			"ObjectDefinitionPortlet#" + getObjectDefinitionId();
 	}
 
 	@Override
