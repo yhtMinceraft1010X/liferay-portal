@@ -23,7 +23,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.web.internal.frontend.taglib.clay.data.set.view.table.ObjectDefinitionTableClayDataSetDisplayView;
-import com.liferay.object.web.internal.portlet.ObjectDefinitionPortlet;
+import com.liferay.object.web.internal.portlet.ObjectPortlet;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -71,7 +71,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				Portlet.class,
-				new ObjectDefinitionPortlet(
+				new ObjectPortlet(
 					_portal, objectDefinition.getRESTContextPath()),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"

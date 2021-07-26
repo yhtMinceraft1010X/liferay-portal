@@ -29,9 +29,9 @@ import javax.portlet.RenderResponse;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-public class ObjectDefinitionPortlet extends MVCPortlet {
+public class ObjectPortlet extends MVCPortlet {
 
-	public ObjectDefinitionPortlet(Portal portal, String restContextPath) {
+	public ObjectPortlet(Portal portal, String restContextPath) {
 		_portal = portal;
 		_restContextPath = restContextPath;
 	}

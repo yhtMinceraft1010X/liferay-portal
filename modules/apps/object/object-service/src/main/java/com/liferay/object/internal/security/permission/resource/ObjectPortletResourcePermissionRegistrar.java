@@ -40,7 +40,7 @@ public class ObjectPortletResourcePermissionRegistrar {
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
 				ObjectConstants.RESOURCE_NAME,
-				new ObjectDefinitionPortletResourcePermissionLogic()),
+				new ObjectPortletResourcePermissionLogic()),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"resource.name", ObjectConstants.RESOURCE_NAME
 			).build());
@@ -53,7 +53,7 @@ public class ObjectPortletResourcePermissionRegistrar {
 
 	private ServiceRegistration<PortletResourcePermission> _serviceRegistration;
 
-	private static class ObjectDefinitionPortletResourcePermissionLogic
+	private static class ObjectPortletResourcePermissionLogic
 		implements PortletResourcePermissionLogic {
 
 		@Override
