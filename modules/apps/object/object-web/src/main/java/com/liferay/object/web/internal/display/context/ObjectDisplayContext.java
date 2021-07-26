@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionDisplayContext {
+public class ObjectDisplayContext {
 
-	public ObjectDefinitionDisplayContext(
+	public ObjectDisplayContext(
 		HttpServletRequest httpServletRequest, String restContextPath) {
 
 		_apiURL = "/o/" + restContextPath;

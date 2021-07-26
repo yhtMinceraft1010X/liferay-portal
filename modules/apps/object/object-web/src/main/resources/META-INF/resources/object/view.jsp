@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ObjectDefinitionDisplayContext objectDefinitionDisplayContext = (ObjectDefinitionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectDisplayContext objectDisplayContext = (ObjectDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:headless-data-set-display
-	apiURL="<%= objectDefinitionDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= objectDefinitionDisplayContext.getClayDataSetActionDropdownItems() %>"
+	apiURL="<%= objectDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= objectDisplayContext.getClayDataSetActionDropdownItems() %>"
 	formId="fm"
-	id="<%= objectDefinitionDisplayContext.getClayHeadlessDataSetDisplayId() %>"
+	id="<%= objectDisplayContext.getClayHeadlessDataSetDisplayId() %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

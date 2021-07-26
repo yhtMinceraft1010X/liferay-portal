@@ -14,7 +14,7 @@
 
 package com.liferay.object.web.internal.portlet;
 
-import com.liferay.object.web.internal.display.context.ObjectDefinitionDisplayContext;
+import com.liferay.object.web.internal.display.context.ObjectDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,7 +43,7 @@ public class ObjectDefinitionPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new ObjectDefinitionDisplayContext(
+			new ObjectDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
 				_restContextPath));
 
