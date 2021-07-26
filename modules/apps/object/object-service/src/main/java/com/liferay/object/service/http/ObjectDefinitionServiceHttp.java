@@ -53,7 +53,7 @@ public class ObjectDefinitionServiceHttp {
 
 	public static com.liferay.object.model.ObjectDefinition
 			addCustomObjectDefinition(
-				HttpPrincipal httpPrincipal, long userId, String name,
+				HttpPrincipal httpPrincipal, String name,
 				java.util.List<com.liferay.object.model.ObjectField>
 					objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,7 +64,7 @@ public class ObjectDefinitionServiceHttp {
 				_addCustomObjectDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, name, objectFields);
+				methodKey, name, objectFields);
 
 			Object returnObj = null;
 
@@ -288,8 +288,7 @@ public class ObjectDefinitionServiceHttp {
 
 	public static com.liferay.object.model.ObjectDefinition
 			publishCustomObjectDefinition(
-				HttpPrincipal httpPrincipal, long userId,
-				long objectDefinitionId)
+				HttpPrincipal httpPrincipal, long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -299,7 +298,7 @@ public class ObjectDefinitionServiceHttp {
 				_publishCustomObjectDefinitionParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectDefinitionId);
+				methodKey, objectDefinitionId);
 
 			Object returnObj = null;
 
@@ -333,7 +332,7 @@ public class ObjectDefinitionServiceHttp {
 		ObjectDefinitionServiceHttp.class);
 
 	private static final Class<?>[] _addCustomObjectDefinitionParameterTypes0 =
-		new Class[] {long.class, String.class, java.util.List.class};
+		new Class[] {String.class, java.util.List.class};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getObjectDefinitionParameterTypes2 =
@@ -346,7 +345,7 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_publishCustomObjectDefinitionParameterTypes6 = new Class[] {
-			long.class, long.class
+			long.class
 		};
 
 }

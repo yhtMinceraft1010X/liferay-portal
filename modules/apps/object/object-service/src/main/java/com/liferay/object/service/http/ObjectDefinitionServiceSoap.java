@@ -65,14 +65,14 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			addCustomObjectDefinition(
-				long userId, String name,
+				String name,
 				com.liferay.object.model.ObjectFieldSoap[] objectFields)
 		throws RemoteException {
 
 		try {
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					userId, name,
+					name,
 					com.liferay.object.model.impl.ObjectFieldModelImpl.toModels(
 						objectFields));
 
@@ -175,13 +175,13 @@ public class ObjectDefinitionServiceSoap {
 	}
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
-			publishCustomObjectDefinition(long userId, long objectDefinitionId)
+			publishCustomObjectDefinition(long objectDefinitionId)
 		throws RemoteException {
 
 		try {
 			com.liferay.object.model.ObjectDefinition returnValue =
 				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
-					userId, objectDefinitionId);
+					objectDefinitionId);
 
 			return com.liferay.object.model.ObjectDefinitionSoap.toSoapModel(
 				returnValue);

@@ -35,12 +35,12 @@ public class ObjectDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition addCustomObjectDefinition(
-			long userId, String name,
+			String name,
 			java.util.List<com.liferay.object.model.ObjectField> objectFields)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.addCustomObjectDefinition(
-			userId, name, objectFields);
+			name, objectFields);
 	}
 
 	@Override
@@ -93,11 +93,11 @@ public class ObjectDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-			publishCustomObjectDefinition(long userId, long objectDefinitionId)
+			publishCustomObjectDefinition(long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionService.publishCustomObjectDefinition(
-			userId, objectDefinitionId);
+			objectDefinitionId);
 	}
 
 	@Override

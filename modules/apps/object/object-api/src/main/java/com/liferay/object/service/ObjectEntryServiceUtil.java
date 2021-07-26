@@ -41,23 +41,23 @@ public class ObjectEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
+			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
+			groupId, objectDefinitionId, values, serviceContext);
 	}
 
 	public static ObjectEntry addOrUpdateObjectEntry(
-			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
+			String externalReferenceCode, long groupId, long objectDefinitionId,
+			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateObjectEntry(
-			externalReferenceCode, userId, groupId, objectDefinitionId, values,
+			externalReferenceCode, groupId, objectDefinitionId, values,
 			serviceContext);
 	}
 

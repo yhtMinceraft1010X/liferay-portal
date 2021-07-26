@@ -52,8 +52,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry addObjectEntry(
-			HttpPrincipal httpPrincipal, long userId, long groupId,
-			long objectDefinitionId,
+			HttpPrincipal httpPrincipal, long groupId, long objectDefinitionId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,8 +63,7 @@ public class ObjectEntryServiceHttp {
 				_addObjectEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, objectDefinitionId, values,
-				serviceContext);
+				methodKey, groupId, objectDefinitionId, values, serviceContext);
 
 			Object returnObj = null;
 
@@ -97,7 +95,7 @@ public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long userId, long groupId, long objectDefinitionId,
+			long groupId, long objectDefinitionId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -108,8 +106,8 @@ public class ObjectEntryServiceHttp {
 				_addOrUpdateObjectEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, groupId,
-				objectDefinitionId, values, serviceContext);
+				methodKey, externalReferenceCode, groupId, objectDefinitionId,
+				values, serviceContext);
 
 			Object returnObj = null;
 
@@ -184,13 +182,12 @@ public class ObjectEntryServiceHttp {
 
 	private static final Class<?>[] _addObjectEntryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
+			long.class, long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateObjectEntryParameterTypes1 =
 		new Class[] {
-			String.class, long.class, long.class, long.class,
-			java.util.Map.class,
+			String.class, long.class, long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteObjectEntryParameterTypes2 =

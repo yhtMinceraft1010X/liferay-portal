@@ -39,12 +39,11 @@ public class ObjectDefinitionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectDefinition addCustomObjectDefinition(
-			long userId, String name,
+			String name,
 			List<com.liferay.object.model.ObjectField> objectFields)
 		throws PortalException {
 
-		return getService().addCustomObjectDefinition(
-			userId, name, objectFields);
+		return getService().addCustomObjectDefinition(name, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(
@@ -86,11 +85,10 @@ public class ObjectDefinitionServiceUtil {
 	}
 
 	public static ObjectDefinition publishCustomObjectDefinition(
-			long userId, long objectDefinitionId)
+			long objectDefinitionId)
 		throws PortalException {
 
-		return getService().publishCustomObjectDefinition(
-			userId, objectDefinitionId);
+		return getService().publishCustomObjectDefinition(objectDefinitionId);
 	}
 
 	public static ObjectDefinitionService getService() {
