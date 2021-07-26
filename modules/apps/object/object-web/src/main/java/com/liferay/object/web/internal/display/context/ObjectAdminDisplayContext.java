@@ -51,7 +51,7 @@ public class ObjectAdminDisplayContext {
 				PortletURLBuilder.create(
 					getPortletURL()
 				).setMVCRenderCommandName(
-					"/object_definitions_admin/edit_object_definition"
+					"/object_admin/edit_object_definition"
 				).setParameter(
 					"objectDefinitionId", "{id}"
 				).buildString(),
