@@ -47,7 +47,7 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, String name, List<ObjectField> objectFields)
+			String name, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -55,7 +55,7 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			userId, name, objectFields);
+			getUserId(), name, objectFields);
 	}
 
 	@Override
@@ -100,11 +100,11 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition publishCustomObjectDefinition(
-			long userId, long objectDefinitionId)
+			long objectDefinitionId)
 		throws PortalException {
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			userId, objectDefinitionId);
+			getUserId(), objectDefinitionId);
 	}
 
 	@Reference

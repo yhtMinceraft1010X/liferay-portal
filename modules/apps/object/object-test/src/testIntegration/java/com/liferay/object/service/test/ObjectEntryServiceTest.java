@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectEntryServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -65,10 +66,10 @@ public class ObjectEntryServiceTest {
 	public void setUp() throws Exception {
 		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_user = TestPropsValues.getUser();
-
+		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		_user = TestPropsValues.getUser();
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
@@ -144,15 +145,21 @@ public class ObjectEntryServiceTest {
 		return objectField;
 	}
 
+	private void _setUser(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
 	private void _testAddObjectEntry(User user) throws Exception {
 		ObjectEntry objectEntry = null;
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			_setUser(user);
 
 			objectEntry = ObjectEntryServiceUtil.addObjectEntry(
-				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+				0, _objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", RandomStringUtils.randomAlphabetic(5)
 				).put(
@@ -173,8 +180,7 @@ public class ObjectEntryServiceTest {
 		ObjectEntry objectEntry = null;
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			_setUser(user);
 
 			objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
@@ -201,6 +207,7 @@ public class ObjectEntryServiceTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
+	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private User _user;
 

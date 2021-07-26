@@ -77,14 +77,13 @@ public class ObjectDefinitionResourceImpl
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					contextUser.getUserId(), objectDefinition.getName(),
+					objectDefinition.getName(),
 					transformToList(
 						objectDefinition.getObjectFields(),
 						this::_toObjectField));
 
 		return _toObjectDefinition(
 			_objectDefinitionService.publishCustomObjectDefinition(
-				serviceBuilderObjectDefinition.getUserId(),
 				serviceBuilderObjectDefinition.getObjectDefinitionId()));
 	}
 

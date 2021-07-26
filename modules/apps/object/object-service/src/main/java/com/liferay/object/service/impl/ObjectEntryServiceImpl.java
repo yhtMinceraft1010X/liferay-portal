@@ -52,7 +52,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
+			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -60,14 +60,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		return objectEntryLocalService.addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
+			getUserId(), groupId, objectDefinitionId, values, serviceContext);
 	}
 
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
-			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long objectDefinitionId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.fetchByG_C_ERC(
@@ -84,8 +83,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
-			externalReferenceCode, userId, groupId, objectDefinitionId, values,
-			serviceContext);
+			externalReferenceCode, getUserId(), groupId, objectDefinitionId,
+			values, serviceContext);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -54,15 +55,17 @@ public class ObjectDefinitionServiceTest {
 	public void setUp() throws Exception {
 		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_user = TestPropsValues.getUser();
-
+		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		_user = TestPropsValues.getUser();
 	}
 
 	@After
 	public void tearDown() {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -131,16 +134,22 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
+	private void _setUser(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
 	private void _testAddCustomObjectDefinition(User user) throws Exception {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			_setUser(user);
 
 			objectDefinition =
 				ObjectDefinitionServiceUtil.addCustomObjectDefinition(
-					user.getUserId(), "Test", null);
+					"Test", null);
 
 			objectDefinition =
 				ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -159,8 +168,7 @@ public class ObjectDefinitionServiceTest {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			_setUser(user);
 
 			objectDefinition = _addCustomObjectDefinition(user);
 
@@ -180,8 +188,7 @@ public class ObjectDefinitionServiceTest {
 		ObjectDefinition objectDefinition = null;
 
 		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
+			_setUser(user);
 
 			objectDefinition = _addCustomObjectDefinition(user);
 
@@ -197,6 +204,7 @@ public class ObjectDefinitionServiceTest {
 	}
 
 	private User _defaultUser;
+	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
 	private User _user;
 
