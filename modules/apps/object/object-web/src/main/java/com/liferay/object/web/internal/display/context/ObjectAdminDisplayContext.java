@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -34,9 +34,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ObjectAdminDisplayContext {
 
-	public ObjectAdminDisplayContext(
-		HttpServletRequest httpServletRequest) {
-
+	public ObjectAdminDisplayContext(HttpServletRequest httpServletRequest) {
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
@@ -48,10 +46,7 @@ public class ObjectAdminDisplayContext {
 			getClayDataSetActionDropdownItems()
 		throws PortalException, PortletException {
 
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
-
-		clayDataSetActionDropdownItems.add(
+		return Arrays.asList(
 			new ClayDataSetActionDropdownItem(
 				PortletURLBuilder.create(
 					getPortletURL()
@@ -62,15 +57,11 @@ public class ObjectAdminDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
-				"get", null, null));
-
-		clayDataSetActionDropdownItems.add(
+				"get", null, null),
 			new ClayDataSetActionDropdownItem(
 				getAPIURL() + "/{id}", "trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
-
-		return clayDataSetActionDropdownItems;
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
