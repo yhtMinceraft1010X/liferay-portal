@@ -43,7 +43,7 @@ public class ObjectAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_OBJECTS;
+		return PanelCategoryKeys.CONTROL_PANEL_OBJECT;
 	}
 
 	@Override
