@@ -48,6 +48,10 @@ public class ObjectAdminDisplayContext {
 				"delete", "delete", "async"));
 	}
 
+	public String getClayHeadlessDataSetDisplayId() {
+		return _objectRequestHelper.getPortletId();
+	}
+
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

@@ -24,7 +24,7 @@ ObjectAdminDisplayContext objectAdminDisplayContext = (ObjectAdminDisplayContext
 	apiURL="<%= objectAdminDisplayContext.getAPIURL() %>"
 	clayDataSetActionDropdownItems="<%= objectAdminDisplayContext.getClayDataSetActionDropdownItems() %>"
 	formId="fm"
-	id="/object_definitions/list"
+	id="<%= objectAdminDisplayContext.getClayHeadlessDataSetDisplayId() %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

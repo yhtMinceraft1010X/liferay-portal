@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.object.constants.ObjectPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "clay.data.set.display.name=/object_definitions/list",
+	property = "clay.data.set.display.name=" + ObjectPortletKeys.OBJECT_ADMIN,
 	service = ClayDataSetDisplayView.class
 )
-public class ObjectDefinitionsTableClayDataSetDisplayView
+public class ObjectAdminTableClayDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
