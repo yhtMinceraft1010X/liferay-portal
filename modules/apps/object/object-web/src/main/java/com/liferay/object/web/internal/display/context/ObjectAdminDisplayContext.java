@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionsDisplayContext {
+public class ObjectAdminDisplayContext {
 
-	public ObjectDefinitionsDisplayContext(
+	public ObjectAdminDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);

@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ObjectDefinitionsDisplayContext objectDefinitionsDisplayContext = (ObjectDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectAdminDisplayContext objectAdminDisplayContext = (ObjectAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:headless-data-set-display
-	apiURL="<%= objectDefinitionsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= objectDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
+	apiURL="<%= objectAdminDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= objectAdminDisplayContext.getClayDataSetActionDropdownItems() %>"
 	formId="fm"
 	id="/object_definitions/list"
 	itemsPerPage="<%= 20 %>"
