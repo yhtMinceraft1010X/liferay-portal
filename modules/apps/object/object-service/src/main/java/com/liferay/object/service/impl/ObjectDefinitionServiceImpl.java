@@ -103,6 +103,10 @@ public class ObjectDefinitionServiceImpl
 			long objectDefinitionId)
 		throws PortalException {
 
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
+
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			getUserId(), objectDefinitionId);
 	}

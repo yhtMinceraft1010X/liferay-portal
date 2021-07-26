@@ -215,7 +215,10 @@ public class ObjectDefinitionLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			objectDefinition.getObjectDefinitionId());
 
-		if (!objectDefinition.isSystem()) {
+		if ((objectDefinition.getStatus() ==
+				WorkflowConstants.STATUS_APPROVED) &&
+			!objectDefinition.isSystem()) {
+
 			_dropTable(objectDefinition);
 
 			TransactionCommitCallbackUtil.registerCallback(
@@ -395,7 +398,10 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void undeployObjectDefinition(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
+		if ((objectDefinition.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) ||
+			objectDefinition.isSystem()) {
+
 			return;
 		}
 

@@ -123,6 +123,25 @@ public class ObjectDefinitionServiceTest {
 		_testGetObjectDefinition(_user);
 	}
 
+	@Test
+	public void testPublishCustomObjectDefinition() throws Exception {
+		try {
+			_testPublishCustomObjectDefinition(_defaultUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _defaultUser.getUserId() +
+						" must have PUBLISH_OBJECT_DEFINITION permission for"));
+		}
+
+		_testPublishCustomObjectDefinition(_user);
+	}
+
 	private ObjectDefinition _addCustomObjectDefinition(User user)
 		throws Exception {
 
@@ -194,6 +213,30 @@ public class ObjectDefinitionServiceTest {
 
 			ObjectDefinitionServiceUtil.getObjectDefinition(
 				objectDefinition.getObjectDefinitionId());
+		}
+		finally {
+			if (objectDefinition != null) {
+				ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
+	private void _testPublishCustomObjectDefinition(User user)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			_setUser(user);
+
+			objectDefinition =
+				ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+					user.getUserId(), "Test", null);
+
+			objectDefinition =
+				ObjectDefinitionServiceUtil.publishCustomObjectDefinition(
+					objectDefinition.getObjectDefinitionId());
 		}
 		finally {
 			if (objectDefinition != null) {
