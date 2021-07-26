@@ -45,7 +45,7 @@ public class ObjectAdminPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return ObjectPortletKeys.OBJECT;
+		return ObjectPortletKeys.OBJECT_ADMIN;
 	}
 
 	@Override

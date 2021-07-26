@@ -20,6 +20,9 @@ package com.liferay.object.constants;
 public class ObjectPortletKeys {
 
 	public static final String OBJECT =
-		"com_liferay_object_web_portlet_ObjectPortlet";
+		"com_liferay_object_web_internal_portlet_ObjectPortlet";
+
+	public static final String OBJECT_ADMIN =
+		"com_liferay_object_web_internal_portlet_ObjectAdminPortlet";
 
 }

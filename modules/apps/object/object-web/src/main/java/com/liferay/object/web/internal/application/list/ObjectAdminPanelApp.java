@@ -39,12 +39,12 @@ public class ObjectAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ObjectPortletKeys.OBJECT;
+		return ObjectPortletKeys.OBJECT_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ObjectPortletKeys.OBJECT + ")",
+		target = "(javax.portlet.name=" + ObjectPortletKeys.OBJECT_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

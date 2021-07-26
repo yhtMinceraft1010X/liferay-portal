@@ -14,6 +14,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
@@ -49,8 +50,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return "com_liferay_object_web_internal_portlet_ObjectPortlet#" +
-			getObjectDefinitionId();
+		return ObjectPortletKeys.OBJECT + "#" + getObjectDefinitionId();
 	}
 
 	@Override
