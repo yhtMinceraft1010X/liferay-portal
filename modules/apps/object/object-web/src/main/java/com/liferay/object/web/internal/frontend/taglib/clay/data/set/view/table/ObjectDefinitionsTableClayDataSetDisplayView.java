@@ -45,10 +45,10 @@ public class ObjectDefinitionsTableClayDataSetDisplayView
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField systemClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("system", "system");
 
-		clayTableSchemaField.setContentRenderer("boolean");
+		systemClayTableSchemaField.setContentRenderer("boolean");
 
 		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
