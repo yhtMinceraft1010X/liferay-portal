@@ -291,6 +291,18 @@ definition {
 			value1 = "Propagate Changes");
 	}
 
+	macro deleteFieldsetFromSideBar {
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Button.clickDelete();
+	}
+
 	macro editFieldReference {
 		if (!(isSet(index))) {
 			var index = "1";
