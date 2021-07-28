@@ -86,6 +86,52 @@ definition {
 			fieldsetName = "New Fieldset Edited");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that is possible to edit Label, Placeholder and Help text of fields on the Fieldset modal."
+	@priority = "5"
+	test CanEditLabelPlaceholderAndHelpTextOfFields {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP();
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Help",
+			fieldPlaceholder = "Placeholder");
+
+		Modal.save();
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edited",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Edited",
+			fieldHelp = "Text Help Edited",
+			fieldPlaceholder = "Placeholder Edited",
+			fieldsetModal = "true");
+
+		Modal.save();
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text Edited",
+			fieldHelp = "Text Help Edited",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Edited");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that is not possible to drag and drop fields from the sidebar into a Fieldset on the builder."
 	@priority = "4"
 	test CanNotAddFieldsIntoFieldsetFromBuilder {
