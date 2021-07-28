@@ -426,6 +426,38 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldsetLabel = "New Fieldset");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that Fieldset Label can be shown or hidden."
+	@priority = "5"
+	test CanSetLabelToShownOrHidden {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		DataEngine.toggleShowLabel(fieldLabel = "New Fieldset");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Title");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldsetLabel = "New Fieldset");
+
+		DataEngine.toggleShowLabel();
+
+		WebContentStructures.saveCP(structureName = "WC Structure Title");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that upon editing a Fieldset that is already on the builder a dialog to confirm propagation is displayed."
 	@priority = "4"
 	test CanShowPropagateChangesDialog {
