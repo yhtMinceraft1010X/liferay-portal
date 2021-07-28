@@ -285,6 +285,12 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro assertPropagateChangesModalIsOpened {
+		AssertTextEquals(
+			locator1 = "DataEngineModal#MODAL_TITLE",
+			value1 = "Propagate Changes");
+	}
+
 	macro editFieldReference {
 		if (!(isSet(index))) {
 			var index = "1";
