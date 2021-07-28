@@ -26,6 +26,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that is possible to add a Fieldset in the builder."
+	@priority = "5"
+	test CanAddFieldsetInBuilder {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that is possible to add multiple options for a field with options on the Fieldset modal."
 	@priority = "5"
 	test CanAddMultipleOptions {
