@@ -378,6 +378,36 @@ definition {
 		DEBuilder.assertFieldActionsIsNotPresent(fieldLabel = "Numeric");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that is possible to remove a Fieldset from the builder."
+	@priority = "5"
+	test CanRemoveFieldsetFromBuilder {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.delete(fieldsetLabel = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.assertFieldNotPresent(fieldsetLabel = "New Fieldset");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that upon editing a Fieldset that is already on the builder a dialog to confirm propagation is displayed."
 	@priority = "4"
 	test CanShowPropagateChangesDialog {
