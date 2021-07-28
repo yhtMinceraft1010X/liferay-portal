@@ -106,6 +106,24 @@ definition {
 			fieldsLabelList = "Text,Numeric");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that is possible to delete a Fieldset that is not being used on any Structures."
+	@priority = "5"
+	test CanDeleteUnusedFieldset {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP();
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DEBuilder.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset");
+
+		Alert.viewSuccessMessage();
+
+		DEBuilder.assertFieldsetNotPresentInSidebar(fieldsetName = "New Fieldset");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that Fieldset Label can be edited."
 	@priority = "5"
 	test CanEditFieldsetLabel {
