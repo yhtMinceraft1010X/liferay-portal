@@ -54,6 +54,36 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that is possible to create Fields Group on the Fieldset modal."
+	@priority = "5"
+	test CanCreateFieldsGroup {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP();
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addFieldNested(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		Modal.save();
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+	}
+
 	@description = "This is a test for LRQA-68940. This test verifies that Fieldset Label can be edited."
 	@priority = "5"
 	test CanEditFieldsetLabel {
