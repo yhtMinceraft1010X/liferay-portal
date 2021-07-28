@@ -227,6 +227,16 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro assertFieldsetNotPresentInSidebar {
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		AssertElementNotPresent(
+			key_fieldName = "${fieldsetName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME");
+	}
+
 	macro assertFieldsGroup {
 		for (var fieldFieldLabel : list "${fieldsLabelList}") {
 			AssertElementPresent(
