@@ -378,4 +378,33 @@ definition {
 		DEBuilder.assertFieldActionsIsNotPresent(fieldLabel = "Numeric");
 	}
 
+	@description = "This is a test for LRQA-68940. This test verifies that upon editing a Fieldset that is already on the builder a dialog to confirm propagation is displayed."
+	@priority = "4"
+	test CanShowPropagateChangesDialog {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edited",
+			fieldsetModal = "true");
+
+		Modal.save();
+
+		DEBuilder.assertPropagateChangesModalIsOpened();
+	}
+
 }
