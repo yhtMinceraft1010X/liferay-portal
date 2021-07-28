@@ -67,7 +67,7 @@ definition {
 			fieldLabel = "Single Selection",
 			optionValueList = "Option 1,Option 2,Option 3");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
@@ -96,7 +96,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
@@ -139,7 +139,7 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -176,7 +176,7 @@ definition {
 			fieldHelp = "Text Help",
 			fieldPlaceholder = "Placeholder");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
@@ -191,7 +191,7 @@ definition {
 			fieldPlaceholder = "Placeholder Edited",
 			fieldsetModal = "true");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset");
 
@@ -217,7 +217,7 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -254,7 +254,7 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -284,7 +284,7 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -312,7 +312,7 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -344,7 +344,7 @@ definition {
 			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DEBuilder.addFieldsetNestedToBuilder(
 			fieldsetName = "New Fieldset",
@@ -379,7 +379,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -482,7 +482,7 @@ definition {
 			fieldFieldLabelEdit = "Text Edited",
 			fieldsetModal = "true");
 
-		Modal.save();
+		FormViewBuilder.saveButtonFieldset();
 
 		DEBuilder.assertPropagateChangesModalIsOpened();
 	}
