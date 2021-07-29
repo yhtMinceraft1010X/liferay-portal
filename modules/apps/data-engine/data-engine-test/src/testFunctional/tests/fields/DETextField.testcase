@@ -275,12 +275,31 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "4"
 	test CanNotEmptyRequiredFieldBePublished {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+
+		Click(locator1 = "Button#PUBLISH");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "This field is required.");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
