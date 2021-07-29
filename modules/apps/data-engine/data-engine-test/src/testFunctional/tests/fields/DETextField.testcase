@@ -175,12 +175,39 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "3"
 	test CanIputtedDataBeRemoved {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a stubbed description"
