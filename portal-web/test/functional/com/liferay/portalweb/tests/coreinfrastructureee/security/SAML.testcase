@@ -1896,7 +1896,7 @@ definition {
 			virtualHost = "www.baker.com",
 			webId = "www.baker.com");
 
-		MyAccount.openMyAccountAdmin(baseURL = "http://localhost:8080/");
+		MyAccount.openMyAccountAdmin();
 
 		User.editUserInformation(userScreenNameEdit = "localhost");
 
