@@ -116,6 +116,24 @@ definition {
 			fieldLineType = "Single Line");
 	}
 
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanDuplicatedRepeatableFieldBeRemoved {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanDuplicatedRepeatableFieldDataPersists {
+
+		// TODO pending implementation
+
+	}
+
 	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelPlaceholderAndHelpText {
@@ -154,6 +172,42 @@ definition {
 			fieldHelp = "Help Text Edited",
 			fieldName = "Text",
 			fieldPlaceholder = "Placeholder Text Edited");
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "3"
+	test CanIputtedDataBeRemoved {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanIputtedDataPersists {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanIputtedEditedDataPersists {
+
+		// TODO pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanNotEmptyRequiredFieldBePublished {
+
+		// TODO pending implementation
+
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
