@@ -28,7 +28,6 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
 request.setAttribute("configuration.jsp-redirect", redirect);
 
-String wrapperId = liferayPortletResponse.getNamespace() + "autocomplete-wrapper";
 Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrganization();
 %>
 
@@ -44,21 +43,31 @@ Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrgani
 		<div class="form-group">
 			<label><liferay-ui:message key="root-organization" /></label>
 
-			<div id="<%= wrapperId %>"></div>
-		</div>
+			<div>
+				<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+				<react:component
+					module="js/configuration"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"apiUrl", "/o/headless-admin-user/v1.0/organizations?flatten=true"
+						).put(
+							"initialLabel", (rootOrganization == null) ? "" : rootOrganization.getName()
+						).put(
+							"initialValue", (rootOrganization == null) ? 0 : rootOrganization.getOrganizationId()
+						).put(
+							"inputName", liferayPortletResponse.getNamespace() + "preferences--rootOrganizationId--"
+						).put(
+							"itemsKey", "id"
+						).put(
+							"itemsLabel", "name"
+						).put(
+							"required", false
+						).build()
+					%>'
+				/>
+			</div>
 
-		<liferay-frontend:component
-			context='<%=
-				HashMapBuilder.<String, Object>put(
-					"rootOrganizationId", (rootOrganization == null) ? 0 : rootOrganization.getOrganizationId()
-				).put(
-					"rootOrganizationName", (rootOrganization == null) ? "" : rootOrganization.getName()
-				).put(
-					"wrapperId", wrapperId
-				).build()
-			%>'
-			module="js/configuration"
-		/>
+		</div>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
