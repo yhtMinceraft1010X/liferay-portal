@@ -117,12 +117,53 @@ definition {
 	}
 
 	@description = "This is a test for LRQA-69035. This test verifies that is possible to remove a duplicated field (repeatable)"
-	@ignore = "true"
 	@priority = "4"
 	test CanDuplicatedRepeatableFieldBeRemoved {
+		NavItem.gotoStructures();
 
-		// TODO pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Text");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Text",
+			index = "1");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Text",
+			index = "2");
+
+		DERenderer.removeRepeatableField(
+			fieldLabel = "Text",
+			index = "1");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DataEngine.assertFieldRepeatedNotPresent(
+			fieldName = "Text",
+			index = "2");
 	}
 
 	@description = "This is a test for LRQA-69035. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
