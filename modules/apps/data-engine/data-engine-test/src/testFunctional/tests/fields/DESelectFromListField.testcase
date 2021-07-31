@@ -128,6 +128,42 @@ definition {
 			optionLabelList = "Option 4,Option 5");
 	}
 
+	@description = "This is a test for LRQA-69036. This test verifies that editing chosen options persists."
+	@priority = "5"
+	test CanEditChosenOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Select from List",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentSelectFromList = "Option 1",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.addWithStructureCP(webContentSelectFromList = "Option 2");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentSelectFromList = "Option 2",
+			webContentTitle = "Web Content Title");
+	}
+
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
