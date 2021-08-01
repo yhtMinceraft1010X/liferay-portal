@@ -279,6 +279,44 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
+	@description = "This is a test for LRQA-69036. This test verifies that is possible to remove a duplicated field (repeatable)."
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Select from List");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Select from List");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.removeRepeatableField(fieldLabel = "Select from List");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Select from List",
+			index = "2");
+	}
+
 	@description = "This is a test for LRQA-69036. This test verifies that chosen options persists."
 	@priority = "5"
 	test CanSelectOptions {
