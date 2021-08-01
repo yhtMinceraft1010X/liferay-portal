@@ -25,4 +25,20 @@ definition {
 		DropdownMenuItem.click(menuItem = "${optionValue}");
 	}
 
+	macro removeRepeatableField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		WaitForElementPresent(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_DELETE_BUTTON_INDEXED");
+
+		Click(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#REPEATABLE_FIELD_DELETE_BUTTON_INDEXED");
+	}
+
 }
