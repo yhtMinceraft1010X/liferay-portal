@@ -1,0 +1,16 @@
+definition {
+
+	macro inputDataInSelectFromListField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#SELECT_FROM_LIST_SELECT_OPTION_TRIGGER_INDEXED");
+
+		DropdownMenuItem.click(menuItem = "${optionValue}");
+	}
+
+}
