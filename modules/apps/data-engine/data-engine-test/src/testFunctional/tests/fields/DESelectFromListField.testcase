@@ -91,12 +91,9 @@ definition {
 			fieldFieldLabel = "Select from List",
 			fieldName = "Select from List");
 
-		for (var index : list "1,2,3,4,5") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Select from List",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Select from List",
+			optionValueList = "Option 1,Option 2,Option 3,Option 4,Option 5");
 
 		WebContentStructures.saveCP();
 
@@ -302,12 +299,9 @@ definition {
 			fieldFieldLabel = "Select from List",
 			fieldName = "Select from List");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Select from List",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Select from List",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		WebContentStructures.saveCP();
 
