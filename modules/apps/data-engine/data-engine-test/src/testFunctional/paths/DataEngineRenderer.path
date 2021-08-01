@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEATABLE_FIELD_DELETE_BUTTON_INDEXED</td>
+	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']/parent::div/preceding-sibling::div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-delete-button')]) | (//label[normalize-space(text())='${key_fieldLabel}']/preceding-sibling::div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-delete-button')]))[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FROM_LIST_SELECT_OPTION_TRIGGER_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'select-field')]//div[contains(@class,'select-field-trigger')])[${index}]</td>
 	<td></td>
