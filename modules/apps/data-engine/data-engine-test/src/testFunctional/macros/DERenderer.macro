@@ -37,6 +37,23 @@ definition {
 		DropdownMenuItem.click(menuItem = "${optionValue}");
 	}
 
+	macro inputDataInSingleSelectionField {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		Check.checkNotVisible(
+			fieldIndex = "${fieldIndex}",
+			key_fieldLabel = "${fieldLabel}",
+			key_optionValue = "${optionValue}",
+			locator1 = "DataEngineRenderer#SINGLE_SELECTION_OPTION_INDEXED",
+			optionIndex = "${optionIndex}");
+	}
+
 	macro inputDataInTextField {
 		if (!(isSet(index))) {
 			var index = "1";
