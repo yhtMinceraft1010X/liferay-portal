@@ -149,15 +149,19 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(
-			webContentSelectFromList = "Option 1",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.addWithStructureCP(webContentSelectFromList = "Option 2");
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 2");
 
 		PortletEntry.publish();
 
@@ -274,7 +278,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
 
 		Button.clickPublish();
 
@@ -340,9 +344,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(
-			webContentSelectFromList = "Option 1",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
 
 		PortletEntry.publish();
 
