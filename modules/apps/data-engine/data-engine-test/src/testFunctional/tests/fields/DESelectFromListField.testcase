@@ -155,7 +155,7 @@ definition {
 			fieldLabel = "Select from List",
 			optionValue = "Option 1");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -163,7 +163,7 @@ definition {
 			fieldLabel = "Select from List",
 			optionValue = "Option 2");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentSelectFromList = "Option 2",
@@ -350,7 +350,7 @@ definition {
 			fieldLabel = "Select from List",
 			optionValue = "Option 1");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentSelectFromList = "Option 1",
