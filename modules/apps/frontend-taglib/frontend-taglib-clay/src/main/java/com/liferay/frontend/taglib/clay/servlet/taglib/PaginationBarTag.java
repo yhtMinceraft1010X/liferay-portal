@@ -114,7 +114,7 @@ public class PaginationBarTag extends BaseContainerTag {
 		return _paginationBarLabels;
 	}
 
-	public boolean getShowDeltasDropDown() {
+	public boolean isShowDeltasDropDown() {
 		return _showDeltasDropDown;
 	}
 
