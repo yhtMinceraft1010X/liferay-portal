@@ -165,9 +165,11 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentSelectFromList = "Option 2",
-			webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 2");
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Label and Help text can be edited."
@@ -352,9 +354,11 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentSelectFromList = "Option 1",
-			webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
 	}
 
 	@description = "This is a test for LRQA-68540. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
