@@ -105,14 +105,15 @@ public class ObjectEntryRowInfoItemRenderer
 
 		Set<Map.Entry<String, Serializable>> entries = values.entrySet();
 
-		Stream<Map.Entry<String, Serializable>> entryStream = entries.stream();
+		Stream<Map.Entry<String, Serializable>> entriesStream =
+			entries.stream();
 
 		List<String> objectFieldNames = ListUtil.toList(
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId()),
 			ObjectField::getName);
 
-		return entryStream.filter(
+		return entriesStream.filter(
 			entry -> objectFieldNames.contains(entry.getKey())
 		).sorted(
 			Map.Entry.comparingByKey()
