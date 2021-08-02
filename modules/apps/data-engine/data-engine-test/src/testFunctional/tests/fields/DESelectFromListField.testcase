@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.duplicate(fieldFieldLabel = "Select from List");
@@ -87,8 +87,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DEBuilder.addFieldOptions(
@@ -173,8 +173,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.editFieldTip(
@@ -376,8 +376,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.viewFieldSearchable(
@@ -410,8 +410,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.viewFieldSearchable(
@@ -426,8 +426,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.editFieldTip(
@@ -451,8 +451,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Select from List");
@@ -481,8 +481,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Select from List",
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
 			fieldName = "Select from List");
 
 		DEBuilder.addFieldOptions(
