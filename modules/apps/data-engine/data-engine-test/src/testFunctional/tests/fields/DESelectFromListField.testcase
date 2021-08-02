@@ -155,6 +155,8 @@ definition {
 
 		PortletEntry.publish();
 
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
 		WebContent.addWithStructureCP(webContentSelectFromList = "Option 2");
 
 		PortletEntry.publish();
