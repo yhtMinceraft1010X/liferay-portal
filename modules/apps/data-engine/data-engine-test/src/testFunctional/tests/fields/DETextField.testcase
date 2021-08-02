@@ -369,11 +369,9 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
 
-		Click(locator1 = "Button#PUBLISH");
+		Button.clickPublish();
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "This field is required.");
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
