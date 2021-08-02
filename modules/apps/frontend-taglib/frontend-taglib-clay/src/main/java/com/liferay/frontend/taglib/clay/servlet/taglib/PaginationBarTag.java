@@ -114,12 +114,12 @@ public class PaginationBarTag extends BaseContainerTag {
 		return _paginationBarLabels;
 	}
 
-	public boolean isShowDeltasDropDown() {
-		return _showDeltasDropDown;
-	}
-
 	public Integer getTotalItems() {
 		return _totalItems;
+	}
+
+	public boolean isShowDeltasDropDown() {
+		return _showDeltasDropDown;
 	}
 
 	public void setActiveDelta(Integer activeDelta) {
