@@ -200,6 +200,32 @@ definition {
 			fieldName = "Single Selection");
 	}
 
+	@description = "This is a test for LRQA-69037. This test verifies that is not possible to publish the Web Content with a blank required field."
+	@priority = "4"
+	test CanNotPublishBlankRequiredField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+	}
+
 	@description = "This is a test for LRQA-69037. This test verifies that chosen options persists."
 	@priority = "5"
 	test CanSelectOptions {
