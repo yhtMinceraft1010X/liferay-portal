@@ -57,16 +57,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		disableDBPartition();
 	}
 
-	private static void _deleteCompanyAndDefaultUser() throws Exception {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(
-				"delete from Company where companyId = " + COMPANY_ID);
-
-			statement.execute(
-				"delete from User_ where companyId = " + COMPANY_ID);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		dropTable(TEST_TABLE_NAME);
@@ -128,6 +118,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		private long[] _companyIds = new long[0];
 
+	}
+
+	private static void _deleteCompanyAndDefaultUser() throws Exception {
+		try (Statement statement = connection.createStatement()) {
+			statement.execute(
+				"delete from Company where companyId = " + COMPANY_ID);
+
+			statement.execute(
+				"delete from User_ where companyId = " + COMPANY_ID);
+		}
 	}
 
 }
