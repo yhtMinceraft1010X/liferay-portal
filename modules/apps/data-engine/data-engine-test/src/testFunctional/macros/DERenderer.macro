@@ -12,6 +12,18 @@ definition {
 			value1 = "${optionValue}");
 	}
 
+	macro assertDataInTextField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals.assertValue(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+			value1 = "${value}");
+	}
+
 	macro inputDataInSelectFromListField {
 		if (!(isSet(index))) {
 			var index = "1";
