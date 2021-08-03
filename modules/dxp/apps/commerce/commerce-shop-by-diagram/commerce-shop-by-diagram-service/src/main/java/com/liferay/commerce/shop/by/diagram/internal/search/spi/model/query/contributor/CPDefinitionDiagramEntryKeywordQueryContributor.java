@@ -15,7 +15,6 @@
 package com.liferay.commerce.shop.by.diagram.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.index.contributor.CPDefinitionDiagramEntryModelDocumentContributor;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;

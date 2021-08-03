@@ -38,8 +38,7 @@ public class CPDefinitionDiagramEntryModelDocumentContributor
 
 		document.addText(CPField.SKU, cpDefinitionDiagramEntry.getSku());
 		document.addNumber("number", cpDefinitionDiagramEntry.getNumber());
-		document.addNumber(
-			"quantity", cpDefinitionDiagramEntry.getQuantity());
+		document.addNumber("quantity", cpDefinitionDiagramEntry.getQuantity());
 	}
 
 }
