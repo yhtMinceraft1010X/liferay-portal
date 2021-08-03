@@ -87,16 +87,6 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static void deleteCompanyAndDefaultUser() throws Exception {
-		try (Statement statement = connection.createStatement()) {
-			statement.execute(
-				"delete from Company where companyId = " + COMPANY_ID);
-
-			statement.execute(
-				"delete from User_ where companyId = " + COMPANY_ID);
-		}
-	}
-
 	protected static void disableDBPartition() {
 		DataAccess.cleanUp(connection);
 
