@@ -53,7 +53,7 @@ public class CPDefinitionDiagramEntryModelVisibilityContributor
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to check visibility for commerce product " +
-						"definition diagram entry ",
+						"definition diagram entry",
 					portalException);
 			}
 
