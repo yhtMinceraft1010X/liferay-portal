@@ -143,8 +143,6 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		PortletEntry.inputTitle(title = "Web Content Title Edited");
-
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "This is a Text field Edited");
@@ -153,7 +151,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field Edited",
-			webContentTitle = "Web Content Title Edited");
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
