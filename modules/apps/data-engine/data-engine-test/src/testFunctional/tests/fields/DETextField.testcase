@@ -51,7 +51,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Text");
+		DEBuilder.assertFieldNotPresent(fieldLabel = "Text");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that is possible to duplicate the field."
@@ -486,7 +486,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Text");
+		DEBuilder.assertFieldNotPresent(fieldLabel = "Text");
 
 		DataEngine.toggleShowLabel();
 
