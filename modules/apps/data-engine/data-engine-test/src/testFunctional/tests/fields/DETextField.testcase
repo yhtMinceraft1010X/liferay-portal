@@ -149,9 +149,11 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field Edited",
-			webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field Edited");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
@@ -219,9 +221,11 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 	}
 
 	@description = "This is a test for LRQA-69035. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
@@ -263,9 +267,9 @@ definition {
 			fieldName = "Text",
 			index = "2");
 
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 	}
 
 	@description = "This is a test for LRQA-69035. This test verifies that is not possible to publish the Web Content with a required field blank"
@@ -381,9 +385,11 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentText = "",
-			webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
