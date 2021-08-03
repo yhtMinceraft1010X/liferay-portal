@@ -367,8 +367,6 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
-
 		DERenderer.inputDataInTextField(
 			fieldLabel = "Text",
 			value = "");
