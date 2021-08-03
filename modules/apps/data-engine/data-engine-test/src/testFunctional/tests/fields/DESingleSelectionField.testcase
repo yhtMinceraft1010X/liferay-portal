@@ -91,12 +91,9 @@ definition {
 			fieldLabel = "Single Selection",
 			fieldName = "Single Selection");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Single Selection",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		DataEngine.toggleInline(fieldLabel = "Single Selection");
 
@@ -486,12 +483,9 @@ definition {
 			fieldLabel = "Single Selection",
 			fieldName = "Single Selection");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Single Selection",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		WebContentStructures.saveCP();
 
