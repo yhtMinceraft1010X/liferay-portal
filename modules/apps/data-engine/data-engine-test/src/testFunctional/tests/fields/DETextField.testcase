@@ -116,9 +116,181 @@ definition {
 			fieldLineType = "Single Line");
 	}
 
+	@description = "This is a test for LRQA-69035. This test verifies that edited data persists"
+	@priority = "5"
+	test CanEditData {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field Edited",
+			webContentTitle = "Web Content Title Edited");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field Edited",
+			webContentTitle = "Web Content Title Edited");
+	}
+
+	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
+	@priority = "5"
+	test CanEditLabelPlaceholderAndHelpText {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edited");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Edited",
+			fieldHelp = "Help Text Edited",
+			fieldPlaceholder = "Placeholder Text Edited");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text Edited",
+			fieldHelp = "Help Text Edited",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text Edited");
+	}
+
+	@description = "This is a test for LRQA-69035. This test verifies that input data persists"
+	@priority = "5"
+	test CanInputData {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+	}
+
+	@description = "This is a test for LRQA-69035. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Text");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Text",
+			index = "1");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Text",
+			index = "2");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+	}
+
+	@description = "This is a test for LRQA-69035. This test verifies that is not possible to publish the Web Content with a required field blank"
+	@priority = "4"
+	test CanNotPublishBlankRequiredField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+	}
+
 	@description = "This is a test for LRQA-69035. This test verifies that is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
-	test CanDuplicatedRepeatableFieldBeRemoved {
+	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -166,91 +338,9 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LRQA-69035. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
-	@priority = "5"
-	test CanDuplicatedRepeatableFieldDataPersists {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		DataEngine.addRepeatableField(fieldLabel = "Text");
-
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DataEngine.assertFieldRepeated(
-			fieldName = "Text",
-			index = "1");
-
-		DataEngine.assertFieldRepeated(
-			fieldName = "Text",
-			index = "2");
-
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-	}
-
-	@description = "This is a test for LRQA-68539. This test verifies that Label, Placeholder and Help text can be edited."
-	@priority = "5"
-	test CanEditLabelPlaceholderAndHelpText {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text Edited");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Edited",
-			fieldHelp = "Help Text Edited",
-			fieldPlaceholder = "Placeholder Text Edited");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text Edited",
-			fieldHelp = "Help Text Edited",
-			fieldName = "Text",
-			fieldPlaceholder = "Placeholder Text Edited");
-	}
-
 	@description = "This is a test for LRQA-69035. This test verifies that is possible to remove inputted data from the field"
 	@priority = "3"
-	test CanIputtedDataBeRemoved {
+	test CanRemoveInputtedData {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
@@ -282,96 +372,6 @@ definition {
 		WebContent.viewWithStructureCP(
 			webContentText = "",
 			webContentTitle = "Web Content Title");
-	}
-
-	@description = "This is a test for LRQA-69035. This test verifies that input data persists"
-	@priority = "5"
-	test CanIputtedDataPersists {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-	}
-
-	@description = "This is a test for LRQA-69035. This test verifies that edited data persists"
-	@priority = "5"
-	test CanIputtedEditedDataPersists {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field Edited",
-			webContentTitle = "Web Content Title Edited");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentText = "This is a Text field Edited",
-			webContentTitle = "Web Content Title Edited");
-	}
-
-	@description = "This is a test for LRQA-69035. This test verifies that is not possible to publish the Web Content with a required field blank"
-	@priority = "4"
-	test CanNotEmptyRequiredFieldBePublished {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.editFieldRequired(fieldFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
-
-		Button.clickPublish();
-
-		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
 	@description = "This is a test for LRQA-68539. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked."
