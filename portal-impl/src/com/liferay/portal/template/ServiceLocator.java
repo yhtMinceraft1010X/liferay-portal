@@ -40,8 +40,8 @@ public class ServiceLocator {
 		Object object = registry.callService(serviceName, Function.identity());
 
 		if (PropsValues.TEMPLATE_ENGINE_SERVICE_LOCATOR_RESTRICT &&
-			!(object instanceof BaseService) &&
-			!(object instanceof BaseLocalService)) {
+			!(object instanceof BaseLocalService) &&
+			!(object instanceof BaseService)) {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(

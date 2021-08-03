@@ -75,19 +75,17 @@ public class ServiceLocatorTest {
 		ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
 		Assert.assertNotNull(
-			serviceLocator.findService(PortletLocalService.class.getName()));
-		Assert.assertNotNull(
-			serviceLocator.findService(PortletService.class.getName()));
-
-		Assert.assertNotNull(
 			serviceLocator.findService(MBMessageLocalService.class.getName()));
 		Assert.assertNotNull(
+			serviceLocator.findService(MBMessagePersistence.class.getName()));
+		Assert.assertNotNull(
 			serviceLocator.findService(MBMessageService.class.getName()));
-
+		Assert.assertNotNull(
+			serviceLocator.findService(PortletLocalService.class.getName()));
 		Assert.assertNotNull(
 			serviceLocator.findService(PortletPersistence.class.getName()));
 		Assert.assertNotNull(
-			serviceLocator.findService(MBMessagePersistence.class.getName()));
+			serviceLocator.findService(PortletService.class.getName()));
 	}
 
 	@Test
@@ -99,23 +97,22 @@ public class ServiceLocatorTest {
 		ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
 		Assert.assertNotNull(
-			serviceLocator.findService(PortletLocalService.class.getName()));
-		Assert.assertNotNull(
-			serviceLocator.findService(PortletService.class.getName()));
-
-		Assert.assertNotNull(
 			serviceLocator.findService(MBMessageLocalService.class.getName()));
 		Assert.assertNotNull(
 			serviceLocator.findService(MBMessageService.class.getName()));
+		Assert.assertNotNull(
+			serviceLocator.findService(PortletLocalService.class.getName()));
+		Assert.assertNotNull(
+			serviceLocator.findService(PortletService.class.getName()));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ServiceLocator.class.getName(), LoggerTestUtil.WARN)) {
 
 			Assert.assertNull(
-				serviceLocator.findService(PortletPersistence.class.getName()));
-			Assert.assertNull(
 				serviceLocator.findService(
 					MBMessagePersistence.class.getName()));
+			Assert.assertNull(
+				serviceLocator.findService(PortletPersistence.class.getName()));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -126,7 +123,7 @@ public class ServiceLocatorTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Denied access to service \"",
-					PortletPersistence.class.getName(),
+					MBMessagePersistence.class.getName(),
 					"\" because it is not a Service Builder generated service"),
 				logEntry.getMessage());
 
@@ -135,7 +132,7 @@ public class ServiceLocatorTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Denied access to service \"",
-					MBMessagePersistence.class.getName(),
+					PortletPersistence.class.getName(),
 					"\" because it is not a Service Builder generated service"),
 				logEntry.getMessage());
 		}
