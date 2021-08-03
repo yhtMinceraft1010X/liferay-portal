@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>REPEATABLE_FIELD_ADD_BUTTON_INDEXED</td>
-	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']/parent::div/preceding-sibling::div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-add-button')]) | (//label[normalize-space(text())='${key_fieldLabel}']/preceding-sibling::div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-add-button')]))[${index}]</td>
+	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//div[contains(@class,'repeatable-toolbar')]//button[contains(@class,'repeatable-add-button')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
