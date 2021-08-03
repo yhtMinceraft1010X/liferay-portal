@@ -64,13 +64,12 @@ public class AssetCategoryActionDropdownItemsProvider {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded();
 		_assetDisplayPageFriendlyURLProvider =
 			(AssetDisplayPageFriendlyURLProvider)
 				_httpServletRequest.getAttribute(
 					AssetCategoriesAdminWebKeys.
 						ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER);
-
-		_assetCategoriesLimitExceeded = _isAssetCategoriesLimitExceeded();
 	}
 
 	public List<DropdownItem> getActionDropdownItems(AssetCategory category) {
