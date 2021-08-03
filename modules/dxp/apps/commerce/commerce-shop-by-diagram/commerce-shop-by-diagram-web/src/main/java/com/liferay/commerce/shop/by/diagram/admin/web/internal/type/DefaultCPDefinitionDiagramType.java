@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.shop.by.diagram.admin.web.internal.diagram.type;
+package com.liferay.commerce.shop.by.diagram.admin.web.internal.type;
 
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.display.context.CPDefinitionDiagramSettingDisplayContext;
