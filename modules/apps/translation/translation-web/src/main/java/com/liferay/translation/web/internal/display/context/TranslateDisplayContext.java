@@ -484,7 +484,7 @@ public class TranslateDisplayContext {
 			String.valueOf((Object)SegmentsExperienceConstants.ID_DEFAULT)
 		).build();
 
-		List<HashMap<String, String>> options = new ArrayList<>();
+		List<Map<String, String>> options = new ArrayList<>();
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			if ((segmentsExperience.getPriority() <
