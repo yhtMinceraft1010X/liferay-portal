@@ -46,13 +46,11 @@ public class CPDefinitionDiagramEntryKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, CPField.SKU, false);
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext,
-			CPDefinitionDiagramEntryModelDocumentContributor.FIELD_NUMBER,
-			false);
+			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "number", false);
 	}
 
 	@Reference

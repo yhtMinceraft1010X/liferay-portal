@@ -32,18 +32,14 @@ import org.osgi.service.component.annotations.Component;
 public class CPDefinitionDiagramEntryModelDocumentContributor
 	implements ModelDocumentContributor<CPDefinitionDiagramEntry> {
 
-	public static final String FIELD_NUMBER = "number";
-
-	public static final String FIELD_QUANTITY = "quantity";
-
 	@Override
 	public void contribute(
 		Document document, CPDefinitionDiagramEntry cpDefinitionDiagramEntry) {
 
-		document.addNumber(FIELD_NUMBER, cpDefinitionDiagramEntry.getNumber());
 		document.addText(CPField.SKU, cpDefinitionDiagramEntry.getSku());
+		document.addNumber("number", cpDefinitionDiagramEntry.getNumber());
 		document.addNumber(
-			FIELD_QUANTITY, cpDefinitionDiagramEntry.getQuantity());
+			"quantity", cpDefinitionDiagramEntry.getQuantity());
 	}
 
 }
