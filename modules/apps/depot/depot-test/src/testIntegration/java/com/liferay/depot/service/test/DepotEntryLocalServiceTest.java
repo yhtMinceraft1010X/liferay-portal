@@ -118,7 +118,7 @@ public class DepotEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testCleanUpDepotEntries() throws Exception {
+	public void testDeleteCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addUser(company);
