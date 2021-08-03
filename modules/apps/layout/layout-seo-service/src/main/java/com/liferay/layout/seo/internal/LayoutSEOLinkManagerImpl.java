@@ -192,10 +192,10 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		}
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
-		long groupId = layout.getGroupId();
 
 		try {
-			siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+			siteDefaultLocale = _portal.getSiteDefaultLocale(
+				layout.getGroupId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
