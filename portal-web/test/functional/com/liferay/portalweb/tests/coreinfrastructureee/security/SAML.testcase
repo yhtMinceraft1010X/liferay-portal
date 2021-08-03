@@ -591,6 +591,7 @@ definition {
 	@description = "This is a use case for LPS-88924 using virtual instance"
 	@priority = "4"
 	test AssertSSOWithEncryptionAndDecryption {
+		property app.server.bundles.size = "0";
 		property test.name.skip.portal.instance = "SAML#AssertSSOWithEncryptionAndDecryption";
 
 		// Change screen name so it will differ from the SP portal instance admin's screen name. Only needed for virtual instance test
