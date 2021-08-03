@@ -200,6 +200,58 @@ definition {
 			fieldName = "Single Selection");
 	}
 
+	@description = "This is a test for LRQA-69037. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Single Selection");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldIndex = "1",
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldIndex = "2",
+			fieldLabel = "Single Selection",
+			optionValue = "Option 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldIndex = "1",
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldIndex = "2",
+			fieldLabel = "Single Selection",
+			optionValue = "Option 2");
+	}
+
 	@description = "This is a test for LRQA-69037. This test verifies that is not possible to publish the Web Content with a blank required field."
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
