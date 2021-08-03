@@ -127,7 +127,7 @@ public class ServiceLocatorTest {
 				StringBundler.concat(
 					"Denied access to service \"",
 					PortletPersistence.class.getName(),
-					"\" as it is not a service builder generated service"),
+					"\" because it is not a Service Builder generated service"),
 				logEntry.getMessage());
 
 			logEntry = logEntries.get(1);
@@ -136,7 +136,7 @@ public class ServiceLocatorTest {
 				StringBundler.concat(
 					"Denied access to service \"",
 					MBMessagePersistence.class.getName(),
-					"\" as it is not a service builder generated service"),
+					"\" because it is not a Service Builder generated service"),
 				logEntry.getMessage());
 		}
 	}

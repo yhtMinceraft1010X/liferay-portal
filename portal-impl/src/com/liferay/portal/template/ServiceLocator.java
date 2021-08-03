@@ -47,7 +47,7 @@ public class ServiceLocator {
 				_log.warn(
 					StringBundler.concat(
 						"Denied access to service \"", serviceName,
-						"\" as it is not a service builder generated ",
+						"\" because it is not a Service Builder generated ",
 						"service"));
 			}
 
