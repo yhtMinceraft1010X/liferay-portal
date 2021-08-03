@@ -137,7 +137,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -145,7 +145,7 @@ definition {
 			webContentText = "This is a Text field Edited",
 			webContentTitle = "Web Content Title Edited");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field Edited",
@@ -213,7 +213,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
@@ -245,7 +245,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -313,7 +313,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -329,7 +329,7 @@ definition {
 			fieldLabel = "Text",
 			index = "1");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -359,7 +359,7 @@ definition {
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -367,7 +367,7 @@ definition {
 			webContentText = "",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContent.viewWithStructureCP(
 			webContentText = "",
