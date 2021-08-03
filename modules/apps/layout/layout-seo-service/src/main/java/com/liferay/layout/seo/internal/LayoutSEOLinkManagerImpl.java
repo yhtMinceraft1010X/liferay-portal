@@ -201,15 +201,15 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_log.error(portalException, portalException);
 		}
 
-		String currentCanonical = layoutSEOEntry.getCanonicalURL(
+		String currentCanonicalURL = layoutSEOEntry.getCanonicalURL(
 			siteDefaultLocale);
-		String alternateCanonical = layoutSEOEntry.getCanonicalURL(locale);
+		String alternateCanonicalURL = layoutSEOEntry.getCanonicalURL(locale);
 
-		if (currentCanonical.equals(alternateCanonical)) {
+		if (currentCanonicalURL.equals(alternateCanonicalURL)) {
 			return alternateURL;
 		}
 
-		return alternateCanonical;
+		return alternateCanonicalURL;
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
