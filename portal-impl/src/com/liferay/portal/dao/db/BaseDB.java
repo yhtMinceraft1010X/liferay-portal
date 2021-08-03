@@ -612,7 +612,8 @@ public abstract class BaseDB implements DB {
 		process(
 			companyId -> {
 				if (Validator.isNotNull(companyId) && _log.isInfoEnabled()) {
-					_log.info("Updating database indexes#" + companyId);
+					_log.info(
+						"Updating database indexes for company " + companyId);
 				}
 
 				List<Index> indexes = getIndexes(connection);
@@ -634,11 +635,10 @@ public abstract class BaseDB implements DB {
 					}
 				}
 
-				String limitedLengthIndexesSQL =
-					_applyMaxStringIndexLengthLimitation(indexesSQL);
-
 				addIndexes(
-					connection, limitedLengthIndexesSQL, validIndexNames);
+					connection,
+					_applyMaxStringIndexLengthLimitation(indexesSQL),
+					validIndexNames);
 			});
 	}
 

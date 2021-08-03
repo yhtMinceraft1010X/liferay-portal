@@ -139,7 +139,6 @@ public abstract class BaseDBPartitionTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
-
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
 			_DB_PARTITION_SCHEMA_NAME_PREFIX);
@@ -158,7 +157,6 @@ public abstract class BaseDBPartitionTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
-
 		ReflectionTestUtil.setFieldValue(
 			InfrastructureUtil.class, "_dataSource",
 			_lazyConnectionDataSourceProxy);
