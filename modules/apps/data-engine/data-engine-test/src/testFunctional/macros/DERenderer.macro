@@ -25,6 +25,18 @@ definition {
 		DropdownMenuItem.click(menuItem = "${optionValue}");
 	}
 
+	macro inputDataInTextField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Type(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+			value1 = "${value}");
+	}
+
 	macro removeRepeatableField {
 		if (!(isSet(index))) {
 			var index = "1";
