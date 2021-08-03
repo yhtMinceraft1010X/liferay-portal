@@ -40,6 +40,7 @@ definition {
 	test AutofillRuleCanBePreviewed {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "FormsPreview#AutofillRuleCanBePreviewed";
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
