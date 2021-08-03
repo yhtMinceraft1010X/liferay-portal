@@ -77,17 +77,13 @@ public class DefaultCPDefinitionDiagramType implements CPDefinitionDiagramType {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CPDefinitionDiagramSettingDisplayContext
-			cpDefinitionDiagramSettingDisplayContext =
-				new CPDefinitionDiagramSettingDisplayContext(
-					_actionHelper, httpServletRequest,
-					_cpDefinitionDiagramSettingImageConfiguration,
-					_cpDefinitionDiagramSettingService,
-					_cpDefinitionDiagramTypeRegistry, _itemSelector);
-
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			cpDefinitionDiagramSettingDisplayContext);
+			new CPDefinitionDiagramSettingDisplayContext(
+				_actionHelper, httpServletRequest,
+				_cpDefinitionDiagramSettingImageConfiguration,
+				_cpDefinitionDiagramSettingService,
+				_cpDefinitionDiagramTypeRegistry, _itemSelector));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
