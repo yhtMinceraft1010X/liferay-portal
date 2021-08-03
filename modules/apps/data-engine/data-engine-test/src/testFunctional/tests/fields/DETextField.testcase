@@ -133,17 +133,21 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field Edited",
-			webContentTitle = "Web Content Title Edited");
+		PortletEntry.inputTitle(title = "Web Content Title Edited");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field Edited");
 
 		Button.clickPublish();
 
@@ -209,9 +213,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 
 		Button.clickPublish();
 
@@ -241,9 +247,11 @@ definition {
 
 		DataEngine.addRepeatableField(fieldLabel = "Text");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 
 		Button.clickPublish();
 
@@ -281,7 +289,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
 
 		Button.clickPublish();
 
@@ -309,9 +317,11 @@ definition {
 
 		DataEngine.addRepeatableField(fieldLabel = "Text");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 
 		Button.clickPublish();
 
@@ -355,17 +365,21 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		WebContent.addWithStructureCP(
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.addWithStructureCP(
-			webContentText = "",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "");
 
 		Button.clickPublish();
 
