@@ -321,36 +321,22 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-		DataEngine.addRepeatableField(fieldLabel = "Text");
-
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		DERenderer.inputDataInTextField(
-			fieldLabel = "Text",
-			value = "This is a Text field");
+		DataEngine.addRepeatableField(fieldLabel = "Text");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DataEngine.assertFieldRepeated(
-			fieldName = "Text",
-			index = "1");
-
-		DataEngine.assertFieldRepeated(
-			fieldName = "Text",
-			index = "2");
-
-		DERenderer.removeRepeatableField(
-			fieldLabel = "Text",
-			index = "1");
+		DERenderer.removeRepeatableField(fieldLabel = "Text");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		DataEngine.assertFieldRepeatedNotPresent(
-			fieldName = "Text",
+		DEBuilder.assertFieldNotPresent(
+			fieldLabel = "Text",
 			index = "2");
 	}
 
