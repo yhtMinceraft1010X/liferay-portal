@@ -437,4 +437,48 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "This is a test for LRQA-69038. This test verifies that is possible to uncheck a chosen option and it persists."
+	@priority = "4"
+	test CanUncheckChosenOptions {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+	}
+
 }
