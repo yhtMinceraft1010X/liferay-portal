@@ -105,8 +105,6 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getScript(long classNameId, long resourceClassNameId) {
-		String script = "<#-- Empty script -->";
-
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(resourceClassNameId);
 
@@ -116,11 +114,11 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		if (templateHandler != null) {
-			script = templateHandler.getTemplatesHelpContent(
+			return templateHandler.getTemplatesHelpContent(
 				TemplateConstants.LANG_TYPE_FTL);
 		}
 
-		return script;
+		return "<#-- Empty script -->";
 	}
 
 	@Reference
