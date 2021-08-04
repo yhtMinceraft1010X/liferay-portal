@@ -950,25 +950,28 @@ public class PortalImpl implements Portal {
 
 		String path = uri.getPath();
 
-		// Return when it's a relative URL
-
 		if (Validator.isNotNull(path) && url.startsWith(path)) {
+
+			// Relative URL
+
 			return url;
 		}
 
 		String protocol = uri.getScheme();
 
-		// Specs regard URL starting with double slashes as valid, but we do not
-
 		if (protocol == null) {
+
+			// Protocol is required
+
 			return null;
 		}
 
 		String domain = uri.getHost();
 
-		// Is not a relative URL, also has not domain. Invalid.
-
 		if (Validator.isNull(domain)) {
+
+			// Absolute URL must have a domain
+
 			return null;
 		}
 
