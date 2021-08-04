@@ -638,7 +638,6 @@ definition {
 	@description = "LPS-108138 - Verify that the tasks on -Choose Transition Per Step- are grouped by versioned tasks -when there are changes in the workflow process-"
 	@priority = "4"
 	test TasksAreGroupedByVersionedTasks {
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -673,38 +672,29 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-        Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
 		Workflow.assignToMeTaskByActions(
-            workflowAssetTitle = "Blogs Entry Title 2",
-            workflowAssetType = "Blogs Entry",
-            workflowTask = "Review");
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
 
-		WorkflowMetrics.goToWorkflowAllItems(
-			workflowProcessName = "Single Approver"
-		);
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToBulkTransitionSelectTasks();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
 		AssertElementPresent(
-			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_1",
-			key_taskName = "Blogs Entry Title"
-		);
+			key_taskName = "Blogs Entry Title",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_1");
 
 		AssertElementPresent(
-			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_2",
-			key_taskName = "Blogs Entry Title 2"
-		);
-
-
-
-
-
+			key_taskName = "Blogs Entry Title 2",
+			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_2");
 	}
 
 	@description = "LPS-105495 - Verify that tasks with more than 10 possible transitions have a scroll inside the dropdown field"
