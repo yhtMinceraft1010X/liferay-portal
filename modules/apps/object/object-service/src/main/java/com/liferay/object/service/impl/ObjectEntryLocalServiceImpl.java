@@ -232,7 +232,11 @@ public class ObjectEntryLocalServiceImpl
 		_assetEntryLocalService.deleteEntry(
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
-		_deleteFromTable(objectDefinition, objectEntry);
+		_deleteFromTable(
+			objectDefinition.getDBTableName(), objectDefinition, objectEntry);
+		_deleteFromTable(
+			objectDefinition.getExtensionDBTableName(), objectDefinition,
+			objectEntry);
 
 		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
 			objectDefinition.getClassName());
@@ -539,20 +543,15 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _deleteFromTable(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			String dbTableName, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws PortalException {
 
 		runSQL(
 			StringBundler.concat(
-				"delete from ", objectDefinition.getDBTableName(), " where ",
+				"delete from ", dbTableName, " where ",
 				objectDefinition.getPKObjectFieldDBColumnName(), " = ",
 				objectEntry.getObjectEntryId()));
-
-		runSQL(
-			StringBundler.concat(
-				"delete from ", objectDefinition.getExtensionDBTableName(),
-				" where ", objectDefinition.getPKObjectFieldDBColumnName(),
-				" = ", objectEntry.getObjectEntryId()));
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
