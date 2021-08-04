@@ -207,8 +207,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
 		return GetterUtil.getString(
-			extensionAttributes.get("factoryInstanceLabelAttribute"),
-			StringPool.BLANK);
+			extensionAttributes.get("factoryInstanceLabelAttribute"));
 	}
 
 	@Override
@@ -329,7 +328,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				com.liferay.portal.configuration.metatype.annotations.
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
-		return GetterUtil.get(extensionAttributes.get("strictScope"), false);
+		return GetterUtil.getBoolean(extensionAttributes.get("strictScope"));
 	}
 
 	public boolean isSystemScope() {
