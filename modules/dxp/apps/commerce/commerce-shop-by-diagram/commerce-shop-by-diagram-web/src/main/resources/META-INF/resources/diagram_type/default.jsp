@@ -20,8 +20,6 @@
 CPDefinitionDiagramSettingDisplayContext cpDefinitionDiagramSettingDisplayContext = (CPDefinitionDiagramSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionDiagramSettingDisplayContext.getCPDefinition();
-
-String imageURL = cpDefinitionDiagramSettingDisplayContext.getImageURL();
 %>
 
 <div id="shop-by-diagram" />
@@ -41,7 +39,7 @@ String imageURL = cpDefinitionDiagramSettingDisplayContext.getImageURL();
 				"width", "100%"
 			)
 		).put(
-			"imageURL", imageURL
+			"imageURL", cpDefinitionDiagramSettingDisplayContext.getImageURL()
 		).put(
 			"isAdmin", true
 		).put(
