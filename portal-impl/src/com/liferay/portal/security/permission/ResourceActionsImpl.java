@@ -1255,19 +1255,19 @@ public class ResourceActionsImpl implements ResourceActions {
 					modelResourceElement.elementText("root"));
 
 				if (root) {
-					String originalRootModelName =
+					String existingModelName =
 						_portletRootModelResources.putIfAbsent(
 							portletName, modelName);
 
-					if (Validator.isNotNull(originalRootModelName) &&
-						!Objects.equals(originalRootModelName, modelName)) {
+					if (Validator.isNotNull(existingModelName) &&
+						!Objects.equals(existingModelName, modelName)) {
 
 						throw new ResourceActionsException(
 							StringBundler.concat(
-								"More than one root model resources are ",
-								"defined for ", portletName, ": ",
-								originalRootModelName, ", ", modelName,
-								", see LPS-135983 for more details"));
+								"Portlet ", portletName,
+								" cannot be assigned to both ",
+								existingModelName, " and ", modelName,
+								" as root model resources. See LPS-135983."));
 					}
 				}
 			}
