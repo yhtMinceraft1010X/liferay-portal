@@ -1,5 +1,22 @@
 definition {
 
+	macro assertDataInMultipleSelectionField {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		AssertChecked.assertCheckedNotVisible(
+			fieldIndex = "${fieldIndex}",
+			key_fieldLabel = "${fieldLabel}",
+			key_optionValue = "${optionValue}",
+			locator1 = "DataEngineRenderer#MULTIPLE_SELECTION_OPTION_INDEXED",
+			optionIndex = "${optionIndex}");
+	}
+
 	macro assertDataInSelectFromListField {
 		if (!(isSet(index))) {
 			var index = "1";
