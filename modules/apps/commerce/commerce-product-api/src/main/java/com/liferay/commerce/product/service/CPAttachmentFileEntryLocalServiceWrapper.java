@@ -81,14 +81,14 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry
 			addOrUpdateCPAttachmentFileEntry(
-				String externalReferenceCode, long groupId, long classNameId,
-				long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-				boolean cdnEnabled, String cdnURL, int displayDateMonth,
-				int displayDateDay, int displayDateYear, int displayDateHour,
-				int displayDateMinute, int expirationDateMonth,
-				int expirationDateDay, int expirationDateYear,
-				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				String externalReferenceCode, long userId, long groupId,
+				long classNameId, long classPK, long cpAttachmentFileEntryId,
+				long fileEntryId, boolean cdnEnabled, String cdnURL,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -96,7 +96,7 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 		return _cpAttachmentFileEntryLocalService.
 			addOrUpdateCPAttachmentFileEntry(
-				externalReferenceCode, groupId, classNameId, classPK,
+				externalReferenceCode, userId, groupId, classNameId, classPK,
 				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,

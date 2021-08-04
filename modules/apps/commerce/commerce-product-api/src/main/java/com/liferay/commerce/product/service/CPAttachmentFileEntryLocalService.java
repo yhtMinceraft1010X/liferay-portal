@@ -98,11 +98,11 @@ public interface CPAttachmentFileEntryLocalService
 		throws PortalException;
 
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnURL, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long cpAttachmentFileEntryId,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,

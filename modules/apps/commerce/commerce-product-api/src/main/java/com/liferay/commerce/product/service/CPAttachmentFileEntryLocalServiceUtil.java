@@ -85,11 +85,11 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 	}
 
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnURL, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long cpAttachmentFileEntryId,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<java.util.Locale, String> titleMap,
@@ -98,7 +98,7 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addOrUpdateCPAttachmentFileEntry(
-			externalReferenceCode, groupId, classNameId, classPK,
+			externalReferenceCode, userId, groupId, classNameId, classPK,
 			cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
