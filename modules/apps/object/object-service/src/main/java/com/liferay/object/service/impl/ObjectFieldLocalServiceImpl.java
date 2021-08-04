@@ -57,6 +57,8 @@ public class ObjectFieldLocalServiceImpl
 			boolean required, String type)
 		throws PortalException {
 
+		name = StringUtil.trim(name);
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
@@ -78,6 +80,8 @@ public class ObjectFieldLocalServiceImpl
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			String name, boolean required, String type)
 		throws PortalException {
+
+		name = StringUtil.trim(name);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -124,8 +128,6 @@ public class ObjectFieldLocalServiceImpl
 			String indexedLanguageId, String name, boolean required,
 			String type)
 		throws PortalException {
-
-		name = StringUtil.trim(name);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
