@@ -70,7 +70,6 @@ public abstract class BaseTemplateDisplayContext
 				DDMWebConfiguration.class.getName());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
-
 		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

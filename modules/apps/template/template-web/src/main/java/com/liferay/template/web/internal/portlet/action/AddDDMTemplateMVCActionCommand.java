@@ -76,6 +76,35 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 			new String[] {LocaleUtil.toLanguageId(themeDisplay.getLocale())},
 			new String[] {ParamUtil.getString(actionRequest, "name")});
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMTemplate.class.getName(), actionRequest);
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
+			themeDisplay.getScopeGroupId(), classNameId, classPK,
+			resourceClassNameId, nameMap, Collections.emptyMap(),
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
+			TemplateConstants.LANG_TYPE_FTL,
+			_getScript(classNameId, resourceClassNameId), serviceContext);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put(
+				"redirectURL",
+				PortletURLBuilder.createRenderURL(
+					_portal.getLiferayPortletResponse(actionResponse)
+				).setMVCPath(
+					"/edit_ddm_template.jsp"
+				).setRedirect(
+					ParamUtil.getString(actionRequest, "redirect")
+				).setParameter(
+					"ddmTemplateId", ddmTemplate.getTemplateId()
+				).buildString()));
+	}
+
+	private String _getScript(long classNameId, long resourceClassNameId) {
 		String script = "<#-- Empty script -->";
 
 		TemplateHandler templateHandler =
@@ -91,31 +120,7 @@ public class AddDDMTemplateMVCActionCommand extends BaseMVCActionCommand {
 				TemplateConstants.LANG_TYPE_FTL);
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMTemplate.class.getName(), actionRequest);
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		DDMTemplate ddmTemplate = _ddmTemplateService.addTemplate(
-			themeDisplay.getScopeGroupId(), classNameId, classPK,
-			resourceClassNameId, nameMap, Collections.emptyMap(),
-			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, StringPool.BLANK,
-			TemplateConstants.LANG_TYPE_FTL, script, serviceContext);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			JSONUtil.put(
-				"redirectURL",
-				PortletURLBuilder.createRenderURL(
-					_portal.getLiferayPortletResponse(actionResponse)
-				).setMVCPath(
-					"/edit_ddm_template.jsp"
-				).setRedirect(
-					ParamUtil.getString(actionRequest, "redirect")
-				).setParameter(
-					"ddmTemplateId", ddmTemplate.getTemplateId()
-				).buildString()));
+		return script;
 	}
 
 	@Reference
