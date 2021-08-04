@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
@@ -36,6 +34,8 @@ if (ddmTemplate != null) {
 	renderResponse.setTitle(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(ddmTemplate.getName(locale))));
 }
 else {
+	TemplateDisplayContext templateDisplayContext = (TemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 	renderResponse.setTitle(LanguageUtil.format(request, "add-x", HtmlUtil.escape(templateDisplayContext.getTemplateTypeLabel(classNameId))));
 }
 %>
