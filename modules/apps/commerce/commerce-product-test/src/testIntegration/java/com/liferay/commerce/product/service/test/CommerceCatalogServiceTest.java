@@ -55,7 +55,7 @@ public class CommerceCatalogServiceTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testAddPricingClassHasOwnerPermission() throws Exception {
+	public void testAddCommerceCatalog() throws Exception {
 		RoleTestUtil.addResourcePermission(
 			"User", CPConstants.RESOURCE_NAME_CATALOG,
 			ResourceConstants.SCOPE_COMPANY,
