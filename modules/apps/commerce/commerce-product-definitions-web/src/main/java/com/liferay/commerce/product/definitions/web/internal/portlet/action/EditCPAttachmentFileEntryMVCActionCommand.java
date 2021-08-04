@@ -146,6 +146,10 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			actionRequest, "cpDefinitionId");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
+		String cdnURL = ParamUtil.getString(actionRequest, "cdnURL");
+
+		boolean cdnEnabled = Validator.isNotNull(cdnURL);
+
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -188,10 +192,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			actionRequest, "title");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		String cdnURL = ParamUtil.getString(actionRequest, "cdnURL");
-
-		boolean cdnEnabled = Validator.isNotNull(cdnURL);
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);

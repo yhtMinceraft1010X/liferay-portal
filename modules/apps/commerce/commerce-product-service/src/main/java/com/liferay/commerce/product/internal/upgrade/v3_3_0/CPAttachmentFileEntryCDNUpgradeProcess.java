@@ -28,7 +28,6 @@ public class CPAttachmentFileEntryCDNUpgradeProcess
 		addColumn(
 			CPAttachmentFileEntryTable.class,
 			CPAttachmentFileEntryTable.TABLE_NAME, "cdn", "BOOLEAN");
-
 		addColumn(
 			CPAttachmentFileEntryTable.class,
 			CPAttachmentFileEntryTable.TABLE_NAME, "cdnURL", "VARCHAR(255)");
