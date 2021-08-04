@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -44,7 +46,7 @@ public class SiteInitializerExtender
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities("liferay.site.initializer");
 
-		if ((bundleCapabilities == null) || bundleCapabilities.isEmpty()) {
+		if (ListUtil.isEmpty(bundleCapabilities)) {
 			return null;
 		}
 
