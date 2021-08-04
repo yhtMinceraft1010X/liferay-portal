@@ -230,6 +230,39 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		sb = new StringBuilder();
+
+		sb.append("#!/bin/bash\n");
+
+		for (String propertyName : properties.stringPropertyNames()) {
+			sb.append("export ");
+			sb.append(propertyName);
+			sb.append("=");
+
+			String propertyValue = properties.getProperty(propertyName);
+
+			propertyValue = propertyValue.replaceAll(" ", "\\\\ ");
+			propertyValue = propertyValue.replaceAll("'", "\\\\\\\'");
+			propertyValue = propertyValue.replaceAll("<", "\\\\\\<");
+			propertyValue = propertyValue.replaceAll(">", "\\\\\\>");
+			propertyValue = propertyValue.replaceAll("\"", "\\\\\\\"");
+			propertyValue = propertyValue.replaceAll("\\$", "\\\\\\$");
+			propertyValue = propertyValue.replaceAll("\\(", "\\\\\\(");
+			propertyValue = propertyValue.replaceAll("\\)", "\\\\\\)");
+			propertyValue = propertyValue.replaceAll("\\n", "\\\\n");
+
+			sb.append(propertyValue);
+
+			sb.append("\n");
+		}
+
+		try {
+			JenkinsResultsParserUtil.write(destFilePath + ".sh", sb.toString());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	@Override
