@@ -65,6 +65,8 @@ public @interface ExtendedObjectClassDefinition {
 	 * ConfigurationVisibilityController.
 	 *
 	 * The default value is false.
+	 *
+	 * @review
 	 */
 	public boolean strictScope() default false;
 
