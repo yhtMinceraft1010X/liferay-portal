@@ -486,7 +486,11 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryId);
 
 		_updateTable(
-			_objectDefinitionPersistence.findByPrimaryKey(
+			_getDynamicObjectDefinitionTable(
+				objectEntry.getObjectDefinitionId()),
+			objectEntryId, values);
+		_updateTable(
+			_getExtensionDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
 			objectEntryId, values);
 
@@ -713,9 +717,11 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		/*if (count == 1) {
-			throw new ObjectEntryValuesException(
-				"No values were provided for object definition " +
-					objectDefinitionId);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No values were provided for object entry " +
+						objectEntryId);
+			}
 		}*/
 
 		sb.append(") values (?");
@@ -1015,21 +1021,17 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _updateTable(
-			ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Serializable> values)
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			long objectEntryId, Map<String, Serializable> values)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler();
 
 		sb.append("update ");
-		sb.append(objectDefinition.getDBTableName());
+		sb.append(dynamicObjectDefinitionTable.getName());
 		sb.append(" set ");
 
 		int count = 0;
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectDefinition.getObjectDefinitionId());
 
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionTable.getObjectFields();
@@ -1058,13 +1060,22 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (count == 0) {
-			throw new ObjectEntryValuesException(
-				"No values were provided for object definition " +
-					objectDefinition.getObjectDefinitionId());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No values were provided for object entry " +
+						objectEntryId);
+			}
+
+			return;
 		}
 
 		sb.append(" where ");
-		sb.append(objectDefinition.getPKObjectFieldDBColumnName());
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+		sb.append(primaryKeyColumn.getName());
+
 		sb.append(" = ?");
 
 		String sql = sb.toString();
