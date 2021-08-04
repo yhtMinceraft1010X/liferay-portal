@@ -380,8 +380,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	private final String _bundleSymbolicName;
 	private final ClassLoader _classLoader;
 	private final Configuration _configuration;
+	private Map<String, Object> _configurationOverrideProperties;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final boolean _factory;
-	private Map<String, Object> _configurationOverrideProperties;
 
 }

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -393,38 +394,35 @@ public class ConfigurationModelToDDMFormConverter {
 
 		LocalizedValue tip = new LocalizedValue(_locale);
 
-		String result = StringPool.BLANK;
+		StringBundler sb = new StringBundler(3);
 
 		Map<String, String> extensionAttributes = _getExtensionAttributes(
 			attributeDefinition);
 
-		List<String> descriptionArguments = StringUtil.split(
-			extensionAttributes.get("description-arguments"));
+		String description = translate(
+			attributeDefinition.getDescription(),
+			StringUtil.split(extensionAttributes.get("description-arguments")));
 
-		String fieldDescription = translate(
-			attributeDefinition.getDescription(), descriptionArguments);
-
-		if (Validator.isNotNull(fieldDescription)) {
-			result += fieldDescription;
+		if (Validator.isNotNull(description)) {
+			sb.append(description);
 		}
 
 		if (_configurationModel.hasConfigurationOverrideProperty(
 				attributeDefinition.getID())) {
 
-			String overridePropertiesTip = LanguageUtil.get(
-				ResourceBundleUtil.getBundle(
-					_locale, ConfigurationModelToDDMFormConverter.class),
-				"this-field-has-been-set-by-a-portal-property-and-cannot-be-" +
-					"changed-here");
-
-			if (result.length() > 0) {
-				result += StringPool.SPACE;
+			if (sb.length() > 0) {
+				sb.append(StringPool.SPACE);
 			}
 
-			result += overridePropertiesTip;
+			sb.append(
+				LanguageUtil.get(
+					ResourceBundleUtil.getBundle(
+						_locale, ConfigurationModelToDDMFormConverter.class),
+					"this-field-has-been-set-by-a-portal-property-and-cannot-" +
+						"be-changed-here"));
 		}
 
-		tip.addString(_locale, result);
+		tip.addString(_locale, sb.toString());
 
 		ddmFormField.setTip(tip);
 	}
