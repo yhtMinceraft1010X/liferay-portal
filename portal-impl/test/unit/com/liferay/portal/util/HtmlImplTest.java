@@ -392,7 +392,7 @@ public class HtmlImplTest {
 	}
 
 	@Test
-	public void testStripHtmlWithNoScriptTag() {
+	public void testStripHtmlWithNoscriptTag() {
 		Assert.assertEquals(
 			"Hello World!",
 			_htmlImpl.stripHtml(
@@ -400,7 +400,7 @@ public class HtmlImplTest {
 	}
 
 	@Test
-	public void testStripHtmlWithScripTag() {
+	public void testStripHtmlWithScriptTag() {
 		Assert.assertEquals(
 			"Hello World!",
 			_htmlImpl.stripHtml(
