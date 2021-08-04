@@ -162,11 +162,8 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_DTN(
-			objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getExtensionDBTableName());
-
-		_createExtensionTable(objectDefinition, objectFields);
+		_createTable(
+			objectDefinition.getExtensionDBTableName(), objectDefinition);
 
 		return objectDefinition;
 	}
@@ -346,15 +343,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_DTN(
-			objectDefinitionId, objectDefinition.getDBTableName());
-
-		_createTable(objectDefinition, objectFields);
-
-		objectFields = _objectFieldPersistence.findByODI_DTN(
-			objectDefinitionId, objectDefinition.getExtensionDBTableName());
-
-		_createExtensionTable(objectDefinition, objectFields);
+		_createTable(objectDefinition.getDBTableName(), objectDefinition);
+		_createTable(
+			objectDefinition.getExtensionDBTableName(), objectDefinition);
 
 		ObjectDefinition finalObjectDefinition = objectDefinition;
 
@@ -599,24 +590,15 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinition;
 	}
 
-	private void _createExtensionTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition, objectFields,
-				objectDefinition.getExtensionDBTableName());
-
-		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
-	}
-
 	private void _createTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+		String dbTableName, ObjectDefinition objectDefinition) {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			new DynamicObjectDefinitionTable(
-				objectDefinition, objectFields,
-				objectDefinition.getDBTableName());
+				objectDefinition,
+				_objectFieldPersistence.findByODI_DTN(
+					objectDefinition.getObjectDefinitionId(), dbTableName),
+				dbTableName);
 
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
