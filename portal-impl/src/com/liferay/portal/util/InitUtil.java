@@ -168,7 +168,7 @@ public class InitUtil {
 
 		DBManagerUtil.setDBManager(new DBManagerImpl());
 
-		// FileUtil
+		// File
 
 		FileUtil fileUtil = new FileUtil();
 
