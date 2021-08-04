@@ -674,14 +674,15 @@ public class ObjectEntryLocalServiceImpl
 			long objectEntryId, Map<String, Serializable> values)
 		throws PortalException {
 
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("insert into ");
 		sb.append(dynamicObjectDefinitionTable.getName());
 		sb.append(" (");
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
 		sb.append(primaryKeyColumn.getName());
 
 		int count = 1;
