@@ -162,9 +162,6 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		_createTable(
-			objectDefinition.getExtensionDBTableName(), objectDefinition);
-
 		return objectDefinition;
 	}
 
@@ -229,9 +226,11 @@ public class ObjectDefinitionLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			objectDefinition.getObjectDefinitionId());
 
-		if ((objectDefinition.getStatus() ==
-				WorkflowConstants.STATUS_APPROVED) &&
-			!objectDefinition.isSystem()) {
+		if (objectDefinition.isSystem()) {
+			_dropTable(objectDefinition.getExtensionDBTableName());
+		}
+		else if (objectDefinition.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
 
 			for (ResourceAction resourceAction :
 					_resourceActionLocalService.getResourceActions(
@@ -585,6 +584,11 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.getType());
 				}
 			}
+		}
+
+		if (system) {
+			_createTable(
+				objectDefinition.getExtensionDBTableName(), objectDefinition);
 		}
 
 		return objectDefinition;
