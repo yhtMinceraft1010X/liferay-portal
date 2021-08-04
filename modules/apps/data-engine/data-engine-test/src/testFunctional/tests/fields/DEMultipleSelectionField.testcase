@@ -208,6 +208,63 @@ definition {
 			fieldName = "Multiple Selection");
 	}
 
+	@description = "This is a test for LRQA-69038. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Multiple Selection");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Multiple Selection");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldIndex = "1",
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldIndex = "2",
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldIndex = "2",
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldIndex = "1",
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldIndex = "2",
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+	}
+
 	@description = "This is a test for LRQA-69038. This test verifies that is not possible to publish the Web Content with a blank required field."
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
