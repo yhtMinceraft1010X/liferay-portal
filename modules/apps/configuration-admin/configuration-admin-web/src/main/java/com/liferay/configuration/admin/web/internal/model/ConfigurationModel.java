@@ -101,7 +101,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				com.liferay.portal.configuration.metatype.annotations.
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
-		return GetterUtil.get(
+		return GetterUtil.getString(
 			extensionAttributes.get("category"), "third-party");
 	}
 
@@ -206,7 +206,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				com.liferay.portal.configuration.metatype.annotations.
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
-		return GetterUtil.get(
+		return GetterUtil.getString(
 			extensionAttributes.get("factoryInstanceLabelAttribute"),
 			StringPool.BLANK);
 	}
@@ -231,7 +231,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				com.liferay.portal.configuration.metatype.annotations.
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
-		return GetterUtil.get(
+		return GetterUtil.getString(
 			extensionAttributes.get("scope"), Scope.SYSTEM.toString());
 	}
 
@@ -311,7 +311,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 				com.liferay.portal.configuration.metatype.annotations.
 					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
-		return GetterUtil.get(extensionAttributes.get("generateUI"), true);
+		return GetterUtil.getBoolean(
+			extensionAttributes.get("generateUI"), true);
 	}
 
 	public boolean isGroupScope() {
