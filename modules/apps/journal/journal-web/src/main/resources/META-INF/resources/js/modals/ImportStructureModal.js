@@ -70,7 +70,7 @@ const ImportStructureModal = ({portletNamespace}) => {
 					title={`${Liferay.Language.get('info')}:`}
 				>
 					{Liferay.Language.get(
-						'once-you-click-import-the-process-will-run-in-the-background-this-may-take-a-while'
+						'the-import-process-will-run-in-the-background-and-may-take-a-few-minutes'
 					)}
 				</ClayAlert>
 				<ClayForm.Group>
