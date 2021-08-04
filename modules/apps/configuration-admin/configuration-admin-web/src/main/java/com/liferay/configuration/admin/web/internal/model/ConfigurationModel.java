@@ -60,12 +60,12 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		_extendedObjectClassDefinition = extendedObjectClassDefinition;
 		_factory = factory;
 
-		_overrideConfigurationPropertiesMap =
+		_configurationOverrideProperties =
 			ConfigurationOverridePropertiesUtil.getOverrideProperties(
 				_extendedObjectClassDefinition.getID());
 
-		if (_overrideConfigurationPropertiesMap == null) {
-			_overrideConfigurationPropertiesMap = Collections.emptyMap();
+		if (_configurationOverrideProperties == null) {
+			_configurationOverrideProperties = Collections.emptyMap();
 		}
 	}
 
@@ -253,7 +253,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public Boolean hasConfigurationOverrideProperty(String key) {
-		return _overrideConfigurationPropertiesMap.containsKey(key);
+		return _configurationOverrideProperties.containsKey(key);
 	}
 
 	@Override
@@ -382,6 +382,6 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	private final Configuration _configuration;
 	private final ExtendedObjectClassDefinition _extendedObjectClassDefinition;
 	private final boolean _factory;
-	private Map<String, Object> _overrideConfigurationPropertiesMap;
+	private Map<String, Object> _configurationOverrideProperties;
 
 }
