@@ -1184,10 +1184,7 @@ definition {
 	test DefaultAccountRolesArePresent {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Navigator.gotoNavItem(navItem = "Account Roles");
 
@@ -1418,10 +1415,7 @@ definition {
 	@description = "This test makes sure the default account roles are present in Roles Admin."
 	@priority = "4"
 	test SharedAccountRoleDisplaysInAllAccounts {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		Role.openRolesAdmin();
 
 		Navigator.gotoNavItem(navItem = "Account Roles");
 
