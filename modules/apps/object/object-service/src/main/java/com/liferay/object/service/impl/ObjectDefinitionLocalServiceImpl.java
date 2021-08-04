@@ -148,8 +148,7 @@ public class ObjectDefinitionLocalServiceImpl
 			if (oldObjectField == null) {
 				_objectFieldLocalService.addSystemObjectField(
 					userId, objectDefinition.getObjectDefinitionId(),
-					newObjectField.getDBColumnName(),
-					false, false, "",
+					newObjectField.getDBColumnName(), false, false, "",
 					newObjectField.getName(), newObjectField.isRequired(),
 					newObjectField.getType());
 			}
@@ -163,10 +162,9 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldPersistence.findByODI_DTN(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getExtensionDBTableName());
+		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_DTN(
+			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getExtensionDBTableName());
 
 		_createExtensionTable(objectDefinition, objectFields);
 
@@ -348,15 +346,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		List<ObjectField> objectFields =
-			_objectFieldPersistence.findByODI_DTN(
-				objectDefinitionId, objectDefinition.getDBTableName());
+		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_DTN(
+			objectDefinitionId, objectDefinition.getDBTableName());
 
 		_createTable(objectDefinition, objectFields);
 
-		objectFields =
-			_objectFieldPersistence.findByODI_DTN(
-				objectDefinitionId, objectDefinition.getExtensionDBTableName());
+		objectFields = _objectFieldPersistence.findByODI_DTN(
+			objectDefinitionId, objectDefinition.getExtensionDBTableName());
 
 		_createExtensionTable(objectDefinition, objectFields);
 
@@ -580,37 +576,27 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
-
-				if(system) {
+				if (system) {
 					_objectFieldLocalService.addSystemObjectField(
 						userId, objectDefinitionId,
 						objectField.getDBColumnName(), objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
-						objectField.getIndexedLanguageId(), objectField.getName(),
-						objectField.isRequired(), objectField.getType());
+						objectField.getIndexedLanguageId(),
+						objectField.getName(), objectField.isRequired(),
+						objectField.getType());
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(
 						userId, objectDefinitionId, objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
-						objectField.getIndexedLanguageId(), objectField.getName(),
-						objectField.isRequired(), objectField.getType());
+						objectField.getIndexedLanguageId(),
+						objectField.getName(), objectField.isRequired(),
+						objectField.getType());
 				}
 			}
 		}
 
 		return objectDefinition;
-	}
-
-	private void _createTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition, objectFields,
-				objectDefinition.getDBTableName());
-
-		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
 
 	private void _createExtensionTable(
@@ -620,6 +606,17 @@ public class ObjectDefinitionLocalServiceImpl
 			new DynamicObjectDefinitionTable(
 				objectDefinition, objectFields,
 				objectDefinition.getExtensionDBTableName());
+
+		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
+	}
+
+	private void _createTable(
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			new DynamicObjectDefinitionTable(
+				objectDefinition, objectFields,
+				objectDefinition.getDBTableName());
 
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}

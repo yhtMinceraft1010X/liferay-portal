@@ -30,12 +30,12 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,9 +52,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public ObjectField addCustomObjectField(
-			long userId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
+			long userId, long objectDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -62,14 +62,14 @@ public class ObjectFieldLocalServiceImpl
 
 		String dbTableName = objectDefinition.getDBTableName();
 
-		if(objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED){
+		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			dbTableName = objectDefinition.getExtensionDBTableName();
 		}
 
 		return _addObjectField(
-			userId, objectDefinitionId, name + StringPool.UNDERLINE, dbTableName, indexed,
-			indexedAsKeyword, indexedLanguageId, name, required, type);
-
+			userId, objectDefinitionId, name + StringPool.UNDERLINE,
+			dbTableName, indexed, indexedAsKeyword, indexedLanguageId, name,
+			required, type);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if(Validator.isNull(dbColumnName)){
+		if (Validator.isNull(dbColumnName)) {
 			dbColumnName = name;
 		}
 
@@ -90,46 +90,6 @@ public class ObjectFieldLocalServiceImpl
 			userId, objectDefinitionId, dbColumnName,
 			objectDefinition.getDBTableName(), indexed, indexedAsKeyword,
 			indexedLanguageId, name, required, type);
-	}
-
-
-	private ObjectField _addObjectField(
-			long userId, long objectDefinitionId, String dbColumnName, String dbTableName,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			String name, boolean required, String type)
-		throws PortalException {
-
-		name = StringUtil.trim(name);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-
-
-		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
-		_validateName(objectDefinition, name);
-		validateType(type);
-
-		ObjectField objectField = objectFieldPersistence.create(
-			counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
-
-		objectField.setCompanyId(user.getCompanyId());
-		objectField.setUserId(user.getUserId());
-		objectField.setUserName(user.getFullName());
-
-		objectField.setObjectDefinitionId(objectDefinitionId);
-		objectField.setDBColumnName(dbColumnName);
-		objectField.setDBTableName(dbTableName);
-		objectField.setIndexed(indexed);
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setIndexedLanguageId(indexedLanguageId);
-		objectField.setName(name);
-		objectField.setRequired(required);
-		objectField.setType(type);
-
-		return objectFieldPersistence.update(objectField);
 	}
 
 	@Override
@@ -156,6 +116,44 @@ public class ObjectFieldLocalServiceImpl
 		if (!_types.contains(type)) {
 			throw new ObjectFieldTypeException("Invalid type " + type);
 		}
+	}
+
+	private ObjectField _addObjectField(
+			long userId, long objectDefinitionId, String dbColumnName,
+			String dbTableName, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, String name, boolean required,
+			String type)
+		throws PortalException {
+
+		name = StringUtil.trim(name);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
+		_validateName(objectDefinition, name);
+		validateType(type);
+
+		ObjectField objectField = objectFieldPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectField.setCompanyId(user.getCompanyId());
+		objectField.setUserId(user.getUserId());
+		objectField.setUserName(user.getFullName());
+
+		objectField.setObjectDefinitionId(objectDefinitionId);
+		objectField.setDBColumnName(dbColumnName);
+		objectField.setDBTableName(dbTableName);
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setName(name);
+		objectField.setRequired(required);
+		objectField.setType(type);
+
+		return objectFieldPersistence.update(objectField);
 	}
 
 	private void _validateIndexed(
