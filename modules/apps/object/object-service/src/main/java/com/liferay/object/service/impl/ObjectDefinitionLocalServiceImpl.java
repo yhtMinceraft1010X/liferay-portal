@@ -603,8 +603,8 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(dynamicObjectDefinitionTable.getCreateTableSQL());
 	}
 
-	private void _dropTable(String tableName) {
-		String sql = "drop table " + tableName;
+	private void _dropTable(String dbTableName) {
+		String sql = "drop table " + dbTableName;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);
