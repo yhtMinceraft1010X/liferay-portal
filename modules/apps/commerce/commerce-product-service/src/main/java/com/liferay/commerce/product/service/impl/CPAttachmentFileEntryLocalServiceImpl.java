@@ -195,11 +195,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Override
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			boolean cdnEnabled, String cdnURL, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			String externalReferenceCode, long userId, long groupId,
+			long classNameId, long classPK, long cpAttachmentFileEntryId,
+			long fileEntryId, boolean cdnEnabled, String cdnURL,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -222,19 +222,18 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		if (cpAttachmentFileEntry == null) {
 			cpAttachmentFileEntry =
 				cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-					externalReferenceCode, serviceContext.getUserId(), groupId,
-					classNameId, classPK, fileEntryId, cdnEnabled, cdnURL,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					externalReferenceCode, userId, groupId, classNameId,
+					classPK, fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, titleMap, json, priority,
 					type, serviceContext);
 		}
 		else {
 			cpAttachmentFileEntry =
 				cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-					serviceContext.getUserId(),
-					cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+					userId, cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 					fileEntryId, cdnEnabled, cdnURL, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,

@@ -110,9 +110,9 @@ public class CPAttachmentFileEntryServiceImpl
 
 		return cpAttachmentFileEntryLocalService.
 			addOrUpdateCPAttachmentFileEntry(
-				externalReferenceCode, groupId, classNameId, classPK,
-				cpAttachmentFileEntryId, fileEntryId, cdnEnabled, cdnURL,
-				displayDateMonth, displayDateDay, displayDateYear,
+				externalReferenceCode, getUserId(), groupId, classNameId,
+				classPK, cpAttachmentFileEntryId, fileEntryId, cdnEnabled,
+				cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, titleMap, json, priority,
