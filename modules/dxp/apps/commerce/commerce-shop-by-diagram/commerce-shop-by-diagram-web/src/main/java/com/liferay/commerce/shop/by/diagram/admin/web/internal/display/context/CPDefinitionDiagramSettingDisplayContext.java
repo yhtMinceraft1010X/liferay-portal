@@ -148,7 +148,7 @@ public class CPDefinitionDiagramSettingDisplayContext
 
 	public String getImageURL() {
 		try {
-			FileEntry fileEntry = getFileEntry();
+			FileEntry fileEntry = fetchFileEntry();
 
 			if (fileEntry != null) {
 				return _dlURLHelper.getDownloadURL(
