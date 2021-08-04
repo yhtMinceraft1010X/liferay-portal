@@ -107,11 +107,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		if (!cdnEnabled) {
 			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
-			ClassName className = classNameLocalService.getClassName(
-				classNameId);
-
 			fileEntryId = _getFileEntryId(
-				fileEntry, userId, groupId, className.getClassName(), classPK);
+				fileEntry, userId, groupId, _portal.getClassName(classNameId),
+				classPK);
 		}
 
 		_validate(
@@ -843,7 +841,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	private void _validate(
 			long classNameId, long classPK, long fileEntryId,
 			boolean cdnEnabled, String cdnURL, long oldFileEntryId,
-			String oldCdnURL, boolean old)
+			String oldCDNURL, boolean old)
 		throws PortalException {
 
 		if (old) {
@@ -852,10 +850,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					return;
 				}
 			}
-			else if (Validator.isNull(cdnURL) && Validator.isNull(oldCdnURL)) {
+			else if (Validator.isNull(cdnURL) && Validator.isNull(oldCDNURL)) {
 				throw new CPAttachmentFileEntryCDNURLException();
 			}
-			else if (Objects.equals(cdnURL, oldCdnURL)) {
+			else if (Objects.equals(cdnURL, oldCDNURL)) {
 				return;
 			}
 		}
