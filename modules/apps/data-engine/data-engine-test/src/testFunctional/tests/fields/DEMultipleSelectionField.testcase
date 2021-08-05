@@ -91,12 +91,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		DataEngine.toggleInline(fieldLabel = "Multiple Selection");
 
@@ -499,12 +496,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		WebContentStructures.saveCP();
 
@@ -530,12 +524,9 @@ definition {
 			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
-				index = "${index}",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		DataEngine.toggleShowAsSwitcher(fieldLabel = "Multiple Selection");
 
