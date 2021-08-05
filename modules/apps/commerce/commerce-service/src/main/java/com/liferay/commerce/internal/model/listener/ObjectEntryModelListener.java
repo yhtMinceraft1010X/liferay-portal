@@ -40,7 +40,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		super.onAfterCreate(objectEntry);
 
-		_sendNotificationKey("create", objectEntry);
+		_sendNotifications("create", objectEntry);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		super.onAfterRemove(objectEntry);
 
-		_sendNotificationKey("delete", objectEntry);
+		_sendNotifications("delete", objectEntry);
 	}
 
 	@Override
@@ -58,10 +58,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		super.onAfterUpdate(objectEntry);
 
-		_sendNotificationKey("update", objectEntry);
+		_sendNotifications("update", objectEntry);
 	}
 
-	private void _sendNotificationKey(String action, ObjectEntry objectEntry) {
+	private void _sendNotifications(String action, ObjectEntry objectEntry) {
 		try {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
