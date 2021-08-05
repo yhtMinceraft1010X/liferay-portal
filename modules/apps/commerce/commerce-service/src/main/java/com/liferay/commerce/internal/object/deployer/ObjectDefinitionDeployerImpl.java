@@ -81,33 +81,33 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectDefinitionTermContributor(
 					objectDefinition.getObjectDefinitionId(),
 					_objectFieldLocalService, _userLocalService),
-				HashMapDictionaryBuilder.put(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"commerce.definition.term.contributor.key",
+					CommerceDefinitionTermConstants.
+						BODY_AND_SUBJECT_DEFINITION_TERMS_CONTRIBUTOR
+				).put(
 					"commerce.notification.type.key",
-					(Object)new String[] {
+					new String[] {
 						objectDefinition.getClassName() + "#create",
 						objectDefinition.getClassName() + "#delete",
 						objectDefinition.getClassName() + "#update"
 					}
-				).put(
-					"commerce.definition.term.contributor.key",
-					CommerceDefinitionTermConstants.
-						BODY_AND_SUBJECT_DEFINITION_TERMS_CONTRIBUTOR
 				).build()),
 			_bundleContext.registerService(
 				CommerceDefinitionTermContributor.class,
 				new ObjectRecipientDefinitionTermContributor(
 					_userGroupLocalService, _userLocalService),
-				HashMapDictionaryBuilder.put(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"commerce.definition.term.contributor.key",
+					CommerceDefinitionTermConstants.
+						RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR
+				).put(
 					"commerce.notification.type.key",
-					(Object)new String[] {
+					new String[] {
 						objectDefinition.getClassName() + "#create",
 						objectDefinition.getClassName() + "#delete",
 						objectDefinition.getClassName() + "#update"
 					}
-				).put(
-					"commerce.definition.term.contributor.key",
-					CommerceDefinitionTermConstants.
-						RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR
 				).build()));
 	}
 
