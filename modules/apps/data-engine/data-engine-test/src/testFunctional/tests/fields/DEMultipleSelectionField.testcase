@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.duplicate(fieldFieldLabel = "Multiple Selection");
@@ -87,8 +87,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		for (var index : list "1,2,3") {
@@ -178,8 +178,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.editFieldTip(
@@ -390,8 +390,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.viewFieldSearchable(
@@ -424,8 +424,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.viewFieldSearchable(
@@ -440,8 +440,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.editFieldTip(
@@ -465,8 +465,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Multiple Selection");
@@ -495,8 +495,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		for (var index : list "1,2,3") {
@@ -526,8 +526,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Multiple Selection",
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
 			fieldName = "Multiple Selection");
 
 		for (var index : list "1,2,3") {
