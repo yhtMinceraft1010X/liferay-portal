@@ -30,43 +30,43 @@ public class ObjectDefinitionRESTContextPathRegistry {
 	public ObjectDefinition getObjectDefinition(
 		long companyId, String restContextPath) {
 
-		Map<Long, ObjectDefinition> objectDefinitionCompanyMap =
-			_objectDefinitionMap.get(restContextPath);
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitions.get(restContextPath);
 
-		if (objectDefinitionCompanyMap != null) {
-			return objectDefinitionCompanyMap.get(companyId);
+		if (objectDefinitions != null) {
+			return objectDefinitions.get(companyId);
 		}
 
 		return null;
 	}
 
 	public boolean hasRESTContextPath(String restContextPath) {
-		return _objectDefinitionMap.containsKey(restContextPath);
+		return _objectDefinitions.containsKey(restContextPath);
 	}
 
 	public void register(ObjectDefinition objectDefinition) {
-		_objectDefinitionMap.putIfAbsent(
+		_objectDefinitions.putIfAbsent(
 			objectDefinition.getRESTContextPath(), new HashMap<>());
 
-		Map<Long, ObjectDefinition> objectDefinitionCompanyMap =
-			_objectDefinitionMap.get(objectDefinition.getRESTContextPath());
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitions.get(objectDefinition.getRESTContextPath());
 
-		objectDefinitionCompanyMap.put(
+		objectDefinitions.put(
 			objectDefinition.getCompanyId(), objectDefinition);
 	}
 
 	public void unregister(ObjectDefinition objectDefinition) {
-		Map<Long, ObjectDefinition> objectDefinitionCompanyMap =
-			_objectDefinitionMap.get(objectDefinition.getRESTContextPath());
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitions.get(objectDefinition.getRESTContextPath());
 
-		objectDefinitionCompanyMap.remove(objectDefinition.getCompanyId());
+		objectDefinitions.remove(objectDefinition.getCompanyId());
 
-		if (objectDefinitionCompanyMap.isEmpty()) {
-			_objectDefinitionMap.remove(objectDefinition.getRESTContextPath());
+		if (objectDefinitions.isEmpty()) {
+			_objectDefinitions.remove(objectDefinition.getRESTContextPath());
 		}
 	}
 
 	private final Map<String, Map<Long, ObjectDefinition>>
-		_objectDefinitionMap = new HashMap<>();
+		_objectDefinitions = new HashMap<>();
 
 }
