@@ -55,7 +55,7 @@ public class ObjectDefinitionTermContributor
 			_objectFieldLocalService.getObjectFields(_objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
-			_termsMap.put(
+			_objectFieldIds.put(
 				StringBundler.concat(
 					"[%",
 					StringUtil.toUpperCase(
@@ -98,7 +98,7 @@ public class ObjectDefinitionTermContributor
 			return String.valueOf(objectEntry.getObjectEntryId());
 		}
 
-		long objectEntryId = _termsMap.get(term);
+		long objectEntryId = _objectFieldIds.get(term);
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectEntryId);
@@ -126,7 +126,7 @@ public class ObjectDefinitionTermContributor
 			return LanguageUtil.get(locale, "id");
 		}
 
-		long objectFieldId = _termsMap.get(term);
+		long objectFieldId = _objectFieldIds.get(term);
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectFieldId);
@@ -138,19 +138,19 @@ public class ObjectDefinitionTermContributor
 
 	@Override
 	public List<String> getTerms() {
-		return new ArrayList<>(_termsMap.keySet());
+		return new ArrayList<>(_objectFieldIds.keySet());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionTermContributor.class);
 
 	private final long _objectDefinitionId;
-	private final ObjectFieldLocalService _objectFieldLocalService;
-	private final Map<String, Long> _termsMap = HashMapBuilder.put(
+	private final Map<String, Long> _objectFieldIds = HashMapBuilder.put(
 		"[%OBJECT_ENTRY_CREATOR%]", 0L
 	).put(
 		"[%OBJECT_ENTRY_ID%]", 0L
 	).build();
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserLocalService _userLocalService;
 
 }
