@@ -56,7 +56,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getThumbnailSrc() {
-		return StringPool.BLANK;
+		return _servletContext.getContextPath() + "/images/thumbnail.png";
 	}
 
 	@Override
