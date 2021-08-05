@@ -14,8 +14,11 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.site.initializer.SiteInitializer;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -50,7 +53,12 @@ public class SiteInitializerExtender
 			return null;
 		}
 
-		return null;
+		return Collections.singletonList(
+			_bundleContext.registerService(
+				SiteInitializer.class, new BundleSiteInitializer(bundle),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"site.initializer.key", bundle.getSymbolicName()
+				).build()));
 	}
 
 	@Override
