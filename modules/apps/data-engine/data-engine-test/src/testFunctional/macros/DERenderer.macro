@@ -75,6 +75,21 @@ definition {
 			optionIndex = "${optionIndex}");
 	}
 
+	macro inputDataInGridField {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		var column = ${column} + 1;
+
+		Check.checkNotVisible(
+			fieldIndex = "${fieldIndex}",
+			key_column = "${column}",
+			key_fieldLabel = "${fieldLabel}",
+			key_row = "${row}",
+			locator1 = "DataEngineRenderer#GRID_OPTION_INDEXED");
+	}
+
 	macro inputDataInMultipleSelectionField {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";
