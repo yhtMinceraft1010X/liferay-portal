@@ -176,13 +176,14 @@ public class ImportDataDefinitionMVCActionCommandTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
 		Layout layout = new LayoutImpl();
 
 		layout.setType(LayoutConstants.TYPE_CONTROL_PANEL);
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
 		themeDisplay.setLayout(layout);
+
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
 		themeDisplay.setUser(TestPropsValues.getUser());
