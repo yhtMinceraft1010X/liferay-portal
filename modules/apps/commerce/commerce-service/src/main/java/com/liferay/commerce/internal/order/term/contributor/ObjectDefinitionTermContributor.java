@@ -150,7 +150,7 @@ public class ObjectDefinitionTermContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionTermContributor.class);
 
-	private static final Map<String, Long> _termsMap = HashMapBuilder.put(
+	private final Map<String, Long> _termsMap = HashMapBuilder.put(
 		"[%ENTRY_CREATOR%]", 0L
 	).put(
 		"[%ENTRY_ID%]", 0L
