@@ -58,6 +58,23 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertMultipleSelectionOptionIsUnchecked {
+		if (!(isSet(fieldIndex))) {
+			var fieldIndex = "1";
+		}
+
+		if (!(isSet(optionIndex))) {
+			var optionIndex = "1";
+		}
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			fieldIndex = "${fieldIndex}",
+			key_fieldLabel = "${fieldLabel}",
+			key_optionValue = "${optionValue}",
+			locator1 = "DataEngineRenderer#MULTIPLE_SELECTION_OPTION_INDEXED",
+			optionIndex = "${optionIndex}");
+	}
+
 	macro inputDataInMultipleSelectionField {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";
