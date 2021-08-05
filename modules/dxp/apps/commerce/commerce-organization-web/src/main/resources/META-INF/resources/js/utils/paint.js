@@ -12,10 +12,7 @@
 import {linkHorizontal} from 'd3';
 
 import {formatItemDescription, formatItemName} from '.';
-import {
-	RECT_SIZES,
-	SYMBOLS_MAP,
-} from './constants';
+import {RECT_SIZES, SYMBOLS_MAP} from './constants';
 
 export function appendIcon(node, symbol, size, className) {
 	return node

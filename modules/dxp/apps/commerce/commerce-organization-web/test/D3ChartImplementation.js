@@ -179,7 +179,6 @@ describe('D3OrganizationChart implementation', () => {
 	let zoomOutButton;
 	let defaultParams;
 	const getChartNodes = (...args) => getNodes(chartSVGWrapper, ...args);
-	let lastActionPerformed = null;
 
 	beforeEach(() => {
 		chartSVGWrapper = document.createElement('svg');
@@ -193,25 +192,11 @@ describe('D3OrganizationChart implementation', () => {
 			},
 			'./assets/clay/icons.svg',
 			{
-				open: (parentData, type) => {
-					lastActionPerformed = {
-						details: {parentData, type},
-						name: 'modal opened',
-					};
-				},
+				open: () => {},
 			},
 			{
-				close: () => {
-					lastActionPerformed = {
-						name: 'menu closed',
-					};
-				},
-				open: (target, data) => {
-					lastActionPerformed = {
-						details: {data, target},
-						name: 'menu opened',
-					};
-				},
+				close: () => {},
+				open: () => {},
 			},
 		];
 	});

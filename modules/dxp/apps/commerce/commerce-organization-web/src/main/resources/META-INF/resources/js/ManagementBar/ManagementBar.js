@@ -20,26 +20,24 @@ function ManagementBar() {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	return (
-		<>
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
-						<ClayButton
-							displayType="secondary"
-							onClick={() =>
-								chartInstanceRef.current.collapseAllNodes()
-							}
-						>
-							{Liferay.Language.get('collapse-all')}
-						</ClayButton>
-					</ClayManagementToolbar.Item>
+		<ClayManagementToolbar>
+			<ClayManagementToolbar.ItemList>
+				<ClayManagementToolbar.Item>
+					<ClayButton
+						displayType="secondary"
+						onClick={() =>
+							chartInstanceRef.current.collapseAllNodes()
+						}
+					>
+						{Liferay.Language.get('collapse-all')}
+					</ClayButton>
+				</ClayManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item>
-						<ViewSelector />
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
-			</ClayManagementToolbar>
-		</>
+				<ClayManagementToolbar.Item>
+					<ViewSelector />
+				</ClayManagementToolbar.Item>
+			</ClayManagementToolbar.ItemList>
+		</ClayManagementToolbar>
 	);
 }
 

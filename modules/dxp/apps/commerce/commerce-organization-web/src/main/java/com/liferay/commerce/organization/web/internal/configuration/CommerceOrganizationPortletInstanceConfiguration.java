@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Luca Pellizzon
  */
 @ExtendedObjectClassDefinition(
-	category = "orgchart",
+	category = "users",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

@@ -10,7 +10,6 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
@@ -51,43 +50,41 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 	}, [rootData, spritemap]);
 
 	return (
-		<ClayIconSpriteContext.Provider value={spritemap}>
-			<ChartContext.Provider
-				value={{
-					chartInstanceRef,
-					currentView,
-					templatesURL,
-					updateCurrentView,
-				}}
-			>
-				<ManagementBar />
-				<div className={classnames('org-chart-container', {expanded})}>
-					<svg className="svg-chart" ref={chartSVGRef} />
-					<div className="zoom-controls">
+		<ChartContext.Provider
+			value={{
+				chartInstanceRef,
+				currentView,
+				templatesURL,
+				updateCurrentView,
+			}}
+		>
+			<ManagementBar />
+			<div className={classnames('org-chart-container', {expanded})}>
+				<svg className="svg-chart" ref={chartSVGRef} />
+				<div className="zoom-controls">
+					<ClayButtonWithIcon
+						displayType="secondary"
+						onClick={() => updateExpanded(!expanded)}
+						small
+						symbol="expand"
+					/>
+					<ClayButton.Group className="ml-3">
 						<ClayButtonWithIcon
 							displayType="secondary"
-							onClick={() => updateExpanded(!expanded)}
+							ref={zoomOutRef}
 							small
-							symbol="expand"
+							symbol="hr"
 						/>
-						<ClayButton.Group className="ml-3">
-							<ClayButtonWithIcon
-								displayType="secondary"
-								ref={zoomOutRef}
-								small
-								symbol="hr"
-							/>
-							<ClayButtonWithIcon
-								displayType="secondary"
-								ref={zoomInRef}
-								small
-								symbol="plus"
-							/>
-						</ClayButton.Group>
-					</div>
+						<ClayButtonWithIcon
+							displayType="secondary"
+							ref={zoomInRef}
+							small
+							symbol="plus"
+						/>
+					</ClayButton.Group>
 				</div>
-			</ChartContext.Provider>
-		</ClayIconSpriteContext.Provider>
+			</div>
+		</ChartContext.Provider>
 	);
 }
 

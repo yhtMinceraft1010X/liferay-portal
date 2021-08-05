@@ -36,13 +36,7 @@ import {
 } from './utils/index';
 import {fillEntityNode, getLinkDiagonal} from './utils/paint';
 class D3OrganizationChart {
-	constructor(
-		rootData,
-		refs,
-		spritemap,
-		modalActions,
-		rootVisible = true
-	) {
+	constructor(rootData, refs, spritemap, modalActions, rootVisible = true) {
 		this._spritemap = spritemap;
 		this._refs = refs;
 		this._handleZoomInClick = this._handleZoomInClick.bind(this);
@@ -302,9 +296,7 @@ class D3OrganizationChart {
 			.scaleExtent(ZOOM_EXTENT)
 			.on('zoom', this._handleZoom);
 
-		this.svg = d3
-			.select(this._refs.svg)
-			.call(this._zoom);
+		this.svg = d3.select(this._refs.svg).call(this._zoom);
 
 		this._zoomHandler = this.svg.append('g');
 
@@ -455,8 +447,7 @@ class D3OrganizationChart {
 		children.attr('transform', `translate(${source.y0},${source.x0})`);
 		fillEntityNode(children, this._spritemap);
 
-		children
-			.on('mousedown', this._handleNodeMouseDown);
+		children.on('mousedown', this._handleNodeMouseDown);
 
 		this._handleTransition(this.bindedNodes.merge(nodes))
 			.attr('opacity', 1)
