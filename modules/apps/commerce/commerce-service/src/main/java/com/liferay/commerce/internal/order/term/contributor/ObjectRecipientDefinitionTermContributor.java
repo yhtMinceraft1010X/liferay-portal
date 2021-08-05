@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.notification.internal.term.contributor;
+package com.liferay.commerce.internal.order.term.contributor;
 
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.object.model.ObjectEntry;

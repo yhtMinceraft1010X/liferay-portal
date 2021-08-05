@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.notification.internal.type;
+package com.liferay.commerce.internal.notification.type;
 
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.object.model.ObjectEntry;

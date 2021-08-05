@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.notification.internal.deployer;
+package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
-import com.liferay.commerce.notification.internal.term.contributor.ObjectDefinitionTermContributor;
-import com.liferay.commerce.notification.internal.term.contributor.ObjectRecipientDefinitionTermContributor;
-import com.liferay.commerce.notification.internal.type.ObjectDefinitionCommerceNotificationType;
+import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
+import com.liferay.commerce.internal.order.term.contributor.ObjectDefinitionTermContributor;
+import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientDefinitionTermContributor;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;

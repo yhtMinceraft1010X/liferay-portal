@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.notification.internal.model.listener;
+package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.notification.util.CommerceNotificationHelper;
 import com.liferay.object.model.ObjectDefinition;
