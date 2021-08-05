@@ -575,7 +575,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_companyServlets.clear();
+						_servlets.clear();
 					}
 
 					@Override
@@ -586,7 +586,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_companyServlets.clear();
+						_servlets.clear();
 					}
 
 				});
@@ -1067,15 +1067,15 @@ public class GraphQLServletExtender {
 	}
 
 	private Servlet _createServlet(long companyId) throws Exception {
-		Servlet servlet = _companyServlets.get(companyId);
+		Servlet servlet = _servlets.get(companyId);
 
 		if (servlet != null) {
 			return servlet;
 		}
 
 		synchronized (_servletDataList) {
-			if (_companyServlets.containsKey(companyId)) {
-				return _companyServlets.get(companyId);
+			if (_servlets.containsKey(companyId)) {
+				return _servlets.get(companyId);
 			}
 
 			PropertyDataFetcher.clearReflectionCache();
@@ -1209,7 +1209,7 @@ public class GraphQLServletExtender {
 			servlet = GraphQLHttpServlet.with(
 				graphQLConfigurationBuilder.build());
 
-			_companyServlets.put(companyId, servlet);
+			_servlets.put(companyId, servlet);
 
 			return servlet;
 		}
@@ -2363,9 +2363,6 @@ public class GraphQLServletExtender {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Map<Long, Servlet> _companyServlets =
-		new ConcurrentHashMap<>();
-
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -2415,6 +2412,7 @@ public class GraphQLServletExtender {
 		_servletContextHelperServiceRegistration;
 	private final List<ServletData> _servletDataList = new ArrayList<>();
 	private ServiceTracker<ServletData, ServletData> _servletDataServiceTracker;
+	private final Map<Long, Servlet> _servlets = new ConcurrentHashMap<>();
 	private ServiceRegistration<Servlet> _servletServiceRegistration;
 
 	@Reference
@@ -3054,7 +3052,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.add(servletData);
 
-				_companyServlets.clear();
+				_servlets.clear();
 			}
 
 			return servletData;
@@ -3074,7 +3072,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.remove(servletData);
 
-				_companyServlets.clear();
+				_servlets.clear();
 			}
 
 			_bundleContext.ungetService(serviceReference);
