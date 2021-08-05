@@ -185,8 +185,8 @@ export default function AddOrganizationModal({
 							</label>
 							<ClayInput
 								id="newAccountNameInput"
-								onChange={(e) =>
-									setNewAccountName(e.target.value)
+								onChange={(event) =>
+									setNewAccountName(event.target.value)
 								}
 								value={newAccountName}
 							/>
