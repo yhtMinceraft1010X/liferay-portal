@@ -95,12 +95,12 @@ public class ObjectRecipientDefinitionTermContributor
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle, _commerceOrderDefinitionTermsMap.get(term));
+			resourceBundle, _languageKeys.get(term));
 	}
 
 	@Override
 	public List<String> getTerms() {
-		return new ArrayList<>(_commerceOrderDefinitionTermsMap.keySet());
+		return new ArrayList<>(_languageKeys.keySet());
 	}
 
 	private String _getUserIds(UserGroup userGroup) throws PortalException {
@@ -117,7 +117,7 @@ public class ObjectRecipientDefinitionTermContributor
 		return resultsSB.toString();
 	}
 
-	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
+	private static final Map<String, String> _languageKeys =
 		HashMapBuilder.put(
 			"[%OBJECT_ENTRY_CREATOR%]", "creator"
 		).put(
