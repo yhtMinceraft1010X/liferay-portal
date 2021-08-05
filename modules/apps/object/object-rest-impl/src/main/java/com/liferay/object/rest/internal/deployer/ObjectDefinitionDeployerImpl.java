@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,110 +55,103 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
+		_objectDefinitionAPIRegistry.register(objectDefinition);
 
-		if (!_objectDefinitionAPIRegistry.hasRESTContextPath(
+		if (_objectDefinitionAPIRegistry.hasRESTContextPath(
 				objectDefinition.getRESTContextPath())) {
 
-			_componentInstancesMap.put(
-				objectDefinition.getRESTContextPath(),
-				Arrays.asList(
-					_objectEntryApplicationComponentFactory.newInstance(
-						HashMapDictionaryBuilder.<String, Object>put(
-							"liferay.jackson", false
-						).put(
-							"liferay.object.definition.id",
-							objectDefinition.getObjectDefinitionId()
-						).put(
-							"osgi.jaxrs.application.base",
-							"/" + objectDefinition.getRESTContextPath()
-						).put(
-							"osgi.jaxrs.extension.select",
-							"(osgi.jaxrs.name=Liferay.Vulcan)"
-						).put(
-							"osgi.jaxrs.name", objectDefinition.getShortName()
-						).build()),
-					_objectEntryResourceComponentFactory.newInstance(
-						HashMapDictionaryBuilder.<String, Object>put(
-							"api.version", "v1.0"
-						).put(
-							"batch.engine.task.item.delegate", "true"
-						).put(
-							"batch.engine.task.item.delegate.name",
-							objectDefinition.getShortName()
-						).put(
-							"osgi.jaxrs.resource", "true"
-						).put(
-							"osgi.jaxrs.application.select",
-							"(osgi.jaxrs.name=" +
-								objectDefinition.getShortName() + ")"
-						).build())));
-
-			Collections.addAll(
-				serviceRegistrations,
+			return Collections.singletonList(
 				_bundleContext.registerService(
-					ContextProvider.class,
-					new ObjectDefinitionContextProvider(
-						_objectDefinitionAPIRegistry, _portal),
+					GraphQLDTOContributor.class,
+					ObjectDefinitionGraphQLDTOContributor.of(
+						objectDefinition, _objectEntryManager,
+						_objectFieldLocalService.getObjectFields(
+							objectDefinition.getObjectDefinitionId())),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
-							")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"enabled", "false"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getRESTContextPath() +
-							"ObjectDefinitionContextProvider"
-					).build()),
-				_bundleContext.registerService(
-					ExceptionMapper.class,
-					new RequiredObjectFieldExceptionMapper(),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"osgi.jaxrs.application.select",
-						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
-							")"
-					).put(
-						"osgi.jaxrs.extension", "true"
-					).put(
-						"osgi.jaxrs.name",
-						objectDefinition.getRESTContextPath() +
-							"RequiredObjectFieldExceptionMapper"
+						"dto.name", objectDefinition.getDBTableName()
 					).build()));
 		}
 
-		serviceRegistrations.add(
+		_componentInstancesMap.put(
+			objectDefinition.getRESTContextPath(),
+			Arrays.asList(
+				_objectEntryApplicationComponentFactory.newInstance(
+					HashMapDictionaryBuilder.<String, Object>put(
+						"liferay.jackson", false
+					).put(
+						"liferay.object.definition.id",
+						objectDefinition.getObjectDefinitionId()
+					).put(
+						"osgi.jaxrs.application.base",
+						"/" + objectDefinition.getRESTContextPath()
+					).put(
+						"osgi.jaxrs.extension.select",
+						"(osgi.jaxrs.name=Liferay.Vulcan)"
+					).put(
+						"osgi.jaxrs.name", objectDefinition.getShortName()
+					).build()),
+				_objectEntryResourceComponentFactory.newInstance(
+					HashMapDictionaryBuilder.<String, Object>put(
+						"api.version", "v1.0"
+					).put(
+						"batch.engine.task.item.delegate", "true"
+					).put(
+						"batch.engine.task.item.delegate.name",
+						objectDefinition.getShortName()
+					).put(
+						"osgi.jaxrs.resource", "true"
+					).put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + objectDefinition.getShortName() +
+							")"
+					).build())));
+
+		return Arrays.asList(
 			_bundleContext.registerService(
-				GraphQLDTOContributor.class,
-				ObjectDefinitionGraphQLDTOContributor.of(
-					objectDefinition, _objectEntryManager,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId())),
+				ContextProvider.class,
+				new ObjectDefinitionContextProvider(
+					_objectDefinitionAPIRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"dto.name", objectDefinition.getDBTableName()
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"enabled", "false"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getRESTContextPath() +
+						"ObjectDefinitionContextProvider"
+				).build()),
+			_bundleContext.registerService(
+				ExceptionMapper.class, new RequiredObjectFieldExceptionMapper(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select",
+					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
+				).put(
+					"osgi.jaxrs.extension", "true"
+				).put(
+					"osgi.jaxrs.name",
+					objectDefinition.getRESTContextPath() +
+						"RequiredObjectFieldExceptionMapper"
 				).build()));
-
-		_objectDefinitionAPIRegistry.register(objectDefinition);
-
-		return serviceRegistrations;
 	}
 
 	@Override
 	public void undeploy(ObjectDefinition objectDefinition) {
 		_objectDefinitionAPIRegistry.unregister(objectDefinition);
 
-		if (!_objectDefinitionAPIRegistry.hasRESTContextPath(
+		if (_objectDefinitionAPIRegistry.hasRESTContextPath(
 				objectDefinition.getRESTContextPath())) {
 
-			List<ComponentInstance> componentInstances =
-				_componentInstancesMap.get(
-					objectDefinition.getRESTContextPath());
+			return;
+		}
 
-			for (ComponentInstance componentInstance : componentInstances) {
-				componentInstance.dispose();
-			}
+		List<ComponentInstance> componentInstances = _componentInstancesMap.get(
+			objectDefinition.getRESTContextPath());
+
+		for (ComponentInstance componentInstance : componentInstances) {
+			componentInstance.dispose();
 		}
 	}
 
