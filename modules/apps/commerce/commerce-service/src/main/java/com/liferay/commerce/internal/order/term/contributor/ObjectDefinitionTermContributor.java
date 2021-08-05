@@ -18,6 +18,7 @@ import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -55,7 +56,11 @@ public class ObjectDefinitionTermContributor
 
 		for (ObjectField objectField : objectFields) {
 			_termsMap.put(
-				_formatTerm(objectField.getName()),
+				StringBundler.concat(
+					"[%",
+					StringUtil.toUpperCase(
+						StringUtil.replace(objectField.getName(), ' ', '_')),
+					"%]"),
 				objectField.getObjectFieldId());
 		}
 	}
@@ -134,13 +139,6 @@ public class ObjectDefinitionTermContributor
 	@Override
 	public List<String> getTerms() {
 		return new ArrayList<>(_termsMap.keySet());
-	}
-
-	private String _formatTerm(String term) {
-		term = StringUtil.replace(term, ' ', '_');
-		term = StringUtil.toUpperCase(term);
-
-		return "[%" + term + "%]";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
