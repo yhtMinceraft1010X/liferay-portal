@@ -1206,11 +1206,12 @@ public class GraphQLServletExtender {
 
 			graphQLConfigurationBuilder.with(objectMapperBuilder.build());
 
-			_companyServlets.put(
-				companyId,
-				GraphQLHttpServlet.with(graphQLConfigurationBuilder.build()));
+			servlet = GraphQLHttpServlet.with(
+				graphQLConfigurationBuilder.build());
 
-			return _companyServlets.get(companyId);
+			_companyServlets.put(companyId, servlet);
+
+			return servlet;
 		}
 	}
 
