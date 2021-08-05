@@ -108,7 +108,8 @@ public class ObjectDefinitionTermContributor
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Processing " + objectField.getName() + "term");
+			_log.debug(
+				"Processing term for object field " + objectField.getName());
 		}
 
 		Map<String, Serializable> values = objectEntry.getValues();
