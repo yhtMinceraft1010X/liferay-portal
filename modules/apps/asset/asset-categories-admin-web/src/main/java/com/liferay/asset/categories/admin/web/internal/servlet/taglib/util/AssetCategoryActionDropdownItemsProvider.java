@@ -56,9 +56,9 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetCategoryActionDropdownItemsProvider {
 
 	public AssetCategoryActionDropdownItemsProvider(
+			AssetCategoriesDisplayContext assetCategoriesDisplayContext,
 			HttpServletRequest httpServletRequest,
-			RenderResponse renderResponse,
-			AssetCategoriesDisplayContext assetCategoriesDisplayContext)
+			RenderResponse renderResponse)
 		throws PortalException {
 
 		_httpServletRequest = httpServletRequest;
