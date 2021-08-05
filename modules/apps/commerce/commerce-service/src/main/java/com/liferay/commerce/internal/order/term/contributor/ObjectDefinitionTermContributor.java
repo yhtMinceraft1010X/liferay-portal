@@ -103,17 +103,17 @@ public class ObjectDefinitionTermContributor
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectEntryId);
 
-		if (objectField != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Processing " + objectField.getName() + "term");
-			}
-
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			return String.valueOf(values.get(objectField.getName()));
+		if (objectField == null) {
+			return term;
 		}
 
-		return term;
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processing " + objectField.getName() + "term");
+		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		return String.valueOf(values.get(objectField.getName()));
 	}
 
 	@Override
