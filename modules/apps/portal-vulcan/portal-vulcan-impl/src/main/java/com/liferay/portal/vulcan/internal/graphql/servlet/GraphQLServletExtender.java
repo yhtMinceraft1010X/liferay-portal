@@ -575,7 +575,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_companyServletMap.clear();
+						_companyServlets.clear();
 					}
 
 					@Override
@@ -586,7 +586,7 @@ public class GraphQLServletExtender {
 						GraphQLDTOContributor serviceGraphQLDTOContributor,
 						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
-						_companyServletMap.clear();
+						_companyServlets.clear();
 					}
 
 				});
@@ -1067,15 +1067,15 @@ public class GraphQLServletExtender {
 	}
 
 	private Servlet _createServlet(long companyId) throws Exception {
-		Servlet servlet = _companyServletMap.get(companyId);
+		Servlet servlet = _companyServlets.get(companyId);
 
 		if (servlet != null) {
 			return servlet;
 		}
 
 		synchronized (_servletDataList) {
-			if (_companyServletMap.containsKey(companyId)) {
-				return _companyServletMap.get(companyId);
+			if (_companyServlets.containsKey(companyId)) {
+				return _companyServlets.get(companyId);
 			}
 
 			PropertyDataFetcher.clearReflectionCache();
@@ -1206,11 +1206,11 @@ public class GraphQLServletExtender {
 
 			graphQLConfigurationBuilder.with(objectMapperBuilder.build());
 
-			_companyServletMap.put(
+			_companyServlets.put(
 				companyId,
 				GraphQLHttpServlet.with(graphQLConfigurationBuilder.build()));
 
-			return _companyServletMap.get(companyId);
+			return _companyServlets.get(companyId);
 		}
 	}
 
@@ -2362,7 +2362,7 @@ public class GraphQLServletExtender {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Map<Long, Servlet> _companyServletMap =
+	private final Map<Long, Servlet> _companyServlets =
 		new ConcurrentHashMap<>();
 
 	@Reference
@@ -3053,7 +3053,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.add(servletData);
 
-				_companyServletMap.clear();
+				_companyServlets.clear();
 			}
 
 			return servletData;
@@ -3073,7 +3073,7 @@ public class GraphQLServletExtender {
 			synchronized (_servletDataList) {
 				_servletDataList.remove(servletData);
 
-				_companyServletMap.clear();
+				_companyServlets.clear();
 			}
 
 			_bundleContext.ungetService(serviceReference);
