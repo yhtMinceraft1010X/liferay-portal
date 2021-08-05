@@ -83,13 +83,13 @@ public class ObjectDefinitionTermContributor
 
 		ObjectEntry objectEntry = (ObjectEntry)object;
 
-		if (term.equals("[%ENTRY_CREATOR%]")) {
+		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			User user = _userLocalService.getUser(objectEntry.getUserId());
 
 			return user.getFullName(true, true);
 		}
 
-		if (term.equals("[%ENTRY_ID%]")) {
+		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
 			return String.valueOf(objectEntry.getObjectEntryId());
 		}
 
@@ -113,11 +113,11 @@ public class ObjectDefinitionTermContributor
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		if (term.equals("[%ENTRY_CREATOR%]")) {
+		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			return LanguageUtil.get(locale, "creator");
 		}
 
-		if (term.equals("[%ENTRY_ID%]")) {
+		if (term.equals("[%OBJECT_ENTRY_ID%]")) {
 			return LanguageUtil.get(locale, "id");
 		}
 
@@ -149,9 +149,9 @@ public class ObjectDefinitionTermContributor
 	private final long _objectDefinitionId;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final Map<String, Long> _termsMap = HashMapBuilder.put(
-		"[%ENTRY_CREATOR%]", 0L
+		"[%OBJECT_ENTRY_CREATOR%]", 0L
 	).put(
-		"[%ENTRY_ID%]", 0L
+		"[%OBJECT_ENTRY_ID%]", 0L
 	).build();
 	private final UserLocalService _userLocalService;
 
