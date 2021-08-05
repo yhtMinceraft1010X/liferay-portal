@@ -57,7 +57,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		if (!_objectDefinitions.containsKey(
+		if (!_objectDefinitionsMap.containsKey(
 				objectDefinition.getRESTContextPath())) {
 
 			_componentInstancesMap.put(
@@ -139,13 +139,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"dto.name", objectDefinition.getDBTableName()
 				).build()));
 
-		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
-			objectDefinition.getRESTContextPath());
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 
 		if (objectDefinitions == null) {
 			objectDefinitions = new HashMap<>();
 
-			_objectDefinitions.put(
+			_objectDefinitionsMap.put(
 				objectDefinition.getRESTContextPath(), objectDefinitions);
 		}
 
@@ -158,8 +158,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public ObjectDefinition getObjectDefinition(
 		long companyId, String restContextPath) {
 
-		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
-			restContextPath);
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitionsMap.get(restContextPath);
 
 		if (objectDefinitions != null) {
 			return objectDefinitions.get(companyId);
@@ -170,16 +170,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public void undeploy(ObjectDefinition objectDefinition) {
-		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
-			objectDefinition.getRESTContextPath());
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
 
 		objectDefinitions.remove(objectDefinition.getCompanyId());
 
 		if (objectDefinitions.isEmpty()) {
-			_objectDefinitions.remove(objectDefinition.getRESTContextPath());
+			_objectDefinitionsMap.remove(objectDefinition.getRESTContextPath());
 		}
 
-		if (!_objectDefinitions.containsKey(
+		if (!_objectDefinitionsMap.containsKey(
 				objectDefinition.getRESTContextPath())) {
 
 			List<ComponentInstance> componentInstances =
@@ -204,8 +204,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private final Map<String, Map<Long, ObjectDefinition>> _objectDefinitions =
-		new HashMap<>();
+	private final Map<String, Map<Long, ObjectDefinition>>
+		_objectDefinitionsMap = new HashMap<>();
 
 	@Reference(
 		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
