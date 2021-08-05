@@ -83,13 +83,13 @@ public class ObjectDefinitionTermContributor
 
 		ObjectEntry objectEntry = (ObjectEntry)object;
 
-		if (term.equals(_ENTRY_CREATOR)) {
+		if (term.equals("[%ENTRY_CREATOR%]")) {
 			User user = _userLocalService.getUser(objectEntry.getUserId());
 
 			return user.getFullName(true, true);
 		}
 
-		if (term.equals(_ENTRY_ID)) {
+		if (term.equals("[%ENTRY_ID%]")) {
 			return String.valueOf(objectEntry.getObjectEntryId());
 		}
 
@@ -117,11 +117,11 @@ public class ObjectDefinitionTermContributor
 
 	@Override
 	public String getLabel(String term, Locale locale) {
-		if (term.equals(_ENTRY_CREATOR)) {
+		if (term.equals("[%ENTRY_CREATOR%]")) {
 			return LanguageUtil.get(locale, "creator");
 		}
 
-		if (term.equals(_ENTRY_ID)) {
+		if (term.equals("[%ENTRY_ID%]")) {
 			return LanguageUtil.get(locale, "id");
 		}
 
@@ -147,17 +147,13 @@ public class ObjectDefinitionTermContributor
 		return "[%" + term + "%]";
 	}
 
-	private static final String _ENTRY_CREATOR = "[%ENTRY_CREATOR%]";
-
-	private static final String _ENTRY_ID = "[%ENTRY_ID%]";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionTermContributor.class);
 
 	private static final Map<String, Long> _termsMap = HashMapBuilder.put(
-		_ENTRY_CREATOR, 0L
+		"[%ENTRY_CREATOR%]", 0L
 	).put(
-		_ENTRY_ID, 0L
+		"[%ENTRY_ID%]", 0L
 	).build();
 
 	private final long _objectDefinitionId;

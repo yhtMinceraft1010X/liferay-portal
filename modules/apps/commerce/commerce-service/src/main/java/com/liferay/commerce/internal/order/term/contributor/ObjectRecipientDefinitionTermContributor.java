@@ -71,7 +71,7 @@ public class ObjectRecipientDefinitionTermContributor
 			objectEntry = (ObjectEntry)object;
 		}
 
-		if (term.equals(_OBJECT_ENTRY_CREATOR)) {
+		if (term.equals("[%OBJECT_ENTRY_CREATOR%]")) {
 			return String.valueOf(objectEntry.getUserId());
 		}
 
@@ -117,16 +117,11 @@ public class ObjectRecipientDefinitionTermContributor
 		return resultsSB.toString();
 	}
 
-	private static final String _OBJECT_ENTRY_CREATOR =
-		"[%OBJECT_ENTRY_CREATOR%]";
-
-	private static final String _USER_GROUP_NAME = "[%USER_GROUP_NAME%]";
-
 	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
 		HashMapBuilder.put(
-			_OBJECT_ENTRY_CREATOR, "creator"
+			"[%OBJECT_ENTRY_CREATOR%]", "creator"
 		).put(
-			_USER_GROUP_NAME, "user-group-name"
+			"[%USER_GROUP_NAME%]", "user-group-name"
 		).build();
 
 	private final UserGroupLocalService _userGroupLocalService;
