@@ -150,14 +150,13 @@ public class ObjectDefinitionTermContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionTermContributor.class);
 
+	private final long _objectDefinitionId;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final Map<String, Long> _termsMap = HashMapBuilder.put(
 		"[%ENTRY_CREATOR%]", 0L
 	).put(
 		"[%ENTRY_ID%]", 0L
 	).build();
-
-	private final long _objectDefinitionId;
-	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final UserLocalService _userLocalService;
 
 }
