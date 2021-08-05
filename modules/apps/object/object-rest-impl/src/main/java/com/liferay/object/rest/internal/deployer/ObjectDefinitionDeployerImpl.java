@@ -57,7 +57,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_objectDefinitionAPIRegistry.register(objectDefinition);
 
-		if (_objectDefinitionAPIRegistry.hasRESTContextPath(
+		if (_objectDefinitionAPIRegistry.hasObjectDefinition(
 				objectDefinition.getRESTContextPath())) {
 
 			return Collections.singletonList(
@@ -141,7 +141,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public void undeploy(ObjectDefinition objectDefinition) {
 		_objectDefinitionAPIRegistry.unregister(objectDefinition);
 
-		if (_objectDefinitionAPIRegistry.hasRESTContextPath(
+		if (_objectDefinitionAPIRegistry.hasObjectDefinition(
 				objectDefinition.getRESTContextPath())) {
 
 			return;

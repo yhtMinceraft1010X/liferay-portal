@@ -40,16 +40,20 @@ public class ObjectDefinitionRESTContextPathRegistry {
 		return null;
 	}
 
-	public boolean hasRESTContextPath(String restContextPath) {
+	public boolean hasObjectDefinition(String restContextPath) {
 		return _objectDefinitions.containsKey(restContextPath);
 	}
 
 	public void register(ObjectDefinition objectDefinition) {
-		_objectDefinitions.putIfAbsent(
-			objectDefinition.getRESTContextPath(), new HashMap<>());
-
 		Map<Long, ObjectDefinition> objectDefinitions =
 			_objectDefinitions.get(objectDefinition.getRESTContextPath());
+
+		if (objectDefinitions == null) {
+			objectDefinitions = new HashMap<>();
+
+			_objectDefinitions.put(
+				objectDefinition.getRESTContextPath(), objectDefinitions);
+		}
 
 		objectDefinitions.put(
 			objectDefinition.getCompanyId(), objectDefinition);
