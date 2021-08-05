@@ -105,10 +105,6 @@ public class ObjectDefinitionTermContributor
 
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			//TODO Once we support localization we should put code like this in
-
-			// a utility
-
 			return String.valueOf(values.get(objectField.getName()));
 		}
 
@@ -130,7 +126,7 @@ public class ObjectDefinitionTermContributor
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectFieldId);
 
-		//TODO Replace with getLabel(locale) when available
+		// TODO return objectField.getLable(locale);
 
 		return objectField.getName();
 	}
