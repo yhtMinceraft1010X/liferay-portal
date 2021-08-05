@@ -62,12 +62,11 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 		}
 
 		if (term.startsWith("[%USER_GROUP_")) {
-			String[] s = term.split("_");
-
-			String userGroupName = StringUtil.removeChars(s[2], '%', ']');
+			String[] termParts = term.split("_");
 
 			UserGroup userGroup = _userGroupLocalService.getUserGroup(
-				objectEntry.getCompanyId(), userGroupName);
+				objectEntry.getCompanyId(),
+				StringUtil.removeChars(termParts[2], '%', ']'));
 
 			return _getUserIds(userGroup);
 		}
@@ -89,17 +88,17 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 	}
 
 	private String _getUserIds(UserGroup userGroup) throws PortalException {
-		List<User> groupUsers = _userLocalService.getUserGroupUsers(
+		StringBundler sb = new StringBundler();
+
+		List<User> users = _userLocalService.getUserGroupUsers(
 			userGroup.getUserGroupId());
 
-		StringBundler resultsSB = new StringBundler();
-
-		for (User user : groupUsers) {
-			resultsSB.append(user.getUserId());
-			resultsSB.append(",");
+		for (User user : users) {
+			sb.append(user.getUserId());
+			sb.append(",");
 		}
 
-		return resultsSB.toString();
+		return sb.toString();
 	}
 
 	private static final Map<String, String> _languageKeys = HashMapBuilder.put(
