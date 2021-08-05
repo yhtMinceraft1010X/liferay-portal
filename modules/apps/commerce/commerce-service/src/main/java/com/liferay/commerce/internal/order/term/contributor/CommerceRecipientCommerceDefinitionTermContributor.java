@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.definition.term.contributor.key=" + CommerceRecipientDefinitionTermContributor.KEY,
+		"commerce.definition.term.contributor.key=" + CommerceRecipientCommerceDefinitionTermContributor.KEY,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_AWAITING_SHIPMENT,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_PARTIALLY_SHIPPED,
@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CommerceDefinitionTermContributor.class
 )
-public class CommerceRecipientDefinitionTermContributor
+public class CommerceRecipientCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
 	public static final String KEY =

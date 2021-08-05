@@ -38,10 +38,10 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class ObjectDefinitionTermContributor
+public class ObjectCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
-	public ObjectDefinitionTermContributor(
+	public ObjectCommerceDefinitionTermContributor(
 		long objectDefinitionId,
 		ObjectFieldLocalService objectFieldLocalService,
 		UserLocalService userLocalService) {
@@ -129,7 +129,7 @@ public class ObjectDefinitionTermContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectDefinitionTermContributor.class);
+		ObjectCommerceDefinitionTermContributor.class);
 
 	private final long _objectDefinitionId;
 	private final Map<String, Long> _objectFieldIds = HashMapBuilder.put(

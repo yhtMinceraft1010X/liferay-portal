@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.definition.term.contributor.key=" + CommerceOrderDefinitionTermContributor.KEY,
+		"commerce.definition.term.contributor.key=" + CommerceOrderCommerceDefinitionTermContributor.KEY,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_AWAITING_SHIPMENT,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED,
 		"commerce.notification.type.key=" + CommerceOrderConstants.ORDER_NOTIFICATION_PARTIALLY_SHIPPED,
@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CommerceDefinitionTermContributor.class
 )
-public class CommerceOrderDefinitionTermContributor
+public class CommerceOrderCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
 	public static final String KEY =
@@ -293,7 +293,7 @@ public class CommerceOrderDefinitionTermContributor
 		"[%ORDER_SHIPPING_ADDRESS%]";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderDefinitionTermContributor.class);
+		CommerceOrderCommerceDefinitionTermContributor.class);
 
 	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
 		HashMapBuilder.put(

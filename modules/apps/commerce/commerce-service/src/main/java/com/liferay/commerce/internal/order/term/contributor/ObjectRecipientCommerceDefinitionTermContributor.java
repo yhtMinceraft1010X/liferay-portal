@@ -36,10 +36,10 @@ import java.util.ResourceBundle;
 /**
  * @author Marco Leo
  */
-public class ObjectRecipientDefinitionTermContributor
+public class ObjectRecipientCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
-	public ObjectRecipientDefinitionTermContributor(
+	public ObjectRecipientCommerceDefinitionTermContributor(
 		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService) {
 

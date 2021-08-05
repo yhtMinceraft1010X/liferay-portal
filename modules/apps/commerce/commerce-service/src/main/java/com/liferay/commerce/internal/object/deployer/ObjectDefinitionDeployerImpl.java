@@ -16,8 +16,8 @@ package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
 import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
-import com.liferay.commerce.internal.order.term.contributor.ObjectDefinitionTermContributor;
-import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientDefinitionTermContributor;
+import com.liferay.commerce.internal.order.term.contributor.ObjectCommerceDefinitionTermContributor;
+import com.liferay.commerce.internal.order.term.contributor.ObjectRecipientCommerceDefinitionTermContributor;
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -78,7 +78,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				CommerceDefinitionTermContributor.class,
-				new ObjectDefinitionTermContributor(
+				new ObjectCommerceDefinitionTermContributor(
 					objectDefinition.getObjectDefinitionId(),
 					_objectFieldLocalService, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -95,7 +95,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				CommerceDefinitionTermContributor.class,
-				new ObjectRecipientDefinitionTermContributor(
+				new ObjectRecipientCommerceDefinitionTermContributor(
 					_userGroupLocalService, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"commerce.definition.term.contributor.key",

@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.definition.term.contributor.key=" + CommerceSubscriptionDefinitionTermContributor.KEY,
+		"commerce.definition.term.contributor.key=" + CommerceSubscriptionCommerceDefinitionTermContributor.KEY,
 		"commerce.notification.type.key=" + CommerceSubscriptionNotificationConstants.SUBSCRIPTION_ACTIVATED,
 		"commerce.notification.type.key=" + CommerceSubscriptionNotificationConstants.SUBSCRIPTION_CANCELLED,
 		"commerce.notification.type.key=" + CommerceSubscriptionNotificationConstants.SUBSCRIPTION_RENEWED,
@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CommerceDefinitionTermContributor.class
 )
-public class CommerceSubscriptionDefinitionTermContributor
+public class CommerceSubscriptionCommerceDefinitionTermContributor
 	implements CommerceDefinitionTermContributor {
 
 	public static final String KEY =
