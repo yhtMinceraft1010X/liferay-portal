@@ -15,7 +15,7 @@
 package com.liferay.object.rest.internal.jaxrs.context.provider;
 
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.internal.ObjectDefinitionRESTContextPathRegistry;
+import com.liferay.object.rest.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -34,12 +34,10 @@ public class ObjectDefinitionContextProvider
 	implements ContextProvider<ObjectDefinition> {
 
 	public ObjectDefinitionContextProvider(
-		ObjectDefinitionRESTContextPathRegistry
-			objectDefinitionRESTContextPathRegistry,
+		ObjectDefinitionDeployerImpl objectDefinitionDeployerImpl,
 		Portal portal) {
 
-		_objectDefinitionRESTContextPathRegistry =
-			objectDefinitionRESTContextPathRegistry;
+		_objectDefinitionDeployerImpl = objectDefinitionDeployerImpl;
 		_portal = portal;
 	}
 
@@ -54,12 +52,11 @@ public class ObjectDefinitionContextProvider
 		restContextPath = StringUtil.removeSubstring(restContextPath, "/o/");
 		restContextPath = StringUtil.replaceLast(restContextPath, '/', "");
 
-		return _objectDefinitionRESTContextPathRegistry.getObjectDefinition(
+		return _objectDefinitionDeployerImpl.getObjectDefinition(
 			companyId, restContextPath);
 	}
 
-	private final ObjectDefinitionRESTContextPathRegistry
-		_objectDefinitionRESTContextPathRegistry;
+	private final ObjectDefinitionDeployerImpl _objectDefinitionDeployerImpl;
 	private final Portal _portal;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.object.rest.internal.deployer;
 
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.internal.ObjectDefinitionRESTContextPathRegistry;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectFieldExceptionMapper;
@@ -55,9 +54,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		_objectDefinitionAPIRegistry.register(objectDefinition);
+		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
+			objectDefinition.getRESTContextPath());
 
-		if (_objectDefinitionAPIRegistry.hasObjectDefinition(
+		if (objectDefinitions == null) {
+			objectDefinitions = new HashMap<>();
+
+			_objectDefinitions.put(
+				objectDefinition.getRESTContextPath(), objectDefinitions);
+		}
+
+		objectDefinitions.put(
+			objectDefinition.getCompanyId(), objectDefinition);
+
+		if (_objectDefinitions.containsKey(
 				objectDefinition.getRESTContextPath())) {
 
 			return Collections.singletonList(
@@ -109,8 +119,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return Arrays.asList(
 			_bundleContext.registerService(
 				ContextProvider.class,
-				new ObjectDefinitionContextProvider(
-					_objectDefinitionAPIRegistry, _portal),
+				new ObjectDefinitionContextProvider(this, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
 					"(osgi.jaxrs.name=" + objectDefinition.getShortName() + ")"
@@ -137,11 +146,31 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()));
 	}
 
+	public ObjectDefinition getObjectDefinition(
+		long companyId, String restContextPath) {
+
+		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
+			restContextPath);
+
+		if (objectDefinitions != null) {
+			return objectDefinitions.get(companyId);
+		}
+
+		return null;
+	}
+
 	@Override
 	public void undeploy(ObjectDefinition objectDefinition) {
-		_objectDefinitionAPIRegistry.unregister(objectDefinition);
+		Map<Long, ObjectDefinition> objectDefinitions = _objectDefinitions.get(
+			objectDefinition.getRESTContextPath());
 
-		if (_objectDefinitionAPIRegistry.hasObjectDefinition(
+		objectDefinitions.remove(objectDefinition.getCompanyId());
+
+		if (objectDefinitions.isEmpty()) {
+			_objectDefinitions.remove(objectDefinition.getRESTContextPath());
+		}
+
+		if (_objectDefinitions.containsKey(
 				objectDefinition.getRESTContextPath())) {
 
 			return;
@@ -165,11 +194,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		new HashMap<>();
 
 	@Reference
-	private ObjectDefinitionRESTContextPathRegistry
-		_objectDefinitionAPIRegistry;
-
-	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final Map<String, Map<Long, ObjectDefinition>> _objectDefinitions =
+		new HashMap<>();
 
 	@Reference(
 		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
