@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,19 +45,6 @@ public class ObjectRecipientDefinitionTermContributor
 
 		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
-	}
-
-	@Override
-	public Map<String, String> getDefinitionTerms(Locale locale) {
-		Map<String, String> map = new HashMap<>();
-
-		List<String> terms = getTerms();
-
-		for (String term : terms) {
-			map.put(term, getLabel(term, locale));
-		}
-
-		return map;
 	}
 
 	@Override
@@ -94,8 +80,7 @@ public class ObjectRecipientDefinitionTermContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
-			resourceBundle, _languageKeys.get(term));
+		return LanguageUtil.get(resourceBundle, _languageKeys.get(term));
 	}
 
 	@Override
@@ -117,12 +102,11 @@ public class ObjectRecipientDefinitionTermContributor
 		return resultsSB.toString();
 	}
 
-	private static final Map<String, String> _languageKeys =
-		HashMapBuilder.put(
-			"[%OBJECT_ENTRY_CREATOR%]", "creator"
-		).put(
-			"[%USER_GROUP_NAME%]", "user-group-name"
-		).build();
+	private static final Map<String, String> _languageKeys = HashMapBuilder.put(
+		"[%OBJECT_ENTRY_CREATOR%]", "creator"
+	).put(
+		"[%USER_GROUP_NAME%]", "user-group-name"
+	).build();
 
 	private final UserGroupLocalService _userGroupLocalService;
 	private final UserLocalService _userLocalService;

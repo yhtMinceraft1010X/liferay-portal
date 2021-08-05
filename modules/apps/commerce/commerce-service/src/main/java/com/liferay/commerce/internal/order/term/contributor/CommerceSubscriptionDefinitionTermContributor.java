@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -63,19 +62,6 @@ public class CommerceSubscriptionDefinitionTermContributor
 	public static final String KEY =
 		CommerceDefinitionTermConstants.
 			BODY_AND_SUBJECT_DEFINITION_TERMS_CONTRIBUTOR;
-
-	@Override
-	public Map<String, String> getDefinitionTerms(Locale locale) {
-		Map<String, String> map = new HashMap<>();
-
-		List<String> terms = getTerms();
-
-		for (String term : terms) {
-			map.put(term, getLabel(term, locale));
-		}
-
-		return map;
-	}
 
 	@Override
 	public String getFilledTerm(String term, Object object, Locale locale)

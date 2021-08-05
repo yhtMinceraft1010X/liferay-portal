@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -63,19 +62,6 @@ public class ObjectDefinitionTermContributor
 					"%]"),
 				objectField.getObjectFieldId());
 		}
-	}
-
-	@Override
-	public Map<String, String> getDefinitionTerms(Locale locale) {
-		Map<String, String> map = new HashMap<>();
-
-		List<String> terms = getTerms();
-
-		for (String term : terms) {
-			map.put(term, getLabel(term, locale));
-		}
-
-		return map;
 	}
 
 	@Override
