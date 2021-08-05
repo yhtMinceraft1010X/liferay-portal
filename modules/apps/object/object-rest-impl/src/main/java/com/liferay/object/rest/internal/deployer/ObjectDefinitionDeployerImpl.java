@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ObjectDefinitionDeployer.class)
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
+	@Override
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
