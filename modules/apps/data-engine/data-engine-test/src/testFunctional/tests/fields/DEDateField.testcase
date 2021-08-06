@@ -80,7 +80,7 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that upon clicking the calendar icon on the Date field the calendar widget is displayed"
 	@priority = "4"
 	test CanCalendarBeClicked {
 		NavItem.gotoStructures();
@@ -115,7 +115,7 @@ definition {
 			value = "08/07/2021");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that edited data persists"
 	@priority = "5"
 	test CanEditData {
 		NavItem.gotoStructures();
@@ -192,7 +192,7 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that input data persists"
 	@priority = "5"
 	test CanInputData {
 		NavItem.gotoStructures();
@@ -224,7 +224,7 @@ definition {
 			value = "08/06/2021");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
@@ -272,7 +272,7 @@ definition {
 			value = "08/07/2021");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that is not possible to publish the Web Content with a required field blank"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -298,7 +298,7 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
@@ -336,7 +336,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove inputted data from the field"
 	@priority = "4"
 	test CanRemoveInputtedData {
 		NavItem.gotoStructures();
