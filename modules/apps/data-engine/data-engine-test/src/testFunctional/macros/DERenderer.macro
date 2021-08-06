@@ -73,6 +73,18 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertDataInDateField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals.assertValue(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#DATE_INPUT_INDEXED",
+			value1 = "${value}");
+	}
+
 	macro assertMultipleSelectionOptionIsUnchecked {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";
