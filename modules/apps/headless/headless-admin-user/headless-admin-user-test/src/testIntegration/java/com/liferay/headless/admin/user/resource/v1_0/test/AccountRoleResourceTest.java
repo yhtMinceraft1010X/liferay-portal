@@ -327,7 +327,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	private UserAccount _randomUserAccount() throws Exception {
-		UserAccount userAccount = new UserAccount() {
+		return new UserAccount() {
 			{
 				additionalName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -358,25 +358,23 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				profileURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+
+				setBirthDate(
+					() -> {
+						Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+						calendar.setTime(RandomTestUtil.nextDate());
+						calendar.set(Calendar.HOUR_OF_DAY, 0);
+						calendar.set(Calendar.MINUTE, 0);
+						calendar.set(Calendar.SECOND, 0);
+						calendar.set(Calendar.MILLISECOND, 0);
+
+						return calendar.getTime();
+					});
+				setUserAccountContactInformation(
+					_randomUserAccountContactInformation());
 			}
 		};
-
-		userAccount.setBirthDate(
-			() -> {
-				Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-				calendar.setTime(RandomTestUtil.nextDate());
-				calendar.set(Calendar.HOUR_OF_DAY, 0);
-				calendar.set(Calendar.MINUTE, 0);
-				calendar.set(Calendar.SECOND, 0);
-				calendar.set(Calendar.MILLISECOND, 0);
-
-				return calendar.getTime();
-			});
-		userAccount.setUserAccountContactInformation(
-			_randomUserAccountContactInformation());
-
-		return userAccount;
 	}
 
 	private EmailAddress _randomEmailAddress() throws Exception {
