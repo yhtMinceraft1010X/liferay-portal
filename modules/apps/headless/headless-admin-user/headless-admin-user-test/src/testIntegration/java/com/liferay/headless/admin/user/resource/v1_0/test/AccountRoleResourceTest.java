@@ -326,6 +326,43 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		};
 	}
 
+	private EmailAddress _randomEmailAddress() throws Exception {
+		return new EmailAddress() {
+			{
+				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
+				setPrimary(true);
+				setType("email-address");
+			}
+		};
+	}
+
+	private Phone _randomPhone() throws Exception {
+		return new Phone() {
+			{
+				setExtension(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
+				setPhoneType("personal");
+				setPrimary(true);
+			}
+		};
+	}
+
+	private PostalAddress _randomPostalAddress() throws Exception {
+		return new PostalAddress() {
+			{
+				setAddressCountry("united-states");
+				setAddressLocality("Diamond Bar");
+				setAddressRegion("California");
+				setAddressType("personal");
+				setPostalCode("91765");
+				setPrimary(true);
+				setStreetAddressLine1(RandomTestUtil.randomString());
+				setStreetAddressLine2(RandomTestUtil.randomString());
+				setStreetAddressLine3(RandomTestUtil.randomString());
+			}
+		};
+	}
+
 	private UserAccount _randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
@@ -373,43 +410,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 					});
 				setUserAccountContactInformation(
 					_randomUserAccountContactInformation());
-			}
-		};
-	}
-
-	private EmailAddress _randomEmailAddress() throws Exception {
-		return new EmailAddress() {
-			{
-				setEmailAddress(RandomTestUtil.randomString() + "@liferay.com");
-				setPrimary(true);
-				setType("email-address");
-			}
-		};
-	}
-
-	private Phone _randomPhone() throws Exception {
-		return new Phone() {
-			{
-				setExtension(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneNumber(String.valueOf(RandomTestUtil.randomInt()));
-				setPhoneType("personal");
-				setPrimary(true);
-			}
-		};
-	}
-
-	private PostalAddress _randomPostalAddress() throws Exception {
-		return new PostalAddress() {
-			{
-				setAddressCountry("united-states");
-				setAddressLocality("Diamond Bar");
-				setAddressRegion("California");
-				setAddressType("personal");
-				setPostalCode("91765");
-				setPrimary(true);
-				setStreetAddressLine1(RandomTestUtil.randomString());
-				setStreetAddressLine2(RandomTestUtil.randomString());
-				setStreetAddressLine3(RandomTestUtil.randomString());
 			}
 		};
 	}
