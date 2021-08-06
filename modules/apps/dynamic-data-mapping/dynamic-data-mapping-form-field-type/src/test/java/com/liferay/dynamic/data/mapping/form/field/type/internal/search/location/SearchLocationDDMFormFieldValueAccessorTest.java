@@ -55,14 +55,13 @@ public class SearchLocationDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetValue() {
-		String value = String.valueOf(
-			JSONUtil.put(
-				"city", "Los Angeles"
-			).put(
-				"country", "United States"
-			).put(
-				"place", "Los Angeles County Museum of Art"
-			));
+		String value = JSONUtil.put(
+			"city", "Los Angeles"
+		).put(
+			"country", "United States"
+		).put(
+			"place", "Los Angeles County Museum of Art"
+		).toString();
 
 		Assert.assertEquals(
 			value,
@@ -76,14 +75,13 @@ public class SearchLocationDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetValueForEvaluation() {
-		String value = String.valueOf(
-			JSONUtil.put(
-				"city", "Los Angeles"
-			).put(
-				"country", "United States"
-			).put(
-				"place", "Los Angeles County Museum of Art"
-			));
+		String value = JSONUtil.put(
+			"city", "Los Angeles"
+		).put(
+			"country", "United States"
+		).put(
+			"place", "Los Angeles County Museum of Art"
+		).toString();
 
 		Assert.assertEquals(
 			value,
