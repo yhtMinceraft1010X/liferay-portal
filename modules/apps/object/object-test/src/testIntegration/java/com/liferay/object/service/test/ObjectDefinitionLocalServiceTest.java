@@ -178,6 +178,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getDBTableName()));
+		Assert.assertEquals(
+			false, _hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// Before publish, resources
 
@@ -224,6 +226,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			true, _hasColumn(objectDefinition.getDBTableName(), "baker_"));
 		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
+		Assert.assertEquals(
+			true, _hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// After publish, resources
 
@@ -523,6 +527,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getDBTableName()));
+		Assert.assertEquals(
+			true, _hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// Resources
 
@@ -601,6 +607,15 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+
+		// Database table
+
+		Assert.assertEquals(
+			false, _hasTable(objectDefinition.getDBTableName()));
+		Assert.assertEquals(
+			false, _hasTable(objectDefinition.getExtensionDBTableName()));
+
+		// Resources
 
 		Assert.assertEquals(
 			0,
