@@ -284,7 +284,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	private UserAccount _addUserAccount(Account account) throws Exception {
 		UserAccount userAccount =
 			_userAccountResource.putUserAccountByExternalReferenceCode(
-				RandomTestUtil.randomString(), _randomAccountUser());
+				RandomTestUtil.randomString(), _randomUserAccount());
 
 		_userAccountResource.postAccountUserByEmailAddress(
 			account.getId(), userAccount.getEmailAddress());
@@ -326,7 +326,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		};
 	}
 
-	private UserAccount _randomAccountUser() throws Exception {
+	private UserAccount _randomUserAccount() throws Exception {
 		UserAccount userAccount = new UserAccount() {
 			{
 				additionalName = StringUtil.toLowerCase(
