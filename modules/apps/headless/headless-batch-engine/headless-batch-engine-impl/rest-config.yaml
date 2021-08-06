@@ -5,5 +5,6 @@ application:
     className: "HeadlessBatchEngineApplication"
     name: "Liferay.Headless.Batch.Engine"
 author: "Ivica Cardic"
+forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false

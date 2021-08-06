@@ -5,5 +5,6 @@ application:
     className: "HeadlessPortalInstancesApplication"
     name: "Liferay.Headless.Portal.Instances"
 author: "Alberto Chaparro"
+forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
