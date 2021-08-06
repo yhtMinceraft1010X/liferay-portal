@@ -62,9 +62,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -117,7 +119,7 @@ public abstract class BaseObjectFieldResourceImpl
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectField")})
-	public ObjectField postObjectField(
+	public ObjectField postObjectDefinitionObjectField(
 			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
 				Long objectDefinitionId,
 			ObjectField objectField)
@@ -126,12 +128,59 @@ public abstract class BaseObjectFieldResourceImpl
 		return new ObjectField();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/object-fields/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "objectDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/object-definitions/{objectDefinitionId}/object-fields/batch")
+	@POST
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ObjectField")})
+	public Response postObjectDefinitionObjectFieldBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("objectDefinitionId")
+				Long objectDefinitionId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				ObjectField.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
 			java.util.Collection<ObjectField> objectFields,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		for (ObjectField objectField : objectFields) {
+			postObjectDefinitionObjectField(
+				Long.parseLong((String)parameters.get("objectDefinitionId")),
+				objectField);
+		}
 	}
 
 	@Override

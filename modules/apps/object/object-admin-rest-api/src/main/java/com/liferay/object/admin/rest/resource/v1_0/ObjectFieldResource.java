@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -52,8 +53,12 @@ public interface ObjectFieldResource {
 			Long objectDefinitionId, Pagination pagination)
 		throws Exception;
 
-	public ObjectField postObjectField(
+	public ObjectField postObjectDefinitionObjectField(
 			Long objectDefinitionId, ObjectField objectField)
+		throws Exception;
+
+	public Response postObjectDefinitionObjectFieldBatch(
+			Long objectDefinitionId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -296,8 +296,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 				Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return objectFieldResource.postObjectDefinitionObjectField(
+			objectDefinitionId, objectField);
 	}
 
 	protected Long
@@ -316,22 +316,24 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	@Test
-	public void testPostObjectField() throws Exception {
+	public void testPostObjectDefinitionObjectField() throws Exception {
 		ObjectField randomObjectField = randomObjectField();
 
-		ObjectField postObjectField = testPostObjectField_addObjectField(
-			randomObjectField);
+		ObjectField postObjectField =
+			testPostObjectDefinitionObjectField_addObjectField(
+				randomObjectField);
 
 		assertEquals(randomObjectField, postObjectField);
 		assertValid(postObjectField);
 	}
 
-	protected ObjectField testPostObjectField_addObjectField(
+	protected ObjectField testPostObjectDefinitionObjectField_addObjectField(
 			ObjectField objectField)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return objectFieldResource.postObjectDefinitionObjectField(
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId(),
+			objectField);
 	}
 
 	protected ObjectField testGraphQLObjectField_addObjectField()

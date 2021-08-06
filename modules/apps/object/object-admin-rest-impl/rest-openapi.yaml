@@ -212,7 +212,7 @@ paths:
                         ""
             tags: ["ObjectField"]
         post:
-            operationId: postObjectField
+            operationId: postObjectDefinitionObjectField
             parameters:
                 - in: path
                   name: objectDefinitionId

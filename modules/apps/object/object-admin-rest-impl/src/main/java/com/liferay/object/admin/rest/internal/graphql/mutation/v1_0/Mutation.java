@@ -119,7 +119,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public ObjectField createObjectField(
+	public ObjectField createObjectDefinitionObjectField(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectField") ObjectField objectField)
 		throws Exception {
@@ -127,8 +127,24 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_objectFieldResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			objectFieldResource -> objectFieldResource.postObjectField(
-				objectDefinitionId, objectField));
+			objectFieldResource ->
+				objectFieldResource.postObjectDefinitionObjectField(
+					objectDefinitionId, objectField));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectFieldBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectFieldResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectFieldResource ->
+				objectFieldResource.postObjectDefinitionObjectFieldBatch(
+					objectDefinitionId, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
