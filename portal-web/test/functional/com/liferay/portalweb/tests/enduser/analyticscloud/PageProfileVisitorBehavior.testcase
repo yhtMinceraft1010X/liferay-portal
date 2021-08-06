@@ -38,7 +38,7 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
 	@ignore = "true"
 	@priority = "5"
 	test PeriodFilter180DaysPageOverview {
@@ -47,7 +47,7 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
 	@ignore = "true"
 	@priority = "5"
 	test PeriodFilterLastYearPageOverview {
@@ -56,15 +56,13 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
 	@ignore = "true"
 	@priority = "5"
 	test ShowsNumberUniqueVisitorsAndViews {
 
 		// TODO LRAC-8514 ShowsNumberUniqueVisitorsAndViews
 
-    }
-
-
+	}
 
 }
