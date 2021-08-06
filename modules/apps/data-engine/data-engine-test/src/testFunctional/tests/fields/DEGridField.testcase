@@ -318,21 +318,15 @@ definition {
 			fieldLabel = "Grid",
 			fieldName = "Grid");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Grid",
-				index = "${index}",
-				optionFieldLabel = "Rows",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Rows",
+			optionValueList = "Option 1,Option 2,Option 3");
 
-		for (var index : list "1,2,3") {
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Grid",
-				index = "${index}",
-				optionFieldLabel = "Columns",
-				optionValue = "Option ${index}");
-		}
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Columns",
+			optionValueList = "Option 1,Option 2,Option 3");
 
 		WebContentStructures.saveCP();
 
