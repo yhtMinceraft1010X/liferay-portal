@@ -199,12 +199,51 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Date");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Date");
+
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			index = "1",
+			value = "08/06/2021");
+
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			index = "2",
+			value = "08/07/2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInDateField(
+			fieldLabel = "Date",
+			index = "1",
+			value = "08/06/2021");
+
+		DERenderer.assertDataInDateField(
+			fieldLabel = "Date",
+			index = "2",
+			value = "08/07/2021");
 	}
 
 	@description = "This is a stubbed description"
