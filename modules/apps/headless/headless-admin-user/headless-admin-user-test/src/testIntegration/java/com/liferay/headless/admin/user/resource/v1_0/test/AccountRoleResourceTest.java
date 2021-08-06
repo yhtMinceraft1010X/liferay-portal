@@ -85,24 +85,24 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	@Test
 	public void testDeleteAccountRoleUserAssociation() throws Exception {
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount accountUser = _addAccountUser(_account);
+		UserAccount userAccount = _addUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 
 		_accountRoleLocalService.associateUser(
-			_account.getId(), accountRole.getId(), accountUser.getId());
+			_account.getId(), accountRole.getId(), userAccount.getId());
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, true);
+			_account, accountRole, userAccount, true);
 
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.deleteAccountRoleUserAssociationHttpResponse(
-				_account.getId(), accountRole.getId(), accountUser.getId()));
+				_account.getId(), accountRole.getId(), userAccount.getId()));
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 	}
 
 	@Override
@@ -111,47 +111,47 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount accountUser = _addAccountUser(_account);
+		UserAccount userAccount = _addUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 
 		_accountRoleLocalService.associateUser(
-			_account.getId(), accountRole.getId(), accountUser.getId());
+			_account.getId(), accountRole.getId(), userAccount.getId());
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, true);
+			_account, accountRole, userAccount, true);
 
 		accountRoleResource.
 			deleteAccountRoleUserAssociationByExternalReferenceCode(
 				_account.getExternalReferenceCode(), accountRole.getId(),
-				accountUser.getExternalReferenceCode());
+				userAccount.getExternalReferenceCode());
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 	}
 
 	@Override
 	@Test
 	public void testPostAccountRoleUserAssociation() throws Exception {
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount accountUser = _addAccountUser(_account);
+		UserAccount userAccount = _addUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				_account.getId(), accountRole.getId(), accountUser.getId()));
+				_account.getId(), accountRole.getId(), userAccount.getId()));
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, true);
+			_account, accountRole, userAccount, true);
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.postAccountRoleUserAssociationHttpResponse(
-				_account.getId(), 0L, accountUser.getId()));
+				_account.getId(), 0L, userAccount.getId()));
 	}
 
 	@Override
@@ -160,27 +160,27 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		throws Exception {
 
 		AccountRole accountRole = _addAccountRole(_account);
-		UserAccount accountUser = _addAccountUser(_account);
+		UserAccount userAccount = _addUserAccount(_account);
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, false);
+			_account, accountRole, userAccount, false);
 
 		assertHttpResponseStatusCode(
 			204,
 			accountRoleResource.
 				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
 					_account.getExternalReferenceCode(), accountRole.getId(),
-					accountUser.getExternalReferenceCode()));
+					userAccount.getExternalReferenceCode()));
 
 		_assertAccountRoleUserAssociation(
-			_account, accountRole, accountUser, true);
+			_account, accountRole, userAccount, true);
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountRoleUserAssociationByExternalReferenceCodeHttpResponse(
 					_account.getExternalReferenceCode(), 0L,
-					accountUser.getExternalReferenceCode()));
+					userAccount.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -281,7 +281,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 			account.getId(), randomAccountRole());
 	}
 
-	private UserAccount _addAccountUser(Account account) throws Exception {
+	private UserAccount _addUserAccount(Account account) throws Exception {
 		UserAccount userAccount =
 			_userAccountResource.putUserAccountByExternalReferenceCode(
 				RandomTestUtil.randomString(), _randomAccountUser());
@@ -293,7 +293,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	private void _assertAccountRoleUserAssociation(
-			Account account, AccountRole accountRole, UserAccount accountUser,
+			Account account, AccountRole accountRole, UserAccount userAccount,
 			boolean hasAssociation)
 		throws Exception {
 
@@ -302,7 +302,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		UserGroupRole userGroupRole =
 			_userGroupRoleLocalService.fetchUserGroupRole(
-				accountUser.getId(), accountEntry.getAccountEntryGroupId(),
+				userAccount.getId(), accountEntry.getAccountEntryGroupId(),
 				accountRole.getRoleId());
 
 		if (hasAssociation) {
