@@ -1,0 +1,97 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8319 | Test Summary: Custom Range time period filter in Sites"
+	@ignore = "true"
+	@priority = "5"
+	test CustomRangeTimePeriodFilterSites {
+
+		// TODO LRAC-8319
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8321 | Test Summary: 1st user access and no property was selected yet"
+	@ignore = "true"
+	@priority = "4"
+	test FirstAccessAndNoProperty {
+
+		// TODO LRAC-8321
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: 180 Days time period filter in Sites"
+	@ignore = "true"
+	@priority = "3"
+	test PeriodFilter180Days {
+
+		// TODO LRAC-8317
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8318 | Test Summary: Last Year time period filter in Sites"
+	@ignore = "true"
+	@priority = "3"
+	test PeriodFilterLastYear {
+
+		// TODO LRAC-8318
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8320 | Test Summary: Property field is displayed in empty state when no property is available"
+	@ignore = "true"
+	@priority = "4"
+	test PropertyFieldWhenNoProperty {
+
+		// TODO LRAC-8320
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
+	@ignore = "true"
+	@priority = "4"
+	test UserLostAccess {
+
+		// TODO LRAC-8323
+
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8322 | Test Summary: A user (independent of user role) should only see the properties they are invited to by the AC admin or the properties which the user is owner"
+	@ignore = "true"
+	@priority = "4"
+	test UserShouldOnlySeePropertiesAreInvitedByACAdminOrPropertiesWhichUserOwner {
+
+		// TODO LRAC-8322
+
+	}
+
+
+
+}
