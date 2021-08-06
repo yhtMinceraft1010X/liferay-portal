@@ -53,10 +53,10 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 	public InformationTemplatesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		InformationTemplatesTemplateDisplayContext
-			informationTemplatesTemplateDisplayContext) {
+			informationTemplatesTemplateDisplayContext,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
