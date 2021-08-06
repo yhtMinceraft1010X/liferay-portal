@@ -90,12 +90,43 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanEditData {
+		NavItem.gotoStructures();
 
-		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			value = "08/06/2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInDateField(
+			fieldLabel = "Date",
+			value = "08/07/2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInDateField(
+			fieldLabel = "Date",
+			value = "08/07/2021");
 	}
 
 	@description = "This is a test for LRQA-68598. This test verifies that Label and Help text can be edited"
