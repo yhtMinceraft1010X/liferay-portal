@@ -50,7 +50,7 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 	}
 
 	@Override
-	public ObjectField postObjectField(
+	public ObjectField postObjectDefinitionObjectField(
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 

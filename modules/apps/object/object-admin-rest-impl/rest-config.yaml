@@ -6,4 +6,5 @@ application:
     name: "Liferay.Object.Admin.REST"
 author: "Javier Gamarra"
 clientDir: "../object-admin-rest-client/src/main/java"
+forcePredictableOperationId: true
 testDir: "../object-admin-rest-test/src/testIntegration/java"
