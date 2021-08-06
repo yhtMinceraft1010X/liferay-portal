@@ -95,7 +95,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/rest/taxonomy-categories");
+			"/site-initializer/rest/taxonomy-vocabularies");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
