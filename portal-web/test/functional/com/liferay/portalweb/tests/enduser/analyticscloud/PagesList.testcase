@@ -36,6 +36,15 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8336 | Test Summary: Search for a Page in Pages list"
+	@ignore = "true"
+	@priority = "5"
+	test CanSearchPageInPagesList {
+
+		// TODO LRAC-8336 CanSearchPageInPagesList
+
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 	@ignore = "true"
 	@priority = "5"
@@ -44,5 +53,7 @@ definition {
 		// TODO LRAC-8111 ShowsListOfPages pending implementation
 
 	}
+
+
 
 }
