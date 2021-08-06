@@ -15,14 +15,8 @@ import D3OrganizationChart from '../src/main/resources/META-INF/resources/js/D3O
 import {
 	ACCOUNTS_PROPERTY_NAME,
 	ORGANIZATIONS_PROPERTY_NAME,
-<<<<<<< HEAD
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../src/main/resources/META-INF/resources/js/utils/constants';
-=======
-	USERS_PROPERTY_NAME,
-} from '../src/main/resources/META-INF/resources/js/utils/constants';
-import {USER_INVITATION_ENABLED} from '../src/main/resources/META-INF/resources/js/utils/flags';
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 
 jest.mock(
 	'../src/main/resources/META-INF/resources/js/data/organizations',
@@ -73,12 +67,8 @@ jest.mock(
 jest.mock('../src/main/resources/META-INF/resources/js/data/accounts', () => ({
 	getAccount: () =>
 		Promise.resolve({
-<<<<<<< HEAD
-			accountUsers: [
-=======
-			type: 'account',
+			type: 'accountUserAccounts',
 			userAccounts: [
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 				{
 					id: '2000',
 					name: `User Child 1`,
@@ -92,10 +82,6 @@ jest.mock('../src/main/resources/META-INF/resources/js/data/accounts', () => ({
 					name: `User Child 3`,
 				},
 			],
-<<<<<<< HEAD
-			type: 'account',
-=======
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 		}),
 }));
 
@@ -144,11 +130,7 @@ const INITIAL_DATA = {
 			name: `Spain`,
 		},
 	],
-<<<<<<< HEAD
 	[USERS_PROPERTY_NAME_IN_ORGANIZATION]: [
-=======
-	[USERS_PROPERTY_NAME]: [
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 		{
 			id: '1',
 			name: `Mark`,
@@ -197,10 +179,7 @@ describe('D3OrganizationChart implementation', () => {
 	let zoomOutButton;
 	let defaultParams;
 	const getChartNodes = (...args) => getNodes(chartSVGWrapper, ...args);
-<<<<<<< HEAD
-=======
 	let lastActionPerformed = null;
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 
 	beforeEach(() => {
 		chartSVGWrapper = document.createElement('svg');
@@ -214,13 +193,6 @@ describe('D3OrganizationChart implementation', () => {
 			},
 			'./assets/clay/icons.svg',
 			{
-<<<<<<< HEAD
-				open: () => {},
-			},
-			{
-				close: () => {},
-				open: () => {},
-=======
 				open: (parentData, type) => {
 					lastActionPerformed = {
 						details: {parentData, type},
@@ -240,18 +212,14 @@ describe('D3OrganizationChart implementation', () => {
 						name: 'menu opened',
 					};
 				},
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 			},
 		];
 	});
 
-<<<<<<< HEAD
-=======
 	afterEach(() => {
 		lastActionPerformed = null;
 	});
 
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 	it('Must create a chart', async () => {
 		new D3OrganizationChart(INITIAL_DATA, ...defaultParams);
 
@@ -283,11 +251,7 @@ describe('D3OrganizationChart implementation', () => {
 		const chartUsers = chartSVGWrapper.querySelectorAll('.chart-item-user');
 
 		expect(chartUsers.length).toBe(
-<<<<<<< HEAD
 			INITIAL_DATA[USERS_PROPERTY_NAME_IN_ORGANIZATION].length
-=======
-			INITIAL_DATA[USERS_PROPERTY_NAME].length
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 		);
 
 		const chartItems = chartSVGWrapper.querySelectorAll('.chart-item');
@@ -341,8 +305,6 @@ describe('D3OrganizationChart implementation', () => {
 			});
 		});
 	});
-<<<<<<< HEAD
-=======
 
 	describe('Node creation', () => {
 		let addButton = null;
@@ -426,26 +388,6 @@ describe('D3OrganizationChart implementation', () => {
 			expect(lastActionPerformed.name).toBe('modal opened');
 			expect(lastActionPerformed.details.type).toBe('account');
 		});
-
-		it('Must open a invite user modal when a creation button is clicked', async () => {
-			const openActionsWrapper = addButton.querySelector(
-				'.open-actions-wrapper'
-			);
-
-			await d3click(openActionsWrapper);
-
-			const inviteUserButton = addButton.querySelector(
-				'.add-action-wrapper.user'
-			);
-			expect(!!inviteUserButton).toBe(USER_INVITATION_ENABLED);
-
-			if (USER_INVITATION_ENABLED) {
-				await d3click(inviteUserButton);
-
-				expect(lastActionPerformed.name).toBe('modal opened');
-				expect(lastActionPerformed.details.type).toBe('user');
-			}
-		});
 	});
 
 	describe('Node actions', () => {
@@ -463,5 +405,4 @@ describe('D3OrganizationChart implementation', () => {
 			expect(lastActionPerformed.details.data.name).toBe('Root');
 		});
 	});
->>>>>>> COMMERCE-5674 Organization chart JS component with basic interactions
 });
