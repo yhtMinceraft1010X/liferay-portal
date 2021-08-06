@@ -188,7 +188,6 @@ public class WorkflowDefinitionResourceTest
 			WorkflowDefinitionTestUtil.getContent(
 				workflowDefinition.getDescription(),
 				workflowDefinition.getName()));
-		workflowDefinition.setVersion("1");
 		workflowDefinition.setTransitions(
 			new Transition[] {
 				new Transition() {
@@ -224,6 +223,7 @@ public class WorkflowDefinitionResourceTest
 					}
 				}
 			});
+		workflowDefinition.setVersion("1");
 
 		return workflowDefinition;
 	}
