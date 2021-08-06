@@ -38,7 +38,7 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8363 | Test Summary: Page profile views by technology shows which devices are being used"
 	@ignore = "true"
 	@priority = "5"
 	test ShowsWhichDevicesBeingUsed {
@@ -46,7 +46,5 @@ definition {
 		// TODO LRAC-8363 ShowsWhichDevicesBeingUsed
 
 	}
-
-
 
 }
