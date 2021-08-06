@@ -48,12 +48,12 @@ public class ObjectFieldLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAddObjectField() throws Exception {
+	public void testAddSystemObjectField() throws Exception {
 
 		// Name is null
 
 		try {
-			_testAddObjectField(_createObjectField("", "String"));
+			_testAddSystemObjectField(_createObjectField("", "String"));
 
 			Assert.fail();
 		}
@@ -64,10 +64,10 @@ public class ObjectFieldLocalServiceTest {
 
 		// Name must only contain letters and digits
 
-		_testAddObjectField(_createObjectField(" able ", "String"));
+		_testAddSystemObjectField(_createObjectField(" able ", "String"));
 
 		try {
-			_testAddObjectField(_createObjectField("abl e", "String"));
+			_testAddSystemObjectField(_createObjectField("abl e", "String"));
 
 			Assert.fail();
 		}
@@ -78,7 +78,7 @@ public class ObjectFieldLocalServiceTest {
 		}
 
 		try {
-			_testAddObjectField(_createObjectField("abl-e", "String"));
+			_testAddSystemObjectField(_createObjectField("abl-e", "String"));
 
 			Assert.fail();
 		}
@@ -91,7 +91,7 @@ public class ObjectFieldLocalServiceTest {
 		// The first character of a name must be an upper case letter
 
 		try {
-			_testAddObjectField(_createObjectField("Able", "String"));
+			_testAddSystemObjectField(_createObjectField("Able", "String"));
 
 			Assert.fail();
 		}
@@ -103,12 +103,12 @@ public class ObjectFieldLocalServiceTest {
 
 		// Names must be less than 41 characters
 
-		_testAddObjectField(
+		_testAddSystemObjectField(
 			_createObjectField(
 				"a123456789a123456789a123456789a1234567891", "String"));
 
 		try {
-			_testAddObjectField(
+			_testAddSystemObjectField(
 				_createObjectField(
 					"a123456789a123456789a123456789a12345678912", "String"));
 
@@ -130,7 +130,7 @@ public class ObjectFieldLocalServiceTest {
 
 		for (String reservedName : reservedNames) {
 			try {
-				_testAddObjectField(_createObjectField(reservedName, "String"));
+				_testAddSystemObjectField(_createObjectField(reservedName, "String"));
 
 				Assert.fail();
 			}
@@ -144,7 +144,7 @@ public class ObjectFieldLocalServiceTest {
 		// Reserved name is the primary key
 
 		try {
-			_testAddObjectField(_createObjectField("testId", "String"));
+			_testAddSystemObjectField(_createObjectField("testId", "String"));
 
 			Assert.fail();
 		}
@@ -157,7 +157,7 @@ public class ObjectFieldLocalServiceTest {
 		// Duplicate name
 
 		try {
-			_testAddObjectField(
+			_testAddSystemObjectField(
 				_createObjectField("able", "String"),
 				_createObjectField("able", "String"));
 
@@ -177,11 +177,11 @@ public class ObjectFieldLocalServiceTest {
 		};
 
 		for (String type : types) {
-			_testAddObjectField(_createObjectField("able", type));
+			_testAddSystemObjectField(_createObjectField("able", type));
 		}
 
 		try {
-			_testAddObjectField(_createObjectField("able", "STRING"));
+			_testAddSystemObjectField(_createObjectField("able", "STRING"));
 
 			Assert.fail();
 		}
@@ -201,7 +201,7 @@ public class ObjectFieldLocalServiceTest {
 		return objectField;
 	}
 
-	private void _testAddObjectField(ObjectField... objectFields)
+	private void _testAddSystemObjectField(ObjectField... objectFields)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = null;
