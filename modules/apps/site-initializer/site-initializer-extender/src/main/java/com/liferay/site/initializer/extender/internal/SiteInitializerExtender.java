@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -50,7 +53,9 @@ public class SiteInitializerExtender
 		}
 
 		SiteInitializerExtension siteInitializerExtension =
-			new SiteInitializerExtension(bundle, _bundleContext);
+			new SiteInitializerExtension(
+				bundle, _bundleContext, _taxonomyVocabularyResourceFactory,
+				_userLocalService);
 
 		siteInitializerExtension.start();
 
@@ -88,5 +93,12 @@ public class SiteInitializerExtender
 
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
+
+	@Reference
+	private TaxonomyVocabularyResource.Factory
+		_taxonomyVocabularyResourceFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

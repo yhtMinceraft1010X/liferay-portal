@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -29,10 +31,14 @@ import org.osgi.framework.ServiceRegistration;
 public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
-		Bundle bundle, BundleContext bundleContext) {
+		Bundle bundle, BundleContext bundleContext,
+		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		UserLocalService userLocalService) {
 
 		_bundle = bundle;
 		_bundleContext = bundleContext;
+		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
+		_userLocalService = userLocalService;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -42,7 +48,9 @@ public class SiteInitializerRegistrar {
 	protected void start() {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
-			new BundleSiteInitializer(_bundle, _servletContext),
+			new BundleSiteInitializer(
+				_bundle, _servletContext, _taxonomyVocabularyResourceFactory,
+				_userLocalService),
 			MapUtil.singletonDictionary(
 				"site.initializer.key", _bundle.getSymbolicName()));
 	}
@@ -55,5 +63,8 @@ public class SiteInitializerRegistrar {
 	private final BundleContext _bundleContext;
 	private ServiceRegistration<?> _serviceRegistration;
 	private ServletContext _servletContext;
+	private final TaxonomyVocabularyResource.Factory
+		_taxonomyVocabularyResourceFactory;
+	private final UserLocalService _userLocalService;
 
 }

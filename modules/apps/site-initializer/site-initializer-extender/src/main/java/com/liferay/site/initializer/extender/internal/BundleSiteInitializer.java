@@ -14,13 +14,21 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.Dictionary;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 
@@ -31,9 +39,15 @@ import org.osgi.framework.Bundle;
  */
 public class BundleSiteInitializer implements SiteInitializer {
 
-	public BundleSiteInitializer(Bundle bundle, ServletContext servletContext) {
+	public BundleSiteInitializer(
+		Bundle bundle, ServletContext servletContext,
+		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		UserLocalService userLocalService) {
+
 		_bundle = bundle;
 		_servletContext = servletContext;
+		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -61,6 +75,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public void initialize(long groupId) throws InitializationException {
+		try {
+			User user = _userLocalService.getUser(
+				PrincipalThreadLocal.getUserId());
+
+			_initialize(groupId, user);
+		}
+		catch (Exception exception) {
+			throw new InitializationException(exception);
+		}
 	}
 
 	@Override
@@ -68,7 +91,50 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
+	private void _addTaxonomyVocabularies(long groupId, User user)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/rest/taxonomy-categories");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
+			_taxonomyVocabularyResourceFactory.create();
+
+		TaxonomyVocabularyResource taxonomyVocabularyResource =
+			taxonomyVocabularyResourceBuilder.user(
+				user
+			).build();
+
+		for (String resourcePath : resourcePaths) {
+			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
+				_read(resourcePath));
+
+			// TODO
+
+			if (false) {
+				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+					groupId, taxonomyVocabulary);
+			}
+		}
+	}
+
+	private void _initialize(long groupId, User user) throws Exception {
+		_addTaxonomyVocabularies(groupId, user);
+	}
+
+	private String _read(String resourcePath) throws Exception {
+		return StringUtil.read(
+			_servletContext.getResourceAsStream(resourcePath));
+	}
+
 	private final Bundle _bundle;
 	private final ServletContext _servletContext;
+	private final TaxonomyVocabularyResource.Factory
+		_taxonomyVocabularyResourceFactory;
+	private final UserLocalService _userLocalService;
 
 }
