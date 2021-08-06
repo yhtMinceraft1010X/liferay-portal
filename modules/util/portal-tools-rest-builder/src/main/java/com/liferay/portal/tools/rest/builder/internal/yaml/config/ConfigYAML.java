@@ -213,7 +213,7 @@ public class ConfigYAML {
 	private String _clientMavenGroupId;
 	private boolean _forceClientVersionDescription = true;
 	private boolean _forcePredictableContentApplicationXML = true;
-	private boolean _forcePredictableOperationId = true;
+	private boolean _forcePredictableOperationId = false;
 	private boolean _forcePredictableSchemaPropertyName = true;
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
