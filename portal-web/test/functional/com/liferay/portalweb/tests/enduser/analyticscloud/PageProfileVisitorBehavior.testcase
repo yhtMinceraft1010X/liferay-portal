@@ -1,0 +1,70 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8516 | Test Summary: Assert Sites Page Overview time filter to Custom Filter"
+	@ignore = "true"
+	@priority = "5"
+	test CanTimeFilterUseCustomRangeInPageOverview {
+
+		// TODO LRAC-8516 CanTimeFilterUseCustomRangeInPageOverview
+
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8317 | Test Summary: Assert Sites Page Overview time filter changes to 180 days"
+	@ignore = "true"
+	@priority = "5"
+	test PeriodFilter180DaysPageOverview {
+
+		// TODO LRAC-8517 PeriodFilter180DaysPageOverview
+
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8515 | Test Summary: Last Year time period filter in Page Overview"
+	@ignore = "true"
+	@priority = "5"
+	test PeriodFilterLastYearPageOverview {
+
+		// TODO LRAC-8515 PeriodFilterLastYearPageOverview
+
+	}
+
+    @description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
+	@ignore = "true"
+	@priority = "5"
+	test ShowsNumberUniqueVisitorsAndViews {
+
+		// TODO LRAC-8514 ShowsNumberUniqueVisitorsAndViews
+
+    }
+
+
+
+}
