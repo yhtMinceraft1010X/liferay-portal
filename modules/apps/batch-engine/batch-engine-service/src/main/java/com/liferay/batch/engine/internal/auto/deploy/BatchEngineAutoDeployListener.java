@@ -299,7 +299,6 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 			ZipEntry zipEntry1, ZipEntry zipEntry2) {
 
 			String name1 = zipEntry1.getName();
-
 			String name2 = zipEntry2.getName();
 
 			if (name1.startsWith(
