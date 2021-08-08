@@ -695,9 +695,9 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
-		findBykaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId) {
+		findByKaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId) {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId(
+		return getPersistence().findByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId);
 	}
 
@@ -714,10 +714,10 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
-		findBykaleoTaskInstanceTokenId(
+		findByKaleoTaskInstanceTokenId(
 			long kaleoTaskInstanceTokenId, int start, int end) {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId(
+		return getPersistence().findByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId, start, end);
 	}
 
@@ -735,11 +735,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
-		findBykaleoTaskInstanceTokenId(
+		findByKaleoTaskInstanceTokenId(
 			long kaleoTaskInstanceTokenId, int start, int end,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId(
+		return getPersistence().findByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId, start, end, orderByComparator);
 	}
 
@@ -758,12 +758,12 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
 	public static List<KaleoTaskAssignmentInstance>
-		findBykaleoTaskInstanceTokenId(
+		findByKaleoTaskInstanceTokenId(
 			long kaleoTaskInstanceTokenId, int start, int end,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
 			boolean useFinderCache) {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId(
+		return getPersistence().findByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId, start, end, orderByComparator,
 			useFinderCache);
 	}
@@ -777,14 +777,14 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	 */
 	public static KaleoTaskAssignmentInstance
-			findBykaleoTaskInstanceTokenId_First(
+			findByKaleoTaskInstanceTokenId_First(
 				long kaleoTaskInstanceTokenId,
 				OrderByComparator<KaleoTaskAssignmentInstance>
 					orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId_First(
+		return getPersistence().findByKaleoTaskInstanceTokenId_First(
 			kaleoTaskInstanceTokenId, orderByComparator);
 	}
 
@@ -796,11 +796,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the first matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
 	public static KaleoTaskAssignmentInstance
-		fetchBykaleoTaskInstanceTokenId_First(
+		fetchByKaleoTaskInstanceTokenId_First(
 			long kaleoTaskInstanceTokenId,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().fetchBykaleoTaskInstanceTokenId_First(
+		return getPersistence().fetchByKaleoTaskInstanceTokenId_First(
 			kaleoTaskInstanceTokenId, orderByComparator);
 	}
 
@@ -813,14 +813,14 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	 */
 	public static KaleoTaskAssignmentInstance
-			findBykaleoTaskInstanceTokenId_Last(
+			findByKaleoTaskInstanceTokenId_Last(
 				long kaleoTaskInstanceTokenId,
 				OrderByComparator<KaleoTaskAssignmentInstance>
 					orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId_Last(
+		return getPersistence().findByKaleoTaskInstanceTokenId_Last(
 			kaleoTaskInstanceTokenId, orderByComparator);
 	}
 
@@ -832,11 +832,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
 	public static KaleoTaskAssignmentInstance
-		fetchBykaleoTaskInstanceTokenId_Last(
+		fetchByKaleoTaskInstanceTokenId_Last(
 			long kaleoTaskInstanceTokenId,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().fetchBykaleoTaskInstanceTokenId_Last(
+		return getPersistence().fetchByKaleoTaskInstanceTokenId_Last(
 			kaleoTaskInstanceTokenId, orderByComparator);
 	}
 
@@ -850,7 +850,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	 */
 	public static KaleoTaskAssignmentInstance[]
-			findBykaleoTaskInstanceTokenId_PrevAndNext(
+			findByKaleoTaskInstanceTokenId_PrevAndNext(
 				long kaleoTaskAssignmentInstanceId,
 				long kaleoTaskInstanceTokenId,
 				OrderByComparator<KaleoTaskAssignmentInstance>
@@ -858,7 +858,7 @@ public class KaleoTaskAssignmentInstanceUtil {
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findBykaleoTaskInstanceTokenId_PrevAndNext(
+		return getPersistence().findByKaleoTaskInstanceTokenId_PrevAndNext(
 			kaleoTaskAssignmentInstanceId, kaleoTaskInstanceTokenId,
 			orderByComparator);
 	}
@@ -868,10 +868,10 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 *
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	 */
-	public static void removeBykaleoTaskInstanceTokenId(
+	public static void removeByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId) {
 
-		getPersistence().removeBykaleoTaskInstanceTokenId(
+		getPersistence().removeByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId);
 	}
 
@@ -881,10 +881,10 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	 * @return the number of matching kaleo task assignment instances
 	 */
-	public static int countBykaleoTaskInstanceTokenId(
+	public static int countByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId) {
 
-		return getPersistence().countBykaleoTaskInstanceTokenId(
+		return getPersistence().countByKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceTokenId);
 	}
 
@@ -894,10 +894,10 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param assigneeClassName the assignee class name
 	 * @return the matching kaleo task assignment instances
 	 */
-	public static List<KaleoTaskAssignmentInstance> findByassigneeClassName(
+	public static List<KaleoTaskAssignmentInstance> findByAssigneeClassName(
 		String assigneeClassName) {
 
-		return getPersistence().findByassigneeClassName(assigneeClassName);
+		return getPersistence().findByAssigneeClassName(assigneeClassName);
 	}
 
 	/**
@@ -912,10 +912,10 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @return the range of matching kaleo task assignment instances
 	 */
-	public static List<KaleoTaskAssignmentInstance> findByassigneeClassName(
+	public static List<KaleoTaskAssignmentInstance> findByAssigneeClassName(
 		String assigneeClassName, int start, int end) {
 
-		return getPersistence().findByassigneeClassName(
+		return getPersistence().findByAssigneeClassName(
 			assigneeClassName, start, end);
 	}
 
@@ -932,11 +932,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
-	public static List<KaleoTaskAssignmentInstance> findByassigneeClassName(
+	public static List<KaleoTaskAssignmentInstance> findByAssigneeClassName(
 		String assigneeClassName, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().findByassigneeClassName(
+		return getPersistence().findByAssigneeClassName(
 			assigneeClassName, start, end, orderByComparator);
 	}
 
@@ -954,12 +954,12 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task assignment instances
 	 */
-	public static List<KaleoTaskAssignmentInstance> findByassigneeClassName(
+	public static List<KaleoTaskAssignmentInstance> findByAssigneeClassName(
 		String assigneeClassName, int start, int end,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByassigneeClassName(
+		return getPersistence().findByAssigneeClassName(
 			assigneeClassName, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -971,13 +971,13 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the first matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	 */
-	public static KaleoTaskAssignmentInstance findByassigneeClassName_First(
+	public static KaleoTaskAssignmentInstance findByAssigneeClassName_First(
 			String assigneeClassName,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findByassigneeClassName_First(
+		return getPersistence().findByAssigneeClassName_First(
 			assigneeClassName, orderByComparator);
 	}
 
@@ -988,11 +988,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
-	public static KaleoTaskAssignmentInstance fetchByassigneeClassName_First(
+	public static KaleoTaskAssignmentInstance fetchByAssigneeClassName_First(
 		String assigneeClassName,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().fetchByassigneeClassName_First(
+		return getPersistence().fetchByAssigneeClassName_First(
 			assigneeClassName, orderByComparator);
 	}
 
@@ -1004,13 +1004,13 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @return the last matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
 	 */
-	public static KaleoTaskAssignmentInstance findByassigneeClassName_Last(
+	public static KaleoTaskAssignmentInstance findByAssigneeClassName_Last(
 			String assigneeClassName,
 			OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findByassigneeClassName_Last(
+		return getPersistence().findByAssigneeClassName_Last(
 			assigneeClassName, orderByComparator);
 	}
 
@@ -1021,11 +1021,11 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
-	public static KaleoTaskAssignmentInstance fetchByassigneeClassName_Last(
+	public static KaleoTaskAssignmentInstance fetchByAssigneeClassName_Last(
 		String assigneeClassName,
 		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator) {
 
-		return getPersistence().fetchByassigneeClassName_Last(
+		return getPersistence().fetchByAssigneeClassName_Last(
 			assigneeClassName, orderByComparator);
 	}
 
@@ -1039,14 +1039,14 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
 	 */
 	public static KaleoTaskAssignmentInstance[]
-			findByassigneeClassName_PrevAndNext(
+			findByAssigneeClassName_PrevAndNext(
 				long kaleoTaskAssignmentInstanceId, String assigneeClassName,
 				OrderByComparator<KaleoTaskAssignmentInstance>
 					orderByComparator)
 		throws com.liferay.portal.workflow.kaleo.exception.
 			NoSuchTaskAssignmentInstanceException {
 
-		return getPersistence().findByassigneeClassName_PrevAndNext(
+		return getPersistence().findByAssigneeClassName_PrevAndNext(
 			kaleoTaskAssignmentInstanceId, assigneeClassName,
 			orderByComparator);
 	}
@@ -1056,8 +1056,8 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 *
 	 * @param assigneeClassName the assignee class name
 	 */
-	public static void removeByassigneeClassName(String assigneeClassName) {
-		getPersistence().removeByassigneeClassName(assigneeClassName);
+	public static void removeByAssigneeClassName(String assigneeClassName) {
+		getPersistence().removeByAssigneeClassName(assigneeClassName);
 	}
 
 	/**
@@ -1066,8 +1066,8 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 * @param assigneeClassName the assignee class name
 	 * @return the number of matching kaleo task assignment instances
 	 */
-	public static int countByassigneeClassName(String assigneeClassName) {
-		return getPersistence().countByassigneeClassName(assigneeClassName);
+	public static int countByAssigneeClassName(String assigneeClassName) {
+		return getPersistence().countByAssigneeClassName(assigneeClassName);
 	}
 
 	/**
