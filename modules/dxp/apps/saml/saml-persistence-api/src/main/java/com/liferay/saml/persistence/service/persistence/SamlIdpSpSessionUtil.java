@@ -130,8 +130,8 @@ public class SamlIdpSpSessionUtil {
 	 * @param createDate the create date
 	 * @return the matching saml idp sp sessions
 	 */
-	public static List<SamlIdpSpSession> findByCreateDate(Date createDate) {
-		return getPersistence().findByCreateDate(createDate);
+	public static List<SamlIdpSpSession> findByLtCreateDate(Date createDate) {
+		return getPersistence().findByLtCreateDate(createDate);
 	}
 
 	/**
@@ -146,10 +146,10 @@ public class SamlIdpSpSessionUtil {
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @return the range of matching saml idp sp sessions
 	 */
-	public static List<SamlIdpSpSession> findByCreateDate(
+	public static List<SamlIdpSpSession> findByLtCreateDate(
 		Date createDate, int start, int end) {
 
-		return getPersistence().findByCreateDate(createDate, start, end);
+		return getPersistence().findByLtCreateDate(createDate, start, end);
 	}
 
 	/**
@@ -165,11 +165,11 @@ public class SamlIdpSpSessionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
-	public static List<SamlIdpSpSession> findByCreateDate(
+	public static List<SamlIdpSpSession> findByLtCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		return getPersistence().findByCreateDate(
+		return getPersistence().findByLtCreateDate(
 			createDate, start, end, orderByComparator);
 	}
 
@@ -187,12 +187,12 @@ public class SamlIdpSpSessionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
-	public static List<SamlIdpSpSession> findByCreateDate(
+	public static List<SamlIdpSpSession> findByLtCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByCreateDate(
+		return getPersistence().findByLtCreateDate(
 			createDate, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -204,13 +204,13 @@ public class SamlIdpSpSessionUtil {
 	 * @return the first matching saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession findByCreateDate_First(
+	public static SamlIdpSpSession findByLtCreateDate_First(
 			Date createDate,
 			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIdpSpSessionException {
 
-		return getPersistence().findByCreateDate_First(
+		return getPersistence().findByLtCreateDate_First(
 			createDate, orderByComparator);
 	}
 
@@ -221,11 +221,11 @@ public class SamlIdpSpSessionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession fetchByCreateDate_First(
+	public static SamlIdpSpSession fetchByLtCreateDate_First(
 		Date createDate,
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		return getPersistence().fetchByCreateDate_First(
+		return getPersistence().fetchByLtCreateDate_First(
 			createDate, orderByComparator);
 	}
 
@@ -237,13 +237,13 @@ public class SamlIdpSpSessionUtil {
 	 * @return the last matching saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession findByCreateDate_Last(
+	public static SamlIdpSpSession findByLtCreateDate_Last(
 			Date createDate,
 			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIdpSpSessionException {
 
-		return getPersistence().findByCreateDate_Last(
+		return getPersistence().findByLtCreateDate_Last(
 			createDate, orderByComparator);
 	}
 
@@ -254,11 +254,11 @@ public class SamlIdpSpSessionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession fetchByCreateDate_Last(
+	public static SamlIdpSpSession fetchByLtCreateDate_Last(
 		Date createDate,
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		return getPersistence().fetchByCreateDate_Last(
+		return getPersistence().fetchByLtCreateDate_Last(
 			createDate, orderByComparator);
 	}
 
@@ -271,13 +271,13 @@ public class SamlIdpSpSessionUtil {
 	 * @return the previous, current, and next saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
 	 */
-	public static SamlIdpSpSession[] findByCreateDate_PrevAndNext(
+	public static SamlIdpSpSession[] findByLtCreateDate_PrevAndNext(
 			long samlIdpSpSessionId, Date createDate,
 			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIdpSpSessionException {
 
-		return getPersistence().findByCreateDate_PrevAndNext(
+		return getPersistence().findByLtCreateDate_PrevAndNext(
 			samlIdpSpSessionId, createDate, orderByComparator);
 	}
 
@@ -286,8 +286,8 @@ public class SamlIdpSpSessionUtil {
 	 *
 	 * @param createDate the create date
 	 */
-	public static void removeByCreateDate(Date createDate) {
-		getPersistence().removeByCreateDate(createDate);
+	public static void removeByLtCreateDate(Date createDate) {
+		getPersistence().removeByLtCreateDate(createDate);
 	}
 
 	/**
@@ -296,8 +296,8 @@ public class SamlIdpSpSessionUtil {
 	 * @param createDate the create date
 	 * @return the number of matching saml idp sp sessions
 	 */
-	public static int countByCreateDate(Date createDate) {
-		return getPersistence().countByCreateDate(createDate);
+	public static int countByLtCreateDate(Date createDate) {
+		return getPersistence().countByLtCreateDate(createDate);
 	}
 
 	/**

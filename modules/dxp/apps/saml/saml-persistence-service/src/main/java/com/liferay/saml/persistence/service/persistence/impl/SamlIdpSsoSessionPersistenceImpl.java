@@ -102,8 +102,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCreateDate;
-	private FinderPath _finderPathWithPaginationCountByCreateDate;
+	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
+	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 
 	/**
 	 * Returns all the saml idp sso sessions where createDate &lt; &#63;.
@@ -112,8 +112,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the matching saml idp sso sessions
 	 */
 	@Override
-	public List<SamlIdpSsoSession> findByCreateDate(Date createDate) {
-		return findByCreateDate(
+	public List<SamlIdpSsoSession> findByLtCreateDate(Date createDate) {
+		return findByLtCreateDate(
 			createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -130,10 +130,10 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the range of matching saml idp sso sessions
 	 */
 	@Override
-	public List<SamlIdpSsoSession> findByCreateDate(
+	public List<SamlIdpSsoSession> findByLtCreateDate(
 		Date createDate, int start, int end) {
 
-		return findByCreateDate(createDate, start, end, null);
+		return findByLtCreateDate(createDate, start, end, null);
 	}
 
 	/**
@@ -150,11 +150,11 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
 	@Override
-	public List<SamlIdpSsoSession> findByCreateDate(
+	public List<SamlIdpSsoSession> findByLtCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
 
-		return findByCreateDate(
+		return findByLtCreateDate(
 			createDate, start, end, orderByComparator, true);
 	}
 
@@ -173,7 +173,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
 	@Override
-	public List<SamlIdpSsoSession> findByCreateDate(
+	public List<SamlIdpSsoSession> findByLtCreateDate(
 		Date createDate, int start, int end,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
 		boolean useFinderCache) {
@@ -181,7 +181,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = _finderPathWithPaginationFindByCreateDate;
+		finderPath = _finderPathWithPaginationFindByLtCreateDate;
 		finderArgs = new Object[] {
 			_getTime(createDate), start, end, orderByComparator
 		};
@@ -221,12 +221,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 			boolean bindCreateDate = false;
 
 			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_1);
+				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
 			}
 			else {
 				bindCreateDate = true;
 
-				sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_2);
+				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -281,12 +281,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
 	 */
 	@Override
-	public SamlIdpSsoSession findByCreateDate_First(
+	public SamlIdpSsoSession findByLtCreateDate_First(
 			Date createDate,
 			OrderByComparator<SamlIdpSsoSession> orderByComparator)
 		throws NoSuchIdpSsoSessionException {
 
-		SamlIdpSsoSession samlIdpSsoSession = fetchByCreateDate_First(
+		SamlIdpSsoSession samlIdpSsoSession = fetchByLtCreateDate_First(
 			createDate, orderByComparator);
 
 		if (samlIdpSsoSession != null) {
@@ -313,11 +313,11 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the first matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
 	@Override
-	public SamlIdpSsoSession fetchByCreateDate_First(
+	public SamlIdpSsoSession fetchByLtCreateDate_First(
 		Date createDate,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
 
-		List<SamlIdpSsoSession> list = findByCreateDate(
+		List<SamlIdpSsoSession> list = findByLtCreateDate(
 			createDate, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -336,12 +336,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @throws NoSuchIdpSsoSessionException if a matching saml idp sso session could not be found
 	 */
 	@Override
-	public SamlIdpSsoSession findByCreateDate_Last(
+	public SamlIdpSsoSession findByLtCreateDate_Last(
 			Date createDate,
 			OrderByComparator<SamlIdpSsoSession> orderByComparator)
 		throws NoSuchIdpSsoSessionException {
 
-		SamlIdpSsoSession samlIdpSsoSession = fetchByCreateDate_Last(
+		SamlIdpSsoSession samlIdpSsoSession = fetchByLtCreateDate_Last(
 			createDate, orderByComparator);
 
 		if (samlIdpSsoSession != null) {
@@ -368,17 +368,17 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the last matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
 	@Override
-	public SamlIdpSsoSession fetchByCreateDate_Last(
+	public SamlIdpSsoSession fetchByLtCreateDate_Last(
 		Date createDate,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
 
-		int count = countByCreateDate(createDate);
+		int count = countByLtCreateDate(createDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SamlIdpSsoSession> list = findByCreateDate(
+		List<SamlIdpSsoSession> list = findByLtCreateDate(
 			createDate, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -398,7 +398,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @throws NoSuchIdpSsoSessionException if a saml idp sso session with the primary key could not be found
 	 */
 	@Override
-	public SamlIdpSsoSession[] findByCreateDate_PrevAndNext(
+	public SamlIdpSsoSession[] findByLtCreateDate_PrevAndNext(
 			long samlIdpSsoSessionId, Date createDate,
 			OrderByComparator<SamlIdpSsoSession> orderByComparator)
 		throws NoSuchIdpSsoSessionException {
@@ -413,13 +413,13 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 			SamlIdpSsoSession[] array = new SamlIdpSsoSessionImpl[3];
 
-			array[0] = getByCreateDate_PrevAndNext(
+			array[0] = getByLtCreateDate_PrevAndNext(
 				session, samlIdpSsoSession, createDate, orderByComparator,
 				true);
 
 			array[1] = samlIdpSsoSession;
 
-			array[2] = getByCreateDate_PrevAndNext(
+			array[2] = getByLtCreateDate_PrevAndNext(
 				session, samlIdpSsoSession, createDate, orderByComparator,
 				false);
 
@@ -433,7 +433,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 		}
 	}
 
-	protected SamlIdpSsoSession getByCreateDate_PrevAndNext(
+	protected SamlIdpSsoSession getByLtCreateDate_PrevAndNext(
 		Session session, SamlIdpSsoSession samlIdpSsoSession, Date createDate,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
 		boolean previous) {
@@ -454,12 +454,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 		boolean bindCreateDate = false;
 
 		if (createDate == null) {
-			sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_1);
+			sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
 		}
 		else {
 			bindCreateDate = true;
 
-			sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_2);
+			sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -560,9 +560,9 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @param createDate the create date
 	 */
 	@Override
-	public void removeByCreateDate(Date createDate) {
+	public void removeByLtCreateDate(Date createDate) {
 		for (SamlIdpSsoSession samlIdpSsoSession :
-				findByCreateDate(
+				findByLtCreateDate(
 					createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(samlIdpSsoSession);
@@ -576,8 +576,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 * @return the number of matching saml idp sso sessions
 	 */
 	@Override
-	public int countByCreateDate(Date createDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByCreateDate;
+	public int countByLtCreateDate(Date createDate) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtCreateDate;
 
 		Object[] finderArgs = new Object[] {_getTime(createDate)};
 
@@ -591,12 +591,12 @@ public class SamlIdpSsoSessionPersistenceImpl
 			boolean bindCreateDate = false;
 
 			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_1);
+				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
 			}
 			else {
 				bindCreateDate = true;
 
-				sb.append(_FINDER_COLUMN_CREATEDATE_CREATEDATE_2);
+				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
 			}
 
 			String sql = sb.toString();
@@ -629,10 +629,10 @@ public class SamlIdpSsoSessionPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CREATEDATE_CREATEDATE_1 =
+	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1 =
 		"samlIdpSsoSession.createDate IS NULL";
 
-	private static final String _FINDER_COLUMN_CREATEDATE_CREATEDATE_2 =
+	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2 =
 		"samlIdpSsoSession.createDate < ?";
 
 	private FinderPath _finderPathFetchBySamlIdpSsoSessionKey;
@@ -1462,16 +1462,16 @@ public class SamlIdpSsoSessionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCreateDate",
+		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			},
 			new String[] {"createDate"}, true);
 
-		_finderPathWithPaginationCountByCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCreateDate",
+		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
 			new String[] {Date.class.getName()}, new String[] {"createDate"},
 			false);
 
