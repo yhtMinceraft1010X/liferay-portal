@@ -748,10 +748,10 @@
 		<finder name="KaleoInstanceId" return-type="Collection">
 			<finder-column name="kaleoInstanceId" />
 		</finder>
-		<finder name="kaleoTaskInstanceTokenId" return-type="Collection">
+		<finder name="KaleoTaskInstanceTokenId" return-type="Collection">
 			<finder-column name="kaleoTaskInstanceTokenId" />
 		</finder>
-		<finder name="assigneeClassName" return-type="Collection">
+		<finder name="AssigneeClassName" return-type="Collection">
 			<finder-column name="assigneeClassName" />
 		</finder>
 		<finder name="G_ACPK" return-type="Collection">
