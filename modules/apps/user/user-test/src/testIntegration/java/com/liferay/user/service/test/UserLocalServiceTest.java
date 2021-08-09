@@ -370,7 +370,7 @@ public class UserLocalServiceTest {
 		_groupLocalService.addUserGroupGroup(
 			userGroup.getUserGroupId(), organizationSite);
 
-		List<User> searchResult = _userLocalService.search(
+		List<User> users = _userLocalService.search(
 			TestPropsValues.getCompanyId(), user.getFirstName(),
 			WorkflowConstants.STATUS_APPROVED,
 			LinkedHashMapBuilder.<String, Object>put(
@@ -381,9 +381,8 @@ public class UserLocalServiceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			(OrderByComparator<User>)null);
 
-		Assert.assertEquals(searchResult.toString(), 1, searchResult.size());
-
-		Assert.assertTrue(searchResult.contains(user));
+		Assert.assertEquals(users.toString(), 1, users.size());
+		Assert.assertTrue(users.contains(user));
 	}
 
 	@Test
