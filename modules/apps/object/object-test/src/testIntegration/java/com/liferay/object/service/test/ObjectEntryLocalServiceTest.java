@@ -101,10 +101,10 @@ public class ObjectEntryLocalServiceTest {
 				Collections.singletonMap(LocaleUtil.US, "Test"), "Test",
 				Arrays.asList(
 					_createObjectField(
-						true, false, "Age Of Death", "ageOfDeath", false,
+						true, false, "Age of Death", "ageOfDeath", false,
 						"Long"),
 					_createObjectField(
-						true, false, "Author Of Gospel", "authorOfGospel",
+						true, false, "Author of Gospel", "authorOfGospel",
 						false, "Boolean"),
 					_createObjectField(
 						true, false, "Birthday", "birthday", false, "Date"),
@@ -125,7 +125,7 @@ public class ObjectEntryLocalServiceTest {
 						true, false, "Middle Name", "middleName", false,
 						"String"),
 					_createObjectField(
-						true, false, "Number Of Books Written",
+						true, false, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					_createObjectField(
 						false, false, "Portrait", "portrait", false, "Blob"),

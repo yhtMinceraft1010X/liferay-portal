@@ -377,7 +377,7 @@ public class ObjectDefinitionLocalServiceTest {
 							createObjectField(
 								"Archived", "archived", true, "Boolean"),
 							createObjectField(
-								"DeliveryType", "deliveryType", true, "Long"),
+								"Delivery Type", "deliveryType", true, "Long"),
 							createObjectField(
 								"type_",
 								Collections.singletonMap(
