@@ -80,6 +80,24 @@ definition {
 			fieldName = "Image");
 	}
 
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanBeUploaded {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanClearUpload {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
 	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited"
 	@priority = "5"
 	test CanEditLabelAndHelpText {
@@ -115,6 +133,51 @@ definition {
 			fieldFieldLabel = "Image Edited",
 			fieldHelp = "Help Text Edited",
 			fieldName = "Image");
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanEditUpload {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanImagePreviweDisplayedAfterEditing {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanNotPublishBlankRequiredField {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "4"
+	test CanRemoveDuplicatedField {
+
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
 	}
 
 	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
