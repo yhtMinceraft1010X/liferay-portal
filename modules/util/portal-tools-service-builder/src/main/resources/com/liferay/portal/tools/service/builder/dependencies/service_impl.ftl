@@ -31,14 +31,4 @@ import org.osgi.service.component.annotations.Component;
 	)
 </#if>
 public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}${sessionTypeName}ServiceBaseImpl {
-
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-<#if stringUtil.equals(sessionTypeName, "Local")>
-	 * Never reference this class directly. Use <code>${apiPackagePath}.service.${entity.name}LocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>${apiPackagePath}.service.${entity.name}LocalServiceUtil</code>.
-<#else>
-	 * Never reference this class directly. Always use <code>${apiPackagePath}.service.${entity.name}ServiceUtil</code> to access the ${entity.humanName} remote service.
-</#if>
-	 */
 }
