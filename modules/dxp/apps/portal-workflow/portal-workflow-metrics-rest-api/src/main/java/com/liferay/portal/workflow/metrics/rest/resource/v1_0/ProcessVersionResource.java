@@ -47,7 +47,7 @@ public interface ProcessVersionResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<ProcessVersion> getProcessProcessVersionsPage(Long processId)
+	public Page<ProcessVersion> getProcessVersionsPage(Long processId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -192,23 +192,23 @@ public abstract class BaseProcessVersionResourceTestCase {
 	}
 
 	@Test
-	public void testGetProcessProcessVersionsPage() throws Exception {
+	public void testGetProcessVersionsPage() throws Exception {
 		Page<ProcessVersion> page =
-			processVersionResource.getProcessProcessVersionsPage(
-				testGetProcessProcessVersionsPage_getProcessId());
+			processVersionResource.getProcessVersionsPage(
+				testGetProcessVersionsPage_getProcessId());
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long processId = testGetProcessProcessVersionsPage_getProcessId();
+		Long processId = testGetProcessVersionsPage_getProcessId();
 		Long irrelevantProcessId =
-			testGetProcessProcessVersionsPage_getIrrelevantProcessId();
+			testGetProcessVersionsPage_getIrrelevantProcessId();
 
 		if (irrelevantProcessId != null) {
 			ProcessVersion irrelevantProcessVersion =
-				testGetProcessProcessVersionsPage_addProcessVersion(
+				testGetProcessVersionsPage_addProcessVersion(
 					irrelevantProcessId, randomIrrelevantProcessVersion());
 
-			page = processVersionResource.getProcessProcessVersionsPage(
+			page = processVersionResource.getProcessVersionsPage(
 				irrelevantProcessId);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -220,14 +220,14 @@ public abstract class BaseProcessVersionResourceTestCase {
 		}
 
 		ProcessVersion processVersion1 =
-			testGetProcessProcessVersionsPage_addProcessVersion(
+			testGetProcessVersionsPage_addProcessVersion(
 				processId, randomProcessVersion());
 
 		ProcessVersion processVersion2 =
-			testGetProcessProcessVersionsPage_addProcessVersion(
+			testGetProcessVersionsPage_addProcessVersion(
 				processId, randomProcessVersion());
 
-		page = processVersionResource.getProcessProcessVersionsPage(processId);
+		page = processVersionResource.getProcessVersionsPage(processId);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -237,26 +237,28 @@ public abstract class BaseProcessVersionResourceTestCase {
 		assertValid(page);
 	}
 
-	protected ProcessVersion
-			testGetProcessProcessVersionsPage_addProcessVersion(
-				Long processId, ProcessVersion processVersion)
+	protected ProcessVersion testGetProcessVersionsPage_addProcessVersion(
+			Long processId, ProcessVersion processVersion)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProcessProcessVersionsPage_getProcessId()
-		throws Exception {
-
+	protected Long testGetProcessVersionsPage_getProcessId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProcessProcessVersionsPage_getIrrelevantProcessId()
+	protected Long testGetProcessVersionsPage_getIrrelevantProcessId()
 		throws Exception {
 
 		return null;
+	}
+
+	@Test
+	public void testGraphQLGetProcessVersionsPage() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(

@@ -39,10 +39,10 @@ public interface ProcessVersionResource {
 		return new Builder();
 	}
 
-	public Page<ProcessVersion> getProcessProcessVersionsPage(Long processId)
+	public Page<ProcessVersion> getProcessVersionsPage(Long processId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getProcessProcessVersionsPageHttpResponse(
+	public HttpInvoker.HttpResponse getProcessVersionsPageHttpResponse(
 			Long processId)
 		throws Exception;
 
@@ -118,12 +118,11 @@ public interface ProcessVersionResource {
 	public static class ProcessVersionResourceImpl
 		implements ProcessVersionResource {
 
-		public Page<ProcessVersion> getProcessProcessVersionsPage(
-				Long processId)
+		public Page<ProcessVersion> getProcessVersionsPage(Long processId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessProcessVersionsPageHttpResponse(processId);
+				getProcessVersionsPageHttpResponse(processId);
 
 			String content = httpResponse.getContent();
 
@@ -162,8 +161,8 @@ public interface ProcessVersionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getProcessProcessVersionsPageHttpResponse(Long processId)
+		public HttpInvoker.HttpResponse getProcessVersionsPageHttpResponse(
+				Long processId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

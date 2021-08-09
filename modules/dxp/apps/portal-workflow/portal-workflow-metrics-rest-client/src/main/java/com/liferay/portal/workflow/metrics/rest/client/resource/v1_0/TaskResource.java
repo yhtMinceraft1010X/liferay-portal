@@ -87,11 +87,11 @@ public interface TaskResource {
 			Long processId, Long taskId, Task task)
 		throws Exception;
 
-	public Page<Task> postTasksPage(
+	public Page<Task> postProcessTasksPage(
 			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTasksPageHttpResponse(
+	public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
 			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception;
 
@@ -740,12 +740,12 @@ public interface TaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Task> postTasksPage(
+		public Page<Task> postProcessTasksPage(
 				Pagination pagination, TaskBulkSelection taskBulkSelection)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postTasksPageHttpResponse(
-				pagination, taskBulkSelection);
+			HttpInvoker.HttpResponse httpResponse =
+				postProcessTasksPageHttpResponse(pagination, taskBulkSelection);
 
 			String content = httpResponse.getContent();
 
@@ -784,7 +784,7 @@ public interface TaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTasksPageHttpResponse(
+		public HttpInvoker.HttpResponse postProcessTasksPageHttpResponse(
 				Pagination pagination, TaskBulkSelection taskBulkSelection)
 			throws Exception {
 
