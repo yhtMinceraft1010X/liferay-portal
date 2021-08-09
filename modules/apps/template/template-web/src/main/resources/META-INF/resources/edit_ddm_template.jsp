@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 long ddmTemplateId = ParamUtil.getLong(request, "ddmTemplateId");
@@ -28,6 +26,8 @@ DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(ddmTempla
 long classNameId = BeanParamUtil.getLong(ddmTemplate, request, "classNameId");
 long classPK = BeanParamUtil.getLong(ddmTemplate, request, "classPK");
 long resourceClassNameId = BeanParamUtil.getLong(ddmTemplate, request, "resourceClassNameId");
+
+EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
