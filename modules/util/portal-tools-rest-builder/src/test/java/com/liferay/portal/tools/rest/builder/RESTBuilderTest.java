@@ -57,7 +57,7 @@ public class RESTBuilderTest {
 		_assertResourceFilesExist(filesPath, "Document");
 		_assertResourceFilesExist(filesPath, "Folder");
 
-		_assertForcePredictableOperationIds(filesPath);
+		_assertForcePredictableOperationId(filesPath);
 
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
@@ -72,7 +72,7 @@ public class RESTBuilderTest {
 		Assert.assertFalse(sampleImplDir.exists());
 	}
 
-	private void _assertForcePredictableOperationIds(String filesPath)
+	private void _assertForcePredictableOperationId(String filesPath)
 		throws Exception {
 
 		File queryJavaFile = new File(
