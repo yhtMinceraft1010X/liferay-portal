@@ -210,7 +210,7 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
-		return _createObjectField("Able", name, type);
+		return _createObjectField(name, name, type);
 	}
 
 	private ObjectField _createObjectField(

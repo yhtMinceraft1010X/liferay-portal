@@ -741,7 +741,7 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private void _testAddCustomObjectDefinition(String name) throws Exception {
-		_testAddCustomObjectDefinition("Test", name);
+		_testAddCustomObjectDefinition(name, name);
 	}
 
 	private void _testAddCustomObjectDefinition(String label, String name)
