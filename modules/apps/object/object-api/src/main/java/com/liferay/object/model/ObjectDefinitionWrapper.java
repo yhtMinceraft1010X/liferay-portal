@@ -57,6 +57,7 @@ public class ObjectDefinitionWrapper
 		attributes.put(
 			"pkObjectFieldDBColumnName", getPKObjectFieldDBColumnName());
 		attributes.put("pkObjectFieldName", getPKObjectFieldName());
+		attributes.put("pluralLabel", getPluralLabel());
 		attributes.put("scope", getScope());
 		attributes.put("system", isSystem());
 		attributes.put("version", getVersion());
@@ -144,6 +145,12 @@ public class ObjectDefinitionWrapper
 
 		if (pkObjectFieldName != null) {
 			setPKObjectFieldName(pkObjectFieldName);
+		}
+
+		String pluralLabel = (String)attributes.get("pluralLabel");
+
+		if (pluralLabel != null) {
+			setPluralLabel(pluralLabel);
 		}
 
 		String scope = (String)attributes.get("scope");
@@ -355,6 +362,82 @@ public class ObjectDefinitionWrapper
 	@Override
 	public String getPKObjectFieldName() {
 		return model.getPKObjectFieldName();
+	}
+
+	/**
+	 * Returns the plural label of this object definition.
+	 *
+	 * @return the plural label of this object definition
+	 */
+	@Override
+	public String getPluralLabel() {
+		return model.getPluralLabel();
+	}
+
+	/**
+	 * Returns the localized plural label of this object definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized plural label of this object definition
+	 */
+	@Override
+	public String getPluralLabel(java.util.Locale locale) {
+		return model.getPluralLabel(locale);
+	}
+
+	/**
+	 * Returns the localized plural label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized plural label of this object definition. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getPluralLabel(java.util.Locale locale, boolean useDefault) {
+		return model.getPluralLabel(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized plural label of this object definition in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized plural label of this object definition
+	 */
+	@Override
+	public String getPluralLabel(String languageId) {
+		return model.getPluralLabel(languageId);
+	}
+
+	/**
+	 * Returns the localized plural label of this object definition in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized plural label of this object definition
+	 */
+	@Override
+	public String getPluralLabel(String languageId, boolean useDefault) {
+		return model.getPluralLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getPluralLabelCurrentLanguageId() {
+		return model.getPluralLabelCurrentLanguageId();
+	}
+
+	@Override
+	public String getPluralLabelCurrentValue() {
+		return model.getPluralLabelCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized plural labels of this object definition.
+	 *
+	 * @return the locales and localized plural labels of this object definition
+	 */
+	@Override
+	public Map<java.util.Locale, String> getPluralLabelMap() {
+		return model.getPluralLabelMap();
 	}
 
 	@Override
@@ -649,6 +732,73 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setPKObjectFieldName(String pkObjectFieldName) {
 		model.setPKObjectFieldName(pkObjectFieldName);
+	}
+
+	/**
+	 * Sets the plural label of this object definition.
+	 *
+	 * @param pluralLabel the plural label of this object definition
+	 */
+	@Override
+	public void setPluralLabel(String pluralLabel) {
+		model.setPluralLabel(pluralLabel);
+	}
+
+	/**
+	 * Sets the localized plural label of this object definition in the language.
+	 *
+	 * @param pluralLabel the localized plural label of this object definition
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setPluralLabel(String pluralLabel, java.util.Locale locale) {
+		model.setPluralLabel(pluralLabel, locale);
+	}
+
+	/**
+	 * Sets the localized plural label of this object definition in the language, and sets the default locale.
+	 *
+	 * @param pluralLabel the localized plural label of this object definition
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setPluralLabel(
+		String pluralLabel, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setPluralLabel(pluralLabel, locale, defaultLocale);
+	}
+
+	@Override
+	public void setPluralLabelCurrentLanguageId(String languageId) {
+		model.setPluralLabelCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized plural labels of this object definition from the map of locales and localized plural labels.
+	 *
+	 * @param pluralLabelMap the locales and localized plural labels of this object definition
+	 */
+	@Override
+	public void setPluralLabelMap(
+		Map<java.util.Locale, String> pluralLabelMap) {
+
+		model.setPluralLabelMap(pluralLabelMap);
+	}
+
+	/**
+	 * Sets the localized plural labels of this object definition from the map of locales and localized plural labels, and sets the default locale.
+	 *
+	 * @param pluralLabelMap the locales and localized plural labels of this object definition
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setPluralLabelMap(
+		Map<java.util.Locale, String> pluralLabelMap,
+		java.util.Locale defaultLocale) {
+
+		model.setPluralLabelMap(pluralLabelMap, defaultLocale);
 	}
 
 	/**

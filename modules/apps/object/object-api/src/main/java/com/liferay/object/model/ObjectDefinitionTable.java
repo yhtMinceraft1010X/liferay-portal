@@ -67,6 +67,9 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		createColumn(
 			"pkObjectFieldName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, String> pluralLabel =
+		createColumn(
+			"pluralLabel", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> scope = createColumn(
 		"scope", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> system = createColumn(

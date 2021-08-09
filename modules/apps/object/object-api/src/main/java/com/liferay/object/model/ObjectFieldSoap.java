@@ -49,6 +49,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setName(model.getName());
+		soapModel.setPluralLabel(model.getPluralLabel());
 		soapModel.setRequired(model.isRequired());
 		soapModel.setType(model.getType());
 
@@ -240,6 +241,14 @@ public class ObjectFieldSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getPluralLabel() {
+		return _pluralLabel;
+	}
+
+	public void setPluralLabel(String pluralLabel) {
+		_pluralLabel = pluralLabel;
+	}
+
 	public boolean getRequired() {
 		return _required;
 	}
@@ -276,6 +285,7 @@ public class ObjectFieldSoap implements Serializable {
 	private String _indexedLanguageId;
 	private String _label;
 	private String _name;
+	private String _pluralLabel;
 	private boolean _required;
 	private String _type;
 

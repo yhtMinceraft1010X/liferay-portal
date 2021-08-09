@@ -154,6 +154,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setName(RandomTestUtil.randomString());
 
+		newObjectField.setPluralLabel(RandomTestUtil.randomString());
+
 		newObjectField.setRequired(RandomTestUtil.randomBoolean());
 
 		newObjectField.setType(RandomTestUtil.randomString());
@@ -204,6 +206,9 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.getLabel(), newObjectField.getLabel());
 		Assert.assertEquals(
 			existingObjectField.getName(), newObjectField.getName());
+		Assert.assertEquals(
+			existingObjectField.getPluralLabel(),
+			newObjectField.getPluralLabel());
 		Assert.assertEquals(
 			existingObjectField.isRequired(), newObjectField.isRequired());
 		Assert.assertEquals(
@@ -283,7 +288,7 @@ public class ObjectFieldPersistenceTest {
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "dbColumnName", true, "dbTableName", true, "indexed", true,
 			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
-			"name", true, "required", true, "type", true);
+			"name", true, "pluralLabel", true, "required", true, "type", true);
 	}
 
 	@Test
@@ -592,6 +597,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setLabel(RandomTestUtil.randomString());
 
 		objectField.setName(RandomTestUtil.randomString());
+
+		objectField.setPluralLabel(RandomTestUtil.randomString());
 
 		objectField.setRequired(RandomTestUtil.randomBoolean());
 

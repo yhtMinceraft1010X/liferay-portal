@@ -149,6 +149,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
 
+		newObjectDefinition.setPluralLabel(RandomTestUtil.randomString());
+
 		newObjectDefinition.setScope(RandomTestUtil.randomString());
 
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
@@ -199,6 +201,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getPKObjectFieldName(),
 			newObjectDefinition.getPKObjectFieldName());
+		Assert.assertEquals(
+			existingObjectDefinition.getPluralLabel(),
+			newObjectDefinition.getPluralLabel());
 		Assert.assertEquals(
 			existingObjectDefinition.getScope(),
 			newObjectDefinition.getScope());
@@ -292,7 +297,8 @@ public class ObjectDefinitionPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"dbTableName", true, "label", true, "name", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"scope", true, "system", true, "version", true, "status", true);
+			"pluralLabel", true, "scope", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -605,6 +611,8 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomString());
 
 		objectDefinition.setPKObjectFieldName(RandomTestUtil.randomString());
+
+		objectDefinition.setPluralLabel(RandomTestUtil.randomString());
 
 		objectDefinition.setScope(RandomTestUtil.randomString());
 

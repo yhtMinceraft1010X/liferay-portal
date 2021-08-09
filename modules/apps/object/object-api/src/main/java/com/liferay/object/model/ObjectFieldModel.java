@@ -424,6 +424,107 @@ public interface ObjectFieldModel
 	public void setName(String name);
 
 	/**
+	 * Returns the plural label of this object field.
+	 *
+	 * @return the plural label of this object field
+	 */
+	public String getPluralLabel();
+
+	/**
+	 * Returns the localized plural label of this object field in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized plural label of this object field
+	 */
+	@AutoEscape
+	public String getPluralLabel(Locale locale);
+
+	/**
+	 * Returns the localized plural label of this object field in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized plural label of this object field. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getPluralLabel(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized plural label of this object field in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized plural label of this object field
+	 */
+	@AutoEscape
+	public String getPluralLabel(String languageId);
+
+	/**
+	 * Returns the localized plural label of this object field in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized plural label of this object field
+	 */
+	@AutoEscape
+	public String getPluralLabel(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getPluralLabelCurrentLanguageId();
+
+	@AutoEscape
+	public String getPluralLabelCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized plural labels of this object field.
+	 *
+	 * @return the locales and localized plural labels of this object field
+	 */
+	public Map<Locale, String> getPluralLabelMap();
+
+	/**
+	 * Sets the plural label of this object field.
+	 *
+	 * @param pluralLabel the plural label of this object field
+	 */
+	public void setPluralLabel(String pluralLabel);
+
+	/**
+	 * Sets the localized plural label of this object field in the language.
+	 *
+	 * @param pluralLabel the localized plural label of this object field
+	 * @param locale the locale of the language
+	 */
+	public void setPluralLabel(String pluralLabel, Locale locale);
+
+	/**
+	 * Sets the localized plural label of this object field in the language, and sets the default locale.
+	 *
+	 * @param pluralLabel the localized plural label of this object field
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setPluralLabel(
+		String pluralLabel, Locale locale, Locale defaultLocale);
+
+	public void setPluralLabelCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized plural labels of this object field from the map of locales and localized plural labels.
+	 *
+	 * @param pluralLabelMap the locales and localized plural labels of this object field
+	 */
+	public void setPluralLabelMap(Map<Locale, String> pluralLabelMap);
+
+	/**
+	 * Sets the localized plural labels of this object field from the map of locales and localized plural labels, and sets the default locale.
+	 *
+	 * @param pluralLabelMap the locales and localized plural labels of this object field
+	 * @param defaultLocale the default locale
+	 */
+	public void setPluralLabelMap(
+		Map<Locale, String> pluralLabelMap, Locale defaultLocale);
+
+	/**
 	 * Returns the required of this object field.
 	 *
 	 * @return the required of this object field

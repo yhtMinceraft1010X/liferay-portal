@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class ObjectFieldCacheModel
 		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", pluralLabel=");
+		sb.append(pluralLabel);
 		sb.append(", required=");
 		sb.append(required);
 		sb.append(", type=");
@@ -198,6 +200,13 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setName(name);
 		}
 
+		if (pluralLabel == null) {
+			objectFieldImpl.setPluralLabel("");
+		}
+		else {
+			objectFieldImpl.setPluralLabel(pluralLabel);
+		}
+
 		objectFieldImpl.setRequired(required);
 
 		if (type == null) {
@@ -236,6 +245,7 @@ public class ObjectFieldCacheModel
 		indexedLanguageId = objectInput.readUTF();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
+		pluralLabel = objectInput.readUTF();
 
 		required = objectInput.readBoolean();
 		type = objectInput.readUTF();
@@ -309,6 +319,13 @@ public class ObjectFieldCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (pluralLabel == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(pluralLabel);
+		}
+
 		objectOutput.writeBoolean(required);
 
 		if (type == null) {
@@ -335,6 +352,7 @@ public class ObjectFieldCacheModel
 	public String indexedLanguageId;
 	public String label;
 	public String name;
+	public String pluralLabel;
 	public boolean required;
 	public String type;
 

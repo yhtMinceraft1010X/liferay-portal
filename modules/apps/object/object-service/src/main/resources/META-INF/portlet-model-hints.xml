@@ -15,6 +15,7 @@
 		<field name="name" type="String" />
 		<field name="pkObjectFieldDBColumnName" type="String" />
 		<field name="pkObjectFieldName" type="String" />
+		<field localized="true" name="pluralLabel" type="String" />
 		<field name="scope" type="String" />
 		<field name="system" type="boolean" />
 		<field name="version" type="int" />
@@ -55,6 +56,7 @@
 		<field name="indexedLanguageId" type="String" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
+		<field localized="true" name="pluralLabel" type="String" />
 		<field name="required" type="boolean" />
 		<field name="type" type="String" />
 	</model>

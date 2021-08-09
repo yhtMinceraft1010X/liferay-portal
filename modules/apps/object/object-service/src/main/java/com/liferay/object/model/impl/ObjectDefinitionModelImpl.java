@@ -88,9 +88,9 @@ public class ObjectDefinitionModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"pkObjectFieldDBColumnName", Types.VARCHAR},
-		{"pkObjectFieldName", Types.VARCHAR}, {"scope", Types.VARCHAR},
-		{"system_", Types.BOOLEAN}, {"version", Types.INTEGER},
-		{"status", Types.INTEGER}
+		{"pkObjectFieldName", Types.VARCHAR}, {"pluralLabel", Types.VARCHAR},
+		{"scope", Types.VARCHAR}, {"system_", Types.BOOLEAN},
+		{"version", Types.INTEGER}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,6 +110,7 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldDBColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pkObjectFieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pluralLabel", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
@@ -117,7 +118,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,scope VARCHAR(75) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -206,6 +207,7 @@ public class ObjectDefinitionModelImpl
 		model.setPKObjectFieldDBColumnName(
 			soapModel.getPKObjectFieldDBColumnName());
 		model.setPKObjectFieldName(soapModel.getPKObjectFieldName());
+		model.setPluralLabel(soapModel.getPluralLabel());
 		model.setScope(soapModel.getScope());
 		model.setSystem(soapModel.isSystem());
 		model.setVersion(soapModel.getVersion());
@@ -434,6 +436,12 @@ public class ObjectDefinitionModelImpl
 			"pkObjectFieldName",
 			(BiConsumer<ObjectDefinition, String>)
 				ObjectDefinition::setPKObjectFieldName);
+		attributeGetterFunctions.put(
+			"pluralLabel", ObjectDefinition::getPluralLabel);
+		attributeSetterBiConsumers.put(
+			"pluralLabel",
+			(BiConsumer<ObjectDefinition, String>)
+				ObjectDefinition::setPluralLabel);
 		attributeGetterFunctions.put("scope", ObjectDefinition::getScope);
 		attributeSetterBiConsumers.put(
 			"scope",
@@ -829,6 +837,118 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
+	public String getPluralLabel() {
+		if (_pluralLabel == null) {
+			return "";
+		}
+		else {
+			return _pluralLabel;
+		}
+	}
+
+	@Override
+	public String getPluralLabel(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getPluralLabel(languageId);
+	}
+
+	@Override
+	public String getPluralLabel(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getPluralLabel(languageId, useDefault);
+	}
+
+	@Override
+	public String getPluralLabel(String languageId) {
+		return LocalizationUtil.getLocalization(getPluralLabel(), languageId);
+	}
+
+	@Override
+	public String getPluralLabel(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getPluralLabel(), languageId, useDefault);
+	}
+
+	@Override
+	public String getPluralLabelCurrentLanguageId() {
+		return _pluralLabelCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getPluralLabelCurrentValue() {
+		Locale locale = getLocale(_pluralLabelCurrentLanguageId);
+
+		return getPluralLabel(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getPluralLabelMap() {
+		return LocalizationUtil.getLocalizationMap(getPluralLabel());
+	}
+
+	@Override
+	public void setPluralLabel(String pluralLabel) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_pluralLabel = pluralLabel;
+	}
+
+	@Override
+	public void setPluralLabel(String pluralLabel, Locale locale) {
+		setPluralLabel(pluralLabel, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setPluralLabel(
+		String pluralLabel, Locale locale, Locale defaultLocale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(pluralLabel)) {
+			setPluralLabel(
+				LocalizationUtil.updateLocalization(
+					getPluralLabel(), "PluralLabel", pluralLabel, languageId,
+					defaultLanguageId));
+		}
+		else {
+			setPluralLabel(
+				LocalizationUtil.removeLocalization(
+					getPluralLabel(), "PluralLabel", languageId));
+		}
+	}
+
+	@Override
+	public void setPluralLabelCurrentLanguageId(String languageId) {
+		_pluralLabelCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setPluralLabelMap(Map<Locale, String> pluralLabelMap) {
+		setPluralLabelMap(pluralLabelMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setPluralLabelMap(
+		Map<Locale, String> pluralLabelMap, Locale defaultLocale) {
+
+		if (pluralLabelMap == null) {
+			return;
+		}
+
+		setPluralLabel(
+			LocalizationUtil.updateLocalization(
+				pluralLabelMap, getPluralLabel(), "PluralLabel",
+				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
 	public String getScope() {
 		if (_scope == null) {
 			return "";
@@ -976,6 +1096,17 @@ public class ObjectDefinitionModelImpl
 			}
 		}
 
+		Map<Locale, String> pluralLabelMap = getPluralLabelMap();
+
+		for (Map.Entry<Locale, String> entry : pluralLabelMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
 		return availableLanguageIds.toArray(
 			new String[availableLanguageIds.size()]);
 	}
@@ -1025,6 +1156,17 @@ public class ObjectDefinitionModelImpl
 		else {
 			setLabel(getLabel(defaultLocale), defaultLocale, defaultLocale);
 		}
+
+		String pluralLabel = getPluralLabel(defaultLocale);
+
+		if (Validator.isNull(pluralLabel)) {
+			setPluralLabel(
+				getPluralLabel(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setPluralLabel(
+				getPluralLabel(defaultLocale), defaultLocale, defaultLocale);
+		}
 	}
 
 	@Override
@@ -1060,6 +1202,7 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionImpl.setPKObjectFieldDBColumnName(
 			getPKObjectFieldDBColumnName());
 		objectDefinitionImpl.setPKObjectFieldName(getPKObjectFieldName());
+		objectDefinitionImpl.setPluralLabel(getPluralLabel());
 		objectDefinitionImpl.setScope(getScope());
 		objectDefinitionImpl.setSystem(isSystem());
 		objectDefinitionImpl.setVersion(getVersion());
@@ -1228,6 +1371,14 @@ public class ObjectDefinitionModelImpl
 			objectDefinitionCacheModel.pkObjectFieldName = null;
 		}
 
+		objectDefinitionCacheModel.pluralLabel = getPluralLabel();
+
+		String pluralLabel = objectDefinitionCacheModel.pluralLabel;
+
+		if ((pluralLabel != null) && (pluralLabel.length() == 0)) {
+			objectDefinitionCacheModel.pluralLabel = null;
+		}
+
 		objectDefinitionCacheModel.scope = getScope();
 
 		String scope = objectDefinitionCacheModel.scope;
@@ -1330,6 +1481,8 @@ public class ObjectDefinitionModelImpl
 	private String _name;
 	private String _pkObjectFieldDBColumnName;
 	private String _pkObjectFieldName;
+	private String _pluralLabel;
+	private String _pluralLabelCurrentLanguageId;
 	private String _scope;
 	private boolean _system;
 	private int _version;
@@ -1378,6 +1531,7 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put(
 			"pkObjectFieldDBColumnName", _pkObjectFieldDBColumnName);
 		_columnOriginalValues.put("pkObjectFieldName", _pkObjectFieldName);
+		_columnOriginalValues.put("pluralLabel", _pluralLabel);
 		_columnOriginalValues.put("scope", _scope);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("version", _version);
@@ -1432,13 +1586,15 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("pkObjectFieldName", 4096L);
 
-		columnBitmasks.put("scope", 8192L);
+		columnBitmasks.put("pluralLabel", 8192L);
 
-		columnBitmasks.put("system_", 16384L);
+		columnBitmasks.put("scope", 16384L);
 
-		columnBitmasks.put("version", 32768L);
+		columnBitmasks.put("system_", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("version", 65536L);
+
+		columnBitmasks.put("status", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
