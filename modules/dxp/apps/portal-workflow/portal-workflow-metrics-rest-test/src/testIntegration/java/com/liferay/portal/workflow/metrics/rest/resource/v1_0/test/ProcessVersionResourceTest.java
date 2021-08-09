@@ -64,9 +64,9 @@ public class ProcessVersionResourceTest
 
 	@Override
 	@Test
-	public void testGetProcessProcessVersionsPage() throws Exception {
+	public void testGetProcessVersionsPage() throws Exception {
 		Page<ProcessVersion> page =
-			processVersionResource.getProcessProcessVersionsPage(_process.getId());
+			processVersionResource.getProcessVersionsPage(_process.getId());
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -84,7 +84,7 @@ public class ProcessVersionResourceTest
 			3, TimeUnit.SECONDS,
 			() -> {
 				Page<ProcessVersion> processVersionsPage =
-					processVersionResource.getProcessProcessVersionsPage(
+					processVersionResource.getProcessVersionsPage(
 						_process.getId());
 
 				assertEqualsIgnoringOrder(
@@ -107,7 +107,7 @@ public class ProcessVersionResourceTest
 
 	@Override
 	@Test
-	public void testGraphQLGetProcessProcessVersionsPage() throws Exception {
+	public void testGraphQLGetProcessVersionsPage() throws Exception {
 		BaseProcessVersionResourceTestCase.GraphQLField graphQLField =
 			new BaseProcessVersionResourceTestCase.GraphQLField(
 				"processVersions",
