@@ -236,7 +236,7 @@ public class StagedExpandoColumnStagedModelRepository
 				if (className == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to find class name by classNameId " +
+							"No class name exists for class name ID " +
 								expandoTable.getClassNameId());
 					}
 
