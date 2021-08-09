@@ -291,8 +291,7 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public Map<Locale, String> getLabelMap() {
 						return Collections.singletonMap(
-							LocaleUtil.getSiteDefault(),
-							"User Notification Event");
+							LocaleUtil.US, "User Notification Event");
 					}
 
 					@Override
@@ -310,8 +309,7 @@ public class ObjectDefinitionLocalServiceTest {
 								"Delivery Type", "deliveryType", false, "Long"),
 							createObjectField(
 								"type_",
-								Collections.singletonMap(
-									LocaleUtil.getSiteDefault(), "Type"),
+								Collections.singletonMap(LocaleUtil.US, "Type"),
 								"type", true, "String"));
 					}
 
@@ -362,8 +360,7 @@ public class ObjectDefinitionLocalServiceTest {
 					@Override
 					public Map<Locale, String> getLabelMap() {
 						return Collections.singletonMap(
-							LocaleUtil.getSiteDefault(),
-							"User Notification Event");
+							LocaleUtil.US, "User Notification Event");
 					}
 
 					@Override
@@ -380,8 +377,7 @@ public class ObjectDefinitionLocalServiceTest {
 								"Delivery Type", "deliveryType", true, "Long"),
 							createObjectField(
 								"type_",
-								Collections.singletonMap(
-									LocaleUtil.getSiteDefault(), "Type"),
+								Collections.singletonMap(LocaleUtil.US, "Type"),
 								"type", false, "String"));
 					}
 
