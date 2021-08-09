@@ -82,7 +82,7 @@ public class ObjectDefinitionLocalServiceTest {
 		// Name is null
 
 		try {
-			_testAddCustomObjectDefinition("");
+			_testAddCustomObjectDefinition("Test", "");
 
 			Assert.fail();
 		}

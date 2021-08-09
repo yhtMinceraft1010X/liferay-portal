@@ -69,7 +69,8 @@ public class ObjectFieldLocalServiceTest {
 		// Name is null
 
 		try {
-			_testAddSystemObjectField(_createObjectField("", "String"));
+			_testAddSystemObjectField(
+				_createObjectField("Able", "", "String"));
 
 			Assert.fail();
 		}
