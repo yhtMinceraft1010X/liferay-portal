@@ -224,9 +224,9 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 	}
 
 	private boolean _isValidZipEntryCount(ZipFile zipFile) {
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		int count = 0;
 
-		int fileCount = 0;
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		while (enumeration.hasMoreElements()) {
 			ZipEntry zipEntry = enumeration.nextElement();
@@ -235,12 +235,12 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 				continue;
 			}
 
-			fileCount++;
+			count++;
 		}
 
-		if (fileCount != 2) {
+		if (count != 2) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unsupported file count " + fileCount);
+				_log.debug("Unsupported file count " + count);
 			}
 
 			return false;
