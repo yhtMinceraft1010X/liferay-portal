@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_DESCRIPTION_INDEXED</td>
+	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div[contains(@class,'form-group')]//input[contains(@name,'description')]))[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_DISABLED_FIELD</td>
 	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''])</td>
 	<td></td>
