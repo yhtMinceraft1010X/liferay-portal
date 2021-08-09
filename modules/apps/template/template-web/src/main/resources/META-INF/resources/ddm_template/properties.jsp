@@ -28,18 +28,18 @@ DDMTemplate ddmTemplate = editDDMTemplateDisplayContext.getDDMTemplate();
 	<aui:select changesContext="<%= true %>" cssClass="form-control-sm" helpMessage='<%= (ddmTemplate == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 		<%
-		for (String curLangType : editDDMTemplateDisplayContext.getLanguageTypes()) {
+		for (String languageType : editDDMTemplateDisplayContext.getLanguageTypes()) {
 			StringBundler sb = new StringBundler(6);
 
-			sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+			sb.append(LanguageUtil.get(request, languageType + "[stands-for]"));
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(StringPool.PERIOD);
-			sb.append(curLangType);
+			sb.append(languageType);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		%>
 
-			<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(editDDMTemplateDisplayContext.getLanguageType(), curLangType) %>" value="<%= curLangType %>" />
+			<aui:option label="<%= sb.toString() %>" selected="<%= Objects.equals(editDDMTemplateDisplayContext.getLanguageType(), languageType) %>" value="<%= languageType %>" />
 
 		<%
 		}

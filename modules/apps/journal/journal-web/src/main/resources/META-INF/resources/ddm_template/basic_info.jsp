@@ -38,10 +38,10 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 		<aui:select changesContext="<%= true %>" label="language" name="language">
 
 			<%
-			for (String curLangType : journalEditDDMTemplateDisplayContext.getExtendedTemplateLanguageTypes()) {
+			for (String languageType : journalEditDDMTemplateDisplayContext.getExtendedTemplateLanguageTypes()) {
 			%>
 
-				<aui:option label="<%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(curLangType) %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), curLangType) %>" value="<%= curLangType %>" />
+				<aui:option label="<%= journalEditDDMTemplateDisplayContext.getTemplateLanguageTypeLabel(languageType) %>" selected="<%= Objects.equals(journalEditDDMTemplateDisplayContext.getLanguage(), languageType) %>" value="<%= languageType %>" />
 
 			<%
 			}

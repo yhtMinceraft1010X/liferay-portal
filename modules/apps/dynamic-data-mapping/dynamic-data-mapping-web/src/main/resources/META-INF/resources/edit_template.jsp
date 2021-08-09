@@ -224,18 +224,18 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 								<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 									<%
-									for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
+									for (String languageType : ddmDisplay.getTemplateLanguageTypes()) {
 										StringBundler sb = new StringBundler(6);
 
-										sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+										sb.append(LanguageUtil.get(request, languageType + "[stands-for]"));
 										sb.append(StringPool.SPACE);
 										sb.append(StringPool.OPEN_PARENTHESIS);
 										sb.append(StringPool.PERIOD);
-										sb.append(curLangType);
+										sb.append(languageType);
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 									%>
 
-										<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+										<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(languageType) %>" value="<%= languageType %>" />
 
 									<%
 									}
