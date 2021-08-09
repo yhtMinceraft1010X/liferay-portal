@@ -749,10 +749,27 @@ public class ServiceBuilder {
 
 			_portletShortName = _portletShortName.trim();
 
-			for (char c : _portletShortName.toCharArray()) {
-				if (!Validator.isChar(c) && (c != CharPool.UNDERLINE)) {
-					throw new RuntimeException(
-						"The namespace element must be a valid keyword");
+			char[] portletShortNameChars = _portletShortName.toCharArray();
+
+			for (int i = 0; i < portletShortNameChars.length; i++) {
+				char portletShortNameChar = portletShortNameChars[i];
+
+				if (i == 0) {
+					if (!Validator.isChar(portletShortNameChar) &&
+						(portletShortNameChar != CharPool.UNDERLINE)) {
+
+						throw new RuntimeException(
+							"The namespace element must be a valid keyword");
+					}
+				}
+				else {
+					if (!Validator.isChar(portletShortNameChar) &&
+						!Validator.isDigit(portletShortNameChar) &&
+						(portletShortNameChar != CharPool.UNDERLINE)) {
+
+						throw new RuntimeException(
+							"The namespace element must be a valid keyword");
+					}
 				}
 			}
 
