@@ -50,7 +50,6 @@ public class CustomElementsDisplayContext {
 					).setRedirect(
 						_getRedirect()
 					).buildPortletURL());
-
 				dropdownItem.setLabel(_getLabel("add-custom-elements-source"));
 			}
 		).build();
