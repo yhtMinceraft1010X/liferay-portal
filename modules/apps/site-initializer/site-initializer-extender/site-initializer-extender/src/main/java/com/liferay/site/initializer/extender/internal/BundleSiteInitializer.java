@@ -100,7 +100,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addObjectDefinitions(User user) throws Exception {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/rest/object-definitions");
+			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -138,7 +138,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/rest/taxonomy-vocabularies");
+			"/site-initializer/taxonomy-vocabularies");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
