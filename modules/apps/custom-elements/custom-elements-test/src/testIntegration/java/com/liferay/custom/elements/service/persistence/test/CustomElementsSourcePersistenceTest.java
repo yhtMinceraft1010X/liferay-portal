@@ -139,12 +139,12 @@ public class CustomElementsSourcePersistenceTest {
 
 		newCustomElementsSource.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCustomElementsSource.setHtmlElementName(
+		newCustomElementsSource.setHTMLElementName(
 			RandomTestUtil.randomString());
 
 		newCustomElementsSource.setName(RandomTestUtil.randomString());
 
-		newCustomElementsSource.setUrl(RandomTestUtil.randomString());
+		newCustomElementsSource.setURL(RandomTestUtil.randomString());
 
 		_customElementsSources.add(
 			_persistence.update(newCustomElementsSource));
@@ -180,14 +180,14 @@ public class CustomElementsSourcePersistenceTest {
 				existingCustomElementsSource.getModifiedDate()),
 			Time.getShortTimestamp(newCustomElementsSource.getModifiedDate()));
 		Assert.assertEquals(
-			existingCustomElementsSource.getHtmlElementName(),
-			newCustomElementsSource.getHtmlElementName());
+			existingCustomElementsSource.getHTMLElementName(),
+			newCustomElementsSource.getHTMLElementName());
 		Assert.assertEquals(
 			existingCustomElementsSource.getName(),
 			newCustomElementsSource.getName());
 		Assert.assertEquals(
-			existingCustomElementsSource.getUrl(),
-			newCustomElementsSource.getUrl());
+			existingCustomElementsSource.getURL(),
+			newCustomElementsSource.getURL());
 	}
 
 	@Test
@@ -206,6 +206,22 @@ public class CustomElementsSourcePersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByName() throws Exception {
+		_persistence.countByName("");
+
+		_persistence.countByName("null");
+
+		_persistence.countByName((String)null);
 	}
 
 	@Test
@@ -495,11 +511,11 @@ public class CustomElementsSourcePersistenceTest {
 
 		customElementsSource.setModifiedDate(RandomTestUtil.nextDate());
 
-		customElementsSource.setHtmlElementName(RandomTestUtil.randomString());
+		customElementsSource.setHTMLElementName(RandomTestUtil.randomString());
 
 		customElementsSource.setName(RandomTestUtil.randomString());
 
-		customElementsSource.setUrl(RandomTestUtil.randomString());
+		customElementsSource.setURL(RandomTestUtil.randomString());
 
 		_customElementsSources.add(_persistence.update(customElementsSource));
 

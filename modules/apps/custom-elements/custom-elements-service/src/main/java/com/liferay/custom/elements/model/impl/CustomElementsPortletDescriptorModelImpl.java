@@ -337,18 +337,18 @@ public class CustomElementsPortletDescriptorModelImpl
 			(BiConsumer<CustomElementsPortletDescriptor, Date>)
 				CustomElementsPortletDescriptor::setModifiedDate);
 		attributeGetterFunctions.put(
-			"cssURLs", CustomElementsPortletDescriptor::getCssURLs);
+			"cssURLs", CustomElementsPortletDescriptor::getCSSURLs);
 		attributeSetterBiConsumers.put(
 			"cssURLs",
 			(BiConsumer<CustomElementsPortletDescriptor, String>)
-				CustomElementsPortletDescriptor::setCssURLs);
+				CustomElementsPortletDescriptor::setCSSURLs);
 		attributeGetterFunctions.put(
 			"htmlElementName",
-			CustomElementsPortletDescriptor::getHtmlElementName);
+			CustomElementsPortletDescriptor::getHTMLElementName);
 		attributeSetterBiConsumers.put(
 			"htmlElementName",
 			(BiConsumer<CustomElementsPortletDescriptor, String>)
-				CustomElementsPortletDescriptor::setHtmlElementName);
+				CustomElementsPortletDescriptor::setHTMLElementName);
 		attributeGetterFunctions.put(
 			"instanceable", CustomElementsPortletDescriptor::getInstanceable);
 		attributeSetterBiConsumers.put(
@@ -540,7 +540,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
-	public String getCssURLs() {
+	public String getCSSURLs() {
 		if (_cssURLs == null) {
 			return "";
 		}
@@ -550,7 +550,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
-	public void setCssURLs(String cssURLs) {
+	public void setCSSURLs(String cssURLs) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -559,7 +559,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
-	public String getHtmlElementName() {
+	public String getHTMLElementName() {
 		if (_htmlElementName == null) {
 			return "";
 		}
@@ -569,7 +569,7 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
-	public void setHtmlElementName(String htmlElementName) {
+	public void setHTMLElementName(String htmlElementName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -710,9 +710,9 @@ public class CustomElementsPortletDescriptorModelImpl
 		customElementsPortletDescriptorImpl.setUserName(getUserName());
 		customElementsPortletDescriptorImpl.setCreateDate(getCreateDate());
 		customElementsPortletDescriptorImpl.setModifiedDate(getModifiedDate());
-		customElementsPortletDescriptorImpl.setCssURLs(getCssURLs());
-		customElementsPortletDescriptorImpl.setHtmlElementName(
-			getHtmlElementName());
+		customElementsPortletDescriptorImpl.setCSSURLs(getCSSURLs());
+		customElementsPortletDescriptorImpl.setHTMLElementName(
+			getHTMLElementName());
 		customElementsPortletDescriptorImpl.setInstanceable(isInstanceable());
 		customElementsPortletDescriptorImpl.setName(getName());
 		customElementsPortletDescriptorImpl.setProperties(getProperties());
@@ -849,7 +849,7 @@ public class CustomElementsPortletDescriptorModelImpl
 				Long.MIN_VALUE;
 		}
 
-		customElementsPortletDescriptorCacheModel.cssURLs = getCssURLs();
+		customElementsPortletDescriptorCacheModel.cssURLs = getCSSURLs();
 
 		String cssURLs = customElementsPortletDescriptorCacheModel.cssURLs;
 
@@ -858,7 +858,7 @@ public class CustomElementsPortletDescriptorModelImpl
 		}
 
 		customElementsPortletDescriptorCacheModel.htmlElementName =
-			getHtmlElementName();
+			getHTMLElementName();
 
 		String htmlElementName =
 			customElementsPortletDescriptorCacheModel.htmlElementName;

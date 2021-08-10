@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,6 +79,11 @@ public interface CustomElementsSourceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource addCustomElementsSource(
 		CustomElementsSource customElementsSource);
+
+	public CustomElementsSource addCustomElementsSource(
+			long userId, String htmlElementName, String name, String url,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new custom elements source with the primary key. Does not add the custom elements source to the database.
@@ -261,6 +268,9 @@ public interface CustomElementsSourceLocalService
 	public List<CustomElementsSource> getCustomElementsSources(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CustomElementsSource> getCustomElementsSources(long companyId);
+
 	/**
 	 * Returns the number of custom elements sources.
 	 *
@@ -291,6 +301,13 @@ public interface CustomElementsSourceLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CustomElementsSource> search(
+		String keywords, int start, int end, Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(String keywords);
+
 	/**
 	 * Updates the custom elements source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -304,5 +321,10 @@ public interface CustomElementsSourceLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsSource updateCustomElementsSource(
 		CustomElementsSource customElementsSource);
+
+	public CustomElementsSource updateCustomElementsSource(
+			long customElementsSourceId, String htmlElementName, String name,
+			String url, ServiceContext serviceContext)
+		throws PortalException;
 
 }

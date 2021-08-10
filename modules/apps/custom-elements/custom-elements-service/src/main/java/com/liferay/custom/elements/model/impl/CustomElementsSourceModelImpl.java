@@ -124,14 +124,20 @@ public class CustomElementsSourceModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CUSTOMELEMENTSSOURCEID_COLUMN_BITMASK = 4L;
+	public static final long CUSTOMELEMENTSSOURCEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -323,21 +329,21 @@ public class CustomElementsSourceModelImpl
 			(BiConsumer<CustomElementsSource, Date>)
 				CustomElementsSource::setModifiedDate);
 		attributeGetterFunctions.put(
-			"htmlElementName", CustomElementsSource::getHtmlElementName);
+			"htmlElementName", CustomElementsSource::getHTMLElementName);
 		attributeSetterBiConsumers.put(
 			"htmlElementName",
 			(BiConsumer<CustomElementsSource, String>)
-				CustomElementsSource::setHtmlElementName);
+				CustomElementsSource::setHTMLElementName);
 		attributeGetterFunctions.put("name", CustomElementsSource::getName);
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<CustomElementsSource, String>)
 				CustomElementsSource::setName);
-		attributeGetterFunctions.put("url", CustomElementsSource::getUrl);
+		attributeGetterFunctions.put("url", CustomElementsSource::getURL);
 		attributeSetterBiConsumers.put(
 			"url",
 			(BiConsumer<CustomElementsSource, String>)
-				CustomElementsSource::setUrl);
+				CustomElementsSource::setURL);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -509,7 +515,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public String getHtmlElementName() {
+	public String getHTMLElementName() {
 		if (_htmlElementName == null) {
 			return "";
 		}
@@ -519,7 +525,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public void setHtmlElementName(String htmlElementName) {
+	public void setHTMLElementName(String htmlElementName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -546,8 +552,17 @@ public class CustomElementsSourceModelImpl
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
+	}
+
 	@Override
-	public String getUrl() {
+	public String getURL() {
 		if (_url == null) {
 			return "";
 		}
@@ -557,7 +572,7 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
-	public void setUrl(String url) {
+	public void setURL(String url) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -638,9 +653,9 @@ public class CustomElementsSourceModelImpl
 		customElementsSourceImpl.setUserName(getUserName());
 		customElementsSourceImpl.setCreateDate(getCreateDate());
 		customElementsSourceImpl.setModifiedDate(getModifiedDate());
-		customElementsSourceImpl.setHtmlElementName(getHtmlElementName());
+		customElementsSourceImpl.setHTMLElementName(getHTMLElementName());
 		customElementsSourceImpl.setName(getName());
-		customElementsSourceImpl.setUrl(getUrl());
+		customElementsSourceImpl.setURL(getURL());
 
 		customElementsSourceImpl.resetOriginalValues();
 
@@ -766,7 +781,7 @@ public class CustomElementsSourceModelImpl
 			customElementsSourceCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		customElementsSourceCacheModel.htmlElementName = getHtmlElementName();
+		customElementsSourceCacheModel.htmlElementName = getHTMLElementName();
 
 		String htmlElementName = customElementsSourceCacheModel.htmlElementName;
 
@@ -782,7 +797,7 @@ public class CustomElementsSourceModelImpl
 			customElementsSourceCacheModel.name = null;
 		}
 
-		customElementsSourceCacheModel.url = getUrl();
+		customElementsSourceCacheModel.url = getURL();
 
 		String url = customElementsSourceCacheModel.url;
 

@@ -294,12 +294,12 @@ public interface RemoteAppEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<RemoteAppEntry> searchRemoteAppEntries(
+	public List<RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchRemoteAppEntriesCount(long companyId, String keywords)
+	public int searchCount(long companyId, String keywords)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

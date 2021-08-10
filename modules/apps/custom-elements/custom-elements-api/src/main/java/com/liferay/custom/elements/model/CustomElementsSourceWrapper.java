@@ -53,9 +53,9 @@ public class CustomElementsSourceWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("htmlElementName", getHtmlElementName());
+		attributes.put("htmlElementName", getHTMLElementName());
 		attributes.put("name", getName());
-		attributes.put("url", getUrl());
+		attributes.put("url", getURL());
 
 		return attributes;
 	}
@@ -114,7 +114,7 @@ public class CustomElementsSourceWrapper
 		String htmlElementName = (String)attributes.get("htmlElementName");
 
 		if (htmlElementName != null) {
-			setHtmlElementName(htmlElementName);
+			setHTMLElementName(htmlElementName);
 		}
 
 		String name = (String)attributes.get("name");
@@ -126,7 +126,7 @@ public class CustomElementsSourceWrapper
 		String url = (String)attributes.get("url");
 
 		if (url != null) {
-			setUrl(url);
+			setURL(url);
 		}
 	}
 
@@ -166,8 +166,8 @@ public class CustomElementsSourceWrapper
 	 * @return the html element name of this custom elements source
 	 */
 	@Override
-	public String getHtmlElementName() {
-		return model.getHtmlElementName();
+	public String getHTMLElementName() {
+		return model.getHTMLElementName();
 	}
 
 	/**
@@ -216,8 +216,8 @@ public class CustomElementsSourceWrapper
 	 * @return the url of this custom elements source
 	 */
 	@Override
-	public String getUrl() {
-		return model.getUrl();
+	public String getURL() {
+		return model.getURL();
 	}
 
 	/**
@@ -301,8 +301,8 @@ public class CustomElementsSourceWrapper
 	 * @param htmlElementName the html element name of this custom elements source
 	 */
 	@Override
-	public void setHtmlElementName(String htmlElementName) {
-		model.setHtmlElementName(htmlElementName);
+	public void setHTMLElementName(String htmlElementName) {
+		model.setHTMLElementName(htmlElementName);
 	}
 
 	/**
@@ -351,8 +351,8 @@ public class CustomElementsSourceWrapper
 	 * @param url the url of this custom elements source
 	 */
 	@Override
-	public void setUrl(String url) {
-		model.setUrl(url);
+	public void setURL(String url) {
+		model.setURL(url);
 	}
 
 	/**

@@ -53,6 +53,17 @@ public class CustomElementsSourceLocalServiceWrapper
 			customElementsSource);
 	}
 
+	@Override
+	public com.liferay.custom.elements.model.CustomElementsSource
+			addCustomElementsSource(
+				long userId, String htmlElementName, String name, String url,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _customElementsSourceLocalService.addCustomElementsSource(
+			userId, htmlElementName, name, url, serviceContext);
+	}
+
 	/**
 	 * Creates a new custom elements source with the primary key. Does not add the custom elements source to the database.
 	 *
@@ -320,6 +331,15 @@ public class CustomElementsSourceLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.custom.elements.model.CustomElementsSource>
+			getCustomElementsSources(long companyId) {
+
+		return _customElementsSourceLocalService.getCustomElementsSources(
+			companyId);
+	}
+
 	/**
 	 * Returns the number of custom elements sources.
 	 *
@@ -371,6 +391,21 @@ public class CustomElementsSourceLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.custom.elements.model.CustomElementsSource> search(
+			String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort) {
+
+		return _customElementsSourceLocalService.search(
+			keywords, start, end, sort);
+	}
+
+	@Override
+	public int searchCount(String keywords) {
+		return _customElementsSourceLocalService.searchCount(keywords);
+	}
+
 	/**
 	 * Updates the custom elements source in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -389,6 +424,18 @@ public class CustomElementsSourceLocalServiceWrapper
 
 		return _customElementsSourceLocalService.updateCustomElementsSource(
 			customElementsSource);
+	}
+
+	@Override
+	public com.liferay.custom.elements.model.CustomElementsSource
+			updateCustomElementsSource(
+				long customElementsSourceId, String htmlElementName,
+				String name, String url,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _customElementsSourceLocalService.updateCustomElementsSource(
+			customElementsSourceId, htmlElementName, name, url, serviceContext);
 	}
 
 	@Override

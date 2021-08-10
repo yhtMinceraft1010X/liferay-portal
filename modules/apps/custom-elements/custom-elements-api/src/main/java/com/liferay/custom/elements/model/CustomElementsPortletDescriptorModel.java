@@ -211,14 +211,14 @@ public interface CustomElementsPortletDescriptorModel
 	 * @return the css ur ls of this custom elements portlet descriptor
 	 */
 	@AutoEscape
-	public String getCssURLs();
+	public String getCSSURLs();
 
 	/**
 	 * Sets the css ur ls of this custom elements portlet descriptor.
 	 *
 	 * @param cssURLs the css ur ls of this custom elements portlet descriptor
 	 */
-	public void setCssURLs(String cssURLs);
+	public void setCSSURLs(String cssURLs);
 
 	/**
 	 * Returns the html element name of this custom elements portlet descriptor.
@@ -226,14 +226,14 @@ public interface CustomElementsPortletDescriptorModel
 	 * @return the html element name of this custom elements portlet descriptor
 	 */
 	@AutoEscape
-	public String getHtmlElementName();
+	public String getHTMLElementName();
 
 	/**
 	 * Sets the html element name of this custom elements portlet descriptor.
 	 *
 	 * @param htmlElementName the html element name of this custom elements portlet descriptor
 	 */
-	public void setHtmlElementName(String htmlElementName);
+	public void setHTMLElementName(String htmlElementName);
 
 	/**
 	 * Returns the instanceable of this custom elements portlet descriptor.

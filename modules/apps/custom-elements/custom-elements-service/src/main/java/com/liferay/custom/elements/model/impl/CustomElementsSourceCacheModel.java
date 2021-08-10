@@ -148,10 +148,10 @@ public class CustomElementsSourceCacheModel
 		}
 
 		if (htmlElementName == null) {
-			customElementsSourceImpl.setHtmlElementName("");
+			customElementsSourceImpl.setHTMLElementName("");
 		}
 		else {
-			customElementsSourceImpl.setHtmlElementName(htmlElementName);
+			customElementsSourceImpl.setHTMLElementName(htmlElementName);
 		}
 
 		if (name == null) {
@@ -162,10 +162,10 @@ public class CustomElementsSourceCacheModel
 		}
 
 		if (url == null) {
-			customElementsSourceImpl.setUrl("");
+			customElementsSourceImpl.setURL("");
 		}
 		else {
-			customElementsSourceImpl.setUrl(url);
+			customElementsSourceImpl.setURL(url);
 		}
 
 		customElementsSourceImpl.resetOriginalValues();

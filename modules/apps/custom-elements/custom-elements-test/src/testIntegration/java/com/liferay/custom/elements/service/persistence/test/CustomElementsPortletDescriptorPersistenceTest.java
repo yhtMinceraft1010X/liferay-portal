@@ -149,10 +149,10 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 		newCustomElementsPortletDescriptor.setModifiedDate(
 			RandomTestUtil.nextDate());
 
-		newCustomElementsPortletDescriptor.setCssURLs(
+		newCustomElementsPortletDescriptor.setCSSURLs(
 			RandomTestUtil.randomString());
 
-		newCustomElementsPortletDescriptor.setHtmlElementName(
+		newCustomElementsPortletDescriptor.setHTMLElementName(
 			RandomTestUtil.randomString());
 
 		newCustomElementsPortletDescriptor.setInstanceable(
@@ -203,11 +203,11 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 			Time.getShortTimestamp(
 				newCustomElementsPortletDescriptor.getModifiedDate()));
 		Assert.assertEquals(
-			existingCustomElementsPortletDescriptor.getCssURLs(),
-			newCustomElementsPortletDescriptor.getCssURLs());
+			existingCustomElementsPortletDescriptor.getCSSURLs(),
+			newCustomElementsPortletDescriptor.getCSSURLs());
 		Assert.assertEquals(
-			existingCustomElementsPortletDescriptor.getHtmlElementName(),
-			newCustomElementsPortletDescriptor.getHtmlElementName());
+			existingCustomElementsPortletDescriptor.getHTMLElementName(),
+			newCustomElementsPortletDescriptor.getHTMLElementName());
 		Assert.assertEquals(
 			existingCustomElementsPortletDescriptor.isInstanceable(),
 			newCustomElementsPortletDescriptor.isInstanceable());
@@ -556,10 +556,10 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 		customElementsPortletDescriptor.setModifiedDate(
 			RandomTestUtil.nextDate());
 
-		customElementsPortletDescriptor.setCssURLs(
+		customElementsPortletDescriptor.setCSSURLs(
 			RandomTestUtil.randomString());
 
-		customElementsPortletDescriptor.setHtmlElementName(
+		customElementsPortletDescriptor.setHTMLElementName(
 			RandomTestUtil.randomString());
 
 		customElementsPortletDescriptor.setInstanceable(
