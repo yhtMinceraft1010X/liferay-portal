@@ -148,76 +148,73 @@ public class ContentDashboardItemSubtypeItemSelectorView
 								InfoItemFormVariationsProvider.class,
 								infoItemClassDetails.getClassName());
 
-					if (infoItemFormVariationsProvider != null) {
-						Collection<InfoItemFormVariation>
-							infoItemFormVariations =
-								infoItemFormVariationsProvider.
-									getInfoItemFormVariations(
-										themeDisplay.getScopeGroupId());
+					if (infoItemFormVariationsProvider == null) {
+						return;
+					}
 
-						JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+					Collection<InfoItemFormVariation> infoItemFormVariations =
+						infoItemFormVariationsProvider.
+							getInfoItemFormVariations(
+								themeDisplay.getScopeGroupId());
+
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+					InfoLocalizedValue<String>
+						infoItemClassDetailsLabelInfoLocalizedValue =
+							infoItemClassDetails.getLabelInfoLocalizedValue();
+
+					for (InfoItemFormVariation infoItemFormVariation :
+							infoItemFormVariations) {
 
 						InfoLocalizedValue<String>
-							infoItemClassDetailsLabelInfoLocalizedValue =
-								infoItemClassDetails.
+							infoItemFormVariationLabelInfoLocalizedValue =
+								infoItemFormVariation.
 									getLabelInfoLocalizedValue();
 
-						for (InfoItemFormVariation infoItemFormVariation :
-								infoItemFormVariations) {
+						try {
+							ContentDashboardItemSubtype
+								contentDashboardItemSubtype =
+									contentDashboardItemSubtypeFactory.create(
+										Long.valueOf(
+											infoItemFormVariation.getKey()));
 
-							InfoLocalizedValue<String>
-								infoItemFormVariationLabelInfoLocalizedValue =
-									infoItemFormVariation.
-										getLabelInfoLocalizedValue();
+							InfoItemReference infoItemReference =
+								contentDashboardItemSubtype.
+									getInfoItemReference();
 
-							try {
-								ContentDashboardItemSubtype
-									contentDashboardItemSubtype =
-										contentDashboardItemSubtypeFactory.
-											create(
-												Long.valueOf(
-													infoItemFormVariation.
-														getKey()));
-
-								InfoItemReference infoItemReference =
-									contentDashboardItemSubtype.
-										getInfoItemReference();
-
-								jsonArray.put(
-									JSONUtil.put(
-										"className",
-										infoItemReference.getClassName()
-									).put(
-										"classPK",
-										String.valueOf(
-											infoItemFormVariation.getKey())
-									).put(
-										"label",
-										infoItemFormVariationLabelInfoLocalizedValue.
-											getValue(themeDisplay.getLocale())
-									).put(
-										"selected",
-										checkedContentDashboardItemSubtypes.
-											contains(
-												infoItemFormVariation.getKey())
-									));
-							}
-							catch (PortalException portalException) {
-								_log.error(portalException, portalException);
-							}
+							jsonArray.put(
+								JSONUtil.put(
+									"className",
+									infoItemReference.getClassName()
+								).put(
+									"classPK",
+									String.valueOf(
+										infoItemFormVariation.getKey())
+								).put(
+									"label",
+									infoItemFormVariationLabelInfoLocalizedValue.
+										getValue(themeDisplay.getLocale())
+								).put(
+									"selected",
+									checkedContentDashboardItemSubtypes.
+										contains(infoItemFormVariation.getKey())
+								));
 						}
-
-						contentDashboardItemTypesJSONArray.put(
-							JSONUtil.put(
-								"icon", _getIcon(className)
-							).put(
-								"itemTypes", jsonArray
-							).put(
-								"label",
-								infoItemClassDetailsLabelInfoLocalizedValue.
-									getValue(themeDisplay.getLocale())
-							));
+						catch (PortalException portalException) {
+							_log.error(portalException, portalException);
+						}
 					}
+
+					contentDashboardItemTypesJSONArray.put(
+						JSONUtil.put(
+							"icon", _getIcon(className)
+						).put(
+							"itemTypes", jsonArray
+						).put(
+							"label",
+							infoItemClassDetailsLabelInfoLocalizedValue.
+								getValue(themeDisplay.getLocale())
+						));
 				}
 			);
 		}
