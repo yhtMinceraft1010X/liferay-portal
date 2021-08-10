@@ -260,7 +260,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				properties.put(
 					objectFieldName,
 					_getValue(
-						defaultLocale, objectFieldTypes.get(objectFieldName),
+						value.getDefaultLocale(),
+						objectFieldTypes.get(objectFieldName),
 						values.get(value.getDefaultLocale())));
 			}
 		}
