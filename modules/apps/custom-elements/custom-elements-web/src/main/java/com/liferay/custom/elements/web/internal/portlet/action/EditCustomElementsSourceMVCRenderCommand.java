@@ -48,7 +48,7 @@ public class EditCustomElementsSourceMVCRenderCommand
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT,
+			CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
 			new CustomElementsDisplayContext(renderRequest, renderResponse));
 
 		try {

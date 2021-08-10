@@ -17,19 +17,19 @@
 <%@ include file="/custom_elements/init.jsp" %>
 
 <%
-CustomElementsDisplayContext customElementsAdminDisplayContext = (CustomElementsDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT);
+CustomElementsDisplayContext customElementsDisplayContext = (CustomElementsDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
 <clay:data-set-display
 	actionParameterName="customElementsSourceEntryId"
-	creationMenu="<%= customElementsAdminDisplayContext.getCreationMenu() %>"
+	creationMenu="<%= customElementsDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES %>"
 	formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'
 	id="<%= CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
-	portletURL="<%= customElementsAdminDisplayContext.getCurrentPortletURL() %>"
+	portletURL="<%= customElementsDisplayContext.getCurrentPortletURL() %>"
 	selectedItemsKey="customElementsSourceEntryId"
 	selectionType="multiple"
 	style="fluid"

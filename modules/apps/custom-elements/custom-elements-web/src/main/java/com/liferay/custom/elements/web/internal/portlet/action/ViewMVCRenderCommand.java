@@ -44,7 +44,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT,
+			CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
 			new CustomElementsDisplayContext(renderRequest, renderResponse));
 
 		return "/custom_elements/view.jsp";
