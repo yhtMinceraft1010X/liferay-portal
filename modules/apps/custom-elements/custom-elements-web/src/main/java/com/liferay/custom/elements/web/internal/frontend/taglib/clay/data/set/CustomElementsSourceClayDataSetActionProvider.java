@@ -63,23 +63,20 @@ public class CustomElementsSourceClayDataSetActionProvider
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				PortletURL editCustomElementsSourceURL =
+				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						_getRenderURL(httpServletRequest)
 					).setMVCRenderCommandName(
 						"/custom_elements/edit_custom_elements_source"
 					).setRedirect(
 						ParamUtil.getString(
-						httpServletRequest, "currentURL",
-						_portal.getCurrentURL(httpServletRequest))
+							httpServletRequest, "currentURL",
+							_portal.getCurrentURL(httpServletRequest))
 					).setParameter(
 						"customElementsSourceId",
 						customElementsSourceClayDataSetEntry.
 							getCustomElementsSourceId()
-					).buildPortletURL();
-
-				dropdownItem.setHref(editCustomElementsSourceURL);
-
+					).buildPortletURL());
 				dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
 			}
 		).add(
