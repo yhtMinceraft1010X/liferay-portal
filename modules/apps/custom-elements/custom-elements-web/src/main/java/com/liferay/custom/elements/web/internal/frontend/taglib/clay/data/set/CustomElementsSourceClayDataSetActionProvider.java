@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,9 +61,14 @@ public class CustomElementsSourceClayDataSetActionProvider
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest);
+
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
-						_getRenderURL(httpServletRequest)
+						requestBackedPortletURLFactory.createRenderURL(
+							_getPortletId(httpServletRequest))
 					).setMVCRenderCommandName(
 						"/custom_elements/edit_custom_elements_source"
 					).setRedirect(
@@ -77,6 +80,7 @@ public class CustomElementsSourceClayDataSetActionProvider
 						customElementsSourceClayDataSetEntry.
 							getCustomElementsSourceId()
 					).buildPortletURL());
+
 				dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
 			}
 		).add(
@@ -125,14 +129,6 @@ public class CustomElementsSourceClayDataSetActionProvider
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getId();
-	}
-
-	private PortletURL _getRenderURL(HttpServletRequest httpServletRequest) {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		return requestBackedPortletURLFactory.createRenderURL(
-			_getPortletId(httpServletRequest));
 	}
 
 	@Reference
