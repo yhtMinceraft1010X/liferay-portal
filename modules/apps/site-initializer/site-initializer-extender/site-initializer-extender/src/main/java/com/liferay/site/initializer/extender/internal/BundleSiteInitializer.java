@@ -42,14 +42,15 @@ import org.osgi.framework.Bundle;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		Bundle bundle, ServletContext servletContext,
+		Bundle bundle,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
+		ServletContext servletContext,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
-		_servletContext = servletContext;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_servletContext = servletContext;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
 	}
