@@ -118,10 +118,9 @@ definition {
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
 	}
 
-	@description = "This is a test for LPS-129049. Verify Hubspot provider errors message"
-	@ignore = "true"
+	@description = "This is a test for LPS-137169. Verify if API key is invalid for hubspot"
 	@priority = "4"
-	test CheckHubspotErrorMessage {
+	test IsApiKeyInvalidForHubspot {
 		Select(
 			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = "Always Inherit");
@@ -132,19 +131,23 @@ definition {
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "nonexistent/");
-
-		SystemSettings.saveConfiguration();
-
-		Alert.viewErrorMessage(errorMessage = "Unable to connect to HubSpot");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
 			value1 = "19907868/1-d096-45a1-b25d-7dab3f332167");
 
 		SystemSettings.saveConfiguration();
 
 		Alert.viewErrorMessage(errorMessage = "The API key provided is invalid");
+	}
+
+	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
+	@priority = "4"
+	test CanHubspotAccessRequiredScopes {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Hubspot");
 
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",

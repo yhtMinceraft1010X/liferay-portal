@@ -31,6 +31,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIGITAL_SIGNATURE_ADD_RECIPIENT</td>
+	<td>//button[contains(@class, 'mb-4 btn btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_EXTRA_RECIPIENT_NAME</td>
+	<td>//input[contains(@id,'recipients[1].fullName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_EXTRA_RECIPIENT_EMAIL</td>
+	<td>//input[contains(@id,'recipients[1].email')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIGITAL_SIGNATURE_ENVELOPE_NAME</td>
 	<td>//a[contains(., '${envelopeName}')]</td>
 	<td></td>

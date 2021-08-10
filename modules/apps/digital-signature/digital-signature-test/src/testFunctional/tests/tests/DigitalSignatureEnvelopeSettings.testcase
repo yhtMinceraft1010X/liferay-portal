@@ -46,6 +46,8 @@ definition {
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
+		Button.click(button = "Send");
+
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -155,6 +157,8 @@ definition {
 			recipientEmail = "test@liferay",
 			recipientFullName = "Recipient Full Name");
 
+		Button.click(button = "Send");
+
 		Alert.viewErrorMessage(errorMessage = "There was an error in processing your request.  Please try again later.");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -181,6 +185,8 @@ definition {
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
 
+		Button.click(button = "Send");
+
 		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPORTTED_FILE");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -204,6 +210,8 @@ definition {
 			envelopeName = "Poshi Test Envelope Name",
 			recipientEmail = "test@liferay.com",
 			recipientFullName = "Recipient Full Name");
+
+		Button.click(button = "Send");
 
 		Alert.viewSuccessMessageText(successMessage = "Your envelope was created successfully.");
 

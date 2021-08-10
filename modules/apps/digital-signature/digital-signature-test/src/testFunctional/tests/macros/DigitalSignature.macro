@@ -54,8 +54,6 @@ definition {
 		Click(
 			dmDocumentTitle = "DM Document Title",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
-
-		Button.click(button = "Send");
 	}
 
 	macro createEnvelopeWith2Documents {
@@ -123,8 +121,6 @@ definition {
 		Click(
 			dmDocumentTitle = "Document_3",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
-
-		Button.click(button = "Send");
 	}
 
 	macro deleteEnvelope {
