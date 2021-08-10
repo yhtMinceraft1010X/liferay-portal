@@ -255,15 +255,13 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 				Value value = ddmFormFieldValue.getValue();
 
-				Locale defaultLocale = value.getDefaultLocale();
-
 				Map<Locale, String> values = value.getValues();
 
 				properties.put(
 					objectFieldName,
 					_getValue(
 						defaultLocale, objectFieldTypes.get(objectFieldName),
-						values.get(defaultLocale)));
+						values.get(value.getDefaultLocale())));
 			}
 		}
 
