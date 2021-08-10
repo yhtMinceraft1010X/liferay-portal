@@ -62,66 +62,51 @@ public class CustomElementsSourceClayDataSetActionProvider
 				(CustomElementsSourceClayDataSetEntry)model;
 
 		return DropdownItemListBuilder.add(
-			dropdownItem -> _buildEditCustomElementsSourceAction(
-				dropdownItem, httpServletRequest,
-				customElementsSourceClayDataSetEntry)
+			dropdownItem -> {
+				PortletURL editCustomElementsSourceURL =
+					PortletURLBuilder.create(
+						_getRenderURL(httpServletRequest)
+					).setMVCRenderCommandName(
+						"/custom_elements/edit_custom_elements_source"
+					).setParameter(
+						"customElementsSourceId",
+						customElementsSourceClayDataSetEntry.
+							getCustomElementsSourceId()
+					).buildPortletURL();
+
+				editCustomElementsSourceURL.setParameter(
+					"redirect",
+					ParamUtil.getString(
+						httpServletRequest, "currentURL",
+						_portal.getCurrentURL(httpServletRequest)));
+
+				dropdownItem.setHref(editCustomElementsSourceURL);
+
+				dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
+			}
 		).add(
-			dropdownItem -> _buildDeleteCustomElementsSourceAction(
-				dropdownItem, httpServletRequest,
-				customElementsSourceClayDataSetEntry)
+			dropdownItem -> {
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest);
+
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						requestBackedPortletURLFactory.createActionURL(
+							_getPortletId(httpServletRequest))
+					).setActionName(
+						"/custom_elements/delete_custom_elements_source"
+					).setParameter(
+						"customElementsSourceId",
+						customElementsSourceClayDataSetEntry.
+							getCustomElementsSourceId()
+					).buildString());
+
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					_getMessage(httpServletRequest, "delete"));
+			}
 		).build();
-	}
-
-	private void _buildDeleteCustomElementsSourceAction(
-		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
-		CustomElementsSourceClayDataSetEntry
-			customElementsSourceClayDataSetEntry) {
-
-		dropdownItem.setHref(
-			PortletURLBuilder.create(
-				_getActionURL(httpServletRequest)
-			).setActionName(
-				"/custom_elements/delete_custom_elements_source"
-			).setParameter(
-				"customElementsSourceId",
-				customElementsSourceClayDataSetEntry.getCustomElementsSourceId()
-			).buildString());
-
-		dropdownItem.setIcon("times-circle");
-		dropdownItem.setLabel(_getMessage(httpServletRequest, "delete"));
-	}
-
-	private void _buildEditCustomElementsSourceAction(
-		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
-		CustomElementsSourceClayDataSetEntry
-			customElementsSourceClayDataSetEntry) {
-
-		PortletURL editCustomElementsSourceURL = PortletURLBuilder.create(
-			_getRenderURL(httpServletRequest)
-		).setMVCRenderCommandName(
-			"/custom_elements/edit_custom_elements_source"
-		).setParameter(
-			"customElementsSourceId",
-			customElementsSourceClayDataSetEntry.getCustomElementsSourceId()
-		).buildPortletURL();
-
-		String currentURL = ParamUtil.getString(
-			httpServletRequest, "currentURL",
-			_portal.getCurrentURL(httpServletRequest));
-
-		editCustomElementsSourceURL.setParameter("redirect", currentURL);
-
-		dropdownItem.setHref(editCustomElementsSourceURL);
-		dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
-	}
-
-	private PortletURL _getActionURL(HttpServletRequest httpServletRequest) {
-		String portletId = _getPortletId(httpServletRequest);
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		return requestBackedPortletURLFactory.createActionURL(portletId);
 	}
 
 	private String _getMessage(
