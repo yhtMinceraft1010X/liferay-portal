@@ -200,8 +200,6 @@ definition {
 		DigitalSignature.deleteEnvelope(envelopeName = "Poshi Test Envelope Name");
 
 		AssertElementPresent(locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_RECIPIENTS_BADGE");
-
 	}
-
 
 }

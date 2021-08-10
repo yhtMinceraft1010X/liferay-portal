@@ -34,6 +34,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
+	@priority = "4"
+	test CanHubspotAccessRequiredScopes {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Hubspot");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "nonexistent/b0198459-60fd-4aea-bf65-3c163efc9f8d");
+
+		SystemSettings.saveConfiguration();
+
+		Alert.viewErrorMessage(errorMessage = "This app hasn't been granted all required scopes to make this call");
+	}
+
 	@description = "This is a test for LPS-129049. Verify Chatwoot provider can be enabled and disabled."
 	@priority = "5"
 	test ChatwootCanBeEnabledAndDisabled {
@@ -116,46 +136,6 @@ definition {
 		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_CHATWOOT");
-	}
-
-	@description = "This is a test for LPS-137169. Verify if API key is invalid for hubspot"
-	@priority = "4"
-	test IsApiKeyInvalidForHubspot {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Hubspot");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "19907868/1-d096-45a1-b25d-7dab3f332167");
-
-		SystemSettings.saveConfiguration();
-
-		Alert.viewErrorMessage(errorMessage = "The API key provided is invalid");
-	}
-
-	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"
-	@priority = "4"
-	test CanHubspotAccessRequiredScopes {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
-
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Hubspot");
-
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = "nonexistent/b0198459-60fd-4aea-bf65-3c163efc9f8d");
-
-		SystemSettings.saveConfiguration();
-
-		Alert.viewErrorMessage(errorMessage = "This app hasn't been granted all required scopes to make this call");
 	}
 
 	@description = "This is a test for LPS-129049. Verify Crisp provider can be enabled and disabled."
@@ -336,6 +316,26 @@ definition {
 		User.firstLoginUI();
 
 		AssertElementPresent(locator1 = "Providers#CHAT_HUBSPOT");
+	}
+
+	@description = "This is a test for LPS-137169. Verify if API key is invalid for hubspot"
+	@priority = "4"
+	test IsApiKeyInvalidForHubspot {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = "Always Inherit");
+
+		Select(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+			value1 = "Hubspot");
+
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = "19907868/1-d096-45a1-b25d-7dab3f332167");
+
+		SystemSettings.saveConfiguration();
+
+		Alert.viewErrorMessage(errorMessage = "The API key provided is invalid");
 	}
 
 	@description = "This is a test for LPS-129049. Verify JivoChat provider can be enabled and disabled."
