@@ -85,24 +85,24 @@ public class RemoteAppEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<RemoteAppEntry> searchRemoteAppEntries(
+	public List<RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, start, end, sort);
 
-		return searchRemoteAppEntries(searchContext);
+		return search(searchContext);
 	}
 
 	@Override
-	public int searchRemoteAppEntriesCount(long companyId, String keywords)
+	public int searchCount(long companyId, String keywords)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return searchRemoteAppEntriesCount(searchContext);
+		return searchCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -186,8 +186,7 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntries;
 	}
 
-	protected List<RemoteAppEntry> searchRemoteAppEntries(
-			SearchContext searchContext)
+	protected List<RemoteAppEntry> search(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<RemoteAppEntry> indexer =
@@ -207,7 +206,7 @@ public class RemoteAppEntryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected int searchRemoteAppEntriesCount(SearchContext searchContext)
+	protected int searchCount(SearchContext searchContext)
 		throws PortalException {
 
 		Indexer<RemoteAppEntry> indexer =

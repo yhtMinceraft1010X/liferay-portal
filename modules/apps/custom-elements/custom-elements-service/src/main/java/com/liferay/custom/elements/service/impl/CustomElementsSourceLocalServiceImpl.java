@@ -65,7 +65,7 @@ public class CustomElementsSourceLocalServiceImpl
 	}
 
 	@Override
-	public List<CustomElementsSource> searchCustomElementsSources(
+	public List<CustomElementsSource> search(
 		String keywords, int start, int end, Sort sort) {
 
 		if (Validator.isNull(keywords)) {
@@ -78,7 +78,7 @@ public class CustomElementsSourceLocalServiceImpl
 	}
 
 	@Override
-	public int searchCustomElementsSourcesCount(String keywords) {
+	public int searchCount(String keywords) {
 		if (Validator.isNull(keywords)) {
 			return customElementsSourcePersistence.countAll();
 		}

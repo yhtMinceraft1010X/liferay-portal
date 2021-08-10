@@ -49,7 +49,7 @@ public class CustomElementsAdminClayDataSetDataProvider
 		Pagination pagination, Sort sort) {
 
 		List<CustomElementsSource> customElementsSources =
-			_customElementsSourceLocalService.searchCustomElementsSources(
+			_customElementsSourceLocalService.search(
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition(), sort);
 
@@ -67,8 +67,8 @@ public class CustomElementsAdminClayDataSetDataProvider
 	public int getItemsCount(
 		HttpServletRequest httpServletRequest, Filter filter) {
 
-		return _customElementsSourceLocalService.
-			searchCustomElementsSourcesCount(filter.getKeywords());
+		return _customElementsSourceLocalService.searchCount(
+			filter.getKeywords());
 	}
 
 	@Reference

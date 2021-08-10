@@ -57,7 +57,7 @@ public class RemoteAppEntryClayDataSetDataProvider
 				WebKeys.THEME_DISPLAY);
 
 		List<RemoteAppEntry> remoteAppEntries =
-			_remoteAppEntryLocalService.searchRemoteAppEntries(
+			_remoteAppEntryLocalService.search(
 				themeDisplay.getCompanyId(), filter.getKeywords(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				sort);
@@ -81,7 +81,7 @@ public class RemoteAppEntryClayDataSetDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return _remoteAppEntryLocalService.searchRemoteAppEntriesCount(
+		return _remoteAppEntryLocalService.searchCount(
 			themeDisplay.getCompanyId(), filter.getKeywords());
 	}
 
