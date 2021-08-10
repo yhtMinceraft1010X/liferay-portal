@@ -142,9 +142,9 @@ public class CustomElementsSourceLocalServiceImpl
 		CustomElementsSource customElementsSource, String htmlElementName,
 		String name, String url) {
 
-		customElementsSource.setHtmlElementName(htmlElementName);
+		customElementsSource.setHTMLElementName(htmlElementName);
 		customElementsSource.setName(name);
-		customElementsSource.setUrl(url);
+		customElementsSource.setURL(url);
 	}
 
 }

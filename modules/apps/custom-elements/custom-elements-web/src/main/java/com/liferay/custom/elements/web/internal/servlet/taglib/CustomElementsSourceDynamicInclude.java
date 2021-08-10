@@ -52,7 +52,7 @@ public class CustomElementsSourceDynamicInclude implements DynamicInclude {
 				customElementsSources) {
 
 			printWriter.print(
-				"<script src=\"" + customElementsSource.getUrl() +
+				"<script src=\"" + customElementsSource.getURL() +
 					"\"></script>");
 		}
 
