@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFormVariation;
@@ -138,84 +139,11 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				ContentDashboardItemFactory::
 					getContentDashboardItemSubtypeFactoryOptional
 			).ifPresent(
-				contentDashboardItemSubtypeFactory -> {
-					InfoItemClassDetails infoItemClassDetails =
-						new InfoItemClassDetails(className);
-
-					InfoItemFormVariationsProvider<?>
-						infoItemFormVariationsProvider =
-							_infoItemServiceTracker.getFirstInfoItemService(
-								InfoItemFormVariationsProvider.class,
-								infoItemClassDetails.getClassName());
-
-					if (infoItemFormVariationsProvider == null) {
-						return;
-					}
-
-					Collection<InfoItemFormVariation> infoItemFormVariations =
-						infoItemFormVariationsProvider.
-							getInfoItemFormVariations(
-								themeDisplay.getScopeGroupId());
-
-					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-					InfoLocalizedValue<String>
-						infoItemClassDetailsLabelInfoLocalizedValue =
-							infoItemClassDetails.getLabelInfoLocalizedValue();
-
-					for (InfoItemFormVariation infoItemFormVariation :
-							infoItemFormVariations) {
-
-						InfoLocalizedValue<String>
-							infoItemFormVariationLabelInfoLocalizedValue =
-								infoItemFormVariation.
-									getLabelInfoLocalizedValue();
-
-						try {
-							ContentDashboardItemSubtype
-								contentDashboardItemSubtype =
-									contentDashboardItemSubtypeFactory.create(
-										Long.valueOf(
-											infoItemFormVariation.getKey()));
-
-							InfoItemReference infoItemReference =
-								contentDashboardItemSubtype.
-									getInfoItemReference();
-
-							jsonArray.put(
-								JSONUtil.put(
-									"className",
-									infoItemReference.getClassName()
-								).put(
-									"classPK",
-									String.valueOf(
-										infoItemFormVariation.getKey())
-								).put(
-									"label",
-									infoItemFormVariationLabelInfoLocalizedValue.
-										getValue(themeDisplay.getLocale())
-								).put(
-									"selected",
-									checkedContentDashboardItemSubtypes.
-										contains(infoItemFormVariation.getKey())
-								));
-						}
-						catch (PortalException portalException) {
-							_log.error(portalException, portalException);
-						}
-					}
-
-					contentDashboardItemTypesJSONArray.put(
-						JSONUtil.put(
-							"icon", _getIcon(className)
-						).put(
-							"itemTypes", jsonArray
-						).put(
-							"label",
-							infoItemClassDetailsLabelInfoLocalizedValue.
-								getValue(themeDisplay.getLocale())
-						));
-				}
+				contentDashboardItemSubtypeFactory ->
+					_populateContentDashboardItemTypesJSONArray(
+						className, contentDashboardItemSubtypeFactory,
+						checkedContentDashboardItemSubtypes,
+						contentDashboardItemTypesJSONArray, themeDisplay)
 			);
 		}
 
@@ -233,6 +161,82 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		}
 
 		return null;
+	}
+
+	private void _populateContentDashboardItemTypesJSONArray(
+		String className,
+		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory,
+		Set<String> checkedContentDashboardItemSubtypes,
+		JSONArray contentDashboardItemTypesJSONArray,
+		ThemeDisplay themeDisplay) {
+
+		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
+			className);
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				infoItemClassDetails.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return;
+		}
+
+		Collection<InfoItemFormVariation> infoItemFormVariations =
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				themeDisplay.getScopeGroupId());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		InfoLocalizedValue<String> infoItemClassDetailsLabelInfoLocalizedValue =
+			infoItemClassDetails.getLabelInfoLocalizedValue();
+
+		for (InfoItemFormVariation infoItemFormVariation :
+				infoItemFormVariations) {
+
+			InfoLocalizedValue<String>
+				infoItemFormVariationLabelInfoLocalizedValue =
+					infoItemFormVariation.getLabelInfoLocalizedValue();
+
+			try {
+				ContentDashboardItemSubtype contentDashboardItemSubtype =
+					contentDashboardItemSubtypeFactory.create(
+						Long.valueOf(infoItemFormVariation.getKey()));
+
+				InfoItemReference infoItemReference =
+					contentDashboardItemSubtype.getInfoItemReference();
+
+				jsonArray.put(
+					JSONUtil.put(
+						"className", infoItemReference.getClassName()
+					).put(
+						"classPK",
+						String.valueOf(infoItemFormVariation.getKey())
+					).put(
+						"label",
+						infoItemFormVariationLabelInfoLocalizedValue.getValue(
+							themeDisplay.getLocale())
+					).put(
+						"selected",
+						checkedContentDashboardItemSubtypes.contains(
+							infoItemFormVariation.getKey())
+					));
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
+			}
+		}
+
+		contentDashboardItemTypesJSONArray.put(
+			JSONUtil.put(
+				"icon", _getIcon(className)
+			).put(
+				"itemTypes", jsonArray
+			).put(
+				"label",
+				infoItemClassDetailsLabelInfoLocalizedValue.getValue(
+					themeDisplay.getLocale())
+			));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
