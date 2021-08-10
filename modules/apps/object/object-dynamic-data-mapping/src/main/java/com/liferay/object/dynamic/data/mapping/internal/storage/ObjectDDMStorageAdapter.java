@@ -175,18 +175,18 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 				_getObjectFieldName(
 					ddmFormFieldsMap.get(ddmFormField.getName())));
 
-			if (objectFieldValue instanceof byte[]) {
-				value.addString(
-					ddmForm.getDefaultLocale(),
-					new String((byte[])objectFieldValue));
-			}
-			else if (objectFieldValue instanceof Double) {
+			if (objectFieldValue instanceof Double) {
 				NumberFormat numberFormat = NumberFormat.getInstance(
 					ddmForm.getDefaultLocale());
 
 				value.addString(
 					ddmForm.getDefaultLocale(),
 					numberFormat.format(objectFieldValue));
+			}
+			else if (objectFieldValue instanceof byte[]) {
+				value.addString(
+					ddmForm.getDefaultLocale(),
+					new String((byte[])objectFieldValue));
 			}
 			else {
 				value.addString(
