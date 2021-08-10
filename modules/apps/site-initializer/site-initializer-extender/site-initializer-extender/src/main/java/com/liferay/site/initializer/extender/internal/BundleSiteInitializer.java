@@ -19,6 +19,8 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -96,9 +98,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addObjectDefinition(User user) throws Exception {
+	private void _addObjectDefinitions(User user) throws Exception {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/rest/object-definition");
+			"/site-initializer/rest/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -113,17 +115,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
-				_read(resourcePath));
+			String json = _read(resourcePath);
 
-			if (objectDefinition != null) {
-				objectDefinition =
-					objectDefinitionResource.postObjectDefinition(
-						objectDefinition);
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 
-				objectDefinitionResource.postObjectDefinitionPublish(
-					objectDefinition.getId());
+			if (objectDefinition == null) {
+				_log.error(
+					"Unable to transform object definition from JSON: " + json);
+
+				continue;
 			}
+
+			objectDefinition = objectDefinitionResource.postObjectDefinition(
+				objectDefinition);
+
+			objectDefinitionResource.postObjectDefinitionPublish(
+				objectDefinition.getId());
 		}
 	}
 
@@ -146,8 +153,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
+			String json = _read(resourcePath);
+
 			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
-				_read(resourcePath));
+				json);
+
+			if (taxonomyVocabulary == null) {
+				_log.error(
+					"Unable to transform taxonomy vocabulary from JSON: " +
+						json);
+
+				continue;
+			}
 
 			// TODO
 
@@ -159,7 +176,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _initialize(long groupId, User user) throws Exception {
-		_addObjectDefinition(user);
+		_addObjectDefinitions(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
 
@@ -167,6 +184,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return StringUtil.read(
 			_servletContext.getResourceAsStream(resourcePath));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
 	private final ObjectDefinitionResource.Factory
