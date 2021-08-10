@@ -14,8 +14,8 @@
 
 package com.liferay.custom.elements.web.internal.portlet.action;
 
-import com.liferay.custom.elements.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
 import com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_ADMIN,
+		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS,
 		"mvc.command.name=/custom_elements/edit_custom_elements_source"
 	},
 	service = MVCRenderCommand.class

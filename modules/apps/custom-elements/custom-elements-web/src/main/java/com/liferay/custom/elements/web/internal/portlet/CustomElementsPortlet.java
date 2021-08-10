@@ -14,7 +14,7 @@
 
 package com.liferay.custom.elements.web.internal.portlet;
 
-import com.liferay.custom.elements.constants.CustomElementsPortletKeys;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.mvc-command-names-default-views=/custom_elements/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_ADMIN,
+		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},

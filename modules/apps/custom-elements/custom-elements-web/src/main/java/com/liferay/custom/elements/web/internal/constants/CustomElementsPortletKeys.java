@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.custom.elements.constants;
+package com.liferay.custom.elements.web.internal.constants;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class CustomElementsPortletKeys {
 
-	public static final String CUSTOM_ELEMENTS_ADMIN =
-		"com_liferay_custom_elements_web_portlet_CustomElementsAdminPortlet";
+	public static final String CUSTOM_ELEMENTS =
+		"com_liferay_custom_elements_web_internal_portlet_" +
+			"CustomElementsPortlet";
 
 }

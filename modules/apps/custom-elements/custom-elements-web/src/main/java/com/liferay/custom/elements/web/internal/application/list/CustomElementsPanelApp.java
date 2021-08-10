@@ -17,7 +17,7 @@ package com.liferay.custom.elements.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.custom.elements.constants.CustomElementsPortletKeys;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +38,12 @@ public class CustomElementsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CustomElementsPortletKeys.CUSTOM_ELEMENTS_ADMIN;
+		return CustomElementsPortletKeys.CUSTOM_ELEMENTS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_ADMIN + ")",
+		target = "(javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {
