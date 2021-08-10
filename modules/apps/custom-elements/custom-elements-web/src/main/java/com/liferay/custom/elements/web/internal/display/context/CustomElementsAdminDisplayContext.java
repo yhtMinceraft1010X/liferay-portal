@@ -46,7 +46,7 @@ public class CustomElementsAdminDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
 					).setMVCRenderCommandName(
-						"/admin/edit_custom_elements_source"
+						"/custom_elements/edit_custom_elements_source"
 					).setRedirect(
 						_getRedirect()
 					).buildPortletURL());

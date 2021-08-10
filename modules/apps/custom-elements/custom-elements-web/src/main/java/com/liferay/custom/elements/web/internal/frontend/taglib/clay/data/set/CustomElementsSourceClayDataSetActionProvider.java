@@ -14,7 +14,7 @@
 
 package com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set;
 
-import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -22,7 +22,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -82,7 +81,7 @@ public class CustomElementsSourceClayDataSetActionProvider
 			PortletURLBuilder.create(
 				_getActionURL(httpServletRequest)
 			).setActionName(
-				"/admin/delete_custom_elements_source"
+				"/custom_elements/delete_custom_elements_source"
 			).setParameter(
 				"customElementsSourceId",
 				customElementsSourceClayDataSetEntry.getCustomElementsSourceId()
@@ -100,7 +99,7 @@ public class CustomElementsSourceClayDataSetActionProvider
 		PortletURL editCustomElementsSourceURL = PortletURLBuilder.create(
 			_getRenderURL(httpServletRequest)
 		).setMVCRenderCommandName(
-			"/admin/edit_custom_elements_source"
+			"/custom_elements/edit_custom_elements_source"
 		).setParameter(
 			"customElementsSourceId",
 			customElementsSourceClayDataSetEntry.getCustomElementsSourceId()

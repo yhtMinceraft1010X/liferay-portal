@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CustomElementsPortletKeys.CUSTOM_ELEMENTS_ADMIN,
-		"mvc.command.name=/admin/delete_custom_elements_source"
+		"mvc.command.name=/custom_elements/delete_custom_elements_source"
 	},
 	service = MVCActionCommand.class
 )

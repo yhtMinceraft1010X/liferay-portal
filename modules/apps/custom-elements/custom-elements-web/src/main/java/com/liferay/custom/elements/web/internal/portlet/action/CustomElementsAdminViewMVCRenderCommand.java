@@ -49,7 +49,7 @@ public class CustomElementsAdminViewMVCRenderCommand
 			new CustomElementsAdminDisplayContext(
 				renderRequest, renderResponse));
 
-		return "/admin/view.jsp";
+		return "/custom_elements/view.jsp";
 	}
 
 }

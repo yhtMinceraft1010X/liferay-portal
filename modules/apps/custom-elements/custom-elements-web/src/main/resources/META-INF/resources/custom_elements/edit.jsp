@@ -29,7 +29,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(request, "add-custom-elements-source") : customElementsSource.getName());
 %>
 
-<portlet:actionURL name="/admin/edit_custom_elements_source" var="editCustomElementsSourceURL" />
+<portlet:actionURL name="/custom_elements/edit_custom_elements_source" var="editCustomElementsSourceURL" />
 
 <clay:container-fluid>
 	<aui:form action="<%= editCustomElementsSourceURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCustomElementsSource();" %>'>

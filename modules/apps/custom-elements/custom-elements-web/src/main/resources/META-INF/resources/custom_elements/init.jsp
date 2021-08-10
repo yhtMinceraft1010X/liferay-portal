@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.custom.elements.model.CustomElementsSource" %><%@
-page import="com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys" %><%@
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames" %><%@
+page import="com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys" %><%@
 page import="com.liferay.custom.elements.web.internal.display.context.CustomElementsAdminDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

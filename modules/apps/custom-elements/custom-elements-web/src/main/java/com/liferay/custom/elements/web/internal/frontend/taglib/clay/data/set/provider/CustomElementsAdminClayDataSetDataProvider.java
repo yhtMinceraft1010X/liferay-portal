@@ -16,13 +16,12 @@ package com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set.p
 
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
-import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 import com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set.CustomElementsSourceClayDataSetEntry;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 
 import java.util.List;
 import java.util.stream.Collectors;

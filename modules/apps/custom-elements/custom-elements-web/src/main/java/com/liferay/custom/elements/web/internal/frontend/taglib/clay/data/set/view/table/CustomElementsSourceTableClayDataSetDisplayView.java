@@ -14,14 +14,14 @@
 
 package com.liferay.custom.elements.web.internal.frontend.taglib.clay.data.set.view.table;
 
-import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
