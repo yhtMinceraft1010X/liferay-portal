@@ -23,7 +23,6 @@ import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -125,35 +124,17 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoForm getConfigurationInfoForm() {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			_addAttributes(
-				InfoField.builder(
-				).infoFieldType(
-					SelectInfoFieldType.INSTANCE
-				).name(
-					Field.ASSET_TAG_NAMES
-				)
+			_getTagsInfoField()
+		).infoFieldSetEntry(
+			InfoField.builder(
+			).infoFieldType(
+				TextInfoFieldType.INSTANCE
+			).name(
+				Field.TITLE
 			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "tag")
+				InfoLocalizedValue.localize(getClass(), "title")
 			).localizable(
 				true
-			).build()
-		).infoFieldSetEntry(
-			InfoFieldSet.builder(
-			).infoFieldSetEntry(
-				InfoField.builder(
-				).infoFieldType(
-					TextInfoFieldType.INSTANCE
-				).name(
-					Field.TITLE
-				).labelInfoLocalizedValue(
-					InfoLocalizedValue.localize(getClass(), "title")
-				).localizable(
-					true
-				).build()
-			).labelInfoLocalizedValue(
-				InfoLocalizedValue.localize(getClass(), "configuration")
-			).name(
-				"basic-information"
 			).build()
 		).build();
 	}
@@ -177,32 +158,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "basic-web-content");
-	}
-
-	private InfoField.FinalStep _addAttributes(InfoField.FinalStep finalStep) {
-		List<SelectInfoFieldType.Option> options = new ArrayList<>();
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		List<AssetTag> assetTags = new ArrayList<>(
-			_assetTagLocalService.getGroupTags(
-				serviceContext.getScopeGroupId()));
-
-		assetTags.sort(new AssetTagNameComparator(true));
-
-		options.add(
-			new SelectInfoFieldType.Option(StringPool.BLANK, StringPool.BLANK));
-
-		for (AssetTag assetTag : assetTags) {
-			options.add(
-				new SelectInfoFieldType.Option(
-					assetTag.getName(), assetTag.getName()));
-		}
-
-		finalStep.attribute(SelectInfoFieldType.OPTIONS, options);
-
-		return finalStep;
 	}
 
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery) {
@@ -274,6 +229,43 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	private InfoField _getTagsInfoField() {
+		List<SelectInfoFieldType.Option> options = new ArrayList<>();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		List<AssetTag> assetTags = new ArrayList<>(
+			_assetTagLocalService.getGroupTags(
+				serviceContext.getScopeGroupId()));
+
+		assetTags.sort(new AssetTagNameComparator(true));
+
+		options.add(
+			new SelectInfoFieldType.Option(StringPool.BLANK, StringPool.BLANK));
+
+		for (AssetTag assetTag : assetTags) {
+			options.add(
+				new SelectInfoFieldType.Option(
+					assetTag.getName(), assetTag.getName()));
+		}
+
+		InfoField.FinalStep finalStep = InfoField.builder(
+		).infoFieldType(
+			SelectInfoFieldType.INSTANCE
+		).name(
+			Field.ASSET_TAG_NAMES
+		).attribute(
+			SelectInfoFieldType.OPTIONS, options
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "tag")
+		).localizable(
+			true
+		);
+
+		return finalStep.build();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
