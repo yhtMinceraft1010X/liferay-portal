@@ -57,8 +57,9 @@ public class CustomElementsSourceLocalServiceImpl
 		customElementsSource.setUserId(user.getUserId());
 		customElementsSource.setUserName(user.getFullName());
 
-		_setCustomElementsSourceFields(
-			customElementsSource, htmlElementName, name, url);
+		customElementsSource.setHTMLElementName(htmlElementName);
+		customElementsSource.setName(name);
+		customElementsSource.setURL(url);
 
 		return customElementsSourcePersistence.update(customElementsSource);
 	}
@@ -95,8 +96,9 @@ public class CustomElementsSourceLocalServiceImpl
 			customElementsSourcePersistence.findByPrimaryKey(
 				customElementsSourceId);
 
-		_setCustomElementsSourceFields(
-			customElementsSource, htmlElementName, name, url);
+		customElementsSource.setHTMLElementName(htmlElementName);
+		customElementsSource.setName(name);
+		customElementsSource.setURL(url);
 
 		return customElementsSourcePersistence.update(customElementsSource);
 	}
@@ -136,15 +138,6 @@ public class CustomElementsSourceLocalServiceImpl
 			}
 
 		};
-	}
-
-	private void _setCustomElementsSourceFields(
-		CustomElementsSource customElementsSource, String htmlElementName,
-		String name, String url) {
-
-		customElementsSource.setHTMLElementName(htmlElementName);
-		customElementsSource.setName(name);
-		customElementsSource.setURL(url);
 	}
 
 }
