@@ -66,7 +66,7 @@ public class EditCustomElementsSourceMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/custom_elements/edit.jsp";
+		return "/custom_elements/edit_custom_elements_source.jsp";
 	}
 
 	@Reference
