@@ -47,11 +47,12 @@ public class EditCustomElementsSourceMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
-			new CustomElementsDisplayContext(renderRequest, renderResponse));
-
 		try {
+			renderRequest.setAttribute(
+				CustomElementsWebKeys.CUSTOM_ELEMENTS_DISPLAY_CONTEXT,
+				new CustomElementsDisplayContext(
+					renderRequest, renderResponse));
+
 			long customElementsSourceId = ParamUtil.getLong(
 				renderRequest, "customElementsSourceId");
 
@@ -61,12 +62,12 @@ public class EditCustomElementsSourceMVCRenderCommand
 					_customElementsSourceLocalService.getCustomElementsSource(
 						customElementsSourceId));
 			}
+
+			return "/custom_elements/edit_custom_elements_source.jsp";
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-
-		return "/custom_elements/edit_custom_elements_source.jsp";
 	}
 
 	@Reference

@@ -46,8 +46,11 @@ public class DeleteCustomElementsSourceMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long customElementsSourceId = ParamUtil.getLong(
+			actionRequest, "customElementsSourceId");
+
 		_customElementsSourceLocalService.deleteCustomElementsSource(
-			ParamUtil.getLong(actionRequest, "customElementsSourceId"));
+			customElementsSourceId);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
