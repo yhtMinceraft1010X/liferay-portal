@@ -109,14 +109,14 @@ public class EditAccountEntryAddressMVCActionCommand
 			long accountEntryId = ParamUtil.getLong(
 				actionRequest, "accountEntryId");
 
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
 			long addressId = 0;
 
 			if (accountEntryAddress != null) {
 				addressId = accountEntryAddress.getAddressId();
 			}
-
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getAccountEntry(accountEntryId);
 
 			if (Objects.equals("billing", defaultAddressType)) {
 				accountEntry.setDefaultBillingAddressId(addressId);

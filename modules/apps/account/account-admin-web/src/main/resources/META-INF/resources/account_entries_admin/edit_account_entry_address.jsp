@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
 long accountEntryAddressId = ParamUtil.getLong(renderRequest, "accountEntryAddressId");
 
 Address address = AddressLocalServiceUtil.fetchAddress(accountEntryAddressId);
 
-AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
-
 String defaultAddressType = ParamUtil.getString(request, "defaultAddressType");
 
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
