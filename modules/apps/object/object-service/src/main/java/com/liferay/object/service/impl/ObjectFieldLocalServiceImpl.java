@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.DuplicateObjectFieldException;
+import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
@@ -122,7 +123,7 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
-	public ObjectField updateObjectField(
+	public ObjectField updateCustomObjectField(
 			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap,
 			boolean required)
@@ -130,6 +131,14 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		if (objectDefinition.isSystem()) {
+			throw new ObjectDefinitionStatusException();
+		}
 
 		_validateIndexed(
 			indexed, indexedAsKeyword, indexedLanguageId,

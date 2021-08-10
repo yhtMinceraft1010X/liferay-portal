@@ -80,7 +80,7 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 		throws Exception {
 
 		return ObjectFieldUtil.toObjectField(
-			_objectFieldLocalService.updateObjectField(
+			_objectFieldLocalService.updateCustomObjectField(
 				objectFieldId, objectField.getIndexed(),
 				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
