@@ -41,33 +41,16 @@ public class CustomElementsSourceTableClayDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		_addClayTableSchemaField(
-			clayTableSchemaBuilder, "name", "name", "actionLink");
-		_addClayTableSchemaField(
-			clayTableSchemaBuilder, "htmlElementName", "html-element-name");
-		_addClayTableSchemaField(clayTableSchemaBuilder, "url", "url");
+		ClayTableSchemaField nameClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+
+		nameClayTableSchemaField.setContentRenderer("actionLink");
+
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"htmlElementName", "html-element-name");
+		clayTableSchemaBuilder.addClayTableSchemaField("url", "url");
 
 		return clayTableSchemaBuilder.build();
-	}
-
-	private void _addClayTableSchemaField(
-		ClayTableSchemaBuilder clayTableSchemaBuilder, String fieldName,
-		String label) {
-
-		_addClayTableSchemaField(
-			clayTableSchemaBuilder, fieldName, label, null);
-	}
-
-	private void _addClayTableSchemaField(
-		ClayTableSchemaBuilder clayTableSchemaBuilder, String fieldName,
-		String label, String contentRenderer) {
-
-		ClayTableSchemaField clayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(fieldName, label);
-
-		if (contentRenderer != null) {
-			clayTableSchemaField.setContentRenderer(contentRenderer);
-		}
 	}
 
 	@Reference
