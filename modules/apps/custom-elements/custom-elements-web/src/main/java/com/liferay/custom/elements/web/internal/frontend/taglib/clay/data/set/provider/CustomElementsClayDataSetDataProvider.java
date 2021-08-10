@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.provider.key=" + CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES,
 	service = ClayDataSetDataProvider.class
 )
-public class CustomElementsAdminClayDataSetDataProvider
+public class CustomElementsClayDataSetDataProvider
 	implements ClayDataSetDataProvider<CustomElementsSourceClayDataSetEntry> {
 
 	@Override

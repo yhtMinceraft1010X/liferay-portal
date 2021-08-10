@@ -16,7 +16,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
-import com.liferay.custom.elements.web.internal.display.context.CustomElementsAdminDisplayContext;
+import com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -36,8 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class CustomElementsAdminViewMVCRenderCommand
-	implements MVCRenderCommand {
+public class CustomElementsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -46,8 +45,7 @@ public class CustomElementsAdminViewMVCRenderCommand
 
 		renderRequest.setAttribute(
 			CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT,
-			new CustomElementsAdminDisplayContext(
-				renderRequest, renderResponse));
+			new CustomElementsDisplayContext(renderRequest, renderResponse));
 
 		return "/custom_elements/view.jsp";
 	}

@@ -17,7 +17,7 @@
 <%@ include file="/custom_elements/init.jsp" %>
 
 <%
-CustomElementsAdminDisplayContext customElementsAdminDisplayContext = (CustomElementsAdminDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT);
+CustomElementsDisplayContext customElementsAdminDisplayContext = (CustomElementsDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT);
 %>
 
 <clay:data-set-display

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class CustomElementsAdminPanelApp extends BasePanelApp {
+public class CustomElementsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

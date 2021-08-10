@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class CustomElementsAdminDisplayContext {
+public class CustomElementsDisplayContext {
 
-	public CustomElementsAdminDisplayContext(
+	public CustomElementsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;

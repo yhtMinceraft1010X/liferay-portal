@@ -17,7 +17,7 @@ package com.liferay.custom.elements.web.internal.portlet.action;
 import com.liferay.custom.elements.constants.CustomElementsPortletKeys;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys;
-import com.liferay.custom.elements.web.internal.display.context.CustomElementsAdminDisplayContext;
+import com.liferay.custom.elements.web.internal.display.context.CustomElementsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -49,8 +49,7 @@ public class EditCustomElementsSourceMVCRenderCommand
 
 		renderRequest.setAttribute(
 			CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT,
-			new CustomElementsAdminDisplayContext(
-				renderRequest, renderResponse));
+			new CustomElementsDisplayContext(renderRequest, renderResponse));
 
 		try {
 			long customElementsSourceId = ParamUtil.getLong(

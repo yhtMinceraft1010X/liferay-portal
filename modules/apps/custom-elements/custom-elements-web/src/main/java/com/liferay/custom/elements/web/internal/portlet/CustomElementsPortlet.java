@@ -45,5 +45,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class CustomElementsAdminPortlet extends MVCPortlet {
+public class CustomElementsPortlet extends MVCPortlet {
 }
