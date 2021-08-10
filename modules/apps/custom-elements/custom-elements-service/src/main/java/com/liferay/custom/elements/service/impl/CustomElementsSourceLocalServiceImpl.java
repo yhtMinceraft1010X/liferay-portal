@@ -65,6 +65,11 @@ public class CustomElementsSourceLocalServiceImpl
 	}
 
 	@Override
+	public List<CustomElementsSource> getCustomElementsSources(long companyId) {
+		return customElementsSourcePersistence.findByCompanyId(companyId);
+	}
+
+	@Override
 	public List<CustomElementsSource> search(
 		String keywords, int start, int end, Sort sort) {
 

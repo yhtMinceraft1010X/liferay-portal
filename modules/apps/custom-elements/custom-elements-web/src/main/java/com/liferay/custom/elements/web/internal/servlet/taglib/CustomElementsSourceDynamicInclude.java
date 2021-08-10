@@ -16,8 +16,9 @@ package com.liferay.custom.elements.web.internal.servlet.taglib;
 
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,9 +45,13 @@ public class CustomElementsSourceDynamicInclude implements DynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		List<CustomElementsSource> customElementsSources =
 			_customElementsSourceLocalService.getCustomElementsSources(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				themeDisplay.getCompanyId());
 
 		for (CustomElementsSource customElementsSource :
 				customElementsSources) {
