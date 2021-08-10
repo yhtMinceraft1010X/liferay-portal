@@ -62,7 +62,8 @@ public class EditCustomElementsSourceMVCActionCommand
 
 		if (cmd.equals(Constants.ADD)) {
 			_customElementsSourceLocalService.addCustomElementsSource(
-				htmlElementName, name, url, serviceContext);
+				serviceContext.getUserId(), htmlElementName, name, url,
+				serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			_customElementsSourceLocalService.updateCustomElementsSource(

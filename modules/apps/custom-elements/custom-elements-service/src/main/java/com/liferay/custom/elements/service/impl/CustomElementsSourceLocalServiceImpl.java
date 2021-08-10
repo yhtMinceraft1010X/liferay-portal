@@ -41,7 +41,7 @@ public class CustomElementsSourceLocalServiceImpl
 
 	@Override
 	public CustomElementsSource addCustomElementsSource(
-			String htmlElementName, String name, String url,
+			long userId, String htmlElementName, String name, String url,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -52,7 +52,7 @@ public class CustomElementsSourceLocalServiceImpl
 
 		customElementsSource.setUuid(serviceContext.getUuid());
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
 		customElementsSource.setUserId(user.getUserId());
 		customElementsSource.setUserName(user.getFullName());
