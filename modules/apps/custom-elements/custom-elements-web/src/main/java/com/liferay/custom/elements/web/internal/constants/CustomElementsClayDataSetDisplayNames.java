@@ -15,14 +15,10 @@
 package com.liferay.custom.elements.web.internal.constants;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Brian Wing Shun Chan
  */
-public class CustomElementsWebKeys {
+public class CustomElementsClayDataSetDisplayNames {
 
-	public static final String CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT =
-		"CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT";
-
-	public static final String CUSTOM_ELEMENTS_SOURCE =
-		"CUSTOM_ELEMENTS_SOURCE";
+	public static final String CUSTOM_ELEMENT_SOURCES = "customElementSources";
 
 }

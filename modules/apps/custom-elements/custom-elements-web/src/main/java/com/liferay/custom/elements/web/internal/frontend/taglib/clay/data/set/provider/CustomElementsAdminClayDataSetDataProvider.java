@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "clay.data.provider.key=" + CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DATA_SET_DISPLAY,
+	property = "clay.data.provider.key=" + CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES,
 	service = ClayDataSetDataProvider.class
 )
 public class CustomElementsAdminClayDataSetDataProvider

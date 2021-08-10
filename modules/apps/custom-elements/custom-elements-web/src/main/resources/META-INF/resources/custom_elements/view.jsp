@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/custom_elements/init.jsp" %>
 
 <%
 CustomElementsAdminDisplayContext customElementsAdminDisplayContext = (CustomElementsAdminDisplayContext)renderRequest.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DISPLAY_CONTEXT);
@@ -23,9 +23,9 @@ CustomElementsAdminDisplayContext customElementsAdminDisplayContext = (CustomEle
 <clay:data-set-display
 	actionParameterName="customElementsSourceEntryId"
 	creationMenu="<%= customElementsAdminDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DATA_SET_DISPLAY %>"
+	dataProviderKey="<%= CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES %>"
 	formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'
-	id="<%= CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DATA_SET_DISPLAY %>"
+	id="<%= CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

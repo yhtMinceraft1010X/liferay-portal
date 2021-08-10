@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-
+import com.liferay.custom.elements.web.internal.constants.CustomElementsClayDataSetDisplayNames;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "clay.data.set.display.name=" + CustomElementsWebKeys.CUSTOM_ELEMENTS_ADMIN_DATA_SET_DISPLAY,
+	property = "clay.data.set.display.name=" + CustomElementsClayDataSetDisplayNames.CUSTOM_ELEMENT_SOURCES,
 	service = ClayDataSetDisplayView.class
 )
 public class CustomElementsSourceTableClayDataSetDisplayView
