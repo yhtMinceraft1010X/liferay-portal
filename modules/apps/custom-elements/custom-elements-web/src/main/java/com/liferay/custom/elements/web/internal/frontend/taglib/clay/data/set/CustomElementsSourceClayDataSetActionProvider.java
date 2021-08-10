@@ -68,17 +68,15 @@ public class CustomElementsSourceClayDataSetActionProvider
 						_getRenderURL(httpServletRequest)
 					).setMVCRenderCommandName(
 						"/custom_elements/edit_custom_elements_source"
+					).setRedirect(
+						ParamUtil.getString(
+						httpServletRequest, "currentURL",
+						_portal.getCurrentURL(httpServletRequest))
 					).setParameter(
 						"customElementsSourceId",
 						customElementsSourceClayDataSetEntry.
 							getCustomElementsSourceId()
 					).buildPortletURL();
-
-				editCustomElementsSourceURL.setParameter(
-					"redirect",
-					ParamUtil.getString(
-						httpServletRequest, "currentURL",
-						_portal.getCurrentURL(httpServletRequest)));
 
 				dropdownItem.setHref(editCustomElementsSourceURL);
 
