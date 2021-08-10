@@ -137,15 +137,6 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectField.getObjectDefinitionId());
-
-		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			objectField.setDBTableName(
-				objectDefinition.getExtensionDBTableName());
-		}
-
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setIndexedLanguageId(indexedLanguageId);
