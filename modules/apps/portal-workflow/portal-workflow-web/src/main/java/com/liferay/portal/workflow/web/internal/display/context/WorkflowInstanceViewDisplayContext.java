@@ -330,10 +330,10 @@ public class WorkflowInstanceViewDisplayContext
 			workflowInstanceRequestHelper.getLiferayPortletResponse()
 		).setNavigation(
 			() -> {
-				String instanceNavigation = getNavigation();
+				String navigation = getNavigation();
 
-				if (Validator.isNotNull(instanceNavigation)) {
-					return instanceNavigation;
+				if (Validator.isNotNull(navigation)) {
+					return navigation;
 				}
 
 				return null;
