@@ -652,7 +652,7 @@ function CollectionFilterConfigurationModal({
 											<span className="component-text">
 												{Liferay.Util.sub(
 													Liferay.Language.get(
-														'x-results-using-the-current-filter'
+														'there-are-x-results-using-the-current-filter'
 													),
 													totalNumberOfItems
 												)}
