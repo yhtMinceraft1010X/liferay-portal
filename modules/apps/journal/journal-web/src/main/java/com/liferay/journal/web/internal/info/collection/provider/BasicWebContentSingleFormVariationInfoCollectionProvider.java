@@ -123,7 +123,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoForm getConfigurationInfoForm() {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
-			_getTagsInfoField()
+			_getAssetTagsInfoField()
 		).infoFieldSetEntry(
 			InfoField.builder(
 			).infoFieldType(
@@ -230,7 +230,7 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		return searchContext;
 	}
 
-	private InfoField _getTagsInfoField() {
+	private InfoField _getAssetTagsInfoField() {
 		List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
 		ServiceContext serviceContext =
