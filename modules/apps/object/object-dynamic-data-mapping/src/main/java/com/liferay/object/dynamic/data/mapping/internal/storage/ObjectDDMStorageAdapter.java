@@ -156,25 +156,23 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	private Value _getDDMFormFieldValue(
 		DDMFormField ddmFormField, Map<String, DDMFormField> ddmFormFieldsMap,
-		Locale defaultLocale, Map<String, Object> properties) {
+		Locale locale, Map<String, Object> properties) {
 
-		Value value = new LocalizedValue(defaultLocale);
+		Value value = new LocalizedValue(locale);
 
 		Object objectFieldValue = properties.get(
 			_getObjectFieldName(ddmFormFieldsMap.get(ddmFormField.getName())));
 
 		if (objectFieldValue instanceof Double) {
-			NumberFormat numberFormat = NumberFormat.getInstance(defaultLocale);
+			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
-			value.addString(
-				defaultLocale, numberFormat.format(objectFieldValue));
+			value.addString(locale, numberFormat.format(objectFieldValue));
 		}
 		else if (objectFieldValue instanceof byte[]) {
-			value.addString(
-				defaultLocale, new String((byte[])objectFieldValue));
+			value.addString(locale, new String((byte[])objectFieldValue));
 		}
 		else {
-			value.addString(defaultLocale, String.valueOf(objectFieldValue));
+			value.addString(locale, String.valueOf(objectFieldValue));
 		}
 
 		return value;
@@ -182,7 +180,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	private List<DDMFormFieldValue> _getDDMFormFieldValues(
 		List<DDMFormField> ddmFormFields,
-		Map<String, DDMFormField> ddmFormFieldsMap, Locale defaultLocale,
+		Map<String, DDMFormField> ddmFormFieldsMap, Locale locale,
 		Map<String, Object> properties) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
@@ -196,7 +194,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					ddmFormFieldValues.addAll(
 						_getDDMFormFieldValues(
 							ddmFormField.getNestedDDMFormFields(),
-							ddmFormFieldsMap, defaultLocale, properties));
+							ddmFormFieldsMap, locale, properties));
 				}
 
 				DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -205,8 +203,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 				ddmFormFieldValue.setValue(
 					_getDDMFormFieldValue(
-						ddmFormField, ddmFormFieldsMap, defaultLocale,
-						properties));
+						ddmFormField, ddmFormFieldsMap, locale, properties));
 
 				ddmFormFieldValues.add(ddmFormFieldValue);
 			});
@@ -311,7 +308,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 	}
 
 	private Object _getValue(
-			Locale defaultLocale, String objectFieldType, String value)
+			Locale locale, String objectFieldType, String value)
 		throws ParseException {
 
 		if (Objects.equals(objectFieldType, "BigDecimal")) {
@@ -324,7 +321,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			return GetterUtil.getBoolean(value);
 		}
 		else if (Objects.equals(objectFieldType, "Double")) {
-			NumberFormat numberFormat = NumberFormat.getInstance(defaultLocale);
+			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 			return GetterUtil.getDouble(numberFormat.parse(value));
 		}
