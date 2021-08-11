@@ -44,46 +44,46 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 		throws ModelListenerException {
 
 		try {
-			long classNameId = ddmStructure.getClassNameId();
-
-			if (classNameId == _portal.getClassNameId(
-					DLFileEntryMetadata.class)) {
-
-				_deDataDefinitionFieldLinkLocalService.
-					deleteDEDataDefinitionFieldLinks(
-						_portal.getClassNameId(DDMStructure.class),
-						ddmStructure.getStructureId());
-
-				List<DDMStructureVersion> ddmStructureVersions =
-					_ddmStructureVersionLocalService.getStructureVersions(
-						ddmStructure.getStructureId());
-
-				for (DDMStructureVersion ddmStructureVersion :
-						ddmStructureVersions) {
-
-					List<DDMStructureLayout> ddmStructureLayouts =
-						_ddmStructureLayoutLocalService.getStructureLayouts(
-							ddmStructure.getGroupId(), classNameId,
-							ddmStructureVersion.getStructureVersionId());
-
-					for (DDMStructureLayout ddmStructureLayout :
-							ddmStructureLayouts) {
-
-						_deDataDefinitionFieldLinkLocalService.
-							deleteDEDataDefinitionFieldLinks(
-								_portal.getClassNameId(
-									DDMStructureLayout.class),
-								ddmStructureLayout.getStructureLayoutId());
-					}
-				}
-
-				_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
-					ddmStructure.getStructureId());
-			}
+			_onBeforeRemove(ddmStructure);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
+	}
+
+	private void _onBeforeRemove(DDMStructure ddmStructure)
+		throws PortalException {
+
+		long classNameId = ddmStructure.getClassNameId();
+
+		if (classNameId != _portal.getClassNameId(DLFileEntryMetadata.class)) {
+			return;
+		}
+
+		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
+			_portal.getClassNameId(DDMStructure.class),
+			ddmStructure.getStructureId());
+
+		List<DDMStructureVersion> ddmStructureVersions =
+			_ddmStructureVersionLocalService.getStructureVersions(
+				ddmStructure.getStructureId());
+
+		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+			List<DDMStructureLayout> ddmStructureLayouts =
+				_ddmStructureLayoutLocalService.getStructureLayouts(
+					ddmStructure.getGroupId(), classNameId,
+					ddmStructureVersion.getStructureVersionId());
+
+			for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
+				_deDataDefinitionFieldLinkLocalService.
+					deleteDEDataDefinitionFieldLinks(
+						_portal.getClassNameId(DDMStructureLayout.class),
+						ddmStructureLayout.getStructureLayoutId());
+			}
+		}
+
+		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
+			ddmStructure.getStructureId());
 	}
 
 	@Reference
