@@ -367,7 +367,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				_portal.getScopeGroupId(actionRequest)),
 			commerceOrder.getCommerceAccountId());
-
 		_commerceOrderHttpHelper.setCurrentCommerceOrder(
 			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 
