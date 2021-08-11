@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -40,6 +41,26 @@ import java.util.Map;
  */
 public class DynamicObjectDefinitionTable
 	extends BaseTable<DynamicObjectDefinitionTable> {
+
+	public static String getDataType(String type) {
+		String dataType = _dataTypes.get(type);
+
+		if (dataType == null) {
+			throw new IllegalArgumentException("Invalid type " + type);
+		}
+
+		return dataType;
+	}
+
+	public static String getSQLColumnNull(String type) {
+		if (type.equals("BigDecimal") || type.equals("Date") ||
+			type.equals("Map") || type.equals("String")) {
+
+			return " null";
+		}
+
+		return StringPool.BLANK;
+	}
 
 	public DynamicObjectDefinitionTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
@@ -89,22 +110,8 @@ public class DynamicObjectDefinitionTable
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
-
-			String type = objectField.getType();
-
-			String dataType = _dataTypes.get(type);
-
-			if (dataType == null) {
-				throw new IllegalArgumentException("Invalid type " + type);
-			}
-
-			sb.append(dataType);
-
-			if (type.equals("BigDecimal") || type.equals("Date") ||
-				type.equals("Map") || type.equals("String")) {
-
-				sb.append(" null");
-			}
+			sb.append(getDataType(objectField.getType()));
+			sb.append(getSQLColumnNull(objectField.getType()));
 		}
 
 		sb.append(");");

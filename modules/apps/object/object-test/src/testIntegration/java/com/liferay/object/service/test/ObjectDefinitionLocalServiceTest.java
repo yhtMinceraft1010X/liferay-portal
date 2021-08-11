@@ -191,6 +191,12 @@ public class ObjectDefinitionLocalServiceTest {
 					_createObjectField("Able", "able", "String"),
 					_createObjectField("Baker", "baker", "String")));
 
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), false, false, null,
+			Collections.singletonMap(LocaleUtil.US, "Charlie"), "charlie", true,
+			"String");
+
 		// Before publish, database table
 
 		Assert.assertEquals(
@@ -232,6 +238,12 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), false, false, null,
+			Collections.singletonMap(LocaleUtil.US, "Dog"), "dog", true,
+			"String");
+
 		// After publish, database table
 
 		Assert.assertEquals(
@@ -242,6 +254,16 @@ public class ObjectDefinitionLocalServiceTest {
 			false, _hasColumn(objectDefinition.getDBTableName(), "baker"));
 		Assert.assertEquals(
 			true, _hasColumn(objectDefinition.getDBTableName(), "baker_"));
+		Assert.assertEquals(
+			false, _hasColumn(objectDefinition.getDBTableName(), "charlie"));
+		Assert.assertEquals(
+			true, _hasColumn(objectDefinition.getDBTableName(), "charlie_"));
+		Assert.assertEquals(
+			false,
+			_hasColumn(objectDefinition.getExtensionDBTableName(), "dog"));
+		Assert.assertEquals(
+			true,
+			_hasColumn(objectDefinition.getExtensionDBTableName(), "dog_"));
 		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
 		Assert.assertEquals(
 			true, _hasTable(objectDefinition.getExtensionDBTableName()));
@@ -574,8 +596,20 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), null, _labelMap, "Test", null,
 				null, 1, Collections.<ObjectField>emptyList());
 
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), false, false, null,
+			Collections.singletonMap(LocaleUtil.US, "Able"), "able", true,
+			"String");
+
 		// Database table
 
+		Assert.assertEquals(
+			false,
+			_hasColumn(objectDefinition.getExtensionDBTableName(), "able"));
+		Assert.assertEquals(
+			true,
+			_hasColumn(objectDefinition.getExtensionDBTableName(), "able_"));
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getDBTableName()));
 		Assert.assertEquals(

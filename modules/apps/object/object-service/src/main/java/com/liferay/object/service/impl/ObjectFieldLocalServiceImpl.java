@@ -20,13 +20,17 @@ import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.exception.ReservedObjectFieldException;
+import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -74,10 +78,18 @@ public class ObjectFieldLocalServiceImpl
 			dbTableName = objectDefinition.getExtensionDBTableName();
 		}
 
-		return _addObjectField(
+		ObjectField objectField = _addObjectField(
 			userId, objectDefinitionId, name + StringPool.UNDERLINE,
 			dbTableName, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
 			name, required, type);
+
+		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			runSQL(
+				_getAlterTableAddColumnSQL(
+					dbTableName, objectField.getDBColumnName(), type));
+		}
+
+		return objectField;
 	}
 
 	@Override
@@ -200,6 +212,32 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
+	/**
+	 * @see com.liferay.portal.kernel.upgrade.UpgradeProcess#AlterTableAddColumn
+	 */
+	private String _getAlterTableAddColumnSQL(
+		String tableName, String columnName, String type) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("alter table ");
+		sb.append(tableName);
+		sb.append(" add ");
+		sb.append(columnName);
+		sb.append(StringPool.SPACE);
+		sb.append(DynamicObjectDefinitionTable.getDataType(type));
+		sb.append(DynamicObjectDefinitionTable.getSQLColumnNull(type));
+		sb.append(StringPool.SEMICOLON);
+
+		String sql = sb.toString();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("SQL: " + sql);
+		}
+
+		return sql;
+	}
+
 	private void _validateIndexed(
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			String type)
@@ -270,6 +308,9 @@ public class ObjectFieldLocalServiceImpl
 			throw new DuplicateObjectFieldException("Duplicate name " + name);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectFieldLocalServiceImpl.class);
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
