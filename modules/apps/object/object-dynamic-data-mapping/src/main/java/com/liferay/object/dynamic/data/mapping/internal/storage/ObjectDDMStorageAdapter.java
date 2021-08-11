@@ -220,12 +220,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(ddmForm.getDefaultLocale());
-
 		ddmFormValues.setDDMFormFieldValues(
 			_getDDMFormFieldValues(
 				ddmForm.getDDMFormFields(), ddmForm.getDDMFormFieldsMap(true),
 				ddmForm.getDefaultLocale(), objectEntry.getProperties()));
-
 		ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
 
 		return ddmFormValues;
