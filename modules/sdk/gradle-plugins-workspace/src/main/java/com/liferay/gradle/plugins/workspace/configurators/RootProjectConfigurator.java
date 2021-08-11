@@ -169,14 +169,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	public RootProjectConfigurator(Settings settings) {
+		_bundleCheckSumMD5 = GradleUtil.getProperty(
+			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.checksum.md5",
+			null);
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + "default.repository.enabled",
 			_DEFAULT_REPOSITORY_ENABLED);
-
-		_userBundleCheckSumMD5 = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.checksum.md5",
-			null);
 	}
 
 	@Override
@@ -1172,7 +1171,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							workspaceExtension.getBundleUrl(),
 							workspaceExtension.getDefaultBundleUrl())) {
 
-						if (Objects.nonNull(_userBundleCheckSumMD5)) {
+						if (Objects.nonNull(_bundleCheckSumMD5)) {
 							return true;
 						}
 
@@ -1508,7 +1507,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
 		"100_liferay_image_setup.sh";
 
+	private String _bundleCheckSumMD5;
 	private boolean _defaultRepositoryEnabled;
-	private String _userBundleCheckSumMD5;
 
 }
