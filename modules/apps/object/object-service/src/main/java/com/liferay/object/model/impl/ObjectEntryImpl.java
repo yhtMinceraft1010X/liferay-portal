@@ -32,9 +32,6 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
 	public Map<String, Serializable> getValues() {
-
-		// TODO Cache does not work for ObjectEntryLocalServiceTest#_getValues
-
 		if (_values == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Get values for object entry " + getObjectEntryId());

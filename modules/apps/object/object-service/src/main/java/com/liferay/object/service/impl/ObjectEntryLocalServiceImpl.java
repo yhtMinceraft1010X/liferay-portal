@@ -302,9 +302,13 @@ public class ObjectEntryLocalServiceImpl
 			_getExtensionDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId());
 
+		Expression<?>[] selectExpressions = ArrayUtil.append(
+			dynamicObjectDefinitionTable.getSelectExpressions(),
+			extensionDynamicObjectDefinitionTable.getSelectExpressions());
+
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
-				dynamicObjectDefinitionTable.getSelectExpressions()
+				selectExpressions
 			).from(
 				dynamicObjectDefinitionTable
 			).innerJoinON(
@@ -319,7 +323,7 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId()
 				)
 			),
-			dynamicObjectDefinitionTable);
+			selectExpressions);
 
 		if (ListUtil.isEmpty(rows)) {
 			throw new ObjectEntryValuesException(
@@ -327,7 +331,7 @@ public class ObjectEntryLocalServiceImpl
 					objectEntry.getObjectEntryId());
 		}
 
-		return _getValues(dynamicObjectDefinitionTable, rows.get(0));
+		return _getValues(rows.get(0), selectExpressions);
 	}
 
 	@Override
@@ -339,6 +343,10 @@ public class ObjectEntryLocalServiceImpl
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+
+		Expression<?>[] selectExpressions = ArrayUtil.append(
+			dynamicObjectDefinitionTable.getSelectExpressions(),
+			extensionDynamicObjectDefinitionTable.getSelectExpressions());
 
 		Predicate predicate = ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 			objectDefinitionId);
@@ -358,7 +366,7 @@ public class ObjectEntryLocalServiceImpl
 
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
-				dynamicObjectDefinitionTable.getSelectExpressions()
+				selectExpressions
 			).from(
 				dynamicObjectDefinitionTable
 			).innerJoinON(
@@ -376,14 +384,14 @@ public class ObjectEntryLocalServiceImpl
 			).limit(
 				start, end
 			),
-			dynamicObjectDefinitionTable);
+			selectExpressions);
 
 		List<Map<String, Serializable>> valuesList = new ArrayList<>(
 			rows.size());
 
 		for (Object[] objects : rows) {
 			Map<String, Serializable> values = _getValues(
-				dynamicObjectDefinitionTable, objects);
+				objects, selectExpressions);
 
 			valuesList.add(values);
 		}
@@ -646,13 +654,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Map<String, Serializable> _getValues(
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-		Object[] objects) {
+		Object[] objects, Expression<?>[] selectExpressions) {
 
 		Map<String, Serializable> values = new HashMap<>();
-
-		Expression<?>[] selectExpressions =
-			dynamicObjectDefinitionTable.getSelectExpressions();
 
 		for (int i = 0; i < selectExpressions.length; i++) {
 			Column<?, ?> column = (Column<?, ?>)selectExpressions[i];
@@ -769,9 +773,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _list(
-			Connection connection, DSLQuery dslQuery,
-			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-			List<Object[]> results)
+			Connection connection, DSLQuery dslQuery, List<Object[]> results,
+			Expression<?>[] selectExpressions)
 		throws SQLException {
 
 		DefaultASTNodeListener defaultASTNodeListener =
@@ -786,9 +789,6 @@ public class ObjectEntryLocalServiceImpl
 			for (int i = 0; i < scalarValues.size(); i++) {
 				preparedStatement.setObject(i + 1, scalarValues.get(i));
 			}
-
-			Expression<?>[] selectExpressions =
-				dynamicObjectDefinitionTable.getSelectExpressions();
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -814,8 +814,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private List<Object[]> _list(
-		DSLQuery dslQuery,
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable) {
+		DSLQuery dslQuery, Expression<?>[] selectExpressions) {
 
 		List<Object[]> results = new ArrayList<>();
 
@@ -824,8 +823,7 @@ public class ObjectEntryLocalServiceImpl
 		try {
 			session.apply(
 				connection -> _list(
-					connection, dslQuery, dynamicObjectDefinitionTable,
-					results));
+					connection, dslQuery, results, selectExpressions));
 		}
 		finally {
 			objectEntryPersistence.closeSession(session);

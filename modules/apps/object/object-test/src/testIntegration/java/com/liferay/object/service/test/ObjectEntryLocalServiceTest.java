@@ -128,16 +128,23 @@ public class ObjectEntryLocalServiceTest {
 						true, false, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					_createObjectField(
-						false, false, "Portrait", "portrait", false, "Blob"),
-					_createObjectField(
-						true, false, "Speed", "speed", false, "BigDecimal"),
-					_createObjectField(
-						true, false, "Weight", "weight", false, "Double")));
+						false, false, "Portrait", "portrait", false, "Blob")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
+
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true, false, null,
+			Collections.singletonMap(LocaleUtil.US, "Speed"), "speed", false,
+			"BigDecimal");
+		ObjectFieldLocalServiceUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true, false, null,
+			Collections.singletonMap(LocaleUtil.US, "Weight"), "weight", false,
+			"Double");
 	}
 
 	@Test
@@ -925,11 +932,6 @@ public class ObjectEntryLocalServiceTest {
 
 	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
 		throws Exception {
-
-		// TODO
-
-		//objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
-		//	objectEntry.getObjectEntryId());
 
 		return objectEntry.getValues();
 	}
