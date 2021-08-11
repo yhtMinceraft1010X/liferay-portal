@@ -127,22 +127,19 @@ public class InfoFormUtil {
 						infoField.getAttributeOptional(
 							SelectInfoFieldType.MULTIPLE);
 
-					Boolean multiple = multipleOptional.orElse(false);
-
-					JSONArray validValuesJSONArray = JSONUtil.toJSONArray(
-						options,
-						option -> JSONUtil.put(
-							"label", String.valueOf(option.getLabel())
-						).put(
-							"value", String.valueOf(option.getValue())
-						));
-
 					jsonObject.put(
 						"typeOptions",
 						JSONUtil.put(
-							"multiSelect", multiple
+							"multiSelect", multipleOptional.orElse(false)
 						).put(
-							"validValues", validValuesJSONArray
+							"validValues",
+							JSONUtil.toJSONArray(
+								options,
+								option -> JSONUtil.put(
+									"label", String.valueOf(option.getLabel())
+								).put(
+									"value", String.valueOf(option.getValue())
+								))
 						));
 				}
 				catch (Exception exception) {
