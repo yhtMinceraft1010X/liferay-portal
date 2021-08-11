@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.service.internal.upgrade.v1_0_0;
+package com.liferay.image.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
