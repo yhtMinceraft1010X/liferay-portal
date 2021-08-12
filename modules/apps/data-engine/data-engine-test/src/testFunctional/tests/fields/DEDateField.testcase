@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that is possible to delete the field"
+	@description = "This is a test for LRQA-68598. This test verifies that is possible to delete the field."
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -54,7 +54,7 @@ definition {
 		DEBuilder.assertFieldNotPresent(fieldLabel = "Date");
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that is possible to duplicate the field"
+	@description = "This is a test for LRQA-68598. This test verifies that is possible to duplicate the field."
 	@priority = "4"
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
@@ -80,7 +80,7 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that upon clicking the calendar icon on the Date field the calendar widget is displayed"
+	@description = "This is a test for LRQA-69097. This test verifies that upon clicking the calendar icon on the Date field the calendar widget is displayed."
 	@priority = "4"
 	test CanCalendarBeClicked {
 		NavItem.gotoStructures();
@@ -115,7 +115,7 @@ definition {
 			value = "08/07/2021");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that edited data persists"
+	@description = "This is a test for LRQA-69097. This test verifies that edited data persists."
 	@priority = "5"
 	test CanEditData {
 		NavItem.gotoStructures();
@@ -155,7 +155,7 @@ definition {
 			value = "08/07/2021");
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that Label and Help text can be edited"
+	@description = "This is a test for LRQA-68598. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -192,7 +192,7 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that input data persists"
+	@description = "This is a test for LRQA-69097. This test verifies that input data persists."
 	@priority = "5"
 	test CanInputData {
 		NavItem.gotoStructures();
@@ -224,7 +224,7 @@ definition {
 			value = "08/06/2021");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
+	@description = "This is a test for LRQA-69097. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
@@ -272,7 +272,7 @@ definition {
 			value = "08/07/2021");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that is not possible to publish the Web Content with a required field blank"
+	@description = "This is a test for LRQA-69097. This test verifies that is not possible to publish the Web Content with a required field blank."
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -298,7 +298,7 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove a duplicated field (repeatable)"
+	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove a duplicated field (repeatable)."
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
@@ -336,7 +336,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove inputted data from the field"
+	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove inputted data from the field."
 	@priority = "4"
 	test CanRemoveInputtedData {
 		NavItem.gotoStructures();
@@ -376,7 +376,7 @@ definition {
 			value = "__/__/____");
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
+	@description = "This is a test for LRQA-68598. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEDateField#CanSetDefaultSearchablePropertyToDisable";
@@ -410,7 +410,7 @@ definition {
 			searchableType = "Disable");
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that Default Searchable property is Keyword when System Setting is checked"
+	@description = "This is a test for LRQA-68598. This test verifies that Default Searchable property is Keyword when System Setting is checked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToKeyword {
 		property test.name.skip.portal.instance = "DEDateField#CanSetDefaultSearchablePropertyToKeyword";
@@ -444,7 +444,7 @@ definition {
 			searchableType = "Keyword");
 	}
 
-	@description = "This is a test for LRQA-68598. This test verifies that Label and Help text can be set"
+	@description = "This is a test for LRQA-68598. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
