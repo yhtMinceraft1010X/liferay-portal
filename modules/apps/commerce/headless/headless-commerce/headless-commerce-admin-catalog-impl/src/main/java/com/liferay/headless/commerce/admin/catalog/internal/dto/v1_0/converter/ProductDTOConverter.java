@@ -224,16 +224,6 @@ public class ProductDTOConverter
 	}
 
 	private Category _toCategory(AssetCategory assetCategory) {
-		String assetVocabularyName = StringPool.BLANK;
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(
-				assetCategory.getVocabularyId());
-
-		if (assetVocabulary != null) {
-			assetVocabularyName = assetVocabulary.getName();
-		}
-
 		return new Category() {
 			{
 				externalReferenceCode =
@@ -241,7 +231,18 @@ public class ProductDTOConverter
 				id = assetCategory.getCategoryId();
 				name = assetCategory.getName();
 
-				setVocabulary(assetVocabularyName);
+				setVocabulary(
+					() -> {
+						AssetVocabulary assetVocabulary =
+							_assetVocabularyLocalService.fetchAssetVocabulary(
+								assetCategory.getVocabularyId());
+
+						if (assetVocabulary == null) {
+							return null;
+						}
+
+						return assetVocabulary.getName();
+					});
 			}
 		};
 	}
