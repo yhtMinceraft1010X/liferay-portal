@@ -68,7 +68,6 @@ public class EditDDMTemplateMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			DDMGroupServiceConfiguration.class.getName(),
 			_getDDMGroupServiceConfiguration(themeDisplay.getScopeGroupId()));
-
 		renderRequest.setAttribute(
 			DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 
