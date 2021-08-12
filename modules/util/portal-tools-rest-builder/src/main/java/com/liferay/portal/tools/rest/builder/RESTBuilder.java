@@ -209,6 +209,8 @@ public class RESTBuilder {
 				_checkOpenAPIYAMLFile(freeMarkerTool, file);
 			}
 			catch (Exception exception) {
+				_log.error(exception, exception);
+
 				throw new RuntimeException(
 					StringBundler.concat(
 						"Error in file \"", file.getName(), "\": ",
@@ -1254,6 +1256,10 @@ public class RESTBuilder {
 						responses.entrySet()) {
 
 					Response response = entry2.getValue();
+
+					if (response == null) {
+						continue;
+					}
 
 					Map<String, Content> contents = response.getContent();
 

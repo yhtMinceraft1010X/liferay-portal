@@ -638,6 +638,10 @@ public class ResourceOpenAPIParser {
 		Set<String> mediaTypes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 		for (Response response : responses.values()) {
+			if (response == null) {
+				continue;
+			}
+
 			Map<String, Content> contents = response.getContent();
 
 			if ((contents == null) || contents.isEmpty()) {

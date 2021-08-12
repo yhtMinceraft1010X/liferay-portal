@@ -182,6 +182,10 @@ public class OpenAPIParserUtil {
 					operation.getResponses();
 
 				for (Response response : responses.values()) {
+					if (response == null) {
+						continue;
+					}
+
 					_getExternalReferences(
 						response.getContent(), externalReferences, schemas);
 				}
