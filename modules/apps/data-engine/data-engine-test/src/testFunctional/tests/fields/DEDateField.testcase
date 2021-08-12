@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.duplicate(fieldFieldLabel = "Date");
@@ -162,8 +162,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.editFieldTip(
@@ -401,8 +401,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.viewFieldSearchable(
@@ -435,8 +435,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.viewFieldSearchable(
@@ -451,8 +451,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.editFieldTip(
@@ -476,8 +476,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Date",
+		DEBuilder.addField(
+			fieldLabel = "Date",
 			fieldName = "Date");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Date");
