@@ -161,9 +161,6 @@ public class OpenIdConnectServiceHandlerImpl
 					_portal.getCompanyId(httpServletRequest),
 					openIdConnectAuthenticationSession.getProviderName());
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
 		OIDCTokens oidcTokens = _requestTokensWithAuthCode(
 			authenticationSuccessResponse,
 			openIdConnectAuthenticationSession.getNonce(),
@@ -172,6 +169,9 @@ public class OpenIdConnectServiceHandlerImpl
 		UserInfo userInfo = _requestUserInfo(
 			oidcTokens.getAccessToken(),
 			openIdConnectProvider.getOIDCProviderMetadata());
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
 
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
 			userInfo, _portal.getCompanyId(httpServletRequest),
