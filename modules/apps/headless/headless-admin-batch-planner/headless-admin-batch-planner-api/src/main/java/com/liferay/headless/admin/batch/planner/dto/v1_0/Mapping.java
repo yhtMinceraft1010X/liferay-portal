@@ -51,7 +51,7 @@ public class Mapping implements Serializable {
 		return ObjectMapperUtil.readValue(Mapping.class, json);
 	}
 
-	@Schema(description = "The name of external entity's field.")
+	@Schema
 	public String getExternalFieldName() {
 		return externalFieldName;
 	}
@@ -75,11 +75,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The name of external entity's field.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldName;
 
-	@Schema(description = "The type of external entity's field.")
+	@Schema
 	public String getExternalFieldType() {
 		return externalFieldType;
 	}
@@ -103,11 +103,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The type of external entity's field.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalFieldType;
 
-	@Schema(description = "The mapping's ID.")
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -129,11 +129,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The mapping's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema(description = "The name of entity's field.")
+	@Schema
 	public String getInternalFieldName() {
 		return internalFieldName;
 	}
@@ -157,11 +157,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The name of entity's field.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldName;
 
-	@Schema(description = "The type of entity's field.")
+	@Schema
 	public String getInternalFieldType() {
 		return internalFieldType;
 	}
@@ -185,11 +185,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The type of entity's field.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalFieldType;
 
-	@Schema(description = "The plan's ID.")
+	@Schema
 	public Long getPlanId() {
 		return planId;
 	}
@@ -213,11 +213,11 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The plan's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long planId;
 
-	@Schema(description = "The mapping script.")
+	@Schema
 	public String getScript() {
 		return script;
 	}
@@ -241,7 +241,7 @@ public class Mapping implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The mapping script.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String script;
 

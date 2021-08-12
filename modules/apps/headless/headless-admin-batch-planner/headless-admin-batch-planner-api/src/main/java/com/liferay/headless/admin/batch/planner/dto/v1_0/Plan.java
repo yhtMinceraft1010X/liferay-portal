@@ -53,7 +53,7 @@ public class Plan implements Serializable {
 		return ObjectMapperUtil.readValue(Plan.class, json);
 	}
 
-	@Schema(description = "The status of a plan.")
+	@Schema
 	public Boolean getActive() {
 		return active;
 	}
@@ -77,13 +77,11 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The status of a plan.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
-	@Schema(
-		description = "Specifies if a plan is created for import or export task."
-	)
+	@Schema
 	public Boolean getExport() {
 		return export;
 	}
@@ -107,15 +105,11 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "Specifies if a plan is created for import or export task."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean export;
 
-	@Schema(
-		description = "The type of external entity that is being imported or exported."
-	)
+	@Schema
 	public String getExternalType() {
 		return externalType;
 	}
@@ -139,9 +133,7 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The type of external entity that is being imported or exported."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalType;
 
@@ -173,7 +165,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalURL;
 
-	@Schema(description = "The plan's ID.")
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -195,11 +187,11 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The plan's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema(description = "The entity class name.")
+	@Schema
 	public String getInternalClassName() {
 		return internalClassName;
 	}
@@ -223,7 +215,7 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The entity class name.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String internalClassName;
 
@@ -256,7 +248,7 @@ public class Plan implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Mapping[] mappings;
 
-	@Schema(description = "The name of a batch plan.")
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -278,7 +270,7 @@ public class Plan implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The name of a batch plan.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

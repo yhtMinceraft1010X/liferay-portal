@@ -84,7 +84,7 @@ public class Log implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dispatchTriggerExternalReferenceCode;
 
-	@Schema(description = "The external reference code of an export task.")
+	@Schema
 	public String getExportTaskExternalReferenceCode() {
 		return exportTaskExternalReferenceCode;
 	}
@@ -112,13 +112,11 @@ public class Log implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The external reference code of an export task."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String exportTaskExternalReferenceCode;
 
-	@Schema(description = "The plan log's ID.")
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -140,11 +138,11 @@ public class Log implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The plan log's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema(description = "The external reference code of an import task.")
+	@Schema
 	public String getImportTaskExternalReferenceCode() {
 		return importTaskExternalReferenceCode;
 	}
@@ -172,13 +170,11 @@ public class Log implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The external reference code of an import task."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String importTaskExternalReferenceCode;
 
-	@Schema(description = "The plan's ID.")
+	@Schema
 	public Long getPlanId() {
 		return planId;
 	}
@@ -202,7 +198,7 @@ public class Log implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The plan's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long planId;
 

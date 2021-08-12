@@ -51,7 +51,7 @@ public class Policy implements Serializable {
 		return ObjectMapperUtil.readValue(Policy.class, json);
 	}
 
-	@Schema(description = "The policy's ID.")
+	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -73,7 +73,7 @@ public class Policy implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The policy's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -103,7 +103,7 @@ public class Policy implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "The plan's ID.")
+	@Schema
 	public Long getPlanId() {
 		return planId;
 	}
@@ -127,7 +127,7 @@ public class Policy implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The plan's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long planId;
 

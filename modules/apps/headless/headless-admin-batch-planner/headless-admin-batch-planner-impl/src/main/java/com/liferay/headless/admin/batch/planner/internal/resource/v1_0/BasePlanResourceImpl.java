@@ -73,7 +73,6 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
 	 */
 	@GET
-	@Operation(description = "Retrieves the batch plans.")
 	@Override
 	@Parameters(
 		value = {
@@ -96,7 +95,6 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
-	@Operation(description = "Creates a new batch plan.")
 	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")}
@@ -120,7 +118,6 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
-	@Operation(description = "Deletes the plan.")
 	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
 	@Path("/plans/{planId}")
