@@ -358,7 +358,7 @@ public class PortletTracker
 				buildPortletModel(
 					portletApp, portletId, bundle,
 					(Long)serviceReference.getProperty(
-						"target.deployment.company"));
+						"com.liferay.portlet.company"));
 
 			portletModel.setPortletName(portletName);
 
@@ -1295,46 +1295,46 @@ public class PortletTracker
 		}
 
 		Long companyId = (Long)serviceReference.getProperty(
-			"target.deployment.company");
+			"com.liferay.portlet.company");
 
-		if (companyId == null) {
-			List<Future<Void>> futures = new ArrayList<>();
-
-			List<Company> companies = _companyLocalService.getCompanies(false);
-
-			_portletLocalService.clearCache();
-
-			for (Company company : companies) {
-				futures.add(
-					_executorService.submit(
-						() -> {
-							_portletLocalService.deployRemotePortlet(
-								new long[] {company.getCompanyId()},
-								portletModel,
-								ArrayUtil.toStringArray(categoryNames), false,
-								false);
-
-							return null;
-						}));
-			}
-
-			for (Future<Void> future : futures) {
-				try {
-					future.get();
-				}
-				catch (Exception exception) {
-					if (exception instanceof ExecutionException) {
-						throw new PortalException(exception.getCause());
-					}
-
-					throw new PortalException(exception);
-				}
-			}
-		}
-		else {
+		if (companyId != null) {
 			_portletLocalService.deployRemotePortlet(
 				new long[] {companyId}, portletModel,
 				ArrayUtil.toStringArray(categoryNames), false, false);
+
+			return;
+		}
+
+		List<Future<Void>> futures = new ArrayList<>();
+
+		List<Company> companies = _companyLocalService.getCompanies(false);
+
+		_portletLocalService.clearCache();
+
+		for (Company company : companies) {
+			futures.add(
+				_executorService.submit(
+					() -> {
+						_portletLocalService.deployRemotePortlet(
+							new long[] {company.getCompanyId()}, portletModel,
+							ArrayUtil.toStringArray(categoryNames), false,
+							false);
+
+						return null;
+					}));
+		}
+
+		for (Future<Void> future : futures) {
+			try {
+				future.get();
+			}
+			catch (Exception exception) {
+				if (exception instanceof ExecutionException) {
+					throw new PortalException(exception.getCause());
+				}
+
+				throw new PortalException(exception);
+			}
 		}
 	}
 
