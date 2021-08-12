@@ -1287,15 +1287,15 @@ public class PortletTracker
 			com.liferay.portal.kernel.model.Portlet portletModel)
 		throws PortalException {
 
+		Long companyId = (Long)serviceReference.getProperty(
+			"com.liferay.portlet.company");
+
 		List<String> categoryNames = StringPlus.asList(
 			get(serviceReference, "display-category"));
 
 		if (categoryNames.isEmpty()) {
 			categoryNames.add("category.undefined");
 		}
-
-		Long companyId = (Long)serviceReference.getProperty(
-			"com.liferay.portlet.company");
 
 		if (companyId != null) {
 			_portletLocalService.deployRemotePortlet(
