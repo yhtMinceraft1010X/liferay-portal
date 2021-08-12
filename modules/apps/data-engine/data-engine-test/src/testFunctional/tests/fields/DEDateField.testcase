@@ -80,41 +80,6 @@ definition {
 			fieldName = "Date");
 	}
 
-	@description = "This is a test for LRQA-69097. This test verifies that upon clicking the calendar icon on the Date field the calendar widget is displayed."
-	@priority = "4"
-	test CanCalendarBeClicked {
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Date",
-			fieldName = "Date");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		FormFields.editDateCalendar(
-			fieldName = "Date",
-			fieldValue = "08/07/2021",
-			valueDay = "7",
-			valueMonth = "August",
-			valueYear = "2021");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.assertDataInDateField(
-			fieldLabel = "Date",
-			value = "08/07/2021");
-	}
-
 	@description = "This is a test for LRQA-69097. This test verifies that edited data persists."
 	@priority = "5"
 	test CanEditData {
@@ -296,6 +261,41 @@ definition {
 		Button.clickPublish();
 
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+	}
+
+	@description = "This is a test for LRQA-69097. This test verifies that upon clicking the calendar icon on the Date field the calendar widget is displayed."
+	@priority = "4"
+	test CanPickDateUsingCalendarWidget {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		FormFields.editDateCalendar(
+			fieldName = "Date",
+			fieldValue = "08/07/2021",
+			valueDay = "7",
+			valueMonth = "August",
+			valueYear = "2021");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInDateField(
+			fieldLabel = "Date",
+			value = "08/07/2021");
 	}
 
 	@description = "This is a test for LRQA-69097. This test verifies that is possible to remove a duplicated field (repeatable)."
