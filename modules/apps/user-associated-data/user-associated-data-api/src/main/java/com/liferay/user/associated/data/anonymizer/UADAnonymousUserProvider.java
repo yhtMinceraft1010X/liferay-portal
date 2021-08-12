@@ -19,25 +19,13 @@ import com.liferay.portal.kernel.model.User;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides a way to create and validate an Anonymous User
  * @author Erick Monteiro
  */
 @ProviderType
 public interface UADAnonymousUserProvider {
 
-	/**
-	 * Get an anonymous user for a company. Creates the user if it does not exists.
-	 * @param  companyId the company ID
-	 * @return the anonymous user
-	 * @throws Exception if an exception occurred
-	 */
 	public User getAnonymousUser(long companyId) throws Exception;
 
-	/**
-	 * Check if the provided user is an anonymous user.
-	 * @param  user the user that will be checked
-	 * @return true if the user provided is an anonymous user, false otherwise
-	 */
 	public boolean isAnonymousUser(User user);
 
 }
