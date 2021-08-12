@@ -112,8 +112,8 @@ public class CPDefinitionDiagramPinServiceImpl
 
 	@Override
 	public CPDefinitionDiagramPin updateCPDefinitionDiagramPin(
-			long cpDefinitionDiagramPinId, double positionX,
-			double positionY, String sequence)
+			long cpDefinitionDiagramPinId, double positionX, double positionY,
+			String sequence)
 		throws PortalException {
 
 		CPDefinitionDiagramPin cpDefinitionDiagramPin =

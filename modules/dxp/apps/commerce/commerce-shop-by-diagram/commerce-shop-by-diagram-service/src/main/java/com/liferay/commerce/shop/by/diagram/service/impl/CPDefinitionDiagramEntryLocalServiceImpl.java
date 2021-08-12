@@ -157,8 +157,8 @@ public class CPDefinitionDiagramEntryLocalServiceImpl
 		cpDefinitionDiagramEntry.setCPInstanceUuid(cpInstanceUuid);
 		cpDefinitionDiagramEntry.setCProductId(cProductId);
 		cpDefinitionDiagramEntry.setDiagram(diagram);
-		cpDefinitionDiagramEntry.setSequence(sequence);
 		cpDefinitionDiagramEntry.setQuantity(quantity);
+		cpDefinitionDiagramEntry.setSequence(sequence);
 		cpDefinitionDiagramEntry.setSku(sku);
 		cpDefinitionDiagramEntry.setExpandoBridgeAttributes(serviceContext);
 

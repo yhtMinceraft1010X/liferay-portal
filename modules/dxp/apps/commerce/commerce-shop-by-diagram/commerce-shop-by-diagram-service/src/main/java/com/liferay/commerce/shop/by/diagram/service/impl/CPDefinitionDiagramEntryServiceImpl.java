@@ -46,8 +46,8 @@ public class CPDefinitionDiagramEntryServiceImpl
 	@Override
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long userId, long cpDefinitionId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number,
-			String sku, String sequence, ServiceContext serviceContext)
+			long cProductId, boolean diagram, int number, String sku,
+			String sequence, ServiceContext serviceContext)
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
@@ -140,8 +140,8 @@ public class CPDefinitionDiagramEntryServiceImpl
 	@Override
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number,
-			String sku, String sequence, ServiceContext serviceContext)
+			long cProductId, boolean diagram, int number, String sku,
+			String sequence, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
