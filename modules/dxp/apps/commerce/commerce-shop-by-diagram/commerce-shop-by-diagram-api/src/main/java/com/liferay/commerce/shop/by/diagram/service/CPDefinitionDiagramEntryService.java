@@ -54,8 +54,8 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 	 */
 	public CPDefinitionDiagramEntry addCPDefinitionDiagramEntry(
 			long userId, long cpDefinitionId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number, int quantity,
-			String sku, ServiceContext serviceContext)
+			long cProductId, boolean diagram, int number, String sku,
+			String sequence, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCPDefinitionDiagramEntry(long cpDefinitionDiagramEntryId)
@@ -63,7 +63,7 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionDiagramEntry fetchCPDefinitionDiagramEntry(
-			long cpDefinitionId, int number)
+			long cpDefinitionId, String sequence)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -82,7 +82,7 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionDiagramEntry getCPDefinitionDiagramEntry(
-			long cpDefinitionId, int number)
+			long cpDefinitionId, String sequence)
 		throws PortalException;
 
 	/**
@@ -94,8 +94,8 @@ public interface CPDefinitionDiagramEntryService extends BaseService {
 
 	public CPDefinitionDiagramEntry updateCPDefinitionDiagramEntry(
 			long cpDefinitionDiagramEntryId, String cpInstanceUuid,
-			long cProductId, boolean diagram, int number, int quantity,
-			String sku, ServiceContext serviceContext)
+			long cProductId, boolean diagram, int number, String sku,
+			String sequence, ServiceContext serviceContext)
 		throws PortalException;
 
 }
