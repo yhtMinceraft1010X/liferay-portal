@@ -217,14 +217,15 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String pathImage = themeDisplay.getPathImage();
-
 		if (StringUtil.startsWith(
-				currentLogoURL, pathImage + "/user_female_portrait") ||
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_female_portrait") ||
 			StringUtil.startsWith(
-				currentLogoURL, pathImage + "/user_male_portrait") ||
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_male_portrait") ||
 			StringUtil.startsWith(
-				currentLogoURL, pathImage + "/user_portrait")) {
+				currentLogoURL,
+				themeDisplay.getPathImage() + "/user_portrait")) {
 
 			return _userFileUploadsConfiguration.imageMaxSize();
 		}
