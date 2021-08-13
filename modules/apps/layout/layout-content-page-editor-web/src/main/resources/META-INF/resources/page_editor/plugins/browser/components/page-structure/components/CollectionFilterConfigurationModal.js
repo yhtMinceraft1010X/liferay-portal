@@ -242,7 +242,7 @@ const FilterInformationToolbar = ({
 								ref={filterInformationMessageElementRef}
 							>
 								{Liferay.Util.sub(
-									Liferay.Language.get('x-results-for-x'),
+									Liferay.Language.get('there-are-x-results-for-x'),
 									totalNumberOfItems,
 									filterInformationMessage
 								)}
