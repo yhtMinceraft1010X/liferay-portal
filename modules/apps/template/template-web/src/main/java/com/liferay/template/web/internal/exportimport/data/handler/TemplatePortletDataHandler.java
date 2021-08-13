@@ -146,12 +146,12 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
+		List<Long> classNameIds = _getClassNameIds(portletDataContext);
+
 		Element ddmTemplatesElement =
 			portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
 		List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
-
-		List<Long> classNameIds = _getClassNameIds(portletDataContext);
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
 			long classNameId = _portal.getClassNameId(
