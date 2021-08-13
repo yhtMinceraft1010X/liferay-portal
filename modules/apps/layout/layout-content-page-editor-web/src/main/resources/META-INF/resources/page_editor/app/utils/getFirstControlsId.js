@@ -32,7 +32,7 @@ export default function getFirstControlsId({itemId, layoutData}) {
 	const toControlsId = collectionItems.reduce(
 		(acc, collectionItemId) => {
 
-			// if the itemId correspond to a collectionId ignore it,
+			// If the itemId correspond to a collectionId ignore it,
 			// that id is only applied to the children not to the collection itself.
 
 			if (collectionItemId === itemId) {
