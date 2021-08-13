@@ -108,9 +108,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addFileEntries(long groupId, User user) throws Exception {
+	private void _addDocuments(long groupId, User user) throws Exception {
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			"/site-initializer/file-entries", "*", true);
+			"/site-initializer/documents", "*", true);
 
 		if (enumeration == null) {
 			return;
@@ -220,7 +220,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _initialize(long groupId, User user) throws Exception {
-		_addFileEntries(groupId, user);
+		_addDocuments(groupId, user);
 		_addObjectDefinitions(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
