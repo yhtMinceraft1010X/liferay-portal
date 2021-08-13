@@ -17,6 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.site.initializer.SiteInitializer;
@@ -35,6 +36,7 @@ public class SiteInitializerRegistrar {
 	public SiteInitializerRegistrar(
 		Bundle bundle, BundleContext bundleContext,
 		DocumentResource.Factory documentResourceFactory,
+		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
@@ -42,6 +44,7 @@ public class SiteInitializerRegistrar {
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_documentResourceFactory = documentResourceFactory;
+		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
@@ -55,7 +58,7 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_bundle, _documentResourceFactory,
+				_bundle, _documentResourceFactory, _jsonFactory,
 				_objectDefinitionResourceFactory, _servletContext,
 				_taxonomyVocabularyResourceFactory, _userLocalService),
 			MapUtil.singletonDictionary(
@@ -69,6 +72,7 @@ public class SiteInitializerRegistrar {
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private ServiceRegistration<?> _serviceRegistration;

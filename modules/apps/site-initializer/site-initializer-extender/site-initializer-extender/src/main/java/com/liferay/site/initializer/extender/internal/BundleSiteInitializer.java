@@ -20,6 +20,8 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -36,11 +38,12 @@ import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -54,6 +57,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		Bundle bundle, DocumentResource.Factory documentResourceFactory,
+		JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ServletContext servletContext,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
@@ -61,6 +65,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_bundle = bundle;
 		_documentResourceFactory = documentResourceFactory;
+		_jsonFactory = jsonFactory;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_servletContext = servletContext;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
@@ -109,10 +114,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDocuments(long groupId, User user) throws Exception {
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			"/site-initializer/documents", "*", true);
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/documents");
 
-		if (enumeration == null) {
+		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
 		}
 
@@ -123,22 +128,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 			user
 		).build();
 
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith("/")) {
 
-			String fileName = FileUtil.getShortFileName(url.getFile());
+				// TODO Recurse
 
-			byte[] bytes = FileUtil.getBytes(url.openStream());
+				continue;
+			}
 
-			MultipartBody multipartBody = MultipartBody.of(
-				Collections.singletonMap(
-					"file",
-					new BinaryFile(
-						MimeTypesUtil.getContentType(fileName), fileName,
-						url.openStream(), (long)bytes.length)),
-				null, Collections.emptyMap());
+			String fileName = FileUtil.getShortFileName(resourcePath);
 
-			documentResource.postSiteDocument(groupId, multipartBody);
+			URL url = _servletContext.getResource(resourcePath);
+
+			URLConnection urlConnection = url.openConnection();
+
+			Map<String, String> values = Collections.emptyMap();
+
+			String json = _read(resourcePath + "._si.json");
+
+			if (json != null) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+				for (String key : jsonObject.keySet()) {
+					values.put(key, jsonObject.getString(key));
+				}
+			}
+
+			documentResource.postSiteDocument(
+				groupId,
+				MultipartBody.of(
+					Collections.singletonMap(
+						"file",
+						new BinaryFile(
+							MimeTypesUtil.getContentType(fileName), fileName,
+							urlConnection.getInputStream(),
+							urlConnection.getContentLength())),
+					null, values));
 		}
 	}
 
@@ -235,6 +260,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private final Bundle _bundle;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final JSONFactory _jsonFactory;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ServletContext _servletContext;
