@@ -29,16 +29,7 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"
-	@ignore = "true"
-	@priority = "4"
-	test SegmentCriteriasNestCorrectlyInTheCriteriaCard {
-
-		// TODO LRAC-8497
-
-	}
-
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8498 | Test Summary: Link to view all criteria allows the user to scroll down and see more"
 	@ignore = "true"
 	@priority = "4"
 	test LinkToViewAllCriteriaAllowsUserScrollDownAndSeeMore {
@@ -47,5 +38,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"
+	@ignore = "true"
+	@priority = "4"
+	test SegmentCriteriasNestCorrectlyInTheCriteriaCard {
+
+		// TODO LRAC-8497
+
+	}
 
 }
