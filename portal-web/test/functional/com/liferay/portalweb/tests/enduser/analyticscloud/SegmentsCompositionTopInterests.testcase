@@ -29,16 +29,7 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8500 | Test Summary: List of interests appears as bar graphs with percentage of interested members"
-	@ignore = "true"
-	@priority = "5"
-	test ViewListInterestsAppearsBarGraphsWithPercentage {
-
-		// TODO LRAC-8500
-
-	}
-
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8501 | Test Summary: Interest can be aggregated from multiple pages"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8501 | Test Summary: Interest can be aggregated from multiple pages"
 	@ignore = "true"
 	@priority = "4"
 	test InterestCanBeAggregatedFromMultiplePages {
@@ -47,7 +38,7 @@ definition {
 
 	}
 
-    @description = "Feature ID: Legacy | Automation ID: LRAC-8502 | Test Summary: Search the Details of a Segment's Interest"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8502 | Test Summary: Search the Details of a Segment's Interest"
 	@ignore = "true"
 	@priority = "3"
 	test SearchDetailsOfSegmentsInterest {
@@ -56,5 +47,13 @@ definition {
 
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8500 | Test Summary: List of interests appears as bar graphs with percentage of interested members"
+	@ignore = "true"
+	@priority = "5"
+	test ViewListInterestsAppearsBarGraphsWithPercentage {
+
+		// TODO LRAC-8500
+
+	}
 
 }
