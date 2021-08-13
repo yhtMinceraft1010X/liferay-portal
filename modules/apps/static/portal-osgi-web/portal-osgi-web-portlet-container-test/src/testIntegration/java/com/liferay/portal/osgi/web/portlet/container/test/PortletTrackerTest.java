@@ -70,7 +70,6 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	@Test
 	public void testPortletTrackerRegistrationCompanyScope() throws Exception {
 		Company company1 = CompanyTestUtil.addCompany();
-
 		Company company2 = CompanyTestUtil.addCompany();
 
 		PortalInstances.reload(_servletContext);
