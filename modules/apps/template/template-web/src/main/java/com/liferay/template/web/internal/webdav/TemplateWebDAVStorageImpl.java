@@ -14,7 +14,6 @@
 
 package com.liferay.template.web.internal.webdav;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -98,24 +97,18 @@ public class TemplateWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected List<Resource> getTemplates(WebDAVRequest webDAVRequest) {
-		List<DDMTemplate> ddmTemplates = new ArrayList<>();
-
-		ddmTemplates.addAll(
-			_ddmTemplateLocalService.getTemplates(
-				webDAVRequest.getCompanyId(),
-				new long[] {webDAVRequest.getGroupId()}, null, null,
-				_portal.getClassNameId(InfoItemFormProvider.class), -1, -1,
-				null));
-
-		ddmTemplates.addAll(
-			_ddmTemplateLocalService.getTemplates(
-				webDAVRequest.getCompanyId(),
-				new long[] {webDAVRequest.getGroupId()}, null, null,
-				_portal.getClassNameId(PortletDisplayTemplate.class), -1, -1,
-				null));
-
 		return TransformUtil.transform(
-			ddmTemplates,
+			ListUtil.concat(
+				_ddmTemplateLocalService.getTemplates(
+					webDAVRequest.getCompanyId(),
+					new long[] {webDAVRequest.getGroupId()}, null, null,
+					_portal.getClassNameId(InfoItemFormProvider.class), -1, -1,
+					null),
+				_ddmTemplateLocalService.getTemplates(
+					webDAVRequest.getCompanyId(),
+					new long[] {webDAVRequest.getGroupId()}, null, null,
+					_portal.getClassNameId(PortletDisplayTemplate.class), -1,
+					-1, null)),
 			ddmTemplate -> _ddmWebDAV.toResource(
 				webDAVRequest, ddmTemplate, getRootPath(), true));
 	}
