@@ -171,7 +171,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addFragments(long groupId, User user) throws Exception {
+	private void _addFragmentEntries(long groupId, User user) throws Exception {
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		if (url == null) {
@@ -262,7 +262,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _initialize(long groupId, User user) throws Exception {
 		_addDocuments(groupId, user);
-		_addFragments(groupId, user);
+		_addFragmentEntries(groupId, user);
 		_addObjectDefinitions(user);
 		_addTaxonomyVocabularies(groupId, user);
 	}
