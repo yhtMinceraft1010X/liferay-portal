@@ -52,7 +52,7 @@ public class LogoutPostActionTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testLogoutDeletesOnDemandAdminUser() throws Exception {
+	public void testLogout() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = OnDemandAdminTestUtil.addOnDemandAdminUser(company);
