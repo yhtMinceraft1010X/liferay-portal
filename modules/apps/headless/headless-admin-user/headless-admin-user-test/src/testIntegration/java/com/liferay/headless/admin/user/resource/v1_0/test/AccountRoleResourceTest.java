@@ -164,7 +164,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetAccountAccountRolesByExternalReferenceCodePage()
 		throws Exception {
@@ -225,7 +224,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetAccountAccountRolesByExternalReferenceCodePageWithPagination()
 		throws Exception {
@@ -275,7 +273,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetAccountAccountRolesPage() throws Exception {
 		Page<AccountRole> page = accountRoleResource.getAccountAccountRolesPage(
@@ -328,7 +325,6 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetAccountAccountRolesPageWithPagination()
 		throws Exception {
