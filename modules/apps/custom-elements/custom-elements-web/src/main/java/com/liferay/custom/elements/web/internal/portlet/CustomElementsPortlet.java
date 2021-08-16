@@ -141,9 +141,11 @@ public class CustomElementsPortlet extends MVCPortlet {
 		}
 
 		_resourceBundleLoaderServiceRegistration.unregister();
-		_serviceRegistration.unregister();
 
 		_resourceBundleLoaderServiceRegistration = null;
+
+		_serviceRegistration.unregister();
+
 		_serviceRegistration = null;
 	}
 
