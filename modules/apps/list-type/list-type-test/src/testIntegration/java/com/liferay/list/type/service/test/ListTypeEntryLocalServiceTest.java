@@ -21,6 +21,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -46,13 +47,11 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Test
 	public void testAddListTypeEntry() throws Exception {
-
-		// NoSuchListTypeDefinitionException
-
 		try {
 			ListTypeEntryLocalServiceUtil.addListTypeEntry(
 				TestPropsValues.getUserId(), 0,
-				Collections.singletonMap(LocaleUtil.US, "ListTypeEntry1"));
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
 		}
 		catch (NoSuchListTypeDefinitionException
 					noSuchListTypeDefinitionException) {
@@ -65,16 +64,18 @@ public class ListTypeEntryLocalServiceTest {
 		ListTypeDefinition listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, "ListTypeDefinition1"));
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
 
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.addListTypeEntry(
 				TestPropsValues.getUserId(),
 				listTypeDefinition.getListTypeDefinitionId(),
-				Collections.singletonMap(LocaleUtil.US, "ListTypeEntry1"));
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
 
-		Assert.assertNotNull(listTypeEntry);
-		Assert.assertNotNull(
+		Assert.assertEquals(
+			listTypeEntry,
 			ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
 				listTypeEntry.getListTypeEntryId()));
 	}
