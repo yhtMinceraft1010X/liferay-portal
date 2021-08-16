@@ -97,6 +97,17 @@ definition {
 			value1 = "${value}");
 	}
 
+	macro assertImageNotPresent {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+		AssertElementNotPresent(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			key_image = "${imageField}",
+			locator1 = "DataEngineRenderer#CUSTOM_FIELD_IMAGE_PREVIEW_INDEXED");
+	}
+
 	macro assertMultipleSelectionOptionIsUnchecked {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = "1";
@@ -114,7 +125,17 @@ definition {
 			optionIndex = "${optionIndex}");
 	}
 
-<<<<<<< HEAD
+	macro clearImageField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+		Click(
+			index = "${index}",
+			key_buttonName = "Clear",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#CUSTOM_FIELD_BUTTON_INDEXED");
+	}
+
 	macro inputDataInDateField {
 		if (!(isSet(index))) {
 			var index = "1";
@@ -125,12 +146,6 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#DATE_INPUT_INDEXED",
 			value1 = "${value}");
-=======
-	macro assertWebContentTitle {
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${webContentTitle}");
->>>>>>> 6ac893d (LRQA-69272 Add assertWebContentTitle)
 	}
 
 	macro inputDataInGridField {
