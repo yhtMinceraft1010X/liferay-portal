@@ -259,7 +259,6 @@ definition {
 		WebContent.viewPGViaWCD(
 			image = "true",
 			key_image = "Document_2.jpg");
-
 	}
 
 	@description = "This is a stubbed description"
@@ -318,12 +317,29 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
+		NavItem.gotoStructures();
 
-		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Button.clickPublish();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
 	@description = "This is a stubbed description"
