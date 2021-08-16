@@ -43,7 +43,7 @@ public class UserModelPreFilterContributor
 		booleanFilter.add(
 			new PrefixFilter(
 				"screenName",
-				OnDemandAdminConstants.ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX),
+				OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN),
 			BooleanClauseOccur.MUST_NOT);
 	}
 

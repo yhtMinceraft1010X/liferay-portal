@@ -60,7 +60,7 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 				dynamicQuery.add(
 					screenNameProperty.like(
 						OnDemandAdminConstants.
-							ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX +
+							SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN +
 								StringPool.PERCENT));
 			});
 
@@ -92,7 +92,7 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 		if ((user != null) &&
 			StringUtil.startsWith(
 				user.getScreenName(),
-				OnDemandAdminConstants.ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX)) {
+				OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN)) {
 
 			return true;
 		}

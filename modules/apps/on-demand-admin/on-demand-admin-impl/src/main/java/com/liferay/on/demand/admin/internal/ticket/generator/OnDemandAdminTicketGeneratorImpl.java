@@ -91,7 +91,7 @@ public class OnDemandAdminTicketGeneratorImpl
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(OnDemandAdminConstants.ON_DEMAND_ADMIN_SCREEN_NAME_PREFIX);
+		sb.append(OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN);
 		sb.append(StringPool.UNDERLINE);
 		sb.append(requestorUserId);
 		sb.append(StringPool.UNDERLINE);
