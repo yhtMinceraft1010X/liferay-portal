@@ -37,9 +37,8 @@ public class CustomElementsPortletDescriptorModelSummaryContributor
 	public Summary getSummary(
 		Document document, Locale locale, String snippet) {
 
-		String content = document.get(locale, Field.NAME);
-
 		String title = document.get(Field.TITLE);
+		String content = document.get(locale, Field.NAME);
 
 		Summary summary = new Summary(title, content);
 
