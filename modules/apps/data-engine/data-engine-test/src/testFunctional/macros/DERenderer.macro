@@ -171,8 +171,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
-			fieldLabel = "${fieldLabel}",
-			locator1 = "Button#BUTTON_LABEL",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED",
 			text = "Select");
 
 		if ("${navTab}" == "Documents and Media") {
