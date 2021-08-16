@@ -15,11 +15,6 @@
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,16 +27,4 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CKEditorBalloonEditorConfigContributor
 	extends BaseCKEditorConfigContributor {
-
-	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
-
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			requestBackedPortletURLFactory);
-	}
-
 }
