@@ -91,6 +91,7 @@ public class UserAccountResourceDTOConverter
 		}
 
 		Contact contact = user.getContact();
+		User contextUser = dtoConverterContext.getUser();
 
 		return new UserAccount() {
 			{
@@ -129,16 +130,12 @@ public class UserAccountResourceDTOConverter
 					_roleService.getUserRoles(user.getUserId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
-
-				User contextUser = dtoConverterContext.getUser();
-
 				siteBriefs = TransformUtil.transformToArray(
 					_groupService.getGroups(
 						contextUser.getCompanyId(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
 					group -> _toSiteBrief(dtoConverterContext, group),
 					SiteBrief.class);
-
 				userAccountContactInformation =
 					new UserAccountContactInformation() {
 						{
