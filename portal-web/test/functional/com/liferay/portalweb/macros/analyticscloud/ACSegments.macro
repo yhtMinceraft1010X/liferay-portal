@@ -69,6 +69,14 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
+	macro deleteSegmentViaSegmentListInlineButton {
+		var key_segmentName = "${segmentName}";
+
+		Click.javaScriptClick(locator1 = "ACSegments#DELETE_SEGMENT_INLINE_BUTTON");
+
+		Click(locator1 = "ACSegments#CONFIRM_DELETION");
+	}
+
 	macro duplicateSegmentCriteria {
 		if (!(isSet(index))) {
 			var index = "1";
