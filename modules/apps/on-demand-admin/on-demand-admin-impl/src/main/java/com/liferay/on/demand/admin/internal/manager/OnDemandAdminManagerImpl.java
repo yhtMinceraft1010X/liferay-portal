@@ -63,7 +63,6 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 							SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN +
 								StringPool.PERCENT));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(User user) -> _userLocalService.deleteUser(user));
 

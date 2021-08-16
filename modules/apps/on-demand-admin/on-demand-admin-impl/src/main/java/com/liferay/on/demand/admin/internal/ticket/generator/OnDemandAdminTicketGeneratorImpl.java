@@ -89,15 +89,10 @@ public class OnDemandAdminTicketGeneratorImpl
 	private String _getScreenName(long requestorUserId, long userId)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(requestorUserId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(userId);
-
-		return sb.toString();
+		return StringBundler.concat(
+			OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN,
+			StringPool.UNDERLINE, requestorUserId, StringPool.UNDERLINE,
+			userId);
 	}
 
 	@Reference
