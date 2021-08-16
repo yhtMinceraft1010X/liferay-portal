@@ -80,7 +80,7 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that is possible to upload an image"
 	@priority = "5"
 	test CanBeUploaded {
 		NavItem.gotoStructures();
@@ -120,7 +120,7 @@ definition {
 			key_image = "Document_1.jpg");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that is possible to clear the uploaded image"
 	@priority = "5"
 	test CanClearUpload {
 		NavItem.gotoStructures();
@@ -203,7 +203,7 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that upon uploading a new image, preview is updated"
 	@priority = "4"
 	test CanEditUpload {
 		NavItem.gotoStructures();
@@ -261,7 +261,7 @@ definition {
 			key_image = "Document_2.jpg");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that image preview is displayed when editing the Web Content"
 	@priority = "4"
 	test CanImagePreviewDisplayedAfterEditing {
 		NavItem.gotoStructures();
@@ -307,7 +307,7 @@ definition {
 			key_image = "Document_1.jpg");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
@@ -368,7 +368,7 @@ definition {
 			key_image = "Document_2.jpg");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies that is not possible to publish the Web Content with a required field blank"
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -394,7 +394,7 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a stubbed description"
+	@description = "This is a test for LRQA-69272. This test verifies is possible to remove a duplicated field (repeatable)"
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
