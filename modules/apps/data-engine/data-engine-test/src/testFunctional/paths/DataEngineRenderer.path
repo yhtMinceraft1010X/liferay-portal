@@ -65,6 +65,16 @@
 	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''])</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CUSTOM_FIELD_BUTTON_INDEXED</td>
+	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='${key_buttonName}']))[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELD_IMAGE_PREVIEW_INDEXED</td>
+	<td>xpath=((//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')]))[${index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
