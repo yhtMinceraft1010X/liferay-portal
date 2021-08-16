@@ -308,12 +308,64 @@ definition {
 	}
 
 	@description = "This is a stubbed description"
-	@ignore = "true"
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
 
-		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title Edited",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Image");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title Edited",
+			index = "2",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title Edited");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.jpg");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
 	}
 
 	@description = "This is a stubbed description"
