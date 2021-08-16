@@ -161,8 +161,8 @@ public class CustomElementsPortlet extends MVCPortlet {
 			_customElementsPortletDescriptor.
 				getCustomElementsPortletDescriptorId();
 
-		return "custom_elements_dynamic_portlet_" +
-			customElementsPortletDescriptorId;
+		return "com_liferay_custom_elements_web_internal_portlet_" +
+			"CustomElementsPortlet#" + customElementsPortletDescriptorId;
 	}
 
 	private ResourceBundle _getResourceBundle() {
