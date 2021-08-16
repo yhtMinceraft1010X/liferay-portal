@@ -38,7 +38,7 @@ public class OnDemandAdminTestUtil {
 
 		User user = UserTestUtil.addUser(
 			company.getCompanyId(), TestPropsValues.getUserId(), null,
-			_getEmailAddress(company.getMx(), screenName), screenName,
+			company.getMx() + StringPool.AT + screenName, screenName,
 			company.getLocale(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
@@ -49,12 +49,6 @@ public class OnDemandAdminTestUtil {
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
 
 		return user;
-	}
-
-	private static String _getEmailAddress(
-		String emailDomain, String emailPrefix) {
-
-		return StringBundler.concat(emailPrefix, StringPool.AT, emailDomain);
 	}
 
 	private static String _getScreenName() {

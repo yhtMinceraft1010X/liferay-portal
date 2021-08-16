@@ -48,24 +48,22 @@ public class OnDemandAdminPermissionCheckerWrapperTest {
 	public void testHasPermission() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
-		User onDemandAdminUser = OnDemandAdminTestUtil.addOnDemandAdminUser(
-			company);
-
 		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			companyAdminUser);
 
+		User onDemandAdminUser = OnDemandAdminTestUtil.addOnDemandAdminUser(
+			company);
+
 		Assert.assertFalse(
 			permissionChecker.hasPermission(
 				company.getGroupId(), User.class.getName(),
 				onDemandAdminUser.getUserId(), ActionKeys.DELETE));
-
 		Assert.assertFalse(
 			permissionChecker.hasPermission(
 				company.getGroupId(), User.class.getName(),
 				onDemandAdminUser.getUserId(), ActionKeys.UPDATE));
-
 		Assert.assertFalse(
 			permissionChecker.hasPermission(
 				company.getGroupId(), User.class.getName(),
