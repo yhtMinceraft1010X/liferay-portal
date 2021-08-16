@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.instances.service.internal.initializer;
+package com.liferay.portal.instances.internal.initializer;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
