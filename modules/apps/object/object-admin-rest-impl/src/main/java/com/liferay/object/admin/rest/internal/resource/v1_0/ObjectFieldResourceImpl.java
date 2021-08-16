@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,14 +39,12 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 	@NestedField(parentClass = ObjectDefinition.class, value = "objectFields")
 	@Override
 	public Page<ObjectField> getObjectDefinitionObjectFieldsPage(
-		Long objectDefinitionId, Pagination pagination) {
+		Long objectDefinitionId) {
 
 		return Page.of(
 			transform(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId),
-				ObjectFieldUtil::toObjectField),
-			pagination,
-			_objectFieldLocalService.getObjectFieldsCount(objectDefinitionId));
+				ObjectFieldUtil::toObjectField));
 	}
 
 	@Override
