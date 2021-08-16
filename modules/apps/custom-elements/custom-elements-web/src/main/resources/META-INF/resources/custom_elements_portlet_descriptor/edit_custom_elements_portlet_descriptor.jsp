@@ -41,20 +41,15 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="name">
-				</aui:input>
+				<aui:input name="name" />
 
-				<aui:input name="HTMLElementName">
-				</aui:input>
+				<aui:input name="HTMLElementName" />
 
-				<aui:input name="instanceable">
-				</aui:input>
+				<aui:input name="instanceable" />
 
-				<aui:input helpMessage="properties-help" name="properties" type="textarea">
-				</aui:input>
+				<aui:input helpMessage="properties-help" name="properties" type="textarea" />
 
-				<aui:input helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea">
-				</aui:input>
+				<aui:input helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 
