@@ -94,7 +94,7 @@ public class ObjectDefinitionLocalServiceTest {
 				"Name is null", objectDefinitionNameException.getMessage());
 		}
 
-		// Plural Label is null
+		// Plural label is null
 
 		try {
 			_testAddCustomObjectDefinition("Test", "Test", "");
@@ -105,7 +105,7 @@ public class ObjectDefinitionLocalServiceTest {
 					objectDefinitionPluralLabelException) {
 
 			Assert.assertEquals(
-				"Plural Label is null for locale " +
+				"Plural label is null for locale " +
 					LocaleUtil.US.getDisplayName(),
 				objectDefinitionPluralLabelException.getMessage());
 		}

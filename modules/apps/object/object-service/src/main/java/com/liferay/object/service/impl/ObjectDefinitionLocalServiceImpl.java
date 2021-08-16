@@ -720,7 +720,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Validator.isNull(pluralLabelMap.get(defaultLocale))) {
 
 			throw new ObjectDefinitionPluralLabelException(
-				"Plural Label is null for locale " +
+				"Plural label is null for locale " +
 					defaultLocale.getDisplayName());
 		}
 	}
