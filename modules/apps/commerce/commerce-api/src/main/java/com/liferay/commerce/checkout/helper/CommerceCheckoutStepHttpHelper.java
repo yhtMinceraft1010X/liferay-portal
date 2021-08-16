@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jan Brychta
  */
+@ProviderType
 public interface CommerceCheckoutStepHttpHelper {
 
 	public String getOrderDetailURL(
