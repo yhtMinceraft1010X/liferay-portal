@@ -185,7 +185,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			"/site-initializer/ddm-templates", "ddm_template.json", true);
+			"/site-initializer/ddm-templates", "ddm-template.json", true);
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -208,7 +208,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					ddmTemplateJSONObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_FTL, _read("ddm_template.ftl", url),
+				TemplateConstants.LANG_TYPE_FTL, _read("ddm-template.ftl", url),
 				false, false, null, null, serviceContext);
 		}
 	}
