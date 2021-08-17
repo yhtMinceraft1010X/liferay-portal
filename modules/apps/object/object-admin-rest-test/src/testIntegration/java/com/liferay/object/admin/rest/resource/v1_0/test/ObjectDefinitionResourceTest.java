@@ -119,9 +119,8 @@ public class ObjectDefinitionResourceTest
 				"en_US", "A" + objectDefinition.getName()));
 		objectDefinition.setName("A" + objectDefinition.getName());
 		objectDefinition.setPluralLabel(
-			HashMapBuilder.put(
-				"en_US", "A" + objectDefinition.getName()
-			).build());
+			Collections.singletonMap(
+				"en_US", "A" + objectDefinition.getName()));
 
 		ObjectField objectField = new ObjectField();
 
