@@ -227,7 +227,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), _commerceChannel.getGroupId(),
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		User secondUser = UserTestUtil.addUser();
 
@@ -240,7 +240,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				secondUser.getUserId(), _commerceChannel.getGroupId(),
 				secondCommerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		List<CommerceOrder> commerceOrders = _getUserOrders(
 			_commerceChannel.getGroupId(), false);
@@ -313,7 +313,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		User secondUser = UserTestUtil.addUser();
 
@@ -333,7 +333,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				secondUser.getUserId(), commerceChannelGroupId,
 				secondCommerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		List<CommerceOrder> commerceOrders = _getUserOrders(
 			commerceChannelGroupId, false);
@@ -419,7 +419,7 @@ public class CommerceOrderTest {
 					_commerceOrderLocalService.addCommerceOrder(
 						user.getUserId(), commerceChannelGroupId,
 						commerceAccount.getCommerceAccountId(),
-						_commerceCurrency.getCommerceCurrencyId()));
+						_commerceCurrency.getCommerceCurrencyId(), 0));
 			}
 
 			ordersCreated += ordersToCreate;
@@ -551,7 +551,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				adminUserId, commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		CommerceAccount secondCommerceAccount =
 			_commerceAccountLocalService.addBusinessCommerceAccount(
@@ -562,7 +562,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				adminUserId, commerceChannelGroupId,
 				secondCommerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		Role role = _roleLocalService.fetchRole(
 			_serviceContext.getCompanyId(), "Sales Agent");
@@ -791,7 +791,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		int ordersCountByAccountId =
 			_commerceOrderService.getPendingCommerceOrdersCount(
@@ -852,7 +852,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		String commerceOrderId = String.valueOf(
 			commerceOrder1.getCommerceOrderId());
@@ -918,7 +918,7 @@ public class CommerceOrderTest {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		CommerceAddress commerceAddress = _addAddressToAccount(
 			commerceAccount.getCommerceAccountId());
@@ -1006,18 +1006,18 @@ public class CommerceOrderTest {
 		_commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), commerceChannelGroupId,
 			commerceAccount.getCommerceAccountId(),
-			_commerceCurrency.getCommerceCurrencyId());
+			_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		_commerceOrderLocalService.addCommerceOrder(
 			_user.getUserId(), commerceChannelGroupId,
 			commerceAccount.getCommerceAccountId(),
-			_commerceCurrency.getCommerceCurrencyId());
+			_commerceCurrency.getCommerceCurrencyId(), 0);
 
 		try {
 			_commerceOrderLocalService.addCommerceOrder(
 				_user.getUserId(), commerceChannelGroupId,
 				commerceAccount.getCommerceAccountId(),
-				_commerceCurrency.getCommerceCurrencyId());
+				_commerceCurrency.getCommerceCurrencyId(), 0);
 		}
 		catch (CommerceOrderAccountLimitException
 					commerceOrderAccountLimitException) {
