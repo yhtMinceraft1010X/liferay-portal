@@ -99,6 +99,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_userLocalService = userLocalService;
+
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		_classLoader = bundleWiring.getClassLoader();
 	}
 
 	@Override
@@ -151,12 +155,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (String resourcePath : resourcePaths) {
-			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
 			_defaultDDMStructureHelper.addDDMStructures(
 				user.getUserId(), groupId,
-				_portal.getClassNameId(JournalArticle.class),
-				bundleWiring.getClassLoader(), resourcePath, _serviceContext);
+				_portal.getClassNameId(JournalArticle.class), _classLoader,
+				resourcePath, _serviceContext);
 		}
 	}
 
@@ -412,6 +414,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		BundleSiteInitializer.class);
 
 	private final Bundle _bundle;
+	private final ClassLoader _classLoader;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
