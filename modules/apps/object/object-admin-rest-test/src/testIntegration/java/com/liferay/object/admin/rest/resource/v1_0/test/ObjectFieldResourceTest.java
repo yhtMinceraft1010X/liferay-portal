@@ -42,7 +42,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		String value = "A" + RandomTestUtil.randomString(5);
+		String value = "A" + RandomTestUtil.randomString();
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(

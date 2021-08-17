@@ -69,11 +69,11 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinitionLabel = "A" + RandomTestUtil.randomString(5);
-		_objectDefinitionName = "A" + RandomTestUtil.randomString(5);
-		_objectDefinitionPluralLabel = RandomTestUtil.randomString(5) + "s";
-		_objectFieldLabel = "A" + RandomTestUtil.randomString(5);
-		_objectFieldName = "a" + RandomTestUtil.randomString(5);
+		_objectDefinitionLabel = "A" + RandomTestUtil.randomString();
+		_objectDefinitionName = "A" + RandomTestUtil.randomString();
+		_objectDefinitionPluralLabel = RandomTestUtil.randomString() + "s";
+		_objectFieldLabel = "A" + RandomTestUtil.randomString();
+		_objectFieldName = "a" + RandomTestUtil.randomString();
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
