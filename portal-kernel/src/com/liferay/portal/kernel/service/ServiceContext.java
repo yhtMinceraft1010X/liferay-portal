@@ -749,6 +749,14 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _userId;
 	}
 
+	public User fetchUser() {
+		if (_userId == 0) {
+			return null;
+		}
+
+		return UserLocalServiceUtil.fetchUserById(_userId);
+	}
+
 	/**
 	 * Returns the UUID of this service context's current entity.
 	 *
