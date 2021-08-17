@@ -138,9 +138,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				{
 					setAddGroupPermissions(true);
 					setAddGuestPermissions(true);
-					setLanguageId(
-						LanguageUtil.getLanguageId(
-							LocaleUtil.getSiteDefault()));
 					setScopeGroupId(groupId);
 					setTimeZone(user.getTimeZone());
 					setUserId(user.getUserId());
