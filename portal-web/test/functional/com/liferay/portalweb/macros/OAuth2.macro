@@ -3,7 +3,11 @@ definition {
 	macro addAndEditExternalApplication {
 		var portalURL = PropsUtil.get("portal.url");
 
-		OAuth2.openOAuth2Admin();
+		if (isSet(customPortalURL)) {
+			portalURL = "${baseURL}";
+		}
+
+		OAuth2.openOAuth2Admin(baseURL = "${baseURL}");
 
 		OAuth2.addApplication(
 			applicationName = "${applicationName}",
@@ -109,6 +113,12 @@ definition {
 		}
 		else {
 			Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		}
+
+		if (isSet(portalURL)) {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
+				value1 = "${portalURL}");
 		}
 
 		Type(
