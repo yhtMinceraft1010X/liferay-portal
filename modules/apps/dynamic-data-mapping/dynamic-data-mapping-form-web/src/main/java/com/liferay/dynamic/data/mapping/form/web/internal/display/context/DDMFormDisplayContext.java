@@ -610,9 +610,7 @@ public class DDMFormDisplayContext {
 	public boolean isSharedURL() {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		String urlCurrent = themeDisplay.getURLCurrent();
-
-		return urlCurrent.contains("/shared");
+		return StringUtil.contains(themeDisplay.getURLCurrent(), "/shared");
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {
