@@ -196,6 +196,54 @@ definition {
 			value = "1.23");
 	}
 
+	@description = "This is a test for LRQA-69098. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Numeric");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "1",
+			value = "123");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			index = "2",
+			value = "456");
+	}
+
 	@description = "This is a test for LRQA-69098. This test verifies that input data on an Integer Numeric field persists."
 	@priority = "5"
 	test CanInputDataOnIntergerType {
