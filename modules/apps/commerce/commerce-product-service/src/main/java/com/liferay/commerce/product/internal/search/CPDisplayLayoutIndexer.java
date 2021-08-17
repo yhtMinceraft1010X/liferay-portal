@@ -210,7 +210,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 	protected void reindexCPDisplayLayouts(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpDisplayLayoutLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

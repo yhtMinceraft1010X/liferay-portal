@@ -49,7 +49,7 @@ public class PublishFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fileShortcutId = ParamUtil.getLong(
+		final long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 
 		Changeset.Builder builder = Changeset.create();

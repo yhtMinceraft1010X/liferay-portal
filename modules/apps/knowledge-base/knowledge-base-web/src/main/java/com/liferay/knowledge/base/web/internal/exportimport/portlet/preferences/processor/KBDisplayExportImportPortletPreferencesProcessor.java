@@ -78,7 +78,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			portletPreferences.getValue(
 				"resourceClassNameId", StringPool.BLANK));
 
-		String resourceClassName;
+		final String resourceClassName;
 
 		if ((resourcePrimKey ==
 				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) &&

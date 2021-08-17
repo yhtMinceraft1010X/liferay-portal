@@ -167,7 +167,7 @@ public class DummyReferenceStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			new ExportActionableDynamicQuery() {
 
 				@Override

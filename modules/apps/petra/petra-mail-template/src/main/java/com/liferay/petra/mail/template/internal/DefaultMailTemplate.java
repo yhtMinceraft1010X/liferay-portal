@@ -53,7 +53,7 @@ public class DefaultMailTemplate implements MailTemplate {
 
 			EscapableLocalizableFunction value = replacement.getValue();
 
-			String valueString;
+			final String valueString;
 
 			if (_escapeHtml) {
 				valueString = value.getEscapedValue(locale);

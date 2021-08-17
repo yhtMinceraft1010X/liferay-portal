@@ -201,7 +201,7 @@ public class CommerceSubscriptionEntryIndexer
 	protected void reindexCommerceSubscriptionEntries(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceSubscriptionEntryLocalService.
 				getIndexableActionableDynamicQuery();
 

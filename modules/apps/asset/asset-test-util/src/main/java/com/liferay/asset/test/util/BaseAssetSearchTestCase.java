@@ -1359,7 +1359,8 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1402,7 +1403,8 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1417,7 +1419,7 @@ public abstract class BaseAssetSearchTestCase {
 
 		Arrays.sort(expirationDates);
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+		final DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
 		List<AssetEntry> assetEntries = search(assetEntryQuery, searchContext);
@@ -1449,7 +1451,8 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 

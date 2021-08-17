@@ -93,7 +93,7 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 			return null;
 		}
 
-		String assetVocabulary = _assetVocabulary;
+		final String assetVocabulary = _assetVocabulary;
 
 		Group group = _groupLocalService.fetchCompanyGroup(companyId);
 

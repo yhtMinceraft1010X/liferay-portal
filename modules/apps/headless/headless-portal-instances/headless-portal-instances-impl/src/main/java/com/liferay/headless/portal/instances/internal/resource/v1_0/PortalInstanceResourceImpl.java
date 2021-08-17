@@ -67,7 +67,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public Page<PortalInstance> getPortalInstancesPage(Boolean skipDefault)
 		throws Exception {
 
-		boolean finalSkipDefault = GetterUtil.getBoolean(skipDefault);
+		final boolean finalSkipDefault = GetterUtil.getBoolean(skipDefault);
 
 		List<PortalInstance> portalInstances = new ArrayList<>();
 

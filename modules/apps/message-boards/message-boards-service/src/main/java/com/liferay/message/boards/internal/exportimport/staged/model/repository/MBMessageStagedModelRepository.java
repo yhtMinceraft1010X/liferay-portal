@@ -97,7 +97,7 @@ public class MBMessageStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		ExportActionableDynamicQuery actionableDynamicQuery =
+		final ExportActionableDynamicQuery actionableDynamicQuery =
 			_mbMessageLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 

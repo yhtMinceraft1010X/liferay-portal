@@ -226,7 +226,7 @@ public abstract class BaseClientTestCase {
 		return (clientId, invocationBuilder) -> {
 			String codeVerifier = RandomTestUtil.randomString();
 
-			String codeChallenge = generateCodeChallenge(codeVerifier);
+			final String codeChallenge = generateCodeChallenge(codeVerifier);
 
 			String authorizationCode = parseAuthorizationCodeString(
 				getCodeResponse(

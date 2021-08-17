@@ -289,7 +289,7 @@ public class CPAttachmentFileEntryIndexer
 	protected void reindexCPAttachmentFileEntries(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpAttachmentFileEntryLocalService.
 				getIndexableActionableDynamicQuery();
 

@@ -241,7 +241,7 @@ public class SampleSQLBuilder {
 	}
 
 	protected Reader generateSQL() {
-		CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
+		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
 		Thread thread = new Thread(
 			() -> {

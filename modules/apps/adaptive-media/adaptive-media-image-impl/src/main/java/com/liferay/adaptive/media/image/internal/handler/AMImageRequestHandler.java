@@ -176,10 +176,10 @@ public class AMImageRequestHandler
 		Map<String, String> properties =
 			amImageConfigurationEntry.getProperties();
 
-		Integer configurationWidth = GetterUtil.getInteger(
+		final Integer configurationWidth = GetterUtil.getInteger(
 			properties.get("max-width"));
 
-		Integer configurationHeight = GetterUtil.getInteger(
+		final Integer configurationHeight = GetterUtil.getInteger(
 			properties.get("max-height"));
 
 		try {

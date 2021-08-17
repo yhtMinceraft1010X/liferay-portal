@@ -111,7 +111,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 				String keyword = suggestSearchResultEntry.getText();
 
-				List<String> wordsList = results.computeIfAbsent(
+				final List<String> wordsList = results.computeIfAbsent(
 					keyword, keywords -> new ArrayList<>());
 
 				suggestSearchResultEntryOptions.forEach(

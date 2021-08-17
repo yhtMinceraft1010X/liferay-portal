@@ -318,7 +318,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	@SuppressWarnings("serial")
 	private void _configureRootTaskDistBundle(final Jar jar) {
-		Project project = jar.getProject();
+		final Project project = jar.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),

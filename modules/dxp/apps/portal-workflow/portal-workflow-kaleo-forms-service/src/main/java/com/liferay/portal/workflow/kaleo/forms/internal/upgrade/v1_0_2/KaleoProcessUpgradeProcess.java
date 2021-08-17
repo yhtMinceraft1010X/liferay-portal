@@ -132,7 +132,7 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 			long kaleoProcessId, final String uuid, final long ddlRecordSetId)
 		throws PortalException {
 
-		String title = getAssetEntryTitle(companyId, ddlRecordSetId);
+		final String title = getAssetEntryTitle(companyId, ddlRecordSetId);
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_ddlRecordLocalService.getActionableDynamicQuery();

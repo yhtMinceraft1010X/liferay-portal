@@ -137,7 +137,7 @@ public class SortParserImpl implements SortParser {
 
 		String fieldName = list.get(0);
 
-		boolean ascending;
+		final boolean ascending;
 
 		if (list.size() > 1) {
 			ascending = isAscending(list.get(1));

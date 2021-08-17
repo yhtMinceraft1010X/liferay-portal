@@ -51,7 +51,7 @@ public abstract class BaseMessagingConfigurator
 	implements MessagingConfigurator {
 
 	public void afterPropertiesSet() {
-		ServiceDependencyManager serviceDependencyManager =
+		final ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
 		serviceDependencyManager.addServiceDependencyListener(

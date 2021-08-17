@@ -267,7 +267,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			BundleExtension bundleExtension = BndUtil.getBundleExtension(
 				project.getExtensions());
 
-			Set<String> dependencyNames = new HashSet<>();
+			final Set<String> dependencyNames = new HashSet<>();
 
 			_addBundleDependencyNames(
 				bundleExtension, dependencyNames, Constants.INCLUDERESOURCE);

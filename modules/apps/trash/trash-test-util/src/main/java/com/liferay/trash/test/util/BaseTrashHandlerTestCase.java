@@ -3390,7 +3390,7 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandler trashHandler, final long systemEventSetKey)
 		throws Exception {
 
-		long systemEventClassNameId = PortalUtil.getClassNameId(
+		final long systemEventClassNameId = PortalUtil.getClassNameId(
 			trashHandler.getSystemEventClassName());
 
 		ActionableDynamicQuery actionableDynamicQuery =

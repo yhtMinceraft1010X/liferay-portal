@@ -486,7 +486,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 	protected void reindexCommerceDiscounts(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceDiscountLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

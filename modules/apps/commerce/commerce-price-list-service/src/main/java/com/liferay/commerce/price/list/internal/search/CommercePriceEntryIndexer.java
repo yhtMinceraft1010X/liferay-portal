@@ -194,7 +194,7 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 	protected void reindexCommercePriceEntries(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commercePriceEntryLocalService.
 				getIndexableActionableDynamicQuery();
 

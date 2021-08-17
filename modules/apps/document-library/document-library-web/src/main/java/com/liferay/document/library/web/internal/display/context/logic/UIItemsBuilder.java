@@ -518,7 +518,7 @@ public class UIItemsBuilder {
 		label = StringBundler.concat(
 			_themeDisplay.translate("download"), " (", label, ")");
 
-		boolean appendVersion;
+		final boolean appendVersion;
 
 		if (StringUtil.equalsIgnoreCase(
 				_fileEntry.getVersion(), _fileVersion.getVersion())) {

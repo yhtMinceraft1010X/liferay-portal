@@ -49,13 +49,13 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 	@Test
 	public void testSearchByFacet() throws Exception {
-		Group group1 = userSearchFixture.addGroup();
+		final Group group1 = userSearchFixture.addGroup();
 
 		String keyword = RandomTestUtil.randomString();
 
 		addUser(group1, keyword + " " + RandomTestUtil.randomString());
 
-		Group group2 = userSearchFixture.addGroup();
+		final Group group2 = userSearchFixture.addGroup();
 
 		addUser(group2, keyword + " " + RandomTestUtil.randomString());
 		addUser(group2, keyword + " " + RandomTestUtil.randomString());
@@ -82,7 +82,7 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	public void testSearchFromSearchPortletWithScopeEverything()
 		throws Exception {
 
-		Group group1 = userSearchFixture.addGroup();
+		final Group group1 = userSearchFixture.addGroup();
 
 		String keyword = RandomTestUtil.randomString();
 
@@ -90,7 +90,7 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		User user1 = addUser(group1, tag1);
 
-		Group group2 = userSearchFixture.addGroup();
+		final Group group2 = userSearchFixture.addGroup();
 
 		String tag2 = keyword + " " + RandomTestUtil.randomString();
 

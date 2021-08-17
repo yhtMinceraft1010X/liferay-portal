@@ -50,7 +50,7 @@ public class PortalSettingsContributorServiceTrackerCustomizer
 	public PortalSettingsFormContributor addingService(
 		ServiceReference<PortalSettingsFormContributor> serviceReference) {
 
-		PortalSettingsFormContributor portalSettingsFormContributor =
+		final PortalSettingsFormContributor portalSettingsFormContributor =
 			_bundleContext.getService(serviceReference);
 
 		MVCActionCommandServiceRegistrationHolder

@@ -526,7 +526,7 @@ public class BookmarksEntryLocalServiceImpl
 			throw new IllegalArgumentException("Tree path is null");
 		}
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
@@ -545,7 +545,7 @@ public class BookmarksEntryLocalServiceImpl
 						treePathProperty.ne(treePath)));
 			});
 
-		Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
+		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class);
 
 		indexableActionableDynamicQuery.setPerformActionMethod(

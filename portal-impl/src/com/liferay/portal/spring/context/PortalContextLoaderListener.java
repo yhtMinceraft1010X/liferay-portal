@@ -201,7 +201,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		FieldInterceptionHelperUtil.initialize();
 
-		ServletContext servletContext = servletContextEvent.getServletContext();
+		final ServletContext servletContext =
+			servletContextEvent.getServletContext();
 
 		String portalLibDir = servletContext.getRealPath("/WEB-INF/lib");
 

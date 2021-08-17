@@ -184,7 +184,7 @@ public class CommerceShippingFixedOptionIndexer
 	protected void reindexCommerceShippingFixedOptions(long companyId)
 		throws Exception {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceShippingFixedOptionLocalService.
 				getIndexableActionableDynamicQuery();
 

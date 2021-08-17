@@ -1920,8 +1920,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String fromName = blogsGroupServiceSettings.getEmailFromName();
 		String fromAddress = blogsGroupServiceSettings.getEmailFromAddress();
 
-		LocalizedValuesMap subjectLocalizedValuesMap;
-		LocalizedValuesMap bodyLocalizedValuesMap;
+		final LocalizedValuesMap subjectLocalizedValuesMap;
+		final LocalizedValuesMap bodyLocalizedValuesMap;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
@@ -2200,7 +2200,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getUrlTitle())
 		).build();
 
-		Set<String> trackbacksSet;
+		final Set<String> trackbacksSet;
 
 		if (ArrayUtil.isNotEmpty(trackbacks)) {
 			trackbacksSet = SetUtil.fromArray(trackbacks);

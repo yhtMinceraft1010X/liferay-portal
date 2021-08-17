@@ -228,7 +228,7 @@ public class CPSpecificationOptionIndexer
 	protected void reindexCPSpecificationOptions(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpSpecificationOptionLocalService.
 				getIndexableActionableDynamicQuery();
 

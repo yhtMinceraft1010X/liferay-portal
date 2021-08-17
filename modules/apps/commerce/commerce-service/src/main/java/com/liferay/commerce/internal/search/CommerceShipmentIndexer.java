@@ -244,7 +244,7 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 	}
 
 	protected void reindexCommerceShipments(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceShipmentLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

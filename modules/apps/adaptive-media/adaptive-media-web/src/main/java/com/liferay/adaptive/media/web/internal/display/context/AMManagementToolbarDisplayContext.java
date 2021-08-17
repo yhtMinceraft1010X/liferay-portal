@@ -83,7 +83,7 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
-		String entriesNavigation = _getEntriesNavigation();
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return LabelItemListBuilder.add(
 			() ->
@@ -147,7 +147,7 @@ public class AMManagementToolbarDisplayContext {
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		String entriesNavigation = _getEntriesNavigation();
+		final String entriesNavigation = _getEntriesNavigation();
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {

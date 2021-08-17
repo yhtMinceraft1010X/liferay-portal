@@ -49,7 +49,8 @@ public class PublishFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		final long fileEntryId = ParamUtil.getLong(
+			actionRequest, "fileEntryId");
 
 		Changeset.Builder builder = Changeset.create();
 

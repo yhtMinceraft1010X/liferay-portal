@@ -606,7 +606,7 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 
 		String cookieName = _COOKIE_NAME_PREFIX.concat(applicationClientId);
 
-		String codeVerifierString = RandomTestUtil.randomString();
+		final String codeVerifierString = RandomTestUtil.randomString();
 
 		Response response1 = getCodeResponse(
 			"test@liferay.com", "test", null,

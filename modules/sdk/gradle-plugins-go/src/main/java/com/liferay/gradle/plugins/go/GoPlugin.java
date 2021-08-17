@@ -39,10 +39,10 @@ public class GoPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GoExtension goExtension = GradleUtil.addExtension(
+		final GoExtension goExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, GoExtension.class);
 
-		DownloadGoTask downloadGoTask = addTaskDownloadGo(project);
+		final DownloadGoTask downloadGoTask = addTaskDownloadGo(project);
 
 		_configureTasksExecuteGo(project, GradleUtil.isRunningInsideDaemon());
 

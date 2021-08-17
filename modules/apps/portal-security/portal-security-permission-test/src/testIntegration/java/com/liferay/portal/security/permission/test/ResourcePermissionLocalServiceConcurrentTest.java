@@ -215,7 +215,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 		SynchronousInvocationHandler.enable();
 
 		try {
-			String primKey = RandomTestUtil.randomString(
+			final String primKey = RandomTestUtil.randomString(
 				UniqueStringRandomizerBumper.INSTANCE);
 
 			Callable<ResourcePermission> callable = () -> {

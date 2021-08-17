@@ -180,7 +180,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		_configureWorkspaceExtension(project, workspaceExtension);
@@ -204,7 +204,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Configuration bundleSupportConfiguration =
 			_addConfigurationBundleSupport(project);
 
-		Configuration providedModulesConfiguration =
+		final Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
 		TargetPlatformRootProjectConfigurator.INSTANCE.apply(project);

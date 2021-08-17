@@ -130,7 +130,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getRatingsEntryCountActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();

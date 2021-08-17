@@ -187,7 +187,7 @@ public class LDAPFormMVCActionCommand extends BaseFormMVCActionCommand {
 				companyId);
 
 		for (int i = 0; i < orderedLdapServerIds.length; i++) {
-			int authServerPriority = i;
+			final int authServerPriority = i;
 			long ldapServerId = GetterUtil.getLong(orderedLdapServerIds[i]);
 
 			Stream<Dictionary<String, Object>> stream = dictionaries.stream();

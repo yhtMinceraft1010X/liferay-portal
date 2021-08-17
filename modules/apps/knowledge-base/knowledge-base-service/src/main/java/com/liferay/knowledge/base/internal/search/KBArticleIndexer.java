@@ -260,7 +260,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	protected void reindexKBArticles(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			kbArticleLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(

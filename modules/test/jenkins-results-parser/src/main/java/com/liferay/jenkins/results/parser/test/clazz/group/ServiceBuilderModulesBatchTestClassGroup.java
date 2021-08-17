@@ -89,7 +89,7 @@ public class ServiceBuilderModulesBatchTestClassGroup
 
 	protected static List<File> getModulesProjectDirs(File moduleBaseDir) {
 		final List<File> modulesProjectDirs = new ArrayList<>();
-		Path moduleBaseDirPath = moduleBaseDir.toPath();
+		final Path moduleBaseDirPath = moduleBaseDir.toPath();
 
 		try {
 			Files.walkFileTree(

@@ -106,7 +106,7 @@ public class ReleaseGraphManager {
 	}
 
 	protected List<String> getEndVertices() {
-		List<String> endVertices = new ArrayList<>();
+		final List<String> endVertices = new ArrayList<>();
 
 		Set<String> vertices = _directedGraph.vertexSet();
 

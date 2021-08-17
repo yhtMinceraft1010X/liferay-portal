@@ -195,7 +195,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 	}
 
 	protected void reindexCommerceOrderItems(long companyId) throws Exception {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceOrderItemLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);

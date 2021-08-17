@@ -329,7 +329,7 @@ public class MembershipRequestLocalServiceImpl
 		String body = PrefsPropsUtil.getContent(
 			membershipRequest.getCompanyId(), bodyProperty);
 
-		String statusKey;
+		final String statusKey;
 
 		if (membershipRequest.getStatusId() ==
 				MembershipRequestConstants.STATUS_APPROVED) {

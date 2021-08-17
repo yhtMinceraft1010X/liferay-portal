@@ -251,8 +251,8 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
-		String name = resourceAction.getName();
-		long bitwiseValue = resourceAction.getBitwiseValue();
+		final String name = resourceAction.getName();
+		final long bitwiseValue = resourceAction.getBitwiseValue();
 
 		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
 			dynamicQuery -> {

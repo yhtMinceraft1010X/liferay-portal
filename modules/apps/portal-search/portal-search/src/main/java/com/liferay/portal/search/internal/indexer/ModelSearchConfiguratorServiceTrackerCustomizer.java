@@ -91,7 +91,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		int serviceRanking = GetterUtil.getInteger(
 			serviceReference.getProperty(Constants.SERVICE_RANKING));
 
-		ModelSearchConfigurator<T> modelSearchConfigurator =
+		final ModelSearchConfigurator<T> modelSearchConfigurator =
 			_bundleContext.getService(serviceReference);
 
 		ServiceRegistrationHolder serviceRegistrationHolder =

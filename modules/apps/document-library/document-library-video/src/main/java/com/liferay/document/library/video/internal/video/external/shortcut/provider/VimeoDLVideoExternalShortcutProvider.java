@@ -99,7 +99,7 @@ public class VimeoDLVideoExternalShortcutProvider
 
 			Http.Response response = options.getResponse();
 
-			JSONObject jsonObject;
+			final JSONObject jsonObject;
 
 			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				jsonObject = JSONFactoryUtil.createJSONObject();

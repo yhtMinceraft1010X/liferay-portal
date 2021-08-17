@@ -99,7 +99,7 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 	public ActionableDynamicQuery getCommentExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		ExportActionableDynamicQuery actionableDynamicQuery =
+		final ExportActionableDynamicQuery actionableDynamicQuery =
 			MBMessageLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 

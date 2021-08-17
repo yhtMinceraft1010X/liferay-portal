@@ -82,7 +82,7 @@ public class DefaultPortletResourcePermission
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
 			_resourceName, groupId, actionId);
 
-		long finalGroupId = groupId;
+		final long finalGroupId = groupId;
 
 		return (Boolean)permissionChecksMap.computeIfAbsent(
 			permissionCacheKey,

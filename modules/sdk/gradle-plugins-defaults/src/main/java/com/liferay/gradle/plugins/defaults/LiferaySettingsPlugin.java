@@ -193,7 +193,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final String projectPathPrefix)
 		throws IOException {
 
-		String buildProfile = System.getProperty("build.profile");
+		final String buildProfile = System.getProperty("build.profile");
 
 		final Set<String> buildProfileFileNames =
 			GradlePluginsDefaultsUtil.getBuildProfileFileNames(

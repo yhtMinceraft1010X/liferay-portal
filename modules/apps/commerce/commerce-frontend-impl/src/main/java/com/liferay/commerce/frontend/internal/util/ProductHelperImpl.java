@@ -108,7 +108,7 @@ public class ProductHelperImpl implements ProductHelper {
 			String commerceOptionValuesJSON, Locale locale)
 		throws PortalException {
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
+		final CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
 		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);

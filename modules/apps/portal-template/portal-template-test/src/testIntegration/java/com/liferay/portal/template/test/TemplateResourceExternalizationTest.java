@@ -119,7 +119,7 @@ public class TemplateResourceExternalizationTest {
 
 	@Test
 	public void testDDMTemplateResourceExternalization() throws Exception {
-		long templateId = 100;
+		final long templateId = 100;
 
 		Class<?> clazz = DDMTemplate.class;
 

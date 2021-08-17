@@ -325,7 +325,7 @@ public class FileUploadChannelHandlerTest {
 			noticeableFuture = _asyncBroker.post(fileResponse.getPath());
 		}
 
-		FileUploadChannelHandler fileUploadChannelHandler =
+		final FileUploadChannelHandler fileUploadChannelHandler =
 			new FileUploadChannelHandler(
 				_asyncBroker, fileResponse, getEventLoop(inEventloop));
 

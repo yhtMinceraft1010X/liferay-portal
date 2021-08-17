@@ -67,7 +67,8 @@ public class PropertiesSettingsTest {
 
 	@Test
 	public void testGetValuesWithResourceValue() {
-		String expectedValue = "resourceValue0,resourceValue1,resourceValue2";
+		final String expectedValue =
+			"resourceValue0,resourceValue1,resourceValue2";
 
 		PropertiesSettings propertiesSettings = new PropertiesSettings(
 			_createLocationVariableResolver(
@@ -103,7 +104,7 @@ public class PropertiesSettingsTest {
 
 	@Test
 	public void testGetValueWithResourceValue() {
-		String expectedValue = "resourceValue";
+		final String expectedValue = "resourceValue";
 
 		PropertiesSettings propertiesSettings = new PropertiesSettings(
 			_createLocationVariableResolver(

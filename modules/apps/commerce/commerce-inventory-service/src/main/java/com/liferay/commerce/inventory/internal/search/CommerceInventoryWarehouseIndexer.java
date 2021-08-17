@@ -239,7 +239,7 @@ public class CommerceInventoryWarehouseIndexer
 	protected void reindexCommerceInventoryWarehouses(long companyId)
 		throws Exception {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_commerceInventoryWarehouseLocalService.
 				getIndexableActionableDynamicQuery();
 

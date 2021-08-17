@@ -180,7 +180,7 @@ public class StagedExpandoColumnStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		ExportActionableDynamicQuery exportActionableDynamicQuery =
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			new ExportActionableDynamicQuery() {
 
 				@Override

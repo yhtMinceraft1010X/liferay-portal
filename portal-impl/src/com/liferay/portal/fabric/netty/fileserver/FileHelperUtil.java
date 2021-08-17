@@ -268,7 +268,7 @@ public class FileHelperUtil {
 	public static long unzip(ZipInputStream zipInputStream, Path destPath)
 		throws IOException {
 
-		AtomicLong rawSize = new AtomicLong();
+		final AtomicLong rawSize = new AtomicLong();
 
 		try (ZipInputStream autoCloseZipInputStream = zipInputStream) {
 			ZipEntry zipEntry = null;

@@ -62,7 +62,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+		final long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		Folder folder = _dlAppLocalService.getFolder(folderId);
 

@@ -199,7 +199,7 @@ public class CPDefinitionOptionValueRelIndexer
 	protected void reindexCPDefinitionOptionValueRels(long companyId)
 		throws PortalException {
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpDefinitionOptionValueRelLocalService.
 				getIndexableActionableDynamicQuery();
 

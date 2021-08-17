@@ -625,7 +625,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		long fileEntryTypeId = _getFileEntryTypeId();
-		String navigation = ParamUtil.getString(
+		final String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "home");
 
 		return DropdownItemListBuilder.add(

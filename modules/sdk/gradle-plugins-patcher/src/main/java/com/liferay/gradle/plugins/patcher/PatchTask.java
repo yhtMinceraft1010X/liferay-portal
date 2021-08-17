@@ -256,7 +256,7 @@ public class PatchTask extends DefaultTask {
 
 	@TaskAction
 	public void patch() throws Exception {
-		Project project = getProject();
+		final Project project = getProject();
 
 		File patchesTemporaryDir = fixPatchFiles();
 		final File srcTemporaryDir = fixSrcFiles();
@@ -400,7 +400,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	protected File fixPatchFiles() {
-		Project project = getProject();
+		final Project project = getProject();
 
 		final File temporaryDir = new File(getTemporaryDir(), "patches");
 

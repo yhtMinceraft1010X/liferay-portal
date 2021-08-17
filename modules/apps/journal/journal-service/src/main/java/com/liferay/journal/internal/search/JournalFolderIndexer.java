@@ -190,7 +190,7 @@ public class JournalFolderIndexer
 	}
 
 	protected void reindexFolders(long companyId) throws PortalException {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_journalFolderLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
