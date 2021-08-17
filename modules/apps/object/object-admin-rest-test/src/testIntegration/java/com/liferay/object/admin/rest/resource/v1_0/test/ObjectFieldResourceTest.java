@@ -48,7 +48,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(value), value,
-				LocalizedMapUtil.getLocalizedMap(value), new ArrayList<>());
+				LocalizedMapUtil.getLocalizedMap(value),
+				Collections.<com.liferay.object.model.ObjectField>emptyList());
 	}
 
 	@After
