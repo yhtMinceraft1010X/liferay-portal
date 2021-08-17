@@ -264,6 +264,46 @@ definition {
 			value = "1.00");
 	}
 
+	@description = "This is a test for LRQA-69098. This test verifies that is possible to remove inputted data from the field."
+	@priority = "4"
+	test CanRemoveInputtedData {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "");
+	}
+
 	@description = "This is a test for LRQA-68600. This test verifies that Numeric field can be set as Decimal or Integer"
 	@priority = "5"
 	test CanSetDecimalOrInteger {
