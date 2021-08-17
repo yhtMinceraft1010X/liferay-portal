@@ -15,10 +15,13 @@
 package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -69,18 +72,21 @@ public class BundleSiteInitializerTest {
 
 		siteInitializer.initialize(group.getGroupId());
 
-		_assertGroup(group);
+		_assertObjectDefinitions(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
 	}
 
-	private void _assertGroup(Group group) {
+	private void _assertObjectDefinitions(Group group) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				group.getCompanyId(), "C_BundleSiteInitializerTest");
 
-		// TODO
-
-		Assert.assertNotNull(group);
+		Assert.assertEquals(
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
+		Assert.assertEquals(objectDefinition.isSystem(), false);
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)
@@ -92,6 +98,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;
