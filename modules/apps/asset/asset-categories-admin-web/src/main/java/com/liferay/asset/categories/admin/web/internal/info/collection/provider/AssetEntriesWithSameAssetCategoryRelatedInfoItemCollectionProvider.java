@@ -190,11 +190,11 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			null);
 
 		if (MapUtil.isNotEmpty(configuration) &&
-			ArrayUtil.isNotEmpty(configuration.get(_ITEM_TYPES))) {
+			ArrayUtil.isNotEmpty(configuration.get("item_types"))) {
 
 			List<Long> classNameIds = new ArrayList<>();
 
-			String[] itemTypes = configuration.get(_ITEM_TYPES);
+			String[] itemTypes = configuration.get("item_types");
 
 			for (String itemType : itemTypes) {
 				if (Validator.isNotNull(itemType)) {
@@ -271,7 +271,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
 		).name(
-			_ITEM_TYPES
+			"item_types"
 		).attribute(
 			SelectInfoFieldType.MULTIPLE, true
 		).attribute(
@@ -303,8 +303,6 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			serviceContext.getCompanyId(), null, themeDisplay.getLayout(), null,
 			serviceContext.getScopeGroupId(), null, serviceContext.getUserId());
 	}
-
-	private static final String _ITEM_TYPES = "item_types";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider.
