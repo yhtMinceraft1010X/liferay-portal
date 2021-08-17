@@ -145,11 +145,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
-			_addDocuments(serviceContext, user);
+			_addDocuments(serviceContext);
 			_addFragmentEntries(serviceContext);
-			_addObjectDefinitions(user);
+			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
-			_addTaxonomyVocabularies(serviceContext, user);
+			_addTaxonomyVocabularies(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -213,9 +213,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDocuments(ServiceContext serviceContext, User user)
-		throws Exception {
-
+	private void _addDocuments(ServiceContext serviceContext) throws Exception {
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/documents");
 
@@ -227,7 +225,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_documentResourceFactory.create();
 
 		DocumentResource documentResource = documentResourceBuilder.user(
-			user
+			serviceContext.fetchUser()
 		).build();
 
 		for (String resourcePath : resourcePaths) {
@@ -283,7 +281,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private void _addObjectDefinitions(User user) throws Exception {
+	private void _addObjectDefinitions(ServiceContext serviceContext)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
@@ -296,7 +296,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		ObjectDefinitionResource objectDefinitionResource =
 			objectDefinitionResourceBuilder.user(
-				user
+				serviceContext.fetchUser()
 			).build();
 
 		for (String resourcePath : resourcePaths) {
@@ -341,8 +341,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private void _addTaxonomyVocabularies(
-			ServiceContext serviceContext, User user)
+	private void _addTaxonomyVocabularies(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -357,7 +356,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		TaxonomyVocabularyResource taxonomyVocabularyResource =
 			taxonomyVocabularyResourceBuilder.user(
-				user
+				serviceContext.fetchUser()
 			).build();
 
 		for (String resourcePath : resourcePaths) {
