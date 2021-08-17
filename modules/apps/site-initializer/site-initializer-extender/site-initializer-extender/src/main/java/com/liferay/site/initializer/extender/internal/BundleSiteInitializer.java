@@ -148,7 +148,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.setTimeZone(user.getTimeZone());
 			serviceContext.setUserId(user.getUserId());
 
-			_initialize(serviceContext, user);
+			_addDDMStructures(serviceContext);
+			_addDDMTemplates(serviceContext);
+			_addDocuments(serviceContext, user);
+			_addFragmentEntries(serviceContext);
+			_addObjectDefinitions(user);
+			_addStyleBookEntries(serviceContext);
+			_addTaxonomyVocabularies(serviceContext, user);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -380,18 +386,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getScopeGroupId(), taxonomyVocabulary);
 			}
 		}
-	}
-
-	private void _initialize(ServiceContext serviceContext, User user)
-		throws Exception {
-
-		_addDDMStructures(serviceContext);
-		_addDDMTemplates(serviceContext);
-		_addDocuments(serviceContext, user);
-		_addFragmentEntries(serviceContext);
-		_addObjectDefinitions(user);
-		_addStyleBookEntries(serviceContext);
-		_addTaxonomyVocabularies(serviceContext, user);
 	}
 
 	private String _read(String resourcePath) throws Exception {
