@@ -41,9 +41,9 @@ public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
 		Bundle bundle, BundleContext bundleContext,
-		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -53,9 +53,9 @@ public class SiteInitializerRegistrar {
 
 		_bundle = bundle;
 		_bundleContext = bundleContext;
-		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
@@ -74,8 +74,8 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_bundle, _defaultDDMStructureHelper, _ddmStructureLocalService,
-				_ddmTemplateLocalService, _documentResourceFactory,
+				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
+				_defaultDDMStructureHelper, _documentResourceFactory,
 				_fragmentsImporter, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,

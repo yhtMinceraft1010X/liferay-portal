@@ -42,9 +42,9 @@ public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
 		Bundle bundle, BundleContext bundleContext,
-		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -58,8 +58,8 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				bundle, bundleContext, defaultDDMStructureHelper,
-				ddmStructureLocalService, ddmTemplateLocalService,
+				bundle, bundleContext, ddmStructureLocalService,
+				ddmTemplateLocalService, defaultDDMStructureHelper,
 				documentResourceFactory, fragmentsImporter, jsonFactory,
 				objectDefinitionResourceFactory, portal,
 				styleBookEntryZipProcessor, taxonomyVocabularyResourceFactory,

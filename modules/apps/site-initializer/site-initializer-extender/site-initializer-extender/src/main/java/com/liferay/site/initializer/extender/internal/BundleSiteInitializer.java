@@ -75,9 +75,9 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		Bundle bundle, DefaultDDMStructureHelper defaultDDMStructureHelper,
-		DDMStructureLocalService ddmStructureLocalService,
+		Bundle bundle, DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DocumentResource.Factory documentResourceFactory,
 		FragmentsImporter fragmentsImporter, JSONFactory jsonFactory,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
@@ -87,9 +87,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService) {
 
 		_bundle = bundle;
-		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_documentResourceFactory = documentResourceFactory;
 		_fragmentsImporter = fragmentsImporter;
 		_jsonFactory = jsonFactory;
