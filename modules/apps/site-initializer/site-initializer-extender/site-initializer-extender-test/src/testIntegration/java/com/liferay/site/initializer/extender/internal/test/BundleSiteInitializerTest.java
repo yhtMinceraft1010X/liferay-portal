@@ -15,8 +15,12 @@
 package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -72,11 +76,28 @@ public class BundleSiteInitializerTest {
 
 		siteInitializer.initialize(group.getGroupId());
 
+		_assertDocuments(group);
 		_assertObjectDefinitions(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
+	}
+
+	private void _assertDocuments(Group group) throws Exception {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Table of Contents.md");
+
+		String string = new String(
+			StreamUtil.toByteArray(
+				_dlFileEntryLocalService.getFileAsStream(
+					dlFileEntry.getFileEntryId(), dlFileEntry.getVersion())));
+
+		Assert.assertTrue(string.contains("## Old Testament"));
+		Assert.assertTrue(string.contains("1. Genesis"));
+		Assert.assertTrue(string.contains("## New Testament"));
+		Assert.assertTrue(string.contains("1. Revelation"));
 	}
 
 	private void _assertObjectDefinitions(Group group) {
@@ -98,6 +119,9 @@ public class BundleSiteInitializerTest {
 			return bundleContext.installBundle(location, inputStream);
 		}
 	}
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
