@@ -134,19 +134,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			User user = _userLocalService.getUser(
 				PrincipalThreadLocal.getUserId());
 
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
-
-			Locale locale = LocaleUtil.getSiteDefault();
-
-			serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
-
-			serviceContext.setScopeGroupId(groupId);
-
-			serviceContext.setTimeZone(user.getTimeZone());
-			serviceContext.setUserId(user.getUserId());
+			ServiceContext serviceContext = new ServiceContext() {
+				{
+					setAddGroupPermissions(true);
+					setAddGuestPermissions(true);
+					setLanguageId(
+						LanguageUtil.getLanguageId(
+							LocaleUtil.getSiteDefault()));
+					setScopeGroupId(groupId);
+					setTimeZone(user.getTimeZone());
+					setUserId(user.getUserId());
+				}
+			};
 
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
