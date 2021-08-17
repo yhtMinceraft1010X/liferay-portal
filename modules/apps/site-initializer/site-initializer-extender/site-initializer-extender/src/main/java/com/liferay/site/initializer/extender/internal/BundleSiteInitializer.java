@@ -134,7 +134,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 			User user = _userLocalService.getUser(
 				PrincipalThreadLocal.getUserId());
 
-			_initialize(groupId, user);
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			Locale locale = LocaleUtil.getSiteDefault();
+
+			serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+
+			serviceContext.setScopeGroupId(groupId);
+
+			serviceContext.setTimeZone(user.getTimeZone());
+			serviceContext.setUserId(user.getUserId());
+
+			_initialize(groupId, serviceContext, user);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -146,7 +160,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addDDMStructures(long groupId, User user) throws Exception {
+	private void _addDDMStructures(
+			long groupId, ServiceContext serviceContext, User user)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/ddm-structures");
 
@@ -158,11 +175,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_defaultDDMStructureHelper.addDDMStructures(
 				user.getUserId(), groupId,
 				_portal.getClassNameId(JournalArticle.class), _classLoader,
-				resourcePath, _serviceContext);
+				resourcePath, serviceContext);
 		}
 	}
 
-	private void _addDDMTemplates(long groupId, User user) throws Exception {
+	private void _addDDMTemplates(
+			long groupId, ServiceContext serviceContext, User user)
+		throws Exception {
+
 		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
@@ -176,7 +196,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					_serviceContext.getScopeGroupId(), resourceClassNameId,
+					groupId, resourceClassNameId,
 					ddmTemplateJSONObject.getString("ddmStructureKey"));
 
 			_ddmTemplateLocalService.addTemplate(
@@ -190,7 +210,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL, _read("ddm_template.ftl", url),
-				false, false, null, null, _serviceContext);
+				false, false, null, null, serviceContext);
 		}
 	}
 
@@ -359,30 +379,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _createServiceContext(long groupId) throws Exception {
-		ServiceContext serviceContext = new ServiceContext();
+	private void _initialize(
+			long groupId, ServiceContext serviceContext, User user)
+		throws Exception {
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
-
-		serviceContext.setScopeGroupId(groupId);
-
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
-
-		_serviceContext = serviceContext;
-	}
-
-	private void _initialize(long groupId, User user) throws Exception {
-		_createServiceContext(groupId);
-		_addDDMStructures(groupId, user);
-		_addDDMTemplates(groupId, user);
+		_addDDMStructures(groupId, serviceContext, user);
+		_addDDMTemplates(groupId, serviceContext, user);
 		_addDocuments(groupId, user);
 		_addFragmentEntries(groupId, user);
 		_addObjectDefinitions(user);
@@ -424,7 +426,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final Portal _portal;
-	private ServiceContext _serviceContext;
 	private final ServletContext _servletContext;
 	private final StyleBookEntryZipProcessor _styleBookEntryZipProcessor;
 	private final TaxonomyVocabularyResource.Factory
