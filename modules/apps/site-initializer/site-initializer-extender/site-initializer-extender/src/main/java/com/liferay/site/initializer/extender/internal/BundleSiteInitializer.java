@@ -148,7 +148,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.setTimeZone(user.getTimeZone());
 			serviceContext.setUserId(user.getUserId());
 
-			_initialize(groupId, serviceContext, user);
+			_initialize(serviceContext, user);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -160,8 +160,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addDDMStructures(
-			long groupId, ServiceContext serviceContext, User user)
+	private void _addDDMStructures(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -173,14 +172,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			_defaultDDMStructureHelper.addDDMStructures(
-				user.getUserId(), groupId,
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(JournalArticle.class), _classLoader,
 				resourcePath, serviceContext);
 		}
 	}
 
-	private void _addDDMTemplates(
-			long groupId, ServiceContext serviceContext, User user)
+	private void _addDDMTemplates(ServiceContext serviceContext)
 		throws Exception {
 
 		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
@@ -196,11 +194,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					groupId, resourceClassNameId,
+					serviceContext.getScopeGroupId(), resourceClassNameId,
 					ddmTemplateJSONObject.getString("ddmStructureKey"));
 
 			_ddmTemplateLocalService.addTemplate(
-				user.getUserId(), groupId,
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), resourceClassNameId,
 				ddmTemplateJSONObject.getString("ddmTemplateKey"),
@@ -214,7 +212,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addDocuments(long groupId, User user) throws Exception {
+	private void _addDocuments(ServiceContext serviceContext, User user)
+		throws Exception {
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/documents");
 
@@ -256,7 +256,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			documentResource.postSiteDocument(
-				groupId,
+				serviceContext.getScopeGroupId(),
 				MultipartBody.of(
 					Collections.singletonMap(
 						"file",
@@ -268,7 +268,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addFragmentEntries(long groupId, User user) throws Exception {
+	private void _addFragmentEntries(ServiceContext serviceContext)
+		throws Exception {
+
 		URL url = _bundle.getEntry("/fragments.zip");
 
 		if (url == null) {
@@ -276,7 +278,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_fragmentsImporter.importFragmentEntries(
-			user.getUserId(), groupId, 0,
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
@@ -324,7 +326,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addStyleBookEntries(long groupId, User user)
+	private void _addStyleBookEntries(ServiceContext serviceContext)
 		throws Exception {
 
 		URL url = _bundle.getEntry("/style-books.zip");
@@ -334,11 +336,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_styleBookEntryZipProcessor.importStyleBookEntries(
-			user.getUserId(), groupId,
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private void _addTaxonomyVocabularies(long groupId, User user)
+	private void _addTaxonomyVocabularies(
+			ServiceContext serviceContext, User user)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -374,22 +377,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (false) {
 				taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-					groupId, taxonomyVocabulary);
+					serviceContext.getScopeGroupId(), taxonomyVocabulary);
 			}
 		}
 	}
 
-	private void _initialize(
-			long groupId, ServiceContext serviceContext, User user)
+	private void _initialize(ServiceContext serviceContext, User user)
 		throws Exception {
 
-		_addDDMStructures(groupId, serviceContext, user);
-		_addDDMTemplates(groupId, serviceContext, user);
-		_addDocuments(groupId, user);
-		_addFragmentEntries(groupId, user);
+		_addDDMStructures(serviceContext);
+		_addDDMTemplates(serviceContext);
+		_addDocuments(serviceContext, user);
+		_addFragmentEntries(serviceContext);
 		_addObjectDefinitions(user);
-		_addStyleBookEntries(groupId, user);
-		_addTaxonomyVocabularies(groupId, user);
+		_addStyleBookEntries(serviceContext);
+		_addTaxonomyVocabularies(serviceContext, user);
 	}
 
 	private String _read(String resourcePath) throws Exception {
