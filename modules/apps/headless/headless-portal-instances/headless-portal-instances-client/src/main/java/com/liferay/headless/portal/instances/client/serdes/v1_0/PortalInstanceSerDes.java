@@ -103,30 +103,18 @@ public class PortalInstanceSerDes {
 			sb.append("\"");
 		}
 
-		if (portalInstance.getPortalInstanceInitializerKey() != null) {
+		if (portalInstance.getSiteInitializerKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"portalInstanceInitializerKey\": ");
+			sb.append("\"siteInitializerKey\": ");
 
 			sb.append("\"");
 
-			sb.append(
-				_escape(portalInstance.getPortalInstanceInitializerKey()));
+			sb.append(_escape(portalInstance.getSiteInitializerKey()));
 
 			sb.append("\"");
-		}
-
-		if (portalInstance.getPortalInstanceInitializerPayload() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"portalInstanceInitializerPayload\": ");
-
-			sb.append(
-				_toJSON(portalInstance.getPortalInstanceInitializerPayload()));
 		}
 
 		if (portalInstance.getVirtualHost() != null) {
@@ -192,24 +180,13 @@ public class PortalInstanceSerDes {
 				String.valueOf(portalInstance.getPortalInstanceId()));
 		}
 
-		if (portalInstance.getPortalInstanceInitializerKey() == null) {
-			map.put("portalInstanceInitializerKey", null);
+		if (portalInstance.getSiteInitializerKey() == null) {
+			map.put("siteInitializerKey", null);
 		}
 		else {
 			map.put(
-				"portalInstanceInitializerKey",
-				String.valueOf(
-					portalInstance.getPortalInstanceInitializerKey()));
-		}
-
-		if (portalInstance.getPortalInstanceInitializerPayload() == null) {
-			map.put("portalInstanceInitializerPayload", null);
-		}
-		else {
-			map.put(
-				"portalInstanceInitializerPayload",
-				String.valueOf(
-					portalInstance.getPortalInstanceInitializerPayload()));
+				"siteInitializerKey",
+				String.valueOf(portalInstance.getSiteInitializerKey()));
 		}
 
 		if (portalInstance.getVirtualHost() == null) {
@@ -264,21 +241,11 @@ public class PortalInstanceSerDes {
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "portalInstanceInitializerKey")) {
+						jsonParserFieldName, "siteInitializerKey")) {
 
 				if (jsonParserFieldValue != null) {
-					portalInstance.setPortalInstanceInitializerKey(
+					portalInstance.setSiteInitializerKey(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"portalInstanceInitializerPayload")) {
-
-				if (jsonParserFieldValue != null) {
-					portalInstance.setPortalInstanceInitializerPayload(
-						(Map)PortalInstanceSerDes.toMap(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "virtualHost")) {

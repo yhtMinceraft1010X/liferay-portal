@@ -19,7 +19,6 @@ import com.liferay.headless.portal.instances.client.serdes.v1_0.PortalInstanceSe
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -119,56 +118,26 @@ public class PortalInstance implements Cloneable, Serializable {
 
 	protected String portalInstanceId;
 
-	public String getPortalInstanceInitializerKey() {
-		return portalInstanceInitializerKey;
+	public String getSiteInitializerKey() {
+		return siteInitializerKey;
 	}
 
-	public void setPortalInstanceInitializerKey(
-		String portalInstanceInitializerKey) {
-
-		this.portalInstanceInitializerKey = portalInstanceInitializerKey;
+	public void setSiteInitializerKey(String siteInitializerKey) {
+		this.siteInitializerKey = siteInitializerKey;
 	}
 
-	public void setPortalInstanceInitializerKey(
-		UnsafeSupplier<String, Exception>
-			portalInstanceInitializerKeyUnsafeSupplier) {
+	public void setSiteInitializerKey(
+		UnsafeSupplier<String, Exception> siteInitializerKeyUnsafeSupplier) {
 
 		try {
-			portalInstanceInitializerKey =
-				portalInstanceInitializerKeyUnsafeSupplier.get();
+			siteInitializerKey = siteInitializerKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String portalInstanceInitializerKey;
-
-	public Map<String, String> getPortalInstanceInitializerPayload() {
-		return portalInstanceInitializerPayload;
-	}
-
-	public void setPortalInstanceInitializerPayload(
-		Map<String, String> portalInstanceInitializerPayload) {
-
-		this.portalInstanceInitializerPayload =
-			portalInstanceInitializerPayload;
-	}
-
-	public void setPortalInstanceInitializerPayload(
-		UnsafeSupplier<Map<String, String>, Exception>
-			portalInstanceInitializerPayloadUnsafeSupplier) {
-
-		try {
-			portalInstanceInitializerPayload =
-				portalInstanceInitializerPayloadUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> portalInstanceInitializerPayload;
+	protected String siteInitializerKey;
 
 	public String getVirtualHost() {
 		return virtualHost;
