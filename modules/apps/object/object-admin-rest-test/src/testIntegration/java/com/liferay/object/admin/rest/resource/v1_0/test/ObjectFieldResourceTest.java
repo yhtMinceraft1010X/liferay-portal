@@ -23,7 +23,6 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.After;
@@ -65,6 +64,18 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetObjectFieldNotFound() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPatchObjectField() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutObjectField() {
 	}
 
 	@Override
