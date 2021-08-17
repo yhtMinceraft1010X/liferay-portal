@@ -145,15 +145,15 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryQuery.setClassNameIds(
 			new long[] {_portal.getClassNameId(BlogsEntry.class.getName())});
 		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
 
 		Pagination pagination = collectionQuery.getPagination();
 
 		if (pagination != null) {
-			assetEntryQuery.setStart(pagination.getStart());
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
+
+		assetEntryQuery.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
 
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 
@@ -166,6 +166,10 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		}
 		else {
 			assetEntryQuery.setOrderByType1("DESC");
+		}
+
+		if (pagination != null) {
+			assetEntryQuery.setStart(pagination.getStart());
 		}
 
 		return assetEntryQuery;
