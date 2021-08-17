@@ -19,9 +19,9 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,8 +47,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, value), value,
-				new ArrayList<>());
+				LocalizedMapUtil.getLocalizedMap(value), value,
+				LocalizedMapUtil.getLocalizedMap(value), new ArrayList<>());
 	}
 
 	@After
