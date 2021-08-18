@@ -35,6 +35,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 						<liferay-ui:message key="basic-info" />
 					</h2>
 
+					<aui:input name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
+
 					<aui:input disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
 					<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
@@ -136,9 +138,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 	}
 
 	function <portlet:namespace />saveObjectField() {
-		const inputName = getNode('name');
-		const inputType = getNode('type');
-		const inputRequired = getNode('required');
 		const inputIndexed = getNode('indexed');
 		const inputIndexedTypeKeyword = getNode(
 			'inputIndexedTypeKeyword'
@@ -147,6 +146,10 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			'input'
 		);
 		const inputIndexedLanguageId = getNode('indexedLanguageId');
+		const inputLabel = getNode('label');
+		const inputName = getNode('name');
+		const inputRequired = getNode('required');
+		const inputType = getNode('type');
 
 		const indexed = inputIndexed.checked;
 		const indexedAsKeyword =
@@ -157,6 +160,9 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			inputType.value === 'String'
 				? inputIndexedLanguageId.value
 				: null;
+		const label = {
+			[themeDisplay.getDefaultLanguageId()]: inputLabel.value,
+		};
 		const name = inputName.value;
 		const required = inputRequired.checked;
 		const type = inputType.value;
@@ -168,6 +174,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 					indexed,
 					indexedAsKeyword,
 					indexedLanguageId,
+					label,
 					name,
 					required,
 					type,
