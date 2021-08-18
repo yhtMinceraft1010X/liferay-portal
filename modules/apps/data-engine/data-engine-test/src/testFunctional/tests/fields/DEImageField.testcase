@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.duplicate(fieldFieldLabel = "Image");
@@ -93,8 +93,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		WebContentStructures.saveCP();
@@ -145,8 +145,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		WebContentStructures.saveCP();
@@ -193,8 +193,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.editFieldTip(
@@ -230,8 +230,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
@@ -256,8 +256,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
@@ -312,8 +312,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.viewFieldSearchable(
@@ -346,8 +346,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.viewFieldSearchable(
@@ -362,8 +362,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.editFieldTip(
@@ -387,8 +387,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Image");
@@ -423,8 +423,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		WebContentStructures.saveCP();
@@ -473,8 +473,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
+		DEBuilder.addField(
+			fieldLabel = "Image",
 			fieldName = "Image");
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
