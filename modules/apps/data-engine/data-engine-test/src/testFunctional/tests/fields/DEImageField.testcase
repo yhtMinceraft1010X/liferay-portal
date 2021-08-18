@@ -209,13 +209,13 @@ definition {
 		NavItem.gotoStructures();
 
 		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
+			dmDocumentTitle = "Document Title 1",
 			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
 		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title Edited",
+			dmDocumentTitle = "Document Title 2",
 			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
@@ -236,25 +236,23 @@ definition {
 
 		DERenderer.inputDataInImageField(
 			fieldLabel = "Image",
-			imageFileName = "Document Title",
+			imageFileName = "Document Title 1",
 			navTab = "Documents and Media",
-			webContentImage = "Document Title");
+			webContentImage = "Document Title 1");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		PortletEntry.inputTitle(title = "Web Content Title Edited");
-
 		DERenderer.inputDataInImageField(
 			fieldLabel = "Image",
-			imageFileName = "Document Title Edited",
+			imageFileName = "Document Title 2",
 			navTab = "Documents and Media",
-			webContentImage = "Document Title Edited");
+			webContentImage = "Document Title 2");
 
 		Button.clickPublish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edited");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		WebContent.viewPGViaWCD(
 			image = "true",
