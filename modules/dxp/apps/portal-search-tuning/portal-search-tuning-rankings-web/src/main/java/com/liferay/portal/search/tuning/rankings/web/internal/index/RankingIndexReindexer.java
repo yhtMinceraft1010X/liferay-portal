@@ -55,7 +55,7 @@ public class RankingIndexReindexer implements IndexReindexer {
 					_log.info(
 						StringBundler.concat(
 							"Not reindexing ", rankingIndexName.getIndexName(),
-							" because the database has no Ranking entries"));
+							" because the database has no ranking entries"));
 				}
 
 				continue;

@@ -86,10 +86,11 @@ public class SynonymSetStorageAdapter {
 		if (parts.length != 2) {
 			_log.error(
 				StringBundler.concat(
-					"Non-standard synonymSetDocumentId: ", synonymSetDocumentId,
-					". SynonymSets may need to be imported to the database ",
-					"via the SynonymSetsDatabaseImporter groovy script before ",
-					"they can be edited or deleted."));
+					"Synonym set document ID ", synonymSetDocumentId,
+					" has an unexpected format. Synonym sets may need to be ",
+					"imported to the database via the synonym sets database ",
+					"importer Groovy script before they can be edited or ",
+					"deleted."));
 
 			throw new PortalException();
 		}

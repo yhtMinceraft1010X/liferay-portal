@@ -80,10 +80,10 @@ public class RankingStorageAdapter {
 		if (parts.length != 2) {
 			_log.error(
 				StringBundler.concat(
-					"Non-standard rankingDocumentId: ", rankingDocumentId,
-					". Rankings may need to be imported to the database via ",
-					"the RankingsDatabaseImporter groovy script before they ",
-					"can be edited or deleted."));
+					"Ranking document ID ", rankingDocumentId, " has an "
+					"unexpected format. Rankings may need to be imported to ",
+					"the database via the rankings database importer Groovy ",
+					"script before they can be edited or deleted."));
 
 			throw new PortalException();
 		}

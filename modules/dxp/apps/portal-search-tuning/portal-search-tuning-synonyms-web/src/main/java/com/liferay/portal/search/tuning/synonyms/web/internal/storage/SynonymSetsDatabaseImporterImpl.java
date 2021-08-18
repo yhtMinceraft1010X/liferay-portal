@@ -72,7 +72,7 @@ public class SynonymSetsDatabaseImporterImpl
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Adding database entry for document with id_ " +
+					"Adding database entry for document with ID " +
 						synonymSet.getSynonymSetDocumentId());
 			}
 

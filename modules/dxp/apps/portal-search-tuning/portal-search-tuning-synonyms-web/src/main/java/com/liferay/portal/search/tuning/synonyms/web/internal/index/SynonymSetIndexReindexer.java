@@ -54,7 +54,8 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 						StringBundler.concat(
 							"Not reindexing ",
 							synonymSetIndexName.getIndexName(),
-							" because the database has no SynonymSet entries"));
+							" because the database has no synonym set ",
+							"entries"));
 				}
 
 				continue;
