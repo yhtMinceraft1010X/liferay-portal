@@ -11,16 +11,6 @@
 
 <tbody>
 <tr>
-	<td>BUTTON_LABEL_INDEXED</td>
-	<td>xpath=(//div[./label[normalize-space(text())='${key_fieldLabel}']]//button[normalize-space()='${text}'])[${index}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CUSTOM_FIELD_BUTTON_INDEXED</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='${key_buttonName}'])[${index}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_FIELD_IMAGE_PREVIEW_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')])[${index}]</td>
 	<td></td>
@@ -28,6 +18,11 @@
 <tr>
 	<td>DATE_INPUT_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_BUTTON_INDEXED</td>
+	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//button[normalize-space()='${key_buttonName}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

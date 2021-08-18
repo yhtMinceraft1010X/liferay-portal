@@ -135,7 +135,7 @@ definition {
 			index = "${index}",
 			key_buttonName = "Clear",
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "DataEngineRenderer#CUSTOM_FIELD_BUTTON_INDEXED");
+			locator1 = "DataEngineRenderer#FIELD_BUTTON_INDEXED");
 	}
 
 	macro inputDataInDateField {
@@ -174,9 +174,9 @@ definition {
 
 		Click(
 			index = "${index}",
+			key_buttonName = "Select",
 			key_fieldLabel = "${fieldLabel}",
-			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED",
-			text = "Select");
+			locator1 = "DataEngineRenderer#FIELD_BUTTON_INDEXED");
 
 		if ("${navTab}" == "Documents and Media") {
 			if (isSet(depotName)) {
