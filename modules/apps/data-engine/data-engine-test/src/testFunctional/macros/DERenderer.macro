@@ -101,6 +101,7 @@ definition {
 		if (!(isSet(index))) {
 			var index = "1";
 		}
+
 		AssertElementNotPresent(
 			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
@@ -129,6 +130,7 @@ definition {
 		if (!(isSet(index))) {
 			var index = "1";
 		}
+
 		Click(
 			index = "${index}",
 			key_buttonName = "Clear",
