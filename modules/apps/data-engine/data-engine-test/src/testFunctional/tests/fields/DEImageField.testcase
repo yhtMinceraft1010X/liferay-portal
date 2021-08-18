@@ -80,53 +80,9 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that is possible to upload an image."
-	@priority = "5"
-	test CanBeUploaded {
-		NavItem.gotoStructures();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
-	}
-
 	@description = "This is a test for LRQA-69272. This test verifies that is possible to clear the uploaded image."
 	@priority = "5"
-	test CanClearUpload {
+	test CanClearImage {
 		NavItem.gotoStructures();
 
 		JSONDocument.addFileWithUploadedFile(
@@ -170,6 +126,66 @@ definition {
 			imageField = "Document_1.jpg");
 	}
 
+	@description = "This is a test for LRQA-69272. This test verifies that upon uploading a new image, preview is updated."
+	@priority = "4"
+	test CanEditImage {
+		NavItem.gotoStructures();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title 1",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title 2",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title 1",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title 2",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title 2");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
+	}
+
 	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
@@ -205,127 +221,6 @@ definition {
 			fieldFieldLabel = "Image Edited",
 			fieldHelp = "Help Text Edited",
 			fieldName = "Image");
-	}
-
-	@description = "This is a test for LRQA-69272. This test verifies that upon uploading a new image, preview is updated."
-	@priority = "4"
-	test CanEditUpload {
-		NavItem.gotoStructures();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title 1",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title 2",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title 1",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title 1");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title 2",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title 2");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
-	}
-
-	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
-	@priority = "5"
-	test CanInputDataOnDuplicatedField {
-		NavItem.gotoStructures();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title 1",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title 2",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DataEngine.addRepeatableField(fieldLabel = "Image");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title 1",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title 1");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title 2",
-			index = "2",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title 2");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
 	}
 
 	@description = "This is a test for LRQA-69272. This test verifies that is not possible to publish the Web Content with a required field blank."
@@ -513,6 +408,111 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
+	}
+
+	@description = "This is a test for LRQA-69272. This test verifies that is possible to upload an image."
+	@priority = "5"
+	test CanUploadImage {
+		NavItem.gotoStructures();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.jpg");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.jpg");
+	}
+
+	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
+	@priority = "5"
+	test CanUploadImageOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title 1",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title 2",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Image");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title 1",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title 1");
+
+		DERenderer.inputDataInImageField(
+			fieldLabel = "Image",
+			imageFileName = "Document Title 2",
+			index = "2",
+			navTab = "Documents and Media",
+			webContentImage = "Document Title 2");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.jpg");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
 	}
 
 }
