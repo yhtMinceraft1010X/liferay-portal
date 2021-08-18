@@ -157,89 +157,7 @@ public class DataDefinitionDDMFormUtilTest extends PowerMockito {
 					{
 						setAvailableLanguageIds(
 							new String[] {"en_US", "pt_BR"});
-						setDataDefinitionFields(
-							new DataDefinitionField[] {
-								new DataDefinitionField() {
-									{
-										setDefaultValue(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "enter a text"
-											).put(
-												"pt_BR", "insira um texto"
-											).build());
-										setFieldType("text");
-										setIndexType(IndexType.TEXT);
-										setLabel(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "label1"
-											).put(
-												"pt_BR", "rótulo1"
-											).build());
-										setLocalizable(true);
-										setName("name1");
-										setReadOnly(true);
-										setRepeatable(true);
-										setRequired(true);
-										setShowLabel(true);
-										setTip(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "tip1"
-											).put(
-												"pt_BR", "ajuda1"
-											).build());
-									}
-								},
-								new DataDefinitionField() {
-									{
-										setCustomProperties(
-											HashMapBuilder.<String, Object>put(
-												"options",
-												HashMapBuilder.
-													<String, Object>put(
-														"en_US",
-														Collections.
-															singletonList(
-																JSONUtil.put(
-																	"label",
-																	"label"
-																).put(
-																	"reference",
-																	"reference"
-																).put(
-																	"value",
-																	"value"
-																))
-													).build()
-											).build());
-										setDefaultValue(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "select an option"
-											).put(
-												"pt_BR", "selecione uma opção"
-											).build());
-										setFieldType("select");
-										setIndexType(IndexType.KEYWORD);
-										setLabel(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "label2"
-											).put(
-												"pt_BR", "rótulo2"
-											).build());
-										setName("name2");
-										setLocalizable(false);
-										setReadOnly(false);
-										setRepeatable(false);
-										setRequired(false);
-										setShowLabel(false);
-										setTip(
-											HashMapBuilder.<String, Object>put(
-												"en_US", "tip2"
-											).put(
-												"pt_BR", "ajuda2"
-											).build());
-									}
-								}
-							});
+						setDataDefinitionFields(_getDataDefinitionFields());
 						setDefaultLanguageId("en_US");
 					}
 				},
@@ -260,6 +178,86 @@ public class DataDefinitionDDMFormUtilTest extends PowerMockito {
 	public void testToDDMFormWithNullDataDefinition() {
 		Assert.assertEquals(
 			new DDMForm(), DataDefinitionDDMFormUtil.toDDMForm(null, null));
+	}
+
+	private DataDefinitionField[] _getDataDefinitionFields() {
+		return new DataDefinitionField[] {
+			new DataDefinitionField() {
+				{
+					setDefaultValue(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "enter a text"
+						).put(
+							"pt_BR", "insira um texto"
+						).build());
+					setFieldType("text");
+					setIndexType(IndexType.TEXT);
+					setLabel(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "label1"
+						).put(
+							"pt_BR", "rótulo1"
+						).build());
+					setLocalizable(true);
+					setName("name1");
+					setReadOnly(true);
+					setRepeatable(true);
+					setRequired(true);
+					setShowLabel(true);
+					setTip(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "tip1"
+						).put(
+							"pt_BR", "ajuda1"
+						).build());
+				}
+			},
+			new DataDefinitionField() {
+				{
+					setCustomProperties(
+						HashMapBuilder.<String, Object>put(
+							"options",
+							HashMapBuilder.<String, Object>put(
+								"en_US",
+								Collections.singletonList(
+									JSONUtil.put(
+										"label", "label"
+									).put(
+										"reference", "reference"
+									).put(
+										"value", "value"
+									))
+							).build()
+						).build());
+					setDefaultValue(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "select an option"
+						).put(
+							"pt_BR", "selecione uma opção"
+						).build());
+					setFieldType("select");
+					setIndexType(IndexType.KEYWORD);
+					setLabel(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "label2"
+						).put(
+							"pt_BR", "rótulo2"
+						).build());
+					setName("name2");
+					setLocalizable(false);
+					setReadOnly(false);
+					setRepeatable(false);
+					setRequired(false);
+					setShowLabel(false);
+					setTip(
+						HashMapBuilder.<String, Object>put(
+							"en_US", "tip2"
+						).put(
+							"pt_BR", "ajuda2"
+						).build());
+				}
+			}
+		};
 	}
 
 	private void _setUpJSONFactoryUtil() {
