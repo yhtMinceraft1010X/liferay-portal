@@ -173,17 +173,19 @@ definition {
 			navTab = "Documents and Media",
 			webContentImage = "Document Title 2");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_2.jpg",
+			imageTitle = "Document Title 2");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_2.jpg",
+			imageTitle = "Document Title 2");
 	}
 
 	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited."
@@ -441,17 +443,19 @@ definition {
 			navTab = "Documents and Media",
 			webContentImage = "Document Title");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_1.jpg",
+			imageTitle = "Document Title");
 
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_1.jpg",
+			imageTitle = "Document Title");
 	}
 
 	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
@@ -506,13 +510,17 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_1.jpg",
+			imageTitle = "Document Title 1",
+			index = "1");
 
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_2.jpg");
+		DERenderer.assertDataInImageField(
+			fieldLabel = "Image",
+			imageFile = "Document_2.jpg",
+			imageTitle = "Document Title 2",
+			index = "2");
 	}
 
 }
