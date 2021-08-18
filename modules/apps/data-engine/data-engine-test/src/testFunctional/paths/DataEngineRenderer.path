@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>CUSTOM_FIELD_IMAGE_PREVIEW_INDEXED</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')])[${index}]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DATE_INPUT_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text'])[${index}]</td>
 	<td></td>
@@ -38,6 +33,11 @@
 <tr>
 	<td>IMAGE_INPUT_INDEXED</td>
 	<td>xpath=(//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}']/ancestor::div[contains(@class,'form-group')]//input[not(contains(@type,'hidden'))])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_PICKER_PREVIEW_INDEXED</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::div[contains(@class,'image-picker-preview')]//img[contains(@src,'${key_image}')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

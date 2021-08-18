@@ -106,7 +106,7 @@ definition {
 			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
 			key_image = "${imageField}",
-			locator1 = "DataEngineRenderer#CUSTOM_FIELD_IMAGE_PREVIEW_INDEXED");
+			locator1 = "DataEngineRenderer#IMAGE_PICKER_PREVIEW_INDEXED");
 	}
 
 	macro assertMultipleSelectionOptionIsUnchecked {
