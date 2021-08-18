@@ -15,6 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -24,6 +26,9 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
 		ACUtils.tearDownAC();
@@ -39,12 +44,55 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
-	@ignore = "true"
 	@priority = "5"
 	test ShowsKeywordsBeingSearched {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		// TODO LRAC-8298 ShowsKeywordsBeingSearched
+		task ("Search keywords on DXP Search Bar") {
+			Navigator.openURL();
 
+			for (var keyword : list "liferay,ac") {
+				ContentDashboard.searchValue(webContentTitle = "${keyword}");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Switch to new property in AC") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACSites.viewSiteOverviewDashboardCards();
+		}
+
+		task ("View the new report") {
+			ACCards.viewCards(cardTitle = "Search Terms");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Search Terms");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert Keywords Searched") {
+			for (var keyword : list "liferay,ac") {
+				AssertElementPresent(
+					key_keyword = "${keyword}",
+					locator1 = "ACSites#SEARCHED_KEYWORD");
+			}
+		}
 	}
 
 }
