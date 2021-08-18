@@ -85,7 +85,6 @@ public class CollectionFilterFragmentRenderer implements FragmentRenderer {
 				FragmentCollectionFilter.class.getName(),
 				_fragmentCollectionFilterTracker.getFragmentCollectionFilter(
 					"category"));
-
 			httpServletRequest.setAttribute(
 				FragmentRendererContext.class.getName(),
 				fragmentRendererContext);
