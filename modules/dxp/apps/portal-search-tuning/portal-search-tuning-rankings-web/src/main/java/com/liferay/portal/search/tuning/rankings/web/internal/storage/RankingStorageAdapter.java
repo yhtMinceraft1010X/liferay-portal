@@ -80,7 +80,7 @@ public class RankingStorageAdapter {
 		if (parts.length != 2) {
 			_log.error(
 				StringBundler.concat(
-					"Ranking document ID ", rankingDocumentId, " has an "
+					"Ranking document ID ", rankingDocumentId, " has an ",
 					"unexpected format. Rankings may need to be imported to ",
 					"the database via the rankings database importer Groovy ",
 					"script before they can be edited or deleted."));
