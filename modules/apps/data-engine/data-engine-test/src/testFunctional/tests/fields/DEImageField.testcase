@@ -111,6 +111,10 @@ definition {
 			navTab = "Documents and Media",
 			webContentImage = "Document Title");
 
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_1.jpg");
+
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -250,6 +254,10 @@ definition {
 			navTab = "Documents and Media",
 			webContentImage = "Document Title 2");
 
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
+
 		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -257,52 +265,6 @@ definition {
 		WebContent.viewPGViaWCD(
 			image = "true",
 			key_image = "Document_2.jpg");
-	}
-
-	@description = "This is a test for LRQA-69272. This test verifies that image preview is displayed when editing the Web Content."
-	@priority = "4"
-	test CanImagePreviewDisplayedAfterEditing {
-		NavItem.gotoStructures();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = "Document Title",
-			groupName = "Test Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg");
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		WebContentStructures.saveCP();
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title");
-
-		DERenderer.inputDataInImageField(
-			fieldLabel = "Image",
-			imageFileName = "Document Title",
-			navTab = "Documents and Media",
-			webContentImage = "Document Title");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		PortletEntry.inputTitle(title = "Web Content Title Edited");
-
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Edited");
-
-		WebContent.viewPGViaWCD(
-			image = "true",
-			key_image = "Document_1.jpg");
 	}
 
 	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
