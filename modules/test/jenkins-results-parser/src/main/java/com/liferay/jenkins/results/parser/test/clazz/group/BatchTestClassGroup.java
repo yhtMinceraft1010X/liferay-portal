@@ -147,7 +147,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return slaveLabel;
 		}
 
-		return "!master";
+		return SLAVE_LABEL_DEFAULT;
 	}
 
 	public String getTestCasePropertiesContent() {
@@ -541,6 +541,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected static final String NAME_STABLE_TEST_SUITE = "stable";
+
+	protected static final String SLAVE_LABEL_DEFAULT = "!master";
 
 	protected final List<AxisTestClassGroup> axisTestClassGroups =
 		new ArrayList<>();
