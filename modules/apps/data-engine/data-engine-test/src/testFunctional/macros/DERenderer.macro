@@ -171,6 +171,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
+			index = "${index}",
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "DataEngineRenderer#BUTTON_LABEL_INDEXED",
 			text = "Select");
