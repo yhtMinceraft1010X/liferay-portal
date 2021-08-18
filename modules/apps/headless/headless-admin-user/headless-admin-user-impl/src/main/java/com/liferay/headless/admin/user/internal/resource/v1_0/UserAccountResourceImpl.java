@@ -484,7 +484,7 @@ public class UserAccountResourceImpl
 			for (String accountRoleId : accountRoleIdsArray) {
 				_accountRoleResource.
 					postAccountAccountRoleUserAccountAssociation(
-						accountId, Long.valueOf(accountRoleId),
+						accountId, GetterUtil.getLong(accountRoleId),
 						userAccount.getId());
 			}
 		}

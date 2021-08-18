@@ -272,8 +272,8 @@ public class OrganizationResourceImpl
 		for (UserAccount userAccount : userAccounts) {
 			for (String organizationRoleId : organizationRoleIdsArray) {
 				_roleResource.postOrganizationRoleUserAccountAssociation(
-					Long.valueOf(organizationRoleId), userAccount.getId(),
-					Long.valueOf(organizationId));
+					GetterUtil.getLong(organizationRoleId), userAccount.getId(),
+					GetterUtil.getLong(organizationId));
 			}
 		}
 
