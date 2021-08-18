@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that is possible to delete the field"
+	@description = "This is a test for LRQA-68645. This test verifies that is possible to delete the field."
 	@priority = "5"
 	test CanBeDeleted {
 		NavItem.gotoStructures();
@@ -54,7 +54,7 @@ definition {
 		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Image");
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that is possible to duplicate the field"
+	@description = "This is a test for LRQA-68645. This test verifies that is possible to duplicate the field."
 	@priority = "4"
 	test CanBeDuplicated {
 		NavItem.gotoStructures();
@@ -80,7 +80,7 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that is possible to upload an image"
+	@description = "This is a test for LRQA-69272. This test verifies that is possible to upload an image."
 	@priority = "5"
 	test CanBeUploaded {
 		NavItem.gotoStructures();
@@ -120,7 +120,7 @@ definition {
 			key_image = "Document_1.jpg");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that is possible to clear the uploaded image"
+	@description = "This is a test for LRQA-69272. This test verifies that is possible to clear the uploaded image."
 	@priority = "5"
 	test CanClearUpload {
 		NavItem.gotoStructures();
@@ -166,7 +166,7 @@ definition {
 			imageField = "Document_1.jpg");
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited"
+	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be edited."
 	@priority = "5"
 	test CanEditLabelAndHelpText {
 		NavItem.gotoStructures();
@@ -203,7 +203,7 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that upon uploading a new image, preview is updated"
+	@description = "This is a test for LRQA-69272. This test verifies that upon uploading a new image, preview is updated."
 	@priority = "4"
 	test CanEditUpload {
 		NavItem.gotoStructures();
@@ -261,7 +261,7 @@ definition {
 			key_image = "Document_2.jpg");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that image preview is displayed when editing the Web Content"
+	@description = "This is a test for LRQA-69272. This test verifies that image preview is displayed when editing the Web Content."
 	@priority = "4"
 	test CanImagePreviewDisplayedAfterEditing {
 		NavItem.gotoStructures();
@@ -307,7 +307,7 @@ definition {
 			key_image = "Document_1.jpg");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists"
+	@description = "This is a test for LRQA-69272. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
 	@priority = "5"
 	test CanInputDataOnDuplicatedField {
 		NavItem.gotoStructures();
@@ -368,7 +368,7 @@ definition {
 			key_image = "Document_2.jpg");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies that is not possible to publish the Web Content with a required field blank"
+	@description = "This is a test for LRQA-69272. This test verifies that is not possible to publish the Web Content with a required field blank."
 	@priority = "4"
 	test CanNotPublishBlankRequiredField {
 		NavItem.gotoStructures();
@@ -394,7 +394,7 @@ definition {
 		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
 	}
 
-	@description = "This is a test for LRQA-69272. This test verifies is possible to remove a duplicated field (repeatable)"
+	@description = "This is a test for LRQA-69272. This test verifies is possible to remove a duplicated field (repeatable)."
 	@priority = "4"
 	test CanRemoveDuplicatedField {
 		NavItem.gotoStructures();
@@ -432,7 +432,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Disable when System Setting is left unchecked"
+	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Disable when System Setting is left unchecked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
 		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToDisable";
@@ -466,7 +466,7 @@ definition {
 			searchableType = "Disable");
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Text when System Setting is checked"
+	@description = "This is a test for LRQA-68645. This test verifies that Default Searchable property is Text when System Setting is checked."
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToText {
 		property test.name.skip.portal.instance = "DEImageField#CanSetDefaultSearchablePropertyToText";
@@ -500,7 +500,7 @@ definition {
 			searchableType = "Text");
 	}
 
-	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be set"
+	@description = "This is a test for LRQA-68645. This test verifies that Label and Help text can be set."
 	@priority = "5"
 	test CanSetLabelAndHelpText {
 		NavItem.gotoStructures();
