@@ -140,6 +140,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _segmentTestClassGroups;
 	}
 
+	public String getSlaveLabel() {
+		String slaveLabel = getFirstPropertyValue("test.batch.slave.label");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return "!master";
+	}
+
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
 
