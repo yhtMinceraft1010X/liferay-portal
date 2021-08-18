@@ -518,6 +518,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		axisTestClassGroupsList = _partitionByMinimumSlaveRAM(
 			axisTestClassGroupsList);
+		axisTestClassGroupsList = _partitionBySlaveLabel(
+			axisTestClassGroupsList);
 		axisTestClassGroupsList = _partitionByTestBaseDir(
 			axisTestClassGroupsList);
 
@@ -697,6 +699,41 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 				axisTestClassGroupsMap.put(
 					minimumSlaveRAM, minimumSlaveRAMAxisTestClassGroups);
+			}
+
+			partitionedAxisTestClassGroupsList.addAll(
+				axisTestClassGroupsMap.values());
+		}
+
+		return partitionedAxisTestClassGroupsList;
+	}
+
+	private List<List<AxisTestClassGroup>> _partitionBySlaveLabel(
+		List<List<AxisTestClassGroup>> axisTestClassGroupsList) {
+
+		List<List<AxisTestClassGroup>> partitionedAxisTestClassGroupsList =
+			new ArrayList<>();
+
+		for (List<AxisTestClassGroup> axisTestClassGroups :
+				axisTestClassGroupsList) {
+
+			Map<String, List<AxisTestClassGroup>> axisTestClassGroupsMap =
+				new HashMap<>();
+
+			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				String slaveLabel = axisTestClassGroup.getSlaveLabel();
+
+				List<AxisTestClassGroup> slaveLabelAxisTestClassGroups =
+					axisTestClassGroupsMap.get(slaveLabel);
+
+				if (slaveLabelAxisTestClassGroups == null) {
+					slaveLabelAxisTestClassGroups = new ArrayList<>();
+				}
+
+				slaveLabelAxisTestClassGroups.add(axisTestClassGroup);
+
+				axisTestClassGroupsMap.put(
+					slaveLabel, slaveLabelAxisTestClassGroups);
 			}
 
 			partitionedAxisTestClassGroupsList.addAll(
