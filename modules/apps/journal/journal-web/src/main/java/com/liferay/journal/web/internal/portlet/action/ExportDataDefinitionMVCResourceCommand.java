@@ -76,7 +76,7 @@ public class ExportDataDefinitionMVCResourceCommand
 
 		Map<String, Object> nameMap = dataDefinition.getName();
 
-		_removeUnnecessaryData(dataDefinition);
+		_sanitize(dataDefinition);
 
 		String dataDefinitionString = String.valueOf(dataDefinition);
 
@@ -91,7 +91,7 @@ public class ExportDataDefinitionMVCResourceCommand
 			dataDefinitionString.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 
-	private void _removeUnnecessaryData(DataDefinition dataDefinition) {
+	private void _sanitize(DataDefinition dataDefinition) {
 		dataDefinition.setDataDefinitionKey((String)null);
 		dataDefinition.setDateCreated((Date)null);
 		dataDefinition.setDateModified((Date)null);
