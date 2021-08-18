@@ -66,6 +66,11 @@
 	<td>//div[contains(@class,'cohort-analysis')]//h5[text()='Cohort Analysis']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCHED_KEYWORD</td>
+	<td>//span[contains(@class,'text-truncate title')and contains(text(),'${key_keyword}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
