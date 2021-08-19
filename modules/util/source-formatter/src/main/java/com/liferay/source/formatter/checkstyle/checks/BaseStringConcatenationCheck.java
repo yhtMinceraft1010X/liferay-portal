@@ -98,7 +98,8 @@ public abstract class BaseStringConcatenationCheck extends BaseCheck {
 				literalString1.charAt(literalString1.length() - 1));
 		}
 
-		if (literalString2.startsWith(StringPool.SPACE) ||
+		if ((literalString1.endsWith(StringPool.NEW_LINE) &&
+			 literalString2.startsWith(StringPool.SPACE)) ||
 			(!literalString1.endsWith(StringPool.SPACE) &&
 			 literalString2.matches("^[-:;.].*"))) {
 
