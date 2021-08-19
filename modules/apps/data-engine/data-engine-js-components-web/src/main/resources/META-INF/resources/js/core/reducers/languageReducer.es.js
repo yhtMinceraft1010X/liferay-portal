@@ -189,7 +189,7 @@ export default (state, action) => {
 					// the fields in the settingsContext structure.
 
 					if (field.settingsContext) {
-						const newField = {
+						let newField = {
 							...field,
 							...updateFieldLanguage({
 								...field,
@@ -199,6 +199,34 @@ export default (state, action) => {
 							}),
 							value: previousValue,
 						};
+
+						if (field.numericInputMask) {
+							const visitor = new PagesVisitor(
+								field.settingsContext.pages
+							);
+							let numericInputMask = {};
+							visitor.mapFields((field) => {
+								if (field.fieldName === 'numericInputMask') {
+									numericInputMask =
+										field.localizedValue[editingLanguageId];
+									newField = {
+										...newField,
+										...numericInputMask,
+									};
+								}
+							});
+
+							field.settingsContext.pages = visitor.mapFields(
+								(field) => {
+									return field.fieldName === 'predefinedValue'
+										? {
+												...field,
+												...numericInputMask,
+										  }
+										: field;
+								}
+							);
+						}
 
 						if (field.fieldName === newFocusedField.fieldName) {
 							newFocusedField = newField;
