@@ -160,10 +160,9 @@ public class ObjectFieldLocalServiceImpl
 			return objectFieldPersistence.update(objectField);
 		}
 
-		validateType(type);
-
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateName(objectDefinition, name);
+		validateType(type);
 
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
