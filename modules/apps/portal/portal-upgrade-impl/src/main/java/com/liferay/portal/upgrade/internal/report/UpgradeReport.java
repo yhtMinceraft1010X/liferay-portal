@@ -138,7 +138,7 @@ public class UpgradeReport {
 	}
 
 	private String _getProperties() {
-		StringBuffer sb = new StringBuffer(10);
+		StringBuffer sb = new StringBuffer(14);
 
 		String dlStore = PropsValues.DL_STORE_IMPL;
 
@@ -156,7 +156,8 @@ public class UpgradeReport {
 				_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
 			if (rootDir == null) {
-				sb.append("rootDir was required. Configure it in ");
+				sb.append("The configuration \"rootDir\" is required. ");
+				sb.append("Configure it in ");
 				sb.append(_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 				sb.append(".config");
 			}
@@ -167,7 +168,8 @@ public class UpgradeReport {
 			rootDir = _getRootDir(_FILE_SYSTEM_STORE_CONFIGURATION_PID);
 
 			if (rootDir == null) {
-				sb.append("rootDir was not set, default directory was used");
+				sb.append("Using the default directory because the ");
+				sb.append("configuration \"rootDir\" was not set");
 			}
 		}
 
