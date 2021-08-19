@@ -50,18 +50,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchACItem {
-		Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
-
-		Type(
-			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
-			value1 = "${searchItem}");
-
-		KeyPress(
-			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
-			value1 = "\ENTER");
-	}
-
 	macro createMultipleProperties {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
@@ -122,6 +110,18 @@ definition {
 
 	macro navToSyncedSitesMenu {
 		Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
+	}
+
+	macro searchACItem {
+		Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
+
+		Type(
+			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+			value1 = "${searchItem}");
+
+		KeyPress(
+			locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+			value1 = "\ENTER");
 	}
 
 	macro selectAvailableProperties {
