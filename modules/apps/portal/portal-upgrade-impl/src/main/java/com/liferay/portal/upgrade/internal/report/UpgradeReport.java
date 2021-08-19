@@ -160,19 +160,19 @@ public class UpgradeReport {
 					"AdvancedFileSystemStore")) {
 
 			rootDir = _getRootDir(
-				_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+				_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
 
 			if (rootDir == null) {
 				sb.append("The configuration \"rootDir\" is required. ");
 				sb.append("Configure it in ");
-				sb.append(_ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+				sb.append(_CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE);
 				sb.append(".config");
 			}
 		}
 		else if (dlStore.equals(
 					"com.liferay.portal.store.file.system.FileSystemStore")) {
 
-			rootDir = _getRootDir(_FILE_SYSTEM_STORE_CONFIGURATION_PID);
+			rootDir = _getRootDir(_CONFIGURATION_PID_FILE_SYSTEM_STORE);
 
 			if (rootDir == null) {
 				sb.append("Using the default directory because the ");
@@ -283,11 +283,11 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private static final String _ADVANCED_FILE_SYSTEM_STORE_CONFIGURATION_PID =
+	private static final String _CONFIGURATION_PID_ADVANCED_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
 			"AdvancedFileSystemStoreConfiguration";
 
-	private static final String _FILE_SYSTEM_STORE_CONFIGURATION_PID =
+	private static final String _CONFIGURATION_PID_FILE_SYSTEM_STORE =
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
 
