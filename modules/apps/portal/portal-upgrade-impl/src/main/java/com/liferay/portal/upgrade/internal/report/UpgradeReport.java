@@ -255,7 +255,7 @@ public class UpgradeReport {
 		}
 		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get DL store root dir");
+				_log.warn("Unable to get document library store root dir");
 			}
 		}
 
