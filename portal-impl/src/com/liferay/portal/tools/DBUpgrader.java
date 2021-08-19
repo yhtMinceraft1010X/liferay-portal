@@ -164,7 +164,9 @@ public class DBUpgrader {
 
 		_upgradeModules(applicationContext);
 
-		DependencyManagerSyncUtil.sync();
+		if (applicationContext == null) {
+			DependencyManagerSyncUtil.sync();
+		}
 	}
 
 	public static void verify() throws VerifyException {
