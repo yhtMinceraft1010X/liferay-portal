@@ -267,10 +267,6 @@ public class ObjectFieldLocalServiceTest {
 
 	@Test
 	public void testUpdateCustomObjectField() throws Exception {
-
-		// Update all properties before publishing object and do not update
-		// name and type after publishing
-
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
