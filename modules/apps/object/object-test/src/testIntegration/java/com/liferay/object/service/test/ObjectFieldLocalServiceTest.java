@@ -282,45 +282,45 @@ public class ObjectFieldLocalServiceTest {
 
 		Locale locale = LocaleUtil.getDefault();
 
-		ObjectField updateCustomObjectField =
+		objectField =
 			ObjectFieldLocalServiceUtil.updateCustomObjectField(
 				objectField.getObjectFieldId(), true, false,
 				locale.getLanguage(), LocalizedMapUtil.getLocalizedMap("able2"),
 				"able2", true, "String");
 
-		Assert.assertTrue(updateCustomObjectField.isIndexed());
-		Assert.assertFalse(updateCustomObjectField.isIndexedAsKeyword());
+		Assert.assertTrue(objectField.isIndexed());
+		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			updateCustomObjectField.getIndexedLanguageId(),
+			objectField.getIndexedLanguageId(),
 			locale.getLanguage());
 		Assert.assertEquals(
-			updateCustomObjectField.getLabelMap(),
+			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able2"));
-		Assert.assertEquals("able2", updateCustomObjectField.getName());
-		Assert.assertTrue(updateCustomObjectField.isRequired());
-		Assert.assertEquals("String", updateCustomObjectField.getType());
+		Assert.assertEquals("able2", objectField.getName());
+		Assert.assertTrue(objectField.isRequired());
+		Assert.assertEquals("String", objectField.getType());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		updateCustomObjectField =
+		objectField =
 			ObjectFieldLocalServiceUtil.updateCustomObjectField(
 				objectField.getObjectFieldId(), false, false, "",
 				LocalizedMapUtil.getLocalizedMap("able3"), "able3", false,
 				"Integer");
 
-		Assert.assertTrue(updateCustomObjectField.isIndexed());
-		Assert.assertFalse(updateCustomObjectField.isIndexedAsKeyword());
+		Assert.assertTrue(objectField.isIndexed());
+		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
 			locale.getLanguage(),
-			updateCustomObjectField.getIndexedLanguageId());
+			objectField.getIndexedLanguageId());
 		Assert.assertEquals(
-			updateCustomObjectField.getLabelMap(),
+			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able3"));
-		Assert.assertEquals("able2", updateCustomObjectField.getName());
-		Assert.assertTrue(updateCustomObjectField.isRequired());
-		Assert.assertEquals("String", updateCustomObjectField.getType());
+		Assert.assertEquals("able2", objectField.getName());
+		Assert.assertTrue(objectField.isRequired());
+		Assert.assertEquals("String", objectField.getType());
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
