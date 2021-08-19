@@ -138,14 +138,13 @@ public class UpgradeReport {
 	}
 
 	private String _getProperties() {
-		StringBuffer sb = new StringBuffer(14);
+		StringBuffer sb = new StringBuffer(12);
 
 		sb.append("liferay.home=" + PropsValues.LIFERAY_HOME);
-		sb.append(StringPool.NEW_LINE);
-		sb.append("locales=" + Arrays.toString(PropsValues.LOCALES));
-		sb.append(StringPool.NEW_LINE);
+		sb.append("\nlocales=" + Arrays.toString(PropsValues.LOCALES));
 		sb.append(
-			"locales.enabled=" + Arrays.toString(PropsValues.LOCALES_ENABLED));
+			"\nlocales.enabled=" +
+				Arrays.toString(PropsValues.LOCALES_ENABLED));
 		sb.append(StringPool.NEW_LINE);
 
 		String dlStore = PropsValues.DL_STORE_IMPL;
