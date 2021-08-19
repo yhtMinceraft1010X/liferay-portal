@@ -42,7 +42,7 @@ public class IndexerRequest {
 
 		_indexer = new NoAutoCommitIndexer<>(indexer);
 
-		_forceSync = _getForceSync();
+		_forceSync = _isForceSync();
 		_modelClassName = classedModel.getModelClassName();
 		_modelPrimaryKey = (Long)_classedModel.getPrimaryKeyObj();
 	}
@@ -57,7 +57,7 @@ public class IndexerRequest {
 		_modelPrimaryKey = modelPrimaryKey;
 
 		_classedModel = null;
-		_forceSync = _getForceSync();
+		_forceSync = _isForceSync();
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class IndexerRequest {
 		return sb.toString();
 	}
 
-	private boolean _getForceSync() {
+	private boolean _isForceSync() {
 		if (_INDEX_ASYNC_INDEXING) {
 			return false;
 		}
