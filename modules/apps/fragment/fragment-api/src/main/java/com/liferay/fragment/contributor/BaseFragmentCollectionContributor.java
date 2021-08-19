@@ -194,10 +194,10 @@ public abstract class BaseFragmentCollectionContributor
 			_fragmentEntryNames = new HashMap<>();
 
 			if (MapUtil.isEmpty(names) ||
-				((fragmentEntriesEnumeration != null) &&
-				 !fragmentEntriesEnumeration.hasMoreElements() &&
-				 (fragmentCompositionsEnumeration != null) &&
-				 !fragmentCompositionsEnumeration.hasMoreElements())) {
+				((fragmentCompositionsEnumeration != null) &&
+				 !fragmentCompositionsEnumeration.hasMoreElements() &&
+				 (fragmentEntriesEnumeration != null) &&
+				 !fragmentEntriesEnumeration.hasMoreElements())) {
 
 				return;
 			}
