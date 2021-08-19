@@ -292,8 +292,8 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			objectField.getIndexedLanguageId(),
-			indexedLanguageId);
+			indexedLanguageId,
+			objectField.getIndexedLanguageId());
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able2"));
