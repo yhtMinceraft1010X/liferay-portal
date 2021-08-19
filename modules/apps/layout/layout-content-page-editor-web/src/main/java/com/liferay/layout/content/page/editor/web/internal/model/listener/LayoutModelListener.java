@@ -101,7 +101,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
-	private void _copySiteNavigationMenu(
+	private void _copySiteNavigationMenuId(
 		Layout layout, UnicodeProperties unicodeProperties) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -140,7 +140,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		unicodeProperties.put("published", Boolean.FALSE.toString());
 
-		_copySiteNavigationMenu(layout, unicodeProperties);
+		_copySiteNavigationMenuId(layout, unicodeProperties);
 
 		_layoutLocalService.updateLayout(draftLayout);
 
