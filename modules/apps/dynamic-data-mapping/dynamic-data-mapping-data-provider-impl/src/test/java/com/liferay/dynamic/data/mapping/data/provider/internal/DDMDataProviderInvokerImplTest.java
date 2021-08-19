@@ -562,6 +562,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = PowerMockito.mock(Portal.class);
+
 		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
 
 		PowerMockito.when(
@@ -608,10 +609,10 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		HystrixCommandProperties hystrixCommandProperties =
 			ddmDataProviderInvokeCommand.getProperties();
 
-		HystrixProperty<Integer> executionTimeoutInMilliseconds =
+		HystrixProperty<Integer> hystrixProperty =
 			hystrixCommandProperties.executionTimeoutInMilliseconds();
 
-		return executionTimeoutInMilliseconds.get();
+		return hystrixProperty.get();
 	}
 
 }
