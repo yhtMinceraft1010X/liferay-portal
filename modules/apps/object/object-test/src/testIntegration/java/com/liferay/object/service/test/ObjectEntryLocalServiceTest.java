@@ -44,6 +44,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -921,7 +924,27 @@ public class ObjectEntryLocalServiceTest {
 	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
 		throws Exception {
 
-		return objectEntry.getValues();
+		Map<String, Serializable> values = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.model.impl.ObjectEntryImpl",
+				LoggerTestUtil.DEBUG)) {
+
+			values = objectEntry.getValues();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				logEntry.getMessage(),
+				"Use cached values for object entry " +
+					objectEntry.getObjectEntryId());
+		}
+
+		return values;
 	}
 
 	private void _testUpdateStatus() throws Exception {
