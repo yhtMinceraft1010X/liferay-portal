@@ -14227,7 +14227,7 @@ url=${short.hostname}:8080</echo>
 		<uninstall-patches patching.tool.dir="${patching.tool.dir}" />
 	</target>
 
-	<target name="unzip-download-temp-file">
+	<target name="unzip-temp-file">
 		<unzip
 			dest="${selenium.output.dir.name}"
 			src="${selenium.output.dir.name}/${fileName}"

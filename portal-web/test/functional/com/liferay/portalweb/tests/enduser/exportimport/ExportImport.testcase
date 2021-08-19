@@ -95,7 +95,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "unzip-download-temp-file -DfileName=${larFileName1}");
+			value1 = "unzip-temp-file -DfileName=${larFileName1}");
 
 		var folderExisted1 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
 
@@ -127,7 +127,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "unzip-download-temp-file -DfileName=${larFileName2}");
+			value1 = "unzip-temp-file -DfileName=${larFileName2}");
 
 		var folderExisted2 = LAR.isExistedFolder(folderName = "com.liferay.asset.kernel.model.adapter.StagedAssetLink");
 
