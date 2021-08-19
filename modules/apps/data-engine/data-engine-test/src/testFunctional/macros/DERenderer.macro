@@ -1,5 +1,17 @@
 definition {
 
+	macro assertDataInColorField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		AssertTextEquals.assertValue(
+			index = "${index}",
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "DataEngineRenderer#COLOR_PICKER_GENERAL_INPUT_INDEXED",
+			value1 = "${value}");
+	}
+
 	macro assertDataInDateField {
 		if (!(isSet(index))) {
 			var index = "1";
