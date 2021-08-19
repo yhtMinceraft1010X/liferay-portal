@@ -292,14 +292,14 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			indexedLanguageId,
-			objectField.getIndexedLanguageId());
+			objectField.getIndexedLanguageId(),
+			indexedLanguageId);
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able2"));
-		Assert.assertEquals("able2", objectField.getName());
+		Assert.assertEquals(objectField.getName(), "able2");
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals("String", objectField.getType());
+		Assert.assertEquals(objectField.getType(), "String");
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -314,14 +314,14 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			indexedLanguageId,
-			objectField.getIndexedLanguageId());
+			objectField.getIndexedLanguageId(),
+			indexedLanguageId);
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able3"));
-		Assert.assertEquals("able2", objectField.getName());
+		Assert.assertEquals(objectField.getName(), "able2");
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals("String", objectField.getType());
+		Assert.assertEquals(objectField.getType(), "String");
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
