@@ -444,7 +444,7 @@ public class ProductResourceImpl
 
 		cpDefinition = _cpDefinitionService.addOrUpdateCPDefinition(
 			product.getExternalReferenceCode(), commerceCatalog.getGroupId(),
-			contextUser.getUserId(), LanguageUtils.getLocalizedMap(nameMap),
+			LanguageUtils.getLocalizedMap(nameMap),
 			LanguageUtils.getLocalizedMap(shortDescriptionMap),
 			LanguageUtils.getLocalizedMap(descriptionMap), null,
 			LanguageUtils.getLocalizedMap(product.getMetaTitle()),
@@ -482,7 +482,7 @@ public class ProductResourceImpl
 			Map<String, Serializable> workflowContext = new HashMap<>();
 
 			_cpDefinitionService.updateStatus(
-				contextUser.getUserId(), cpDefinition.getCPDefinitionId(),
+				cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_INACTIVE, serviceContext,
 				workflowContext);
 		}
@@ -1034,7 +1034,7 @@ public class ProductResourceImpl
 			Map<String, Serializable> workflowContext = new HashMap<>();
 
 			_cpDefinitionService.updateStatus(
-				contextUser.getUserId(), cpDefinition.getCPDefinitionId(),
+				cpDefinition.getCPDefinitionId(),
 				WorkflowConstants.STATUS_INACTIVE, serviceContext,
 				workflowContext);
 		}
