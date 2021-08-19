@@ -96,11 +96,14 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			).build()
 		);
 
-		DDMDataProviderInvokeCommand command = new DDMDataProviderInvokeCommand(
-			"ddmDataProviderInstanceName", ddmDataProvider,
-			ddmDataProviderRequest, mock(DDMRESTDataProviderSettings.class));
+		DDMDataProviderInvokeCommand ddmDataProviderInvokeCommand =
+			new DDMDataProviderInvokeCommand(
+				"ddmDataProviderInstanceName", ddmDataProvider,
+				ddmDataProviderRequest,
+				mock(DDMRESTDataProviderSettings.class));
 
-		DDMDataProviderResponse ddmDataProviderResponse = command.run();
+		DDMDataProviderResponse ddmDataProviderResponse =
+			ddmDataProviderInvokeCommand.run();
 
 		Optional<String> optional = ddmDataProviderResponse.getOutputOptional(
 			"output", String.class);
@@ -496,25 +499,26 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 		int timeout = 10000;
 
-		DDMDataProviderInvokeCommand command = new DDMDataProviderInvokeCommand(
-			"ddmDataProviderInstanceName", ddmDataProvider,
-			ddmDataProviderRequest,
-			_createDDMRESTDataProviderSettingsWithTimeout(timeout));
+		DDMDataProviderInvokeCommand ddmDataProviderInvokeCommand =
+			new DDMDataProviderInvokeCommand(
+				"ddmDataProviderInstanceName", ddmDataProvider,
+				ddmDataProviderRequest,
+				_createDDMRESTDataProviderSettingsWithTimeout(timeout));
 
 		int executionTimeoutInMilliseconds = _getExecutionTimeoutInMilliseconds(
-			command);
+			ddmDataProviderInvokeCommand);
 
 		Assert.assertEquals(timeout, executionTimeoutInMilliseconds);
 
 		timeout = 15000;
 
-		command = new DDMDataProviderInvokeCommand(
+		ddmDataProviderInvokeCommand = new DDMDataProviderInvokeCommand(
 			"ddmDataProviderInstanceName", ddmDataProvider,
 			ddmDataProviderRequest,
 			_createDDMRESTDataProviderSettingsWithTimeout(timeout));
 
 		executionTimeoutInMilliseconds = _getExecutionTimeoutInMilliseconds(
-			command);
+			ddmDataProviderInvokeCommand);
 
 		Assert.assertEquals(timeout, executionTimeoutInMilliseconds);
 	}
