@@ -68,7 +68,7 @@ export default function AddOrganizationModal({
 			if (newOrganizationsDetails.length) {
 				openToast({
 					message: Liferay.Util.sub(
-						Liferay.Language.get('x-organizations-added-to-x'),
+						Liferay.Language.get('x-organizations-were-added-to-x'),
 						newOrganizationsDetails.length,
 						parentData.name
 					),
