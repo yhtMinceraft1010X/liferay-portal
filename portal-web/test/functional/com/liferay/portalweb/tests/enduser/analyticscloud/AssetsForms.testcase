@@ -307,6 +307,7 @@ definition {
 	@priority = "5"
 	test FormsLocationCardShowsViewsByExpectedLocation {
 		property portal.upstream = "quarantine";
+
 		// AC Refactor: Location data issues happen in this ticket
 		// AC Refactor ticket: LRAC-8750
 
@@ -360,12 +361,11 @@ definition {
 		}
 
 		task ("Assert locations appear propperly in the card") {
+
 			// Assert the entries using the locations list declared before
+
 			ACSites.viewGeomapAnalyticsLocationNames(locationList = "${locationList}");
-
 		}
-
-		
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
