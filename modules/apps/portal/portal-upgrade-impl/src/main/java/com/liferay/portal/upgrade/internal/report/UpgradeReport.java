@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.report;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -80,16 +81,11 @@ public class UpgradeReport {
 	}
 
 	public void generateReport() {
-		File reportFile = _getReportFile();
-
-		StringBuffer sb = new StringBuffer(3);
-
-		sb.append(_getPortalVersions());
-		sb.append(_getDialectInfo());
-		sb.append(_getProperties());
-
 		try {
-			FileUtil.write(reportFile, sb.toString());
+			FileUtil.write(
+				_getReportFile(),
+				StringBundler.concat(
+					_getPortalVersions(), _getDialectInfo(), _getProperties()));
 		}
 		catch (IOException ioException) {
 			_log.error("Unable to generate the upgrade report");
@@ -118,41 +114,27 @@ public class UpgradeReport {
 	}
 
 	private String _getDialectInfo() {
-		StringBuffer sb = new StringBuffer(7);
-
 		DB db = DBManagerUtil.getDB();
 
-		sb.append("Using ");
-		sb.append(db.getDBType());
-		sb.append(" version ");
-		sb.append(db.getMajorVersion());
-		sb.append(StringPool.PERIOD);
-		sb.append(db.getMinorVersion());
-		sb.append(StringPool.NEW_LINE);
-
-		return sb.toString();
+		return StringBundler.concat(
+			"Using ", db.getDBType(), " version ", db.getMajorVersion(),
+			StringPool.PERIOD, db.getMinorVersion(), StringPool.NEW_LINE);
 	}
 
 	private String _getPortalVersions() {
 		Version expectedSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
 
-		StringBuffer sb = new StringBuffer();
-
-		sb.append(
+		return StringBundler.concat(
 			_getReleaseInfo(
-				_initialBuildNumber, _initialSchemaVersion, "initial"));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(
-			_getReleaseInfo(_getBuildNumber(), _getSchemaVersion(), "final"));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(
+				_initialBuildNumber, _initialSchemaVersion, "initial"),
+			StringPool.NEW_LINE,
+			_getReleaseInfo(_getBuildNumber(), _getSchemaVersion(), "final"),
+			StringPool.NEW_LINE,
 			_getReleaseInfo(
 				ReleaseInfo.getBuildNumber(), expectedSchemaVersion.toString(),
-				"expected"));
-		sb.append(StringPool.NEW_LINE);
-
-		return sb.toString();
+				"expected"),
+			StringPool.NEW_LINE);
 	}
 
 	private String _getProperties() {
