@@ -106,6 +106,7 @@ export default function AddOrganizationModal({
 					)
 				).then((results) => {
 					const nodeChildren = [];
+
 					results.forEach((result) => {
 						if (result.status === 'fulfilled') {
 							nodeChildren.push(result.value);
@@ -158,6 +159,7 @@ export default function AddOrganizationModal({
 			<ClayModal.Header>
 				{Liferay.Language.get('add-accounts')}
 			</ClayModal.Header>
+
 			<ClayModal.Body>
 				{ACCOUNTS_CREATION_ENABLED && (
 					<ClayRadioGroup
@@ -171,6 +173,7 @@ export default function AddOrganizationModal({
 							)}
 							value={false}
 						/>
+
 						<ClayRadio
 							label={Liferay.Language.get('create-new-account')}
 							value={true}
@@ -183,6 +186,7 @@ export default function AddOrganizationModal({
 							<label htmlFor="newAccountNameInput">
 								{Liferay.Language.get('name')}
 							</label>
+
 							<ClayInput
 								id="newAccountNameInput"
 								onChange={(event) =>
@@ -191,10 +195,12 @@ export default function AddOrganizationModal({
 								value={newAccountName}
 							/>
 						</ClayForm.Group>
+
 						<ClayForm.Group>
 							<label htmlFor="administratorEmailInput">
 								{Liferay.Language.get('administrators-email')}
 							</label>
+
 							<ClayMultiSelect
 								id="administratorEmailInput"
 								inputValue={emailsQuery}
@@ -211,6 +217,7 @@ export default function AddOrganizationModal({
 						<label htmlFor="searchAccountInput">
 							{Liferay.Language.get('search-account')}
 						</label>
+
 						<ClayMultiSelect
 							id="searchAccountInput"
 							inputValue={accountsQuery}
@@ -223,6 +230,7 @@ export default function AddOrganizationModal({
 					</ClayForm.Group>
 				)}
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
@@ -232,6 +240,7 @@ export default function AddOrganizationModal({
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton displayType="primary" onClick={handleSave}>
 							{Liferay.Language.get('save')}
 						</ClayButton>

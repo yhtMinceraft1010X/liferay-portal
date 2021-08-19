@@ -52,6 +52,7 @@ export function getAllUserRoles() {
 
 		return Promise.allSettled(requests).then((results) => {
 			const errors = [];
+
 			const roles = results.reduce((values, result) => {
 				if (result.status === 'fulfilled') {
 					return [...values, ...result.value.items];

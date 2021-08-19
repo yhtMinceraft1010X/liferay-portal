@@ -35,6 +35,7 @@ export default function AddOrganizationModal({
 		const newOrganizations = query
 			? items.concat({label: query, value: query})
 			: [...items];
+
 		const organizationNames = newOrganizations.map((item) => item.label);
 
 		if (!newOrganizations.length) {
@@ -99,6 +100,7 @@ export default function AddOrganizationModal({
 			<ClayModal.Header>
 				{Liferay.Language.get('add-organizations')}
 			</ClayModal.Header>
+
 			<ClayModal.Body>
 				<ClayForm.Group
 					className={classNames(errors.length && 'has-error')}
@@ -110,6 +112,7 @@ export default function AddOrganizationModal({
 							symbol="asterisk"
 						/>
 					</label>
+
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
@@ -136,6 +139,7 @@ export default function AddOrganizationModal({
 					</ClayInput.Group>
 				</ClayForm.Group>
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
@@ -145,6 +149,7 @@ export default function AddOrganizationModal({
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton displayType="primary" onClick={handleSave}>
 							{Liferay.Language.get('save')}
 						</ClayButton>

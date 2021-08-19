@@ -16,7 +16,7 @@ import AccountMenuContent from './AccountMenuContent';
 import OrganizationMenuContent from './OrganizationMenuContent';
 import UserMenuContent from './UserMenuContent';
 
-const content = {
+const CONTENT = {
 	account: AccountMenuContent,
 	organization: OrganizationMenuContent,
 	user: UserMenuContent,
@@ -31,9 +31,7 @@ export default function MenuProvider({
 	const [data, updateData] = useState(false);
 	const menuRef = useRef(null);
 
-	/**
-	 * the useEffect below force the component repositioning
-	 */
+	// The useEffect below force the component repositioning
 
 	useEffect(() => {
 		setActive(false);
@@ -46,12 +44,12 @@ export default function MenuProvider({
 		}
 	}, [data]);
 
-	const MenuContent = useMemo(() => data && content[data.type], [data]);
+	const MenuContent = useMemo(() => data && CONTENT[data.type], [data]);
 
-	function closeMenu() {
+	const closeMenu = () => {
 		updateData(null);
 		setActive(false);
-	}
+	};
 
 	return (
 		<ClayDropDown.Menu

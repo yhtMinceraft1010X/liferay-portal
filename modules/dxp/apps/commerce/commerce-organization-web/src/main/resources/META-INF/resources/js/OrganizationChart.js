@@ -87,6 +87,7 @@ function OrganizationChartApp({rootOrganizationId, spritemap, templatesURL}) {
 			}}
 		>
 			<ManagementBar />
+
 			<div className={classnames('org-chart-container', {expanded})}>
 				<svg className="svg-chart" ref={chartSVGRef} />
 				<div className="zoom-controls">

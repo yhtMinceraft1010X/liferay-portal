@@ -92,6 +92,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 			<ClayModal.Header>
 				{Liferay.Language.get('invite-users')}
 			</ClayModal.Header>
+
 			<ClayModal.Body>
 				<ClayForm.Group
 					className={classNames(errors.length && 'has-error')}
@@ -103,6 +104,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 							symbol="asterisk"
 						/>
 					</label>
+
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
@@ -160,6 +162,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 								symbol="asterisk"
 							/>
 						</label>
+
 						<ClaySelectBox
 							id="inviteUsersRoleInput"
 							items={roles.map((role) => ({
@@ -171,6 +174,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 							size={5}
 							value={selectedRoleIds}
 						/>
+
 						<ClayInput.Group>
 							<ClayInput.GroupItem>
 								{!!errors.length && (
@@ -188,6 +192,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 					</ClayForm.Group>
 				)}
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
@@ -197,6 +202,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton displayType="primary" onClick={handleSave}>
 							{Liferay.Language.get('save')}
 						</ClayButton>

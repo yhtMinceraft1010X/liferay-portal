@@ -16,6 +16,7 @@ const ACCOUNTS_ROOT_ENDPOINT = '/o/account-rest/v1.0/accounts';
 
 export function getAccounts(query) {
 	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
+
 	url.searchParams.append('search', query);
 
 	return fetchFromHeadless(url);
