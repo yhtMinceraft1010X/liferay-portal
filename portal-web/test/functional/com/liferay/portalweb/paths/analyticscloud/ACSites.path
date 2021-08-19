@@ -37,6 +37,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GEOMAP_ANALYTICS_LOCATIONS_NAME</td>
+	<td>//div[contains(@class,'analytics-geomap')]//td[contains(@class,'text-left') and contains(text(),'${key_entry}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VISITORS_BY_DAY_AND_TIME_CARD</td>
 	<td>//div[contains(@class,'visitors-by-time')]//h5[text()='Visitors by Day and Time']</td>
 	<td></td>
