@@ -276,9 +276,19 @@ public class ObjectFieldLocalServiceTest {
 		ObjectField objectField =
 			ObjectFieldLocalServiceUtil.addCustomObjectField(
 				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId(), true, true, "",
+				objectDefinition.getObjectDefinitionId(), false, true, "",
 				LocalizedMapUtil.getLocalizedMap("able"), "able", false,
 				"Long");
+
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertTrue(objectField.isIndexedAsKeyword());
+		Assert.assertEquals(objectField.getIndexedLanguageId(), "");
+		Assert.assertEquals(
+			objectField.getLabelMap(),
+			LocalizedMapUtil.getLocalizedMap("able"));
+		Assert.assertEquals("able", objectField.getName());
+		Assert.assertFalse(objectField.isRequired());
+		Assert.assertEquals("Long", objectField.getType());
 
 		String indexedLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());
@@ -303,7 +313,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition.getObjectDefinitionId());
 
 		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
-			objectField.getObjectFieldId(), false, false, "",
+			objectField.getObjectFieldId(), false, true, "",
 			LocalizedMapUtil.getLocalizedMap("charlie"), "charlie", false,
 			"Integer");
 
