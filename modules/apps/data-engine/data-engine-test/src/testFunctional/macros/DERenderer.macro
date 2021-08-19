@@ -164,6 +164,72 @@ definition {
 			locator1 = "DataEngineRenderer#FIELD_BUTTON_INDEXED");
 	}
 
+	macro inputDataInColorField {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		var colorSelectionMethod = "${colorSelectionMethod}";
+
+		if ("${colorSelectionMethod}" == "Swatch") {
+			Click(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineRenderer#COLOR_PICKER_INDEXED");
+
+			Click(
+				key_colorSwatchItem = "${value}",
+				locator1 = "Button#COLOR_SWATCH_ITEM");
+		}
+		else if ("${colorSelectionMethod}" == "RGB") {
+			Click(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineRenderer#COLOR_PICKER_INDEXED");
+
+			Click(locator1 = "DataEngineRenderer#COLOR_PICKER_CUSTOM_COLOR_BUTTON");
+
+			DoubleClick(locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_RED_INPUT");
+
+			Type.sendKeys(
+				locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_RED_INPUT",
+				value1 = "${valueRed}");
+
+			DoubleClick(locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_GREEN_INPUT");
+
+			Type.sendKeys(
+				locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_GREEN_INPUT",
+				value1 = "${valueGreen}");
+
+			DoubleClick(locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_BLUE_INPUT");
+
+			Type.sendKeys(
+				locator1 = "DataEngineRenderer#COLOR_PICKER_RGB_BLUE_INPUT",
+				value1 = "${valueBlue}");
+		}
+		else if ("${colorSelectionMethod}" == "HEX") {
+			Click(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineRenderer#COLOR_PICKER_INDEXED");
+
+			Click(locator1 = "DataEngineRenderer#COLOR_PICKER_CUSTOM_COLOR_BUTTON");
+
+			Click(locator1 = "DataEngineRenderer#COLOR_PICKER_HEX_INPUT");
+
+			Type(
+				locator1 = "DataEngineRenderer#COLOR_PICKER_HEX_INPUT",
+				value1 = "${value}");
+		}
+		else {
+			Type(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineRenderer#COLOR_PICKER_GENERAL_INPUT_INDEXED",
+				value1 = "${value}");
+		}
+	}
+
 	macro inputDataInDateField {
 		if (!(isSet(index))) {
 			var index = "1";
