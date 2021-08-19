@@ -18,11 +18,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,23 +36,16 @@ public class RemoteAppAdminWebUpgrade implements UpgradeStepRegistrator {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
-				List<String[]> renamePortletIdsArray = new ArrayList<>();
-
-				for (RemoteAppEntry remoteAppEntry :
-						_remoteAppEntryLocalService.getRemoteAppEntries(
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-					renamePortletIdsArray.add(
-						new String[] {
-							"remote_app_" +
-								remoteAppEntry.getRemoteAppEntryId(),
-							"com_liferay_remote_app_admin_web_internal_" +
-								"portlet_RemoteAppPortlet#" +
-									remoteAppEntry.getRemoteAppEntryId()
-						});
-				}
-
-				return renamePortletIdsArray.toArray(new String[0][0]);
+				return TransformUtil.transformToArray(
+					_remoteAppEntryLocalService.getRemoteAppEntries(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					remoteAppEntry -> new String[] {
+						"remote_app_" + remoteAppEntry.getRemoteAppEntryId(),
+						"com_liferay_remote_app_admin_web_internal_" +
+							"portlet_RemoteAppPortlet#" +
+								remoteAppEntry.getRemoteAppEntryId()
+					},
+					String[].class);
 			}
 
 		};
