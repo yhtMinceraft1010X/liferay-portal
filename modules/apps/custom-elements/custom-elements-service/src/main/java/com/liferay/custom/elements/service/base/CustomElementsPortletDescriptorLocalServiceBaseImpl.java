@@ -150,12 +150,14 @@ public abstract class CustomElementsPortletDescriptorLocalServiceBaseImpl
 	 *
 	 * @param customElementsPortletDescriptor the custom elements portlet descriptor
 	 * @return the custom elements portlet descriptor that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CustomElementsPortletDescriptor
-		deleteCustomElementsPortletDescriptor(
-			CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+			deleteCustomElementsPortletDescriptor(
+				CustomElementsPortletDescriptor customElementsPortletDescriptor)
+		throws PortalException {
 
 		return customElementsPortletDescriptorPersistence.remove(
 			customElementsPortletDescriptor);

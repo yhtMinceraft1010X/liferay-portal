@@ -108,10 +108,12 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 	 *
 	 * @param customElementsPortletDescriptor the custom elements portlet descriptor
 	 * @return the custom elements portlet descriptor that was removed
+	 * @throws PortalException
 	 */
 	public static CustomElementsPortletDescriptor
-		deleteCustomElementsPortletDescriptor(
-			CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+			deleteCustomElementsPortletDescriptor(
+				CustomElementsPortletDescriptor customElementsPortletDescriptor)
+		throws PortalException {
 
 		return getService().deleteCustomElementsPortletDescriptor(
 			customElementsPortletDescriptor);
@@ -145,6 +147,13 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deployCustomElementsPortletDescriptor(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+
+		getService().deployCustomElementsPortletDescriptor(
+			customElementsPortletDescriptor);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -367,6 +376,13 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 		throws com.liferay.portal.kernel.search.SearchException {
 
 		return getService().searchCount(companyId, keywords);
+	}
+
+	public static void undeployCustomElementsPortletDescriptor(
+		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
+
+		getService().undeployCustomElementsPortletDescriptor(
+			customElementsPortletDescriptor);
 	}
 
 	/**

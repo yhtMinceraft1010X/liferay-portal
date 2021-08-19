@@ -64,4 +64,6 @@ public interface CustomElementsPortletDescriptor
 
 			};
 
+	public String getPortletName();
+
 }

@@ -106,12 +106,15 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 	 *
 	 * @param customElementsPortletDescriptor the custom elements portlet descriptor
 	 * @return the custom elements portlet descriptor that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.custom.elements.model.CustomElementsPortletDescriptor
-		deleteCustomElementsPortletDescriptor(
-			com.liferay.custom.elements.model.CustomElementsPortletDescriptor
-				customElementsPortletDescriptor) {
+			deleteCustomElementsPortletDescriptor(
+				com.liferay.custom.elements.model.
+					CustomElementsPortletDescriptor
+						customElementsPortletDescriptor)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsPortletDescriptorLocalService.
 			deleteCustomElementsPortletDescriptor(
@@ -150,6 +153,16 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 
 		return _customElementsPortletDescriptorLocalService.
 			deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deployCustomElementsPortletDescriptor(
+		com.liferay.custom.elements.model.CustomElementsPortletDescriptor
+			customElementsPortletDescriptor) {
+
+		_customElementsPortletDescriptorLocalService.
+			deployCustomElementsPortletDescriptor(
+				customElementsPortletDescriptor);
 	}
 
 	@Override
@@ -420,6 +433,16 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 
 		return _customElementsPortletDescriptorLocalService.searchCount(
 			companyId, keywords);
+	}
+
+	@Override
+	public void undeployCustomElementsPortletDescriptor(
+		com.liferay.custom.elements.model.CustomElementsPortletDescriptor
+			customElementsPortletDescriptor) {
+
+		_customElementsPortletDescriptorLocalService.
+			undeployCustomElementsPortletDescriptor(
+				customElementsPortletDescriptor);
 	}
 
 	/**
