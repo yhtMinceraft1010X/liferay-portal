@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_PICKER_GENERAL_INPUT_INDEXED</td>
+	<td>xpath=((//*[name()='label' or name()='legend'][normalize-space(text())='${key_fieldLabel}'])[${index}]/ancestor::div[contains(@class,'form-group')]//input[not(contains(@type,'hidden'))])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLOR_PICKER_HEX_INPUT</td>
 	<td>//input[@data-testid='customHexInput']</td>
 	<td></td>
