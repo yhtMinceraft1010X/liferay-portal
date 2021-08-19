@@ -244,7 +244,7 @@ const FilterInformationToolbar = ({
 								{totalNumberOfItems === 1
 									? Liferay.Util.sub(
 											Liferay.Language.get(
-												'there-is-1-result-for-x'
+												'there-is-one-result-for-x'
 											),
 											filterInformationMessage
 									  )
