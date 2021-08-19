@@ -1,4 +1,4 @@
 <#--
-Add elements from the sidebar to define your Template. During code
-editing, type "${" to use the autocomplete feature.
+Add elements from the sidebar to define your template. Type "${" to use the
+autocomplete feature.
 -->
