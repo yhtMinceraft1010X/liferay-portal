@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -280,19 +281,19 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap("able"), "able", false,
 				"Long");
 
-		Locale locale = LocaleUtil.getDefault();
+		String languageId = LanguageUtil.getLanguageId(LocaleUtil.getDefault());
 
 		objectField =
 			ObjectFieldLocalServiceUtil.updateCustomObjectField(
 				objectField.getObjectFieldId(), true, false,
-				locale.getLanguage(), LocalizedMapUtil.getLocalizedMap("able2"),
+				languageId, LocalizedMapUtil.getLocalizedMap("able2"),
 				"able2", true, "String");
 
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
 			objectField.getIndexedLanguageId(),
-			locale.getLanguage());
+			languageId);
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("able2"));
@@ -313,7 +314,7 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			locale.getLanguage(),
+			languageId,
 			objectField.getIndexedLanguageId());
 		Assert.assertEquals(
 			objectField.getLabelMap(),
