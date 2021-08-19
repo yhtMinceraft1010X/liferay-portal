@@ -365,7 +365,8 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		Map<String, Serializable> values = _getValues(objectEntries.get(0));
+		Map<String, Serializable> values = _getValuesFromCacheField(
+			objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
@@ -386,13 +387,13 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(2);
 
-		values = _getValues(objectEntries.get(0));
+		values = _getValuesFromCacheField(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(1));
+		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
@@ -413,19 +414,19 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(3);
 
-		values = _getValues(objectEntries.get(0));
+		values = _getValuesFromCacheField(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(1));
+		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(2));
+		values = _getValuesFromCacheField(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("John", values.get("firstName"));
@@ -605,7 +606,8 @@ public class ObjectEntryLocalServiceTest {
 
 		List<ObjectEntry> objectEntries = baseModelSearchResult.getBaseModels();
 
-		Map<String, Serializable> values = _getValues(objectEntries.get(0));
+		Map<String, Serializable> values = _getValuesFromCacheField(
+			objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
@@ -628,14 +630,14 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntries = baseModelSearchResult.getBaseModels();
 
-		values = _getValues(objectEntries.get(0));
+		values = _getValuesFromCacheField(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(1));
+		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
@@ -658,21 +660,21 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntries = baseModelSearchResult.getBaseModels();
 
-		values = _getValues(objectEntries.get(0));
+		values = _getValuesFromCacheField(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(1));
+		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
-		values = _getValues(objectEntries.get(2));
+		values = _getValuesFromCacheField(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
@@ -713,9 +715,11 @@ public class ObjectEntryLocalServiceTest {
 				"firstName", "John"
 			).build());
 
+		_getValues(objectEntry);
+
 		_assertCount(1);
 
-		ObjectEntryLocalServiceUtil.updateObjectEntry(
+		objectEntry = ObjectEntryLocalServiceUtil.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
@@ -730,6 +734,7 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryLocalServiceUtil.getValues(
 				objectEntry.getObjectEntryId());
 
+		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertEquals(false, values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
@@ -922,6 +927,33 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Serializable> values = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.model.impl.ObjectEntryImpl",
+				LoggerTestUtil.DEBUG)) {
+
+			values = objectEntry.getValues();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				logEntry.getMessage(),
+				"Get values for object entry " +
+					objectEntry.getObjectEntryId());
+		}
+
+		return values;
+	}
+
+	private Map<String, Serializable> _getValuesFromCacheField(
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		Map<String, Serializable> values = null;
