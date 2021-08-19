@@ -95,8 +95,8 @@ public class DDMDataProviderInvokeCommand
 			new HystrixPropertiesStrategy() {
 
 				public String getCommandPropertiesCacheKey(
-					HystrixCommandKey commandKey,
-					HystrixCommandProperties.Setter builder) {
+					HystrixCommandKey hystrixCommandKey,
+					HystrixCommandProperties.Setter setter) {
 
 					return null;
 				}
