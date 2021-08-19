@@ -179,7 +179,7 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 	public void testGetDataWithDDMStructuresFromSeveralSites()
 		throws Exception {
 
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
@@ -192,9 +192,9 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			DDMStructure ddmStructure2 = DDMStructureTestUtil.addStructure(
-				group2.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+				group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
 				LocaleUtil.US,
-				ServiceContextTestUtil.getServiceContext(group2.getGroupId()));
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 			Map<String, Object> data = _getData();
 
@@ -248,13 +248,13 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				ddmStructure2.getStructureId(),
 				itemSubtypeJSONObject.getLong("classPK"));
 			Assert.assertEquals(
-				_getLabel(ddmStructure2.getName(LocaleUtil.US), group2),
+				_getLabel(ddmStructure2.getName(LocaleUtil.US), group),
 				itemSubtypeJSONObject.getString("label"));
 
 			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 		}
 		finally {
-			GroupTestUtil.deleteGroup(group2);
+			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -262,11 +262,11 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 	public void testGetDataWithDLFileEntryTypesFromSeveralSites()
 		throws Exception {
 
-		Group group2 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		try {
 			DLFileEntryType dlFileEntryType1 = _getDlFileEntryType(_group);
-			DLFileEntryType dlFileEntryType2 = _getDlFileEntryType(group2);
+			DLFileEntryType dlFileEntryType2 = _getDlFileEntryType(group);
 
 			Map<String, Object> data = _getData();
 
@@ -335,13 +335,13 @@ public class ContentDashboardItemSubtypeItemSelectorViewTest {
 				String.valueOf(dlFileEntryType2.getFileEntryTypeId()),
 				itemSubtypeJSONObject.getString("classPK"));
 			Assert.assertEquals(
-				_getLabel(dlFileEntryType2.getName(LocaleUtil.US), group2),
+				_getLabel(dlFileEntryType2.getName(LocaleUtil.US), group),
 				itemSubtypeJSONObject.getString("label"));
 
 			Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 		}
 		finally {
-			GroupTestUtil.deleteGroup(group2);
+			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
