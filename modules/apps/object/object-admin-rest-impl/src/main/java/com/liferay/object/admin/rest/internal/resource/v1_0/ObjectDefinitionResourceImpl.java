@@ -24,7 +24,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -112,25 +111,22 @@ public class ObjectDefinitionResourceImpl
 						}
 
 						return addAction(
-							ActionKeys.DELETE,
-							objectDefinition.getObjectDefinitionId(),
-							"deleteObjectDefinition",
-							_objectDefinitionModelResourcePermission);
+							ActionKeys.DELETE, "deleteObjectDefinition",
+							ObjectDefinition.class.getName(),
+							objectDefinition.getObjectDefinitionId());
 					}
 				).put(
 					"get",
 					addAction(
-						ActionKeys.VIEW,
-						objectDefinition.getObjectDefinitionId(),
-						"getObjectDefinition",
-						_objectDefinitionModelResourcePermission)
+						ActionKeys.VIEW, "getObjectDefinition",
+						ObjectDefinition.class.getName(),
+						objectDefinition.getObjectDefinitionId())
 				).put(
 					"update",
 					addAction(
-						ActionKeys.UPDATE,
-						objectDefinition.getObjectDefinitionId(),
-						"postObjectDefinition",
-						_objectDefinitionModelResourcePermission)
+						ActionKeys.UPDATE, "postObjectDefinition",
+						ObjectDefinition.class.getName(),
+						objectDefinition.getObjectDefinitionId())
 				).build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
@@ -156,12 +152,6 @@ public class ObjectDefinitionResourceImpl
 			}
 		};
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
-	)
-	private ModelResourcePermission<com.liferay.object.model.ObjectDefinition>
-		_objectDefinitionModelResourcePermission;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
