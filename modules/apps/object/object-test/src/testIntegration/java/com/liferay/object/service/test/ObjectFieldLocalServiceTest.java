@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -281,47 +280,43 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap("able"), "able", false,
 				"Long");
 
-		String indexedLanguageId = LanguageUtil.getLanguageId(LocaleUtil.getDefault());
+		String indexedLanguageId = LanguageUtil.getLanguageId(
+			LocaleUtil.getDefault());
 
-		objectField =
-			ObjectFieldLocalServiceUtil.updateCustomObjectField(
-				objectField.getObjectFieldId(), true, false,
-				indexedLanguageId, LocalizedMapUtil.getLocalizedMap("baker"),
-				"baker", true, "String");
+		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
+			objectField.getObjectFieldId(), true, false, indexedLanguageId,
+			LocalizedMapUtil.getLocalizedMap("baker"), "baker", true, "String");
 
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			objectField.getIndexedLanguageId(),
-			indexedLanguageId);
+			objectField.getIndexedLanguageId(), indexedLanguageId);
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("baker"));
-		Assert.assertEquals(objectField.getName(), "baker");
+		Assert.assertEquals("baker", objectField.getName());
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals(objectField.getType(), "String");
+		Assert.assertEquals("String", objectField.getType());
 
 		ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		objectField =
-			ObjectFieldLocalServiceUtil.updateCustomObjectField(
-				objectField.getObjectFieldId(), false, false, "",
-				LocalizedMapUtil.getLocalizedMap("charlie"), "charlie", false,
-				"Integer");
+		objectField = ObjectFieldLocalServiceUtil.updateCustomObjectField(
+			objectField.getObjectFieldId(), false, false, "",
+			LocalizedMapUtil.getLocalizedMap("charlie"), "charlie", false,
+			"Integer");
 
 		Assert.assertTrue(objectField.isIndexed());
 		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			objectField.getIndexedLanguageId(),
-			indexedLanguageId);
+			objectField.getIndexedLanguageId(), indexedLanguageId);
 		Assert.assertEquals(
 			objectField.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("charlie"));
-		Assert.assertEquals(objectField.getName(), "baker");
+		Assert.assertEquals("baker", objectField.getName());
 		Assert.assertTrue(objectField.isRequired());
-		Assert.assertEquals(objectField.getType(), "String");
+		Assert.assertEquals("String", objectField.getType());
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
