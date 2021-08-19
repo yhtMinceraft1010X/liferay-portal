@@ -251,7 +251,6 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		CommercePriceModifier commercePriceModifier =
 			_commercePriceModifierService.addOrUpdateCommercePriceModifier(
 				priceModifier.getExternalReferenceCode(),
-				serviceContext.getUserId(),
 				GetterUtil.getLong(priceModifier.getId()),
 				commercePriceList.getGroupId(), priceModifier.getTitle(),
 				priceModifier.getTarget(),
