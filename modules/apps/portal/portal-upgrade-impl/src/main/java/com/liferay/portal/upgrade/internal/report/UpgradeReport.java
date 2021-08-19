@@ -196,26 +196,26 @@ public class UpgradeReport {
 
 		if (buildNumber != 0) {
 			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" Portal build number: ");
+			sb.append(" portal build number: ");
 			sb.append(buildNumber);
 		}
 		else {
 			sb.append("Unable to determine ");
 			sb.append(type);
-			sb.append(" Portal build number");
+			sb.append(" portal build number");
 		}
 
 		sb.append(StringPool.NEW_LINE);
 
 		if (schemaVersion != null) {
 			sb.append(StringUtil.upperCaseFirstLetter(type));
-			sb.append(" Portal schema version: ");
+			sb.append(" portal schema version: ");
 			sb.append(schemaVersion);
 		}
 		else {
 			sb.append("Unable to determine ");
 			sb.append(type);
-			sb.append(" Portal schema version");
+			sb.append(" portal schema version");
 		}
 
 		return sb.toString();
