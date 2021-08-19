@@ -122,7 +122,7 @@ public class UpgradeReport {
 	}
 
 	private String _getPortalVersions() {
-		Version expectedSchemaVersion =
+		Version latestSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
 
 		return StringBundler.concat(
@@ -132,7 +132,7 @@ public class UpgradeReport {
 			_getReleaseInfo(_getBuildNumber(), _getSchemaVersion(), "final"),
 			StringPool.NEW_LINE,
 			_getReleaseInfo(
-				ReleaseInfo.getBuildNumber(), expectedSchemaVersion.toString(),
+				ReleaseInfo.getBuildNumber(), latestSchemaVersion.toString(),
 				"expected"),
 			StringPool.NEW_LINE);
 	}
