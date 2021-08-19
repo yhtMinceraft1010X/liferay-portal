@@ -36,12 +36,12 @@ public class ContentDashboardTestUtil {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setCompany(
-			CompanyLocalServiceUtil.fetchCompany(group.getCompanyId()));
 
 		return themeDisplay;
 	}
