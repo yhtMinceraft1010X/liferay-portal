@@ -55,7 +55,7 @@ public class CProductInfoItemObjectProvider
 
 		if (cProduct == null) {
 			throw new NoSuchInfoItemException(
-				"Unable to get object entry " +
+				"Unable to get commerce product " +
 					classPKInfoItemIdentifier.getClassPK());
 		}
 
