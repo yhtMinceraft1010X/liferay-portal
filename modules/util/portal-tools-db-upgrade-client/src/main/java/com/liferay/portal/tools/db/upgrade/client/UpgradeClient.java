@@ -218,7 +218,7 @@ public class UpgradeClient {
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				if (line.equals("DBUpgrader java process finished")) {
+				if (line.equals("Exiting DBUpgrader#main(String[]).")) {
 					break;
 				}
 

@@ -153,7 +153,7 @@ public class DBUpgrader {
 			}
 		}
 
-		System.out.println("DBUpgrader java process finished");
+		System.out.println("Exiting DBUpgrader#main(String[]).");
 	}
 
 	public static void upgrade() throws Exception {
