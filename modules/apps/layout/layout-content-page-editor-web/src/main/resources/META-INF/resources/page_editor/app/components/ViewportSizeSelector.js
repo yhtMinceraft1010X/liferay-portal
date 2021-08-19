@@ -25,16 +25,16 @@ import {config} from '../config/index';
 
 const VIEWPORT_DESCRIPTIONS = {
 	desktop: Liferay.Language.get(
-		'the-styles-you-define-in-the-desktop-viewport-apply-to-all-viewports-as-well-unless-you-specify-a-style-in-another-viewport'
+		'the-styles-you-define-in-the-desktop-viewport-apply-to-all-other-viewports-unless-you-specify-a-style-in-another-viewport'
 	),
 	landscapeMobile: Liferay.Language.get(
-		'the-styles-you-define-in-the-landscape-phone-viewport-apply-to-the-portrait-phone-viewport-as-well-unless-you-specify-a-style-in-the-portrait-phone-viewport'
+		'the-styles-you-define-in-the-landscape-phone-viewport-apply-to-the-portrait-phone-viewport-unless-you-specify-a-style-in-the-portrait-phone-viewport'
 	),
 	portraitMobile: Liferay.Language.get(
 		'the-portrait-phone-viewport-reflects-the-style-changes-you-make-in-any-other-viewport-unless-you-specify-a-style-in-the-portrait-phone-viewport'
 	),
 	tablet: Liferay.Language.get(
-		'the-styles-you-define-in-the-tablet-viewport-apply-to-all-the-phone-viewports-as-well-unless-you-specify-a-style-in-the-landscape-or-portrait-phone-viewports'
+		'the-styles-you-define-in-the-tablet-viewport-apply-to-all-the-phone-viewports-unless-you-specify-a-style-in-the-landscape-or-portrait-phone-viewports'
 	),
 };
 
