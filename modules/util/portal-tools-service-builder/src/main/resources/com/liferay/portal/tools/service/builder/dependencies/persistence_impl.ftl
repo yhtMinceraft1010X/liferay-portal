@@ -1264,7 +1264,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					while (iterator.hasNext()) {
 						Set<Serializable> page = new HashSet<>();
 
-						for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext();i++) {
+						for (int i = 0; (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
 							page.add(iterator.next());
 						}
 
