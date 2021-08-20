@@ -307,7 +307,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			false);
 	}
 
-	public String getDiscountCPInstanceApiURL() throws PortalException {
+	public String getDiscountCPInstanceAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-skus?nestedFields=sku";
 	}

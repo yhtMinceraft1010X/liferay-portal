@@ -89,7 +89,7 @@
 				title='<%= LanguageUtil.get(request, "skus") %>'
 			>
 				<clay:headless-data-set-display
-					apiURL="<%= commerceDiscountDisplayContext.getDiscountCPInstanceApiURL() %>"
+					apiURL="<%= commerceDiscountDisplayContext.getDiscountCPInstanceAPIURL() %>"
 					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPInstanceClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_SKUS %>"
