@@ -32,8 +32,6 @@ public class BatchPlannerDisplayContext {
 	public BatchPlannerDisplayContext(
 		Map<String, String> headlessEndpoints) {
 
-		Objects.requireNonNull(headlessEndpoints);
-
 		_headlessEndpoints = Collections.unmodifiableMap(headlessEndpoints);
 	}
 
