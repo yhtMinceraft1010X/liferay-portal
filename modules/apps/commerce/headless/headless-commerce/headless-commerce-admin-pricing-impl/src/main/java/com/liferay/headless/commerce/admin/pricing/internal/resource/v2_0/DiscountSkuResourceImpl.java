@@ -34,8 +34,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
@@ -66,17 +64,16 @@ public class DiscountSkuResourceImpl extends BaseDiscountSkuResourceImpl {
 			Sort[] sorts)
 		throws Exception {
 
-		List<CommerceDiscountRel> commerceDiscountRels =
-			_commerceDiscountRelService.getCPInstancesByCommerceDiscountId(
-				id, search, pagination.getStartPosition(),
-				pagination.getEndPosition());
-
-		int totalItems =
-			_commerceDiscountRelService.getCPInstancesByCommerceDiscountIdCount(
-				id, search);
-
 		return Page.of(
-			_toDiscountSkus(commerceDiscountRels), pagination, totalItems);
+			transform(
+				_commerceDiscountRelService.getCPInstancesByCommerceDiscountId(
+					id, search, pagination.getStartPosition(),
+					pagination.getEndPosition()),
+				commerceDiscountRel -> _toDiscountSku(
+					commerceDiscountRel.getCommerceDiscountRelId())),
+			pagination,
+			_commerceDiscountRelService.getCPInstancesByCommerceDiscountIdCount(
+				id, search));
 	}
 
 	@Override
@@ -120,16 +117,6 @@ public class DiscountSkuResourceImpl extends BaseDiscountSkuResourceImpl {
 				commerceDiscountRelId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
-	}
-
-	private List<DiscountSku> _toDiscountSkus(
-			List<CommerceDiscountRel> commerceDiscountRels)
-		throws Exception {
-
-		return transform(
-			commerceDiscountRels,
-			commerceDiscountRel -> _toDiscountSku(
-				commerceDiscountRel.getCommerceDiscountRelId()));
 	}
 
 	@Reference(
