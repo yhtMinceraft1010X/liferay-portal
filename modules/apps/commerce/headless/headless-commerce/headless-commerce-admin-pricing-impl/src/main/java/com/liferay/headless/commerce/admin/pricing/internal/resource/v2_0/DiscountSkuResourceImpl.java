@@ -126,14 +126,10 @@ public class DiscountSkuResourceImpl extends BaseDiscountSkuResourceImpl {
 			List<CommerceDiscountRel> commerceDiscountRels)
 		throws Exception {
 
-		List<DiscountSku> discountSkus = new ArrayList<>();
-
-		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
-			discountSkus.add(
-				_toDiscountSku(commerceDiscountRel.getCommerceDiscountRelId()));
-		}
-
-		return discountSkus;
+		return transform(
+			commerceDiscountRels,
+			commerceDiscountRel -> _toDiscountSku(
+				commerceDiscountRel.getCommerceDiscountRelId()));
 	}
 
 	@Reference(
