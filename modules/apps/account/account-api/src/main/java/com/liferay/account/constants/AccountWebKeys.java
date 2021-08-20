@@ -20,6 +20,6 @@ package com.liferay.account.constants;
 public class AccountWebKeys {
 
 	public static final String CURRENT_ACCOUNT_ENTRY_ID =
-		"LIFERAY_SHARED_CURRENT_ACCOUNT_ENTRY_ID";
+		"LIFERAY_SHARED_CURRENT_ACCOUNT_ENTRY_ID#";
 
 }
