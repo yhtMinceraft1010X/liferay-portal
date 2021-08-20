@@ -183,7 +183,7 @@ definition {
 			value1 = "No workflow definitions are defined.");
 	}
 
-	@description = "Verify that the user can not unpublish a Workflow in use and system displays an error message"
+	@description = "Verify that the user can not unpublish a Workflow is in use and system displays an error message"
 	@priority = "5"
 	test CanNotUnpublishWorkflowInUse {
 		ApplicationsMenu.gotoPortlet(
@@ -210,7 +210,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "Message#ERROR",
-			value1 = "Workflow in use. Remove its assignment to this asset: Blogs Entry.");
+			value1 = "Workflow is in use. Remove its assignment to this asset: Blogs Entry.");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}
