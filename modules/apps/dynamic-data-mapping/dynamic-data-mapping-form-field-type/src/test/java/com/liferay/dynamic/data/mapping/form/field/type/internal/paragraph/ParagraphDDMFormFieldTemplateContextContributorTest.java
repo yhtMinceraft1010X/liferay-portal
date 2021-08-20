@@ -53,11 +53,10 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 			_paragraphDDMFormFieldTemplateContextContributor.getParameters(
 				ddmFormField, new DDMFormFieldRenderingContext());
 
-		Assert.assertEquals(
-			text.getString(text.getDefaultLocale()), parameters.get("text"));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(parameters.get("rulesConditionDisabled")));
+		Assert.assertEquals(
+			text.getString(text.getDefaultLocale()), parameters.get("text"));
 	}
 
 	@Test
