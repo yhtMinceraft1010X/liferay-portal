@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -715,9 +716,15 @@ public class ObjectEntryLocalServiceTest {
 				"firstName", "John"
 			).build());
 
+		_assertCount(1);
+
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
 		_getValues(objectEntry);
 
-		_assertCount(1);
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 
 		objectEntry = ObjectEntryLocalServiceUtil.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -730,16 +737,20 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
+		Assert.assertNull(
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
+		objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertNotNull(
+			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
 		Map<String, Serializable> values =
 			ObjectEntryLocalServiceUtil.getValues(
 				objectEntry.getObjectEntryId());
 
-		ObjectEntry cachedObjectEntry =
-			ObjectEntryLocalServiceUtil.getObjectEntry(
-				objectEntry.getObjectEntryId());
-
-		Assert.assertEquals(values, cachedObjectEntry.getValues());
-
+		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertEquals(false, values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
