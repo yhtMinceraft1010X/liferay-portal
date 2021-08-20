@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,9 +28,7 @@ import java.util.stream.Stream;
  */
 public class BatchPlannerDisplayContext {
 
-	public BatchPlannerDisplayContext(
-		Map<String, String> headlessEndpoints) {
-
+	public BatchPlannerDisplayContext(Map<String, String> headlessEndpoints) {
 		_headlessEndpoints = Collections.unmodifiableMap(headlessEndpoints);
 	}
 

@@ -67,9 +67,17 @@ public class BatchPlannerPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new BatchPlannerDisplayContext(_getHeadlessEndpoints()));
 
+		super.render(renderRequest, renderResponse);
+	}
+
+	private Map<String, String> _getHeadlessEndpoints() {
 		Map<String, String> headlessEndpoints = new HashMap<>();
+
+		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 
 		for (ApplicationDTO applicationDTO : runtimeDTO.applicationDTOs) {
 			for (ResourceDTO resourceDTO : applicationDTO.resourceDTOs) {
@@ -90,11 +98,7 @@ public class BatchPlannerPortlet extends MVCPortlet {
 			}
 		}
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new BatchPlannerDisplayContext(headlessEndpoints));
-
-		super.render(renderRequest, renderResponse);
+		return headlessEndpoints;
 	}
 
 	@Reference
