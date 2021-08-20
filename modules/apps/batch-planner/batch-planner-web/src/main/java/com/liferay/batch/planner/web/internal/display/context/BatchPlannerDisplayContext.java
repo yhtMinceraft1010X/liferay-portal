@@ -27,9 +27,9 @@ import java.util.stream.Stream;
 /**
  * @author Igor Beslic
  */
-public class SelectHeadlessEndpointDisplayContext {
+public class BatchPlannerDisplayContext {
 
-	public SelectHeadlessEndpointDisplayContext(
+	public BatchPlannerDisplayContext(
 		Map<String, String> headlessEndpoints) {
 
 		Objects.requireNonNull(headlessEndpoints);

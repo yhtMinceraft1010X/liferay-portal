@@ -50,7 +50,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 		<aui:input bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalURL" />
 
 		<%
-		SelectHeadlessEndpointDisplayContext selectHeadlessEndpointDisplayContext = (SelectHeadlessEndpointDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+		BatchPlannerDisplayContext batchPlannerDisplayContext = (BatchPlannerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 		%>
 
 		<clay:row>
@@ -63,7 +63,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
 					label="headless-endpoint"
 					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
-					options="<%= selectHeadlessEndpointDisplayContext.getHeadlessEndpointSelectOptions() %>"
+					options="<%= batchPlannerDisplayContext.getHeadlessEndpointSelectOptions() %>"
 				/>
 			</clay:col>
 
@@ -77,7 +77,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
 					label="internal-class-name"
 					name='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
-					options="<%= selectHeadlessEndpointDisplayContext.getHeadlessEndpointSelectOptions() %>"
+					options="<%= batchPlannerDisplayContext.getHeadlessEndpointSelectOptions() %>"
 				/>
 			</clay:col>
 		</clay:row>

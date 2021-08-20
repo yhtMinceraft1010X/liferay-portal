@@ -15,7 +15,7 @@
 package com.liferay.batch.planner.web.internal.portlet;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.batch.planner.web.internal.display.context.SelectHeadlessEndpointDisplayContext;
+import com.liferay.batch.planner.web.internal.display.context.BatchPlannerDisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,7 +92,7 @@ public class BatchPlannerPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new SelectHeadlessEndpointDisplayContext(headlessEndpoints));
+			new BatchPlannerDisplayContext(headlessEndpoints));
 
 		super.render(renderRequest, renderResponse);
 	}
