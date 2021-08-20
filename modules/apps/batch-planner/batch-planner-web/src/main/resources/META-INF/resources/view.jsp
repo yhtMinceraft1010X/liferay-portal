@@ -63,7 +63,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					id='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
 					label="headless-endpoint"
 					name='<%= liferayPortletResponse.getNamespace() + "headlessEndpoint" %>'
-					options="<%= batchPlannerDisplayContext.getHeadlessEndpointSelectOptions() %>"
+					options="<%= batchPlannerDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>
 
@@ -77,7 +77,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 					id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
 					label="internal-class-name"
 					name='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
-					options="<%= batchPlannerDisplayContext.getHeadlessEndpointSelectOptions() %>"
+					options="<%= batchPlannerDisplayContext.getSelectOptions() %>"
 				/>
 			</clay:col>
 		</clay:row>

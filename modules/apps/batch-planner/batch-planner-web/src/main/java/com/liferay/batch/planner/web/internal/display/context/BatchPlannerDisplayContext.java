@@ -39,7 +39,7 @@ public class BatchPlannerDisplayContext {
 		return _headlessEndpoints;
 	}
 
-	public List<SelectOption> getHeadlessEndpointSelectOptions() {
+	public List<SelectOption> getSelectOptions() {
 		Set<Map.Entry<String, String>> entries = _headlessEndpoints.entrySet();
 
 		Stream<Map.Entry<String, String>> stream = entries.stream();
