@@ -94,9 +94,9 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(
 		ActionRequest actionRequest) {
 
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
-
 		List<BatchPlannerMapping> batchPlannerMappings = new ArrayList<>();
+
+		Enumeration<String> enumeration = actionRequest.getParameterNames();
 
 		while (enumeration.hasMoreElements()) {
 			String externalFieldNameParameter = enumeration.nextElement();
