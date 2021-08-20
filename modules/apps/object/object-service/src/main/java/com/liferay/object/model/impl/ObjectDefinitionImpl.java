@@ -15,7 +15,6 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

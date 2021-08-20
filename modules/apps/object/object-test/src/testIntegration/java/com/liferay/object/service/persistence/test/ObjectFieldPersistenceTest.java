@@ -138,6 +138,8 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
+
 		newObjectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
 		newObjectField.setDBColumnName(RandomTestUtil.randomString());
@@ -185,6 +187,9 @@ public class ObjectFieldPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectField.getModifiedDate()),
 			Time.getShortTimestamp(newObjectField.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectField.getListTypeDefinitionId(),
+			newObjectField.getListTypeDefinitionId());
 		Assert.assertEquals(
 			existingObjectField.getObjectDefinitionId(),
 			newObjectField.getObjectDefinitionId());
@@ -285,10 +290,11 @@ public class ObjectFieldPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "dbColumnName", true, "dbTableName", true, "indexed", true,
-			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
-			"name", true, "pluralLabel", true, "required", true, "type", true);
+			"createDate", true, "modifiedDate", true, "listTypeDefinitionId",
+			true, "objectDefinitionId", true, "dbColumnName", true,
+			"dbTableName", true, "indexed", true, "indexedAsKeyword", true,
+			"indexedLanguageId", true, "label", true, "name", true,
+			"pluralLabel", true, "required", true, "type", true);
 	}
 
 	@Test
@@ -581,6 +587,8 @@ public class ObjectFieldPersistenceTest {
 		objectField.setCreateDate(RandomTestUtil.nextDate());
 
 		objectField.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectField.setListTypeDefinitionId(RandomTestUtil.nextLong());
 
 		objectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 

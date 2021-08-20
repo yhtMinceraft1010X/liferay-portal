@@ -46,15 +46,16 @@ public class ObjectFieldLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectField addCustomObjectField(
-			long userId, long objectDefinitionId, boolean indexed,
-			boolean indexedAsKeyword, String indexedLanguageId,
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
 			boolean required, String type)
 		throws PortalException {
 
 		return getService().addCustomObjectField(
-			userId, objectDefinitionId, indexed, indexedAsKeyword,
-			indexedLanguageId, labelMap, name, required, type);
+			userId, listTypeDefinitionId, objectDefinitionId, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			type);
 	}
 
 	/**
@@ -353,14 +354,15 @@ public class ObjectFieldLocalServiceUtil {
 	}
 
 	public static ObjectField updateCustomObjectField(
-			long objectFieldId, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
-			String name, boolean required, String type)
+			long objectFieldId, long listTypeDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, String type)
 		throws PortalException {
 
 		return getService().updateCustomObjectField(
-			objectFieldId, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, type);
+			objectFieldId, listTypeDefinitionId, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, type);
 	}
 
 	/**

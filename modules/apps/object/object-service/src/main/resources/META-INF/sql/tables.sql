@@ -49,6 +49,7 @@ create table ObjectField (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	listTypeDefinitionId LONG,
 	objectDefinitionId LONG,
 	dbColumnName VARCHAR(75) null,
 	dbTableName VARCHAR(75) null,

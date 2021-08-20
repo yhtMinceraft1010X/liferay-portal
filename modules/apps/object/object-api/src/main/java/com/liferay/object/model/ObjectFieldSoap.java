@@ -41,6 +41,7 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setListTypeDefinitionId(model.getListTypeDefinitionId());
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
 		soapModel.setDBColumnName(model.getDBColumnName());
 		soapModel.setDBTableName(model.getDBTableName());
@@ -169,6 +170,14 @@ public class ObjectFieldSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getListTypeDefinitionId() {
+		return _listTypeDefinitionId;
+	}
+
+	public void setListTypeDefinitionId(long listTypeDefinitionId) {
+		_listTypeDefinitionId = listTypeDefinitionId;
+	}
+
 	public long getObjectDefinitionId() {
 		return _objectDefinitionId;
 	}
@@ -277,6 +286,7 @@ public class ObjectFieldSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _listTypeDefinitionId;
 	private long _objectDefinitionId;
 	private String _dbColumnName;
 	private String _dbTableName;

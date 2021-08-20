@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,8 @@ public class ObjectFieldCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", listTypeDefinitionId=");
+		sb.append(listTypeDefinitionId);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
 		sb.append(", dbColumnName=");
@@ -160,6 +162,7 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		objectFieldImpl.setListTypeDefinitionId(listTypeDefinitionId);
 		objectFieldImpl.setObjectDefinitionId(objectDefinitionId);
 
 		if (dbColumnName == null) {
@@ -235,6 +238,8 @@ public class ObjectFieldCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		listTypeDefinitionId = objectInput.readLong();
+
 		objectDefinitionId = objectInput.readLong();
 		dbColumnName = objectInput.readUTF();
 		dbTableName = objectInput.readUTF();
@@ -277,6 +282,8 @@ public class ObjectFieldCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(listTypeDefinitionId);
 
 		objectOutput.writeLong(objectDefinitionId);
 
@@ -344,6 +351,7 @@ public class ObjectFieldCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long listTypeDefinitionId;
 	public long objectDefinitionId;
 	public String dbColumnName;
 	public String dbTableName;

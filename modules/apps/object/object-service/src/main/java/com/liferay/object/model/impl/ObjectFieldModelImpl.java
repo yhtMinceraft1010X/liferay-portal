@@ -86,6 +86,7 @@ public class ObjectFieldModelImpl
 		{"objectFieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"listTypeDefinitionId", Types.BIGINT},
 		{"objectDefinitionId", Types.BIGINT}, {"dbColumnName", Types.VARCHAR},
 		{"dbTableName", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
 		{"indexedAsKeyword", Types.BOOLEAN},
@@ -106,6 +107,7 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dbColumnName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
@@ -120,7 +122,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pluralLabel STRING null,required BOOLEAN,type_ VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,pluralLabel STRING null,required BOOLEAN,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -201,6 +203,7 @@ public class ObjectFieldModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setListTypeDefinitionId(soapModel.getListTypeDefinitionId());
 		model.setObjectDefinitionId(soapModel.getObjectDefinitionId());
 		model.setDBColumnName(soapModel.getDBColumnName());
 		model.setDBTableName(soapModel.getDBTableName());
@@ -396,6 +399,12 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<ObjectField, Date>)ObjectField::setModifiedDate);
+		attributeGetterFunctions.put(
+			"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
+		attributeSetterBiConsumers.put(
+			"listTypeDefinitionId",
+			(BiConsumer<ObjectField, Long>)
+				ObjectField::setListTypeDefinitionId);
 		attributeGetterFunctions.put(
 			"objectDefinitionId", ObjectField::getObjectDefinitionId);
 		attributeSetterBiConsumers.put(
@@ -619,6 +628,21 @@ public class ObjectFieldModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getListTypeDefinitionId() {
+		return _listTypeDefinitionId;
+	}
+
+	@Override
+	public void setListTypeDefinitionId(long listTypeDefinitionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_listTypeDefinitionId = listTypeDefinitionId;
 	}
 
 	@JSON
@@ -1206,6 +1230,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setUserName(getUserName());
 		objectFieldImpl.setCreateDate(getCreateDate());
 		objectFieldImpl.setModifiedDate(getModifiedDate());
+		objectFieldImpl.setListTypeDefinitionId(getListTypeDefinitionId());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectFieldImpl.setDBColumnName(getDBColumnName());
 		objectFieldImpl.setDBTableName(getDBTableName());
@@ -1336,6 +1361,8 @@ public class ObjectFieldModelImpl
 		else {
 			objectFieldCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		objectFieldCacheModel.listTypeDefinitionId = getListTypeDefinitionId();
 
 		objectFieldCacheModel.objectDefinitionId = getObjectDefinitionId();
 
@@ -1483,6 +1510,7 @@ public class ObjectFieldModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _listTypeDefinitionId;
 	private long _objectDefinitionId;
 	private String _dbColumnName;
 	private String _dbTableName;
@@ -1534,6 +1562,8 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("dbColumnName", _dbColumnName);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
@@ -1585,27 +1615,29 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("objectDefinitionId", 256L);
+		columnBitmasks.put("listTypeDefinitionId", 256L);
 
-		columnBitmasks.put("dbColumnName", 512L);
+		columnBitmasks.put("objectDefinitionId", 512L);
 
-		columnBitmasks.put("dbTableName", 1024L);
+		columnBitmasks.put("dbColumnName", 1024L);
 
-		columnBitmasks.put("indexed", 2048L);
+		columnBitmasks.put("dbTableName", 2048L);
 
-		columnBitmasks.put("indexedAsKeyword", 4096L);
+		columnBitmasks.put("indexed", 4096L);
 
-		columnBitmasks.put("indexedLanguageId", 8192L);
+		columnBitmasks.put("indexedAsKeyword", 8192L);
 
-		columnBitmasks.put("label", 16384L);
+		columnBitmasks.put("indexedLanguageId", 16384L);
 
-		columnBitmasks.put("name", 32768L);
+		columnBitmasks.put("label", 32768L);
 
-		columnBitmasks.put("pluralLabel", 65536L);
+		columnBitmasks.put("name", 65536L);
 
-		columnBitmasks.put("required", 131072L);
+		columnBitmasks.put("pluralLabel", 131072L);
 
-		columnBitmasks.put("type_", 262144L);
+		columnBitmasks.put("required", 262144L);
+
+		columnBitmasks.put("type_", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

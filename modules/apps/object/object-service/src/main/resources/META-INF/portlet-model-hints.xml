@@ -56,6 +56,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="listTypeDefinitionId" type="long" />
 		<field name="objectDefinitionId" type="long" />
 		<field name="DBColumnName" type="String" />
 		<field name="DBTableName" type="String" />
