@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 BatchPlannerPlan batchPlannerPlan = BatchPlannerPlanServiceUtil.fetchBatchPlannerPlan(batchPlannerPlanId);
-
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "add") : LanguageUtil.get(request, "edit"));
 %>
@@ -200,6 +200,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				);
 			});
 	});
+
 	A.one('#<portlet:namespace />internalClassName').on('change', function (event) {
 		this.attr('disabled', true);
 
@@ -209,7 +210,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	});
 
 	function renderMappings() {
-		var openapiURL = A.one('#<portlet:namespace />headlessEndpoint').val();
+		var openAPIURL = A.one('#<portlet:namespace />headlessEndpoint').val();
 
 		var internalClassName = A.one(
 			'#<portlet:namespace />internalClassName'
@@ -219,7 +220,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 			internalClassName.lastIndexOf('.') + 1
 		);
 
-		Liferay.Util.fetch(openapiURL, {
+		Liferay.Util.fetch(openAPIURL, {
 			method: 'GET',
 			credentials: 'include',
 			headers: [
@@ -229,7 +230,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 		})
 			.then((response) => {
 				if (!response.ok) {
-					throw new Error(`Failed to fetch: '${openapiURL}'`);
+					throw new Error(`Failed to fetch: '${openAPIURL}'`);
 				}
 
 				return response.json();
