@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -97,23 +96,25 @@ public class ApplyToSKUCommerceDiscountTargetImpl
 	public void postProcessContextBooleanFilter(
 		BooleanFilter contextBooleanFilter, CPInstance cpInstance) {
 
-		TermFilter termFilter = new TermFilter(
-			"commerce_discount_target_cp_instance_ids",
-			String.valueOf(cpInstance.getCPDefinitionId()));
+		BooleanFilter booleanFilter = new BooleanFilter();
 
-		Filter existFilter = new ExistsFilter(
-			"commerce_discount_target_cp_instance_ids");
+		booleanFilter.add(
+			new BooleanFilter() {
+				{
+					add(
+						new ExistsFilter(
+							"commerce_discount_target_cp_instance_ids"),
+						BooleanClauseOccur.MUST_NOT);
+				}
+			},
+			BooleanClauseOccur.SHOULD);
+		booleanFilter.add(
+			new TermFilter(
+				"commerce_discount_target_cp_instance_ids",
+				String.valueOf(cpInstance.getCPDefinitionId())),
+			BooleanClauseOccur.SHOULD);
 
-		BooleanFilter existBooleanFilter = new BooleanFilter();
-
-		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
-
-		BooleanFilter fieldBooleanFilter = new BooleanFilter();
-
-		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
-		fieldBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
-
-		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
+		contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Reference
