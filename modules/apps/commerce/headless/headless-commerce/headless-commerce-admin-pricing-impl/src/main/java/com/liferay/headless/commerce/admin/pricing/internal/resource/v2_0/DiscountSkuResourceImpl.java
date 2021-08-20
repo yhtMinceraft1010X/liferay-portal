@@ -106,15 +106,13 @@ public class DiscountSkuResourceImpl extends BaseDiscountSkuResourceImpl {
 	private DiscountSku _toDiscountSku(Long commerceDiscountRelId)
 		throws Exception {
 
-		CommerceDiscountRel commerceDiscountRel =
-			_commerceDiscountRelService.getCommerceDiscountRel(
-				commerceDiscountRelId);
-
 		return _discountSkuDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getActions(commerceDiscountRel), _dtoConverterRegistry,
-				commerceDiscountRelId,
+				_getActions(
+					_commerceDiscountRelService.getCommerceDiscountRel(
+						commerceDiscountRelId)),
+				_dtoConverterRegistry, commerceDiscountRelId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
