@@ -246,8 +246,6 @@ definition {
 		}
 
 		task ("Create segment") {
-			Pause(locator1 = "30000");
-
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
