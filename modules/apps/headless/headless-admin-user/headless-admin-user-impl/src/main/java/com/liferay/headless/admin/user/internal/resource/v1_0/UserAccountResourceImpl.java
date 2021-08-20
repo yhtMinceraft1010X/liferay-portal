@@ -565,14 +565,6 @@ public class UserAccountResourceImpl
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
-		User user = _userService.getUserById(userAccountId);
-
-		String sms = null;
-		String facebook = null;
-		String jabber = null;
-		String skype = null;
-		String twitter = null;
-
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
 		if (accountBriefs != null) {
@@ -585,6 +577,14 @@ public class UserAccountResourceImpl
 			}
 		}
 
+		User user = _userService.getUserById(userAccountId);
+
+		String sms = null;
+		String facebook = null;
+		String jabber = null;
+		String skype = null;
+		String twitter = null;
+
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
 
@@ -596,10 +596,10 @@ public class UserAccountResourceImpl
 			twitter = userAccountContactInformation.getTwitter();
 		}
 
+		long[] organizationIds = user.getOrganizationIds();
+
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
-
-		long[] organizationIds = user.getOrganizationIds();
 
 		if (organizationBriefs != null) {
 			Stream<OrganizationBrief> stream = Arrays.stream(
