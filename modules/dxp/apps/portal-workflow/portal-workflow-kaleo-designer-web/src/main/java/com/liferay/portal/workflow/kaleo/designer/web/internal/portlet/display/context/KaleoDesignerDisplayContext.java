@@ -394,13 +394,13 @@ public class KaleoDesignerDisplayContext {
 			return StringPool.BLANK;
 		}
 		else if (workflowDefinitionLinks.size() == 1) {
-			return "workflow-in-use.-remove-its-assignment-to-x";
+			return "workflow-is-in-use.-remove-its-assignment-to-x";
 		}
 		else if (workflowDefinitionLinks.size() == 2) {
-			return "workflow-in-use.-remove-its-assignment-to-x-and-x-x";
+			return "workflow-is-in-use.-remove-its-assignment-to-x-and-x-x";
 		}
 
-		return "workflow-in-use.-remove-its-assignment-to-x-x-and-x-more-x";
+		return "workflow-is-in-use.-remove-its-assignment-to-x-x-and-x-more-x";
 	}
 
 	public Date getModifiedDate(KaleoDefinitionVersion kaleoDefinitionVersion) {
