@@ -99,18 +99,18 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 		Enumeration<String> enumeration = actionRequest.getParameterNames();
 
 		while (enumeration.hasMoreElements()) {
-			String externalFieldNameParameter = enumeration.nextElement();
+			String parameterName = enumeration.nextElement();
 
-			if (!externalFieldNameParameter.startsWith("externalFieldName_") ||
+			if (!parameterName.startsWith("externalFieldName_") ||
 				Validator.isNull(
 					ParamUtil.getString(
-						actionRequest, externalFieldNameParameter))) {
+						actionRequest, parameterName))) {
 
 				continue;
 			}
 
 			String suffix = StringUtil.extractLast(
-				externalFieldNameParameter, StringPool.UNDERLINE);
+				parameterName, StringPool.UNDERLINE);
 
 			if (Validator.isNull(
 					ParamUtil.getString(
@@ -123,7 +123,7 @@ public class AddBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 				BatchPlannerMappingUtil.create(0);
 
 			batchPlannerMapping.setExternalFieldName(
-				ParamUtil.getString(actionRequest, externalFieldNameParameter));
+				ParamUtil.getString(actionRequest, parameterName));
 			batchPlannerMapping.setInternalFieldName(
 				ParamUtil.getString(
 					actionRequest, "internalFieldName_" + suffix));
