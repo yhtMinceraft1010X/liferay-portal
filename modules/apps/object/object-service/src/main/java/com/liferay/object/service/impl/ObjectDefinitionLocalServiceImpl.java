@@ -530,13 +530,13 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
-		dbTableName = _getDbTableName(
+		dbTableName = _getDBTableName(
 			dbTableName, name, system, user.getCompanyId(), shortName);
 
-		pkObjectFieldName = _getPkObjectFieldName(
+		pkObjectFieldName = _getPKObjectFieldName(
 			pkObjectFieldName, system, shortName);
 
-		pkObjectFieldDBColumnName = _getPkObjectFieldDBColumnName(
+		pkObjectFieldDBColumnName = _getPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName, pkObjectFieldName, system);
 
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
@@ -623,7 +623,7 @@ public class ObjectDefinitionLocalServiceImpl
 		runSQL(sql);
 	}
 
-	private String _getDbTableName(
+	private String _getDBTableName(
 		String dbTableName, String name, boolean system, Long companyId,
 		String shortName) {
 
@@ -632,14 +632,11 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (system) {
-			dbTableName = name;
-		}
-		else {
-			dbTableName = StringBundler.concat(
-				"O_", companyId, StringPool.UNDERLINE, shortName);
+			return name;
 		}
 
-		return dbTableName;
+		return StringBundler.concat(
+			"O_", companyId, StringPool.UNDERLINE, shortName);
 	}
 
 	private String _getName(String name, boolean system) {
@@ -652,7 +649,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return name;
 	}
 
-	private String _getPkObjectFieldDBColumnName(
+	private String _getPKObjectFieldDBColumnName(
 		String pkObjectFieldDBColumnName, String pkObjectFieldName,
 		boolean system) {
 
@@ -661,17 +658,13 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (system) {
-			pkObjectFieldDBColumnName = pkObjectFieldName;
-		}
-		else {
-			pkObjectFieldDBColumnName =
-				pkObjectFieldName + StringPool.UNDERLINE;
+			return pkObjectFieldName;
 		}
 
-		return pkObjectFieldDBColumnName;
+		return pkObjectFieldName + StringPool.UNDERLINE;
 	}
 
-	private String _getPkObjectFieldName(
+	private String _getPKObjectFieldName(
 		String pkObjectFieldName, boolean system, String shortName) {
 
 		if (Validator.isNotNull(pkObjectFieldName)) {
@@ -681,11 +674,11 @@ public class ObjectDefinitionLocalServiceImpl
 		pkObjectFieldName = TextFormatter.format(
 			shortName + "Id", TextFormatter.I);
 
-		if (!system) {
-			pkObjectFieldName = "c_" + pkObjectFieldName;
+		if (system) {
+			return pkObjectFieldName;
 		}
 
-		return pkObjectFieldName;
+		return pkObjectFieldName = "c_" + pkObjectFieldName;
 	}
 
 	private boolean _hasObjectField(
@@ -723,14 +716,14 @@ public class ObjectDefinitionLocalServiceImpl
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
-		dbTableName = _getDbTableName(
+		dbTableName = _getDBTableName(
 			dbTableName, name, objectDefinition.isSystem(),
 			objectDefinition.getCompanyId(), shortName);
 
-		pkObjectFieldName = _getPkObjectFieldName(
+		pkObjectFieldName = _getPKObjectFieldName(
 			pkObjectFieldName, objectDefinition.isSystem(), shortName);
 
-		pkObjectFieldDBColumnName = _getPkObjectFieldDBColumnName(
+		pkObjectFieldDBColumnName = _getPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName, pkObjectFieldName,
 			objectDefinition.isSystem());
 
