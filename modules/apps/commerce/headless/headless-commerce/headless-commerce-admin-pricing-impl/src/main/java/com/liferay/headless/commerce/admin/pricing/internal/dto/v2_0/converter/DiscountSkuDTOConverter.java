@@ -52,11 +52,11 @@ public class DiscountSkuDTOConverter
 			_commerceDiscountRelService.getCommerceDiscountRel(
 				(Long)dtoConverterContext.getId());
 
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(
-			commerceDiscountRel.getClassPK());
-
 		CommerceDiscount commerceDiscount =
 			commerceDiscountRel.getCommerceDiscount();
+
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(
+			commerceDiscountRel.getClassPK());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
