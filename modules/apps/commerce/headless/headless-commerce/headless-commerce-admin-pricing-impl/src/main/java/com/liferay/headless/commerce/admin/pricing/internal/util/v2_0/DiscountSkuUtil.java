@@ -22,7 +22,6 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Alessio Antonio Rendina
@@ -36,16 +35,13 @@ public class DiscountSkuUtil {
 			ServiceContextHelper serviceContextHelper)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			serviceContextHelper.getServiceContext();
-
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			discountSku.getSkuId());
 
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			serviceContext);
+			serviceContextHelper.getServiceContext());
 	}
 
 }
