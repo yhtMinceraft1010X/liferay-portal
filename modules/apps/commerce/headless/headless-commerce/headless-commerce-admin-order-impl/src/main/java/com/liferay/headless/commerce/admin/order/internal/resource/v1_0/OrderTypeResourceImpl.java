@@ -309,8 +309,6 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 			GetterUtil.getBoolean(orderType.getNeverExpire(), true),
 			serviceContext);
 
-		// Expando
-
 		Map<String, ?> customFields = orderType.getCustomFields();
 
 		if ((customFields != null) && !customFields.isEmpty()) {
