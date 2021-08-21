@@ -39,9 +39,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -82,12 +80,14 @@ public class OrderTypeChannelResourceImpl
 		}
 
 		return Page.of(
-			_toOrderTypeChannels(
+			transform(
 				_commerceOrderTypeRelService.
 					getCommerceOrderTypeCommerceChannelRels(
 						commerceOrderType.getCommerceOrderTypeId(), null,
 						pagination.getStartPosition(),
-						pagination.getEndPosition())),
+						pagination.getEndPosition()),
+				commerceOrderTypeRel -> _toOrderTypeChannel(
+					commerceOrderTypeRel.getCommerceOrderTypeRelId())),
 			pagination,
 			_commerceOrderTypeRelService.
 				getCommerceOrderTypeCommerceChannelRelsCount(
@@ -108,11 +108,13 @@ public class OrderTypeChannelResourceImpl
 		}
 
 		return Page.of(
-			_toOrderTypeChannels(
+			transform(
 				_commerceOrderTypeRelService.
 					getCommerceOrderTypeCommerceChannelRels(
 						id, search, pagination.getStartPosition(),
-						pagination.getEndPosition())),
+						pagination.getEndPosition()),
+				commerceOrderTypeRel -> _toOrderTypeChannel(
+					commerceOrderTypeRel.getCommerceOrderTypeRelId())),
 			pagination,
 			_commerceOrderTypeRelService.
 				getCommerceOrderTypeCommerceChannelRelsCount(id, search));
@@ -150,10 +152,10 @@ public class OrderTypeChannelResourceImpl
 			long commerceOrderTypeId, OrderTypeChannel orderTypeChannel)
 		throws Exception {
 
+		CommerceChannel commerceChannel = null;
+
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
-
-		CommerceChannel commerceChannel;
 
 		if (Validator.isNull(
 				orderTypeChannel.getChannelExternalReferenceCode())) {
@@ -211,23 +213,6 @@ public class OrderTypeChannelResourceImpl
 				commerceOrderTypeRelId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
-	}
-
-	private List<OrderTypeChannel> _toOrderTypeChannels(
-			List<CommerceOrderTypeRel> commerceOrderTypeRels)
-		throws Exception {
-
-		List<OrderTypeChannel> orderTypeChannels = new ArrayList<>();
-
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				commerceOrderTypeRels) {
-
-			orderTypeChannels.add(
-				_toOrderTypeChannel(
-					commerceOrderTypeRel.getCommerceOrderTypeRelId()));
-		}
-
-		return orderTypeChannels;
 	}
 
 	@Reference
