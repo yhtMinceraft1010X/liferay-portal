@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.duplicate(fieldFieldLabel = "Numeric");
@@ -127,8 +127,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.editFieldTip(
@@ -423,8 +423,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.editNumericType(
@@ -477,8 +477,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.viewFieldSearchable(
@@ -511,8 +511,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.viewFieldSearchable(
@@ -527,8 +527,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.editFieldTip(
@@ -554,8 +554,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
 			fieldName = "Numeric");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Numeric");
