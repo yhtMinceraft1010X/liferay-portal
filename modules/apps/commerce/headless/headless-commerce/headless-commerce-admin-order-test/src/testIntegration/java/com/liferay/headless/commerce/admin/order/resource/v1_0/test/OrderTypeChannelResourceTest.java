@@ -61,10 +61,9 @@ public class OrderTypeChannelResourceTest
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
 
-		DateConfig displayDateConfig = _getDisplayDateConfig(
+		DateConfig displayDateConfig = _toDisplayDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
-
-		DateConfig expirationDateConfig = _getExpirationDateConfig(
+		DateConfig expirationDateConfig = _toExpirationDateConfig(
 			RandomTestUtil.nextDate(), _user.getTimeZone());
 
 		_commerceOrderType =
@@ -175,7 +174,7 @@ public class OrderTypeChannelResourceTest
 				orderTypeChannel.getOrderTypeId(), _serviceContext));
 	}
 
-	private DateConfig _getDisplayDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
 		}
@@ -186,7 +185,7 @@ public class OrderTypeChannelResourceTest
 		return new DateConfig(calendar);
 	}
 
-	private DateConfig _getExpirationDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 				timeZone);
