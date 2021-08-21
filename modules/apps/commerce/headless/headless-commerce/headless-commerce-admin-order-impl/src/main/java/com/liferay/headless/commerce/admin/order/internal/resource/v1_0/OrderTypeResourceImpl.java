@@ -184,9 +184,9 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _getDisplayDateConfig(
+		DateConfig displayDateConfig = _toDisplayDateConfig(
 			orderType.getDisplayDate(), serviceContext.getTimeZone());
-		DateConfig expirationDateConfig = _getExpirationDateConfig(
+		DateConfig expirationDateConfig = _toExpirationDateConfig(
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
 		return _commerceOrderTypeService.addCommerceOrderType(
@@ -232,7 +232,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		).build();
 	}
 
-	private DateConfig _getDisplayDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
 		}
@@ -243,7 +243,7 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		return new DateConfig(calendar);
 	}
 
-	private DateConfig _getExpirationDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 				timeZone);
@@ -284,10 +284,10 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
-		DateConfig displayDateConfig = _getDisplayDateConfig(
+		DateConfig displayDateConfig = _toDisplayDateConfig(
 			orderType.getDisplayDate(), serviceContext.getTimeZone());
 
-		DateConfig expirationDateConfig = _getExpirationDateConfig(
+		DateConfig expirationDateConfig = _toExpirationDateConfig(
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
 		commerceOrderType = _commerceOrderTypeService.updateCommerceOrderType(
