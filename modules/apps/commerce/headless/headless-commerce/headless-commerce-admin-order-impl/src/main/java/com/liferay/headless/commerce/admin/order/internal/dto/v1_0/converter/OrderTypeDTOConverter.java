@@ -26,8 +26,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.ResourceBundle;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,16 +53,6 @@ public class OrderTypeDTOConverter
 			_commerceOrderTypeService.getCommerceOrderType(
 				(Long)dtoConverterContext.getId());
 
-		String orderTypeStatusLabel = WorkflowConstants.getStatusLabel(
-			commerceOrderType.getStatus());
-
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			dtoConverterContext.getLocale());
-
-		String orderTypeStatusLabelI18n = LanguageUtil.get(
-			resourceBundle,
-			WorkflowConstants.getStatusLabel(commerceOrderType.getStatus()));
-
 		ExpandoBridge expandoBridge = commerceOrderType.getExpandoBridge();
 
 		return new OrderType() {
@@ -83,15 +71,21 @@ public class OrderTypeDTOConverter
 				name = LanguageUtils.getLanguageIdMap(
 					commerceOrderType.getNameMap());
 				workflowStatusInfo = _getWorkflowStatusInfo(
-					commerceOrderType.getStatus(), orderTypeStatusLabel,
-					orderTypeStatusLabelI18n);
+					WorkflowConstants.getStatusLabel(
+						commerceOrderType.getStatus()),
+					LanguageUtil.get(
+						LanguageResources.getResourceBundle(
+							dtoConverterContext.getLocale()),
+						WorkflowConstants.getStatusLabel(
+							commerceOrderType.getStatus())),
+					commerceOrderType.getStatus());
 			}
 		};
 	}
 
 	private Status _getWorkflowStatusInfo(
-		int statusCode, String orderTypeStatusLabel,
-		String orderTypeStatusLabelI18n) {
+		String orderTypeStatusLabel, String orderTypeStatusLabelI18n,
+		int statusCode) {
 
 		return new Status() {
 			{
