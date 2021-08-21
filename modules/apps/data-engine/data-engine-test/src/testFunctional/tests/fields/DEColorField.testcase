@@ -33,12 +33,12 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
+		DEBuilder.addField(
+			fieldLabel = "Text",
 			fieldName = "Text");
 
 		WebContentStructures.saveCP();
@@ -61,8 +61,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.duplicate(fieldFieldLabel = "Color");
@@ -87,8 +87,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.editFieldTip(
@@ -361,8 +361,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.viewFieldSearchable(
@@ -395,8 +395,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.viewFieldSearchable(
@@ -411,8 +411,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.editFieldTip(
@@ -436,8 +436,8 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Color",
+		DEBuilder.addField(
+			fieldLabel = "Color",
 			fieldName = "Color");
 
 		DataEngine.toggleShowLabel(fieldLabel = "Color");
