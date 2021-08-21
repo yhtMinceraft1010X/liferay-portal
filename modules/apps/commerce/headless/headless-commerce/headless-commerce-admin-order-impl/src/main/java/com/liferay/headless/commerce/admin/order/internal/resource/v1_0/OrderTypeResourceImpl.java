@@ -286,7 +286,6 @@ public class OrderTypeResourceImpl extends BaseOrderTypeResourceImpl {
 
 		DateConfig displayDateConfig = _toDisplayDateConfig(
 			orderType.getDisplayDate(), serviceContext.getTimeZone());
-
 		DateConfig expirationDateConfig = _toExpirationDateConfig(
 			orderType.getExpirationDate(), serviceContext.getTimeZone());
 
