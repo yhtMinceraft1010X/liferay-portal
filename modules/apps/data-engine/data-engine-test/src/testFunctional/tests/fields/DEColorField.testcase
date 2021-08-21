@@ -117,6 +117,54 @@ definition {
 			fieldName = "Color");
 	}
 
+	@description = "This is a test for LRQA-69447. This test verifies that upon duplicating a repeatable field, inputted data on both fields persists."
+	@priority = "5"
+	test CanInputDataOnDuplicatedField {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Color");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DataEngine.addRepeatableField(fieldLabel = "Color");
+
+		DERenderer.inputDataInColorField(
+			fieldLabel = "Color",
+			index = "1",
+			value = "006EF8");
+
+		DERenderer.inputDataInColorField(
+			fieldLabel = "Color",
+			index = "2",
+			value = "FF21A0");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInColorField(
+			fieldLabel = "Color",
+			index = "1",
+			value = "006EF8");
+
+		DERenderer.assertDataInColorField(
+			fieldLabel = "Color",
+			index = "2",
+			value = "FF21A0");
+	}
+
 	@description = "This is a test for LRQA-69447. This test verifies that chosen color persists."
 	@priority = "5"
 	test CanSelectColor {
