@@ -51,7 +51,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Numeric");
+		DEBuilder.assertFieldNotPresent(fieldLabel = "Numeric");
 	}
 
 	@description = "This is a test for LRQA-68600. This test verifies that is possible to duplicate the field"
@@ -564,7 +564,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
 
-		DataEngine.assertFieldNotPresent(fieldFieldLabel = "Numeric");
+		DEBuilder.assertFieldNotPresent(fieldLabel = "Numeric");
 
 		DataEngine.toggleShowLabel();
 
