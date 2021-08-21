@@ -208,7 +208,6 @@ public class OrderTypeChannelResourceTest
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(
 				commerceOrderTypeRel.getClassPK());
-
 		CommerceOrderType commerceOrderType =
 			_commerceOrderTypeLocalService.fetchCommerceOrderType(
 				commerceOrderTypeRel.getCommerceOrderTypeId());

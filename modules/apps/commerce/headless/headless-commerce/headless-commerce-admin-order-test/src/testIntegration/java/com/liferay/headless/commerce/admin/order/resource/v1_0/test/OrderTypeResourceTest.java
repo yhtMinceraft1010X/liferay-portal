@@ -172,10 +172,9 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	private OrderType _addOrderType(OrderType orderType) throws Exception {
-		DateConfig displayDateConfig = _getDisplayDateConfig(
+		DateConfig displayDateConfig = _toDisplayDateConfig(
 			orderType.getDisplayDate(), _user.getTimeZone());
-
-		DateConfig expirationDateConfig = _getExpirationDateConfig(
+		DateConfig expirationDateConfig = _toExpirationDateConfig(
 			orderType.getExpirationDate(), _user.getTimeZone());
 
 		CommerceOrderType commerceOrderType =
@@ -199,7 +198,7 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return _toOrderType(commerceOrderType);
 	}
 
-	private DateConfig _getDisplayDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
 		}
@@ -210,7 +209,7 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 		return new DateConfig(calendar);
 	}
 
-	private DateConfig _getExpirationDateConfig(Date date, TimeZone timeZone) {
+	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 				timeZone);
