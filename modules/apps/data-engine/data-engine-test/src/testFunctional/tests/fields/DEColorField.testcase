@@ -182,6 +182,41 @@ definition {
 			value = "006ef8");
 	}
 
+	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by choosing RGB values by clicking on the drop icon."
+	@priority = "5"
+	test CanSelectColorByRGB {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInColorField(
+			colorSelectionMethod = "RGB",
+			fieldLabel = "Color",
+			valueBlue = "248",
+			valueGreen = "110",
+			valueRed = "0");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInColorField(
+			fieldLabel = "Color",
+			value = "006ef8");
+	}
+
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by clicking on the color square."
 	@priority = "5"
 	test CanSelectColorBySwatch {
