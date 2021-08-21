@@ -149,6 +149,39 @@ definition {
 			value = "006EF8");
 	}
 
+	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by HEX."
+	@priority = "5"
+	test CanSelectColorByHEX {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInColorField(
+			colorSelectionMethod = "HEX",
+			fieldLabel = "Color",
+			value = "006EF8");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInColorField(
+			fieldLabel = "Color",
+			value = "006ef8");
+	}
+
 	@description = "This is a test for LRQA-68657. This test verifies that Default Searchable property is 'Disable' when System Setting is left unchecked"
 	@priority = "3"
 	test CanSetDefaultSearchablePropertyToDisable {
