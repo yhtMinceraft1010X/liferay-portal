@@ -302,6 +302,24 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 		).build();
 	}
 
+	private Discount _toDiscount(CommerceDiscount commerceDiscount)
+		throws Exception {
+
+		return _toDiscount(commerceDiscount.getCommerceDiscountId());
+	}
+
+	private Discount _toDiscount(Long commerceDiscountId) throws Exception {
+		CommerceDiscount commerceDiscount =
+			_commerceDiscountService.getCommerceDiscount(commerceDiscountId);
+
+		return _discountDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(commerceDiscount), _dtoConverterRegistry,
+				commerceDiscountId, contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser));
+	}
+
 	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
 		if (date == null) {
 			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
@@ -327,24 +345,6 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 			date.getTime(), timeZone);
 
 		return new DateConfig(calendar);
-	}
-
-	private Discount _toDiscount(CommerceDiscount commerceDiscount)
-		throws Exception {
-
-		return _toDiscount(commerceDiscount.getCommerceDiscountId());
-	}
-
-	private Discount _toDiscount(Long commerceDiscountId) throws Exception {
-		CommerceDiscount commerceDiscount =
-			_commerceDiscountService.getCommerceDiscount(commerceDiscountId);
-
-		return _discountDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getActions(commerceDiscount), _dtoConverterRegistry,
-				commerceDiscountId, contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser));
 	}
 
 	private CommerceDiscount _updateDiscount(

@@ -534,17 +534,6 @@ public class ProductResourceImpl
 		);
 	}
 
-	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
-	}
-
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		Attachment attachment) {
 
@@ -561,22 +550,6 @@ public class ProductResourceImpl
 			CPDefinition.class.getName(), contextCompany.getCompanyId(),
 			product.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
-		if (date == null) {
-			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				timeZone);
-
-			expirationCalendar.add(Calendar.MONTH, 1);
-
-			return new DateConfig(expirationCalendar);
-		}
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			date.getTime(), timeZone);
-
-		return new DateConfig(calendar);
 	}
 
 	private ProductShippingConfiguration _getProductShippingConfiguration(
@@ -616,6 +589,33 @@ public class ProductResourceImpl
 		}
 
 		return new ProductTaxConfiguration();
+	}
+
+	private DateConfig _toDisplayDateConfig(Date date, TimeZone timeZone) {
+		if (date == null) {
+			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
+	}
+
+	private DateConfig _toExpirationDateConfig(Date date, TimeZone timeZone) {
+		if (date == null) {
+			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				timeZone);
+
+			expirationCalendar.add(Calendar.MONTH, 1);
+
+			return new DateConfig(expirationCalendar);
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
 	}
 
 	private Product _toProduct(Long cpDefinitionId) throws Exception {
