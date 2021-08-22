@@ -131,8 +131,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ObjectDefinition"
                                 type: array
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
         post:
             operationId: postObjectDefinition
@@ -153,8 +151,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
     "/object-definitions/{objectDefinitionId}":
         delete:
@@ -171,8 +167,6 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
         get:
             operationId: getObjectDefinition
@@ -192,8 +186,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
         patch:
             operationId: patchObjectDefinition
@@ -250,8 +242,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectDefinition"
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
     "/object-definitions/{objectDefinitionId}/object-fields":
         get:
@@ -276,8 +266,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ObjectField"
                                 type: array
-                    description:
-                        ""
             tags: ["ObjectField"]
         post:
             operationId: postObjectDefinitionObjectField
@@ -305,8 +293,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
-                    description:
-                        ""
             tags: ["ObjectField"]
     "/object-definitions/{objectDefinitionId}/publish":
         post:
@@ -323,8 +309,6 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-                    description:
-                        ""
             tags: ["ObjectDefinition"]
     "/object-fields/{objectFieldId}":
         get:
@@ -345,8 +329,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
-                    description:
-                        ""
             tags: ["ObjectField"]
         patch:
             operationId: patchObjectField
@@ -374,8 +356,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
-                    description:
-                        ""
             tags: ["ObjectField"]
         put:
             operationId: putObjectField
@@ -403,6 +383,4 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/ObjectField"
-                    description:
-                        ""
             tags: ["ObjectField"]
