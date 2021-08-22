@@ -15,7 +15,6 @@
 package com.liferay.custom.elements.web.internal.portlet.action;
 
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
-import com.liferay.custom.elements.portlet.CustomElementsPortletRegistrar;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalService;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -65,29 +64,18 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 			CustomElementsPortletDescriptor.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			CustomElementsPortletDescriptor customElementsPortletDescriptor =
-				_customElementsPortletDescriptorLocalService.
-					addCustomElementsPortletDescriptor(
-						cssURLs, htmlElementName, instanceable, name,
-						properties, serviceContext);
-
-			_customElementsPortletRegistrar.registerPortlet(
-				customElementsPortletDescriptor);
+			_customElementsPortletDescriptorLocalService.
+				addCustomElementsPortletDescriptor(
+					cssURLs, htmlElementName, instanceable, name, properties,
+					serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			CustomElementsPortletDescriptor customElementsPortletDescriptor =
-				_customElementsPortletDescriptorLocalService.
-					updateCustomElementsPortletDescriptor(
-						ParamUtil.getLong(
-							actionRequest, "customElementsPortletDescriptorId"),
-						cssURLs, htmlElementName, instanceable, name,
-						properties, serviceContext);
-
-			_customElementsPortletRegistrar.unregisterPortlet(
-				customElementsPortletDescriptor);
-
-			_customElementsPortletRegistrar.registerPortlet(
-				customElementsPortletDescriptor);
+			_customElementsPortletDescriptorLocalService.
+				updateCustomElementsPortletDescriptor(
+					ParamUtil.getLong(
+						actionRequest, "customElementsPortletDescriptorId"),
+					cssURLs, htmlElementName, instanceable, name, properties,
+					serviceContext);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -100,8 +88,5 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 	@Reference
 	private CustomElementsPortletDescriptorLocalService
 		_customElementsPortletDescriptorLocalService;
-
-	@Reference
-	private CustomElementsPortletRegistrar _customElementsPortletRegistrar;
 
 }
