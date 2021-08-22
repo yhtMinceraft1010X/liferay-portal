@@ -62,11 +62,11 @@ public class DDMStructureModelListener
 			return;
 		}
 
-		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
-			_serviceRegistrationsMaps.computeIfAbsent(
+		Map<Long, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.computeIfAbsent(
 				ddmStructure.getCompanyId(), key -> new HashMap<>());
 
-		ddmStructureServiceRegistrationMap.put(
+		serviceRegistrations.put(
 			ddmStructure.getStructureId(),
 			_bundleContext.registerService(
 				RelatedInfoItemCollectionProvider.class,
@@ -85,13 +85,12 @@ public class DDMStructureModelListener
 			return;
 		}
 
-		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
-			_serviceRegistrationsMaps.get(ddmStructure.getCompanyId());
+		Map<Long, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.get(ddmStructure.getCompanyId());
 
-		if (MapUtil.isNotEmpty(ddmStructureServiceRegistrationMap)) {
+		if (MapUtil.isNotEmpty(serviceRegistrations)) {
 			ServiceRegistration<?> serviceRegistration =
-				ddmStructureServiceRegistrationMap.remove(
-					ddmStructure.getStructureId());
+				serviceRegistrations.remove(ddmStructure.getStructureId());
 
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
@@ -101,7 +100,7 @@ public class DDMStructureModelListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
+		Map<Long, ServiceRegistration<?>> serviceRegistrations =
 			new HashMap<>();
 
 		List<DDMStructure> ddmStructures =
@@ -110,7 +109,7 @@ public class DDMStructureModelListener
 				_portal.getClassNameId(JournalArticle.class.getName()));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			ddmStructureServiceRegistrationMap.put(
+			serviceRegistrations.put(
 				ddmStructure.getStructureId(),
 				_bundleContext.registerService(
 					RelatedInfoItemCollectionProvider.class,
@@ -119,19 +118,19 @@ public class DDMStructureModelListener
 					null));
 		}
 
-		if (MapUtil.isNotEmpty(ddmStructureServiceRegistrationMap)) {
-			_serviceRegistrationsMaps.put(
-				company.getCompanyId(), ddmStructureServiceRegistrationMap);
+		if (MapUtil.isNotEmpty(serviceRegistrations)) {
+			_serviceRegistrations.put(
+				company.getCompanyId(), serviceRegistrations);
 		}
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) {
-		Map<Long, ServiceRegistration<?>> ddmStructureServiceRegistrationMap =
-			_serviceRegistrationsMaps.remove(company.getCompanyId());
+		Map<Long, ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrations.remove(company.getCompanyId());
 
 		for (Map.Entry<Long, ServiceRegistration<?>> entry :
-				ddmStructureServiceRegistrationMap.entrySet()) {
+				serviceRegistrations.entrySet()) {
 
 			ServiceRegistration<?> serviceRegistration = entry.getValue();
 
@@ -161,7 +160,7 @@ public class DDMStructureModelListener
 	private Portal _portal;
 
 	private final Map<Long, Map<Long, ServiceRegistration<?>>>
-		_serviceRegistrationsMaps = Collections.synchronizedMap(
+		_serviceRegistrations = Collections.synchronizedMap(
 			new LinkedHashMap<>());
 
 }
