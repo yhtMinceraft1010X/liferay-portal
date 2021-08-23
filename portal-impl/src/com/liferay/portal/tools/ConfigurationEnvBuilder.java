@@ -92,9 +92,9 @@ public class ConfigurationEnvBuilder {
 		String[] configurationJavaFileNames = StringUtil.split(
 			arguments.get("configuration.java.files"));
 
-		Path outputFile = Paths.get(arguments.get("output.file"));
+		Path path = Paths.get(arguments.get("output.file"));
 
-		String content = new String(Files.readAllBytes(outputFile));
+		String content = new String(Files.readAllBytes(path));
 
 		int index = content.indexOf("##\n## OSGi Configuration Overrides");
 
