@@ -19,9 +19,9 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-EditObjectDefinitionDisplayContext editObjectDefinitionDisplayContext = (EditObjectDefinitionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = (ObjectDefinitionsDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-ObjectDefinition objectDefinition = editObjectDefinitionDisplayContext.getObjectDefinition();
+ObjectDefinition objectDefinition = objectDefinitionsDetailsDisplayContext.getObjectDefinition();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -87,8 +87,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
 
 							<%
-							for (ObjectScopeProvider objectScopeProvider : editObjectDefinitionDisplayContext.getObjectScopeProviders()) {
-								String scope = editObjectDefinitionDisplayContext.getScope();
+							for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
+								String scope = objectDefinitionsDetailsDisplayContext.getScope();
 							%>
 
 								<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= scope.equals(objectScopeProvider.getKey()) %>" value="<%= objectScopeProvider.getKey() %>" />
@@ -102,7 +102,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:select name="panelCategoryKey" showEmptyOption="<%= true %>">
-							<% for(KeyValuePair keyValuePair : editObjectDefinitionDisplayContext.getPanelCategories()) {
+							<% for(KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getPanelCategories()) {
 									String panelCategoryKey = objectDefinition.getPanelCategoryKey();
 							%>
 

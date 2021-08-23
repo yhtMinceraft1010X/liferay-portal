@@ -33,9 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class EditObjectDefinitionDisplayContext {
+public class ObjectDefinitionsDetailsDisplayContext {
 
-	public EditObjectDefinitionDisplayContext(
+	public ObjectDefinitionsDetailsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		PanelCategoryRegistry panelCategoryRegistry) {

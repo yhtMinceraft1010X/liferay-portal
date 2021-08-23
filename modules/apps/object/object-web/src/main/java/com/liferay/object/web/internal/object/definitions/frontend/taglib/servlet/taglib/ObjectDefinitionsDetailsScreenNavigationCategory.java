@@ -19,7 +19,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
-import com.liferay.object.web.internal.object.definitions.display.context.EditObjectDefinitionDisplayContext;
+import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsDetailsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -77,7 +77,7 @@ public class ObjectDefinitionsDetailsScreenNavigationCategory
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new EditObjectDefinitionDisplayContext(
+			new ObjectDefinitionsDetailsDisplayContext(
 				httpServletRequest, _objectScopeProviderRegistry,
 				_panelCategoryRegistry));
 
