@@ -3057,7 +3057,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			FileUtil.join(
 				compileClasspathConfiguration, sourceSet.getCompileClasspath(),
 				portalTestConfiguration));
-
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
 				portalTestSnapshotConfiguration, compileClasspathConfiguration,
@@ -3083,7 +3082,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			FileUtil.join(
 				portalConfiguration, compileOnlyConfiguration,
 				sourceSet.getCompileClasspath(), portalTestConfiguration));
-
 		sourceSet.setRuntimeClasspath(
 			FileUtil.join(
 				portalConfiguration, compileOnlyConfiguration,
