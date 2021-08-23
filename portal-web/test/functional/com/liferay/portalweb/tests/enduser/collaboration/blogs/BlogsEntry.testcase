@@ -390,6 +390,8 @@ definition {
 
 		Refresh();
 
+		Navigator.gotoPage(pageName = "Blogs Page");
+
 		BlogsEntry.addWithTrackbackURLPG(
 			entryContent = "Blogs Entry1 Content",
 			entryContent2 = "Blogs Entry2 Content",
