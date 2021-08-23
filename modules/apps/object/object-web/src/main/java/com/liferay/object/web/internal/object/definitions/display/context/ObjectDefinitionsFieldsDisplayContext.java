@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  * @author Gabriel Albuquerque
  */
-public class ViewObjectFieldsDisplayContext {
+public class ObjectDefinitionsFieldsDisplayContext {
 
-	public ViewObjectFieldsDisplayContext(
+	public ObjectDefinitionsFieldsDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);

@@ -21,7 +21,7 @@ String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderRe
 
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 
-ViewObjectFieldsDisplayContext viewObjectFieldsDisplayContext = (ViewObjectFieldsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (ObjectDefinitionsFieldsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -30,9 +30,9 @@ renderResponse.setTitle(objectDefinition.getShortName());
 %>
 
 <clay:headless-data-set-display
-	apiURL="<%= viewObjectFieldsDisplayContext.getAPIURL() %>"
-	clayDataSetActionDropdownItems="<%= viewObjectFieldsDisplayContext.getClayDataSetActionDropdownItems() %>"
-	creationMenu="<%= viewObjectFieldsDisplayContext.getCreationMenu() %>"
+	apiURL="<%= objectDefinitionsFieldsDisplayContext.getAPIURL() %>"
+	clayDataSetActionDropdownItems="<%= objectDefinitionsFieldsDisplayContext.getClayDataSetActionDropdownItems() %>"
+	creationMenu="<%= objectDefinitionsFieldsDisplayContext.getCreationMenu() %>"
 	formId="fm"
 	id="<%= ObjectDefinitionsClayDataSetDisplayNames.OBJECT_FIELDS %>"
 	itemsPerPage="<%= 20 %>"
@@ -47,7 +47,7 @@ renderResponse.setTitle(objectDefinition.getShortName());
 		module="js/components/ModalAddObjectField"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", viewObjectFieldsDisplayContext.getAPIURL()
+				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
 			).put(
 				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
