@@ -61,25 +61,26 @@ public class ObjectDefinitionsDetailsDisplayContext {
 		for (String panelCategoryKey :
 				objectScopeProvider.getRootPanelCategoryKeys()) {
 
-			PanelCategory rootPanelCategory =
+			PanelCategory panelCategory =
 				_panelCategoryRegistry.getPanelCategory(panelCategoryKey);
 
 			List<PanelCategory> childPanelCategories =
 				_panelCategoryRegistry.getChildPanelCategories(
 					panelCategoryKey);
 
-			for (PanelCategory panelCategory : childPanelCategories) {
+			for (PanelCategory childPanelCategory : childPanelCategories) {
 				StringBundler sb = new StringBundler(3);
 
 				sb.append(
-					rootPanelCategory.getLabel(
-						_objectRequestHelper.getLocale()));
+					panelCategory.getLabel(_objectRequestHelper.getLocale()));
 				sb.append(" >> ");
 				sb.append(
-					panelCategory.getLabel(_objectRequestHelper.getLocale()));
+					childPanelCategory.getLabel(
+						_objectRequestHelper.getLocale()));
 
 				keyValuePairs.add(
-					new KeyValuePair(panelCategory.getKey(), sb.toString()));
+					new KeyValuePair(
+						childPanelCategory.getKey(), sb.toString()));
 			}
 		}
 
