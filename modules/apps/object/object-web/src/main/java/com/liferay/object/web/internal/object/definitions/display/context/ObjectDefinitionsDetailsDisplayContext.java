@@ -46,18 +46,6 @@ public class ObjectDefinitionsDetailsDisplayContext {
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
-	public ObjectDefinition getObjectDefinition() {
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		return (ObjectDefinition)httpServletRequest.getAttribute(
-			ObjectWebKeys.OBJECT_DEFINITION);
-	}
-
-	public List<ObjectScopeProvider> getObjectScopeProviders() {
-		return _objectScopeProviderRegistry.getObjectScopeProviders();
-	}
-
 	public List<KeyValuePair> getKeyValuePairs() {
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
@@ -96,6 +84,18 @@ public class ObjectDefinitionsDetailsDisplayContext {
 		}
 
 		return keyValuePairs;
+	}
+
+	public ObjectDefinition getObjectDefinition() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return (ObjectDefinition)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
+	public List<ObjectScopeProvider> getObjectScopeProviders() {
+		return _objectScopeProviderRegistry.getObjectScopeProviders();
 	}
 
 	public String getScope() {
