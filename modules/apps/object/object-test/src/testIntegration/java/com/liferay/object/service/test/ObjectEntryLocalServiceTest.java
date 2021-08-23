@@ -166,63 +166,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-
-		// Scope by company
-
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		long depotEntryGroupId = depotEntry.getGroupId();
-
-		long siteGroupId = TestPropsValues.getGroupId();
-
-		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_COMPANY, true);
-		_testAddObjectEntry(
-			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
-		_testAddObjectEntry(
-			siteGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
-
-		// Scope by depot
-
-		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_DEPOT, false);
-		_testAddObjectEntry(
-			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, true);
-		_testAddObjectEntry(
-			siteGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, false);
-
-		// Scope by site
-
-		_testAddObjectEntry(0, ObjectDefinitionConstants.SCOPE_SITE, false);
-		_testAddObjectEntry(
-			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_SITE, false);
-		_testAddObjectEntry(
-			siteGroupId, ObjectDefinitionConstants.SCOPE_SITE, true);
-
-		// No value was provided for required object field "emailAddress"
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "Judas"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
-			Assert.assertEquals(
-				"No value was provided for required object field " +
-					"\"emailAddress\"",
-				objectEntryValuesException.getMessage());
-		}
-
-		// Count
-
 		_assertCount(0);
 
 		_addObjectEntry(
@@ -251,6 +194,21 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(3);
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Judas"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"emailAddress\"",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test
@@ -629,6 +587,44 @@ public class ObjectEntryLocalServiceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
+	}
+
+	@Test
+	public void testScope() throws Exception {
+
+		// Scope by company
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		long depotEntryGroupId = depotEntry.getGroupId();
+
+		long siteGroupId = TestPropsValues.getGroupId();
+
+		_testScope(0, ObjectDefinitionConstants.SCOPE_COMPANY, true);
+		_testScope(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+		_testScope(siteGroupId, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+		// Scope by depot
+
+		_testScope(0, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+		_testScope(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, true);
+		_testScope(siteGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+
+		// Scope by site
+
+		_testScope(0, ObjectDefinitionConstants.SCOPE_SITE, false);
+		_testScope(
+			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_SITE, false);
+		_testScope(siteGroupId, ObjectDefinitionConstants.SCOPE_SITE, true);
 	}
 
 	@Test
@@ -1046,8 +1042,7 @@ public class ObjectEntryLocalServiceTest {
 		return values;
 	}
 
-	private void _testAddObjectEntry(
-			long groupId, String scope, boolean expectSuccess)
+	private void _testScope(long groupId, String scope, boolean expectSuccess)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
