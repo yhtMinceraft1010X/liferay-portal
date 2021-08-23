@@ -316,8 +316,8 @@ definition {
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_5.txt",
-			dmDocumentTitle = "Document_5.txt");
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt");
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
@@ -332,14 +332,14 @@ definition {
 		Notifications.gotoNotifications();
 
 		Notifications.viewExpiredContent(
-			contentBody = "Document_5.txt",
+			contentBody = "Document_1.txt",
 			user = "Test Test");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Expired",
-			dmDocumentTitle = "Document_5.txt");
+			dmDocumentTitle = "Document_1.txt");
 	}
 
 	@description = "This test ensures that a user who has content review permissions can see an expired document."
