@@ -137,18 +137,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 </liferay-frontend:edit-form>
 
 <script>
-	function <portlet:namespace />submitObjectDefinition(draft) {
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
-
-		if (!draft) {
-			cmd.setAttribute('value', '<%= Constants.PUBLISH %>');
-		}
-
-		submitForm(form);
-	}
-
 	function <portlet:namespace />selectScope() {
 		const scope = document.getElementById('<portlet:namespace />scope');
 
@@ -162,5 +150,17 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		else {
 			window.location.href = url;
 		}
+	}
+
+	function <portlet:namespace />submitObjectDefinition(draft) {
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+		if (!draft) {
+			cmd.setAttribute('value', '<%= Constants.PUBLISH %>');
+		}
+
+		submitForm(form);
 	}
 </script>
