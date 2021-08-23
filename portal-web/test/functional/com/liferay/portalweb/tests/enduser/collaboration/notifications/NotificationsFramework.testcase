@@ -230,7 +230,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoPage(pageName = "Site Page");
 
 		Blogs.subscribePG();
 
@@ -239,7 +239,7 @@ definition {
 			userLoginFullName = "Test Test");
 
 		BlogsNavigator.openToAddEntry(
-			layoutName = "Blogs Page",
+			layoutName = "Site Page",
 			siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
