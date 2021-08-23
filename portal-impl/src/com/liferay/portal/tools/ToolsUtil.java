@@ -83,7 +83,7 @@ public class ToolsUtil {
 	public static String encodeEnvironmentProperty(String property) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(_ENV_OVERRIDE_PREFIX);
+		sb.append("LIFERAY_");
 
 		for (char c : property.toCharArray()) {
 			if (Character.isLowerCase(c)) {
@@ -777,8 +777,6 @@ public class ToolsUtil {
 
 		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
-
-	private static final String _ENV_OVERRIDE_PREFIX = "LIFERAY_";
 
 	private static final Map<Character, String> _charPoolChars =
 		new HashMap<Character, String>() {
