@@ -60,15 +60,15 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.UPDATE)) {
-			_updateObjectDefinition(actionRequest, actionResponse);
-		}
-		else if (cmd.equals(Constants.PUBLISH)) {
+		if (cmd.equals(Constants.PUBLISH)) {
 			long objectDefinitionId = ParamUtil.getLong(
 				actionRequest, "objectDefinitionId");
 
 			_objectDefinitionService.publishCustomObjectDefinition(
 				objectDefinitionId);
+		}
+		else if (cmd.equals(Constants.UPDATE)) {
+			_updateObjectDefinition(actionRequest, actionResponse);
 		}
 	}
 
@@ -79,13 +79,13 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long objectDefinitionId = ParamUtil.getLong(
 			actionRequest, "objectDefinitionId");
 
+		Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "label");
+		String name = ParamUtil.getString(actionRequest, "shortName");
 		String panelCategoryOrder = ParamUtil.getString(
 			actionRequest, "panelCategoryOrder");
 		String panelCategoryKey = ParamUtil.getString(
 			actionRequest, "panelCategoryKey");
-		Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "label");
-		String name = ParamUtil.getString(actionRequest, "shortName");
 		Map<Locale, String> pluralLabelMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "pluralLabel");
 		String scope = ParamUtil.getString(actionRequest, "scope");
