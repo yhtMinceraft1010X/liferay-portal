@@ -22,9 +22,6 @@ import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -37,6 +34,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,16 +93,15 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				objectDefinitionId, labelMap, name, panelCategoryOrder,
 				panelCategoryKey, pluralLabelMap, scope);
 		}
-		catch (PortalException portalException) {
-			if (portalException instanceof DuplicateObjectDefinitionException ||
-				portalException instanceof ObjectDefinitionLabelException ||
-				portalException instanceof ObjectDefinitionNameException ||
-				portalException instanceof
-					ObjectDefinitionPluralLabelException ||
-				portalException instanceof ObjectDefinitionScopeException ||
-				portalException instanceof ObjectDefinitionStatusException) {
+		catch (Exception exception) {
+			if (exception instanceof DuplicateObjectDefinitionException ||
+				exception instanceof ObjectDefinitionLabelException ||
+				exception instanceof ObjectDefinitionNameException ||
+				exception instanceof ObjectDefinitionPluralLabelException ||
+				exception instanceof ObjectDefinitionScopeException ||
+				exception instanceof ObjectDefinitionStatusException) {
 
-				SessionErrors.add(actionRequest, portalException.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -112,15 +109,10 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				_log.error(portalException);
-
-				throw new PortalException(portalException);
+				throw new PortletException(exception);
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditObjectDefinitionMVCActionCommand.class);
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
