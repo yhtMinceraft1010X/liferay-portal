@@ -102,7 +102,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:select name="panelCategoryKey" showEmptyOption="<%= true %>">
-							<% for(KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getPanelCategories()) {
+							<% for(KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
 									String panelCategoryKey = objectDefinition.getPanelCategoryKey();
 							%>
 

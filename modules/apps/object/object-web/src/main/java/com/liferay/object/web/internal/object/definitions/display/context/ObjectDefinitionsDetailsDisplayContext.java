@@ -58,8 +58,8 @@ public class ObjectDefinitionsDetailsDisplayContext {
 		return _objectScopeProviderRegistry.getObjectScopeProviders();
 	}
 
-	public List<KeyValuePair> getPanelCategories() {
-		List<KeyValuePair> panelCategories = new ArrayList<>();
+	public List<KeyValuePair> getKeyValuePairs() {
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
@@ -90,12 +90,12 @@ public class ObjectDefinitionsDetailsDisplayContext {
 				sb.append(
 					panelCategory.getLabel(_objectRequestHelper.getLocale()));
 
-				panelCategories.add(
+				keyValuePairs.add(
 					new KeyValuePair(panelCategory.getKey(), sb.toString()));
 			}
 		}
 
-		return panelCategories;
+		return keyValuePairs;
 	}
 
 	public String getScope() {
