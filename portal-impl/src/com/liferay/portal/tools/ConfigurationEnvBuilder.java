@@ -102,8 +102,7 @@ public class ConfigurationEnvBuilder {
 
 		content = content.concat(buildContent(configurationJavaFileNames));
 
-		Files.write(
-			Paths.get(arguments.get("output.file")), content.getBytes());
+		Files.write(path, content.getBytes());
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
