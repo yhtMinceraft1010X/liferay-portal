@@ -776,6 +776,9 @@ public class ToolsUtil {
 		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
 
+	/**
+	 * @see com.liferay.portal.configuration.ClassLoaderAggregatePropertiesUtil#_getCharPoolChars
+	 */
 	private static final Map<Character, String> _charPoolChars =
 		new HashMap<Character, String>() {
 			{
