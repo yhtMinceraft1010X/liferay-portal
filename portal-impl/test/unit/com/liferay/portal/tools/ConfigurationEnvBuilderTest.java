@@ -142,7 +142,7 @@ public class ConfigurationEnvBuilderTest {
 
 		for (String line : lines) {
 			if (skip) {
-				if (line.equals("## Configuration Overrides")) {
+				if (line.equals("## OSGi Configuration Overrides")) {
 					skip = false;
 
 					result.add(line);

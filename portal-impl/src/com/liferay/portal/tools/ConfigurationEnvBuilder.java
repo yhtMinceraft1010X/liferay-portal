@@ -40,8 +40,7 @@ public class ConfigurationEnvBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("##\n## Configuration Overrides\n## The following can be ");
-		sb.append("used to override OSGi configurations.\n##\n");
+		sb.append("##\n## OSGi Configuration Overrides\n##\n");
 
 		Matcher matcher = _pattern.matcher("");
 
@@ -97,7 +96,7 @@ public class ConfigurationEnvBuilder {
 
 		String content = new String(Files.readAllBytes(outputFile));
 
-		int index = content.indexOf("##\n## Configuration Overrides");
+		int index = content.indexOf("##\n## OSGi Configuration Overrides");
 
 		content = content.substring(0, index);
 
