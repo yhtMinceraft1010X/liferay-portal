@@ -91,9 +91,7 @@ public class ToolsUtil {
 			}
 			else {
 				sb.append(CharPool.UNDERLINE);
-
 				sb.append(_charPoolChars.get(c));
-
 				sb.append(CharPool.UNDERLINE);
 			}
 		}
