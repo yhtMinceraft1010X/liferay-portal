@@ -155,7 +155,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Throwable throwable) {
-			_log.error(throwable);
+			throw new Exception(throwable);
 		}
 	}
 
