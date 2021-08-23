@@ -93,6 +93,10 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="G_ODI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="objectDefinitionId" />
+		</finder>
 		<finder name="G_C_ERC" return-type="ObjectEntry">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />

@@ -162,14 +162,14 @@ public class ObjectEntryServiceTest {
 
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			ObjectEntryLocalServiceUtil.searchObjectEntries(
-				_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+				0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(2, baseModelSearchResult.getLength());
 
 		_setUser(_defaultUser);
 
 		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+			0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
 

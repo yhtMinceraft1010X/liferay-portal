@@ -263,17 +263,16 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public List<ObjectEntry> getObjectEntries(
-			long objectDefinitionId, int start, int end)
+			long groupId, long objectDefinitionId, int start, int end)
 		throws PortalException {
 
-		return objectEntryPersistence.findByObjectDefinitionId(
-			objectDefinitionId, start, end);
+		return objectEntryPersistence.findByG_ODI(
+			groupId, objectDefinitionId, start, end);
 	}
 
 	@Override
-	public int getObjectEntriesCount(long objectDefinitionId) {
-		return objectEntryPersistence.countByObjectDefinitionId(
-			objectDefinitionId);
+	public int getObjectEntriesCount(long groupId, long objectDefinitionId) {
+		return objectEntryPersistence.countByG_ODI(groupId, objectDefinitionId);
 	}
 
 	@Override
@@ -405,11 +404,16 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<ObjectEntry> searchObjectEntries(
-			long objectDefinitionId, String keywords, int cur, int delta)
+			long groupId, long objectDefinitionId, String keywords, int cur,
+			int delta)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
@@ -432,6 +436,14 @@ public class ObjectEntryLocalServiceImpl
 					"objectDefinitionId",
 					objectDefinition.getObjectDefinitionId());
 				searchContext.setCompanyId(objectDefinition.getCompanyId());
+
+				if (objectScopeProvider.isGroupAware()) {
+					searchContext.setGroupIds(new long[] {groupId});
+				}
+				else {
+					searchContext.setGroupIds(new long[] {0});
+				}
+
 				searchContext.setKeywords(keywords);
 			}
 		);

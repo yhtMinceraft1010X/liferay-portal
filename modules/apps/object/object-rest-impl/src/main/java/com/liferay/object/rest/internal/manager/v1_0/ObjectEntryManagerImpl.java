@@ -148,6 +148,9 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				if (objectScopeProvider.isGroupAware()) {
 					searchContext.setGroupIds(new long[] {groupId});
 				}
+				else {
+					searchContext.setGroupIds(new long[] {0});
+				}
 			},
 			sorts,
 			document -> getObjectEntry(

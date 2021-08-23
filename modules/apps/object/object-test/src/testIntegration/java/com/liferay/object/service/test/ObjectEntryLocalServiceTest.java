@@ -353,7 +353,7 @@ public class ObjectEntryLocalServiceTest {
 	public void testGetObjectEntries() throws Exception {
 		List<ObjectEntry> objectEntries =
 			ObjectEntryLocalServiceUtil.getObjectEntries(
-				_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
@@ -368,7 +368,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		objectEntries = ObjectEntryLocalServiceUtil.getObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+			0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
@@ -390,7 +390,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		objectEntries = ObjectEntryLocalServiceUtil.getObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+			0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
@@ -417,7 +417,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		objectEntries = ObjectEntryLocalServiceUtil.getObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+			0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 3, objectEntries.size());
@@ -443,7 +443,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		objectEntries = ObjectEntryLocalServiceUtil.getObjectEntries(
-			_irrelevantObjectDefinition.getObjectDefinitionId(),
+			0, _irrelevantObjectDefinition.getObjectDefinitionId(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
@@ -634,7 +634,7 @@ public class ObjectEntryLocalServiceTest {
 
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			ObjectEntryLocalServiceUtil.searchObjectEntries(
-				_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+				0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
 
@@ -648,7 +648,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+			0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 
@@ -672,7 +672,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+			0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(2, baseModelSearchResult.getLength());
 
@@ -702,7 +702,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
-			_objectDefinition.getObjectDefinitionId(), null, 0, 20);
+			0, _objectDefinition.getObjectDefinitionId(), null, 0, 20);
 
 		Assert.assertEquals(3, baseModelSearchResult.getLength());
 
@@ -747,7 +747,8 @@ public class ObjectEntryLocalServiceTest {
 		// Irrelevant object definition
 
 		baseModelSearchResult = ObjectEntryLocalServiceUtil.searchObjectEntries(
-			_irrelevantObjectDefinition.getObjectDefinitionId(), null, 0, 20);
+			0, _irrelevantObjectDefinition.getObjectDefinitionId(), null, 0,
+			20);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
 	}
@@ -959,14 +960,14 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			count,
 			ObjectEntryLocalServiceUtil.getObjectEntriesCount(
-				_objectDefinition.getObjectDefinitionId()));
+				0, _objectDefinition.getObjectDefinitionId()));
 		Assert.assertEquals(count, _count());
 	}
 
 	private void _assertKeywords(String keywords, int count) throws Exception {
 		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
 			ObjectEntryLocalServiceUtil.searchObjectEntries(
-				_objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
+				0, _objectDefinition.getObjectDefinitionId(), keywords, 0, 20);
 
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
 	}
@@ -1058,6 +1059,17 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
+		Assert.assertEquals(
+			0,
+			ObjectEntryLocalServiceUtil.getObjectEntriesCount(
+				groupId, objectDefinition.getObjectDefinitionId()));
+
+		BaseModelSearchResult<ObjectEntry> baseModelSearchResult =
+			ObjectEntryLocalServiceUtil.searchObjectEntries(
+				groupId, objectDefinition.getObjectDefinitionId(), null, 0, 20);
+
+		Assert.assertEquals(0, baseModelSearchResult.getLength());
+
 		try {
 			ObjectEntryLocalServiceUtil.addObjectEntry(
 				TestPropsValues.getUserId(), groupId,
@@ -1075,6 +1087,20 @@ public class ObjectEntryLocalServiceTest {
 					"Group ID ", groupId, " is not valid for scope \"", scope,
 					"\""),
 				objectDefinitionScopeException.getMessage());
+		}
+
+		if (expectSuccess) {
+			Assert.assertEquals(
+				1,
+				ObjectEntryLocalServiceUtil.getObjectEntriesCount(
+					groupId, objectDefinition.getObjectDefinitionId()));
+
+			baseModelSearchResult =
+				ObjectEntryLocalServiceUtil.searchObjectEntries(
+					groupId, objectDefinition.getObjectDefinitionId(), null, 0,
+					20);
+
+			Assert.assertEquals(1, baseModelSearchResult.getLength());
 		}
 
 		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
