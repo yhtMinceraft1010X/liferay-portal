@@ -63,9 +63,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" />
+
 						<aui:input disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
+
 						<aui:input name="label" />
+
 						<aui:input name="pluralLabel" />
+
 						<aui:input cssClass="disabled" label="object-definition-table-name" name="DBTableName" readonly="true" type="text" />
 					</clay:col>
 				</clay:row>
@@ -88,11 +92,14 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 							<%
 							for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
-								String scope = objectDefinitionsDetailsDisplayContext.getScope();
 							%>
 
-								<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= scope.equals(objectScopeProvider.getKey()) %>" value="<%= objectScopeProvider.getKey() %>" />
-							<%} %>
+								<aui:option label="<%= objectScopeProvider.getLabel(locale) %>" selected="<%= Objects.equals(objectScopeProvider.getKey(), objectDefinitionsDetailsDisplayContext.getScope()) %>" value="<%= objectScopeProvider.getKey() %>" />
+
+							<%
+							}
+							%>
+
 						</aui:select>
 					</clay:col>
 				</clay:row>
@@ -102,12 +109,17 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 						md="11"
 					>
 						<aui:select name="panelCategoryKey" showEmptyOption="<%= true %>">
-							<% for(KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
-									String panelCategoryKey = objectDefinition.getPanelCategoryKey();
+
+							<%
+							for (KeyValuePair keyValuePair : objectDefinitionsDetailsDisplayContext.getKeyValuePairs()) {
 							%>
 
-								<aui:option label="<%= keyValuePair.getValue() %>" selected="<%= panelCategoryKey.equals(keyValuePair.getKey()) %>" value="<%= keyValuePair.getKey() %>" />
-							<%} %>
+								<aui:option label="<%= keyValuePair.getValue() %>" selected="<%= Objects.equals(keyValuePair.getKey(), objectDefinition.getPanelCategoryKey()) %>" value="<%= keyValuePair.getKey() %>" />
+
+							<%
+							}
+							%>
+
 						</aui:select>
 					</clay:col>
 				</clay:row>
