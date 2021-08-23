@@ -75,11 +75,11 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(predefinedValueDDMFormField);
 		Assert.assertNotNull(predefinedValueDDMFormField.getLabel());
 		Assert.assertNotNull(predefinedValueDDMFormField.getPredefinedValue());
-		Assert.assertEquals("select", predefinedValueDDMFormField.getType());
-		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
 		Assert.assertEquals(
 			"false",
 			predefinedValueDDMFormField.getProperty("showEmptyOption"));
+		Assert.assertEquals("select", predefinedValueDDMFormField.getType());
+		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
 
 		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
 			"requiredErrorMessage");
@@ -96,17 +96,17 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 		DDMFormField requiredDDMFormField = ddmFormFieldsMap.get("required");
 
 		Assert.assertNotNull(requiredDDMFormField);
-		Assert.assertNotNull(requiredDDMFormField.getProperty("tooltip"));
 		Assert.assertNotNull(
 			requiredDDMFormField.getProperty("showAsSwitcher"));
+		Assert.assertNotNull(requiredDDMFormField.getProperty("tooltip"));
 
 		DDMFormField showAsSwitcherDDMFormField = ddmFormFieldsMap.get(
 			"showAsSwitcher");
 
 		Assert.assertNotNull(showAsSwitcherDDMFormField);
-		Assert.assertEquals("checkbox", showAsSwitcherDDMFormField.getType());
 		Assert.assertEquals(
 			"boolean", showAsSwitcherDDMFormField.getDataType());
+		Assert.assertEquals("checkbox", showAsSwitcherDDMFormField.getType());
 		Assert.assertEquals(
 			"true", showAsSwitcherDDMFormField.getProperty("showAsSwitcher"));
 
