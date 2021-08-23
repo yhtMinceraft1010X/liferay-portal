@@ -68,10 +68,13 @@ definition {
 			groupName = "Site Name",
 			workflowAction = "PUBLISH");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "digital-transformation-or-digital-experience-?",
-			layoutName = "blogs-page",
-			siteURLKey = "site-name");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in...",
+			entryTitle = "Digital Transformation or Digital Experience?");
 
 		BlogsEntry.viewAutoTag(
 			entryTitle = "Digital Transformation or Digital Experience?",
