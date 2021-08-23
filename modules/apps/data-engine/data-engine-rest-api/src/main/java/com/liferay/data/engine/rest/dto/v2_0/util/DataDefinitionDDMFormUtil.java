@@ -104,7 +104,7 @@ public class DataDefinitionDDMFormUtil {
 
 				for (Object curValue : values) {
 					try {
-						JSONObject jsonObject;
+						JSONObject jsonObject = null;
 
 						if (curValue instanceof Map) {
 							jsonObject = JSONFactoryUtil.createJSONObject(
