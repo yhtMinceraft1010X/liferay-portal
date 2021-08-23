@@ -322,10 +322,8 @@ public class JenkinsResultsParserUtil {
 		return jsonObject;
 	}
 
-	public static URL createURL(String urlString) throws Exception {
-		URL url = new URL(urlString);
-
-		return encode(url);
+	public static URL createURL(String url) throws Exception {
+		return encode(new URL(url));
 	}
 
 	public static String decode(String url)
@@ -561,11 +559,11 @@ public class JenkinsResultsParserUtil {
 			String jenkinsAdminUserName = buildProperties.getProperty(
 				"jenkins.admin.user.name");
 
-			String urlString = fixURL(
+			String url = fixURL(
 				getLocalURL("http://" + jenkinsMasterName + "/script"));
 
 			while (true) {
-				URL urlObject = new URL(urlString);
+				URL urlObject = new URL(url);
 
 				HttpURLConnection httpURLConnection =
 					(HttpURLConnection)urlObject.openConnection();
