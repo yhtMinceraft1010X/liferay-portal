@@ -39,14 +39,14 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
-
 		<liferay-ui:error exception="<%= DuplicateObjectDefinitionException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionNameException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionScopeException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionStatusException.class %>" />
+
+		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
 
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "information") %>
