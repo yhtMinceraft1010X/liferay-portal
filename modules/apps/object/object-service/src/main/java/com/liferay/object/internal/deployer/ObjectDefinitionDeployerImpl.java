@@ -25,6 +25,7 @@ import com.liferay.object.internal.security.permission.resource.ObjectEntryModel
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -63,6 +64,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		ResourceActions resourceActions,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor) {
@@ -73,6 +75,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 		_resourceActions = resourceActions;
@@ -107,7 +110,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
-					objectDefinition, _objectEntryLocalService),
+					objectDefinition, _objectEntryLocalService,
+					_objectScopeProviderRegistry),
 				null),
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
@@ -200,6 +204,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 	private final ResourceActions _resourceActions;

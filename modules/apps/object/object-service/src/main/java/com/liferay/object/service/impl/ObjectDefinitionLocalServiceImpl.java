@@ -378,8 +378,9 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectDefinitionDeployerImpl(
 				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
 				_modelSearchRegistrarHelper, _objectEntryLocalService,
-				_objectFieldLocalService, _persistedModelLocalServiceRegistry,
-				_resourceActions, _workflowStatusModelPreFilterContributor));
+				_objectFieldLocalService, _objectScopeProviderRegistry,
+				_persistedModelLocalServiceRegistry, _resourceActions,
+				_workflowStatusModelPreFilterContributor));
 
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
 			_bundleContext, ObjectDefinitionDeployer.class,

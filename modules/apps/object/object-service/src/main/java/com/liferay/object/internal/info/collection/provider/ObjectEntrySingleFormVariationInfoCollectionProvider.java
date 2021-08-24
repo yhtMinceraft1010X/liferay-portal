@@ -20,9 +20,13 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 import java.util.Locale;
 
@@ -34,10 +38,12 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 	public ObjectEntrySingleFormVariationInfoCollectionProvider(
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 	}
 
 	@Override
@@ -49,11 +55,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		try {
 			return InfoPage.of(
 				_objectEntryLocalService.getObjectEntries(
-					0, _objectDefinition.getObjectDefinitionId(),
+					_getGroupId(), _objectDefinition.getObjectDefinitionId(),
 					pagination.getStart(), pagination.getEnd()),
 				collectionQuery.getPagination(),
 				_objectEntryLocalService.getObjectEntriesCount(
-					0, _objectDefinition.getObjectDefinitionId()));
+					_getGroupId(), _objectDefinition.getObjectDefinitionId()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -80,7 +86,23 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return _objectDefinition.getName();
 	}
 
+	private long _getGroupId() throws PortalException {
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		if (objectScopeProvider.isGroupAware()) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			return objectScopeProvider.getGroupId(serviceContext.getRequest());
+		}
+
+		return 0;
+	}
+
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }
