@@ -586,37 +586,44 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewCustomFriendlyURL {
-		property test.name.skip.portal.instance = "KBDisplayWidget#CanViewCustomFriendlyURL";
+		var portalURL = PropsUtil.get("portal.url");
 
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBArticle.addCP(
-			kbArticleContent = "KB Article Content",
-			kbArticleFriendlyURL = "custom-friendly-url",
-			kbArticleTitle = "Article Title");
+		for (var num : list "1,2") {
+			JSONKnowledgeBase.addkBArticle(
+				groupName = "Guest",
+				kbArticleContent = "KB Article Content${num}",
+				kbArticleTitle = "KB Article Title${num}",
+				urlTitle = "custom-friendly-url${num}");
+		}
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "Article Title");
+		for (var num : list "1,2") {
+			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "custom-friendly-url");
+			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/custom-friendly-url${num}");
+		}
 	}
 
 	@priority = "4"
 	@refactordone
 	test CanViewDefaultFriendlyURL {
-		property test.name.skip.portal.instance = "KBDisplayWidget#CanViewDefaultFriendlyURL";
+		var portalURL = PropsUtil.get("portal.url");
 
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "KB Article Content",
-			kbArticleTitle = "KB Article Title");
+		for (var num : list "1,2") {
+			JSONKnowledgeBase.addkBArticle(
+				groupName = "Guest",
+				kbArticleContent = "KB Article Content${num}",
+				kbArticleTitle = "KB Article Title${num}");
+		}
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title");
+		for (var num : list "1,2") {
+			KBArticle.gotoViaKBDisplayPG(kbArticleTitle = "KB Article Title${num}");
 
-		KBArticle.viewKBDisplayPG(kbArticleFriendlyURL = "kb-article-title");
+			AssertLocation(value1 = "${portalURL}/web/guest/knowledge-base-display-page/-/knowledge_base/kb-article-title${num}");
+		}
 	}
 
 	@priority = "4"
