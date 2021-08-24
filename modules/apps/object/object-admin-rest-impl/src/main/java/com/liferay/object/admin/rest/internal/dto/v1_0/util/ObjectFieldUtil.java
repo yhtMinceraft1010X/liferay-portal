@@ -53,6 +53,8 @@ public class ObjectFieldUtil {
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);
 
+		serviceBuilderObjectField.setListTypeDefinitionId(
+			objectField.getListTypeDefinitionId());
 		serviceBuilderObjectField.setIndexed(
 			GetterUtil.getBoolean(objectField.getIndexed()));
 		serviceBuilderObjectField.setIndexedAsKeyword(
@@ -61,8 +63,6 @@ public class ObjectFieldUtil {
 			objectField.getIndexedLanguageId());
 		serviceBuilderObjectField.setLabelMap(
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
-		serviceBuilderObjectField.setListTypeDefinitionId(
-			objectField.getListTypeDefinitionId());
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));

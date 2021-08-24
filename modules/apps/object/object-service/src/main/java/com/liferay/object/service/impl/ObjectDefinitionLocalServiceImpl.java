@@ -589,13 +589,12 @@ public class ObjectDefinitionLocalServiceImpl
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(
-						userId, objectDefinitionId, objectField.getIndexed(),
+						userId, objectField.getListTypeDefinitionId(),
+						objectDefinitionId, objectField.getIndexed(),
 						objectField.getIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(),
-						objectField.getListTypeDefinitionId(),
-						objectField.getName(), objectField.isRequired(),
-						objectField.getType());
+						objectField.getLabelMap(), objectField.getName(),
+						objectField.isRequired(), objectField.getType());
 				}
 			}
 		}

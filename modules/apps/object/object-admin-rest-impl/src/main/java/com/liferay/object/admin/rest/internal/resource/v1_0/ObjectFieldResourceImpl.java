@@ -60,12 +60,13 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 
 		return ObjectFieldUtil.toObjectField(
 			_objectFieldLocalService.addCustomObjectField(
-				contextUser.getUserId(), objectDefinitionId,
-				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
+				contextUser.getUserId(), objectField.getListTypeDefinitionId(),
+				objectDefinitionId, objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				objectField.getListTypeDefinitionId(), objectField.getName(),
-				objectField.getRequired(), objectField.getType()));
+				objectField.getName(), objectField.getRequired(),
+				objectField.getType()));
 	}
 
 	@Override
@@ -75,13 +76,13 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 
 		return ObjectFieldUtil.toObjectField(
 			_objectFieldLocalService.updateCustomObjectField(
-				objectFieldId, objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				objectFieldId, objectField.getListTypeDefinitionId(),
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				com.liferay.object.util.LocalizedMapUtil.getLocalizedMap(
 					objectField.getName()),
-				objectField.getListTypeDefinitionId(), objectField.getName(),
-				objectField.getRequired(), objectField.getType()));
+				objectField.getName(), objectField.getRequired(),
+				objectField.getType()));
 	}
 
 	@Reference
