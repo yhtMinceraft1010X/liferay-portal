@@ -80,7 +80,7 @@ public class ObjectEntriesDetailsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectEntriesDetailsDisplayContext(
-				httpServletRequest, _ddmFormRenderer,
+				_ddmFormRenderer, httpServletRequest,
 				_objectFieldLocalService));
 
 		_jspRenderer.renderJSP(

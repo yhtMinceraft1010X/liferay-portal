@@ -89,9 +89,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				MVCRenderCommand.class, new EditObjectEntryMVCRenderCommand(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"mvc.command.name", "/object_entries/edit_object_entry"
-				).put(
 					"javax.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"mvc.command.name", "/object_entries/edit_object_entry"
 				).build()));
 	}
 

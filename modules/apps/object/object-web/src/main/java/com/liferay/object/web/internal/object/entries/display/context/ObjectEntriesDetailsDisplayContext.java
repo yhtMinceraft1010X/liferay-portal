@@ -41,7 +41,7 @@ import javax.servlet.jsp.PageContext;
 public class ObjectEntriesDetailsDisplayContext {
 
 	public ObjectEntriesDetailsDisplayContext(
-		HttpServletRequest httpServletRequest, DDMFormRenderer ddmFormRenderer,
+		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_ddmFormRenderer = ddmFormRenderer;
