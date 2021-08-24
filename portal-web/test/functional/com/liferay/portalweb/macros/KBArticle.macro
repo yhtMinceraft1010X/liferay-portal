@@ -1368,10 +1368,6 @@ definition {
 	}
 
 	macro viewKBDisplayPG {
-		if (isSet(kbArticleFriendlyURL)) {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/knowledge-base-display/-/knowledge_base/${kbArticleFriendlyURL}");
-		}
-
 		if ("${sourceURL}" == "true") {
 			AssertClick(
 				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
