@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -142,7 +141,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				{
 					setAddGroupPermissions(true);
 					setAddGuestPermissions(true);
-					setCompanyId(CompanyThreadLocal.getCompanyId());
+					setCompanyId(user.getCompanyId());
 					setScopeGroupId(groupId);
 					setTimeZone(user.getTimeZone());
 					setUserId(user.getUserId());
