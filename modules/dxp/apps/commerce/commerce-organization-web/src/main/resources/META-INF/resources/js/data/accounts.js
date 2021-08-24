@@ -12,8 +12,8 @@
 import {USERS_PROPERTY_NAME_IN_ACCOUNT} from '../utils/constants';
 import {fetchFromHeadless} from '../utils/fetch';
 
-const ACCOUNTS_ROOT_ENDPOINT = '/o/account-rest/v1.0/accounts';
 const ACCOUNTS_MOVING_ENDPOINT = `/o/account-rest/v1.0/organizations/move-accounts`;
+const ACCOUNTS_ROOT_ENDPOINT = '/o/account-rest/v1.0/accounts';
 
 export function getAccounts(query) {
 	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
