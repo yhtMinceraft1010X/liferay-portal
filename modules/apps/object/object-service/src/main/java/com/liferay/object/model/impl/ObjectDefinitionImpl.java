@@ -62,7 +62,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return PortalUtil.getJsSafePortletId(getRESTContextPath());
+		return "com_liferay_object_" + getShortName();
 	}
 
 	@Override

@@ -167,7 +167,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 					"javax.portlet.name",
 					StringBundler.concat(
 						"com_liferay_custom_elements_web_internal_portlet_",
-						"CustomElementsPortlet#",
+						"CustomElementsPortlet_",
 						customElementsPortletDescriptor.
 							getCustomElementsPortletDescriptorId())
 				).put(
