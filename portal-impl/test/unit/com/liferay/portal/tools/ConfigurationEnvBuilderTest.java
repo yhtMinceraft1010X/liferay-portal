@@ -157,8 +157,8 @@ public class ConfigurationEnvBuilderTest {
 	}
 
 	private static final String _MESSAGE =
-		"Run \"ant generate-configuration-override-properties\" to " +
-			"regenerate portal.properties.";
+		"Run \"ant update-portal-properties-with-osgi-configuration-" +
+			"overrides.\".";
 
 	private static final Pattern _pattern = Pattern.compile(
 		StringBundler.concat(
