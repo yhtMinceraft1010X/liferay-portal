@@ -227,6 +227,13 @@ public class CustomElementsSourceLocalServiceUtil {
 		return getService().fetchCustomElementsSource(customElementsSourceId);
 	}
 
+	public static CustomElementsSource fetchCustomElementsSource(
+		long companyId, String htmlElementName) {
+
+		return getService().fetchCustomElementsSource(
+			companyId, htmlElementName);
+	}
+
 	/**
 	 * Returns the custom elements source with the matching UUID and company.
 	 *

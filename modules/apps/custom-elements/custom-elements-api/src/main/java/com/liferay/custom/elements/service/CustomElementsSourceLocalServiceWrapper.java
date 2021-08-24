@@ -254,6 +254,14 @@ public class CustomElementsSourceLocalServiceWrapper
 			customElementsSourceId);
 	}
 
+	@Override
+	public com.liferay.custom.elements.model.CustomElementsSource
+		fetchCustomElementsSource(long companyId, String htmlElementName) {
+
+		return _customElementsSourceLocalService.fetchCustomElementsSource(
+			companyId, htmlElementName);
+	}
+
 	/**
 	 * Returns the custom elements source with the matching UUID and company.
 	 *

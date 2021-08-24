@@ -215,6 +215,10 @@ public interface CustomElementsSourceLocalService
 	public CustomElementsSource fetchCustomElementsSource(
 		long customElementsSourceId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CustomElementsSource fetchCustomElementsSource(
+		long companyId, String htmlElementName);
+
 	/**
 	 * Returns the custom elements source with the matching UUID and company.
 	 *

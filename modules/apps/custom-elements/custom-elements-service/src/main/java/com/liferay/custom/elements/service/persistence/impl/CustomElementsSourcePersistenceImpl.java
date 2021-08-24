@@ -14,7 +14,7 @@
 
 package com.liferay.custom.elements.service.persistence.impl;
 
-import com.liferay.custom.elements.exception.NoSuchSourceException;
+import com.liferay.custom.elements.exception.NoSuchCustomElementsSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.model.CustomElementsSourceTable;
 import com.liferay.custom.elements.model.impl.CustomElementsSourceImpl;
@@ -279,13 +279,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByUuid_First(
 			String uuid,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByUuid_First(
 			uuid, orderByComparator);
@@ -303,7 +303,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -334,13 +334,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByUuid_Last(
 			String uuid,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByUuid_Last(
 			uuid, orderByComparator);
@@ -358,7 +358,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -396,13 +396,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next custom elements source
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource[] findByUuid_PrevAndNext(
 			long customElementsSourceId, String uuid,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -837,13 +837,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -864,7 +864,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -897,13 +897,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -924,7 +924,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -964,13 +964,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next custom elements source
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource[] findByUuid_C_PrevAndNext(
 			long customElementsSourceId, String uuid, long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1396,13 +1396,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByCompanyId_First(
 			long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByCompanyId_First(
 			companyId, orderByComparator);
@@ -1420,7 +1420,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -1451,13 +1451,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching custom elements source
-	 * @throws NoSuchSourceException if a matching custom elements source could not be found
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
 	 */
 	@Override
 	public CustomElementsSource findByCompanyId_Last(
 			long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByCompanyId_Last(
 			companyId, orderByComparator);
@@ -1475,7 +1475,7 @@ public class CustomElementsSourcePersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchSourceException(sb.toString());
+		throw new NoSuchCustomElementsSourceException(sb.toString());
 	}
 
 	/**
@@ -1513,13 +1513,13 @@ public class CustomElementsSourcePersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next custom elements source
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource[] findByCompanyId_PrevAndNext(
 			long customElementsSourceId, long companyId,
 			OrderByComparator<CustomElementsSource> orderByComparator)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = findByPrimaryKey(
 			customElementsSourceId);
@@ -1729,6 +1729,262 @@ public class CustomElementsSourcePersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"customElementsSource.companyId = ?";
 
+	private FinderPath _finderPathFetchByC_H;
+	private FinderPath _finderPathCountByC_H;
+
+	/**
+	 * Returns the custom elements source where companyId = &#63; and htmlElementName = &#63; or throws a <code>NoSuchCustomElementsSourceException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source
+	 * @throws NoSuchCustomElementsSourceException if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource findByC_H(
+			long companyId, String htmlElementName)
+		throws NoSuchCustomElementsSourceException {
+
+		CustomElementsSource customElementsSource = fetchByC_H(
+			companyId, htmlElementName);
+
+		if (customElementsSource == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", htmlElementName=");
+			sb.append(htmlElementName);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCustomElementsSourceException(sb.toString());
+		}
+
+		return customElementsSource;
+	}
+
+	/**
+	 * Returns the custom elements source where companyId = &#63; and htmlElementName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param htmlElementName the html element name
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource fetchByC_H(
+		long companyId, String htmlElementName) {
+
+		return fetchByC_H(companyId, htmlElementName, true);
+	}
+
+	/**
+	 * Returns the custom elements source where companyId = &#63; and htmlElementName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param htmlElementName the html element name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching custom elements source, or <code>null</code> if a matching custom elements source could not be found
+	 */
+	@Override
+	public CustomElementsSource fetchByC_H(
+		long companyId, String htmlElementName, boolean useFinderCache) {
+
+		htmlElementName = Objects.toString(htmlElementName, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, htmlElementName};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByC_H, finderArgs);
+		}
+
+		if (result instanceof CustomElementsSource) {
+			CustomElementsSource customElementsSource =
+				(CustomElementsSource)result;
+
+			if ((companyId != customElementsSource.getCompanyId()) ||
+				!Objects.equals(
+					htmlElementName,
+					customElementsSource.getHTMLElementName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_CUSTOMELEMENTSSOURCE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_H_COMPANYID_2);
+
+			boolean bindHTMLElementName = false;
+
+			if (htmlElementName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_H_HTMLELEMENTNAME_3);
+			}
+			else {
+				bindHTMLElementName = true;
+
+				sb.append(_FINDER_COLUMN_C_H_HTMLELEMENTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindHTMLElementName) {
+					queryPos.add(htmlElementName);
+				}
+
+				List<CustomElementsSource> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_H, finderArgs, list);
+					}
+				}
+				else {
+					CustomElementsSource customElementsSource = list.get(0);
+
+					result = customElementsSource;
+
+					cacheResult(customElementsSource);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CustomElementsSource)result;
+		}
+	}
+
+	/**
+	 * Removes the custom elements source where companyId = &#63; and htmlElementName = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param htmlElementName the html element name
+	 * @return the custom elements source that was removed
+	 */
+	@Override
+	public CustomElementsSource removeByC_H(
+			long companyId, String htmlElementName)
+		throws NoSuchCustomElementsSourceException {
+
+		CustomElementsSource customElementsSource = findByC_H(
+			companyId, htmlElementName);
+
+		return remove(customElementsSource);
+	}
+
+	/**
+	 * Returns the number of custom elements sources where companyId = &#63; and htmlElementName = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param htmlElementName the html element name
+	 * @return the number of matching custom elements sources
+	 */
+	@Override
+	public int countByC_H(long companyId, String htmlElementName) {
+		htmlElementName = Objects.toString(htmlElementName, "");
+
+		FinderPath finderPath = _finderPathCountByC_H;
+
+		Object[] finderArgs = new Object[] {companyId, htmlElementName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_CUSTOMELEMENTSSOURCE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_H_COMPANYID_2);
+
+			boolean bindHTMLElementName = false;
+
+			if (htmlElementName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_H_HTMLELEMENTNAME_3);
+			}
+			else {
+				bindHTMLElementName = true;
+
+				sb.append(_FINDER_COLUMN_C_H_HTMLELEMENTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindHTMLElementName) {
+					queryPos.add(htmlElementName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_H_COMPANYID_2 =
+		"customElementsSource.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_H_HTMLELEMENTNAME_2 =
+		"customElementsSource.htmlElementName = ?";
+
+	private static final String _FINDER_COLUMN_C_H_HTMLELEMENTNAME_3 =
+		"(customElementsSource.htmlElementName IS NULL OR customElementsSource.htmlElementName = '')";
+
 	public CustomElementsSourcePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1754,6 +2010,14 @@ public class CustomElementsSourcePersistenceImpl
 		entityCache.putResult(
 			CustomElementsSourceImpl.class,
 			customElementsSource.getPrimaryKey(), customElementsSource);
+
+		finderCache.putResult(
+			_finderPathFetchByC_H,
+			new Object[] {
+				customElementsSource.getCompanyId(),
+				customElementsSource.getHTMLElementName()
+			},
+			customElementsSource);
 	}
 
 	/**
@@ -1822,6 +2086,19 @@ public class CustomElementsSourcePersistenceImpl
 		}
 	}
 
+	protected void cacheUniqueFindersCache(
+		CustomElementsSourceModelImpl customElementsSourceModelImpl) {
+
+		Object[] args = new Object[] {
+			customElementsSourceModelImpl.getCompanyId(),
+			customElementsSourceModelImpl.getHTMLElementName()
+		};
+
+		finderCache.putResult(_finderPathCountByC_H, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByC_H, args, customElementsSourceModelImpl);
+	}
+
 	/**
 	 * Creates a new custom elements source with the primary key. Does not add the custom elements source to the database.
 	 *
@@ -1850,11 +2127,11 @@ public class CustomElementsSourcePersistenceImpl
 	 *
 	 * @param customElementsSourceId the primary key of the custom elements source
 	 * @return the custom elements source that was removed
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource remove(long customElementsSourceId)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		return remove((Serializable)customElementsSourceId);
 	}
@@ -1864,11 +2141,11 @@ public class CustomElementsSourcePersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the custom elements source
 	 * @return the custom elements source that was removed
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource remove(Serializable primaryKey)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		Session session = null;
 
@@ -1884,13 +2161,13 @@ public class CustomElementsSourcePersistenceImpl
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchSourceException(
+				throw new NoSuchCustomElementsSourceException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(customElementsSource);
 		}
-		catch (NoSuchSourceException noSuchEntityException) {
+		catch (NoSuchCustomElementsSourceException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -2015,6 +2292,8 @@ public class CustomElementsSourcePersistenceImpl
 			CustomElementsSourceImpl.class, customElementsSourceModelImpl,
 			false, true);
 
+		cacheUniqueFindersCache(customElementsSourceModelImpl);
+
 		if (isNew) {
 			customElementsSource.setNew(false);
 		}
@@ -2029,11 +2308,11 @@ public class CustomElementsSourcePersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the custom elements source
 	 * @return the custom elements source
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		CustomElementsSource customElementsSource = fetchByPrimaryKey(
 			primaryKey);
@@ -2043,7 +2322,7 @@ public class CustomElementsSourcePersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchSourceException(
+			throw new NoSuchCustomElementsSourceException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -2051,15 +2330,15 @@ public class CustomElementsSourcePersistenceImpl
 	}
 
 	/**
-	 * Returns the custom elements source with the primary key or throws a <code>NoSuchSourceException</code> if it could not be found.
+	 * Returns the custom elements source with the primary key or throws a <code>NoSuchCustomElementsSourceException</code> if it could not be found.
 	 *
 	 * @param customElementsSourceId the primary key of the custom elements source
 	 * @return the custom elements source
-	 * @throws NoSuchSourceException if a custom elements source with the primary key could not be found
+	 * @throws NoSuchCustomElementsSourceException if a custom elements source with the primary key could not be found
 	 */
 	@Override
 	public CustomElementsSource findByPrimaryKey(long customElementsSourceId)
-		throws NoSuchSourceException {
+		throws NoSuchCustomElementsSourceException {
 
 		return findByPrimaryKey((Serializable)customElementsSourceId);
 	}
@@ -2353,6 +2632,16 @@ public class CustomElementsSourcePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_finderPathFetchByC_H = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_H",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "htmlElementName"}, true);
+
+		_finderPathCountByC_H = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_H",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "htmlElementName"}, false);
 	}
 
 	@Deactivate

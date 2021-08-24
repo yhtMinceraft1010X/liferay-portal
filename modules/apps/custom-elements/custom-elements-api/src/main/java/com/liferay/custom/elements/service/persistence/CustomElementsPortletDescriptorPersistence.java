@@ -14,7 +14,7 @@
 
 package com.liferay.custom.elements.service.persistence;
 
-import com.liferay.custom.elements.exception.NoSuchPortletDescriptorException;
+import com.liferay.custom.elements.exception.NoSuchCustomElementsPortletDescriptorException;
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -109,13 +109,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a matching custom elements portlet descriptor could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a matching custom elements portlet descriptor could not be found
 	 */
 	public CustomElementsPortletDescriptor findByUuid_First(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Returns the first custom elements portlet descriptor in the ordered set where uuid = &#63;.
@@ -135,13 +135,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a matching custom elements portlet descriptor could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a matching custom elements portlet descriptor could not be found
 	 */
 	public CustomElementsPortletDescriptor findByUuid_Last(
 			String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Returns the last custom elements portlet descriptor in the ordered set where uuid = &#63;.
@@ -162,13 +162,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
 	 */
 	public CustomElementsPortletDescriptor[] findByUuid_PrevAndNext(
 			long customElementsPortletDescriptorId, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Removes all the custom elements portlet descriptors where uuid = &#63; from the database.
@@ -258,13 +258,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a matching custom elements portlet descriptor could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a matching custom elements portlet descriptor could not be found
 	 */
 	public CustomElementsPortletDescriptor findByUuid_C_First(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Returns the first custom elements portlet descriptor in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -286,13 +286,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a matching custom elements portlet descriptor could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a matching custom elements portlet descriptor could not be found
 	 */
 	public CustomElementsPortletDescriptor findByUuid_C_Last(
 			String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Returns the last custom elements portlet descriptor in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -315,13 +315,13 @@ public interface CustomElementsPortletDescriptorPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
 	 */
 	public CustomElementsPortletDescriptor[] findByUuid_C_PrevAndNext(
 			long customElementsPortletDescriptorId, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CustomElementsPortletDescriptor> orderByComparator)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Removes all the custom elements portlet descriptors where uuid = &#63; and companyId = &#63; from the database.
@@ -371,25 +371,25 @@ public interface CustomElementsPortletDescriptorPersistence
 	 *
 	 * @param customElementsPortletDescriptorId the primary key of the custom elements portlet descriptor
 	 * @return the custom elements portlet descriptor that was removed
-	 * @throws NoSuchPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
 	 */
 	public CustomElementsPortletDescriptor remove(
 			long customElementsPortletDescriptorId)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	public CustomElementsPortletDescriptor updateImpl(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor);
 
 	/**
-	 * Returns the custom elements portlet descriptor with the primary key or throws a <code>NoSuchPortletDescriptorException</code> if it could not be found.
+	 * Returns the custom elements portlet descriptor with the primary key or throws a <code>NoSuchCustomElementsPortletDescriptorException</code> if it could not be found.
 	 *
 	 * @param customElementsPortletDescriptorId the primary key of the custom elements portlet descriptor
 	 * @return the custom elements portlet descriptor
-	 * @throws NoSuchPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
+	 * @throws NoSuchCustomElementsPortletDescriptorException if a custom elements portlet descriptor with the primary key could not be found
 	 */
 	public CustomElementsPortletDescriptor findByPrimaryKey(
 			long customElementsPortletDescriptorId)
-		throws NoSuchPortletDescriptorException;
+		throws NoSuchCustomElementsPortletDescriptorException;
 
 	/**
 	 * Returns the custom elements portlet descriptor with the primary key or returns <code>null</code> if it could not be found.

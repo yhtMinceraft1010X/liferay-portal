@@ -15,7 +15,7 @@
 package com.liferay.custom.elements.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.custom.elements.exception.NoSuchPortletDescriptorException;
+import com.liferay.custom.elements.exception.NoSuchCustomElementsPortletDescriptorException;
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.service.CustomElementsPortletDescriptorLocalServiceUtil;
 import com.liferay.custom.elements.service.persistence.CustomElementsPortletDescriptorPersistence;
@@ -252,7 +252,7 @@ public class CustomElementsPortletDescriptorPersistenceTest {
 			newCustomElementsPortletDescriptor);
 	}
 
-	@Test(expected = NoSuchPortletDescriptorException.class)
+	@Test(expected = NoSuchCustomElementsPortletDescriptorException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

@@ -19,20 +19,23 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchSourceException extends NoSuchModelException {
+public class NoSuchCustomElementsPortletDescriptorException
+	extends NoSuchModelException {
 
-	public NoSuchSourceException() {
+	public NoSuchCustomElementsPortletDescriptorException() {
 	}
 
-	public NoSuchSourceException(String msg) {
+	public NoSuchCustomElementsPortletDescriptorException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchSourceException(String msg, Throwable throwable) {
+	public NoSuchCustomElementsPortletDescriptorException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public NoSuchSourceException(Throwable throwable) {
+	public NoSuchCustomElementsPortletDescriptorException(Throwable throwable) {
 		super(throwable);
 	}
 
