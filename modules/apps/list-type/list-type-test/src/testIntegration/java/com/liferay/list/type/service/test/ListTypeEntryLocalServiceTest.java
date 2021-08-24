@@ -65,13 +65,13 @@ public class ListTypeEntryLocalServiceTest {
 				noSuchListTypeDefinitionException.getMessage());
 		}
 
+		// Key is null
+
 		ListTypeDefinition listTypeDefinition =
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
-
-		// Key is null
 
 		try {
 			_testAddListTypeEntry(
@@ -98,25 +98,7 @@ public class ListTypeEntryLocalServiceTest {
 				listTypeEntryKeyException.getMessage());
 		}
 
-		// Keys must be less than 41 characters
-
-		_testAddListTypeEntry(
-			listTypeDefinition.getListTypeDefinitionId(),
-			"A123456789a123456789a123456789a1234567891");
-
-		try {
-			_testAddListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(),
-				"A123456789a123456789a123456789a12345678912");
-			Assert.fail();
-		}
-		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
-			Assert.assertEquals(
-				"Keys must be less than 41 characters",
-				listTypeEntryKeyException.getMessage());
-		}
-
-		// Duplicate key for the same ListTypeDefinition
+		// Duplicate key
 
 		ListTypeEntry listTypeEntry =
 			ListTypeEntryLocalServiceUtil.addListTypeEntry(
@@ -133,8 +115,7 @@ public class ListTypeEntryLocalServiceTest {
 					duplicateListTypeEntryException) {
 
 			Assert.assertEquals(
-				"Duplicate key test for the same ListTypeDefinitionId " +
-					listTypeDefinition.getListTypeDefinitionId(),
+				"Duplicate key test",
 				duplicateListTypeEntryException.getMessage());
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
-import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeEntryLocalServiceBaseImpl;
 import com.liferay.list.type.service.persistence.ListTypeDefinitionPersistence;
@@ -24,7 +23,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -50,7 +48,7 @@ public class ListTypeEntryLocalServiceImpl
 			Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validateKey(listTypeDefinitionId, key);
+		_validate(listTypeDefinitionId, key);
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.create(
 			counterLocalService.increment());
@@ -61,13 +59,7 @@ public class ListTypeEntryLocalServiceImpl
 		listTypeEntry.setUserId(user.getUserId());
 		listTypeEntry.setUserName(user.getFullName());
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionPersistence.findByPrimaryKey(
-				listTypeDefinitionId);
-
-		listTypeEntry.setListTypeDefinitionId(
-			listTypeDefinition.getListTypeDefinitionId());
-
+		listTypeEntry.setListTypeDefinitionId(listTypeDefinitionId);
 		listTypeEntry.setKey(key);
 		listTypeEntry.setNameMap(nameMap);
 
@@ -86,8 +78,10 @@ public class ListTypeEntryLocalServiceImpl
 			listTypeDefinitionId);
 	}
 
-	private void _validateKey(long listTypeDefinitionId, String key)
+	private void _validate(long listTypeDefinitionId, String key)
 		throws PortalException {
+
+		_listTypeDefinitionPersistence.findByPrimaryKey(listTypeDefinitionId);
 
 		if (Validator.isNull(key)) {
 			throw new ListTypeEntryKeyException("Key is null");
@@ -102,20 +96,11 @@ public class ListTypeEntryLocalServiceImpl
 			}
 		}
 
-		if (nameCharArray.length > 41) {
-			throw new ListTypeEntryKeyException(
-				"Keys must be less than 41 characters");
-		}
-
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.fetchByLTDI_K(
 			listTypeDefinitionId, key);
 
 		if (listTypeEntry != null) {
-			throw new DuplicateListTypeEntryException(
-				StringBundler.concat(
-					"Duplicate key ", key,
-					" for the same ListTypeDefinitionId ",
-					String.valueOf(listTypeDefinitionId)));
+			throw new DuplicateListTypeEntryException("Duplicate key " + key);
 		}
 	}
 
