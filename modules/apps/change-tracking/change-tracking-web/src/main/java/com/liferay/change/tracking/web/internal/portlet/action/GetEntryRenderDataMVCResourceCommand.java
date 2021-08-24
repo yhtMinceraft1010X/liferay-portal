@@ -166,13 +166,12 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
 
 		String[] availableLanguageIds = null;
 		String defaultLanguageId = null;
@@ -363,7 +362,6 @@ public class GetEntryRenderDataMVCResourceCommand
 						_ctDisplayRendererRegistry.getAvailableLanguageIds(
 							leftCtCollectionId, leftCTSQLMode, leftModel,
 							ctEntry.getModelClassNameId());
-
 					defaultLanguageId =
 						_ctDisplayRendererRegistry.getDefaultLanguageId(
 							leftModel, ctEntry.getModelClassNameId());
