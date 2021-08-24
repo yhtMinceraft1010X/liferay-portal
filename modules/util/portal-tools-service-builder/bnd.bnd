@@ -63,6 +63,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ToolsUtil$1.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/xml/DocumentFactory.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/xml/QNameCache.class,\
