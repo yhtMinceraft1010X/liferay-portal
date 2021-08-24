@@ -91,14 +91,14 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				_objectDefinition.getScope());
 
-		if (objectScopeProvider.isGroupAware()) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			return objectScopeProvider.getGroupId(serviceContext.getRequest());
+		if (!objectScopeProvider.isGroupAware()) {
+			return 0;
 		}
 
-		return 0;
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		return objectScopeProvider.getGroupId(serviceContext.getRequest());
 	}
 
 	private final ObjectDefinition _objectDefinition;
