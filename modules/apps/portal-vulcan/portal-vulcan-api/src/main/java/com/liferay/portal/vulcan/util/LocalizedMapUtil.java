@@ -50,6 +50,12 @@ public class LocalizedMapUtil {
 		return i18nMap;
 	}
 
+	public static Map<String, String> getI18nMap(
+		Map<Locale, String> localizedMap) {
+
+		return getI18nMap(true, localizedMap);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getI18nMap(boolean, Map)}

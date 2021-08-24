@@ -36,7 +36,7 @@ public class ObjectFieldUtil {
 				indexedLanguageId =
 					serviceBuilderObjectField.getIndexedLanguageId();
 				label = LocalizedMapUtil.getI18nMap(
-					true, serviceBuilderObjectField.getLabelMap());
+					serviceBuilderObjectField.getLabelMap());
 				listTypeDefinitionId =
 					serviceBuilderObjectField.getListTypeDefinitionId();
 				name = serviceBuilderObjectField.getName();

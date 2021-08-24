@@ -558,8 +558,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 								localizedNames = layout.getNameMap();
 							}
 
-							return LocalizedMapUtil.getI18nMap(
-								true, localizedNames);
+							return LocalizedMapUtil.getI18nMap(localizedNames);
 						}
 
 						return null;
