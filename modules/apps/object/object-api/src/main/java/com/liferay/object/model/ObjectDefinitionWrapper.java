@@ -584,6 +584,11 @@ public class ObjectDefinitionWrapper
 		return model.getVersion();
 	}
 
+	@Override
+	public boolean isApproved() {
+		return model.isApproved();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object definition is system.
 	 *

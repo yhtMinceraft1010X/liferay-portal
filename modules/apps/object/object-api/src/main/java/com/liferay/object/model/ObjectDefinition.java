@@ -69,4 +69,6 @@ public interface ObjectDefinition
 
 	public String getShortName();
 
+	public boolean isApproved();
+
 }
