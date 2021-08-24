@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,7 +73,7 @@ public class ObjectFieldLocalServiceImpl
 
 		String dbTableName = objectDefinition.getDBTableName();
 
-		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if (objectDefinition.isApproved()) {
 			dbTableName = objectDefinition.getExtensionDBTableName();
 		}
 
@@ -83,7 +82,7 @@ public class ObjectFieldLocalServiceImpl
 			dbTableName, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
 			name, required, type);
 
-		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if (objectDefinition.isApproved()) {
 			runSQL(
 				_getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), type));
@@ -156,7 +155,7 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
-		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if (objectDefinition.isApproved()) {
 			return objectFieldPersistence.update(objectField);
 		}
 

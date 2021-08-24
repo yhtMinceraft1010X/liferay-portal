@@ -64,7 +64,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					>
 						<aui:input cssClass="disabled" label="object-definition-id" name="objectDefinitionId" readonly="true" type="text" />
 
-						<aui:input disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
+						<aui:input disabled="<%= objectDefinition.isApproved() %>" label="name" name="shortName" required="<%= true %>" type="text" value="<%= objectDefinition.getShortName() %>" />
 
 						<aui:input name="label" />
 
@@ -88,7 +88,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 					<clay:col
 						md="11"
 					>
-						<aui:select disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
+						<aui:select disabled="<%= objectDefinition.isApproved() %>" name="scope" onChange='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "selectScope();" %>' showEmptyOption="<%= false %>">
 
 							<%
 							for (ObjectScopeProvider objectScopeProvider : objectDefinitionsDetailsDisplayContext.getObjectScopeProviders()) {
@@ -130,7 +130,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	<liferay-frontend:edit-form-footer>
 		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' primary="<%= false %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-		<aui:button disabled="<%= objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+		<aui:button disabled="<%= objectDefinition.isApproved() %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>

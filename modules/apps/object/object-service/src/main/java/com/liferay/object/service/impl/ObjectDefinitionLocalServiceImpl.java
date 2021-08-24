@@ -243,9 +243,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition.isSystem()) {
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
-		else if (objectDefinition.getStatus() ==
-					WorkflowConstants.STATUS_APPROVED) {
-
+		else if (objectDefinition.isApproved()) {
 			for (ResourceAction resourceAction :
 					_resourceActionLocalService.getResourceActions(
 						objectDefinition.getClassName())) {
@@ -719,7 +717,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 
-		if (objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if (objectDefinition.isApproved()) {
 			objectDefinitionLocalService.deployObjectDefinition(
 				objectDefinition);
 
