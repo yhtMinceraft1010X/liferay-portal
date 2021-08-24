@@ -98,20 +98,20 @@ public class ConfigurationEnvBuilderTest {
 
 		expectedList = _formatList(expectedList);
 
-		List<String> leftover = new ArrayList<>();
+		List<String> leftoverList = new ArrayList<>();
 
 		for (String line : actualList) {
 			if (!expectedList.remove(line)) {
-				leftover.add(line);
+				leftoverList.add(line);
 			}
 		}
 
 		Assert.assertTrue(
-			StringBundler.concat(_MESSAGE, " Leftover configs: ", leftover),
-			leftover.isEmpty());
+			StringBundler.concat(_MESSAGE, " Leftover: ", leftoverList),
+			leftoverList.isEmpty());
 
 		Assert.assertTrue(
-			StringBundler.concat(_MESSAGE, " Missing configs: ", expectedList),
+			StringBundler.concat(_MESSAGE, " Missing: ", expectedList),
 			expectedList.isEmpty());
 	}
 
