@@ -407,7 +407,6 @@ public class KnowledgeBaseArticleResourceImpl
 
 		long parentResourceClassNameId = _portal.getClassNameId(
 			KBFolderConstants.getClassName());
-
 		Long parentResourcePrimaryKey =
 			knowledgeBaseArticle.getParentKnowledgeBaseFolderId();
 
