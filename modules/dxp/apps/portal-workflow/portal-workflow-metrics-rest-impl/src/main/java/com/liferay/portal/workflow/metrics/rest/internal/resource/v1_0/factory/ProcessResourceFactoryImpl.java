@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -38,6 +42,7 @@ import java.util.Locale;
 import javax.annotation.Generated;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
@@ -69,7 +74,8 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 					new Class<?>[] {ProcessResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
-						_httpServletRequest, _preferredLocale, _user));
+						_httpServletRequest, _httpServletResponse,
+						_preferredLocale, _user));
 			}
 
 			@Override
@@ -86,6 +92,15 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
+
+				return this;
+			}
+
+			@Override
+			public ProcessResource.Builder httpServletResponse(
+				HttpServletResponse httpServletResponse) {
+
+				_httpServletResponse = httpServletResponse;
 
 				return this;
 			}
@@ -126,7 +141,8 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 
 	private Object _invoke(
 			Method method, Object[] arguments, boolean checkPermissions,
-			HttpServletRequest httpServletRequest, Locale preferredLocale,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Locale preferredLocale,
 			User user)
 		throws Throwable {
 
@@ -156,7 +172,14 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 		processResource.setContextCompany(company);
 
 		processResource.setContextHttpServletRequest(httpServletRequest);
+		processResource.setContextHttpServletResponse(httpServletResponse);
 		processResource.setContextUser(user);
+		processResource.setGroupLocalService(_groupLocalService);
+		processResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		processResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		processResource.setRoleLocalService(_roleLocalService);
 
 		try {
 			return method.invoke(processResource, arguments);
@@ -182,8 +205,20 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
 
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	@Reference(target = "(permission.checker.type=liberal)")
 	private PermissionCheckerFactory _liberalPermissionCheckerFactory;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
