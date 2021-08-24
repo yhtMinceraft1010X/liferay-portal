@@ -289,6 +289,7 @@ AUI.add(
 						'move-to-trash',
 						A.bind('_moveToTrash', instance)
 					);
+
 					eventHandles.push(
 						searchContainer.on(
 							'rowToggled',
