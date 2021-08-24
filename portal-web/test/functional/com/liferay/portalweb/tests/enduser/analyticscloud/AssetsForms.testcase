@@ -395,12 +395,86 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8421 | Test Summary: Assert Assets Forms Custom Range Time Filter in Behaviour Report	"
-	@ignore = "true"
 	@priority = "5"
 	test CanTimeFilterUseCustomRangeInFormsBehaviourReport {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8421 CanTimeFilterUseCustomRangeInFormsBehaviourReport
+		// AC Refactor: Timing issues may happen on this test case
+		// AC Refactor ticket: LRAC-8813
 
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("Form submit") {
+
+			// This test needs to add data from a past date to work propperly
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			FormPortlet.waitFormRenderer(text = "Submit");
+
+			FormFields.viewTextLabel(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Test Assets");
+
+			FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Enter in forms asset page") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Forms");
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACNavigation.openItem(itemName = "Created Form Name");
+		}
+
+		task ("Assert that overview card change behavior when I set a custom range date") {
+
+			// This test needs to assert data from a past date
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setCustomRange(
+				endDay = "8",
+				endMonth = "August",
+				endYear = "2020",
+				startDay = "1",
+				startMonth = "August",
+				startYear = "2020");
+
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Aug 1, 2020 - Aug 8, 2020");
+
+			var curr_metricName = "";
+        	var curr_metricValue = "";
+
+			for (var current : list "Abandonment-${expectedValue1},Submissions-${expectedValue2},Views-${expectedValue3},Completion Time-${expectedValue4}"){
+				curr_metricName = StringUtil.extractFirst("${current}","-");
+				curr_metricValue = StringUtil.extractLast("${current}","-");
+
+				ACCards.viewMetricValue(
+					cardTitle = "Visitors Behavior",
+					metricName = "${curr_metricName}",
+					metricValue = "${curr_metricValue}");
+			}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8431 | Test Summary: Form abandonment card shows the expected amount of form abandonment based on how many times the form was started but not completed"
