@@ -4,6 +4,7 @@
 	import ${apiPackagePath}.model.${entity.name}Table;
 	import ${packagePath}.model.impl.${entity.name}Impl;
 	import ${packagePath}.model.impl.${entity.name}ModelImpl;
+
 	import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 	import com.liferay.portal.kernel.dao.orm.FinderPath;
 	import com.liferay.portal.kernel.model.BaseModel;
@@ -15,17 +16,17 @@
 	import java.util.concurrent.ConcurrentHashMap;
 
 	import org.osgi.service.component.annotations.Component;
-	<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+	<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 
 	/**
-	* The arguments resolver class for retrieving value from ${entity.name}.
-	*
-	* @author ${author}
+	 * The arguments resolver class for retrieving value from ${entity.name}.
+	 *
+	 * @author ${author}
 	<#if classDeprecated>
-		* @deprecated ${classDeprecatedComment}
+	 * @deprecated ${classDeprecatedComment}
 	</#if>
-	* @generated
-	*/
+	 * @generated
+	 */
 	<#if dependencyInjectorDS>
 		@Component(
 			immediate = true,
@@ -68,11 +69,11 @@ class ${entity.name}ModelArgumentsResolver implements ArgumentsResolver {
 					finderPathColumnBitmask |= ${entity.variableName}ModelImpl.getColumnBitmask(columnName);
 				}
 
-			<#if entity.entityOrder??>
-				if (finderPath.isBaseModelResult() && (${entity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION == finderPath.getCacheName())) {
-					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
-				}
-			</#if>
+				<#if entity.entityOrder??>
+					if (finderPath.isBaseModelResult() && (${entity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION == finderPath.getCacheName())) {
+						finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
+					}
+				</#if>
 
 				_finderPathColumnBitmasksCache.put(finderPath, finderPathColumnBitmask);
 			}
@@ -82,9 +83,11 @@ class ${entity.name}ModelArgumentsResolver implements ArgumentsResolver {
 			}
 		<#else>
 			if (!checkColumn || _hasModifiedColumns(${entity.variableName}ModelImpl, columnNames)
+
 			<#if entity.entityOrder??>
 				|| _hasModifiedColumns(${entity.variableName}ModelImpl, _ORDER_BY_COLUMNS)
 			</#if>
+
 			) {
 				return _getValue(${entity.variableName}ModelImpl, columnNames, original);
 			}
@@ -173,4 +176,5 @@ class ${entity.name}ModelArgumentsResolver implements ArgumentsResolver {
 			}
 		</#if>
 	</#if>
+
 }
