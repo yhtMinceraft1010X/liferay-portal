@@ -218,7 +218,6 @@ public class GetEntryRenderDataMVCResourceCommand
 						_ctDisplayRendererRegistry.getAvailableLanguageIds(
 							ctCollectionId, ctSQLMode, rightModel,
 							ctEntry.getModelClassNameId());
-
 					defaultLanguageId =
 						_ctDisplayRendererRegistry.getDefaultLanguageId(
 							rightModel, ctEntry.getModelClassNameId());

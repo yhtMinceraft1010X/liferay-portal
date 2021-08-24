@@ -312,9 +312,8 @@ public class ViewChangesDisplayContext {
 			() -> {
 				ResourceURL dataURL = _renderResponse.createResourceURL();
 
-				dataURL.setResourceID("/change_tracking/get_entry_render_data");
-
 				dataURL.setParameter("localize", Boolean.TRUE.toString());
+				dataURL.setResourceID("/change_tracking/get_entry_render_data");
 
 				return dataURL.toString();
 			}
