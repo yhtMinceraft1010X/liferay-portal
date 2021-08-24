@@ -284,7 +284,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Parent Article Title");
+		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title Parent");
 
 		KBArticle.viewCP(
 			kbArticleContent = "Knowledge Base Child Article Content",
