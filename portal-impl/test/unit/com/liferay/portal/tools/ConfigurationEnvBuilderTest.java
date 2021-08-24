@@ -88,7 +88,7 @@ public class ConfigurationEnvBuilderTest {
 				configurationJavaFileNames.toArray(new String[0])),
 			CharPool.NEW_LINE);
 
-		List<String> actualList = _readPortalProperties();
+		List<String> actualList = _readPortalOSGiConfigurationProperties();
 
 		Collections.sort(actualList);
 
@@ -129,8 +129,11 @@ public class ConfigurationEnvBuilderTest {
 		return result;
 	}
 
-	private List<String> _readPortalProperties() throws IOException {
-		Path path = Paths.get("portal-impl/src/portal.properties");
+	private List<String> _readPortalOSGiConfigurationProperties()
+		throws IOException {
+
+		Path path = Paths.get(
+			"portal-impl/src/portal-osgi-configuration.properties");
 
 		List<String> lines = Files.readAllLines(path);
 
@@ -157,8 +160,7 @@ public class ConfigurationEnvBuilderTest {
 	}
 
 	private static final String _MESSAGE =
-		"Run \"ant update-portal-properties-with-osgi-configuration-" +
-			"overrides.\".";
+		"Run \"ant update-portal-osgi-configuration-properties\".";
 
 	private static final Pattern _pattern = Pattern.compile(
 		StringBundler.concat(

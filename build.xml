@@ -1238,7 +1238,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</execute>
 	</target>
 
-	<target name="update-portal-properties-with-osgi-configuration-overrides">
+	<target name="update-portal-osgi-configuration-properties">
 		<pathconvert pathsep="," property="configuration.java.files">
 			<fileset
 				dir="modules"
@@ -1256,7 +1256,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			newenvironment="true"
 		>
 			<arg value="configuration.java.files=${configuration.java.files}" />
-			<arg value="output.file=${project.dir}/portal-impl/src/portal.properties" />
+			<arg value="output.file=${project.dir}/portal-impl/src/portal-osgi-configuration.properties" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 		</java>
 	</target>
