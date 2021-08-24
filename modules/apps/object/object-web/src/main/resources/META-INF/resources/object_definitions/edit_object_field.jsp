@@ -19,8 +19,6 @@
 <%
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
-
-Boolean published = objectDefinition.getStatus() == WorkflowConstants.STATUS_APPROVED;
 %>
 
 <liferay-frontend:side-panel-content
@@ -36,9 +34,9 @@ Boolean published = objectDefinition.getStatus() == WorkflowConstants.STATUS_APP
 
 					<aui:input name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
 
-					<aui:input disabled="<%= published %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
+					<aui:input disabled="<%= objectDefinition.isApproved() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
-					<aui:select disabled="<%= published %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
+					<aui:select disabled="<%= objectDefinition.isApproved() %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= objectField.getType().equals("BigDecimal") %>' value="BigDecimal" />
 						<aui:option label="Blob" selected='<%= objectField.getType().equals("Blob") %>' value="Blob" />
 						<aui:option label="Boolean" selected='<%= objectField.getType().equals("Boolean") %>' value="Boolean" />
@@ -60,14 +58,14 @@ Boolean published = objectDefinition.getStatus() == WorkflowConstants.STATUS_APP
 					</h2>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= published %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
+						<aui:input disabled="<%= objectDefinition.isApproved() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
 					</aui:field-wrapper>
 
 					<div id="<portlet:namespace />indexedGroup" style="display: <%= (objectField.getType().equals("String") && objectField.getIndexed()) ? "block;" : "none;" %>">
 						<div class="form-group">
 							<clay:radio
 								checked="<%= objectField.getIndexed() && objectField.getIndexedAsKeyword() %>"
-								disabled="<%= published %>"
+								disabled="<%= objectDefinition.isApproved() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
 								label='<%= LanguageUtil.get(request, "keyword") %>'
 								name="indexedType"
@@ -76,7 +74,7 @@ Boolean published = objectDefinition.getStatus() == WorkflowConstants.STATUS_APP
 
 							<clay:radio
 								checked="<%= objectField.getIndexed() && !objectField.getIndexedAsKeyword() %>"
-								disabled="<%= published %>"
+								disabled="<%= objectDefinition.isApproved() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
 								label='<%= LanguageUtil.get(request, "text") %>'
 								name="indexedType"
@@ -85,7 +83,7 @@ Boolean published = objectDefinition.getStatus() == WorkflowConstants.STATUS_APP
 						</div>
 
 						<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= (!objectField.getIndexed() || objectField.getIndexedAsKeyword()) ? "none;" : "block;" %>">
-							<aui:select disabled="<%= published %>" label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
+							<aui:select disabled="<%= objectDefinition.isApproved() %>" label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
 
 								<%
 								for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
