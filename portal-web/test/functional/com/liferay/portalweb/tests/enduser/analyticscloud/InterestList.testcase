@@ -33,9 +33,59 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test CanTimeFilterUse180DaysInInterestsList {
+		property portal.upstream = "quarantine";
 
-		// TODO LRAC-8370 CanTimeFilterUse180DaysInInterestsList
+		// AC Refactor: data doesn't appear on time and the test needs data from a past date
+		// AC Refactor ticket: LRAC-8884
 
+		task ("Connect DXP to Analytics Cloud and get the property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("View the blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessions();
+
+			Pause(locator1 = "30000");
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Navigate to Interests tab in Sites") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+		task ("Set time filter use 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			// Unable to perform the declaration because the data does not appear at the time
+		}
+
+		task ("Set time filter use 180Days") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast180Days();
+		}
+
+		task ("Assert Time Filter set Last 180 days") {
+		// It is not possible to perform the assert because this test needs data from the past
+			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 180 days");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8372 | Test Summary: Custom Range time period filter in Interests List"
