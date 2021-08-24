@@ -23,9 +23,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectEntriesDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-//renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.getShortName(), false));
-
 %>
 
 <portlet:actionURL name="/object_definitions/edit_object_definition" var="editObjectDefinitionURL" />
