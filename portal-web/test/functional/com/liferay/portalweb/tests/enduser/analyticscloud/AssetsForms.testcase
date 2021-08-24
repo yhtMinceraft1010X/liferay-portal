@@ -464,9 +464,9 @@ definition {
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Aug 1, 2020 - Aug 8, 2020");
 
 			var curr_metricName = "";
-        	var curr_metricValue = "";
+			var curr_metricValue = "";
 
-			for (var current : list "Abandonment-${expectedValue1},Submissions-${expectedValue2},Views-${expectedValue3},Completion Time-${expectedValue4}"){
+			for (var current : list "Abandonment-${expectedValue1},Submissions-${expectedValue2},Views-${expectedValue3},Completion Time-${expectedValue4}") {
 				curr_metricName = StringUtil.extractFirst("${current}","-");
 				curr_metricValue = StringUtil.extractLast("${current}","-");
 
@@ -475,6 +475,7 @@ definition {
 					metricName = "${curr_metricName}",
 					metricValue = "${curr_metricValue}");
 			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8431 | Test Summary: Form abandonment card shows the expected amount of form abandonment based on how many times the form was started but not completed"
