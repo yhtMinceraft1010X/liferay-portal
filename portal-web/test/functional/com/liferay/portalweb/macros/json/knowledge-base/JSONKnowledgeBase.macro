@@ -105,6 +105,10 @@ definition {
 				groupName = "${groupName}");
 		}
 
+		if (!(isSet(urlTitle))) {
+			var urlTitle = "";
+		}
+
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBFolder");
 
 		var curl = '''
@@ -115,7 +119,7 @@ definition {
 				-d parentResourceClassNameId=${parentResourceClassNameId} \
 				-d parentResourcePrimKey=${folderId} \
 				-d title=${kbArticleTitle} \
-				-d urlTitle= \
+				-d urlTitle=${urlTitle} \
 				-d content=<p>${kbArticleContent}</p> \
 				-d description= \
 				-d sourceURL= \
