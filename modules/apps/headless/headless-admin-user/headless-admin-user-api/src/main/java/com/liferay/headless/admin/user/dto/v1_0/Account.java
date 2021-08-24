@@ -376,9 +376,7 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
-	@Schema(
-		description = "The account's type. This property will be read during Account creation, but ignored during updates."
-	)
+	@Schema
 	@Valid
 	public Type getType() {
 		return type;
@@ -410,9 +408,7 @@ public class Account implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The account's type. This property will be read during Account creation, but ignored during updates."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
