@@ -2,6 +2,6 @@
 	"fragmentEntryKey": "solution-button",
 	"icon": "button",
 	"name": "solution-button",
-	"thumbnail": "solution-button.png",
+	"thumbnail": "solution_button.png",
 	"type": "component"
 }
