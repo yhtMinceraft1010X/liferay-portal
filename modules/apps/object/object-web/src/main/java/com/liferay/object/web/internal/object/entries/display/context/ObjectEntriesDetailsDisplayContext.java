@@ -178,11 +178,7 @@ public class ObjectEntriesDetailsDisplayContext {
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(String.valueOf(entry.getValue())));
 
-			if ((ddmFormFieldValue != null) &&
-				(ddmFormFieldValue.getValue() != null)) {
-
-				ddmFormFieldValues.add(ddmFormFieldValue);
-			}
+			ddmFormFieldValues.add(ddmFormFieldValue);
 		}
 
 		if (ddmFormFieldValues.isEmpty()) {
