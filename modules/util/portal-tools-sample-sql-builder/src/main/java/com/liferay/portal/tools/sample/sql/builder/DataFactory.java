@@ -378,7 +378,6 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  */
-@SuppressWarnings({"unchecked", "unused"})
 public class DataFactory {
 
 	public DataFactory() throws Exception {
