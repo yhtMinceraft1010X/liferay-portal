@@ -76,14 +76,22 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			ddmFormValues);
 	}
 
+	private long _getGroupId(ActionRequest actionRequest, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		return objectScopeProvider.getGroupId(
+			_portal.getHttpServletRequest(actionRequest));
+	}
+
 	private void _addOrUpdateObjectEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-				actionRequest);
-
 			long objectDefinitionId = ParamUtil.getLong(
 				actionRequest, "objectDefinitionId");
 
@@ -93,22 +101,18 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectDefinitionId);
 
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
-
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
-					objectScopeProvider.getGroupId(httpServletRequest),
+					_getGroupId(actionRequest, objectDefinition),
 					objectDefinition.getObjectDefinitionId(), _getValues(actionRequest),
 					ServiceContextFactory.getInstance(
-						objectDefinition.getClassName(), httpServletRequest));
+						objectDefinition.getClassName(), actionRequest));
 			}
 			else {
 				_objectEntryService.updateObjectEntry(
 					objectEntryId, _getValues(actionRequest),
 					ServiceContextFactory.getInstance(
-						objectDefinition.getClassName(), httpServletRequest));
+						objectDefinition.getClassName(), actionRequest));
 			}
 		}
 		catch (Exception exception) {
