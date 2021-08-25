@@ -19,13 +19,13 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
-
 ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectEntriesDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectDefinition objectDefinition = objectEntriesDetailsDisplayContext.getObjectDefinition();
 ObjectEntry objectEntry = objectEntriesDetailsDisplayContext.getObjectEntry();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
 %>
 
 <portlet:actionURL name="/object_entries/edit_object_entry" var="editObjectEntryURL" />
