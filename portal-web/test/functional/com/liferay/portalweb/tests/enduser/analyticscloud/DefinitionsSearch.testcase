@@ -22,7 +22,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownAC();
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
@@ -61,8 +61,7 @@ definition {
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
-		ACDefinitions.editSearchQuerySuccessfully(
-			query = "Test Edit");
+		ACDefinitions.editSearchQuerySuccessfully(query = "Test Edit");
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
@@ -71,11 +70,15 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
-	@ignore = "true"
 	@priority = "4"
 	test CantSearchMoreThanFiveSearchQueryStrings {
+		var varList = "Test Query 1,Test Query 2,Test Query 3,Test Query 4,Test Query 5";
 
-		// TODO LRAC-8782 CantSearchMoreThanFiveSearchQueryStrings pending implementation
+		ACDefinitions.addMultipleSearchQuerySuccessfully(query_list = "${varList}");
+
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+		ACDefinitions.noViewAddSearchQueryButton(query = "Test Query 5");
 
 	}
 
