@@ -528,13 +528,11 @@ public abstract class Base${schemaName}ResourceImpl
 		this.contextCompany = contextCompany;
 	}
 
-	public void setContextHttpServletRequest(
-		HttpServletRequest contextHttpServletRequest) {
+	public void setContextHttpServletRequest(HttpServletRequest contextHttpServletRequest) {
 		this.contextHttpServletRequest = contextHttpServletRequest;
 	}
 
-	public void setContextHttpServletResponse(
-		HttpServletResponse contextHttpServletResponse) {
+	public void setContextHttpServletResponse(HttpServletResponse contextHttpServletResponse) {
 		this.contextHttpServletResponse = contextHttpServletResponse;
 	}
 
