@@ -121,6 +121,7 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 
 			private boolean _checkPermissions = true;
 			private HttpServletRequest _httpServletRequest;
+			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
 			private User _user;
 
