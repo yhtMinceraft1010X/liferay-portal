@@ -28,6 +28,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_QUERY_DELETE_BUTTON</td>
+	<td>//input[contains(@value,'${key_query}')]/ancestor::div/following-sibling::button[contains(@class,'btn')]/*[contains(@class,'lexicon-icon-trash')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRESENT_SEARCH_QUERY_INPUT</td>
 	<td>//input[contains(@value,'${key_query}')]</td>
 	<td></td>
