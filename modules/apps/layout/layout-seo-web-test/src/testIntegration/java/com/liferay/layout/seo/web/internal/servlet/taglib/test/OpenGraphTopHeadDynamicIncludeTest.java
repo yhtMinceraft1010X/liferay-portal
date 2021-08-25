@@ -588,11 +588,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTag(
+			document, _language.getAvailableLocales(_group.getGroupId()));
 		_assertCanonicalLinkTag(
 			document,
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-		_assertAlternateLinkTag(
-			document, _language.getAvailableLocales(_group.getGroupId()));
 	}
 
 	@Test
@@ -611,14 +611,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_language.getAvailableLocales(_group.getGroupId()));
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				_getThemeDisplay()));
-		_assertAlternateLinkTagAssetDisplayPage(
-			document, fileEntry,
-			_language.getAvailableLocales(_group.getGroupId()));
 	}
 
 	@Test
@@ -643,14 +643,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_getAvailableLocalesLayoutTranslatedLanguages());
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				_getThemeDisplay()));
-		_assertAlternateLinkTagAssetDisplayPage(
-			document, fileEntry,
-			_getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -677,14 +677,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_getAvailableLocalesLayoutTranslatedLanguages());
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				_getThemeDisplay()));
-		_assertAlternateLinkTagAssetDisplayPage(
-			document, fileEntry,
-			_getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -709,14 +709,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTagAssetDisplayPage(
+			document, fileEntry,
+			_language.getAvailableLocales(_group.getGroupId()));
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
 				_getThemeDisplay()));
-		_assertAlternateLinkTagAssetDisplayPage(
-			document, fileEntry,
-			_language.getAvailableLocales(_group.getGroupId()));
 	}
 
 	@Test
@@ -769,11 +769,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
 		_assertCanonicalLinkTag(
 			document,
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-		_assertAlternateLinkTag(
-			document, _getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -831,11 +831,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
 		_assertCanonicalLinkTag(
 			document,
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-		_assertAlternateLinkTag(
-			document, _getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -858,11 +858,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
+		_assertAlternateLinkTag(
+			document, _getAvailableLocalesLayoutTranslatedLanguages());
 		_assertCanonicalLinkTag(
 			document,
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-		_assertAlternateLinkTag(
-			document, _getAvailableLocalesLayoutTranslatedLanguages());
 	}
 
 	@Test
@@ -879,9 +879,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _language.getAvailableLocales(_group.getGroupId()));
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -902,9 +902,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -958,9 +958,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1286,8 +1286,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertNoLinkElements(document, "canonical");
 		_assertNoLinkElements(document, "alternate");
+		_assertNoLinkElements(document, "canonical");
 	}
 
 	@Test
@@ -1302,8 +1302,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertNoLinkElements(document, "canonical");
 		_assertNoLinkElements(document, "alternate");
+		_assertNoLinkElements(document, "canonical");
 	}
 
 	private FileEntry _addImageFileEntry(
