@@ -82,7 +82,7 @@ public class BatchPlannerPlanModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"export", Types.BOOLEAN}, {"externalType", Types.VARCHAR},
 		{"externalURL", Types.VARCHAR}, {"internalClassName", Types.VARCHAR},
-		{"name", Types.VARCHAR}
+		{"name", Types.VARCHAR}, {"template", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,10 +102,11 @@ public class BatchPlannerPlanModelImpl
 		TABLE_COLUMNS_MAP.put("externalURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("internalClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("template", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,template BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 
@@ -131,20 +132,32 @@ public class BatchPlannerPlanModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long EXPORT_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TEMPLATE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long USERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -188,6 +201,7 @@ public class BatchPlannerPlanModelImpl
 		model.setExternalURL(soapModel.getExternalURL());
 		model.setInternalClassName(soapModel.getInternalClassName());
 		model.setName(soapModel.getName());
+		model.setTemplate(soapModel.isTemplate());
 
 		return model;
 	}
@@ -411,6 +425,11 @@ public class BatchPlannerPlanModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<BatchPlannerPlan, String>)BatchPlannerPlan::setName);
+		attributeGetterFunctions.put("template", BatchPlannerPlan::getTemplate);
+		attributeSetterBiConsumers.put(
+			"template",
+			(BiConsumer<BatchPlannerPlan, Boolean>)
+				BatchPlannerPlan::setTemplate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -611,6 +630,16 @@ public class BatchPlannerPlanModelImpl
 		_export = export;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalExport() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("export"));
+	}
+
 	@JSON
 	@Override
 	public String getExternalType() {
@@ -700,6 +729,37 @@ public class BatchPlannerPlanModelImpl
 		return getColumnOriginalValue("name");
 	}
 
+	@JSON
+	@Override
+	public boolean getTemplate() {
+		return _template;
+	}
+
+	@JSON
+	@Override
+	public boolean isTemplate() {
+		return _template;
+	}
+
+	@Override
+	public void setTemplate(boolean template) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_template = template;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalTemplate() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("template"));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -769,6 +829,7 @@ public class BatchPlannerPlanModelImpl
 		batchPlannerPlanImpl.setExternalURL(getExternalURL());
 		batchPlannerPlanImpl.setInternalClassName(getInternalClassName());
 		batchPlannerPlanImpl.setName(getName());
+		batchPlannerPlanImpl.setTemplate(isTemplate());
 
 		batchPlannerPlanImpl.resetOriginalValues();
 
@@ -954,6 +1015,8 @@ public class BatchPlannerPlanModelImpl
 			batchPlannerPlanCacheModel.name = null;
 		}
 
+		batchPlannerPlanCacheModel.template = isTemplate();
+
 		return batchPlannerPlanCacheModel;
 	}
 
@@ -1059,6 +1122,7 @@ public class BatchPlannerPlanModelImpl
 	private String _externalURL;
 	private String _internalClassName;
 	private String _name;
+	private boolean _template;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1102,6 +1166,7 @@ public class BatchPlannerPlanModelImpl
 		_columnOriginalValues.put("externalURL", _externalURL);
 		_columnOriginalValues.put("internalClassName", _internalClassName);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("template", _template);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1150,6 +1215,8 @@ public class BatchPlannerPlanModelImpl
 		columnBitmasks.put("internalClassName", 2048L);
 
 		columnBitmasks.put("name", 4096L);
+
+		columnBitmasks.put("template", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
