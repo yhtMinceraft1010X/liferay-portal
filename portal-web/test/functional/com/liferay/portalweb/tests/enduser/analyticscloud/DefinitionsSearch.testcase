@@ -22,7 +22,7 @@ definition {
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
@@ -54,11 +54,19 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8781 | Test Summary: Edit search query parameters"
-	@ignore = "true"
 	@priority = "4"
 	test CanEditSearchQueryParameters {
 
-		// TODO LRAC-8781 CanEditSearchQueryParameters pending implementation
+		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
+
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+		ACDefinitions.editSearchQuerySuccessfully(
+			query = "Test Edit");
+
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+		ACDefinitions.viewSearchQuery(query = "Test Edit");
 
 	}
 
