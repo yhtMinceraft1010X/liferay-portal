@@ -33,11 +33,11 @@ import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -172,21 +172,19 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
+		ddmFormValues.setDDMFormFieldValues(
+			TransformUtil.transform(
+				values.entrySet(),
+				entry -> {
+					DDMFormFieldValue ddmFormFieldValue =
+						new DDMFormFieldValue();
 
-		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+					ddmFormFieldValue.setName(entry.getKey());
+					ddmFormFieldValue.setValue(
+						new UnlocalizedValue(String.valueOf(entry.getValue())));
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-			ddmFormFieldValue.setName(entry.getKey());
-			ddmFormFieldValue.setValue(
-				new UnlocalizedValue(String.valueOf(entry.getValue())));
-
-			ddmFormFieldValues.add(ddmFormFieldValue);
-		}
-
-		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
-
+					return ddmFormFieldValue;
+				}));
 		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		return ddmFormValues;
