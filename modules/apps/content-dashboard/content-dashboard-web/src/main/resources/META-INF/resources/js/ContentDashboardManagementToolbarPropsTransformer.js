@@ -175,11 +175,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'selectContentDashboardItemSubtype') {
 				selectContentDashboardItemSubtype(data);
 			}
-			else if (action === 'selectFileExtension') {
-				selectFileExtension(data);
-			}
 			else if (action === 'selectScope') {
 				selectScope(data);
+			}
+			else if (action === 'selectFileExtension') {
+				selectFileExtension(data);
 			}
 		},
 	};
