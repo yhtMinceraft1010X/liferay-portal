@@ -92,10 +92,10 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
+			long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
+
 			long objectDefinitionId = ParamUtil.getLong(
 				actionRequest, "objectDefinitionId");
-
-			long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
 
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
