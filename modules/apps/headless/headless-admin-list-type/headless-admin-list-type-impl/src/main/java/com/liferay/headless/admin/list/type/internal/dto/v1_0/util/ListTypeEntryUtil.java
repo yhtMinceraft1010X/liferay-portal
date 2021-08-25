@@ -23,16 +23,17 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 public class ListTypeEntryUtil {
 
 	public static ListTypeEntry toListTypeEntry(
-		com.liferay.list.type.model.ListTypeEntry listTypeEntry) {
+		com.liferay.list.type.model.ListTypeEntry serviceBuilderListTypeEntry) {
 
 		return new ListTypeEntry() {
 			{
-				dateCreated = listTypeEntry.getCreateDate();
-				dateModified = listTypeEntry.getModifiedDate();
-				id = listTypeEntry.getListTypeEntryId();
-				key = listTypeEntry.getKey();
-				name = LocalizedMapUtil.getI18nMap(listTypeEntry.getNameMap());
-				type = listTypeEntry.getType();
+				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
+				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
+				id = serviceBuilderListTypeEntry.getListTypeEntryId();
+				key = serviceBuilderListTypeEntry.getKey();
+				name = LocalizedMapUtil.getI18nMap(
+					serviceBuilderListTypeEntry.getNameMap());
+				type = serviceBuilderListTypeEntry.getType();
 			}
 		};
 	}

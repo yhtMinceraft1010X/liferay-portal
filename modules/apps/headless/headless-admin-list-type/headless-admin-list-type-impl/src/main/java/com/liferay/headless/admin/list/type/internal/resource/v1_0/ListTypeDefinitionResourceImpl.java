@@ -94,20 +94,21 @@ public class ListTypeDefinitionResourceImpl
 	}
 
 	private ListTypeDefinition _toListTypeDefinition(
-		com.liferay.list.type.model.ListTypeDefinition listTypeDefinition) {
+		com.liferay.list.type.model.ListTypeDefinition
+			serviceBuilderListTypeEntry) {
 
 		return new ListTypeDefinition() {
 			{
-				dateCreated = listTypeDefinition.getCreateDate();
-				dateModified = listTypeDefinition.getModifiedDate();
-				id = listTypeDefinition.getListTypeDefinitionId();
+				dateCreated = serviceBuilderListTypeEntry.getCreateDate();
+				dateModified = serviceBuilderListTypeEntry.getModifiedDate();
+				id = serviceBuilderListTypeEntry.getListTypeDefinitionId();
 				listTypeEntries = transformToArray(
 					_listTypeEntryLocalService.getListTypeEntries(
-						listTypeDefinition.getListTypeDefinitionId(),
+						serviceBuilderListTypeEntry.getListTypeDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					ListTypeEntryUtil::toListTypeEntry, ListTypeEntry.class);
 				name = LocalizedMapUtil.getI18nMap(
-					listTypeDefinition.getNameMap());
+					serviceBuilderListTypeEntry.getNameMap());
 			}
 		};
 	}
