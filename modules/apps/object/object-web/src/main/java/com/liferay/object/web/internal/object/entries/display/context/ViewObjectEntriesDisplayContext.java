@@ -20,7 +20,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -32,7 +31,6 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -127,7 +125,7 @@ public class ViewObjectEntriesDisplayContext {
 	private String _getPermissionsURL() throws Exception {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_objectRequestHelper.getRequest(),
 				"com_liferay_portlet_configuration_web_portlet_" +
@@ -144,16 +142,9 @@ public class ViewObjectEntriesDisplayContext {
 			objectDefinition.getLabel(_objectRequestHelper.getLocale())
 		).setParameter(
 			"resourcePrimKey", "{id}"
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
-
-		return portletURL.toString();
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private final String _apiURL;
