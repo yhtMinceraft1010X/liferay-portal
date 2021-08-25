@@ -25,7 +25,6 @@ portletDisplay.setURLBack(backURL);
 ObjectEntriesDetailsDisplayContext objectEntriesDetailsDisplayContext = (ObjectEntriesDetailsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectDefinition objectDefinition = objectEntriesDetailsDisplayContext.getObjectDefinition();
-
 ObjectEntry objectEntry = objectEntriesDetailsDisplayContext.getObjectEntry();
 %>
 
@@ -37,8 +36,8 @@ ObjectEntry objectEntry = objectEntriesDetailsDisplayContext.getObjectEntry();
 >
 	<liferay-frontend:edit-form-body>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (objectEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="objectDefinitionId" type="hidden" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 		<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>" />
+		<aui:input name="objectDefinitionId" type="hidden" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 		<aui:input name="ddmFormValues" type="hidden" value="" />
 
 		<liferay-frontend:fieldset-group>
