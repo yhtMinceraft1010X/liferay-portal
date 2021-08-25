@@ -65,4 +65,16 @@ definition {
 			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
+	macro editSearchQuerySuccessfully {
+
+		Type(
+			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",			
+			value1 = "${query}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+	}
+
 }
