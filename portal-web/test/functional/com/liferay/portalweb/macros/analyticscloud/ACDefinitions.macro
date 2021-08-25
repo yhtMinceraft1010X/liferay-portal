@@ -1,5 +1,51 @@
 definition {
 
+	macro addMultipleSearchQuerySuccessfully {
+		var key_queryList = "${query_list}";
+		var flag = "0";
+		var aux = "";
+
+		for (var x : list "${key_queryList}") {
+			if ("${flag}" == "0") {
+				Click(locator1 = "Button#PLUS");
+
+				Type(
+					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
+					value1 = "${x}");
+				flag = "1"
+			}
+			else {
+				Click(
+					key_query = "${aux}",
+					locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
+
+				Type(
+					key_index = "${flag}",
+					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
+					value1 = "${x}");
+
+				flag = MathUtil.sum("${flag}", "1");
+			}
+			aux = "${x}";
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addSearchQuerySuccessfully {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
+			value1 = "${query}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	@summary = "Navigates to a definition in the Definitions screen. \
 	@param definitionType the name of the definition that will be navigated to."
 	macro assertIndividualAttributesSource {
@@ -21,68 +67,6 @@ definition {
 		}
 	}
 
-	macro goToDefinitionType {
-		var key_definitionType = "${definitionType}";
-		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
-	}
-
-	macro openIndividualAttributeDetails {
-		var key_attributeName = "${attributeName}";
-		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
-	}
-
-	macro addSearchQuerySuccessfully {
-		Click(locator1 = "Button#PLUS");
-		
-		Type(
-			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",			
-			value1 = "${query}");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro addMultipleSearchQuerySuccessfully{
-		var key_queryList = "${query_list}";
-		var flag = "0";
-		var aux = "";
-
-		for (var x : list "${key_queryList}") {
-			if ("${flag}" == "0"){
-				Click(locator1 = "Button#PLUS");
-		
-			Type(
-				locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",			
-				value1 = "${x}");
-				flag = "1"
-			}
-			else {
-				Click(
-					key_query = "${aux}",
-					locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
-
-				Type(
-					key_index = "${flag}",
-					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
-					value1 = "${x}");
-
-					flag = MathUtil.sum("${flag}", "1");	
-			}
-			aux = "${x}";
-		}
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
-	macro viewSearchQuery {
-		AssertElementPresent(
-			key_query = "${query}",
-			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
-	}
-
 	macro deleteSearchQuerySuccessfully {
 		Click(
 			key_query = "${query}",
@@ -93,29 +77,42 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro noViewSearchQuery {
-		AssertElementNotPresent(
-			key_query = "${query}",
-			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
-	}
-
 	macro editSearchQuerySuccessfully {
-
 		Type(
-			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",			
+			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
 			value1 = "${query}");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+	}
 
+	macro goToDefinitionType {
+		var key_definitionType = "${definitionType}";
+		Click(locator1 = "ACDefinitions#DEFINITION_TYPE");
 	}
 
 	macro noViewAddSearchQueryButton {
 		AssertElementNotPresent(
 			key_query = "${query}",
 			locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
-		
+	}
+
+	macro noViewSearchQuery {
+		AssertElementNotPresent(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
+	}
+
+	macro openIndividualAttributeDetails {
+		var key_attributeName = "${attributeName}";
+		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
+	}
+
+	macro viewSearchQuery {
+		AssertElementPresent(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
 }

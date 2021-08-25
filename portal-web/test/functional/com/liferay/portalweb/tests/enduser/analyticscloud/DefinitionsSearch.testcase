@@ -19,7 +19,6 @@ definition {
 	}
 
 	tearDown {
-
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		ACUtils.tearDownAC();
@@ -28,19 +27,16 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
 	@priority = "5"
 	test CanAddSearchQueryParameters {
-
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.viewSearchQuery(query = "Test Query");
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8780 | Test Summary: Delete search query parameters"
 	@priority = "5"
 	test CanDeleteSearchQueryParameters {
-
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
@@ -50,13 +46,11 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.noViewSearchQuery(query = "Test Query");
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8781 | Test Summary: Edit search query parameters"
 	@priority = "4"
 	test CanEditSearchQueryParameters {
-
 		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
@@ -66,7 +60,6 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.viewSearchQuery(query = "Test Edit");
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
@@ -79,7 +72,6 @@ definition {
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 
 		ACDefinitions.noViewAddSearchQueryButton(query = "Test Query 5");
-
 	}
 
 }
