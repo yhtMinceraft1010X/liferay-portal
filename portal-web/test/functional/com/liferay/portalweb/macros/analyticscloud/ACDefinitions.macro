@@ -49,4 +49,20 @@ definition {
 			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
 	}
 
+	macro deleteSearchQuerySuccessfully {
+		Click(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#SEARCH_QUERY_DELETE_BUTTON");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro noViewSearchQuery {
+		AssertElementNotPresent(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
+	}
+
 }
