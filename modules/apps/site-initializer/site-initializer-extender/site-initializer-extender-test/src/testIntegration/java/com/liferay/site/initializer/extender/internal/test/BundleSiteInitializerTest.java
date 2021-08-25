@@ -106,7 +106,7 @@ public class BundleSiteInitializerTest {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
-			"TEST-TEMPLATE-KEY");
+			"TEST TEMPLATE KEY");
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
