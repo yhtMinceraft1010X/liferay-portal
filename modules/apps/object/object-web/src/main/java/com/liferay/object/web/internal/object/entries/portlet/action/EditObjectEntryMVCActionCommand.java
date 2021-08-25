@@ -37,8 +37,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marco Leo
  */
@@ -68,31 +66,13 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private Map<String, Serializable> _getValues(ActionRequest actionRequest) {
-		String ddmFormValues = ParamUtil.getString(
-			actionRequest, "ddmFormValues");
-
-		return (Map<String, Serializable>)JSONFactoryUtil.looseDeserialize(
-			ddmFormValues);
-	}
-
-	private long _getGroupId(ActionRequest actionRequest, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		return objectScopeProvider.getGroupId(
-			_portal.getHttpServletRequest(actionRequest));
-	}
-
 	private void _addOrUpdateObjectEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
+			long objectEntryId = ParamUtil.getLong(
+				actionRequest, "objectEntryId");
 
 			long objectDefinitionId = ParamUtil.getLong(
 				actionRequest, "objectDefinitionId");
@@ -104,7 +84,8 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
 					_getGroupId(actionRequest, objectDefinition),
-					objectDefinition.getObjectDefinitionId(), _getValues(actionRequest),
+					objectDefinition.getObjectDefinitionId(),
+					_getValues(actionRequest),
 					ServiceContextFactory.getInstance(
 						objectDefinition.getClassName(), actionRequest));
 			}
@@ -130,6 +111,26 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 				throw new PortletException(exception);
 			}
 		}
+	}
+
+	private long _getGroupId(
+			ActionRequest actionRequest, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		return objectScopeProvider.getGroupId(
+			_portal.getHttpServletRequest(actionRequest));
+	}
+
+	private Map<String, Serializable> _getValues(ActionRequest actionRequest) {
+		String ddmFormValues = ParamUtil.getString(
+			actionRequest, "ddmFormValues");
+
+		return (Map<String, Serializable>)JSONFactoryUtil.looseDeserialize(
+			ddmFormValues);
 	}
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
