@@ -350,11 +350,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileUtil.createTempFile(url.openStream()), false);
 	}
 
-	private void _addTaxonomyVocabularies(ServiceContext serviceContext)
+	private void _addTaxonomyVocabularies(
+			long groupId, String parentResourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/taxonomy-vocabularies");
+			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -369,40 +371,37 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			Set<String> resourcePathsScope = _servletContext.getResourcePaths(
-				resourcePath);
+			String json = _read(resourcePath);
 
-			if (SetUtil.isEmpty(resourcePathsScope)) {
-				return;
+			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
+				json);
+
+			if (taxonomyVocabulary == null) {
+				_log.error(
+					"Unable to transform taxonomy vocabulary from JSON: " +
+						json);
+
+				continue;
 			}
 
-			for (String resourcePathScope : resourcePathsScope) {
-				String json = _read(resourcePathScope);
-
-				TaxonomyVocabulary taxonomyVocabulary =
-					TaxonomyVocabulary.toDTO(json);
-
-				if (taxonomyVocabulary == null) {
-					_log.error(
-						"Unable to transform taxonomy vocabulary from JSON: " +
-							json);
-
-					continue;
-				}
-
-				if (resourcePathScope.contains("company")) {
-					Group group = _groupLocalService.getCompanyGroup(
-						serviceContext.getCompanyId());
-
-					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-						group.getGroupId(), taxonomyVocabulary);
-				}
-				else if (resourcePathScope.contains("group")) {
-					taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-						serviceContext.getScopeGroupId(), taxonomyVocabulary);
-				}
-			}
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				groupId, taxonomyVocabulary);
 		}
+	}
+
+	private void _addTaxonomyVocabularies(ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
+		_addTaxonomyVocabularies(
+			group.getGroupId(),
+			"/site-initializer/taxonomy-vocabularies/company", serviceContext);
+
+		_addTaxonomyVocabularies(
+			serviceContext.getScopeGroupId(),
+			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
 	}
 
 	private String _read(String resourcePath) throws Exception {
