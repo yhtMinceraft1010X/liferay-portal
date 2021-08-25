@@ -72,29 +72,29 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		long objectDefinitionId = ParamUtil.getLong(
-			actionRequest, "objectDefinitionId");
-
-		long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
-
-		String ddmFormValues = ParamUtil.getString(
-			actionRequest, "ddmFormValues");
-
-		Map<String, Serializable> values =
-			(Map)JSONFactoryUtil.looseDeserialize(ddmFormValues);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
 		try {
+			HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+				actionRequest);
+
+			long objectDefinitionId = ParamUtil.getLong(
+				actionRequest, "objectDefinitionId");
+
+			long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
+
+			String ddmFormValues = ParamUtil.getString(
+				actionRequest, "ddmFormValues");
+
+			Map<String, Serializable> values =
+				(Map)JSONFactoryUtil.looseDeserialize(ddmFormValues);
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
+
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
 					objectScopeProvider.getGroupId(httpServletRequest),
