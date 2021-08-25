@@ -163,13 +163,17 @@ public class ObjectEntriesDetailsDisplayContext {
 			DDMForm ddmForm, ObjectEntry objectEntry)
 		throws PortalException {
 
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (values.isEmpty()) {
+			return null;
+		}
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
-
-		Map<String, Serializable> values = objectEntry.getValues();
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -179,10 +183,6 @@ public class ObjectEntriesDetailsDisplayContext {
 				new UnlocalizedValue(String.valueOf(entry.getValue())));
 
 			ddmFormFieldValues.add(ddmFormFieldValue);
-		}
-
-		if (ddmFormFieldValues.isEmpty()) {
-			return null;
 		}
 
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
