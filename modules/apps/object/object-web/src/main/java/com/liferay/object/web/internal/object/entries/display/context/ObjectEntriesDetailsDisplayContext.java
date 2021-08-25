@@ -39,7 +39,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +110,7 @@ public class ObjectEntriesDetailsDisplayContext {
 
 		if (objectEntry != null) {
 			DDMFormValues ddmFormValues = _getDDMFormValues(
-				ddmForm, objectEntry, _objectRequestHelper.getLocale());
+				ddmForm, objectEntry);
 
 			if (ddmFormValues != null) {
 				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
@@ -131,10 +130,7 @@ public class ObjectEntriesDetailsDisplayContext {
 				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
-			DDMFormField ddmFormField = _getDDMFormField(
-				objectField, _objectRequestHelper.getLocale());
-
-			ddmForm.addDDMFormField(ddmFormField);
+			ddmForm.addDDMFormField(_getDDMFormField(objectField));
 		}
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
@@ -143,17 +139,16 @@ public class ObjectEntriesDetailsDisplayContext {
 		return ddmForm;
 	}
 
-	private DDMFormField _getDDMFormField(
-		ObjectField objectField, Locale locale) {
-
+	private DDMFormField _getDDMFormField(ObjectField objectField) {
 		DDMFormField ddmFormField = new DDMFormField(
 			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
 
 		LocalizedValue ddmFormFieldLabelLocalizedValue = new LocalizedValue(
-			locale);
+			_objectRequestHelper.getLocale());
 
 		ddmFormFieldLabelLocalizedValue.addString(
-			locale, objectField.getLabel(locale));
+			_objectRequestHelper.getLocale(),
+			objectField.getLabel(_objectRequestHelper.getLocale()));
 
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
@@ -163,13 +158,13 @@ public class ObjectEntriesDetailsDisplayContext {
 	}
 
 	private DDMFormValues _getDDMFormValues(
-			DDMForm ddmForm, ObjectEntry objectEntry, Locale locale)
+			DDMForm ddmForm, ObjectEntry objectEntry)
 		throws PortalException {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		ddmFormValues.addAvailableLocale(locale);
-		ddmFormValues.setDefaultLocale(locale);
+		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
+		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
