@@ -19,7 +19,6 @@ import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.client.pagination.Page;
 import com.liferay.headless.admin.list.type.client.pagination.Pagination;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
@@ -32,7 +31,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class ListTypeDefinitionResourceTest
 	extends BaseListTypeDefinitionResourceTestCase {
@@ -79,11 +77,13 @@ public class ListTypeDefinitionResourceTest
 		ListTypeDefinition listTypeDefinition =
 			super.randomListTypeDefinition();
 
-		listTypeDefinition.setName(Collections.singletonMap("en_US", "test"));
+		listTypeDefinition.setName(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
 
 		ListTypeEntry listTypeEntry = new ListTypeEntry();
 
-		listTypeEntry.setName(Collections.singletonMap("en_US", "test"));
+		listTypeEntry.setName(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
 		listTypeEntry.setKey(RandomTestUtil.randomString());
 
 		listTypeDefinition.setListTypeEntries(
