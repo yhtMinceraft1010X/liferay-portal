@@ -115,12 +115,12 @@ public class AccountEntryDisplaySearchContainerFactory {
 
 		params.put("status", _getStatus(navigation));
 
-		String type = ParamUtil.getString(liferayPortletRequest, "type");
-
 		String[] types = {
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON
 		};
+
+		String type = ParamUtil.getString(liferayPortletRequest, "type");
 
 		if (Validator.isNotNull(type) && !type.equals("all")) {
 			params.put("type", type);
