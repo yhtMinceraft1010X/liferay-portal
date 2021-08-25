@@ -11,31 +11,29 @@ definition {
 	setUp {
 		ACUtils.launchAC();
 
-		ACSettings.takeTokenFromAnalyticsCloud();
+		ACNavigation.goToSettings();
 
-		TestCase.setUpPortalInstance();
+		ACSettings.goToDefinitions();
 
-		ACUtils.launchDXP();
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
 	}
 
 	tearDown {
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownDXP();
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8779 | Test Summary: Add search query parameters"
-	@ignore = "true"
 	@priority = "5"
 	test CanAddSearchQueryParameters {
 
-		// TODO LRAC-8779 CanAddSearchQueryParameters pending implementation
+		ACDefinitions.addSearchQuerySuccessfully(query = "Test Query");
+
+		ACDefinitions.goToDefinitionType(definitionType = "Search");
+
+		ACDefinitions.viewSearchQuery(query = "Test Query");
 
 	}
 
@@ -48,7 +46,7 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC- | Test Summary: Edit search query parameters"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8781 | Test Summary: Edit search query parameters"
 	@ignore = "true"
 	@priority = "4"
 	test CanEditSearchQueryParameters {
@@ -57,7 +55,7 @@ definition {
 
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC- | Test Summary: Maximum 5 search query strings"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
 	@ignore = "true"
 	@priority = "4"
 	test CantSearchMoreThanFiveSearchQueryStrings {
