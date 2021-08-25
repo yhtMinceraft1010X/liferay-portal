@@ -83,7 +83,7 @@ public class CustomElementsSourceLocalServiceImpl
 	public CustomElementsSource getCustomElementsSource(String htmlElementName)
 		throws NoSuchSourceException {
 
-		return customElementsSourcePersistence.findByHtmlElementName(
+		return customElementsSourcePersistence.findByHTMLElementName(
 			htmlElementName);
 	}
 
