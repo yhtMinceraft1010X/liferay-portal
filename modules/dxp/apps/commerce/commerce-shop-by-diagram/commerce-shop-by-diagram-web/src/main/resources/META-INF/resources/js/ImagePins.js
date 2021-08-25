@@ -293,6 +293,7 @@ const ImagePins = ({
 				.attr('id', (attr) => attr.id)
 				.attr('label', (attr) => attr.label)
 				.attr('fill', () => `#${addNewPinState.fill}`)
+				.attr('font-size', 4)
 				.attr('linked_to_sku', (attr) => attr.linked_to_sku)
 				.attr('quantity', (attr) => attr.quantity)
 				.attr('r', () => addNewPinState.radius)
@@ -303,10 +304,10 @@ const ImagePins = ({
 				.call(dragHandler);
 
 			cont.append('circle')
-				.attr('fill', () => '#ffffff')
+				.attr('fill', () => 'transparent')
 				.attr('r', () => addNewPinState.radius)
 				.attr('stroke', () => `#${addNewPinState.fill}`)
-				.attr('stroke-width', 2);
+				.attr('stroke-width', 0.5);
 
 			cont.append('text')
 				.text((attr) => attr.label)
@@ -450,7 +451,7 @@ ImagePins.propTypes = {
 			cy: PropTypes.double,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			linked_to_sku: PropTypes.oneOf(['sku', 'diagram', '']),
 			quantity: PropTypes.number,
 			sku: PropTypes.string,
 		}),

@@ -40,8 +40,11 @@ const Diagram = ({
 	pinsEndpoint,
 	productId,
 	spritemap,
+	type,
 	zoomController,
 }) => {
+	const [pinImport, setPinImport] = useState([]);
+	const [svgString, setSvgString] = useState('');
 	const [imageState] = useState(imageURL);
 	const [pinClickHandler, setPinClickHandler] = useState(false);
 	const [addPinHandler, setAddPinHandler] = useState(false);
@@ -75,10 +78,49 @@ const Diagram = ({
 		radius: newPinSettings.defaultRadius,
 	});
 
+	const importPinSchema = () => {
+		const textDatas = [];
+		const pinDatas = [];
+		const parser = new DOMParser();
+		const xmlImage = parser.parseFromString(svgString, 'image/svg+xml');
+		const rootLevel = xmlImage.getElementById('Livello_Testi');
+		if (rootLevel) {
+			const rects = rootLevel.getElementsByTagName('rect');
+			const text = rootLevel.getElementsByTagName('text');
+
+			Array.from(text).map((t) => {
+				textDatas.push({
+					label: t.textContent,
+				});
+			});
+
+			Array.from(rects).map((r, i) => {
+				pinDatas.push({
+					cx: r.attributes.x.value / 2.78,
+					cy: r.attributes.y.value / 2.78,
+					id: i,
+					label: textDatas[i].label,
+				});
+			});
+
+			setPinImport(pinDatas);
+		}
+	};
+
+	useEffect(() => {
+		setCpins(pinImport);
+	}, [pinImport]);
+
+	useEffect(() => {
+		fetch(imageState)
+			.then((response) => response.text())
+			.then((text) => setSvgString(text));
+	}, [imageState]);
+
 	const loadPins = useCallback(
 		() =>
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				HEADERS,
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -96,7 +138,7 @@ const Diagram = ({
 
 	const deletePin = (node) => {
 		fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-			HEADERS,
+			headers: HEADERS,
 			method: 'DELETE',
 		});
 	};
@@ -104,15 +146,15 @@ const Diagram = ({
 	const updatePin = (node) => {
 		if (node.id) {
 			fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
-				HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'PATCH',
 			});
 		}
 		else {
 			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				HEADERS,
 				body: JSON.stringify(node),
+				headers: HEADERS,
 				method: 'POST',
 			});
 		}
@@ -126,9 +168,14 @@ const Diagram = ({
 				queryParam = `?search=${query}`;
 			}
 
-			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
-				HEADERS,
-			})
+			return fetch(
+				queryParam
+					? `${pinsEndpoint}skus/${queryParam}`
+					: `${pinsEndpoint}skus`,
+				{
+					headers: HEADERS,
+				}
+			)
 				.then((response) => response.json())
 				.then((jsonResponse) => {
 					setSkus(jsonResponse.items);
@@ -141,8 +188,8 @@ const Diagram = ({
 				queryParam = `?filter=productType eq ${linkedValue}`;
 			}
 
-			return fetch(`${pinsEndpoint}products/${queryParam}`, {
-				HEADERS,
+			return fetch(`${pinsEndpoint}skus/${queryParam}`, {
+				headers: HEADERS,
 			})
 				.then((response) => response.json())
 				.then((jsonResponse) => {
@@ -175,12 +222,14 @@ const Diagram = ({
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader
 					addNewPinState={addNewPinState}
+					importPinSchema={importPinSchema}
 					isAdmin={isAdmin}
 					namespace={namespace}
 					newPinSettings={newPinSettings}
 					setAddNewPinState={setAddNewPinState}
 					setAddPinHandler={setAddPinHandler}
 					setSelectedOption={setSelectedOption}
+					type={type}
 				/>
 
 				<ImagePins
@@ -251,6 +300,7 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
+			<div id="culo"></div>
 		</div>
 	) : (
 		<div className="border-0 pt-0 sheet taglib-empty-result-message">
@@ -300,9 +350,12 @@ Diagram.defaultProps = {
 			selectedColor: '0B5FFF',
 			useNative: true,
 		},
-		defaultRadius: 15,
+		defaultRadius: 2,
 	},
 	pins: [],
+	pinsEndpoint:
+		'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/',
+	productId: 44206,
 	showTooltip: {
 		details: {
 			cx: null,
@@ -310,12 +363,13 @@ Diagram.defaultProps = {
 			id: null,
 			label: null,
 			linked_to_sku: 'sku',
-			quantity: null,
+			quantity: 1,
 			sku: '',
 		},
 		tooltip: false,
 	},
 	spritemap: './assets/clay/icons.svg',
+	type: 'diagram.type.svg',
 	zoomController: {
 		enable: true,
 		position: {
@@ -388,6 +442,7 @@ Diagram.propTypes = {
 		tooltip: PropTypes.bool,
 	}),
 	spritemap: PropTypes.string,
+	type: PropTypes.oneOf(['diagram.type.svg', 'diagram.type.default']),
 	updatePin: PropTypes.func,
 	zoomController: PropTypes.shape({
 		enable: PropTypes.bool,

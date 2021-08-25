@@ -37,12 +37,14 @@ const AdminTooltip = ({
 	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
 
 	useEffect(() => {
-		searchSkus(sku, linkedValue);
+		if (!sku) {
+			searchSkus(sku, linkedValue);
+		}
 	}, [sku, searchSkus, linkedValue]);
 
 	return (
 		<ClayCard
-			className="admin-tooltip"
+			className="admin-tooltip p-1"
 			style={{
 				left: showTooltip.details.cx,
 				top: showTooltip.details.cy,
@@ -98,7 +100,11 @@ const AdminTooltip = ({
 						<ClayAutocomplete.DropDown active={skus}>
 							<ClayDropDown.ItemList
 								onClick={(event) => {
-									setSku(event.target.innerText);
+									setSku(
+										event.target.innerText.match(
+											/^[\S]*/g
+										)[0]
+									);
 								}}
 							>
 								{skus?.length && (
@@ -113,7 +119,7 @@ const AdminTooltip = ({
 										<ClayAutocomplete.Item
 											key={item.id}
 											match={sku}
-											value={item.sku}
+											value={`${item.sku} - ${item.productName.en_US}`}
 										/>
 									))}
 							</ClayDropDown.ItemList>
@@ -145,9 +151,9 @@ const AdminTooltip = ({
 						onClick={() => {
 							deletePin({
 								id: showTooltip.details.id,
-								number: pinPositionLabel,
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
+								sequence: pinPositionLabel,
 							});
 							setRemovePinHandler({
 								handler: true,
@@ -199,9 +205,9 @@ const AdminTooltip = ({
 						onClick={() => {
 							updatePin({
 								id: showTooltip.details.id,
-								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
+								sequence: parseInt(pinPositionLabel, 10),
 							});
 							setShowTooltip({
 								details: {

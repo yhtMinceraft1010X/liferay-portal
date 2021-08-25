@@ -61,7 +61,7 @@ module.exports = {
 										done({
 											file: path.resolve(
 												__dirname,
-												'../../../node_modules/@clayui/css/src/scss/atlas-variables.scss'
+												'./../../../../../node_modules/@clayui/css/src/scss/atlas-variables.scss'
 											),
 										});
 									}
