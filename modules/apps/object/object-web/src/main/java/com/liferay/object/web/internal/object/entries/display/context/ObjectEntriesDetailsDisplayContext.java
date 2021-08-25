@@ -91,6 +91,18 @@ public class ObjectEntriesDetailsDisplayContext {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setContainerId("editObjectEntry");
+
+		ObjectEntry objectEntry = getObjectEntry();
+
+		if (objectEntry != null) {
+			DDMFormValues ddmFormValues = _getDDMFormValues(
+				ddmForm, objectEntry);
+
+			if (ddmFormValues != null) {
+				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+			}
+		}
+
 		ddmFormRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -105,17 +117,6 @@ public class ObjectEntriesDetailsDisplayContext {
 			liferayPortletResponse.getNamespace());
 
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
-
-		ObjectEntry objectEntry = getObjectEntry();
-
-		if (objectEntry != null) {
-			DDMFormValues ddmFormValues = _getDDMFormValues(
-				ddmForm, objectEntry);
-
-			if (ddmFormValues != null) {
-				ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-			}
-		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
