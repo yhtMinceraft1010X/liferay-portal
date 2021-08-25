@@ -31,4 +31,22 @@ definition {
 		Click(locator1 = "ACDefinitions#ATTRIBUTE_NAME");
 	}
 
+	macro addSearchQuerySuccessfully {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",			
+			value1 = "${query}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewSearchQuery {
+		AssertElementPresent(
+			key_query = "${query}",
+			locator1 = "ACDefinitions#PRESENT_SEARCH_QUERY_INPUT");
+	}
+
 }
