@@ -70,14 +70,15 @@ portletDisplay.setURLBack(backURL);
 
 		current.validate().then((result) => {
 			if (result) {
+				const ddmFormValues = form.querySelector(
+					'#<portlet:namespace />ddmFormValues'
+				);
+
 				const fields = current.getFields();
 
 				const values = fields.reduce(
 					(obj, cur) => Object.assign(obj, {[cur.fieldName]: cur.value}),
 					{}
-				);
-				const ddmFormValues = form.querySelector(
-					'#<portlet:namespace />ddmFormValues'
 				);
 
 				ddmFormValues.value = JSON.stringify(values);
