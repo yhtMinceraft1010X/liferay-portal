@@ -166,7 +166,6 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		ddmFormValues.addAvailableLocale(_objectRequestHelper.getLocale());
-		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
@@ -191,6 +190,8 @@ public class ObjectEntriesDetailsDisplayContext {
 		}
 
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
+
+		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		return ddmFormValues;
 	}
