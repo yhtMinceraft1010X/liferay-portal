@@ -37,6 +37,9 @@ renderResponse.setTitle((customElementsSource == null) ? LanguageUtil.get(reques
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="customElementsSourceId" type="hidden" value="<%= customElementsSourceId %>" />
 
+		<liferay-ui:error exception="<%= CustomElementsSourceHTMLElementNameException.class %>" />
+		<liferay-ui:error exception="<%= DuplicateCustomElementsSourceException.class %>" />
+
 		<aui:model-context bean="<%= customElementsSource %>" model="<%= CustomElementsSource.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">

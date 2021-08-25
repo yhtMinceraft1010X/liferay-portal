@@ -14,7 +14,6 @@
 
 package com.liferay.custom.elements.service.impl;
 
-import com.liferay.custom.elements.exception.NoSuchSourceException;
 import com.liferay.custom.elements.internal.portlet.CustomElementsPortlet;
 import com.liferay.custom.elements.model.CustomElementsPortletDescriptor;
 import com.liferay.custom.elements.model.CustomElementsSource;
@@ -360,18 +359,18 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	private String[] _getCustomElementsSourceURLs(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 
-		try {
-			CustomElementsSource customElementsSource =
-				_customElementsSourceLocalService.getCustomElementsSource(
-					customElementsPortletDescriptor.getHTMLElementName());
+		CustomElementsSource customElementsSource =
+			_customElementsSourceLocalService.fetchCustomElementsSource(
+				customElementsPortletDescriptor.getCompanyId(),
+				customElementsPortletDescriptor.getHTMLElementName());
 
-			String urls = customElementsSource.getURLs();
-
-			return urls.split(StringPool.NEW_LINE);
-		}
-		catch (NoSuchSourceException noSuchSourceException) {
+		if (customElementsSource == null) {
 			return StringPool.EMPTY_ARRAY;
 		}
+
+		String urls = customElementsSource.getURLs();
+
+		return urls.split(StringPool.NEW_LINE);
 	}
 
 	private BundleContext _bundleContext;

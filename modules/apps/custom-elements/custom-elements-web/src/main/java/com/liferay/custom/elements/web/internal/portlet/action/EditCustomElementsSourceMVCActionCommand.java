@@ -14,6 +14,8 @@
 
 package com.liferay.custom.elements.web.internal.portlet.action;
 
+import com.liferay.custom.elements.exception.CustomElementsSourceHTMLElementNameException;
+import com.liferay.custom.elements.exception.DuplicateCustomElementsSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalService;
 import com.liferay.custom.elements.web.internal.constants.CustomElementsPortletKeys;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,31 +53,49 @@ public class EditCustomElementsSourceMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		try {
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String htmlElementName = ParamUtil.getString(
-			actionRequest, "htmlElementName");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String urls = ParamUtil.getString(actionRequest, "urls");
+			String htmlElementName = ParamUtil.getString(
+				actionRequest, "htmlElementName");
+			String name = ParamUtil.getString(actionRequest, "name");
+			String urls = ParamUtil.getString(actionRequest, "urls");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CustomElementsSource.class.getName(), actionRequest);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CustomElementsSource.class.getName(), actionRequest);
 
-		if (cmd.equals(Constants.ADD)) {
-			_customElementsSourceLocalService.addCustomElementsSource(
-				serviceContext.getUserId(), htmlElementName, name, urls,
-				serviceContext);
+			if (cmd.equals(Constants.ADD)) {
+				_customElementsSourceLocalService.addCustomElementsSource(
+					serviceContext.getUserId(), htmlElementName, name, urls,
+					serviceContext);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_customElementsSourceLocalService.updateCustomElementsSource(
+					ParamUtil.getLong(actionRequest, "customElementsSourceId"),
+					htmlElementName, name, urls, serviceContext);
+			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_customElementsSourceLocalService.updateCustomElementsSource(
-				ParamUtil.getLong(actionRequest, "customElementsSourceId"),
-				htmlElementName, name, urls, serviceContext);
-		}
+		catch (Exception exception) {
+			if (exception instanceof
+					CustomElementsSourceHTMLElementNameException ||
+				exception instanceof DuplicateCustomElementsSourceException) {
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+				SessionErrors.add(actionRequest, exception.getClass());
 
-		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else {
+				throw exception;
+			}
 		}
 	}
 

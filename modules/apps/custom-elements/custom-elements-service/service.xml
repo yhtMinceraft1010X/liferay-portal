@@ -63,4 +63,8 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<exceptions>
+		<exception>CustomElementsSourceHTMLElementName</exception>
+		<exception>DuplicateCustomElementsSource</exception>
+	</exceptions>
 </service-builder>

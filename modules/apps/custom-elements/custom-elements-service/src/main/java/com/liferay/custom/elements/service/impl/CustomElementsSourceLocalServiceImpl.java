@@ -14,7 +14,8 @@
 
 package com.liferay.custom.elements.service.impl;
 
-import com.liferay.custom.elements.exception.NoSuchCustomElementsSourceException;
+import com.liferay.custom.elements.exception.CustomElementsSourceHTMLElementNameException;
+import com.liferay.custom.elements.exception.DuplicateCustomElementsSourceException;
 import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.base.CustomElementsSourceLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -60,6 +63,11 @@ public class CustomElementsSourceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		htmlElementName = StringUtil.toLowerCase(
+			StringUtil.trim(htmlElementName));
+
+		_validate(0, htmlElementName);
+
 		long customElementsSourceId = counterLocalService.increment();
 
 		CustomElementsSource customElementsSource =
@@ -80,11 +88,10 @@ public class CustomElementsSourceLocalServiceImpl
 	}
 
 	@Override
-	public CustomElementsSource getCustomElementsSource(
-			long companyId, String htmlElementName)
-		throws NoSuchCustomElementsSourceException {
+	public CustomElementsSource fetchCustomElementsSource(
+		long companyId, String htmlElementName) {
 
-		return customElementsSourcePersistence.findByC_H(
+		return customElementsSourcePersistence.fetchByC_H(
 			companyId, htmlElementName);
 	}
 
@@ -138,6 +145,11 @@ public class CustomElementsSourceLocalServiceImpl
 			long customElementsSourceId, String htmlElementName, String name,
 			String urls, ServiceContext serviceContext)
 		throws PortalException {
+
+		htmlElementName = StringUtil.toLowerCase(
+			StringUtil.trim(htmlElementName));
+
+		_validate(customElementsSourceId, htmlElementName);
 
 		CustomElementsSource customElementsSource =
 			customElementsSourcePersistence.findByPrimaryKey(
@@ -212,6 +224,33 @@ public class CustomElementsSourceLocalServiceImpl
 		}
 
 		return customElementsSources;
+	}
+
+	private void _validate(long customElementsSourceId, String htmlElementName)
+		throws PortalException {
+
+		if (Validator.isNull(htmlElementName)) {
+			throw new CustomElementsSourceHTMLElementNameException(
+				"HTML element name is null");
+		}
+
+		char[] htmlElementNameCharArray = htmlElementName.toCharArray();
+
+		for (char c : htmlElementNameCharArray) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+				throw new CustomElementsSourceHTMLElementNameException(
+					"HTML element name must only contain letters and digits");
+			}
+		}
+
+		CustomElementsSource customElementsSource =
+			customElementsSourcePersistence.fetchByC_H(
+				customElementsSourceId, htmlElementName);
+
+		if (customElementsSource != null) {
+			throw new DuplicateCustomElementsSourceException(
+				"Duplicate HTML element name " + htmlElementName);
+		}
 	}
 
 }
