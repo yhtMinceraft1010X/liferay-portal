@@ -89,9 +89,9 @@ public class ListTypeEntryLocalServiceImpl
 			throw new ListTypeEntryKeyException("Key is null");
 		}
 
-		char[] nameCharArray = key.toCharArray();
+		char[] keyCharArray = key.toCharArray();
 
-		for (char c : nameCharArray) {
+		for (char c : keyCharArray) {
 			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
 				throw new ListTypeEntryKeyException(
 					"Key must only contain letters and digits");
