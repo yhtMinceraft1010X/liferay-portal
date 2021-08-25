@@ -439,16 +439,16 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				continue;
 			}
 
-			List<String> parameterData = StringUtil.split(
+			List<String> parameterNameParts = StringUtil.split(
 				parameterName, CharPool.UNDERLINE);
 
-			if (parameterData.size() != 3) {
+			if (parameterNameParts.size() != 3) {
 				continue;
 			}
 
 			FragmentEntryLink fragmentEntryLink =
 				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-					GetterUtil.getLong(parameterData.get(2)));
+					GetterUtil.getLong(parameterNameParts.get(2)));
 
 			if (fragmentEntryLink == null) {
 				continue;
