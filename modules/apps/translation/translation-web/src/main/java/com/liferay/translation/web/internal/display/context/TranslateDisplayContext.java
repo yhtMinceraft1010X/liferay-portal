@@ -138,10 +138,9 @@ public class TranslateDisplayContext {
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
 			infoField.getLabelInfoLocalizedValue();
 
-		String infoFieldLabel = labelInfoLocalizedValue.getValue(
-			PortalUtil.getLocale(_httpServletRequest));
-
-		return HtmlUtil.escape(infoFieldLabel);
+		return HtmlUtil.escape(
+			labelInfoLocalizedValue.getValue(
+				PortalUtil.getLocale(_httpServletRequest)));
 	}
 
 	public List<InfoField> getInfoFields(InfoFieldSetEntry infoFieldSetEntry) {
