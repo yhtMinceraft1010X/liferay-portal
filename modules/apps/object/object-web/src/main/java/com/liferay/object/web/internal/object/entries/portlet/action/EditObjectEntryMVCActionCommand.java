@@ -68,6 +68,14 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private Map<String, Serializable> _getValues(ActionRequest actionRequest) {
+		String ddmFormValues = ParamUtil.getString(
+			actionRequest, "ddmFormValues");
+
+		return (Map<String, Serializable>)JSONFactoryUtil.looseDeserialize(
+			ddmFormValues);
+	}
+
 	private void _addOrUpdateObjectEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -81,12 +89,6 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
 
-			String ddmFormValues = ParamUtil.getString(
-				actionRequest, "ddmFormValues");
-
-			Map<String, Serializable> values =
-				(Map)JSONFactoryUtil.looseDeserialize(ddmFormValues);
-
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectDefinitionId);
@@ -98,13 +100,13 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
 					objectScopeProvider.getGroupId(httpServletRequest),
-					objectDefinition.getObjectDefinitionId(), values,
+					objectDefinition.getObjectDefinitionId(), _getValues(actionRequest),
 					ServiceContextFactory.getInstance(
 						objectDefinition.getClassName(), httpServletRequest));
 			}
 			else {
 				_objectEntryService.updateObjectEntry(
-					objectEntryId, values,
+					objectEntryId, _getValues(actionRequest),
 					ServiceContextFactory.getInstance(
 						objectDefinition.getClassName(), httpServletRequest));
 			}
