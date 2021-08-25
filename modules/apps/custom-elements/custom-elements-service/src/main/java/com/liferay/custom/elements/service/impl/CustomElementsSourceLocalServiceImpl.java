@@ -80,11 +80,12 @@ public class CustomElementsSourceLocalServiceImpl
 	}
 
 	@Override
-	public CustomElementsSource getCustomElementsSource(String htmlElementName)
+	public CustomElementsSource getCustomElementsSource(
+			long companyId, String htmlElementName)
 		throws NoSuchCustomElementsSourceException {
 
-		return customElementsSourcePersistence.findByHTMLElementName(
-			htmlElementName);
+		return customElementsSourcePersistence.findByC_H(
+			companyId, htmlElementName);
 	}
 
 	@Override
