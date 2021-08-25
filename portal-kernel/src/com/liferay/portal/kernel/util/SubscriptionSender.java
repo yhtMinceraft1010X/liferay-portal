@@ -89,11 +89,13 @@ public class SubscriptionSender implements Serializable {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryClassName, assetEntryClassPK);
 
-		if (assetEntry != null) {
-			for (AssetTag assetTag : assetEntry.getTags()) {
-				addPersistedSubscribers(
-					AssetTag.class.getName(), assetTag.getTagId());
-			}
+		if (assetEntry == null) {
+			return;
+		}
+
+		for (AssetTag assetTag : assetEntry.getTags()) {
+			addPersistedSubscribers(
+				AssetTag.class.getName(), assetTag.getTagId());
 		}
 	}
 

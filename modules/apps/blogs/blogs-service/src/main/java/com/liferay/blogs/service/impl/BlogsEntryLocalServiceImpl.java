@@ -2032,10 +2032,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getEntryId());
-
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getGroupId());
-
 		subscriptionSender.addPersistedSubscribers(
 			BlogsEntry.class.getName(), entry.getEntryId());
 

@@ -255,7 +255,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(
 			DLFileEntry.class.getName(), dlFileEntry.getPrimaryKey());
-
 		subscriptionSender.addPersistedSubscribers(
 			DLFolder.class.getName(), fileVersion.getGroupId());
 
