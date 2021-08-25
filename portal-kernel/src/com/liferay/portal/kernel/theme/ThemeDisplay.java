@@ -936,11 +936,9 @@ public class ThemeDisplay
 	public String getThemeSetting(String key) {
 		Theme theme = getTheme();
 
-		String device = theme.getDevice();
-
 		Layout layout = getLayout();
 
-		return layout.getThemeSetting(key, device);
+		return layout.getThemeSetting(key, theme.getDevice());
 	}
 
 	/**

@@ -1257,8 +1257,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			creatorUserName = creatorUser.getFullName();
 		}
 
-		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
-
 		Contact contact = contactPersistence.create(user.getContactId());
 
 		contact.setCompanyId(user.getCompanyId());
@@ -1274,7 +1272,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
 		contact.setMale(male);
-		contact.setBirthday(birthday);
+		contact.setBirthday(
+			getBirthday(birthdayMonth, birthdayDay, birthdayYear));
 		contact.setJobTitle(jobTitle);
 
 		contactPersistence.update(contact, serviceContext);
@@ -5538,8 +5537,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Contact
 
-		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
-
 		long contactId = user.getContactId();
 
 		Contact contact = contactPersistence.fetchByPrimaryKey(contactId);
@@ -5562,7 +5559,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
 		contact.setMale(male);
-		contact.setBirthday(birthday);
+		contact.setBirthday(
+			getBirthday(birthdayMonth, birthdayDay, birthdayYear));
 		contact.setSmsSn(smsSn);
 		contact.setFacebookSn(facebookSn);
 		contact.setJabberSn(jabberSn);
