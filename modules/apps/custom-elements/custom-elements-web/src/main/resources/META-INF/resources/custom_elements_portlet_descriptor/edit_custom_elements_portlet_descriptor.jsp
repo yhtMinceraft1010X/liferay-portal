@@ -22,7 +22,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 CustomElementsPortletDescriptor customElementsPortletDescriptor = (CustomElementsPortletDescriptor)request.getAttribute(CustomElementsWebKeys.CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR);
 
 long customElementsPortletDescriptorId = BeanParamUtil.getLong(customElementsPortletDescriptor, request, "customElementsPortletDescriptorId");
-String htmlElementName = BeanParamUtil.getString(customElementsPortletDescriptor, request, "HTMLElementName");
+
+String htmlElementName = ParamUtil.getString(request, "htmlElementName", BeanPropertiesUtil.getString(customElementsPortletDescriptor, "HTMLElementName"));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -44,7 +45,7 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 			<aui:fieldset>
 				<aui:input name="name" />
 
-				<aui:select name="HTMLElementName" showEmptyOption="<%= false %>">
+				<aui:select name="htmlElementName" showEmptyOption="<%= false %>">
 
 					<%
 					for (CustomElementsSource customElementsSource : customElementsPortletDescriptorDisplayContext.getCustomElementSources()) {
@@ -62,7 +63,7 @@ renderResponse.setTitle((customElementsPortletDescriptor == null) ? LanguageUtil
 
 				<aui:input helpMessage="properties-help" name="properties" type="textarea" />
 
-				<aui:input helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea" />
+				<aui:input fieldParam="cssURLs" helpMessage="css-urls-help" label="css-urls" name="CSSURLs" type="textarea" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

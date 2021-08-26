@@ -22,6 +22,7 @@ page import="com.liferay.custom.elements.web.internal.constants.CustomElementsCl
 page import="com.liferay.custom.elements.web.internal.constants.CustomElementsWebKeys" %><%@
 page import="com.liferay.custom.elements.web.internal.display.context.CustomElementsPortletDescriptorDisplayContext" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
