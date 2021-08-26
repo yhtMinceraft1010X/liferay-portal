@@ -96,15 +96,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchEntryException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, exception.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/admin/error.jsp");
-			}
-			else if (exception instanceof DuplicateRemoteAppEntryURLException) {
+			if (exception instanceof DuplicateRemoteAppEntryURLException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
