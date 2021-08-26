@@ -94,7 +94,7 @@ public class ObjectDefinitionGraphQLTest {
 				_objectDefinition.getObjectDefinitionId());
 
 		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_objectFieldName, "peter@liferay.com"
