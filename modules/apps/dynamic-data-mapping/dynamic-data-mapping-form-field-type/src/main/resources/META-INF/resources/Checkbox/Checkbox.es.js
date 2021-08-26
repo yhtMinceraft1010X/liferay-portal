@@ -14,12 +14,13 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const Switcher = ({
-	checked,
+	checked: initialChecked,
 	disabled,
 	label,
 	name,
@@ -28,7 +29,15 @@ const Switcher = ({
 	showLabel,
 	showMaximumRepetitionsInfo,
 	systemSettingsURL,
+	visible,
 }) => {
+	const [checked, setChecked] = useSyncValue(initialChecked, true);
+
+	useEffect(() => {
+		setChecked(initialChecked);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [disabled, visible]);
+
 	return (
 		<>
 			<label className="ddm-toggle-switch toggle-switch">
@@ -37,8 +46,9 @@ const Switcher = ({
 					className="toggle-switch-check"
 					disabled={disabled}
 					name={name}
-					onChange={({target: {checked}}) => {
-						onChange(null, checked);
+					onChange={(event) => {
+						setChecked(event.target.checked);
+						onChange(event, event.target.checked);
 					}}
 					type="checkbox"
 					value={true}
@@ -84,7 +94,7 @@ const Switcher = ({
 };
 
 const Checkbox = ({
-	checked,
+	checked: initialChecked,
 	disabled,
 	label,
 	name,
@@ -92,14 +102,17 @@ const Checkbox = ({
 	required,
 	showLabel,
 }) => {
+	const [checked, setChecked] = useState(initialChecked);
+
 	return (
 		<ClayCheckbox
 			checked={checked}
 			disabled={disabled}
 			label={showLabel && label}
 			name={name}
-			onChange={({target: {checked}}) => {
-				onChange(null, checked);
+			onChange={(event) => {
+				setChecked(event.target.checked);
+				onChange(event, event.target.checked);
 			}}
 		>
 			{showLabel && required && (

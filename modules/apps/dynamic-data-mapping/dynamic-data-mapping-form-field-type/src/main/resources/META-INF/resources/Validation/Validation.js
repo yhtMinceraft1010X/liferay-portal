@@ -160,7 +160,7 @@ const ValidationWrapper = ({
 			label={label}
 			name={name}
 			onBlur={onBlur}
-			onChange={(value) => onChange(null, value)}
+			onChange={(value) => onChange({}, value)}
 			readOnly={readOnly}
 			validation={validation}
 			value={value}

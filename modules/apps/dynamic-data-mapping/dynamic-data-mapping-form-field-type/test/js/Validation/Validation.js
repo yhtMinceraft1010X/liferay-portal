@@ -108,7 +108,7 @@ describe('Validation', () => {
 
 		userEvent.click(inputCheckbox);
 
-		expect(onChange).toHaveBeenCalledWith(null, {
+		expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
 			enableValidation: true,
 			errorMessage: {
 				en_US: undefined,
@@ -158,7 +158,7 @@ describe('Validation', () => {
 
 		userEvent.click(inputCheckbox);
 
-		expect(onChange).toHaveBeenCalledWith(null, {
+		expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
 			enableValidation: true,
 			errorMessage: {
 				en_US: undefined,
@@ -208,7 +208,7 @@ describe('Validation', () => {
 
 		userEvent.click(inputCheckbox);
 
-		expect(onChange).toHaveBeenCalledWith(null, {
+		expect(onChange).toHaveBeenCalledWith(expect.any(Object), {
 			enableValidation: true,
 			errorMessage: {
 				en_US: undefined,
