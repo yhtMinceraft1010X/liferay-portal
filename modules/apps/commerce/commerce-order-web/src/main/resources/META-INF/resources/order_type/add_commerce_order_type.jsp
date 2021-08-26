@@ -18,10 +18,6 @@
 
 <%
 CommerceOrderTypeDisplayContext commerceOrderTypeDisplayContext = (CommerceOrderTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-PortletURL editCommerceOrderTypePortletURL = commerceOrderTypeDisplayContext.getEditCommerceOrderTypeRenderURL();
-
-String defaultLanguageId = LocaleUtil.toLanguageId(locale);
 %>
 
 <portlet:actionURL name="/commerce_order_type/edit_commerce_order_type" var="editCommerceOrderTypeActionURL" />
@@ -38,9 +34,9 @@ String defaultLanguageId = LocaleUtil.toLanguageId(locale);
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"defaultLanguageId", defaultLanguageId
+				"defaultLanguageId", themeDisplay.getLanguageId()
 			).put(
-				"editCommerceOrderTypePortletURL", editCommerceOrderTypePortletURL.toString()
+				"editCommerceOrderTypePortletURL", String.valueOf(commerceOrderTypeDisplayContext.getEditCommerceOrderTypeRenderURL())
 			).build()
 		%>'
 		module="js/addCommerceOrderType"

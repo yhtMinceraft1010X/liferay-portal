@@ -32,9 +32,9 @@ boolean hasPermission = commerceOrderTypeQualifiersDisplayContext.hasPermission(
 <aui:form action="<%= editCommerceOrderTypeQualifiersActionURL %>" cssClass="pt-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceOrderType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="channelQualifiers" type="hidden" value="<%= channelQualifiers %>" />
-	<aui:input name="commerceOrderTypeId" type="hidden" value="<%= commerceOrderTypeId %>" />
 	<aui:input name="externalReferenceCode" type="hidden" value="<%= commerceOrderType.getExternalReferenceCode() %>" />
+	<aui:input name="commerceOrderTypeId" type="hidden" value="<%= commerceOrderTypeId %>" />
+	<aui:input name="channelQualifiers" type="hidden" value="<%= channelQualifiers %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<aui:model-context bean="<%= commerceOrderType %>" model="<%= CommerceOrderType.class %>" />

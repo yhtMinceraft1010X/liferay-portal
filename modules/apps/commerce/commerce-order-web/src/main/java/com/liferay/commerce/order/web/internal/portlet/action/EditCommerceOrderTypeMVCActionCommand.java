@@ -62,28 +62,21 @@ public class EditCommerceOrderTypeMVCActionCommand
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				String externalReferenceCode = ParamUtil.getString(
 					actionRequest, "externalReferenceCode");
-
 				long commerceOrderTypeId = ParamUtil.getLong(
 					actionRequest, "commerceOrderTypeId");
 
 				Map<Locale, String> nameMap =
 					LocalizationUtil.getLocalizationMap(actionRequest, "name");
-
 				Map<Locale, String> descriptionMap =
 					LocalizationUtil.getLocalizationMap(
 						actionRequest, "description");
-
 				boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
 				int displayDateMonth = ParamUtil.getInteger(
 					actionRequest, "displayDateMonth");
-
 				int displayDateDay = ParamUtil.getInteger(
 					actionRequest, "displayDateDay");
-
 				int displayDateYear = ParamUtil.getInteger(
 					actionRequest, "displayDateYear");
-
 				int displayDateHour = ParamUtil.getInteger(
 					actionRequest, "displayDateHour");
 
@@ -96,19 +89,14 @@ public class EditCommerceOrderTypeMVCActionCommand
 
 				int displayDateMinute = ParamUtil.getInteger(
 					actionRequest, "displayDateMinute");
-
 				int displayOrder = ParamUtil.getInteger(
 					actionRequest, "displayOrder");
-
 				int expirationDateMonth = ParamUtil.getInteger(
 					actionRequest, "expirationDateMonth");
-
 				int expirationDateDay = ParamUtil.getInteger(
 					actionRequest, "expirationDateDay");
-
 				int expirationDateYear = ParamUtil.getInteger(
 					actionRequest, "expirationDateYear");
-
 				int expirationDateHour = ParamUtil.getInteger(
 					actionRequest, "expirationDateHour");
 
@@ -121,7 +109,6 @@ public class EditCommerceOrderTypeMVCActionCommand
 
 				int expirationDateMinute = ParamUtil.getInteger(
 					actionRequest, "expirationDateMinute");
-
 				boolean neverExpire = ParamUtil.getBoolean(
 					actionRequest, "neverExpire");
 
