@@ -383,13 +383,11 @@ public class CustomElementsSourceLocalServiceUtil {
 
 	public static CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
-			String urls,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			String urls)
 		throws PortalException {
 
 		return getService().updateCustomElementsSource(
-			customElementsSourceId, htmlElementName, name, urls,
-			serviceContext);
+			customElementsSourceId, htmlElementName, name, urls);
 	}
 
 	public static CustomElementsSourceLocalService getService() {

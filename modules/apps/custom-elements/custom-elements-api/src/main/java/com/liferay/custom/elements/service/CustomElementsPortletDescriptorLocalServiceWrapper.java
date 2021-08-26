@@ -58,15 +58,15 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 	@Override
 	public com.liferay.custom.elements.model.CustomElementsPortletDescriptor
 			addCustomElementsPortletDescriptor(
-				String cssURLs, String htmlElementName, boolean instanceable,
-				String name, String properties,
+				long userId, String cssURLs, String htmlElementName,
+				boolean instanceable, String name, String properties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsPortletDescriptorLocalService.
 			addCustomElementsPortletDescriptor(
-				cssURLs, htmlElementName, instanceable, name, properties,
-				serviceContext);
+				userId, cssURLs, htmlElementName, instanceable, name,
+				properties, serviceContext);
 	}
 
 	/**
@@ -471,14 +471,13 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 			updateCustomElementsPortletDescriptor(
 				long customElementsSourceId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
-				String properties,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsPortletDescriptorLocalService.
 			updateCustomElementsPortletDescriptor(
 				customElementsSourceId, cssURLs, htmlElementName, instanceable,
-				name, properties, serviceContext);
+				name, properties);
 	}
 
 	@Override

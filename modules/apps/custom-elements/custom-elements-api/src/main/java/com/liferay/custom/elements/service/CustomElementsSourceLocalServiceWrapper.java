@@ -442,13 +442,11 @@ public class CustomElementsSourceLocalServiceWrapper
 	public com.liferay.custom.elements.model.CustomElementsSource
 			updateCustomElementsSource(
 				long customElementsSourceId, String htmlElementName,
-				String name, String urls,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				String name, String urls)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsSourceLocalService.updateCustomElementsSource(
-			customElementsSourceId, htmlElementName, name, urls,
-			serviceContext);
+			customElementsSourceId, htmlElementName, name, urls);
 	}
 
 	@Override
