@@ -17,9 +17,10 @@ package com.liferay.custom.elements.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.custom.elements.exception.CustomElementsSourceHTMLElementNameException;
 import com.liferay.custom.elements.exception.DuplicateCustomElementsSourceException;
+import com.liferay.custom.elements.model.CustomElementsSource;
 import com.liferay.custom.elements.service.CustomElementsSourceLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -43,39 +44,11 @@ public class CustomElementsSourceLocalServiceTest {
 
 	@Test
 	public void testAddCustomElementsSource() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		// No CustomElementSource exists with the same HTML element name
-
-		try {
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), "vanilla-counter",
-				"Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
-
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), "vanilla-counter",
-				"Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
-
-			Assert.fail();
-		}
-		catch (DuplicateCustomElementsSourceException
-					duplicateCustomElementsSourceException) {
-
-			Assert.assertEquals(
-				"Duplicate HTML element name vanilla-counter",
-				duplicateCustomElementsSourceException.getMessage());
-		}
 
 		// HTML element name is null
 
 		try {
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), null, "Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
+			_testAddCustomElementsSource(null);
 
 			Assert.fail();
 		}
@@ -87,13 +60,25 @@ public class CustomElementsSourceLocalServiceTest {
 				customElementsSourceHTMLElementNameException.getMessage());
 		}
 
-		// HTML element name must not have uppercase letters
+		// HTML element name must start with a lowercase letter
 
 		try {
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), "vanilla-COUNTer",
-				"Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
+			_testAddCustomElementsSource("Test");
+
+			Assert.fail();
+		}
+		catch (CustomElementsSourceHTMLElementNameException
+					customElementsSourceHTMLElementNameException) {
+
+			Assert.assertEquals(
+				"HTML element name must start with a lowercase letter",
+				customElementsSourceHTMLElementNameException.getMessage());
+		}
+
+		// HTML element name must only contain lowercase letters or hyphens
+
+		try {
+			_testAddCustomElementsSource("t st");
 
 			Assert.fail();
 		}
@@ -106,13 +91,8 @@ public class CustomElementsSourceLocalServiceTest {
 				customElementsSourceHTMLElementNameException.getMessage());
 		}
 
-		// HTML element name must start with lowercase letter
-
 		try {
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), "Vanilla-counter",
-				"Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
+			_testAddCustomElementsSource("t3st");
 
 			Assert.fail();
 		}
@@ -120,17 +100,29 @@ public class CustomElementsSourceLocalServiceTest {
 					customElementsSourceHTMLElementNameException) {
 
 			Assert.assertEquals(
-				"HTML element name must start with a lowercase letter",
+				"HTML element name must only contain lowercase letters or " +
+					"hyphens",
+				customElementsSourceHTMLElementNameException.getMessage());
+		}
+
+		try {
+			_testAddCustomElementsSource("tEst");
+
+			Assert.fail();
+		}
+		catch (CustomElementsSourceHTMLElementNameException
+					customElementsSourceHTMLElementNameException) {
+
+			Assert.assertEquals(
+				"HTML element name must only contain lowercase letters or " +
+					"hyphens",
 				customElementsSourceHTMLElementNameException.getMessage());
 		}
 
 		// HTML element name must contain at least one hyphen
 
 		try {
-			CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
-				TestPropsValues.getUserId(), "vanillacounter",
-				"Vanilla Counter",
-				"http://liferay.com/vanilla-counter/index.js", serviceContext);
+			_testAddCustomElementsSource("test");
 
 			Assert.fail();
 		}
@@ -140,6 +132,49 @@ public class CustomElementsSourceLocalServiceTest {
 			Assert.assertEquals(
 				"HTML element name must contain at least one hyphen",
 				customElementsSourceHTMLElementNameException.getMessage());
+		}
+
+		// Duplicate HTML element name
+
+		CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
+			TestPropsValues.getUserId(), "test-test",
+			RandomTestUtil.randomString(), "http://abc.com/def.js",
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		try {
+			_testAddCustomElementsSource("test-test");
+
+			Assert.fail();
+		}
+		catch (DuplicateCustomElementsSourceException
+					duplicateCustomElementsSourceException) {
+
+			Assert.assertEquals(
+				"Duplicate HTML element name test-test",
+				duplicateCustomElementsSourceException.getMessage());
+		}
+	}
+
+	private void _testAddCustomElementsSource(String htmlElementName)
+		throws Exception {
+
+		CustomElementsSource customElementsSource = null;
+
+		try {
+			customElementsSource =
+				CustomElementsSourceLocalServiceUtil.addCustomElementsSource(
+					TestPropsValues.getUserId(), htmlElementName,
+					RandomTestUtil.randomString(), "http://abc.com/def.js",
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						TestPropsValues.getUserId()));
+		}
+		finally {
+			if (customElementsSource != null) {
+				CustomElementsSourceLocalServiceUtil.deleteCustomElementsSource(
+					customElementsSource);
+			}
 		}
 	}
 
