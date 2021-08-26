@@ -152,7 +152,7 @@ const TranslationAdminContent = ({
 						title={Liferay.Language.get('success')}
 					>
 						{Liferay.Util.sub(
-							Liferay.Language.get('translation-deleted'),
+							Liferay.Language.get('translation-was-deleted'),
 							availableLocales.find(
 								(availableLocale) =>
 									availableLocale.id === lastDeletedLocaleId
