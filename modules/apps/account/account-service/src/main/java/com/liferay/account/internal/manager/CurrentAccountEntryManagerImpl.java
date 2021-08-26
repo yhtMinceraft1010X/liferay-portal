@@ -21,15 +21,11 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -50,45 +46,47 @@ public class CurrentAccountEntryManagerImpl
 	public AccountEntry getCurrentAccountEntry(long groupId, long userId)
 		throws PortalException {
 
-		AccountEntry accountEntry = _retrieveFromSession(groupId);
+		AccountEntry accountEntry = null;
 
-		if (_isValid(accountEntry)) {
-			return accountEntry;
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+		long currentAccountEntryId = GetterUtil.getLong(
+			httpSession.getAttribute(
+				AccountWebKeys.CURRENT_ACCOUNT_ENTRY_ID + groupId));
+
+		if (currentAccountEntryId > 0) {
+			accountEntry = _accountEntryLocalService.fetchAccountEntry(
+				currentAccountEntryId);
 		}
 
-		accountEntry = _retrieveFromPreferences(groupId, userId);
+		if ((accountEntry == null) ||
+			!Objects.equals(
+				WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus())) {
 
-		if (_isValid(accountEntry)) {
-			_storeInSession(accountEntry.getAccountEntryId(), groupId);
+			accountEntry = _getAccountEntry(userId);
 
-			return accountEntry;
+			if (accountEntry == null) {
+				setCurrentAccountEntry(-1, groupId, userId);
+			}
+			else {
+				setCurrentAccountEntry(
+					accountEntry.getAccountEntryId(), groupId, userId);
+			}
 		}
 
-		accountEntry = _getDefaultAccountEntry(userId);
-
-		if (_isValid(accountEntry)) {
-			setCurrentAccountEntry(
-				accountEntry.getAccountEntryId(), groupId, userId);
-
-			return accountEntry;
-		}
-
-		setCurrentAccountEntry(-1, groupId, userId);
-
-		return null;
+		return accountEntry;
 	}
 
 	public void setCurrentAccountEntry(
 		long accountEntryId, long groupId, long userId) {
 
-		_storeInSession(accountEntryId, groupId);
+		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
 
-		_storeInPreferences(accountEntryId, groupId, userId);
+		httpSession.setAttribute(
+			AccountWebKeys.CURRENT_ACCOUNT_ENTRY_ID + groupId, accountEntryId);
 	}
 
-	private AccountEntry _getDefaultAccountEntry(long userId)
-		throws PortalException {
-
+	private AccountEntry _getAccountEntry(long userId) throws PortalException {
 		User user = _userLocalService.fetchUser(userId);
 
 		if ((user == null) || user.isDefaultUser()) {
@@ -113,87 +111,11 @@ public class CurrentAccountEntryManagerImpl
 		return null;
 	}
 
-	private String _getKey(long groupId) {
-		return AccountWebKeys.CURRENT_ACCOUNT_ENTRY_ID + groupId;
-	}
-
-	private PortalPreferences _getPortalPreferences(long userId) {
-		return _portletPreferencesFactory.getPortalPreferences(userId, true);
-	}
-
-	private boolean _isValid(AccountEntry accountEntry) {
-		if ((accountEntry != null) &&
-			Objects.equals(
-				WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private AccountEntry _retrieveFromPreferences(long groupId, long userId) {
-		PortalPreferences portalPreferences = _getPortalPreferences(userId);
-
-		long accountEntryId = GetterUtil.getLong(
-			portalPreferences.getValue(
-				AccountEntry.class.getName(), _getKey(groupId)));
-
-		if (accountEntryId > 0) {
-			return _accountEntryLocalService.fetchAccountEntry(accountEntryId);
-		}
-
-		return null;
-	}
-
-	private AccountEntry _retrieveFromSession(long groupId) {
-		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
-
-		if (httpSession == null) {
-			return null;
-		}
-
-		long currentAccountEntryId = GetterUtil.getLong(
-			httpSession.getAttribute(_getKey(groupId)));
-
-		return _accountEntryLocalService.fetchAccountEntry(
-			currentAccountEntryId);
-	}
-
-	private void _storeInPreferences(
-		long accountEntryId, long groupId, long userId) {
-
-		PortalPreferences portalPreferences = _getPortalPreferences(userId);
-
-		portalPreferences.setValue(
-			AccountEntry.class.getName(), _getKey(groupId),
-			String.valueOf(accountEntryId));
-
-		_portalPreferencesLocalService.updatePreferences(
-			userId, PortletKeys.PREFS_OWNER_TYPE_USER, portalPreferences);
-	}
-
-	private void _storeInSession(long accountEntryId, long groupId) {
-		HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
-
-		if (httpSession == null) {
-			return;
-		}
-
-		httpSession.setAttribute(_getKey(groupId), accountEntryId);
-	}
-
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalPreferencesLocalService _portalPreferencesLocalService;
-
-	@Reference
-	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;
