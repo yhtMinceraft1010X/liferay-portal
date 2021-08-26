@@ -143,27 +143,27 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		try {
 			URL url = servletContext.getResource("package.json");
 
-			if (url != null) {
-				try (InputStream inputStream = url.openStream()) {
-					JSONObject jsonObject = _jsonFactory.createJSONObject(
-						StringUtil.read(inputStream));
-
-					String moduleName = jsonObject.getString("name");
-					String moduleVersion = jsonObject.getString("version");
-
-					String moduleMainFile = jsonObject.getString("main");
-
-					if (Validator.isNull(moduleMainFile)) {
-						moduleMainFile = "index.js";
-					}
-
-					return StringBundler.concat(
-						moduleName, "@", moduleVersion, "/",
-						ModuleNameUtil.toModuleName(moduleMainFile));
-				}
+			if (url == null) {
+				return null;
 			}
 
-			return null;
+			try (InputStream inputStream = url.openStream()) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					StringUtil.read(inputStream));
+
+				String moduleName = jsonObject.getString("name");
+				String moduleVersion = jsonObject.getString("version");
+
+				String moduleMainFile = jsonObject.getString("main");
+
+				if (Validator.isNull(moduleMainFile)) {
+					moduleMainFile = "index.js";
+				}
+
+				return StringBundler.concat(
+					moduleName, "@", moduleVersion, "/",
+					ModuleNameUtil.toModuleName(moduleMainFile));
+			}
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
