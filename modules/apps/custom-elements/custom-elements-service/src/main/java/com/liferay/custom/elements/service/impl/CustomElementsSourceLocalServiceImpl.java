@@ -250,11 +250,11 @@ public class CustomElementsSourceLocalServiceImpl
 				"HTML element name must start with a lowercase letter");
 		}
 
-		boolean dashFound = false;
+		boolean containsDash = false;
 
 		for (char c : htmlElementNameCharArray) {
 			if (c == CharPool.DASH) {
-				dashFound = true;
+				containsDash = true;
 			}
 
 			if (!_isValidHTMLElementNameChar(c)) {
@@ -264,7 +264,7 @@ public class CustomElementsSourceLocalServiceImpl
 			}
 		}
 
-		if (!dashFound) {
+		if (!containsDash) {
 			throw new CustomElementsSourceHTMLElementNameException(
 				"HTML element name must contain at least one hyphen");
 		}
