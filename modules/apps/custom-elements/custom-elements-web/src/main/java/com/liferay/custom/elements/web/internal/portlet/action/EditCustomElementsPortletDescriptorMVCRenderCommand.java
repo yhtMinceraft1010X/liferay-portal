@@ -53,8 +53,8 @@ public class EditCustomElementsPortletDescriptorMVCRenderCommand
 				CustomElementsWebKeys.
 					CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR_DISPLAY_CONTEXT,
 				new CustomElementsPortletDescriptorDisplayContext(
-					renderRequest, renderResponse,
-					_customElementsSourceLocalService));
+					_customElementsSourceLocalService, renderRequest,
+					renderResponse));
 
 			long customElementsPortletDescriptorId = ParamUtil.getLong(
 				renderRequest, "customElementsPortletDescriptorId");

@@ -39,12 +39,12 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomElementsPortletDescriptorDisplayContext {
 
 	public CustomElementsPortletDescriptorDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		CustomElementsSourceLocalService customElementsSourceLocalService) {
+		CustomElementsSourceLocalService customElementsSourceLocalService,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_customElementsSourceLocalService = customElementsSourceLocalService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_customElementsSourceLocalService = customElementsSourceLocalService;
 	}
 
 	public CreationMenu getCreationMenu() {

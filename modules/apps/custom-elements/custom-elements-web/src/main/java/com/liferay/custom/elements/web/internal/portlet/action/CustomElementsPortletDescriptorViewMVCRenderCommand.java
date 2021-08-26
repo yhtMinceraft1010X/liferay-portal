@@ -50,8 +50,8 @@ public class CustomElementsPortletDescriptorViewMVCRenderCommand
 			CustomElementsWebKeys.
 				CUSTOM_ELEMENTS_PORTLET_DESCRIPTOR_DISPLAY_CONTEXT,
 			new CustomElementsPortletDescriptorDisplayContext(
-				renderRequest, renderResponse,
-				_customElementsSourceLocalService));
+				_customElementsSourceLocalService, renderRequest,
+				renderResponse));
 
 		return "/custom_elements_portlet_descriptor/view.jsp";
 	}
