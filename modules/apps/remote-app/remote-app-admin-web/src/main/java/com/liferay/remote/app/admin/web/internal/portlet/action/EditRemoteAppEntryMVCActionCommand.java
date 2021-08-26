@@ -16,7 +16,6 @@ package com.liferay.remote.app.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -26,8 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.admin.web.internal.RemoteAppPortletRegistrar;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminPortletKeys;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryURLException;
-import com.liferay.remote.app.exception.NoSuchEntryException;
+import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -96,7 +94,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateRemoteAppEntryURLException) {
+			if (exception instanceof DuplicateRemoteAppEntryException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {

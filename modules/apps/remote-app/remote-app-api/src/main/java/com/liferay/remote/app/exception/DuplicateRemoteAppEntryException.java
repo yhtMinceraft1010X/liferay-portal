@@ -14,25 +14,25 @@
 
 package com.liferay.remote.app.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchEntryException extends NoSuchModelException {
+public class DuplicateRemoteAppEntryException extends PortalException {
 
-	public NoSuchEntryException() {
+	public DuplicateRemoteAppEntryException() {
 	}
 
-	public NoSuchEntryException(String msg) {
+	public DuplicateRemoteAppEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEntryException(String msg, Throwable throwable) {
+	public DuplicateRemoteAppEntryException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchEntryException(Throwable throwable) {
+	public DuplicateRemoteAppEntryException(Throwable throwable) {
 		super(throwable);
 	}
 

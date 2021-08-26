@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.remote.app.exception.NoSuchEntryException;
+import com.liferay.remote.app.exception.NoSuchRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalServiceUtil;
 import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
@@ -212,7 +212,7 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(existingRemoteAppEntry, newRemoteAppEntry);
 	}
 
-	@Test(expected = NoSuchEntryException.class)
+	@Test(expected = NoSuchRemoteAppEntryException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 

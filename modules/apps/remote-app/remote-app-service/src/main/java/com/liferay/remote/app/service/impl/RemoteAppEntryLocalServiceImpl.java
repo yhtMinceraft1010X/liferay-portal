@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryURLException;
+import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
@@ -224,8 +224,7 @@ public class RemoteAppEntryLocalServiceImpl
 		if ((remoteAppEntry != null) &&
 			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
 
-			throw new DuplicateRemoteAppEntryURLException(
-				"{remoteAppEntryId=" + remoteAppEntryId + "}");
+			throw new DuplicateRemoteAppEntryException("Duplicate URL " + url);
 		}
 	}
 

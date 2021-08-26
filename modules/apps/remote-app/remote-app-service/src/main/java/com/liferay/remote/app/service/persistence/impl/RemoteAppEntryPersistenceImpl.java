@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.remote.app.exception.NoSuchEntryException;
+import com.liferay.remote.app.exception.NoSuchRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.model.RemoteAppEntryTable;
 import com.liferay.remote.app.model.impl.RemoteAppEntryImpl;
@@ -275,12 +275,12 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByUuid_First(
 			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByUuid_First(
 			uuid, orderByComparator);
@@ -298,7 +298,7 @@ public class RemoteAppEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -327,12 +327,12 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByUuid_Last(
 			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByUuid_Last(
 			uuid, orderByComparator);
@@ -350,7 +350,7 @@ public class RemoteAppEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -387,13 +387,13 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry[] findByUuid_PrevAndNext(
 			long remoteAppEntryId, String uuid,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -824,13 +824,13 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -851,7 +851,7 @@ public class RemoteAppEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -884,13 +884,13 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -911,7 +911,7 @@ public class RemoteAppEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -951,13 +951,13 @@ public class RemoteAppEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry[] findByUuid_C_PrevAndNext(
 			long remoteAppEntryId, String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1212,16 +1212,16 @@ public class RemoteAppEntryPersistenceImpl
 	private FinderPath _finderPathCountByC_U;
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and url = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and url = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param url the url
 	 * @return the matching remote app entry
-	 * @throws NoSuchEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByC_U(long companyId, String url)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByC_U(companyId, url);
 
@@ -1242,7 +1242,7 @@ public class RemoteAppEntryPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchRemoteAppEntryException(sb.toString());
 		}
 
 		return remoteAppEntry;
@@ -1372,7 +1372,7 @@ public class RemoteAppEntryPersistenceImpl
 	 */
 	@Override
 	public RemoteAppEntry removeByC_U(long companyId, String url)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = findByC_U(companyId, url);
 
@@ -1588,11 +1588,11 @@ public class RemoteAppEntryPersistenceImpl
 	 *
 	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry remove(long remoteAppEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		return remove((Serializable)remoteAppEntryId);
 	}
@@ -1602,11 +1602,11 @@ public class RemoteAppEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the remote app entry
 	 * @return the remote app entry that was removed
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		Session session = null;
 
@@ -1621,13 +1621,13 @@ public class RemoteAppEntryPersistenceImpl
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchEntryException(
+				throw new NoSuchRemoteAppEntryException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(remoteAppEntry);
 		}
-		catch (NoSuchEntryException noSuchEntityException) {
+		catch (NoSuchRemoteAppEntryException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -1762,11 +1762,11 @@ public class RemoteAppEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the remote app entry
 	 * @return the remote app entry
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		RemoteAppEntry remoteAppEntry = fetchByPrimaryKey(primaryKey);
 
@@ -1775,7 +1775,7 @@ public class RemoteAppEntryPersistenceImpl
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchEntryException(
+			throw new NoSuchRemoteAppEntryException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
@@ -1783,15 +1783,15 @@ public class RemoteAppEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the remote app entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the remote app entry with the primary key or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
-	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
-		throws NoSuchEntryException {
+		throws NoSuchRemoteAppEntryException {
 
 		return findByPrimaryKey((Serializable)remoteAppEntryId);
 	}
