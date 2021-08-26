@@ -35,7 +35,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 /**
  * @author Marco Leo
@@ -108,7 +107,7 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				throw new PortletException(exception);
+				throw exception;
 			}
 		}
 	}
