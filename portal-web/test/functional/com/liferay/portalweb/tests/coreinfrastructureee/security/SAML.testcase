@@ -127,6 +127,204 @@ definition {
 		AssertConsoleTextPresent(value1 = "TestSiteRole");
 	}
 
+	@description = "This is a use case for LRQA-57574 TC-1: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and Oauth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled with a synced user on SP. The test is under quarantine cause of LPS-137257"
+	@priority = "4"
+	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser {
+		property app.server.bundles.size = "1";
+		property minimum.slave.ram = "32";
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithExistingUser";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		// Setting up IDP and SP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Email Address",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com",
+			userResolution = "dynamic");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierFormat = "Email Address",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:9080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		User.firstLoginUI(
+			specificURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		User.firstLoginUI(
+			specificURL = "http://www.able.com:9080/web/guest/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&saveLastPath=false&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin",
+			userEmailAddress = "test@liferay.com");
+
+		OAuth2.addAndEditExternalApplication(
+			applicationName = "Third-party Application",
+			baseURL = "http://www.able.com:9080",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123",
+			portalURL = "http://localhost:9080");
+
+		OAuth2.launchRequest();
+
+		// Assert the user information for verification
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com",
+			value2 = '''"firstName":"Test"''',
+			value3 = '''"lastName":"Test"''',
+			value4 = '''"screenName":"test"''');
+	}
+
+	@description = "This is a use case for LRQA-57574 TC-2: Combines SAML.CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute and Oauth2.AuthorizeExternalApplication to verify that the portal works when OAuth 2 and SAML are both enabled and authenticating with a user who is not synced to SP. The test is under quarantine cause of LPS-137257"
+	@priority = "4"
+	test AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser {
+		property app.server.bundles.size = "1";
+		property minimum.slave.ram = "32";
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "SAML#AssertAuthorizationOnOAuth2WithSAMLConnectionWithoutExistingUser";
+
+		// Enable SAML debug logs
+
+		SAML.enableSAMLDebugLogs();
+
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		// Setting up IDP and SP role
+
+		SAML.setupIDP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.setupSP(
+			encryptionCertificate = "true",
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		// Setting up IDP and SP connection
+
+		SAML.addIDPConfigurationsToServiceProvider(
+			idpEntityID = "samlidp",
+			idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+			idpURL = "http://localhost:8080/",
+			nameIdentifierFormat = "Email Address",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com",
+			userResolution = "dynamic");
+
+		SAML.enableSPRoles(
+			samlEntityID = "samlsp",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		SAML.addSPConfigurationsToIdentityProvider(
+			idpURL = "http://localhost:8080",
+			nameIdentifierFormat = "Email Address",
+			spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+			spEntityID = "samlsp",
+			spKeepAliveURL = "http://www.able.com:9080/c/portal/saml/keep_alive",
+			spURL = "http://www.able.com:9080",
+			userEmailAddress = "test@liferay.com");
+
+		// Test starts here
+
+		User.firstLoginUI(
+			specificURL = "http://www.able.com:9080/web/guest/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&saveLastPath=false&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin",
+			userEmailAddress = "test@liferay.com");
+
+		// Add new OAuth2 application
+
+		OAuth2.addAndEditExternalApplication(
+			applicationName = "Third-party Application",
+			baseURL = "http://www.able.com:9080",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
+
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
+		User.viewLoggedOutPG();
+
+		// Authorize the new application
+
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123",
+			portalURL = "http://localhost:9080");
+
+		OAuth2.launchRequest();
+
+		// Assert the user information for verification
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com",
+			value2 = '''"firstName":"Test"''',
+			value3 = '''"lastName":"Test"''',
+			value4 = '''"screenName":"test"''');
+	}
+
 	@description = "LPS-123218 TC-6: Assertion for: empty attribute mapping cannot be used for user matching"
 	@priority = "4"
 	test AssertEmptyMappingCannotBeUsedForUserMatching {
