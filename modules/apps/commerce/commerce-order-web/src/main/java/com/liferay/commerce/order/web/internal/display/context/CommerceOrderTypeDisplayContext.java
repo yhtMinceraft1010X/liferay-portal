@@ -302,7 +302,7 @@ public class CommerceOrderTypeDisplayContext {
 	protected final HttpServletRequest httpServletRequest;
 
 	private String _getManagePermissionsURL() throws PortalException {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
@@ -318,16 +318,9 @@ public class CommerceOrderTypeDisplayContext {
 			"modelResourceDescription", "{name}"
 		).setParameter(
 			"resourcePrimKey", "{id}"
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
-
-		return portletURL.toString();
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private final ModelResourcePermission<CommerceOrderType>
