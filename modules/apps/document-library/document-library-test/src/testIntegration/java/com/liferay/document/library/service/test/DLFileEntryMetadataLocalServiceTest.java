@@ -288,12 +288,11 @@ public class DLFileEntryMetadataLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				group, TestPropsValues.getUserId());
 
-		byte[] testFileBytes = FileUtil.getBytes(
-			getClass(), "dependencies/ddmstructure.xml");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				new String(testFileBytes));
+				new String(
+					FileUtil.getBytes(
+						getClass(), "dependencies/ddmstructure.xml")));
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
