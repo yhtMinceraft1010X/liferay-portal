@@ -138,9 +138,9 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private String _getModuleMain(JSBundleConfigTracker.JSConfig jsConfig) {
-		ServletContext servletContext = jsConfig.getServletContext();
-
 		try {
+			ServletContext servletContext = jsConfig.getServletContext();
+
 			URL url = servletContext.getResource("package.json");
 
 			if (url == null) {
@@ -154,15 +154,15 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 				String moduleName = jsonObject.getString("name");
 				String moduleVersion = jsonObject.getString("version");
 
-				String moduleMainFile = jsonObject.getString("main");
+				String moduleMain = jsonObject.getString("main");
 
-				if (Validator.isNull(moduleMainFile)) {
-					moduleMainFile = "index.js";
+				if (Validator.isNull(moduleMain)) {
+					moduleMain = "index.js";
 				}
 
 				return StringBundler.concat(
 					moduleName, "@", moduleVersion, "/",
-					ModuleNameUtil.toModuleName(moduleMainFile));
+					ModuleNameUtil.toModuleName(moduleMain));
 			}
 		}
 		catch (Exception exception) {
