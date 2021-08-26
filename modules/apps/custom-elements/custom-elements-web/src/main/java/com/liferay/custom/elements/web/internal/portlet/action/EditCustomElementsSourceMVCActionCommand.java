@@ -61,10 +61,11 @@ public class EditCustomElementsSourceMVCActionCommand
 			String name = ParamUtil.getString(actionRequest, "name");
 			String urls = ParamUtil.getString(actionRequest, "urls");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CustomElementsSource.class.getName(), actionRequest);
-
 			if (cmd.equals(Constants.ADD)) {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						CustomElementsSource.class.getName(), actionRequest);
+
 				_customElementsSourceLocalService.addCustomElementsSource(
 					serviceContext.getUserId(), htmlElementName, name, urls,
 					serviceContext);
@@ -72,7 +73,7 @@ public class EditCustomElementsSourceMVCActionCommand
 			else if (cmd.equals(Constants.UPDATE)) {
 				_customElementsSourceLocalService.updateCustomElementsSource(
 					ParamUtil.getLong(actionRequest, "customElementsSourceId"),
-					htmlElementName, name, urls, serviceContext);
+					htmlElementName, name, urls);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

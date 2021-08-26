@@ -60,22 +60,21 @@ public class EditCustomElementsPortletDescriptorMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String properties = ParamUtil.getString(actionRequest, "properties");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CustomElementsPortletDescriptor.class.getName(), actionRequest);
-
 		if (cmd.equals(Constants.ADD)) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CustomElementsPortletDescriptor.class.getName(), actionRequest);
+
 			_customElementsPortletDescriptorLocalService.
 				addCustomElementsPortletDescriptor(
-					cssURLs, htmlElementName, instanceable, name, properties,
-					serviceContext);
+					serviceContext.getUserId(), cssURLs, htmlElementName,
+					instanceable, name, properties, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			_customElementsPortletDescriptorLocalService.
 				updateCustomElementsPortletDescriptor(
 					ParamUtil.getLong(
 						actionRequest, "customElementsPortletDescriptorId"),
-					cssURLs, htmlElementName, instanceable, name, properties,
-					serviceContext);
+					cssURLs, htmlElementName, instanceable, name, properties);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

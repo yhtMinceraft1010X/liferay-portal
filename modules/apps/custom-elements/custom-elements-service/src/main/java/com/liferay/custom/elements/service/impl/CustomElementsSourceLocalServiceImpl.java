@@ -63,10 +63,12 @@ public class CustomElementsSourceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		User user = userLocalService.getUser(userId);
+
 		htmlElementName = StringUtil.toLowerCase(
 			StringUtil.trim(htmlElementName));
 
-		_validate(0, htmlElementName);
+		_validate(0, user.getCompanyId(), htmlElementName);
 
 		long customElementsSourceId = counterLocalService.increment();
 
@@ -74,12 +76,9 @@ public class CustomElementsSourceLocalServiceImpl
 			customElementsSourcePersistence.create(customElementsSourceId);
 
 		customElementsSource.setUuid(serviceContext.getUuid());
-
-		User user = userLocalService.getUser(userId);
-
+		customElementsSource.setCompanyId(user.getCompanyId());
 		customElementsSource.setUserId(user.getUserId());
 		customElementsSource.setUserName(user.getFullName());
-
 		customElementsSource.setHTMLElementName(htmlElementName);
 		customElementsSource.setName(name);
 		customElementsSource.setURLs(urls);
@@ -143,19 +142,22 @@ public class CustomElementsSourceLocalServiceImpl
 	@Override
 	public CustomElementsSource updateCustomElementsSource(
 			long customElementsSourceId, String htmlElementName, String name,
-			String urls, ServiceContext serviceContext)
+			String urls)
 		throws PortalException {
-
-		htmlElementName = StringUtil.toLowerCase(
-			StringUtil.trim(htmlElementName));
-
-		_validate(customElementsSourceId, htmlElementName);
 
 		CustomElementsSource customElementsSource =
 			customElementsSourcePersistence.findByPrimaryKey(
 				customElementsSourceId);
 
+		htmlElementName = StringUtil.toLowerCase(
+			StringUtil.trim(htmlElementName));
+
+		_validate(
+			customElementsSourceId, customElementsSource.getCompanyId(),
+			htmlElementName);
+
 		customElementsSource.setHTMLElementName(htmlElementName);
+
 		customElementsSource.setName(name);
 		customElementsSource.setURLs(urls);
 
@@ -226,7 +228,8 @@ public class CustomElementsSourceLocalServiceImpl
 		return customElementsSources;
 	}
 
-	private void _validate(long customElementsSourceId, String htmlElementName)
+	private void _validate(
+			long customElementsSourceId, long companyId, String htmlElementName)
 		throws PortalException {
 
 		if (Validator.isNull(htmlElementName)) {
@@ -245,9 +248,12 @@ public class CustomElementsSourceLocalServiceImpl
 
 		CustomElementsSource customElementsSource =
 			customElementsSourcePersistence.fetchByC_H(
-				customElementsSourceId, htmlElementName);
+				companyId, htmlElementName);
 
-		if (customElementsSource != null) {
+		if ((customElementsSource != null) &&
+			(customElementsSource.getCustomElementsSourceId() !=
+				customElementsSourceId)) {
+
 			throw new DuplicateCustomElementsSourceException(
 				"Duplicate HTML element name " + htmlElementName);
 		}

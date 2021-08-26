@@ -70,8 +70,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CustomElementsPortletDescriptor addCustomElementsPortletDescriptor(
-			String cssURLs, String htmlElementName, boolean instanceable,
-			String name, String properties, ServiceContext serviceContext)
+			long userId, String cssURLs, String htmlElementName,
+			boolean instanceable, String name, String properties,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long customElementsPortletDescriptorId =
@@ -83,8 +84,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 		customElementsPortletDescriptor.setUuid(serviceContext.getUuid());
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
+		customElementsPortletDescriptor.setCompanyId(user.getCompanyId());
 		customElementsPortletDescriptor.setUserId(user.getUserId());
 		customElementsPortletDescriptor.setUserName(user.getFullName());
 
@@ -260,7 +262,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 			updateCustomElementsPortletDescriptor(
 				long customElementsSourceId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
-				String properties, ServiceContext serviceContext)
+				String properties)
 		throws PortalException {
 
 		CustomElementsPortletDescriptor customElementsPortletDescriptor =
