@@ -97,16 +97,15 @@ const AdminTooltip = ({
 							onChange={(event) => setSku(event.target.value)}
 							value={sku}
 						/>
-						<ClayAutocomplete.DropDown active={skus}>
-							<ClayDropDown.ItemList
-								onClick={(event) => {
-									setSku(
-										event.target.innerText.match(
-											/^[\S]*/g
-										)[0]
-									);
-								}}
-							>
+						<ClayAutocomplete.DropDown
+							active={skus}
+							onSetActive={(event) => {
+								setSku(
+									event.target.innerText.match(/^[\S]*/g)[0]
+								);
+							}}
+						>
+							<ClayDropDown.ItemList>
 								{skus?.length && (
 									<ClayDropDown.Item disabled>
 										{Liferay.Language.get(
@@ -151,6 +150,7 @@ const AdminTooltip = ({
 						onClick={() => {
 							deletePin({
 								id: showTooltip.details.id,
+								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
 								sequence: pinPositionLabel,
@@ -205,6 +205,7 @@ const AdminTooltip = ({
 						onClick={() => {
 							updatePin({
 								id: showTooltip.details.id,
+								number: parseInt(pinPositionLabel, 10),
 								positionX: showTooltip.details.cx,
 								positionY: showTooltip.details.cy,
 								sequence: parseInt(pinPositionLabel, 10),
