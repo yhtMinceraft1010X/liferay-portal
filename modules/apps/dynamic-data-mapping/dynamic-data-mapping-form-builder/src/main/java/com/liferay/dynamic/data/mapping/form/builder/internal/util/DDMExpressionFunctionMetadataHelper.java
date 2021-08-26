@@ -156,7 +156,6 @@ public class DDMExpressionFunctionMetadataHelper {
 			new DDMExpressionFunctionMetadata(
 				"belongs-to", LanguageUtil.get(resourceBundle, "belongs-to"),
 				_TYPE_BOOLEAN, new String[] {_TYPE_USER, _TYPE_LIST}));
-
 		addDDMExpressionFunctionMetadata(
 			ddmExpressionFunctionMetadatasMap,
 			new DDMExpressionFunctionMetadata(
