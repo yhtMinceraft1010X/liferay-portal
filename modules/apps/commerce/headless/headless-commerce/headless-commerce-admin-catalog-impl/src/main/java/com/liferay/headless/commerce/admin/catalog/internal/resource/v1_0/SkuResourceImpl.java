@@ -86,7 +86,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find sku with external reference code " +
+				"Unable to find SKU with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -159,7 +159,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find sku with external reference code " +
+				"Unable to find SKU with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -196,7 +196,7 @@ public class SkuResourceImpl
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"Unable to find sku with external reference code " +
+				"Unable to find SKU with external reference code " +
 					externalReferenceCode);
 		}
 
