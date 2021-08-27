@@ -40,10 +40,42 @@ import org.junit.runner.RunWith;
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
 
-	@Override
 	@Test
-	public void testPostSiteBlogPostingImage() throws Exception {
-		_testPostSiteBlogPostingImageRollback();
+	public void testPostSiteBlogPostingImageRollback() throws Exception {
+		Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId());
+
+		Assert.assertNull(folder);
+
+		BlogPostingImage blogPostingImage = randomBlogPostingImage();
+
+		try {
+			testPostSiteBlogPostingImage_addBlogPostingImage(
+				blogPostingImage,
+				HashMapBuilder.put(
+					"file",
+					() -> {
+						File tempFile = FileUtil.createTempFile("*,?", "txt");
+
+						FileUtil.write(
+							tempFile, TestDataConstants.TEST_BYTE_ARRAY);
+
+						return tempFile;
+					}
+				).build());
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Assert.assertTrue(throwable instanceof Problem.ProblemException);
+		}
+
+		folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
+			testGroup.getGroupId());
+
+		Assert.assertNull(folder);
 	}
 
 	@Override
@@ -91,43 +123,6 @@ public class BlogPostingImageResourceTest
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 		return httpResponse.getContent();
-	}
-
-	private void _testPostSiteBlogPostingImageRollback() throws Exception {
-		Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
-			testGroup.getGroupId());
-
-		Assert.assertNull(folder);
-
-		BlogPostingImage blogPostingImage = randomBlogPostingImage();
-
-		try {
-			testPostSiteBlogPostingImage_addBlogPostingImage(
-				blogPostingImage,
-				HashMapBuilder.put(
-					"file",
-					() -> {
-						File tempFile = FileUtil.createTempFile("*,?", "txt");
-
-						FileUtil.write(
-							tempFile, TestDataConstants.TEST_BYTE_ARRAY);
-
-						return tempFile;
-					}
-				).build());
-
-			Assert.fail();
-		}
-		catch (Throwable throwable) {
-			Assert.assertTrue(throwable instanceof Problem.ProblemException);
-		}
-
-		folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
-			UserLocalServiceUtil.getDefaultUserId(testGroup.getCompanyId()),
-			testGroup.getGroupId());
-
-		Assert.assertNull(folder);
 	}
 
 }
