@@ -20,8 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.PreparedStatement;
-
 /**
  * @author Mariano Álvaro Sáiz
  */
@@ -30,77 +28,38 @@ public class DLFileEntryUpgradeProcess extends UpgradeProcess {
 	public DLFileEntryUpgradeProcess(
 		ClassNameLocalService classNameLocalService) {
 
-		_dlFileEntryClassNameId = classNameLocalService.getClassNameId(
-			DLFileEntry.class);
-
-		_dlFolderClassNameId = classNameLocalService.getClassNameId(
-			DLFolder.class);
+		_classNameLocalService = classNameLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_deleteDLFileShortcuts();
+		runSQL(
+			StringBundler.concat(
+				"delete from DLFileShortcut where not exists (select * from ",
+				"DLFileEntry where fileEntryId = ",
+				"DLFileShortcut.toFileEntryId)"));
 
-		_deleteTableByFileEntryId("AssetEntry");
-		_deleteTableByFileEntryId("RatingsEntry");
-		_deleteTableByFileEntryId("RatingsStats");
-
-		_deleteTableByFolderId("AssetEntry");
+		_delete(DLFileEntry.class, "AssetEntry", "DLFileEntry", "fileEntryId");
+		_delete(
+			DLFileEntry.class, "RatingsEntry", "DLFileEntry", "fileEntryId");
+		_delete(
+			DLFileEntry.class, "RatingsStats", "DLFileEntry", "fileEntryId");
+		_delete(DLFolder.class, "AssetEntry", "DLFolder", "folderId");
 	}
 
-	private void _deleteDLFileShortcuts() throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("delete from DLFileShortcut where not exists (select * ");
-		sb.append("from DLFileEntry where fileEntryId = ");
-		sb.append("DLFileShortcut.toFileEntryId)");
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
-
-			preparedStatement.execute();
-		}
-	}
-
-	private void _deleteTableByClassName(
-			long classNameId, String tableName, String joinTableName,
-			String joinPrimaryKey)
+	private void _delete(
+			Class<?> clazz, String tableName, String joinTableName,
+			String joinColumnName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("delete from ");
-		sb.append(tableName);
-		sb.append(" where ");
-		sb.append(tableName);
-		sb.append(".classNameId = ");
-		sb.append(classNameId);
-		sb.append(" and not exists (select * from ");
-		sb.append(joinTableName);
-		sb.append(" where ");
-		sb.append(joinPrimaryKey);
-		sb.append(" = ");
-		sb.append(tableName);
-		sb.append(".classPK)");
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
-
-			preparedStatement.execute();
-		}
+		runSQL(
+			StringBundler.concat(
+				"delete from ", tableName, " where ", tableName,
+				".classNameId = ", _classNameLocalService.getClassNameId(clazz),
+				" and not exists (select * from ", joinTableName, " where ",
+				joinColumnName, " = ", tableName, ".classPK)"));
 	}
 
-	private void _deleteTableByFileEntryId(String tableName) throws Exception {
-		_deleteTableByClassName(
-			_dlFileEntryClassNameId, tableName, "DLFileEntry", "fileEntryId");
-	}
-
-	private void _deleteTableByFolderId(String tableName) throws Exception {
-		_deleteTableByClassName(
-			_dlFolderClassNameId, tableName, "DLFolder", "folderId");
-	}
-
-	private final long _dlFileEntryClassNameId;
-	private final long _dlFolderClassNameId;
+	private final ClassNameLocalService _classNameLocalService;
 
 }
