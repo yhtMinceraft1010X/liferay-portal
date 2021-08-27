@@ -30,11 +30,11 @@ import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -243,22 +243,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		resourcePath = StringUtil.replaceLast(
-			resourcePath, CharPool.FORWARD_SLASH, StringPool.BLANK);
+		DocumentFolder documentFolder = null;
+
+		resourcePath = resourcePath.substring(0, resourcePath.length() - 1);
 
 		String json = _read(resourcePath + "._si.json");
-
-		DocumentFolder documentFolder = null;
 
 		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
 		}
 		else {
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-			jsonObject.put("name", FileUtil.getShortFileName(resourcePath));
-
-			documentFolder = DocumentFolder.toDTO(jsonObject.toString());
+			documentFolder = DocumentFolder.toDTO(
+				JSONUtil.put(
+					"name", FileUtil.getShortFileName(resourcePath)
+				).toString());
 		}
 
 		if (documentFolderId != null) {
@@ -275,10 +273,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addDocuments(
-			Long documentFolderId, String path, ServiceContext serviceContext)
+			Long documentFolderId, String parentResourcePath,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(path);
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
@@ -293,11 +293,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				long documentInternalFolderId = _addDocumentFolder(
-					documentFolderId, resourcePath, serviceContext);
-
 				_addDocuments(
-					documentInternalFolderId, resourcePath, serviceContext);
+					_addDocumentFolder(
+						documentFolderId, resourcePath, serviceContext),
+					resourcePath, serviceContext);
 
 				continue;
 			}
@@ -313,8 +312,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			URLConnection urlConnection = url.openConnection();
 
 			Map<String, String> values = new HashMap<>();
-
-			ObjectMapper objectMapper = new ObjectMapper();
 
 			String json = _read(resourcePath + "._si.json");
 
@@ -332,7 +329,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								MimeTypesUtil.getContentType(fileName),
 								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
-						__ -> objectMapper, values));
+						__ -> _objectMapper, values));
 			}
 			else {
 				documentResource.postSiteDocument(
@@ -344,7 +341,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								MimeTypesUtil.getContentType(fileName),
 								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
-						__ -> objectMapper, values));
+						__ -> _objectMapper, values));
 			}
 		}
 	}
@@ -503,6 +500,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleSiteInitializer.class);
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
