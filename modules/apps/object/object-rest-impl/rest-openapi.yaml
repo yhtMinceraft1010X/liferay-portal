@@ -111,9 +111,9 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
-    "/by-external-reference-code/{externalReferenceCode}":
+    "/object-entries/by-external-reference-code/{externalReferenceCode}":
         delete:
-            operationId: deleteByExternalReferenceCode
+            operationId: deleteObjectEntryByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -127,7 +127,7 @@ paths:
                         application/xml: {}
             tags: ["ObjectEntry"]
         get:
-            operationId: getByExternalReferenceCode
+            operationId: getObjectEntryByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
@@ -145,7 +145,7 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
         put:
-            operationId: putByExternalReferenceCode
+            operationId: putObjectEntryByExternalReferenceCode
             parameters:
                 - in: path
                   name: externalReferenceCode
