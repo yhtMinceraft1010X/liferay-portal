@@ -42,13 +42,15 @@ public class WorkflowInstanceStateComparator
 
 		List<String> currentNodeNames1 =
 			workflowInstance1.getCurrentNodeNames();
+
+		String currentNodeName1 = currentNodeNames1.get(0);
+
 		List<String> currentNodeNames2 =
 			workflowInstance2.getCurrentNodeNames();
 
-		String state1 = currentNodeNames1.get(0);
-		String state2 = currentNodeNames2.get(0);
+		String currentNodeName2 = currentNodeNames2.get(0);
 
-		int value = state1.compareTo(state2);
+		int value = currentNodeName1.compareTo(currentNodeName2);
 
 		if (value == 0) {
 			Long workflowInstanceId1 =

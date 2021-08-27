@@ -316,7 +316,6 @@ public class KaleoWorkflowModelConverterImpl
 			).collect(
 				Collectors.toList()
 			));
-
 		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
 		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 
