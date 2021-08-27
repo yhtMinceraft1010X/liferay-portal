@@ -85,6 +85,22 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
+	macro addMultiplesKeywords {
+		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
+
+		for (var keyword : list "${keywordList}") {
+			Type(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "${keyword}");
+
+			KeyPress(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "\ENTER");
+		}
+
+		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
+	}
+
 	macro addSalesforceAndCancel {
 		var key_salesforceName = "${salesforceName}";
 		var key_consumerKey = "${consumerKey}";
@@ -114,22 +130,6 @@ definition {
 		ACNavigation.clickCancelButton();
 
 		Button.click(button = "Leave Page");
-	}
-
-	macro addMultiplesKeywords {
-		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
-
-		for (var keyword : list "${keywordList}") {
-			Type(
-				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-				value1 = "${keyword}");
-
-			KeyPress(
-				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-				value1 = "\ENTER");
-		}
-
-		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
 	macro addUser {
