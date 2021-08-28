@@ -203,7 +203,7 @@ public class CommercePriceListQualifiersDisplayContext
 				"delete", "headless"));
 	}
 
-	public String getPriceListOrderTypesApiURL() throws PortalException {
+	public String getPriceListOrderTypesAPIURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
 			getCommercePriceListId() +
 				"/price-list-order-types?nestedFields=orderType";

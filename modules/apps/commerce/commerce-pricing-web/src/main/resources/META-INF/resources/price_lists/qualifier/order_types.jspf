@@ -87,7 +87,7 @@
 				title='<%= LanguageUtil.get(request, "order-types") %>'
 			>
 				<clay:headless-data-set-display
-					apiURL="<%= commercePriceListQualifiersDisplayContext.getPriceListOrderTypesApiURL() %>"
+					apiURL="<%= commercePriceListQualifiersDisplayContext.getPriceListOrderTypesAPIURL() %>"
 					clayDataSetActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListOrderTypeClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ORDER_TYPES %>"
