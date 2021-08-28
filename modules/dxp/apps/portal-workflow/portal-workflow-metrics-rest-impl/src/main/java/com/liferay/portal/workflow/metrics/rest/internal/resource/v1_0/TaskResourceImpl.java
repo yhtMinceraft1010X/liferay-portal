@@ -143,9 +143,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		getProcessTask(processId, taskId);
 
-		Assignee assignee = task.getAssignee();
-
 		List<Assignment> assignments = new ArrayList<>();
+
+		Assignee assignee = task.getAssignee();
 
 		if ((assignee != null) && (assignee.getId() != null)) {
 			User user = _userLocalService.fetchUser(assignee.getId());
@@ -175,9 +175,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 	@Override
 	public Task postProcessTask(Long processId, Task task) throws Exception {
-		Assignee assignee = task.getAssignee();
-
 		List<Assignment> assignments = new ArrayList<>();
+
+		Assignee assignee = task.getAssignee();
 
 		if ((assignee != null) && (assignee.getId() != null)) {
 			User user = _userLocalService.fetchUser(assignee.getId());
