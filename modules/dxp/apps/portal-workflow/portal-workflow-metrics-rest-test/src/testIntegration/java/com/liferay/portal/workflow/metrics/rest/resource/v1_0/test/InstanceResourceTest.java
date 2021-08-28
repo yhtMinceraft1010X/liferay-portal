@@ -140,7 +140,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		Instance instance1 = randomInstance();
 
-		instance1.setClassPK(_classPK);
 		instance1.setAssignees(
 			new Assignee[] {
 				new Assignee() {
@@ -149,6 +148,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 					}
 				}
 			});
+		instance1.setClassPK(_classPK);
 		instance1.setCompleted(true);
 		instance1.setDateCompletion(
 			DateUtils.truncate(new Date(), Calendar.SECOND));
