@@ -95,8 +95,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 						return _objectEntryLocalService.fetchObjectEntry(
 							classPK);
 					}),
-					collectionQuery.getPagination(),
-				hits.getLength());
+				collectionQuery.getPagination(), hits.getLength());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
