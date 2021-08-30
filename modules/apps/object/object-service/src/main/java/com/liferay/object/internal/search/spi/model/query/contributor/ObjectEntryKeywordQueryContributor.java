@@ -248,6 +248,7 @@ public class ObjectEntryKeywordQueryContributor
 			booleanQuery.add(
 				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
 				booleanClauseOccur);
+
 			nestedBooleanQuery.add(
 				new TermQueryImpl(
 					"nestedFieldArray.fieldName", objectField.getName()),
