@@ -279,7 +279,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			}
 			catch (Exception exception) {
 				failBuildRunner(
-					"Failed to store the commit history", exception);
+					"Unable to store the commit history", exception);
 			}
 
 			List<List<LocalGitCommit>> localGitCommitsLists =
