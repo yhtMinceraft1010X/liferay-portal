@@ -169,6 +169,11 @@
 </tr>
 <!--OAUTH2_TESTER-->
 <tr>
+	<td>OAUTH2_TESTER_PORTAL_URL</td>
+	<td>//input[contains(@id,'liferayUrl')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OAUTH2_TESTER_CLIENT_ID</td>
 	<td>//input[contains(@id,'clientId')]</td>
 	<td></td>
