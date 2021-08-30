@@ -52,6 +52,13 @@ definition {
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
+	macro noViewTopVisitedPages {
+		AssertElementNotPresent(
+			key_entryName = "${key_entry}",
+			key_resultNumber = "${key_result}",
+			locator1 = "ACSites#TOP_VISITED_PAGES");
+	}
+
 	macro selectInterval {
 		if (isSet(cardName)) {
 			Click(
@@ -65,13 +72,6 @@ definition {
 				interval = "${interval}",
 				locator1 = "ACCards#INTERVAL_OPTION");
 		}
-	}
-
-	macro noViewTopVisitedPages {
-		AssertElementNotPresent(
-			key_entryName = "${key_entry}",
-			key_resultNumber = "${key_result}",
-			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
 	macro viewCards {
@@ -162,7 +162,7 @@ definition {
 		AssertElementPresent(
 			key_indexNumber = "${key_index}",
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
-	}	
+	}
 
 	macro viewTopVisitedPages {
 		AssertElementPresent(
