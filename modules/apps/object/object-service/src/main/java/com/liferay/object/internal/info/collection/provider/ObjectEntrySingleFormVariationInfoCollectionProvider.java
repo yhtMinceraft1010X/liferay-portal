@@ -87,9 +87,9 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 			List<ObjectEntry> objectEntries = TransformUtil.transformToList(
 				hits.getDocs(),
-				doc -> {
+				document -> {
 					long classPK = GetterUtil.getLong(
-						doc.get(Field.ENTRY_CLASS_PK));
+						document.get(Field.ENTRY_CLASS_PK));
 
 					return _objectEntryLocalService.fetchObjectEntry(classPK);
 				});
