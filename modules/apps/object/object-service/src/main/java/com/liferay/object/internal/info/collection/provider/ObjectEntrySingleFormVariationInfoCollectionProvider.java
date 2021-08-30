@@ -116,27 +116,29 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 							_objectFieldLocalService.getObjectFields(
 								_objectDefinition.getObjectDefinitionId())) {
 
-						if (Objects.equals(objectField.getType(), "Boolean") &&
-							objectField.isIndexed()) {
+						if (!Objects.equals(objectField.getType(), "Boolean") ||
+							!objectField.isIndexed()) {
 
-							consumer.accept(
-								InfoField.builder(
-								).infoFieldType(
-									SelectInfoFieldType.INSTANCE
-								).name(
-									objectField.getName()
-								).attribute(
-									SelectInfoFieldType.OPTIONS,
-									_getBooleanOptions()
-								).labelInfoLocalizedValue(
-									InfoLocalizedValue.<String>builder(
-									).values(
-										objectField.getLabelMap()
-									).build()
-								).localizable(
-									true
-								).build());
+							continue;
 						}
+
+						consumer.accept(
+							InfoField.builder(
+							).infoFieldType(
+								SelectInfoFieldType.INSTANCE
+							).name(
+								objectField.getName()
+							).attribute(
+								SelectInfoFieldType.OPTIONS,
+								_getBooleanOptions()
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.<String>builder(
+								).values(
+									objectField.getLabelMap()
+								).build()
+							).localizable(
+								true
+							).build());
 					}
 				}
 			).build()
