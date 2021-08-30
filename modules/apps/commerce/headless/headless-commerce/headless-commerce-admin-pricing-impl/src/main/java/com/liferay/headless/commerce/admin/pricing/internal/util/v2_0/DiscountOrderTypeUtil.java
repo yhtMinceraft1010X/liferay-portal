@@ -44,7 +44,7 @@ public class DiscountOrderTypeUtil {
 		ServiceContext serviceContext =
 			serviceContextHelper.getServiceContext();
 
-		CommerceOrderType commerceOrderType;
+		CommerceOrderType commerceOrderType = null;
 
 		if (Validator.isNull(
 				discountOrderType.getOrderTypeExternalReferenceCode())) {
