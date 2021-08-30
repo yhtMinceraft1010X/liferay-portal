@@ -79,23 +79,23 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	public InfoPage<ObjectEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
-			_objectDefinition.getClassName());
-
 		try {
+			Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+				_objectDefinition.getClassName());
+
 			Hits hits = indexer.search(_buildSearchContext(collectionQuery));
 
-			List<ObjectEntry> objectEntries = TransformUtil.transformToList(
-				hits.getDocs(),
-				document -> {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					return _objectEntryLocalService.fetchObjectEntry(classPK);
-				});
-
 			return InfoPage.of(
-				objectEntries, collectionQuery.getPagination(),
+				TransformUtil.transformToList(
+					hits.getDocs(),
+					document -> {
+						long classPK = GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK));
+
+						return _objectEntryLocalService.fetchObjectEntry(
+							classPK);
+					}),
+					collectionQuery.getPagination(),
 				hits.getLength());
 		}
 		catch (PortalException portalException) {

@@ -83,11 +83,11 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Indexer<?> indexer = JournalSearcher.getInstance();
-
-		SearchContext searchContext = _buildSearchContext(collectionQuery);
-
 		try {
+			Indexer<?> indexer = JournalSearcher.getInstance();
+
+			SearchContext searchContext = _buildSearchContext(collectionQuery);
+
 			Hits hits = indexer.search(searchContext);
 
 			List<JournalArticle> articles = new ArrayList<>();
