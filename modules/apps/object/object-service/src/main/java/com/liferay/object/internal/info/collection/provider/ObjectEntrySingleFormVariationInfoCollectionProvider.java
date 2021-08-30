@@ -165,12 +165,9 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery)
 		throws PortalException {
 
-		Pagination pagination = collectionQuery.getPagination();
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(true);
-
 		searchContext.setAttribute(
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		searchContext.setAttribute(
@@ -191,10 +188,11 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		searchContext.setCompanyId(serviceContext.getCompanyId());
 
-		searchContext.setGroupIds(new long[] {_getGroupId()});
+		Pagination pagination = collectionQuery.getPagination();
 
 		searchContext.setEnd(pagination.getEnd());
 
+		searchContext.setGroupIds(new long[] {_getGroupId()});
 		searchContext.setStart(pagination.getStart());
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
