@@ -31,7 +31,7 @@ public interface DataGuardCommand extends Serializable {
 
 			if (dataBag == null) {
 				throw new IllegalArgumentException(
-					"No dataBag found in test " + testClassName);
+					"No data bag found in test " + testClassName);
 			}
 
 			DataGuardTestRuleUtil.afterClass(dataBag, testClassName);

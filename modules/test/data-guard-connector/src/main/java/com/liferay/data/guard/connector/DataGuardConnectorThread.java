@@ -48,7 +48,7 @@ public class DataGuardConnectorThread extends Thread {
 		_passcode = passcode;
 		_logger = logger;
 
-		setName("Data-Guard-Connector-Thread");
+		setName("Data Guard Connector Thread");
 		setDaemon(true);
 
 		_serverSocket = new ServerSocket(port, 50, inetAddress);
@@ -73,7 +73,7 @@ public class DataGuardConnectorThread extends Thread {
 
 				if ((_passcode != null) && !_passcode.equals(passcode)) {
 					_logger.warn(
-						"Pass code mismatch, dropped connection from {}",
+						"Passcode mismatch, dropped connection from {}",
 						socket.getRemoteSocketAddress());
 
 					continue;
@@ -94,7 +94,7 @@ public class DataGuardConnectorThread extends Thread {
 						objectOutputStream.writeObject(new DataGuardResult(id));
 					}
 					catch (Throwable throwable) {
-						_logger.error("Error encountered", throwable);
+						_logger.error(throwable.getMessage(), throwable);
 
 						objectOutputStream.writeObject(
 							new DataGuardResult(throwable));
@@ -110,7 +110,7 @@ public class DataGuardConnectorThread extends Thread {
 			}
 			catch (Exception exception) {
 				_logger.error(
-					"Dropped connection due to unrecoverable framework failure",
+					"Dropped connection due to unrecoverable failure",
 					exception);
 			}
 		}

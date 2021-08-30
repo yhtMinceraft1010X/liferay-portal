@@ -68,7 +68,7 @@ public class DataGuardClient {
 						Level.INFO,
 						"Unable to connect at " +
 							_inetAddress.getHostAddress() + ":" + port +
-								". retrying in " + _RETRY_INTERVAL + "s.");
+								". Retrying in " + _RETRY_INTERVAL + "s.");
 
 					Thread.sleep(_RETRY_INTERVAL * 1000);
 				}

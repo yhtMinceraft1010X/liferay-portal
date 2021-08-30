@@ -41,7 +41,7 @@ public class DataGuardConnector {
 	protected void activate(
 		BundleContext bundleContext, Map<String, String> properties) {
 
-		int port = _DEFAULT_PORT;
+		int port = _PORT;
 
 		String portString = properties.get("port");
 
@@ -76,7 +76,7 @@ public class DataGuardConnector {
 		_dataGuardConnectorThread.join();
 	}
 
-	private static final int _DEFAULT_PORT = 42763;
+	private static final int _PORT = 42763;
 
 	private static final InetAddress _inetAddress =
 		InetAddress.getLoopbackAddress();
