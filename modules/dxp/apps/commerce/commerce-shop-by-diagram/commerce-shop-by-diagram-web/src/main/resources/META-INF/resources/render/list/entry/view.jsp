@@ -17,19 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDisplayContext)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT);
-
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 
-String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
+CSDiagramCPTypeDisplayContext csDiagramCPTypeDisplayContext = (CSDiagramCPTypeDisplayContext)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_DISPLAY_CONTEXT);
+
+String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 %>
 
 <div class="cp-renderer">
 	<div class="card d-flex flex-column product-card">
 		<div class="aspect-ratio aspect-ratio-4-to-3 card-item-first">
-			<a href="<%= productDetailURL %>">
+			<a href="<%= url %>">
 				<div class="aspect-ratio-bg-cover aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon h-100 w-100" style="background-image: url('<%= csDiagramCPTypeDisplayContext.getImageURL(cpCatalogEntry.getCPDefinitionId()) %>');"></div>
 			</a>
 		</div>
@@ -37,7 +37,7 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 		<div class="card-body d-flex flex-column justify-content-between py-2">
 			<div class="cp-information">
 				<p class="card-title" title="<%= cpCatalogEntry.getName() %>">
-					<a href="<%= productDetailURL %>">
+					<a href="<%= url %>">
 						<span class="text-truncate-inline">
 							<span class="text-truncate"><%= cpCatalogEntry.getName() %></span>
 						</span>
@@ -47,7 +47,7 @@ String productDetailURL = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDi
 
 			<div>
 				<div class="add-to-cart d-flex my-2 pt-5">
-					<a class="btn btn-block btn-secondary" href="<%= productDetailURL %>" role="button" style="margin-top: 0.35rem;">
+					<a class="btn btn-block btn-secondary" href="<%= url %>" role="button" style="margin-top: 0.35rem;">
 						<liferay-ui:message key="view" />
 					</a>
 				</div>
