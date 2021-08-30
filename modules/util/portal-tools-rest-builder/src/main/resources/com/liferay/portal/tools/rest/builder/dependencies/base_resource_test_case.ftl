@@ -294,6 +294,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 
@@ -309,6 +310,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 
@@ -525,6 +527,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									<#else>
 										null
 									</#if>
+
 									<#sep>, </#sep>
 								</#list>);
 
@@ -535,6 +538,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									<#else>
 										null
 									</#if>
+
 									<#sep>, </#sep>
 								</#list>);
 						</#if>
@@ -1145,6 +1149,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									"VIEW"
 								</#if>
 							</@getPermissionParameter>
+
 							<#sep>, </#sep>
 						</#list>
 						));
@@ -1156,6 +1161,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#assign schemaVarNameId>
 								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
 							</#assign>
+
 							<@getPermissionParameter
 								javaMethodParameter=javaMethodParameter
 								javaMethodSignature=javaMethodSignature
@@ -1166,6 +1172,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							>
 								"-"
 							</@getPermissionParameter>
+
 							<#sep>, </#sep>
 						</#list>
 					));
@@ -1322,6 +1329,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 					));
@@ -1343,6 +1351,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 					));
@@ -1663,6 +1672,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 					);
@@ -1701,6 +1711,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#else>
 								null
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 					);

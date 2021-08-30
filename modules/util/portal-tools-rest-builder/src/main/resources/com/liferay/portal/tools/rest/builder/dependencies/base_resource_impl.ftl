@@ -376,6 +376,7 @@ public abstract class Base${schemaName}ResourceImpl
 						);
 					}
 				</#if>
+
 				<#if postSiteBatchJavaMethodSignature??>
 					<#if postAssetLibraryBatchJavaMethodSignature??>
 						else
@@ -423,29 +424,34 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public Page<${javaDataType}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {
-
 			<#if getAssetLibraryBatchJavaMethodSignature?? || getBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
 				<#if getAssetLibraryBatchJavaMethodSignature??>
 					if (parameters.containsKey("assetLibraryId")) {
 						return ${getAssetLibraryBatchJavaMethodSignature.methodName}(
 							<@getGETBatchJavaMethodParameters javaMethodParameters=getAssetLibraryBatchJavaMethodSignature.javaMethodParameters />
 						);
-					} else
+					}
+					else
 				</#if>
+
 				<#if getSiteBatchJavaMethodSignature??>
 					if (parameters.containsKey("siteId")) {
 						return ${getSiteBatchJavaMethodSignature.methodName}(
 							<@getGETBatchJavaMethodParameters javaMethodParameters=getSiteBatchJavaMethodSignature.javaMethodParameters />
 						);
-					} else
+					}
+					else
 				</#if>
+
 				<#if getBatchJavaMethodSignature??>
 					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
 						{
 					</#if>
+
 					return ${getBatchJavaMethodSignature.methodName}(
 						<@getGETBatchJavaMethodParameters javaMethodParameters=getBatchJavaMethodSignature.javaMethodParameters />
 					);
+
 					<#if getAssetLibraryBatchJavaMethodSignature?? || getSiteBatchJavaMethodSignature??>
 						}
 					</#if>
@@ -514,6 +520,7 @@ public abstract class Base${schemaName}ResourceImpl
 							<#else>
 								${javaMethodParameter.parameterName}
 							</#if>
+
 							<#sep>, </#sep>
 						</#list>
 					);
@@ -730,6 +737,7 @@ public abstract class Base${schemaName}ResourceImpl
 				value=javaMethodParameter.parameterName
 			/>
 		</#if>
+
 		<#sep>, </#sep>
 	</#list>
 </#macro>
@@ -747,6 +755,7 @@ public abstract class Base${schemaName}ResourceImpl
 				value=javaMethodParameter.parameterName
 			/>
 		</#if>
+
 		<#sep>, </#sep>
 	</#list>
 </#macro>
