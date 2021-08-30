@@ -116,6 +116,22 @@ definition {
 		Button.click(button = "Leave Page");
 	}
 
+	macro addMultiplesKeywords {
+		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
+
+		for (var keyword : list "${keywordList}") {
+			Type(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "${keyword}");
+
+			KeyPress(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "\ENTER");
+		}
+
+		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
+	}
+
 	macro addUser {
 		Click(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 
@@ -179,11 +195,13 @@ definition {
 	}
 
 	macro assertKeywordNotPresent {
-		var key_KeywordName = "${keyword}";
+		for (var word : list "${keyword}") {
+			var key_KeywordName = "${word}";
 
-		AssertElementNotPresent(
-			locator1 = "ACSettings#KEYWORD_NAME",
-			value1 = "${keyword}");
+			AssertElementNotPresent(
+				locator1 = "ACSettings#KEYWORD_NAME",
+				value1 = "${word}");
+		}
 	}
 
 	macro assertKeywords {
@@ -191,26 +209,10 @@ definition {
 			var key_KeywordName = "${word}";
 
 			AssertTextEquals(
-			locator1 = "ACSettings#KEYWORD_NAME",
-			value1 = "${word}");
+				locator1 = "ACSettings#KEYWORD_NAME",
+				value1 = "${word}");
 		}
 	}
-	
-	macro addMultiplesKeywords {
-        Click(locator1 = "ACSettings#KEYWORD_BUTTON");
-
-        for(var keyword : list "${keywordList}") {
-            Type(
-                locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-                value1 = "${keyword}");
-
-            KeyPress(
-                locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-                value1 = "\ENTER");
-        }
-
-        Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
-    }
 
 	@summary = "Asserts the page views usage value \
 	@param pageViewsUsageValue"
@@ -380,16 +382,16 @@ definition {
 			value1 = "\SPACE");
 
 		if (IsElementPresent(locator1 = "ACSettings#GENERIC_DELETE_BUTTON")) {
-            Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+			Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
-            Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+			Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
-            Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-            Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+			Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-            Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
-        }
+			Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		}
 	}
 
 	@summary = "Deletes a specific data source \
