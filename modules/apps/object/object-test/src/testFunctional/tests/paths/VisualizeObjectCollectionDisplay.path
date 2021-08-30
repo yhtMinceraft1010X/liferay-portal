@@ -15,6 +15,51 @@
 		<td>//p[(@title='Object')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ADD_BLANK_PAGE</td>
+		<td>//span[@class='text-truncate']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NAME_DISPLAY_PAGE</td>
+		<td>//input[@id='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_name']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_CONTENT_TYPE</td>
+		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classNameId']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_SUBTYPE</td>
+		<td>//select[@name='_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_classTypeId']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_BUTTON</td>
+		<td>//button[@class='btn btn-primary']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FRAGMENT_COLLECTION</td>
+		<td>//div[(@class='page-editor__collection__message')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FRAGMENT_SIDEBAR</td>
+		<td>//div[(@class='text-truncate title') and contains(.,'${key_fragment}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>HEADING_COLLECTION_DISPLAY</td>
+		<td>//h1[@class='component-heading mb-0 text-break page-editor__editable']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MAP_FRAGMENT</td>
+		<td>//select[@id='_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet__useId_8']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

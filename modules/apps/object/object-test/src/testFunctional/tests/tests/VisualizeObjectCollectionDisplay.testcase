@@ -23,12 +23,49 @@ definition {
 	}
 
 	@description = "LPS-133865 - Verify if the fields from an Object are displayed to be mapped on a fragment"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsFromObjectDisplayedToBeMapped {
 		property portal.acceptance = "true";
 
-		// TODO LPS-137102 FieldsFromObjectDisplayedToBeMapped pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "integer",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Not Required Field",
+			fieldName = "text",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		VisualizeObjectCollectionDisplay.addDisplayPage(displayPageName = "Blank Display Page", contentType = "Object", subtype = "C_CustomObject");
+
+		PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "integer");
+
+		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldName = "integer");
+
+		VisualizeObjectCollectionDisplay.mapFragment(fieldName = "text");
+
+		VisualizeObjectCollectionDisplay.viewMappedFragment(fieldName = "text");
+		
 
 	}
 
