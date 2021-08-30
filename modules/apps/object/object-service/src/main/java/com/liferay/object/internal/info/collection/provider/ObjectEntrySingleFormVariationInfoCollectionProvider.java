@@ -111,7 +111,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		).infoFieldSetEntry(
 			InfoFieldSet.builder(
 			).infoFieldSetEntry(
-				consumer -> {
+				unsafeConsumer -> {
 					for (ObjectField objectField :
 							_objectFieldLocalService.getObjectFields(
 								_objectDefinition.getObjectDefinitionId())) {
@@ -122,7 +122,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 							continue;
 						}
 
-						consumer.accept(
+						unsafeConsumer.accept(
 							InfoField.builder(
 							).infoFieldType(
 								SelectInfoFieldType.INSTANCE

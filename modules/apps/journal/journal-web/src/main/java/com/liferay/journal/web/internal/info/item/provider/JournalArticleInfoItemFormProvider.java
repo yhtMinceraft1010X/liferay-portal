@@ -187,7 +187,7 @@ public class JournalArticleInfoItemFormProvider
 			).infoFieldSetEntry(
 				_getBasicInformationInfoFieldSet()
 			).<NoSuchStructureException>infoFieldSetEntry(
-				consumer -> {
+				unsafeConsumer -> {
 					if (ddmStructureId != 0) {
 						consumer.accept(
 							_ddmStructureInfoItemFieldSetProvider.
@@ -196,7 +196,7 @@ public class JournalArticleInfoItemFormProvider
 									_getStructureFieldSetNameInfoLocalizedValue(
 										ddmStructureId)));
 
-						consumer.accept(
+						unsafeConsumer.accept(
 							_ddmTemplateInfoItemFieldSetProvider.
 								getInfoItemFieldSet(ddmStructureId));
 					}
