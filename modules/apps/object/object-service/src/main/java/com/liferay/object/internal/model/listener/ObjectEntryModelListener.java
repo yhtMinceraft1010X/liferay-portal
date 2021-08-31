@@ -74,14 +74,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			objectDefinition.getDestinationName(),
 			new Message() {
 				{
-
-					// TODO Rename
-
 					put("command", command);
-
-					// TODO Use JSON instead
-
-					setPayload(objectDefinition.toXmlString());
+					setPayload(objectEntry.toString());
 				}
 			});
 	}

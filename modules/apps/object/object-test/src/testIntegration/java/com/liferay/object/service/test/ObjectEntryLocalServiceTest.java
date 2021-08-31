@@ -35,6 +35,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -43,6 +49,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -72,8 +79,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,7 +101,9 @@ public class ObjectEntryLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -151,6 +162,18 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
+		Destination destination = MessageBusUtil.getDestination(
+			_objectDefinition.getDestinationName());
+
+		destination.register(
+			new MessageListener() {
+
+				public void receive(Message message) {
+					_messages.add(message);
+				}
+
+			});
+
 		ObjectFieldLocalServiceUtil.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), true, false, null,
@@ -175,6 +198,44 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		_assertCount(1);
+
+		Assert.assertEquals(4, _messages.size());
+
+		Message message1 = _messages.poll();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message1.getPayload()),
+				"Object/status"));
+		Assert.assertEquals("onBeforeCreate", message1.getString("command"));
+
+		Message message2 = _messages.poll();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message2.getPayload()),
+				"Object/status"));
+		Assert.assertEquals("onAfterCreate", message2.getString("command"));
+
+		Message message3 = _messages.poll();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message3.getPayload()),
+				"Object/status"));
+		Assert.assertEquals("onBeforeUpdate", message3.getString("command"));
+
+		Message message4 = _messages.poll();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message4.getPayload()),
+				"Object/status"));
+		Assert.assertEquals("onAfterUpdate", message4.getString("command"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -1149,6 +1210,11 @@ public class ObjectEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _irrelevantObjectDefinition;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	private final Queue<Message> _messages = new LinkedList<>();
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
