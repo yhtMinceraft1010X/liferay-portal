@@ -42,6 +42,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.math.BigDecimal;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -1458,7 +1459,7 @@ public class CommerceTierPriceEntryModelImpl
 			attributeGetterFunctions = getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			(4 * attributeGetterFunctions.size()) + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -1469,10 +1470,24 @@ public class CommerceTierPriceEntryModelImpl
 			Function<CommerceTierPriceEntry, Object> attributeGetterFunction =
 				entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply((CommerceTierPriceEntry)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply(
+				(CommerceTierPriceEntry)this);
+
+			if (value == null) {
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append("\"" + value + "\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 

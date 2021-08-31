@@ -35,6 +35,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.Collections;
@@ -802,7 +803,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			(4 * attributeGetterFunctions.size()) + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -812,9 +813,23 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			String attributeName = entry.getKey();
 			Function<Lock, Object> attributeGetterFunction = entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(attributeGetterFunction.apply((Lock)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply((Lock)this);
+
+			if (value == null) {
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append("\"" + value + "\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 

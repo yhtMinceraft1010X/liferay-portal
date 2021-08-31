@@ -1265,48 +1265,90 @@ public class BatchEngineImportTaskModelImpl
 	public String toString() {
 		StringBundler sb = new StringBundler(45);
 
-		sb.append("{mvccVersion=");
+		sb.append("{\"mvccVersion\": ");
+
 		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", batchEngineImportTaskId=");
+
+		sb.append(", \"uuid\": ");
+
+		sb.append("\"" + getUuid() + "\"");
+
+		sb.append(", \"batchEngineImportTaskId\": ");
+
 		sb.append(getBatchEngineImportTaskId());
-		sb.append(", companyId=");
+
+		sb.append(", \"companyId\": ");
+
 		sb.append(getCompanyId());
-		sb.append(", userId=");
+
+		sb.append(", \"userId\": ");
+
 		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", batchSize=");
+
+		sb.append(", \"createDate\": ");
+
+		sb.append("\"" + getCreateDate() + "\"");
+
+		sb.append(", \"modifiedDate\": ");
+
+		sb.append("\"" + getModifiedDate() + "\"");
+
+		sb.append(", \"batchSize\": ");
+
 		sb.append(getBatchSize());
-		sb.append(", callbackURL=");
-		sb.append(getCallbackURL());
-		sb.append(", className=");
-		sb.append(getClassName());
-		sb.append(", contentType=");
-		sb.append(getContentType());
-		sb.append(", endTime=");
-		sb.append(getEndTime());
-		sb.append(", errorMessage=");
-		sb.append(getErrorMessage());
-		sb.append(", executeStatus=");
-		sb.append(getExecuteStatus());
-		sb.append(", fieldNameMapping=");
-		sb.append(getFieldNameMapping());
-		sb.append(", operation=");
-		sb.append(getOperation());
-		sb.append(", parameters=");
-		sb.append(getParameters());
-		sb.append(", processedItemsCount=");
+
+		sb.append(", \"callbackURL\": ");
+
+		sb.append("\"" + getCallbackURL() + "\"");
+
+		sb.append(", \"className\": ");
+
+		sb.append("\"" + getClassName() + "\"");
+
+		sb.append(", \"contentType\": ");
+
+		sb.append("\"" + getContentType() + "\"");
+
+		sb.append(", \"endTime\": ");
+
+		sb.append("\"" + getEndTime() + "\"");
+
+		sb.append(", \"errorMessage\": ");
+
+		sb.append("\"" + getErrorMessage() + "\"");
+
+		sb.append(", \"executeStatus\": ");
+
+		sb.append("\"" + getExecuteStatus() + "\"");
+
+		sb.append(", \"fieldNameMapping\": ");
+
+		sb.append("\"" + getFieldNameMapping() + "\"");
+
+		sb.append(", \"operation\": ");
+
+		sb.append("\"" + getOperation() + "\"");
+
+		sb.append(", \"parameters\": ");
+
+		sb.append("\"" + getParameters() + "\"");
+
+		sb.append(", \"processedItemsCount\": ");
+
 		sb.append(getProcessedItemsCount());
-		sb.append(", startTime=");
-		sb.append(getStartTime());
-		sb.append(", taskItemDelegateName=");
-		sb.append(getTaskItemDelegateName());
-		sb.append(", totalItemsCount=");
+
+		sb.append(", \"startTime\": ");
+
+		sb.append("\"" + getStartTime() + "\"");
+
+		sb.append(", \"taskItemDelegateName\": ");
+
+		sb.append("\"" + getTaskItemDelegateName() + "\"");
+
+		sb.append(", \"totalItemsCount\": ");
+
 		sb.append(getTotalItemsCount());
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1322,87 +1364,129 @@ public class BatchEngineImportTaskModelImpl
 
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+
 		sb.append(getMvccVersion());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+
 		sb.append(getUuid());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>batchEngineImportTaskId</column-name><column-value><![CDATA[");
+
 		sb.append(getBatchEngineImportTaskId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+
 		sb.append(getCompanyId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
+
 		sb.append(getUserId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+
 		sb.append(getCreateDate());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+
 		sb.append(getModifiedDate());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>batchSize</column-name><column-value><![CDATA[");
+
 		sb.append(getBatchSize());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>callbackURL</column-name><column-value><![CDATA[");
+
 		sb.append(getCallbackURL());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>className</column-name><column-value><![CDATA[");
+
 		sb.append(getClassName());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>contentType</column-name><column-value><![CDATA[");
+
 		sb.append(getContentType());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>endTime</column-name><column-value><![CDATA[");
+
 		sb.append(getEndTime());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>errorMessage</column-name><column-value><![CDATA[");
+
 		sb.append(getErrorMessage());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>executeStatus</column-name><column-value><![CDATA[");
+
 		sb.append(getExecuteStatus());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fieldNameMapping</column-name><column-value><![CDATA[");
+
 		sb.append(getFieldNameMapping());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>operation</column-name><column-value><![CDATA[");
+
 		sb.append(getOperation());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>parameters</column-name><column-value><![CDATA[");
+
 		sb.append(getParameters());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>processedItemsCount</column-name><column-value><![CDATA[");
+
 		sb.append(getProcessedItemsCount());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>startTime</column-name><column-value><![CDATA[");
+
 		sb.append(getStartTime());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>taskItemDelegateName</column-name><column-value><![CDATA[");
+
 		sb.append(getTaskItemDelegateName());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>totalItemsCount</column-name><column-value><![CDATA[");
+
 		sb.append(getTotalItemsCount());
+
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

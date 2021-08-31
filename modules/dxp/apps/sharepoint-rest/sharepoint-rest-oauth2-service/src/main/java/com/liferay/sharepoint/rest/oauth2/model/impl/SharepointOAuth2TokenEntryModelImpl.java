@@ -35,6 +35,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.Collections;
@@ -741,7 +742,7 @@ public class SharepointOAuth2TokenEntryModelImpl
 			attributeGetterFunctions = getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			(4 * attributeGetterFunctions.size()) + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -752,11 +753,24 @@ public class SharepointOAuth2TokenEntryModelImpl
 			Function<SharepointOAuth2TokenEntry, Object>
 				attributeGetterFunction = entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(
-				attributeGetterFunction.apply(
-					(SharepointOAuth2TokenEntry)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply(
+				(SharepointOAuth2TokenEntry)this);
+
+			if (value == null) {
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append("\"" + value + "\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 

@@ -645,11 +645,16 @@ public class LazyBlobEntryModelImpl
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", lazyBlobEntryId=");
+		sb.append("{\"uuid\": ");
+
+		sb.append("\"" + getUuid() + "\"");
+
+		sb.append(", \"lazyBlobEntryId\": ");
+
 		sb.append(getLazyBlobEntryId());
-		sb.append(", groupId=");
+
+		sb.append(", \"groupId\": ");
+
 		sb.append(getGroupId());
 
 		return sb.toString();
@@ -666,15 +671,21 @@ public class LazyBlobEntryModelImpl
 
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+
 		sb.append(getUuid());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lazyBlobEntryId</column-name><column-value><![CDATA[");
+
 		sb.append(getLazyBlobEntryId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+
 		sb.append(getGroupId());
+
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

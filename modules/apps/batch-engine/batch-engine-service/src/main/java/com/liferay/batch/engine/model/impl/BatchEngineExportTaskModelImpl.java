@@ -1152,40 +1152,74 @@ public class BatchEngineExportTaskModelImpl
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{mvccVersion=");
+		sb.append("{\"mvccVersion\": ");
+
 		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", batchEngineExportTaskId=");
+
+		sb.append(", \"uuid\": ");
+
+		sb.append("\"" + getUuid() + "\"");
+
+		sb.append(", \"batchEngineExportTaskId\": ");
+
 		sb.append(getBatchEngineExportTaskId());
-		sb.append(", companyId=");
+
+		sb.append(", \"companyId\": ");
+
 		sb.append(getCompanyId());
-		sb.append(", userId=");
+
+		sb.append(", \"userId\": ");
+
 		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", callbackURL=");
-		sb.append(getCallbackURL());
-		sb.append(", className=");
-		sb.append(getClassName());
-		sb.append(", contentType=");
-		sb.append(getContentType());
-		sb.append(", endTime=");
-		sb.append(getEndTime());
-		sb.append(", errorMessage=");
-		sb.append(getErrorMessage());
-		sb.append(", fieldNames=");
-		sb.append(getFieldNames());
-		sb.append(", executeStatus=");
-		sb.append(getExecuteStatus());
-		sb.append(", parameters=");
-		sb.append(getParameters());
-		sb.append(", startTime=");
-		sb.append(getStartTime());
-		sb.append(", taskItemDelegateName=");
-		sb.append(getTaskItemDelegateName());
+
+		sb.append(", \"createDate\": ");
+
+		sb.append("\"" + getCreateDate() + "\"");
+
+		sb.append(", \"modifiedDate\": ");
+
+		sb.append("\"" + getModifiedDate() + "\"");
+
+		sb.append(", \"callbackURL\": ");
+
+		sb.append("\"" + getCallbackURL() + "\"");
+
+		sb.append(", \"className\": ");
+
+		sb.append("\"" + getClassName() + "\"");
+
+		sb.append(", \"contentType\": ");
+
+		sb.append("\"" + getContentType() + "\"");
+
+		sb.append(", \"endTime\": ");
+
+		sb.append("\"" + getEndTime() + "\"");
+
+		sb.append(", \"errorMessage\": ");
+
+		sb.append("\"" + getErrorMessage() + "\"");
+
+		sb.append(", \"fieldNames\": ");
+
+		sb.append("\"" + getFieldNames() + "\"");
+
+		sb.append(", \"executeStatus\": ");
+
+		sb.append("\"" + getExecuteStatus() + "\"");
+
+		sb.append(", \"parameters\": ");
+
+		sb.append("\"" + getParameters() + "\"");
+
+		sb.append(", \"startTime\": ");
+
+		sb.append("\"" + getStartTime() + "\"");
+
+		sb.append(", \"taskItemDelegateName\": ");
+
+		sb.append("\"" + getTaskItemDelegateName() + "\"");
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1201,71 +1235,105 @@ public class BatchEngineExportTaskModelImpl
 
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+
 		sb.append(getMvccVersion());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+
 		sb.append(getUuid());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>batchEngineExportTaskId</column-name><column-value><![CDATA[");
+
 		sb.append(getBatchEngineExportTaskId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+
 		sb.append(getCompanyId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
+
 		sb.append(getUserId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+
 		sb.append(getCreateDate());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
+
 		sb.append(getModifiedDate());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>callbackURL</column-name><column-value><![CDATA[");
+
 		sb.append(getCallbackURL());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>className</column-name><column-value><![CDATA[");
+
 		sb.append(getClassName());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>contentType</column-name><column-value><![CDATA[");
+
 		sb.append(getContentType());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>endTime</column-name><column-value><![CDATA[");
+
 		sb.append(getEndTime());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>errorMessage</column-name><column-value><![CDATA[");
+
 		sb.append(getErrorMessage());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fieldNames</column-name><column-value><![CDATA[");
+
 		sb.append(getFieldNames());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>executeStatus</column-name><column-value><![CDATA[");
+
 		sb.append(getExecuteStatus());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>parameters</column-name><column-value><![CDATA[");
+
 		sb.append(getParameters());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>startTime</column-name><column-value><![CDATA[");
+
 		sb.append(getStartTime());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>taskItemDelegateName</column-name><column-value><![CDATA[");
+
 		sb.append(getTaskItemDelegateName());
+
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");

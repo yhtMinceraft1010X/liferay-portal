@@ -638,18 +638,29 @@ public class AnalyticsMessageModelImpl
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append("{mvccVersion=");
+		sb.append("{\"mvccVersion\": ");
+
 		sb.append(getMvccVersion());
-		sb.append(", analyticsMessageId=");
+
+		sb.append(", \"analyticsMessageId\": ");
+
 		sb.append(getAnalyticsMessageId());
-		sb.append(", companyId=");
+
+		sb.append(", \"companyId\": ");
+
 		sb.append(getCompanyId());
-		sb.append(", userId=");
+
+		sb.append(", \"userId\": ");
+
 		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
+
+		sb.append(", \"userName\": ");
+
+		sb.append("\"" + getUserName() + "\"");
+
+		sb.append(", \"createDate\": ");
+
+		sb.append("\"" + getCreateDate() + "\"");
 
 		return sb.toString();
 	}
@@ -665,27 +676,39 @@ public class AnalyticsMessageModelImpl
 
 		sb.append(
 			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+
 		sb.append(getMvccVersion());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>analyticsMessageId</column-name><column-value><![CDATA[");
+
 		sb.append(getAnalyticsMessageId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+
 		sb.append(getCompanyId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
+
 		sb.append(getUserId());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
+
 		sb.append(getUserName());
+
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+
 		sb.append(getCreateDate());
+
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
