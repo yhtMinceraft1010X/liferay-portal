@@ -74,7 +74,7 @@ public class DDMFormInstanceRecordXLSWriter
 				_log.warn(
 					StringBundler.concat(
 						"Form has ", values.size(),
-						" fields. Due to XSL file format limitations, the ",
+						" fields. Due to XLS file format limitations, the ",
 						"first ", _COLUMNS_MAX_COUNT,
 						" will be included in the exported file."));
 			}
