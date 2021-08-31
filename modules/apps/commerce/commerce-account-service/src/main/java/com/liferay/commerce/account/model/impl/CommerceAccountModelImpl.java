@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -1368,11 +1369,14 @@ public class CommerceAccountModelImpl
 			Object value = attributeGetterFunction.apply((CommerceAccount)this);
 
 			if (value == null) {
+				sb.append("null");
 			}
 			else if (value instanceof Blob || value instanceof Date ||
 					 value instanceof Map || value instanceof String) {
 
-				sb.append("\"" + value + "\"");
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
 			}
 			else {
 				sb.append(value);

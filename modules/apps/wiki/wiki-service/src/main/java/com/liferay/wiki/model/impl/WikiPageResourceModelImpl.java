@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.model.WikiPageResourceModel;
 
@@ -668,11 +669,14 @@ public class WikiPageResourceModelImpl
 				(WikiPageResource)this);
 
 			if (value == null) {
+				sb.append("null");
 			}
 			else if (value instanceof Blob || value instanceof Date ||
 					 value instanceof Map || value instanceof String) {
 
-				sb.append("\"" + value + "\"");
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
 			}
 			else {
 				sb.append(value);

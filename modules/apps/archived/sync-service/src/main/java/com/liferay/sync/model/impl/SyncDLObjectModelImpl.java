@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectModel;
 import com.liferay.sync.model.SyncDLObjectSoap;
@@ -1499,11 +1500,14 @@ public class SyncDLObjectModelImpl
 			Object value = attributeGetterFunction.apply((SyncDLObject)this);
 
 			if (value == null) {
+				sb.append("null");
 			}
 			else if (value instanceof Blob || value instanceof Date ||
 					 value instanceof Map || value instanceof String) {
 
-				sb.append("\"" + value + "\"");
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
 			}
 			else {
 				sb.append(value);
