@@ -33,8 +33,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8849 | Test Summary: Add a CSV data source with an individual whose email matches another individual that already has activities and check that the indiviual details are updated"
 	@priority = "5"
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
-
-		task("Add user") {
+		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "wuksiwze@fo.pf",
 				userFirstName = "Manuel",
@@ -42,10 +41,10 @@ definition {
 				userScreenName = "usersn");
 		}
 
-		task("Connect to AC") {
+		task ("Connect to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
-		 
+
 		task ("Login as another user and visit DXP") {
 			Navigator.openURL();
 
@@ -66,9 +65,9 @@ definition {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
 			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV users",
 				fieldNameList = "additionalName,additionalName",
 				selectAnalyticsCloudField = "true",
-				dataSourceName = "CSV users",
 				sourceFileName = "10users.csv");
 		}
 
@@ -93,7 +92,6 @@ definition {
 
 			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Murphy");
 		}
-
 	}
 
 }

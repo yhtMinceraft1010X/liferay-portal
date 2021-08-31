@@ -48,16 +48,15 @@ definition {
 				Button.click(button = "Create");
 			}
 			else {
-				if(isSet(fieldNameList)) {
+				if (isSet(fieldNameList)) {
 					for (var item : list "${fieldNameList}") {
 						MenuItem.click(menuItem = "${item}");
 
 						if (IsElementPresent(key_text = "Select Analytics Cloud Field",
-											locator1 = "Button#ANY")){
+								locator1 = "Button#ANY")) {
 							Button.click(button = "Select Analytics Cloud Field");
 						}
 					}
-
 				}
 				else {
 					MenuItem.click(menuItem = "${fieldName}");
