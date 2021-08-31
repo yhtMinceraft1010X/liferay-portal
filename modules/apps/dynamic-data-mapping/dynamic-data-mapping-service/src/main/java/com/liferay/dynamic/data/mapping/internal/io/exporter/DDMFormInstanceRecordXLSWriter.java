@@ -70,15 +70,13 @@ public class DDMFormInstanceRecordXLSWriter
 
 			Collection<String> values = ddmFormFieldsLabel.values();
 
-			if (values.size() > _COLUMNS_MAX_COUNT) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Form has ", values.size(),
-							" fields. Due to XSL file format limitations, the ",
-							"first ", _COLUMNS_MAX_COUNT,
-							" will be included in the exported file."));
-				}
+			if ((values.size() > _COLUMNS_MAX_COUNT) && _log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Form has ", values.size(),
+						" fields. Due to XSL file format limitations, the ",
+						"first ", _COLUMNS_MAX_COUNT,
+						" will be included in the exported file."));
 			}
 
 			createRow(rowIndex++, headerCellStyle, values, sheet);
