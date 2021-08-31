@@ -238,6 +238,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public String getDestinationName() {
+		return model.getDestinationName();
+	}
+
+	@Override
 	public String getExtensionDBTableName() {
 		return model.getExtensionDBTableName();
 	}

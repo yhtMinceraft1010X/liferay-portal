@@ -59,6 +59,8 @@ public interface ObjectDefinition
 
 	public String getClassName();
 
+	public String getDestinationName();
+
 	public String getExtensionDBTableName();
 
 	public String getPortletId();
