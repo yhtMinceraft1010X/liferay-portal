@@ -34,11 +34,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -136,7 +133,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
 					ObjectEntryInfoItemFields.userProfileImage,
-					_getUserProfileImage(objectEntry.getUserId())));
+					_getWebImage(objectEntry.getUserId())));
 
 			ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -183,7 +180,27 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		return null;
 	}
 
-	private Object _getUserProfileImage(long userId) {
+	private Object _getValue(
+			ObjectField objectField, Map<String, Serializable> values)
+		throws PortalException {
+
+		if (Objects.equals(
+				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				new String((byte[])values.get(objectField.getName())));
+
+			WebImage webImage = new WebImage(jsonObject.getString("url"));
+
+			webImage.setAlt(jsonObject.getString("alt"));
+
+			return webImage;
+		}
+
+		return values.get(objectField.getName());
+	}
+
+	private WebImage _getWebImage(long userId) throws PortalException {
 		User user = _userLocalService.fetchUser(userId);
 
 		if (user == null) {
@@ -193,50 +210,15 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if (themeDisplay != null) {
-			try {
-				WebImage webImage = new WebImage(
-					user.getPortraitURL(themeDisplay));
+			WebImage webImage = new WebImage(user.getPortraitURL(themeDisplay));
 
-				webImage.setAlt(user.getFullName());
+			webImage.setAlt(user.getFullName());
 
-				return webImage;
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-			}
+			return webImage;
 		}
 
 		return null;
 	}
-
-	private Object _getValue(
-		ObjectField objectField, Map<String, Serializable> values) {
-
-		if (Objects.equals(
-				_getInfoFieldType(objectField), ImageInfoFieldType.INSTANCE)) {
-
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					new String((byte[])values.get(objectField.getName())));
-
-				WebImage webImage = new WebImage(jsonObject.getString("url"));
-
-				webImage.setAlt(jsonObject.getString("alt"));
-
-				return webImage;
-			}
-			catch (JSONException jsonException) {
-				return null;
-			}
-		}
-
-		return values.get(objectField.getName());
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryInfoItemFieldValuesProvider.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
@@ -245,6 +227,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
