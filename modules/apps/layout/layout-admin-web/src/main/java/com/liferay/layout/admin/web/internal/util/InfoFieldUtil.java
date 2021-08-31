@@ -120,16 +120,16 @@ public class InfoFieldUtil {
 			return _renderHtml(fragmentEntryLink, defaultElementName);
 		}
 
-		DefaultFragmentRendererContext fragmentRendererContext =
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		fragmentRendererContext.setLocale(themeDisplay.getLocale());
-		fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
-		fragmentRendererContext.setSegmentsExperienceIds(
+		defaultFragmentRendererContext.setLocale(themeDisplay.getLocale());
+		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
+		defaultFragmentRendererContext.setSegmentsExperienceIds(
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 
 		return fragmentRendererController.render(
-			fragmentRendererContext, httpServletRequest,
+			defaultFragmentRendererContext, httpServletRequest,
 			serviceContext.getResponse());
 	}
 
