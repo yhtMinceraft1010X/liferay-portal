@@ -658,6 +658,8 @@ definition {
 
 		PopulateObjectFormsConfiguration.openForm();
 
+		FormsAdminNavigator.gotoAddForm();
+
 		PopulateObjectFormsConfiguration.openFormSettings();
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
