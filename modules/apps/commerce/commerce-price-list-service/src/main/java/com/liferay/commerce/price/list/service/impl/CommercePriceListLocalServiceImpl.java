@@ -1558,7 +1558,6 @@ public class CommercePriceListLocalServiceImpl
 		Long commerceOrderTypeId, String type) {
 
 		JoinStep joinStep = fromStep.from(CommercePriceListTable.INSTANCE);
-
 		Predicate predicate = CommercePriceListTable.INSTANCE.status.eq(
 			WorkflowConstants.STATUS_APPROVED
 		).and(
@@ -1572,7 +1571,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListAccountRelTable.INSTANCE,
 				CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListAccountRelTable.INSTANCE.commerceAccountId.eq(
 					commerceAccountId));
@@ -1582,7 +1580,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListAccountRelTable.INSTANCE,
 				CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListAccountRelTable.INSTANCE.
 					commercePriceListAccountRelId.isNull());
@@ -1615,7 +1612,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
 					commercePriceListId.eq(
 						CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListCommerceAccountGroupRelTable.INSTANCE.
 					commercePriceListCommerceAccountGroupRelId.isNull());
@@ -1626,7 +1622,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListChannelRelTable.INSTANCE,
 				CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListChannelRelTable.INSTANCE.commerceChannelId.eq(
 					commerceChannelId));
@@ -1636,7 +1631,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListChannelRelTable.INSTANCE,
 				CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListChannelRelTable.INSTANCE.
 					CommercePriceListChannelRelId.isNull());
@@ -1647,7 +1641,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListOrderTypeRelTable.INSTANCE,
 				CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListOrderTypeRelTable.INSTANCE.commerceOrderTypeId.
 					eq(commerceOrderTypeId));
@@ -1657,7 +1650,6 @@ public class CommercePriceListLocalServiceImpl
 				CommercePriceListOrderTypeRelTable.INSTANCE,
 				CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.
 					eq(CommercePriceListTable.INSTANCE.commercePriceListId));
-
 			predicate = predicate.and(
 				CommercePriceListOrderTypeRelTable.INSTANCE.
 					commercePriceListOrderTypeRelId.isNull());
