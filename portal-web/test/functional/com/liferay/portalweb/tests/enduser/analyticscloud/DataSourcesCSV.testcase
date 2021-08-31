@@ -61,9 +61,23 @@ definition {
 			ACUtils.launchAC();
 		}
 
-		task ("Add a CSV Data Source") {
+		task ("Assert Field not present") {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Manuel Test");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "wuksiwze@fo.pf");
+
+			ACIndividualsDashboard.assertIndividualAttributeNotPresent(individualAttribute = "Murphy");
+		}
+
+		task ("Add a CSV Data Source") {
 			ACSettings.addCSVDataSource(
 				dataSourceName = "CSV users",
 				fieldNameList = "additionalName,additionalName",
