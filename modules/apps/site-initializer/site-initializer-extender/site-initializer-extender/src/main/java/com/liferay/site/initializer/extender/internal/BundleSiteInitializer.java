@@ -16,6 +16,7 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
@@ -39,6 +40,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -53,6 +55,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,6 +66,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.exception.InitializationException;
@@ -93,6 +98,7 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AssetListEntryLocalService assetListEntryLocalService,
 		Bundle bundle, DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -111,6 +117,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
+		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
@@ -187,6 +194,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
+			_addAssetListEntries(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -196,6 +204,74 @@ public class BundleSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
+	}
+
+	private void _addAssetListEntries(ServiceContext serviceContext) throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/asset-list");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(
+				_read(resourcePath));
+
+			for (int i = 0; i < assetListJSONArray.length(); i++) {
+				JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(i);
+
+				String[] assetTagNames = JSONUtil.toStringArray(assetListJSONObject.getJSONArray("tags"));
+
+				_assetListEntryLocalService.addDynamicAssetListEntry(
+					serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+					assetListJSONObject.getString("title"), _getDynamicCollectionTypeSettings(assetListJSONObject.getString("ddmStructureKey"), assetTagNames,
+					serviceContext), serviceContext);
+			}
+		}
+	}
+
+	private String _getDynamicCollectionTypeSettings(
+		String ddmStructureKey, String[] assetTagNames, ServiceContext serviceContext)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey);
+
+		unicodeProperties.put(
+			"anyClassTypeJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+
+		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
+		unicodeProperties.put(
+			"classTypeIdsJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+		unicodeProperties.put(
+			"groupIds", String.valueOf(serviceContext.getScopeGroupId()));
+		unicodeProperties.put("orderByColumn1", "modifiedDate");
+		unicodeProperties.put("orderByColumn2", "title");
+		unicodeProperties.put("orderByType1", "ASC");
+		unicodeProperties.put("orderByType2", "ASC");
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			for (int i = 0; i < assetTagNames.length; i++) {
+				unicodeProperties.put("queryAndOperator" + i, "true");
+				unicodeProperties.put("queryContains" + i, "true");
+				unicodeProperties.put("queryName" + i, "assetTags");
+				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+			}
+		}
+
+		return unicodeProperties.toString();
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -676,6 +752,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
 	private final DDMStructureLocalService _ddmStructureLocalService;
