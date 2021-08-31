@@ -29,8 +29,6 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -108,7 +106,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				_getDestinationName(objectDefinition)));
+				objectDefinition.getDestinationName()));
 		ObjectEntryModelIndexerWriterContributor
 			objectEntryModelIndexerWriterContributor =
 				new ObjectEntryModelIndexerWriterContributor(
@@ -193,7 +191,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Override
 	public void undeploy(ObjectDefinition objectDefinition) {
 		Destination destination = _messageBus.getDestination(
-			_getDestinationName(objectDefinition));
+			objectDefinition.getDestinationName());
 
 		if (destination != null) {
 			destination.destroy();
@@ -201,12 +199,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_persistedModelLocalServiceRegistry.unregister(
 			objectDefinition.getClassName());
-	}
-
-	private String _getDestinationName(ObjectDefinition objectDefinition) {
-		return StringBundler.concat(
-			"liferay/object/", objectDefinition.getCompanyId(),
-			StringPool.SLASH, objectDefinition.getShortName());
 	}
 
 	private void _readResourceActions(ObjectDefinition objectDefinition)

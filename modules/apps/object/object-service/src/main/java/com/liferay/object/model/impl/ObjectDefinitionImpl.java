@@ -15,6 +15,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -43,6 +44,13 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 		return "com.liferay.object.model.ObjectDefinition#" +
 			getObjectDefinitionId();
+	}
+
+	@Override
+	public String getDestinationName() {
+		return StringBundler.concat(
+			"liferay/object/", getCompanyId(), StringPool.SLASH,
+			getShortName());
 	}
 
 	@Override
