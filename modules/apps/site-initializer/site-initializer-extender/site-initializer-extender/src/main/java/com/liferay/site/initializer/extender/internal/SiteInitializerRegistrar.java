@@ -14,6 +14,7 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -45,6 +46,7 @@ import org.osgi.framework.ServiceRegistration;
 public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
+		AssetListEntryLocalService assetListEntryLocalService,
 		Bundle bundle, BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
@@ -63,6 +65,7 @@ public class SiteInitializerRegistrar {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		UserLocalService userLocalService) {
 
+		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_bundleContext = bundleContext;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -92,6 +95,7 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
+				_assetListEntryLocalService,
 				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dlURLHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
@@ -108,7 +112,7 @@ public class SiteInitializerRegistrar {
 	protected void stop() {
 		_serviceRegistration.unregister();
 	}
-
+	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
 	private final DDMStructureLocalService _ddmStructureLocalService;
