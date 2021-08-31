@@ -92,8 +92,8 @@ public class DLFileEntryTypeModelListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		_registerDefaultDLFileEntryType();
 		_registerCompanyDLFileEntryTypes(company);
+		_registerDefaultDLFileEntryType();
 	}
 
 	@Override

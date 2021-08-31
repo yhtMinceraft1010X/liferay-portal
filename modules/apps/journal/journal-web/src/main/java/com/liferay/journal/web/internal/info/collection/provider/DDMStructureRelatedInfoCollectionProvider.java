@@ -74,22 +74,23 @@ public class DDMStructureRelatedInfoCollectionProvider
 	public InfoPage<JournalArticle> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
-
-		if (!(relatedItem instanceof AssetCategory)) {
-			return InfoPage.of(
-				Collections.emptyList(), collectionQuery.getPagination(), 0);
-		}
-
-		Indexer<?> indexer = JournalSearcher.getInstance();
-
-		SearchContext searchContext = _buildSearchContext(
-			(AssetCategory)relatedItem, collectionQuery);
-
 		try {
+			Optional<Object> relatedItemOptional =
+				collectionQuery.getRelatedItemObjectOptional();
+
+			Object relatedItem = relatedItemOptional.orElse(null);
+
+			if (!(relatedItem instanceof AssetCategory)) {
+				return InfoPage.of(
+					Collections.emptyList(), collectionQuery.getPagination(),
+					0);
+			}
+
+			Indexer<?> indexer = JournalSearcher.getInstance();
+
+			SearchContext searchContext = _buildSearchContext(
+				(AssetCategory)relatedItem, collectionQuery);
+
 			Hits hits = indexer.search(searchContext);
 
 			List<JournalArticle> articles = new ArrayList<>();
@@ -112,9 +113,9 @@ public class DDMStructureRelatedInfoCollectionProvider
 			if (_log.isWarnEnabled()) {
 				_log.warn(searchException, searchException);
 			}
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	@Override

@@ -84,23 +84,24 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 	public InfoPage<FileEntry> getFileEntryInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Optional<Object> relatedItemOptional =
-			collectionQuery.getRelatedItemObjectOptional();
-
-		Object relatedItem = relatedItemOptional.orElse(null);
-
-		if (!(relatedItem instanceof AssetCategory)) {
-			return InfoPage.of(
-				Collections.emptyList(), collectionQuery.getPagination(), 0);
-		}
-
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-			DLFileEntryConstants.getClassName());
-
-		SearchContext searchContext = _buildSearchContext(
-			(AssetCategory)relatedItem, collectionQuery);
-
 		try {
+			Optional<Object> relatedItemOptional =
+				collectionQuery.getRelatedItemObjectOptional();
+
+			Object relatedItem = relatedItemOptional.orElse(null);
+
+			if (!(relatedItem instanceof AssetCategory)) {
+				return InfoPage.of(
+					Collections.emptyList(), collectionQuery.getPagination(),
+					0);
+			}
+
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
+
+			SearchContext searchContext = _buildSearchContext(
+				(AssetCategory)relatedItem, collectionQuery);
+
 			Hits hits = indexer.search(searchContext);
 
 			List<FileEntry> fileEntries = new ArrayList<>();
@@ -119,9 +120,9 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException, portalException);
 			}
-		}
 
-		return null;
+			return null;
+		}
 	}
 
 	@Override
@@ -151,10 +152,10 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 
 	@Override
 	public boolean isAvailable() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			long[] currentAndAncestorSiteAndDepotGroupIds =
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
