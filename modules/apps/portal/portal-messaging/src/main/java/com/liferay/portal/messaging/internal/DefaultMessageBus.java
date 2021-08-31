@@ -431,6 +431,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			BaseDestination baseDestination = (BaseDestination)destination;
 
 			baseDestination.setName(destinationName);
+
 			baseDestination.afterPropertiesSet();
 		}
 

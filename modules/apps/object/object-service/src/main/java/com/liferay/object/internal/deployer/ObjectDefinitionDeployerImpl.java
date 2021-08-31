@@ -29,6 +29,12 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -58,9 +64,10 @@ import org.osgi.framework.ServiceRegistration;
 public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	public ObjectDefinitionDeployerImpl(
-		BundleContext bundleContext,
+		BundleContext bundleContext, DestinationFactory destinationFactory,
 		DynamicQueryBatchIndexingActionableFactory
 			dynamicQueryBatchIndexingActionableFactory,
+		MessageBus messageBus,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -70,8 +77,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor) {
 
 		_bundleContext = bundleContext;
+		_destinationFactory = destinationFactory;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
+		_messageBus = messageBus;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -96,6 +105,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return ReflectionUtil.throwException(exception);
 		}
 
+		Destination destination = _destinationFactory.createDestination(
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				_getDestinationName(objectDefinition)));
 		ObjectEntryModelIndexerWriterContributor
 			objectEntryModelIndexerWriterContributor =
 				new ObjectEntryModelIndexerWriterContributor(
@@ -107,6 +120,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryPortletResourcePermissionLogic());
 
 		return Arrays.asList(
+			_bundleContext.registerService(
+				Destination.class, destination,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destination.getName()
+				).build()),
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
@@ -174,8 +192,21 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Override
 	public void undeploy(ObjectDefinition objectDefinition) {
+		Destination destination = _messageBus.getDestination(
+			_getDestinationName(objectDefinition));
+
+		if (destination != null) {
+			destination.destroy();
+		}
+
 		_persistedModelLocalServiceRegistry.unregister(
 			objectDefinition.getClassName());
+	}
+
+	private String _getDestinationName(ObjectDefinition objectDefinition) {
+		return StringBundler.concat(
+			"liferay/object/", objectDefinition.getCompanyId(),
+			StringPool.SLASH, objectDefinition.getShortName());
 	}
 
 	private void _readResourceActions(ObjectDefinition objectDefinition)
@@ -199,8 +230,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private final BundleContext _bundleContext;
+	private final DestinationFactory _destinationFactory;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+	private final MessageBus _messageBus;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
