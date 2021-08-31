@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -1770,15 +1771,19 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			<#list entity.regularEntityColumns as entityColumn>
 				<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
 					<#if entityColumn_index == 0>
-						sb.append("{${entityColumn.name}=");
+						sb.append("{\"${entityColumn.name}\": ");
 					<#else>
-						sb.append(", ${entityColumn.name}=");
+						sb.append(", \"${entityColumn.name}\": ");
 					</#if>
+
 					<#if stringUtil.equals(entityColumn.type, "boolean")>
 						sb.append(is${entityColumn.methodName}());
+					<#elseif stringUtil.equals(entityColumn.type, "Blob") || stringUtil.equals(entityColumn.type, "Date") || stringUtil.equals(entityColumn.type, "Map") || stringUtil.equals(entityColumn.type, "String")>
+						sb.append("\"" + get${entityColumn.methodName}() + "\"");
 					<#else>
 						sb.append(get${entityColumn.methodName}());
 					</#if>
+
 					<#if !entityColumn_has_next>
 						sb.append("}");
 					</#if>
@@ -1799,11 +1804,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			<#list entity.regularEntityColumns as entityColumn>
 				<#if !stringUtil.equals(entityColumn.type, "Blob") || !entityColumn.lazy>
 					sb.append("<column><column-name>${entityColumn.name}</column-name><column-value><![CDATA[");
+
 					<#if stringUtil.equals(entityColumn.type, "boolean")>
 						sb.append(is${entityColumn.methodName}());
 					<#else>
 						sb.append(get${entityColumn.methodName}());
 					</#if>
+
 					sb.append("]]></column-value></column>");
 				</#if>
 			</#list>
@@ -1817,7 +1824,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		public String toString() {
 			Map<String, Function<${entity.name}, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
 
-			StringBundler sb = new StringBundler(4 * attributeGetterFunctions.size() + 2);
+			StringBundler sb = new StringBundler(5 * attributeGetterFunctions.size() + 2);
 
 			sb.append("{");
 
@@ -1825,9 +1832,26 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				String attributeName = entry.getKey();
 				Function<${entity.name}, Object> attributeGetterFunction = entry.getValue();
 
+				sb.append("\"");
 				sb.append(attributeName);
-				sb.append("=");
-				sb.append(attributeGetterFunction.apply((${entity.name})this));
+				sb.append("\": ");
+
+				Object value = attributeGetterFunction.apply((${entity.name})this);
+
+				if (value == null) {
+					sb.append("null");
+				}
+				else if ((value instanceof Blob) ||
+						 (value instanceof Date) ||
+						 (value instanceof Map) ||
+						 (value instanceof String)) {
+
+					sb.append("\"" + StringUtil.replace(value.toString(), "\"", "'") + "\"");
+				}
+				else {
+					sb.append(value);
+				}
+
 				sb.append(", ");
 			}
 
