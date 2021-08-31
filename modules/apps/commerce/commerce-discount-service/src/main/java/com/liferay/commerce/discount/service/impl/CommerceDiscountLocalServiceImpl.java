@@ -1752,7 +1752,6 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
 					commerceDiscountId.eq(
 						CommerceDiscountTable.INSTANCE.commerceDiscountId));
-
 			predicate = predicate.and(
 				CommerceDiscountCommerceAccountGroupRelTable.INSTANCE.
 					commerceDiscountCommerceAccountGroupRelId.isNull());
@@ -1768,7 +1767,6 @@ public class CommerceDiscountLocalServiceImpl
 						classNameLocalService.getClassNameId(
 							CommerceDiscount.class.getName()))
 				));
-
 			predicate = predicate.and(
 				CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
 					commerceChannelId));
@@ -1783,7 +1781,6 @@ public class CommerceDiscountLocalServiceImpl
 						classNameLocalService.getClassNameId(
 							CommerceDiscount.class.getName()))
 				));
-
 			predicate = predicate.and(
 				CommerceChannelRelTable.INSTANCE.commerceChannelRelId.isNull());
 		}
@@ -1793,7 +1790,6 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountOrderTypeRelTable.INSTANCE,
 				CommerceDiscountOrderTypeRelTable.INSTANCE.commerceDiscountId.
 					eq(CommerceDiscountTable.INSTANCE.commerceDiscountId));
-
 			predicate = predicate.and(
 				CommerceDiscountOrderTypeRelTable.INSTANCE.commerceOrderTypeId.
 					eq(commerceOrderTypeId));
@@ -1803,7 +1799,6 @@ public class CommerceDiscountLocalServiceImpl
 				CommerceDiscountOrderTypeRelTable.INSTANCE,
 				CommerceDiscountOrderTypeRelTable.INSTANCE.commerceDiscountId.
 					eq(CommerceDiscountTable.INSTANCE.commerceDiscountId));
-
 			predicate = predicate.and(
 				CommerceDiscountOrderTypeRelTable.INSTANCE.
 					commerceDiscountOrderTypeRelId.isNull());
