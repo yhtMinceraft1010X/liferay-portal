@@ -112,7 +112,6 @@ public class
 					).setParameter(
 						"itemType", (String)null
 					).buildString());
-
 				labelItem.setDismissible(true);
 
 				String modelResource = ResourceActionsUtil.getModelResource(
