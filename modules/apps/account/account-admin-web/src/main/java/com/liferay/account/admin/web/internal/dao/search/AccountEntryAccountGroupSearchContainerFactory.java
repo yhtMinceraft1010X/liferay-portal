@@ -56,7 +56,6 @@ public class AccountEntryAccountGroupSearchContainerFactory {
 
 		accountGroupDisplaySearchContainer.setResults(
 			TransformUtil.transform(accountGroups, AccountGroupDisplay::of));
-
 		accountGroupDisplaySearchContainer.setTotal(accountGroups.size());
 
 		return accountGroupDisplaySearchContainer;
