@@ -31,11 +31,68 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8849 | Test Summary: Add a CSV data source with an individual whose email matches another individual that already has activities and check that the indiviual details are updated"
-	@ignore = "true"
 	@priority = "5"
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
 
-		// TODO LRAC-8849 AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated pending implementation
+		task("Add user") {
+			JSONUser.addUser(
+				userEmailAddress = "wuksiwze@fo.pf",
+				userFirstName = "Manuel",
+				userLastName = "Test",
+				userScreenName = "usersn");
+		}
+
+		task("Connect to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+		 
+		task ("Login as another user and visit DXP") {
+			Navigator.openURL();
+
+			Pause(locator1 = "5000");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "wuksiwze@fo.pf",
+				userLoginFullName = "Manuel Test");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+		}
+
+		task ("Add a CSV Data Source") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACSettings.addCSVDataSource(
+				fieldNameList = "additionalName,additionalName",
+				selectAnalyticsCloudField = "true",
+				dataSourceName = "CSV users",
+				sourceFileName = "10users.csv");
+		}
+
+		task ("Exit Settings") {
+			ACNavigation.exitSettings();
+		}
+
+		task ("Go to Known Individuals tab") {
+			ACNavigation.goToIndividuals();
+
+			ACNavigation.switchTab(tabName = "Known Individuals");
+		}
+
+		task ("Assert that the new user is present") {
+			ACUtils.searchBar(searchItem = "Manuel Test");
+
+			ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Manuel Test");
+
+			ACNavigation.switchTab(tabName = "Details");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "wuksiwze@fo.pf");
+
+			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Murphy");
+		}
 
 	}
 
