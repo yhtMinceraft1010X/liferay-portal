@@ -372,9 +372,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long repositoryId = ParamUtil.getLong(
 			uploadPortletRequest, "repositoryId");
 
@@ -383,6 +380,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (RepositoryUtil.isExternalRepository(repositoryId)) {
 			neverExpireDefaultValue = true;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
