@@ -29,6 +29,11 @@ definition {
 			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE_VALUE",
 			value1 = "${individualAttributeValue}");
 	}
+	
+	macro assertIndividualAttributeNotPresent {
+		var key_individualAttribute = "${individualAttribute}";
+		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
+	}
 
 	macro assertIndividualsActivitiesTimeRange {
 		var key_timeRange = "${timeRange}";
