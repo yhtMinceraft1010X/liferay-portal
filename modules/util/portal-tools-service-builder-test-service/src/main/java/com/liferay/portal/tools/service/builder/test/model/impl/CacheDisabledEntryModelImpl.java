@@ -387,6 +387,19 @@ public class CacheDisabledEntryModelImpl
 	}
 
 	@Override
+	public CacheDisabledEntry cloneWithOriginalValues() {
+		CacheDisabledEntryImpl cacheDisabledEntryImpl =
+			new CacheDisabledEntryImpl();
+
+		cacheDisabledEntryImpl.setCacheDisabledEntryId(
+			this.<Long>getColumnOriginalValue("cacheDisabledEntryId"));
+		cacheDisabledEntryImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+
+		return cacheDisabledEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CacheDisabledEntry cacheDisabledEntry) {
 		long primaryKey = cacheDisabledEntry.getPrimaryKey();
 

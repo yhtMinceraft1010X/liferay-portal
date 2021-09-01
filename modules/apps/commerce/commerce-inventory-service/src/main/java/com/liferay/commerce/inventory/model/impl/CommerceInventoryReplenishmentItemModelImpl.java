@@ -773,6 +773,39 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	}
 
 	@Override
+	public CommerceInventoryReplenishmentItem cloneWithOriginalValues() {
+		CommerceInventoryReplenishmentItemImpl
+			commerceInventoryReplenishmentItemImpl =
+				new CommerceInventoryReplenishmentItemImpl();
+
+		commerceInventoryReplenishmentItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceInventoryReplenishmentItemImpl.
+			setCommerceInventoryReplenishmentItemId(
+				this.<Long>getColumnOriginalValue("CIReplenishmentItemId"));
+		commerceInventoryReplenishmentItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceInventoryReplenishmentItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceInventoryReplenishmentItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceInventoryReplenishmentItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceInventoryReplenishmentItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceInventoryReplenishmentItemImpl.setCommerceInventoryWarehouseId(
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
+		commerceInventoryReplenishmentItemImpl.setSku(
+			this.<String>getColumnOriginalValue("sku"));
+		commerceInventoryReplenishmentItemImpl.setAvailabilityDate(
+			this.<Date>getColumnOriginalValue("availabilityDate"));
+		commerceInventoryReplenishmentItemImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+
+		return commerceInventoryReplenishmentItemImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
 

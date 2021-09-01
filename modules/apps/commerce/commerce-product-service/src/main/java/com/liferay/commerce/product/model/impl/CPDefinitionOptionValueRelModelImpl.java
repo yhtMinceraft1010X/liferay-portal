@@ -1138,6 +1138,49 @@ public class CPDefinitionOptionValueRelModelImpl
 	}
 
 	@Override
+	public CPDefinitionOptionValueRel cloneWithOriginalValues() {
+		CPDefinitionOptionValueRelImpl cpDefinitionOptionValueRelImpl =
+			new CPDefinitionOptionValueRelImpl();
+
+		cpDefinitionOptionValueRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionValueRelId(
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionValueRelId"));
+		cpDefinitionOptionValueRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpDefinitionOptionValueRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionOptionValueRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionOptionValueRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionOptionValueRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionOptionValueRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionRelId"));
+		cpDefinitionOptionValueRelImpl.setCPInstanceUuid(
+			this.<String>getColumnOriginalValue("CPInstanceUuid"));
+		cpDefinitionOptionValueRelImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		cpDefinitionOptionValueRelImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		cpDefinitionOptionValueRelImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionOptionValueRelImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		cpDefinitionOptionValueRelImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+		cpDefinitionOptionValueRelImpl.setPreselected(
+			this.<Boolean>getColumnOriginalValue("preselected"));
+		cpDefinitionOptionValueRelImpl.setPrice(
+			this.<BigDecimal>getColumnOriginalValue("price"));
+
+		return cpDefinitionOptionValueRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
 

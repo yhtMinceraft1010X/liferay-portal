@@ -656,6 +656,31 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	@Override
+	public AnnouncementsDelivery cloneWithOriginalValues() {
+		AnnouncementsDeliveryImpl announcementsDeliveryImpl =
+			new AnnouncementsDeliveryImpl();
+
+		announcementsDeliveryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		announcementsDeliveryImpl.setDeliveryId(
+			this.<Long>getColumnOriginalValue("deliveryId"));
+		announcementsDeliveryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		announcementsDeliveryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		announcementsDeliveryImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		announcementsDeliveryImpl.setEmail(
+			this.<Boolean>getColumnOriginalValue("email"));
+		announcementsDeliveryImpl.setSms(
+			this.<Boolean>getColumnOriginalValue("sms"));
+		announcementsDeliveryImpl.setWebsite(
+			this.<Boolean>getColumnOriginalValue("website"));
+
+		return announcementsDeliveryImpl;
+	}
+
+	@Override
 	public int compareTo(AnnouncementsDelivery announcementsDelivery) {
 		long primaryKey = announcementsDelivery.getPrimaryKey();
 

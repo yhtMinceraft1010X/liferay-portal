@@ -1118,6 +1118,45 @@ public class DDMDataProviderInstanceModelImpl
 	}
 
 	@Override
+	public DDMDataProviderInstance cloneWithOriginalValues() {
+		DDMDataProviderInstanceImpl ddmDataProviderInstanceImpl =
+			new DDMDataProviderInstanceImpl();
+
+		ddmDataProviderInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmDataProviderInstanceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmDataProviderInstanceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		ddmDataProviderInstanceImpl.setDataProviderInstanceId(
+			this.<Long>getColumnOriginalValue("dataProviderInstanceId"));
+		ddmDataProviderInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmDataProviderInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmDataProviderInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmDataProviderInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmDataProviderInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmDataProviderInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmDataProviderInstanceImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmDataProviderInstanceImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmDataProviderInstanceImpl.setDefinition(
+			this.<String>getColumnOriginalValue("definition"));
+		ddmDataProviderInstanceImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		ddmDataProviderInstanceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddmDataProviderInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(DDMDataProviderInstance ddmDataProviderInstance) {
 		long primaryKey = ddmDataProviderInstance.getPrimaryKey();
 

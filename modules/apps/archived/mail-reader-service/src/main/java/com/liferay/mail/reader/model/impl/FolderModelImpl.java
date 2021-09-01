@@ -562,6 +562,28 @@ public class FolderModelImpl
 	}
 
 	@Override
+	public Folder cloneWithOriginalValues() {
+		FolderImpl folderImpl = new FolderImpl();
+
+		folderImpl.setFolderId(this.<Long>getColumnOriginalValue("folderId"));
+		folderImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		folderImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		folderImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		folderImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		folderImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		folderImpl.setAccountId(this.<Long>getColumnOriginalValue("accountId"));
+		folderImpl.setFullName(this.<String>getColumnOriginalValue("fullName"));
+		folderImpl.setDisplayName(
+			this.<String>getColumnOriginalValue("displayName"));
+		folderImpl.setRemoteMessageCount(
+			this.<Integer>getColumnOriginalValue("remoteMessageCount"));
+
+		return folderImpl;
+	}
+
+	@Override
 	public int compareTo(Folder folder) {
 		int value = 0;
 

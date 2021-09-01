@@ -926,6 +926,57 @@ public class SamlSpIdpConnectionModelImpl
 	}
 
 	@Override
+	public SamlSpIdpConnection cloneWithOriginalValues() {
+		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl =
+			new SamlSpIdpConnectionImpl();
+
+		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(
+			this.<Long>getColumnOriginalValue("samlSpIdpConnectionId"));
+		samlSpIdpConnectionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlSpIdpConnectionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlSpIdpConnectionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlSpIdpConnectionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlSpIdpConnectionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		samlSpIdpConnectionImpl.setAssertionSignatureRequired(
+			this.<Boolean>getColumnOriginalValue("assertionSignatureRequired"));
+		samlSpIdpConnectionImpl.setClockSkew(
+			this.<Long>getColumnOriginalValue("clockSkew"));
+		samlSpIdpConnectionImpl.setEnabled(
+			this.<Boolean>getColumnOriginalValue("enabled"));
+		samlSpIdpConnectionImpl.setForceAuthn(
+			this.<Boolean>getColumnOriginalValue("forceAuthn"));
+		samlSpIdpConnectionImpl.setLdapImportEnabled(
+			this.<Boolean>getColumnOriginalValue("ldapImportEnabled"));
+		samlSpIdpConnectionImpl.setMetadataUpdatedDate(
+			this.<Date>getColumnOriginalValue("metadataUpdatedDate"));
+		samlSpIdpConnectionImpl.setMetadataUrl(
+			this.<String>getColumnOriginalValue("metadataUrl"));
+		samlSpIdpConnectionImpl.setMetadataXml(
+			this.<String>getColumnOriginalValue("metadataXml"));
+		samlSpIdpConnectionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		samlSpIdpConnectionImpl.setNameIdFormat(
+			this.<String>getColumnOriginalValue("nameIdFormat"));
+		samlSpIdpConnectionImpl.setSamlIdpEntityId(
+			this.<String>getColumnOriginalValue("samlIdpEntityId"));
+		samlSpIdpConnectionImpl.setSignAuthnRequest(
+			this.<Boolean>getColumnOriginalValue("signAuthnRequest"));
+		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
+			this.<Boolean>getColumnOriginalValue("unknownUsersAreStrangers"));
+		samlSpIdpConnectionImpl.setUserAttributeMappings(
+			this.<String>getColumnOriginalValue("userAttributeMappings"));
+		samlSpIdpConnectionImpl.setUserIdentifierExpression(
+			this.<String>getColumnOriginalValue("userIdentifierExpression"));
+
+		return samlSpIdpConnectionImpl;
+	}
+
+	@Override
 	public int compareTo(SamlSpIdpConnection samlSpIdpConnection) {
 		long primaryKey = samlSpIdpConnection.getPrimaryKey();
 

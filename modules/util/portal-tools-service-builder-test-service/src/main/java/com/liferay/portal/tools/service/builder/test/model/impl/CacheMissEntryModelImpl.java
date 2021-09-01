@@ -383,6 +383,20 @@ public class CacheMissEntryModelImpl
 	}
 
 	@Override
+	public CacheMissEntry cloneWithOriginalValues() {
+		CacheMissEntryImpl cacheMissEntryImpl = new CacheMissEntryImpl();
+
+		cacheMissEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cacheMissEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		cacheMissEntryImpl.setCacheMissEntryId(
+			this.<Long>getColumnOriginalValue("cacheMissEntryId"));
+
+		return cacheMissEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CacheMissEntry cacheMissEntry) {
 		long primaryKey = cacheMissEntry.getPrimaryKey();
 

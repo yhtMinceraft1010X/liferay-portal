@@ -761,6 +761,35 @@ public class CommerceOrderTypeRelModelImpl
 	}
 
 	@Override
+	public CommerceOrderTypeRel cloneWithOriginalValues() {
+		CommerceOrderTypeRelImpl commerceOrderTypeRelImpl =
+			new CommerceOrderTypeRelImpl();
+
+		commerceOrderTypeRelImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceOrderTypeRelImpl.setCommerceOrderTypeRelId(
+			this.<Long>getColumnOriginalValue("commerceOrderTypeRelId"));
+		commerceOrderTypeRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceOrderTypeRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceOrderTypeRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceOrderTypeRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceOrderTypeRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceOrderTypeRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceOrderTypeRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceOrderTypeRelImpl.setCommerceOrderTypeId(
+			this.<Long>getColumnOriginalValue("commerceOrderTypeId"));
+
+		return commerceOrderTypeRelImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceOrderTypeRel commerceOrderTypeRel) {
 		int value = 0;
 

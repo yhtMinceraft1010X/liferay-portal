@@ -765,6 +765,36 @@ public class TrashEntryModelImpl
 	}
 
 	@Override
+	public TrashEntry cloneWithOriginalValues() {
+		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
+
+		trashEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		trashEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		trashEntryImpl.setEntryId(this.<Long>getColumnOriginalValue("entryId"));
+		trashEntryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		trashEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		trashEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		trashEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		trashEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		trashEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		trashEntryImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		trashEntryImpl.setSystemEventSetKey(
+			this.<Long>getColumnOriginalValue("systemEventSetKey"));
+		trashEntryImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		trashEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return trashEntryImpl;
+	}
+
+	@Override
 	public int compareTo(TrashEntry trashEntry) {
 		int value = 0;
 

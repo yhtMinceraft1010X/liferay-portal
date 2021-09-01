@@ -588,6 +588,29 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	@Override
+	public UserGroupGroupRole cloneWithOriginalValues() {
+		UserGroupGroupRoleImpl userGroupGroupRoleImpl =
+			new UserGroupGroupRoleImpl();
+
+		userGroupGroupRoleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userGroupGroupRoleImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		userGroupGroupRoleImpl.setUserGroupGroupRoleId(
+			this.<Long>getColumnOriginalValue("userGroupGroupRoleId"));
+		userGroupGroupRoleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userGroupGroupRoleImpl.setUserGroupId(
+			this.<Long>getColumnOriginalValue("userGroupId"));
+		userGroupGroupRoleImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		userGroupGroupRoleImpl.setRoleId(
+			this.<Long>getColumnOriginalValue("roleId"));
+
+		return userGroupGroupRoleImpl;
+	}
+
+	@Override
 	public int compareTo(UserGroupGroupRole userGroupGroupRole) {
 		long primaryKey = userGroupGroupRole.getPrimaryKey();
 

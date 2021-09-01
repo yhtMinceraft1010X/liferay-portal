@@ -662,6 +662,34 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	}
 
 	@Override
+	public CommercePricingClassCPDefinitionRel cloneWithOriginalValues() {
+		CommercePricingClassCPDefinitionRelImpl
+			commercePricingClassCPDefinitionRelImpl =
+				new CommercePricingClassCPDefinitionRelImpl();
+
+		commercePricingClassCPDefinitionRelImpl.
+			setCommercePricingClassCPDefinitionRelId(
+				this.<Long>getColumnOriginalValue(
+					"CPricingClassCPDefinitionRelId"));
+		commercePricingClassCPDefinitionRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePricingClassCPDefinitionRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePricingClassCPDefinitionRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePricingClassCPDefinitionRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePricingClassCPDefinitionRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePricingClassCPDefinitionRelImpl.setCommercePricingClassId(
+			this.<Long>getColumnOriginalValue("commercePricingClassId"));
+		commercePricingClassCPDefinitionRelImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+
+		return commercePricingClassCPDefinitionRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePricingClassCPDefinitionRel
 			commercePricingClassCPDefinitionRel) {

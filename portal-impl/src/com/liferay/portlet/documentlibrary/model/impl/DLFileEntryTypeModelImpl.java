@@ -1171,6 +1171,46 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	@Override
+	public DLFileEntryType cloneWithOriginalValues() {
+		DLFileEntryTypeImpl dlFileEntryTypeImpl = new DLFileEntryTypeImpl();
+
+		dlFileEntryTypeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileEntryTypeImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFileEntryTypeImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		dlFileEntryTypeImpl.setFileEntryTypeId(
+			this.<Long>getColumnOriginalValue("fileEntryTypeId"));
+		dlFileEntryTypeImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		dlFileEntryTypeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileEntryTypeImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dlFileEntryTypeImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dlFileEntryTypeImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlFileEntryTypeImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dlFileEntryTypeImpl.setDataDefinitionId(
+			this.<Long>getColumnOriginalValue("dataDefinitionId"));
+		dlFileEntryTypeImpl.setFileEntryTypeKey(
+			this.<String>getColumnOriginalValue("fileEntryTypeKey"));
+		dlFileEntryTypeImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		dlFileEntryTypeImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		dlFileEntryTypeImpl.setScope(
+			this.<Integer>getColumnOriginalValue("scope"));
+		dlFileEntryTypeImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return dlFileEntryTypeImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileEntryType dlFileEntryType) {
 		long primaryKey = dlFileEntryType.getPrimaryKey();
 

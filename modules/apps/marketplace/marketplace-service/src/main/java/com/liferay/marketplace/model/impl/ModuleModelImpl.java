@@ -552,6 +552,24 @@ public class ModuleModelImpl
 	}
 
 	@Override
+	public Module cloneWithOriginalValues() {
+		ModuleImpl moduleImpl = new ModuleImpl();
+
+		moduleImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		moduleImpl.setModuleId(this.<Long>getColumnOriginalValue("moduleId"));
+		moduleImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		moduleImpl.setAppId(this.<Long>getColumnOriginalValue("appId"));
+		moduleImpl.setBundleSymbolicName(
+			this.<String>getColumnOriginalValue("bundleSymbolicName"));
+		moduleImpl.setBundleVersion(
+			this.<String>getColumnOriginalValue("bundleVersion"));
+		moduleImpl.setContextName(
+			this.<String>getColumnOriginalValue("contextName"));
+
+		return moduleImpl;
+	}
+
+	@Override
 	public int compareTo(Module module) {
 		long primaryKey = module.getPrimaryKey();
 

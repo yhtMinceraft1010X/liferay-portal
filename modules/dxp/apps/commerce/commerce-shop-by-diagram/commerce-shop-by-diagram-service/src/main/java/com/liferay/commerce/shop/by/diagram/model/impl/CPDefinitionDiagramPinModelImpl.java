@@ -666,6 +666,35 @@ public class CPDefinitionDiagramPinModelImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramPin cloneWithOriginalValues() {
+		CPDefinitionDiagramPinImpl cpDefinitionDiagramPinImpl =
+			new CPDefinitionDiagramPinImpl();
+
+		cpDefinitionDiagramPinImpl.setCPDefinitionDiagramPinId(
+			this.<Long>getColumnOriginalValue("CPDefinitionDiagramPinId"));
+		cpDefinitionDiagramPinImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionDiagramPinImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionDiagramPinImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionDiagramPinImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionDiagramPinImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionDiagramPinImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionDiagramPinImpl.setPositionX(
+			this.<Double>getColumnOriginalValue("positionX"));
+		cpDefinitionDiagramPinImpl.setPositionY(
+			this.<Double>getColumnOriginalValue("positionY"));
+		cpDefinitionDiagramPinImpl.setSequence(
+			this.<String>getColumnOriginalValue("sequence"));
+
+		return cpDefinitionDiagramPinImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionDiagramPin cpDefinitionDiagramPin) {
 		int value = 0;
 

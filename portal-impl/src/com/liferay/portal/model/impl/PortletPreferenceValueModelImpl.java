@@ -626,6 +626,35 @@ public class PortletPreferenceValueModelImpl
 	}
 
 	@Override
+	public PortletPreferenceValue cloneWithOriginalValues() {
+		PortletPreferenceValueImpl portletPreferenceValueImpl =
+			new PortletPreferenceValueImpl();
+
+		portletPreferenceValueImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		portletPreferenceValueImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		portletPreferenceValueImpl.setPortletPreferenceValueId(
+			this.<Long>getColumnOriginalValue("portletPreferenceValueId"));
+		portletPreferenceValueImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		portletPreferenceValueImpl.setPortletPreferencesId(
+			this.<Long>getColumnOriginalValue("portletPreferencesId"));
+		portletPreferenceValueImpl.setIndex(
+			this.<Integer>getColumnOriginalValue("index_"));
+		portletPreferenceValueImpl.setLargeValue(
+			this.<String>getColumnOriginalValue("largeValue"));
+		portletPreferenceValueImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		portletPreferenceValueImpl.setReadOnly(
+			this.<Boolean>getColumnOriginalValue("readOnly"));
+		portletPreferenceValueImpl.setSmallValue(
+			this.<String>getColumnOriginalValue("smallValue"));
+
+		return portletPreferenceValueImpl;
+	}
+
+	@Override
 	public int compareTo(PortletPreferenceValue portletPreferenceValue) {
 		int value = 0;
 

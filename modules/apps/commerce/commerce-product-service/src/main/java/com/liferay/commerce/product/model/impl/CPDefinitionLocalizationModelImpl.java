@@ -641,6 +641,37 @@ public class CPDefinitionLocalizationModelImpl
 	}
 
 	@Override
+	public CPDefinitionLocalization cloneWithOriginalValues() {
+		CPDefinitionLocalizationImpl cpDefinitionLocalizationImpl =
+			new CPDefinitionLocalizationImpl();
+
+		cpDefinitionLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		cpDefinitionLocalizationImpl.setCpDefinitionLocalizationId(
+			this.<Long>getColumnOriginalValue("cpDefinitionLocalizationId"));
+		cpDefinitionLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionLocalizationImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		cpDefinitionLocalizationImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		cpDefinitionLocalizationImpl.setShortDescription(
+			this.<String>getColumnOriginalValue("shortDescription"));
+		cpDefinitionLocalizationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		cpDefinitionLocalizationImpl.setMetaTitle(
+			this.<String>getColumnOriginalValue("metaTitle"));
+		cpDefinitionLocalizationImpl.setMetaDescription(
+			this.<String>getColumnOriginalValue("metaDescription"));
+		cpDefinitionLocalizationImpl.setMetaKeywords(
+			this.<String>getColumnOriginalValue("metaKeywords"));
+
+		return cpDefinitionLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionLocalization cpDefinitionLocalization) {
 		long primaryKey = cpDefinitionLocalization.getPrimaryKey();
 

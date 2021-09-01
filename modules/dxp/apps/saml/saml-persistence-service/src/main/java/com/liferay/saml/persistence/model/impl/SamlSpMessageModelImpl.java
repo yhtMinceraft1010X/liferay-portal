@@ -492,6 +492,26 @@ public class SamlSpMessageModelImpl
 	}
 
 	@Override
+	public SamlSpMessage cloneWithOriginalValues() {
+		SamlSpMessageImpl samlSpMessageImpl = new SamlSpMessageImpl();
+
+		samlSpMessageImpl.setSamlSpMessageId(
+			this.<Long>getColumnOriginalValue("samlSpMessageId"));
+		samlSpMessageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlSpMessageImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlSpMessageImpl.setSamlIdpEntityId(
+			this.<String>getColumnOriginalValue("samlIdpEntityId"));
+		samlSpMessageImpl.setSamlIdpResponseKey(
+			this.<String>getColumnOriginalValue("samlIdpResponseKey"));
+		samlSpMessageImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+
+		return samlSpMessageImpl;
+	}
+
+	@Override
 	public int compareTo(SamlSpMessage samlSpMessage) {
 		long primaryKey = samlSpMessage.getPrimaryKey();
 

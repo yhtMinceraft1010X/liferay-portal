@@ -850,6 +850,51 @@ public class KaleoInstanceTokenModelImpl
 	}
 
 	@Override
+	public KaleoInstanceToken cloneWithOriginalValues() {
+		KaleoInstanceTokenImpl kaleoInstanceTokenImpl =
+			new KaleoInstanceTokenImpl();
+
+		kaleoInstanceTokenImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceTokenId"));
+		kaleoInstanceTokenImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoInstanceTokenImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoInstanceTokenImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoInstanceTokenImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoInstanceTokenImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoInstanceTokenImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoInstanceTokenImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoInstanceTokenImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoInstanceTokenImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoInstanceTokenImpl.setParentKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("parentKaleoInstanceTokenId"));
+		kaleoInstanceTokenImpl.setCurrentKaleoNodeId(
+			this.<Long>getColumnOriginalValue("currentKaleoNodeId"));
+		kaleoInstanceTokenImpl.setCurrentKaleoNodeName(
+			this.<String>getColumnOriginalValue("currentKaleoNodeName"));
+		kaleoInstanceTokenImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		kaleoInstanceTokenImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		kaleoInstanceTokenImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		kaleoInstanceTokenImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+
+		return kaleoInstanceTokenImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoInstanceToken kaleoInstanceToken) {
 		int value = 0;
 

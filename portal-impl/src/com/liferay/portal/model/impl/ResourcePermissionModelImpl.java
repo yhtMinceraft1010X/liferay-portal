@@ -786,6 +786,39 @@ public class ResourcePermissionModelImpl
 	}
 
 	@Override
+	public ResourcePermission cloneWithOriginalValues() {
+		ResourcePermissionImpl resourcePermissionImpl =
+			new ResourcePermissionImpl();
+
+		resourcePermissionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		resourcePermissionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		resourcePermissionImpl.setResourcePermissionId(
+			this.<Long>getColumnOriginalValue("resourcePermissionId"));
+		resourcePermissionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		resourcePermissionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		resourcePermissionImpl.setScope(
+			this.<Integer>getColumnOriginalValue("scope"));
+		resourcePermissionImpl.setPrimKey(
+			this.<String>getColumnOriginalValue("primKey"));
+		resourcePermissionImpl.setPrimKeyId(
+			this.<Long>getColumnOriginalValue("primKeyId"));
+		resourcePermissionImpl.setRoleId(
+			this.<Long>getColumnOriginalValue("roleId"));
+		resourcePermissionImpl.setOwnerId(
+			this.<Long>getColumnOriginalValue("ownerId"));
+		resourcePermissionImpl.setActionIds(
+			this.<Long>getColumnOriginalValue("actionIds"));
+		resourcePermissionImpl.setViewActionId(
+			this.<Boolean>getColumnOriginalValue("viewActionId"));
+
+		return resourcePermissionImpl;
+	}
+
+	@Override
 	public int compareTo(ResourcePermission resourcePermission) {
 		long primaryKey = resourcePermission.getPrimaryKey();
 

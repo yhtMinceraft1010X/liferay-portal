@@ -1331,6 +1331,55 @@ public class DDMStructureVersionModelImpl
 	}
 
 	@Override
+	public DDMStructureVersion cloneWithOriginalValues() {
+		DDMStructureVersionImpl ddmStructureVersionImpl =
+			new DDMStructureVersionImpl();
+
+		ddmStructureVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmStructureVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmStructureVersionImpl.setStructureVersionId(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
+		ddmStructureVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmStructureVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmStructureVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmStructureVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmStructureVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmStructureVersionImpl.setStructureId(
+			this.<Long>getColumnOriginalValue("structureId"));
+		ddmStructureVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmStructureVersionImpl.setParentStructureId(
+			this.<Long>getColumnOriginalValue("parentStructureId"));
+		ddmStructureVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmStructureVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmStructureVersionImpl.setDefinition(
+			this.<String>getColumnOriginalValue("definition"));
+		ddmStructureVersionImpl.setStorageType(
+			this.<String>getColumnOriginalValue("storageType"));
+		ddmStructureVersionImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		ddmStructureVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddmStructureVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddmStructureVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddmStructureVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddmStructureVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DDMStructureVersion ddmStructureVersion) {
 		long primaryKey = ddmStructureVersion.getPrimaryKey();
 

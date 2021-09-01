@@ -884,6 +884,53 @@ public class KaleoNotificationModelImpl
 	}
 
 	@Override
+	public KaleoNotification cloneWithOriginalValues() {
+		KaleoNotificationImpl kaleoNotificationImpl =
+			new KaleoNotificationImpl();
+
+		kaleoNotificationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoNotificationImpl.setKaleoNotificationId(
+			this.<Long>getColumnOriginalValue("kaleoNotificationId"));
+		kaleoNotificationImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoNotificationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoNotificationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoNotificationImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoNotificationImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoNotificationImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoNotificationImpl.setKaleoClassName(
+			this.<String>getColumnOriginalValue("kaleoClassName"));
+		kaleoNotificationImpl.setKaleoClassPK(
+			this.<Long>getColumnOriginalValue("kaleoClassPK"));
+		kaleoNotificationImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoNotificationImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoNotificationImpl.setKaleoNodeName(
+			this.<String>getColumnOriginalValue("kaleoNodeName"));
+		kaleoNotificationImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		kaleoNotificationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoNotificationImpl.setExecutionType(
+			this.<String>getColumnOriginalValue("executionType"));
+		kaleoNotificationImpl.setTemplate(
+			this.<String>getColumnOriginalValue("template"));
+		kaleoNotificationImpl.setTemplateLanguage(
+			this.<String>getColumnOriginalValue("templateLanguage"));
+		kaleoNotificationImpl.setNotificationTypes(
+			this.<String>getColumnOriginalValue("notificationTypes"));
+
+		return kaleoNotificationImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoNotification kaleoNotification) {
 		int value = 0;
 

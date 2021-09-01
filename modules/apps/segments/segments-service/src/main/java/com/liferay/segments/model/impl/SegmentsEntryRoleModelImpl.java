@@ -593,6 +593,35 @@ public class SegmentsEntryRoleModelImpl
 	}
 
 	@Override
+	public SegmentsEntryRole cloneWithOriginalValues() {
+		SegmentsEntryRoleImpl segmentsEntryRoleImpl =
+			new SegmentsEntryRoleImpl();
+
+		segmentsEntryRoleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		segmentsEntryRoleImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		segmentsEntryRoleImpl.setSegmentsEntryRoleId(
+			this.<Long>getColumnOriginalValue("segmentsEntryRoleId"));
+		segmentsEntryRoleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		segmentsEntryRoleImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		segmentsEntryRoleImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		segmentsEntryRoleImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		segmentsEntryRoleImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		segmentsEntryRoleImpl.setSegmentsEntryId(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		segmentsEntryRoleImpl.setRoleId(
+			this.<Long>getColumnOriginalValue("roleId"));
+
+		return segmentsEntryRoleImpl;
+	}
+
+	@Override
 	public int compareTo(SegmentsEntryRole segmentsEntryRole) {
 		long primaryKey = segmentsEntryRole.getPrimaryKey();
 

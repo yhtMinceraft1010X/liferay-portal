@@ -845,6 +845,46 @@ public class CommerceShipmentModelImpl
 	}
 
 	@Override
+	public CommerceShipment cloneWithOriginalValues() {
+		CommerceShipmentImpl commerceShipmentImpl = new CommerceShipmentImpl();
+
+		commerceShipmentImpl.setCommerceShipmentId(
+			this.<Long>getColumnOriginalValue("commerceShipmentId"));
+		commerceShipmentImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceShipmentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceShipmentImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceShipmentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceShipmentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceShipmentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceShipmentImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceShipmentImpl.setCommerceAddressId(
+			this.<Long>getColumnOriginalValue("commerceAddressId"));
+		commerceShipmentImpl.setCommerceShippingMethodId(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
+		commerceShipmentImpl.setShippingOptionName(
+			this.<String>getColumnOriginalValue("shippingOptionName"));
+		commerceShipmentImpl.setCarrier(
+			this.<String>getColumnOriginalValue("carrier"));
+		commerceShipmentImpl.setTrackingNumber(
+			this.<String>getColumnOriginalValue("trackingNumber"));
+		commerceShipmentImpl.setShippingDate(
+			this.<Date>getColumnOriginalValue("shippingDate"));
+		commerceShipmentImpl.setExpectedDate(
+			this.<Date>getColumnOriginalValue("expectedDate"));
+		commerceShipmentImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return commerceShipmentImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceShipment commerceShipment) {
 		int value = 0;
 

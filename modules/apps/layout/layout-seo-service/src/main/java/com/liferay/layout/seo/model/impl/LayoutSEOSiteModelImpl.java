@@ -936,6 +936,39 @@ public class LayoutSEOSiteModelImpl
 	}
 
 	@Override
+	public LayoutSEOSite cloneWithOriginalValues() {
+		LayoutSEOSiteImpl layoutSEOSiteImpl = new LayoutSEOSiteImpl();
+
+		layoutSEOSiteImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutSEOSiteImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutSEOSiteImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		layoutSEOSiteImpl.setLayoutSEOSiteId(
+			this.<Long>getColumnOriginalValue("layoutSEOSiteId"));
+		layoutSEOSiteImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutSEOSiteImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutSEOSiteImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutSEOSiteImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutSEOSiteImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutSEOSiteImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutSEOSiteImpl.setOpenGraphEnabled(
+			this.<Boolean>getColumnOriginalValue("openGraphEnabled"));
+		layoutSEOSiteImpl.setOpenGraphImageAlt(
+			this.<String>getColumnOriginalValue("openGraphImageAlt"));
+		layoutSEOSiteImpl.setOpenGraphImageFileEntryId(
+			this.<Long>getColumnOriginalValue("openGraphImageFileEntryId"));
+
+		return layoutSEOSiteImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutSEOSite layoutSEOSite) {
 		long primaryKey = layoutSEOSite.getPrimaryKey();
 

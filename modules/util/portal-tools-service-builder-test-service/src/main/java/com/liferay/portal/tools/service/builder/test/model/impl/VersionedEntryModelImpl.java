@@ -481,6 +481,22 @@ public class VersionedEntryModelImpl
 	}
 
 	@Override
+	public VersionedEntry cloneWithOriginalValues() {
+		VersionedEntryImpl versionedEntryImpl = new VersionedEntryImpl();
+
+		versionedEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		versionedEntryImpl.setHeadId(
+			this.<Long>getColumnOriginalValue("headId"));
+		versionedEntryImpl.setVersionedEntryId(
+			this.<Long>getColumnOriginalValue("versionedEntryId"));
+		versionedEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+
+		return versionedEntryImpl;
+	}
+
+	@Override
 	public int compareTo(VersionedEntry versionedEntry) {
 		long primaryKey = versionedEntry.getPrimaryKey();
 

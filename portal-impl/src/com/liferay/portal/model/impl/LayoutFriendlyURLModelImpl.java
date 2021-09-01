@@ -814,6 +814,45 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	@Override
+	public LayoutFriendlyURL cloneWithOriginalValues() {
+		LayoutFriendlyURLImpl layoutFriendlyURLImpl =
+			new LayoutFriendlyURLImpl();
+
+		layoutFriendlyURLImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutFriendlyURLImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutFriendlyURLImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutFriendlyURLImpl.setLayoutFriendlyURLId(
+			this.<Long>getColumnOriginalValue("layoutFriendlyURLId"));
+		layoutFriendlyURLImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutFriendlyURLImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutFriendlyURLImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutFriendlyURLImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutFriendlyURLImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutFriendlyURLImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutFriendlyURLImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		layoutFriendlyURLImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		layoutFriendlyURLImpl.setFriendlyURL(
+			this.<String>getColumnOriginalValue("friendlyURL"));
+		layoutFriendlyURLImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		layoutFriendlyURLImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return layoutFriendlyURLImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutFriendlyURL layoutFriendlyURL) {
 		long primaryKey = layoutFriendlyURL.getPrimaryKey();
 

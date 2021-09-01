@@ -919,6 +919,51 @@ public class CommerceShippingFixedOptionRelModelImpl
 	}
 
 	@Override
+	public CommerceShippingFixedOptionRel cloneWithOriginalValues() {
+		CommerceShippingFixedOptionRelImpl commerceShippingFixedOptionRelImpl =
+			new CommerceShippingFixedOptionRelImpl();
+
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionRelId(
+			this.<Long>getColumnOriginalValue("CShippingFixedOptionRelId"));
+		commerceShippingFixedOptionRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceShippingFixedOptionRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceShippingFixedOptionRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceShippingFixedOptionRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceShippingFixedOptionRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceShippingFixedOptionRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(
+			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
+		commerceShippingFixedOptionRelImpl.setCommerceInventoryWarehouseId(
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
+		commerceShippingFixedOptionRelImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		commerceShippingFixedOptionRelImpl.setRegionId(
+			this.<Long>getColumnOriginalValue("regionId"));
+		commerceShippingFixedOptionRelImpl.setZip(
+			this.<String>getColumnOriginalValue("zip"));
+		commerceShippingFixedOptionRelImpl.setWeightFrom(
+			this.<Double>getColumnOriginalValue("weightFrom"));
+		commerceShippingFixedOptionRelImpl.setWeightTo(
+			this.<Double>getColumnOriginalValue("weightTo"));
+		commerceShippingFixedOptionRelImpl.setFixedPrice(
+			this.<BigDecimal>getColumnOriginalValue("fixedPrice"));
+		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(
+			this.<BigDecimal>getColumnOriginalValue("rateUnitWeightPrice"));
+		commerceShippingFixedOptionRelImpl.setRatePercentage(
+			this.<Double>getColumnOriginalValue("ratePercentage"));
+
+		return commerceShippingFixedOptionRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
 

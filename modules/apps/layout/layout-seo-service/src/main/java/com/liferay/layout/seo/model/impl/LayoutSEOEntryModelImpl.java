@@ -1588,6 +1588,59 @@ public class LayoutSEOEntryModelImpl
 	}
 
 	@Override
+	public LayoutSEOEntry cloneWithOriginalValues() {
+		LayoutSEOEntryImpl layoutSEOEntryImpl = new LayoutSEOEntryImpl();
+
+		layoutSEOEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutSEOEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutSEOEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutSEOEntryImpl.setLayoutSEOEntryId(
+			this.<Long>getColumnOriginalValue("layoutSEOEntryId"));
+		layoutSEOEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutSEOEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutSEOEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutSEOEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutSEOEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutSEOEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutSEOEntryImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		layoutSEOEntryImpl.setLayoutId(
+			this.<Long>getColumnOriginalValue("layoutId"));
+		layoutSEOEntryImpl.setCanonicalURL(
+			this.<String>getColumnOriginalValue("canonicalURL"));
+		layoutSEOEntryImpl.setCanonicalURLEnabled(
+			this.<Boolean>getColumnOriginalValue("canonicalURLEnabled"));
+		layoutSEOEntryImpl.setDDMStorageId(
+			this.<Long>getColumnOriginalValue("DDMStorageId"));
+		layoutSEOEntryImpl.setOpenGraphDescription(
+			this.<String>getColumnOriginalValue("openGraphDescription"));
+		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
+			this.<Boolean>getColumnOriginalValue(
+				"openGraphDescriptionEnabled"));
+		layoutSEOEntryImpl.setOpenGraphImageAlt(
+			this.<String>getColumnOriginalValue("openGraphImageAlt"));
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
+			this.<Long>getColumnOriginalValue("openGraphImageFileEntryId"));
+		layoutSEOEntryImpl.setOpenGraphTitle(
+			this.<String>getColumnOriginalValue("openGraphTitle"));
+		layoutSEOEntryImpl.setOpenGraphTitleEnabled(
+			this.<Boolean>getColumnOriginalValue("openGraphTitleEnabled"));
+		layoutSEOEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return layoutSEOEntryImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutSEOEntry layoutSEOEntry) {
 		long primaryKey = layoutSEOEntry.getPrimaryKey();
 

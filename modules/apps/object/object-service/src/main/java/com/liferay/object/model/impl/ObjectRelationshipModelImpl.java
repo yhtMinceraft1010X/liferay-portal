@@ -632,6 +632,31 @@ public class ObjectRelationshipModelImpl
 	}
 
 	@Override
+	public ObjectRelationship cloneWithOriginalValues() {
+		ObjectRelationshipImpl objectRelationshipImpl =
+			new ObjectRelationshipImpl();
+
+		objectRelationshipImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectRelationshipImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		objectRelationshipImpl.setObjectRelationshipId(
+			this.<Long>getColumnOriginalValue("objectRelationshipId"));
+		objectRelationshipImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectRelationshipImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		objectRelationshipImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectRelationshipImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectRelationshipImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return objectRelationshipImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectRelationship objectRelationship) {
 		long primaryKey = objectRelationship.getPrimaryKey();
 

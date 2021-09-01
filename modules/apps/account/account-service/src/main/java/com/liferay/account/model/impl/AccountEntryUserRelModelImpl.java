@@ -541,6 +541,25 @@ public class AccountEntryUserRelModelImpl
 	}
 
 	@Override
+	public AccountEntryUserRel cloneWithOriginalValues() {
+		AccountEntryUserRelImpl accountEntryUserRelImpl =
+			new AccountEntryUserRelImpl();
+
+		accountEntryUserRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountEntryUserRelImpl.setAccountEntryUserRelId(
+			this.<Long>getColumnOriginalValue("accountEntryUserRelId"));
+		accountEntryUserRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountEntryUserRelImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
+		accountEntryUserRelImpl.setAccountUserId(
+			this.<Long>getColumnOriginalValue("accountUserId"));
+
+		return accountEntryUserRelImpl;
+	}
+
+	@Override
 	public int compareTo(AccountEntryUserRel accountEntryUserRel) {
 		long primaryKey = accountEntryUserRel.getPrimaryKey();
 

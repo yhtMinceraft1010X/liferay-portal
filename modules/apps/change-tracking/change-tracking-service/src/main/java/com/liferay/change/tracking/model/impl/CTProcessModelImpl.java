@@ -562,6 +562,27 @@ public class CTProcessModelImpl
 	}
 
 	@Override
+	public CTProcess cloneWithOriginalValues() {
+		CTProcessImpl ctProcessImpl = new CTProcessImpl();
+
+		ctProcessImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctProcessImpl.setCtProcessId(
+			this.<Long>getColumnOriginalValue("ctProcessId"));
+		ctProcessImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctProcessImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ctProcessImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ctProcessImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctProcessImpl.setBackgroundTaskId(
+			this.<Long>getColumnOriginalValue("backgroundTaskId"));
+
+		return ctProcessImpl;
+	}
+
+	@Override
 	public int compareTo(CTProcess ctProcess) {
 		int value = 0;
 

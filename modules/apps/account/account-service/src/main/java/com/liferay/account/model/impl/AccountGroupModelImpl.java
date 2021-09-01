@@ -756,6 +756,35 @@ public class AccountGroupModelImpl
 	}
 
 	@Override
+	public AccountGroup cloneWithOriginalValues() {
+		AccountGroupImpl accountGroupImpl = new AccountGroupImpl();
+
+		accountGroupImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountGroupImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		accountGroupImpl.setAccountGroupId(
+			this.<Long>getColumnOriginalValue("accountGroupId"));
+		accountGroupImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountGroupImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		accountGroupImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		accountGroupImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		accountGroupImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		accountGroupImpl.setDefaultAccountGroup(
+			this.<Boolean>getColumnOriginalValue("defaultAccountGroup"));
+		accountGroupImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		accountGroupImpl.setName(this.<String>getColumnOriginalValue("name"));
+		accountGroupImpl.setType(this.<String>getColumnOriginalValue("type_"));
+
+		return accountGroupImpl;
+	}
+
+	@Override
 	public int compareTo(AccountGroup accountGroup) {
 		long primaryKey = accountGroup.getPrimaryKey();
 

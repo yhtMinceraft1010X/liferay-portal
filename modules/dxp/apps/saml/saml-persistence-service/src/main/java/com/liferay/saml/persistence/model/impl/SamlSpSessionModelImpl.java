@@ -696,6 +696,38 @@ public class SamlSpSessionModelImpl
 	}
 
 	@Override
+	public SamlSpSession cloneWithOriginalValues() {
+		SamlSpSessionImpl samlSpSessionImpl = new SamlSpSessionImpl();
+
+		samlSpSessionImpl.setSamlSpSessionId(
+			this.<Long>getColumnOriginalValue("samlSpSessionId"));
+		samlSpSessionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlSpSessionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlSpSessionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlSpSessionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlSpSessionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		samlSpSessionImpl.setSamlPeerBindingId(
+			this.<Long>getColumnOriginalValue("samlPeerBindingId"));
+		samlSpSessionImpl.setAssertionXml(
+			this.<String>getColumnOriginalValue("assertionXml"));
+		samlSpSessionImpl.setJSessionId(
+			this.<String>getColumnOriginalValue("jSessionId"));
+		samlSpSessionImpl.setSamlSpSessionKey(
+			this.<String>getColumnOriginalValue("samlSpSessionKey"));
+		samlSpSessionImpl.setSessionIndex(
+			this.<String>getColumnOriginalValue("sessionIndex"));
+		samlSpSessionImpl.setTerminated(
+			this.<Boolean>getColumnOriginalValue("terminated_"));
+
+		return samlSpSessionImpl;
+	}
+
+	@Override
 	public int compareTo(SamlSpSession samlSpSession) {
 		long primaryKey = samlSpSession.getPrimaryKey();
 

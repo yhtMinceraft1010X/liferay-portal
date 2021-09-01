@@ -547,6 +547,33 @@ public class DDMFormInstanceReportModelImpl
 	}
 
 	@Override
+	public DDMFormInstanceReport cloneWithOriginalValues() {
+		DDMFormInstanceReportImpl ddmFormInstanceReportImpl =
+			new DDMFormInstanceReportImpl();
+
+		ddmFormInstanceReportImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFormInstanceReportImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFormInstanceReportImpl.setFormInstanceReportId(
+			this.<Long>getColumnOriginalValue("formInstanceReportId"));
+		ddmFormInstanceReportImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmFormInstanceReportImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFormInstanceReportImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmFormInstanceReportImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmFormInstanceReportImpl.setFormInstanceId(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
+		ddmFormInstanceReportImpl.setData(
+			this.<String>getColumnOriginalValue("data_"));
+
+		return ddmFormInstanceReportImpl;
+	}
+
+	@Override
 	public int compareTo(DDMFormInstanceReport ddmFormInstanceReport) {
 		long primaryKey = ddmFormInstanceReport.getPrimaryKey();
 

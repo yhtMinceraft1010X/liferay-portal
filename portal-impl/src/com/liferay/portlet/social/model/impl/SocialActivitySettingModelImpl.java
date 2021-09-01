@@ -688,6 +688,33 @@ public class SocialActivitySettingModelImpl
 	}
 
 	@Override
+	public SocialActivitySetting cloneWithOriginalValues() {
+		SocialActivitySettingImpl socialActivitySettingImpl =
+			new SocialActivitySettingImpl();
+
+		socialActivitySettingImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivitySettingImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivitySettingImpl.setActivitySettingId(
+			this.<Long>getColumnOriginalValue("activitySettingId"));
+		socialActivitySettingImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivitySettingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivitySettingImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialActivitySettingImpl.setActivityType(
+			this.<Integer>getColumnOriginalValue("activityType"));
+		socialActivitySettingImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		socialActivitySettingImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
+
+		return socialActivitySettingImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivitySetting socialActivitySetting) {
 		long primaryKey = socialActivitySetting.getPrimaryKey();
 

@@ -1079,6 +1079,38 @@ public class MDRRuleModelImpl
 	}
 
 	@Override
+	public MDRRule cloneWithOriginalValues() {
+		MDRRuleImpl mdrRuleImpl = new MDRRuleImpl();
+
+		mdrRuleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mdrRuleImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mdrRuleImpl.setRuleId(this.<Long>getColumnOriginalValue("ruleId"));
+		mdrRuleImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		mdrRuleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mdrRuleImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mdrRuleImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mdrRuleImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mdrRuleImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mdrRuleImpl.setRuleGroupId(
+			this.<Long>getColumnOriginalValue("ruleGroupId"));
+		mdrRuleImpl.setName(this.<String>getColumnOriginalValue("name"));
+		mdrRuleImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		mdrRuleImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		mdrRuleImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		mdrRuleImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mdrRuleImpl;
+	}
+
+	@Override
 	public int compareTo(MDRRule mdrRule) {
 		int value = 0;
 

@@ -814,6 +814,39 @@ public class LayoutPageTemplateStructureModelImpl
 	}
 
 	@Override
+	public LayoutPageTemplateStructure cloneWithOriginalValues() {
+		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl =
+			new LayoutPageTemplateStructureImpl();
+
+		layoutPageTemplateStructureImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutPageTemplateStructureImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutPageTemplateStructureImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutPageTemplateStructureImpl.setLayoutPageTemplateStructureId(
+			this.<Long>getColumnOriginalValue("layoutPageTemplateStructureId"));
+		layoutPageTemplateStructureImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutPageTemplateStructureImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutPageTemplateStructureImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutPageTemplateStructureImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutPageTemplateStructureImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutPageTemplateStructureImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutPageTemplateStructureImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		layoutPageTemplateStructureImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return layoutPageTemplateStructureImpl;
+	}
+
+	@Override
 	public int compareTo(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
 

@@ -646,6 +646,37 @@ public class DDMFieldModelImpl
 	}
 
 	@Override
+	public DDMField cloneWithOriginalValues() {
+		DDMFieldImpl ddmFieldImpl = new DDMFieldImpl();
+
+		ddmFieldImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFieldImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFieldImpl.setFieldId(this.<Long>getColumnOriginalValue("fieldId"));
+		ddmFieldImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFieldImpl.setParentFieldId(
+			this.<Long>getColumnOriginalValue("parentFieldId"));
+		ddmFieldImpl.setStorageId(
+			this.<Long>getColumnOriginalValue("storageId"));
+		ddmFieldImpl.setStructureVersionId(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
+		ddmFieldImpl.setFieldName(
+			this.<String>getColumnOriginalValue("fieldName"));
+		ddmFieldImpl.setFieldType(
+			this.<String>getColumnOriginalValue("fieldType"));
+		ddmFieldImpl.setInstanceId(
+			this.<String>getColumnOriginalValue("instanceId"));
+		ddmFieldImpl.setLocalizable(
+			this.<Boolean>getColumnOriginalValue("localizable"));
+		ddmFieldImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
+
+		return ddmFieldImpl;
+	}
+
+	@Override
 	public int compareTo(DDMField ddmField) {
 		int value = 0;
 

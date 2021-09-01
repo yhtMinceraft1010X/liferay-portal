@@ -799,6 +799,40 @@ public class CommercePriceListCommerceAccountGroupRelModelImpl
 	}
 
 	@Override
+	public CommercePriceListCommerceAccountGroupRel cloneWithOriginalValues() {
+		CommercePriceListCommerceAccountGroupRelImpl
+			commercePriceListCommerceAccountGroupRelImpl =
+				new CommercePriceListCommerceAccountGroupRelImpl();
+
+		commercePriceListCommerceAccountGroupRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePriceListCommerceAccountGroupRelImpl.
+			setCommercePriceListCommerceAccountGroupRelId(
+				this.<Long>getColumnOriginalValue(
+					"CPLCommerceAccountGroupRelId"));
+		commercePriceListCommerceAccountGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceListCommerceAccountGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceListCommerceAccountGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceListCommerceAccountGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceListCommerceAccountGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceListCommerceAccountGroupRelImpl.setCommercePriceListId(
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
+		commercePriceListCommerceAccountGroupRelImpl.setCommerceAccountGroupId(
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
+		commercePriceListCommerceAccountGroupRelImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
+		commercePriceListCommerceAccountGroupRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commercePriceListCommerceAccountGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePriceListCommerceAccountGroupRel
 			commercePriceListCommerceAccountGroupRel) {

@@ -800,6 +800,38 @@ public class MicroblogsEntryModelImpl
 	}
 
 	@Override
+	public MicroblogsEntry cloneWithOriginalValues() {
+		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
+
+		microblogsEntryImpl.setMicroblogsEntryId(
+			this.<Long>getColumnOriginalValue("microblogsEntryId"));
+		microblogsEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		microblogsEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		microblogsEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		microblogsEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		microblogsEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		microblogsEntryImpl.setCreatorClassNameId(
+			this.<Long>getColumnOriginalValue("creatorClassNameId"));
+		microblogsEntryImpl.setCreatorClassPK(
+			this.<Long>getColumnOriginalValue("creatorClassPK"));
+		microblogsEntryImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		microblogsEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		microblogsEntryImpl.setParentMicroblogsEntryId(
+			this.<Long>getColumnOriginalValue("parentMicroblogsEntryId"));
+		microblogsEntryImpl.setSocialRelationType(
+			this.<Integer>getColumnOriginalValue("socialRelationType"));
+
+		return microblogsEntryImpl;
+	}
+
+	@Override
 	public int compareTo(MicroblogsEntry microblogsEntry) {
 		int value = 0;
 

@@ -590,6 +590,29 @@ public class DLContentModelImpl
 	}
 
 	@Override
+	public DLContent cloneWithOriginalValues() {
+		DLContentImpl dlContentImpl = new DLContentImpl();
+
+		dlContentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlContentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlContentImpl.setContentId(
+			this.<Long>getColumnOriginalValue("contentId"));
+		dlContentImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		dlContentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlContentImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		dlContentImpl.setPath(this.<String>getColumnOriginalValue("path_"));
+		dlContentImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		dlContentImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+
+		return dlContentImpl;
+	}
+
+	@Override
 	public int compareTo(DLContent dlContent) {
 		int value = 0;
 

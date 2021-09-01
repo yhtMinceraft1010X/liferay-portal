@@ -793,6 +793,39 @@ public class CommerceInventoryWarehouseItemModelImpl
 	}
 
 	@Override
+	public CommerceInventoryWarehouseItem cloneWithOriginalValues() {
+		CommerceInventoryWarehouseItemImpl commerceInventoryWarehouseItemImpl =
+			new CommerceInventoryWarehouseItemImpl();
+
+		commerceInventoryWarehouseItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceInventoryWarehouseItemImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceInventoryWarehouseItemImpl.setCommerceInventoryWarehouseItemId(
+			this.<Long>getColumnOriginalValue("CIWarehouseItemId"));
+		commerceInventoryWarehouseItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceInventoryWarehouseItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceInventoryWarehouseItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceInventoryWarehouseItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceInventoryWarehouseItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceInventoryWarehouseItemImpl.setCommerceInventoryWarehouseId(
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
+		commerceInventoryWarehouseItemImpl.setSku(
+			this.<String>getColumnOriginalValue("sku"));
+		commerceInventoryWarehouseItemImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+		commerceInventoryWarehouseItemImpl.setReservedQuantity(
+			this.<Integer>getColumnOriginalValue("reservedQuantity"));
+
+		return commerceInventoryWarehouseItemImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
 

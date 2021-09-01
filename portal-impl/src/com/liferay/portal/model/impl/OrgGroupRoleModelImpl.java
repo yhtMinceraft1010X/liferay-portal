@@ -438,6 +438,23 @@ public class OrgGroupRoleModelImpl
 	}
 
 	@Override
+	public OrgGroupRole cloneWithOriginalValues() {
+		OrgGroupRoleImpl orgGroupRoleImpl = new OrgGroupRoleImpl();
+
+		orgGroupRoleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		orgGroupRoleImpl.setOrganizationId(
+			this.<Long>getColumnOriginalValue("organizationId"));
+		orgGroupRoleImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		orgGroupRoleImpl.setRoleId(this.<Long>getColumnOriginalValue("roleId"));
+		orgGroupRoleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+
+		return orgGroupRoleImpl;
+	}
+
+	@Override
 	public int compareTo(OrgGroupRole orgGroupRole) {
 		OrgGroupRolePK primaryKey = orgGroupRole.getPrimaryKey();
 

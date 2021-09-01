@@ -570,6 +570,28 @@ public class DLFileRankModelImpl
 	}
 
 	@Override
+	public DLFileRank cloneWithOriginalValues() {
+		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
+
+		dlFileRankImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileRankImpl.setFileRankId(
+			this.<Long>getColumnOriginalValue("fileRankId"));
+		dlFileRankImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		dlFileRankImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileRankImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		dlFileRankImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlFileRankImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		dlFileRankImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return dlFileRankImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileRank dlFileRank) {
 		int value = 0;
 

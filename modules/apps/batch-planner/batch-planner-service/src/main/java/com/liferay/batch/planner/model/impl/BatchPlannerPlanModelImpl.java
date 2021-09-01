@@ -776,6 +776,40 @@ public class BatchPlannerPlanModelImpl
 	}
 
 	@Override
+	public BatchPlannerPlan cloneWithOriginalValues() {
+		BatchPlannerPlanImpl batchPlannerPlanImpl = new BatchPlannerPlanImpl();
+
+		batchPlannerPlanImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerPlanImpl.setBatchPlannerPlanId(
+			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
+		batchPlannerPlanImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchPlannerPlanImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchPlannerPlanImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		batchPlannerPlanImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchPlannerPlanImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchPlannerPlanImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		batchPlannerPlanImpl.setExport(
+			this.<Boolean>getColumnOriginalValue("export"));
+		batchPlannerPlanImpl.setExternalType(
+			this.<String>getColumnOriginalValue("externalType"));
+		batchPlannerPlanImpl.setExternalURL(
+			this.<String>getColumnOriginalValue("externalURL"));
+		batchPlannerPlanImpl.setInternalClassName(
+			this.<String>getColumnOriginalValue("internalClassName"));
+		batchPlannerPlanImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+
+		return batchPlannerPlanImpl;
+	}
+
+	@Override
 	public int compareTo(BatchPlannerPlan batchPlannerPlan) {
 		int value = 0;
 

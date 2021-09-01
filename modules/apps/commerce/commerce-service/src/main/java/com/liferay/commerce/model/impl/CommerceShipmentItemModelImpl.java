@@ -747,6 +747,37 @@ public class CommerceShipmentItemModelImpl
 	}
 
 	@Override
+	public CommerceShipmentItem cloneWithOriginalValues() {
+		CommerceShipmentItemImpl commerceShipmentItemImpl =
+			new CommerceShipmentItemImpl();
+
+		commerceShipmentItemImpl.setCommerceShipmentItemId(
+			this.<Long>getColumnOriginalValue("commerceShipmentItemId"));
+		commerceShipmentItemImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceShipmentItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceShipmentItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceShipmentItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceShipmentItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceShipmentItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceShipmentItemImpl.setCommerceShipmentId(
+			this.<Long>getColumnOriginalValue("commerceShipmentId"));
+		commerceShipmentItemImpl.setCommerceOrderItemId(
+			this.<Long>getColumnOriginalValue("commerceOrderItemId"));
+		commerceShipmentItemImpl.setCommerceInventoryWarehouseId(
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
+		commerceShipmentItemImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+
+		return commerceShipmentItemImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceShipmentItem commerceShipmentItem) {
 		int value = 0;
 

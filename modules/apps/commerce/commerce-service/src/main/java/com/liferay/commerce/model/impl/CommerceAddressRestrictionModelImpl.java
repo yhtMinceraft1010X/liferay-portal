@@ -729,6 +729,35 @@ public class CommerceAddressRestrictionModelImpl
 	}
 
 	@Override
+	public CommerceAddressRestriction cloneWithOriginalValues() {
+		CommerceAddressRestrictionImpl commerceAddressRestrictionImpl =
+			new CommerceAddressRestrictionImpl();
+
+		commerceAddressRestrictionImpl.setCommerceAddressRestrictionId(
+			this.<Long>getColumnOriginalValue("commerceAddressRestrictionId"));
+		commerceAddressRestrictionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceAddressRestrictionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAddressRestrictionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAddressRestrictionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAddressRestrictionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAddressRestrictionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAddressRestrictionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceAddressRestrictionImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceAddressRestrictionImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+
+		return commerceAddressRestrictionImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceAddressRestriction commerceAddressRestriction) {
 

@@ -882,6 +882,45 @@ public class BackgroundTaskModelImpl
 	}
 
 	@Override
+	public BackgroundTask cloneWithOriginalValues() {
+		BackgroundTaskImpl backgroundTaskImpl = new BackgroundTaskImpl();
+
+		backgroundTaskImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		backgroundTaskImpl.setBackgroundTaskId(
+			this.<Long>getColumnOriginalValue("backgroundTaskId"));
+		backgroundTaskImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		backgroundTaskImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		backgroundTaskImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		backgroundTaskImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		backgroundTaskImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		backgroundTaskImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		backgroundTaskImpl.setName(this.<String>getColumnOriginalValue("name"));
+		backgroundTaskImpl.setServletContextNames(
+			this.<String>getColumnOriginalValue("servletContextNames"));
+		backgroundTaskImpl.setTaskExecutorClassName(
+			this.<String>getColumnOriginalValue("taskExecutorClassName"));
+		backgroundTaskImpl.setTaskContextMap(
+			this.<Map>getColumnOriginalValue("taskContextMap"));
+		backgroundTaskImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		backgroundTaskImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+		backgroundTaskImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		backgroundTaskImpl.setStatusMessage(
+			this.<String>getColumnOriginalValue("statusMessage"));
+
+		return backgroundTaskImpl;
+	}
+
+	@Override
 	public int compareTo(BackgroundTask backgroundTask) {
 		int value = 0;
 

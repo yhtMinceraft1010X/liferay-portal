@@ -630,6 +630,38 @@ public class MFAEmailOTPEntryModelImpl
 	}
 
 	@Override
+	public MFAEmailOTPEntry cloneWithOriginalValues() {
+		MFAEmailOTPEntryImpl mfaEmailOTPEntryImpl = new MFAEmailOTPEntryImpl();
+
+		mfaEmailOTPEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mfaEmailOTPEntryImpl.setMfaEmailOTPEntryId(
+			this.<Long>getColumnOriginalValue("mfaEmailOTPEntryId"));
+		mfaEmailOTPEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mfaEmailOTPEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		mfaEmailOTPEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mfaEmailOTPEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mfaEmailOTPEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mfaEmailOTPEntryImpl.setFailedAttempts(
+			this.<Integer>getColumnOriginalValue("failedAttempts"));
+		mfaEmailOTPEntryImpl.setLastFailDate(
+			this.<Date>getColumnOriginalValue("lastFailDate"));
+		mfaEmailOTPEntryImpl.setLastFailIP(
+			this.<String>getColumnOriginalValue("lastFailIP"));
+		mfaEmailOTPEntryImpl.setLastSuccessDate(
+			this.<Date>getColumnOriginalValue("lastSuccessDate"));
+		mfaEmailOTPEntryImpl.setLastSuccessIP(
+			this.<String>getColumnOriginalValue("lastSuccessIP"));
+
+		return mfaEmailOTPEntryImpl;
+	}
+
+	@Override
 	public int compareTo(MFAEmailOTPEntry mfaEmailOTPEntry) {
 		long primaryKey = mfaEmailOTPEntry.getPrimaryKey();
 

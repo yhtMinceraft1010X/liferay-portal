@@ -1026,6 +1026,37 @@ public class CommercePricingClassModelImpl
 	}
 
 	@Override
+	public CommercePricingClass cloneWithOriginalValues() {
+		CommercePricingClassImpl commercePricingClassImpl =
+			new CommercePricingClassImpl();
+
+		commercePricingClassImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePricingClassImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commercePricingClassImpl.setCommercePricingClassId(
+			this.<Long>getColumnOriginalValue("commercePricingClassId"));
+		commercePricingClassImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePricingClassImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePricingClassImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePricingClassImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePricingClassImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePricingClassImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		commercePricingClassImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commercePricingClassImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commercePricingClassImpl;
+	}
+
+	@Override
 	public int compareTo(CommercePricingClass commercePricingClass) {
 		int value = 0;
 

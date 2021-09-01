@@ -1015,6 +1015,39 @@ public class CommerceShippingFixedOptionModelImpl
 	}
 
 	@Override
+	public CommerceShippingFixedOption cloneWithOriginalValues() {
+		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl =
+			new CommerceShippingFixedOptionImpl();
+
+		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(
+			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
+		commerceShippingFixedOptionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceShippingFixedOptionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceShippingFixedOptionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceShippingFixedOptionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceShippingFixedOptionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceShippingFixedOptionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceShippingFixedOptionImpl.setCommerceShippingMethodId(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
+		commerceShippingFixedOptionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceShippingFixedOptionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceShippingFixedOptionImpl.setAmount(
+			this.<BigDecimal>getColumnOriginalValue("amount"));
+		commerceShippingFixedOptionImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+
+		return commerceShippingFixedOptionImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceShippingFixedOption commerceShippingFixedOption) {
 

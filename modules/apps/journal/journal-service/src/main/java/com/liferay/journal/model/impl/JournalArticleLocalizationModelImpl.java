@@ -578,6 +578,31 @@ public class JournalArticleLocalizationModelImpl
 	}
 
 	@Override
+	public JournalArticleLocalization cloneWithOriginalValues() {
+		JournalArticleLocalizationImpl journalArticleLocalizationImpl =
+			new JournalArticleLocalizationImpl();
+
+		journalArticleLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		journalArticleLocalizationImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		journalArticleLocalizationImpl.setArticleLocalizationId(
+			this.<Long>getColumnOriginalValue("articleLocalizationId"));
+		journalArticleLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		journalArticleLocalizationImpl.setArticlePK(
+			this.<Long>getColumnOriginalValue("articlePK"));
+		journalArticleLocalizationImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		journalArticleLocalizationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		journalArticleLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+
+		return journalArticleLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(
 		JournalArticleLocalization journalArticleLocalization) {
 

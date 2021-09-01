@@ -457,6 +457,24 @@ public class KaleoProcessLinkModelImpl
 	}
 
 	@Override
+	public KaleoProcessLink cloneWithOriginalValues() {
+		KaleoProcessLinkImpl kaleoProcessLinkImpl = new KaleoProcessLinkImpl();
+
+		kaleoProcessLinkImpl.setKaleoProcessLinkId(
+			this.<Long>getColumnOriginalValue("kaleoProcessLinkId"));
+		kaleoProcessLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoProcessLinkImpl.setKaleoProcessId(
+			this.<Long>getColumnOriginalValue("kaleoProcessId"));
+		kaleoProcessLinkImpl.setWorkflowTaskName(
+			this.<String>getColumnOriginalValue("workflowTaskName"));
+		kaleoProcessLinkImpl.setDDMTemplateId(
+			this.<Long>getColumnOriginalValue("DDMTemplateId"));
+
+		return kaleoProcessLinkImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoProcessLink kaleoProcessLink) {
 		long primaryKey = kaleoProcessLink.getPrimaryKey();
 

@@ -729,6 +729,38 @@ public class SamlPeerBindingModelImpl
 	}
 
 	@Override
+	public SamlPeerBinding cloneWithOriginalValues() {
+		SamlPeerBindingImpl samlPeerBindingImpl = new SamlPeerBindingImpl();
+
+		samlPeerBindingImpl.setSamlPeerBindingId(
+			this.<Long>getColumnOriginalValue("samlPeerBindingId"));
+		samlPeerBindingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlPeerBindingImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlPeerBindingImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlPeerBindingImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlPeerBindingImpl.setDeleted(
+			this.<Boolean>getColumnOriginalValue("deleted"));
+		samlPeerBindingImpl.setSamlNameIdFormat(
+			this.<String>getColumnOriginalValue("samlNameIdFormat"));
+		samlPeerBindingImpl.setSamlNameIdNameQualifier(
+			this.<String>getColumnOriginalValue("samlNameIdNameQualifier"));
+		samlPeerBindingImpl.setSamlNameIdSpNameQualifier(
+			this.<String>getColumnOriginalValue("samlNameIdSpNameQualifier"));
+		samlPeerBindingImpl.setSamlNameIdSpProvidedId(
+			this.<String>getColumnOriginalValue("samlNameIdSpProvidedId"));
+		samlPeerBindingImpl.setSamlNameIdValue(
+			this.<String>getColumnOriginalValue("samlNameIdValue"));
+		samlPeerBindingImpl.setSamlPeerEntityId(
+			this.<String>getColumnOriginalValue("samlPeerEntityId"));
+
+		return samlPeerBindingImpl;
+	}
+
+	@Override
 	public int compareTo(SamlPeerBinding samlPeerBinding) {
 		long primaryKey = samlPeerBinding.getPrimaryKey();
 

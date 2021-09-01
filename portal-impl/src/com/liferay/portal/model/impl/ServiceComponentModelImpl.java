@@ -483,6 +483,26 @@ public class ServiceComponentModelImpl
 	}
 
 	@Override
+	public ServiceComponent cloneWithOriginalValues() {
+		ServiceComponentImpl serviceComponentImpl = new ServiceComponentImpl();
+
+		serviceComponentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		serviceComponentImpl.setServiceComponentId(
+			this.<Long>getColumnOriginalValue("serviceComponentId"));
+		serviceComponentImpl.setBuildNamespace(
+			this.<String>getColumnOriginalValue("buildNamespace"));
+		serviceComponentImpl.setBuildNumber(
+			this.<Long>getColumnOriginalValue("buildNumber"));
+		serviceComponentImpl.setBuildDate(
+			this.<Long>getColumnOriginalValue("buildDate"));
+		serviceComponentImpl.setData(
+			this.<String>getColumnOriginalValue("data_"));
+
+		return serviceComponentImpl;
+	}
+
+	@Override
 	public int compareTo(ServiceComponent serviceComponent) {
 		int value = 0;
 

@@ -937,6 +937,37 @@ public class PollsChoiceModelImpl
 	}
 
 	@Override
+	public PollsChoice cloneWithOriginalValues() {
+		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
+
+		pollsChoiceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		pollsChoiceImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		pollsChoiceImpl.setChoiceId(
+			this.<Long>getColumnOriginalValue("choiceId"));
+		pollsChoiceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		pollsChoiceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		pollsChoiceImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		pollsChoiceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		pollsChoiceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		pollsChoiceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		pollsChoiceImpl.setQuestionId(
+			this.<Long>getColumnOriginalValue("questionId"));
+		pollsChoiceImpl.setName(this.<String>getColumnOriginalValue("name"));
+		pollsChoiceImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		pollsChoiceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return pollsChoiceImpl;
+	}
+
+	@Override
 	public int compareTo(PollsChoice pollsChoice) {
 		int value = 0;
 

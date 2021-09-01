@@ -480,6 +480,25 @@ public class SamlSpAuthRequestModelImpl
 	}
 
 	@Override
+	public SamlSpAuthRequest cloneWithOriginalValues() {
+		SamlSpAuthRequestImpl samlSpAuthRequestImpl =
+			new SamlSpAuthRequestImpl();
+
+		samlSpAuthRequestImpl.setSamlSpAuthnRequestId(
+			this.<Long>getColumnOriginalValue("samlSpAuthnRequestId"));
+		samlSpAuthRequestImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlSpAuthRequestImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlSpAuthRequestImpl.setSamlIdpEntityId(
+			this.<String>getColumnOriginalValue("samlIdpEntityId"));
+		samlSpAuthRequestImpl.setSamlSpAuthRequestKey(
+			this.<String>getColumnOriginalValue("samlSpAuthRequestKey"));
+
+		return samlSpAuthRequestImpl;
+	}
+
+	@Override
 	public int compareTo(SamlSpAuthRequest samlSpAuthRequest) {
 		long primaryKey = samlSpAuthRequest.getPrimaryKey();
 

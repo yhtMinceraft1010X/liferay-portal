@@ -1084,6 +1084,52 @@ public class TranslationEntryModelImpl
 	}
 
 	@Override
+	public TranslationEntry cloneWithOriginalValues() {
+		TranslationEntryImpl translationEntryImpl = new TranslationEntryImpl();
+
+		translationEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		translationEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		translationEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		translationEntryImpl.setTranslationEntryId(
+			this.<Long>getColumnOriginalValue("translationEntryId"));
+		translationEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		translationEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		translationEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		translationEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		translationEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		translationEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		translationEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		translationEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		translationEntryImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		translationEntryImpl.setContentType(
+			this.<String>getColumnOriginalValue("contentType"));
+		translationEntryImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		translationEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		translationEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		translationEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		translationEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return translationEntryImpl;
+	}
+
+	@Override
 	public int compareTo(TranslationEntry translationEntry) {
 		long primaryKey = translationEntry.getPrimaryKey();
 

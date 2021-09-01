@@ -735,6 +735,36 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	}
 
 	@Override
+	public CommerceAccountGroupCommerceAccountRel cloneWithOriginalValues() {
+		CommerceAccountGroupCommerceAccountRelImpl
+			commerceAccountGroupCommerceAccountRelImpl =
+				new CommerceAccountGroupCommerceAccountRelImpl();
+
+		commerceAccountGroupCommerceAccountRelImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceAccountGroupCommerceAccountRelImpl.
+			setCommerceAccountGroupCommerceAccountRelId(
+				this.<Long>getColumnOriginalValue(
+					"CAccountGroupCAccountRelId"));
+		commerceAccountGroupCommerceAccountRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAccountGroupCommerceAccountRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAccountGroupCommerceAccountRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAccountGroupCommerceAccountRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAccountGroupCommerceAccountRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAccountGroupCommerceAccountRelImpl.setCommerceAccountGroupId(
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
+		commerceAccountGroupCommerceAccountRelImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+
+		return commerceAccountGroupCommerceAccountRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceAccountGroupCommerceAccountRel
 			commerceAccountGroupCommerceAccountRel) {

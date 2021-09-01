@@ -1272,6 +1272,51 @@ public class DDLRecordSetVersionModelImpl
 	}
 
 	@Override
+	public DDLRecordSetVersion cloneWithOriginalValues() {
+		DDLRecordSetVersionImpl ddlRecordSetVersionImpl =
+			new DDLRecordSetVersionImpl();
+
+		ddlRecordSetVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddlRecordSetVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddlRecordSetVersionImpl.setRecordSetVersionId(
+			this.<Long>getColumnOriginalValue("recordSetVersionId"));
+		ddlRecordSetVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddlRecordSetVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddlRecordSetVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddlRecordSetVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddlRecordSetVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddlRecordSetVersionImpl.setRecordSetId(
+			this.<Long>getColumnOriginalValue("recordSetId"));
+		ddlRecordSetVersionImpl.setDDMStructureVersionId(
+			this.<Long>getColumnOriginalValue("DDMStructureVersionId"));
+		ddlRecordSetVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddlRecordSetVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddlRecordSetVersionImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		ddlRecordSetVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddlRecordSetVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddlRecordSetVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddlRecordSetVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddlRecordSetVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddlRecordSetVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DDLRecordSetVersion ddlRecordSetVersion) {
 		long primaryKey = ddlRecordSetVersion.getPrimaryKey();
 

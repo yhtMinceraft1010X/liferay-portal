@@ -1011,6 +1011,46 @@ public class CompanyModelImpl
 	}
 
 	@Override
+	public Company cloneWithOriginalValues() {
+		CompanyImpl companyImpl = new CompanyImpl();
+
+		companyImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		companyImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		companyImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		companyImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		companyImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		companyImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		companyImpl.setWebId(this.<String>getColumnOriginalValue("webId"));
+		companyImpl.setMx(this.<String>getColumnOriginalValue("mx"));
+		companyImpl.setHomeURL(this.<String>getColumnOriginalValue("homeURL"));
+		companyImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
+		companyImpl.setSystem(this.<Boolean>getColumnOriginalValue("system_"));
+		companyImpl.setMaxUsers(
+			this.<Integer>getColumnOriginalValue("maxUsers"));
+		companyImpl.setActive(this.<Boolean>getColumnOriginalValue("active_"));
+		companyImpl.setName(this.<String>getColumnOriginalValue("name"));
+		companyImpl.setLegalName(
+			this.<String>getColumnOriginalValue("legalName"));
+		companyImpl.setLegalId(this.<String>getColumnOriginalValue("legalId"));
+		companyImpl.setLegalType(
+			this.<String>getColumnOriginalValue("legalType"));
+		companyImpl.setSicCode(this.<String>getColumnOriginalValue("sicCode"));
+		companyImpl.setTickerSymbol(
+			this.<String>getColumnOriginalValue("tickerSymbol"));
+		companyImpl.setIndustry(
+			this.<String>getColumnOriginalValue("industry"));
+		companyImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		companyImpl.setSize(this.<String>getColumnOriginalValue("size_"));
+
+		return companyImpl;
+	}
+
+	@Override
 	public int compareTo(Company company) {
 		long primaryKey = company.getPrimaryKey();
 

@@ -680,6 +680,35 @@ public class CommerceDiscountRuleModelImpl
 	}
 
 	@Override
+	public CommerceDiscountRule cloneWithOriginalValues() {
+		CommerceDiscountRuleImpl commerceDiscountRuleImpl =
+			new CommerceDiscountRuleImpl();
+
+		commerceDiscountRuleImpl.setCommerceDiscountRuleId(
+			this.<Long>getColumnOriginalValue("commerceDiscountRuleId"));
+		commerceDiscountRuleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceDiscountRuleImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceDiscountRuleImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceDiscountRuleImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceDiscountRuleImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceDiscountRuleImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceDiscountRuleImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+		commerceDiscountRuleImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		commerceDiscountRuleImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+
+		return commerceDiscountRuleImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceDiscountRule commerceDiscountRule) {
 		int value = 0;
 

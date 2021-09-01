@@ -469,6 +469,19 @@ public class ClassNameModelImpl
 	}
 
 	@Override
+	public ClassName cloneWithOriginalValues() {
+		ClassNameImpl classNameImpl = new ClassNameImpl();
+
+		classNameImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		classNameImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		classNameImpl.setValue(this.<String>getColumnOriginalValue("value"));
+
+		return classNameImpl;
+	}
+
+	@Override
 	public int compareTo(ClassName className) {
 		long primaryKey = className.getPrimaryKey();
 

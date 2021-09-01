@@ -414,6 +414,20 @@ public class BigDecimalEntryModelImpl
 	}
 
 	@Override
+	public BigDecimalEntry cloneWithOriginalValues() {
+		BigDecimalEntryImpl bigDecimalEntryImpl = new BigDecimalEntryImpl();
+
+		bigDecimalEntryImpl.setBigDecimalEntryId(
+			this.<Long>getColumnOriginalValue("bigDecimalEntryId"));
+		bigDecimalEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		bigDecimalEntryImpl.setBigDecimalValue(
+			this.<BigDecimal>getColumnOriginalValue("bigDecimalValue"));
+
+		return bigDecimalEntryImpl;
+	}
+
+	@Override
 	public int compareTo(BigDecimalEntry bigDecimalEntry) {
 		int value = 0;
 

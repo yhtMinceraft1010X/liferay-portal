@@ -722,6 +722,38 @@ public class JSONStorageEntryModelImpl
 	}
 
 	@Override
+	public JSONStorageEntry cloneWithOriginalValues() {
+		JSONStorageEntryImpl jsonStorageEntryImpl = new JSONStorageEntryImpl();
+
+		jsonStorageEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		jsonStorageEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		jsonStorageEntryImpl.setJsonStorageEntryId(
+			this.<Long>getColumnOriginalValue("jsonStorageEntryId"));
+		jsonStorageEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		jsonStorageEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		jsonStorageEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		jsonStorageEntryImpl.setParentJSONStorageEntryId(
+			this.<Long>getColumnOriginalValue("parentJSONStorageEntryId"));
+		jsonStorageEntryImpl.setIndex(
+			this.<Integer>getColumnOriginalValue("index_"));
+		jsonStorageEntryImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		jsonStorageEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		jsonStorageEntryImpl.setValueLong(
+			this.<Long>getColumnOriginalValue("valueLong"));
+		jsonStorageEntryImpl.setValueString(
+			this.<String>getColumnOriginalValue("valueString"));
+
+		return jsonStorageEntryImpl;
+	}
+
+	@Override
 	public int compareTo(JSONStorageEntry jsonStorageEntry) {
 		int value = 0;
 

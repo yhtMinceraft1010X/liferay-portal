@@ -730,6 +730,39 @@ public class SegmentsExperimentRelModelImpl
 	}
 
 	@Override
+	public SegmentsExperimentRel cloneWithOriginalValues() {
+		SegmentsExperimentRelImpl segmentsExperimentRelImpl =
+			new SegmentsExperimentRelImpl();
+
+		segmentsExperimentRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		segmentsExperimentRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		segmentsExperimentRelImpl.setSegmentsExperimentRelId(
+			this.<Long>getColumnOriginalValue("segmentsExperimentRelId"));
+		segmentsExperimentRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		segmentsExperimentRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		segmentsExperimentRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		segmentsExperimentRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		segmentsExperimentRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		segmentsExperimentRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		segmentsExperimentRelImpl.setSegmentsExperimentId(
+			this.<Long>getColumnOriginalValue("segmentsExperimentId"));
+		segmentsExperimentRelImpl.setSegmentsExperienceId(
+			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
+		segmentsExperimentRelImpl.setSplit(
+			this.<Double>getColumnOriginalValue("split"));
+
+		return segmentsExperimentRelImpl;
+	}
+
+	@Override
 	public int compareTo(SegmentsExperimentRel segmentsExperimentRel) {
 		long primaryKey = segmentsExperimentRel.getPrimaryKey();
 

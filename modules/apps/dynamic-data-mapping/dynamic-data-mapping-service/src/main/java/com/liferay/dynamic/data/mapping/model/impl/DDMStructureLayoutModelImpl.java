@@ -1211,6 +1211,47 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	@Override
+	public DDMStructureLayout cloneWithOriginalValues() {
+		DDMStructureLayoutImpl ddmStructureLayoutImpl =
+			new DDMStructureLayoutImpl();
+
+		ddmStructureLayoutImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmStructureLayoutImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmStructureLayoutImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		ddmStructureLayoutImpl.setStructureLayoutId(
+			this.<Long>getColumnOriginalValue("structureLayoutId"));
+		ddmStructureLayoutImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmStructureLayoutImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmStructureLayoutImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmStructureLayoutImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmStructureLayoutImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmStructureLayoutImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmStructureLayoutImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmStructureLayoutImpl.setStructureLayoutKey(
+			this.<String>getColumnOriginalValue("structureLayoutKey"));
+		ddmStructureLayoutImpl.setStructureVersionId(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
+		ddmStructureLayoutImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmStructureLayoutImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmStructureLayoutImpl.setDefinition(
+			this.<String>getColumnOriginalValue("definition"));
+
+		return ddmStructureLayoutImpl;
+	}
+
+	@Override
 	public int compareTo(DDMStructureLayout ddmStructureLayout) {
 		long primaryKey = ddmStructureLayout.getPrimaryKey();
 

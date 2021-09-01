@@ -456,6 +456,24 @@ public class BrowserTrackerModelImpl
 	}
 
 	@Override
+	public BrowserTracker cloneWithOriginalValues() {
+		BrowserTrackerImpl browserTrackerImpl = new BrowserTrackerImpl();
+
+		browserTrackerImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		browserTrackerImpl.setBrowserTrackerId(
+			this.<Long>getColumnOriginalValue("browserTrackerId"));
+		browserTrackerImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		browserTrackerImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		browserTrackerImpl.setBrowserKey(
+			this.<Long>getColumnOriginalValue("browserKey"));
+
+		return browserTrackerImpl;
+	}
+
+	@Override
 	public int compareTo(BrowserTracker browserTracker) {
 		long primaryKey = browserTracker.getPrimaryKey();
 

@@ -769,6 +769,37 @@ public class CommercePriceListOrderTypeRelModelImpl
 	}
 
 	@Override
+	public CommercePriceListOrderTypeRel cloneWithOriginalValues() {
+		CommercePriceListOrderTypeRelImpl commercePriceListOrderTypeRelImpl =
+			new CommercePriceListOrderTypeRelImpl();
+
+		commercePriceListOrderTypeRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePriceListOrderTypeRelImpl.setCommercePriceListOrderTypeRelId(
+			this.<Long>getColumnOriginalValue("CPriceListOrderTypeRelId"));
+		commercePriceListOrderTypeRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceListOrderTypeRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceListOrderTypeRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceListOrderTypeRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceListOrderTypeRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceListOrderTypeRelImpl.setCommercePriceListId(
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
+		commercePriceListOrderTypeRelImpl.setCommerceOrderTypeId(
+			this.<Long>getColumnOriginalValue("commerceOrderTypeId"));
+		commercePriceListOrderTypeRelImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
+		commercePriceListOrderTypeRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commercePriceListOrderTypeRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel) {
 

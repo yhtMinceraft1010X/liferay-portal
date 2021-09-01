@@ -939,6 +939,51 @@ public class CommerceVirtualOrderItemModelImpl
 	}
 
 	@Override
+	public CommerceVirtualOrderItem cloneWithOriginalValues() {
+		CommerceVirtualOrderItemImpl commerceVirtualOrderItemImpl =
+			new CommerceVirtualOrderItemImpl();
+
+		commerceVirtualOrderItemImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceVirtualOrderItemImpl.setCommerceVirtualOrderItemId(
+			this.<Long>getColumnOriginalValue("commerceVirtualOrderItemId"));
+		commerceVirtualOrderItemImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceVirtualOrderItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceVirtualOrderItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceVirtualOrderItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceVirtualOrderItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceVirtualOrderItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceVirtualOrderItemImpl.setCommerceOrderItemId(
+			this.<Long>getColumnOriginalValue("commerceOrderItemId"));
+		commerceVirtualOrderItemImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		commerceVirtualOrderItemImpl.setUrl(
+			this.<String>getColumnOriginalValue("url"));
+		commerceVirtualOrderItemImpl.setActivationStatus(
+			this.<Integer>getColumnOriginalValue("activationStatus"));
+		commerceVirtualOrderItemImpl.setDuration(
+			this.<Long>getColumnOriginalValue("duration"));
+		commerceVirtualOrderItemImpl.setUsages(
+			this.<Integer>getColumnOriginalValue("usages"));
+		commerceVirtualOrderItemImpl.setMaxUsages(
+			this.<Integer>getColumnOriginalValue("maxUsages"));
+		commerceVirtualOrderItemImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		commerceVirtualOrderItemImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		commerceVirtualOrderItemImpl.setEndDate(
+			this.<Date>getColumnOriginalValue("endDate"));
+
+		return commerceVirtualOrderItemImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceVirtualOrderItem commerceVirtualOrderItem) {
 		int value = 0;
 

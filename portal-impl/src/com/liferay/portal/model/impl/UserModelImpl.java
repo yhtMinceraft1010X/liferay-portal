@@ -1791,6 +1791,83 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	@Override
+	public User cloneWithOriginalValues() {
+		UserImpl userImpl = new UserImpl();
+
+		userImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		userImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		userImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		userImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		userImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		userImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
+		userImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		userImpl.setDefaultUser(
+			this.<Boolean>getColumnOriginalValue("defaultUser"));
+		userImpl.setContactId(this.<Long>getColumnOriginalValue("contactId"));
+		userImpl.setPassword(this.<String>getColumnOriginalValue("password_"));
+		userImpl.setPasswordEncrypted(
+			this.<Boolean>getColumnOriginalValue("passwordEncrypted"));
+		userImpl.setPasswordReset(
+			this.<Boolean>getColumnOriginalValue("passwordReset"));
+		userImpl.setPasswordModifiedDate(
+			this.<Date>getColumnOriginalValue("passwordModifiedDate"));
+		userImpl.setDigest(this.<String>getColumnOriginalValue("digest"));
+		userImpl.setReminderQueryQuestion(
+			this.<String>getColumnOriginalValue("reminderQueryQuestion"));
+		userImpl.setReminderQueryAnswer(
+			this.<String>getColumnOriginalValue("reminderQueryAnswer"));
+		userImpl.setGraceLoginCount(
+			this.<Integer>getColumnOriginalValue("graceLoginCount"));
+		userImpl.setScreenName(
+			this.<String>getColumnOriginalValue("screenName"));
+		userImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		userImpl.setFacebookId(this.<Long>getColumnOriginalValue("facebookId"));
+		userImpl.setGoogleUserId(
+			this.<String>getColumnOriginalValue("googleUserId"));
+		userImpl.setLdapServerId(
+			this.<Long>getColumnOriginalValue("ldapServerId"));
+		userImpl.setOpenId(this.<String>getColumnOriginalValue("openId"));
+		userImpl.setPortraitId(this.<Long>getColumnOriginalValue("portraitId"));
+		userImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		userImpl.setTimeZoneId(
+			this.<String>getColumnOriginalValue("timeZoneId"));
+		userImpl.setGreeting(this.<String>getColumnOriginalValue("greeting"));
+		userImpl.setComments(this.<String>getColumnOriginalValue("comments"));
+		userImpl.setFirstName(this.<String>getColumnOriginalValue("firstName"));
+		userImpl.setMiddleName(
+			this.<String>getColumnOriginalValue("middleName"));
+		userImpl.setLastName(this.<String>getColumnOriginalValue("lastName"));
+		userImpl.setJobTitle(this.<String>getColumnOriginalValue("jobTitle"));
+		userImpl.setLoginDate(this.<Date>getColumnOriginalValue("loginDate"));
+		userImpl.setLoginIP(this.<String>getColumnOriginalValue("loginIP"));
+		userImpl.setLastLoginDate(
+			this.<Date>getColumnOriginalValue("lastLoginDate"));
+		userImpl.setLastLoginIP(
+			this.<String>getColumnOriginalValue("lastLoginIP"));
+		userImpl.setLastFailedLoginDate(
+			this.<Date>getColumnOriginalValue("lastFailedLoginDate"));
+		userImpl.setFailedLoginAttempts(
+			this.<Integer>getColumnOriginalValue("failedLoginAttempts"));
+		userImpl.setLockout(this.<Boolean>getColumnOriginalValue("lockout"));
+		userImpl.setLockoutDate(
+			this.<Date>getColumnOriginalValue("lockoutDate"));
+		userImpl.setAgreedToTermsOfUse(
+			this.<Boolean>getColumnOriginalValue("agreedToTermsOfUse"));
+		userImpl.setEmailAddressVerified(
+			this.<Boolean>getColumnOriginalValue("emailAddressVerified"));
+		userImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+
+		return userImpl;
+	}
+
+	@Override
 	public int compareTo(User user) {
 		long primaryKey = user.getPrimaryKey();
 

@@ -2425,6 +2425,80 @@ public class LayoutModelImpl
 	}
 
 	@Override
+	public Layout cloneWithOriginalValues() {
+		LayoutImpl layoutImpl = new LayoutImpl();
+
+		layoutImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		layoutImpl.setPlid(this.<Long>getColumnOriginalValue("plid"));
+		layoutImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		layoutImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		layoutImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		layoutImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		layoutImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutImpl.setParentPlid(
+			this.<Long>getColumnOriginalValue("parentPlid"));
+		layoutImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		layoutImpl.setLayoutId(this.<Long>getColumnOriginalValue("layoutId"));
+		layoutImpl.setParentLayoutId(
+			this.<Long>getColumnOriginalValue("parentLayoutId"));
+		layoutImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		layoutImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		layoutImpl.setName(this.<String>getColumnOriginalValue("name"));
+		layoutImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		layoutImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		layoutImpl.setKeywords(this.<String>getColumnOriginalValue("keywords"));
+		layoutImpl.setRobots(this.<String>getColumnOriginalValue("robots"));
+		layoutImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		layoutImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		layoutImpl.setHidden(this.<Boolean>getColumnOriginalValue("hidden_"));
+		layoutImpl.setSystem(this.<Boolean>getColumnOriginalValue("system_"));
+		layoutImpl.setFriendlyURL(
+			this.<String>getColumnOriginalValue("friendlyURL"));
+		layoutImpl.setIconImageId(
+			this.<Long>getColumnOriginalValue("iconImageId"));
+		layoutImpl.setThemeId(this.<String>getColumnOriginalValue("themeId"));
+		layoutImpl.setColorSchemeId(
+			this.<String>getColumnOriginalValue("colorSchemeId"));
+		layoutImpl.setStyleBookEntryId(
+			this.<Long>getColumnOriginalValue("styleBookEntryId"));
+		layoutImpl.setCss(this.<String>getColumnOriginalValue("css"));
+		layoutImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
+		layoutImpl.setMasterLayoutPlid(
+			this.<Long>getColumnOriginalValue("masterLayoutPlid"));
+		layoutImpl.setLayoutPrototypeUuid(
+			this.<String>getColumnOriginalValue("layoutPrototypeUuid"));
+		layoutImpl.setLayoutPrototypeLinkEnabled(
+			this.<Boolean>getColumnOriginalValue("layoutPrototypeLinkEnabled"));
+		layoutImpl.setSourcePrototypeLayoutUuid(
+			this.<String>getColumnOriginalValue("sourcePrototypeLayoutUuid"));
+		layoutImpl.setPublishDate(
+			this.<Date>getColumnOriginalValue("publishDate"));
+		layoutImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		layoutImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+		layoutImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		layoutImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		layoutImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return layoutImpl;
+	}
+
+	@Override
 	public int compareTo(Layout layout) {
 		int value = 0;
 

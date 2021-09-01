@@ -1226,6 +1226,47 @@ public class SegmentsEntryModelImpl
 	}
 
 	@Override
+	public SegmentsEntry cloneWithOriginalValues() {
+		SegmentsEntryImpl segmentsEntryImpl = new SegmentsEntryImpl();
+
+		segmentsEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		segmentsEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		segmentsEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		segmentsEntryImpl.setSegmentsEntryId(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		segmentsEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		segmentsEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		segmentsEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		segmentsEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		segmentsEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		segmentsEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		segmentsEntryImpl.setSegmentsEntryKey(
+			this.<String>getColumnOriginalValue("segmentsEntryKey"));
+		segmentsEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		segmentsEntryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		segmentsEntryImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		segmentsEntryImpl.setCriteria(
+			this.<String>getColumnOriginalValue("criteria"));
+		segmentsEntryImpl.setSource(
+			this.<String>getColumnOriginalValue("source"));
+		segmentsEntryImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		segmentsEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return segmentsEntryImpl;
+	}
+
+	@Override
 	public int compareTo(SegmentsEntry segmentsEntry) {
 		int value = 0;
 

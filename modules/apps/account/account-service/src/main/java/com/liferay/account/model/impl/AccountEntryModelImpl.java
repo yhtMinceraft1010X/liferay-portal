@@ -969,6 +969,50 @@ public class AccountEntryModelImpl
 	}
 
 	@Override
+	public AccountEntry cloneWithOriginalValues() {
+		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
+
+		accountEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		accountEntryImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
+		accountEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		accountEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		accountEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		accountEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		accountEntryImpl.setDefaultBillingAddressId(
+			this.<Long>getColumnOriginalValue("defaultBillingAddressId"));
+		accountEntryImpl.setDefaultShippingAddressId(
+			this.<Long>getColumnOriginalValue("defaultShippingAddressId"));
+		accountEntryImpl.setParentAccountEntryId(
+			this.<Long>getColumnOriginalValue("parentAccountEntryId"));
+		accountEntryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		accountEntryImpl.setDomains(
+			this.<String>getColumnOriginalValue("domains"));
+		accountEntryImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		accountEntryImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
+		accountEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		accountEntryImpl.setTaxExemptionCode(
+			this.<String>getColumnOriginalValue("taxExemptionCode"));
+		accountEntryImpl.setTaxIdNumber(
+			this.<String>getColumnOriginalValue("taxIdNumber"));
+		accountEntryImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		accountEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return accountEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AccountEntry accountEntry) {
 		int value = 0;
 

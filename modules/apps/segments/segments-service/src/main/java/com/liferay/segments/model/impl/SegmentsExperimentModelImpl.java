@@ -1039,6 +1039,53 @@ public class SegmentsExperimentModelImpl
 	}
 
 	@Override
+	public SegmentsExperiment cloneWithOriginalValues() {
+		SegmentsExperimentImpl segmentsExperimentImpl =
+			new SegmentsExperimentImpl();
+
+		segmentsExperimentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		segmentsExperimentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		segmentsExperimentImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		segmentsExperimentImpl.setSegmentsExperimentId(
+			this.<Long>getColumnOriginalValue("segmentsExperimentId"));
+		segmentsExperimentImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		segmentsExperimentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		segmentsExperimentImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		segmentsExperimentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		segmentsExperimentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		segmentsExperimentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		segmentsExperimentImpl.setSegmentsEntryId(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		segmentsExperimentImpl.setSegmentsExperienceId(
+			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
+		segmentsExperimentImpl.setSegmentsExperimentKey(
+			this.<String>getColumnOriginalValue("segmentsExperimentKey"));
+		segmentsExperimentImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		segmentsExperimentImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		segmentsExperimentImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		segmentsExperimentImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		segmentsExperimentImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		segmentsExperimentImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return segmentsExperimentImpl;
+	}
+
+	@Override
 	public int compareTo(SegmentsExperiment segmentsExperiment) {
 		int value = 0;
 

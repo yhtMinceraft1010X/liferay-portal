@@ -599,6 +599,31 @@ public class RecentLayoutRevisionModelImpl
 	}
 
 	@Override
+	public RecentLayoutRevision cloneWithOriginalValues() {
+		RecentLayoutRevisionImpl recentLayoutRevisionImpl =
+			new RecentLayoutRevisionImpl();
+
+		recentLayoutRevisionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		recentLayoutRevisionImpl.setRecentLayoutRevisionId(
+			this.<Long>getColumnOriginalValue("recentLayoutRevisionId"));
+		recentLayoutRevisionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		recentLayoutRevisionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		recentLayoutRevisionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		recentLayoutRevisionImpl.setLayoutRevisionId(
+			this.<Long>getColumnOriginalValue("layoutRevisionId"));
+		recentLayoutRevisionImpl.setLayoutSetBranchId(
+			this.<Long>getColumnOriginalValue("layoutSetBranchId"));
+		recentLayoutRevisionImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+
+		return recentLayoutRevisionImpl;
+	}
+
+	@Override
 	public int compareTo(RecentLayoutRevision recentLayoutRevision) {
 		long primaryKey = recentLayoutRevision.getPrimaryKey();
 

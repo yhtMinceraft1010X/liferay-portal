@@ -783,6 +783,27 @@ public class LVEntryModelImpl
 	}
 
 	@Override
+	public LVEntry cloneWithOriginalValues() {
+		LVEntryImpl lvEntryImpl = new LVEntryImpl();
+
+		lvEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		lvEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		lvEntryImpl.setHeadId(this.<Long>getColumnOriginalValue("headId"));
+		lvEntryImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
+		lvEntryImpl.setLvEntryId(
+			this.<Long>getColumnOriginalValue("lvEntryId"));
+		lvEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		lvEntryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		lvEntryImpl.setUniqueGroupKey(
+			this.<String>getColumnOriginalValue("uniqueGroupKey"));
+
+		return lvEntryImpl;
+	}
+
+	@Override
 	public int compareTo(LVEntry lvEntry) {
 		long primaryKey = lvEntry.getPrimaryKey();
 

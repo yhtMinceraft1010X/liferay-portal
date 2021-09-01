@@ -728,6 +728,37 @@ public class FVSActiveEntryModelImpl
 	}
 
 	@Override
+	public FVSActiveEntry cloneWithOriginalValues() {
+		FVSActiveEntryImpl fvsActiveEntryImpl = new FVSActiveEntryImpl();
+
+		fvsActiveEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fvsActiveEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		fvsActiveEntryImpl.setFvsActiveEntryId(
+			this.<Long>getColumnOriginalValue("fvsActiveEntryId"));
+		fvsActiveEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fvsActiveEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		fvsActiveEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fvsActiveEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fvsActiveEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fvsActiveEntryImpl.setFvsEntryId(
+			this.<Long>getColumnOriginalValue("fvsEntryId"));
+		fvsActiveEntryImpl.setClayDataSetDisplayId(
+			this.<String>getColumnOriginalValue("clayDataSetDisplayId"));
+		fvsActiveEntryImpl.setPlid(this.<Long>getColumnOriginalValue("plid"));
+		fvsActiveEntryImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+
+		return fvsActiveEntryImpl;
+	}
+
+	@Override
 	public int compareTo(FVSActiveEntry fvsActiveEntry) {
 		long primaryKey = fvsActiveEntry.getPrimaryKey();
 

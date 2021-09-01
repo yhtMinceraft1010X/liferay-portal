@@ -726,6 +726,37 @@ public class MembershipRequestModelImpl
 	}
 
 	@Override
+	public MembershipRequest cloneWithOriginalValues() {
+		MembershipRequestImpl membershipRequestImpl =
+			new MembershipRequestImpl();
+
+		membershipRequestImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		membershipRequestImpl.setMembershipRequestId(
+			this.<Long>getColumnOriginalValue("membershipRequestId"));
+		membershipRequestImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		membershipRequestImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		membershipRequestImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		membershipRequestImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		membershipRequestImpl.setComments(
+			this.<String>getColumnOriginalValue("comments"));
+		membershipRequestImpl.setReplyComments(
+			this.<String>getColumnOriginalValue("replyComments"));
+		membershipRequestImpl.setReplyDate(
+			this.<Date>getColumnOriginalValue("replyDate"));
+		membershipRequestImpl.setReplierUserId(
+			this.<Long>getColumnOriginalValue("replierUserId"));
+		membershipRequestImpl.setStatusId(
+			this.<Long>getColumnOriginalValue("statusId"));
+
+		return membershipRequestImpl;
+	}
+
+	@Override
 	public int compareTo(MembershipRequest membershipRequest) {
 		int value = 0;
 

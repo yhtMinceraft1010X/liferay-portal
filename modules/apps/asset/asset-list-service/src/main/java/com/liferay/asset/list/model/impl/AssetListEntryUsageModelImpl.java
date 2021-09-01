@@ -996,6 +996,55 @@ public class AssetListEntryUsageModelImpl
 	}
 
 	@Override
+	public AssetListEntryUsage cloneWithOriginalValues() {
+		AssetListEntryUsageImpl assetListEntryUsageImpl =
+			new AssetListEntryUsageImpl();
+
+		assetListEntryUsageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetListEntryUsageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetListEntryUsageImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		assetListEntryUsageImpl.setAssetListEntryUsageId(
+			this.<Long>getColumnOriginalValue("assetListEntryUsageId"));
+		assetListEntryUsageImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetListEntryUsageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetListEntryUsageImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetListEntryUsageImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetListEntryUsageImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetListEntryUsageImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetListEntryUsageImpl.setAssetListEntryId(
+			this.<Long>getColumnOriginalValue("assetListEntryId"));
+		assetListEntryUsageImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		assetListEntryUsageImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		assetListEntryUsageImpl.setContainerKey(
+			this.<String>getColumnOriginalValue("containerKey"));
+		assetListEntryUsageImpl.setContainerType(
+			this.<Long>getColumnOriginalValue("containerType"));
+		assetListEntryUsageImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		assetListEntryUsageImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		assetListEntryUsageImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		assetListEntryUsageImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		assetListEntryUsageImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetListEntryUsageImpl;
+	}
+
+	@Override
 	public int compareTo(AssetListEntryUsage assetListEntryUsage) {
 		long primaryKey = assetListEntryUsage.getPrimaryKey();
 

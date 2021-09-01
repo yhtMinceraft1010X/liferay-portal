@@ -618,6 +618,33 @@ public class ChangesetCollectionModelImpl
 	}
 
 	@Override
+	public ChangesetCollection cloneWithOriginalValues() {
+		ChangesetCollectionImpl changesetCollectionImpl =
+			new ChangesetCollectionImpl();
+
+		changesetCollectionImpl.setChangesetCollectionId(
+			this.<Long>getColumnOriginalValue("changesetCollectionId"));
+		changesetCollectionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		changesetCollectionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		changesetCollectionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		changesetCollectionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		changesetCollectionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		changesetCollectionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		changesetCollectionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		changesetCollectionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+
+		return changesetCollectionImpl;
+	}
+
+	@Override
 	public int compareTo(ChangesetCollection changesetCollection) {
 		long primaryKey = changesetCollection.getPrimaryKey();
 

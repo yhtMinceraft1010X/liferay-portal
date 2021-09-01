@@ -921,6 +921,31 @@ public class CPTaxCategoryModelImpl
 	}
 
 	@Override
+	public CPTaxCategory cloneWithOriginalValues() {
+		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
+
+		cpTaxCategoryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cpTaxCategoryImpl.setCPTaxCategoryId(
+			this.<Long>getColumnOriginalValue("CPTaxCategoryId"));
+		cpTaxCategoryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpTaxCategoryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpTaxCategoryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpTaxCategoryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpTaxCategoryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpTaxCategoryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		cpTaxCategoryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+
+		return cpTaxCategoryImpl;
+	}
+
+	@Override
 	public int compareTo(CPTaxCategory cpTaxCategory) {
 		int value = 0;
 

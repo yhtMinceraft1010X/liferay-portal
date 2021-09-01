@@ -466,6 +466,26 @@ public class UserTrackerPathModelImpl
 	}
 
 	@Override
+	public UserTrackerPath cloneWithOriginalValues() {
+		UserTrackerPathImpl userTrackerPathImpl = new UserTrackerPathImpl();
+
+		userTrackerPathImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userTrackerPathImpl.setUserTrackerPathId(
+			this.<Long>getColumnOriginalValue("userTrackerPathId"));
+		userTrackerPathImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userTrackerPathImpl.setUserTrackerId(
+			this.<Long>getColumnOriginalValue("userTrackerId"));
+		userTrackerPathImpl.setPath(
+			this.<String>getColumnOriginalValue("path_"));
+		userTrackerPathImpl.setPathDate(
+			this.<Date>getColumnOriginalValue("pathDate"));
+
+		return userTrackerPathImpl;
+	}
+
+	@Override
 	public int compareTo(UserTrackerPath userTrackerPath) {
 		long primaryKey = userTrackerPath.getPrimaryKey();
 

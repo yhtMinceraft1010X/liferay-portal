@@ -408,6 +408,20 @@ public class CacheFieldEntryModelImpl
 	}
 
 	@Override
+	public CacheFieldEntry cloneWithOriginalValues() {
+		CacheFieldEntryImpl cacheFieldEntryImpl = new CacheFieldEntryImpl();
+
+		cacheFieldEntryImpl.setCacheFieldEntryId(
+			this.<Long>getColumnOriginalValue("cacheFieldEntryId"));
+		cacheFieldEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cacheFieldEntryImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+
+		return cacheFieldEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CacheFieldEntry cacheFieldEntry) {
 		long primaryKey = cacheFieldEntry.getPrimaryKey();
 

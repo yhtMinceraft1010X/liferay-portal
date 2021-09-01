@@ -725,6 +725,44 @@ public class CustomElementsPortletDescriptorModelImpl
 	}
 
 	@Override
+	public CustomElementsPortletDescriptor cloneWithOriginalValues() {
+		CustomElementsPortletDescriptorImpl
+			customElementsPortletDescriptorImpl =
+				new CustomElementsPortletDescriptorImpl();
+
+		customElementsPortletDescriptorImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		customElementsPortletDescriptorImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		customElementsPortletDescriptorImpl.
+			setCustomElementsPortletDescriptorId(
+				this.<Long>getColumnOriginalValue(
+					"customElementsPortletDescId"));
+		customElementsPortletDescriptorImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		customElementsPortletDescriptorImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		customElementsPortletDescriptorImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		customElementsPortletDescriptorImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		customElementsPortletDescriptorImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		customElementsPortletDescriptorImpl.setCSSURLs(
+			this.<String>getColumnOriginalValue("cssURLs"));
+		customElementsPortletDescriptorImpl.setHTMLElementName(
+			this.<String>getColumnOriginalValue("htmlElementName"));
+		customElementsPortletDescriptorImpl.setInstanceable(
+			this.<Boolean>getColumnOriginalValue("instanceable"));
+		customElementsPortletDescriptorImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		customElementsPortletDescriptorImpl.setProperties(
+			this.<String>getColumnOriginalValue("properties"));
+
+		return customElementsPortletDescriptorImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CustomElementsPortletDescriptor customElementsPortletDescriptor) {
 

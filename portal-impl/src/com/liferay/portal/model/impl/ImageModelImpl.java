@@ -575,6 +575,26 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	@Override
+	public Image cloneWithOriginalValues() {
+		ImageImpl imageImpl = new ImageImpl();
+
+		imageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		imageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		imageImpl.setImageId(this.<Long>getColumnOriginalValue("imageId"));
+		imageImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		imageImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		imageImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		imageImpl.setHeight(this.<Integer>getColumnOriginalValue("height"));
+		imageImpl.setWidth(this.<Integer>getColumnOriginalValue("width"));
+		imageImpl.setSize(this.<Integer>getColumnOriginalValue("size_"));
+
+		return imageImpl;
+	}
+
+	@Override
 	public int compareTo(Image image) {
 		int value = 0;
 

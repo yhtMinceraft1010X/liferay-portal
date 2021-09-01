@@ -813,6 +813,41 @@ public class RedirectEntryModelImpl
 	}
 
 	@Override
+	public RedirectEntry cloneWithOriginalValues() {
+		RedirectEntryImpl redirectEntryImpl = new RedirectEntryImpl();
+
+		redirectEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		redirectEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		redirectEntryImpl.setRedirectEntryId(
+			this.<Long>getColumnOriginalValue("redirectEntryId"));
+		redirectEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		redirectEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		redirectEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		redirectEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		redirectEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		redirectEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		redirectEntryImpl.setDestinationURL(
+			this.<String>getColumnOriginalValue("destinationURL"));
+		redirectEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		redirectEntryImpl.setLastOccurrenceDate(
+			this.<Date>getColumnOriginalValue("lastOccurrenceDate"));
+		redirectEntryImpl.setPermanent(
+			this.<Boolean>getColumnOriginalValue("permanent_"));
+		redirectEntryImpl.setSourceURL(
+			this.<String>getColumnOriginalValue("sourceURL"));
+
+		return redirectEntryImpl;
+	}
+
+	@Override
 	public int compareTo(RedirectEntry redirectEntry) {
 		long primaryKey = redirectEntry.getPrimaryKey();
 

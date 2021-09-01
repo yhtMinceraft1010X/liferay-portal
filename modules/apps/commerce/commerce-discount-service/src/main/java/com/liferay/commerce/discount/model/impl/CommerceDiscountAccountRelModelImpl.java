@@ -765,6 +765,37 @@ public class CommerceDiscountAccountRelModelImpl
 	}
 
 	@Override
+	public CommerceDiscountAccountRel cloneWithOriginalValues() {
+		CommerceDiscountAccountRelImpl commerceDiscountAccountRelImpl =
+			new CommerceDiscountAccountRelImpl();
+
+		commerceDiscountAccountRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceDiscountAccountRelImpl.setCommerceDiscountAccountRelId(
+			this.<Long>getColumnOriginalValue("commerceDiscountAccountRelId"));
+		commerceDiscountAccountRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceDiscountAccountRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceDiscountAccountRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceDiscountAccountRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceDiscountAccountRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceDiscountAccountRelImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceDiscountAccountRelImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+		commerceDiscountAccountRelImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
+		commerceDiscountAccountRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commerceDiscountAccountRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceDiscountAccountRel commerceDiscountAccountRel) {
 

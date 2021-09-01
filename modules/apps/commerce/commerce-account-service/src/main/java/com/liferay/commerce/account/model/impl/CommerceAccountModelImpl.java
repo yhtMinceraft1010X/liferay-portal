@@ -1139,6 +1139,60 @@ public class CommerceAccountModelImpl
 	}
 
 	@Override
+	public CommerceAccount cloneWithOriginalValues() {
+		CommerceAccountImpl commerceAccountImpl = new CommerceAccountImpl();
+
+		commerceAccountImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceAccountImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceAccountImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAccountImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAccountImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAccountImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAccountImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAccountImpl.setParentCommerceAccountId(
+			this.<Long>getColumnOriginalValue("parentCommerceAccountId"));
+		commerceAccountImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceAccountImpl.setLogoId(
+			this.<Long>getColumnOriginalValue("logoId"));
+		commerceAccountImpl.setEmail(
+			this.<String>getColumnOriginalValue("email"));
+		commerceAccountImpl.setTaxId(
+			this.<String>getColumnOriginalValue("taxId"));
+		commerceAccountImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		commerceAccountImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		commerceAccountImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commerceAccountImpl.setDefaultBillingAddressId(
+			this.<Long>getColumnOriginalValue("defaultBillingAddressId"));
+		commerceAccountImpl.setDefaultShippingAddressId(
+			this.<Long>getColumnOriginalValue("defaultShippingAddressId"));
+		commerceAccountImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commerceAccountImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commerceAccountImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commerceAccountImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commerceAccountImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commerceAccountImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return commerceAccountImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceAccount commerceAccount) {
 		int value = 0;
 

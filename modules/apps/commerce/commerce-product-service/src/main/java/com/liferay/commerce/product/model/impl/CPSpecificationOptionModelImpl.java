@@ -1097,6 +1097,41 @@ public class CPSpecificationOptionModelImpl
 	}
 
 	@Override
+	public CPSpecificationOption cloneWithOriginalValues() {
+		CPSpecificationOptionImpl cpSpecificationOptionImpl =
+			new CPSpecificationOptionImpl();
+
+		cpSpecificationOptionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpSpecificationOptionImpl.setCPSpecificationOptionId(
+			this.<Long>getColumnOriginalValue("CPSpecificationOptionId"));
+		cpSpecificationOptionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpSpecificationOptionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpSpecificationOptionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpSpecificationOptionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpSpecificationOptionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpSpecificationOptionImpl.setCPOptionCategoryId(
+			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
+		cpSpecificationOptionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		cpSpecificationOptionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		cpSpecificationOptionImpl.setFacetable(
+			this.<Boolean>getColumnOriginalValue("facetable"));
+		cpSpecificationOptionImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		cpSpecificationOptionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpSpecificationOptionImpl;
+	}
+
+	@Override
 	public int compareTo(CPSpecificationOption cpSpecificationOption) {
 		int value = 0;
 

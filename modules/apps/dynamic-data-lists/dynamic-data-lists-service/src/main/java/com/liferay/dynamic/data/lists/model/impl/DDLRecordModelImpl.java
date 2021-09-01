@@ -1003,6 +1003,50 @@ public class DDLRecordModelImpl
 	}
 
 	@Override
+	public DDLRecord cloneWithOriginalValues() {
+		DDLRecordImpl ddlRecordImpl = new DDLRecordImpl();
+
+		ddlRecordImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddlRecordImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddlRecordImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		ddlRecordImpl.setRecordId(
+			this.<Long>getColumnOriginalValue("recordId"));
+		ddlRecordImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		ddlRecordImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddlRecordImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ddlRecordImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddlRecordImpl.setVersionUserId(
+			this.<Long>getColumnOriginalValue("versionUserId"));
+		ddlRecordImpl.setVersionUserName(
+			this.<String>getColumnOriginalValue("versionUserName"));
+		ddlRecordImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddlRecordImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddlRecordImpl.setDDMStorageId(
+			this.<Long>getColumnOriginalValue("DDMStorageId"));
+		ddlRecordImpl.setRecordSetId(
+			this.<Long>getColumnOriginalValue("recordSetId"));
+		ddlRecordImpl.setRecordSetVersion(
+			this.<String>getColumnOriginalValue("recordSetVersion"));
+		ddlRecordImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		ddlRecordImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		ddlRecordImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddlRecordImpl.setDisplayIndex(
+			this.<Integer>getColumnOriginalValue("displayIndex"));
+		ddlRecordImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddlRecordImpl;
+	}
+
+	@Override
 	public int compareTo(DDLRecord ddlRecord) {
 		long primaryKey = ddlRecord.getPrimaryKey();
 

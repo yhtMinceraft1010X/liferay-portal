@@ -726,6 +726,40 @@ public class RepositoryEntryModelImpl
 	}
 
 	@Override
+	public RepositoryEntry cloneWithOriginalValues() {
+		RepositoryEntryImpl repositoryEntryImpl = new RepositoryEntryImpl();
+
+		repositoryEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		repositoryEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		repositoryEntryImpl.setRepositoryEntryId(
+			this.<Long>getColumnOriginalValue("repositoryEntryId"));
+		repositoryEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		repositoryEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		repositoryEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		repositoryEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		repositoryEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		repositoryEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		repositoryEntryImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		repositoryEntryImpl.setMappedId(
+			this.<String>getColumnOriginalValue("mappedId"));
+		repositoryEntryImpl.setManualCheckInRequired(
+			this.<Boolean>getColumnOriginalValue("manualCheckInRequired"));
+		repositoryEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return repositoryEntryImpl;
+	}
+
+	@Override
 	public int compareTo(RepositoryEntry repositoryEntry) {
 		long primaryKey = repositoryEntry.getPrimaryKey();
 

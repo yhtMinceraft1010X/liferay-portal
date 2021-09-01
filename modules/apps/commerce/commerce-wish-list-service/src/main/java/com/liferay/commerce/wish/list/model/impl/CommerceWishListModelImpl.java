@@ -747,6 +747,34 @@ public class CommerceWishListModelImpl
 	}
 
 	@Override
+	public CommerceWishList cloneWithOriginalValues() {
+		CommerceWishListImpl commerceWishListImpl = new CommerceWishListImpl();
+
+		commerceWishListImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceWishListImpl.setCommerceWishListId(
+			this.<Long>getColumnOriginalValue("commerceWishListId"));
+		commerceWishListImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceWishListImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceWishListImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceWishListImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceWishListImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceWishListImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceWishListImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceWishListImpl.setDefaultWishList(
+			this.<Boolean>getColumnOriginalValue("defaultWishList"));
+
+		return commerceWishListImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceWishList commerceWishList) {
 		int value = 0;
 

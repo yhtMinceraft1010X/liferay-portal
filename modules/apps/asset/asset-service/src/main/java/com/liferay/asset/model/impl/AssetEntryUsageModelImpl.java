@@ -763,6 +763,41 @@ public class AssetEntryUsageModelImpl
 	}
 
 	@Override
+	public AssetEntryUsage cloneWithOriginalValues() {
+		AssetEntryUsageImpl assetEntryUsageImpl = new AssetEntryUsageImpl();
+
+		assetEntryUsageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetEntryUsageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetEntryUsageImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		assetEntryUsageImpl.setAssetEntryUsageId(
+			this.<Long>getColumnOriginalValue("assetEntryUsageId"));
+		assetEntryUsageImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetEntryUsageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetEntryUsageImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetEntryUsageImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetEntryUsageImpl.setAssetEntryId(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
+		assetEntryUsageImpl.setContainerType(
+			this.<Long>getColumnOriginalValue("containerType"));
+		assetEntryUsageImpl.setContainerKey(
+			this.<String>getColumnOriginalValue("containerKey"));
+		assetEntryUsageImpl.setPlid(this.<Long>getColumnOriginalValue("plid"));
+		assetEntryUsageImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		assetEntryUsageImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetEntryUsageImpl;
+	}
+
+	@Override
 	public int compareTo(AssetEntryUsage assetEntryUsage) {
 		long primaryKey = assetEntryUsage.getPrimaryKey();
 

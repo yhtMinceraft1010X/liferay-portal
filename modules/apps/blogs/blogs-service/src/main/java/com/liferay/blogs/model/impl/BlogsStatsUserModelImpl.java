@@ -629,6 +629,34 @@ public class BlogsStatsUserModelImpl
 	}
 
 	@Override
+	public BlogsStatsUser cloneWithOriginalValues() {
+		BlogsStatsUserImpl blogsStatsUserImpl = new BlogsStatsUserImpl();
+
+		blogsStatsUserImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		blogsStatsUserImpl.setStatsUserId(
+			this.<Long>getColumnOriginalValue("statsUserId"));
+		blogsStatsUserImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		blogsStatsUserImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		blogsStatsUserImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		blogsStatsUserImpl.setEntryCount(
+			this.<Integer>getColumnOriginalValue("entryCount"));
+		blogsStatsUserImpl.setLastPostDate(
+			this.<Date>getColumnOriginalValue("lastPostDate"));
+		blogsStatsUserImpl.setRatingsTotalEntries(
+			this.<Integer>getColumnOriginalValue("ratingsTotalEntries"));
+		blogsStatsUserImpl.setRatingsTotalScore(
+			this.<Double>getColumnOriginalValue("ratingsTotalScore"));
+		blogsStatsUserImpl.setRatingsAverageScore(
+			this.<Double>getColumnOriginalValue("ratingsAverageScore"));
+
+		return blogsStatsUserImpl;
+	}
+
+	@Override
 	public int compareTo(BlogsStatsUser blogsStatsUser) {
 		int value = 0;
 

@@ -983,6 +983,51 @@ public class DDMFormInstanceRecordModelImpl
 	}
 
 	@Override
+	public DDMFormInstanceRecord cloneWithOriginalValues() {
+		DDMFormInstanceRecordImpl ddmFormInstanceRecordImpl =
+			new DDMFormInstanceRecordImpl();
+
+		ddmFormInstanceRecordImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFormInstanceRecordImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFormInstanceRecordImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		ddmFormInstanceRecordImpl.setFormInstanceRecordId(
+			this.<Long>getColumnOriginalValue("formInstanceRecordId"));
+		ddmFormInstanceRecordImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmFormInstanceRecordImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFormInstanceRecordImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmFormInstanceRecordImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmFormInstanceRecordImpl.setVersionUserId(
+			this.<Long>getColumnOriginalValue("versionUserId"));
+		ddmFormInstanceRecordImpl.setVersionUserName(
+			this.<String>getColumnOriginalValue("versionUserName"));
+		ddmFormInstanceRecordImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmFormInstanceRecordImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmFormInstanceRecordImpl.setFormInstanceId(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
+		ddmFormInstanceRecordImpl.setFormInstanceVersion(
+			this.<String>getColumnOriginalValue("formInstanceVersion"));
+		ddmFormInstanceRecordImpl.setStorageId(
+			this.<Long>getColumnOriginalValue("storageId"));
+		ddmFormInstanceRecordImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmFormInstanceRecordImpl.setIpAddress(
+			this.<String>getColumnOriginalValue("ipAddress"));
+		ddmFormInstanceRecordImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddmFormInstanceRecordImpl;
+	}
+
+	@Override
 	public int compareTo(DDMFormInstanceRecord ddmFormInstanceRecord) {
 		long primaryKey = ddmFormInstanceRecord.getPrimaryKey();
 

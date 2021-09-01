@@ -615,6 +615,29 @@ public class AnnouncementsFlagModelImpl
 	}
 
 	@Override
+	public AnnouncementsFlag cloneWithOriginalValues() {
+		AnnouncementsFlagImpl announcementsFlagImpl =
+			new AnnouncementsFlagImpl();
+
+		announcementsFlagImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		announcementsFlagImpl.setFlagId(
+			this.<Long>getColumnOriginalValue("flagId"));
+		announcementsFlagImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		announcementsFlagImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		announcementsFlagImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		announcementsFlagImpl.setEntryId(
+			this.<Long>getColumnOriginalValue("entryId"));
+		announcementsFlagImpl.setValue(
+			this.<Integer>getColumnOriginalValue("value"));
+
+		return announcementsFlagImpl;
+	}
+
+	@Override
 	public int compareTo(AnnouncementsFlag announcementsFlag) {
 		int value = 0;
 

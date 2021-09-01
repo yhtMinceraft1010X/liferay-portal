@@ -1190,6 +1190,68 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	}
 
 	@Override
+	public WorkflowMetricsSLADefinitionVersion cloneWithOriginalValues() {
+		WorkflowMetricsSLADefinitionVersionImpl
+			workflowMetricsSLADefinitionVersionImpl =
+				new WorkflowMetricsSLADefinitionVersionImpl();
+
+		workflowMetricsSLADefinitionVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		workflowMetricsSLADefinitionVersionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		workflowMetricsSLADefinitionVersionImpl.
+			setWorkflowMetricsSLADefinitionVersionId(
+				this.<Long>getColumnOriginalValue("wmSLADefinitionVersionId"));
+		workflowMetricsSLADefinitionVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		workflowMetricsSLADefinitionVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		workflowMetricsSLADefinitionVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		workflowMetricsSLADefinitionVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		workflowMetricsSLADefinitionVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		workflowMetricsSLADefinitionVersionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		workflowMetricsSLADefinitionVersionImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		workflowMetricsSLADefinitionVersionImpl.setCalendarKey(
+			this.<String>getColumnOriginalValue("calendarKey"));
+		workflowMetricsSLADefinitionVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		workflowMetricsSLADefinitionVersionImpl.setDuration(
+			this.<Long>getColumnOriginalValue("duration"));
+		workflowMetricsSLADefinitionVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		workflowMetricsSLADefinitionVersionImpl.setPauseNodeKeys(
+			this.<String>getColumnOriginalValue("pauseNodeKeys"));
+		workflowMetricsSLADefinitionVersionImpl.setProcessId(
+			this.<Long>getColumnOriginalValue("processId"));
+		workflowMetricsSLADefinitionVersionImpl.setProcessVersion(
+			this.<String>getColumnOriginalValue("processVersion"));
+		workflowMetricsSLADefinitionVersionImpl.setStartNodeKeys(
+			this.<String>getColumnOriginalValue("startNodeKeys"));
+		workflowMetricsSLADefinitionVersionImpl.setStopNodeKeys(
+			this.<String>getColumnOriginalValue("stopNodeKeys"));
+		workflowMetricsSLADefinitionVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		workflowMetricsSLADefinitionVersionImpl.
+			setWorkflowMetricsSLADefinitionId(
+				this.<Long>getColumnOriginalValue("wmSLADefinitionId"));
+		workflowMetricsSLADefinitionVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		workflowMetricsSLADefinitionVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		workflowMetricsSLADefinitionVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		workflowMetricsSLADefinitionVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return workflowMetricsSLADefinitionVersionImpl;
+	}
+
+	@Override
 	public int compareTo(
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion) {

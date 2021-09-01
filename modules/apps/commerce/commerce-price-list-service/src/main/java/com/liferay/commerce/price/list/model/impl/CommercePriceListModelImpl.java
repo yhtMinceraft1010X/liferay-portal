@@ -1262,6 +1262,61 @@ public class CommercePriceListModelImpl
 	}
 
 	@Override
+	public CommercePriceList cloneWithOriginalValues() {
+		CommercePriceListImpl commercePriceListImpl =
+			new CommercePriceListImpl();
+
+		commercePriceListImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePriceListImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commercePriceListImpl.setCommercePriceListId(
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
+		commercePriceListImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commercePriceListImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceListImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceListImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceListImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceListImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceListImpl.setCommerceCurrencyId(
+			this.<Long>getColumnOriginalValue("commerceCurrencyId"));
+		commercePriceListImpl.setParentCommercePriceListId(
+			this.<Long>getColumnOriginalValue("parentCommercePriceListId"));
+		commercePriceListImpl.setCatalogBasePriceList(
+			this.<Boolean>getColumnOriginalValue("catalogBasePriceList"));
+		commercePriceListImpl.setNetPrice(
+			this.<Boolean>getColumnOriginalValue("netPrice"));
+		commercePriceListImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		commercePriceListImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commercePriceListImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commercePriceListImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commercePriceListImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commercePriceListImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commercePriceListImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commercePriceListImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commercePriceListImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commercePriceListImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return commercePriceListImpl;
+	}
+
+	@Override
 	public int compareTo(CommercePriceList commercePriceList) {
 		int value = 0;
 

@@ -695,6 +695,33 @@ public class CommerceDiscountRelModelImpl
 	}
 
 	@Override
+	public CommerceDiscountRel cloneWithOriginalValues() {
+		CommerceDiscountRelImpl commerceDiscountRelImpl =
+			new CommerceDiscountRelImpl();
+
+		commerceDiscountRelImpl.setCommerceDiscountRelId(
+			this.<Long>getColumnOriginalValue("commerceDiscountRelId"));
+		commerceDiscountRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceDiscountRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceDiscountRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceDiscountRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceDiscountRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceDiscountRelImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+		commerceDiscountRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceDiscountRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return commerceDiscountRelImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceDiscountRel commerceDiscountRel) {
 		int value = 0;
 

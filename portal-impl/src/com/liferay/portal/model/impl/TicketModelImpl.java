@@ -615,6 +615,29 @@ public class TicketModelImpl
 	}
 
 	@Override
+	public Ticket cloneWithOriginalValues() {
+		TicketImpl ticketImpl = new TicketImpl();
+
+		ticketImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ticketImpl.setTicketId(this.<Long>getColumnOriginalValue("ticketId"));
+		ticketImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		ticketImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ticketImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ticketImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		ticketImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		ticketImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
+		ticketImpl.setExtraInfo(
+			this.<String>getColumnOriginalValue("extraInfo"));
+		ticketImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+
+		return ticketImpl;
+	}
+
+	@Override
 	public int compareTo(Ticket ticket) {
 		int value = 0;
 

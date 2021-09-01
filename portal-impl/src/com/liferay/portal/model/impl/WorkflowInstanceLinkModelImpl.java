@@ -709,6 +709,39 @@ public class WorkflowInstanceLinkModelImpl
 	}
 
 	@Override
+	public WorkflowInstanceLink cloneWithOriginalValues() {
+		WorkflowInstanceLinkImpl workflowInstanceLinkImpl =
+			new WorkflowInstanceLinkImpl();
+
+		workflowInstanceLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		workflowInstanceLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(
+			this.<Long>getColumnOriginalValue("workflowInstanceLinkId"));
+		workflowInstanceLinkImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		workflowInstanceLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		workflowInstanceLinkImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		workflowInstanceLinkImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		workflowInstanceLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		workflowInstanceLinkImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		workflowInstanceLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		workflowInstanceLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		workflowInstanceLinkImpl.setWorkflowInstanceId(
+			this.<Long>getColumnOriginalValue("workflowInstanceId"));
+
+		return workflowInstanceLinkImpl;
+	}
+
+	@Override
 	public int compareTo(WorkflowInstanceLink workflowInstanceLink) {
 		int value = 0;
 

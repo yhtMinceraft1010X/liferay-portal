@@ -1338,6 +1338,55 @@ public class DDMTemplateVersionModelImpl
 	}
 
 	@Override
+	public DDMTemplateVersion cloneWithOriginalValues() {
+		DDMTemplateVersionImpl ddmTemplateVersionImpl =
+			new DDMTemplateVersionImpl();
+
+		ddmTemplateVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmTemplateVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmTemplateVersionImpl.setTemplateVersionId(
+			this.<Long>getColumnOriginalValue("templateVersionId"));
+		ddmTemplateVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmTemplateVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmTemplateVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmTemplateVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmTemplateVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmTemplateVersionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmTemplateVersionImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ddmTemplateVersionImpl.setTemplateId(
+			this.<Long>getColumnOriginalValue("templateId"));
+		ddmTemplateVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmTemplateVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmTemplateVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmTemplateVersionImpl.setLanguage(
+			this.<String>getColumnOriginalValue("language"));
+		ddmTemplateVersionImpl.setScript(
+			this.<String>getColumnOriginalValue("script"));
+		ddmTemplateVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddmTemplateVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddmTemplateVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddmTemplateVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddmTemplateVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DDMTemplateVersion ddmTemplateVersion) {
 		long primaryKey = ddmTemplateVersion.getPrimaryKey();
 

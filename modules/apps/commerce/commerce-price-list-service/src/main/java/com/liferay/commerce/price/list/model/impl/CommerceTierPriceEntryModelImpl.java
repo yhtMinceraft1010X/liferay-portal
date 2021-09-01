@@ -1244,6 +1244,63 @@ public class CommerceTierPriceEntryModelImpl
 	}
 
 	@Override
+	public CommerceTierPriceEntry cloneWithOriginalValues() {
+		CommerceTierPriceEntryImpl commerceTierPriceEntryImpl =
+			new CommerceTierPriceEntryImpl();
+
+		commerceTierPriceEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceTierPriceEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceTierPriceEntryImpl.setCommerceTierPriceEntryId(
+			this.<Long>getColumnOriginalValue("commerceTierPriceEntryId"));
+		commerceTierPriceEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceTierPriceEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceTierPriceEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceTierPriceEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceTierPriceEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceTierPriceEntryImpl.setCommercePriceEntryId(
+			this.<Long>getColumnOriginalValue("commercePriceEntryId"));
+		commerceTierPriceEntryImpl.setPrice(
+			this.<BigDecimal>getColumnOriginalValue("price"));
+		commerceTierPriceEntryImpl.setPromoPrice(
+			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
+		commerceTierPriceEntryImpl.setDiscountDiscovery(
+			this.<Boolean>getColumnOriginalValue("discountDiscovery"));
+		commerceTierPriceEntryImpl.setDiscountLevel1(
+			this.<BigDecimal>getColumnOriginalValue("discountLevel1"));
+		commerceTierPriceEntryImpl.setDiscountLevel2(
+			this.<BigDecimal>getColumnOriginalValue("discountLevel2"));
+		commerceTierPriceEntryImpl.setDiscountLevel3(
+			this.<BigDecimal>getColumnOriginalValue("discountLevel3"));
+		commerceTierPriceEntryImpl.setDiscountLevel4(
+			this.<BigDecimal>getColumnOriginalValue("discountLevel4"));
+		commerceTierPriceEntryImpl.setMinQuantity(
+			this.<Integer>getColumnOriginalValue("minQuantity"));
+		commerceTierPriceEntryImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commerceTierPriceEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commerceTierPriceEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commerceTierPriceEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commerceTierPriceEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commerceTierPriceEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commerceTierPriceEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return commerceTierPriceEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceTierPriceEntry commerceTierPriceEntry) {
 		int value = 0;
 

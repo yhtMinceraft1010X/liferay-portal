@@ -626,6 +626,34 @@ public class AMImageEntryModelImpl
 	}
 
 	@Override
+	public AMImageEntry cloneWithOriginalValues() {
+		AMImageEntryImpl amImageEntryImpl = new AMImageEntryImpl();
+
+		amImageEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		amImageEntryImpl.setAmImageEntryId(
+			this.<Long>getColumnOriginalValue("amImageEntryId"));
+		amImageEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		amImageEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		amImageEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		amImageEntryImpl.setConfigurationUuid(
+			this.<String>getColumnOriginalValue("configurationUuid"));
+		amImageEntryImpl.setFileVersionId(
+			this.<Long>getColumnOriginalValue("fileVersionId"));
+		amImageEntryImpl.setMimeType(
+			this.<String>getColumnOriginalValue("mimeType"));
+		amImageEntryImpl.setHeight(
+			this.<Integer>getColumnOriginalValue("height"));
+		amImageEntryImpl.setWidth(
+			this.<Integer>getColumnOriginalValue("width"));
+		amImageEntryImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+
+		return amImageEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AMImageEntry amImageEntry) {
 		long primaryKey = amImageEntry.getPrimaryKey();
 

@@ -484,6 +484,26 @@ public class PasswordTrackerModelImpl
 	}
 
 	@Override
+	public PasswordTracker cloneWithOriginalValues() {
+		PasswordTrackerImpl passwordTrackerImpl = new PasswordTrackerImpl();
+
+		passwordTrackerImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		passwordTrackerImpl.setPasswordTrackerId(
+			this.<Long>getColumnOriginalValue("passwordTrackerId"));
+		passwordTrackerImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		passwordTrackerImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		passwordTrackerImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		passwordTrackerImpl.setPassword(
+			this.<String>getColumnOriginalValue("password_"));
+
+		return passwordTrackerImpl;
+	}
+
+	@Override
 	public int compareTo(PasswordTracker passwordTracker) {
 		int value = 0;
 

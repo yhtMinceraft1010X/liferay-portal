@@ -1194,6 +1194,50 @@ public class DDMFormInstanceModelImpl
 	}
 
 	@Override
+	public DDMFormInstance cloneWithOriginalValues() {
+		DDMFormInstanceImpl ddmFormInstanceImpl = new DDMFormInstanceImpl();
+
+		ddmFormInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFormInstanceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFormInstanceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		ddmFormInstanceImpl.setFormInstanceId(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
+		ddmFormInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmFormInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFormInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmFormInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmFormInstanceImpl.setVersionUserId(
+			this.<Long>getColumnOriginalValue("versionUserId"));
+		ddmFormInstanceImpl.setVersionUserName(
+			this.<String>getColumnOriginalValue("versionUserName"));
+		ddmFormInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmFormInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmFormInstanceImpl.setStructureId(
+			this.<Long>getColumnOriginalValue("structureId"));
+		ddmFormInstanceImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmFormInstanceImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmFormInstanceImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmFormInstanceImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		ddmFormInstanceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddmFormInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(DDMFormInstance ddmFormInstance) {
 		long primaryKey = ddmFormInstance.getPrimaryKey();
 

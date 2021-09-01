@@ -440,6 +440,20 @@ public class EagerBlobEntryModelImpl
 	}
 
 	@Override
+	public EagerBlobEntry cloneWithOriginalValues() {
+		EagerBlobEntryImpl eagerBlobEntryImpl = new EagerBlobEntryImpl();
+
+		eagerBlobEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		eagerBlobEntryImpl.setEagerBlobEntryId(
+			this.<Long>getColumnOriginalValue("eagerBlobEntryId"));
+		eagerBlobEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+
+		return eagerBlobEntryImpl;
+	}
+
+	@Override
 	public int compareTo(EagerBlobEntry eagerBlobEntry) {
 		long primaryKey = eagerBlobEntry.getPrimaryKey();
 

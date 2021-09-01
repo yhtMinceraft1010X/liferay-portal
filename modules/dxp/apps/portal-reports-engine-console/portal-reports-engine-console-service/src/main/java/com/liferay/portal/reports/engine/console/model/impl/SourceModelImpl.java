@@ -930,6 +930,35 @@ public class SourceModelImpl
 	}
 
 	@Override
+	public Source cloneWithOriginalValues() {
+		SourceImpl sourceImpl = new SourceImpl();
+
+		sourceImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		sourceImpl.setSourceId(this.<Long>getColumnOriginalValue("sourceId"));
+		sourceImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		sourceImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		sourceImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		sourceImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		sourceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		sourceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		sourceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		sourceImpl.setName(this.<String>getColumnOriginalValue("name"));
+		sourceImpl.setDriverClassName(
+			this.<String>getColumnOriginalValue("driverClassName"));
+		sourceImpl.setDriverUrl(
+			this.<String>getColumnOriginalValue("driverUrl"));
+		sourceImpl.setDriverUserName(
+			this.<String>getColumnOriginalValue("driverUserName"));
+		sourceImpl.setDriverPassword(
+			this.<String>getColumnOriginalValue("driverPassword"));
+
+		return sourceImpl;
+	}
+
+	@Override
 	public int compareTo(Source source) {
 		long primaryKey = source.getPrimaryKey();
 

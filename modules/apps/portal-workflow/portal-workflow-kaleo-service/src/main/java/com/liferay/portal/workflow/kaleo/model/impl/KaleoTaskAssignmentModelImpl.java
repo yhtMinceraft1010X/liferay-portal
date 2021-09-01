@@ -891,6 +891,54 @@ public class KaleoTaskAssignmentModelImpl
 	}
 
 	@Override
+	public KaleoTaskAssignment cloneWithOriginalValues() {
+		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl =
+			new KaleoTaskAssignmentImpl();
+
+		kaleoTaskAssignmentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(
+			this.<Long>getColumnOriginalValue("kaleoTaskAssignmentId"));
+		kaleoTaskAssignmentImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTaskAssignmentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTaskAssignmentImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTaskAssignmentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTaskAssignmentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTaskAssignmentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTaskAssignmentImpl.setKaleoClassName(
+			this.<String>getColumnOriginalValue("kaleoClassName"));
+		kaleoTaskAssignmentImpl.setKaleoClassPK(
+			this.<Long>getColumnOriginalValue("kaleoClassPK"));
+		kaleoTaskAssignmentImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTaskAssignmentImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTaskAssignmentImpl.setKaleoNodeId(
+			this.<Long>getColumnOriginalValue("kaleoNodeId"));
+		kaleoTaskAssignmentImpl.setAssigneeClassName(
+			this.<String>getColumnOriginalValue("assigneeClassName"));
+		kaleoTaskAssignmentImpl.setAssigneeClassPK(
+			this.<Long>getColumnOriginalValue("assigneeClassPK"));
+		kaleoTaskAssignmentImpl.setAssigneeActionId(
+			this.<String>getColumnOriginalValue("assigneeActionId"));
+		kaleoTaskAssignmentImpl.setAssigneeScript(
+			this.<String>getColumnOriginalValue("assigneeScript"));
+		kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(
+			this.<String>getColumnOriginalValue("assigneeScriptLanguage"));
+		kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(
+			this.<String>getColumnOriginalValue(
+				"assigneeScriptRequiredContexts"));
+
+		return kaleoTaskAssignmentImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTaskAssignment kaleoTaskAssignment) {
 		int value = 0;
 

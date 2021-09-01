@@ -916,6 +916,46 @@ public class AssetListEntryModelImpl
 	}
 
 	@Override
+	public AssetListEntry cloneWithOriginalValues() {
+		AssetListEntryImpl assetListEntryImpl = new AssetListEntryImpl();
+
+		assetListEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetListEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetListEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		assetListEntryImpl.setAssetListEntryId(
+			this.<Long>getColumnOriginalValue("assetListEntryId"));
+		assetListEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetListEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetListEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetListEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetListEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetListEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetListEntryImpl.setAssetListEntryKey(
+			this.<String>getColumnOriginalValue("assetListEntryKey"));
+		assetListEntryImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		assetListEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		assetListEntryImpl.setAssetEntrySubtype(
+			this.<String>getColumnOriginalValue("assetEntrySubtype"));
+		assetListEntryImpl.setAssetEntryType(
+			this.<String>getColumnOriginalValue("assetEntryType"));
+		assetListEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetListEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AssetListEntry assetListEntry) {
 		long primaryKey = assetListEntry.getPrimaryKey();
 

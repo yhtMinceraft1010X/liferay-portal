@@ -795,6 +795,37 @@ public class CPInstanceOptionValueRelModelImpl
 	}
 
 	@Override
+	public CPInstanceOptionValueRel cloneWithOriginalValues() {
+		CPInstanceOptionValueRelImpl cpInstanceOptionValueRelImpl =
+			new CPInstanceOptionValueRelImpl();
+
+		cpInstanceOptionValueRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpInstanceOptionValueRelImpl.setCPInstanceOptionValueRelId(
+			this.<Long>getColumnOriginalValue("CPInstanceOptionValueRelId"));
+		cpInstanceOptionValueRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpInstanceOptionValueRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpInstanceOptionValueRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpInstanceOptionValueRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpInstanceOptionValueRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpInstanceOptionValueRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpInstanceOptionValueRelImpl.setCPDefinitionOptionRelId(
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionRelId"));
+		cpInstanceOptionValueRelImpl.setCPDefinitionOptionValueRelId(
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionValueRelId"));
+		cpInstanceOptionValueRelImpl.setCPInstanceId(
+			this.<Long>getColumnOriginalValue("CPInstanceId"));
+
+		return cpInstanceOptionValueRelImpl;
+	}
+
+	@Override
 	public int compareTo(CPInstanceOptionValueRel cpInstanceOptionValueRel) {
 		long primaryKey = cpInstanceOptionValueRel.getPrimaryKey();
 

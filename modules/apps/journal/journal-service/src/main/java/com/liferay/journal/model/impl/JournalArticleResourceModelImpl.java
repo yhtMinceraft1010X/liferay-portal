@@ -544,6 +544,29 @@ public class JournalArticleResourceModelImpl
 	}
 
 	@Override
+	public JournalArticleResource cloneWithOriginalValues() {
+		JournalArticleResourceImpl journalArticleResourceImpl =
+			new JournalArticleResourceImpl();
+
+		journalArticleResourceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		journalArticleResourceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		journalArticleResourceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		journalArticleResourceImpl.setResourcePrimKey(
+			this.<Long>getColumnOriginalValue("resourcePrimKey"));
+		journalArticleResourceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		journalArticleResourceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		journalArticleResourceImpl.setArticleId(
+			this.<String>getColumnOriginalValue("articleId"));
+
+		return journalArticleResourceImpl;
+	}
+
+	@Override
 	public int compareTo(JournalArticleResource journalArticleResource) {
 		long primaryKey = journalArticleResource.getPrimaryKey();
 

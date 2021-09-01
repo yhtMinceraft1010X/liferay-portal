@@ -624,6 +624,34 @@ public class HtmlPreviewEntryModelImpl
 	}
 
 	@Override
+	public HtmlPreviewEntry cloneWithOriginalValues() {
+		HtmlPreviewEntryImpl htmlPreviewEntryImpl = new HtmlPreviewEntryImpl();
+
+		htmlPreviewEntryImpl.setHtmlPreviewEntryId(
+			this.<Long>getColumnOriginalValue("htmlPreviewEntryId"));
+		htmlPreviewEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		htmlPreviewEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		htmlPreviewEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		htmlPreviewEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		htmlPreviewEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		htmlPreviewEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		htmlPreviewEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		htmlPreviewEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		htmlPreviewEntryImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+
+		return htmlPreviewEntryImpl;
+	}
+
+	@Override
 	public int compareTo(HtmlPreviewEntry htmlPreviewEntry) {
 		long primaryKey = htmlPreviewEntry.getPrimaryKey();
 

@@ -409,6 +409,22 @@ public class DLStorageQuotaModelImpl
 	}
 
 	@Override
+	public DLStorageQuota cloneWithOriginalValues() {
+		DLStorageQuotaImpl dlStorageQuotaImpl = new DLStorageQuotaImpl();
+
+		dlStorageQuotaImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlStorageQuotaImpl.setDlStorageQuotaId(
+			this.<Long>getColumnOriginalValue("dlStorageQuotaId"));
+		dlStorageQuotaImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlStorageQuotaImpl.setStorageSize(
+			this.<Long>getColumnOriginalValue("storageSize"));
+
+		return dlStorageQuotaImpl;
+	}
+
+	@Override
 	public int compareTo(DLStorageQuota dlStorageQuota) {
 		long primaryKey = dlStorageQuota.getPrimaryKey();
 

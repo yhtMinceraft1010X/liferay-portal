@@ -706,6 +706,35 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	@Override
+	public CommerceInventoryAudit cloneWithOriginalValues() {
+		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
+			new CommerceInventoryAuditImpl();
+
+		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
+			this.<Long>getColumnOriginalValue("CIAuditId"));
+		commerceInventoryAuditImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceInventoryAuditImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceInventoryAuditImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceInventoryAuditImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceInventoryAuditImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceInventoryAuditImpl.setSku(
+			this.<String>getColumnOriginalValue("sku"));
+		commerceInventoryAuditImpl.setLogType(
+			this.<String>getColumnOriginalValue("logType"));
+		commerceInventoryAuditImpl.setLogTypeSettings(
+			this.<String>getColumnOriginalValue("logTypeSettings"));
+		commerceInventoryAuditImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+
+		return commerceInventoryAuditImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceInventoryAudit commerceInventoryAudit) {
 		int value = 0;
 

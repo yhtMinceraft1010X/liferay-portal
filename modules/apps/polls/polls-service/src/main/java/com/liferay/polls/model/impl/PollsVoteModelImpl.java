@@ -773,6 +773,36 @@ public class PollsVoteModelImpl
 	}
 
 	@Override
+	public PollsVote cloneWithOriginalValues() {
+		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
+
+		pollsVoteImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		pollsVoteImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		pollsVoteImpl.setVoteId(this.<Long>getColumnOriginalValue("voteId"));
+		pollsVoteImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		pollsVoteImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		pollsVoteImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		pollsVoteImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		pollsVoteImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		pollsVoteImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		pollsVoteImpl.setQuestionId(
+			this.<Long>getColumnOriginalValue("questionId"));
+		pollsVoteImpl.setChoiceId(
+			this.<Long>getColumnOriginalValue("choiceId"));
+		pollsVoteImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		pollsVoteImpl.setVoteDate(
+			this.<Date>getColumnOriginalValue("voteDate"));
+
+		return pollsVoteImpl;
+	}
+
+	@Override
 	public int compareTo(PollsVote pollsVote) {
 		long primaryKey = pollsVote.getPrimaryKey();
 

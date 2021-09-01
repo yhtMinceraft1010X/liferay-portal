@@ -1346,6 +1346,54 @@ public class MBThreadModelImpl
 	}
 
 	@Override
+	public MBThread cloneWithOriginalValues() {
+		MBThreadImpl mbThreadImpl = new MBThreadImpl();
+
+		mbThreadImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mbThreadImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		mbThreadImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mbThreadImpl.setThreadId(this.<Long>getColumnOriginalValue("threadId"));
+		mbThreadImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		mbThreadImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mbThreadImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mbThreadImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mbThreadImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mbThreadImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mbThreadImpl.setCategoryId(
+			this.<Long>getColumnOriginalValue("categoryId"));
+		mbThreadImpl.setRootMessageId(
+			this.<Long>getColumnOriginalValue("rootMessageId"));
+		mbThreadImpl.setRootMessageUserId(
+			this.<Long>getColumnOriginalValue("rootMessageUserId"));
+		mbThreadImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		mbThreadImpl.setLastPostByUserId(
+			this.<Long>getColumnOriginalValue("lastPostByUserId"));
+		mbThreadImpl.setLastPostDate(
+			this.<Date>getColumnOriginalValue("lastPostDate"));
+		mbThreadImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		mbThreadImpl.setQuestion(
+			this.<Boolean>getColumnOriginalValue("question"));
+		mbThreadImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		mbThreadImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+		mbThreadImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		mbThreadImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		mbThreadImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return mbThreadImpl;
+	}
+
+	@Override
 	public int compareTo(MBThread mbThread) {
 		int value = 0;
 

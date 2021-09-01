@@ -676,6 +676,36 @@ public class MBThreadFlagModelImpl
 	}
 
 	@Override
+	public MBThreadFlag cloneWithOriginalValues() {
+		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
+
+		mbThreadFlagImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mbThreadFlagImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		mbThreadFlagImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mbThreadFlagImpl.setThreadFlagId(
+			this.<Long>getColumnOriginalValue("threadFlagId"));
+		mbThreadFlagImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		mbThreadFlagImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mbThreadFlagImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mbThreadFlagImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mbThreadFlagImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mbThreadFlagImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mbThreadFlagImpl.setThreadId(
+			this.<Long>getColumnOriginalValue("threadId"));
+		mbThreadFlagImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mbThreadFlagImpl;
+	}
+
+	@Override
 	public int compareTo(MBThreadFlag mbThreadFlag) {
 		long primaryKey = mbThreadFlag.getPrimaryKey();
 

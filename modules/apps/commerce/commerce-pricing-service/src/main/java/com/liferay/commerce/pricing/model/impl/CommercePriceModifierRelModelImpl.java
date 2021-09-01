@@ -704,6 +704,33 @@ public class CommercePriceModifierRelModelImpl
 	}
 
 	@Override
+	public CommercePriceModifierRel cloneWithOriginalValues() {
+		CommercePriceModifierRelImpl commercePriceModifierRelImpl =
+			new CommercePriceModifierRelImpl();
+
+		commercePriceModifierRelImpl.setCommercePriceModifierRelId(
+			this.<Long>getColumnOriginalValue("commercePriceModifierRelId"));
+		commercePriceModifierRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceModifierRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceModifierRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceModifierRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceModifierRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceModifierRelImpl.setCommercePriceModifierId(
+			this.<Long>getColumnOriginalValue("commercePriceModifierId"));
+		commercePriceModifierRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commercePriceModifierRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return commercePriceModifierRelImpl;
+	}
+
+	@Override
 	public int compareTo(CommercePriceModifierRel commercePriceModifierRel) {
 		int value = 0;
 

@@ -650,6 +650,34 @@ public class ChangesetEntryModelImpl
 	}
 
 	@Override
+	public ChangesetEntry cloneWithOriginalValues() {
+		ChangesetEntryImpl changesetEntryImpl = new ChangesetEntryImpl();
+
+		changesetEntryImpl.setChangesetEntryId(
+			this.<Long>getColumnOriginalValue("changesetEntryId"));
+		changesetEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		changesetEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		changesetEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		changesetEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		changesetEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		changesetEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		changesetEntryImpl.setChangesetCollectionId(
+			this.<Long>getColumnOriginalValue("changesetCollectionId"));
+		changesetEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		changesetEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return changesetEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ChangesetEntry changesetEntry) {
 		long primaryKey = changesetEntry.getPrimaryKey();
 

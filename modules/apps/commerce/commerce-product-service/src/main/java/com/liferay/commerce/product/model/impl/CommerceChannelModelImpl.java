@@ -816,6 +816,42 @@ public class CommerceChannelModelImpl
 	}
 
 	@Override
+	public CommerceChannel cloneWithOriginalValues() {
+		CommerceChannelImpl commerceChannelImpl = new CommerceChannelImpl();
+
+		commerceChannelImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceChannelImpl.setCommerceChannelId(
+			this.<Long>getColumnOriginalValue("commerceChannelId"));
+		commerceChannelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceChannelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceChannelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceChannelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceChannelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceChannelImpl.setSiteGroupId(
+			this.<Long>getColumnOriginalValue("siteGroupId"));
+		commerceChannelImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceChannelImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		commerceChannelImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		commerceChannelImpl.setCommerceCurrencyCode(
+			this.<String>getColumnOriginalValue("commerceCurrencyCode"));
+		commerceChannelImpl.setPriceDisplayType(
+			this.<String>getColumnOriginalValue("priceDisplayType"));
+		commerceChannelImpl.setDiscountsTargetNetPrice(
+			this.<Boolean>getColumnOriginalValue("discountsTargetNetPrice"));
+
+		return commerceChannelImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceChannel commerceChannel) {
 		int value = 0;
 

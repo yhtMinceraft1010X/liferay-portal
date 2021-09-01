@@ -600,6 +600,35 @@ public class CTEntryModelImpl
 	}
 
 	@Override
+	public CTEntry cloneWithOriginalValues() {
+		CTEntryImpl ctEntryImpl = new CTEntryImpl();
+
+		ctEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctEntryImpl.setCtEntryId(
+			this.<Long>getColumnOriginalValue("ctEntryId"));
+		ctEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ctEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ctEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ctEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctEntryImpl.setModelClassNameId(
+			this.<Long>getColumnOriginalValue("modelClassNameId"));
+		ctEntryImpl.setModelClassPK(
+			this.<Long>getColumnOriginalValue("modelClassPK"));
+		ctEntryImpl.setModelMvccVersion(
+			this.<Long>getColumnOriginalValue("modelMvccVersion"));
+		ctEntryImpl.setChangeType(
+			this.<Integer>getColumnOriginalValue("changeType"));
+
+		return ctEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CTEntry ctEntry) {
 		long primaryKey = ctEntry.getPrimaryKey();
 

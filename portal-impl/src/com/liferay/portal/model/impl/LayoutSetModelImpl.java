@@ -841,6 +841,42 @@ public class LayoutSetModelImpl
 	}
 
 	@Override
+	public LayoutSet cloneWithOriginalValues() {
+		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
+
+		layoutSetImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutSetImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutSetImpl.setLayoutSetId(
+			this.<Long>getColumnOriginalValue("layoutSetId"));
+		layoutSetImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		layoutSetImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutSetImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutSetImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutSetImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		layoutSetImpl.setLogoId(this.<Long>getColumnOriginalValue("logoId"));
+		layoutSetImpl.setThemeId(
+			this.<String>getColumnOriginalValue("themeId"));
+		layoutSetImpl.setColorSchemeId(
+			this.<String>getColumnOriginalValue("colorSchemeId"));
+		layoutSetImpl.setCss(this.<String>getColumnOriginalValue("css"));
+		layoutSetImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		layoutSetImpl.setLayoutSetPrototypeUuid(
+			this.<String>getColumnOriginalValue("layoutSetPrototypeUuid"));
+		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(
+			this.<Boolean>getColumnOriginalValue(
+				"layoutSetPrototypeLinkEnabled"));
+
+		return layoutSetImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutSet layoutSet) {
 		long primaryKey = layoutSet.getPrimaryKey();
 

@@ -575,6 +575,33 @@ public class CTAutoResolutionInfoModelImpl
 	}
 
 	@Override
+	public CTAutoResolutionInfo cloneWithOriginalValues() {
+		CTAutoResolutionInfoImpl ctAutoResolutionInfoImpl =
+			new CTAutoResolutionInfoImpl();
+
+		ctAutoResolutionInfoImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctAutoResolutionInfoImpl.setCtAutoResolutionInfoId(
+			this.<Long>getColumnOriginalValue("ctAutoResolutionInfoId"));
+		ctAutoResolutionInfoImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctAutoResolutionInfoImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ctAutoResolutionInfoImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctAutoResolutionInfoImpl.setModelClassNameId(
+			this.<Long>getColumnOriginalValue("modelClassNameId"));
+		ctAutoResolutionInfoImpl.setSourceModelClassPK(
+			this.<Long>getColumnOriginalValue("sourceModelClassPK"));
+		ctAutoResolutionInfoImpl.setTargetModelClassPK(
+			this.<Long>getColumnOriginalValue("targetModelClassPK"));
+		ctAutoResolutionInfoImpl.setConflictIdentifier(
+			this.<String>getColumnOriginalValue("conflictIdentifier"));
+
+		return ctAutoResolutionInfoImpl;
+	}
+
+	@Override
 	public int compareTo(CTAutoResolutionInfo ctAutoResolutionInfo) {
 		int value = 0;
 

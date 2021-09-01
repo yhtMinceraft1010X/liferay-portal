@@ -609,6 +609,33 @@ public class DLFileEntryMetadataModelImpl
 	}
 
 	@Override
+	public DLFileEntryMetadata cloneWithOriginalValues() {
+		DLFileEntryMetadataImpl dlFileEntryMetadataImpl =
+			new DLFileEntryMetadataImpl();
+
+		dlFileEntryMetadataImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileEntryMetadataImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFileEntryMetadataImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		dlFileEntryMetadataImpl.setFileEntryMetadataId(
+			this.<Long>getColumnOriginalValue("fileEntryMetadataId"));
+		dlFileEntryMetadataImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileEntryMetadataImpl.setDDMStorageId(
+			this.<Long>getColumnOriginalValue("DDMStorageId"));
+		dlFileEntryMetadataImpl.setDDMStructureId(
+			this.<Long>getColumnOriginalValue("DDMStructureId"));
+		dlFileEntryMetadataImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		dlFileEntryMetadataImpl.setFileVersionId(
+			this.<Long>getColumnOriginalValue("fileVersionId"));
+
+		return dlFileEntryMetadataImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileEntryMetadata dlFileEntryMetadata) {
 		long primaryKey = dlFileEntryMetadata.getPrimaryKey();
 

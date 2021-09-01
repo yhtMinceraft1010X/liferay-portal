@@ -756,6 +756,40 @@ public class MBDiscussionModelImpl
 	}
 
 	@Override
+	public MBDiscussion cloneWithOriginalValues() {
+		MBDiscussionImpl mbDiscussionImpl = new MBDiscussionImpl();
+
+		mbDiscussionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mbDiscussionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		mbDiscussionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mbDiscussionImpl.setDiscussionId(
+			this.<Long>getColumnOriginalValue("discussionId"));
+		mbDiscussionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		mbDiscussionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mbDiscussionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mbDiscussionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mbDiscussionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mbDiscussionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mbDiscussionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		mbDiscussionImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		mbDiscussionImpl.setThreadId(
+			this.<Long>getColumnOriginalValue("threadId"));
+		mbDiscussionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mbDiscussionImpl;
+	}
+
+	@Override
 	public int compareTo(MBDiscussion mbDiscussion) {
 		long primaryKey = mbDiscussion.getPrimaryKey();
 

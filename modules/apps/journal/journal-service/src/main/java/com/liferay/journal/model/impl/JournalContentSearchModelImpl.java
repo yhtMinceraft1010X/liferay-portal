@@ -626,6 +626,33 @@ public class JournalContentSearchModelImpl
 	}
 
 	@Override
+	public JournalContentSearch cloneWithOriginalValues() {
+		JournalContentSearchImpl journalContentSearchImpl =
+			new JournalContentSearchImpl();
+
+		journalContentSearchImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		journalContentSearchImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		journalContentSearchImpl.setContentSearchId(
+			this.<Long>getColumnOriginalValue("contentSearchId"));
+		journalContentSearchImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		journalContentSearchImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		journalContentSearchImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		journalContentSearchImpl.setLayoutId(
+			this.<Long>getColumnOriginalValue("layoutId"));
+		journalContentSearchImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		journalContentSearchImpl.setArticleId(
+			this.<String>getColumnOriginalValue("articleId"));
+
+		return journalContentSearchImpl;
+	}
+
+	@Override
 	public int compareTo(JournalContentSearch journalContentSearch) {
 		long primaryKey = journalContentSearch.getPrimaryKey();
 

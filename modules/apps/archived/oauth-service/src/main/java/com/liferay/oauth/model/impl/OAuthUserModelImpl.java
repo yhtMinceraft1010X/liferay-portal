@@ -657,6 +657,31 @@ public class OAuthUserModelImpl
 	}
 
 	@Override
+	public OAuthUser cloneWithOriginalValues() {
+		OAuthUserImpl oAuthUserImpl = new OAuthUserImpl();
+
+		oAuthUserImpl.setOAuthUserId(
+			this.<Long>getColumnOriginalValue("oAuthUserId"));
+		oAuthUserImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuthUserImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		oAuthUserImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		oAuthUserImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		oAuthUserImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		oAuthUserImpl.setOAuthApplicationId(
+			this.<Long>getColumnOriginalValue("oAuthApplicationId"));
+		oAuthUserImpl.setAccessToken(
+			this.<String>getColumnOriginalValue("accessToken"));
+		oAuthUserImpl.setAccessSecret(
+			this.<String>getColumnOriginalValue("accessSecret"));
+
+		return oAuthUserImpl;
+	}
+
+	@Override
 	public int compareTo(OAuthUser oAuthUser) {
 		long primaryKey = oAuthUser.getPrimaryKey();
 

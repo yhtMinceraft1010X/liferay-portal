@@ -533,6 +533,23 @@ public class PortletModelImpl
 	}
 
 	@Override
+	public Portlet cloneWithOriginalValues() {
+		PortletImpl portletImpl = new PortletImpl();
+
+		portletImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		portletImpl.setId(this.<Long>getColumnOriginalValue("id_"));
+		portletImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		portletImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		portletImpl.setRoles(this.<String>getColumnOriginalValue("roles"));
+		portletImpl.setActive(this.<Boolean>getColumnOriginalValue("active_"));
+
+		return portletImpl;
+	}
+
+	@Override
 	public int compareTo(Portlet portlet) {
 		long primaryKey = portlet.getPrimaryKey();
 

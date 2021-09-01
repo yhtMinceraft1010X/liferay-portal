@@ -833,6 +833,37 @@ public class WebsiteModelImpl
 	}
 
 	@Override
+	public Website cloneWithOriginalValues() {
+		WebsiteImpl websiteImpl = new WebsiteImpl();
+
+		websiteImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		websiteImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		websiteImpl.setWebsiteId(
+			this.<Long>getColumnOriginalValue("websiteId"));
+		websiteImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		websiteImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		websiteImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		websiteImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		websiteImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		websiteImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		websiteImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		websiteImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+		websiteImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		websiteImpl.setPrimary(
+			this.<Boolean>getColumnOriginalValue("primary_"));
+		websiteImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return websiteImpl;
+	}
+
+	@Override
 	public int compareTo(Website website) {
 		int value = 0;
 

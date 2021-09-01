@@ -621,6 +621,33 @@ public class SocialActivityAchievementModelImpl
 	}
 
 	@Override
+	public SocialActivityAchievement cloneWithOriginalValues() {
+		SocialActivityAchievementImpl socialActivityAchievementImpl =
+			new SocialActivityAchievementImpl();
+
+		socialActivityAchievementImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivityAchievementImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivityAchievementImpl.setActivityAchievementId(
+			this.<Long>getColumnOriginalValue("activityAchievementId"));
+		socialActivityAchievementImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivityAchievementImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivityAchievementImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		socialActivityAchievementImpl.setCreateDate(
+			this.<Long>getColumnOriginalValue("createDate"));
+		socialActivityAchievementImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		socialActivityAchievementImpl.setFirstInGroup(
+			this.<Boolean>getColumnOriginalValue("firstInGroup"));
+
+		return socialActivityAchievementImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivityAchievement socialActivityAchievement) {
 		long primaryKey = socialActivityAchievement.getPrimaryKey();
 

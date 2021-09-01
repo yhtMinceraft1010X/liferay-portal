@@ -630,6 +630,37 @@ public class CommerceOrderPaymentModelImpl
 	}
 
 	@Override
+	public CommerceOrderPayment cloneWithOriginalValues() {
+		CommerceOrderPaymentImpl commerceOrderPaymentImpl =
+			new CommerceOrderPaymentImpl();
+
+		commerceOrderPaymentImpl.setCommerceOrderPaymentId(
+			this.<Long>getColumnOriginalValue("commerceOrderPaymentId"));
+		commerceOrderPaymentImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceOrderPaymentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceOrderPaymentImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceOrderPaymentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceOrderPaymentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceOrderPaymentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceOrderPaymentImpl.setCommerceOrderId(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
+		commerceOrderPaymentImpl.setCommercePaymentMethodKey(
+			this.<String>getColumnOriginalValue("commercePaymentMethodKey"));
+		commerceOrderPaymentImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		commerceOrderPaymentImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return commerceOrderPaymentImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceOrderPayment commerceOrderPayment) {
 		int value = 0;
 

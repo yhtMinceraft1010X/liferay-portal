@@ -896,6 +896,53 @@ public class KaleoTaskFormInstanceModelImpl
 	}
 
 	@Override
+	public KaleoTaskFormInstance cloneWithOriginalValues() {
+		KaleoTaskFormInstanceImpl kaleoTaskFormInstanceImpl =
+			new KaleoTaskFormInstanceImpl();
+
+		kaleoTaskFormInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskFormInstanceImpl.setKaleoTaskFormInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoTaskFormInstanceId"));
+		kaleoTaskFormInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTaskFormInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTaskFormInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTaskFormInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTaskFormInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTaskFormInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTaskFormInstanceImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTaskFormInstanceImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTaskFormInstanceImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoTaskFormInstanceImpl.setKaleoTaskId(
+			this.<Long>getColumnOriginalValue("kaleoTaskId"));
+		kaleoTaskFormInstanceImpl.setKaleoTaskInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTaskInstanceTokenId"));
+		kaleoTaskFormInstanceImpl.setKaleoTaskFormId(
+			this.<Long>getColumnOriginalValue("kaleoTaskFormId"));
+		kaleoTaskFormInstanceImpl.setFormValues(
+			this.<String>getColumnOriginalValue("formValues"));
+		kaleoTaskFormInstanceImpl.setFormValueEntryGroupId(
+			this.<Long>getColumnOriginalValue("formValueEntryGroupId"));
+		kaleoTaskFormInstanceImpl.setFormValueEntryId(
+			this.<Long>getColumnOriginalValue("formValueEntryId"));
+		kaleoTaskFormInstanceImpl.setFormValueEntryUuid(
+			this.<String>getColumnOriginalValue("formValueEntryUuid"));
+		kaleoTaskFormInstanceImpl.setMetadata(
+			this.<String>getColumnOriginalValue("metadata"));
+
+		return kaleoTaskFormInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTaskFormInstance kaleoTaskFormInstance) {
 		int value = 0;
 

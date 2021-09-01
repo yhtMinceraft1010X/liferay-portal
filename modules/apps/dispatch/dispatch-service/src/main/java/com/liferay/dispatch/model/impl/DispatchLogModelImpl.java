@@ -709,6 +709,38 @@ public class DispatchLogModelImpl
 	}
 
 	@Override
+	public DispatchLog cloneWithOriginalValues() {
+		DispatchLogImpl dispatchLogImpl = new DispatchLogImpl();
+
+		dispatchLogImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dispatchLogImpl.setDispatchLogId(
+			this.<Long>getColumnOriginalValue("dispatchLogId"));
+		dispatchLogImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dispatchLogImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		dispatchLogImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dispatchLogImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dispatchLogImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dispatchLogImpl.setDispatchTriggerId(
+			this.<Long>getColumnOriginalValue("dispatchTriggerId"));
+		dispatchLogImpl.setEndDate(
+			this.<Date>getColumnOriginalValue("endDate"));
+		dispatchLogImpl.setError(this.<String>getColumnOriginalValue("error"));
+		dispatchLogImpl.setOutput(
+			this.<String>getColumnOriginalValue("output_"));
+		dispatchLogImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		dispatchLogImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return dispatchLogImpl;
+	}
+
+	@Override
 	public int compareTo(DispatchLog dispatchLog) {
 		int value = 0;
 

@@ -603,6 +603,32 @@ public class AssetLinkModelImpl
 	}
 
 	@Override
+	public AssetLink cloneWithOriginalValues() {
+		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
+
+		assetLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetLinkImpl.setLinkId(this.<Long>getColumnOriginalValue("linkId"));
+		assetLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetLinkImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		assetLinkImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetLinkImpl.setEntryId1(
+			this.<Long>getColumnOriginalValue("entryId1"));
+		assetLinkImpl.setEntryId2(
+			this.<Long>getColumnOriginalValue("entryId2"));
+		assetLinkImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
+		assetLinkImpl.setWeight(this.<Integer>getColumnOriginalValue("weight"));
+
+		return assetLinkImpl;
+	}
+
+	@Override
 	public int compareTo(AssetLink assetLink) {
 		int value = 0;
 

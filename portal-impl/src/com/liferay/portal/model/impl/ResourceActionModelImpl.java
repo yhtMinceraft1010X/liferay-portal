@@ -462,6 +462,23 @@ public class ResourceActionModelImpl
 	}
 
 	@Override
+	public ResourceAction cloneWithOriginalValues() {
+		ResourceActionImpl resourceActionImpl = new ResourceActionImpl();
+
+		resourceActionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		resourceActionImpl.setResourceActionId(
+			this.<Long>getColumnOriginalValue("resourceActionId"));
+		resourceActionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		resourceActionImpl.setActionId(
+			this.<String>getColumnOriginalValue("actionId"));
+		resourceActionImpl.setBitwiseValue(
+			this.<Long>getColumnOriginalValue("bitwiseValue"));
+
+		return resourceActionImpl;
+	}
+
+	@Override
 	public int compareTo(ResourceAction resourceAction) {
 		int value = 0;
 

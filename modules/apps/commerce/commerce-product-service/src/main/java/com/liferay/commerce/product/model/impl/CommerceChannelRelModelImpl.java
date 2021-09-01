@@ -691,6 +691,33 @@ public class CommerceChannelRelModelImpl
 	}
 
 	@Override
+	public CommerceChannelRel cloneWithOriginalValues() {
+		CommerceChannelRelImpl commerceChannelRelImpl =
+			new CommerceChannelRelImpl();
+
+		commerceChannelRelImpl.setCommerceChannelRelId(
+			this.<Long>getColumnOriginalValue("commerceChannelRelId"));
+		commerceChannelRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceChannelRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceChannelRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceChannelRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceChannelRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceChannelRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceChannelRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceChannelRelImpl.setCommerceChannelId(
+			this.<Long>getColumnOriginalValue("commerceChannelId"));
+
+		return commerceChannelRelImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceChannelRel commerceChannelRel) {
 		int value = 0;
 

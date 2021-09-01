@@ -795,6 +795,41 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	}
 
 	@Override
+	public CommerceTaxFixedRateAddressRel cloneWithOriginalValues() {
+		CommerceTaxFixedRateAddressRelImpl commerceTaxFixedRateAddressRelImpl =
+			new CommerceTaxFixedRateAddressRelImpl();
+
+		commerceTaxFixedRateAddressRelImpl.setCommerceTaxFixedRateAddressRelId(
+			this.<Long>getColumnOriginalValue("CTaxFixedRateAddressRelId"));
+		commerceTaxFixedRateAddressRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceTaxFixedRateAddressRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceTaxFixedRateAddressRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceTaxFixedRateAddressRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceTaxFixedRateAddressRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceTaxFixedRateAddressRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceTaxFixedRateAddressRelImpl.setCommerceTaxMethodId(
+			this.<Long>getColumnOriginalValue("commerceTaxMethodId"));
+		commerceTaxFixedRateAddressRelImpl.setCPTaxCategoryId(
+			this.<Long>getColumnOriginalValue("CPTaxCategoryId"));
+		commerceTaxFixedRateAddressRelImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		commerceTaxFixedRateAddressRelImpl.setRegionId(
+			this.<Long>getColumnOriginalValue("regionId"));
+		commerceTaxFixedRateAddressRelImpl.setZip(
+			this.<String>getColumnOriginalValue("zip"));
+		commerceTaxFixedRateAddressRelImpl.setRate(
+			this.<Double>getColumnOriginalValue("rate"));
+
+		return commerceTaxFixedRateAddressRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
 

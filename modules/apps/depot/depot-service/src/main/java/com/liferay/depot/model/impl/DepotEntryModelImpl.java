@@ -643,6 +643,29 @@ public class DepotEntryModelImpl
 	}
 
 	@Override
+	public DepotEntry cloneWithOriginalValues() {
+		DepotEntryImpl depotEntryImpl = new DepotEntryImpl();
+
+		depotEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		depotEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		depotEntryImpl.setDepotEntryId(
+			this.<Long>getColumnOriginalValue("depotEntryId"));
+		depotEntryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		depotEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		depotEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		depotEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		depotEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		depotEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return depotEntryImpl;
+	}
+
+	@Override
 	public int compareTo(DepotEntry depotEntry) {
 		long primaryKey = depotEntry.getPrimaryKey();
 

@@ -707,6 +707,42 @@ public class KaleoConditionModelImpl
 	}
 
 	@Override
+	public KaleoCondition cloneWithOriginalValues() {
+		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
+
+		kaleoConditionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoConditionImpl.setKaleoConditionId(
+			this.<Long>getColumnOriginalValue("kaleoConditionId"));
+		kaleoConditionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoConditionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoConditionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoConditionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoConditionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoConditionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoConditionImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoConditionImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoConditionImpl.setKaleoNodeId(
+			this.<Long>getColumnOriginalValue("kaleoNodeId"));
+		kaleoConditionImpl.setScript(
+			this.<String>getColumnOriginalValue("script"));
+		kaleoConditionImpl.setScriptLanguage(
+			this.<String>getColumnOriginalValue("scriptLanguage"));
+		kaleoConditionImpl.setScriptRequiredContexts(
+			this.<String>getColumnOriginalValue("scriptRequiredContexts"));
+
+		return kaleoConditionImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoCondition kaleoCondition) {
 		int value = 0;
 

@@ -511,6 +511,27 @@ public class DepotAppCustomizationModelImpl
 	}
 
 	@Override
+	public DepotAppCustomization cloneWithOriginalValues() {
+		DepotAppCustomizationImpl depotAppCustomizationImpl =
+			new DepotAppCustomizationImpl();
+
+		depotAppCustomizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		depotAppCustomizationImpl.setDepotAppCustomizationId(
+			this.<Long>getColumnOriginalValue("depotAppCustomizationId"));
+		depotAppCustomizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		depotAppCustomizationImpl.setDepotEntryId(
+			this.<Long>getColumnOriginalValue("depotEntryId"));
+		depotAppCustomizationImpl.setEnabled(
+			this.<Boolean>getColumnOriginalValue("enabled"));
+		depotAppCustomizationImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+
+		return depotAppCustomizationImpl;
+	}
+
+	@Override
 	public int compareTo(DepotAppCustomization depotAppCustomization) {
 		long primaryKey = depotAppCustomization.getPrimaryKey();
 

@@ -618,6 +618,30 @@ public class ObjectLayoutBoxModelImpl
 	}
 
 	@Override
+	public ObjectLayoutBox cloneWithOriginalValues() {
+		ObjectLayoutBoxImpl objectLayoutBoxImpl = new ObjectLayoutBoxImpl();
+
+		objectLayoutBoxImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectLayoutBoxImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		objectLayoutBoxImpl.setObjectLayoutBoxId(
+			this.<Long>getColumnOriginalValue("objectLayoutBoxId"));
+		objectLayoutBoxImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectLayoutBoxImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		objectLayoutBoxImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectLayoutBoxImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectLayoutBoxImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return objectLayoutBoxImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectLayoutBox objectLayoutBox) {
 		long primaryKey = objectLayoutBox.getPrimaryKey();
 

@@ -1167,6 +1167,44 @@ public class WikiNodeModelImpl
 	}
 
 	@Override
+	public WikiNode cloneWithOriginalValues() {
+		WikiNodeImpl wikiNodeImpl = new WikiNodeImpl();
+
+		wikiNodeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		wikiNodeImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		wikiNodeImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		wikiNodeImpl.setNodeId(this.<Long>getColumnOriginalValue("nodeId"));
+		wikiNodeImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		wikiNodeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		wikiNodeImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		wikiNodeImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		wikiNodeImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		wikiNodeImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		wikiNodeImpl.setName(this.<String>getColumnOriginalValue("name"));
+		wikiNodeImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		wikiNodeImpl.setLastPostDate(
+			this.<Date>getColumnOriginalValue("lastPostDate"));
+		wikiNodeImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		wikiNodeImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+		wikiNodeImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		wikiNodeImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		wikiNodeImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return wikiNodeImpl;
+	}
+
+	@Override
 	public int compareTo(WikiNode wikiNode) {
 		int value = 0;
 

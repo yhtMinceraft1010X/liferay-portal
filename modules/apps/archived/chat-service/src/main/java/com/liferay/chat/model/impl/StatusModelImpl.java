@@ -550,6 +550,25 @@ public class StatusModelImpl
 	}
 
 	@Override
+	public Status cloneWithOriginalValues() {
+		StatusImpl statusImpl = new StatusImpl();
+
+		statusImpl.setStatusId(this.<Long>getColumnOriginalValue("statusId"));
+		statusImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		statusImpl.setModifiedDate(
+			this.<Long>getColumnOriginalValue("modifiedDate"));
+		statusImpl.setOnline(this.<Boolean>getColumnOriginalValue("online_"));
+		statusImpl.setAwake(this.<Boolean>getColumnOriginalValue("awake"));
+		statusImpl.setActivePanelIds(
+			this.<String>getColumnOriginalValue("activePanelIds"));
+		statusImpl.setMessage(this.<String>getColumnOriginalValue("message"));
+		statusImpl.setPlaySound(
+			this.<Boolean>getColumnOriginalValue("playSound"));
+
+		return statusImpl;
+	}
+
+	@Override
 	public int compareTo(Status status) {
 		long primaryKey = status.getPrimaryKey();
 

@@ -765,6 +765,41 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	}
 
 	@Override
+	public CommerceNotificationTemplateCommerceAccountGroupRel
+		cloneWithOriginalValues() {
+
+		CommerceNotificationTemplateCommerceAccountGroupRelImpl
+			commerceNotificationTemplateCommerceAccountGroupRelImpl =
+				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
+
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.
+			setCommerceNotificationTemplateCommerceAccountGroupRelId(
+				this.<Long>getColumnOriginalValue(
+					"CNTemplateCAccountGroupRelId"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.
+			setCommerceNotificationTemplateId(
+				this.<Long>getColumnOriginalValue(
+					"commerceNotificationTemplateId"));
+		commerceNotificationTemplateCommerceAccountGroupRelImpl.
+			setCommerceAccountGroupId(
+				this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
+
+		return commerceNotificationTemplateCommerceAccountGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceNotificationTemplateCommerceAccountGroupRel
 			commerceNotificationTemplateCommerceAccountGroupRel) {

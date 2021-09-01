@@ -463,6 +463,23 @@ public class DLSyncEventModelImpl
 	}
 
 	@Override
+	public DLSyncEvent cloneWithOriginalValues() {
+		DLSyncEventImpl dlSyncEventImpl = new DLSyncEventImpl();
+
+		dlSyncEventImpl.setSyncEventId(
+			this.<Long>getColumnOriginalValue("syncEventId"));
+		dlSyncEventImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlSyncEventImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		dlSyncEventImpl.setEvent(this.<String>getColumnOriginalValue("event"));
+		dlSyncEventImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		dlSyncEventImpl.setTypePK(this.<Long>getColumnOriginalValue("typePK"));
+
+		return dlSyncEventImpl;
+	}
+
+	@Override
 	public int compareTo(DLSyncEvent dlSyncEvent) {
 		int value = 0;
 

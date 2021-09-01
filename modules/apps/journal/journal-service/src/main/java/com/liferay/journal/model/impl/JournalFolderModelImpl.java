@@ -1252,6 +1252,52 @@ public class JournalFolderModelImpl
 	}
 
 	@Override
+	public JournalFolder cloneWithOriginalValues() {
+		JournalFolderImpl journalFolderImpl = new JournalFolderImpl();
+
+		journalFolderImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		journalFolderImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		journalFolderImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		journalFolderImpl.setFolderId(
+			this.<Long>getColumnOriginalValue("folderId"));
+		journalFolderImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		journalFolderImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		journalFolderImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		journalFolderImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		journalFolderImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		journalFolderImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		journalFolderImpl.setParentFolderId(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
+		journalFolderImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		journalFolderImpl.setName(this.<String>getColumnOriginalValue("name"));
+		journalFolderImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		journalFolderImpl.setRestrictionType(
+			this.<Integer>getColumnOriginalValue("restrictionType"));
+		journalFolderImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		journalFolderImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		journalFolderImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		journalFolderImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		journalFolderImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return journalFolderImpl;
+	}
+
+	@Override
 	public int compareTo(JournalFolder journalFolder) {
 		int value = 0;
 

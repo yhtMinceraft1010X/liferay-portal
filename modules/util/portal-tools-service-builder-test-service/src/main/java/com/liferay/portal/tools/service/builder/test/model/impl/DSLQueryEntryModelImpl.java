@@ -362,6 +362,17 @@ public class DSLQueryEntryModelImpl
 	}
 
 	@Override
+	public DSLQueryEntry cloneWithOriginalValues() {
+		DSLQueryEntryImpl dslQueryEntryImpl = new DSLQueryEntryImpl();
+
+		dslQueryEntryImpl.setDslQueryEntryId(
+			this.<Long>getColumnOriginalValue("dslQueryEntryId"));
+		dslQueryEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+
+		return dslQueryEntryImpl;
+	}
+
+	@Override
 	public int compareTo(DSLQueryEntry dslQueryEntry) {
 		long primaryKey = dslQueryEntry.getPrimaryKey();
 

@@ -1464,6 +1464,78 @@ public class CommerceDiscountModelImpl
 	}
 
 	@Override
+	public CommerceDiscount cloneWithOriginalValues() {
+		CommerceDiscountImpl commerceDiscountImpl = new CommerceDiscountImpl();
+
+		commerceDiscountImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceDiscountImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceDiscountImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+		commerceDiscountImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceDiscountImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceDiscountImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceDiscountImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceDiscountImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceDiscountImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		commerceDiscountImpl.setTarget(
+			this.<String>getColumnOriginalValue("target"));
+		commerceDiscountImpl.setUseCouponCode(
+			this.<Boolean>getColumnOriginalValue("useCouponCode"));
+		commerceDiscountImpl.setCouponCode(
+			this.<String>getColumnOriginalValue("couponCode"));
+		commerceDiscountImpl.setUsePercentage(
+			this.<Boolean>getColumnOriginalValue("usePercentage"));
+		commerceDiscountImpl.setMaximumDiscountAmount(
+			this.<BigDecimal>getColumnOriginalValue("maximumDiscountAmount"));
+		commerceDiscountImpl.setLevel(
+			this.<String>getColumnOriginalValue("levelType"));
+		commerceDiscountImpl.setLevel1(
+			this.<BigDecimal>getColumnOriginalValue("level1"));
+		commerceDiscountImpl.setLevel2(
+			this.<BigDecimal>getColumnOriginalValue("level2"));
+		commerceDiscountImpl.setLevel3(
+			this.<BigDecimal>getColumnOriginalValue("level3"));
+		commerceDiscountImpl.setLevel4(
+			this.<BigDecimal>getColumnOriginalValue("level4"));
+		commerceDiscountImpl.setLimitationType(
+			this.<String>getColumnOriginalValue("limitationType"));
+		commerceDiscountImpl.setLimitationTimes(
+			this.<Integer>getColumnOriginalValue("limitationTimes"));
+		commerceDiscountImpl.setLimitationTimesPerAccount(
+			this.<Integer>getColumnOriginalValue("limitationTimesPerAccount"));
+		commerceDiscountImpl.setNumberOfUse(
+			this.<Integer>getColumnOriginalValue("numberOfUse"));
+		commerceDiscountImpl.setRulesConjunction(
+			this.<Boolean>getColumnOriginalValue("rulesConjunction"));
+		commerceDiscountImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		commerceDiscountImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commerceDiscountImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commerceDiscountImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commerceDiscountImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commerceDiscountImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commerceDiscountImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commerceDiscountImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return commerceDiscountImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceDiscount commerceDiscount) {
 		int value = 0;
 

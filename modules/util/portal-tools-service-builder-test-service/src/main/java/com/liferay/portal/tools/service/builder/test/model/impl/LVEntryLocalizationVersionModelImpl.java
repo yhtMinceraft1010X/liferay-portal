@@ -620,6 +620,31 @@ public class LVEntryLocalizationVersionModelImpl
 	}
 
 	@Override
+	public LVEntryLocalizationVersion cloneWithOriginalValues() {
+		LVEntryLocalizationVersionImpl lvEntryLocalizationVersionImpl =
+			new LVEntryLocalizationVersionImpl();
+
+		lvEntryLocalizationVersionImpl.setLvEntryLocalizationVersionId(
+			this.<Long>getColumnOriginalValue("lvEntryLocalizationVersionId"));
+		lvEntryLocalizationVersionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
+		lvEntryLocalizationVersionImpl.setLvEntryLocalizationId(
+			this.<Long>getColumnOriginalValue("lvEntryLocalizationId"));
+		lvEntryLocalizationVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		lvEntryLocalizationVersionImpl.setLvEntryId(
+			this.<Long>getColumnOriginalValue("lvEntryId"));
+		lvEntryLocalizationVersionImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		lvEntryLocalizationVersionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		lvEntryLocalizationVersionImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+
+		return lvEntryLocalizationVersionImpl;
+	}
+
+	@Override
 	public int compareTo(
 		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 

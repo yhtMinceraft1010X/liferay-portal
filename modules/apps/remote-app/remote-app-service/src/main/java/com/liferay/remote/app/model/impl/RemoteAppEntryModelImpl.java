@@ -800,6 +800,32 @@ public class RemoteAppEntryModelImpl
 	}
 
 	@Override
+	public RemoteAppEntry cloneWithOriginalValues() {
+		RemoteAppEntryImpl remoteAppEntryImpl = new RemoteAppEntryImpl();
+
+		remoteAppEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		remoteAppEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		remoteAppEntryImpl.setRemoteAppEntryId(
+			this.<Long>getColumnOriginalValue("remoteAppEntryId"));
+		remoteAppEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		remoteAppEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		remoteAppEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		remoteAppEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		remoteAppEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		remoteAppEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		remoteAppEntryImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+
+		return remoteAppEntryImpl;
+	}
+
+	@Override
 	public int compareTo(RemoteAppEntry remoteAppEntry) {
 		int value = 0;
 

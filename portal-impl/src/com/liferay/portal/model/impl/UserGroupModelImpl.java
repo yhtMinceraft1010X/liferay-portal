@@ -874,6 +874,39 @@ public class UserGroupModelImpl
 	}
 
 	@Override
+	public UserGroup cloneWithOriginalValues() {
+		UserGroupImpl userGroupImpl = new UserGroupImpl();
+
+		userGroupImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userGroupImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		userGroupImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		userGroupImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		userGroupImpl.setUserGroupId(
+			this.<Long>getColumnOriginalValue("userGroupId"));
+		userGroupImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userGroupImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		userGroupImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		userGroupImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		userGroupImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		userGroupImpl.setParentUserGroupId(
+			this.<Long>getColumnOriginalValue("parentUserGroupId"));
+		userGroupImpl.setName(this.<String>getColumnOriginalValue("name"));
+		userGroupImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		userGroupImpl.setAddedByLDAPImport(
+			this.<Boolean>getColumnOriginalValue("addedByLDAPImport"));
+
+		return userGroupImpl;
+	}
+
+	@Override
 	public int compareTo(UserGroup userGroup) {
 		int value = 0;
 

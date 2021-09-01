@@ -804,6 +804,43 @@ public class WorkflowDefinitionLinkModelImpl
 	}
 
 	@Override
+	public WorkflowDefinitionLink cloneWithOriginalValues() {
+		WorkflowDefinitionLinkImpl workflowDefinitionLinkImpl =
+			new WorkflowDefinitionLinkImpl();
+
+		workflowDefinitionLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		workflowDefinitionLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(
+			this.<Long>getColumnOriginalValue("workflowDefinitionLinkId"));
+		workflowDefinitionLinkImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		workflowDefinitionLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		workflowDefinitionLinkImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		workflowDefinitionLinkImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		workflowDefinitionLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		workflowDefinitionLinkImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		workflowDefinitionLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		workflowDefinitionLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		workflowDefinitionLinkImpl.setTypePK(
+			this.<Long>getColumnOriginalValue("typePK"));
+		workflowDefinitionLinkImpl.setWorkflowDefinitionName(
+			this.<String>getColumnOriginalValue("workflowDefinitionName"));
+		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(
+			this.<Integer>getColumnOriginalValue("workflowDefinitionVersion"));
+
+		return workflowDefinitionLinkImpl;
+	}
+
+	@Override
 	public int compareTo(WorkflowDefinitionLink workflowDefinitionLink) {
 		int value = 0;
 

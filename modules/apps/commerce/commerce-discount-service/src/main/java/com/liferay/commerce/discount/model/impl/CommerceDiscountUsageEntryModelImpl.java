@@ -617,6 +617,33 @@ public class CommerceDiscountUsageEntryModelImpl
 	}
 
 	@Override
+	public CommerceDiscountUsageEntry cloneWithOriginalValues() {
+		CommerceDiscountUsageEntryImpl commerceDiscountUsageEntryImpl =
+			new CommerceDiscountUsageEntryImpl();
+
+		commerceDiscountUsageEntryImpl.setCommerceDiscountUsageEntryId(
+			this.<Long>getColumnOriginalValue("commerceDiscountUsageEntryId"));
+		commerceDiscountUsageEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceDiscountUsageEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceDiscountUsageEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceDiscountUsageEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceDiscountUsageEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceDiscountUsageEntryImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceDiscountUsageEntryImpl.setCommerceOrderId(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
+		commerceDiscountUsageEntryImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+
+		return commerceDiscountUsageEntryImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
 

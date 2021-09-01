@@ -745,6 +745,37 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	@Override
+	public CommerceOrderNote cloneWithOriginalValues() {
+		CommerceOrderNoteImpl commerceOrderNoteImpl =
+			new CommerceOrderNoteImpl();
+
+		commerceOrderNoteImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceOrderNoteImpl.setCommerceOrderNoteId(
+			this.<Long>getColumnOriginalValue("commerceOrderNoteId"));
+		commerceOrderNoteImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceOrderNoteImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceOrderNoteImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceOrderNoteImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceOrderNoteImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceOrderNoteImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceOrderNoteImpl.setCommerceOrderId(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
+		commerceOrderNoteImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		commerceOrderNoteImpl.setRestricted(
+			this.<Boolean>getColumnOriginalValue("restricted"));
+
+		return commerceOrderNoteImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceOrderNote commerceOrderNote) {
 		int value = 0;
 

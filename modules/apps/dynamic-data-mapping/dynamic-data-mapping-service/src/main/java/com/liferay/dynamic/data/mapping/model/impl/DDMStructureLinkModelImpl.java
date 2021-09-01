@@ -533,6 +533,28 @@ public class DDMStructureLinkModelImpl
 	}
 
 	@Override
+	public DDMStructureLink cloneWithOriginalValues() {
+		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
+
+		ddmStructureLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmStructureLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmStructureLinkImpl.setStructureLinkId(
+			this.<Long>getColumnOriginalValue("structureLinkId"));
+		ddmStructureLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmStructureLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmStructureLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ddmStructureLinkImpl.setStructureId(
+			this.<Long>getColumnOriginalValue("structureId"));
+
+		return ddmStructureLinkImpl;
+	}
+
+	@Override
 	public int compareTo(DDMStructureLink ddmStructureLink) {
 		long primaryKey = ddmStructureLink.getPrimaryKey();
 

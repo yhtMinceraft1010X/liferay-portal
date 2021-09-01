@@ -797,6 +797,45 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	@Override
+	public AssetListEntryAssetEntryRel cloneWithOriginalValues() {
+		AssetListEntryAssetEntryRelImpl assetListEntryAssetEntryRelImpl =
+			new AssetListEntryAssetEntryRelImpl();
+
+		assetListEntryAssetEntryRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetListEntryAssetEntryRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetListEntryAssetEntryRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(
+			this.<Long>getColumnOriginalValue("assetListEntryAssetEntryRelId"));
+		assetListEntryAssetEntryRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetListEntryAssetEntryRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetListEntryAssetEntryRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetListEntryAssetEntryRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetListEntryAssetEntryRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetListEntryAssetEntryRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetListEntryAssetEntryRelImpl.setAssetListEntryId(
+			this.<Long>getColumnOriginalValue("assetListEntryId"));
+		assetListEntryAssetEntryRelImpl.setAssetEntryId(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
+		assetListEntryAssetEntryRelImpl.setSegmentsEntryId(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		assetListEntryAssetEntryRelImpl.setPosition(
+			this.<Integer>getColumnOriginalValue("position"));
+		assetListEntryAssetEntryRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetListEntryAssetEntryRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
 

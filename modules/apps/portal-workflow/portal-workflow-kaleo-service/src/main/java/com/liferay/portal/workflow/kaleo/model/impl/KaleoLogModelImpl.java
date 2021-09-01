@@ -1190,6 +1190,73 @@ public class KaleoLogModelImpl
 	}
 
 	@Override
+	public KaleoLog cloneWithOriginalValues() {
+		KaleoLogImpl kaleoLogImpl = new KaleoLogImpl();
+
+		kaleoLogImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoLogImpl.setKaleoLogId(
+			this.<Long>getColumnOriginalValue("kaleoLogId"));
+		kaleoLogImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kaleoLogImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoLogImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kaleoLogImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoLogImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoLogImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoLogImpl.setKaleoClassName(
+			this.<String>getColumnOriginalValue("kaleoClassName"));
+		kaleoLogImpl.setKaleoClassPK(
+			this.<Long>getColumnOriginalValue("kaleoClassPK"));
+		kaleoLogImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoLogImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoLogImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoLogImpl.setKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceTokenId"));
+		kaleoLogImpl.setKaleoTaskInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTaskInstanceTokenId"));
+		kaleoLogImpl.setKaleoNodeName(
+			this.<String>getColumnOriginalValue("kaleoNodeName"));
+		kaleoLogImpl.setTerminalKaleoNode(
+			this.<Boolean>getColumnOriginalValue("terminalKaleoNode"));
+		kaleoLogImpl.setKaleoActionId(
+			this.<Long>getColumnOriginalValue("kaleoActionId"));
+		kaleoLogImpl.setKaleoActionName(
+			this.<String>getColumnOriginalValue("kaleoActionName"));
+		kaleoLogImpl.setKaleoActionDescription(
+			this.<String>getColumnOriginalValue("kaleoActionDescription"));
+		kaleoLogImpl.setPreviousKaleoNodeId(
+			this.<Long>getColumnOriginalValue("previousKaleoNodeId"));
+		kaleoLogImpl.setPreviousKaleoNodeName(
+			this.<String>getColumnOriginalValue("previousKaleoNodeName"));
+		kaleoLogImpl.setPreviousAssigneeClassName(
+			this.<String>getColumnOriginalValue("previousAssigneeClassName"));
+		kaleoLogImpl.setPreviousAssigneeClassPK(
+			this.<Long>getColumnOriginalValue("previousAssigneeClassPK"));
+		kaleoLogImpl.setCurrentAssigneeClassName(
+			this.<String>getColumnOriginalValue("currentAssigneeClassName"));
+		kaleoLogImpl.setCurrentAssigneeClassPK(
+			this.<Long>getColumnOriginalValue("currentAssigneeClassPK"));
+		kaleoLogImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		kaleoLogImpl.setComment(
+			this.<String>getColumnOriginalValue("comment_"));
+		kaleoLogImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		kaleoLogImpl.setEndDate(this.<Date>getColumnOriginalValue("endDate"));
+		kaleoLogImpl.setDuration(this.<Long>getColumnOriginalValue("duration"));
+		kaleoLogImpl.setWorkflowContext(
+			this.<String>getColumnOriginalValue("workflowContext"));
+
+		return kaleoLogImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoLog kaleoLog) {
 		int value = 0;
 

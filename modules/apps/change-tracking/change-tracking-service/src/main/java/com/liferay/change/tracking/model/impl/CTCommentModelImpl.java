@@ -551,6 +551,30 @@ public class CTCommentModelImpl
 	}
 
 	@Override
+	public CTComment cloneWithOriginalValues() {
+		CTCommentImpl ctCommentImpl = new CTCommentImpl();
+
+		ctCommentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctCommentImpl.setCtCommentId(
+			this.<Long>getColumnOriginalValue("ctCommentId"));
+		ctCommentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctCommentImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ctCommentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ctCommentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ctCommentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctCommentImpl.setCtEntryId(
+			this.<Long>getColumnOriginalValue("ctEntryId"));
+		ctCommentImpl.setValue(this.<String>getColumnOriginalValue("value"));
+
+		return ctCommentImpl;
+	}
+
+	@Override
 	public int compareTo(CTComment ctComment) {
 		int value = 0;
 

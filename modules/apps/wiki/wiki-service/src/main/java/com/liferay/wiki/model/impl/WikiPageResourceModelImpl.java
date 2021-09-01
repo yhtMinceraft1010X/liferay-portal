@@ -544,6 +544,28 @@ public class WikiPageResourceModelImpl
 	}
 
 	@Override
+	public WikiPageResource cloneWithOriginalValues() {
+		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
+
+		wikiPageResourceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		wikiPageResourceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		wikiPageResourceImpl.setResourcePrimKey(
+			this.<Long>getColumnOriginalValue("resourcePrimKey"));
+		wikiPageResourceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		wikiPageResourceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		wikiPageResourceImpl.setNodeId(
+			this.<Long>getColumnOriginalValue("nodeId"));
+		wikiPageResourceImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+
+		return wikiPageResourceImpl;
+	}
+
+	@Override
 	public int compareTo(WikiPageResource wikiPageResource) {
 		long primaryKey = wikiPageResource.getPrimaryKey();
 

@@ -1033,6 +1033,39 @@ public class CommerceTaxMethodModelImpl
 	}
 
 	@Override
+	public CommerceTaxMethod cloneWithOriginalValues() {
+		CommerceTaxMethodImpl commerceTaxMethodImpl =
+			new CommerceTaxMethodImpl();
+
+		commerceTaxMethodImpl.setCommerceTaxMethodId(
+			this.<Long>getColumnOriginalValue("commerceTaxMethodId"));
+		commerceTaxMethodImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceTaxMethodImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceTaxMethodImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceTaxMethodImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceTaxMethodImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceTaxMethodImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceTaxMethodImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceTaxMethodImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceTaxMethodImpl.setEngineKey(
+			this.<String>getColumnOriginalValue("engineKey"));
+		commerceTaxMethodImpl.setPercentage(
+			this.<Boolean>getColumnOriginalValue("percentage"));
+		commerceTaxMethodImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return commerceTaxMethodImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceTaxMethod commerceTaxMethod) {
 		int value = 0;
 

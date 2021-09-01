@@ -864,6 +864,53 @@ public class SamlIdpSpConnectionModelImpl
 	}
 
 	@Override
+	public SamlIdpSpConnection cloneWithOriginalValues() {
+		SamlIdpSpConnectionImpl samlIdpSpConnectionImpl =
+			new SamlIdpSpConnectionImpl();
+
+		samlIdpSpConnectionImpl.setSamlIdpSpConnectionId(
+			this.<Long>getColumnOriginalValue("samlIdpSpConnectionId"));
+		samlIdpSpConnectionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlIdpSpConnectionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlIdpSpConnectionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlIdpSpConnectionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlIdpSpConnectionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		samlIdpSpConnectionImpl.setAssertionLifetime(
+			this.<Integer>getColumnOriginalValue("assertionLifetime"));
+		samlIdpSpConnectionImpl.setAttributeNames(
+			this.<String>getColumnOriginalValue("attributeNames"));
+		samlIdpSpConnectionImpl.setAttributesEnabled(
+			this.<Boolean>getColumnOriginalValue("attributesEnabled"));
+		samlIdpSpConnectionImpl.setAttributesNamespaceEnabled(
+			this.<Boolean>getColumnOriginalValue("attributesNamespaceEnabled"));
+		samlIdpSpConnectionImpl.setEnabled(
+			this.<Boolean>getColumnOriginalValue("enabled"));
+		samlIdpSpConnectionImpl.setEncryptionForced(
+			this.<Boolean>getColumnOriginalValue("encryptionForced"));
+		samlIdpSpConnectionImpl.setMetadataUrl(
+			this.<String>getColumnOriginalValue("metadataUrl"));
+		samlIdpSpConnectionImpl.setMetadataXml(
+			this.<String>getColumnOriginalValue("metadataXml"));
+		samlIdpSpConnectionImpl.setMetadataUpdatedDate(
+			this.<Date>getColumnOriginalValue("metadataUpdatedDate"));
+		samlIdpSpConnectionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		samlIdpSpConnectionImpl.setNameIdAttribute(
+			this.<String>getColumnOriginalValue("nameIdAttribute"));
+		samlIdpSpConnectionImpl.setNameIdFormat(
+			this.<String>getColumnOriginalValue("nameIdFormat"));
+		samlIdpSpConnectionImpl.setSamlSpEntityId(
+			this.<String>getColumnOriginalValue("samlSpEntityId"));
+
+		return samlIdpSpConnectionImpl;
+	}
+
+	@Override
 	public int compareTo(SamlIdpSpConnection samlIdpSpConnection) {
 		long primaryKey = samlIdpSpConnection.getPrimaryKey();
 

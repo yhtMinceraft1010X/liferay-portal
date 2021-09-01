@@ -491,6 +491,27 @@ public class DDMDataProviderInstanceLinkModelImpl
 	}
 
 	@Override
+	public DDMDataProviderInstanceLink cloneWithOriginalValues() {
+		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl =
+			new DDMDataProviderInstanceLinkImpl();
+
+		ddmDataProviderInstanceLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmDataProviderInstanceLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
+			this.<Long>getColumnOriginalValue("dataProviderInstanceLinkId"));
+		ddmDataProviderInstanceLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceId(
+			this.<Long>getColumnOriginalValue("dataProviderInstanceId"));
+		ddmDataProviderInstanceLinkImpl.setStructureId(
+			this.<Long>getColumnOriginalValue("structureId"));
+
+		return ddmDataProviderInstanceLinkImpl;
+	}
+
+	@Override
 	public int compareTo(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 

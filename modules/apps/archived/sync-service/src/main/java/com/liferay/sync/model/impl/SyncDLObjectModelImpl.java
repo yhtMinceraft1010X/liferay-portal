@@ -1220,6 +1220,64 @@ public class SyncDLObjectModelImpl
 	}
 
 	@Override
+	public SyncDLObject cloneWithOriginalValues() {
+		SyncDLObjectImpl syncDLObjectImpl = new SyncDLObjectImpl();
+
+		syncDLObjectImpl.setSyncDLObjectId(
+			this.<Long>getColumnOriginalValue("syncDLObjectId"));
+		syncDLObjectImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		syncDLObjectImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		syncDLObjectImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		syncDLObjectImpl.setCreateTime(
+			this.<Long>getColumnOriginalValue("createTime"));
+		syncDLObjectImpl.setModifiedTime(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
+		syncDLObjectImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		syncDLObjectImpl.setParentFolderId(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
+		syncDLObjectImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		syncDLObjectImpl.setName(this.<String>getColumnOriginalValue("name"));
+		syncDLObjectImpl.setExtension(
+			this.<String>getColumnOriginalValue("extension"));
+		syncDLObjectImpl.setMimeType(
+			this.<String>getColumnOriginalValue("mimeType"));
+		syncDLObjectImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		syncDLObjectImpl.setChangeLog(
+			this.<String>getColumnOriginalValue("changeLog"));
+		syncDLObjectImpl.setExtraSettings(
+			this.<String>getColumnOriginalValue("extraSettings"));
+		syncDLObjectImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		syncDLObjectImpl.setVersionId(
+			this.<Long>getColumnOriginalValue("versionId"));
+		syncDLObjectImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+		syncDLObjectImpl.setChecksum(
+			this.<String>getColumnOriginalValue("checksum"));
+		syncDLObjectImpl.setEvent(this.<String>getColumnOriginalValue("event"));
+		syncDLObjectImpl.setLanTokenKey(
+			this.<String>getColumnOriginalValue("lanTokenKey"));
+		syncDLObjectImpl.setLastPermissionChangeDate(
+			this.<Date>getColumnOriginalValue("lastPermissionChangeDate"));
+		syncDLObjectImpl.setLockExpirationDate(
+			this.<Date>getColumnOriginalValue("lockExpirationDate"));
+		syncDLObjectImpl.setLockUserId(
+			this.<Long>getColumnOriginalValue("lockUserId"));
+		syncDLObjectImpl.setLockUserName(
+			this.<String>getColumnOriginalValue("lockUserName"));
+		syncDLObjectImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		syncDLObjectImpl.setTypePK(this.<Long>getColumnOriginalValue("typePK"));
+		syncDLObjectImpl.setTypeUuid(
+			this.<String>getColumnOriginalValue("typeUuid"));
+
+		return syncDLObjectImpl;
+	}
+
+	@Override
 	public int compareTo(SyncDLObject syncDLObject) {
 		int value = 0;
 

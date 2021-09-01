@@ -365,6 +365,20 @@ public class RSVEntryModelImpl
 	}
 
 	@Override
+	public RSVEntry cloneWithOriginalValues() {
+		RSVEntryImpl rsvEntryImpl = new RSVEntryImpl();
+
+		rsvEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		rsvEntryImpl.setRsvEntryId(
+			this.<Long>getColumnOriginalValue("rsvEntryId"));
+		rsvEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+
+		return rsvEntryImpl;
+	}
+
+	@Override
 	public int compareTo(RSVEntry rsvEntry) {
 		long primaryKey = rsvEntry.getPrimaryKey();
 

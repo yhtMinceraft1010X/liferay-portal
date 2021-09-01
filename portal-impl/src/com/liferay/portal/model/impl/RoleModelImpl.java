@@ -1188,6 +1188,35 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
+	public Role cloneWithOriginalValues() {
+		RoleImpl roleImpl = new RoleImpl();
+
+		roleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		roleImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		roleImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		roleImpl.setRoleId(this.<Long>getColumnOriginalValue("roleId"));
+		roleImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		roleImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		roleImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		roleImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
+		roleImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		roleImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		roleImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		roleImpl.setName(this.<String>getColumnOriginalValue("name"));
+		roleImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		roleImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		roleImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
+		roleImpl.setSubtype(this.<String>getColumnOriginalValue("subtype"));
+
+		return roleImpl;
+	}
+
+	@Override
 	public int compareTo(Role role) {
 		int value = 0;
 

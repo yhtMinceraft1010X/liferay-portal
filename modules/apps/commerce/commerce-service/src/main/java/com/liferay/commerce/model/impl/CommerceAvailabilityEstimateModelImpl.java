@@ -875,6 +875,36 @@ public class CommerceAvailabilityEstimateModelImpl
 	}
 
 	@Override
+	public CommerceAvailabilityEstimate cloneWithOriginalValues() {
+		CommerceAvailabilityEstimateImpl commerceAvailabilityEstimateImpl =
+			new CommerceAvailabilityEstimateImpl();
+
+		commerceAvailabilityEstimateImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceAvailabilityEstimateImpl.setCommerceAvailabilityEstimateId(
+			this.<Long>getColumnOriginalValue(
+				"commerceAvailabilityEstimateId"));
+		commerceAvailabilityEstimateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAvailabilityEstimateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAvailabilityEstimateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAvailabilityEstimateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAvailabilityEstimateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAvailabilityEstimateImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		commerceAvailabilityEstimateImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commerceAvailabilityEstimateImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commerceAvailabilityEstimateImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 

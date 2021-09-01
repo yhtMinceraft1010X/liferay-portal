@@ -421,6 +421,20 @@ public class ERCCompanyEntryModelImpl
 	}
 
 	@Override
+	public ERCCompanyEntry cloneWithOriginalValues() {
+		ERCCompanyEntryImpl ercCompanyEntryImpl = new ERCCompanyEntryImpl();
+
+		ercCompanyEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		ercCompanyEntryImpl.setErcCompanyEntryId(
+			this.<Long>getColumnOriginalValue("ercCompanyEntryId"));
+		ercCompanyEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+
+		return ercCompanyEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ERCCompanyEntry ercCompanyEntry) {
 		long primaryKey = ercCompanyEntry.getPrimaryKey();
 

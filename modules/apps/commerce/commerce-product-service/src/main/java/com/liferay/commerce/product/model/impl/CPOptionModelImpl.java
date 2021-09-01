@@ -1133,6 +1133,42 @@ public class CPOptionModelImpl
 	}
 
 	@Override
+	public CPOption cloneWithOriginalValues() {
+		CPOptionImpl cpOptionImpl = new CPOptionImpl();
+
+		cpOptionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		cpOptionImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cpOptionImpl.setCPOptionId(
+			this.<Long>getColumnOriginalValue("CPOptionId"));
+		cpOptionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpOptionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		cpOptionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpOptionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpOptionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpOptionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		cpOptionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		cpOptionImpl.setDDMFormFieldTypeName(
+			this.<String>getColumnOriginalValue("DDMFormFieldTypeName"));
+		cpOptionImpl.setFacetable(
+			this.<Boolean>getColumnOriginalValue("facetable"));
+		cpOptionImpl.setRequired(
+			this.<Boolean>getColumnOriginalValue("required"));
+		cpOptionImpl.setSkuContributor(
+			this.<Boolean>getColumnOriginalValue("skuContributor"));
+		cpOptionImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		cpOptionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpOptionImpl;
+	}
+
+	@Override
 	public int compareTo(CPOption cpOption) {
 		int value = 0;
 

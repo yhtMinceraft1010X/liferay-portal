@@ -642,6 +642,37 @@ public class DLOpenerFileEntryReferenceModelImpl
 	}
 
 	@Override
+	public DLOpenerFileEntryReference cloneWithOriginalValues() {
+		DLOpenerFileEntryReferenceImpl dlOpenerFileEntryReferenceImpl =
+			new DLOpenerFileEntryReferenceImpl();
+
+		dlOpenerFileEntryReferenceImpl.setDlOpenerFileEntryReferenceId(
+			this.<Long>getColumnOriginalValue("dlOpenerFileEntryReferenceId"));
+		dlOpenerFileEntryReferenceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		dlOpenerFileEntryReferenceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlOpenerFileEntryReferenceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dlOpenerFileEntryReferenceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dlOpenerFileEntryReferenceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlOpenerFileEntryReferenceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dlOpenerFileEntryReferenceImpl.setReferenceKey(
+			this.<String>getColumnOriginalValue("referenceKey"));
+		dlOpenerFileEntryReferenceImpl.setReferenceType(
+			this.<String>getColumnOriginalValue("referenceType"));
+		dlOpenerFileEntryReferenceImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		dlOpenerFileEntryReferenceImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return dlOpenerFileEntryReferenceImpl;
+	}
+
+	@Override
 	public int compareTo(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
 

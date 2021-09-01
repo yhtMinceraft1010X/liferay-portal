@@ -587,6 +587,32 @@ public class SocialRelationModelImpl
 	}
 
 	@Override
+	public SocialRelation cloneWithOriginalValues() {
+		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
+
+		socialRelationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialRelationImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialRelationImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		socialRelationImpl.setRelationId(
+			this.<Long>getColumnOriginalValue("relationId"));
+		socialRelationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialRelationImpl.setCreateDate(
+			this.<Long>getColumnOriginalValue("createDate"));
+		socialRelationImpl.setUserId1(
+			this.<Long>getColumnOriginalValue("userId1"));
+		socialRelationImpl.setUserId2(
+			this.<Long>getColumnOriginalValue("userId2"));
+		socialRelationImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return socialRelationImpl;
+	}
+
+	@Override
 	public int compareTo(SocialRelation socialRelation) {
 		long primaryKey = socialRelation.getPrimaryKey();
 

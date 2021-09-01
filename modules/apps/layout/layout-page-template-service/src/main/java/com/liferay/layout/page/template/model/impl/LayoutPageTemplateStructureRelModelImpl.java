@@ -756,6 +756,41 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	@Override
+	public LayoutPageTemplateStructureRel cloneWithOriginalValues() {
+		LayoutPageTemplateStructureRelImpl layoutPageTemplateStructureRelImpl =
+			new LayoutPageTemplateStructureRelImpl();
+
+		layoutPageTemplateStructureRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutPageTemplateStructureRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutPageTemplateStructureRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureRelId(
+			this.<Long>getColumnOriginalValue("lPageTemplateStructureRelId"));
+		layoutPageTemplateStructureRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutPageTemplateStructureRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutPageTemplateStructureRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutPageTemplateStructureRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutPageTemplateStructureRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutPageTemplateStructureRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutPageTemplateStructureRelImpl.setLayoutPageTemplateStructureId(
+			this.<Long>getColumnOriginalValue("layoutPageTemplateStructureId"));
+		layoutPageTemplateStructureRelImpl.setSegmentsExperienceId(
+			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
+		layoutPageTemplateStructureRelImpl.setData(
+			this.<String>getColumnOriginalValue("data_"));
+
+		return layoutPageTemplateStructureRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 

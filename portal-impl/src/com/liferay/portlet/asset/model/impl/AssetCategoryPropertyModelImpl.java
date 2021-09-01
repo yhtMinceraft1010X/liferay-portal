@@ -726,6 +726,37 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	@Override
+	public AssetCategoryProperty cloneWithOriginalValues() {
+		AssetCategoryPropertyImpl assetCategoryPropertyImpl =
+			new AssetCategoryPropertyImpl();
+
+		assetCategoryPropertyImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetCategoryPropertyImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetCategoryPropertyImpl.setCategoryPropertyId(
+			this.<Long>getColumnOriginalValue("categoryPropertyId"));
+		assetCategoryPropertyImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetCategoryPropertyImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetCategoryPropertyImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetCategoryPropertyImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetCategoryPropertyImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetCategoryPropertyImpl.setCategoryId(
+			this.<Long>getColumnOriginalValue("categoryId"));
+		assetCategoryPropertyImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		assetCategoryPropertyImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
+
+		return assetCategoryPropertyImpl;
+	}
+
+	@Override
 	public int compareTo(AssetCategoryProperty assetCategoryProperty) {
 		int value = 0;
 

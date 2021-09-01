@@ -836,6 +836,34 @@ public class ListTypeEntryModelImpl
 	}
 
 	@Override
+	public ListTypeEntry cloneWithOriginalValues() {
+		ListTypeEntryImpl listTypeEntryImpl = new ListTypeEntryImpl();
+
+		listTypeEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		listTypeEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		listTypeEntryImpl.setListTypeEntryId(
+			this.<Long>getColumnOriginalValue("listTypeEntryId"));
+		listTypeEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		listTypeEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		listTypeEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		listTypeEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		listTypeEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		listTypeEntryImpl.setListTypeDefinitionId(
+			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
+		listTypeEntryImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		listTypeEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		listTypeEntryImpl.setType(this.<String>getColumnOriginalValue("type_"));
+
+		return listTypeEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ListTypeEntry listTypeEntry) {
 		long primaryKey = listTypeEntry.getPrimaryKey();
 

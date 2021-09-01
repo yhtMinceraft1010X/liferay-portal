@@ -1056,6 +1056,57 @@ public class BatchEngineImportTaskModelImpl
 	}
 
 	@Override
+	public BatchEngineImportTask cloneWithOriginalValues() {
+		BatchEngineImportTaskImpl batchEngineImportTaskImpl =
+			new BatchEngineImportTaskImpl();
+
+		batchEngineImportTaskImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchEngineImportTaskImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		batchEngineImportTaskImpl.setBatchEngineImportTaskId(
+			this.<Long>getColumnOriginalValue("batchEngineImportTaskId"));
+		batchEngineImportTaskImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchEngineImportTaskImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchEngineImportTaskImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchEngineImportTaskImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchEngineImportTaskImpl.setBatchSize(
+			this.<Long>getColumnOriginalValue("batchSize"));
+		batchEngineImportTaskImpl.setCallbackURL(
+			this.<String>getColumnOriginalValue("callbackURL"));
+		batchEngineImportTaskImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		batchEngineImportTaskImpl.setContentType(
+			this.<String>getColumnOriginalValue("contentType"));
+		batchEngineImportTaskImpl.setEndTime(
+			this.<Date>getColumnOriginalValue("endTime"));
+		batchEngineImportTaskImpl.setErrorMessage(
+			this.<String>getColumnOriginalValue("errorMessage"));
+		batchEngineImportTaskImpl.setExecuteStatus(
+			this.<String>getColumnOriginalValue("executeStatus"));
+		batchEngineImportTaskImpl.setFieldNameMapping(
+			this.<Map>getColumnOriginalValue("fieldNameMapping"));
+		batchEngineImportTaskImpl.setOperation(
+			this.<String>getColumnOriginalValue("operation"));
+		batchEngineImportTaskImpl.setParameters(
+			this.<Map>getColumnOriginalValue("parameters"));
+		batchEngineImportTaskImpl.setProcessedItemsCount(
+			this.<Integer>getColumnOriginalValue("processedItemsCount"));
+		batchEngineImportTaskImpl.setStartTime(
+			this.<Date>getColumnOriginalValue("startTime"));
+		batchEngineImportTaskImpl.setTaskItemDelegateName(
+			this.<String>getColumnOriginalValue("taskItemDelegateName"));
+		batchEngineImportTaskImpl.setTotalItemsCount(
+			this.<Integer>getColumnOriginalValue("totalItemsCount"));
+
+		return batchEngineImportTaskImpl;
+	}
+
+	@Override
 	public int compareTo(BatchEngineImportTask batchEngineImportTask) {
 		long primaryKey = batchEngineImportTask.getPrimaryKey();
 

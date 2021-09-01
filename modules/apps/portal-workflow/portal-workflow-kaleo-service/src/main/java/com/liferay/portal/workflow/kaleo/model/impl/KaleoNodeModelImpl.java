@@ -723,6 +723,42 @@ public class KaleoNodeModelImpl
 	}
 
 	@Override
+	public KaleoNode cloneWithOriginalValues() {
+		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
+
+		kaleoNodeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoNodeImpl.setKaleoNodeId(
+			this.<Long>getColumnOriginalValue("kaleoNodeId"));
+		kaleoNodeImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kaleoNodeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoNodeImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kaleoNodeImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoNodeImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoNodeImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoNodeImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoNodeImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoNodeImpl.setName(this.<String>getColumnOriginalValue("name"));
+		kaleoNodeImpl.setMetadata(
+			this.<String>getColumnOriginalValue("metadata"));
+		kaleoNodeImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoNodeImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		kaleoNodeImpl.setInitial(
+			this.<Boolean>getColumnOriginalValue("initial_"));
+		kaleoNodeImpl.setTerminal(
+			this.<Boolean>getColumnOriginalValue("terminal"));
+
+		return kaleoNodeImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoNode kaleoNode) {
 		int value = 0;
 

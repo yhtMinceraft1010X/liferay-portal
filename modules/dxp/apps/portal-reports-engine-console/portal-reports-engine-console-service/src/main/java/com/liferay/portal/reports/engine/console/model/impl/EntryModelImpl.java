@@ -892,6 +892,46 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	@Override
+	public Entry cloneWithOriginalValues() {
+		EntryImpl entryImpl = new EntryImpl();
+
+		entryImpl.setEntryId(this.<Long>getColumnOriginalValue("entryId"));
+		entryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		entryImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		entryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		entryImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		entryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		entryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		entryImpl.setDefinitionId(
+			this.<Long>getColumnOriginalValue("definitionId"));
+		entryImpl.setFormat(this.<String>getColumnOriginalValue("format"));
+		entryImpl.setScheduleRequest(
+			this.<Boolean>getColumnOriginalValue("scheduleRequest"));
+		entryImpl.setStartDate(this.<Date>getColumnOriginalValue("startDate"));
+		entryImpl.setEndDate(this.<Date>getColumnOriginalValue("endDate"));
+		entryImpl.setRepeating(
+			this.<Boolean>getColumnOriginalValue("repeating"));
+		entryImpl.setRecurrence(
+			this.<String>getColumnOriginalValue("recurrence"));
+		entryImpl.setEmailNotifications(
+			this.<String>getColumnOriginalValue("emailNotifications"));
+		entryImpl.setEmailDelivery(
+			this.<String>getColumnOriginalValue("emailDelivery"));
+		entryImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		entryImpl.setPageURL(this.<String>getColumnOriginalValue("pageURL"));
+		entryImpl.setReportParameters(
+			this.<String>getColumnOriginalValue("reportParameters"));
+		entryImpl.setErrorMessage(
+			this.<String>getColumnOriginalValue("errorMessage"));
+		entryImpl.setStatus(this.<String>getColumnOriginalValue("status"));
+
+		return entryImpl;
+	}
+
+	@Override
 	public int compareTo(Entry entry) {
 		int value = 0;
 

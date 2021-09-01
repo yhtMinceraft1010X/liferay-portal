@@ -1052,6 +1052,41 @@ public class PollsQuestionModelImpl
 	}
 
 	@Override
+	public PollsQuestion cloneWithOriginalValues() {
+		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
+
+		pollsQuestionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		pollsQuestionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		pollsQuestionImpl.setQuestionId(
+			this.<Long>getColumnOriginalValue("questionId"));
+		pollsQuestionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		pollsQuestionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		pollsQuestionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		pollsQuestionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		pollsQuestionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		pollsQuestionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		pollsQuestionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		pollsQuestionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		pollsQuestionImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		pollsQuestionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		pollsQuestionImpl.setLastVoteDate(
+			this.<Date>getColumnOriginalValue("lastVoteDate"));
+
+		return pollsQuestionImpl;
+	}
+
+	@Override
 	public int compareTo(PollsQuestion pollsQuestion) {
 		int value = 0;
 

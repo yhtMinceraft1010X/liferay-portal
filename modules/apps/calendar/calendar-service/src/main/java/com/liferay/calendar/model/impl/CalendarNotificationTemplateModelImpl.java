@@ -967,6 +967,50 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	@Override
+	public CalendarNotificationTemplate cloneWithOriginalValues() {
+		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl =
+			new CalendarNotificationTemplateImpl();
+
+		calendarNotificationTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		calendarNotificationTemplateImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		calendarNotificationTemplateImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(
+			this.<Long>getColumnOriginalValue(
+				"calendarNotificationTemplateId"));
+		calendarNotificationTemplateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		calendarNotificationTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		calendarNotificationTemplateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		calendarNotificationTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		calendarNotificationTemplateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		calendarNotificationTemplateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		calendarNotificationTemplateImpl.setCalendarId(
+			this.<Long>getColumnOriginalValue("calendarId"));
+		calendarNotificationTemplateImpl.setNotificationType(
+			this.<String>getColumnOriginalValue("notificationType"));
+		calendarNotificationTemplateImpl.setNotificationTypeSettings(
+			this.<String>getColumnOriginalValue("notificationTypeSettings"));
+		calendarNotificationTemplateImpl.setNotificationTemplateType(
+			this.<String>getColumnOriginalValue("notificationTemplateType"));
+		calendarNotificationTemplateImpl.setSubject(
+			this.<String>getColumnOriginalValue("subject"));
+		calendarNotificationTemplateImpl.setBody(
+			this.<String>getColumnOriginalValue("body"));
+		calendarNotificationTemplateImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return calendarNotificationTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
 

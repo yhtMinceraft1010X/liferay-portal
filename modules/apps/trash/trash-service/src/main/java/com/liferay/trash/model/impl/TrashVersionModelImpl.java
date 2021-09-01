@@ -569,6 +569,32 @@ public class TrashVersionModelImpl
 	}
 
 	@Override
+	public TrashVersion cloneWithOriginalValues() {
+		TrashVersionImpl trashVersionImpl = new TrashVersionImpl();
+
+		trashVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		trashVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		trashVersionImpl.setVersionId(
+			this.<Long>getColumnOriginalValue("versionId"));
+		trashVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		trashVersionImpl.setEntryId(
+			this.<Long>getColumnOriginalValue("entryId"));
+		trashVersionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		trashVersionImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		trashVersionImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		trashVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return trashVersionImpl;
+	}
+
+	@Override
 	public int compareTo(TrashVersion trashVersion) {
 		long primaryKey = trashVersion.getPrimaryKey();
 

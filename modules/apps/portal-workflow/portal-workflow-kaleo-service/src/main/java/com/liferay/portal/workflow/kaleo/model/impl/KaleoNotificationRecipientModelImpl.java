@@ -881,6 +881,53 @@ public class KaleoNotificationRecipientModelImpl
 	}
 
 	@Override
+	public KaleoNotificationRecipient cloneWithOriginalValues() {
+		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl =
+			new KaleoNotificationRecipientImpl();
+
+		kaleoNotificationRecipientImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(
+			this.<Long>getColumnOriginalValue("kaleoNotificationRecipientId"));
+		kaleoNotificationRecipientImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoNotificationRecipientImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoNotificationRecipientImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoNotificationRecipientImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoNotificationRecipientImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoNotificationRecipientImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoNotificationRecipientImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoNotificationRecipientImpl.setKaleoNotificationId(
+			this.<Long>getColumnOriginalValue("kaleoNotificationId"));
+		kaleoNotificationRecipientImpl.setRecipientClassName(
+			this.<String>getColumnOriginalValue("recipientClassName"));
+		kaleoNotificationRecipientImpl.setRecipientClassPK(
+			this.<Long>getColumnOriginalValue("recipientClassPK"));
+		kaleoNotificationRecipientImpl.setRecipientRoleType(
+			this.<Integer>getColumnOriginalValue("recipientRoleType"));
+		kaleoNotificationRecipientImpl.setRecipientScript(
+			this.<String>getColumnOriginalValue("recipientScript"));
+		kaleoNotificationRecipientImpl.setRecipientScriptLanguage(
+			this.<String>getColumnOriginalValue("recipientScriptLanguage"));
+		kaleoNotificationRecipientImpl.setRecipientScriptContexts(
+			this.<String>getColumnOriginalValue("recipientScriptContexts"));
+		kaleoNotificationRecipientImpl.setAddress(
+			this.<String>getColumnOriginalValue("address"));
+		kaleoNotificationRecipientImpl.setNotificationReceptionType(
+			this.<String>getColumnOriginalValue("notificationReceptionType"));
+
+		return kaleoNotificationRecipientImpl;
+	}
+
+	@Override
 	public int compareTo(
 		KaleoNotificationRecipient kaleoNotificationRecipient) {
 

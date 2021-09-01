@@ -767,6 +767,37 @@ public class CommercePriceListChannelRelModelImpl
 	}
 
 	@Override
+	public CommercePriceListChannelRel cloneWithOriginalValues() {
+		CommercePriceListChannelRelImpl commercePriceListChannelRelImpl =
+			new CommercePriceListChannelRelImpl();
+
+		commercePriceListChannelRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePriceListChannelRelImpl.setCommercePriceListChannelRelId(
+			this.<Long>getColumnOriginalValue("CommercePriceListChannelRelId"));
+		commercePriceListChannelRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceListChannelRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceListChannelRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceListChannelRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceListChannelRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceListChannelRelImpl.setCommerceChannelId(
+			this.<Long>getColumnOriginalValue("commerceChannelId"));
+		commercePriceListChannelRelImpl.setCommercePriceListId(
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
+		commercePriceListChannelRelImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
+		commercePriceListChannelRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commercePriceListChannelRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePriceListChannelRel commercePriceListChannelRel) {
 

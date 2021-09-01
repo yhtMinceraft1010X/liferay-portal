@@ -587,6 +587,30 @@ public class FVSEntryModelImpl
 	}
 
 	@Override
+	public FVSEntry cloneWithOriginalValues() {
+		FVSEntryImpl fvsEntryImpl = new FVSEntryImpl();
+
+		fvsEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fvsEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		fvsEntryImpl.setFvsEntryId(
+			this.<Long>getColumnOriginalValue("fvsEntryId"));
+		fvsEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fvsEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		fvsEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fvsEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fvsEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fvsEntryImpl.setViewState(
+			this.<String>getColumnOriginalValue("viewState"));
+
+		return fvsEntryImpl;
+	}
+
+	@Override
 	public int compareTo(FVSEntry fvsEntry) {
 		long primaryKey = fvsEntry.getPrimaryKey();
 

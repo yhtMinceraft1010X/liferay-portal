@@ -1237,6 +1237,48 @@ public class AssetCategoryModelImpl
 	}
 
 	@Override
+	public AssetCategory cloneWithOriginalValues() {
+		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
+
+		assetCategoryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetCategoryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetCategoryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		assetCategoryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		assetCategoryImpl.setCategoryId(
+			this.<Long>getColumnOriginalValue("categoryId"));
+		assetCategoryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetCategoryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetCategoryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetCategoryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetCategoryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetCategoryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetCategoryImpl.setParentCategoryId(
+			this.<Long>getColumnOriginalValue("parentCategoryId"));
+		assetCategoryImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		assetCategoryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		assetCategoryImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		assetCategoryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		assetCategoryImpl.setVocabularyId(
+			this.<Long>getColumnOriginalValue("vocabularyId"));
+		assetCategoryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetCategoryImpl;
+	}
+
+	@Override
 	public int compareTo(AssetCategory assetCategory) {
 		int value = 0;
 

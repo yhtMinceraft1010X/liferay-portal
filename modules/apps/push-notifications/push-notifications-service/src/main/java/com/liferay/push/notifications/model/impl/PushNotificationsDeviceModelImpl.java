@@ -593,6 +593,27 @@ public class PushNotificationsDeviceModelImpl
 	}
 
 	@Override
+	public PushNotificationsDevice cloneWithOriginalValues() {
+		PushNotificationsDeviceImpl pushNotificationsDeviceImpl =
+			new PushNotificationsDeviceImpl();
+
+		pushNotificationsDeviceImpl.setPushNotificationsDeviceId(
+			this.<Long>getColumnOriginalValue("pushNotificationsDeviceId"));
+		pushNotificationsDeviceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		pushNotificationsDeviceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		pushNotificationsDeviceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		pushNotificationsDeviceImpl.setPlatform(
+			this.<String>getColumnOriginalValue("platform"));
+		pushNotificationsDeviceImpl.setToken(
+			this.<String>getColumnOriginalValue("token"));
+
+		return pushNotificationsDeviceImpl;
+	}
+
+	@Override
 	public int compareTo(PushNotificationsDevice pushNotificationsDevice) {
 		long primaryKey = pushNotificationsDevice.getPrimaryKey();
 

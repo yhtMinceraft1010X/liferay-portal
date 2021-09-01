@@ -430,6 +430,22 @@ public class UADPartialEntryModelImpl
 	}
 
 	@Override
+	public UADPartialEntry cloneWithOriginalValues() {
+		UADPartialEntryImpl uadPartialEntryImpl = new UADPartialEntryImpl();
+
+		uadPartialEntryImpl.setUadPartialEntryId(
+			this.<Long>getColumnOriginalValue("uadPartialEntryId"));
+		uadPartialEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		uadPartialEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		uadPartialEntryImpl.setMessage(
+			this.<String>getColumnOriginalValue("message"));
+
+		return uadPartialEntryImpl;
+	}
+
+	@Override
 	public int compareTo(UADPartialEntry uadPartialEntry) {
 		long primaryKey = uadPartialEntry.getPrimaryKey();
 

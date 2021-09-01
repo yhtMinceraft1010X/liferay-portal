@@ -801,6 +801,42 @@ public class BatchPlannerLogModelImpl
 	}
 
 	@Override
+	public BatchPlannerLog cloneWithOriginalValues() {
+		BatchPlannerLogImpl batchPlannerLogImpl = new BatchPlannerLogImpl();
+
+		batchPlannerLogImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerLogImpl.setBatchPlannerLogId(
+			this.<Long>getColumnOriginalValue("batchPlannerLogId"));
+		batchPlannerLogImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchPlannerLogImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchPlannerLogImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		batchPlannerLogImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchPlannerLogImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchPlannerLogImpl.setBatchPlannerPlanId(
+			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
+		batchPlannerLogImpl.setBatchEngineExportTaskERC(
+			this.<String>getColumnOriginalValue("batchEngineExportTaskERC"));
+		batchPlannerLogImpl.setBatchEngineImportTaskERC(
+			this.<String>getColumnOriginalValue("batchEngineImportTaskERC"));
+		batchPlannerLogImpl.setDispatchTriggerERC(
+			this.<String>getColumnOriginalValue("dispatchTriggerERC"));
+		batchPlannerLogImpl.setSize(
+			this.<Integer>getColumnOriginalValue("size_"));
+		batchPlannerLogImpl.setTotal(
+			this.<Integer>getColumnOriginalValue("total"));
+		batchPlannerLogImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return batchPlannerLogImpl;
+	}
+
+	@Override
 	public int compareTo(BatchPlannerLog batchPlannerLog) {
 		int value = 0;
 

@@ -827,6 +827,33 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	}
 
 	@Override
+	public Phone cloneWithOriginalValues() {
+		PhoneImpl phoneImpl = new PhoneImpl();
+
+		phoneImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		phoneImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		phoneImpl.setPhoneId(this.<Long>getColumnOriginalValue("phoneId"));
+		phoneImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		phoneImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		phoneImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		phoneImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		phoneImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		phoneImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		phoneImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		phoneImpl.setNumber(this.<String>getColumnOriginalValue("number_"));
+		phoneImpl.setExtension(
+			this.<String>getColumnOriginalValue("extension"));
+		phoneImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		phoneImpl.setPrimary(this.<Boolean>getColumnOriginalValue("primary_"));
+
+		return phoneImpl;
+	}
+
+	@Override
 	public int compareTo(Phone phone) {
 		int value = 0;
 

@@ -678,6 +678,35 @@ public class BatchPlannerPolicyModelImpl
 	}
 
 	@Override
+	public BatchPlannerPolicy cloneWithOriginalValues() {
+		BatchPlannerPolicyImpl batchPlannerPolicyImpl =
+			new BatchPlannerPolicyImpl();
+
+		batchPlannerPolicyImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerPolicyImpl.setBatchPlannerPolicyId(
+			this.<Long>getColumnOriginalValue("batchPlannerPolicyId"));
+		batchPlannerPolicyImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchPlannerPolicyImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchPlannerPolicyImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		batchPlannerPolicyImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchPlannerPolicyImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchPlannerPolicyImpl.setBatchPlannerPlanId(
+			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
+		batchPlannerPolicyImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		batchPlannerPolicyImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
+
+		return batchPlannerPolicyImpl;
+	}
+
+	@Override
 	public int compareTo(BatchPlannerPolicy batchPlannerPolicy) {
 		int value = 0;
 

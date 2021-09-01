@@ -613,6 +613,35 @@ public class RedirectNotFoundEntryModelImpl
 	}
 
 	@Override
+	public RedirectNotFoundEntry cloneWithOriginalValues() {
+		RedirectNotFoundEntryImpl redirectNotFoundEntryImpl =
+			new RedirectNotFoundEntryImpl();
+
+		redirectNotFoundEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		redirectNotFoundEntryImpl.setRedirectNotFoundEntryId(
+			this.<Long>getColumnOriginalValue("redirectNotFoundEntryId"));
+		redirectNotFoundEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		redirectNotFoundEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		redirectNotFoundEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		redirectNotFoundEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		redirectNotFoundEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		redirectNotFoundEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		redirectNotFoundEntryImpl.setIgnored(
+			this.<Boolean>getColumnOriginalValue("ignored"));
+		redirectNotFoundEntryImpl.setUrl(
+			this.<String>getColumnOriginalValue("url"));
+
+		return redirectNotFoundEntryImpl;
+	}
+
+	@Override
 	public int compareTo(RedirectNotFoundEntry redirectNotFoundEntry) {
 		long primaryKey = redirectNotFoundEntry.getPrimaryKey();
 

@@ -748,6 +748,39 @@ public class CommerceInventoryBookedQuantityModelImpl
 	}
 
 	@Override
+	public CommerceInventoryBookedQuantity cloneWithOriginalValues() {
+		CommerceInventoryBookedQuantityImpl
+			commerceInventoryBookedQuantityImpl =
+				new CommerceInventoryBookedQuantityImpl();
+
+		commerceInventoryBookedQuantityImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceInventoryBookedQuantityImpl.
+			setCommerceInventoryBookedQuantityId(
+				this.<Long>getColumnOriginalValue("CIBookedQuantityId"));
+		commerceInventoryBookedQuantityImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceInventoryBookedQuantityImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceInventoryBookedQuantityImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceInventoryBookedQuantityImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceInventoryBookedQuantityImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceInventoryBookedQuantityImpl.setSku(
+			this.<String>getColumnOriginalValue("sku"));
+		commerceInventoryBookedQuantityImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+		commerceInventoryBookedQuantityImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commerceInventoryBookedQuantityImpl.setBookedNote(
+			this.<String>getColumnOriginalValue("bookedNote"));
+
+		return commerceInventoryBookedQuantityImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 

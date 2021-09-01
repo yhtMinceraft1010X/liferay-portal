@@ -597,6 +597,33 @@ public class SharepointOAuth2TokenEntryModelImpl
 	}
 
 	@Override
+	public SharepointOAuth2TokenEntry cloneWithOriginalValues() {
+		SharepointOAuth2TokenEntryImpl sharepointOAuth2TokenEntryImpl =
+			new SharepointOAuth2TokenEntryImpl();
+
+		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(
+			this.<Long>getColumnOriginalValue("sharepointOAuth2TokenEntryId"));
+		sharepointOAuth2TokenEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		sharepointOAuth2TokenEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		sharepointOAuth2TokenEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		sharepointOAuth2TokenEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		sharepointOAuth2TokenEntryImpl.setAccessToken(
+			this.<String>getColumnOriginalValue("accessToken"));
+		sharepointOAuth2TokenEntryImpl.setConfigurationPid(
+			this.<String>getColumnOriginalValue("configurationPid"));
+		sharepointOAuth2TokenEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		sharepointOAuth2TokenEntryImpl.setRefreshToken(
+			this.<String>getColumnOriginalValue("refreshToken"));
+
+		return sharepointOAuth2TokenEntryImpl;
+	}
+
+	@Override
 	public int compareTo(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 

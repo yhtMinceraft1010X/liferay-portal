@@ -713,6 +713,33 @@ public class LayoutBranchModelImpl
 	}
 
 	@Override
+	public LayoutBranch cloneWithOriginalValues() {
+		LayoutBranchImpl layoutBranchImpl = new LayoutBranchImpl();
+
+		layoutBranchImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutBranchImpl.setLayoutBranchId(
+			this.<Long>getColumnOriginalValue("layoutBranchId"));
+		layoutBranchImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutBranchImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutBranchImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		layoutBranchImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutBranchImpl.setLayoutSetBranchId(
+			this.<Long>getColumnOriginalValue("layoutSetBranchId"));
+		layoutBranchImpl.setPlid(this.<Long>getColumnOriginalValue("plid"));
+		layoutBranchImpl.setName(this.<String>getColumnOriginalValue("name"));
+		layoutBranchImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		layoutBranchImpl.setMaster(
+			this.<Boolean>getColumnOriginalValue("master"));
+
+		return layoutBranchImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutBranch layoutBranch) {
 		long primaryKey = layoutBranch.getPrimaryKey();
 

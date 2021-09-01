@@ -532,6 +532,29 @@ public class SamlIdpSsoSessionModelImpl
 	}
 
 	@Override
+	public SamlIdpSsoSession cloneWithOriginalValues() {
+		SamlIdpSsoSessionImpl samlIdpSsoSessionImpl =
+			new SamlIdpSsoSessionImpl();
+
+		samlIdpSsoSessionImpl.setSamlIdpSsoSessionId(
+			this.<Long>getColumnOriginalValue("samlIdpSsoSessionId"));
+		samlIdpSsoSessionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlIdpSsoSessionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlIdpSsoSessionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlIdpSsoSessionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlIdpSsoSessionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey(
+			this.<String>getColumnOriginalValue("samlIdpSsoSessionKey"));
+
+		return samlIdpSsoSessionImpl;
+	}
+
+	@Override
 	public int compareTo(SamlIdpSsoSession samlIdpSsoSession) {
 		long primaryKey = samlIdpSsoSession.getPrimaryKey();
 

@@ -775,6 +775,39 @@ public class CPDefinitionDiagramSettingModelImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramSetting cloneWithOriginalValues() {
+		CPDefinitionDiagramSettingImpl cpDefinitionDiagramSettingImpl =
+			new CPDefinitionDiagramSettingImpl();
+
+		cpDefinitionDiagramSettingImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDefinitionDiagramSettingImpl.setCPDefinitionDiagramSettingId(
+			this.<Long>getColumnOriginalValue("CPDefinitionDiagramSettingId"));
+		cpDefinitionDiagramSettingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionDiagramSettingImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionDiagramSettingImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionDiagramSettingImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionDiagramSettingImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionDiagramSettingImpl.setCPAttachmentFileEntryId(
+			this.<Long>getColumnOriginalValue("CPAttachmentFileEntryId"));
+		cpDefinitionDiagramSettingImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionDiagramSettingImpl.setColor(
+			this.<String>getColumnOriginalValue("color"));
+		cpDefinitionDiagramSettingImpl.setRadius(
+			this.<Double>getColumnOriginalValue("radius"));
+		cpDefinitionDiagramSettingImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+
+		return cpDefinitionDiagramSettingImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CPDefinitionDiagramSetting cpDefinitionDiagramSetting) {
 

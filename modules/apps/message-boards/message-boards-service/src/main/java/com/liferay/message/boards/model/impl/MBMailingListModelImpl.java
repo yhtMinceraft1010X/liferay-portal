@@ -1094,6 +1094,69 @@ public class MBMailingListModelImpl
 	}
 
 	@Override
+	public MBMailingList cloneWithOriginalValues() {
+		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
+
+		mbMailingListImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mbMailingListImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		mbMailingListImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mbMailingListImpl.setMailingListId(
+			this.<Long>getColumnOriginalValue("mailingListId"));
+		mbMailingListImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		mbMailingListImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mbMailingListImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		mbMailingListImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mbMailingListImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mbMailingListImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mbMailingListImpl.setCategoryId(
+			this.<Long>getColumnOriginalValue("categoryId"));
+		mbMailingListImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		mbMailingListImpl.setInProtocol(
+			this.<String>getColumnOriginalValue("inProtocol"));
+		mbMailingListImpl.setInServerName(
+			this.<String>getColumnOriginalValue("inServerName"));
+		mbMailingListImpl.setInServerPort(
+			this.<Integer>getColumnOriginalValue("inServerPort"));
+		mbMailingListImpl.setInUseSSL(
+			this.<Boolean>getColumnOriginalValue("inUseSSL"));
+		mbMailingListImpl.setInUserName(
+			this.<String>getColumnOriginalValue("inUserName"));
+		mbMailingListImpl.setInPassword(
+			this.<String>getColumnOriginalValue("inPassword"));
+		mbMailingListImpl.setInReadInterval(
+			this.<Integer>getColumnOriginalValue("inReadInterval"));
+		mbMailingListImpl.setOutEmailAddress(
+			this.<String>getColumnOriginalValue("outEmailAddress"));
+		mbMailingListImpl.setOutCustom(
+			this.<Boolean>getColumnOriginalValue("outCustom"));
+		mbMailingListImpl.setOutServerName(
+			this.<String>getColumnOriginalValue("outServerName"));
+		mbMailingListImpl.setOutServerPort(
+			this.<Integer>getColumnOriginalValue("outServerPort"));
+		mbMailingListImpl.setOutUseSSL(
+			this.<Boolean>getColumnOriginalValue("outUseSSL"));
+		mbMailingListImpl.setOutUserName(
+			this.<String>getColumnOriginalValue("outUserName"));
+		mbMailingListImpl.setOutPassword(
+			this.<String>getColumnOriginalValue("outPassword"));
+		mbMailingListImpl.setAllowAnonymous(
+			this.<Boolean>getColumnOriginalValue("allowAnonymous"));
+		mbMailingListImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return mbMailingListImpl;
+	}
+
+	@Override
 	public int compareTo(MBMailingList mbMailingList) {
 		long primaryKey = mbMailingList.getPrimaryKey();
 

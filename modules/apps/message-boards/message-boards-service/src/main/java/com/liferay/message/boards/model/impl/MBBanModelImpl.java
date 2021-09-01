@@ -742,6 +742,31 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	@Override
+	public MBBan cloneWithOriginalValues() {
+		MBBanImpl mbBanImpl = new MBBanImpl();
+
+		mbBanImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mbBanImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		mbBanImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mbBanImpl.setBanId(this.<Long>getColumnOriginalValue("banId"));
+		mbBanImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		mbBanImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		mbBanImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mbBanImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		mbBanImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mbBanImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mbBanImpl.setBanUserId(this.<Long>getColumnOriginalValue("banUserId"));
+		mbBanImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mbBanImpl;
+	}
+
+	@Override
 	public int compareTo(MBBan mbBan) {
 		long primaryKey = mbBan.getPrimaryKey();
 

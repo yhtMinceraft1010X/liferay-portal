@@ -589,6 +589,31 @@ public class ExpandoColumnModelImpl
 	}
 
 	@Override
+	public ExpandoColumn cloneWithOriginalValues() {
+		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
+
+		expandoColumnImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		expandoColumnImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		expandoColumnImpl.setColumnId(
+			this.<Long>getColumnOriginalValue("columnId"));
+		expandoColumnImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		expandoColumnImpl.setTableId(
+			this.<Long>getColumnOriginalValue("tableId"));
+		expandoColumnImpl.setName(this.<String>getColumnOriginalValue("name"));
+		expandoColumnImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		expandoColumnImpl.setDefaultData(
+			this.<String>getColumnOriginalValue("defaultData"));
+		expandoColumnImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+
+		return expandoColumnImpl;
+	}
+
+	@Override
 	public int compareTo(ExpandoColumn expandoColumn) {
 		int value = 0;
 

@@ -1237,6 +1237,56 @@ public class AddressModelImpl
 	}
 
 	@Override
+	public Address cloneWithOriginalValues() {
+		AddressImpl addressImpl = new AddressImpl();
+
+		addressImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		addressImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		addressImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		addressImpl.setAddressId(
+			this.<Long>getColumnOriginalValue("addressId"));
+		addressImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		addressImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		addressImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		addressImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		addressImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		addressImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		addressImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		addressImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		addressImpl.setRegionId(this.<Long>getColumnOriginalValue("regionId"));
+		addressImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		addressImpl.setCity(this.<String>getColumnOriginalValue("city"));
+		addressImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		addressImpl.setLatitude(
+			this.<Double>getColumnOriginalValue("latitude"));
+		addressImpl.setLongitude(
+			this.<Double>getColumnOriginalValue("longitude"));
+		addressImpl.setMailing(this.<Boolean>getColumnOriginalValue("mailing"));
+		addressImpl.setName(this.<String>getColumnOriginalValue("name"));
+		addressImpl.setPrimary(
+			this.<Boolean>getColumnOriginalValue("primary_"));
+		addressImpl.setStreet1(this.<String>getColumnOriginalValue("street1"));
+		addressImpl.setStreet2(this.<String>getColumnOriginalValue("street2"));
+		addressImpl.setStreet3(this.<String>getColumnOriginalValue("street3"));
+		addressImpl.setValidationDate(
+			this.<Date>getColumnOriginalValue("validationDate"));
+		addressImpl.setValidationStatus(
+			this.<Integer>getColumnOriginalValue("validationStatus"));
+		addressImpl.setZip(this.<String>getColumnOriginalValue("zip"));
+
+		return addressImpl;
+	}
+
+	@Override
 	public int compareTo(Address address) {
 		int value = 0;
 

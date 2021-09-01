@@ -662,6 +662,37 @@ public class KaleoTaskModelImpl
 	}
 
 	@Override
+	public KaleoTask cloneWithOriginalValues() {
+		KaleoTaskImpl kaleoTaskImpl = new KaleoTaskImpl();
+
+		kaleoTaskImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskImpl.setKaleoTaskId(
+			this.<Long>getColumnOriginalValue("kaleoTaskId"));
+		kaleoTaskImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTaskImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTaskImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kaleoTaskImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTaskImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTaskImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTaskImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTaskImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTaskImpl.setKaleoNodeId(
+			this.<Long>getColumnOriginalValue("kaleoNodeId"));
+		kaleoTaskImpl.setName(this.<String>getColumnOriginalValue("name"));
+		kaleoTaskImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+
+		return kaleoTaskImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTask kaleoTask) {
 		int value = 0;
 

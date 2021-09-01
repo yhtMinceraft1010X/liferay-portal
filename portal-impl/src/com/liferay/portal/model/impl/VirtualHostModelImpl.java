@@ -563,6 +563,30 @@ public class VirtualHostModelImpl
 	}
 
 	@Override
+	public VirtualHost cloneWithOriginalValues() {
+		VirtualHostImpl virtualHostImpl = new VirtualHostImpl();
+
+		virtualHostImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		virtualHostImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		virtualHostImpl.setVirtualHostId(
+			this.<Long>getColumnOriginalValue("virtualHostId"));
+		virtualHostImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		virtualHostImpl.setLayoutSetId(
+			this.<Long>getColumnOriginalValue("layoutSetId"));
+		virtualHostImpl.setHostname(
+			this.<String>getColumnOriginalValue("hostname"));
+		virtualHostImpl.setDefaultVirtualHost(
+			this.<Boolean>getColumnOriginalValue("defaultVirtualHost"));
+		virtualHostImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+
+		return virtualHostImpl;
+	}
+
+	@Override
 	public int compareTo(VirtualHost virtualHost) {
 		int value = 0;
 

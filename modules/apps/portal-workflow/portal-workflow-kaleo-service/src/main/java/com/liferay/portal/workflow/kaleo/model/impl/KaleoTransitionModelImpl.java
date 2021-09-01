@@ -840,6 +840,50 @@ public class KaleoTransitionModelImpl
 	}
 
 	@Override
+	public KaleoTransition cloneWithOriginalValues() {
+		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
+
+		kaleoTransitionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTransitionImpl.setKaleoTransitionId(
+			this.<Long>getColumnOriginalValue("kaleoTransitionId"));
+		kaleoTransitionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTransitionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTransitionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTransitionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTransitionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTransitionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTransitionImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTransitionImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTransitionImpl.setKaleoNodeId(
+			this.<Long>getColumnOriginalValue("kaleoNodeId"));
+		kaleoTransitionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		kaleoTransitionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoTransitionImpl.setSourceKaleoNodeId(
+			this.<Long>getColumnOriginalValue("sourceKaleoNodeId"));
+		kaleoTransitionImpl.setSourceKaleoNodeName(
+			this.<String>getColumnOriginalValue("sourceKaleoNodeName"));
+		kaleoTransitionImpl.setTargetKaleoNodeId(
+			this.<Long>getColumnOriginalValue("targetKaleoNodeId"));
+		kaleoTransitionImpl.setTargetKaleoNodeName(
+			this.<String>getColumnOriginalValue("targetKaleoNodeName"));
+		kaleoTransitionImpl.setDefaultTransition(
+			this.<Boolean>getColumnOriginalValue("defaultTransition"));
+
+		return kaleoTransitionImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTransition kaleoTransition) {
 		int value = 0;
 

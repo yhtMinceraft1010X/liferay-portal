@@ -665,6 +665,34 @@ public class PortletItemModelImpl
 	}
 
 	@Override
+	public PortletItem cloneWithOriginalValues() {
+		PortletItemImpl portletItemImpl = new PortletItemImpl();
+
+		portletItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		portletItemImpl.setPortletItemId(
+			this.<Long>getColumnOriginalValue("portletItemId"));
+		portletItemImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		portletItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		portletItemImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		portletItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		portletItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		portletItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		portletItemImpl.setName(this.<String>getColumnOriginalValue("name"));
+		portletItemImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		portletItemImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+
+		return portletItemImpl;
+	}
+
+	@Override
 	public int compareTo(PortletItem portletItem) {
 		long primaryKey = portletItem.getPrimaryKey();
 

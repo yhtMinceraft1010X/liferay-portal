@@ -522,6 +522,18 @@ public class LocalizedEntryModelImpl
 	}
 
 	@Override
+	public LocalizedEntry cloneWithOriginalValues() {
+		LocalizedEntryImpl localizedEntryImpl = new LocalizedEntryImpl();
+
+		localizedEntryImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
+		localizedEntryImpl.setLocalizedEntryId(
+			this.<Long>getColumnOriginalValue("localizedEntryId"));
+
+		return localizedEntryImpl;
+	}
+
+	@Override
 	public int compareTo(LocalizedEntry localizedEntry) {
 		long primaryKey = localizedEntry.getPrimaryKey();
 

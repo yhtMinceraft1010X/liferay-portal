@@ -513,6 +513,29 @@ public class AssetEntryAssetCategoryRelModelImpl
 	}
 
 	@Override
+	public AssetEntryAssetCategoryRel cloneWithOriginalValues() {
+		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl =
+			new AssetEntryAssetCategoryRelImpl();
+
+		assetEntryAssetCategoryRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetEntryAssetCategoryRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
+			this.<Long>getColumnOriginalValue("assetEntryAssetCategoryRelId"));
+		assetEntryAssetCategoryRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetEntryAssetCategoryRelImpl.setAssetEntryId(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
+		assetEntryAssetCategoryRelImpl.setAssetCategoryId(
+			this.<Long>getColumnOriginalValue("assetCategoryId"));
+		assetEntryAssetCategoryRelImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
+
+		return assetEntryAssetCategoryRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
 

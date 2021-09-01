@@ -475,6 +475,25 @@ public class ExpandoRowModelImpl
 	}
 
 	@Override
+	public ExpandoRow cloneWithOriginalValues() {
+		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
+
+		expandoRowImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		expandoRowImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		expandoRowImpl.setRowId(this.<Long>getColumnOriginalValue("rowId_"));
+		expandoRowImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		expandoRowImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		expandoRowImpl.setTableId(this.<Long>getColumnOriginalValue("tableId"));
+		expandoRowImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+
+		return expandoRowImpl;
+	}
+
+	@Override
 	public int compareTo(ExpandoRow expandoRow) {
 		long primaryKey = expandoRow.getPrimaryKey();
 

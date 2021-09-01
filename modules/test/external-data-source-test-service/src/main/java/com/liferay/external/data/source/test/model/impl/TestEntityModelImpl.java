@@ -356,6 +356,16 @@ public class TestEntityModelImpl
 	}
 
 	@Override
+	public TestEntity cloneWithOriginalValues() {
+		TestEntityImpl testEntityImpl = new TestEntityImpl();
+
+		testEntityImpl.setId(this.<Long>getColumnOriginalValue("id_"));
+		testEntityImpl.setData(this.<String>getColumnOriginalValue("data_"));
+
+		return testEntityImpl;
+	}
+
+	@Override
 	public int compareTo(TestEntity testEntity) {
 		long primaryKey = testEntity.getPrimaryKey();
 

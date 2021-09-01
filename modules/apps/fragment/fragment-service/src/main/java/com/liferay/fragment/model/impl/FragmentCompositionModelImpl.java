@@ -1148,6 +1148,57 @@ public class FragmentCompositionModelImpl
 	}
 
 	@Override
+	public FragmentComposition cloneWithOriginalValues() {
+		FragmentCompositionImpl fragmentCompositionImpl =
+			new FragmentCompositionImpl();
+
+		fragmentCompositionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fragmentCompositionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		fragmentCompositionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		fragmentCompositionImpl.setFragmentCompositionId(
+			this.<Long>getColumnOriginalValue("fragmentCompositionId"));
+		fragmentCompositionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		fragmentCompositionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fragmentCompositionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		fragmentCompositionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fragmentCompositionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fragmentCompositionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fragmentCompositionImpl.setFragmentCollectionId(
+			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
+		fragmentCompositionImpl.setFragmentCompositionKey(
+			this.<String>getColumnOriginalValue("fragmentCompositionKey"));
+		fragmentCompositionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		fragmentCompositionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		fragmentCompositionImpl.setData(
+			this.<String>getColumnOriginalValue("data_"));
+		fragmentCompositionImpl.setPreviewFileEntryId(
+			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		fragmentCompositionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		fragmentCompositionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		fragmentCompositionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		fragmentCompositionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		fragmentCompositionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return fragmentCompositionImpl;
+	}
+
+	@Override
 	public int compareTo(FragmentComposition fragmentComposition) {
 		int value = 0;
 

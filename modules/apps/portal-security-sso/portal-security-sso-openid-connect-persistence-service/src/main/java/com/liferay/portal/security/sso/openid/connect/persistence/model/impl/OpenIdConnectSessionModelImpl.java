@@ -522,6 +522,31 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	@Override
+	public OpenIdConnectSession cloneWithOriginalValues() {
+		OpenIdConnectSessionImpl openIdConnectSessionImpl =
+			new OpenIdConnectSessionImpl();
+
+		openIdConnectSessionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		openIdConnectSessionImpl.setOpenIdConnectSessionId(
+			this.<Long>getColumnOriginalValue("openIdConnectSessionId"));
+		openIdConnectSessionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		openIdConnectSessionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		openIdConnectSessionImpl.setAccessToken(
+			this.<String>getColumnOriginalValue("accessToken"));
+		openIdConnectSessionImpl.setIdToken(
+			this.<String>getColumnOriginalValue("idToken"));
+		openIdConnectSessionImpl.setProviderName(
+			this.<String>getColumnOriginalValue("providerName"));
+		openIdConnectSessionImpl.setRefreshToken(
+			this.<String>getColumnOriginalValue("refreshToken"));
+
+		return openIdConnectSessionImpl;
+	}
+
+	@Override
 	public int compareTo(OpenIdConnectSession openIdConnectSession) {
 		long primaryKey = openIdConnectSession.getPrimaryKey();
 

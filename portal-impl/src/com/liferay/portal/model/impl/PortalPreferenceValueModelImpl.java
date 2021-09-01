@@ -619,6 +619,33 @@ public class PortalPreferenceValueModelImpl
 	}
 
 	@Override
+	public PortalPreferenceValue cloneWithOriginalValues() {
+		PortalPreferenceValueImpl portalPreferenceValueImpl =
+			new PortalPreferenceValueImpl();
+
+		portalPreferenceValueImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		portalPreferenceValueImpl.setPortalPreferenceValueId(
+			this.<Long>getColumnOriginalValue("portalPreferenceValueId"));
+		portalPreferenceValueImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		portalPreferenceValueImpl.setPortalPreferencesId(
+			this.<Long>getColumnOriginalValue("portalPreferencesId"));
+		portalPreferenceValueImpl.setIndex(
+			this.<Integer>getColumnOriginalValue("index_"));
+		portalPreferenceValueImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		portalPreferenceValueImpl.setLargeValue(
+			this.<String>getColumnOriginalValue("largeValue"));
+		portalPreferenceValueImpl.setNamespace(
+			this.<String>getColumnOriginalValue("namespace"));
+		portalPreferenceValueImpl.setSmallValue(
+			this.<String>getColumnOriginalValue("smallValue"));
+
+		return portalPreferenceValueImpl;
+	}
+
+	@Override
 	public int compareTo(PortalPreferenceValue portalPreferenceValue) {
 		int value = 0;
 

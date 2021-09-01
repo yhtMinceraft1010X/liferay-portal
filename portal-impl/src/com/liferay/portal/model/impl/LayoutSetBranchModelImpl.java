@@ -955,6 +955,52 @@ public class LayoutSetBranchModelImpl
 	}
 
 	@Override
+	public LayoutSetBranch cloneWithOriginalValues() {
+		LayoutSetBranchImpl layoutSetBranchImpl = new LayoutSetBranchImpl();
+
+		layoutSetBranchImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutSetBranchImpl.setLayoutSetBranchId(
+			this.<Long>getColumnOriginalValue("layoutSetBranchId"));
+		layoutSetBranchImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutSetBranchImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutSetBranchImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutSetBranchImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutSetBranchImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutSetBranchImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutSetBranchImpl.setPrivateLayout(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
+		layoutSetBranchImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		layoutSetBranchImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		layoutSetBranchImpl.setMaster(
+			this.<Boolean>getColumnOriginalValue("master"));
+		layoutSetBranchImpl.setLogoId(
+			this.<Long>getColumnOriginalValue("logoId"));
+		layoutSetBranchImpl.setThemeId(
+			this.<String>getColumnOriginalValue("themeId"));
+		layoutSetBranchImpl.setColorSchemeId(
+			this.<String>getColumnOriginalValue("colorSchemeId"));
+		layoutSetBranchImpl.setCss(this.<String>getColumnOriginalValue("css"));
+		layoutSetBranchImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		layoutSetBranchImpl.setLayoutSetPrototypeUuid(
+			this.<String>getColumnOriginalValue("layoutSetPrototypeUuid"));
+		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(
+			this.<Boolean>getColumnOriginalValue(
+				"layoutSetPrototypeLinkEnabled"));
+
+		return layoutSetBranchImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutSetBranch layoutSetBranch) {
 		int value = 0;
 

@@ -657,6 +657,29 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	@Override
+	public Lock cloneWithOriginalValues() {
+		LockImpl lockImpl = new LockImpl();
+
+		lockImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		lockImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		lockImpl.setLockId(this.<Long>getColumnOriginalValue("lockId"));
+		lockImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		lockImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		lockImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		lockImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
+		lockImpl.setClassName(this.<String>getColumnOriginalValue("className"));
+		lockImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		lockImpl.setOwner(this.<String>getColumnOriginalValue("owner"));
+		lockImpl.setInheritable(
+			this.<Boolean>getColumnOriginalValue("inheritable"));
+		lockImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+
+		return lockImpl;
+	}
+
+	@Override
 	public int compareTo(Lock lock) {
 		long primaryKey = lock.getPrimaryKey();
 

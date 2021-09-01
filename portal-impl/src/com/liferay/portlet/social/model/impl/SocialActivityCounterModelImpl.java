@@ -802,6 +802,45 @@ public class SocialActivityCounterModelImpl
 	}
 
 	@Override
+	public SocialActivityCounter cloneWithOriginalValues() {
+		SocialActivityCounterImpl socialActivityCounterImpl =
+			new SocialActivityCounterImpl();
+
+		socialActivityCounterImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivityCounterImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivityCounterImpl.setActivityCounterId(
+			this.<Long>getColumnOriginalValue("activityCounterId"));
+		socialActivityCounterImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivityCounterImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivityCounterImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialActivityCounterImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		socialActivityCounterImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		socialActivityCounterImpl.setOwnerType(
+			this.<Integer>getColumnOriginalValue("ownerType"));
+		socialActivityCounterImpl.setCurrentValue(
+			this.<Integer>getColumnOriginalValue("currentValue"));
+		socialActivityCounterImpl.setTotalValue(
+			this.<Integer>getColumnOriginalValue("totalValue"));
+		socialActivityCounterImpl.setGraceValue(
+			this.<Integer>getColumnOriginalValue("graceValue"));
+		socialActivityCounterImpl.setStartPeriod(
+			this.<Integer>getColumnOriginalValue("startPeriod"));
+		socialActivityCounterImpl.setEndPeriod(
+			this.<Integer>getColumnOriginalValue("endPeriod"));
+		socialActivityCounterImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return socialActivityCounterImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivityCounter socialActivityCounter) {
 		long primaryKey = socialActivityCounter.getPrimaryKey();
 

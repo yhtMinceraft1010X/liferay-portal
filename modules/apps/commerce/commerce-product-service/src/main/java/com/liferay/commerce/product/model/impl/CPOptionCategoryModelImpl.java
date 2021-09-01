@@ -1036,6 +1036,38 @@ public class CPOptionCategoryModelImpl
 	}
 
 	@Override
+	public CPOptionCategory cloneWithOriginalValues() {
+		CPOptionCategoryImpl cpOptionCategoryImpl = new CPOptionCategoryImpl();
+
+		cpOptionCategoryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpOptionCategoryImpl.setCPOptionCategoryId(
+			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
+		cpOptionCategoryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpOptionCategoryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpOptionCategoryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpOptionCategoryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpOptionCategoryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpOptionCategoryImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		cpOptionCategoryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		cpOptionCategoryImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpOptionCategoryImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		cpOptionCategoryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpOptionCategoryImpl;
+	}
+
+	@Override
 	public int compareTo(CPOptionCategory cpOptionCategory) {
 		int value = 0;
 

@@ -1625,6 +1625,62 @@ public class AssetEntryModelImpl
 	}
 
 	@Override
+	public AssetEntry cloneWithOriginalValues() {
+		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
+
+		assetEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetEntryImpl.setEntryId(this.<Long>getColumnOriginalValue("entryId"));
+		assetEntryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		assetEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		assetEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		assetEntryImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		assetEntryImpl.setClassUuid(
+			this.<String>getColumnOriginalValue("classUuid"));
+		assetEntryImpl.setClassTypeId(
+			this.<Long>getColumnOriginalValue("classTypeId"));
+		assetEntryImpl.setListable(
+			this.<Boolean>getColumnOriginalValue("listable"));
+		assetEntryImpl.setVisible(
+			this.<Boolean>getColumnOriginalValue("visible"));
+		assetEntryImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		assetEntryImpl.setEndDate(this.<Date>getColumnOriginalValue("endDate"));
+		assetEntryImpl.setPublishDate(
+			this.<Date>getColumnOriginalValue("publishDate"));
+		assetEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		assetEntryImpl.setMimeType(
+			this.<String>getColumnOriginalValue("mimeType"));
+		assetEntryImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		assetEntryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		assetEntryImpl.setSummary(
+			this.<String>getColumnOriginalValue("summary"));
+		assetEntryImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+		assetEntryImpl.setLayoutUuid(
+			this.<String>getColumnOriginalValue("layoutUuid"));
+		assetEntryImpl.setHeight(
+			this.<Integer>getColumnOriginalValue("height"));
+		assetEntryImpl.setWidth(this.<Integer>getColumnOriginalValue("width"));
+		assetEntryImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+
+		return assetEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AssetEntry assetEntry) {
 		long primaryKey = assetEntry.getPrimaryKey();
 

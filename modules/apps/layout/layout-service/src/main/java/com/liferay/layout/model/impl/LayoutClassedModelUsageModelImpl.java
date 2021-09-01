@@ -839,6 +839,45 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	@Override
+	public LayoutClassedModelUsage cloneWithOriginalValues() {
+		LayoutClassedModelUsageImpl layoutClassedModelUsageImpl =
+			new LayoutClassedModelUsageImpl();
+
+		layoutClassedModelUsageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutClassedModelUsageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutClassedModelUsageImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutClassedModelUsageImpl.setLayoutClassedModelUsageId(
+			this.<Long>getColumnOriginalValue("layoutClassedModelUsageId"));
+		layoutClassedModelUsageImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutClassedModelUsageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutClassedModelUsageImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutClassedModelUsageImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutClassedModelUsageImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		layoutClassedModelUsageImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		layoutClassedModelUsageImpl.setContainerKey(
+			this.<String>getColumnOriginalValue("containerKey"));
+		layoutClassedModelUsageImpl.setContainerType(
+			this.<Long>getColumnOriginalValue("containerType"));
+		layoutClassedModelUsageImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		layoutClassedModelUsageImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		layoutClassedModelUsageImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return layoutClassedModelUsageImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutClassedModelUsage layoutClassedModelUsage) {
 		long primaryKey = layoutClassedModelUsage.getPrimaryKey();
 

@@ -744,6 +744,36 @@ public class KaleoProcessModelImpl
 	}
 
 	@Override
+	public KaleoProcess cloneWithOriginalValues() {
+		KaleoProcessImpl kaleoProcessImpl = new KaleoProcessImpl();
+
+		kaleoProcessImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		kaleoProcessImpl.setKaleoProcessId(
+			this.<Long>getColumnOriginalValue("kaleoProcessId"));
+		kaleoProcessImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoProcessImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoProcessImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kaleoProcessImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoProcessImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoProcessImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoProcessImpl.setDDLRecordSetId(
+			this.<Long>getColumnOriginalValue("DDLRecordSetId"));
+		kaleoProcessImpl.setDDMTemplateId(
+			this.<Long>getColumnOriginalValue("DDMTemplateId"));
+		kaleoProcessImpl.setWorkflowDefinitionName(
+			this.<String>getColumnOriginalValue("workflowDefinitionName"));
+		kaleoProcessImpl.setWorkflowDefinitionVersion(
+			this.<Integer>getColumnOriginalValue("workflowDefinitionVersion"));
+
+		return kaleoProcessImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoProcess kaleoProcess) {
 		long primaryKey = kaleoProcess.getPrimaryKey();
 

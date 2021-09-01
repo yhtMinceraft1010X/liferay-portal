@@ -881,6 +881,40 @@ public class SharingEntryModelImpl
 	}
 
 	@Override
+	public SharingEntry cloneWithOriginalValues() {
+		SharingEntryImpl sharingEntryImpl = new SharingEntryImpl();
+
+		sharingEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		sharingEntryImpl.setSharingEntryId(
+			this.<Long>getColumnOriginalValue("sharingEntryId"));
+		sharingEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		sharingEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		sharingEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		sharingEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		sharingEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		sharingEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		sharingEntryImpl.setToUserId(
+			this.<Long>getColumnOriginalValue("toUserId"));
+		sharingEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		sharingEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		sharingEntryImpl.setShareable(
+			this.<Boolean>getColumnOriginalValue("shareable"));
+		sharingEntryImpl.setActionIds(
+			this.<Long>getColumnOriginalValue("actionIds"));
+		sharingEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+
+		return sharingEntryImpl;
+	}
+
+	@Override
 	public int compareTo(SharingEntry sharingEntry) {
 		long primaryKey = sharingEntry.getPrimaryKey();
 

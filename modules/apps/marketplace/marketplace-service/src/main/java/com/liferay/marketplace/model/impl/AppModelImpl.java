@@ -781,6 +781,31 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	}
 
 	@Override
+	public App cloneWithOriginalValues() {
+		AppImpl appImpl = new AppImpl();
+
+		appImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		appImpl.setAppId(this.<Long>getColumnOriginalValue("appId"));
+		appImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		appImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		appImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		appImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
+		appImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		appImpl.setRemoteAppId(
+			this.<Long>getColumnOriginalValue("remoteAppId"));
+		appImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		appImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		appImpl.setCategory(this.<String>getColumnOriginalValue("category"));
+		appImpl.setIconURL(this.<String>getColumnOriginalValue("iconURL"));
+		appImpl.setVersion(this.<String>getColumnOriginalValue("version"));
+		appImpl.setRequired(this.<Boolean>getColumnOriginalValue("required"));
+
+		return appImpl;
+	}
+
+	@Override
 	public int compareTo(App app) {
 		long primaryKey = app.getPrimaryKey();
 

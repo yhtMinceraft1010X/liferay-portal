@@ -702,6 +702,33 @@ public class CommerceAccountGroupRelModelImpl
 	}
 
 	@Override
+	public CommerceAccountGroupRel cloneWithOriginalValues() {
+		CommerceAccountGroupRelImpl commerceAccountGroupRelImpl =
+			new CommerceAccountGroupRelImpl();
+
+		commerceAccountGroupRelImpl.setCommerceAccountGroupRelId(
+			this.<Long>getColumnOriginalValue("commerceAccountGroupRelId"));
+		commerceAccountGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAccountGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAccountGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAccountGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAccountGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAccountGroupRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceAccountGroupRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceAccountGroupRelImpl.setCommerceAccountGroupId(
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
+
+		return commerceAccountGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceAccountGroupRel commerceAccountGroupRel) {
 		int value = 0;
 

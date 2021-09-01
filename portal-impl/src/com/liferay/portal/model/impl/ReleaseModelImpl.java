@@ -575,6 +575,35 @@ public class ReleaseModelImpl
 	}
 
 	@Override
+	public Release cloneWithOriginalValues() {
+		ReleaseImpl releaseImpl = new ReleaseImpl();
+
+		releaseImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		releaseImpl.setReleaseId(
+			this.<Long>getColumnOriginalValue("releaseId"));
+		releaseImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		releaseImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		releaseImpl.setServletContextName(
+			this.<String>getColumnOriginalValue("servletContextName"));
+		releaseImpl.setSchemaVersion(
+			this.<String>getColumnOriginalValue("schemaVersion"));
+		releaseImpl.setBuildNumber(
+			this.<Integer>getColumnOriginalValue("buildNumber"));
+		releaseImpl.setBuildDate(
+			this.<Date>getColumnOriginalValue("buildDate"));
+		releaseImpl.setVerified(
+			this.<Boolean>getColumnOriginalValue("verified"));
+		releaseImpl.setState(this.<Integer>getColumnOriginalValue("state_"));
+		releaseImpl.setTestString(
+			this.<String>getColumnOriginalValue("testString"));
+
+		return releaseImpl;
+	}
+
+	@Override
 	public int compareTo(Release release) {
 		long primaryKey = release.getPrimaryKey();
 

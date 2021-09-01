@@ -687,6 +687,34 @@ public class WeDeployAuthAppModelImpl
 	}
 
 	@Override
+	public WeDeployAuthApp cloneWithOriginalValues() {
+		WeDeployAuthAppImpl weDeployAuthAppImpl = new WeDeployAuthAppImpl();
+
+		weDeployAuthAppImpl.setWeDeployAuthAppId(
+			this.<Long>getColumnOriginalValue("weDeployAuthAppId"));
+		weDeployAuthAppImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		weDeployAuthAppImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		weDeployAuthAppImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		weDeployAuthAppImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		weDeployAuthAppImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		weDeployAuthAppImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		weDeployAuthAppImpl.setRedirectURI(
+			this.<String>getColumnOriginalValue("redirectURI"));
+		weDeployAuthAppImpl.setClientId(
+			this.<String>getColumnOriginalValue("clientId"));
+		weDeployAuthAppImpl.setClientSecret(
+			this.<String>getColumnOriginalValue("clientSecret"));
+
+		return weDeployAuthAppImpl;
+	}
+
+	@Override
 	public int compareTo(WeDeployAuthApp weDeployAuthApp) {
 		long primaryKey = weDeployAuthApp.getPrimaryKey();
 

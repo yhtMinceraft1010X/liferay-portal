@@ -499,6 +499,27 @@ public class CountryLocalizationModelImpl
 	}
 
 	@Override
+	public CountryLocalization cloneWithOriginalValues() {
+		CountryLocalizationImpl countryLocalizationImpl =
+			new CountryLocalizationImpl();
+
+		countryLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		countryLocalizationImpl.setCountryLocalizationId(
+			this.<Long>getColumnOriginalValue("countryLocalizationId"));
+		countryLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		countryLocalizationImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		countryLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		countryLocalizationImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+
+		return countryLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(CountryLocalization countryLocalization) {
 		long primaryKey = countryLocalization.getPrimaryKey();
 

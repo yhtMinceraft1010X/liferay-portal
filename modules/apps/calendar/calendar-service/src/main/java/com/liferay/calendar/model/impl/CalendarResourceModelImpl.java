@@ -1248,6 +1248,50 @@ public class CalendarResourceModelImpl
 	}
 
 	@Override
+	public CalendarResource cloneWithOriginalValues() {
+		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
+
+		calendarResourceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		calendarResourceImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		calendarResourceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		calendarResourceImpl.setCalendarResourceId(
+			this.<Long>getColumnOriginalValue("calendarResourceId"));
+		calendarResourceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		calendarResourceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		calendarResourceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		calendarResourceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		calendarResourceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		calendarResourceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		calendarResourceImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		calendarResourceImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		calendarResourceImpl.setClassUuid(
+			this.<String>getColumnOriginalValue("classUuid"));
+		calendarResourceImpl.setCode(
+			this.<String>getColumnOriginalValue("code_"));
+		calendarResourceImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		calendarResourceImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		calendarResourceImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		calendarResourceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return calendarResourceImpl;
+	}
+
+	@Override
 	public int compareTo(CalendarResource calendarResource) {
 		int value = 0;
 

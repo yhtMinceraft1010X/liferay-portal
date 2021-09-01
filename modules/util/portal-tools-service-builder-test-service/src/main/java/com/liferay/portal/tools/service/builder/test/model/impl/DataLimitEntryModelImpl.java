@@ -473,6 +473,26 @@ public class DataLimitEntryModelImpl
 	}
 
 	@Override
+	public DataLimitEntry cloneWithOriginalValues() {
+		DataLimitEntryImpl dataLimitEntryImpl = new DataLimitEntryImpl();
+
+		dataLimitEntryImpl.setDataLimitEntryId(
+			this.<Long>getColumnOriginalValue("dataLimitEntryId"));
+		dataLimitEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dataLimitEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dataLimitEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dataLimitEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dataLimitEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return dataLimitEntryImpl;
+	}
+
+	@Override
 	public int compareTo(DataLimitEntry dataLimitEntry) {
 		long primaryKey = dataLimitEntry.getPrimaryKey();
 

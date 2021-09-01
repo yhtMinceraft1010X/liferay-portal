@@ -647,6 +647,33 @@ public class CProductModelImpl
 	}
 
 	@Override
+	public CProduct cloneWithOriginalValues() {
+		CProductImpl cProductImpl = new CProductImpl();
+
+		cProductImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		cProductImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cProductImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		cProductImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		cProductImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cProductImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		cProductImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cProductImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cProductImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cProductImpl.setPublishedCPDefinitionId(
+			this.<Long>getColumnOriginalValue("publishedCPDefinitionId"));
+		cProductImpl.setLatestVersion(
+			this.<Integer>getColumnOriginalValue("latestVersion"));
+
+		return cProductImpl;
+	}
+
+	@Override
 	public int compareTo(CProduct cProduct) {
 		int value = 0;
 

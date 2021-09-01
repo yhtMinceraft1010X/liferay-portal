@@ -476,6 +476,25 @@ public class NestedSetsTreeEntryModelImpl
 	}
 
 	@Override
+	public NestedSetsTreeEntry cloneWithOriginalValues() {
+		NestedSetsTreeEntryImpl nestedSetsTreeEntryImpl =
+			new NestedSetsTreeEntryImpl();
+
+		nestedSetsTreeEntryImpl.setNestedSetsTreeEntryId(
+			this.<Long>getColumnOriginalValue("nestedSetsTreeEntryId"));
+		nestedSetsTreeEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		nestedSetsTreeEntryImpl.setParentNestedSetsTreeEntryId(
+			this.<Long>getColumnOriginalValue("parentNestedSetsTreeEntryId"));
+		nestedSetsTreeEntryImpl.setLeftNestedSetsTreeEntryId(
+			this.<Long>getColumnOriginalValue("leftNestedSetsTreeEntryId"));
+		nestedSetsTreeEntryImpl.setRightNestedSetsTreeEntryId(
+			this.<Long>getColumnOriginalValue("rightNestedSetsTreeEntryId"));
+
+		return nestedSetsTreeEntryImpl;
+	}
+
+	@Override
 	public int compareTo(NestedSetsTreeEntry nestedSetsTreeEntry) {
 		long primaryKey = nestedSetsTreeEntry.getPrimaryKey();
 

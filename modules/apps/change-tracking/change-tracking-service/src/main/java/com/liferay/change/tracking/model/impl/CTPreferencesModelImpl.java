@@ -609,6 +609,28 @@ public class CTPreferencesModelImpl
 	}
 
 	@Override
+	public CTPreferences cloneWithOriginalValues() {
+		CTPreferencesImpl ctPreferencesImpl = new CTPreferencesImpl();
+
+		ctPreferencesImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctPreferencesImpl.setCtPreferencesId(
+			this.<Long>getColumnOriginalValue("ctPreferencesId"));
+		ctPreferencesImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctPreferencesImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ctPreferencesImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctPreferencesImpl.setPreviousCtCollectionId(
+			this.<Long>getColumnOriginalValue("previousCtCollectionId"));
+		ctPreferencesImpl.setConfirmationEnabled(
+			this.<Boolean>getColumnOriginalValue("confirmationEnabled"));
+
+		return ctPreferencesImpl;
+	}
+
+	@Override
 	public int compareTo(CTPreferences ctPreferences) {
 		long primaryKey = ctPreferences.getPrimaryKey();
 

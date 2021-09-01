@@ -769,6 +769,38 @@ public class CommercePriceListDiscountRelModelImpl
 	}
 
 	@Override
+	public CommercePriceListDiscountRel cloneWithOriginalValues() {
+		CommercePriceListDiscountRelImpl commercePriceListDiscountRelImpl =
+			new CommercePriceListDiscountRelImpl();
+
+		commercePriceListDiscountRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commercePriceListDiscountRelImpl.setCommercePriceListDiscountRelId(
+			this.<Long>getColumnOriginalValue(
+				"commercePriceListDiscountRelId"));
+		commercePriceListDiscountRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePriceListDiscountRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePriceListDiscountRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePriceListDiscountRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePriceListDiscountRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePriceListDiscountRelImpl.setCommerceDiscountId(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
+		commercePriceListDiscountRelImpl.setCommercePriceListId(
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
+		commercePriceListDiscountRelImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
+		commercePriceListDiscountRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commercePriceListDiscountRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePriceListDiscountRel commercePriceListDiscountRel) {
 

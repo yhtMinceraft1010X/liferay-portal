@@ -515,6 +515,27 @@ public class LocalizedEntryLocalizationModelImpl
 	}
 
 	@Override
+	public LocalizedEntryLocalization cloneWithOriginalValues() {
+		LocalizedEntryLocalizationImpl localizedEntryLocalizationImpl =
+			new LocalizedEntryLocalizationImpl();
+
+		localizedEntryLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		localizedEntryLocalizationImpl.setLocalizedEntryLocalizationId(
+			this.<Long>getColumnOriginalValue("localizedEntryLocalizationId"));
+		localizedEntryLocalizationImpl.setLocalizedEntryId(
+			this.<Long>getColumnOriginalValue("localizedEntryId"));
+		localizedEntryLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		localizedEntryLocalizationImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		localizedEntryLocalizationImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+
+		return localizedEntryLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(
 		LocalizedEntryLocalization localizedEntryLocalization) {
 

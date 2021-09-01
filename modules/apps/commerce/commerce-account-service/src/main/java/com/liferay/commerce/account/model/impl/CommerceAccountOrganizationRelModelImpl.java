@@ -605,6 +605,29 @@ public class CommerceAccountOrganizationRelModelImpl
 	}
 
 	@Override
+	public CommerceAccountOrganizationRel cloneWithOriginalValues() {
+		CommerceAccountOrganizationRelImpl commerceAccountOrganizationRelImpl =
+			new CommerceAccountOrganizationRelImpl();
+
+		commerceAccountOrganizationRelImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceAccountOrganizationRelImpl.setOrganizationId(
+			this.<Long>getColumnOriginalValue("organizationId"));
+		commerceAccountOrganizationRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAccountOrganizationRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAccountOrganizationRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAccountOrganizationRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAccountOrganizationRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return commerceAccountOrganizationRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceAccountOrganizationRel commerceAccountOrganizationRel) {
 

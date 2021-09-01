@@ -1000,6 +1000,35 @@ public class MDRRuleGroupModelImpl
 	}
 
 	@Override
+	public MDRRuleGroup cloneWithOriginalValues() {
+		MDRRuleGroupImpl mdrRuleGroupImpl = new MDRRuleGroupImpl();
+
+		mdrRuleGroupImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mdrRuleGroupImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mdrRuleGroupImpl.setRuleGroupId(
+			this.<Long>getColumnOriginalValue("ruleGroupId"));
+		mdrRuleGroupImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		mdrRuleGroupImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mdrRuleGroupImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mdrRuleGroupImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mdrRuleGroupImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mdrRuleGroupImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mdrRuleGroupImpl.setName(this.<String>getColumnOriginalValue("name"));
+		mdrRuleGroupImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		mdrRuleGroupImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mdrRuleGroupImpl;
+	}
+
+	@Override
 	public int compareTo(MDRRuleGroup mdrRuleGroup) {
 		int value = 0;
 

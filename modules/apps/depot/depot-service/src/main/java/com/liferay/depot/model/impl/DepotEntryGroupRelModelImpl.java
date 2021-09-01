@@ -872,6 +872,43 @@ public class DepotEntryGroupRelModelImpl
 	}
 
 	@Override
+	public DepotEntryGroupRel cloneWithOriginalValues() {
+		DepotEntryGroupRelImpl depotEntryGroupRelImpl =
+			new DepotEntryGroupRelImpl();
+
+		depotEntryGroupRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		depotEntryGroupRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		depotEntryGroupRelImpl.setDepotEntryGroupRelId(
+			this.<Long>getColumnOriginalValue("depotEntryGroupRelId"));
+		depotEntryGroupRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		depotEntryGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		depotEntryGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		depotEntryGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		depotEntryGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		depotEntryGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		depotEntryGroupRelImpl.setDdmStructuresAvailable(
+			this.<Boolean>getColumnOriginalValue("ddmStructuresAvailable"));
+		depotEntryGroupRelImpl.setDepotEntryId(
+			this.<Long>getColumnOriginalValue("depotEntryId"));
+		depotEntryGroupRelImpl.setSearchable(
+			this.<Boolean>getColumnOriginalValue("searchable"));
+		depotEntryGroupRelImpl.setToGroupId(
+			this.<Long>getColumnOriginalValue("toGroupId"));
+		depotEntryGroupRelImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return depotEntryGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(DepotEntryGroupRel depotEntryGroupRel) {
 		long primaryKey = depotEntryGroupRel.getPrimaryKey();
 

@@ -1136,6 +1136,47 @@ public class ExportImportConfigurationModelImpl
 	}
 
 	@Override
+	public ExportImportConfiguration cloneWithOriginalValues() {
+		ExportImportConfigurationImpl exportImportConfigurationImpl =
+			new ExportImportConfigurationImpl();
+
+		exportImportConfigurationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		exportImportConfigurationImpl.setExportImportConfigurationId(
+			this.<Long>getColumnOriginalValue("exportImportConfigurationId"));
+		exportImportConfigurationImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		exportImportConfigurationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		exportImportConfigurationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		exportImportConfigurationImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		exportImportConfigurationImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		exportImportConfigurationImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		exportImportConfigurationImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		exportImportConfigurationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		exportImportConfigurationImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		exportImportConfigurationImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		exportImportConfigurationImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		exportImportConfigurationImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		exportImportConfigurationImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		exportImportConfigurationImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return exportImportConfigurationImpl;
+	}
+
+	@Override
 	public int compareTo(ExportImportConfiguration exportImportConfiguration) {
 		int value = 0;
 

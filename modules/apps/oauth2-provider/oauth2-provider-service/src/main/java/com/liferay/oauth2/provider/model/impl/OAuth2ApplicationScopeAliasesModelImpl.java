@@ -518,6 +518,27 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	}
 
 	@Override
+	public OAuth2ApplicationScopeAliases cloneWithOriginalValues() {
+		OAuth2ApplicationScopeAliasesImpl oAuth2ApplicationScopeAliasesImpl =
+			new OAuth2ApplicationScopeAliasesImpl();
+
+		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationScopeAliasesId(
+			this.<Long>getColumnOriginalValue("oA2AScopeAliasesId"));
+		oAuth2ApplicationScopeAliasesImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuth2ApplicationScopeAliasesImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		oAuth2ApplicationScopeAliasesImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		oAuth2ApplicationScopeAliasesImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationId(
+			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
+
+		return oAuth2ApplicationScopeAliasesImpl;
+	}
+
+	@Override
 	public int compareTo(
 		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
 

@@ -774,6 +774,32 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	@Override
+	public Team cloneWithOriginalValues() {
+		TeamImpl teamImpl = new TeamImpl();
+
+		teamImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		teamImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		teamImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		teamImpl.setTeamId(this.<Long>getColumnOriginalValue("teamId"));
+		teamImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		teamImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		teamImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		teamImpl.setCreateDate(this.<Date>getColumnOriginalValue("createDate"));
+		teamImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		teamImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		teamImpl.setName(this.<String>getColumnOriginalValue("name"));
+		teamImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		teamImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return teamImpl;
+	}
+
+	@Override
 	public int compareTo(Team team) {
 		int value = 0;
 

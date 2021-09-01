@@ -1110,6 +1110,53 @@ public class KaleoDefinitionVersionModelImpl
 	}
 
 	@Override
+	public KaleoDefinitionVersion cloneWithOriginalValues() {
+		KaleoDefinitionVersionImpl kaleoDefinitionVersionImpl =
+			new KaleoDefinitionVersionImpl();
+
+		kaleoDefinitionVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoDefinitionVersionImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoDefinitionVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoDefinitionVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoDefinitionVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoDefinitionVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoDefinitionVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		kaleoDefinitionVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		kaleoDefinitionVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+		kaleoDefinitionVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoDefinitionVersionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoDefinitionVersionImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoDefinitionVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		kaleoDefinitionVersionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		kaleoDefinitionVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoDefinitionVersionImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		kaleoDefinitionVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		kaleoDefinitionVersionImpl.setStartKaleoNodeId(
+			this.<Long>getColumnOriginalValue("startKaleoNodeId"));
+		kaleoDefinitionVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return kaleoDefinitionVersionImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		long primaryKey = kaleoDefinitionVersion.getPrimaryKey();
 

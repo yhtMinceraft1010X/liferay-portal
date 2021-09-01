@@ -545,6 +545,29 @@ public class WebDAVPropsModelImpl
 	}
 
 	@Override
+	public WebDAVProps cloneWithOriginalValues() {
+		WebDAVPropsImpl webDAVPropsImpl = new WebDAVPropsImpl();
+
+		webDAVPropsImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		webDAVPropsImpl.setWebDavPropsId(
+			this.<Long>getColumnOriginalValue("webDavPropsId"));
+		webDAVPropsImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		webDAVPropsImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		webDAVPropsImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		webDAVPropsImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		webDAVPropsImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		webDAVPropsImpl.setProps(this.<String>getColumnOriginalValue("props"));
+
+		return webDAVPropsImpl;
+	}
+
+	@Override
 	public int compareTo(WebDAVProps webDAVProps) {
 		long primaryKey = webDAVProps.getPrimaryKey();
 

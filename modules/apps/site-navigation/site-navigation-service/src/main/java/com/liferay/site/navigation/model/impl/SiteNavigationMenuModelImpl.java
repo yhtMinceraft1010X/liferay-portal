@@ -848,6 +848,43 @@ public class SiteNavigationMenuModelImpl
 	}
 
 	@Override
+	public SiteNavigationMenu cloneWithOriginalValues() {
+		SiteNavigationMenuImpl siteNavigationMenuImpl =
+			new SiteNavigationMenuImpl();
+
+		siteNavigationMenuImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		siteNavigationMenuImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		siteNavigationMenuImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		siteNavigationMenuImpl.setSiteNavigationMenuId(
+			this.<Long>getColumnOriginalValue("siteNavigationMenuId"));
+		siteNavigationMenuImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		siteNavigationMenuImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		siteNavigationMenuImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		siteNavigationMenuImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		siteNavigationMenuImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		siteNavigationMenuImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		siteNavigationMenuImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		siteNavigationMenuImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		siteNavigationMenuImpl.setAuto(
+			this.<Boolean>getColumnOriginalValue("auto_"));
+		siteNavigationMenuImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return siteNavigationMenuImpl;
+	}
+
+	@Override
 	public int compareTo(SiteNavigationMenu siteNavigationMenu) {
 		long primaryKey = siteNavigationMenu.getPrimaryKey();
 

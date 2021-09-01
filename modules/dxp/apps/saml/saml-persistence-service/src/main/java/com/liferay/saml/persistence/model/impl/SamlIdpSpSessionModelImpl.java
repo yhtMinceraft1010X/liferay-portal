@@ -547,6 +547,30 @@ public class SamlIdpSpSessionModelImpl
 	}
 
 	@Override
+	public SamlIdpSpSession cloneWithOriginalValues() {
+		SamlIdpSpSessionImpl samlIdpSpSessionImpl = new SamlIdpSpSessionImpl();
+
+		samlIdpSpSessionImpl.setSamlIdpSpSessionId(
+			this.<Long>getColumnOriginalValue("samlIdpSpSessionId"));
+		samlIdpSpSessionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		samlIdpSpSessionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		samlIdpSpSessionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		samlIdpSpSessionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		samlIdpSpSessionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		samlIdpSpSessionImpl.setSamlIdpSsoSessionId(
+			this.<Long>getColumnOriginalValue("samlIdpSsoSessionId"));
+		samlIdpSpSessionImpl.setSamlPeerBindingId(
+			this.<Long>getColumnOriginalValue("samlPeerBindingId"));
+
+		return samlIdpSpSessionImpl;
+	}
+
+	@Override
 	public int compareTo(SamlIdpSpSession samlIdpSpSession) {
 		long primaryKey = samlIdpSpSession.getPrimaryKey();
 

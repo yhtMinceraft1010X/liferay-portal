@@ -881,6 +881,42 @@ public class RepositoryModelImpl
 	}
 
 	@Override
+	public Repository cloneWithOriginalValues() {
+		RepositoryImpl repositoryImpl = new RepositoryImpl();
+
+		repositoryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		repositoryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		repositoryImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		repositoryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		repositoryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		repositoryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		repositoryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		repositoryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		repositoryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		repositoryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		repositoryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		repositoryImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		repositoryImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		repositoryImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		repositoryImpl.setDlFolderId(
+			this.<Long>getColumnOriginalValue("dlFolderId"));
+		repositoryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return repositoryImpl;
+	}
+
+	@Override
 	public int compareTo(Repository repository) {
 		long primaryKey = repository.getPrimaryKey();
 

@@ -559,6 +559,33 @@ public class AssetAutoTaggerEntryModelImpl
 	}
 
 	@Override
+	public AssetAutoTaggerEntry cloneWithOriginalValues() {
+		AssetAutoTaggerEntryImpl assetAutoTaggerEntryImpl =
+			new AssetAutoTaggerEntryImpl();
+
+		assetAutoTaggerEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetAutoTaggerEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(
+			this.<Long>getColumnOriginalValue("assetAutoTaggerEntryId"));
+		assetAutoTaggerEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetAutoTaggerEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetAutoTaggerEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetAutoTaggerEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetAutoTaggerEntryImpl.setAssetEntryId(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
+		assetAutoTaggerEntryImpl.setAssetTagId(
+			this.<Long>getColumnOriginalValue("assetTagId"));
+
+		return assetAutoTaggerEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AssetAutoTaggerEntry assetAutoTaggerEntry) {
 		int value = 0;
 

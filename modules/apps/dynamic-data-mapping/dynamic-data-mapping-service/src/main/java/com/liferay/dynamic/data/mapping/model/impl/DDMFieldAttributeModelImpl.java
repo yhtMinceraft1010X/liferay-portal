@@ -631,6 +631,35 @@ public class DDMFieldAttributeModelImpl
 	}
 
 	@Override
+	public DDMFieldAttribute cloneWithOriginalValues() {
+		DDMFieldAttributeImpl ddmFieldAttributeImpl =
+			new DDMFieldAttributeImpl();
+
+		ddmFieldAttributeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFieldAttributeImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFieldAttributeImpl.setFieldAttributeId(
+			this.<Long>getColumnOriginalValue("fieldAttributeId"));
+		ddmFieldAttributeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFieldAttributeImpl.setFieldId(
+			this.<Long>getColumnOriginalValue("fieldId"));
+		ddmFieldAttributeImpl.setStorageId(
+			this.<Long>getColumnOriginalValue("storageId"));
+		ddmFieldAttributeImpl.setAttributeName(
+			this.<String>getColumnOriginalValue("attributeName"));
+		ddmFieldAttributeImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		ddmFieldAttributeImpl.setLargeAttributeValue(
+			this.<String>getColumnOriginalValue("largeAttributeValue"));
+		ddmFieldAttributeImpl.setSmallAttributeValue(
+			this.<String>getColumnOriginalValue("smallAttributeValue"));
+
+		return ddmFieldAttributeImpl;
+	}
+
+	@Override
 	public int compareTo(DDMFieldAttribute ddmFieldAttribute) {
 		long primaryKey = ddmFieldAttribute.getPrimaryKey();
 

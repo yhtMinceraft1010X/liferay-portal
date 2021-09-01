@@ -1419,6 +1419,54 @@ public class CommerceNotificationTemplateModelImpl
 	}
 
 	@Override
+	public CommerceNotificationTemplate cloneWithOriginalValues() {
+		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
+			new CommerceNotificationTemplateImpl();
+
+		commerceNotificationTemplateImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceNotificationTemplateImpl.setCommerceNotificationTemplateId(
+			this.<Long>getColumnOriginalValue(
+				"commerceNotificationTemplateId"));
+		commerceNotificationTemplateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceNotificationTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceNotificationTemplateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceNotificationTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceNotificationTemplateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceNotificationTemplateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceNotificationTemplateImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceNotificationTemplateImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceNotificationTemplateImpl.setFrom(
+			this.<String>getColumnOriginalValue("from_"));
+		commerceNotificationTemplateImpl.setFromName(
+			this.<String>getColumnOriginalValue("fromName"));
+		commerceNotificationTemplateImpl.setTo(
+			this.<String>getColumnOriginalValue("to_"));
+		commerceNotificationTemplateImpl.setCc(
+			this.<String>getColumnOriginalValue("cc"));
+		commerceNotificationTemplateImpl.setBcc(
+			this.<String>getColumnOriginalValue("bcc"));
+		commerceNotificationTemplateImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		commerceNotificationTemplateImpl.setEnabled(
+			this.<Boolean>getColumnOriginalValue("enabled"));
+		commerceNotificationTemplateImpl.setSubject(
+			this.<String>getColumnOriginalValue("subject"));
+		commerceNotificationTemplateImpl.setBody(
+			this.<String>getColumnOriginalValue("body"));
+
+		return commerceNotificationTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceNotificationTemplate commerceNotificationTemplate) {
 

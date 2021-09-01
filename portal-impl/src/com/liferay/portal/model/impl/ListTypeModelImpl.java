@@ -478,6 +478,20 @@ public class ListTypeModelImpl
 	}
 
 	@Override
+	public ListType cloneWithOriginalValues() {
+		ListTypeImpl listTypeImpl = new ListTypeImpl();
+
+		listTypeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		listTypeImpl.setListTypeId(
+			this.<Long>getColumnOriginalValue("listTypeId"));
+		listTypeImpl.setName(this.<String>getColumnOriginalValue("name"));
+		listTypeImpl.setType(this.<String>getColumnOriginalValue("type_"));
+
+		return listTypeImpl;
+	}
+
+	@Override
 	public int compareTo(ListType listType) {
 		int value = 0;
 

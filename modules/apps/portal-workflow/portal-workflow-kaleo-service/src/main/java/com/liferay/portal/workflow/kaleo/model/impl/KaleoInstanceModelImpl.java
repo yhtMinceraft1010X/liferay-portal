@@ -915,6 +915,50 @@ public class KaleoInstanceModelImpl
 	}
 
 	@Override
+	public KaleoInstance cloneWithOriginalValues() {
+		KaleoInstanceImpl kaleoInstanceImpl = new KaleoInstanceImpl();
+
+		kaleoInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoInstanceImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoInstanceImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoInstanceImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoInstanceImpl.setKaleoDefinitionName(
+			this.<String>getColumnOriginalValue("kaleoDefinitionName"));
+		kaleoInstanceImpl.setKaleoDefinitionVersion(
+			this.<Integer>getColumnOriginalValue("kaleoDefinitionVersion"));
+		kaleoInstanceImpl.setRootKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("rootKaleoInstanceTokenId"));
+		kaleoInstanceImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		kaleoInstanceImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		kaleoInstanceImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		kaleoInstanceImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+		kaleoInstanceImpl.setWorkflowContext(
+			this.<String>getColumnOriginalValue("workflowContext"));
+
+		return kaleoInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoInstance kaleoInstance) {
 		int value = 0;
 

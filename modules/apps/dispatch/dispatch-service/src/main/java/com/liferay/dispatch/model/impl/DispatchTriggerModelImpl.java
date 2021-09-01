@@ -927,6 +927,48 @@ public class DispatchTriggerModelImpl
 	}
 
 	@Override
+	public DispatchTrigger cloneWithOriginalValues() {
+		DispatchTriggerImpl dispatchTriggerImpl = new DispatchTriggerImpl();
+
+		dispatchTriggerImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dispatchTriggerImpl.setDispatchTriggerId(
+			this.<Long>getColumnOriginalValue("dispatchTriggerId"));
+		dispatchTriggerImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dispatchTriggerImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dispatchTriggerImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dispatchTriggerImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dispatchTriggerImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dispatchTriggerImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		dispatchTriggerImpl.setCronExpression(
+			this.<String>getColumnOriginalValue("cronExpression"));
+		dispatchTriggerImpl.setDispatchTaskClusterMode(
+			this.<Integer>getColumnOriginalValue("dispatchTaskClusterMode"));
+		dispatchTriggerImpl.setDispatchTaskExecutorType(
+			this.<String>getColumnOriginalValue("dispatchTaskExecutorType"));
+		dispatchTriggerImpl.setDispatchTaskSettings(
+			this.<String>getColumnOriginalValue("dispatchTaskSettings"));
+		dispatchTriggerImpl.setEndDate(
+			this.<Date>getColumnOriginalValue("endDate"));
+		dispatchTriggerImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		dispatchTriggerImpl.setOverlapAllowed(
+			this.<Boolean>getColumnOriginalValue("overlapAllowed"));
+		dispatchTriggerImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		dispatchTriggerImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
+
+		return dispatchTriggerImpl;
+	}
+
+	@Override
 	public int compareTo(DispatchTrigger dispatchTrigger) {
 		int value = 0;
 

@@ -732,6 +732,37 @@ public class CommerceWishListItemModelImpl
 	}
 
 	@Override
+	public CommerceWishListItem cloneWithOriginalValues() {
+		CommerceWishListItemImpl commerceWishListItemImpl =
+			new CommerceWishListItemImpl();
+
+		commerceWishListItemImpl.setCommerceWishListItemId(
+			this.<Long>getColumnOriginalValue("commerceWishListItemId"));
+		commerceWishListItemImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceWishListItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceWishListItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceWishListItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceWishListItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceWishListItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceWishListItemImpl.setCommerceWishListId(
+			this.<Long>getColumnOriginalValue("commerceWishListId"));
+		commerceWishListItemImpl.setCPInstanceUuid(
+			this.<String>getColumnOriginalValue("CPInstanceUuid"));
+		commerceWishListItemImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		commerceWishListItemImpl.setJson(
+			this.<String>getColumnOriginalValue("json"));
+
+		return commerceWishListItemImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceWishListItem commerceWishListItem) {
 		int value = 0;
 

@@ -540,6 +540,26 @@ public class UserIdMapperModelImpl
 	}
 
 	@Override
+	public UserIdMapper cloneWithOriginalValues() {
+		UserIdMapperImpl userIdMapperImpl = new UserIdMapperImpl();
+
+		userIdMapperImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userIdMapperImpl.setUserIdMapperId(
+			this.<Long>getColumnOriginalValue("userIdMapperId"));
+		userIdMapperImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userIdMapperImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		userIdMapperImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		userIdMapperImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		userIdMapperImpl.setExternalUserId(
+			this.<String>getColumnOriginalValue("externalUserId"));
+
+		return userIdMapperImpl;
+	}
+
+	@Override
 	public int compareTo(UserIdMapper userIdMapper) {
 		long primaryKey = userIdMapper.getPrimaryKey();
 

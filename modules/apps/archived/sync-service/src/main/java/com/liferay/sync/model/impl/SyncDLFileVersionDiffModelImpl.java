@@ -565,6 +565,31 @@ public class SyncDLFileVersionDiffModelImpl
 	}
 
 	@Override
+	public SyncDLFileVersionDiff cloneWithOriginalValues() {
+		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl =
+			new SyncDLFileVersionDiffImpl();
+
+		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(
+			this.<Long>getColumnOriginalValue("syncDLFileVersionDiffId"));
+		syncDLFileVersionDiffImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		syncDLFileVersionDiffImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		syncDLFileVersionDiffImpl.setSourceFileVersionId(
+			this.<Long>getColumnOriginalValue("sourceFileVersionId"));
+		syncDLFileVersionDiffImpl.setTargetFileVersionId(
+			this.<Long>getColumnOriginalValue("targetFileVersionId"));
+		syncDLFileVersionDiffImpl.setDataFileEntryId(
+			this.<Long>getColumnOriginalValue("dataFileEntryId"));
+		syncDLFileVersionDiffImpl.setSize(
+			this.<Long>getColumnOriginalValue("size_"));
+		syncDLFileVersionDiffImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+
+		return syncDLFileVersionDiffImpl;
+	}
+
+	@Override
 	public int compareTo(SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		long primaryKey = syncDLFileVersionDiff.getPrimaryKey();
 

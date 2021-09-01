@@ -846,6 +846,32 @@ public class ReadingTimeEntryModelImpl
 	}
 
 	@Override
+	public ReadingTimeEntry cloneWithOriginalValues() {
+		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
+
+		readingTimeEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		readingTimeEntryImpl.setReadingTimeEntryId(
+			this.<Long>getColumnOriginalValue("readingTimeEntryId"));
+		readingTimeEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		readingTimeEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		readingTimeEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		readingTimeEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		readingTimeEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		readingTimeEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		readingTimeEntryImpl.setReadingTime(
+			this.<Long>getColumnOriginalValue("readingTime"));
+
+		return readingTimeEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ReadingTimeEntry readingTimeEntry) {
 		int value = 0;
 

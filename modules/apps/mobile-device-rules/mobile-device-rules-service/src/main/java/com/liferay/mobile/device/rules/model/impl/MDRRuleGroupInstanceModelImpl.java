@@ -867,6 +867,43 @@ public class MDRRuleGroupInstanceModelImpl
 	}
 
 	@Override
+	public MDRRuleGroupInstance cloneWithOriginalValues() {
+		MDRRuleGroupInstanceImpl mdrRuleGroupInstanceImpl =
+			new MDRRuleGroupInstanceImpl();
+
+		mdrRuleGroupInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mdrRuleGroupInstanceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		mdrRuleGroupInstanceImpl.setRuleGroupInstanceId(
+			this.<Long>getColumnOriginalValue("ruleGroupInstanceId"));
+		mdrRuleGroupInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		mdrRuleGroupInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mdrRuleGroupInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		mdrRuleGroupInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mdrRuleGroupInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mdrRuleGroupInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mdrRuleGroupInstanceImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		mdrRuleGroupInstanceImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		mdrRuleGroupInstanceImpl.setRuleGroupId(
+			this.<Long>getColumnOriginalValue("ruleGroupId"));
+		mdrRuleGroupInstanceImpl.setPriority(
+			this.<Integer>getColumnOriginalValue("priority"));
+		mdrRuleGroupInstanceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mdrRuleGroupInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(MDRRuleGroupInstance mdrRuleGroupInstance) {
 		long primaryKey = mdrRuleGroupInstance.getPrimaryKey();
 

@@ -412,6 +412,22 @@ public class CTSchemaVersionModelImpl
 	}
 
 	@Override
+	public CTSchemaVersion cloneWithOriginalValues() {
+		CTSchemaVersionImpl ctSchemaVersionImpl = new CTSchemaVersionImpl();
+
+		ctSchemaVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctSchemaVersionImpl.setSchemaVersionId(
+			this.<Long>getColumnOriginalValue("schemaVersionId"));
+		ctSchemaVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctSchemaVersionImpl.setSchemaContext(
+			this.<Map>getColumnOriginalValue("schemaContext"));
+
+		return ctSchemaVersionImpl;
+	}
+
+	@Override
 	public int compareTo(CTSchemaVersion ctSchemaVersion) {
 		int value = 0;
 

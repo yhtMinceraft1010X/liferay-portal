@@ -766,6 +766,35 @@ public class AssetTagModelImpl
 	}
 
 	@Override
+	public AssetTag cloneWithOriginalValues() {
+		AssetTagImpl assetTagImpl = new AssetTagImpl();
+
+		assetTagImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetTagImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetTagImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		assetTagImpl.setTagId(this.<Long>getColumnOriginalValue("tagId"));
+		assetTagImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		assetTagImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetTagImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		assetTagImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetTagImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetTagImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetTagImpl.setName(this.<String>getColumnOriginalValue("name"));
+		assetTagImpl.setAssetCount(
+			this.<Integer>getColumnOriginalValue("assetCount"));
+		assetTagImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetTagImpl;
+	}
+
+	@Override
 	public int compareTo(AssetTag assetTag) {
 		int value = 0;
 

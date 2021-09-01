@@ -506,6 +506,25 @@ public class ExpandoTableModelImpl
 	}
 
 	@Override
+	public ExpandoTable cloneWithOriginalValues() {
+		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
+
+		expandoTableImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		expandoTableImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		expandoTableImpl.setTableId(
+			this.<Long>getColumnOriginalValue("tableId"));
+		expandoTableImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		expandoTableImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		expandoTableImpl.setName(this.<String>getColumnOriginalValue("name"));
+
+		return expandoTableImpl;
+	}
+
+	@Override
 	public int compareTo(ExpandoTable expandoTable) {
 		long primaryKey = expandoTable.getPrimaryKey();
 

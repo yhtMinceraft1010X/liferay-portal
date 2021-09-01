@@ -810,6 +810,48 @@ public class KaleoTimerModelImpl
 	}
 
 	@Override
+	public KaleoTimer cloneWithOriginalValues() {
+		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
+
+		kaleoTimerImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTimerImpl.setKaleoTimerId(
+			this.<Long>getColumnOriginalValue("kaleoTimerId"));
+		kaleoTimerImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTimerImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTimerImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kaleoTimerImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTimerImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTimerImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTimerImpl.setKaleoClassName(
+			this.<String>getColumnOriginalValue("kaleoClassName"));
+		kaleoTimerImpl.setKaleoClassPK(
+			this.<Long>getColumnOriginalValue("kaleoClassPK"));
+		kaleoTimerImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTimerImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTimerImpl.setName(this.<String>getColumnOriginalValue("name"));
+		kaleoTimerImpl.setBlocking(
+			this.<Boolean>getColumnOriginalValue("blocking"));
+		kaleoTimerImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoTimerImpl.setDuration(
+			this.<Double>getColumnOriginalValue("duration"));
+		kaleoTimerImpl.setScale(this.<String>getColumnOriginalValue("scale"));
+		kaleoTimerImpl.setRecurrenceDuration(
+			this.<Double>getColumnOriginalValue("recurrenceDuration"));
+		kaleoTimerImpl.setRecurrenceScale(
+			this.<String>getColumnOriginalValue("recurrenceScale"));
+
+		return kaleoTimerImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTimer kaleoTimer) {
 		int value = 0;
 

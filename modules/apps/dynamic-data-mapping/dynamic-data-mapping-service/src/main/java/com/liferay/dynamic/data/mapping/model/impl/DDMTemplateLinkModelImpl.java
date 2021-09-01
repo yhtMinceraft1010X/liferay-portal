@@ -529,6 +529,28 @@ public class DDMTemplateLinkModelImpl
 	}
 
 	@Override
+	public DDMTemplateLink cloneWithOriginalValues() {
+		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
+
+		ddmTemplateLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmTemplateLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmTemplateLinkImpl.setTemplateLinkId(
+			this.<Long>getColumnOriginalValue("templateLinkId"));
+		ddmTemplateLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmTemplateLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmTemplateLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ddmTemplateLinkImpl.setTemplateId(
+			this.<Long>getColumnOriginalValue("templateId"));
+
+		return ddmTemplateLinkImpl;
+	}
+
+	@Override
 	public int compareTo(DDMTemplateLink ddmTemplateLink) {
 		long primaryKey = ddmTemplateLink.getPrimaryKey();
 

@@ -1029,6 +1029,38 @@ public class LayoutPrototypeModelImpl
 	}
 
 	@Override
+	public LayoutPrototype cloneWithOriginalValues() {
+		LayoutPrototypeImpl layoutPrototypeImpl = new LayoutPrototypeImpl();
+
+		layoutPrototypeImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutPrototypeImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutPrototypeImpl.setLayoutPrototypeId(
+			this.<Long>getColumnOriginalValue("layoutPrototypeId"));
+		layoutPrototypeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutPrototypeImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutPrototypeImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutPrototypeImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutPrototypeImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutPrototypeImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		layoutPrototypeImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		layoutPrototypeImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		layoutPrototypeImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return layoutPrototypeImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutPrototype layoutPrototype) {
 		long primaryKey = layoutPrototype.getPrimaryKey();
 

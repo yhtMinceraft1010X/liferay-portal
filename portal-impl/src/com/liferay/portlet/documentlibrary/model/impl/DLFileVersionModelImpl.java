@@ -1432,6 +1432,76 @@ public class DLFileVersionModelImpl
 	}
 
 	@Override
+	public DLFileVersion cloneWithOriginalValues() {
+		DLFileVersionImpl dlFileVersionImpl = new DLFileVersionImpl();
+
+		dlFileVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFileVersionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		dlFileVersionImpl.setFileVersionId(
+			this.<Long>getColumnOriginalValue("fileVersionId"));
+		dlFileVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		dlFileVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dlFileVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dlFileVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlFileVersionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dlFileVersionImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		dlFileVersionImpl.setFolderId(
+			this.<Long>getColumnOriginalValue("folderId"));
+		dlFileVersionImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		dlFileVersionImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		dlFileVersionImpl.setFileName(
+			this.<String>getColumnOriginalValue("fileName"));
+		dlFileVersionImpl.setExtension(
+			this.<String>getColumnOriginalValue("extension"));
+		dlFileVersionImpl.setMimeType(
+			this.<String>getColumnOriginalValue("mimeType"));
+		dlFileVersionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		dlFileVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		dlFileVersionImpl.setChangeLog(
+			this.<String>getColumnOriginalValue("changeLog"));
+		dlFileVersionImpl.setExtraSettings(
+			this.<String>getColumnOriginalValue("extraSettings"));
+		dlFileVersionImpl.setFileEntryTypeId(
+			this.<Long>getColumnOriginalValue("fileEntryTypeId"));
+		dlFileVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		dlFileVersionImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+		dlFileVersionImpl.setChecksum(
+			this.<String>getColumnOriginalValue("checksum"));
+		dlFileVersionImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		dlFileVersionImpl.setReviewDate(
+			this.<Date>getColumnOriginalValue("reviewDate"));
+		dlFileVersionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		dlFileVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		dlFileVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		dlFileVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		dlFileVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return dlFileVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileVersion dlFileVersion) {
 		int value = 0;
 

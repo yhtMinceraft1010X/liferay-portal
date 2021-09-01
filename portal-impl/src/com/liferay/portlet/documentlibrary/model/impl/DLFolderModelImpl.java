@@ -1450,6 +1450,57 @@ public class DLFolderModelImpl
 	}
 
 	@Override
+	public DLFolder cloneWithOriginalValues() {
+		DLFolderImpl dlFolderImpl = new DLFolderImpl();
+
+		dlFolderImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFolderImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFolderImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		dlFolderImpl.setFolderId(this.<Long>getColumnOriginalValue("folderId"));
+		dlFolderImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		dlFolderImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFolderImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		dlFolderImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dlFolderImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlFolderImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dlFolderImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		dlFolderImpl.setMountPoint(
+			this.<Boolean>getColumnOriginalValue("mountPoint"));
+		dlFolderImpl.setParentFolderId(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
+		dlFolderImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		dlFolderImpl.setName(this.<String>getColumnOriginalValue("name"));
+		dlFolderImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		dlFolderImpl.setLastPostDate(
+			this.<Date>getColumnOriginalValue("lastPostDate"));
+		dlFolderImpl.setDefaultFileEntryTypeId(
+			this.<Long>getColumnOriginalValue("defaultFileEntryTypeId"));
+		dlFolderImpl.setHidden(this.<Boolean>getColumnOriginalValue("hidden_"));
+		dlFolderImpl.setRestrictionType(
+			this.<Integer>getColumnOriginalValue("restrictionType"));
+		dlFolderImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		dlFolderImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+		dlFolderImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		dlFolderImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		dlFolderImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return dlFolderImpl;
+	}
+
+	@Override
 	public int compareTo(DLFolder dlFolder) {
 		int value = 0;
 

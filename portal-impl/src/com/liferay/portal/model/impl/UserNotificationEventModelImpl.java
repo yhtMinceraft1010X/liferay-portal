@@ -791,6 +791,41 @@ public class UserNotificationEventModelImpl
 	}
 
 	@Override
+	public UserNotificationEvent cloneWithOriginalValues() {
+		UserNotificationEventImpl userNotificationEventImpl =
+			new UserNotificationEventImpl();
+
+		userNotificationEventImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userNotificationEventImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		userNotificationEventImpl.setUserNotificationEventId(
+			this.<Long>getColumnOriginalValue("userNotificationEventId"));
+		userNotificationEventImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userNotificationEventImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		userNotificationEventImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		userNotificationEventImpl.setTimestamp(
+			this.<Long>getColumnOriginalValue("timestamp"));
+		userNotificationEventImpl.setDeliveryType(
+			this.<Integer>getColumnOriginalValue("deliveryType"));
+		userNotificationEventImpl.setDeliverBy(
+			this.<Long>getColumnOriginalValue("deliverBy"));
+		userNotificationEventImpl.setDelivered(
+			this.<Boolean>getColumnOriginalValue("delivered"));
+		userNotificationEventImpl.setPayload(
+			this.<String>getColumnOriginalValue("payload"));
+		userNotificationEventImpl.setActionRequired(
+			this.<Boolean>getColumnOriginalValue("actionRequired"));
+		userNotificationEventImpl.setArchived(
+			this.<Boolean>getColumnOriginalValue("archived"));
+
+		return userNotificationEventImpl;
+	}
+
+	@Override
 	public int compareTo(UserNotificationEvent userNotificationEvent) {
 		int value = 0;
 

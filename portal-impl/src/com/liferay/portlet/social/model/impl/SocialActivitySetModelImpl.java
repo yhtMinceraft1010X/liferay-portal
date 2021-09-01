@@ -727,6 +727,41 @@ public class SocialActivitySetModelImpl
 	}
 
 	@Override
+	public SocialActivitySet cloneWithOriginalValues() {
+		SocialActivitySetImpl socialActivitySetImpl =
+			new SocialActivitySetImpl();
+
+		socialActivitySetImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivitySetImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivitySetImpl.setActivitySetId(
+			this.<Long>getColumnOriginalValue("activitySetId"));
+		socialActivitySetImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivitySetImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivitySetImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		socialActivitySetImpl.setCreateDate(
+			this.<Long>getColumnOriginalValue("createDate"));
+		socialActivitySetImpl.setModifiedDate(
+			this.<Long>getColumnOriginalValue("modifiedDate"));
+		socialActivitySetImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialActivitySetImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		socialActivitySetImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		socialActivitySetImpl.setExtraData(
+			this.<String>getColumnOriginalValue("extraData"));
+		socialActivitySetImpl.setActivityCount(
+			this.<Integer>getColumnOriginalValue("activityCount"));
+
+		return socialActivitySetImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivitySet socialActivitySet) {
 		int value = 0;
 

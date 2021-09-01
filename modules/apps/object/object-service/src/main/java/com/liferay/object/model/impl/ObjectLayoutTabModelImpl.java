@@ -618,6 +618,30 @@ public class ObjectLayoutTabModelImpl
 	}
 
 	@Override
+	public ObjectLayoutTab cloneWithOriginalValues() {
+		ObjectLayoutTabImpl objectLayoutTabImpl = new ObjectLayoutTabImpl();
+
+		objectLayoutTabImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectLayoutTabImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		objectLayoutTabImpl.setObjectLayoutTabId(
+			this.<Long>getColumnOriginalValue("objectLayoutTabId"));
+		objectLayoutTabImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectLayoutTabImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		objectLayoutTabImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectLayoutTabImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectLayoutTabImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return objectLayoutTabImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectLayoutTab objectLayoutTab) {
 		long primaryKey = objectLayoutTab.getPrimaryKey();
 

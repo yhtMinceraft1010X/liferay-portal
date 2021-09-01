@@ -1215,6 +1215,63 @@ public class CommerceAddressModelImpl
 	}
 
 	@Override
+	public CommerceAddress cloneWithOriginalValues() {
+		CommerceAddressImpl commerceAddressImpl = new CommerceAddressImpl();
+
+		commerceAddressImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceAddressImpl.setCommerceAddressId(
+			this.<Long>getColumnOriginalValue("commerceAddressId"));
+		commerceAddressImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceAddressImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceAddressImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceAddressImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceAddressImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceAddressImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceAddressImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceAddressImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceAddressImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceAddressImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceAddressImpl.setStreet1(
+			this.<String>getColumnOriginalValue("street1"));
+		commerceAddressImpl.setStreet2(
+			this.<String>getColumnOriginalValue("street2"));
+		commerceAddressImpl.setStreet3(
+			this.<String>getColumnOriginalValue("street3"));
+		commerceAddressImpl.setCity(
+			this.<String>getColumnOriginalValue("city"));
+		commerceAddressImpl.setZip(this.<String>getColumnOriginalValue("zip"));
+		commerceAddressImpl.setRegionId(
+			this.<Long>getColumnOriginalValue("regionId"));
+		commerceAddressImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		commerceAddressImpl.setLatitude(
+			this.<Double>getColumnOriginalValue("latitude"));
+		commerceAddressImpl.setLongitude(
+			this.<Double>getColumnOriginalValue("longitude"));
+		commerceAddressImpl.setPhoneNumber(
+			this.<String>getColumnOriginalValue("phoneNumber"));
+		commerceAddressImpl.setDefaultBilling(
+			this.<Boolean>getColumnOriginalValue("defaultBilling"));
+		commerceAddressImpl.setDefaultShipping(
+			this.<Boolean>getColumnOriginalValue("defaultShipping"));
+		commerceAddressImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return commerceAddressImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceAddress commerceAddress) {
 		int value = 0;
 

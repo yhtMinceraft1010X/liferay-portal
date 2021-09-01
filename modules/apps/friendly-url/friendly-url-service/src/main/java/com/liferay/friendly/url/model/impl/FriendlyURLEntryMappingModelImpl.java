@@ -532,6 +532,29 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	@Override
+	public FriendlyURLEntryMapping cloneWithOriginalValues() {
+		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl =
+			new FriendlyURLEntryMappingImpl();
+
+		friendlyURLEntryMappingImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		friendlyURLEntryMappingImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
+			this.<Long>getColumnOriginalValue("friendlyURLEntryMappingId"));
+		friendlyURLEntryMappingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		friendlyURLEntryMappingImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		friendlyURLEntryMappingImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(
+			this.<Long>getColumnOriginalValue("friendlyURLEntryId"));
+
+		return friendlyURLEntryMappingImpl;
+	}
+
+	@Override
 	public int compareTo(FriendlyURLEntryMapping friendlyURLEntryMapping) {
 		long primaryKey = friendlyURLEntryMapping.getPrimaryKey();
 

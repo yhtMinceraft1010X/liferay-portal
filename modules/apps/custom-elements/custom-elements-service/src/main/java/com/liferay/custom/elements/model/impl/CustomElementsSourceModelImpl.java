@@ -665,6 +665,37 @@ public class CustomElementsSourceModelImpl
 	}
 
 	@Override
+	public CustomElementsSource cloneWithOriginalValues() {
+		CustomElementsSourceImpl customElementsSourceImpl =
+			new CustomElementsSourceImpl();
+
+		customElementsSourceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		customElementsSourceImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		customElementsSourceImpl.setCustomElementsSourceId(
+			this.<Long>getColumnOriginalValue("customElementsSourceId"));
+		customElementsSourceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		customElementsSourceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		customElementsSourceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		customElementsSourceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		customElementsSourceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		customElementsSourceImpl.setHTMLElementName(
+			this.<String>getColumnOriginalValue("htmlElementName"));
+		customElementsSourceImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		customElementsSourceImpl.setURLs(
+			this.<String>getColumnOriginalValue("urls"));
+
+		return customElementsSourceImpl;
+	}
+
+	@Override
 	public int compareTo(CustomElementsSource customElementsSource) {
 		long primaryKey = customElementsSource.getPrimaryKey();
 

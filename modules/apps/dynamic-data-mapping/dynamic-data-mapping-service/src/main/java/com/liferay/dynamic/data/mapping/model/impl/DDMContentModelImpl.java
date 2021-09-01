@@ -837,6 +837,35 @@ public class DDMContentModelImpl
 	}
 
 	@Override
+	public DDMContent cloneWithOriginalValues() {
+		DDMContentImpl ddmContentImpl = new DDMContentImpl();
+
+		ddmContentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmContentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmContentImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		ddmContentImpl.setContentId(
+			this.<Long>getColumnOriginalValue("contentId"));
+		ddmContentImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		ddmContentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmContentImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ddmContentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmContentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmContentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmContentImpl.setName(this.<String>getColumnOriginalValue("name"));
+		ddmContentImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmContentImpl.setData(this.<String>getColumnOriginalValue("data_"));
+
+		return ddmContentImpl;
+	}
+
+	@Override
 	public int compareTo(DDMContent ddmContent) {
 		long primaryKey = ddmContent.getPrimaryKey();
 

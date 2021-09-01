@@ -1251,6 +1251,49 @@ public class ObjectFieldModelImpl
 	}
 
 	@Override
+	public ObjectField cloneWithOriginalValues() {
+		ObjectFieldImpl objectFieldImpl = new ObjectFieldImpl();
+
+		objectFieldImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectFieldImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		objectFieldImpl.setObjectFieldId(
+			this.<Long>getColumnOriginalValue("objectFieldId"));
+		objectFieldImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectFieldImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		objectFieldImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectFieldImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectFieldImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectFieldImpl.setListTypeDefinitionId(
+			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
+		objectFieldImpl.setObjectDefinitionId(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectFieldImpl.setDBColumnName(
+			this.<String>getColumnOriginalValue("dbColumnName"));
+		objectFieldImpl.setDBTableName(
+			this.<String>getColumnOriginalValue("dbTableName"));
+		objectFieldImpl.setIndexed(
+			this.<Boolean>getColumnOriginalValue("indexed"));
+		objectFieldImpl.setIndexedAsKeyword(
+			this.<Boolean>getColumnOriginalValue("indexedAsKeyword"));
+		objectFieldImpl.setIndexedLanguageId(
+			this.<String>getColumnOriginalValue("indexedLanguageId"));
+		objectFieldImpl.setLabel(this.<String>getColumnOriginalValue("label"));
+		objectFieldImpl.setName(this.<String>getColumnOriginalValue("name"));
+		objectFieldImpl.setPluralLabel(
+			this.<String>getColumnOriginalValue("pluralLabel"));
+		objectFieldImpl.setRequired(
+			this.<Boolean>getColumnOriginalValue("required"));
+		objectFieldImpl.setType(this.<String>getColumnOriginalValue("type_"));
+
+		return objectFieldImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectField objectField) {
 		int value = 0;
 

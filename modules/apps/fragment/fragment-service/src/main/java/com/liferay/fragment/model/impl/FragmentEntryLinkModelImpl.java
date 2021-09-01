@@ -1227,6 +1227,66 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	@Override
+	public FragmentEntryLink cloneWithOriginalValues() {
+		FragmentEntryLinkImpl fragmentEntryLinkImpl =
+			new FragmentEntryLinkImpl();
+
+		fragmentEntryLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fragmentEntryLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		fragmentEntryLinkImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		fragmentEntryLinkImpl.setFragmentEntryLinkId(
+			this.<Long>getColumnOriginalValue("fragmentEntryLinkId"));
+		fragmentEntryLinkImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		fragmentEntryLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fragmentEntryLinkImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		fragmentEntryLinkImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fragmentEntryLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fragmentEntryLinkImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(
+			this.<Long>getColumnOriginalValue("originalFragmentEntryLinkId"));
+		fragmentEntryLinkImpl.setFragmentEntryId(
+			this.<Long>getColumnOriginalValue("fragmentEntryId"));
+		fragmentEntryLinkImpl.setSegmentsExperienceId(
+			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
+		fragmentEntryLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		fragmentEntryLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		fragmentEntryLinkImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		fragmentEntryLinkImpl.setCss(
+			this.<String>getColumnOriginalValue("css"));
+		fragmentEntryLinkImpl.setHtml(
+			this.<String>getColumnOriginalValue("html"));
+		fragmentEntryLinkImpl.setJs(this.<String>getColumnOriginalValue("js"));
+		fragmentEntryLinkImpl.setConfiguration(
+			this.<String>getColumnOriginalValue("configuration"));
+		fragmentEntryLinkImpl.setEditableValues(
+			this.<String>getColumnOriginalValue("editableValues"));
+		fragmentEntryLinkImpl.setNamespace(
+			this.<String>getColumnOriginalValue("namespace"));
+		fragmentEntryLinkImpl.setPosition(
+			this.<Integer>getColumnOriginalValue("position"));
+		fragmentEntryLinkImpl.setRendererKey(
+			this.<String>getColumnOriginalValue("rendererKey"));
+		fragmentEntryLinkImpl.setLastPropagationDate(
+			this.<Date>getColumnOriginalValue("lastPropagationDate"));
+		fragmentEntryLinkImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return fragmentEntryLinkImpl;
+	}
+
+	@Override
 	public int compareTo(FragmentEntryLink fragmentEntryLink) {
 		int value = 0;
 

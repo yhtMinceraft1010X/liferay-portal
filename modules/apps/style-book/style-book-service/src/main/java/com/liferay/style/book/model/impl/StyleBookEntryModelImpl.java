@@ -969,6 +969,45 @@ public class StyleBookEntryModelImpl
 	}
 
 	@Override
+	public StyleBookEntry cloneWithOriginalValues() {
+		StyleBookEntryImpl styleBookEntryImpl = new StyleBookEntryImpl();
+
+		styleBookEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		styleBookEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		styleBookEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		styleBookEntryImpl.setHeadId(
+			this.<Long>getColumnOriginalValue("headId"));
+		styleBookEntryImpl.setStyleBookEntryId(
+			this.<Long>getColumnOriginalValue("styleBookEntryId"));
+		styleBookEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		styleBookEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		styleBookEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		styleBookEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		styleBookEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		styleBookEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		styleBookEntryImpl.setDefaultStyleBookEntry(
+			this.<Boolean>getColumnOriginalValue("defaultStyleBookEntry"));
+		styleBookEntryImpl.setFrontendTokensValues(
+			this.<String>getColumnOriginalValue("frontendTokensValues"));
+		styleBookEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		styleBookEntryImpl.setPreviewFileEntryId(
+			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		styleBookEntryImpl.setStyleBookEntryKey(
+			this.<String>getColumnOriginalValue("styleBookEntryKey"));
+
+		return styleBookEntryImpl;
+	}
+
+	@Override
 	public int compareTo(StyleBookEntry styleBookEntry) {
 		int value = 0;
 

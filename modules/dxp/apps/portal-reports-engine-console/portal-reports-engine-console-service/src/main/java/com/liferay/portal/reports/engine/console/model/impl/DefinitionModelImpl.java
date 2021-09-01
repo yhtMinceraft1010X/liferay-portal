@@ -1050,6 +1050,38 @@ public class DefinitionModelImpl
 	}
 
 	@Override
+	public Definition cloneWithOriginalValues() {
+		DefinitionImpl definitionImpl = new DefinitionImpl();
+
+		definitionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		definitionImpl.setDefinitionId(
+			this.<Long>getColumnOriginalValue("definitionId"));
+		definitionImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		definitionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		definitionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		definitionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		definitionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		definitionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		definitionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		definitionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		definitionImpl.setSourceId(
+			this.<Long>getColumnOriginalValue("sourceId"));
+		definitionImpl.setReportName(
+			this.<String>getColumnOriginalValue("reportName"));
+		definitionImpl.setReportParameters(
+			this.<String>getColumnOriginalValue("reportParameters"));
+		definitionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return definitionImpl;
+	}
+
+	@Override
 	public int compareTo(Definition definition) {
 		int value = 0;
 

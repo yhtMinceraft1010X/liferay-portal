@@ -1150,6 +1150,42 @@ public class MDRActionModelImpl
 	}
 
 	@Override
+	public MDRAction cloneWithOriginalValues() {
+		MDRActionImpl mdrActionImpl = new MDRActionImpl();
+
+		mdrActionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mdrActionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		mdrActionImpl.setActionId(
+			this.<Long>getColumnOriginalValue("actionId"));
+		mdrActionImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		mdrActionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mdrActionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		mdrActionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mdrActionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mdrActionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mdrActionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		mdrActionImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		mdrActionImpl.setRuleGroupInstanceId(
+			this.<Long>getColumnOriginalValue("ruleGroupInstanceId"));
+		mdrActionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		mdrActionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		mdrActionImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		mdrActionImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		mdrActionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return mdrActionImpl;
+	}
+
+	@Override
 	public int compareTo(MDRAction mdrAction) {
 		long primaryKey = mdrAction.getPrimaryKey();
 

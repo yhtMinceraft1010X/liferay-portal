@@ -569,6 +569,27 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	@Override
+	public Entry cloneWithOriginalValues() {
+		EntryImpl entryImpl = new EntryImpl();
+
+		entryImpl.setEntryId(this.<Long>getColumnOriginalValue("entryId"));
+		entryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		entryImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		entryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		entryImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		entryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		entryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		entryImpl.setFullName(this.<String>getColumnOriginalValue("fullName"));
+		entryImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		entryImpl.setComments(this.<String>getColumnOriginalValue("comments"));
+
+		return entryImpl;
+	}
+
+	@Override
 	public int compareTo(Entry entry) {
 		int value = 0;
 

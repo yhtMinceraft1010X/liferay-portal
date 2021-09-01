@@ -788,6 +788,51 @@ public class OrgLaborModelImpl
 	}
 
 	@Override
+	public OrgLabor cloneWithOriginalValues() {
+		OrgLaborImpl orgLaborImpl = new OrgLaborImpl();
+
+		orgLaborImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		orgLaborImpl.setOrgLaborId(
+			this.<Long>getColumnOriginalValue("orgLaborId"));
+		orgLaborImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		orgLaborImpl.setOrganizationId(
+			this.<Long>getColumnOriginalValue("organizationId"));
+		orgLaborImpl.setTypeId(this.<Long>getColumnOriginalValue("typeId"));
+		orgLaborImpl.setSunOpen(
+			this.<Integer>getColumnOriginalValue("sunOpen"));
+		orgLaborImpl.setSunClose(
+			this.<Integer>getColumnOriginalValue("sunClose"));
+		orgLaborImpl.setMonOpen(
+			this.<Integer>getColumnOriginalValue("monOpen"));
+		orgLaborImpl.setMonClose(
+			this.<Integer>getColumnOriginalValue("monClose"));
+		orgLaborImpl.setTueOpen(
+			this.<Integer>getColumnOriginalValue("tueOpen"));
+		orgLaborImpl.setTueClose(
+			this.<Integer>getColumnOriginalValue("tueClose"));
+		orgLaborImpl.setWedOpen(
+			this.<Integer>getColumnOriginalValue("wedOpen"));
+		orgLaborImpl.setWedClose(
+			this.<Integer>getColumnOriginalValue("wedClose"));
+		orgLaborImpl.setThuOpen(
+			this.<Integer>getColumnOriginalValue("thuOpen"));
+		orgLaborImpl.setThuClose(
+			this.<Integer>getColumnOriginalValue("thuClose"));
+		orgLaborImpl.setFriOpen(
+			this.<Integer>getColumnOriginalValue("friOpen"));
+		orgLaborImpl.setFriClose(
+			this.<Integer>getColumnOriginalValue("friClose"));
+		orgLaborImpl.setSatOpen(
+			this.<Integer>getColumnOriginalValue("satOpen"));
+		orgLaborImpl.setSatClose(
+			this.<Integer>getColumnOriginalValue("satClose"));
+
+		return orgLaborImpl;
+	}
+
+	@Override
 	public int compareTo(OrgLabor orgLabor) {
 		int value = 0;
 

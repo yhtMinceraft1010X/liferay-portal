@@ -1203,6 +1203,47 @@ public class CalendarModelImpl
 	}
 
 	@Override
+	public Calendar cloneWithOriginalValues() {
+		CalendarImpl calendarImpl = new CalendarImpl();
+
+		calendarImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		calendarImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		calendarImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		calendarImpl.setCalendarId(
+			this.<Long>getColumnOriginalValue("calendarId"));
+		calendarImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		calendarImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		calendarImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		calendarImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		calendarImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		calendarImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		calendarImpl.setCalendarResourceId(
+			this.<Long>getColumnOriginalValue("calendarResourceId"));
+		calendarImpl.setName(this.<String>getColumnOriginalValue("name"));
+		calendarImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		calendarImpl.setTimeZoneId(
+			this.<String>getColumnOriginalValue("timeZoneId"));
+		calendarImpl.setColor(this.<Integer>getColumnOriginalValue("color"));
+		calendarImpl.setDefaultCalendar(
+			this.<Boolean>getColumnOriginalValue("defaultCalendar"));
+		calendarImpl.setEnableComments(
+			this.<Boolean>getColumnOriginalValue("enableComments"));
+		calendarImpl.setEnableRatings(
+			this.<Boolean>getColumnOriginalValue("enableRatings"));
+		calendarImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return calendarImpl;
+	}
+
+	@Override
 	public int compareTo(Calendar calendar) {
 		int value = 0;
 

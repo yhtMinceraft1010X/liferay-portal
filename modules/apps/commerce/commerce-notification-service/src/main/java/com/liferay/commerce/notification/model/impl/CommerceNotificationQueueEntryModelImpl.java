@@ -1101,6 +1101,58 @@ public class CommerceNotificationQueueEntryModelImpl
 	}
 
 	@Override
+	public CommerceNotificationQueueEntry cloneWithOriginalValues() {
+		CommerceNotificationQueueEntryImpl commerceNotificationQueueEntryImpl =
+			new CommerceNotificationQueueEntryImpl();
+
+		commerceNotificationQueueEntryImpl.setCommerceNotificationQueueEntryId(
+			this.<Long>getColumnOriginalValue("CNotificationQueueEntryId"));
+		commerceNotificationQueueEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceNotificationQueueEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceNotificationQueueEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceNotificationQueueEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceNotificationQueueEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceNotificationQueueEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceNotificationQueueEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		commerceNotificationQueueEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		commerceNotificationQueueEntryImpl.setCommerceNotificationTemplateId(
+			this.<Long>getColumnOriginalValue(
+				"commerceNotificationTemplateId"));
+		commerceNotificationQueueEntryImpl.setFrom(
+			this.<String>getColumnOriginalValue("from_"));
+		commerceNotificationQueueEntryImpl.setFromName(
+			this.<String>getColumnOriginalValue("fromName"));
+		commerceNotificationQueueEntryImpl.setTo(
+			this.<String>getColumnOriginalValue("to_"));
+		commerceNotificationQueueEntryImpl.setToName(
+			this.<String>getColumnOriginalValue("toName"));
+		commerceNotificationQueueEntryImpl.setCc(
+			this.<String>getColumnOriginalValue("cc"));
+		commerceNotificationQueueEntryImpl.setBcc(
+			this.<String>getColumnOriginalValue("bcc"));
+		commerceNotificationQueueEntryImpl.setSubject(
+			this.<String>getColumnOriginalValue("subject"));
+		commerceNotificationQueueEntryImpl.setBody(
+			this.<String>getColumnOriginalValue("body"));
+		commerceNotificationQueueEntryImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commerceNotificationQueueEntryImpl.setSent(
+			this.<Boolean>getColumnOriginalValue("sent"));
+		commerceNotificationQueueEntryImpl.setSentDate(
+			this.<Date>getColumnOriginalValue("sentDate"));
+
+		return commerceNotificationQueueEntryImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
 

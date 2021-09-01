@@ -922,6 +922,53 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	}
 
 	@Override
+	public KaleoTaskAssignmentInstance cloneWithOriginalValues() {
+		KaleoTaskAssignmentInstanceImpl kaleoTaskAssignmentInstanceImpl =
+			new KaleoTaskAssignmentInstanceImpl();
+
+		kaleoTaskAssignmentInstanceImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoTaskAssignmentInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoTaskAssignmentInstanceId"));
+		kaleoTaskAssignmentInstanceImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTaskAssignmentInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTaskAssignmentInstanceImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTaskAssignmentInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTaskAssignmentInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTaskAssignmentInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceTokenId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoTaskInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTaskInstanceTokenId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoTaskId(
+			this.<Long>getColumnOriginalValue("kaleoTaskId"));
+		kaleoTaskAssignmentInstanceImpl.setKaleoTaskName(
+			this.<String>getColumnOriginalValue("kaleoTaskName"));
+		kaleoTaskAssignmentInstanceImpl.setAssigneeClassName(
+			this.<String>getColumnOriginalValue("assigneeClassName"));
+		kaleoTaskAssignmentInstanceImpl.setAssigneeClassPK(
+			this.<Long>getColumnOriginalValue("assigneeClassPK"));
+		kaleoTaskAssignmentInstanceImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		kaleoTaskAssignmentInstanceImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+
+		return kaleoTaskAssignmentInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) {
 

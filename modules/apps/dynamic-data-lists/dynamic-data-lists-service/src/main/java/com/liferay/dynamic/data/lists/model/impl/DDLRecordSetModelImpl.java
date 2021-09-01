@@ -1284,6 +1284,53 @@ public class DDLRecordSetModelImpl
 	}
 
 	@Override
+	public DDLRecordSet cloneWithOriginalValues() {
+		DDLRecordSetImpl ddlRecordSetImpl = new DDLRecordSetImpl();
+
+		ddlRecordSetImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddlRecordSetImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddlRecordSetImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		ddlRecordSetImpl.setRecordSetId(
+			this.<Long>getColumnOriginalValue("recordSetId"));
+		ddlRecordSetImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddlRecordSetImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddlRecordSetImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ddlRecordSetImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddlRecordSetImpl.setVersionUserId(
+			this.<Long>getColumnOriginalValue("versionUserId"));
+		ddlRecordSetImpl.setVersionUserName(
+			this.<String>getColumnOriginalValue("versionUserName"));
+		ddlRecordSetImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddlRecordSetImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddlRecordSetImpl.setDDMStructureId(
+			this.<Long>getColumnOriginalValue("DDMStructureId"));
+		ddlRecordSetImpl.setRecordSetKey(
+			this.<String>getColumnOriginalValue("recordSetKey"));
+		ddlRecordSetImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddlRecordSetImpl.setName(this.<String>getColumnOriginalValue("name"));
+		ddlRecordSetImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddlRecordSetImpl.setMinDisplayRows(
+			this.<Integer>getColumnOriginalValue("minDisplayRows"));
+		ddlRecordSetImpl.setScope(
+			this.<Integer>getColumnOriginalValue("scope"));
+		ddlRecordSetImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		ddlRecordSetImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddlRecordSetImpl;
+	}
+
+	@Override
 	public int compareTo(DDLRecordSet ddlRecordSet) {
 		long primaryKey = ddlRecordSet.getPrimaryKey();
 

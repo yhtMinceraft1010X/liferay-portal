@@ -523,6 +523,26 @@ public class AnalyticsMessageModelImpl
 	}
 
 	@Override
+	public AnalyticsMessage cloneWithOriginalValues() {
+		AnalyticsMessageImpl analyticsMessageImpl = new AnalyticsMessageImpl();
+
+		analyticsMessageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		analyticsMessageImpl.setAnalyticsMessageId(
+			this.<Long>getColumnOriginalValue("analyticsMessageId"));
+		analyticsMessageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		analyticsMessageImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		analyticsMessageImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		analyticsMessageImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+
+		return analyticsMessageImpl;
+	}
+
+	@Override
 	public int compareTo(AnalyticsMessage analyticsMessage) {
 		int value = 0;
 

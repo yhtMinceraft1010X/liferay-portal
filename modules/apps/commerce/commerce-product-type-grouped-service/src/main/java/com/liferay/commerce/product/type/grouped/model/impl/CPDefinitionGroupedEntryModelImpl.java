@@ -794,6 +794,39 @@ public class CPDefinitionGroupedEntryModelImpl
 	}
 
 	@Override
+	public CPDefinitionGroupedEntry cloneWithOriginalValues() {
+		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl =
+			new CPDefinitionGroupedEntryImpl();
+
+		cpDefinitionGroupedEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDefinitionGroupedEntryImpl.setCPDefinitionGroupedEntryId(
+			this.<Long>getColumnOriginalValue("CPDefinitionGroupedEntryId"));
+		cpDefinitionGroupedEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpDefinitionGroupedEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionGroupedEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionGroupedEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionGroupedEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionGroupedEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionGroupedEntryImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionGroupedEntryImpl.setEntryCProductId(
+			this.<Long>getColumnOriginalValue("entryCProductId"));
+		cpDefinitionGroupedEntryImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionGroupedEntryImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+
+		return cpDefinitionGroupedEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 		int value = 0;
 

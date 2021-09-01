@@ -1206,6 +1206,50 @@ public class BookmarksFolderModelImpl
 	}
 
 	@Override
+	public BookmarksFolder cloneWithOriginalValues() {
+		BookmarksFolderImpl bookmarksFolderImpl = new BookmarksFolderImpl();
+
+		bookmarksFolderImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		bookmarksFolderImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		bookmarksFolderImpl.setFolderId(
+			this.<Long>getColumnOriginalValue("folderId"));
+		bookmarksFolderImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		bookmarksFolderImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		bookmarksFolderImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		bookmarksFolderImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		bookmarksFolderImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		bookmarksFolderImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		bookmarksFolderImpl.setParentFolderId(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
+		bookmarksFolderImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		bookmarksFolderImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		bookmarksFolderImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		bookmarksFolderImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		bookmarksFolderImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		bookmarksFolderImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		bookmarksFolderImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		bookmarksFolderImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return bookmarksFolderImpl;
+	}
+
+	@Override
 	public int compareTo(BookmarksFolder bookmarksFolder) {
 		int value = 0;
 

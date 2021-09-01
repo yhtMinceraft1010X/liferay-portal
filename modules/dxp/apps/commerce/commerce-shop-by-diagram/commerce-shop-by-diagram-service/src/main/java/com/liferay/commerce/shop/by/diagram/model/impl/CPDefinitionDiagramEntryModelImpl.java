@@ -764,6 +764,41 @@ public class CPDefinitionDiagramEntryModelImpl
 	}
 
 	@Override
+	public CPDefinitionDiagramEntry cloneWithOriginalValues() {
+		CPDefinitionDiagramEntryImpl cpDefinitionDiagramEntryImpl =
+			new CPDefinitionDiagramEntryImpl();
+
+		cpDefinitionDiagramEntryImpl.setCPDefinitionDiagramEntryId(
+			this.<Long>getColumnOriginalValue("CPDefinitionDiagramEntryId"));
+		cpDefinitionDiagramEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionDiagramEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionDiagramEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionDiagramEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionDiagramEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionDiagramEntryImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionDiagramEntryImpl.setCPInstanceUuid(
+			this.<String>getColumnOriginalValue("CPInstanceUuid"));
+		cpDefinitionDiagramEntryImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		cpDefinitionDiagramEntryImpl.setDiagram(
+			this.<Boolean>getColumnOriginalValue("diagram"));
+		cpDefinitionDiagramEntryImpl.setQuantity(
+			this.<Integer>getColumnOriginalValue("quantity"));
+		cpDefinitionDiagramEntryImpl.setSequence(
+			this.<String>getColumnOriginalValue("sequence"));
+		cpDefinitionDiagramEntryImpl.setSku(
+			this.<String>getColumnOriginalValue("sku"));
+
+		return cpDefinitionDiagramEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionDiagramEntry cpDefinitionDiagramEntry) {
 		int value = 0;
 

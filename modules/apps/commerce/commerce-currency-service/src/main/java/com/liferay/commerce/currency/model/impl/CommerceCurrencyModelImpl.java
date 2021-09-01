@@ -1249,6 +1249,52 @@ public class CommerceCurrencyModelImpl
 	}
 
 	@Override
+	public CommerceCurrency cloneWithOriginalValues() {
+		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
+
+		commerceCurrencyImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceCurrencyImpl.setCommerceCurrencyId(
+			this.<Long>getColumnOriginalValue("commerceCurrencyId"));
+		commerceCurrencyImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceCurrencyImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceCurrencyImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceCurrencyImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceCurrencyImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceCurrencyImpl.setCode(
+			this.<String>getColumnOriginalValue("code_"));
+		commerceCurrencyImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceCurrencyImpl.setSymbol(
+			this.<String>getColumnOriginalValue("symbol"));
+		commerceCurrencyImpl.setRate(
+			this.<BigDecimal>getColumnOriginalValue("rate"));
+		commerceCurrencyImpl.setFormatPattern(
+			this.<String>getColumnOriginalValue("formatPattern"));
+		commerceCurrencyImpl.setMaxFractionDigits(
+			this.<Integer>getColumnOriginalValue("maxFractionDigits"));
+		commerceCurrencyImpl.setMinFractionDigits(
+			this.<Integer>getColumnOriginalValue("minFractionDigits"));
+		commerceCurrencyImpl.setRoundingMode(
+			this.<String>getColumnOriginalValue("roundingMode"));
+		commerceCurrencyImpl.setPrimary(
+			this.<Boolean>getColumnOriginalValue("primary_"));
+		commerceCurrencyImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commerceCurrencyImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		commerceCurrencyImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return commerceCurrencyImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceCurrency commerceCurrency) {
 		int value = 0;
 

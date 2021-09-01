@@ -1047,6 +1047,59 @@ public class OAuth2ApplicationModelImpl
 	}
 
 	@Override
+	public OAuth2Application cloneWithOriginalValues() {
+		OAuth2ApplicationImpl oAuth2ApplicationImpl =
+			new OAuth2ApplicationImpl();
+
+		oAuth2ApplicationImpl.setOAuth2ApplicationId(
+			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
+		oAuth2ApplicationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuth2ApplicationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		oAuth2ApplicationImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		oAuth2ApplicationImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		oAuth2ApplicationImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		oAuth2ApplicationImpl.setOAuth2ApplicationScopeAliasesId(
+			this.<Long>getColumnOriginalValue("oA2AScopeAliasesId"));
+		oAuth2ApplicationImpl.setAllowedGrantTypes(
+			this.<String>getColumnOriginalValue("allowedGrantTypes"));
+		oAuth2ApplicationImpl.setClientCredentialUserId(
+			this.<Long>getColumnOriginalValue("clientCredentialUserId"));
+		oAuth2ApplicationImpl.setClientCredentialUserName(
+			this.<String>getColumnOriginalValue("clientCredentialUserName"));
+		oAuth2ApplicationImpl.setClientId(
+			this.<String>getColumnOriginalValue("clientId"));
+		oAuth2ApplicationImpl.setClientProfile(
+			this.<Integer>getColumnOriginalValue("clientProfile"));
+		oAuth2ApplicationImpl.setClientSecret(
+			this.<String>getColumnOriginalValue("clientSecret"));
+		oAuth2ApplicationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		oAuth2ApplicationImpl.setFeatures(
+			this.<String>getColumnOriginalValue("features"));
+		oAuth2ApplicationImpl.setHomePageURL(
+			this.<String>getColumnOriginalValue("homePageURL"));
+		oAuth2ApplicationImpl.setIconFileEntryId(
+			this.<Long>getColumnOriginalValue("iconFileEntryId"));
+		oAuth2ApplicationImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		oAuth2ApplicationImpl.setPrivacyPolicyURL(
+			this.<String>getColumnOriginalValue("privacyPolicyURL"));
+		oAuth2ApplicationImpl.setRedirectURIs(
+			this.<String>getColumnOriginalValue("redirectURIs"));
+		oAuth2ApplicationImpl.setRememberDevice(
+			this.<Boolean>getColumnOriginalValue("rememberDevice"));
+		oAuth2ApplicationImpl.setTrustedApplication(
+			this.<Boolean>getColumnOriginalValue("trustedApplication"));
+
+		return oAuth2ApplicationImpl;
+	}
+
+	@Override
 	public int compareTo(OAuth2Application oAuth2Application) {
 		long primaryKey = oAuth2Application.getPrimaryKey();
 

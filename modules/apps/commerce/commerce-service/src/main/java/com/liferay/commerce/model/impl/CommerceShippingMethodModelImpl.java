@@ -1067,6 +1067,41 @@ public class CommerceShippingMethodModelImpl
 	}
 
 	@Override
+	public CommerceShippingMethod cloneWithOriginalValues() {
+		CommerceShippingMethodImpl commerceShippingMethodImpl =
+			new CommerceShippingMethodImpl();
+
+		commerceShippingMethodImpl.setCommerceShippingMethodId(
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
+		commerceShippingMethodImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceShippingMethodImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceShippingMethodImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceShippingMethodImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceShippingMethodImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceShippingMethodImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceShippingMethodImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceShippingMethodImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceShippingMethodImpl.setImageId(
+			this.<Long>getColumnOriginalValue("imageId"));
+		commerceShippingMethodImpl.setEngineKey(
+			this.<String>getColumnOriginalValue("engineKey"));
+		commerceShippingMethodImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commerceShippingMethodImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return commerceShippingMethodImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceShippingMethod commerceShippingMethod) {
 		int value = 0;
 

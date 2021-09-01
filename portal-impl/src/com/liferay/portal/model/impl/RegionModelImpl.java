@@ -914,6 +914,35 @@ public class RegionModelImpl
 	}
 
 	@Override
+	public Region cloneWithOriginalValues() {
+		RegionImpl regionImpl = new RegionImpl();
+
+		regionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		regionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		regionImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
+		regionImpl.setRegionId(this.<Long>getColumnOriginalValue("regionId"));
+		regionImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		regionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		regionImpl.setUserName(this.<String>getColumnOriginalValue("userName"));
+		regionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		regionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		regionImpl.setCountryId(this.<Long>getColumnOriginalValue("countryId"));
+		regionImpl.setActive(this.<Boolean>getColumnOriginalValue("active_"));
+		regionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		regionImpl.setPosition(this.<Double>getColumnOriginalValue("position"));
+		regionImpl.setRegionCode(
+			this.<String>getColumnOriginalValue("regionCode"));
+		regionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return regionImpl;
+	}
+
+	@Override
 	public int compareTo(Region region) {
 		int value = 0;
 

@@ -728,6 +728,36 @@ public class CTCollectionModelImpl
 	}
 
 	@Override
+	public CTCollection cloneWithOriginalValues() {
+		CTCollectionImpl ctCollectionImpl = new CTCollectionImpl();
+
+		ctCollectionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctCollectionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctCollectionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctCollectionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ctCollectionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ctCollectionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ctCollectionImpl.setSchemaVersionId(
+			this.<Long>getColumnOriginalValue("schemaVersionId"));
+		ctCollectionImpl.setName(this.<String>getColumnOriginalValue("name"));
+		ctCollectionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ctCollectionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ctCollectionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ctCollectionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ctCollectionImpl;
+	}
+
+	@Override
 	public int compareTo(CTCollection ctCollection) {
 		int value = 0;
 

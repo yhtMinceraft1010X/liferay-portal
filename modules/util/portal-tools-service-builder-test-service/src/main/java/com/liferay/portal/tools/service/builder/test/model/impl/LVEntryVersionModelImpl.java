@@ -639,6 +639,30 @@ public class LVEntryVersionModelImpl
 	}
 
 	@Override
+	public LVEntryVersion cloneWithOriginalValues() {
+		LVEntryVersionImpl lvEntryVersionImpl = new LVEntryVersionImpl();
+
+		lvEntryVersionImpl.setLvEntryVersionId(
+			this.<Long>getColumnOriginalValue("lvEntryVersionId"));
+		lvEntryVersionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
+		lvEntryVersionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		lvEntryVersionImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
+		lvEntryVersionImpl.setLvEntryId(
+			this.<Long>getColumnOriginalValue("lvEntryId"));
+		lvEntryVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		lvEntryVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		lvEntryVersionImpl.setUniqueGroupKey(
+			this.<String>getColumnOriginalValue("uniqueGroupKey"));
+
+		return lvEntryVersionImpl;
+	}
+
+	@Override
 	public int compareTo(LVEntryVersion lvEntryVersion) {
 		int value = 0;
 

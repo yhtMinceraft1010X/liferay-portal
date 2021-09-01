@@ -595,6 +595,33 @@ public class WeDeployAuthTokenModelImpl
 	}
 
 	@Override
+	public WeDeployAuthToken cloneWithOriginalValues() {
+		WeDeployAuthTokenImpl weDeployAuthTokenImpl =
+			new WeDeployAuthTokenImpl();
+
+		weDeployAuthTokenImpl.setWeDeployAuthTokenId(
+			this.<Long>getColumnOriginalValue("weDeployAuthTokenId"));
+		weDeployAuthTokenImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		weDeployAuthTokenImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		weDeployAuthTokenImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		weDeployAuthTokenImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		weDeployAuthTokenImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		weDeployAuthTokenImpl.setClientId(
+			this.<String>getColumnOriginalValue("clientId"));
+		weDeployAuthTokenImpl.setToken(
+			this.<String>getColumnOriginalValue("token"));
+		weDeployAuthTokenImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+
+		return weDeployAuthTokenImpl;
+	}
+
+	@Override
 	public int compareTo(WeDeployAuthToken weDeployAuthToken) {
 		long primaryKey = weDeployAuthToken.getPrimaryKey();
 

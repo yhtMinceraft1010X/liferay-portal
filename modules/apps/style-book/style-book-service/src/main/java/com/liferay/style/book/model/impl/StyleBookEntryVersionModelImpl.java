@@ -917,6 +917,49 @@ public class StyleBookEntryVersionModelImpl
 	}
 
 	@Override
+	public StyleBookEntryVersion cloneWithOriginalValues() {
+		StyleBookEntryVersionImpl styleBookEntryVersionImpl =
+			new StyleBookEntryVersionImpl();
+
+		styleBookEntryVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		styleBookEntryVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		styleBookEntryVersionImpl.setStyleBookEntryVersionId(
+			this.<Long>getColumnOriginalValue("styleBookEntryVersionId"));
+		styleBookEntryVersionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
+		styleBookEntryVersionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		styleBookEntryVersionImpl.setStyleBookEntryId(
+			this.<Long>getColumnOriginalValue("styleBookEntryId"));
+		styleBookEntryVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		styleBookEntryVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		styleBookEntryVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		styleBookEntryVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		styleBookEntryVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		styleBookEntryVersionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		styleBookEntryVersionImpl.setDefaultStyleBookEntry(
+			this.<Boolean>getColumnOriginalValue("defaultStyleBookEntry"));
+		styleBookEntryVersionImpl.setFrontendTokensValues(
+			this.<String>getColumnOriginalValue("frontendTokensValues"));
+		styleBookEntryVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		styleBookEntryVersionImpl.setPreviewFileEntryId(
+			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		styleBookEntryVersionImpl.setStyleBookEntryKey(
+			this.<String>getColumnOriginalValue("styleBookEntryKey"));
+
+		return styleBookEntryVersionImpl;
+	}
+
+	@Override
 	public int compareTo(StyleBookEntryVersion styleBookEntryVersion) {
 		int value = 0;
 

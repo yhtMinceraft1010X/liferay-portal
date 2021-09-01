@@ -950,6 +950,46 @@ public class SocialActivityModelImpl
 	}
 
 	@Override
+	public SocialActivity cloneWithOriginalValues() {
+		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
+
+		socialActivityImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivityImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivityImpl.setActivityId(
+			this.<Long>getColumnOriginalValue("activityId"));
+		socialActivityImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivityImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivityImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		socialActivityImpl.setCreateDate(
+			this.<Long>getColumnOriginalValue("createDate"));
+		socialActivityImpl.setActivitySetId(
+			this.<Long>getColumnOriginalValue("activitySetId"));
+		socialActivityImpl.setMirrorActivityId(
+			this.<Long>getColumnOriginalValue("mirrorActivityId"));
+		socialActivityImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialActivityImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		socialActivityImpl.setParentClassNameId(
+			this.<Long>getColumnOriginalValue("parentClassNameId"));
+		socialActivityImpl.setParentClassPK(
+			this.<Long>getColumnOriginalValue("parentClassPK"));
+		socialActivityImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		socialActivityImpl.setExtraData(
+			this.<String>getColumnOriginalValue("extraData"));
+		socialActivityImpl.setReceiverUserId(
+			this.<Long>getColumnOriginalValue("receiverUserId"));
+
+		return socialActivityImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivity socialActivity) {
 		int value = 0;
 

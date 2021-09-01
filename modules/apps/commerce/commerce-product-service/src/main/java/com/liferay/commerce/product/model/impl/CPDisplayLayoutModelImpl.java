@@ -784,6 +784,36 @@ public class CPDisplayLayoutModelImpl
 	}
 
 	@Override
+	public CPDisplayLayout cloneWithOriginalValues() {
+		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
+
+		cpDisplayLayoutImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDisplayLayoutImpl.setCPDisplayLayoutId(
+			this.<Long>getColumnOriginalValue("CPDisplayLayoutId"));
+		cpDisplayLayoutImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpDisplayLayoutImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDisplayLayoutImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDisplayLayoutImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDisplayLayoutImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDisplayLayoutImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDisplayLayoutImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		cpDisplayLayoutImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		cpDisplayLayoutImpl.setLayoutUuid(
+			this.<String>getColumnOriginalValue("layoutUuid"));
+
+		return cpDisplayLayoutImpl;
+	}
+
+	@Override
 	public int compareTo(CPDisplayLayout cpDisplayLayout) {
 		long primaryKey = cpDisplayLayout.getPrimaryKey();
 

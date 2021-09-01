@@ -627,6 +627,33 @@ public class AkismetEntryModelImpl
 	}
 
 	@Override
+	public AkismetEntry cloneWithOriginalValues() {
+		AkismetEntryImpl akismetEntryImpl = new AkismetEntryImpl();
+
+		akismetEntryImpl.setAkismetEntryId(
+			this.<Long>getColumnOriginalValue("akismetEntryId"));
+		akismetEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		akismetEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		akismetEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		akismetEntryImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		akismetEntryImpl.setPermalink(
+			this.<String>getColumnOriginalValue("permalink"));
+		akismetEntryImpl.setReferrer(
+			this.<String>getColumnOriginalValue("referrer"));
+		akismetEntryImpl.setUserAgent(
+			this.<String>getColumnOriginalValue("userAgent"));
+		akismetEntryImpl.setUserIP(
+			this.<String>getColumnOriginalValue("userIP"));
+		akismetEntryImpl.setUserURL(
+			this.<String>getColumnOriginalValue("userURL"));
+
+		return akismetEntryImpl;
+	}
+
+	@Override
 	public int compareTo(AkismetEntry akismetEntry) {
 		long primaryKey = akismetEntry.getPrimaryKey();
 

@@ -412,6 +412,22 @@ public class ViewCountEntryModelImpl
 	}
 
 	@Override
+	public ViewCountEntry cloneWithOriginalValues() {
+		ViewCountEntryImpl viewCountEntryImpl = new ViewCountEntryImpl();
+
+		viewCountEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		viewCountEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		viewCountEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		viewCountEntryImpl.setViewCount(
+			this.<Long>getColumnOriginalValue("viewCount"));
+
+		return viewCountEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ViewCountEntry viewCountEntry) {
 		ViewCountEntryPK primaryKey = viewCountEntry.getPrimaryKey();
 

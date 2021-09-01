@@ -606,6 +606,36 @@ public class RatingsStatsModelImpl
 	}
 
 	@Override
+	public RatingsStats cloneWithOriginalValues() {
+		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
+
+		ratingsStatsImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ratingsStatsImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ratingsStatsImpl.setStatsId(
+			this.<Long>getColumnOriginalValue("statsId"));
+		ratingsStatsImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ratingsStatsImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ratingsStatsImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ratingsStatsImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ratingsStatsImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ratingsStatsImpl.setTotalEntries(
+			this.<Integer>getColumnOriginalValue("totalEntries"));
+		ratingsStatsImpl.setTotalScore(
+			this.<Double>getColumnOriginalValue("totalScore"));
+		ratingsStatsImpl.setAverageScore(
+			this.<Double>getColumnOriginalValue("averageScore"));
+
+		return ratingsStatsImpl;
+	}
+
+	@Override
 	public int compareTo(RatingsStats ratingsStats) {
 		long primaryKey = ratingsStats.getPrimaryKey();
 

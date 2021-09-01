@@ -660,6 +660,33 @@ public class UserNotificationDeliveryModelImpl
 	}
 
 	@Override
+	public UserNotificationDelivery cloneWithOriginalValues() {
+		UserNotificationDeliveryImpl userNotificationDeliveryImpl =
+			new UserNotificationDeliveryImpl();
+
+		userNotificationDeliveryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userNotificationDeliveryImpl.setUserNotificationDeliveryId(
+			this.<Long>getColumnOriginalValue("userNotificationDeliveryId"));
+		userNotificationDeliveryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userNotificationDeliveryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		userNotificationDeliveryImpl.setPortletId(
+			this.<String>getColumnOriginalValue("portletId"));
+		userNotificationDeliveryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		userNotificationDeliveryImpl.setNotificationType(
+			this.<Integer>getColumnOriginalValue("notificationType"));
+		userNotificationDeliveryImpl.setDeliveryType(
+			this.<Integer>getColumnOriginalValue("deliveryType"));
+		userNotificationDeliveryImpl.setDeliver(
+			this.<Boolean>getColumnOriginalValue("deliver"));
+
+		return userNotificationDeliveryImpl;
+	}
+
+	@Override
 	public int compareTo(UserNotificationDelivery userNotificationDelivery) {
 		long primaryKey = userNotificationDelivery.getPrimaryKey();
 

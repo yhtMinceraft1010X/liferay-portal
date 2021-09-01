@@ -1723,6 +1723,88 @@ public class CPInstanceModelImpl
 	}
 
 	@Override
+	public CPInstance cloneWithOriginalValues() {
+		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
+
+		cpInstanceImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		cpInstanceImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cpInstanceImpl.setCPInstanceId(
+			this.<Long>getColumnOriginalValue("CPInstanceId"));
+		cpInstanceImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		cpInstanceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpInstanceImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		cpInstanceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpInstanceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpInstanceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpInstanceImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpInstanceImpl.setCPInstanceUuid(
+			this.<String>getColumnOriginalValue("CPInstanceUuid"));
+		cpInstanceImpl.setSku(this.<String>getColumnOriginalValue("sku"));
+		cpInstanceImpl.setGtin(this.<String>getColumnOriginalValue("gtin"));
+		cpInstanceImpl.setManufacturerPartNumber(
+			this.<String>getColumnOriginalValue("manufacturerPartNumber"));
+		cpInstanceImpl.setPurchasable(
+			this.<Boolean>getColumnOriginalValue("purchasable"));
+		cpInstanceImpl.setWidth(this.<Double>getColumnOriginalValue("width"));
+		cpInstanceImpl.setHeight(this.<Double>getColumnOriginalValue("height"));
+		cpInstanceImpl.setDepth(this.<Double>getColumnOriginalValue("depth"));
+		cpInstanceImpl.setWeight(this.<Double>getColumnOriginalValue("weight"));
+		cpInstanceImpl.setPrice(
+			this.<BigDecimal>getColumnOriginalValue("price"));
+		cpInstanceImpl.setPromoPrice(
+			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
+		cpInstanceImpl.setCost(this.<BigDecimal>getColumnOriginalValue("cost"));
+		cpInstanceImpl.setPublished(
+			this.<Boolean>getColumnOriginalValue("published"));
+		cpInstanceImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		cpInstanceImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		cpInstanceImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		cpInstanceImpl.setOverrideSubscriptionInfo(
+			this.<Boolean>getColumnOriginalValue("overrideSubscriptionInfo"));
+		cpInstanceImpl.setSubscriptionEnabled(
+			this.<Boolean>getColumnOriginalValue("subscriptionEnabled"));
+		cpInstanceImpl.setSubscriptionLength(
+			this.<Integer>getColumnOriginalValue("subscriptionLength"));
+		cpInstanceImpl.setSubscriptionType(
+			this.<String>getColumnOriginalValue("subscriptionType"));
+		cpInstanceImpl.setSubscriptionTypeSettings(
+			this.<String>getColumnOriginalValue("subscriptionTypeSettings"));
+		cpInstanceImpl.setMaxSubscriptionCycles(
+			this.<Long>getColumnOriginalValue("maxSubscriptionCycles"));
+		cpInstanceImpl.setDeliverySubscriptionEnabled(
+			this.<Boolean>getColumnOriginalValue(
+				"deliverySubscriptionEnabled"));
+		cpInstanceImpl.setDeliverySubscriptionLength(
+			this.<Integer>getColumnOriginalValue("deliverySubscriptionLength"));
+		cpInstanceImpl.setDeliverySubscriptionType(
+			this.<String>getColumnOriginalValue("deliverySubscriptionType"));
+		cpInstanceImpl.setDeliverySubscriptionTypeSettings(
+			this.<String>getColumnOriginalValue("deliverySubTypeSettings"));
+		cpInstanceImpl.setDeliveryMaxSubscriptionCycles(
+			this.<Long>getColumnOriginalValue("deliveryMaxSubscriptionCycles"));
+		cpInstanceImpl.setUnspsc(this.<String>getColumnOriginalValue("unspsc"));
+		cpInstanceImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		cpInstanceImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		cpInstanceImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		cpInstanceImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return cpInstanceImpl;
+	}
+
+	@Override
 	public int compareTo(CPInstance cpInstance) {
 		int value = 0;
 

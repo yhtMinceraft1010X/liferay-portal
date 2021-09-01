@@ -419,6 +419,23 @@ public class DSLQueryStatusEntryModelImpl
 	}
 
 	@Override
+	public DSLQueryStatusEntry cloneWithOriginalValues() {
+		DSLQueryStatusEntryImpl dslQueryStatusEntryImpl =
+			new DSLQueryStatusEntryImpl();
+
+		dslQueryStatusEntryImpl.setDslQueryStatusEntryId(
+			this.<Long>getColumnOriginalValue("dslQueryStatusEntryId"));
+		dslQueryStatusEntryImpl.setDslQueryEntryId(
+			this.<Long>getColumnOriginalValue("dslQueryEntryId"));
+		dslQueryStatusEntryImpl.setStatus(
+			this.<String>getColumnOriginalValue("status"));
+		dslQueryStatusEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return dslQueryStatusEntryImpl;
+	}
+
+	@Override
 	public int compareTo(DSLQueryStatusEntry dslQueryStatusEntry) {
 		long primaryKey = dslQueryStatusEntry.getPrimaryKey();
 

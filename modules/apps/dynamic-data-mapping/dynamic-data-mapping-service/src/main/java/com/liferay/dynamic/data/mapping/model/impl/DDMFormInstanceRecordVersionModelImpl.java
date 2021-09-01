@@ -1029,6 +1029,49 @@ public class DDMFormInstanceRecordVersionModelImpl
 	}
 
 	@Override
+	public DDMFormInstanceRecordVersion cloneWithOriginalValues() {
+		DDMFormInstanceRecordVersionImpl ddmFormInstanceRecordVersionImpl =
+			new DDMFormInstanceRecordVersionImpl();
+
+		ddmFormInstanceRecordVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFormInstanceRecordVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFormInstanceRecordVersionImpl.setFormInstanceRecordVersionId(
+			this.<Long>getColumnOriginalValue("formInstanceRecordVersionId"));
+		ddmFormInstanceRecordVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmFormInstanceRecordVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFormInstanceRecordVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmFormInstanceRecordVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmFormInstanceRecordVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmFormInstanceRecordVersionImpl.setFormInstanceId(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
+		ddmFormInstanceRecordVersionImpl.setFormInstanceVersion(
+			this.<String>getColumnOriginalValue("formInstanceVersion"));
+		ddmFormInstanceRecordVersionImpl.setFormInstanceRecordId(
+			this.<Long>getColumnOriginalValue("formInstanceRecordId"));
+		ddmFormInstanceRecordVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmFormInstanceRecordVersionImpl.setStorageId(
+			this.<Long>getColumnOriginalValue("storageId"));
+		ddmFormInstanceRecordVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddmFormInstanceRecordVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddmFormInstanceRecordVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddmFormInstanceRecordVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddmFormInstanceRecordVersionImpl;
+	}
+
+	@Override
 	public int compareTo(
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
 

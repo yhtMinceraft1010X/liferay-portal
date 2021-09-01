@@ -955,6 +955,44 @@ public class ObjectEntryModelImpl
 	}
 
 	@Override
+	public ObjectEntry cloneWithOriginalValues() {
+		ObjectEntryImpl objectEntryImpl = new ObjectEntryImpl();
+
+		objectEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		objectEntryImpl.setObjectEntryId(
+			this.<Long>getColumnOriginalValue("objectEntryId"));
+		objectEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		objectEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		objectEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		objectEntryImpl.setObjectDefinitionId(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		objectEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		objectEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		objectEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		objectEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return objectEntryImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectEntry objectEntry) {
 		int value = 0;
 

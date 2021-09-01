@@ -1339,6 +1339,73 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	@Override
+	public CommerceSubscriptionEntry cloneWithOriginalValues() {
+		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
+			new CommerceSubscriptionEntryImpl();
+
+		commerceSubscriptionEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceSubscriptionEntryImpl.setCommerceSubscriptionEntryId(
+			this.<Long>getColumnOriginalValue("commerceSubscriptionEntryId"));
+		commerceSubscriptionEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceSubscriptionEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceSubscriptionEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceSubscriptionEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceSubscriptionEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceSubscriptionEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceSubscriptionEntryImpl.setCPInstanceUuid(
+			this.<String>getColumnOriginalValue("CPInstanceUuid"));
+		commerceSubscriptionEntryImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		commerceSubscriptionEntryImpl.setCommerceOrderItemId(
+			this.<Long>getColumnOriginalValue("commerceOrderItemId"));
+		commerceSubscriptionEntryImpl.setSubscriptionLength(
+			this.<Integer>getColumnOriginalValue("subscriptionLength"));
+		commerceSubscriptionEntryImpl.setSubscriptionType(
+			this.<String>getColumnOriginalValue("subscriptionType"));
+		commerceSubscriptionEntryImpl.setSubscriptionTypeSettings(
+			this.<String>getColumnOriginalValue("subscriptionTypeSettings"));
+		commerceSubscriptionEntryImpl.setCurrentCycle(
+			this.<Long>getColumnOriginalValue("currentCycle"));
+		commerceSubscriptionEntryImpl.setMaxSubscriptionCycles(
+			this.<Long>getColumnOriginalValue("maxSubscriptionCycles"));
+		commerceSubscriptionEntryImpl.setSubscriptionStatus(
+			this.<Integer>getColumnOriginalValue("subscriptionStatus"));
+		commerceSubscriptionEntryImpl.setLastIterationDate(
+			this.<Date>getColumnOriginalValue("lastIterationDate"));
+		commerceSubscriptionEntryImpl.setNextIterationDate(
+			this.<Date>getColumnOriginalValue("nextIterationDate"));
+		commerceSubscriptionEntryImpl.setStartDate(
+			this.<Date>getColumnOriginalValue("startDate"));
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionLength(
+			this.<Integer>getColumnOriginalValue("deliverySubscriptionLength"));
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionType(
+			this.<String>getColumnOriginalValue("deliverySubscriptionType"));
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionTypeSettings(
+			this.<String>getColumnOriginalValue("deliverySubTypeSettings"));
+		commerceSubscriptionEntryImpl.setDeliveryCurrentCycle(
+			this.<Long>getColumnOriginalValue("deliveryCurrentCycle"));
+		commerceSubscriptionEntryImpl.setDeliveryMaxSubscriptionCycles(
+			this.<Long>getColumnOriginalValue("deliveryMaxSubscriptionCycles"));
+		commerceSubscriptionEntryImpl.setDeliverySubscriptionStatus(
+			this.<Integer>getColumnOriginalValue("deliverySubscriptionStatus"));
+		commerceSubscriptionEntryImpl.setDeliveryLastIterationDate(
+			this.<Date>getColumnOriginalValue("deliveryLastIterationDate"));
+		commerceSubscriptionEntryImpl.setDeliveryNextIterationDate(
+			this.<Date>getColumnOriginalValue("deliveryNextIterationDate"));
+		commerceSubscriptionEntryImpl.setDeliveryStartDate(
+			this.<Date>getColumnOriginalValue("deliveryStartDate"));
+
+		return commerceSubscriptionEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceSubscriptionEntry commerceSubscriptionEntry) {
 		int value = 0;
 

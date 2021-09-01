@@ -1375,6 +1375,66 @@ public class LayoutPageTemplateEntryModelImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry cloneWithOriginalValues() {
+		LayoutPageTemplateEntryImpl layoutPageTemplateEntryImpl =
+			new LayoutPageTemplateEntryImpl();
+
+		layoutPageTemplateEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		layoutPageTemplateEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		layoutPageTemplateEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryId(
+			this.<Long>getColumnOriginalValue("layoutPageTemplateEntryId"));
+		layoutPageTemplateEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		layoutPageTemplateEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		layoutPageTemplateEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		layoutPageTemplateEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		layoutPageTemplateEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		layoutPageTemplateEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(
+			this.<Long>getColumnOriginalValue(
+				"layoutPageTemplateCollectionId"));
+		layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryKey(
+			this.<String>getColumnOriginalValue("layoutPageTemplateEntryKey"));
+		layoutPageTemplateEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		layoutPageTemplateEntryImpl.setClassTypeId(
+			this.<Long>getColumnOriginalValue("classTypeId"));
+		layoutPageTemplateEntryImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		layoutPageTemplateEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		layoutPageTemplateEntryImpl.setPreviewFileEntryId(
+			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		layoutPageTemplateEntryImpl.setDefaultTemplate(
+			this.<Boolean>getColumnOriginalValue("defaultTemplate"));
+		layoutPageTemplateEntryImpl.setLayoutPrototypeId(
+			this.<Long>getColumnOriginalValue("layoutPrototypeId"));
+		layoutPageTemplateEntryImpl.setPlid(
+			this.<Long>getColumnOriginalValue("plid"));
+		layoutPageTemplateEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		layoutPageTemplateEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		layoutPageTemplateEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		layoutPageTemplateEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		layoutPageTemplateEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return layoutPageTemplateEntryImpl;
+	}
+
+	@Override
 	public int compareTo(LayoutPageTemplateEntry layoutPageTemplateEntry) {
 		int value = 0;
 

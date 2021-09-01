@@ -763,6 +763,36 @@ public class FriendlyURLEntryModelImpl
 	}
 
 	@Override
+	public FriendlyURLEntry cloneWithOriginalValues() {
+		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
+
+		friendlyURLEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		friendlyURLEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		friendlyURLEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		friendlyURLEntryImpl.setDefaultLanguageId(
+			this.<String>getColumnOriginalValue("defaultLanguageId"));
+		friendlyURLEntryImpl.setFriendlyURLEntryId(
+			this.<Long>getColumnOriginalValue("friendlyURLEntryId"));
+		friendlyURLEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		friendlyURLEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		friendlyURLEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		friendlyURLEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		friendlyURLEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		friendlyURLEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return friendlyURLEntryImpl;
+	}
+
+	@Override
 	public int compareTo(FriendlyURLEntry friendlyURLEntry) {
 		long primaryKey = friendlyURLEntry.getPrimaryKey();
 

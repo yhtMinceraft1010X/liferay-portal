@@ -684,6 +684,35 @@ public class CommerceTaxFixedRateModelImpl
 	}
 
 	@Override
+	public CommerceTaxFixedRate cloneWithOriginalValues() {
+		CommerceTaxFixedRateImpl commerceTaxFixedRateImpl =
+			new CommerceTaxFixedRateImpl();
+
+		commerceTaxFixedRateImpl.setCommerceTaxFixedRateId(
+			this.<Long>getColumnOriginalValue("commerceTaxFixedRateId"));
+		commerceTaxFixedRateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commerceTaxFixedRateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceTaxFixedRateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceTaxFixedRateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceTaxFixedRateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceTaxFixedRateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceTaxFixedRateImpl.setCPTaxCategoryId(
+			this.<Long>getColumnOriginalValue("CPTaxCategoryId"));
+		commerceTaxFixedRateImpl.setCommerceTaxMethodId(
+			this.<Long>getColumnOriginalValue("commerceTaxMethodId"));
+		commerceTaxFixedRateImpl.setRate(
+			this.<Double>getColumnOriginalValue("rate"));
+
+		return commerceTaxFixedRateImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceTaxFixedRate commerceTaxFixedRate) {
 		int value = 0;
 

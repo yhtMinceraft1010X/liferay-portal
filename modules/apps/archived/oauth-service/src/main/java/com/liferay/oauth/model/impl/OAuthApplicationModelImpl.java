@@ -846,6 +846,44 @@ public class OAuthApplicationModelImpl
 	}
 
 	@Override
+	public OAuthApplication cloneWithOriginalValues() {
+		OAuthApplicationImpl oAuthApplicationImpl = new OAuthApplicationImpl();
+
+		oAuthApplicationImpl.setOAuthApplicationId(
+			this.<Long>getColumnOriginalValue("oAuthApplicationId"));
+		oAuthApplicationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuthApplicationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		oAuthApplicationImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		oAuthApplicationImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		oAuthApplicationImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		oAuthApplicationImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		oAuthApplicationImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		oAuthApplicationImpl.setConsumerKey(
+			this.<String>getColumnOriginalValue("consumerKey"));
+		oAuthApplicationImpl.setConsumerSecret(
+			this.<String>getColumnOriginalValue("consumerSecret"));
+		oAuthApplicationImpl.setAccessLevel(
+			this.<Integer>getColumnOriginalValue("accessLevel"));
+		oAuthApplicationImpl.setLogoId(
+			this.<Long>getColumnOriginalValue("logoId"));
+		oAuthApplicationImpl.setShareableAccessToken(
+			this.<Boolean>getColumnOriginalValue("shareableAccessToken"));
+		oAuthApplicationImpl.setCallbackURI(
+			this.<String>getColumnOriginalValue("callbackURI"));
+		oAuthApplicationImpl.setWebsiteURL(
+			this.<String>getColumnOriginalValue("websiteURL"));
+
+		return oAuthApplicationImpl;
+	}
+
+	@Override
 	public int compareTo(OAuthApplication oAuthApplication) {
 		long primaryKey = oAuthApplication.getPrimaryKey();
 

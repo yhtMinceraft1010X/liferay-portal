@@ -943,6 +943,50 @@ public class SiteNavigationMenuItemModelImpl
 	}
 
 	@Override
+	public SiteNavigationMenuItem cloneWithOriginalValues() {
+		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl =
+			new SiteNavigationMenuItemImpl();
+
+		siteNavigationMenuItemImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		siteNavigationMenuItemImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		siteNavigationMenuItemImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(
+			this.<Long>getColumnOriginalValue("siteNavigationMenuItemId"));
+		siteNavigationMenuItemImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		siteNavigationMenuItemImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		siteNavigationMenuItemImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		siteNavigationMenuItemImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		siteNavigationMenuItemImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		siteNavigationMenuItemImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		siteNavigationMenuItemImpl.setSiteNavigationMenuId(
+			this.<Long>getColumnOriginalValue("siteNavigationMenuId"));
+		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(
+			this.<Long>getColumnOriginalValue(
+				"parentSiteNavigationMenuItemId"));
+		siteNavigationMenuItemImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		siteNavigationMenuItemImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+		siteNavigationMenuItemImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		siteNavigationMenuItemImpl.setOrder(
+			this.<Integer>getColumnOriginalValue("order_"));
+		siteNavigationMenuItemImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return siteNavigationMenuItemImpl;
+	}
+
+	@Override
 	public int compareTo(SiteNavigationMenuItem siteNavigationMenuItem) {
 		long primaryKey = siteNavigationMenuItem.getPrimaryKey();
 

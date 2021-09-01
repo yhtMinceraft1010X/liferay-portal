@@ -669,6 +669,41 @@ public class MFATimeBasedOTPEntryModelImpl
 	}
 
 	@Override
+	public MFATimeBasedOTPEntry cloneWithOriginalValues() {
+		MFATimeBasedOTPEntryImpl mfaTimeBasedOTPEntryImpl =
+			new MFATimeBasedOTPEntryImpl();
+
+		mfaTimeBasedOTPEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		mfaTimeBasedOTPEntryImpl.setMfaTimeBasedOTPEntryId(
+			this.<Long>getColumnOriginalValue("mfaTimeBasedOTPEntryId"));
+		mfaTimeBasedOTPEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		mfaTimeBasedOTPEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		mfaTimeBasedOTPEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		mfaTimeBasedOTPEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		mfaTimeBasedOTPEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		mfaTimeBasedOTPEntryImpl.setFailedAttempts(
+			this.<Integer>getColumnOriginalValue("failedAttempts"));
+		mfaTimeBasedOTPEntryImpl.setLastFailDate(
+			this.<Date>getColumnOriginalValue("lastFailDate"));
+		mfaTimeBasedOTPEntryImpl.setLastFailIP(
+			this.<String>getColumnOriginalValue("lastFailIP"));
+		mfaTimeBasedOTPEntryImpl.setLastSuccessDate(
+			this.<Date>getColumnOriginalValue("lastSuccessDate"));
+		mfaTimeBasedOTPEntryImpl.setLastSuccessIP(
+			this.<String>getColumnOriginalValue("lastSuccessIP"));
+		mfaTimeBasedOTPEntryImpl.setSharedSecret(
+			this.<String>getColumnOriginalValue("sharedSecret"));
+
+		return mfaTimeBasedOTPEntryImpl;
+	}
+
+	@Override
 	public int compareTo(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
 		long primaryKey = mfaTimeBasedOTPEntry.getPrimaryKey();
 

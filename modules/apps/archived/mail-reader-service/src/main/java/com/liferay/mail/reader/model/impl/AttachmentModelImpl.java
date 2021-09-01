@@ -534,6 +534,30 @@ public class AttachmentModelImpl
 	}
 
 	@Override
+	public Attachment cloneWithOriginalValues() {
+		AttachmentImpl attachmentImpl = new AttachmentImpl();
+
+		attachmentImpl.setAttachmentId(
+			this.<Long>getColumnOriginalValue("attachmentId"));
+		attachmentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		attachmentImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		attachmentImpl.setAccountId(
+			this.<Long>getColumnOriginalValue("accountId"));
+		attachmentImpl.setFolderId(
+			this.<Long>getColumnOriginalValue("folderId"));
+		attachmentImpl.setMessageId(
+			this.<Long>getColumnOriginalValue("messageId"));
+		attachmentImpl.setContentPath(
+			this.<String>getColumnOriginalValue("contentPath"));
+		attachmentImpl.setFileName(
+			this.<String>getColumnOriginalValue("fileName"));
+		attachmentImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+
+		return attachmentImpl;
+	}
+
+	@Override
 	public int compareTo(Attachment attachment) {
 		long primaryKey = attachment.getPrimaryKey();
 

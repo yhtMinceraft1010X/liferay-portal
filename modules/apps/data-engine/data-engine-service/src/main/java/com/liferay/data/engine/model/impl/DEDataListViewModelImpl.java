@@ -913,6 +913,43 @@ public class DEDataListViewModelImpl
 	}
 
 	@Override
+	public DEDataListView cloneWithOriginalValues() {
+		DEDataListViewImpl deDataListViewImpl = new DEDataListViewImpl();
+
+		deDataListViewImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		deDataListViewImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		deDataListViewImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		deDataListViewImpl.setDeDataListViewId(
+			this.<Long>getColumnOriginalValue("deDataListViewId"));
+		deDataListViewImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		deDataListViewImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		deDataListViewImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		deDataListViewImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		deDataListViewImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		deDataListViewImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		deDataListViewImpl.setAppliedFilters(
+			this.<String>getColumnOriginalValue("appliedFilters"));
+		deDataListViewImpl.setDdmStructureId(
+			this.<Long>getColumnOriginalValue("ddmStructureId"));
+		deDataListViewImpl.setFieldNames(
+			this.<String>getColumnOriginalValue("fieldNames"));
+		deDataListViewImpl.setName(this.<String>getColumnOriginalValue("name"));
+		deDataListViewImpl.setSortField(
+			this.<String>getColumnOriginalValue("sortField"));
+
+		return deDataListViewImpl;
+	}
+
+	@Override
 	public int compareTo(DEDataListView deDataListView) {
 		long primaryKey = deDataListView.getPrimaryKey();
 

@@ -1564,6 +1564,65 @@ public class DDMTemplateModelImpl
 	}
 
 	@Override
+	public DDMTemplate cloneWithOriginalValues() {
+		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
+
+		ddmTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmTemplateImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmTemplateImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		ddmTemplateImpl.setTemplateId(
+			this.<Long>getColumnOriginalValue("templateId"));
+		ddmTemplateImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmTemplateImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		ddmTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmTemplateImpl.setVersionUserId(
+			this.<Long>getColumnOriginalValue("versionUserId"));
+		ddmTemplateImpl.setVersionUserName(
+			this.<String>getColumnOriginalValue("versionUserName"));
+		ddmTemplateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmTemplateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ddmTemplateImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmTemplateImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ddmTemplateImpl.setResourceClassNameId(
+			this.<Long>getColumnOriginalValue("resourceClassNameId"));
+		ddmTemplateImpl.setTemplateKey(
+			this.<String>getColumnOriginalValue("templateKey"));
+		ddmTemplateImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmTemplateImpl.setName(this.<String>getColumnOriginalValue("name"));
+		ddmTemplateImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmTemplateImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		ddmTemplateImpl.setMode(this.<String>getColumnOriginalValue("mode_"));
+		ddmTemplateImpl.setLanguage(
+			this.<String>getColumnOriginalValue("language"));
+		ddmTemplateImpl.setScript(
+			this.<String>getColumnOriginalValue("script"));
+		ddmTemplateImpl.setCacheable(
+			this.<Boolean>getColumnOriginalValue("cacheable"));
+		ddmTemplateImpl.setSmallImage(
+			this.<Boolean>getColumnOriginalValue("smallImage"));
+		ddmTemplateImpl.setSmallImageId(
+			this.<Long>getColumnOriginalValue("smallImageId"));
+		ddmTemplateImpl.setSmallImageURL(
+			this.<String>getColumnOriginalValue("smallImageURL"));
+		ddmTemplateImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return ddmTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(DDMTemplate ddmTemplate) {
 		long primaryKey = ddmTemplate.getPrimaryKey();
 

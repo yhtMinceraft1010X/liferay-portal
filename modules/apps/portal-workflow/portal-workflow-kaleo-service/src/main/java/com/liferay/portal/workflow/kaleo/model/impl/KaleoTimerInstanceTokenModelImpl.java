@@ -975,6 +975,59 @@ public class KaleoTimerInstanceTokenModelImpl
 	}
 
 	@Override
+	public KaleoTimerInstanceToken cloneWithOriginalValues() {
+		KaleoTimerInstanceTokenImpl kaleoTimerInstanceTokenImpl =
+			new KaleoTimerInstanceTokenImpl();
+
+		kaleoTimerInstanceTokenImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTimerInstanceTokenId"));
+		kaleoTimerInstanceTokenImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTimerInstanceTokenImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTimerInstanceTokenImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTimerInstanceTokenImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTimerInstanceTokenImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTimerInstanceTokenImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTimerInstanceTokenImpl.setKaleoClassName(
+			this.<String>getColumnOriginalValue("kaleoClassName"));
+		kaleoTimerInstanceTokenImpl.setKaleoClassPK(
+			this.<Long>getColumnOriginalValue("kaleoClassPK"));
+		kaleoTimerInstanceTokenImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTimerInstanceTokenImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTimerInstanceTokenImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoTimerInstanceTokenImpl.setKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceTokenId"));
+		kaleoTimerInstanceTokenImpl.setKaleoTaskInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTaskInstanceTokenId"));
+		kaleoTimerInstanceTokenImpl.setKaleoTimerId(
+			this.<Long>getColumnOriginalValue("kaleoTimerId"));
+		kaleoTimerInstanceTokenImpl.setKaleoTimerName(
+			this.<String>getColumnOriginalValue("kaleoTimerName"));
+		kaleoTimerInstanceTokenImpl.setBlocking(
+			this.<Boolean>getColumnOriginalValue("blocking"));
+		kaleoTimerInstanceTokenImpl.setCompletionUserId(
+			this.<Long>getColumnOriginalValue("completionUserId"));
+		kaleoTimerInstanceTokenImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		kaleoTimerInstanceTokenImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+		kaleoTimerInstanceTokenImpl.setWorkflowContext(
+			this.<String>getColumnOriginalValue("workflowContext"));
+
+		return kaleoTimerInstanceTokenImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 		int value = 0;
 

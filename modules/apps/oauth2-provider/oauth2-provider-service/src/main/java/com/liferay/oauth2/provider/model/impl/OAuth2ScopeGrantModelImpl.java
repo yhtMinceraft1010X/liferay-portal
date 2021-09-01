@@ -581,6 +581,28 @@ public class OAuth2ScopeGrantModelImpl
 	}
 
 	@Override
+	public OAuth2ScopeGrant cloneWithOriginalValues() {
+		OAuth2ScopeGrantImpl oAuth2ScopeGrantImpl = new OAuth2ScopeGrantImpl();
+
+		oAuth2ScopeGrantImpl.setOAuth2ScopeGrantId(
+			this.<Long>getColumnOriginalValue("oAuth2ScopeGrantId"));
+		oAuth2ScopeGrantImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuth2ScopeGrantImpl.setOAuth2ApplicationScopeAliasesId(
+			this.<Long>getColumnOriginalValue("oA2AScopeAliasesId"));
+		oAuth2ScopeGrantImpl.setApplicationName(
+			this.<String>getColumnOriginalValue("applicationName"));
+		oAuth2ScopeGrantImpl.setBundleSymbolicName(
+			this.<String>getColumnOriginalValue("bundleSymbolicName"));
+		oAuth2ScopeGrantImpl.setScope(
+			this.<String>getColumnOriginalValue("scope"));
+		oAuth2ScopeGrantImpl.setScopeAliases(
+			this.<String>getColumnOriginalValue("scopeAliases"));
+
+		return oAuth2ScopeGrantImpl;
+	}
+
+	@Override
 	public int compareTo(OAuth2ScopeGrant oAuth2ScopeGrant) {
 		long primaryKey = oAuth2ScopeGrant.getPrimaryKey();
 

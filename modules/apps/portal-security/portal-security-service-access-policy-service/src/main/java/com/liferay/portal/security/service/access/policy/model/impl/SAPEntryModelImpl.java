@@ -912,6 +912,34 @@ public class SAPEntryModelImpl
 	}
 
 	@Override
+	public SAPEntry cloneWithOriginalValues() {
+		SAPEntryImpl sapEntryImpl = new SAPEntryImpl();
+
+		sapEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		sapEntryImpl.setSapEntryId(
+			this.<Long>getColumnOriginalValue("sapEntryId"));
+		sapEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		sapEntryImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		sapEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		sapEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		sapEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		sapEntryImpl.setAllowedServiceSignatures(
+			this.<String>getColumnOriginalValue("allowedServiceSignatures"));
+		sapEntryImpl.setDefaultSAPEntry(
+			this.<Boolean>getColumnOriginalValue("defaultSAPEntry"));
+		sapEntryImpl.setEnabled(
+			this.<Boolean>getColumnOriginalValue("enabled"));
+		sapEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		sapEntryImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+
+		return sapEntryImpl;
+	}
+
+	@Override
 	public int compareTo(SAPEntry sapEntry) {
 		long primaryKey = sapEntry.getPrimaryKey();
 

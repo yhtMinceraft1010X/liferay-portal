@@ -431,6 +431,24 @@ public class CTMessageModelImpl
 	}
 
 	@Override
+	public CTMessage cloneWithOriginalValues() {
+		CTMessageImpl ctMessageImpl = new CTMessageImpl();
+
+		ctMessageImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctMessageImpl.setCtMessageId(
+			this.<Long>getColumnOriginalValue("ctMessageId"));
+		ctMessageImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctMessageImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctMessageImpl.setMessageContent(
+			this.<String>getColumnOriginalValue("messageContent"));
+
+		return ctMessageImpl;
+	}
+
+	@Override
 	public int compareTo(CTMessage ctMessage) {
 		long primaryKey = ctMessage.getPrimaryKey();
 

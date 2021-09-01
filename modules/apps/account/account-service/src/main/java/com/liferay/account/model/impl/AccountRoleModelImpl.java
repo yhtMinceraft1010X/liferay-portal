@@ -516,6 +516,23 @@ public class AccountRoleModelImpl
 	}
 
 	@Override
+	public AccountRole cloneWithOriginalValues() {
+		AccountRoleImpl accountRoleImpl = new AccountRoleImpl();
+
+		accountRoleImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountRoleImpl.setAccountRoleId(
+			this.<Long>getColumnOriginalValue("accountRoleId"));
+		accountRoleImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountRoleImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
+		accountRoleImpl.setRoleId(this.<Long>getColumnOriginalValue("roleId"));
+
+		return accountRoleImpl;
+	}
+
+	@Override
 	public int compareTo(AccountRole accountRole) {
 		long primaryKey = accountRole.getPrimaryKey();
 

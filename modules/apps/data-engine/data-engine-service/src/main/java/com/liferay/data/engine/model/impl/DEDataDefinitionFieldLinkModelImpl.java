@@ -770,6 +770,41 @@ public class DEDataDefinitionFieldLinkModelImpl
 	}
 
 	@Override
+	public DEDataDefinitionFieldLink cloneWithOriginalValues() {
+		DEDataDefinitionFieldLinkImpl deDataDefinitionFieldLinkImpl =
+			new DEDataDefinitionFieldLinkImpl();
+
+		deDataDefinitionFieldLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		deDataDefinitionFieldLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		deDataDefinitionFieldLinkImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		deDataDefinitionFieldLinkImpl.setDeDataDefinitionFieldLinkId(
+			this.<Long>getColumnOriginalValue("deDataDefinitionFieldLinkId"));
+		deDataDefinitionFieldLinkImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		deDataDefinitionFieldLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		deDataDefinitionFieldLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		deDataDefinitionFieldLinkImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		deDataDefinitionFieldLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		deDataDefinitionFieldLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		deDataDefinitionFieldLinkImpl.setDdmStructureId(
+			this.<Long>getColumnOriginalValue("ddmStructureId"));
+		deDataDefinitionFieldLinkImpl.setFieldName(
+			this.<String>getColumnOriginalValue("fieldName"));
+		deDataDefinitionFieldLinkImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return deDataDefinitionFieldLinkImpl;
+	}
+
+	@Override
 	public int compareTo(DEDataDefinitionFieldLink deDataDefinitionFieldLink) {
 		long primaryKey = deDataDefinitionFieldLink.getPrimaryKey();
 

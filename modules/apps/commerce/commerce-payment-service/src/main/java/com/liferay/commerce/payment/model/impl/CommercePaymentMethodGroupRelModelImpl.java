@@ -1075,6 +1075,41 @@ public class CommercePaymentMethodGroupRelModelImpl
 	}
 
 	@Override
+	public CommercePaymentMethodGroupRel cloneWithOriginalValues() {
+		CommercePaymentMethodGroupRelImpl commercePaymentMethodGroupRelImpl =
+			new CommercePaymentMethodGroupRelImpl();
+
+		commercePaymentMethodGroupRelImpl.setCommercePaymentMethodGroupRelId(
+			this.<Long>getColumnOriginalValue("CPaymentMethodGroupRelId"));
+		commercePaymentMethodGroupRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		commercePaymentMethodGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commercePaymentMethodGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commercePaymentMethodGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commercePaymentMethodGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commercePaymentMethodGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commercePaymentMethodGroupRelImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commercePaymentMethodGroupRelImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commercePaymentMethodGroupRelImpl.setImageId(
+			this.<Long>getColumnOriginalValue("imageId"));
+		commercePaymentMethodGroupRelImpl.setEngineKey(
+			this.<String>getColumnOriginalValue("engineKey"));
+		commercePaymentMethodGroupRelImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		commercePaymentMethodGroupRelImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return commercePaymentMethodGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
 

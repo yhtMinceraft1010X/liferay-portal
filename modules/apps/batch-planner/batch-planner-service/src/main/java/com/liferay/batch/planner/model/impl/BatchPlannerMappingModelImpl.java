@@ -787,6 +787,41 @@ public class BatchPlannerMappingModelImpl
 	}
 
 	@Override
+	public BatchPlannerMapping cloneWithOriginalValues() {
+		BatchPlannerMappingImpl batchPlannerMappingImpl =
+			new BatchPlannerMappingImpl();
+
+		batchPlannerMappingImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchPlannerMappingImpl.setBatchPlannerMappingId(
+			this.<Long>getColumnOriginalValue("batchPlannerMappingId"));
+		batchPlannerMappingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchPlannerMappingImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchPlannerMappingImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		batchPlannerMappingImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchPlannerMappingImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchPlannerMappingImpl.setBatchPlannerPlanId(
+			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
+		batchPlannerMappingImpl.setExternalFieldName(
+			this.<String>getColumnOriginalValue("externalFieldName"));
+		batchPlannerMappingImpl.setExternalFieldType(
+			this.<String>getColumnOriginalValue("externalFieldType"));
+		batchPlannerMappingImpl.setInternalFieldName(
+			this.<String>getColumnOriginalValue("internalFieldName"));
+		batchPlannerMappingImpl.setInternalFieldType(
+			this.<String>getColumnOriginalValue("internalFieldType"));
+		batchPlannerMappingImpl.setScript(
+			this.<String>getColumnOriginalValue("script"));
+
+		return batchPlannerMappingImpl;
+	}
+
+	@Override
 	public int compareTo(BatchPlannerMapping batchPlannerMapping) {
 		int value = 0;
 

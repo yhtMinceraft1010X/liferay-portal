@@ -1278,6 +1278,51 @@ public class DDMFormInstanceVersionModelImpl
 	}
 
 	@Override
+	public DDMFormInstanceVersion cloneWithOriginalValues() {
+		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl =
+			new DDMFormInstanceVersionImpl();
+
+		ddmFormInstanceVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmFormInstanceVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmFormInstanceVersionImpl.setFormInstanceVersionId(
+			this.<Long>getColumnOriginalValue("formInstanceVersionId"));
+		ddmFormInstanceVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddmFormInstanceVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmFormInstanceVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddmFormInstanceVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddmFormInstanceVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddmFormInstanceVersionImpl.setFormInstanceId(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
+		ddmFormInstanceVersionImpl.setStructureVersionId(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
+		ddmFormInstanceVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		ddmFormInstanceVersionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		ddmFormInstanceVersionImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		ddmFormInstanceVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddmFormInstanceVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddmFormInstanceVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddmFormInstanceVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddmFormInstanceVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddmFormInstanceVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DDMFormInstanceVersion ddmFormInstanceVersion) {
 		long primaryKey = ddmFormInstanceVersion.getPrimaryKey();
 

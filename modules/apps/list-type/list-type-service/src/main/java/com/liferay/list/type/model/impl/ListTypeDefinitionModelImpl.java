@@ -755,6 +755,33 @@ public class ListTypeDefinitionModelImpl
 	}
 
 	@Override
+	public ListTypeDefinition cloneWithOriginalValues() {
+		ListTypeDefinitionImpl listTypeDefinitionImpl =
+			new ListTypeDefinitionImpl();
+
+		listTypeDefinitionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		listTypeDefinitionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		listTypeDefinitionImpl.setListTypeDefinitionId(
+			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
+		listTypeDefinitionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		listTypeDefinitionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		listTypeDefinitionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		listTypeDefinitionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		listTypeDefinitionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		listTypeDefinitionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+
+		return listTypeDefinitionImpl;
+	}
+
+	@Override
 	public int compareTo(ListTypeDefinition listTypeDefinition) {
 		long primaryKey = listTypeDefinition.getPrimaryKey();
 

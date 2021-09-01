@@ -1146,6 +1146,62 @@ public class ContactModelImpl
 	}
 
 	@Override
+	public Contact cloneWithOriginalValues() {
+		ContactImpl contactImpl = new ContactImpl();
+
+		contactImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		contactImpl.setContactId(
+			this.<Long>getColumnOriginalValue("contactId"));
+		contactImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		contactImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		contactImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		contactImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		contactImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		contactImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		contactImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		contactImpl.setParentContactId(
+			this.<Long>getColumnOriginalValue("parentContactId"));
+		contactImpl.setEmailAddress(
+			this.<String>getColumnOriginalValue("emailAddress"));
+		contactImpl.setFirstName(
+			this.<String>getColumnOriginalValue("firstName"));
+		contactImpl.setMiddleName(
+			this.<String>getColumnOriginalValue("middleName"));
+		contactImpl.setLastName(
+			this.<String>getColumnOriginalValue("lastName"));
+		contactImpl.setPrefixId(this.<Long>getColumnOriginalValue("prefixId"));
+		contactImpl.setSuffixId(this.<Long>getColumnOriginalValue("suffixId"));
+		contactImpl.setMale(this.<Boolean>getColumnOriginalValue("male"));
+		contactImpl.setBirthday(this.<Date>getColumnOriginalValue("birthday"));
+		contactImpl.setSmsSn(this.<String>getColumnOriginalValue("smsSn"));
+		contactImpl.setFacebookSn(
+			this.<String>getColumnOriginalValue("facebookSn"));
+		contactImpl.setJabberSn(
+			this.<String>getColumnOriginalValue("jabberSn"));
+		contactImpl.setSkypeSn(this.<String>getColumnOriginalValue("skypeSn"));
+		contactImpl.setTwitterSn(
+			this.<String>getColumnOriginalValue("twitterSn"));
+		contactImpl.setEmployeeStatusId(
+			this.<String>getColumnOriginalValue("employeeStatusId"));
+		contactImpl.setEmployeeNumber(
+			this.<String>getColumnOriginalValue("employeeNumber"));
+		contactImpl.setJobTitle(
+			this.<String>getColumnOriginalValue("jobTitle"));
+		contactImpl.setJobClass(
+			this.<String>getColumnOriginalValue("jobClass"));
+		contactImpl.setHoursOfOperation(
+			this.<String>getColumnOriginalValue("hoursOfOperation"));
+
+		return contactImpl;
+	}
+
+	@Override
 	public int compareTo(Contact contact) {
 		int value = 0;
 

@@ -1523,6 +1523,50 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	@Override
+	public Group cloneWithOriginalValues() {
+		GroupImpl groupImpl = new GroupImpl();
+
+		groupImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		groupImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		groupImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		groupImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		groupImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
+		groupImpl.setCreatorUserId(
+			this.<Long>getColumnOriginalValue("creatorUserId"));
+		groupImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		groupImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		groupImpl.setParentGroupId(
+			this.<Long>getColumnOriginalValue("parentGroupId"));
+		groupImpl.setLiveGroupId(
+			this.<Long>getColumnOriginalValue("liveGroupId"));
+		groupImpl.setTreePath(this.<String>getColumnOriginalValue("treePath"));
+		groupImpl.setGroupKey(this.<String>getColumnOriginalValue("groupKey"));
+		groupImpl.setName(this.<String>getColumnOriginalValue("name"));
+		groupImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		groupImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
+		groupImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
+		groupImpl.setManualMembership(
+			this.<Boolean>getColumnOriginalValue("manualMembership"));
+		groupImpl.setMembershipRestriction(
+			this.<Integer>getColumnOriginalValue("membershipRestriction"));
+		groupImpl.setFriendlyURL(
+			this.<String>getColumnOriginalValue("friendlyURL"));
+		groupImpl.setSite(this.<Boolean>getColumnOriginalValue("site"));
+		groupImpl.setRemoteStagingGroupCount(
+			this.<Integer>getColumnOriginalValue("remoteStagingGroupCount"));
+		groupImpl.setInheritContent(
+			this.<Boolean>getColumnOriginalValue("inheritContent"));
+		groupImpl.setActive(this.<Boolean>getColumnOriginalValue("active_"));
+
+		return groupImpl;
+	}
+
+	@Override
 	public int compareTo(Group group) {
 		int value = 0;
 

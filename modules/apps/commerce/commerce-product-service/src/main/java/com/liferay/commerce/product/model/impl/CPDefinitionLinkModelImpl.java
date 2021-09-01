@@ -790,6 +790,38 @@ public class CPDefinitionLinkModelImpl
 	}
 
 	@Override
+	public CPDefinitionLink cloneWithOriginalValues() {
+		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
+
+		cpDefinitionLinkImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDefinitionLinkImpl.setCPDefinitionLinkId(
+			this.<Long>getColumnOriginalValue("CPDefinitionLinkId"));
+		cpDefinitionLinkImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpDefinitionLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionLinkImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionLinkImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionLinkImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionLinkImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionLinkImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionLinkImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		cpDefinitionLinkImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpDefinitionLinkImpl.setType(
+			this.<String>getColumnOriginalValue("type_"));
+
+		return cpDefinitionLinkImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionLink cpDefinitionLink) {
 		int value = 0;
 

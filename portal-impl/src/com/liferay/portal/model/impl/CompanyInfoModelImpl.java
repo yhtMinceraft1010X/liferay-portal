@@ -419,6 +419,21 @@ public class CompanyInfoModelImpl
 	}
 
 	@Override
+	public CompanyInfo cloneWithOriginalValues() {
+		CompanyInfoImpl companyInfoImpl = new CompanyInfoImpl();
+
+		companyInfoImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		companyInfoImpl.setCompanyInfoId(
+			this.<Long>getColumnOriginalValue("companyInfoId"));
+		companyInfoImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		companyInfoImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+
+		return companyInfoImpl;
+	}
+
+	@Override
 	public int compareTo(CompanyInfo companyInfo) {
 		long primaryKey = companyInfo.getPrimaryKey();
 

@@ -545,6 +545,31 @@ public class DLFileVersionPreviewModelImpl
 	}
 
 	@Override
+	public DLFileVersionPreview cloneWithOriginalValues() {
+		DLFileVersionPreviewImpl dlFileVersionPreviewImpl =
+			new DLFileVersionPreviewImpl();
+
+		dlFileVersionPreviewImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileVersionPreviewImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
+			this.<Long>getColumnOriginalValue("dlFileVersionPreviewId"));
+		dlFileVersionPreviewImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		dlFileVersionPreviewImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileVersionPreviewImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		dlFileVersionPreviewImpl.setFileVersionId(
+			this.<Long>getColumnOriginalValue("fileVersionId"));
+		dlFileVersionPreviewImpl.setPreviewStatus(
+			this.<Integer>getColumnOriginalValue("previewStatus"));
+
+		return dlFileVersionPreviewImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileVersionPreview dlFileVersionPreview) {
 		int value = 0;
 

@@ -521,6 +521,27 @@ public class PasswordPolicyRelModelImpl
 	}
 
 	@Override
+	public PasswordPolicyRel cloneWithOriginalValues() {
+		PasswordPolicyRelImpl passwordPolicyRelImpl =
+			new PasswordPolicyRelImpl();
+
+		passwordPolicyRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		passwordPolicyRelImpl.setPasswordPolicyRelId(
+			this.<Long>getColumnOriginalValue("passwordPolicyRelId"));
+		passwordPolicyRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		passwordPolicyRelImpl.setPasswordPolicyId(
+			this.<Long>getColumnOriginalValue("passwordPolicyId"));
+		passwordPolicyRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		passwordPolicyRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return passwordPolicyRelImpl;
+	}
+
+	@Override
 	public int compareTo(PasswordPolicyRel passwordPolicyRel) {
 		long primaryKey = passwordPolicyRel.getPrimaryKey();
 

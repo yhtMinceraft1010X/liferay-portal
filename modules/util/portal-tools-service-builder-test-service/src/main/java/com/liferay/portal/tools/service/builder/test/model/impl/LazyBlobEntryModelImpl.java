@@ -551,6 +551,19 @@ public class LazyBlobEntryModelImpl
 	}
 
 	@Override
+	public LazyBlobEntry cloneWithOriginalValues() {
+		LazyBlobEntryImpl lazyBlobEntryImpl = new LazyBlobEntryImpl();
+
+		lazyBlobEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		lazyBlobEntryImpl.setLazyBlobEntryId(
+			this.<Long>getColumnOriginalValue("lazyBlobEntryId"));
+		lazyBlobEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+
+		return lazyBlobEntryImpl;
+	}
+
+	@Override
 	public int compareTo(LazyBlobEntry lazyBlobEntry) {
 		long primaryKey = lazyBlobEntry.getPrimaryKey();
 

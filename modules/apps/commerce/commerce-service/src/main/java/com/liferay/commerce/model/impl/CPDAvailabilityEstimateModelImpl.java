@@ -736,6 +736,36 @@ public class CPDAvailabilityEstimateModelImpl
 	}
 
 	@Override
+	public CPDAvailabilityEstimate cloneWithOriginalValues() {
+		CPDAvailabilityEstimateImpl cpdAvailabilityEstimateImpl =
+			new CPDAvailabilityEstimateImpl();
+
+		cpdAvailabilityEstimateImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpdAvailabilityEstimateImpl.setCPDAvailabilityEstimateId(
+			this.<Long>getColumnOriginalValue("CPDAvailabilityEstimateId"));
+		cpdAvailabilityEstimateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpdAvailabilityEstimateImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpdAvailabilityEstimateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpdAvailabilityEstimateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpdAvailabilityEstimateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpdAvailabilityEstimateImpl.setCommerceAvailabilityEstimateId(
+			this.<Long>getColumnOriginalValue(
+				"commerceAvailabilityEstimateId"));
+		cpdAvailabilityEstimateImpl.setCProductId(
+			this.<Long>getColumnOriginalValue("CProductId"));
+		cpdAvailabilityEstimateImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpdAvailabilityEstimateImpl;
+	}
+
+	@Override
 	public int compareTo(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 		long primaryKey = cpdAvailabilityEstimate.getPrimaryKey();
 

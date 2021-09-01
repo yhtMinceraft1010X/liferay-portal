@@ -758,6 +758,38 @@ public class SegmentsEntryRelModelImpl
 	}
 
 	@Override
+	public SegmentsEntryRel cloneWithOriginalValues() {
+		SegmentsEntryRelImpl segmentsEntryRelImpl = new SegmentsEntryRelImpl();
+
+		segmentsEntryRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		segmentsEntryRelImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		segmentsEntryRelImpl.setSegmentsEntryRelId(
+			this.<Long>getColumnOriginalValue("segmentsEntryRelId"));
+		segmentsEntryRelImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		segmentsEntryRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		segmentsEntryRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		segmentsEntryRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		segmentsEntryRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		segmentsEntryRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		segmentsEntryRelImpl.setSegmentsEntryId(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
+		segmentsEntryRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		segmentsEntryRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return segmentsEntryRelImpl;
+	}
+
+	@Override
 	public int compareTo(SegmentsEntryRel segmentsEntryRel) {
 		long primaryKey = segmentsEntryRel.getPrimaryKey();
 

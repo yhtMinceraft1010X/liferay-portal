@@ -605,6 +605,32 @@ public class DDMStorageLinkModelImpl
 	}
 
 	@Override
+	public DDMStorageLink cloneWithOriginalValues() {
+		DDMStorageLinkImpl ddmStorageLinkImpl = new DDMStorageLinkImpl();
+
+		ddmStorageLinkImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddmStorageLinkImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddmStorageLinkImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		ddmStorageLinkImpl.setStorageLinkId(
+			this.<Long>getColumnOriginalValue("storageLinkId"));
+		ddmStorageLinkImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddmStorageLinkImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		ddmStorageLinkImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		ddmStorageLinkImpl.setStructureId(
+			this.<Long>getColumnOriginalValue("structureId"));
+		ddmStorageLinkImpl.setStructureVersionId(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
+
+		return ddmStorageLinkImpl;
+	}
+
+	@Override
 	public int compareTo(DDMStorageLink ddmStorageLink) {
 		long primaryKey = ddmStorageLink.getPrimaryKey();
 

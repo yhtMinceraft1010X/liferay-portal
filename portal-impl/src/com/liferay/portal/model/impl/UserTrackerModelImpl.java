@@ -593,6 +593,31 @@ public class UserTrackerModelImpl
 	}
 
 	@Override
+	public UserTracker cloneWithOriginalValues() {
+		UserTrackerImpl userTrackerImpl = new UserTrackerImpl();
+
+		userTrackerImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		userTrackerImpl.setUserTrackerId(
+			this.<Long>getColumnOriginalValue("userTrackerId"));
+		userTrackerImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		userTrackerImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		userTrackerImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		userTrackerImpl.setSessionId(
+			this.<String>getColumnOriginalValue("sessionId"));
+		userTrackerImpl.setRemoteAddr(
+			this.<String>getColumnOriginalValue("remoteAddr"));
+		userTrackerImpl.setRemoteHost(
+			this.<String>getColumnOriginalValue("remoteHost"));
+		userTrackerImpl.setUserAgent(
+			this.<String>getColumnOriginalValue("userAgent"));
+
+		return userTrackerImpl;
+	}
+
+	@Override
 	public int compareTo(UserTracker userTracker) {
 		long primaryKey = userTracker.getPrimaryKey();
 

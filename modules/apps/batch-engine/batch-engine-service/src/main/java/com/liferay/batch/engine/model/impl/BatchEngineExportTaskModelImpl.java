@@ -953,6 +953,49 @@ public class BatchEngineExportTaskModelImpl
 	}
 
 	@Override
+	public BatchEngineExportTask cloneWithOriginalValues() {
+		BatchEngineExportTaskImpl batchEngineExportTaskImpl =
+			new BatchEngineExportTaskImpl();
+
+		batchEngineExportTaskImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		batchEngineExportTaskImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		batchEngineExportTaskImpl.setBatchEngineExportTaskId(
+			this.<Long>getColumnOriginalValue("batchEngineExportTaskId"));
+		batchEngineExportTaskImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		batchEngineExportTaskImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		batchEngineExportTaskImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		batchEngineExportTaskImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		batchEngineExportTaskImpl.setCallbackURL(
+			this.<String>getColumnOriginalValue("callbackURL"));
+		batchEngineExportTaskImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		batchEngineExportTaskImpl.setContentType(
+			this.<String>getColumnOriginalValue("contentType"));
+		batchEngineExportTaskImpl.setEndTime(
+			this.<Date>getColumnOriginalValue("endTime"));
+		batchEngineExportTaskImpl.setErrorMessage(
+			this.<String>getColumnOriginalValue("errorMessage"));
+		batchEngineExportTaskImpl.setFieldNames(
+			this.<String>getColumnOriginalValue("fieldNames"));
+		batchEngineExportTaskImpl.setExecuteStatus(
+			this.<String>getColumnOriginalValue("executeStatus"));
+		batchEngineExportTaskImpl.setParameters(
+			this.<Map>getColumnOriginalValue("parameters"));
+		batchEngineExportTaskImpl.setStartTime(
+			this.<Date>getColumnOriginalValue("startTime"));
+		batchEngineExportTaskImpl.setTaskItemDelegateName(
+			this.<String>getColumnOriginalValue("taskItemDelegateName"));
+
+		return batchEngineExportTaskImpl;
+	}
+
+	@Override
 	public int compareTo(BatchEngineExportTask batchEngineExportTask) {
 		long primaryKey = batchEngineExportTask.getPrimaryKey();
 

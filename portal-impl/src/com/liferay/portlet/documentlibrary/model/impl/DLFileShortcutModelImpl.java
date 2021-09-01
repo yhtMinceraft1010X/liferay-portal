@@ -1245,6 +1245,54 @@ public class DLFileShortcutModelImpl
 	}
 
 	@Override
+	public DLFileShortcut cloneWithOriginalValues() {
+		DLFileShortcutImpl dlFileShortcutImpl = new DLFileShortcutImpl();
+
+		dlFileShortcutImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dlFileShortcutImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		dlFileShortcutImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		dlFileShortcutImpl.setFileShortcutId(
+			this.<Long>getColumnOriginalValue("fileShortcutId"));
+		dlFileShortcutImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		dlFileShortcutImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		dlFileShortcutImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		dlFileShortcutImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		dlFileShortcutImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		dlFileShortcutImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		dlFileShortcutImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		dlFileShortcutImpl.setFolderId(
+			this.<Long>getColumnOriginalValue("folderId"));
+		dlFileShortcutImpl.setToFileEntryId(
+			this.<Long>getColumnOriginalValue("toFileEntryId"));
+		dlFileShortcutImpl.setTreePath(
+			this.<String>getColumnOriginalValue("treePath"));
+		dlFileShortcutImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		dlFileShortcutImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		dlFileShortcutImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		dlFileShortcutImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		dlFileShortcutImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		dlFileShortcutImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return dlFileShortcutImpl;
+	}
+
+	@Override
 	public int compareTo(DLFileShortcut dlFileShortcut) {
 		long primaryKey = dlFileShortcut.getPrimaryKey();
 

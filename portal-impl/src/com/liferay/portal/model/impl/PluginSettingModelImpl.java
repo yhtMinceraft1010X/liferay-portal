@@ -590,6 +590,28 @@ public class PluginSettingModelImpl
 	}
 
 	@Override
+	public PluginSetting cloneWithOriginalValues() {
+		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
+
+		pluginSettingImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		pluginSettingImpl.setPluginSettingId(
+			this.<Long>getColumnOriginalValue("pluginSettingId"));
+		pluginSettingImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		pluginSettingImpl.setPluginId(
+			this.<String>getColumnOriginalValue("pluginId"));
+		pluginSettingImpl.setPluginType(
+			this.<String>getColumnOriginalValue("pluginType"));
+		pluginSettingImpl.setRoles(
+			this.<String>getColumnOriginalValue("roles"));
+		pluginSettingImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return pluginSettingImpl;
+	}
+
+	@Override
 	public int compareTo(PluginSetting pluginSetting) {
 		long primaryKey = pluginSetting.getPrimaryKey();
 

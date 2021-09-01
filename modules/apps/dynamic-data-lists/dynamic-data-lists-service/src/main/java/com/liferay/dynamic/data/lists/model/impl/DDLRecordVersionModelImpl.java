@@ -1016,6 +1016,50 @@ public class DDLRecordVersionModelImpl
 	}
 
 	@Override
+	public DDLRecordVersion cloneWithOriginalValues() {
+		DDLRecordVersionImpl ddlRecordVersionImpl = new DDLRecordVersionImpl();
+
+		ddlRecordVersionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ddlRecordVersionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ddlRecordVersionImpl.setRecordVersionId(
+			this.<Long>getColumnOriginalValue("recordVersionId"));
+		ddlRecordVersionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		ddlRecordVersionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ddlRecordVersionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		ddlRecordVersionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		ddlRecordVersionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		ddlRecordVersionImpl.setDDMStorageId(
+			this.<Long>getColumnOriginalValue("DDMStorageId"));
+		ddlRecordVersionImpl.setRecordSetId(
+			this.<Long>getColumnOriginalValue("recordSetId"));
+		ddlRecordVersionImpl.setRecordSetVersion(
+			this.<String>getColumnOriginalValue("recordSetVersion"));
+		ddlRecordVersionImpl.setRecordId(
+			this.<Long>getColumnOriginalValue("recordId"));
+		ddlRecordVersionImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ddlRecordVersionImpl.setDisplayIndex(
+			this.<Integer>getColumnOriginalValue("displayIndex"));
+		ddlRecordVersionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		ddlRecordVersionImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		ddlRecordVersionImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		ddlRecordVersionImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return ddlRecordVersionImpl;
+	}
+
+	@Override
 	public int compareTo(DDLRecordVersion ddlRecordVersion) {
 		long primaryKey = ddlRecordVersion.getPrimaryKey();
 

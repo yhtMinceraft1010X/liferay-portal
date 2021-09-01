@@ -733,6 +733,36 @@ public class CommerceCatalogModelImpl
 	}
 
 	@Override
+	public CommerceCatalog cloneWithOriginalValues() {
+		CommerceCatalogImpl commerceCatalogImpl = new CommerceCatalogImpl();
+
+		commerceCatalogImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceCatalogImpl.setCommerceCatalogId(
+			this.<Long>getColumnOriginalValue("commerceCatalogId"));
+		commerceCatalogImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceCatalogImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceCatalogImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceCatalogImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceCatalogImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceCatalogImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceCatalogImpl.setCommerceCurrencyCode(
+			this.<String>getColumnOriginalValue("commerceCurrencyCode"));
+		commerceCatalogImpl.setCatalogDefaultLanguageId(
+			this.<String>getColumnOriginalValue("catalogDefaultLanguageId"));
+		commerceCatalogImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
+
+		return commerceCatalogImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceCatalog commerceCatalog) {
 		int value = 0;
 

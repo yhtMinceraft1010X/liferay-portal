@@ -1513,6 +1513,65 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	@Override
+	public CPAttachmentFileEntry cloneWithOriginalValues() {
+		CPAttachmentFileEntryImpl cpAttachmentFileEntryImpl =
+			new CPAttachmentFileEntryImpl();
+
+		cpAttachmentFileEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpAttachmentFileEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cpAttachmentFileEntryImpl.setCPAttachmentFileEntryId(
+			this.<Long>getColumnOriginalValue("CPAttachmentFileEntryId"));
+		cpAttachmentFileEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpAttachmentFileEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpAttachmentFileEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpAttachmentFileEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpAttachmentFileEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpAttachmentFileEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpAttachmentFileEntryImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		cpAttachmentFileEntryImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		cpAttachmentFileEntryImpl.setFileEntryId(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
+		cpAttachmentFileEntryImpl.setCDNEnabled(
+			this.<Boolean>getColumnOriginalValue("cdnEnabled"));
+		cpAttachmentFileEntryImpl.setCDNURL(
+			this.<String>getColumnOriginalValue("cdnURL"));
+		cpAttachmentFileEntryImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		cpAttachmentFileEntryImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		cpAttachmentFileEntryImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		cpAttachmentFileEntryImpl.setJson(
+			this.<String>getColumnOriginalValue("json"));
+		cpAttachmentFileEntryImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpAttachmentFileEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		cpAttachmentFileEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		cpAttachmentFileEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		cpAttachmentFileEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		cpAttachmentFileEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		cpAttachmentFileEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return cpAttachmentFileEntryImpl;
+	}
+
+	@Override
 	public int compareTo(CPAttachmentFileEntry cpAttachmentFileEntry) {
 		int value = 0;
 

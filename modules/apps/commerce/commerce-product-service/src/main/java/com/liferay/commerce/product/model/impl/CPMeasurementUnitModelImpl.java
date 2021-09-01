@@ -1033,6 +1033,45 @@ public class CPMeasurementUnitModelImpl
 	}
 
 	@Override
+	public CPMeasurementUnit cloneWithOriginalValues() {
+		CPMeasurementUnitImpl cpMeasurementUnitImpl =
+			new CPMeasurementUnitImpl();
+
+		cpMeasurementUnitImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpMeasurementUnitImpl.setCPMeasurementUnitId(
+			this.<Long>getColumnOriginalValue("CPMeasurementUnitId"));
+		cpMeasurementUnitImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpMeasurementUnitImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpMeasurementUnitImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpMeasurementUnitImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpMeasurementUnitImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpMeasurementUnitImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpMeasurementUnitImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		cpMeasurementUnitImpl.setKey(
+			this.<String>getColumnOriginalValue("key_"));
+		cpMeasurementUnitImpl.setRate(
+			this.<Double>getColumnOriginalValue("rate"));
+		cpMeasurementUnitImpl.setPrimary(
+			this.<Boolean>getColumnOriginalValue("primary_"));
+		cpMeasurementUnitImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpMeasurementUnitImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		cpMeasurementUnitImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpMeasurementUnitImpl;
+	}
+
+	@Override
 	public int compareTo(CPMeasurementUnit cpMeasurementUnit) {
 		int value = 0;
 

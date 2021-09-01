@@ -919,6 +919,44 @@ public class KaleoDefinitionModelImpl
 	}
 
 	@Override
+	public KaleoDefinition cloneWithOriginalValues() {
+		KaleoDefinitionImpl kaleoDefinitionImpl = new KaleoDefinitionImpl();
+
+		kaleoDefinitionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoDefinitionImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoDefinitionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoDefinitionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoDefinitionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoDefinitionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoDefinitionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoDefinitionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoDefinitionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		kaleoDefinitionImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		kaleoDefinitionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		kaleoDefinitionImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		kaleoDefinitionImpl.setScope(
+			this.<String>getColumnOriginalValue("scope"));
+		kaleoDefinitionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
+		kaleoDefinitionImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+
+		return kaleoDefinitionImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoDefinition kaleoDefinition) {
 		int value = 0;
 

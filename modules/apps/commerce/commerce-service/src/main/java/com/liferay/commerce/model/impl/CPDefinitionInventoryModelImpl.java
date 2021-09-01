@@ -998,6 +998,53 @@ public class CPDefinitionInventoryModelImpl
 	}
 
 	@Override
+	public CPDefinitionInventory cloneWithOriginalValues() {
+		CPDefinitionInventoryImpl cpDefinitionInventoryImpl =
+			new CPDefinitionInventoryImpl();
+
+		cpDefinitionInventoryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		cpDefinitionInventoryImpl.setCPDefinitionInventoryId(
+			this.<Long>getColumnOriginalValue("CPDefinitionInventoryId"));
+		cpDefinitionInventoryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		cpDefinitionInventoryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpDefinitionInventoryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpDefinitionInventoryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpDefinitionInventoryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpDefinitionInventoryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpDefinitionInventoryImpl.setCPDefinitionId(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
+		cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine(
+			this.<String>getColumnOriginalValue("CPDefinitionInventoryEngine"));
+		cpDefinitionInventoryImpl.setLowStockActivity(
+			this.<String>getColumnOriginalValue("lowStockActivity"));
+		cpDefinitionInventoryImpl.setDisplayAvailability(
+			this.<Boolean>getColumnOriginalValue("displayAvailability"));
+		cpDefinitionInventoryImpl.setDisplayStockQuantity(
+			this.<Boolean>getColumnOriginalValue("displayStockQuantity"));
+		cpDefinitionInventoryImpl.setMinStockQuantity(
+			this.<Integer>getColumnOriginalValue("minStockQuantity"));
+		cpDefinitionInventoryImpl.setBackOrders(
+			this.<Boolean>getColumnOriginalValue("backOrders"));
+		cpDefinitionInventoryImpl.setMinOrderQuantity(
+			this.<Integer>getColumnOriginalValue("minOrderQuantity"));
+		cpDefinitionInventoryImpl.setMaxOrderQuantity(
+			this.<Integer>getColumnOriginalValue("maxOrderQuantity"));
+		cpDefinitionInventoryImpl.setAllowedOrderQuantities(
+			this.<String>getColumnOriginalValue("allowedOrderQuantities"));
+		cpDefinitionInventoryImpl.setMultipleOrderQuantity(
+			this.<Integer>getColumnOriginalValue("multipleOrderQuantity"));
+
+		return cpDefinitionInventoryImpl;
+	}
+
+	@Override
 	public int compareTo(CPDefinitionInventory cpDefinitionInventory) {
 		long primaryKey = cpDefinitionInventory.getPrimaryKey();
 

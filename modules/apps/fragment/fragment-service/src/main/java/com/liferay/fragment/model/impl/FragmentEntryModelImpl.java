@@ -1365,6 +1365,63 @@ public class FragmentEntryModelImpl
 	}
 
 	@Override
+	public FragmentEntry cloneWithOriginalValues() {
+		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
+
+		fragmentEntryImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fragmentEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		fragmentEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		fragmentEntryImpl.setHeadId(
+			this.<Long>getColumnOriginalValue("headId"));
+		fragmentEntryImpl.setFragmentEntryId(
+			this.<Long>getColumnOriginalValue("fragmentEntryId"));
+		fragmentEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		fragmentEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fragmentEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		fragmentEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fragmentEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fragmentEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fragmentEntryImpl.setFragmentCollectionId(
+			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
+		fragmentEntryImpl.setFragmentEntryKey(
+			this.<String>getColumnOriginalValue("fragmentEntryKey"));
+		fragmentEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		fragmentEntryImpl.setCss(this.<String>getColumnOriginalValue("css"));
+		fragmentEntryImpl.setHtml(this.<String>getColumnOriginalValue("html"));
+		fragmentEntryImpl.setJs(this.<String>getColumnOriginalValue("js"));
+		fragmentEntryImpl.setCacheable(
+			this.<Boolean>getColumnOriginalValue("cacheable"));
+		fragmentEntryImpl.setConfiguration(
+			this.<String>getColumnOriginalValue("configuration"));
+		fragmentEntryImpl.setPreviewFileEntryId(
+			this.<Long>getColumnOriginalValue("previewFileEntryId"));
+		fragmentEntryImpl.setReadOnly(
+			this.<Boolean>getColumnOriginalValue("readOnly"));
+		fragmentEntryImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		fragmentEntryImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		fragmentEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		fragmentEntryImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		fragmentEntryImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		fragmentEntryImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return fragmentEntryImpl;
+	}
+
+	@Override
 	public int compareTo(FragmentEntry fragmentEntry) {
 		int value = 0;
 

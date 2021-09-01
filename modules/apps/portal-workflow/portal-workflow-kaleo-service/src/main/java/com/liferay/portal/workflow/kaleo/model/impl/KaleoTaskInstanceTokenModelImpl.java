@@ -987,6 +987,57 @@ public class KaleoTaskInstanceTokenModelImpl
 	}
 
 	@Override
+	public KaleoTaskInstanceToken cloneWithOriginalValues() {
+		KaleoTaskInstanceTokenImpl kaleoTaskInstanceTokenImpl =
+			new KaleoTaskInstanceTokenImpl();
+
+		kaleoTaskInstanceTokenImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoTaskInstanceTokenId"));
+		kaleoTaskInstanceTokenImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		kaleoTaskInstanceTokenImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kaleoTaskInstanceTokenImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		kaleoTaskInstanceTokenImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kaleoTaskInstanceTokenImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kaleoTaskInstanceTokenImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kaleoTaskInstanceTokenImpl.setKaleoDefinitionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
+		kaleoTaskInstanceTokenImpl.setKaleoDefinitionVersionId(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
+		kaleoTaskInstanceTokenImpl.setKaleoInstanceId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
+		kaleoTaskInstanceTokenImpl.setKaleoInstanceTokenId(
+			this.<Long>getColumnOriginalValue("kaleoInstanceTokenId"));
+		kaleoTaskInstanceTokenImpl.setKaleoTaskId(
+			this.<Long>getColumnOriginalValue("kaleoTaskId"));
+		kaleoTaskInstanceTokenImpl.setKaleoTaskName(
+			this.<String>getColumnOriginalValue("kaleoTaskName"));
+		kaleoTaskInstanceTokenImpl.setClassName(
+			this.<String>getColumnOriginalValue("className"));
+		kaleoTaskInstanceTokenImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		kaleoTaskInstanceTokenImpl.setCompletionUserId(
+			this.<Long>getColumnOriginalValue("completionUserId"));
+		kaleoTaskInstanceTokenImpl.setCompleted(
+			this.<Boolean>getColumnOriginalValue("completed"));
+		kaleoTaskInstanceTokenImpl.setCompletionDate(
+			this.<Date>getColumnOriginalValue("completionDate"));
+		kaleoTaskInstanceTokenImpl.setDueDate(
+			this.<Date>getColumnOriginalValue("dueDate"));
+		kaleoTaskInstanceTokenImpl.setWorkflowContext(
+			this.<String>getColumnOriginalValue("workflowContext"));
+
+		return kaleoTaskInstanceTokenImpl;
+	}
+
+	@Override
 	public int compareTo(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 		int value = 0;
 

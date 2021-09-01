@@ -958,6 +958,63 @@ public class AccountModelImpl
 	}
 
 	@Override
+	public Account cloneWithOriginalValues() {
+		AccountImpl accountImpl = new AccountImpl();
+
+		accountImpl.setAccountId(
+			this.<Long>getColumnOriginalValue("accountId"));
+		accountImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		accountImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		accountImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		accountImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		accountImpl.setAddress(this.<String>getColumnOriginalValue("address"));
+		accountImpl.setPersonalName(
+			this.<String>getColumnOriginalValue("personalName"));
+		accountImpl.setProtocol(
+			this.<String>getColumnOriginalValue("protocol"));
+		accountImpl.setIncomingHostName(
+			this.<String>getColumnOriginalValue("incomingHostName"));
+		accountImpl.setIncomingPort(
+			this.<Integer>getColumnOriginalValue("incomingPort"));
+		accountImpl.setIncomingSecure(
+			this.<Boolean>getColumnOriginalValue("incomingSecure"));
+		accountImpl.setOutgoingHostName(
+			this.<String>getColumnOriginalValue("outgoingHostName"));
+		accountImpl.setOutgoingPort(
+			this.<Integer>getColumnOriginalValue("outgoingPort"));
+		accountImpl.setOutgoingSecure(
+			this.<Boolean>getColumnOriginalValue("outgoingSecure"));
+		accountImpl.setLogin(this.<String>getColumnOriginalValue("login"));
+		accountImpl.setPassword(
+			this.<String>getColumnOriginalValue("password_"));
+		accountImpl.setSavePassword(
+			this.<Boolean>getColumnOriginalValue("savePassword"));
+		accountImpl.setSignature(
+			this.<String>getColumnOriginalValue("signature"));
+		accountImpl.setUseSignature(
+			this.<Boolean>getColumnOriginalValue("useSignature"));
+		accountImpl.setFolderPrefix(
+			this.<String>getColumnOriginalValue("folderPrefix"));
+		accountImpl.setInboxFolderId(
+			this.<Long>getColumnOriginalValue("inboxFolderId"));
+		accountImpl.setDraftFolderId(
+			this.<Long>getColumnOriginalValue("draftFolderId"));
+		accountImpl.setSentFolderId(
+			this.<Long>getColumnOriginalValue("sentFolderId"));
+		accountImpl.setTrashFolderId(
+			this.<Long>getColumnOriginalValue("trashFolderId"));
+		accountImpl.setDefaultSender(
+			this.<Boolean>getColumnOriginalValue("defaultSender"));
+
+		return accountImpl;
+	}
+
+	@Override
 	public int compareTo(Account account) {
 		int value = 0;
 

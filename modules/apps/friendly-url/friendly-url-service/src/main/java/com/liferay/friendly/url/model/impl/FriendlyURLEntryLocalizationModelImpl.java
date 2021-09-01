@@ -677,6 +677,36 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	@Override
+	public FriendlyURLEntryLocalization cloneWithOriginalValues() {
+		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl =
+			new FriendlyURLEntryLocalizationImpl();
+
+		friendlyURLEntryLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		friendlyURLEntryLocalizationImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(
+			this.<Long>getColumnOriginalValue(
+				"friendlyURLEntryLocalizationId"));
+		friendlyURLEntryLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(
+			this.<Long>getColumnOriginalValue("friendlyURLEntryId"));
+		friendlyURLEntryLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		friendlyURLEntryLocalizationImpl.setUrlTitle(
+			this.<String>getColumnOriginalValue("urlTitle"));
+		friendlyURLEntryLocalizationImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		friendlyURLEntryLocalizationImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		friendlyURLEntryLocalizationImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return friendlyURLEntryLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 

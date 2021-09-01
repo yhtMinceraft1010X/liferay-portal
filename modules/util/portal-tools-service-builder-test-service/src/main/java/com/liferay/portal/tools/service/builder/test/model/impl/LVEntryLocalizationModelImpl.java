@@ -618,6 +618,31 @@ public class LVEntryLocalizationModelImpl
 	}
 
 	@Override
+	public LVEntryLocalization cloneWithOriginalValues() {
+		LVEntryLocalizationImpl lvEntryLocalizationImpl =
+			new LVEntryLocalizationImpl();
+
+		lvEntryLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		lvEntryLocalizationImpl.setHeadId(
+			this.<Long>getColumnOriginalValue("headId"));
+		lvEntryLocalizationImpl.setLvEntryLocalizationId(
+			this.<Long>getColumnOriginalValue("lvEntryLocalizationId"));
+		lvEntryLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		lvEntryLocalizationImpl.setLvEntryId(
+			this.<Long>getColumnOriginalValue("lvEntryId"));
+		lvEntryLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		lvEntryLocalizationImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		lvEntryLocalizationImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+
+		return lvEntryLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(LVEntryLocalization lvEntryLocalization) {
 		long primaryKey = lvEntryLocalization.getPrimaryKey();
 

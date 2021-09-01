@@ -712,6 +712,37 @@ public class SocialActivityLimitModelImpl
 	}
 
 	@Override
+	public SocialActivityLimit cloneWithOriginalValues() {
+		SocialActivityLimitImpl socialActivityLimitImpl =
+			new SocialActivityLimitImpl();
+
+		socialActivityLimitImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialActivityLimitImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialActivityLimitImpl.setActivityLimitId(
+			this.<Long>getColumnOriginalValue("activityLimitId"));
+		socialActivityLimitImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialActivityLimitImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialActivityLimitImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		socialActivityLimitImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialActivityLimitImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		socialActivityLimitImpl.setActivityType(
+			this.<Integer>getColumnOriginalValue("activityType"));
+		socialActivityLimitImpl.setActivityCounterName(
+			this.<String>getColumnOriginalValue("activityCounterName"));
+		socialActivityLimitImpl.setValue(
+			this.<String>getColumnOriginalValue("value"));
+
+		return socialActivityLimitImpl;
+	}
+
+	@Override
 	public int compareTo(SocialActivityLimit socialActivityLimit) {
 		long primaryKey = socialActivityLimit.getPrimaryKey();
 

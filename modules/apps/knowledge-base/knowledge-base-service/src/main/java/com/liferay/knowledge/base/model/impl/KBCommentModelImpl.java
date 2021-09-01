@@ -863,6 +863,39 @@ public class KBCommentModelImpl
 	}
 
 	@Override
+	public KBComment cloneWithOriginalValues() {
+		KBCommentImpl kbCommentImpl = new KBCommentImpl();
+
+		kbCommentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kbCommentImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		kbCommentImpl.setKbCommentId(
+			this.<Long>getColumnOriginalValue("kbCommentId"));
+		kbCommentImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kbCommentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kbCommentImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kbCommentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kbCommentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kbCommentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kbCommentImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		kbCommentImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
+		kbCommentImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		kbCommentImpl.setUserRating(
+			this.<Integer>getColumnOriginalValue("userRating"));
+		kbCommentImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		kbCommentImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+
+		return kbCommentImpl;
+	}
+
+	@Override
 	public int compareTo(KBComment kbComment) {
 		int value = 0;
 

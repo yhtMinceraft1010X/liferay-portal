@@ -840,6 +840,42 @@ public class CommerceMLForecastAlertEntryModelImpl
 	}
 
 	@Override
+	public CommerceMLForecastAlertEntry cloneWithOriginalValues() {
+		CommerceMLForecastAlertEntryImpl commerceMLForecastAlertEntryImpl =
+			new CommerceMLForecastAlertEntryImpl();
+
+		commerceMLForecastAlertEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceMLForecastAlertEntryImpl.setCommerceMLForecastAlertEntryId(
+			this.<Long>getColumnOriginalValue(
+				"commerceMLForecastAlertEntryId"));
+		commerceMLForecastAlertEntryImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceMLForecastAlertEntryImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceMLForecastAlertEntryImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceMLForecastAlertEntryImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceMLForecastAlertEntryImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceMLForecastAlertEntryImpl.setCommerceAccountId(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
+		commerceMLForecastAlertEntryImpl.setActual(
+			this.<Double>getColumnOriginalValue("actual"));
+		commerceMLForecastAlertEntryImpl.setForecast(
+			this.<Double>getColumnOriginalValue("forecast"));
+		commerceMLForecastAlertEntryImpl.setTimestamp(
+			this.<Date>getColumnOriginalValue("timestamp"));
+		commerceMLForecastAlertEntryImpl.setRelativeChange(
+			this.<Double>getColumnOriginalValue("relativeChange"));
+		commerceMLForecastAlertEntryImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return commerceMLForecastAlertEntryImpl;
+	}
+
+	@Override
 	public int compareTo(
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 

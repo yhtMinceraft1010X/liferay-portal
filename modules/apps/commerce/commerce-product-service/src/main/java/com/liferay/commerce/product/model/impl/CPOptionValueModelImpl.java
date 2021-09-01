@@ -961,6 +961,37 @@ public class CPOptionValueModelImpl
 	}
 
 	@Override
+	public CPOptionValue cloneWithOriginalValues() {
+		CPOptionValueImpl cpOptionValueImpl = new CPOptionValueImpl();
+
+		cpOptionValueImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		cpOptionValueImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		cpOptionValueImpl.setCPOptionValueId(
+			this.<Long>getColumnOriginalValue("CPOptionValueId"));
+		cpOptionValueImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		cpOptionValueImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		cpOptionValueImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		cpOptionValueImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		cpOptionValueImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		cpOptionValueImpl.setCPOptionId(
+			this.<Long>getColumnOriginalValue("CPOptionId"));
+		cpOptionValueImpl.setName(this.<String>getColumnOriginalValue("name"));
+		cpOptionValueImpl.setPriority(
+			this.<Double>getColumnOriginalValue("priority"));
+		cpOptionValueImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		cpOptionValueImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return cpOptionValueImpl;
+	}
+
+	@Override
 	public int compareTo(CPOptionValue cpOptionValue) {
 		int value = 0;
 

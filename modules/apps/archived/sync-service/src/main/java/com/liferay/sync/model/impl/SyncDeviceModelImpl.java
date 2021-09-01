@@ -734,6 +734,35 @@ public class SyncDeviceModelImpl
 	}
 
 	@Override
+	public SyncDevice cloneWithOriginalValues() {
+		SyncDeviceImpl syncDeviceImpl = new SyncDeviceImpl();
+
+		syncDeviceImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		syncDeviceImpl.setSyncDeviceId(
+			this.<Long>getColumnOriginalValue("syncDeviceId"));
+		syncDeviceImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		syncDeviceImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		syncDeviceImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		syncDeviceImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		syncDeviceImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		syncDeviceImpl.setType(this.<String>getColumnOriginalValue("type_"));
+		syncDeviceImpl.setBuildNumber(
+			this.<Long>getColumnOriginalValue("buildNumber"));
+		syncDeviceImpl.setFeatureSet(
+			this.<Integer>getColumnOriginalValue("featureSet"));
+		syncDeviceImpl.setHostname(
+			this.<String>getColumnOriginalValue("hostname"));
+		syncDeviceImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return syncDeviceImpl;
+	}
+
+	@Override
 	public int compareTo(SyncDevice syncDevice) {
 		long primaryKey = syncDevice.getPrimaryKey();
 

@@ -461,6 +461,25 @@ public class PortalPreferencesModelImpl
 	}
 
 	@Override
+	public PortalPreferences cloneWithOriginalValues() {
+		PortalPreferencesImpl portalPreferencesImpl =
+			new PortalPreferencesImpl();
+
+		portalPreferencesImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		portalPreferencesImpl.setPortalPreferencesId(
+			this.<Long>getColumnOriginalValue("portalPreferencesId"));
+		portalPreferencesImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		portalPreferencesImpl.setOwnerId(
+			this.<Long>getColumnOriginalValue("ownerId"));
+		portalPreferencesImpl.setOwnerType(
+			this.<Integer>getColumnOriginalValue("ownerType"));
+
+		return portalPreferencesImpl;
+	}
+
+	@Override
 	public int compareTo(PortalPreferences portalPreferences) {
 		long primaryKey = portalPreferences.getPrimaryKey();
 

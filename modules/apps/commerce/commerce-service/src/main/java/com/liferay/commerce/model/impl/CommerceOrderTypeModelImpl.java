@@ -1311,6 +1311,51 @@ public class CommerceOrderTypeModelImpl
 	}
 
 	@Override
+	public CommerceOrderType cloneWithOriginalValues() {
+		CommerceOrderTypeImpl commerceOrderTypeImpl =
+			new CommerceOrderTypeImpl();
+
+		commerceOrderTypeImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		commerceOrderTypeImpl.setCommerceOrderTypeId(
+			this.<Long>getColumnOriginalValue("commerceOrderTypeId"));
+		commerceOrderTypeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		commerceOrderTypeImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		commerceOrderTypeImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		commerceOrderTypeImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		commerceOrderTypeImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceOrderTypeImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceOrderTypeImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		commerceOrderTypeImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
+		commerceOrderTypeImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
+		commerceOrderTypeImpl.setDisplayOrder(
+			this.<Integer>getColumnOriginalValue("displayOrder"));
+		commerceOrderTypeImpl.setExpirationDate(
+			this.<Date>getColumnOriginalValue("expirationDate"));
+		commerceOrderTypeImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		commerceOrderTypeImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+		commerceOrderTypeImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		commerceOrderTypeImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		commerceOrderTypeImpl.setStatusDate(
+			this.<Date>getColumnOriginalValue("statusDate"));
+
+		return commerceOrderTypeImpl;
+	}
+
+	@Override
 	public int compareTo(CommerceOrderType commerceOrderType) {
 		int value = 0;
 

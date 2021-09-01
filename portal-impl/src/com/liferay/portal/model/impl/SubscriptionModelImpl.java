@@ -680,6 +680,35 @@ public class SubscriptionModelImpl
 	}
 
 	@Override
+	public Subscription cloneWithOriginalValues() {
+		SubscriptionImpl subscriptionImpl = new SubscriptionImpl();
+
+		subscriptionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		subscriptionImpl.setSubscriptionId(
+			this.<Long>getColumnOriginalValue("subscriptionId"));
+		subscriptionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		subscriptionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		subscriptionImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		subscriptionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		subscriptionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		subscriptionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		subscriptionImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		subscriptionImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		subscriptionImpl.setFrequency(
+			this.<String>getColumnOriginalValue("frequency"));
+
+		return subscriptionImpl;
+	}
+
+	@Override
 	public int compareTo(Subscription subscription) {
 		long primaryKey = subscription.getPrimaryKey();
 

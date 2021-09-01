@@ -691,6 +691,34 @@ public class AccountGroupRelModelImpl
 	}
 
 	@Override
+	public AccountGroupRel cloneWithOriginalValues() {
+		AccountGroupRelImpl accountGroupRelImpl = new AccountGroupRelImpl();
+
+		accountGroupRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountGroupRelImpl.setAccountGroupRelId(
+			this.<Long>getColumnOriginalValue("accountGroupRelId"));
+		accountGroupRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountGroupRelImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		accountGroupRelImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		accountGroupRelImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		accountGroupRelImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		accountGroupRelImpl.setAccountGroupId(
+			this.<Long>getColumnOriginalValue("accountGroupId"));
+		accountGroupRelImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		accountGroupRelImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+
+		return accountGroupRelImpl;
+	}
+
+	@Override
 	public int compareTo(AccountGroupRel accountGroupRel) {
 		long primaryKey = accountGroupRel.getPrimaryKey();
 

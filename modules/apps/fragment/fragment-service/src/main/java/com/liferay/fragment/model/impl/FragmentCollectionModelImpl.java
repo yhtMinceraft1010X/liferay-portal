@@ -832,6 +832,43 @@ public class FragmentCollectionModelImpl
 	}
 
 	@Override
+	public FragmentCollection cloneWithOriginalValues() {
+		FragmentCollectionImpl fragmentCollectionImpl =
+			new FragmentCollectionImpl();
+
+		fragmentCollectionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		fragmentCollectionImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		fragmentCollectionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		fragmentCollectionImpl.setFragmentCollectionId(
+			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
+		fragmentCollectionImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		fragmentCollectionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		fragmentCollectionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		fragmentCollectionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		fragmentCollectionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		fragmentCollectionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		fragmentCollectionImpl.setFragmentCollectionKey(
+			this.<String>getColumnOriginalValue("fragmentCollectionKey"));
+		fragmentCollectionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		fragmentCollectionImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		fragmentCollectionImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return fragmentCollectionImpl;
+	}
+
+	@Override
 	public int compareTo(FragmentCollection fragmentCollection) {
 		int value = 0;
 

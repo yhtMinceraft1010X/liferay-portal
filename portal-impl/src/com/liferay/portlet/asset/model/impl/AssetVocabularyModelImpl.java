@@ -1195,6 +1195,48 @@ public class AssetVocabularyModelImpl
 	}
 
 	@Override
+	public AssetVocabulary cloneWithOriginalValues() {
+		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
+
+		assetVocabularyImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		assetVocabularyImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		assetVocabularyImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		assetVocabularyImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
+		assetVocabularyImpl.setVocabularyId(
+			this.<Long>getColumnOriginalValue("vocabularyId"));
+		assetVocabularyImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		assetVocabularyImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assetVocabularyImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		assetVocabularyImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assetVocabularyImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assetVocabularyImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assetVocabularyImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		assetVocabularyImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+		assetVocabularyImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		assetVocabularyImpl.setSettings(
+			this.<String>getColumnOriginalValue("settings_"));
+		assetVocabularyImpl.setVisibilityType(
+			this.<Integer>getColumnOriginalValue("visibilityType"));
+		assetVocabularyImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return assetVocabularyImpl;
+	}
+
+	@Override
 	public int compareTo(AssetVocabulary assetVocabulary) {
 		int value = 0;
 

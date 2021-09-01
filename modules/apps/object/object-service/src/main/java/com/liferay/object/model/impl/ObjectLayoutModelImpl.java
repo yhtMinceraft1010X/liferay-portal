@@ -609,6 +609,28 @@ public class ObjectLayoutModelImpl
 	}
 
 	@Override
+	public ObjectLayout cloneWithOriginalValues() {
+		ObjectLayoutImpl objectLayoutImpl = new ObjectLayoutImpl();
+
+		objectLayoutImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectLayoutImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		objectLayoutImpl.setObjectLayoutId(
+			this.<Long>getColumnOriginalValue("objectLayoutId"));
+		objectLayoutImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectLayoutImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		objectLayoutImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectLayoutImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectLayoutImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+
+		return objectLayoutImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectLayout objectLayout) {
 		long primaryKey = objectLayout.getPrimaryKey();
 

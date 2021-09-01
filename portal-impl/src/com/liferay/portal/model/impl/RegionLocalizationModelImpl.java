@@ -498,6 +498,27 @@ public class RegionLocalizationModelImpl
 	}
 
 	@Override
+	public RegionLocalization cloneWithOriginalValues() {
+		RegionLocalizationImpl regionLocalizationImpl =
+			new RegionLocalizationImpl();
+
+		regionLocalizationImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		regionLocalizationImpl.setRegionLocalizationId(
+			this.<Long>getColumnOriginalValue("regionLocalizationId"));
+		regionLocalizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		regionLocalizationImpl.setRegionId(
+			this.<Long>getColumnOriginalValue("regionId"));
+		regionLocalizationImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		regionLocalizationImpl.setTitle(
+			this.<String>getColumnOriginalValue("title"));
+
+		return regionLocalizationImpl;
+	}
+
+	@Override
 	public int compareTo(RegionLocalization regionLocalization) {
 		long primaryKey = regionLocalization.getPrimaryKey();
 

@@ -1085,6 +1085,59 @@ public class JournalFeedModelImpl
 	}
 
 	@Override
+	public JournalFeed cloneWithOriginalValues() {
+		JournalFeedImpl journalFeedImpl = new JournalFeedImpl();
+
+		journalFeedImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		journalFeedImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		journalFeedImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		journalFeedImpl.setId(this.<Long>getColumnOriginalValue("id_"));
+		journalFeedImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		journalFeedImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		journalFeedImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		journalFeedImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		journalFeedImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		journalFeedImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		journalFeedImpl.setFeedId(
+			this.<String>getColumnOriginalValue("feedId"));
+		journalFeedImpl.setName(this.<String>getColumnOriginalValue("name"));
+		journalFeedImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		journalFeedImpl.setDDMStructureKey(
+			this.<String>getColumnOriginalValue("DDMStructureKey"));
+		journalFeedImpl.setDDMTemplateKey(
+			this.<String>getColumnOriginalValue("DDMTemplateKey"));
+		journalFeedImpl.setDDMRendererTemplateKey(
+			this.<String>getColumnOriginalValue("DDMRendererTemplateKey"));
+		journalFeedImpl.setDelta(this.<Integer>getColumnOriginalValue("delta"));
+		journalFeedImpl.setOrderByCol(
+			this.<String>getColumnOriginalValue("orderByCol"));
+		journalFeedImpl.setOrderByType(
+			this.<String>getColumnOriginalValue("orderByType"));
+		journalFeedImpl.setTargetLayoutFriendlyUrl(
+			this.<String>getColumnOriginalValue("targetLayoutFriendlyUrl"));
+		journalFeedImpl.setTargetPortletId(
+			this.<String>getColumnOriginalValue("targetPortletId"));
+		journalFeedImpl.setContentField(
+			this.<String>getColumnOriginalValue("contentField"));
+		journalFeedImpl.setFeedFormat(
+			this.<String>getColumnOriginalValue("feedFormat"));
+		journalFeedImpl.setFeedVersion(
+			this.<Double>getColumnOriginalValue("feedVersion"));
+		journalFeedImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return journalFeedImpl;
+	}
+
+	@Override
 	public int compareTo(JournalFeed journalFeed) {
 		int value = 0;
 

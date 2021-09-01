@@ -339,6 +339,17 @@ public class CounterModelImpl
 	}
 
 	@Override
+	public Counter cloneWithOriginalValues() {
+		CounterImpl counterImpl = new CounterImpl();
+
+		counterImpl.setName(this.<String>getColumnOriginalValue("name"));
+		counterImpl.setCurrentId(
+			this.<Long>getColumnOriginalValue("currentId"));
+
+		return counterImpl;
+	}
+
+	@Override
 	public int compareTo(Counter counter) {
 		String primaryKey = counter.getPrimaryKey();
 

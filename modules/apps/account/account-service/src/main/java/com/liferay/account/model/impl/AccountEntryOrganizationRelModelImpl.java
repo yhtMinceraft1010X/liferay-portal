@@ -532,6 +532,25 @@ public class AccountEntryOrganizationRelModelImpl
 	}
 
 	@Override
+	public AccountEntryOrganizationRel cloneWithOriginalValues() {
+		AccountEntryOrganizationRelImpl accountEntryOrganizationRelImpl =
+			new AccountEntryOrganizationRelImpl();
+
+		accountEntryOrganizationRelImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountEntryOrganizationRelImpl.setAccountEntryOrganizationRelId(
+			this.<Long>getColumnOriginalValue("accountEntryOrganizationRelId"));
+		accountEntryOrganizationRelImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		accountEntryOrganizationRelImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
+		accountEntryOrganizationRelImpl.setOrganizationId(
+			this.<Long>getColumnOriginalValue("organizationId"));
+
+		return accountEntryOrganizationRelImpl;
+	}
+
+	@Override
 	public int compareTo(
 		AccountEntryOrganizationRel accountEntryOrganizationRel) {
 

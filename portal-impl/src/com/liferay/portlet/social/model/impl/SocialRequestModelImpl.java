@@ -911,6 +911,43 @@ public class SocialRequestModelImpl
 	}
 
 	@Override
+	public SocialRequest cloneWithOriginalValues() {
+		SocialRequestImpl socialRequestImpl = new SocialRequestImpl();
+
+		socialRequestImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		socialRequestImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		socialRequestImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		socialRequestImpl.setRequestId(
+			this.<Long>getColumnOriginalValue("requestId"));
+		socialRequestImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		socialRequestImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		socialRequestImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		socialRequestImpl.setCreateDate(
+			this.<Long>getColumnOriginalValue("createDate"));
+		socialRequestImpl.setModifiedDate(
+			this.<Long>getColumnOriginalValue("modifiedDate"));
+		socialRequestImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		socialRequestImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		socialRequestImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
+		socialRequestImpl.setExtraData(
+			this.<String>getColumnOriginalValue("extraData"));
+		socialRequestImpl.setReceiverUserId(
+			this.<Long>getColumnOriginalValue("receiverUserId"));
+		socialRequestImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return socialRequestImpl;
+	}
+
+	@Override
 	public int compareTo(SocialRequest socialRequest) {
 		int value = 0;
 

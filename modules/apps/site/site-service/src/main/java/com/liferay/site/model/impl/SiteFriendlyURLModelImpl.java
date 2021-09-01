@@ -696,6 +696,38 @@ public class SiteFriendlyURLModelImpl
 	}
 
 	@Override
+	public SiteFriendlyURL cloneWithOriginalValues() {
+		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
+
+		siteFriendlyURLImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		siteFriendlyURLImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		siteFriendlyURLImpl.setSiteFriendlyURLId(
+			this.<Long>getColumnOriginalValue("siteFriendlyURLId"));
+		siteFriendlyURLImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		siteFriendlyURLImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		siteFriendlyURLImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		siteFriendlyURLImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		siteFriendlyURLImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		siteFriendlyURLImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		siteFriendlyURLImpl.setFriendlyURL(
+			this.<String>getColumnOriginalValue("friendlyURL"));
+		siteFriendlyURLImpl.setLanguageId(
+			this.<String>getColumnOriginalValue("languageId"));
+		siteFriendlyURLImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return siteFriendlyURLImpl;
+	}
+
+	@Override
 	public int compareTo(SiteFriendlyURL siteFriendlyURL) {
 		long primaryKey = siteFriendlyURL.getPrimaryKey();
 

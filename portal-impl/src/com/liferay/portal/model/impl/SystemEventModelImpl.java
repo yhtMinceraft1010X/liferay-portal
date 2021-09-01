@@ -782,6 +782,44 @@ public class SystemEventModelImpl
 	}
 
 	@Override
+	public SystemEvent cloneWithOriginalValues() {
+		SystemEventImpl systemEventImpl = new SystemEventImpl();
+
+		systemEventImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		systemEventImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		systemEventImpl.setSystemEventId(
+			this.<Long>getColumnOriginalValue("systemEventId"));
+		systemEventImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
+		systemEventImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		systemEventImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		systemEventImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		systemEventImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		systemEventImpl.setClassNameId(
+			this.<Long>getColumnOriginalValue("classNameId"));
+		systemEventImpl.setClassPK(
+			this.<Long>getColumnOriginalValue("classPK"));
+		systemEventImpl.setClassUuid(
+			this.<String>getColumnOriginalValue("classUuid"));
+		systemEventImpl.setReferrerClassNameId(
+			this.<Long>getColumnOriginalValue("referrerClassNameId"));
+		systemEventImpl.setParentSystemEventId(
+			this.<Long>getColumnOriginalValue("parentSystemEventId"));
+		systemEventImpl.setSystemEventSetKey(
+			this.<Long>getColumnOriginalValue("systemEventSetKey"));
+		systemEventImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
+		systemEventImpl.setExtraData(
+			this.<String>getColumnOriginalValue("extraData"));
+
+		return systemEventImpl;
+	}
+
+	@Override
 	public int compareTo(SystemEvent systemEvent) {
 		int value = 0;
 

@@ -614,6 +614,30 @@ public class CTSContentModelImpl
 	}
 
 	@Override
+	public CTSContent cloneWithOriginalValues() {
+		CTSContentImpl ctsContentImpl = new CTSContentImpl();
+
+		ctsContentImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		ctsContentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		ctsContentImpl.setCtsContentId(
+			this.<Long>getColumnOriginalValue("ctsContentId"));
+		ctsContentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		ctsContentImpl.setRepositoryId(
+			this.<Long>getColumnOriginalValue("repositoryId"));
+		ctsContentImpl.setPath(this.<String>getColumnOriginalValue("path_"));
+		ctsContentImpl.setVersion(
+			this.<String>getColumnOriginalValue("version"));
+		ctsContentImpl.setSize(this.<Long>getColumnOriginalValue("size_"));
+		ctsContentImpl.setStoreType(
+			this.<String>getColumnOriginalValue("storeType"));
+
+		return ctsContentImpl;
+	}
+
+	@Override
 	public int compareTo(CTSContent ctsContent) {
 		int value = 0;
 

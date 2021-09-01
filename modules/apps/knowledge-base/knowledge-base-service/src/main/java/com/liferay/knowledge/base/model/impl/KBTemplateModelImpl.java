@@ -720,6 +720,34 @@ public class KBTemplateModelImpl
 	}
 
 	@Override
+	public KBTemplate cloneWithOriginalValues() {
+		KBTemplateImpl kbTemplateImpl = new KBTemplateImpl();
+
+		kbTemplateImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kbTemplateImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		kbTemplateImpl.setKbTemplateId(
+			this.<Long>getColumnOriginalValue("kbTemplateId"));
+		kbTemplateImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		kbTemplateImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		kbTemplateImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		kbTemplateImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		kbTemplateImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		kbTemplateImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		kbTemplateImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		kbTemplateImpl.setContent(
+			this.<String>getColumnOriginalValue("content"));
+		kbTemplateImpl.setLastPublishDate(
+			this.<Date>getColumnOriginalValue("lastPublishDate"));
+
+		return kbTemplateImpl;
+	}
+
+	@Override
 	public int compareTo(KBTemplate kbTemplate) {
 		int value = 0;
 

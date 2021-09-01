@@ -1276,6 +1276,54 @@ public class ObjectDefinitionModelImpl
 	}
 
 	@Override
+	public ObjectDefinition cloneWithOriginalValues() {
+		ObjectDefinitionImpl objectDefinitionImpl = new ObjectDefinitionImpl();
+
+		objectDefinitionImpl.setMvccVersion(
+			this.<Long>getColumnOriginalValue("mvccVersion"));
+		objectDefinitionImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		objectDefinitionImpl.setObjectDefinitionId(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectDefinitionImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		objectDefinitionImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		objectDefinitionImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		objectDefinitionImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		objectDefinitionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectDefinitionImpl.setDBTableName(
+			this.<String>getColumnOriginalValue("dbTableName"));
+		objectDefinitionImpl.setLabel(
+			this.<String>getColumnOriginalValue("label"));
+		objectDefinitionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		objectDefinitionImpl.setPanelAppOrder(
+			this.<String>getColumnOriginalValue("panelAppOrder"));
+		objectDefinitionImpl.setPanelCategoryKey(
+			this.<String>getColumnOriginalValue("panelCategoryKey"));
+		objectDefinitionImpl.setPKObjectFieldDBColumnName(
+			this.<String>getColumnOriginalValue("pkObjectFieldDBColumnName"));
+		objectDefinitionImpl.setPKObjectFieldName(
+			this.<String>getColumnOriginalValue("pkObjectFieldName"));
+		objectDefinitionImpl.setPluralLabel(
+			this.<String>getColumnOriginalValue("pluralLabel"));
+		objectDefinitionImpl.setScope(
+			this.<String>getColumnOriginalValue("scope"));
+		objectDefinitionImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
+		objectDefinitionImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
+		objectDefinitionImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
+
+		return objectDefinitionImpl;
+	}
+
+	@Override
 	public int compareTo(ObjectDefinition objectDefinition) {
 		int value = 0;
 

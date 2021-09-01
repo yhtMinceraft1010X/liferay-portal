@@ -973,6 +973,51 @@ public class OAuth2AuthorizationModelImpl
 	}
 
 	@Override
+	public OAuth2Authorization cloneWithOriginalValues() {
+		OAuth2AuthorizationImpl oAuth2AuthorizationImpl =
+			new OAuth2AuthorizationImpl();
+
+		oAuth2AuthorizationImpl.setOAuth2AuthorizationId(
+			this.<Long>getColumnOriginalValue("oAuth2AuthorizationId"));
+		oAuth2AuthorizationImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		oAuth2AuthorizationImpl.setUserId(
+			this.<Long>getColumnOriginalValue("userId"));
+		oAuth2AuthorizationImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		oAuth2AuthorizationImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		oAuth2AuthorizationImpl.setOAuth2ApplicationId(
+			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
+		oAuth2AuthorizationImpl.setOAuth2ApplicationScopeAliasesId(
+			this.<Long>getColumnOriginalValue("oA2AScopeAliasesId"));
+		oAuth2AuthorizationImpl.setAccessTokenContent(
+			this.<String>getColumnOriginalValue("accessTokenContent"));
+		oAuth2AuthorizationImpl.setAccessTokenContentHash(
+			this.<Long>getColumnOriginalValue("accessTokenContentHash"));
+		oAuth2AuthorizationImpl.setAccessTokenCreateDate(
+			this.<Date>getColumnOriginalValue("accessTokenCreateDate"));
+		oAuth2AuthorizationImpl.setAccessTokenExpirationDate(
+			this.<Date>getColumnOriginalValue("accessTokenExpirationDate"));
+		oAuth2AuthorizationImpl.setRemoteHostInfo(
+			this.<String>getColumnOriginalValue("remoteHostInfo"));
+		oAuth2AuthorizationImpl.setRemoteIPInfo(
+			this.<String>getColumnOriginalValue("remoteIPInfo"));
+		oAuth2AuthorizationImpl.setRefreshTokenContent(
+			this.<String>getColumnOriginalValue("refreshTokenContent"));
+		oAuth2AuthorizationImpl.setRefreshTokenContentHash(
+			this.<Long>getColumnOriginalValue("refreshTokenContentHash"));
+		oAuth2AuthorizationImpl.setRefreshTokenCreateDate(
+			this.<Date>getColumnOriginalValue("refreshTokenCreateDate"));
+		oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(
+			this.<Date>getColumnOriginalValue("refreshTokenExpirationDate"));
+		oAuth2AuthorizationImpl.setRememberDeviceContent(
+			this.<String>getColumnOriginalValue("rememberDeviceContent"));
+
+		return oAuth2AuthorizationImpl;
+	}
+
+	@Override
 	public int compareTo(OAuth2Authorization oAuth2Authorization) {
 		long primaryKey = oAuth2Authorization.getPrimaryKey();
 

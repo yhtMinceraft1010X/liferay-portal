@@ -418,6 +418,21 @@ public class FinderWhereClauseEntryModelImpl
 	}
 
 	@Override
+	public FinderWhereClauseEntry cloneWithOriginalValues() {
+		FinderWhereClauseEntryImpl finderWhereClauseEntryImpl =
+			new FinderWhereClauseEntryImpl();
+
+		finderWhereClauseEntryImpl.setFinderWhereClauseEntryId(
+			this.<Long>getColumnOriginalValue("finderWhereClauseEntryId"));
+		finderWhereClauseEntryImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		finderWhereClauseEntryImpl.setNickname(
+			this.<String>getColumnOriginalValue("nickname"));
+
+		return finderWhereClauseEntryImpl;
+	}
+
+	@Override
 	public int compareTo(FinderWhereClauseEntry finderWhereClauseEntry) {
 		long primaryKey = finderWhereClauseEntry.getPrimaryKey();
 
