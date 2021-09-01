@@ -262,4 +262,7 @@ public interface CPDisplayLayoutModel
 	 */
 	public void setLayoutUuid(String layoutUuid);
 
+	@Override
+	public CPDisplayLayout cloneWithOriginalValues();
+
 }

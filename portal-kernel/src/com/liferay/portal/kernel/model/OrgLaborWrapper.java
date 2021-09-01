@@ -37,11 +37,6 @@ public class OrgLaborWrapper
 	}
 
 	@Override
-	public OrgLabor cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -183,6 +178,11 @@ public class OrgLaborWrapper
 		if (satClose != null) {
 			setSatClose(satClose);
 		}
+	}
+
+	@Override
+	public OrgLabor cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

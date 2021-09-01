@@ -42,11 +42,6 @@ public class WorkflowInstanceLinkWrapper
 	}
 
 	@Override
-	public WorkflowInstanceLink cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -140,6 +135,11 @@ public class WorkflowInstanceLinkWrapper
 		if (workflowInstanceId != null) {
 			setWorkflowInstanceId(workflowInstanceId);
 		}
+	}
+
+	@Override
+	public WorkflowInstanceLink cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

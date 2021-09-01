@@ -38,11 +38,6 @@ public class LocalizedEntryWrapper
 	}
 
 	@Override
-	public LocalizedEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -65,6 +60,11 @@ public class LocalizedEntryWrapper
 		if (localizedEntryId != null) {
 			setLocalizedEntryId(localizedEntryId);
 		}
+	}
+
+	@Override
+	public LocalizedEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

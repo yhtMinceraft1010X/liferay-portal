@@ -264,4 +264,7 @@ public interface SamlSpSessionModel
 	 */
 	public void setTerminated(boolean terminated);
 
+	@Override
+	public SamlSpSession cloneWithOriginalValues();
+
 }

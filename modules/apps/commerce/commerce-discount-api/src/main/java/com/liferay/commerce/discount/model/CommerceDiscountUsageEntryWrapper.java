@@ -42,11 +42,6 @@ public class CommerceDiscountUsageEntryWrapper
 	}
 
 	@Override
-	public CommerceDiscountUsageEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -120,6 +115,11 @@ public class CommerceDiscountUsageEntryWrapper
 		if (commerceDiscountId != null) {
 			setCommerceDiscountId(commerceDiscountId);
 		}
+	}
+
+	@Override
+	public CommerceDiscountUsageEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

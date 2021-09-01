@@ -42,11 +42,6 @@ public class KaleoTaskAssignmentInstanceWrapper
 	}
 
 	@Override
-	public KaleoTaskAssignmentInstance cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -196,6 +191,11 @@ public class KaleoTaskAssignmentInstanceWrapper
 		if (completionDate != null) {
 			setCompletionDate(completionDate);
 		}
+	}
+
+	@Override
+	public KaleoTaskAssignmentInstance cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -227,4 +227,7 @@ public interface CommerceTaxFixedRateModel
 	 */
 	public void setRate(double rate);
 
+	@Override
+	public CommerceTaxFixedRate cloneWithOriginalValues();
+
 }

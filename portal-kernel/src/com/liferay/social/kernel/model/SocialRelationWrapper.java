@@ -40,11 +40,6 @@ public class SocialRelationWrapper
 	}
 
 	@Override
-	public SocialRelation cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class SocialRelationWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public SocialRelation cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -40,11 +40,6 @@ public class RoleWrapper
 	}
 
 	@Override
-	public Role cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -165,6 +160,11 @@ public class RoleWrapper
 		if (subtype != null) {
 			setSubtype(subtype);
 		}
+	}
+
+	@Override
+	public Role cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

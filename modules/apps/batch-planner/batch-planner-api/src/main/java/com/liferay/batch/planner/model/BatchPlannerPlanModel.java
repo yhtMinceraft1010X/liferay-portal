@@ -309,4 +309,7 @@ public interface BatchPlannerPlanModel
 	 */
 	public void setTemplate(boolean template);
 
+	@Override
+	public BatchPlannerPlan cloneWithOriginalValues();
+
 }

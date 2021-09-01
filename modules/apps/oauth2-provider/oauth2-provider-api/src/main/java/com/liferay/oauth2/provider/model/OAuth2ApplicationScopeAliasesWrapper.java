@@ -42,11 +42,6 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
-	public OAuth2ApplicationScopeAliases cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -100,6 +95,11 @@ public class OAuth2ApplicationScopeAliasesWrapper
 		if (oAuth2ApplicationId != null) {
 			setOAuth2ApplicationId(oAuth2ApplicationId);
 		}
+	}
+
+	@Override
+	public OAuth2ApplicationScopeAliases cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

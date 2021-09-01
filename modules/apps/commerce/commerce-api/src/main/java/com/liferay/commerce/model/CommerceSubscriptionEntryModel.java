@@ -506,4 +506,7 @@ public interface CommerceSubscriptionEntryModel
 	 */
 	public void setDeliveryStartDate(Date deliveryStartDate);
 
+	@Override
+	public CommerceSubscriptionEntry cloneWithOriginalValues();
+
 }

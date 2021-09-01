@@ -40,11 +40,6 @@ public class ExpandoTableWrapper
 	}
 
 	@Override
-	public ExpandoTable cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -95,6 +90,11 @@ public class ExpandoTableWrapper
 		if (name != null) {
 			setName(name);
 		}
+	}
+
+	@Override
+	public ExpandoTable cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -286,4 +286,7 @@ public interface CustomElementsPortletDescriptorModel
 	 */
 	public void setProperties(String properties);
 
+	@Override
+	public CustomElementsPortletDescriptor cloneWithOriginalValues();
+
 }

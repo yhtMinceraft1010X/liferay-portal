@@ -332,4 +332,7 @@ public interface RepositoryModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public Repository cloneWithOriginalValues();
+
 }

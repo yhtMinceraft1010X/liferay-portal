@@ -525,4 +525,7 @@ public interface CommerceTierPriceEntryModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CommerceTierPriceEntry cloneWithOriginalValues();
+
 }

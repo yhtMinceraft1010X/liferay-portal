@@ -294,4 +294,7 @@ public interface CommerceChannelModel
 	 */
 	public void setDiscountsTargetNetPrice(boolean discountsTargetNetPrice);
 
+	@Override
+	public CommerceChannel cloneWithOriginalValues();
+
 }

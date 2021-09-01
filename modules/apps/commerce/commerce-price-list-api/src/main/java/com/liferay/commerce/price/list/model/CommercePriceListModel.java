@@ -522,4 +522,7 @@ public interface CommercePriceListModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CommercePriceList cloneWithOriginalValues();
+
 }

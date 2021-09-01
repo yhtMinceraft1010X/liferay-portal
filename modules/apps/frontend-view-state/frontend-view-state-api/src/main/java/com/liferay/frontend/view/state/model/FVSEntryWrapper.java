@@ -40,11 +40,6 @@ public class FVSEntryWrapper
 	}
 
 	@Override
-	public FVSEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class FVSEntryWrapper
 		if (viewState != null) {
 			setViewState(viewState);
 		}
+	}
+
+	@Override
+	public FVSEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -40,11 +40,6 @@ public class KBCommentWrapper
 	}
 
 	@Override
-	public KBComment cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -158,6 +153,11 @@ public class KBCommentWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public KBComment cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

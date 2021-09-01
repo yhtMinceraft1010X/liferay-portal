@@ -39,11 +39,6 @@ public class OrgGroupRoleWrapper
 	}
 
 	@Override
-	public OrgGroupRole cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -87,6 +82,11 @@ public class OrgGroupRoleWrapper
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
+	}
+
+	@Override
+	public OrgGroupRole cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

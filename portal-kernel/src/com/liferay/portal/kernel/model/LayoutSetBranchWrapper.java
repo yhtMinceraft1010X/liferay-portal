@@ -38,11 +38,6 @@ public class LayoutSetBranchWrapper
 	}
 
 	@Override
-	public LayoutSetBranch cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -187,6 +182,11 @@ public class LayoutSetBranchWrapper
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 		}
+	}
+
+	@Override
+	public LayoutSetBranch cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

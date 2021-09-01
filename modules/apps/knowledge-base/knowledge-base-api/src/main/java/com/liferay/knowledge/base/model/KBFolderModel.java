@@ -309,4 +309,7 @@ public interface KBFolderModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public KBFolder cloneWithOriginalValues();
+
 }

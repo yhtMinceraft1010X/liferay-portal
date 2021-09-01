@@ -38,11 +38,6 @@ public class ManyColumnsEntryWrapper
 	}
 
 	@Override
-	public ManyColumnsEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -506,6 +501,11 @@ public class ManyColumnsEntryWrapper
 		if (column64 != null) {
 			setColumn64(column64);
 		}
+	}
+
+	@Override
+	public ManyColumnsEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -42,11 +42,6 @@ public class DDMStructureLayoutWrapper
 	}
 
 	@Override
-	public DDMStructureLayout cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -168,6 +163,11 @@ public class DDMStructureLayoutWrapper
 		if (definition != null) {
 			setDefinition(definition);
 		}
+	}
+
+	@Override
+	public DDMStructureLayout cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

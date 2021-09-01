@@ -230,4 +230,7 @@ public interface CPDAvailabilityEstimateModel
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public CPDAvailabilityEstimate cloneWithOriginalValues();
+
 }

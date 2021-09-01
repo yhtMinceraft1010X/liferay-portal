@@ -38,11 +38,6 @@ public class ERCCompanyEntryWrapper
 	}
 
 	@Override
-	public ERCCompanyEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -73,6 +68,11 @@ public class ERCCompanyEntryWrapper
 		if (companyId != null) {
 			setCompanyId(companyId);
 		}
+	}
+
+	@Override
+	public ERCCompanyEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -40,11 +40,6 @@ public class UserNotificationDeliveryWrapper
 	}
 
 	@Override
-	public UserNotificationDelivery cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -118,6 +113,11 @@ public class UserNotificationDeliveryWrapper
 		if (deliver != null) {
 			setDeliver(deliver);
 		}
+	}
+
+	@Override
+	public UserNotificationDelivery cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

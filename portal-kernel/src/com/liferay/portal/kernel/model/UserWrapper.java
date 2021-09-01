@@ -40,11 +40,6 @@ public class UserWrapper
 	}
 
 	@Override
-	public User cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -376,6 +371,11 @@ public class UserWrapper
 		com.liferay.portal.kernel.util.RemotePreference remotePreference) {
 
 		model.addRemotePreference(remotePreference);
+	}
+
+	@Override
+	public User cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

@@ -43,11 +43,6 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	@Override
-	public WorkflowMetricsSLADefinition cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -227,6 +222,11 @@ public class WorkflowMetricsSLADefinitionWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@Override
+	public WorkflowMetricsSLADefinition cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -39,11 +39,6 @@ public class CommerceDiscountRelWrapper
 	}
 
 	@Override
-	public CommerceDiscountRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class CommerceDiscountRelWrapper
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+	}
+
+	@Override
+	public CommerceDiscountRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

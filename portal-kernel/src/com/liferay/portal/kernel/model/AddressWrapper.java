@@ -39,11 +39,6 @@ public class AddressWrapper
 	}
 
 	@Override
-	public Address cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -242,6 +237,11 @@ public class AddressWrapper
 		if (zip != null) {
 			setZip(zip);
 		}
+	}
+
+	@Override
+	public Address cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

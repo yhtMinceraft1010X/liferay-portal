@@ -635,4 +635,7 @@ public interface GroupModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public Group cloneWithOriginalValues();
+
 }

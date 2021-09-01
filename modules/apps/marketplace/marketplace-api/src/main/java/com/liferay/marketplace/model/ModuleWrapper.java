@@ -37,11 +37,6 @@ public class ModuleWrapper
 	}
 
 	@Override
-	public Module cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -100,6 +95,11 @@ public class ModuleWrapper
 		if (contextName != null) {
 			setContextName(contextName);
 		}
+	}
+
+	@Override
+	public Module cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

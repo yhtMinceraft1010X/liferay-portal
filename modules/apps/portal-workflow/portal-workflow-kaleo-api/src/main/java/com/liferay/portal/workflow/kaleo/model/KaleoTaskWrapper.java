@@ -39,11 +39,6 @@ public class KaleoTaskWrapper
 	}
 
 	@Override
-	public KaleoTask cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -145,6 +140,11 @@ public class KaleoTaskWrapper
 		if (description != null) {
 			setDescription(description);
 		}
+	}
+
+	@Override
+	public KaleoTask cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

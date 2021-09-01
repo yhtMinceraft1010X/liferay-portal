@@ -39,11 +39,6 @@ public class LayoutPrototypeWrapper
 	}
 
 	@Override
-	public LayoutPrototype cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -136,6 +131,11 @@ public class LayoutPrototypeWrapper
 		if (active != null) {
 			setActive(active);
 		}
+	}
+
+	@Override
+	public LayoutPrototype cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

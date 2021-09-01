@@ -349,4 +349,7 @@ public interface BatchEngineExportTaskModel
 	 */
 	public void setTaskItemDelegateName(String taskItemDelegateName);
 
+	@Override
+	public BatchEngineExportTask cloneWithOriginalValues();
+
 }

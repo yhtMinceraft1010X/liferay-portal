@@ -260,4 +260,7 @@ public interface CPDefinitionDiagramSettingModel
 	 */
 	public void setType(String type);
 
+	@Override
+	public CPDefinitionDiagramSetting cloneWithOriginalValues();
+
 }

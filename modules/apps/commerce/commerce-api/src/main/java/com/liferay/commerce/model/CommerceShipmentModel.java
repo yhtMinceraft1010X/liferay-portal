@@ -314,4 +314,7 @@ public interface CommerceShipmentModel
 	 */
 	public void setStatus(int status);
 
+	@Override
+	public CommerceShipment cloneWithOriginalValues();
+
 }

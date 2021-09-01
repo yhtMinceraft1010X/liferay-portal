@@ -351,4 +351,7 @@ public interface DispatchTriggerModel
 	 */
 	public void setSystem(boolean system);
 
+	@Override
+	public DispatchTrigger cloneWithOriginalValues();
+
 }

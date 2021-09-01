@@ -38,11 +38,6 @@ public class ContactWrapper
 	}
 
 	@Override
-	public Contact cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -247,6 +242,11 @@ public class ContactWrapper
 		if (hoursOfOperation != null) {
 			setHoursOfOperation(hoursOfOperation);
 		}
+	}
+
+	@Override
+	public Contact cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

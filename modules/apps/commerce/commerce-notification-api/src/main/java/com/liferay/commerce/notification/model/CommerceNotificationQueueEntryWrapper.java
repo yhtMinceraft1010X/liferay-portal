@@ -42,11 +42,6 @@ public class CommerceNotificationQueueEntryWrapper
 	}
 
 	@Override
-	public CommerceNotificationQueueEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -209,6 +204,11 @@ public class CommerceNotificationQueueEntryWrapper
 		if (sentDate != null) {
 			setSentDate(sentDate);
 		}
+	}
+
+	@Override
+	public CommerceNotificationQueueEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

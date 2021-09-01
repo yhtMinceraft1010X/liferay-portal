@@ -668,4 +668,7 @@ public interface DLFileEntryModel
 	@Override
 	public boolean isInTrashImplicitly();
 
+	@Override
+	public DLFileEntry cloneWithOriginalValues();
+
 }

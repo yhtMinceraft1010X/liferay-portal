@@ -41,11 +41,6 @@ public class SubscriptionWrapper
 	}
 
 	@Override
-	public Subscription cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -138,6 +133,11 @@ public class SubscriptionWrapper
 		if (frequency != null) {
 			setFrequency(frequency);
 		}
+	}
+
+	@Override
+	public Subscription cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

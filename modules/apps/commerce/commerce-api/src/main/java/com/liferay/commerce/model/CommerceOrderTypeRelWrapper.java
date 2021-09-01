@@ -41,11 +41,6 @@ public class CommerceOrderTypeRelWrapper
 	}
 
 	@Override
-	public CommerceOrderTypeRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -126,6 +121,11 @@ public class CommerceOrderTypeRelWrapper
 		if (commerceOrderTypeId != null) {
 			setCommerceOrderTypeId(commerceOrderTypeId);
 		}
+	}
+
+	@Override
+	public CommerceOrderTypeRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

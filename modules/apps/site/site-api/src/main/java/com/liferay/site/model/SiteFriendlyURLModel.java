@@ -266,4 +266,7 @@ public interface SiteFriendlyURLModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public SiteFriendlyURL cloneWithOriginalValues();
+
 }

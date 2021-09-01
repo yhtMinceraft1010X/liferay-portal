@@ -669,4 +669,7 @@ public interface WikiPageModel
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
 
+	@Override
+	public WikiPage cloneWithOriginalValues();
+
 }

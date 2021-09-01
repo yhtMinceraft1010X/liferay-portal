@@ -383,4 +383,7 @@ public interface CPDefinitionInventoryModel
 	 */
 	public void setMultipleOrderQuantity(int multipleOrderQuantity);
 
+	@Override
+	public CPDefinitionInventory cloneWithOriginalValues();
+
 }

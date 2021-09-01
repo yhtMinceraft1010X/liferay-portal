@@ -41,11 +41,6 @@ public class AnalyticsMessageWrapper
 	}
 
 	@Override
-	public AnalyticsMessage cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -103,6 +98,11 @@ public class AnalyticsMessageWrapper
 		if (body != null) {
 			setBody(body);
 		}
+	}
+
+	@Override
+	public AnalyticsMessage cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

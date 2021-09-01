@@ -453,4 +453,7 @@ public interface MDRRuleGroupModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public MDRRuleGroup cloneWithOriginalValues();
+
 }

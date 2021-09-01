@@ -38,11 +38,6 @@ public class PhoneWrapper
 	}
 
 	@Override
-	public Phone cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -149,6 +144,11 @@ public class PhoneWrapper
 		if (primary != null) {
 			setPrimary(primary);
 		}
+	}
+
+	@Override
+	public Phone cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

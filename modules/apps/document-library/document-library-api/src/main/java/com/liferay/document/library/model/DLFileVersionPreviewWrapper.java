@@ -42,11 +42,6 @@ public class DLFileVersionPreviewWrapper
 	}
 
 	@Override
-	public DLFileVersionPreview cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -112,6 +107,11 @@ public class DLFileVersionPreviewWrapper
 		if (previewStatus != null) {
 			setPreviewStatus(previewStatus);
 		}
+	}
+
+	@Override
+	public DLFileVersionPreview cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

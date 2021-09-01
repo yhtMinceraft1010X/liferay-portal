@@ -39,11 +39,6 @@ public class AnnouncementsFlagWrapper
 	}
 
 	@Override
-	public AnnouncementsFlag cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -101,6 +96,11 @@ public class AnnouncementsFlagWrapper
 		if (value != null) {
 			setValue(value);
 		}
+	}
+
+	@Override
+	public AnnouncementsFlag cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

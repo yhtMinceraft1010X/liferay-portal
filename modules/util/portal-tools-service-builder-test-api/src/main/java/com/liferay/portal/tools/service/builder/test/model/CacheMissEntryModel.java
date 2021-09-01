@@ -103,4 +103,7 @@ public interface CacheMissEntryModel
 	 */
 	public void setCacheMissEntryId(long cacheMissEntryId);
 
+	@Override
+	public CacheMissEntry cloneWithOriginalValues();
+
 }

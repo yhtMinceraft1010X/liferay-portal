@@ -39,11 +39,6 @@ public class CommerceChannelWrapper
 	}
 
 	@Override
-	public CommerceChannel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -153,6 +148,11 @@ public class CommerceChannelWrapper
 		if (discountsTargetNetPrice != null) {
 			setDiscountsTargetNetPrice(discountsTargetNetPrice);
 		}
+	}
+
+	@Override
+	public CommerceChannel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

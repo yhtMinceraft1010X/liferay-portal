@@ -37,11 +37,6 @@ public class StatusWrapper
 	}
 
 	@Override
-	public Status cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -106,6 +101,11 @@ public class StatusWrapper
 		if (playSound != null) {
 			setPlaySound(playSound);
 		}
+	}
+
+	@Override
+	public Status cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

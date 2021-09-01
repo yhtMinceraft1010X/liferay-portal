@@ -40,11 +40,6 @@ public class DDMFieldAttributeWrapper
 	}
 
 	@Override
-	public DDMFieldAttribute cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -125,6 +120,11 @@ public class DDMFieldAttributeWrapper
 		if (smallAttributeValue != null) {
 			setSmallAttributeValue(smallAttributeValue);
 		}
+	}
+
+	@Override
+	public DDMFieldAttribute cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

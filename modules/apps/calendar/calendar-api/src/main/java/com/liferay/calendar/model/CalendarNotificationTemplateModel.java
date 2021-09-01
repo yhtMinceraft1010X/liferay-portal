@@ -346,4 +346,7 @@ public interface CalendarNotificationTemplateModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public CalendarNotificationTemplate cloneWithOriginalValues();
+
 }

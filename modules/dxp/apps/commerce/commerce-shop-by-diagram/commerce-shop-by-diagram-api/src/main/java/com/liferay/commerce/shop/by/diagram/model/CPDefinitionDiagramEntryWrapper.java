@@ -42,11 +42,6 @@ public class CPDefinitionDiagramEntryWrapper
 	}
 
 	@Override
-	public CPDefinitionDiagramEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -148,6 +143,11 @@ public class CPDefinitionDiagramEntryWrapper
 		if (sku != null) {
 			setSku(sku);
 		}
+	}
+
+	@Override
+	public CPDefinitionDiagramEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

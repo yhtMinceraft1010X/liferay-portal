@@ -249,4 +249,7 @@ public interface CustomElementsSourceModel
 	 */
 	public void setURLs(String urls);
 
+	@Override
+	public CustomElementsSource cloneWithOriginalValues();
+
 }

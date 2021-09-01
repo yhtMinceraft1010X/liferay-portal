@@ -41,11 +41,6 @@ public class KaleoTaskFormInstanceWrapper
 	}
 
 	@Override
-	public KaleoTaskFormInstance cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -194,6 +189,11 @@ public class KaleoTaskFormInstanceWrapper
 		if (metadata != null) {
 			setMetadata(metadata);
 		}
+	}
+
+	@Override
+	public KaleoTaskFormInstance cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

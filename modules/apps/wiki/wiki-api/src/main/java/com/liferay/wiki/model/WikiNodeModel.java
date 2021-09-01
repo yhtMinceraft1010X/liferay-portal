@@ -533,4 +533,7 @@ public interface WikiNodeModel
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
 
+	@Override
+	public WikiNode cloneWithOriginalValues();
+
 }

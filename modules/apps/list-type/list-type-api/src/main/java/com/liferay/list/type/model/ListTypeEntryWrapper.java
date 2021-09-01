@@ -40,11 +40,6 @@ public class ListTypeEntryWrapper
 	}
 
 	@Override
-	public ListTypeEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -138,6 +133,11 @@ public class ListTypeEntryWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public ListTypeEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

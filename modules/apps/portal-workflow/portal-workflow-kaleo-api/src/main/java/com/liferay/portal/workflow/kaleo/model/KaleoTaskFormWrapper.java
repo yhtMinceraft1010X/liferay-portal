@@ -39,11 +39,6 @@ public class KaleoTaskFormWrapper
 	}
 
 	@Override
-	public KaleoTaskForm cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -208,6 +203,11 @@ public class KaleoTaskFormWrapper
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@Override
+	public KaleoTaskForm cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

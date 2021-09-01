@@ -821,4 +821,7 @@ public interface CPInstanceModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CPInstance cloneWithOriginalValues();
+
 }

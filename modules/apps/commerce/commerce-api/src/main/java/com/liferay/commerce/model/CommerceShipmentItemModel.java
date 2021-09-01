@@ -242,4 +242,7 @@ public interface CommerceShipmentItemModel
 	 */
 	public void setQuantity(int quantity);
 
+	@Override
+	public CommerceShipmentItem cloneWithOriginalValues();
+
 }

@@ -414,4 +414,7 @@ public interface CommerceNotificationQueueEntryModel
 	 */
 	public void setSentDate(Date sentDate);
 
+	@Override
+	public CommerceNotificationQueueEntry cloneWithOriginalValues();
+
 }

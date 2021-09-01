@@ -38,11 +38,6 @@ public class MembershipRequestWrapper
 	}
 
 	@Override
-	public MembershipRequest cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -128,6 +123,11 @@ public class MembershipRequestWrapper
 		if (statusId != null) {
 			setStatusId(statusId);
 		}
+	}
+
+	@Override
+	public MembershipRequest cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

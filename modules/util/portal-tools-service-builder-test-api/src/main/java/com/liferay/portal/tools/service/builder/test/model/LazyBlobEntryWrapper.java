@@ -40,11 +40,6 @@ public class LazyBlobEntryWrapper
 	}
 
 	@Override
-	public LazyBlobEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -88,6 +83,11 @@ public class LazyBlobEntryWrapper
 		if (blob2 != null) {
 			setBlob2(blob2);
 		}
+	}
+
+	@Override
+	public LazyBlobEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

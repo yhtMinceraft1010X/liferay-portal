@@ -332,4 +332,7 @@ public interface KaleoNodeModel
 	 */
 	public void setTerminal(boolean terminal);
 
+	@Override
+	public KaleoNode cloneWithOriginalValues();
+
 }

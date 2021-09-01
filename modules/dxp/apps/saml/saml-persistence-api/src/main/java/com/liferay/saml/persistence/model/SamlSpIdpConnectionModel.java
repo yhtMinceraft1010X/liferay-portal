@@ -429,4 +429,7 @@ public interface SamlSpIdpConnectionModel
 	 */
 	public void setUserIdentifierExpression(String userIdentifierExpression);
 
+	@Override
+	public SamlSpIdpConnection cloneWithOriginalValues();
+
 }

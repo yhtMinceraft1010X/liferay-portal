@@ -226,4 +226,7 @@ public interface CPDefinitionDiagramPinModel
 	 */
 	public void setSequence(String sequence);
 
+	@Override
+	public CPDefinitionDiagramPin cloneWithOriginalValues();
+
 }

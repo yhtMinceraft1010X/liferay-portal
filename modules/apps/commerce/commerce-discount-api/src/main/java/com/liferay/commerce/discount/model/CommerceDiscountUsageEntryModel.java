@@ -212,4 +212,7 @@ public interface CommerceDiscountUsageEntryModel
 	 */
 	public void setCommerceDiscountId(long commerceDiscountId);
 
+	@Override
+	public CommerceDiscountUsageEntry cloneWithOriginalValues();
+
 }

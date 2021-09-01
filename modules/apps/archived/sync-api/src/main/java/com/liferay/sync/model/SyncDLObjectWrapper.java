@@ -39,11 +39,6 @@ public class SyncDLObjectWrapper
 	}
 
 	@Override
-	public SyncDLObject cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -255,6 +250,11 @@ public class SyncDLObjectWrapper
 	@Override
 	public String buildTreePath() {
 		return model.buildTreePath();
+	}
+
+	@Override
+	public SyncDLObject cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

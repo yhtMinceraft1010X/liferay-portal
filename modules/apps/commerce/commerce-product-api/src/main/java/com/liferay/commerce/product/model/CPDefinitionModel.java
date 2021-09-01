@@ -984,4 +984,7 @@ public interface CPDefinitionModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CPDefinition cloneWithOriginalValues();
+
 }

@@ -38,11 +38,6 @@ public class DLSyncEventWrapper
 	}
 
 	@Override
-	public DLSyncEvent cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -93,6 +88,11 @@ public class DLSyncEventWrapper
 		if (typePK != null) {
 			setTypePK(typePK);
 		}
+	}
+
+	@Override
+	public DLSyncEvent cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

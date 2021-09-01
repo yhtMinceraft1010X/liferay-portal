@@ -227,4 +227,7 @@ public interface CommerceChannelRelModel
 	 */
 	public void setCommerceChannelId(long commerceChannelId);
 
+	@Override
+	public CommerceChannelRel cloneWithOriginalValues();
+
 }

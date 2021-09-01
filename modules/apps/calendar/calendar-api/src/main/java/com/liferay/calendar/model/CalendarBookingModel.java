@@ -878,4 +878,7 @@ public interface CalendarBookingModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CalendarBooking cloneWithOriginalValues();
+
 }

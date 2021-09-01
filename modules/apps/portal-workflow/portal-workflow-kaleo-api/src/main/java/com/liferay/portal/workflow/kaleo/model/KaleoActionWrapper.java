@@ -39,11 +39,6 @@ public class KaleoActionWrapper
 	}
 
 	@Override
-	public KaleoAction cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -195,6 +190,11 @@ public class KaleoActionWrapper
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@Override
+	public KaleoAction cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -37,11 +37,6 @@ public class PortletWrapper
 	}
 
 	@Override
-	public Portlet cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -170,6 +165,11 @@ public class PortletWrapper
 	@Override
 	public Object clone() {
 		return new PortletWrapper((Portlet)model.clone());
+	}
+
+	@Override
+	public Portlet cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

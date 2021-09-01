@@ -405,4 +405,7 @@ public interface BatchEngineImportTaskModel
 	 */
 	public void setTotalItemsCount(int totalItemsCount);
 
+	@Override
+	public BatchEngineImportTask cloneWithOriginalValues();
+
 }

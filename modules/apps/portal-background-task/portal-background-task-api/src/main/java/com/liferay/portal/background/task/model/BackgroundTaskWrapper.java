@@ -41,11 +41,6 @@ public class BackgroundTaskWrapper
 	}
 
 	@Override
-	public BackgroundTask cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -192,6 +187,11 @@ public class BackgroundTaskWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.addAttachmentsFolder();
+	}
+
+	@Override
+	public BackgroundTask cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

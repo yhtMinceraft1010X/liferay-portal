@@ -261,4 +261,7 @@ public interface CPDefinitionLinkModel
 	 */
 	public void setType(String type);
 
+	@Override
+	public CPDefinitionLink cloneWithOriginalValues();
+
 }

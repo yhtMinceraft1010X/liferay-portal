@@ -243,4 +243,7 @@ public interface CommerceOrderPaymentModel
 	 */
 	public void setStatus(int status);
 
+	@Override
+	public CommerceOrderPayment cloneWithOriginalValues();
+
 }

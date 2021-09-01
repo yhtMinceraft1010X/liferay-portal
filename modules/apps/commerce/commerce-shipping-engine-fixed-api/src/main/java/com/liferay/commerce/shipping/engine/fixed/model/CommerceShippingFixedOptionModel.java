@@ -448,4 +448,7 @@ public interface CommerceShippingFixedOptionModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CommerceShippingFixedOption cloneWithOriginalValues();
+
 }

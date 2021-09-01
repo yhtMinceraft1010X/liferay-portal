@@ -38,11 +38,6 @@ public class UserTrackerWrapper
 	}
 
 	@Override
-	public UserTracker cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -119,6 +114,11 @@ public class UserTrackerWrapper
 	@Override
 	public void addPath(UserTrackerPath path) {
 		model.addPath(path);
+	}
+
+	@Override
+	public UserTracker cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

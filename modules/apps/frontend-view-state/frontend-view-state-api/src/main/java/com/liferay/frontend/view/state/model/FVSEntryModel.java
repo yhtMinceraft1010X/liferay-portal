@@ -260,4 +260,7 @@ public interface FVSEntryModel
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
 
+	@Override
+	public FVSEntry cloneWithOriginalValues();
+
 }

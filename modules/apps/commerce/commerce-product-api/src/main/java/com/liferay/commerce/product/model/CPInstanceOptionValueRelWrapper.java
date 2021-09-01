@@ -43,11 +43,6 @@ public class CPInstanceOptionValueRelWrapper
 	}
 
 	@Override
-	public CPInstanceOptionValueRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -138,6 +133,11 @@ public class CPInstanceOptionValueRelWrapper
 		if (CPInstanceId != null) {
 			setCPInstanceId(CPInstanceId);
 		}
+	}
+
+	@Override
+	public CPInstanceOptionValueRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

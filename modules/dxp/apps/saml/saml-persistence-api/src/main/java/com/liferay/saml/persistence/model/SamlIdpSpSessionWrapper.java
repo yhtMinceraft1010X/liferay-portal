@@ -39,11 +39,6 @@ public class SamlIdpSpSessionWrapper
 	}
 
 	@Override
-	public SamlIdpSpSession cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -108,6 +103,11 @@ public class SamlIdpSpSessionWrapper
 		if (samlPeerBindingId != null) {
 			setSamlPeerBindingId(samlPeerBindingId);
 		}
+	}
+
+	@Override
+	public SamlIdpSpSession cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

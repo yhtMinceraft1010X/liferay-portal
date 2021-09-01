@@ -251,4 +251,7 @@ public interface JSONStorageEntryModel
 	 */
 	public void setValueString(String valueString);
 
+	@Override
+	public JSONStorageEntry cloneWithOriginalValues();
+
 }

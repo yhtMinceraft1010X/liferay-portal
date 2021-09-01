@@ -40,11 +40,6 @@ public class CommerceAddressWrapper
 	}
 
 	@Override
-	public CommerceAddress cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -229,6 +224,11 @@ public class CommerceAddressWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public CommerceAddress cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

@@ -197,4 +197,7 @@ public interface SamlIdpSpSessionModel
 	 */
 	public void setSamlPeerBindingId(long samlPeerBindingId);
 
+	@Override
+	public SamlIdpSpSession cloneWithOriginalValues();
+
 }

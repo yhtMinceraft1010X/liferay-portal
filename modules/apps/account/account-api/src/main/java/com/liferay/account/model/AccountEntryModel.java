@@ -376,4 +376,7 @@ public interface AccountEntryModel
 	 */
 	public void setStatus(int status);
 
+	@Override
+	public AccountEntry cloneWithOriginalValues();
+
 }

@@ -42,11 +42,6 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 	@Override
-	public CPAttachmentFileEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -232,6 +227,11 @@ public class CPAttachmentFileEntryWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@Override
+	public CPAttachmentFileEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

@@ -43,11 +43,6 @@ public class SocialActivityAchievementWrapper
 	}
 
 	@Override
-	public SocialActivityAchievement cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -120,6 +115,11 @@ public class SocialActivityAchievementWrapper
 		if (firstInGroup != null) {
 			setFirstInGroup(firstInGroup);
 		}
+	}
+
+	@Override
+	public SocialActivityAchievement cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

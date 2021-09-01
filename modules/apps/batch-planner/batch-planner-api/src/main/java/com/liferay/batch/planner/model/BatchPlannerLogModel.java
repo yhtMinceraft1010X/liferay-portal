@@ -287,4 +287,7 @@ public interface BatchPlannerLogModel
 	 */
 	public void setStatus(int status);
 
+	@Override
+	public BatchPlannerLog cloneWithOriginalValues();
+
 }

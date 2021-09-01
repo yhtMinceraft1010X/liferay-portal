@@ -42,11 +42,6 @@ public class CommercePriceModifierRelWrapper
 	}
 
 	@Override
-	public CommercePriceModifierRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -121,6 +116,11 @@ public class CommercePriceModifierRelWrapper
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+	}
+
+	@Override
+	public CommercePriceModifierRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -38,11 +38,6 @@ public class WebDAVPropsWrapper
 	}
 
 	@Override
-	public WebDAVProps cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -121,6 +116,11 @@ public class WebDAVPropsWrapper
 		throws Exception {
 
 		model.addProp(name, prefix, uri, text);
+	}
+
+	@Override
+	public WebDAVProps cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

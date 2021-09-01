@@ -40,11 +40,6 @@ public class TrashVersionWrapper
 	}
 
 	@Override
-	public TrashVersion cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class TrashVersionWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public TrashVersion cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

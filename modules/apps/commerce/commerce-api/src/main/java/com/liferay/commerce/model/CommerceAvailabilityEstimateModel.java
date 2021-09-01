@@ -332,4 +332,7 @@ public interface CommerceAvailabilityEstimateModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CommerceAvailabilityEstimate cloneWithOriginalValues();
+
 }

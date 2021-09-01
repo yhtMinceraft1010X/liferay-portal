@@ -40,11 +40,6 @@ public class SocialRequestWrapper
 	}
 
 	@Override
-	public SocialRequest cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -158,6 +153,11 @@ public class SocialRequestWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public SocialRequest cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

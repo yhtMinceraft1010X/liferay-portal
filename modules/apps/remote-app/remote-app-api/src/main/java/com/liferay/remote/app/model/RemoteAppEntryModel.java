@@ -376,4 +376,7 @@ public interface RemoteAppEntryModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public RemoteAppEntry cloneWithOriginalValues();
+
 }

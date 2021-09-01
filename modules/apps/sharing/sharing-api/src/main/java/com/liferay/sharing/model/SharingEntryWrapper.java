@@ -40,11 +40,6 @@ public class SharingEntryWrapper
 	}
 
 	@Override
-	public SharingEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -151,6 +146,11 @@ public class SharingEntryWrapper
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
 		}
+	}
+
+	@Override
+	public SharingEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

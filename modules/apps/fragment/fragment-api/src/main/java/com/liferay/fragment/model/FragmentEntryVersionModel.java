@@ -603,4 +603,7 @@ public interface FragmentEntryVersionModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public FragmentEntryVersion cloneWithOriginalValues();
+
 }

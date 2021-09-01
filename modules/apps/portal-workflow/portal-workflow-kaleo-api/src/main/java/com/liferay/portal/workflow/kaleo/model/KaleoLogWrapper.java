@@ -39,11 +39,6 @@ public class KaleoLogWrapper
 	}
 
 	@Override
-	public KaleoLog cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -290,6 +285,11 @@ public class KaleoLogWrapper
 		if (workflowContext != null) {
 			setWorkflowContext(workflowContext);
 		}
+	}
+
+	@Override
+	public KaleoLog cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

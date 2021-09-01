@@ -187,4 +187,7 @@ public interface PortalPreferenceValueModel
 	 */
 	public void setSmallValue(String smallValue);
 
+	@Override
+	public PortalPreferenceValue cloneWithOriginalValues();
+
 }

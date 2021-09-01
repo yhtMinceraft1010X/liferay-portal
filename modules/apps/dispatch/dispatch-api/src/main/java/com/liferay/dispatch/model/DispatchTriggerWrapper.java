@@ -39,11 +39,6 @@ public class DispatchTriggerWrapper
 	}
 
 	@Override
-	public DispatchTrigger cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -175,6 +170,11 @@ public class DispatchTriggerWrapper
 		if (system != null) {
 			setSystem(system);
 		}
+	}
+
+	@Override
+	public DispatchTrigger cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

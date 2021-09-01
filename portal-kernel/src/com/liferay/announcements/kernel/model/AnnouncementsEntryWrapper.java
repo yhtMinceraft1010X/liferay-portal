@@ -40,11 +40,6 @@ public class AnnouncementsEntryWrapper
 	}
 
 	@Override
-	public AnnouncementsEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -179,6 +174,11 @@ public class AnnouncementsEntryWrapper
 		if (alert != null) {
 			setAlert(alert);
 		}
+	}
+
+	@Override
+	public AnnouncementsEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

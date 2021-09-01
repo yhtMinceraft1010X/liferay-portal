@@ -42,11 +42,6 @@ public class CommerceInventoryReplenishmentItemWrapper
 	}
 
 	@Override
-	public CommerceInventoryReplenishmentItem cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -138,6 +133,11 @@ public class CommerceInventoryReplenishmentItemWrapper
 		if (quantity != null) {
 			setQuantity(quantity);
 		}
+	}
+
+	@Override
+	public CommerceInventoryReplenishmentItem cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

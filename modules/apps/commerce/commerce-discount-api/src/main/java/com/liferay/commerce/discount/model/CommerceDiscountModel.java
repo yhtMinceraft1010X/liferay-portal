@@ -663,4 +663,7 @@ public interface CommerceDiscountModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CommerceDiscount cloneWithOriginalValues();
+
 }

@@ -41,11 +41,6 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 	@Override
-	public KaleoDefinitionVersion cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -189,6 +184,11 @@ public class KaleoDefinitionVersionWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public KaleoDefinitionVersion cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

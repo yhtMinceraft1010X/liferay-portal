@@ -42,11 +42,6 @@ public class FriendlyURLEntryWrapper
 	}
 
 	@Override
-	public FriendlyURLEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -132,6 +127,11 @@ public class FriendlyURLEntryWrapper
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+	}
+
+	@Override
+	public FriendlyURLEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

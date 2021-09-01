@@ -272,4 +272,7 @@ public interface CommerceTaxFixedRateAddressRelModel
 	 */
 	public void setRate(double rate);
 
+	@Override
+	public CommerceTaxFixedRateAddressRel cloneWithOriginalValues();
+
 }

@@ -255,4 +255,7 @@ public interface SamlPeerBindingModel
 	 */
 	public void setSamlPeerEntityId(String samlPeerEntityId);
 
+	@Override
+	public SamlPeerBinding cloneWithOriginalValues();
+
 }

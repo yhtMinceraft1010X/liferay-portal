@@ -260,4 +260,7 @@ public interface CPDefinitionGroupedEntryModel
 	 */
 	public void setQuantity(int quantity);
 
+	@Override
+	public CPDefinitionGroupedEntry cloneWithOriginalValues();
+
 }

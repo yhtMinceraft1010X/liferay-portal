@@ -39,11 +39,6 @@ public class KaleoNodeWrapper
 	}
 
 	@Override
-	public KaleoNode cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -166,6 +161,11 @@ public class KaleoNodeWrapper
 		if (terminal != null) {
 			setTerminal(terminal);
 		}
+	}
+
+	@Override
+	public KaleoNode cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

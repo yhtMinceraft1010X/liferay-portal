@@ -244,4 +244,7 @@ public interface AccountGroupRelModel
 	@Override
 	public void setClassPK(long classPK);
 
+	@Override
+	public AccountGroupRel cloneWithOriginalValues();
+
 }

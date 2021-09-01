@@ -40,11 +40,6 @@ public class RedirectEntryWrapper
 	}
 
 	@Override
-	public RedirectEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -151,6 +146,11 @@ public class RedirectEntryWrapper
 		if (sourceURL != null) {
 			setSourceURL(sourceURL);
 		}
+	}
+
+	@Override
+	public RedirectEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

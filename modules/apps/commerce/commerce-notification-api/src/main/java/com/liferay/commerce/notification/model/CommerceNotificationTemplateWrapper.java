@@ -43,11 +43,6 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	@Override
-	public CommerceNotificationTemplate cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -192,6 +187,11 @@ public class CommerceNotificationTemplateWrapper
 		if (body != null) {
 			setBody(body);
 		}
+	}
+
+	@Override
+	public CommerceNotificationTemplate cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

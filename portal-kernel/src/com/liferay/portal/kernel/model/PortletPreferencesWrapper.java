@@ -39,11 +39,6 @@ public class PortletPreferencesWrapper
 	}
 
 	@Override
-	public PortletPreferences cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -109,6 +104,11 @@ public class PortletPreferencesWrapper
 		if (portletId != null) {
 			setPortletId(portletId);
 		}
+	}
+
+	@Override
+	public PortletPreferences cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

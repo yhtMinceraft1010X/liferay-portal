@@ -37,11 +37,6 @@ public class ResourceActionWrapper
 	}
 
 	@Override
-	public ResourceAction cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -85,6 +80,11 @@ public class ResourceActionWrapper
 		if (bitwiseValue != null) {
 			setBitwiseValue(bitwiseValue);
 		}
+	}
+
+	@Override
+	public ResourceAction cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

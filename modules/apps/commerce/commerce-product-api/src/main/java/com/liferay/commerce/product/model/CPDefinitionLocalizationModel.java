@@ -221,4 +221,7 @@ public interface CPDefinitionLocalizationModel
 	 */
 	public void setMetaKeywords(String metaKeywords);
 
+	@Override
+	public CPDefinitionLocalization cloneWithOriginalValues();
+
 }

@@ -432,4 +432,7 @@ public interface OAuth2ApplicationModel
 	 */
 	public void setTrustedApplication(boolean trustedApplication);
 
+	@Override
+	public OAuth2Application cloneWithOriginalValues();
+
 }

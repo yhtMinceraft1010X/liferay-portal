@@ -38,11 +38,6 @@ public class EntryWrapper
 	}
 
 	@Override
-	public Entry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -121,6 +116,11 @@ public class EntryWrapper
 		if (comments != null) {
 			setComments(comments);
 		}
+	}
+
+	@Override
+	public Entry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

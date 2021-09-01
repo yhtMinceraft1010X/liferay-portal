@@ -37,11 +37,6 @@ public class PluginSettingWrapper
 	}
 
 	@Override
-	public PluginSetting cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -107,6 +102,11 @@ public class PluginSettingWrapper
 	@Override
 	public void addRole(String role) {
 		model.addRole(role);
+	}
+
+	@Override
+	public PluginSetting cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

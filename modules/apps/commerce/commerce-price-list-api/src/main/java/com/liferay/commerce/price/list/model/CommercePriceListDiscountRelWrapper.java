@@ -43,11 +43,6 @@ public class CommercePriceListDiscountRelWrapper
 	}
 
 	@Override
-	public CommercePriceListDiscountRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -136,6 +131,11 @@ public class CommercePriceListDiscountRelWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public CommercePriceListDiscountRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

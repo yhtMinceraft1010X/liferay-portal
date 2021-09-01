@@ -199,4 +199,7 @@ public interface CommercePricingClassCPDefinitionRelModel
 	 */
 	public void setCPDefinitionId(long CPDefinitionId);
 
+	@Override
+	public CommercePricingClassCPDefinitionRel cloneWithOriginalValues();
+
 }

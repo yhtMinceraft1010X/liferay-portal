@@ -39,11 +39,6 @@ public class BatchPlannerPolicyWrapper
 	}
 
 	@Override
-	public BatchPlannerPolicy cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -123,6 +118,11 @@ public class BatchPlannerPolicyWrapper
 		if (value != null) {
 			setValue(value);
 		}
+	}
+
+	@Override
+	public BatchPlannerPolicy cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

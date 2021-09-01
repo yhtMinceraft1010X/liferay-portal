@@ -40,11 +40,6 @@ public class DepotEntryWrapper
 	}
 
 	@Override
-	public DepotEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class DepotEntryWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	@Override
+	public DepotEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

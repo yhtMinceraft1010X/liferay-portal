@@ -42,11 +42,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public CommerceTaxFixedRateAddressRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -150,6 +145,11 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		if (rate != null) {
 			setRate(rate);
 		}
+	}
+
+	@Override
+	public CommerceTaxFixedRateAddressRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

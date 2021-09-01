@@ -38,11 +38,6 @@ public class LVEntryWrapper
 	}
 
 	@Override
-	public LVEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -107,6 +102,11 @@ public class LVEntryWrapper
 		if (uniqueGroupKey != null) {
 			setUniqueGroupKey(uniqueGroupKey);
 		}
+	}
+
+	@Override
+	public LVEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

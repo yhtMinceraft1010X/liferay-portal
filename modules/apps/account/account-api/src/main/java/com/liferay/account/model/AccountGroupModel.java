@@ -267,4 +267,7 @@ public interface AccountGroupModel
 	 */
 	public void setType(String type);
 
+	@Override
+	public AccountGroup cloneWithOriginalValues();
+
 }

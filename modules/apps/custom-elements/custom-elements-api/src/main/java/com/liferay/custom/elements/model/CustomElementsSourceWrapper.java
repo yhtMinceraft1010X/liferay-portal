@@ -42,11 +42,6 @@ public class CustomElementsSourceWrapper
 	}
 
 	@Override
-	public CustomElementsSource cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -133,6 +128,11 @@ public class CustomElementsSourceWrapper
 		if (urls != null) {
 			setURLs(urls);
 		}
+	}
+
+	@Override
+	public CustomElementsSource cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

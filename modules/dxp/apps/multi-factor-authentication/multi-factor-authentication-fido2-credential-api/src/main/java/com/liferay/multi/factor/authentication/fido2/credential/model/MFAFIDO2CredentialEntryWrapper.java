@@ -41,11 +41,6 @@ public class MFAFIDO2CredentialEntryWrapper
 	}
 
 	@Override
-	public MFAFIDO2CredentialEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -147,6 +142,11 @@ public class MFAFIDO2CredentialEntryWrapper
 		if (signatureCount != null) {
 			setSignatureCount(signatureCount);
 		}
+	}
+
+	@Override
+	public MFAFIDO2CredentialEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

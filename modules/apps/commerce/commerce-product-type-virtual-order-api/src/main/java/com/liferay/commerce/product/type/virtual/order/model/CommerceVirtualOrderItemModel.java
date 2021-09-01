@@ -352,4 +352,7 @@ public interface CommerceVirtualOrderItemModel
 	 */
 	public void setEndDate(Date endDate);
 
+	@Override
+	public CommerceVirtualOrderItem cloneWithOriginalValues();
+
 }

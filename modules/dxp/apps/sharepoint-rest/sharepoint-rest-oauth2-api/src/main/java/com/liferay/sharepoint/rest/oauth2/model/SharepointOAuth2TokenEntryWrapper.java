@@ -42,11 +42,6 @@ public class SharepointOAuth2TokenEntryWrapper
 	}
 
 	@Override
-	public SharepointOAuth2TokenEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -120,6 +115,11 @@ public class SharepointOAuth2TokenEntryWrapper
 		if (refreshToken != null) {
 			setRefreshToken(refreshToken);
 		}
+	}
+
+	@Override
+	public SharepointOAuth2TokenEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

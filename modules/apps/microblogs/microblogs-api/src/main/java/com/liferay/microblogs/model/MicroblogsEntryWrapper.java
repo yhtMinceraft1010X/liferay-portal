@@ -39,11 +39,6 @@ public class MicroblogsEntryWrapper
 	}
 
 	@Override
-	public MicroblogsEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -138,6 +133,11 @@ public class MicroblogsEntryWrapper
 		if (socialRelationType != null) {
 			setSocialRelationType(socialRelationType);
 		}
+	}
+
+	@Override
+	public MicroblogsEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

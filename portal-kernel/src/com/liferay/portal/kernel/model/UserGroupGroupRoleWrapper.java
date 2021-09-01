@@ -39,11 +39,6 @@ public class UserGroupGroupRoleWrapper
 	}
 
 	@Override
-	public UserGroupGroupRole cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -102,6 +97,11 @@ public class UserGroupGroupRoleWrapper
 		if (roleId != null) {
 			setRoleId(roleId);
 		}
+	}
+
+	@Override
+	public UserGroupGroupRole cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

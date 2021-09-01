@@ -268,4 +268,7 @@ public interface ReadingTimeEntryModel
 	@Override
 	public boolean isInTrashImplicitly();
 
+	@Override
+	public ReadingTimeEntry cloneWithOriginalValues();
+
 }

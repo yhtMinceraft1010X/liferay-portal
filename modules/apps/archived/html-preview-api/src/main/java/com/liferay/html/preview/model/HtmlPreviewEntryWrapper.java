@@ -39,11 +39,6 @@ public class HtmlPreviewEntryWrapper
 	}
 
 	@Override
-	public HtmlPreviewEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -122,6 +117,11 @@ public class HtmlPreviewEntryWrapper
 		if (fileEntryId != null) {
 			setFileEntryId(fileEntryId);
 		}
+	}
+
+	@Override
+	public HtmlPreviewEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

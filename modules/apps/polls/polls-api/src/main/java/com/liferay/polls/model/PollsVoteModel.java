@@ -277,4 +277,7 @@ public interface PollsVoteModel
 	 */
 	public void setVoteDate(Date voteDate);
 
+	@Override
+	public PollsVote cloneWithOriginalValues();
+
 }

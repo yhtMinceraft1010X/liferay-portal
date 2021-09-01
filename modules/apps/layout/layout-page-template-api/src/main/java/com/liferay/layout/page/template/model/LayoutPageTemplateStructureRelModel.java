@@ -286,4 +286,7 @@ public interface LayoutPageTemplateStructureRelModel
 	 */
 	public void setData(String data);
 
+	@Override
+	public LayoutPageTemplateStructureRel cloneWithOriginalValues();
+
 }

@@ -300,4 +300,7 @@ public interface AssetListEntrySegmentsEntryRelModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public AssetListEntrySegmentsEntryRel cloneWithOriginalValues();
+
 }

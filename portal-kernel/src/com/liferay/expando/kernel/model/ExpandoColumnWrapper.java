@@ -42,11 +42,6 @@ public class ExpandoColumnWrapper
 	}
 
 	@Override
-	public ExpandoColumn cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -118,6 +113,11 @@ public class ExpandoColumnWrapper
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
 		}
+	}
+
+	@Override
+	public ExpandoColumn cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -37,11 +37,6 @@ public class LayoutBranchWrapper
 	}
 
 	@Override
-	public LayoutBranch cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -127,6 +122,11 @@ public class LayoutBranchWrapper
 		if (master != null) {
 			setMaster(master);
 		}
+	}
+
+	@Override
+	public LayoutBranch cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

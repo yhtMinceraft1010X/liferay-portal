@@ -387,4 +387,7 @@ public interface SamlIdpSpConnectionModel
 	 */
 	public void setSamlSpEntityId(String samlSpEntityId);
 
+	@Override
+	public SamlIdpSpConnection cloneWithOriginalValues();
+
 }

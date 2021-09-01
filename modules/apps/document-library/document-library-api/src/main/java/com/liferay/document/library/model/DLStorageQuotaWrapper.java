@@ -38,11 +38,6 @@ public class DLStorageQuotaWrapper
 	}
 
 	@Override
-	public DLStorageQuota cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -79,6 +74,11 @@ public class DLStorageQuotaWrapper
 		if (storageSize != null) {
 			setStorageSize(storageSize);
 		}
+	}
+
+	@Override
+	public DLStorageQuota cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

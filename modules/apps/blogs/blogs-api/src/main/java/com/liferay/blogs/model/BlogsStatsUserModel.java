@@ -229,4 +229,7 @@ public interface BlogsStatsUserModel
 	 */
 	public void setRatingsAverageScore(double ratingsAverageScore);
 
+	@Override
+	public BlogsStatsUser cloneWithOriginalValues();
+
 }

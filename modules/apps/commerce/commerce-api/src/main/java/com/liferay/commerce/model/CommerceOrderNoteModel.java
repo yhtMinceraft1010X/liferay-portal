@@ -250,4 +250,7 @@ public interface CommerceOrderNoteModel
 	 */
 	public void setRestricted(boolean restricted);
 
+	@Override
+	public CommerceOrderNote cloneWithOriginalValues();
+
 }

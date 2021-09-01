@@ -44,11 +44,6 @@ public class LayoutClassedModelUsageWrapper
 	}
 
 	@Override
-	public LayoutClassedModelUsage cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -164,6 +159,11 @@ public class LayoutClassedModelUsageWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public LayoutClassedModelUsage cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

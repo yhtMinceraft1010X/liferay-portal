@@ -38,11 +38,6 @@ public class CacheDisabledEntryWrapper
 	}
 
 	@Override
-	public CacheDisabledEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -66,6 +61,11 @@ public class CacheDisabledEntryWrapper
 		if (name != null) {
 			setName(name);
 		}
+	}
+
+	@Override
+	public CacheDisabledEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

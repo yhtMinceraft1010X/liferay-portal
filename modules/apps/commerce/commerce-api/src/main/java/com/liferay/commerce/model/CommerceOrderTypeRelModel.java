@@ -242,4 +242,7 @@ public interface CommerceOrderTypeRelModel
 	 */
 	public void setCommerceOrderTypeId(long commerceOrderTypeId);
 
+	@Override
+	public CommerceOrderTypeRel cloneWithOriginalValues();
+
 }

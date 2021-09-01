@@ -39,11 +39,6 @@ public class CommerceChannelRelWrapper
 	}
 
 	@Override
-	public CommerceChannelRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -116,6 +111,11 @@ public class CommerceChannelRelWrapper
 		if (commerceChannelId != null) {
 			setCommerceChannelId(commerceChannelId);
 		}
+	}
+
+	@Override
+	public CommerceChannelRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

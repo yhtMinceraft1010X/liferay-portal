@@ -353,4 +353,7 @@ public interface KaleoTransitionModel
 	 */
 	public void setDefaultTransition(boolean defaultTransition);
 
+	@Override
+	public KaleoTransition cloneWithOriginalValues();
+
 }

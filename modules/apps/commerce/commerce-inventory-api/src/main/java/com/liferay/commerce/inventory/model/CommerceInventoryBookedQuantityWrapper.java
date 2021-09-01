@@ -42,11 +42,6 @@ public class CommerceInventoryBookedQuantityWrapper
 	}
 
 	@Override
-	public CommerceInventoryBookedQuantity cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -136,6 +131,11 @@ public class CommerceInventoryBookedQuantityWrapper
 		if (bookedNote != null) {
 			setBookedNote(bookedNote);
 		}
+	}
+
+	@Override
+	public CommerceInventoryBookedQuantity cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

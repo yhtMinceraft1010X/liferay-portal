@@ -497,4 +497,7 @@ public interface MDRRuleModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public MDRRule cloneWithOriginalValues();
+
 }

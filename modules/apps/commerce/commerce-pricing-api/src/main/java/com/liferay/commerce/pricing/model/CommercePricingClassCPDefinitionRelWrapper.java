@@ -43,11 +43,6 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	}
 
 	@Override
-	public CommercePricingClassCPDefinitionRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -117,6 +112,11 @@ public class CommercePricingClassCPDefinitionRelWrapper
 		if (CPDefinitionId != null) {
 			setCPDefinitionId(CPDefinitionId);
 		}
+	}
+
+	@Override
+	public CommercePricingClassCPDefinitionRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

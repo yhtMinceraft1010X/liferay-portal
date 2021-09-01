@@ -41,11 +41,6 @@ public class PushNotificationsDeviceWrapper
 	}
 
 	@Override
-	public PushNotificationsDevice cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -98,6 +93,11 @@ public class PushNotificationsDeviceWrapper
 		if (token != null) {
 			setToken(token);
 		}
+	}
+
+	@Override
+	public PushNotificationsDevice cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

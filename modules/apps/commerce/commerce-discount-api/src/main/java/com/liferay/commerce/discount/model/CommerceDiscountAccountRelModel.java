@@ -244,4 +244,7 @@ public interface CommerceDiscountAccountRelModel
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public CommerceDiscountAccountRel cloneWithOriginalValues();
+
 }

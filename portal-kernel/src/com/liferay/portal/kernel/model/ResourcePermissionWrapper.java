@@ -39,11 +39,6 @@ public class ResourcePermissionWrapper
 	}
 
 	@Override
-	public ResourcePermission cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -144,6 +139,11 @@ public class ResourcePermissionWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		model.addResourceAction(actionId);
+	}
+
+	@Override
+	public ResourcePermission cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

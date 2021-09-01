@@ -39,11 +39,6 @@ public class EmailAddressWrapper
 	}
 
 	@Override
-	public EmailAddress cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -143,6 +138,11 @@ public class EmailAddressWrapper
 		if (primary != null) {
 			setPrimary(primary);
 		}
+	}
+
+	@Override
+	public EmailAddress cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

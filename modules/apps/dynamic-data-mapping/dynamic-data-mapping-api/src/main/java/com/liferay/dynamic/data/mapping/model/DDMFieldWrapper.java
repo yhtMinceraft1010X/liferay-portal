@@ -40,11 +40,6 @@ public class DDMFieldWrapper
 	}
 
 	@Override
-	public DDMField cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -137,6 +132,11 @@ public class DDMFieldWrapper
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@Override
+	public DDMField cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -199,4 +199,7 @@ public interface CommerceDiscountCommerceAccountGroupRelModel
 	 */
 	public void setCommerceAccountGroupId(long commerceAccountGroupId);
 
+	@Override
+	public CommerceDiscountCommerceAccountGroupRel cloneWithOriginalValues();
+
 }

@@ -40,11 +40,6 @@ public class FinderWhereClauseEntryWrapper
 	}
 
 	@Override
-	public FinderWhereClauseEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -76,6 +71,11 @@ public class FinderWhereClauseEntryWrapper
 		if (nickname != null) {
 			setNickname(nickname);
 		}
+	}
+
+	@Override
+	public FinderWhereClauseEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

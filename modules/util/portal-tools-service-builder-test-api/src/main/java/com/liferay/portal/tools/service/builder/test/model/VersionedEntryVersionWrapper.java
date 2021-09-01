@@ -40,11 +40,6 @@ public class VersionedEntryVersionWrapper
 	}
 
 	@Override
-	public VersionedEntryVersion cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -82,6 +77,11 @@ public class VersionedEntryVersionWrapper
 		if (groupId != null) {
 			setGroupId(groupId);
 		}
+	}
+
+	@Override
+	public VersionedEntryVersion cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

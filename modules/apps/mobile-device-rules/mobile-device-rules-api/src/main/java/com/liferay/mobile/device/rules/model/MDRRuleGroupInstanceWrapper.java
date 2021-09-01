@@ -42,11 +42,6 @@ public class MDRRuleGroupInstanceWrapper
 	}
 
 	@Override
-	public MDRRuleGroupInstance cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -153,6 +148,11 @@ public class MDRRuleGroupInstanceWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public MDRRuleGroupInstance cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

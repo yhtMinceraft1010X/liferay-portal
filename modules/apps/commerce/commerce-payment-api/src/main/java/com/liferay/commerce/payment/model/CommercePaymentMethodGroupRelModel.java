@@ -468,4 +468,7 @@ public interface CommercePaymentMethodGroupRelModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CommercePaymentMethodGroupRel cloneWithOriginalValues();
+
 }

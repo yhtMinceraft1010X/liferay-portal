@@ -195,4 +195,7 @@ public interface ExpandoColumnModel
 	 */
 	public void setTypeSettings(String typeSettings);
 
+	@Override
+	public ExpandoColumn cloneWithOriginalValues();
+
 }

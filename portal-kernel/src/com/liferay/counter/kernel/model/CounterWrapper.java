@@ -38,11 +38,6 @@ public class CounterWrapper
 	}
 
 	@Override
-	public Counter cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -65,6 +60,11 @@ public class CounterWrapper
 		if (currentId != null) {
 			setCurrentId(currentId);
 		}
+	}
+
+	@Override
+	public Counter cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

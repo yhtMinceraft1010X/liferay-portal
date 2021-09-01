@@ -228,4 +228,7 @@ public interface CommerceDiscountRuleModel
 	 */
 	public void setTypeSettings(String typeSettings);
 
+	@Override
+	public CommerceDiscountRule cloneWithOriginalValues();
+
 }

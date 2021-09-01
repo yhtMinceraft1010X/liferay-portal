@@ -777,4 +777,7 @@ public interface JournalArticleModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public JournalArticle cloneWithOriginalValues();
+
 }

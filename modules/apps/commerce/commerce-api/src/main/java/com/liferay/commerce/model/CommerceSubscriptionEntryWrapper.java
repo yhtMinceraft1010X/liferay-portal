@@ -43,11 +43,6 @@ public class CommerceSubscriptionEntryWrapper
 	}
 
 	@Override
-	public CommerceSubscriptionEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -284,6 +279,11 @@ public class CommerceSubscriptionEntryWrapper
 		if (deliveryStartDate != null) {
 			setDeliveryStartDate(deliveryStartDate);
 		}
+	}
+
+	@Override
+	public CommerceSubscriptionEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

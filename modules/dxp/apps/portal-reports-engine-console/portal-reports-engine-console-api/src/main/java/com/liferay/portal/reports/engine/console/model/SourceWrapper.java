@@ -39,11 +39,6 @@ public class SourceWrapper
 	}
 
 	@Override
-	public Source cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -150,6 +145,11 @@ public class SourceWrapper
 		if (driverPassword != null) {
 			setDriverPassword(driverPassword);
 		}
+	}
+
+	@Override
+	public Source cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

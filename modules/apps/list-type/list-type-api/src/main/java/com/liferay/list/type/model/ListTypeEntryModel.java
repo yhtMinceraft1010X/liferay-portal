@@ -364,4 +364,7 @@ public interface ListTypeEntryModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public ListTypeEntry cloneWithOriginalValues();
+
 }

@@ -247,4 +247,7 @@ public interface CPInstanceOptionValueRelModel
 	 */
 	public void setCPInstanceId(long CPInstanceId);
 
+	@Override
+	public CPInstanceOptionValueRel cloneWithOriginalValues();
+
 }

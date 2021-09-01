@@ -240,4 +240,7 @@ public interface CommerceWishListModel
 	 */
 	public void setDefaultWishList(boolean defaultWishList);
 
+	@Override
+	public CommerceWishList cloneWithOriginalValues();
+
 }

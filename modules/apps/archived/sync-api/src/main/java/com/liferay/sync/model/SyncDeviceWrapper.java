@@ -40,11 +40,6 @@ public class SyncDeviceWrapper
 	}
 
 	@Override
-	public SyncDevice cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -144,6 +139,11 @@ public class SyncDeviceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		model.checkStatus();
+	}
+
+	@Override
+	public SyncDevice cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

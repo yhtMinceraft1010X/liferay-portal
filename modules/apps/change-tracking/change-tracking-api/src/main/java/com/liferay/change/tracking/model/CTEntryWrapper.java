@@ -39,11 +39,6 @@ public class CTEntryWrapper
 	}
 
 	@Override
-	public CTEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -129,6 +124,11 @@ public class CTEntryWrapper
 		if (changeType != null) {
 			setChangeType(changeType);
 		}
+	}
+
+	@Override
+	public CTEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

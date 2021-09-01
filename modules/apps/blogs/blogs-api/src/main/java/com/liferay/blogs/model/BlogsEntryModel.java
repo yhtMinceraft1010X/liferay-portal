@@ -702,4 +702,7 @@ public interface BlogsEntryModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public BlogsEntry cloneWithOriginalValues();
+
 }

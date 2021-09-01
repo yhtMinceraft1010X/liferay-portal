@@ -39,11 +39,6 @@ public class CommerceCatalogWrapper
 	}
 
 	@Override
-	public CommerceCatalog cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -133,6 +128,11 @@ public class CommerceCatalogWrapper
 		if (system != null) {
 			setSystem(system);
 		}
+	}
+
+	@Override
+	public CommerceCatalog cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

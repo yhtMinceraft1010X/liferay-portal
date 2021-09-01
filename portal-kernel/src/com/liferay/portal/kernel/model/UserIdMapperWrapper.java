@@ -37,11 +37,6 @@ public class UserIdMapperWrapper
 	}
 
 	@Override
-	public UserIdMapper cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -99,6 +94,11 @@ public class UserIdMapperWrapper
 		if (externalUserId != null) {
 			setExternalUserId(externalUserId);
 		}
+	}
+
+	@Override
+	public UserIdMapper cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

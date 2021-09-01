@@ -447,4 +447,7 @@ public interface CPOptionCategoryModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CPOptionCategory cloneWithOriginalValues();
+
 }

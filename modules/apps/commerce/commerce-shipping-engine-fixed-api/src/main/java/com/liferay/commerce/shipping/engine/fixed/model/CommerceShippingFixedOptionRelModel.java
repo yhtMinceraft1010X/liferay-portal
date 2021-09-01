@@ -346,4 +346,7 @@ public interface CommerceShippingFixedOptionRelModel
 	 */
 	public void setRatePercentage(double ratePercentage);
 
+	@Override
+	public CommerceShippingFixedOptionRel cloneWithOriginalValues();
+
 }

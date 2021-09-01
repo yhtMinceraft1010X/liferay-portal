@@ -352,4 +352,7 @@ public interface KaleoInstanceModel
 	 */
 	public void setWorkflowContext(String workflowContext);
 
+	@Override
+	public KaleoInstance cloneWithOriginalValues();
+
 }

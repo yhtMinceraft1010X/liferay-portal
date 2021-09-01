@@ -247,4 +247,7 @@ public interface CProductModel
 	 */
 	public void setLatestVersion(int latestVersion);
 
+	@Override
+	public CProduct cloneWithOriginalValues();
+
 }

@@ -243,4 +243,7 @@ public interface CommerceWishListItemModel
 	 */
 	public void setJson(String json);
 
+	@Override
+	public CommerceWishListItem cloneWithOriginalValues();
+
 }

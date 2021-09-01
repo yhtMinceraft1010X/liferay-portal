@@ -39,11 +39,6 @@ public class PasswordPolicyWrapper
 	}
 
 	@Override
-	public PasswordPolicy cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -298,6 +293,11 @@ public class PasswordPolicyWrapper
 		if (resetTicketMaxAge != null) {
 			setResetTicketMaxAge(resetTicketMaxAge);
 		}
+	}
+
+	@Override
+	public PasswordPolicy cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

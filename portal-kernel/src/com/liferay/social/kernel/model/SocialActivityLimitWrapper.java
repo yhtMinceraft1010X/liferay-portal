@@ -40,11 +40,6 @@ public class SocialActivityLimitWrapper
 	}
 
 	@Override
-	public SocialActivityLimit cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -131,6 +126,11 @@ public class SocialActivityLimitWrapper
 		if (value != null) {
 			setValue(value);
 		}
+	}
+
+	@Override
+	public SocialActivityLimit cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -42,11 +42,6 @@ public class LayoutSEOSiteWrapper
 	}
 
 	@Override
-	public LayoutSEOSite cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -148,6 +143,11 @@ public class LayoutSEOSiteWrapper
 		if (openGraphImageFileEntryId != null) {
 			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 		}
+	}
+
+	@Override
+	public LayoutSEOSite cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

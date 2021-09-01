@@ -43,11 +43,6 @@ public class CommerceDiscountCommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public CommerceDiscountCommerceAccountGroupRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -117,6 +112,11 @@ public class CommerceDiscountCommerceAccountGroupRelWrapper
 		if (commerceAccountGroupId != null) {
 			setCommerceAccountGroupId(commerceAccountGroupId);
 		}
+	}
+
+	@Override
+	public CommerceDiscountCommerceAccountGroupRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

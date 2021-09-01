@@ -43,11 +43,6 @@ public class CommerceVirtualOrderItemWrapper
 	}
 
 	@Override
-	public CommerceVirtualOrderItem cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -184,6 +179,11 @@ public class CommerceVirtualOrderItemWrapper
 		if (endDate != null) {
 			setEndDate(endDate);
 		}
+	}
+
+	@Override
+	public CommerceVirtualOrderItem cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

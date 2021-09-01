@@ -125,4 +125,7 @@ public interface PortalPreferencesModel
 	 */
 	public void setOwnerType(int ownerType);
 
+	@Override
+	public PortalPreferences cloneWithOriginalValues();
+
 }

@@ -413,4 +413,7 @@ public interface CPMeasurementUnitModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CPMeasurementUnit cloneWithOriginalValues();
+
 }

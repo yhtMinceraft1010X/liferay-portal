@@ -42,11 +42,6 @@ public class DLOpenerFileEntryReferenceWrapper
 	}
 
 	@Override
-	public DLOpenerFileEntryReference cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -134,6 +129,11 @@ public class DLOpenerFileEntryReferenceWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public DLOpenerFileEntryReference cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

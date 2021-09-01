@@ -39,11 +39,6 @@ public class DispatchLogWrapper
 	}
 
 	@Override
-	public DispatchLog cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -143,6 +138,11 @@ public class DispatchLogWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public DispatchLog cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

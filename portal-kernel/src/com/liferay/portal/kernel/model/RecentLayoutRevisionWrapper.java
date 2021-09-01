@@ -39,11 +39,6 @@ public class RecentLayoutRevisionWrapper
 	}
 
 	@Override
-	public RecentLayoutRevision cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -109,6 +104,11 @@ public class RecentLayoutRevisionWrapper
 		if (plid != null) {
 			setPlid(plid);
 		}
+	}
+
+	@Override
+	public RecentLayoutRevision cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

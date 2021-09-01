@@ -228,4 +228,7 @@ public interface CommerceInventoryAuditModel
 	 */
 	public void setQuantity(int quantity);
 
+	@Override
+	public CommerceInventoryAudit cloneWithOriginalValues();
+
 }

@@ -526,4 +526,7 @@ public interface CPOptionModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public CPOption cloneWithOriginalValues();
+
 }

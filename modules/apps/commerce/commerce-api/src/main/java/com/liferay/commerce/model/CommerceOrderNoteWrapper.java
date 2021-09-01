@@ -39,11 +39,6 @@ public class CommerceOrderNoteWrapper
 	}
 
 	@Override
-	public CommerceOrderNote cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -130,6 +125,11 @@ public class CommerceOrderNoteWrapper
 		if (restricted != null) {
 			setRestricted(restricted);
 		}
+	}
+
+	@Override
+	public CommerceOrderNote cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

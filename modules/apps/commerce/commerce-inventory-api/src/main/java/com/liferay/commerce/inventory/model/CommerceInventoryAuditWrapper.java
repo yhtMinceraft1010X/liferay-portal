@@ -41,11 +41,6 @@ public class CommerceInventoryAuditWrapper
 	}
 
 	@Override
-	public CommerceInventoryAudit cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -126,6 +121,11 @@ public class CommerceInventoryAuditWrapper
 		if (quantity != null) {
 			setQuantity(quantity);
 		}
+	}
+
+	@Override
+	public CommerceInventoryAudit cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

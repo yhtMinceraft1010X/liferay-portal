@@ -41,11 +41,6 @@ public class AssetEntryWrapper
 	}
 
 	@Override
-	public AssetEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -250,6 +245,11 @@ public class AssetEntryWrapper
 		if (priority != null) {
 			setPriority(priority);
 		}
+	}
+
+	@Override
+	public AssetEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

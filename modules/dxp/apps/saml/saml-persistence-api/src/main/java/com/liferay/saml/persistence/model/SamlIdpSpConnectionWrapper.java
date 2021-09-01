@@ -39,11 +39,6 @@ public class SamlIdpSpConnectionWrapper
 	}
 
 	@Override
-	public SamlIdpSpConnection cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -190,6 +185,11 @@ public class SamlIdpSpConnectionWrapper
 		if (samlSpEntityId != null) {
 			setSamlSpEntityId(samlSpEntityId);
 		}
+	}
+
+	@Override
+	public SamlIdpSpConnection cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

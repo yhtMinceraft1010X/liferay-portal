@@ -244,4 +244,7 @@ public interface CommerceAddressRestrictionModel
 	 */
 	public void setCountryId(long countryId);
 
+	@Override
+	public CommerceAddressRestriction cloneWithOriginalValues();
+
 }

@@ -39,11 +39,6 @@ public class SamlPeerBindingWrapper
 	}
 
 	@Override
-	public SamlPeerBinding cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -140,6 +135,11 @@ public class SamlPeerBindingWrapper
 		if (samlPeerEntityId != null) {
 			setSamlPeerEntityId(samlPeerEntityId);
 		}
+	}
+
+	@Override
+	public SamlPeerBinding cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

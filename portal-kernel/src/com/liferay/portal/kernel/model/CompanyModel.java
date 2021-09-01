@@ -418,4 +418,7 @@ public interface CompanyModel
 	 */
 	public void setSize(String size);
 
+	@Override
+	public Company cloneWithOriginalValues();
+
 }

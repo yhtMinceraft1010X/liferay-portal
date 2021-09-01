@@ -45,11 +45,6 @@ public class LayoutPageTemplateStructureRelWrapper
 	}
 
 	@Override
-	public LayoutPageTemplateStructureRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -157,6 +152,11 @@ public class LayoutPageTemplateStructureRelWrapper
 		if (data != null) {
 			setData(data);
 		}
+	}
+
+	@Override
+	public LayoutPageTemplateStructureRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

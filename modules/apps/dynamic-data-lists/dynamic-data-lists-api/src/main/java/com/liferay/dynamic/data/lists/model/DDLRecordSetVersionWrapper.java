@@ -41,11 +41,6 @@ public class DDLRecordSetVersionWrapper
 	}
 
 	@Override
-	public DDLRecordSetVersion cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -181,6 +176,11 @@ public class DDLRecordSetVersionWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	@Override
+	public DDLRecordSetVersion cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

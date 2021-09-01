@@ -282,4 +282,7 @@ public interface RepositoryEntryModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public RepositoryEntry cloneWithOriginalValues();
+
 }

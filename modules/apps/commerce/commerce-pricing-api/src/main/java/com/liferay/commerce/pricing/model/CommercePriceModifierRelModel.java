@@ -227,4 +227,7 @@ public interface CommercePriceModifierRelModel
 	@Override
 	public void setClassPK(long classPK);
 
+	@Override
+	public CommercePriceModifierRel cloneWithOriginalValues();
+
 }

@@ -37,11 +37,6 @@ public class CountryLocalizationWrapper
 	}
 
 	@Override
-	public CountryLocalization cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -93,6 +88,11 @@ public class CountryLocalizationWrapper
 		if (title != null) {
 			setTitle(title);
 		}
+	}
+
+	@Override
+	public CountryLocalization cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

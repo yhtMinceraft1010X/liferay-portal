@@ -40,11 +40,6 @@ public class FVSCustomEntryWrapper
 	}
 
 	@Override
-	public FVSCustomEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -123,6 +118,11 @@ public class FVSCustomEntryWrapper
 		if (name != null) {
 			setName(name);
 		}
+	}
+
+	@Override
+	public FVSCustomEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

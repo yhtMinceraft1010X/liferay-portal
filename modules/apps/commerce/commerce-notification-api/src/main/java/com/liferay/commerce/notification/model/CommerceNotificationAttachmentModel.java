@@ -255,4 +255,7 @@ public interface CommerceNotificationAttachmentModel
 	 */
 	public void setDeleteOnSend(boolean deleteOnSend);
 
+	@Override
+	public CommerceNotificationAttachment cloneWithOriginalValues();
+
 }

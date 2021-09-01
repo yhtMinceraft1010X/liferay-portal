@@ -40,11 +40,6 @@ public class CPDefinitionWrapper
 	}
 
 	@Override
-	public CPDefinition cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -405,6 +400,11 @@ public class CPDefinitionWrapper
 	@Override
 	public Object clone() {
 		return new CPDefinitionWrapper((CPDefinition)model.clone());
+	}
+
+	@Override
+	public CPDefinition cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

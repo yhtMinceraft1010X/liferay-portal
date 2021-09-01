@@ -42,11 +42,6 @@ public class RatingsEntryWrapper
 	}
 
 	@Override
-	public RatingsEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -139,6 +134,11 @@ public class RatingsEntryWrapper
 		if (score != null) {
 			setScore(score);
 		}
+	}
+
+	@Override
+	public RatingsEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

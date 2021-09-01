@@ -41,11 +41,6 @@ public class OpenIdConnectSessionWrapper
 	}
 
 	@Override
-	public OpenIdConnectSession cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -111,6 +106,11 @@ public class OpenIdConnectSessionWrapper
 		if (refreshToken != null) {
 			setRefreshToken(refreshToken);
 		}
+	}
+
+	@Override
+	public OpenIdConnectSession cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

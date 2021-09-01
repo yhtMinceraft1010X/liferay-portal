@@ -276,4 +276,7 @@ public interface BatchPlannerMappingModel
 	 */
 	public void setScript(String script);
 
+	@Override
+	public BatchPlannerMapping cloneWithOriginalValues();
+
 }

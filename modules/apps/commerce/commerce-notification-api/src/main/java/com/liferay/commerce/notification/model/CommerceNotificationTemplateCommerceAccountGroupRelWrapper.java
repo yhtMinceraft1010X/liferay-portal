@@ -45,13 +45,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel
-		cloneWithOriginalValues() {
-
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -132,6 +125,13 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 		if (commerceAccountGroupId != null) {
 			setCommerceAccountGroupId(commerceAccountGroupId);
 		}
+	}
+
+	@Override
+	public CommerceNotificationTemplateCommerceAccountGroupRel
+		cloneWithOriginalValues() {
+
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

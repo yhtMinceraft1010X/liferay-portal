@@ -37,11 +37,6 @@ public class ServiceComponentWrapper
 	}
 
 	@Override
-	public ServiceComponent cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -92,6 +87,11 @@ public class ServiceComponentWrapper
 		if (data != null) {
 			setData(data);
 		}
+	}
+
+	@Override
+	public ServiceComponent cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

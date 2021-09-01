@@ -39,11 +39,6 @@ public class KaleoTransitionWrapper
 	}
 
 	@Override
-	public KaleoTransition cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -183,6 +178,11 @@ public class KaleoTransitionWrapper
 		if (defaultTransition != null) {
 			setDefaultTransition(defaultTransition);
 		}
+	}
+
+	@Override
+	public KaleoTransition cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -39,11 +39,6 @@ public class OAuthUserWrapper
 	}
 
 	@Override
-	public OAuthUser cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -115,6 +110,11 @@ public class OAuthUserWrapper
 		if (accessSecret != null) {
 			setAccessSecret(accessSecret);
 		}
+	}
+
+	@Override
+	public OAuthUser cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

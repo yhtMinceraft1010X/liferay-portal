@@ -231,4 +231,7 @@ public interface BatchPlannerPolicyModel
 	 */
 	public void setValue(String value);
 
+	@Override
+	public BatchPlannerPolicy cloneWithOriginalValues();
+
 }

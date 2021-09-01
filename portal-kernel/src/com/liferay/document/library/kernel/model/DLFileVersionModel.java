@@ -649,4 +649,7 @@ public interface DLFileVersionModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public DLFileVersion cloneWithOriginalValues();
+
 }

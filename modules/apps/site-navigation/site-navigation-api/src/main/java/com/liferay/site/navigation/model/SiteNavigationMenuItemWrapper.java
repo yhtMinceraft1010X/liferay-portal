@@ -44,11 +44,6 @@ public class SiteNavigationMenuItemWrapper
 	}
 
 	@Override
-	public SiteNavigationMenuItem cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -182,6 +177,11 @@ public class SiteNavigationMenuItemWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public SiteNavigationMenuItem cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

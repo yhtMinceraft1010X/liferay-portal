@@ -39,11 +39,6 @@ public class VirtualHostWrapper
 	}
 
 	@Override
-	public VirtualHost cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -109,6 +104,11 @@ public class VirtualHostWrapper
 		if (languageId != null) {
 			setLanguageId(languageId);
 		}
+	}
+
+	@Override
+	public VirtualHost cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -39,11 +39,6 @@ public class AkismetEntryWrapper
 	}
 
 	@Override
-	public AkismetEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -122,6 +117,11 @@ public class AkismetEntryWrapper
 		if (userURL != null) {
 			setUserURL(userURL);
 		}
+	}
+
+	@Override
+	public AkismetEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

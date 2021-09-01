@@ -37,11 +37,6 @@ public class PasswordPolicyRelWrapper
 	}
 
 	@Override
-	public PasswordPolicyRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -92,6 +87,11 @@ public class PasswordPolicyRelWrapper
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+	}
+
+	@Override
+	public PasswordPolicyRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

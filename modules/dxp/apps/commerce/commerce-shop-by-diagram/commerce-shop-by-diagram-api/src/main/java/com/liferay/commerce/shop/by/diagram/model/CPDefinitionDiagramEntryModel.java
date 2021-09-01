@@ -277,4 +277,7 @@ public interface CPDefinitionDiagramEntryModel
 	 */
 	public void setSku(String sku);
 
+	@Override
+	public CPDefinitionDiagramEntry cloneWithOriginalValues();
+
 }

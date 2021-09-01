@@ -38,11 +38,6 @@ public class AttachmentWrapper
 	}
 
 	@Override
-	public Attachment cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -114,6 +109,11 @@ public class AttachmentWrapper
 		if (size != null) {
 			setSize(size);
 		}
+	}
+
+	@Override
+	public Attachment cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

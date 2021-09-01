@@ -41,11 +41,6 @@ public class AssetLinkWrapper
 	}
 
 	@Override
-	public AssetLink cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -131,6 +126,11 @@ public class AssetLinkWrapper
 		if (weight != null) {
 			setWeight(weight);
 		}
+	}
+
+	@Override
+	public AssetLink cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

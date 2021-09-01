@@ -512,4 +512,7 @@ public interface ContactModel
 	 */
 	public void setHoursOfOperation(String hoursOfOperation);
 
+	@Override
+	public Contact cloneWithOriginalValues();
+
 }

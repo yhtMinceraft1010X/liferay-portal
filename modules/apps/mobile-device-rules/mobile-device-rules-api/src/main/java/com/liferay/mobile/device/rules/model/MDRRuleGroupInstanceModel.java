@@ -307,4 +307,7 @@ public interface MDRRuleGroupInstanceModel
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	@Override
+	public MDRRuleGroupInstance cloneWithOriginalValues();
+
 }

@@ -40,11 +40,6 @@ public class CommerceWishListWrapper
 	}
 
 	@Override
-	public CommerceWishList cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -123,6 +118,11 @@ public class CommerceWishListWrapper
 		if (defaultWishList != null) {
 			setDefaultWishList(defaultWishList);
 		}
+	}
+
+	@Override
+	public CommerceWishList cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

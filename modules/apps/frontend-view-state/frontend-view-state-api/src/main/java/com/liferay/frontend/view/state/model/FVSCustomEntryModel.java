@@ -274,4 +274,7 @@ public interface FVSCustomEntryModel
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
 
+	@Override
+	public FVSCustomEntry cloneWithOriginalValues();
+
 }

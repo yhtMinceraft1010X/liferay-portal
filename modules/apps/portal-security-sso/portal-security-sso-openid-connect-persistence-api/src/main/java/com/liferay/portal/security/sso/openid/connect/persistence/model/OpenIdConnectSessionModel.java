@@ -178,4 +178,7 @@ public interface OpenIdConnectSessionModel
 	 */
 	public void setRefreshToken(String refreshToken);
 
+	@Override
+	public OpenIdConnectSession cloneWithOriginalValues();
+
 }

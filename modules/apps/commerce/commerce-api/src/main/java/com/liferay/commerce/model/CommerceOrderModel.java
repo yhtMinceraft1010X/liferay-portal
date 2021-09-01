@@ -1192,4 +1192,7 @@ public interface CommerceOrderModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public CommerceOrder cloneWithOriginalValues();
+
 }

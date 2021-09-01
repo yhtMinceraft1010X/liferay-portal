@@ -303,4 +303,7 @@ public interface FVSActiveEntryModel
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId);
 
+	@Override
+	public FVSActiveEntry cloneWithOriginalValues();
+
 }

@@ -39,11 +39,6 @@ public class CTProcessWrapper
 	}
 
 	@Override
-	public CTProcess cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -101,6 +96,11 @@ public class CTProcessWrapper
 		if (backgroundTaskId != null) {
 			setBackgroundTaskId(backgroundTaskId);
 		}
+	}
+
+	@Override
+	public CTProcess cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

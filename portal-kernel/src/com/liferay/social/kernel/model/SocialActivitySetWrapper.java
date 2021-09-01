@@ -40,11 +40,6 @@ public class SocialActivitySetWrapper
 	}
 
 	@Override
-	public SocialActivitySet cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -144,6 +139,11 @@ public class SocialActivitySetWrapper
 		if (activityCount != null) {
 			setActivityCount(activityCount);
 		}
+	}
+
+	@Override
+	public SocialActivitySet cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

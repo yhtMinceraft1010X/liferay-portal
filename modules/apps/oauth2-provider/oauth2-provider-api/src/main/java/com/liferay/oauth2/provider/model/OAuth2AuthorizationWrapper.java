@@ -39,11 +39,6 @@ public class OAuth2AuthorizationWrapper
 	}
 
 	@Override
-	public OAuth2Authorization cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -193,6 +188,11 @@ public class OAuth2AuthorizationWrapper
 		if (rememberDeviceContent != null) {
 			setRememberDeviceContent(rememberDeviceContent);
 		}
+	}
+
+	@Override
+	public OAuth2Authorization cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -45,11 +45,6 @@ public class AssetListEntrySegmentsEntryRelWrapper
 	}
 
 	@Override
-	public AssetListEntrySegmentsEntryRel cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -160,6 +155,11 @@ public class AssetListEntrySegmentsEntryRelWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

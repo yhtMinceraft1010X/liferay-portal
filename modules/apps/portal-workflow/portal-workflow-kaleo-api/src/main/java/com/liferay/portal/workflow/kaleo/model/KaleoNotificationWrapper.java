@@ -39,11 +39,6 @@ public class KaleoNotificationWrapper
 	}
 
 	@Override
-	public KaleoNotification cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -187,6 +182,11 @@ public class KaleoNotificationWrapper
 		if (notificationTypes != null) {
 			setNotificationTypes(notificationTypes);
 		}
+	}
+
+	@Override
+	public KaleoNotification cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

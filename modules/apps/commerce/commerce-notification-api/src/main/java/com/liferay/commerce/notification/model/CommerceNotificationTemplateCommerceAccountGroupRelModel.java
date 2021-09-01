@@ -216,4 +216,8 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelModel
 	 */
 	public void setCommerceAccountGroupId(long commerceAccountGroupId);
 
+	@Override
+	public CommerceNotificationTemplateCommerceAccountGroupRel
+		cloneWithOriginalValues();
+
 }

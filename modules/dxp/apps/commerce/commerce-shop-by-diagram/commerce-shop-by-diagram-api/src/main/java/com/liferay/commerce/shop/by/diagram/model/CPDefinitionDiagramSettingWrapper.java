@@ -43,11 +43,6 @@ public class CPDefinitionDiagramSettingWrapper
 	}
 
 	@Override
-	public CPDefinitionDiagramSetting cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -143,6 +138,11 @@ public class CPDefinitionDiagramSettingWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public CPDefinitionDiagramSetting cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

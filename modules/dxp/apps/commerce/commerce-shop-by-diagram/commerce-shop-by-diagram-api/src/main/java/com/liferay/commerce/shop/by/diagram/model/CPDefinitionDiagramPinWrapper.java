@@ -41,11 +41,6 @@ public class CPDefinitionDiagramPinWrapper
 	}
 
 	@Override
-	public CPDefinitionDiagramPin cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -126,6 +121,11 @@ public class CPDefinitionDiagramPinWrapper
 		if (sequence != null) {
 			setSequence(sequence);
 		}
+	}
+
+	@Override
+	public CPDefinitionDiagramPin cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

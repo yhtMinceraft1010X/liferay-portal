@@ -41,11 +41,6 @@ public class CTAutoResolutionInfoWrapper
 	}
 
 	@Override
-	public CTAutoResolutionInfo cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -119,6 +114,11 @@ public class CTAutoResolutionInfoWrapper
 		if (conflictIdentifier != null) {
 			setConflictIdentifier(conflictIdentifier);
 		}
+	}
+
+	@Override
+	public CTAutoResolutionInfo cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

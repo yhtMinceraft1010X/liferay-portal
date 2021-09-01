@@ -476,4 +476,7 @@ public interface CommerceAddressModel
 	 */
 	public void setType(int type);
 
+	@Override
+	public CommerceAddress cloneWithOriginalValues();
+
 }

@@ -42,11 +42,6 @@ public class JournalArticleWrapper
 	}
 
 	@Override
-	public JournalArticle cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -320,6 +315,11 @@ public class JournalArticleWrapper
 	@Override
 	public Object clone() {
 		return new JournalArticleWrapper((JournalArticle)model.clone());
+	}
+
+	@Override
+	public JournalArticle cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -44,11 +44,6 @@ public class AssetDisplayPageEntryWrapper
 	}
 
 	@Override
-	public AssetDisplayPageEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -165,6 +160,11 @@ public class AssetDisplayPageEntryWrapper
 		if (plid != null) {
 			setPlid(plid);
 		}
+	}
+
+	@Override
+	public AssetDisplayPageEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

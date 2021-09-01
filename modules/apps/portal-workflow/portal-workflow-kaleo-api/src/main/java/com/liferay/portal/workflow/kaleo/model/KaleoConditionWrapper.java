@@ -39,11 +39,6 @@ public class KaleoConditionWrapper
 	}
 
 	@Override
-	public KaleoCondition cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -153,6 +148,11 @@ public class KaleoConditionWrapper
 		if (scriptRequiredContexts != null) {
 			setScriptRequiredContexts(scriptRequiredContexts);
 		}
+	}
+
+	@Override
+	public KaleoCondition cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

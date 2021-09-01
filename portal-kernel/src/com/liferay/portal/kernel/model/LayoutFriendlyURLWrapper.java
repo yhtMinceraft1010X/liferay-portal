@@ -41,11 +41,6 @@ public class LayoutFriendlyURLWrapper
 	}
 
 	@Override
-	public LayoutFriendlyURL cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -159,6 +154,11 @@ public class LayoutFriendlyURLWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public LayoutFriendlyURL cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -40,11 +40,6 @@ public class EagerBlobEntryWrapper
 	}
 
 	@Override
-	public EagerBlobEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -81,6 +76,11 @@ public class EagerBlobEntryWrapper
 		if (blob != null) {
 			setBlob(blob);
 		}
+	}
+
+	@Override
+	public EagerBlobEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

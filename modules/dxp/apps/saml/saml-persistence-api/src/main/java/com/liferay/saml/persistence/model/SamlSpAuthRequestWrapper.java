@@ -39,11 +39,6 @@ public class SamlSpAuthRequestWrapper
 	}
 
 	@Override
-	public SamlSpAuthRequest cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -89,6 +84,11 @@ public class SamlSpAuthRequestWrapper
 		if (samlSpAuthRequestKey != null) {
 			setSamlSpAuthRequestKey(samlSpAuthRequestKey);
 		}
+	}
+
+	@Override
+	public SamlSpAuthRequest cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -43,11 +43,6 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public JournalArticleLocalization cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -113,6 +108,11 @@ public class JournalArticleLocalizationWrapper
 		if (languageId != null) {
 			setLanguageId(languageId);
 		}
+	}
+
+	@Override
+	public JournalArticleLocalization cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

@@ -633,4 +633,7 @@ public interface KBArticleModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public KBArticle cloneWithOriginalValues();
+
 }

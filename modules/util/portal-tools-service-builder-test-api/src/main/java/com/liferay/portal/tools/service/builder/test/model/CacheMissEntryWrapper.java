@@ -40,11 +40,6 @@ public class CacheMissEntryWrapper
 	}
 
 	@Override
-	public CacheMissEntry cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -74,6 +69,11 @@ public class CacheMissEntryWrapper
 		if (cacheMissEntryId != null) {
 			setCacheMissEntryId(cacheMissEntryId);
 		}
+	}
+
+	@Override
+	public CacheMissEntry cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

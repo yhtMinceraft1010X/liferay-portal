@@ -40,11 +40,6 @@ public class CPDefinitionLinkWrapper
 	}
 
 	@Override
-	public CPDefinitionLink cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -137,6 +132,11 @@ public class CPDefinitionLinkWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public CPDefinitionLink cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

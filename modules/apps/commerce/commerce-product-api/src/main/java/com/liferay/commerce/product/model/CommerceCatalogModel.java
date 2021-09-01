@@ -250,4 +250,7 @@ public interface CommerceCatalogModel
 	 */
 	public void setSystem(boolean system);
 
+	@Override
+	public CommerceCatalog cloneWithOriginalValues();
+
 }

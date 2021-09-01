@@ -38,11 +38,6 @@ public class TestEntityWrapper
 	}
 
 	@Override
-	public TestEntity cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -65,6 +60,11 @@ public class TestEntityWrapper
 		if (data != null) {
 			setData(data);
 		}
+	}
+
+	@Override
+	public TestEntity cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**
