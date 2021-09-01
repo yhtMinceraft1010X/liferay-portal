@@ -757,6 +757,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			}
 		}
 
+		T oldModel = null;
+
+		if (!isNew) {
+			oldModel = model.cloneWithOriginalValues();
+		}
+
 		ModelListener<T>[] modelListeners = getListeners();
 
 		for (ModelListener<T> modelListener : modelListeners) {
@@ -764,7 +770,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				modelListener.onBeforeCreate(model);
 			}
 			else {
-				modelListener.onBeforeUpdate(model);
+				modelListener.onBeforeUpdate(oldModel, model);
 			}
 		}
 
@@ -775,7 +781,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				modelListener.onAfterCreate(model);
 			}
 			else {
-				modelListener.onAfterUpdate(model);
+				modelListener.onAfterUpdate(oldModel, model);
 			}
 		}
 
