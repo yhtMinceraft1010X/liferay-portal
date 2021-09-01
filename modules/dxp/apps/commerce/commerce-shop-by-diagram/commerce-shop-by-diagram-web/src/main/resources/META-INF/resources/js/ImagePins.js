@@ -96,7 +96,7 @@ const ImagePins = ({
 						fill: `#${addNewPinState.fill}`,
 						label: '',
 						linked_to_sku: 'sku',
-						quantity: 0,
+						quantity: 1,
 						r: addNewPinState.radius,
 						sku: addNewPinState.sku,
 					})
@@ -233,7 +233,7 @@ const ImagePins = ({
 					fill: '#' + addNewPinState.fill,
 					label: '',
 					linked_to_sku: 'sku',
-					quantity: 0,
+					quantity: 1,
 					r: addNewPinState.radius,
 					sku: addNewPinState.sku,
 				})

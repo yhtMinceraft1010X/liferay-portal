@@ -214,7 +214,7 @@ const Diagram = ({
 				id: updatedPin.id,
 				label: updatedPin.label || '',
 				linked_to_sku: updatedPin.linked_to_sku || '',
-				quantity: updatedPin.quantity || 0,
+				quantity: updatedPin.quantity || 1,
 				sku: updatedPin.sku,
 			},
 			tooltip: true,
