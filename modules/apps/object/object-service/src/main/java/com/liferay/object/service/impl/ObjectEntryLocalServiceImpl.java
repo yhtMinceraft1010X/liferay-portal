@@ -513,6 +513,10 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
 			objectEntryId);
 
+		// Populate cache field before calling _updateTable
+
+		objectEntry.getValues();
+
 		_updateTable(
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
@@ -523,7 +527,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryId, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
-		objectEntry.setValues(null);
+		objectEntry.setValues(getValues(objectEntry));
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
 

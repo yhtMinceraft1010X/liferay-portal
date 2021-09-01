@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -129,9 +131,14 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				});
 		}
 		catch (Exception exception) {
+			_log.error(exception, exception);
+
 			throw new ModelListenerException(exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryModelListener.class);
 
 	@Reference
 	private JSONFactory _jsonFactory;

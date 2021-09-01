@@ -14,6 +14,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +30,15 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class ObjectEntryImpl extends ObjectEntryBaseImpl {
+
+	@Override
+	public ObjectEntry cloneWithOriginalValues() {
+		ObjectEntry objectEntry = super.cloneWithOriginalValues();
+
+		objectEntry.setValues(getValues());
+
+		return objectEntry;
+	}
 
 	@Override
 	public Map<String, Serializable> getValues() {

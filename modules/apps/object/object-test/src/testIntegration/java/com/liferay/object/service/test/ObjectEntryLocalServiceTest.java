@@ -394,14 +394,7 @@ public class ObjectEntryLocalServiceTest {
 				noSuchObjectEntryException.getMessage());
 		}
 
-		try {
-			ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntry1);
-
-			Assert.fail();
-		}
-		catch (NullPointerException nullPointerException) {
-			Assert.assertNotNull(nullPointerException);
-		}
+		ObjectEntryLocalServiceUtil.deleteObjectEntry(objectEntry1);
 
 		try {
 			ObjectEntryLocalServiceUtil.getValues(
@@ -853,6 +846,8 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertNotNull(
 			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 
+		_messages.clear();
+
 		objectEntry = ObjectEntryLocalServiceUtil.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -863,6 +858,8 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertCount(1);
+
+		Assert.assertEquals(4, _messages.size());
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
