@@ -663,7 +663,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			modelListener.onBeforeRemove(model);
 		}
 
-		model = removeImpl(model);
+		T removedModel = removeImpl(model);
+
+		if (removedModel != null) {
+			model = removedModel;
+		}
 
 		for (ModelListener<T> modelListener : modelListeners) {
 			modelListener.onAfterRemove(model);
