@@ -1,0 +1,107 @@
+
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+
+		}
+        
+		ACUtils.tearDownAC();
+
+	}
+
+	@description = "Automation ID: LRAC-9048 | Test Summary: Assert the User Management Page"
+	@ignore = "true"
+	@priority = "3"
+	test AssertUserManagementPage {
+
+		// TODO LRAC-9048 AssertUserManagementPage
+
+	}
+
+    @description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
+	@ignore = "true"
+	@priority = "5"
+	test ViewOwnerCannotBeEditedOrRemoved {
+
+		// TODO LRAC-9049 ViewOwnerCannotBeEditedOrRemoved
+
+	}
+
+    @description = "Automation ID: LRAC-9050 | Test Summary: Owner cannot be selected in the user list"
+	@ignore = "true"
+	@priority = "5"
+	test ViewOwnerCannotBeSelectedInUserList {
+
+		// TODO LRAC-9050 ViewOwnerCannotBeSelectedInUserList
+
+	}
+
+    @description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanBeEditedOrRemoved {
+
+		// TODO LRAC-9051 AdminCanBeEditedOrRemoved
+
+	}
+
+    @description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanBeSelected {
+
+		// TODO LRAC-9052 AdminCanBeSelected
+
+	}
+
+    @description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
+	@ignore = "true"
+	@priority = "3"
+	test MemberCanBeEditedOrRemoved {
+
+		// TODO LRAC-9053 MemberCanBeEditedOrRemoved
+
+	}
+
+    @description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
+	@ignore = "true"
+	@priority = "3"
+	test MemberCanBeSelected {
+
+		// TODO LRAC-9054 MemberCanBeSelected
+
+	}
+
+    @description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"
+	@ignore = "true"
+	@priority = "3"
+	test ViewAllUserList {
+
+		// TODO LRAC-9055 ViewAllUserList
+
+	}
+}
