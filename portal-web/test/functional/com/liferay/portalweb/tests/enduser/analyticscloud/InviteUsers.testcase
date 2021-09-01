@@ -2,9 +2,10 @@
 definition {
 
 	property analytics.cloud.enabled = "true";
-	property minimum.slave.ram = "32";
+	property minimum.slave.ram = "24";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property slave.label = "slave-1";
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
@@ -33,7 +34,7 @@ definition {
 	@priority = "3"
 	test AdminCanInviteUsers {
 
-		// TODO LRAC-9072 v
+		// TODO LRAC-9072 AdminCanInviteUsers
 
 	}
 

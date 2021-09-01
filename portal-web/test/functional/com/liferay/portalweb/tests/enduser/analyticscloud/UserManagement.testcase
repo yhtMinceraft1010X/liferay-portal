@@ -69,7 +69,7 @@ definition {
 
 	@description = "Automation ID: LRAC-9089 | Test Summary: Select multiple users to change permissions at once."
 	@ignore = "true"
-	@priority = ""
+	@priority = "3"
 	test ChangeMultipleUserPermissions {
 
 		// TODO LRAC-9089 ChangeMultipleUserPermissions
@@ -203,8 +203,8 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9087 | Test Summary: Select and change an admin + member to members"
-	@ignore = "tr3ue"
-	@priority = ""
+	@ignore = "true"
+	@priority = "3"
 	test SelectAndChangeAnAdminAndMembertoMembers {
 
 		// TODO LRAC-9087 SelectAndChangeAnAdminAndMembertoMembers
