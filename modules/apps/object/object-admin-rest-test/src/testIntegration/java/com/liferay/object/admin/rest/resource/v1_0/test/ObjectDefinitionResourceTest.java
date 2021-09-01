@@ -122,15 +122,16 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
 				"en_US", "A" + objectDefinition.getName()));
-
-		ObjectField objectField = new ObjectField();
-
-		objectField.setLabel(Collections.singletonMap("en_US", "Column"));
-		objectField.setName("column");
-		objectField.setType("String");
-
-		objectDefinition.setObjectFields(new ObjectField[] {objectField});
-
+		objectDefinition.setObjectFields(
+			new ObjectField[] {
+				new ObjectField() {
+					{
+						setLabel(Collections.singletonMap("en_US", "Column"));
+						setName("column");
+						setType("String");
+					}
+				}
+			});
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		return objectDefinition;
