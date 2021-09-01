@@ -214,7 +214,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		_exportTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
-
 		_exportTaskResource.setContextUriInfo(new EmptyUriInfo());
 		_exportTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
@@ -248,13 +247,11 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 
-		long batchPlannerPlanId = batchPlannerPlan.getBatchPlannerPlanId();
-
-		File file = _getJSONLFile(batchPlannerPlanId);
+		File file = _getJSONLFile(batchPlannerPlan.getBatchPlannerPlanId());
 
 		ImportTask importTask = _importTaskResource.postImportTask(
 			batchPlannerPlan.getInternalClassName(), null, null,
-			"batch-planner-plan-" + batchPlannerPlanId,
+			"batch-planner-plan-" + batchPlannerPlan.getBatchPlannerPlanId(),
 			MultipartBody.of(
 				Collections.singletonMap(
 					"file",
@@ -264,7 +261,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				null, Collections.emptyMap()));
 
 		_batchPlannerLogLocalService.addBatchPlannerLog(
-			batchPlannerPlan.getUserId(), batchPlannerPlanId, null,
+			batchPlannerPlan.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), null,
 			String.valueOf(importTask.getId()), null, (int)file.length(), 1);
 	}
 
