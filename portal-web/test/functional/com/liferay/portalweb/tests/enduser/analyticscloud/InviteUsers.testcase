@@ -1,0 +1,79 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+
+		}
+		ACUtils.tearDownAC();
+
+	}
+
+	@description = "Automation ID: LRAC-9069 | Test Summary: Invite a single user"
+	@ignore = "true"
+	@priority = "5"
+	test CanInviteSingleUser {
+
+		// TODO LRAC-9069 CanInviteSingleUser
+
+	}
+
+    @description = "Automation ID: LRAC-9070 | Test Summary: Invite multiple users at a time"
+	@ignore = "true"
+	@priority = "3"
+	test CanInviteMultipleUsers {
+
+		// TODO LRAC-9070 CanInviteMultipleUsers
+
+	}
+
+    @description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
+	@ignore = "true"
+	@priority = "5"
+	test OwnerCanInviteUsers {
+
+		// TODO LRAC-9071 OwnerCanInviteUsers
+
+	}
+
+    @description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanInviteUsers {
+
+		// TODO LRAC-9072 v
+
+	}
+
+    @description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
+	@ignore = "true"
+	@priority = "3"
+	test MemberCannotInviteUsers {
+
+		// TODO LRAC-9073 MemberCannotInviteUsers
+
+	}
+
+}
