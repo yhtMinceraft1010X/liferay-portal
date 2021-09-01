@@ -600,6 +600,11 @@ public class ObjectEntryWrapper
 		model.setStatusDate(statusDate);
 	}
 
+	@Override
+	public void setTransientValues(Map<String, Serializable> values) {
+		model.setTransientValues(values);
+	}
+
 	/**
 	 * Sets the user ID of this object entry.
 	 *

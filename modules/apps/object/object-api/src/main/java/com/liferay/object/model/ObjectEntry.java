@@ -58,6 +58,9 @@ public interface ObjectEntry extends ObjectEntryModel, PersistedModel {
 
 	public java.util.Map<String, java.io.Serializable> getValues();
 
+	public void setTransientValues(
+		java.util.Map<String, java.io.Serializable> values);
+
 	public void setValues(java.util.Map<String, java.io.Serializable> values);
 
 }
