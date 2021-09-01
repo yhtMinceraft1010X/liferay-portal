@@ -165,6 +165,7 @@ public class EditBatchPlannerPlanMVCActionCommand extends BaseMVCActionCommand {
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			actionRequest, "batchPlannerPlanId");
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		_batchPlannerPlanService.updateBatchPlannerPlan(

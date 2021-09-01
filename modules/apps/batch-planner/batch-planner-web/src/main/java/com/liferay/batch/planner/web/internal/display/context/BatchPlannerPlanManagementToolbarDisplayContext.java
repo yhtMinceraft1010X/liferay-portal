@@ -59,7 +59,6 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.putData("action", "deleteBatchPlannerPlans");
-
 				dropdownItem.putData(
 					"deleteBatchPlannerPlansURL",
 					PortletURLBuilder.createActionURL(
@@ -71,7 +70,6 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 					).setNavigation(
 						getNavigation()
 					).buildString());
-
 				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
