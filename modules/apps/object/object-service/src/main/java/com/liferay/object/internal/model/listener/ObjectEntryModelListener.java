@@ -95,24 +95,19 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				return;
 			}
 
+			JSONObject payloadJSONObject = JSONUtil.put("command", command);
+
 			JSONObject objectEntryJSONObject = _jsonFactory.createJSONObject(
 				objectEntry.toString());
 
-			if (command.equals("onAfterCreate") ||
-				command.equals("onBeforeCreate")) {
+			objectEntryJSONObject.put("values", objectEntry.getValues());
 
-				objectEntryJSONObject.put("values", objectEntry.getValues());
-			}
-
-			JSONObject payloadJSONObject = JSONUtil.put(
-				"objectEntry", objectEntryJSONObject);
+			payloadJSONObject.put("objectEntry", objectEntryJSONObject);
 
 			if (originalObjectEntry != null) {
 				JSONObject originalObjectEntryJSONObject =
 					_jsonFactory.createJSONObject(
 						originalObjectEntry.toString());
-
-				// TODO
 
 				originalObjectEntryJSONObject.put(
 					"values", originalObjectEntry.getValues());
@@ -125,7 +120,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				objectDefinition.getDestinationName(),
 				new Message() {
 					{
-						put("command", command);
 						setPayload(payloadJSONObject.toString());
 					}
 				});

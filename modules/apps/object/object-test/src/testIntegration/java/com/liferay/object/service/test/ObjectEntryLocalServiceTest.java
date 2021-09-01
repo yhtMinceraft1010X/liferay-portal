@@ -202,59 +202,79 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(4, _messages.size());
 
-		Message message1 = _messages.poll();
+		Message message = _messages.poll();
 
-		JSONObject payloadJSONObject1 = _jsonFactory.createJSONObject(
-			(String)message1.getPayload());
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
 
+		Assert.assertEquals(
+			"onBeforeCreate", payloadJSONObject.getString("command"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				payloadJSONObject1, "JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
 		Assert.assertEquals(
-			"peter@liferay.com",
+			"Peter",
 			JSONUtil.getValue(
-				payloadJSONObject1, "JSONObject/objectEntry",
-				"JSONObject/values", "Object/emailAddress"));
+				payloadJSONObject, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/firstName"));
+		Assert.assertNull(
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry"));
 
-		Assert.assertEquals("onBeforeCreate", message1.getString("command"));
+		message = _messages.poll();
 
-		Message message2 = _messages.poll();
+		payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
 
+		Assert.assertEquals(
+			"onAfterCreate", payloadJSONObject.getString("command"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message2.getPayload()),
-				"JSONObject/objectEntry", "Object/status"));
-		Assert.assertEquals("onAfterCreate", message2.getString("command"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			"Peter",
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/firstName"));
+		Assert.assertNull(
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry"));
 
-		Message message3 = _messages.poll();
+		message = _messages.poll();
 
+		payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
+
+		Assert.assertEquals(
+			"onBeforeUpdate", payloadJSONObject.getString("command"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message3.getPayload()),
-				"JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message3.getPayload()),
-				"JSONObject/originalObjectEntry", "Object/status"));
-		Assert.assertEquals("onBeforeUpdate", message3.getString("command"));
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"Object/status"));
 
-		Message message4 = _messages.poll();
+		message = _messages.poll();
 
+		payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
+
+		Assert.assertEquals(
+			"onAfterUpdate", payloadJSONObject.getString("command"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message4.getPayload()),
-				"JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message4.getPayload()),
-				"JSONObject/originalObjectEntry", "Object/status"));
-		Assert.assertEquals("onAfterUpdate", message4.getString("command"));
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"Object/status"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -838,13 +858,13 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		Assert.assertNull(
-			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
-
-		_getValues(objectEntry);
-
 		Assert.assertNotNull(
 			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+
+		_getValuesFromCacheField(objectEntry);
+
+		//Assert.assertNotNull(
+		//	ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
 
 		_messages.clear();
 
@@ -859,10 +879,61 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		Assert.assertEquals(4, _messages.size());
+		Assert.assertEquals(2, _messages.size());
 
-		Assert.assertNull(
-			ReflectionTestUtil.getFieldValue(objectEntry, "_values"));
+		Message message = _messages.poll();
+
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
+
+		Assert.assertEquals(
+			"onBeforeUpdate", payloadJSONObject.getString("command"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			"João",
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"Object/status"));
+		Assert.assertEquals(
+			"John",
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"JSONObject/values", "Object/firstName"));
+
+		message = _messages.poll();
+
+		payloadJSONObject = _jsonFactory.createJSONObject(
+			(String)message.getPayload());
+
+		Assert.assertEquals(
+			"onAfterUpdate", payloadJSONObject.getString("command"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			"João",
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/firstName"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"Object/status"));
+		Assert.assertEquals(
+			"John",
+			JSONUtil.getValue(
+				payloadJSONObject, "JSONObject/originalObjectEntry",
+				"JSONObject/values", "Object/firstName"));
 
 		objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
 			objectEntry.getObjectEntryId());

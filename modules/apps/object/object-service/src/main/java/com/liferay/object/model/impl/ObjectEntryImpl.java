@@ -35,7 +35,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	public ObjectEntry cloneWithOriginalValues() {
 		ObjectEntry objectEntry = super.cloneWithOriginalValues();
 
-		objectEntry.setValues(getValues());
+		objectEntry.setValues(_transientValues);
 
 		return objectEntry;
 	}
@@ -65,12 +65,19 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public void setTransientValues(Map<String, Serializable> values) {
+		_transientValues = values;
+	}
+
+	@Override
 	public void setValues(Map<String, Serializable> values) {
 		_values = values;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryImpl.class);
+
+	private Map<String, Serializable> _transientValues;
 
 	@CacheField(propagateToInterface = true)
 	private Map<String, Serializable> _values;
