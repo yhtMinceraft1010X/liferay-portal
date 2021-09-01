@@ -39,6 +39,11 @@ public class OAuth2ApplicationWrapper
 	}
 
 	@Override
+	public OAuth2Application cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 

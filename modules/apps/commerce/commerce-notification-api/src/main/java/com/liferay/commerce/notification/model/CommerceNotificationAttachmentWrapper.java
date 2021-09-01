@@ -43,6 +43,11 @@ public class CommerceNotificationAttachmentWrapper
 	}
 
 	@Override
+	public CommerceNotificationAttachment cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 

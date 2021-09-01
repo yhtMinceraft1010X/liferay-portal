@@ -42,6 +42,11 @@ public class CTSContentWrapper
 	}
 
 	@Override
+	public CTSContent cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 

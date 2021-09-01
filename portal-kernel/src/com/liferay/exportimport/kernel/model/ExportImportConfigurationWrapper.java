@@ -44,6 +44,11 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
+	public ExportImportConfiguration cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 

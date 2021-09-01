@@ -55,6 +55,13 @@ public class ${entity.name}Wrapper
 		</#if>
 	}
 
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		@Override
+		public ${entity.name} cloneWithOriginalValues() {
+			return wrap(${entityFieldName}.cloneWithOriginalValues());
+		}
+	</#if>
+
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
 		@Override
 		public Class<?> getModelClass() {

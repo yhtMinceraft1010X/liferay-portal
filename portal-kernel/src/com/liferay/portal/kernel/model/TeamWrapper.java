@@ -40,6 +40,11 @@ public class TeamWrapper
 	}
 
 	@Override
+	public Team cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 

@@ -41,6 +41,11 @@ public class DDLRecordSetVersionWrapper
 	}
 
 	@Override
+	public DDLRecordSetVersion cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
