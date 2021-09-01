@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -81,11 +83,21 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return null;
 		}
 
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).build();
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				_portal.getClassName(ddmTemplate.getClassNameId()));
+
+		if (infoItemFieldValuesProvider != null) {
+			infoItemFieldValues =
+				infoItemFieldValuesProvider.getInfoItemFieldValues(itemObject);
+		}
+
 		TemplateInfoItemFieldReader templateInfoItemFieldReader =
-			new TemplateInfoItemFieldReader(
-				ddmTemplate,
-				InfoItemFieldValues.builder(
-				).build());
+			new TemplateInfoItemFieldReader(ddmTemplate, infoItemFieldValues);
 
 		return new InfoFieldValue<>(
 			templateInfoItemFieldReader.getInfoField(),
@@ -137,6 +149,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;
