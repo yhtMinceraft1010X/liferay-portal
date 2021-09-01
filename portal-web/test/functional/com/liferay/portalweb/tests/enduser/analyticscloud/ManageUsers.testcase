@@ -1,4 +1,3 @@
-
 @component-name = "portal-analytics-cloud"
 definition {
 
@@ -16,7 +15,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
-
 	}
 
 	tearDown {
@@ -26,10 +24,26 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-
 		}
-        
+
 		ACUtils.tearDownAC();
+	}
+
+	@description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanBeEditedOrRemoved {
+
+		// TODO LRAC-9051 AdminCanBeEditedOrRemoved
+
+	}
+
+	@description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanBeSelected {
+
+		// TODO LRAC-9052 AdminCanBeSelected
 
 	}
 
@@ -42,43 +56,7 @@ definition {
 
 	}
 
-    @description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
-	@ignore = "true"
-	@priority = "5"
-	test ViewOwnerCannotBeEditedOrRemoved {
-
-		// TODO LRAC-9049 ViewOwnerCannotBeEditedOrRemoved
-
-	}
-
-    @description = "Automation ID: LRAC-9050 | Test Summary: Owner cannot be selected in the user list"
-	@ignore = "true"
-	@priority = "5"
-	test ViewOwnerCannotBeSelectedInUserList {
-
-		// TODO LRAC-9050 ViewOwnerCannotBeSelectedInUserList
-
-	}
-
-    @description = "Automation ID: LRAC-9051 | Test Summary: Admin can be edited or removed"
-	@ignore = "true"
-	@priority = "3"
-	test AdminCanBeEditedOrRemoved {
-
-		// TODO LRAC-9051 AdminCanBeEditedOrRemoved
-
-	}
-
-    @description = "Automation ID: LRAC-9052 | Test Summary: Admin can be selected in the user list"
-	@ignore = "true"
-	@priority = "3"
-	test AdminCanBeSelected {
-
-		// TODO LRAC-9052 AdminCanBeSelected
-
-	}
-
-    @description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
+	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
 	@ignore = "true"
 	@priority = "3"
 	test MemberCanBeEditedOrRemoved {
@@ -87,7 +65,7 @@ definition {
 
 	}
 
-    @description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
+	@description = "Automation ID: LRAC-9054 | Test Summary: Member can be selected in the user list"
 	@ignore = "true"
 	@priority = "3"
 	test MemberCanBeSelected {
@@ -96,7 +74,7 @@ definition {
 
 	}
 
-    @description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"
+	@description = "Automation ID: LRAC-9055 | Test Summary: View list of all users"
 	@ignore = "true"
 	@priority = "3"
 	test ViewAllUserList {
@@ -104,4 +82,23 @@ definition {
 		// TODO LRAC-9055 ViewAllUserList
 
 	}
+
+	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
+	@ignore = "true"
+	@priority = "5"
+	test ViewOwnerCannotBeEditedOrRemoved {
+
+		// TODO LRAC-9049 ViewOwnerCannotBeEditedOrRemoved
+
+	}
+
+	@description = "Automation ID: LRAC-9050 | Test Summary: Owner cannot be selected in the user list"
+	@ignore = "true"
+	@priority = "5"
+	test ViewOwnerCannotBeSelectedInUserList {
+
+		// TODO LRAC-9050 ViewOwnerCannotBeSelectedInUserList
+
+	}
+
 }
