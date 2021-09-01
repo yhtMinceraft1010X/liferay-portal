@@ -253,6 +253,7 @@ const Diagram = ({
 					isAdmin={isAdmin}
 					namespace={namespace}
 					navigationController={navigationController}
+					newPinSettings={newPinSettings}
 					pinClickAction={pinClickAction}
 					pinClickHandler={pinClickHandler}
 					pinsEndpoint={pinsEndpoint}
@@ -357,7 +358,7 @@ Diagram.defaultProps = {
 			selectedColor: '0B5FFF',
 			useNative: true,
 		},
-		defaultRadius: 2,
+		defaultRadius: 10,
 	},
 	pins: [],
 	pinsEndpoint:

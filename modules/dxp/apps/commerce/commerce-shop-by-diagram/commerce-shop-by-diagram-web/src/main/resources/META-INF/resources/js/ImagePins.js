@@ -41,6 +41,7 @@ const ImagePins = ({
 	isAdmin,
 	namespace,
 	navigationController,
+	newPinSettings,
 	pinClickAction,
 	removePinHandler,
 	resetZoom,
@@ -145,9 +146,9 @@ const ImagePins = ({
 		}
 
 		function dragStarted() {
-			const pinContainer = select(this)
-			pinContainer.raise().classed('active', true)
-			pinContainer.selectAll('circle').attr('stroke', `#ffa500`)
+			const pinContainer = select(this);
+			pinContainer.raise().classed('active', true);
+			pinContainer.selectAll('circle').attr('stroke', `#ffa500`);
 		}
 
 		function dragged() {
@@ -278,7 +279,10 @@ const ImagePins = ({
 					.data(cPins)
 					.enter()
 					.append('g')
-					.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
+					.attr(
+						'transform',
+						(attr) => `translate(${attr.cx},${attr.cy})`
+					)
 					.attr('cx', (attr) => attr.cx)
 					.attr('cy', (attr) => attr.cy)
 					.attr('id', (attr) => attr.id)
@@ -292,13 +296,16 @@ const ImagePins = ({
 					.attr('id', (attr) => attr.id)
 					.attr('class', 'circle_pin')
 					.call(dragHandler)
-					.on("mouseover", function (d) {
-						const gPin = select(this)
-						gPin.selectAll('circle').attr('stroke', `#ffa500`)
+					.on('mouseover', function () {
+						const gPin = select(this);
+						gPin.selectAll('circle').attr('stroke', `#ffa500`);
 					})
-					.on("mouseout", function (d) {
-						const gPin = select(this)
-						gPin.selectAll('circle').attr('stroke', `#${addNewPinState.fill}`)
+					.on('mouseout', function () {
+						const gPin = select(this);
+						gPin.selectAll('circle').attr(
+							'stroke',
+							`#${addNewPinState.fill}`
+						);
 					});
 
 				cont.append('circle')
@@ -306,14 +313,17 @@ const ImagePins = ({
 					.attr('r', () => addNewPinState.radius)
 					.attr('stroke', () => `#${addNewPinState.fill}`)
 					.attr('stroke-width', 0.5);
-
-			} else {
+			}
+			else {
 				const cont = container
 					.selectAll('g')
 					.data(cPins)
 					.enter()
 					.append('g')
-					.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
+					.attr(
+						'transform',
+						(attr) => `translate(${attr.cx},${attr.cy})`
+					)
 					.attr('cx', (attr) => attr.cx)
 					.attr('cy', (attr) => attr.cy)
 					.attr('id', (attr) => attr.id)
@@ -336,12 +346,14 @@ const ImagePins = ({
 
 				cont.append('text')
 					.text((attr) => attr.label)
-					.attr('font-size', (attr) => attr.r)
+					.attr(
+						'font-size',
+						(attr) => (newPinSettings.defaultRadius || attr.r) - 2
+					)
 					.attr('text-anchor', 'middle')
 					.attr('fill', '#000000')
 					.attr('alignment-baseline', 'central');
 			}
-			
 		}
 
 		if (isAdmin) {
@@ -358,6 +370,7 @@ const ImagePins = ({
 		enablePanZoom,
 		imageSettings,
 		navigationController,
+		newPinSettings,
 		removePinHandler,
 		handleAddPin,
 		resetZoom,
