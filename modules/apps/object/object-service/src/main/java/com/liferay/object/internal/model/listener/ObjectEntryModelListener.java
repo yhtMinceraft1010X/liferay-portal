@@ -17,6 +17,10 @@ package com.liferay.object.internal.model.listener;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -32,53 +36,105 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Override
-	public void onAfterCreate(ObjectEntry objectEntry) {
-		_sendMessage("onAfterCreate", objectEntry);
+	public void onAfterCreate(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onAfterCreate", null, objectEntry);
 	}
 
 	@Override
-	public void onAfterRemove(ObjectEntry objectEntry) {
-		_sendMessage("onAfterRemove", objectEntry);
+	public void onAfterRemove(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onAfterRemove", null, objectEntry);
 	}
 
 	@Override
-	public void onAfterUpdate(ObjectEntry objectEntry) {
-		_sendMessage("onAfterUpdate", objectEntry);
+	public void onAfterUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onAfterUpdate", originalObjectEntry, objectEntry);
 	}
 
 	@Override
-	public void onBeforeCreate(ObjectEntry objectEntry) {
-		_sendMessage("onBeforeCreate", objectEntry);
+	public void onBeforeCreate(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onBeforeCreate", null, objectEntry);
 	}
 
 	@Override
-	public void onBeforeRemove(ObjectEntry objectEntry) {
-		_sendMessage("onBeforeRemove", objectEntry);
+	public void onBeforeRemove(ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onBeforeRemove", null, objectEntry);
 	}
 
 	@Override
-	public void onBeforeUpdate(ObjectEntry objectEntry) {
-		_sendMessage("onBeforeUpdate", objectEntry);
+	public void onBeforeUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
+		throws ModelListenerException {
+
+		_sendMessage("onBeforeUpdate", originalObjectEntry, objectEntry);
 	}
 
-	private void _sendMessage(String command, ObjectEntry objectEntry) {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
+	private void _sendMessage(
+			String command, ObjectEntry originalObjectEntry,
+			ObjectEntry objectEntry)
+		throws ModelListenerException {
 
-		if (objectDefinition == null) {
-			return;
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
+			JSONObject objectEntryJSONObject = _jsonFactory.createJSONObject(
+				objectEntry.toString());
+
+			if (command.equals("onAfterCreate") ||
+				command.equals("onBeforeCreate")) {
+
+				objectEntryJSONObject.put("values", objectEntry.getValues());
+			}
+
+			JSONObject payloadJSONObject = JSONUtil.put(
+				"objectEntry", objectEntryJSONObject);
+
+			if (originalObjectEntry != null) {
+				JSONObject originalObjectEntryJSONObject =
+					_jsonFactory.createJSONObject(
+						originalObjectEntry.toString());
+
+				// TODO
+
+				originalObjectEntryJSONObject.put(
+					"values", originalObjectEntry.getValues());
+
+				payloadJSONObject.put(
+					"originalObjectEntry", originalObjectEntryJSONObject);
+			}
+
+			_messageBus.sendMessage(
+				objectDefinition.getDestinationName(),
+				new Message() {
+					{
+						put("command", command);
+						setPayload(payloadJSONObject.toString());
+					}
+				});
 		}
-
-		_messageBus.sendMessage(
-			objectDefinition.getDestinationName(),
-			new Message() {
-				{
-					put("command", command);
-					setPayload(objectEntry.toString());
-				}
-			});
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MessageBus _messageBus;

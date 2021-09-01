@@ -207,7 +207,7 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
 				_jsonFactory.createJSONObject((String)message1.getPayload()),
-				"Object/status"));
+				"JSONObject/objectEntry", "Object/status"));
 		Assert.assertEquals("onBeforeCreate", message1.getString("command"));
 
 		Message message2 = _messages.poll();
@@ -216,7 +216,7 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
 				_jsonFactory.createJSONObject((String)message2.getPayload()),
-				"Object/status"));
+				"JSONObject/objectEntry", "Object/status"));
 		Assert.assertEquals("onAfterCreate", message2.getString("command"));
 
 		Message message3 = _messages.poll();
@@ -225,7 +225,12 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
 				_jsonFactory.createJSONObject((String)message3.getPayload()),
-				"Object/status"));
+				"JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message3.getPayload()),
+				"JSONObject/originalObjectEntry", "Object/status"));
 		Assert.assertEquals("onBeforeUpdate", message3.getString("command"));
 
 		Message message4 = _messages.poll();
@@ -234,7 +239,12 @@ public class ObjectEntryLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
 				_jsonFactory.createJSONObject((String)message4.getPayload()),
-				"Object/status"));
+				"JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT,
+			JSONUtil.getValue(
+				_jsonFactory.createJSONObject((String)message4.getPayload()),
+				"JSONObject/originalObjectEntry", "Object/status"));
 		Assert.assertEquals("onAfterUpdate", message4.getString("command"));
 
 		_addObjectEntry(
