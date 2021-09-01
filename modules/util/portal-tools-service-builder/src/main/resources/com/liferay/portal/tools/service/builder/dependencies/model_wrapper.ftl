@@ -55,13 +55,6 @@ public class ${entity.name}Wrapper
 		</#if>
 	}
 
-	<#if serviceBuilder.isVersionGTE_7_4_0()>
-		@Override
-		public ${entity.name} cloneWithOriginalValues() {
-			return wrap(${entityFieldName}.cloneWithOriginalValues());
-		}
-	</#if>
-
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
 		@Override
 		public Class<?> getModelClass() {
@@ -156,6 +149,8 @@ public class ${entity.name}Wrapper
 			{
 				<#if stringUtil.equals(method.name, "clone") && (parameters?size == 0)>
 					return new ${entity.name}Wrapper((${entity.name})${entityFieldName}.clone());
+				<#elseif stringUtil.equals(method.name, "cloneWithOriginalValues") && (parameters?size == 0)>
+					return wrap(${entityFieldName}.cloneWithOriginalValues());
 				<#elseif (stringUtil.equals(method.name, "toEscapedModel") || stringUtil.equals(method.name, "toUnescapedModel")) && (parameters?size == 0)>
 					return new ${entity.name}Wrapper(${entityFieldName}.${method.name}());
 				<#else>
