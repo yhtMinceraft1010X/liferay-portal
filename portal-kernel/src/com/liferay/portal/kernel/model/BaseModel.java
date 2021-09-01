@@ -41,7 +41,9 @@ public interface BaseModel<T>
 	 */
 	public Object clone();
 
-	public T cloneWithOriginalValues();
+	public default T cloneWithOriginalValues() {
+		return null;
+	}
 
 	public default Map<String, Function<T, Object>>
 		getAttributeGetterFunctions() {
