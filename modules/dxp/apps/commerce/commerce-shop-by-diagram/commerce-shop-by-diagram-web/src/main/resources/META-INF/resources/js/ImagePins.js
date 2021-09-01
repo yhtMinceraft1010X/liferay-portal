@@ -13,9 +13,7 @@ import {drag, event as d3event, select, zoom as d3zoom, zoomIdentity} from 'd3';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
 
-import NavigationButtons from './NavigationButtons';
 import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
-import ZoomController from './ZoomController';
 
 const PIN_ATTRIBUTES = [
 	'cx',
@@ -58,7 +56,6 @@ const ImagePins = ({
 	setShowTooltip,
 	setZoomInHandler,
 	setZoomOutHandler,
-	zoomController,
 	zoomInHandler,
 	zoomOutHandler,
 }) => {
@@ -371,23 +368,6 @@ const ImagePins = ({
 			</svg>
 
 			{children}
-
-			{navigationController.enable && (
-				<NavigationButtons
-					moveController={(where) =>
-						handlers.current?.moveController(where)
-					}
-					position={navigationController.position}
-				/>
-			)}
-
-			{zoomController.enable && (
-				<ZoomController
-					position={zoomController.position}
-					zoomIn={() => handlers.current?.zoomIn()}
-					zoomOut={() => handlers.current?.zoomOut()}
-				/>
-			)}
 		</div>
 	);
 };

@@ -329,7 +329,7 @@ Diagram.defaultProps = {
 	isAdmin: true,
 	navigationController: {
 		dragStep: 10,
-		enable: true,
+		enable: false,
 		enableDrag: false,
 		position: {
 			bottom: '15px',
@@ -378,7 +378,7 @@ Diagram.defaultProps = {
 	spritemap: './assets/clay/icons.svg',
 	type: 'diagram.type.svg',
 	zoomController: {
-		enable: true,
+		enable: false,
 		position: {
 			bottom: '0px',
 			left: '',
