@@ -1189,6 +1189,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		@Override
+		public NullModel cloneWithOriginalValues() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public int compareTo(NullModel nullModel) {
 			throw new UnsupportedOperationException();
 		}

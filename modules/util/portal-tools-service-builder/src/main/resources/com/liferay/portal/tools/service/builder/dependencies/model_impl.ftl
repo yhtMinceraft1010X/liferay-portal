@@ -1536,6 +1536,21 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		return ${entity.variableName}Impl;
 	}
 
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		@Override
+		public ${entity.name} cloneWithOriginalValues() {
+			${entity.name}Impl ${entity.variableName}Impl = new ${entity.name}Impl();
+
+			<#list entity.regularEntityColumns as entityColumn>
+				<#if !stringUtil.equals(entityColumn.type, "Blob")>
+					${entity.variableName}Impl.set${entityColumn.methodName}(this.<${serviceBuilder.getPrimitiveObj(entityColumn.type)}>getColumnOriginalValue("${entityColumn.DBName}"));
+				</#if>
+			</#list>
+
+			return ${entity.variableName}Impl;
+		}
+	</#if>
+
 	@Override
 	public int compareTo(${entity.name} ${entity.variableName}) {
 		<#if entity.isOrdered()>
