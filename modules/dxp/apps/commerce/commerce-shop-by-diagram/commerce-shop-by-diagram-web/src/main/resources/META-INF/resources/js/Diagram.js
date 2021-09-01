@@ -393,7 +393,6 @@ Diagram.propTypes = {
 		PropTypes.shape({
 			cx: PropTypes.double,
 			cy: PropTypes.double,
-			draggable: PropTypes.bool,
 			fill: PropTypes.string,
 			id: PropTypes.number,
 			label: PropTypes.string,

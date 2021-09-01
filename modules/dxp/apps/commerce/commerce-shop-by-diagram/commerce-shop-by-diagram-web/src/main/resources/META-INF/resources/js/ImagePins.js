@@ -18,7 +18,6 @@ import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 const PIN_ATTRIBUTES = [
 	'cx',
 	'cy',
-	'draggable',
 	'fill',
 	'id',
 	'label',
@@ -89,7 +88,6 @@ const ImagePins = ({
 					cPins.concat({
 						cx: x,
 						cy: y,
-						draggable: true,
 						fill: `#${addNewPinState.fill}`,
 						label: '',
 						linked_to_sku: 'sku',
@@ -147,7 +145,9 @@ const ImagePins = ({
 		}
 
 		function dragStarted() {
-			select(this).raise().classed('active', true);
+			const pinContainer = select(this)
+			pinContainer.raise().classed('active', true)
+			pinContainer.selectAll('circle').attr('stroke', `#ffa500`)
 		}
 
 		function dragged() {
@@ -182,11 +182,6 @@ const ImagePins = ({
 								attr.value,
 								10
 							);
-						}
-						else if (element === 'draggable') {
-							updatedPin[`${attr.name}`] = attr.value
-								? true
-								: false;
 						}
 						else {
 							updatedPin[`${attr.name}`] = attr.value;
@@ -226,7 +221,6 @@ const ImagePins = ({
 				cPins.concat({
 					cx: 50,
 					cy: 50,
-					draggable: true,
 					fill: '#' + addNewPinState.fill,
 					label: '',
 					linked_to_sku: 'sku',
@@ -244,7 +238,6 @@ const ImagePins = ({
 				return {
 					cx: pin.cx,
 					cy: pin.cy,
-					draggable: pin.draggable,
 					fill: pin.fill,
 					id: i,
 					label: pin.label,
@@ -279,39 +272,76 @@ const ImagePins = ({
 				return;
 			}
 
-			const cont = container
-				.selectAll('g')
-				.data(cPins)
-				.enter()
-				.append('g')
-				.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
-				.attr('cx', (attr) => attr.cx)
-				.attr('cy', (attr) => attr.cy)
-				.attr('id', (attr) => attr.id)
-				.attr('label', (attr) => attr.label)
-				.attr('fill', () => `#${addNewPinState.fill}`)
-				.attr('font-size', 4)
-				.attr('linked_to_sku', (attr) => attr.linked_to_sku)
-				.attr('quantity', (attr) => attr.quantity)
-				.attr('r', () => addNewPinState.radius)
-				.attr('sku', (attr) => attr.sku)
-				.attr('id', (attr) => attr.id)
-				.attr('class', 'circle_pin')
-				.attr('draggable', (attr) => (attr.draggable ? true : false))
-				.call(dragHandler);
+			if (isAdmin) {
+				const cont = container
+					.selectAll('g')
+					.data(cPins)
+					.enter()
+					.append('g')
+					.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
+					.attr('cx', (attr) => attr.cx)
+					.attr('cy', (attr) => attr.cy)
+					.attr('id', (attr) => attr.id)
+					.attr('label', (attr) => attr.label)
+					.attr('fill', () => `#${addNewPinState.fill}`)
+					.attr('font-size', 4)
+					.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+					.attr('quantity', (attr) => attr.quantity)
+					.attr('r', () => addNewPinState.radius)
+					.attr('sku', (attr) => attr.sku)
+					.attr('id', (attr) => attr.id)
+					.attr('class', 'circle_pin')
+					.call(dragHandler)
+					.on("mouseover", function (d) {
+						const gPin = select(this)
+						gPin.selectAll('circle').attr('stroke', `#ffa500`)
+					})
+					.on("mouseout", function (d) {
+						const gPin = select(this)
+						gPin.selectAll('circle').attr('stroke', `#${addNewPinState.fill}`)
+					});
 
-			cont.append('circle')
-				.attr('fill', () => 'transparent')
-				.attr('r', () => addNewPinState.radius)
-				.attr('stroke', () => `#${addNewPinState.fill}`)
-				.attr('stroke-width', 0.5);
+				cont.append('circle')
+					.attr('fill', () => 'transparent')
+					.attr('r', () => addNewPinState.radius)
+					.attr('stroke', () => `#${addNewPinState.fill}`)
+					.attr('stroke-width', 0.5);
 
-			cont.append('text')
-				.text((attr) => attr.label)
-				.attr('font-size', (attr) => attr.r)
-				.attr('text-anchor', 'middle')
-				.attr('fill', '#000000')
-				.attr('alignment-baseline', 'central');
+			} else {
+				const cont = container
+					.selectAll('g')
+					.data(cPins)
+					.enter()
+					.append('g')
+					.attr('transform', (attr) => `translate(${attr.cx},${attr.cy})`)
+					.attr('cx', (attr) => attr.cx)
+					.attr('cy', (attr) => attr.cy)
+					.attr('id', (attr) => attr.id)
+					.attr('label', (attr) => attr.label)
+					.attr('fill', () => `#${addNewPinState.fill}`)
+					.attr('font-size', 4)
+					.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+					.attr('quantity', (attr) => attr.quantity)
+					.attr('r', () => addNewPinState.radius)
+					.attr('sku', (attr) => attr.sku)
+					.attr('id', (attr) => attr.id)
+					.attr('class', 'circle_pin')
+					.call(dragHandler);
+
+				cont.append('circle')
+					.attr('fill', () => '#ffffff')
+					.attr('r', () => addNewPinState.radius)
+					.attr('stroke', () => `#${addNewPinState.fill}`)
+					.attr('stroke-width', 0.5);
+
+				cont.append('text')
+					.text((attr) => attr.label)
+					.attr('font-size', (attr) => attr.r)
+					.attr('text-anchor', 'middle')
+					.attr('fill', '#000000')
+					.attr('alignment-baseline', 'central');
+			}
+			
 		}
 
 		if (isAdmin) {
@@ -384,7 +414,6 @@ ImagePins.propTypes = {
 		PropTypes.shape({
 			cx: PropTypes.double,
 			cy: PropTypes.double,
-			draggable: PropTypes.bool,
 			fill: PropTypes.string,
 			id: PropTypes.number,
 			label: PropTypes.string,
