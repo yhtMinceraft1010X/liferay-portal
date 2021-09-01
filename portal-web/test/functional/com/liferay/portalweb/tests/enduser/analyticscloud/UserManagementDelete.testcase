@@ -1,10 +1,12 @@
 @component-name = "portal-analytics-cloud"
 definition {
+
 	property analytics.cloud.enabled = "true";
 	property minimum.slave.ram = "32";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Analytics Cloud";
+
 	setUp {
 		ACUtils.launchAC();
 
@@ -13,8 +15,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
-
 	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -22,10 +24,26 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-
 		}
 
 		ACUtils.tearDownAC();
+	}
+
+	@description = "Automation ID: LRAC-9065 | Test Summary: Admin can delete users"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanDeleteUser {
+
+		// TODO LRAC-9065 AdminCanDeleteUser
+
+	}
+
+	@description = "Automation ID: LRAC-9064 | Test Summary: Select multiple users to delete at once"
+	@ignore = "true"
+	@priority = "3"
+	test CanSelectAndDeleteUsers {
+
+		// TODO LRAC-9064 CanSelectAndDeleteUsers
 
 	}
 
@@ -38,25 +56,7 @@ definition {
 
 	}
 
-    @description = "Automation ID: LRAC-9064 | Test Summary: Select multiple users to delete at once"
-	@ignore = "true"
-	@priority = "3"
-	test CanSelectAndDeleteUsers {
-
-		// TODO LRAC-9064 CanSelectAndDeleteUsers
-
-	}
-
-    @description = "Automation ID: LRAC-9065 | Test Summary: Admin can delete users"
-	@ignore = "true"
-	@priority = "3"
-	test AdminCanDeleteUser {
-
-		// TODO LRAC-9065 AdminCanDeleteUser
-
-	}
-
-    @description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
+	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
 	@ignore = "true"
 	@priority = "3"
 	test MemberCantDeleteUser {

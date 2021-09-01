@@ -15,7 +15,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
-
 	}
 
 	tearDown {
@@ -25,9 +24,25 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
-
 		}
 		ACUtils.tearDownAC();
+	}
+
+	@description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
+	@ignore = "true"
+	@priority = "3"
+	test AdminCanInviteUsers {
+
+		// TODO LRAC-9072 v
+
+	}
+
+	@description = "Automation ID: LRAC-9070 | Test Summary: Invite multiple users at a time"
+	@ignore = "true"
+	@priority = "3"
+	test CanInviteMultipleUsers {
+
+		// TODO LRAC-9070 CanInviteMultipleUsers
 
 	}
 
@@ -40,39 +55,21 @@ definition {
 
 	}
 
-    @description = "Automation ID: LRAC-9070 | Test Summary: Invite multiple users at a time"
-	@ignore = "true"
-	@priority = "3"
-	test CanInviteMultipleUsers {
-
-		// TODO LRAC-9070 CanInviteMultipleUsers
-
-	}
-
-    @description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
-	@ignore = "true"
-	@priority = "5"
-	test OwnerCanInviteUsers {
-
-		// TODO LRAC-9071 OwnerCanInviteUsers
-
-	}
-
-    @description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
-	@ignore = "true"
-	@priority = "3"
-	test AdminCanInviteUsers {
-
-		// TODO LRAC-9072 v
-
-	}
-
-    @description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
+	@description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
 	@ignore = "true"
 	@priority = "3"
 	test MemberCannotInviteUsers {
 
 		// TODO LRAC-9073 MemberCannotInviteUsers
+
+	}
+
+	@description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
+	@ignore = "true"
+	@priority = "5"
+	test OwnerCanInviteUsers {
+
+		// TODO LRAC-9071 OwnerCanInviteUsers
 
 	}
 
