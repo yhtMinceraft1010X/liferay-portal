@@ -170,6 +170,11 @@ public class ObjectEntryWrapper
 		}
 	}
 
+	@Override
+	public ObjectEntry cloneWithOriginalValues() {
+		return model.cloneWithOriginalValues();
+	}
+
 	/**
 	 * Returns the company ID of this object entry.
 	 *

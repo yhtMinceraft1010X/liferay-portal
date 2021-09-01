@@ -866,6 +866,8 @@ public class BatchPlannerPlanModelImpl
 			this.<String>getColumnOriginalValue("internalClassName"));
 		batchPlannerPlanImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		batchPlannerPlanImpl.setTemplate(
+			this.<Boolean>getColumnOriginalValue("template"));
 
 		return batchPlannerPlanImpl;
 	}
