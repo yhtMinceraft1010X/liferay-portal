@@ -635,8 +635,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public void registerListener(ModelListener<T> listener) {
-		ModelListenerRegistrationUtil.register(listener);
+	public void registerListener(ModelListener<T> modelListener) {
+		ModelListenerRegistrationUtil.register(modelListener);
 	}
 
 	@Override
@@ -657,16 +657,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			model = modelWrapper.getWrappedModel();
 		}
 
-		ModelListener<T>[] listeners = getListeners();
+		ModelListener<T>[] modelListeners = getListeners();
 
-		for (ModelListener<T> listener : listeners) {
-			listener.onBeforeRemove(model);
+		for (ModelListener<T> modelListener : modelListeners) {
+			modelListener.onBeforeRemove(model);
 		}
 
 		model = removeImpl(model);
 
-		for (ModelListener<T> listener : listeners) {
-			listener.onAfterRemove(model);
+		for (ModelListener<T> modelListener : modelListeners) {
+			modelListener.onAfterRemove(model);
 		}
 
 		return model;
@@ -713,8 +713,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public void unregisterListener(ModelListener<T> listener) {
-		ModelListenerRegistrationUtil.unregister(listener);
+	public void unregisterListener(ModelListener<T> modelListener) {
+		ModelListenerRegistrationUtil.unregister(modelListener);
 	}
 
 	@Override
@@ -757,25 +757,25 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			}
 		}
 
-		ModelListener<T>[] listeners = getListeners();
+		ModelListener<T>[] modelListeners = getListeners();
 
-		for (ModelListener<T> listener : listeners) {
+		for (ModelListener<T> modelListener : modelListeners) {
 			if (isNew) {
-				listener.onBeforeCreate(model);
+				modelListener.onBeforeCreate(model);
 			}
 			else {
-				listener.onBeforeUpdate(model);
+				modelListener.onBeforeUpdate(model);
 			}
 		}
 
 		model = updateImpl(model);
 
-		for (ModelListener<T> listener : listeners) {
+		for (ModelListener<T> modelListener : modelListeners) {
 			if (isNew) {
-				listener.onAfterCreate(model);
+				modelListener.onAfterCreate(model);
 			}
 			else {
-				listener.onAfterUpdate(model);
+				modelListener.onAfterUpdate(model);
 			}
 		}
 

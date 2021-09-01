@@ -242,7 +242,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 *
 	 * @param listener the model listener to register
 	 */
-	public void registerListener(ModelListener<T> listener);
+	public void registerListener(ModelListener<T> modelListener);
 
 	/**
 	 * Removes the model instance with the primary key from the database. Also
@@ -275,7 +275,7 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 * @param listener the model listener to unregister
 	 * @see   #registerListener(ModelListener)
 	 */
-	public void unregisterListener(ModelListener<T> listener);
+	public void unregisterListener(ModelListener<T> modelListener);
 
 	/**
 	 * Updates the model instance in the database or adds it if it does not yet
