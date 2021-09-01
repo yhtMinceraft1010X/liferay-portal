@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -130,6 +131,8 @@ public class ObjectDefinitionResourceTest
 
 		objectDefinition.setObjectFields(new ObjectField[] {objectField});
 
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
+
 		return objectDefinition;
 	}
 
@@ -149,6 +152,13 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected ObjectDefinition testGraphQLObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
+	protected ObjectDefinition testPatchObjectDefinition_addObjectDefinition()
 		throws Exception {
 
 		return _addObjectDefinition(randomObjectDefinition());
