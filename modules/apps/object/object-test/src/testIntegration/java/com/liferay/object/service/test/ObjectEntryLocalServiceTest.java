@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
@@ -203,11 +204,19 @@ public class ObjectEntryLocalServiceTest {
 
 		Message message1 = _messages.poll();
 
+		JSONObject payloadJSONObject1 = _jsonFactory.createJSONObject(
+			(String)message1.getPayload());
+
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
-				_jsonFactory.createJSONObject((String)message1.getPayload()),
-				"JSONObject/objectEntry", "Object/status"));
+				payloadJSONObject1, "JSONObject/objectEntry", "Object/status"));
+		Assert.assertEquals(
+			"peter@liferay.com",
+			JSONUtil.getValue(
+				payloadJSONObject1, "JSONObject/objectEntry",
+				"JSONObject/values", "Object/emailAddress"));
+
 		Assert.assertEquals("onBeforeCreate", message1.getString("command"));
 
 		Message message2 = _messages.poll();
