@@ -587,4 +587,7 @@ public interface ObjectFieldModel
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
+	@Override
+	public ObjectField cloneWithOriginalValues();
+
 }

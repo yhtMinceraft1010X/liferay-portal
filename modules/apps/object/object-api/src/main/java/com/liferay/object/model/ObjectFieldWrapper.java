@@ -40,11 +40,6 @@ public class ObjectFieldWrapper
 	}
 
 	@Override
-	public ObjectField cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -194,6 +189,11 @@ public class ObjectFieldWrapper
 		if (type != null) {
 			setType(type);
 		}
+	}
+
+	@Override
+	public ObjectField cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

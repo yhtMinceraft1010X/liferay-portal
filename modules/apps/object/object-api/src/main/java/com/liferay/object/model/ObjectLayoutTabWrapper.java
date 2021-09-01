@@ -40,11 +40,6 @@ public class ObjectLayoutTabWrapper
 	}
 
 	@Override
-	public ObjectLayoutTab cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -109,6 +104,11 @@ public class ObjectLayoutTabWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	@Override
+	public ObjectLayoutTab cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

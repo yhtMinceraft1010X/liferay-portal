@@ -411,4 +411,7 @@ public interface ObjectEntryModel
 	@Override
 	public boolean isScheduled();
 
+	@Override
+	public ObjectEntry cloneWithOriginalValues();
+
 }

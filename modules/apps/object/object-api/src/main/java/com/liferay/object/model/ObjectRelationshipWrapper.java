@@ -40,11 +40,6 @@ public class ObjectRelationshipWrapper
 	}
 
 	@Override
-	public ObjectRelationship cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -110,6 +105,11 @@ public class ObjectRelationshipWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	@Override
+	public ObjectRelationship cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

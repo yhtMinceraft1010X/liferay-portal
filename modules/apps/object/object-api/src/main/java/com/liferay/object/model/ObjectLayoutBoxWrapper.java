@@ -40,11 +40,6 @@ public class ObjectLayoutBoxWrapper
 	}
 
 	@Override
-	public ObjectLayoutBox cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -109,6 +104,11 @@ public class ObjectLayoutBoxWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	@Override
+	public ObjectLayoutBox cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	/**

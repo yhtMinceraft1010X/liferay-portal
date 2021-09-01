@@ -40,11 +40,6 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
-	public ObjectDefinition cloneWithOriginalValues() {
-		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
@@ -195,6 +190,11 @@ public class ObjectDefinitionWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public ObjectDefinition cloneWithOriginalValues() {
+		return wrap(model.cloneWithOriginalValues());
 	}
 
 	@Override

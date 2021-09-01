@@ -204,4 +204,7 @@ public interface ObjectLayoutModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	@Override
+	public ObjectLayout cloneWithOriginalValues();
+
 }

@@ -204,4 +204,7 @@ public interface ObjectRelationshipModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	@Override
+	public ObjectRelationship cloneWithOriginalValues();
+
 }

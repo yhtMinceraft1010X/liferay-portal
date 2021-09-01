@@ -56,8 +56,6 @@ public interface ObjectEntry extends ObjectEntryModel, PersistedModel {
 
 		};
 
-	public ObjectEntry cloneWithOriginalValues();
-
 	public java.util.Map<String, java.io.Serializable> getValues();
 
 	public void setValues(java.util.Map<String, java.io.Serializable> values);

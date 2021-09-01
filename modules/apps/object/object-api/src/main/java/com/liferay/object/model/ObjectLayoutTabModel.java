@@ -204,4 +204,7 @@ public interface ObjectLayoutTabModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	@Override
+	public ObjectLayoutTab cloneWithOriginalValues();
+
 }
