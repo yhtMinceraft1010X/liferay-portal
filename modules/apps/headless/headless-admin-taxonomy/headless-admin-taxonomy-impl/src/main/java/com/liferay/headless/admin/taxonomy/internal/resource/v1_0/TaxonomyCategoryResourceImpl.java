@@ -357,7 +357,7 @@ public class TaxonomyCategoryResourceImpl
 				contextUser.getUserId(), assetCategory.getCategoryId(),
 				assetCategory.getParentCategoryId(), titleMap, descriptionMap,
 				assetCategory.getVocabularyId(),
-				_toCategoryProperties(
+				_toStringArray(
 					taxonomyCategory.getTaxonomyCategoryProperties()),
 				ServiceContextRequestUtil.createServiceContext(
 					assetCategory.getGroupId(), contextHttpServletRequest,
@@ -401,7 +401,7 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId, titleMap, descriptionMap,
 			taxonomyVocabularyId,
-			_toCategoryProperties(
+			_toStringArray(
 				taxonomyCategory.getTaxonomyCategoryProperties()),
 			ServiceContextRequestUtil.createServiceContext(
 				groupId, contextHttpServletRequest,
@@ -561,7 +561,7 @@ public class TaxonomyCategoryResourceImpl
 		};
 	}
 
-	private String[] _toCategoryProperties(
+	private String[] _toStringArray(
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
 		return TransformUtil.transform(
