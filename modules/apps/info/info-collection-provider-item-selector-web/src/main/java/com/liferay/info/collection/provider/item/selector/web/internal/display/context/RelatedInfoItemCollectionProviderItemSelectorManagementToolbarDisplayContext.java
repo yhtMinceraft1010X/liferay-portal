@@ -154,7 +154,7 @@ public class
 		Stream<RelatedInfoItemCollectionProvider<?, ?>> stream =
 			relatedInfoItemCollectionProviders.stream();
 
-		List<KeyValuePair> itemTypes = stream.map(
+		List<KeyValuePair> keyValuePairs = stream.map(
 			relatedInfoItemCollectionProvider -> {
 				String collectionItemClassName =
 					relatedInfoItemCollectionProvider.
@@ -174,19 +174,20 @@ public class
 
 		return new DropdownItemList() {
 			{
-				for (KeyValuePair itemType : itemTypes) {
+				for (KeyValuePair keyValuePair : keyValuePairs) {
 					add(
 						dropdownItem -> {
 							if (Objects.equals(
-									itemType.getKey(),
+									keyValuePair.getKey(),
 									_getSelectedItemType())) {
 
 								dropdownItem.setActive(true);
 							}
 
 							dropdownItem.setHref(
-								getPortletURL(), "itemType", itemType.getKey());
-							dropdownItem.setLabel(itemType.getValue());
+								getPortletURL(), "itemType",
+								keyValuePair.getKey());
+							dropdownItem.setLabel(keyValuePair.getValue());
 						});
 				}
 			}
