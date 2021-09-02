@@ -9811,7 +9811,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<![CDATA[
 				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-				Hashtable properties = project.getProperties();
+				Properties properties = project.getProperties();
 
 				StringBuilder sb = new StringBuilder();
 
