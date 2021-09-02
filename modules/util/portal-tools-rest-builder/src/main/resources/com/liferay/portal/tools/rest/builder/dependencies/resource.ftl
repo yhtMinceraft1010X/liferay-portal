@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -89,7 +90,7 @@ public interface ${schemaName}Resource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public default Filter toFilter(String filterString) {
-		return toFilter(filterString, null);
+		return toFilter(filterString, Collections.<String, List<String>>emptyMap());
 	}
 
 	public default Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
