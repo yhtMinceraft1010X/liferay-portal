@@ -45,16 +45,6 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
-	macro clickCheckboxMember {
-		var key_TableMember = "${tableMember}";
-
-		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
-	}
-	macro assertMember {
-		AssertElementPresent(
-			locator1 = "ACSegments#TABLE_CHECKBOX",
-			key_TableMember = "${memberName}");
-	}
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
@@ -65,6 +55,18 @@ definition {
 		}
 
 		Click(locator1 = "ACSegments#ADD_BUTTON");
+	}
+
+	macro assertMember {
+		AssertElementPresent(
+			key_TableMember = "${memberName}",
+			locator1 = "ACSegments#TABLE_CHECKBOX");
+	}
+
+	macro assertMemberNotPresent {
+		AssertElementNotPresent(
+			key_TableMember = "${memberName}",
+			locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro assertSegmentAttributeNotPresent {
@@ -87,6 +89,12 @@ definition {
 
 	macro cancelSegment {
 		Click(locator1 = "ACSegments#CANCEL_SEGMENT");
+	}
+
+	macro clickCheckboxMember {
+		var key_TableMember = "${tableMember}";
+
+		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 	}
 
 	macro clickMemberButton {
