@@ -283,8 +283,9 @@ public class TaxonomyCategoryResourceImpl
 				assetCategory.getParentCategoryId(),
 				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
 				assetCategory.getVocabularyId(),
-				_mergeProperties(
-					assetCategory.getCategoryId(),
+				_merge(
+					_assetCategoryPropertyLocalService.getCategoryProperties(
+						assetCategory.getCategoryId()),
 					taxonomyCategory.getTaxonomyCategoryProperties()),
 				ServiceContextRequestUtil.createServiceContext(
 					assetCategory.getGroupId(), contextHttpServletRequest,
@@ -510,8 +511,8 @@ public class TaxonomyCategoryResourceImpl
 		return _assetCategoryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
-	private String[] _mergeProperties(
-		long categoryId,
+	private String[] _merge(
+		List<AssetCategoryProperty> assetCategoryProperties,
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
 		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
@@ -521,24 +522,20 @@ public class TaxonomyCategoryResourceImpl
 				new TaxonomyCategoryProperty[0]
 			));
 
-		Map<String, String> propertiesMap = stream.collect(
+		Map<String, String> map = stream.collect(
 			Collectors.toMap(
 				TaxonomyCategoryProperty::getKey,
 				TaxonomyCategoryProperty::getValue));
 
-		List<AssetCategoryProperty> assetCategoryProperties =
-			_assetCategoryPropertyLocalService.getCategoryProperties(
-				categoryId);
-
 		for (AssetCategoryProperty assetCategoryProperty :
 				assetCategoryProperties) {
 
-			propertiesMap.putIfAbsent(
+			map.putIfAbsent(
 				assetCategoryProperty.getKey(),
 				assetCategoryProperty.getValue());
 		}
 
-		Set<Map.Entry<String, String>> entries = propertiesMap.entrySet();
+		Set<Map.Entry<String, String>> entries = map.entrySet();
 
 		Stream<Map.Entry<String, String>> entriesStream = entries.stream();
 
