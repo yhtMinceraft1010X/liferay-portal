@@ -96,11 +96,46 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
-	@ignore = "true"
 	@priority = "5"
 	test OwnerCanInviteUsers {
 
-		// TODO LRAC-9071 MemberCannotInviteUsers
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+
+        ACUtils.launchAC();
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "corbin.murakami@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		ACSettings.verifyCannotAddUser();
+
+		ACNavigation.exitSettings();
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "michelle.hoshi@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+		
+		ACSettings.addUser(userInvite = "user@liferay.com");
+
+		ACUtils.searchBar(searchItem = "user@liferay.com");
+
+		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 
 	}
 
