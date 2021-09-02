@@ -43,17 +43,30 @@ definition {
 	@priority = "3"
 	test CanInviteMultipleUsers {
 
-		// TODO LRAC-9070 CanInviteMultipleUsers
+		// TODO LRAC-9070
 
 	}
 
 	@description = "Automation ID: LRAC-9069 | Test Summary: Invite a single user"
-	@ignore = "true"
 	@priority = "5"
 	test CanInviteSingleUser {
 
-		// TODO LRAC-9069 CanInviteSingleUser
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
 
+        ACUtils.launchAC();
+
+        ACProperties.switchProperty(propertyName = "${propertyName}");
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		ACSettings.addUser(userInvite = "user@liferay.com");
+
+		ACUtils.searchBar(searchItem = "user@liferay.com");
+
+		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		
 	}
 
 	@description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
@@ -70,7 +83,7 @@ definition {
 	@priority = "5"
 	test OwnerCanInviteUsers {
 
-		// TODO LRAC-9071 OwnerCanInviteUsers
+		// TODO LRAC-9071 MemberCannotInviteUsers
 
 	}
 
