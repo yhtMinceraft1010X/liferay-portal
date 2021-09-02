@@ -21,20 +21,55 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownDXP();
+		// ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		ACUtils.tearDownAC();
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
-	@ignore = "true"
 	@priority = "3"
 	test AdminCanInviteUsers {
 
-		// TODO LRAC-9072 AdminCanInviteUsers
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+
+        ACUtils.launchAC();
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "corbin.murakami@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		ACSettings.verifyCannotAddUser();
+
+		ACNavigation.exitSettings();
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "michelle.hoshi@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+		
+		ACSettings.addUser(userInvite = "user@liferay.com");
+
+		ACUtils.searchBar(searchItem = "user@liferay.com");
+
+		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 
 	}
 
@@ -122,7 +157,7 @@ definition {
 		ACWorkspace.signOut();
 
 		ACLogin.loginAs(
-			emailAddress = "michelle.hoshi@faro.io",
+			emailAddress = "bryan.cheung@faro.io",
 			password = "test");
 
 		ACWorkspace.openWorkspace();
