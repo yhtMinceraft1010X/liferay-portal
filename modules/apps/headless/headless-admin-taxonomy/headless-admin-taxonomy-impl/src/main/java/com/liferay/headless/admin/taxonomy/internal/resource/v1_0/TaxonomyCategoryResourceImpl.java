@@ -401,8 +401,7 @@ public class TaxonomyCategoryResourceImpl
 		AssetCategory assetCategory = _assetCategoryService.addCategory(
 			groupId, taxonomyCategoryId, titleMap, descriptionMap,
 			taxonomyVocabularyId,
-			_toStringArray(
-				taxonomyCategory.getTaxonomyCategoryProperties()),
+			_toStringArray(taxonomyCategory.getTaxonomyCategoryProperties()),
 			ServiceContextRequestUtil.createServiceContext(
 				groupId, contextHttpServletRequest,
 				taxonomyCategory.getViewableByAsString()));
@@ -561,6 +560,10 @@ public class TaxonomyCategoryResourceImpl
 		};
 	}
 
+	private Date _toDate(Timestamp timestamp) {
+		return new Date(timestamp.getTime());
+	}
+
 	private String[] _toStringArray(
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
@@ -570,10 +573,6 @@ public class TaxonomyCategoryResourceImpl
 				taxonomyCategoryProperty.getKey(), StringPool.COLON,
 				taxonomyCategoryProperty.getValue()),
 			String.class);
-	}
-
-	private Date _toDate(Timestamp timestamp) {
-		return new Date(timestamp.getTime());
 	}
 
 	private TaxonomyCategory _toTaxonomyCategory(AssetCategory assetCategory)
