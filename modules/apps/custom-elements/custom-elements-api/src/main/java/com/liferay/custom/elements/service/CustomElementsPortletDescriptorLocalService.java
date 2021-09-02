@@ -344,7 +344,7 @@ public interface CustomElementsPortletDescriptorLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
-				long customElementsSourceId, String cssURLs,
+				long customElementsPortletDescriptorId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
 				String properties)
 		throws PortalException;

@@ -469,15 +469,15 @@ public class CustomElementsPortletDescriptorLocalServiceWrapper
 	@Override
 	public com.liferay.custom.elements.model.CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
-				long customElementsSourceId, String cssURLs,
+				long customElementsPortletDescriptorId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
 				String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _customElementsPortletDescriptorLocalService.
 			updateCustomElementsPortletDescriptor(
-				customElementsSourceId, cssURLs, htmlElementName, instanceable,
-				name, properties);
+				customElementsPortletDescriptorId, cssURLs, htmlElementName,
+				instanceable, name, properties);
 	}
 
 	@Override

@@ -405,14 +405,14 @@ public class CustomElementsPortletDescriptorLocalServiceUtil {
 
 	public static CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
-				long customElementsSourceId, String cssURLs,
+				long customElementsPortletDescriptorId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
 				String properties)
 		throws PortalException {
 
 		return getService().updateCustomElementsPortletDescriptor(
-			customElementsSourceId, cssURLs, htmlElementName, instanceable,
-			name, properties);
+			customElementsPortletDescriptorId, cssURLs, htmlElementName,
+			instanceable, name, properties);
 	}
 
 	public static CustomElementsPortletDescriptorLocalService getService() {
