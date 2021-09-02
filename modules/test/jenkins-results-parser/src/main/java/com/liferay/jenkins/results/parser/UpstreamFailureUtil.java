@@ -345,16 +345,16 @@ public class UpstreamFailureUtil {
 			TopLevelBuild topLevelBuild)
 		throws IllegalStateException {
 
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				topLevelBuild.getBranchName(), (File)null,
+				topLevelBuild.getBaseGitRepositoryName());
+
 		List<String> buildResultJSONURLs =
 			JenkinsResultsParserUtil.getBuildResultJsonURLs(
 				topLevelBuild.getAcceptanceUpstreamJobURL(), 20);
 
 		Collections.reverse(buildResultJSONURLs);
-
-		GitWorkingDirectory gitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				topLevelBuild.getBranchName(), (File)null,
-				topLevelBuild.getBaseGitRepositoryName());
 
 		for (String buildResultJSONURL : buildResultJSONURLs) {
 			try {
