@@ -91,13 +91,13 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
-	macro addMultiplesKeywords {
+	macro addMultiplesOptions {
 		Click(locator1 = "ACSettings#KEYWORD_BUTTON");
 
-		for (var keyword : list "${keywordList}") {
+		for (var option : list "${optionsList}") {
 			Type(
 				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
-				value1 = "${keyword}");
+				value1 = "${option}");
 
 			KeyPress(
 				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
