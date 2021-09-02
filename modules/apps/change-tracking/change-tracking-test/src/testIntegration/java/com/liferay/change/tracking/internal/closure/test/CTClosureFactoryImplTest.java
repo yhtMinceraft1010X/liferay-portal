@@ -847,6 +847,11 @@ public class CTClosureFactoryImplTest {
 		}
 
 		@Override
+		public T cloneWithOriginalValues() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public int compareTo(T o) {
 			throw new UnsupportedOperationException();
 		}
