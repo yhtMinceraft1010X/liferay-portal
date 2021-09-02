@@ -160,12 +160,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 	public int getCommerceAccountGroupCommerceAccountRelsCount(
 		long commerceAccountGroupId) {
 
-		long accountGroupRelsCountByAccountGroupId =
+		return (int)
 			accountGroupRelLocalService.
 				getAccountGroupRelsCountByAccountGroupId(
 					commerceAccountGroupId);
-
-		return (int)accountGroupRelsCountByAccountGroupId;
 	}
 
 }
