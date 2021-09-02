@@ -19,7 +19,7 @@ definition {
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
 
-        ACUtils.launchAC();
+		ACUtils.launchAC();
 	}
 
 	tearDown {
@@ -36,7 +36,6 @@ definition {
 	@description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
 	@priority = "3"
 	test AdminCanInviteUsers {
-
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
@@ -71,20 +70,18 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
-			
+
 			ACSettings.addUser(userInvite = "user@liferay.com");
 
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 		}
-
 	}
 
 	@description = "Automation ID: LRAC-9070 | Test Summary: Invite multiple users at a time"
 	@priority = "3"
 	test CanInviteMultipleUsers {
-
 		task ("go to user management and add multiple users") {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
@@ -99,16 +96,14 @@ definition {
 			for (var n : list "${emailList}") {
 				ACUtils.searchBar(searchItem = "${n}");
 
-				ACSettings.assertUserListEmail(userEmail = "${n}");	
+				ACSettings.assertUserListEmail(userEmail = "${n}");
 			}
 		}
-
 	}
 
 	@description = "Automation ID: LRAC-9069 | Test Summary: Invite a single user"
 	@priority = "5"
 	test CanInviteSingleUser {
-
 		task ("go to user management and add user") {
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 
@@ -122,13 +117,11 @@ definition {
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 		}
-		
 	}
 
 	@description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
 	@priority = "3"
 	test MemberCannotInviteUsers {
-
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
@@ -146,13 +139,11 @@ definition {
 
 			ACSettings.verifyCannotAddUser();
 		}
-
 	}
 
 	@description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
 	@priority = "5"
 	test OwnerCanInviteUsers {
-
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
@@ -176,7 +167,7 @@ definition {
 
 			ACWorkspace.signOut();
 
-				ACLogin.loginAs(
+			ACLogin.loginAs(
 				emailAddress = "bryan.cheung@faro.io",
 				password = "test");
 		}
@@ -187,14 +178,13 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
-			
+
 			ACSettings.addUser(userInvite = "user@liferay.com");
 
 			ACUtils.searchBar(searchItem = "user@liferay.com");
 
 			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
 		}
-
 	}
 
 }

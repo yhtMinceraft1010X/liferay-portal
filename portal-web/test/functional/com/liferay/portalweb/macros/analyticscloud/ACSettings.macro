@@ -1,9 +1,5 @@
 definition {
 
-	macro verifyCannotAddUser{
-        AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
-    }
-
 	macro addCSVDataSource {
 		ACSettings.goToDataSources();
 
@@ -628,6 +624,10 @@ definition {
 		Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
 		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+	}
+
+	macro verifyCannotAddUser {
+		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 	}
 
 }
