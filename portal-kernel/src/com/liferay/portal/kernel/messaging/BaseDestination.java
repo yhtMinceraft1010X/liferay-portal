@@ -15,15 +15,21 @@
 package com.liferay.portal.kernel.messaging;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
+ * @author Brian Wing Shun Chan
  */
 public abstract class BaseDestination implements Destination {
 
@@ -105,8 +111,24 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
+	public Set<WebhookEvent> getWebhookEvents() {
+		return _webhookEvents;
+	}
+
+	@Override
 	public boolean isRegistered() {
 		if (getMessageListenerCount() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isWebhookCapable(long companyId) {
+		if ((_webhookRequiredCompanyId == 0) ||
+			(_webhookRequiredCompanyId == companyId)) {
+
 			return true;
 		}
 
@@ -158,6 +180,32 @@ public abstract class BaseDestination implements Destination {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setProperties(Map<String, Object> properties) {
+		long webhookRequiredCompanyId = MapUtil.getLong(
+			properties, "destination.webhook.required.company.id", -1);
+
+		if (webhookRequiredCompanyId < 0) {
+			return;
+		}
+
+		_webhookRequiredCompanyId = webhookRequiredCompanyId;
+
+		String[] keys = StringUtil.split(
+			MapUtil.getString(properties, "destination.webhook.event.keys"));
+
+		for (String key : keys) {
+			_webhookEvents.add(
+				new WebhookEvent(
+					MapUtil.getString(
+						properties,
+						"destination.webhook.event.description[" + key + "]"),
+					key,
+					MapUtil.getString(
+						properties,
+						"destination.webhook.event.name[" + key + "]")));
+		}
 	}
 
 	@Override
@@ -236,5 +284,21 @@ public abstract class BaseDestination implements Destination {
 	private final Set<DestinationEventListener> _destinationEventListeners =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private String _destinationType;
+
+	private final Set<WebhookEvent> _webhookEvents = new TreeSet<>(
+		new Comparator<WebhookEvent>() {
+
+			public int compare(
+				WebhookEvent webhookEvent1, WebhookEvent webhookEvent2) {
+
+				String key1 = webhookEvent1.getKey();
+				String key2 = webhookEvent2.getKey();
+
+				return key1.compareTo(key2);
+			}
+
+		});
+
+	private long _webhookRequiredCompanyId = -1;
 
 }

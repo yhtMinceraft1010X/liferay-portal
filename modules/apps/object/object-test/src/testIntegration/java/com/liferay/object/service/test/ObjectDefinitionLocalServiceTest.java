@@ -31,8 +31,11 @@ import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
@@ -41,15 +44,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -261,6 +268,17 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getExtensionDBTableName()));
 
+		// Before publish, messaging
+
+		Assert.assertFalse(
+			_messageBus.hasDestination(objectDefinition.getDestinationName()));
+
+		Collection<Destination> webhookCapableDestinations =
+			_messageBus.getWebhookCapableDestinations(
+				objectDefinition.getCompanyId());
+
+		int webhookCapableDestinationsCount = webhookCapableDestinations.size();
+
 		// Before publish, resources
 
 		Assert.assertEquals(
@@ -323,6 +341,46 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
 		Assert.assertEquals(
 			true, _hasTable(objectDefinition.getExtensionDBTableName()));
+
+		// After publish, messaging
+
+		Destination destination = _messageBus.getDestination(
+			objectDefinition.getDestinationName());
+
+		Set<Destination.WebhookEvent> webhookEvents =
+			destination.getWebhookEvents();
+
+		Assert.assertEquals(webhookEvents.toString(), 6, webhookEvents.size());
+
+		Iterator<Destination.WebhookEvent> iterator = webhookEvents.iterator();
+
+		for (String key : _DESTINATION_WEBHOOK_EVENT_KEYS) {
+			Destination.WebhookEvent webhookEvent = iterator.next();
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"destination-webhook-event-description[",
+					"liferay-object-event][", key, "]"),
+				webhookEvent.getDescription());
+			Assert.assertEquals(key, webhookEvent.getKey());
+			Assert.assertEquals(
+				"destination-webhook-event-name[liferay-object-event][" + key +
+					"]",
+				webhookEvent.getName());
+		}
+
+		Assert.assertFalse(
+			destination.isWebhookCapable(RandomTestUtil.randomLong()));
+		Assert.assertTrue(
+			destination.isWebhookCapable(objectDefinition.getCompanyId()));
+
+		webhookCapableDestinations = _messageBus.getWebhookCapableDestinations(
+			objectDefinition.getCompanyId());
+
+		Assert.assertEquals(
+			webhookCapableDestinations.toString(),
+			webhookCapableDestinationsCount + 1,
+			webhookCapableDestinations.size());
 
 		// After publish, resources
 
@@ -717,6 +775,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			true, _hasTable(objectDefinition.getExtensionDBTableName()));
 
+		// Messaging
+
+		Assert.assertFalse(
+			_messageBus.hasDestination(objectDefinition.getDestinationName()));
+
 		// Resources
 
 		try {
@@ -802,6 +865,11 @@ public class ObjectDefinitionLocalServiceTest {
 			false, _hasTable(objectDefinition.getDBTableName()));
 		Assert.assertEquals(
 			false, _hasTable(objectDefinition.getExtensionDBTableName()));
+
+		// Messaging
+
+		Assert.assertFalse(
+			_messageBus.hasDestination(objectDefinition.getDestinationName()));
 
 		// Resources
 
@@ -985,8 +1053,17 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
+	private static final String[] _DESTINATION_WEBHOOK_EVENT_KEYS = {
+		"onAfterCreate", "onAfterRemove", "onAfterUpdate", "onBeforeCreate",
+		"onBeforeRemove", "onBeforeUpdate"
+	};
+
 	private final Map<Locale, String> _labelMap =
 		LocalizedMapUtil.getLocalizedMap("Test");
+
+	@Inject
+	private MessageBus _messageBus;
+
 	private final Map<Locale, String> _pluralLabelMap =
 		LocalizedMapUtil.getLocalizedMap("Tests");
 

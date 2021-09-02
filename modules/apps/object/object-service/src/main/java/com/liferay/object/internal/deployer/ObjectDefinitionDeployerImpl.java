@@ -29,6 +29,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -50,6 +51,7 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -120,9 +122,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return Arrays.asList(
 			_bundleContext.registerService(
 				Destination.class, destination,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name", destination.getName()
-				).build()),
+				_toProperties(
+					objectDefinition.getCompanyId(), destination.getName())),
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,
 				new ObjectEntrySingleFormVariationInfoCollectionProvider(
@@ -220,6 +221,39 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition.getResourceName()
 					})));
 	}
+
+	private Dictionary<String, Object> _toProperties(
+		long companyId, String destinationName) {
+
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"destination.name", destinationName
+			).put(
+				"destination.webhook.event.keys",
+				StringUtil.merge(_DESTINATION_WEBHOOK_EVENT_KEYS)
+			).put(
+				"destination.webhook.required.company.id", companyId
+			).build();
+
+		for (String key : _DESTINATION_WEBHOOK_EVENT_KEYS) {
+			properties.put(
+				"destination.webhook.event.description[" + key + "]",
+				StringBundler.concat(
+					"destination-webhook-event-description[",
+					"liferay-object-event][", key, "]"));
+			properties.put(
+				"destination.webhook.event.name[" + key + "]",
+				"destination-webhook-event-name[liferay-object-event][" + key +
+					"]");
+		}
+
+		return properties;
+	}
+
+	private static final String[] _DESTINATION_WEBHOOK_EVENT_KEYS = {
+		"onAfterCreate", "onAfterRemove", "onAfterUpdate", "onBeforeCreate",
+		"onBeforeRemove", "onBeforeUpdate"
+	};
 
 	private final BundleContext _bundleContext;
 	private final DestinationFactory _destinationFactory;

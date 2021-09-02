@@ -16,9 +16,13 @@ package com.liferay.portal.kernel.messaging;
 
 import java.util.Collection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Michael C. Han
+ * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface MessageBus {
 
 	/**
@@ -37,6 +41,9 @@ public interface MessageBus {
 	public Collection<String> getDestinationNames();
 
 	public Collection<Destination> getDestinations();
+
+	public Collection<Destination> getWebhookCapableDestinations(
+		long companyId);
 
 	public boolean hasDestination(String destinationName);
 

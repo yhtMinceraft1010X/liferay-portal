@@ -15,6 +15,9 @@
 package com.liferay.webhook.internal.messaging;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -23,7 +26,11 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.webhook.constants.WebhookConstants;
 import com.liferay.webhook.model.WebhookEntry;
+
+import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -31,15 +38,16 @@ import com.liferay.webhook.model.WebhookEntry;
  */
 public class WebhookEntryMessageListener extends BaseMessageListener {
 
-	public WebhookEntryMessageListener(WebhookEntry webhookEntry) {
+	public WebhookEntryMessageListener(
+		JSONFactory jsonFactory, WebhookEntry webhookEntry) {
+
+		_jsonFactory = jsonFactory;
 		_webhookEntry = webhookEntry;
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long companyId = message.getLong("companyId");
-
-		if (_webhookEntry.getCompanyId() != companyId) {
+		if (!_isRelevant(message)) {
 			return;
 		}
 
@@ -60,9 +68,50 @@ public class WebhookEntryMessageListener extends BaseMessageListener {
 		HttpUtil.URLtoString(options);
 	}
 
+	private boolean _isRelevant(Message message) {
+		long companyId = message.getLong("companyId");
+
+		if (_webhookEntry.getCompanyId() != companyId) {
+			return false;
+		}
+
+		if (Objects.equals(
+				_webhookEntry.getDestinationWebhookEventKeys(),
+				WebhookConstants.DESTINATION_WEBHOOK_EVENT_KEYS_ALL)) {
+
+			return true;
+		}
+
+		Object payload = message.getPayload();
+
+		if (payload == null) {
+			return false;
+		}
+
+		JSONObject payloadJSONObject = null;
+
+		try {
+			payloadJSONObject = _jsonFactory.createJSONObject(
+				String.valueOf(payload));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
+
+			return false;
+		}
+
+		String webhookEventKey = payloadJSONObject.getString("webhookEventKey");
+
+		return StringUtil.contains(
+			_webhookEntry.getDestinationWebhookEventKeys(), webhookEventKey);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebhookEntryMessageListener.class);
 
+	private final JSONFactory _jsonFactory;
 	private final WebhookEntry _webhookEntry;
 
 }

@@ -82,7 +82,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _sendMessage(
-			String command, ObjectEntry originalObjectEntry,
+			String webhookEventKey, ObjectEntry originalObjectEntry,
 			ObjectEntry objectEntry)
 		throws ModelListenerException {
 
@@ -95,7 +95,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				return;
 			}
 
-			JSONObject payloadJSONObject = JSONUtil.put("command", command);
+			JSONObject payloadJSONObject = JSONUtil.put(
+				"webhookEventKey", webhookEventKey);
 
 			JSONObject objectEntryJSONObject = _jsonFactory.createJSONObject(
 				objectEntry.toString());

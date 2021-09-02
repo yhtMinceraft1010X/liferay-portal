@@ -18,6 +18,9 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -36,6 +39,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.webhook.constants.WebhookConstants;
+import com.liferay.webhook.exception.WebhookEntryDestinationNameException;
+import com.liferay.webhook.exception.WebhookEntryDestinationWebhookEventKeysException;
+import com.liferay.webhook.exception.WebhookEntryNameException;
+import com.liferay.webhook.exception.WebhookEntryURLException;
 import com.liferay.webhook.internal.messaging.WebhookEntryMessageListener;
 import com.liferay.webhook.model.WebhookEntry;
 import com.liferay.webhook.service.base.WebhookEntryLocalServiceBaseImpl;
@@ -45,6 +55,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -66,9 +78,16 @@ public class WebhookEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public WebhookEntry addWebhookEntry(
-			long userId, boolean active, String messageBusDestinationName,
-			String name, String url, ServiceContext serviceContext)
+			long userId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url, ServiceContext serviceContext)
 		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		_validate(
+			user.getCompanyId(), destinationName, destinationWebhookEventKeys,
+			name, url);
 
 		long webhookEntryId = counterLocalService.increment();
 
@@ -76,16 +95,15 @@ public class WebhookEntryLocalServiceImpl
 			webhookEntryId);
 
 		webhookEntry.setUuid(serviceContext.getUuid());
-
-		User user = _userLocalService.getUser(userId);
-
 		webhookEntry.setCompanyId(user.getCompanyId());
 		webhookEntry.setUserId(user.getUserId());
 		webhookEntry.setUserName(user.getFullName());
-
 		webhookEntry.setActive(active);
-		webhookEntry.setMessageBusDestinationName(messageBusDestinationName);
+		webhookEntry.setDestinationName(destinationName);
+		webhookEntry.setDestinationWebhookEventKeys(
+			destinationWebhookEventKeys);
 		webhookEntry.setName(name);
+		webhookEntry.setSecret(secret);
 		webhookEntry.setURL(url);
 
 		webhookEntry = webhookEntryPersistence.update(webhookEntry);
@@ -127,10 +145,9 @@ public class WebhookEntryLocalServiceImpl
 			webhookEntry.getWebhookEntryId(),
 			_bundleContext.registerService(
 				MessageListener.class,
-				new WebhookEntryMessageListener(webhookEntry),
+				new WebhookEntryMessageListener(_jsonFactory, webhookEntry),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name",
-					webhookEntry.getMessageBusDestinationName()
+					"destination.name", webhookEntry.getDestinationName()
 				).build()));
 	}
 
@@ -199,16 +216,24 @@ public class WebhookEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public WebhookEntry updateWebhookEntry(
-			long webhookEntryId, boolean active,
-			String messageBusDestinationName, String name, String url)
+			long webhookEntryId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url)
 		throws PortalException {
 
 		WebhookEntry webhookEntry = webhookEntryPersistence.findByPrimaryKey(
 			webhookEntryId);
 
+		_validate(
+			webhookEntry.getCompanyId(), destinationName,
+			destinationWebhookEventKeys, name, url);
+
 		webhookEntry.setActive(active);
-		webhookEntry.setMessageBusDestinationName(messageBusDestinationName);
+		webhookEntry.setDestinationName(destinationName);
+		webhookEntry.setDestinationWebhookEventKeys(
+			destinationWebhookEventKeys);
 		webhookEntry.setName(name);
+		webhookEntry.setSecret(secret);
 		webhookEntry.setURL(url);
 
 		webhookEntry = webhookEntryPersistence.update(webhookEntry);
@@ -290,7 +315,81 @@ public class WebhookEntryLocalServiceImpl
 		return webhookEntries;
 	}
 
+	private void _validate(
+			long companyId, String destinationName,
+			String destinationWebhookEventKeys, String name, String url)
+		throws PortalException {
+
+		Destination destination = _messageBus.getDestination(destinationName);
+
+		if ((destination == null) || !destination.isWebhookCapable(companyId)) {
+			throw new WebhookEntryDestinationNameException();
+		}
+
+		if (Validator.isNull(destinationWebhookEventKeys)) {
+			throw new WebhookEntryDestinationWebhookEventKeysException();
+		}
+
+		char[] destinationWebhookEventKeysCharArray =
+			destinationWebhookEventKeys.toCharArray();
+
+		for (char c : destinationWebhookEventKeysCharArray) {
+			if (Character.isWhitespace(c)) {
+				throw new WebhookEntryDestinationWebhookEventKeysException(
+					"Destination webhook event keys must not contain " +
+						"whitespace");
+			}
+		}
+
+		if (Objects.equals(
+				destinationWebhookEventKeys,
+				WebhookConstants.DESTINATION_WEBHOOK_EVENT_KEYS_ALL)) {
+		}
+		else {
+			Set<Destination.WebhookEvent> webhookEvents =
+				destination.getWebhookEvents();
+
+			for (String destinationWebhookEventKey :
+					StringUtil.split(destinationWebhookEventKeys)) {
+
+				boolean valid = false;
+
+				for (Destination.WebhookEvent webhookEvent : webhookEvents) {
+					if (Objects.equals(
+							destinationWebhookEventKey,
+							webhookEvent.getKey())) {
+
+						valid = true;
+
+						break;
+					}
+				}
+
+				if (!valid) {
+					throw new WebhookEntryDestinationWebhookEventKeysException(
+						"Invalid destination webhook event key " +
+							destinationWebhookEventKey);
+				}
+			}
+		}
+
+		if (Validator.isNull(name)) {
+			throw new WebhookEntryNameException();
+		}
+
+		if (!Validator.isUrl(url)) {
+			throw new WebhookEntryURLException();
+		}
+	}
+
 	private BundleContext _bundleContext;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private final Map<Long, ServiceRegistration<MessageListener>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 

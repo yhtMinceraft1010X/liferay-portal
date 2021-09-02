@@ -84,8 +84,18 @@ public class DestinationWrapper implements Destination {
 	}
 
 	@Override
+	public Set<WebhookEvent> getWebhookEvents() {
+		return destination.getWebhookEvents();
+	}
+
+	@Override
 	public boolean isRegistered() {
 		return destination.isRegistered();
+	}
+
+	@Override
+	public boolean isWebhookCapable(long companyId) {
+		return destination.isWebhookCapable(companyId);
 	}
 
 	@Override

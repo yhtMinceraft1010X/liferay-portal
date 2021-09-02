@@ -208,7 +208,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onBeforeCreate", payloadJSONObject.getString("command"));
+			"onBeforeCreate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
@@ -228,7 +228,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onAfterCreate", payloadJSONObject.getString("command"));
+			"onAfterCreate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT,
 			JSONUtil.getValue(
@@ -248,7 +248,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onBeforeUpdate", payloadJSONObject.getString("command"));
+			"onBeforeUpdate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
@@ -265,7 +265,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onAfterUpdate", payloadJSONObject.getString("command"));
+			"onAfterUpdate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
@@ -887,7 +887,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onBeforeUpdate", payloadJSONObject.getString("command"));
+			"onBeforeUpdate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(
@@ -914,7 +914,7 @@ public class ObjectEntryLocalServiceTest {
 			(String)message.getPayload());
 
 		Assert.assertEquals(
-			"onAfterUpdate", payloadJSONObject.getString("command"));
+			"onAfterUpdate", payloadJSONObject.getString("webhookEventKey"));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,
 			JSONUtil.getValue(

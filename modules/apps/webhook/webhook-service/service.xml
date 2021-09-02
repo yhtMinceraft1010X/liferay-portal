@@ -20,12 +20,15 @@
 		<!-- Other fields -->
 
 		<column name="active" type="boolean" />
-		<column name="messageBusDestinationName" type="String" />
+		<column name="destinationName" type="String" />
+		<column name="destinationWebhookEventKeys" type="String" />
 		<column name="name" type="String" />
+		<column name="secret" type="String" />
 		<column method-name="URL" name="url" type="String" />
 	</entity>
 	<exceptions>
-		<exception>WebhookEntryMessageBusDestinationName</exception>
+		<exception>WebhookEntryDestinationName</exception>
+		<exception>WebhookEntryDestinationWebhookEventKeys</exception>
 		<exception>WebhookEntryName</exception>
 		<exception>WebhookEntryURL</exception>
 	</exceptions>
