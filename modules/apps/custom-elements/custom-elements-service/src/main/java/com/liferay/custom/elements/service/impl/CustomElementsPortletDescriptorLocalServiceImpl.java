@@ -215,8 +215,9 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	public int searchCount(long companyId, String keywords)
 		throws SearchException {
 
-		Indexer<CustomElementsSource> indexer =
-			IndexerRegistryUtil.nullSafeGetIndexer(CustomElementsSource.class);
+		Indexer<CustomElementsPortletDescriptor> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CustomElementsPortletDescriptor.class);
 
 		SearchContext searchContext = _buildSearchContext(
 			companyId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
