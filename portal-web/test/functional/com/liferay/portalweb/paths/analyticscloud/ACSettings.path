@@ -262,6 +262,11 @@
 </tr>
 <!-- USERS LIST -->
 <tr>
+	<td>USER_UNSELECTABLE</td>
+	<td>//tr[contains(@class,'clickable disabled')]//td[contains(text(),'${userEmail}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_LIST</td>
 	<td>//h4[contains(@class,'table')]</td>
 	<td></td>
