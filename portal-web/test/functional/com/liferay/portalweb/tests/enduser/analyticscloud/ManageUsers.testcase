@@ -70,11 +70,18 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9048 | Test Summary: Assert the User Management Page"
-	@ignore = "true"
 	@priority = "3"
 	test AssertUserManagementPage {
 
-		// TODO LRAC-9048 AssertUserManagementPage
+		task ("launch ac") {
+			ACUtils.launchAC();
+		}
+
+		task ("go to User Manaagement page and assert you are there") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+		}
 
 	}
 
