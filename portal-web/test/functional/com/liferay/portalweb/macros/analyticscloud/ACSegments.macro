@@ -45,6 +45,11 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro assertMember {
+		AssertElementPresent(
+			locator1 = "ACSegments#TABLE_CHECKBOX",
+			key_TableMember = "${memberName}");
+	}
 	macro addStaticMultiMember {
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
