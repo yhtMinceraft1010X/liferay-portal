@@ -69,8 +69,9 @@ public interface WebhookEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public WebhookEntry addWebhookEntry(
-			long userId, boolean active, String messageBusDestinationName,
-			String name, String url, ServiceContext serviceContext)
+			long userId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -312,8 +313,9 @@ public interface WebhookEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public WebhookEntry updateWebhookEntry(
-			long webhookEntryId, boolean active,
-			String messageBusDestinationName, String name, String url)
+			long webhookEntryId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url)
 		throws PortalException;
 
 	/**

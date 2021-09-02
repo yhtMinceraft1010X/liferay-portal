@@ -50,12 +50,18 @@ public class WebhookEntryTable extends BaseTable<WebhookEntryTable> {
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<WebhookEntryTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<WebhookEntryTable, String> messageBusDestinationName =
+	public final Column<WebhookEntryTable, String> destinationName =
 		createColumn(
-			"messageBusDestinationName", String.class, Types.VARCHAR,
+			"destinationName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<WebhookEntryTable, String> destinationWebhookEventKeys =
+		createColumn(
+			"destinationWebhookEventKeys", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 	public final Column<WebhookEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<WebhookEntryTable, String> secret = createColumn(
+		"secret", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<WebhookEntryTable, String> url = createColumn(
 		"url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

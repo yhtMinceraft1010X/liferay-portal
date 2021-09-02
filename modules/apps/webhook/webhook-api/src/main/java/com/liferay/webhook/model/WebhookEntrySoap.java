@@ -42,9 +42,11 @@ public class WebhookEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
-		soapModel.setMessageBusDestinationName(
-			model.getMessageBusDestinationName());
+		soapModel.setDestinationName(model.getDestinationName());
+		soapModel.setDestinationWebhookEventKeys(
+			model.getDestinationWebhookEventKeys());
 		soapModel.setName(model.getName());
+		soapModel.setSecret(model.getSecret());
 		soapModel.setURL(model.getURL());
 
 		return soapModel;
@@ -175,12 +177,22 @@ public class WebhookEntrySoap implements Serializable {
 		_active = active;
 	}
 
-	public String getMessageBusDestinationName() {
-		return _messageBusDestinationName;
+	public String getDestinationName() {
+		return _destinationName;
 	}
 
-	public void setMessageBusDestinationName(String messageBusDestinationName) {
-		_messageBusDestinationName = messageBusDestinationName;
+	public void setDestinationName(String destinationName) {
+		_destinationName = destinationName;
+	}
+
+	public String getDestinationWebhookEventKeys() {
+		return _destinationWebhookEventKeys;
+	}
+
+	public void setDestinationWebhookEventKeys(
+		String destinationWebhookEventKeys) {
+
+		_destinationWebhookEventKeys = destinationWebhookEventKeys;
 	}
 
 	public String getName() {
@@ -189,6 +201,14 @@ public class WebhookEntrySoap implements Serializable {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public String getSecret() {
+		return _secret;
+	}
+
+	public void setSecret(String secret) {
+		_secret = secret;
 	}
 
 	public String getURL() {
@@ -208,8 +228,10 @@ public class WebhookEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _active;
-	private String _messageBusDestinationName;
+	private String _destinationName;
+	private String _destinationWebhookEventKeys;
 	private String _name;
+	private String _secret;
 	private String _url;
 
 }

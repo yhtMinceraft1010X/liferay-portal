@@ -35,14 +35,15 @@ public class WebhookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.webhook.model.WebhookEntry addWebhookEntry(
-			long userId, boolean active, String messageBusDestinationName,
-			String name, String url,
+			long userId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _webhookEntryLocalService.addWebhookEntry(
-			userId, active, messageBusDestinationName, name, url,
-			serviceContext);
+			userId, active, destinationName, destinationWebhookEventKeys, name,
+			secret, url, serviceContext);
 	}
 
 	/**
@@ -397,12 +398,14 @@ public class WebhookEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.webhook.model.WebhookEntry updateWebhookEntry(
-			long webhookEntryId, boolean active,
-			String messageBusDestinationName, String name, String url)
+			long webhookEntryId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _webhookEntryLocalService.updateWebhookEntry(
-			webhookEntryId, active, messageBusDestinationName, name, url);
+			webhookEntryId, active, destinationName,
+			destinationWebhookEventKeys, name, secret, url);
 	}
 
 	/**

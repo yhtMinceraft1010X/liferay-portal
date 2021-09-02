@@ -45,14 +45,15 @@ public class WebhookEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.webhook.service.impl.WebhookEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static WebhookEntry addWebhookEntry(
-			long userId, boolean active, String messageBusDestinationName,
-			String name, String url,
+			long userId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addWebhookEntry(
-			userId, active, messageBusDestinationName, name, url,
-			serviceContext);
+			userId, active, destinationName, destinationWebhookEventKeys, name,
+			secret, url, serviceContext);
 	}
 
 	/**
@@ -350,12 +351,14 @@ public class WebhookEntryLocalServiceUtil {
 	}
 
 	public static WebhookEntry updateWebhookEntry(
-			long webhookEntryId, boolean active,
-			String messageBusDestinationName, String name, String url)
+			long webhookEntryId, boolean active, String destinationName,
+			String destinationWebhookEventKeys, String name, String secret,
+			String url)
 		throws PortalException {
 
 		return getService().updateWebhookEntry(
-			webhookEntryId, active, messageBusDestinationName, name, url);
+			webhookEntryId, active, destinationName,
+			destinationWebhookEventKeys, name, secret, url);
 	}
 
 	/**

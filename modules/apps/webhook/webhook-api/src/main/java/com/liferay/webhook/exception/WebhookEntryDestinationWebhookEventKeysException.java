@@ -19,23 +19,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebhookEntryMessageBusDestinationNameException
+public class WebhookEntryDestinationWebhookEventKeysException
 	extends PortalException {
 
-	public WebhookEntryMessageBusDestinationNameException() {
+	public WebhookEntryDestinationWebhookEventKeysException() {
 	}
 
-	public WebhookEntryMessageBusDestinationNameException(String msg) {
+	public WebhookEntryDestinationWebhookEventKeysException(String msg) {
 		super(msg);
 	}
 
-	public WebhookEntryMessageBusDestinationNameException(
+	public WebhookEntryDestinationWebhookEventKeysException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public WebhookEntryMessageBusDestinationNameException(Throwable throwable) {
+	public WebhookEntryDestinationWebhookEventKeysException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

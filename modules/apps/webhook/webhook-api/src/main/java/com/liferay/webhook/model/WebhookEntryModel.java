@@ -226,19 +226,35 @@ public interface WebhookEntryModel
 	public void setActive(boolean active);
 
 	/**
-	 * Returns the message bus destination name of this webhook entry.
+	 * Returns the destination name of this webhook entry.
 	 *
-	 * @return the message bus destination name of this webhook entry
+	 * @return the destination name of this webhook entry
 	 */
 	@AutoEscape
-	public String getMessageBusDestinationName();
+	public String getDestinationName();
 
 	/**
-	 * Sets the message bus destination name of this webhook entry.
+	 * Sets the destination name of this webhook entry.
 	 *
-	 * @param messageBusDestinationName the message bus destination name of this webhook entry
+	 * @param destinationName the destination name of this webhook entry
 	 */
-	public void setMessageBusDestinationName(String messageBusDestinationName);
+	public void setDestinationName(String destinationName);
+
+	/**
+	 * Returns the destination webhook event keys of this webhook entry.
+	 *
+	 * @return the destination webhook event keys of this webhook entry
+	 */
+	@AutoEscape
+	public String getDestinationWebhookEventKeys();
+
+	/**
+	 * Sets the destination webhook event keys of this webhook entry.
+	 *
+	 * @param destinationWebhookEventKeys the destination webhook event keys of this webhook entry
+	 */
+	public void setDestinationWebhookEventKeys(
+		String destinationWebhookEventKeys);
 
 	/**
 	 * Returns the name of this webhook entry.
@@ -254,6 +270,21 @@ public interface WebhookEntryModel
 	 * @param name the name of this webhook entry
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the secret of this webhook entry.
+	 *
+	 * @return the secret of this webhook entry
+	 */
+	@AutoEscape
+	public String getSecret();
+
+	/**
+	 * Sets the secret of this webhook entry.
+	 *
+	 * @param secret the secret of this webhook entry
+	 */
+	public void setSecret(String secret);
 
 	/**
 	 * Returns the url of this webhook entry.

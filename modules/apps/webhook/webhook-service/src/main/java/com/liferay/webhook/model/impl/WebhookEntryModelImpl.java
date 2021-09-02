@@ -81,9 +81,9 @@ public class WebhookEntryModelImpl
 		{"webhookEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"active_", Types.BOOLEAN},
-		{"messageBusDestinationName", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"url", Types.VARCHAR}
+		{"active_", Types.BOOLEAN}, {"destinationName", Types.VARCHAR},
+		{"destinationWebhookEventKeys", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"secret", Types.VARCHAR}, {"url", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,13 +99,15 @@ public class WebhookEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("messageBusDestinationName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("destinationName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("destinationWebhookEventKeys", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("secret", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WebhookEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,webhookEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,messageBusDestinationName VARCHAR(75) null,name VARCHAR(75) null,url VARCHAR(75) null)";
+		"create table WebhookEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,webhookEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,destinationName VARCHAR(75) null,destinationWebhookEventKeys VARCHAR(75) null,name VARCHAR(75) null,secret VARCHAR(75) null,url VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WebhookEntry";
 
@@ -178,9 +180,11 @@ public class WebhookEntryModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setActive(soapModel.isActive());
-		model.setMessageBusDestinationName(
-			soapModel.getMessageBusDestinationName());
+		model.setDestinationName(soapModel.getDestinationName());
+		model.setDestinationWebhookEventKeys(
+			soapModel.getDestinationWebhookEventKeys());
 		model.setName(soapModel.getName());
+		model.setSecret(soapModel.getSecret());
 		model.setURL(soapModel.getURL());
 
 		return model;
@@ -371,15 +375,24 @@ public class WebhookEntryModelImpl
 			"active",
 			(BiConsumer<WebhookEntry, Boolean>)WebhookEntry::setActive);
 		attributeGetterFunctions.put(
-			"messageBusDestinationName",
-			WebhookEntry::getMessageBusDestinationName);
+			"destinationName", WebhookEntry::getDestinationName);
 		attributeSetterBiConsumers.put(
-			"messageBusDestinationName",
+			"destinationName",
+			(BiConsumer<WebhookEntry, String>)WebhookEntry::setDestinationName);
+		attributeGetterFunctions.put(
+			"destinationWebhookEventKeys",
+			WebhookEntry::getDestinationWebhookEventKeys);
+		attributeSetterBiConsumers.put(
+			"destinationWebhookEventKeys",
 			(BiConsumer<WebhookEntry, String>)
-				WebhookEntry::setMessageBusDestinationName);
+				WebhookEntry::setDestinationWebhookEventKeys);
 		attributeGetterFunctions.put("name", WebhookEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<WebhookEntry, String>)WebhookEntry::setName);
+		attributeGetterFunctions.put("secret", WebhookEntry::getSecret);
+		attributeSetterBiConsumers.put(
+			"secret",
+			(BiConsumer<WebhookEntry, String>)WebhookEntry::setSecret);
 		attributeGetterFunctions.put("url", WebhookEntry::getURL);
 		attributeSetterBiConsumers.put(
 			"url", (BiConsumer<WebhookEntry, String>)WebhookEntry::setURL);
@@ -584,22 +597,44 @@ public class WebhookEntryModelImpl
 
 	@JSON
 	@Override
-	public String getMessageBusDestinationName() {
-		if (_messageBusDestinationName == null) {
+	public String getDestinationName() {
+		if (_destinationName == null) {
 			return "";
 		}
 		else {
-			return _messageBusDestinationName;
+			return _destinationName;
 		}
 	}
 
 	@Override
-	public void setMessageBusDestinationName(String messageBusDestinationName) {
+	public void setDestinationName(String destinationName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_messageBusDestinationName = messageBusDestinationName;
+		_destinationName = destinationName;
+	}
+
+	@JSON
+	@Override
+	public String getDestinationWebhookEventKeys() {
+		if (_destinationWebhookEventKeys == null) {
+			return "";
+		}
+		else {
+			return _destinationWebhookEventKeys;
+		}
+	}
+
+	@Override
+	public void setDestinationWebhookEventKeys(
+		String destinationWebhookEventKeys) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_destinationWebhookEventKeys = destinationWebhookEventKeys;
 	}
 
 	@JSON
@@ -620,6 +655,26 @@ public class WebhookEntryModelImpl
 		}
 
 		_name = name;
+	}
+
+	@JSON
+	@Override
+	public String getSecret() {
+		if (_secret == null) {
+			return "";
+		}
+		else {
+			return _secret;
+		}
+	}
+
+	@Override
+	public void setSecret(String secret) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_secret = secret;
 	}
 
 	@JSON
@@ -713,9 +768,11 @@ public class WebhookEntryModelImpl
 		webhookEntryImpl.setCreateDate(getCreateDate());
 		webhookEntryImpl.setModifiedDate(getModifiedDate());
 		webhookEntryImpl.setActive(isActive());
-		webhookEntryImpl.setMessageBusDestinationName(
-			getMessageBusDestinationName());
+		webhookEntryImpl.setDestinationName(getDestinationName());
+		webhookEntryImpl.setDestinationWebhookEventKeys(
+			getDestinationWebhookEventKeys());
 		webhookEntryImpl.setName(getName());
+		webhookEntryImpl.setSecret(getSecret());
 		webhookEntryImpl.setURL(getURL());
 
 		webhookEntryImpl.resetOriginalValues();
@@ -743,9 +800,13 @@ public class WebhookEntryModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		webhookEntryImpl.setActive(
 			this.<Boolean>getColumnOriginalValue("active_"));
-		webhookEntryImpl.setMessageBusDestinationName(
-			this.<String>getColumnOriginalValue("messageBusDestinationName"));
+		webhookEntryImpl.setDestinationName(
+			this.<String>getColumnOriginalValue("destinationName"));
+		webhookEntryImpl.setDestinationWebhookEventKeys(
+			this.<String>getColumnOriginalValue("destinationWebhookEventKeys"));
 		webhookEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
+		webhookEntryImpl.setSecret(
+			this.<String>getColumnOriginalValue("secret"));
 		webhookEntryImpl.setURL(this.<String>getColumnOriginalValue("url"));
 
 		return webhookEntryImpl;
@@ -869,16 +930,24 @@ public class WebhookEntryModelImpl
 
 		webhookEntryCacheModel.active = isActive();
 
-		webhookEntryCacheModel.messageBusDestinationName =
-			getMessageBusDestinationName();
+		webhookEntryCacheModel.destinationName = getDestinationName();
 
-		String messageBusDestinationName =
-			webhookEntryCacheModel.messageBusDestinationName;
+		String destinationName = webhookEntryCacheModel.destinationName;
 
-		if ((messageBusDestinationName != null) &&
-			(messageBusDestinationName.length() == 0)) {
+		if ((destinationName != null) && (destinationName.length() == 0)) {
+			webhookEntryCacheModel.destinationName = null;
+		}
 
-			webhookEntryCacheModel.messageBusDestinationName = null;
+		webhookEntryCacheModel.destinationWebhookEventKeys =
+			getDestinationWebhookEventKeys();
+
+		String destinationWebhookEventKeys =
+			webhookEntryCacheModel.destinationWebhookEventKeys;
+
+		if ((destinationWebhookEventKeys != null) &&
+			(destinationWebhookEventKeys.length() == 0)) {
+
+			webhookEntryCacheModel.destinationWebhookEventKeys = null;
 		}
 
 		webhookEntryCacheModel.name = getName();
@@ -887,6 +956,14 @@ public class WebhookEntryModelImpl
 
 		if ((name != null) && (name.length() == 0)) {
 			webhookEntryCacheModel.name = null;
+		}
+
+		webhookEntryCacheModel.secret = getSecret();
+
+		String secret = webhookEntryCacheModel.secret;
+
+		if ((secret != null) && (secret.length() == 0)) {
+			webhookEntryCacheModel.secret = null;
 		}
 
 		webhookEntryCacheModel.url = getURL();
@@ -997,8 +1074,10 @@ public class WebhookEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _active;
-	private String _messageBusDestinationName;
+	private String _destinationName;
+	private String _destinationWebhookEventKeys;
 	private String _name;
+	private String _secret;
 	private String _url;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1039,9 +1118,11 @@ public class WebhookEntryModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("destinationName", _destinationName);
 		_columnOriginalValues.put(
-			"messageBusDestinationName", _messageBusDestinationName);
+			"destinationWebhookEventKeys", _destinationWebhookEventKeys);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("secret", _secret);
 		_columnOriginalValues.put("url", _url);
 	}
 
@@ -1085,11 +1166,15 @@ public class WebhookEntryModelImpl
 
 		columnBitmasks.put("active_", 256L);
 
-		columnBitmasks.put("messageBusDestinationName", 512L);
+		columnBitmasks.put("destinationName", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("destinationWebhookEventKeys", 1024L);
 
-		columnBitmasks.put("url", 2048L);
+		columnBitmasks.put("name", 2048L);
+
+		columnBitmasks.put("secret", 4096L);
+
+		columnBitmasks.put("url", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -11,8 +11,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
-		<field name="messageBusDestinationName" type="String" />
+		<field name="destinationName" type="String" />
+		<field name="destinationWebhookEventKeys" type="String" />
 		<field name="name" type="String" />
+		<field name="secret" type="String" />
 		<field name="URL" type="String" />
 	</model>
 </model-hints>

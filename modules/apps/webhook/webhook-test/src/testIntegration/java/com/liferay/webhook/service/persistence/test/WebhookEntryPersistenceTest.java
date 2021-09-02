@@ -138,10 +138,14 @@ public class WebhookEntryPersistenceTest {
 
 		newWebhookEntry.setActive(RandomTestUtil.randomBoolean());
 
-		newWebhookEntry.setMessageBusDestinationName(
+		newWebhookEntry.setDestinationName(RandomTestUtil.randomString());
+
+		newWebhookEntry.setDestinationWebhookEventKeys(
 			RandomTestUtil.randomString());
 
 		newWebhookEntry.setName(RandomTestUtil.randomString());
+
+		newWebhookEntry.setSecret(RandomTestUtil.randomString());
 
 		newWebhookEntry.setURL(RandomTestUtil.randomString());
 
@@ -174,10 +178,15 @@ public class WebhookEntryPersistenceTest {
 		Assert.assertEquals(
 			existingWebhookEntry.isActive(), newWebhookEntry.isActive());
 		Assert.assertEquals(
-			existingWebhookEntry.getMessageBusDestinationName(),
-			newWebhookEntry.getMessageBusDestinationName());
+			existingWebhookEntry.getDestinationName(),
+			newWebhookEntry.getDestinationName());
+		Assert.assertEquals(
+			existingWebhookEntry.getDestinationWebhookEventKeys(),
+			newWebhookEntry.getDestinationWebhookEventKeys());
 		Assert.assertEquals(
 			existingWebhookEntry.getName(), newWebhookEntry.getName());
+		Assert.assertEquals(
+			existingWebhookEntry.getSecret(), newWebhookEntry.getSecret());
 		Assert.assertEquals(
 			existingWebhookEntry.getURL(), newWebhookEntry.getURL());
 	}
@@ -228,7 +237,8 @@ public class WebhookEntryPersistenceTest {
 			"WebhookEntry", "mvccVersion", true, "uuid", true, "webhookEntryId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "active", true,
-			"messageBusDestinationName", true, "name", true, "url", true);
+			"destinationName", true, "destinationWebhookEventKeys", true,
+			"name", true, "secret", true, "url", true);
 	}
 
 	@Test
@@ -465,10 +475,14 @@ public class WebhookEntryPersistenceTest {
 
 		webhookEntry.setActive(RandomTestUtil.randomBoolean());
 
-		webhookEntry.setMessageBusDestinationName(
+		webhookEntry.setDestinationName(RandomTestUtil.randomString());
+
+		webhookEntry.setDestinationWebhookEventKeys(
 			RandomTestUtil.randomString());
 
 		webhookEntry.setName(RandomTestUtil.randomString());
+
+		webhookEntry.setSecret(RandomTestUtil.randomString());
 
 		webhookEntry.setURL(RandomTestUtil.randomString());
 
