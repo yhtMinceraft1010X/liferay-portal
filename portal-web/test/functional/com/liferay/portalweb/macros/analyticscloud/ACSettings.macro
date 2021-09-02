@@ -306,6 +306,12 @@ definition {
 			value1 = "${userEmail}");
 	}
 
+	macro assertUserNotPresent {
+		AssertTextNotEquals(
+			locator1 = "ACSettings#USER_LIST_EMAIL",
+			value1 = "${userEmail}");
+	}
+
 	macro changeRetentionPeriodTo7Months {
 		Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
 
@@ -536,16 +542,6 @@ definition {
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 		}
-	}
-
-	macro assertUserNotPresent {
-
-
-		AssertTextNotEquals(
-			locator1 = "ACSettings#USER_LIST_EMAIL",
-			value1 = "${userEmail}");
-
-
 	}
 
 	@summary = "Disconnect selected data source"
