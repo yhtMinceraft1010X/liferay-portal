@@ -260,14 +260,14 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 	@Override
 	public CustomElementsPortletDescriptor
 			updateCustomElementsPortletDescriptor(
-				long customElementsSourceId, String cssURLs,
+				long customElementsPortletDescriptorId, String cssURLs,
 				String htmlElementName, boolean instanceable, String name,
 				String properties)
 		throws PortalException {
 
 		CustomElementsPortletDescriptor customElementsPortletDescriptor =
 			customElementsPortletDescriptorPersistence.findByPrimaryKey(
-				customElementsSourceId);
+				customElementsPortletDescriptorId);
 
 		customElementsPortletDescriptor.setCSSURLs(cssURLs);
 		customElementsPortletDescriptor.setHTMLElementName(htmlElementName);
