@@ -614,12 +614,73 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8591 | Test Summary: Undo all members from being added"
-	@ignore = "true"
 	@priority = "3"
 	test UndoAllMembersFromBeingAdded {
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
-		// TODO LRAC-8591 UndoAllMembersFromBeingAdded pending implementation
+		task ("Create Blog and Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
 
+		task ("Add a new user in DXP") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+		}
+
+		task ("Sync Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
+		task ("Login new user and view page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
+		}
+
+		task ("Navigate To Page And Blog") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		task ("Close all sessions, launch AC, change the property and go to segments") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create a static segment add set name") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+		}
+
+		task ("Add All Members and View Added Members") {
+			ACSegments.addAllMembers();
+
+			ACUtils.clickAnyButton(button = "View Added Members");
+		}
+
+		task ("Select All Checkboxes, Undo Changes and Verify There Are No Results") {
+			KeyPress(
+				locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+				value1 = "\SPACE");
+
+			ACUtils.clickAnyButton(button = "Undo Changes");
+
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Individuals found.");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8593 | Test Summary: Undo Deleting a Segment Member in the Edit Modal"
