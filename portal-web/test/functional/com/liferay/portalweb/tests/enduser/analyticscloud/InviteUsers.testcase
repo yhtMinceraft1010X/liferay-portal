@@ -16,60 +16,68 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		ACUtils.launchDXP();
+
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+
+        ACUtils.launchAC();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownDXP();
+		ACUtils.tearDownDXP();
 
-		// if ("${testPortalInstance}" == "true") {
-		// 	PortalInstances.tearDownCP();
-		// }
-		// ACUtils.tearDownAC();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
 	@priority = "3"
 	test AdminCanInviteUsers {
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		task ("sign out and login as member") {
+			ACWorkspace.signOut();
 
-        ACUtils.launchAC();
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
 
-		ACWorkspace.signOut();
+		task ("go to user management and assert the add user button not present") {
+			ACWorkspace.openWorkspace();
 
-		ACLogin.loginAs(
-			emailAddress = "corbin.murakami@faro.io",
-			password = "test");
+			ACNavigation.goToSettings();
 
-		ACWorkspace.openWorkspace();
+			ACSettings.goToUserManagement();
 
-		ACNavigation.goToSettings();
+			ACSettings.verifyCannotAddUser();
+		}
 
-		ACSettings.goToUserManagement();
+		task ("login and logout as admin") {
+			ACNavigation.exitSettings();
 
-		ACSettings.verifyCannotAddUser();
+			ACWorkspace.signOut();
 
-		ACNavigation.exitSettings();
+			ACLogin.loginAs(
+				emailAddress = "michelle.hoshi@faro.io",
+				password = "test");
+		}
 
-		ACWorkspace.signOut();
+		task ("go to user management and add user") {
+			ACWorkspace.openWorkspace();
 
-		ACLogin.loginAs(
-			emailAddress = "michelle.hoshi@faro.io",
-			password = "test");
+			ACNavigation.goToSettings();
 
-		ACWorkspace.openWorkspace();
+			ACSettings.goToUserManagement();
+			
+			ACSettings.addUser(userInvite = "user@liferay.com");
 
-		ACNavigation.goToSettings();
+			ACUtils.searchBar(searchItem = "user@liferay.com");
 
-		ACSettings.goToUserManagement();
-		
-		ACSettings.addUser(userInvite = "user@liferay.com");
-
-		ACUtils.searchBar(searchItem = "user@liferay.com");
-
-		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		}
 
 	}
 
@@ -77,25 +85,23 @@ definition {
 	@priority = "3"
 	test CanInviteMultipleUsers {
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		task ("go to user management and add multiple users") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
 
-        ACUtils.launchAC();
+			ACNavigation.goToSettings();
 
-        ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACSettings.goToUserManagement();
 
-		ACNavigation.goToSettings();
+			var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com";
 
-		ACSettings.goToUserManagement();
+			ACSettings.addUser(userInvite = "${emailList}");
 
-		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com";
+			for (var n : list "${emailList}") {
+				ACUtils.searchBar(searchItem = "${n}");
 
-		ACSettings.addUser(userInvite = "${emailList}");
-
-        for (var n : list "${emailList}") {
-			ACUtils.searchBar(searchItem = "${n}");
-
-		    ACSettings.assertUserListEmail(userEmail = "${n}");	
-        }
+				ACSettings.assertUserListEmail(userEmail = "${n}");	
+			}
+		}
 
 	}
 
@@ -103,21 +109,19 @@ definition {
 	@priority = "5"
 	test CanInviteSingleUser {
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		task ("go to user management and add user") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
 
-        ACUtils.launchAC();
+			ACNavigation.goToSettings();
 
-        ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACSettings.goToUserManagement();
 
-		ACNavigation.goToSettings();
+			ACSettings.addUser(userInvite = "user@liferay.com");
 
-		ACSettings.goToUserManagement();
+			ACUtils.searchBar(searchItem = "user@liferay.com");
 
-		ACSettings.addUser(userInvite = "user@liferay.com");
-
-		ACUtils.searchBar(searchItem = "user@liferay.com");
-
-		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		}
 		
 	}
 
@@ -125,23 +129,23 @@ definition {
 	@priority = "3"
 	test MemberCannotInviteUsers {
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		task ("sign out and login as member") {
+			ACWorkspace.signOut();
 
-        ACUtils.launchAC();
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
 
-		ACWorkspace.signOut();
+		task ("go to user management and assert the add user button not present") {
+			ACWorkspace.openWorkspace();
 
-		ACLogin.loginAs(
-			emailAddress = "corbin.murakami@faro.io",
-			password = "test");
+			ACNavigation.goToSettings();
 
-		ACWorkspace.openWorkspace();
+			ACSettings.goToUserManagement();
 
-		ACNavigation.goToSettings();
-
-		ACSettings.goToUserManagement();
-
-		ACSettings.verifyCannotAddUser();
+			ACSettings.verifyCannotAddUser();
+		}
 
 	}
 
@@ -149,43 +153,47 @@ definition {
 	@priority = "5"
 	test OwnerCanInviteUsers {
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+		task ("sign out and login as member") {
+			ACWorkspace.signOut();
 
-        ACUtils.launchAC();
+			ACLogin.loginAs(
+				emailAddress = "corbin.murakami@faro.io",
+				password = "test");
+		}
 
-		ACWorkspace.signOut();
+		task ("go to user management and assert the add user button not present") {
+			ACWorkspace.openWorkspace();
 
-		ACLogin.loginAs(
-			emailAddress = "corbin.murakami@faro.io",
-			password = "test");
+			ACNavigation.goToSettings();
 
-		ACWorkspace.openWorkspace();
+			ACSettings.goToUserManagement();
 
-		ACNavigation.goToSettings();
+			ACSettings.verifyCannotAddUser();
+		}
 
-		ACSettings.goToUserManagement();
+		task ("login and logout as owner") {
+			ACNavigation.exitSettings();
 
-		ACSettings.verifyCannotAddUser();
+			ACWorkspace.signOut();
 
-		ACNavigation.exitSettings();
+				ACLogin.loginAs(
+				emailAddress = "bryan.cheung@faro.io",
+				password = "test");
+		}
 
-		ACWorkspace.signOut();
+		task ("go to user management and add user") {
+			ACWorkspace.openWorkspace();
 
-		ACLogin.loginAs(
-			emailAddress = "bryan.cheung@faro.io",
-			password = "test");
+			ACNavigation.goToSettings();
 
-		ACWorkspace.openWorkspace();
+			ACSettings.goToUserManagement();
+			
+			ACSettings.addUser(userInvite = "user@liferay.com");
 
-		ACNavigation.goToSettings();
+			ACUtils.searchBar(searchItem = "user@liferay.com");
 
-		ACSettings.goToUserManagement();
-		
-		ACSettings.addUser(userInvite = "user@liferay.com");
-
-		ACUtils.searchBar(searchItem = "user@liferay.com");
-
-		ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+			ACSettings.assertUserListEmail(userEmail = "user@liferay.com");
+		}
 
 	}
 
