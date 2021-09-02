@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -63,7 +65,7 @@ public class CustomElementsSourceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		_validate(0, user.getCompanyId(), htmlElementName);
 
@@ -280,5 +282,8 @@ public class CustomElementsSourceLocalServiceImpl
 				"Duplicate HTML element name " + htmlElementName);
 		}
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -84,7 +85,7 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 		customElementsPortletDescriptor.setUuid(serviceContext.getUuid());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		customElementsPortletDescriptor.setCompanyId(user.getCompanyId());
 		customElementsPortletDescriptor.setUserId(user.getUserId());
@@ -383,5 +384,8 @@ public class CustomElementsPortletDescriptorLocalServiceImpl
 
 	private final Map<Long, ServiceRegistration<Portlet>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
