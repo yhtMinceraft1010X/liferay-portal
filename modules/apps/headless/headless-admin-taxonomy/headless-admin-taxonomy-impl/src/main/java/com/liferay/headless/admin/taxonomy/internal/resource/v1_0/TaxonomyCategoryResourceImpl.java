@@ -30,6 +30,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -58,6 +59,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -565,20 +567,12 @@ public class TaxonomyCategoryResourceImpl
 	private String[] _toCategoryProperties(
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
-		if (taxonomyCategoryProperties == null) {
-			return null;
-		}
-
-		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
-			taxonomyCategoryProperties);
-
-		return stream.map(
-			taxonomyCategoryProperty ->
-				taxonomyCategoryProperty.getKey() + ":" +
-					taxonomyCategoryProperty.getValue()
-		).toArray(
-			String[]::new
-		);
+		return TransformUtil.transform(
+			taxonomyCategoryProperties,
+			taxonomyCategoryProperty -> StringBundler.concat(
+				taxonomyCategoryProperty.getKey(), StringPool.COLON,
+				taxonomyCategoryProperty.getValue()),
+			String.class);
 	}
 
 	private Date _toDate(Timestamp timestamp) {
