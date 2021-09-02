@@ -623,26 +623,18 @@ public abstract class Base${schemaName}ResourceImpl
 
 	@Override
 	public Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
-
 		try {
 			EntityModel entityModel = getEntityModel(multivaluedMap);
 
-			FilterParser filterParser = filterParserProvider.provide(
-				entityModel);
+			FilterParser filterParser = filterParserProvider.provide(entityModel);
 
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
+			com.liferay.portal.odata.filter.Filter oDataFilter = new com.liferay.portal.odata.filter.Filter(filterParser.parse(filterString));
 
-			return expressionConvert.convert(
-				oDataFilter.getExpression(),
-				contextAcceptLanguage.getPreferredLocale(), entityModel);
+			return expressionConvert.convert(oDataFilter.getExpression(), contextAcceptLanguage.getPreferredLocale(), entityModel);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to create filter from " + filterString,
-					exception);
+				_log.debug("Invalid filter " + filterString, exception);
 			}
 		}
 
@@ -686,9 +678,6 @@ public abstract class Base${schemaName}ResourceImpl
 		return TransformUtil.transformToList(array, unsafeFunction);
 	}
 
-	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(Base${schemaName}ResourceImpl.class);
-
 	protected AcceptLanguage contextAcceptLanguage;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -706,6 +695,8 @@ public abstract class Base${schemaName}ResourceImpl
 	<#if generateBatch>
 		protected VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource;
 	</#if>
+
+	private static final com.liferay.portal.kernel.log.Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceImpl.class);
 
 }
 
