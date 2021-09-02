@@ -122,11 +122,26 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
-	@ignore = "true"
 	@priority = "3"
 	test MemberCannotInviteUsers {
 
-		// TODO LRAC-9073 MemberCannotInviteUsers
+		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Liferay DXP");
+
+        ACUtils.launchAC();
+
+		ACWorkspace.signOut();
+
+		ACLogin.loginAs(
+			emailAddress = "corbin.murakami@faro.io",
+			password = "test");
+
+		ACWorkspace.openWorkspace();
+
+		ACNavigation.goToSettings();
+
+		ACSettings.goToUserManagement();
+
+		ACSettings.verifyCannotAddUser();
 
 	}
 
