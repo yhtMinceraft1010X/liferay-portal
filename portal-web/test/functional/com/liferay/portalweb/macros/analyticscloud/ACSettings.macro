@@ -1,8 +1,8 @@
 definition {
 
 	macro verifyCannotAddUser{
-		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
-	}
+        AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
+    }
 
 	macro addCSVDataSource {
 		ACSettings.goToDataSources();
