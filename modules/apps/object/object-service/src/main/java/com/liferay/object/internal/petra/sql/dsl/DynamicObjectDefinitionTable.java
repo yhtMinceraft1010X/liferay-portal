@@ -114,7 +114,7 @@ public class DynamicObjectDefinitionTable
 			sb.append(getSQLColumnNull(objectField.getType()));
 		}
 
-		sb.append(");");
+		sb.append(")");
 
 		String sql = sb.toString();
 
