@@ -642,12 +642,104 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"
-	@ignore = "true"
 	@priority = "3"
 	test UndoOneStaticMemberFromBeingAdded {
+		task ("Create user and sincronize it") {
+			var users = "ac,ac2,ac3";
+			for(var user : list "${users}") {
+			JSONUser.addUser(
+				userEmailAddress = "${user}@liferay.com",
+				userFirstName = "${user}",
+				userLastName = "${user}",
+				userScreenName = "${user}");
+			}
 
-		// TODO LRAC-8596 UndoOneStaticMemberFromBeingAdded pending implementation
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
 
+		task ("Login new user and view page") {
+			for(var user : list "${users}") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${user}@liferay.com",
+				userLoginFullName = "${user} ${user}");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "10000");
+			}
+		}
+
+		task ("Close session, go to AC and segments") {
+			ACUtils.closeAllSessionsAndWait();
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+
+			ACNavigation.goToSegments();
+		}
+
+		task ("Create segment test and save") {
+			ACSegments.createStaticSegment();
+
+			ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+			for(var user : list "${users}") {
+				ACSegments.addStaticMember(tableMember = "${user} ${user}");
+			}
+		}
+		
+		task ("Click view added members") {
+			ACUtils.clickAnyButton(button = "View Added Members");
+		}	
+
+		task ("Assert three members") {
+			for(var user : list "${users}") {
+				ACSegments.assertMember(memberName = "${user} ${user}");
+			}
+		}
+
+		task ("Click view the added members") {
+			ACSegments.clickCheckboxMember(tableMember = "ac ac");
+		}
+
+		task ("Click undo changes") {
+			ACUtils.clickAnyButton(button = "Undo Changes");
+		}
+
+		task ("Assert elemennt not present in ac ac") {
+			ACSegments.assertMemberNotPresent(memberName = "ac ac");
+		}
+		
+		task ("Click undo") {
+			ACSegments.clickMemberButton(
+				memberName = "ac2 ac2",
+				buttonName = "Undo");
+		}
+
+		task ("Assert elemennt not present in ac2 ac2") {
+			ACSegments.assertMemberNotPresent(memberName = "ac2 ac2");
+		}
+
+		task ("Save segment and open it") {
+			ACSegments.saveSegment();
+			ACNavigation.goToSegments();
+			ACSegments.editSegment(searchTerm = "Static Segment Test");
+		}
+
+		task ("Assert element present in ac ac") {
+			ACSegments.assertMember(memberName = "ac3 ac3");		
+		}
+
+		task ("Assert elemennt not present in ac ac") {
+			ACSegments.assertMemberNotPresent(memberName = "ac ac");
+		}
+
+		task ("Assert elemennt not present in ac2 ac2") {
+			ACSegments.assertMemberNotPresent(memberName = "ac2 ac2");
+		}
 	}
 
 }
