@@ -72,13 +72,17 @@ definition {
 	@description = "Automation ID: LRAC-9048 | Test Summary: Assert the User Management Page"
 	@priority = "3"
 	test AssertUserManagementPage {
-
-		task ("go to User Manaagement page and assert you are there") {
+		task ("go to User Management page and assert page elements") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
-		}
 
+			ACSettings.assertUserManagementHeader();
+
+			ACSettings.assertUserManagementDescription();
+
+			ACSettings.assertInviteUsersButton();
+		}
 	}
 
 	@description = "Automation ID: LRAC-9053 | Test Summary: Member can be edited or removed"
@@ -164,7 +168,6 @@ definition {
 	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
 	@priority = "5"
 	test ViewOwnerCannotBeEditedOrRemoved {
-
 		task ("go to User Manaagement page and assert you are there") {
 			ACNavigation.goToSettings();
 
@@ -178,18 +181,16 @@ definition {
 		task ("view owner cannot be edited") {
 			ACSettings.viewEditnotAvailable();
 		}
-		
+
 		task ("view owner cannot be removed") {
 			ACSettings.viewDeleteNotAvailable();
 		}
-
 	}
 
 	@description = "Automation ID: LRAC-9050 | Test Summary: Owner cannot be selected in the user list"
 	@priority = "5"
 	test ViewOwnerCannotBeSelectedInUserList {
-
-		task ("go to User Manaagement page and assert you are there") {
+		task ("go to User Management page") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -199,10 +200,9 @@ definition {
 			ACUtils.searchBar(searchItem = "bryan.cheung@faro.io");
 		}
 
-		task ("view ownnet cannot be selected") {
+		task ("view owner cannot be selected") {
 			ACSettings.viewUserNotSelectable(email = "bryan.cheung@faro.io");
 		}
-
 	}
 
 }

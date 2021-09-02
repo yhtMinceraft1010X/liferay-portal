@@ -26,6 +26,11 @@
 	<td>//h3[contains(@class,'title-text')]/span[contains(@title,'') and contains (text(),'User Management')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_MANAGEMENT_DESCRIPTION</td>
+	<td>//div[contains(@class,'header-text')]//div[contains(text(),'Invite new users to Analytics Cloud and/or configure existing users.')]</td>
+	<td></td>
+</tr>
 <!-- SETTINGS NAVIGATION -->
 <tr>
 	<td>SETTINGS_NAVIGATION</td>
