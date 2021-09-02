@@ -58,10 +58,12 @@ const TranslationAdminSelector = ({
 	);
 
 	const handleCloseTranslationModal = (activeLanguageIds) => {
+		setActiveLanguageIds(activeLanguageIds);
+
 		if (!activeLanguageIds.includes(selectedLanguageId)) {
 			setSelectedLanguageId(defaultLanguageId);
 		}
-		setActiveLanguageIds(activeLanguageIds);
+
 		setTranslationModalVisible(false);
 	};
 
