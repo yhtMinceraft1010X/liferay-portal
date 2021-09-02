@@ -34,9 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.List;
-import java.util.stream.Stream;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,17 +73,6 @@ public class TaxonomyCategoryDTOConverter
 		throws Exception {
 
 		return _toTaxonomyCategory(dtoConverterContext, assetCategory);
-	}
-
-	private static TaxonomyCategoryProperty _toTaxonomyCategoryProperty(
-		AssetCategoryProperty assetCategoryProperty) {
-
-		return new TaxonomyCategoryProperty() {
-			{
-				key = assetCategoryProperty.getKey();
-				value = assetCategoryProperty.getValue();
-			}
-		};
 	}
 
 	private ParentTaxonomyCategory _toParentTaxonomyCategory(
@@ -150,6 +137,12 @@ public class TaxonomyCategoryDTOConverter
 							});
 					}
 				};
+				taxonomyCategoryProperties = TransformUtil.transformToArray(
+					_assetCategoryPropertyLocalService.getCategoryProperties(
+						assetCategory.getCategoryId()),
+					assetCategoryProperties -> _toTaxonomyCategoryProperty(
+						assetCategoryProperties),
+					TaxonomyCategoryProperty.class);
 				taxonomyCategoryUsageCount =
 					(int)_assetEntryLocalService.searchCount(
 						assetCategory.getCompanyId(),
@@ -174,27 +167,17 @@ public class TaxonomyCategoryDTOConverter
 							assetCategory.getParentCategory(),
 							dtoConverterContext);
 					});
-				setTaxonomyCategoryProperties(
-					() -> {
-						List<AssetCategoryProperty> assetCategoryProperties =
-							_assetCategoryPropertyLocalService.
-								getCategoryProperties(
-									assetCategory.getCategoryId());
+			}
+		};
+	}
 
-						if (assetCategoryProperties.isEmpty()) {
-							return null;
-						}
+	private TaxonomyCategoryProperty _toTaxonomyCategoryProperty(
+		AssetCategoryProperty assetCategoryProperty) {
 
-						Stream<AssetCategoryProperty> stream =
-							assetCategoryProperties.stream();
-
-						return stream.map(
-							TaxonomyCategoryDTOConverter::
-								_toTaxonomyCategoryProperty
-						).toArray(
-							TaxonomyCategoryProperty[]::new
-						);
-					});
+		return new TaxonomyCategoryProperty() {
+			{
+				key = assetCategoryProperty.getKey();
+				value = assetCategoryProperty.getValue();
 			}
 		};
 	}
