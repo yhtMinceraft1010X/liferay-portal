@@ -947,6 +947,8 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
 
+		objectEntry.setValues(null);
+
 		Assert.assertEquals(_getValuesFromDatabase(objectEntry), values);
 
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
