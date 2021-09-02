@@ -1,5 +1,9 @@
 definition {
 
+	macro verifyCannotAddUser{
+		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
+	}
+
 	macro addCSVDataSource {
 		ACSettings.goToDataSources();
 
@@ -141,9 +145,15 @@ definition {
 	macro addUser {
 		Click(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 
-		Type(
-			locator1 = "ACSettings#INVITE_USERS_INPUT",
-			value1 = "${userInvite}");
+		for (var keyword : list "${userInvite}") {
+			Type(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "${userInvite}");
+
+			KeyPress(
+				locator1 = "ACSettings#KEYWORD_TEXTFIELD",
+				value1 = "\ENTER");
+		}
 
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
