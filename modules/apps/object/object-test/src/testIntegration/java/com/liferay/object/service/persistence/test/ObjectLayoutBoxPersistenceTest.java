@@ -136,6 +136,14 @@ public class ObjectLayoutBoxPersistenceTest {
 
 		newObjectLayoutBox.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectLayoutBox.setObjectLayoutTabId(RandomTestUtil.nextLong());
+
+		newObjectLayoutBox.setCollapsable(RandomTestUtil.randomBoolean());
+
+		newObjectLayoutBox.setName(RandomTestUtil.randomString());
+
+		newObjectLayoutBox.setPriority(RandomTestUtil.nextInt());
+
 		_objectLayoutBoxes.add(_persistence.update(newObjectLayoutBox));
 
 		ObjectLayoutBox existingObjectLayoutBox = _persistence.findByPrimaryKey(
@@ -164,6 +172,17 @@ public class ObjectLayoutBoxPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectLayoutBox.getModifiedDate()),
 			Time.getShortTimestamp(newObjectLayoutBox.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectLayoutBox.getObjectLayoutTabId(),
+			newObjectLayoutBox.getObjectLayoutTabId());
+		Assert.assertEquals(
+			existingObjectLayoutBox.isCollapsable(),
+			newObjectLayoutBox.isCollapsable());
+		Assert.assertEquals(
+			existingObjectLayoutBox.getName(), newObjectLayoutBox.getName());
+		Assert.assertEquals(
+			existingObjectLayoutBox.getPriority(),
+			newObjectLayoutBox.getPriority());
 	}
 
 	@Test
@@ -211,7 +230,9 @@ public class ObjectLayoutBoxPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"ObjectLayoutBox", "mvccVersion", true, "uuid", true,
 			"objectLayoutBoxId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"objectLayoutTabId", true, "collapsable", true, "name", true,
+			"priority", true);
 	}
 
 	@Test
@@ -447,6 +468,14 @@ public class ObjectLayoutBoxPersistenceTest {
 		objectLayoutBox.setCreateDate(RandomTestUtil.nextDate());
 
 		objectLayoutBox.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectLayoutBox.setObjectLayoutTabId(RandomTestUtil.nextLong());
+
+		objectLayoutBox.setCollapsable(RandomTestUtil.randomBoolean());
+
+		objectLayoutBox.setName(RandomTestUtil.randomString());
+
+		objectLayoutBox.setPriority(RandomTestUtil.nextInt());
 
 		_objectLayoutBoxes.add(_persistence.update(objectLayoutBox));
 
