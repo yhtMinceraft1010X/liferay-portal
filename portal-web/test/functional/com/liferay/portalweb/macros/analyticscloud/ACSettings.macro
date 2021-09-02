@@ -672,6 +672,8 @@ definition {
 
 	macro goToUserManagement {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "users");
+
+		AssertElementPresent(locator1 = "ACSettings#HEADER_USER_MANAGEMENT");
 	}
 
 	macro goToWorkspace {
