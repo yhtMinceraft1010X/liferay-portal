@@ -88,6 +88,10 @@ public interface ${schemaName}Resource {
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
+	public default Filter toFilter(String filterString) {
+		return toFilter(filterString, null);
+	}
+
 	public default Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
 		return null;
 	}
