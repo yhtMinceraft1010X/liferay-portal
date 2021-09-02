@@ -1,0 +1,1 @@
+create index IX_12D38D15 on WebhookEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
