@@ -6,6 +6,16 @@ definition {
 		Click(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
+	macro addAllMembers {
+		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
+
+		KeyPress(
+			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
+			value1 = "\SPACE");
+
+		Click(locator1 = "ACSegments#ADD_BUTTON");
+	}
+
 	macro addNestedSegmentField {
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",
