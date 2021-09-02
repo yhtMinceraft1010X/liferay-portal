@@ -45,6 +45,11 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
+	macro clickCheckboxMember {
+		var key_TableMember = "${tableMember}";
+
+		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
+	}
 	macro assertMember {
 		AssertElementPresent(
 			locator1 = "ACSegments#TABLE_CHECKBOX",
