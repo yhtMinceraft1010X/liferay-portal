@@ -946,6 +946,9 @@ public class ObjectEntryLocalServiceTest {
 				objectEntry.getObjectEntryId());
 
 		Assert.assertEquals(_getValuesFromCacheField(objectEntry), values);
+
+		Assert.assertEquals(_getValuesFromDatabase(objectEntry), values);
+
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertEquals(false, values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
@@ -1136,32 +1139,6 @@ public class ObjectEntryLocalServiceTest {
 		return bigDecimal.setScale(16);
 	}
 
-	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
-		throws Exception {
-
-		Map<String, Serializable> values = null;
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.object.model.impl.ObjectEntryImpl",
-				LoggerTestUtil.DEBUG)) {
-
-			values = objectEntry.getValues();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				logEntry.getMessage(),
-				"Get values for object entry " +
-					objectEntry.getObjectEntryId());
-		}
-
-		return values;
-	}
-
 	private Map<String, Serializable> _getValuesFromCacheField(
 			ObjectEntry objectEntry)
 		throws Exception {
@@ -1183,6 +1160,33 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				logEntry.getMessage(),
 				"Use cached values for object entry " +
+					objectEntry.getObjectEntryId());
+		}
+
+		return values;
+	}
+
+	private Map<String, Serializable> _getValuesFromDatabase(
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Serializable> values = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.model.impl.ObjectEntryImpl",
+				LoggerTestUtil.DEBUG)) {
+
+			values = objectEntry.getValues();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				logEntry.getMessage(),
+				"Get values for object entry " +
 					objectEntry.getObjectEntryId());
 		}
 
