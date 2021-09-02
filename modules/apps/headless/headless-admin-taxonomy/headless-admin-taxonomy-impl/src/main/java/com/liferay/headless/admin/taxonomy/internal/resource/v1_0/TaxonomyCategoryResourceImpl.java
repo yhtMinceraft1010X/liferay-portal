@@ -514,10 +514,6 @@ public class TaxonomyCategoryResourceImpl
 		long categoryId,
 		TaxonomyCategoryProperty[] taxonomyCategoryProperties) {
 
-		List<AssetCategoryProperty> assetCategoryProperties =
-			_assetCategoryPropertyLocalService.getCategoryProperties(
-				categoryId);
-
 		Stream<TaxonomyCategoryProperty> stream = Arrays.stream(
 			Optional.ofNullable(
 				taxonomyCategoryProperties
@@ -529,6 +525,10 @@ public class TaxonomyCategoryResourceImpl
 			Collectors.toMap(
 				TaxonomyCategoryProperty::getKey,
 				TaxonomyCategoryProperty::getValue));
+
+		List<AssetCategoryProperty> assetCategoryProperties =
+			_assetCategoryPropertyLocalService.getCategoryProperties(
+				categoryId);
 
 		for (AssetCategoryProperty assetCategoryProperty :
 				assetCategoryProperties) {
