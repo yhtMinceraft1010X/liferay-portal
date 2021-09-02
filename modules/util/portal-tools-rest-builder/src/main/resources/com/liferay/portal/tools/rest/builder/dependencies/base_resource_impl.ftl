@@ -621,35 +621,33 @@ public abstract class Base${schemaName}ResourceImpl
 		this.roleLocalService = roleLocalService;
 	}
 
-	<#if generateBatch>
-		@Override
-		public Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
+	@Override
+	public Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
 
-			try {
-				EntityModel entityModel = getEntityModel(multivaluedMap);
+		try {
+			EntityModel entityModel = getEntityModel(multivaluedMap);
 
-				FilterParser filterParser = filterParserProvider.provide(
-					entityModel);
+			FilterParser filterParser = filterParserProvider.provide(
+				entityModel);
 
-				com.liferay.portal.odata.filter.Filter oDataFilter =
-					new com.liferay.portal.odata.filter.Filter(
-						filterParser.parse(filterString));
+			com.liferay.portal.odata.filter.Filter oDataFilter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
 
-				return expressionConvert.convert(
-					oDataFilter.getExpression(),
-					contextAcceptLanguage.getPreferredLocale(), entityModel);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to create filter from " + filterString,
-						exception);
-				}
-			}
-
-			return null;
+			return expressionConvert.convert(
+				oDataFilter.getExpression(),
+				contextAcceptLanguage.getPreferredLocale(), entityModel);
 		}
-	</#if>
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create filter from " + filterString,
+					exception);
+			}
+		}
+
+		return null;
+	}
 
 	protected Map<String, String> addAction(String actionName, GroupedModel groupedModel, String methodName) {
 		return ActionUtil.addAction(actionName, getClass(), groupedModel, methodName, contextScopeChecker, contextUriInfo);
