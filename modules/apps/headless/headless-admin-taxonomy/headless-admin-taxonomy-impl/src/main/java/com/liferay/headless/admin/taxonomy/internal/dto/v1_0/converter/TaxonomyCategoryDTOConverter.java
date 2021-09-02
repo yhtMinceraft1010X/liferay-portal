@@ -174,7 +174,6 @@ public class TaxonomyCategoryDTOConverter
 							assetCategory.getParentCategory(),
 							dtoConverterContext);
 					});
-
 				setTaxonomyCategoryProperties(
 					() -> {
 						List<AssetCategoryProperty> assetCategoryProperties =
