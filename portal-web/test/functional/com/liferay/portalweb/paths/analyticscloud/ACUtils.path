@@ -80,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_BUTTON</td>
+	<td>//button[contains(@class,'button-root')and text()='${key_buttonName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TITLE</td>
 	<td>//span[@class='text-truncate'and text()='${key_pageTitle}']</td>
 	<td></td>
