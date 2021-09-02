@@ -166,11 +166,30 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9049 | Test Summary: Owner cannot be edited or removed"
-	@ignore = "true"
 	@priority = "5"
 	test ViewOwnerCannotBeEditedOrRemoved {
 
-		// TODO LRAC-9049 ViewOwnerCannotBeEditedOrRemoved
+		task ("launch ac") {
+			ACUtils.launchAC();
+		}
+
+		task ("go to User Manaagement page and assert you are there") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+		}
+
+		task ("search for owner user") {
+			ACUtils.searchBar(searchItem = "bryan.cheung@faro.io");
+		}
+
+		task ("view owner cannot be edited") {
+			ACSettings.viewEditnotAvailable();
+		}
+		
+		task ("view owner cannot be removed") {
+			ACSettings.viewDeleteNotAvailable();
+		}
 
 	}
 
