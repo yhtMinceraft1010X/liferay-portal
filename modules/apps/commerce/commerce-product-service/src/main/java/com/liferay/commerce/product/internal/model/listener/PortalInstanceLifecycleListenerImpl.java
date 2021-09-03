@@ -85,19 +85,18 @@ public class PortalInstanceLifecycleListenerImpl
 					company.getGroupId(), PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO);
 
 			if (fileEntry == null) {
-				User user = company.getDefaultUser();
-
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setCompanyId(company.getCompanyId());
 				serviceContext.setScopeGroupId(company.getGroupId());
+
+				User user = company.getDefaultUser();
+
 				serviceContext.setUserId(user.getCompanyId());
 
-				long classNameId = _portal.getClassNameId(
-					PortletRepository.class.getName());
-
 				Repository repository = _repositoryLocalService.addRepository(
-					user.getUserId(), company.getGroupId(), classNameId,
+					user.getUserId(), company.getGroupId(),
+					_portal.getClassNameId(PortletRepository.class.getName()),
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					PropsKeys.IMAGE_DEFAULT_COMPANY_LOGO, null, null,
 					new UnicodeProperties(), true, serviceContext);
