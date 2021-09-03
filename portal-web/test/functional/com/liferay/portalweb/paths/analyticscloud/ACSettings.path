@@ -230,6 +230,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_DROPDOWN_BUTTON</td>
+	<td>//div[contains(@class,'dropdown')]//span[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_SELECT_USER_EMAIL</td>
 	<td>//div[contains(@class,'secondary-info text-truncate') and text()='${emailAddress}']</td>
 	<td></td>
