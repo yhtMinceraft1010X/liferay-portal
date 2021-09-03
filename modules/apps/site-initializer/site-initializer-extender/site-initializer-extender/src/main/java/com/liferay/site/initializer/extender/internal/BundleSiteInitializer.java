@@ -183,9 +183,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
+
+			_addAssetListEntries(serviceContext);
 			Map<String, String> documentsStringUtilReplaceValues =
 				_addDocuments(serviceContext);
-
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
@@ -194,7 +195,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
-			_addAssetListEntries(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -224,16 +224,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONObject assetListJSONObject =
 					assetListJSONArray.getJSONObject(i);
 
-				String[] assetTagNames = JSONUtil.toStringArray(
-					assetListJSONObject.getJSONArray("tags"));
-
 				_assetListEntryLocalService.addDynamicAssetListEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					assetListJSONObject.getString("title"),
 					_getDynamicCollectionTypeSettings(
-						assetListJSONObject.getString("ddmStructureKey"),
-						assetTagNames, serviceContext),
+						assetListJSONObject, serviceContext),
 					serviceContext);
 			}
 		}
@@ -693,42 +689,75 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private String _getDynamicCollectionTypeSettings(
-			String ddmStructureKey, String[] assetTagNames,
-			ServiceContext serviceContext)
+			JSONObject assetListJSONObject, ServiceContext serviceContext)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
 
+		JSONObject unicodePropertiesJSONObject =
+			assetListJSONObject.getJSONObject("unicodeProperties");
+
+		Class<?> clazz = Class.forName(
+			unicodePropertiesJSONObject.getString("classNameIds"));
+
 		unicodeProperties.put(
-			"anyAssetType",
-			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+			"anyAssetType", String.valueOf(_portal.getClassNameId(clazz)));
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			ddmStructureKey);
+			_portal.getClassNameId(
+				unicodePropertiesJSONObject.getString("classNameIds")),
+			assetListJSONObject.getString("ddmStructureKey"));
 
 		unicodeProperties.put(
-			"anyClassTypeJournalArticleAssetRendererFactory",
+			unicodePropertiesJSONObject.getString("anyClassType"),
 			String.valueOf(ddmStructure.getStructureId()));
 
-		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
 		unicodeProperties.put(
-			"classTypeIdsJournalArticleAssetRendererFactory",
+			"classNameIds",
+			unicodePropertiesJSONObject.getString("classNameIds"));
+		unicodeProperties.put(
+			unicodePropertiesJSONObject.getString("classTypeIds"),
 			String.valueOf(ddmStructure.getStructureId()));
 		unicodeProperties.put(
 			"groupIds", String.valueOf(serviceContext.getScopeGroupId()));
-		unicodeProperties.put("orderByColumn1", "modifiedDate");
-		unicodeProperties.put("orderByColumn2", "title");
-		unicodeProperties.put("orderByType1", "ASC");
-		unicodeProperties.put("orderByType2", "ASC");
+
+		JSONArray orderByPropertiesJSONArray =
+			unicodePropertiesJSONObject.getJSONArray("orderBy");
+
+		if (orderByPropertiesJSONArray != null) {
+			for (int i = 0; i < orderByPropertiesJSONArray.length(); i++) {
+				JSONObject orderByJSONObject =
+					orderByPropertiesJSONArray.getJSONObject(i);
+
+				unicodeProperties.put(
+					orderByJSONObject.getString("key"),
+					orderByJSONObject.getString("value"));
+			}
+		}
+
+		String[] assetTagNames = JSONUtil.toStringArray(
+			assetListJSONObject.getJSONArray("tags"));
 
 		if (ArrayUtil.isNotEmpty(assetTagNames)) {
 			for (int i = 0; i < assetTagNames.length; i++) {
-				unicodeProperties.put("queryAndOperator" + i, "true");
-				unicodeProperties.put("queryContains" + i, "true");
-				unicodeProperties.put("queryName" + i, "assetTags");
 				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+
+				JSONArray queryPropertiesJSONArray =
+					unicodePropertiesJSONObject.getJSONArray("query");
+
+				if (queryPropertiesJSONArray != null) {
+					for (int j = 0; j < queryPropertiesJSONArray.length();
+						 j++) {
+
+						JSONObject queryJSONObject =
+							queryPropertiesJSONArray.getJSONObject(i);
+
+						unicodeProperties.put(
+							queryJSONObject.getString("key"),
+							queryJSONObject.getString("value"));
+					}
+				}
 			}
 		}
 
