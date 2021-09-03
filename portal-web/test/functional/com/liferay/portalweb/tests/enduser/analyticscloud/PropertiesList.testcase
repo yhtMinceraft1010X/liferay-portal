@@ -76,11 +76,32 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
-	@ignore = "true"
 	@priority = "3"
 	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
 
-		// TODO LRAC-9118 ViewSettingInfoAreGlobalAndDontDependOfProperty pending implementation
+		task ("go to properties and add a new property") {
+			ACNavigation.goToSettings();
+
+			var propertyList = "Property Name 1,Property Name 2";
+
+			for (var n : list "${propertyList}"){
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${n}");
+			}
+
+			for (var n : list "${propertyList}"){
+				ACNavigation.exitSettings();
+
+				ACProperties.switchProperty(propertyName = "${n}");
+
+				ACNavigation.goToSettings();
+
+				ACSettings.goToProperties();	
+
+				ACSettings.viewPropertyInfo();	
+			}
+		}
 
 	}
 
