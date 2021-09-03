@@ -461,10 +461,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.setAssetTagNames(
 				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
 
-			Long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			Long journalFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 			if (documentFolderId != null) {
-				folderId = documentFolderId;
+				journalFolderId = documentFolderId;
 			}
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
@@ -472,7 +472,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
-				serviceContext.getScopeGroupId(), folderId,
+				serviceContext.getScopeGroupId(), journalFolderId,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
 				jsonObject.getString("articleId"), false, 1, titleMap, null,
 				titleMap,
