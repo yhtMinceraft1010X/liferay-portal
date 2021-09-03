@@ -71,7 +71,15 @@ definition {
 	@priority = "3"
 	test ViewPropertyListDefault {
 
-		// TODO LRAC-9120 ViewPropertyListDefault pending implementation
+		task ("go to properties") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("assert default view") {
+			ACSettings.viewPropertyListDefaultMessage();
+		}
 
 	}
 
@@ -89,6 +97,9 @@ definition {
 
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
+		
+		}
+		task ("assert the property description wont change") {
 
 			for (var n : list "${propertyList}"){
 				ACNavigation.exitSettings();
@@ -101,6 +112,7 @@ definition {
 
 				ACSettings.viewPropertyInfo();	
 			}
+			
 		}
 
 	}
