@@ -215,6 +215,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_LIST_NAME</td>
+	<td>//div[contains(@class,'table-title')]//span[contains(text(),'${entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_SELECT_USERS_BUTTON</td>
 	<td>//span[contains(@class,'custom-control-label-text')]//b[text()='Select Users']</td>
 	<td></td>
