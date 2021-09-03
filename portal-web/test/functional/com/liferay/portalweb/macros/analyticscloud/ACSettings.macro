@@ -1,5 +1,17 @@
 definition {
 
+	macro viewFilterButton {
+		if(isSet(nofilter)){
+			AssertElementNotPresent(
+				key_text = "${nofilter}",
+				locator1 = "ACSettings#PROPERTIES_DROPDOWN_BUTTON");
+		}
+
+		AssertElementPresent(
+			key_text = "${filter}",
+			locator1 = "ACSettings#PROPERTIES_DROPDOWN_BUTTON");
+	}
+
 	macro addCSVDataSource {
 		ACSettings.goToDataSources();
 
