@@ -8,13 +8,12 @@ definition {
 
 	setUp {
 		ACUtils.launchAC();
-
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownAC();
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
@@ -29,7 +28,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9121 | Test Summary: Settings page properties list is searchable"
 	@priority = "3"
 	test CanSearchForPagePropertiesList {
-
 		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4";
 
 		task ("go to property and add new  properties") {
@@ -40,7 +38,6 @@ definition {
 
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
-
 		}
 
 		task ("search the properties") {
@@ -51,24 +48,36 @@ definition {
 
 				ACSettings.viewPropertyEntryName(propertyName = "${n}");
 			}
-
 		}
-			
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
-	@ignore = "true"
 	@priority = "5"
 	test CanSearchForProperty {
+		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4";
 
-		// TODO LRAC-9122 CanSearchForProperty pending implementation
+		task ("go to property and add new  properties") {
+			ACNavigation.goToSettings();
 
+			for (var n : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${n}");
+			}
+		}
+
+		task ("search for a property") {
+			ACNavigation.exitSettings();
+
+			for (var n : list "${propertyList}") {
+				ACProperties.switchProperty(propertyName = "${n}");
+			}
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
 	@priority = "3"
 	test CanUserSelectPropertyFromTheDropDownByFirstTime {
-
 		var propertyName = "Property Name 1";
 
 		task ("go to properties and add a new property") {
@@ -84,14 +93,11 @@ definition {
 
 			ACProperties.switchProperty(propertyName = "${propertyName}");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
-	@ignore = "true"
 	@priority = "3"
 	test ViewPropertyListDefault {
-
 		task ("go to properties") {
 			ACNavigation.goToSettings();
 
@@ -101,47 +107,40 @@ definition {
 		task ("assert default view") {
 			ACSettings.viewPropertyListDefaultMessage();
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
 	@priority = "3"
 	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
-
 		task ("go to properties and add a new property") {
 			ACNavigation.goToSettings();
 
 			var propertyList = "Property Name 1,Property Name 2";
 
-			for (var n : list "${propertyList}"){
+			for (var n : list "${propertyList}") {
 				ACSettings.goToProperties();
 
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
-		
 		}
 		task ("assert the property description wont change") {
-
-			for (var n : list "${propertyList}"){
+			for (var n : list "${propertyList}") {
 				ACNavigation.exitSettings();
 
 				ACProperties.switchProperty(propertyName = "${n}");
 
 				ACNavigation.goToSettings();
 
-				ACSettings.goToProperties();	
+				ACSettings.goToProperties();
 
-				ACSettings.viewPropertyInfo();	
+				ACSettings.viewPropertyInfo();
 			}
-			
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
 	@priority = "3"
 	test ViewTheDropdownTransition {
-
 		task ("go to properties page") {
 			ACNavigation.goToSettings();
 
@@ -149,7 +148,6 @@ definition {
 		}
 
 		task ("assert dropdown not present") {
-
 			ACSettings.viewFilterButton(nofilter = "20 Items");
 		}
 
@@ -159,9 +157,9 @@ definition {
 			ACSettings.goToProperties();
 		}
 
-		task ("assert dropdown present"){
+		task ("assert dropdown present") {
 			ACSettings.viewFilterButton(filter = "20 Items");
-		}	
+		}
 		task ("delete property") {
 			ACSettings.deleteAllProperties();
 
@@ -171,7 +169,6 @@ definition {
 		task ("assert dropdown not present") {
 			ACSettings.viewFilterButton(nofilter = "20 Items");
 		}
-
 	}
 
 }
