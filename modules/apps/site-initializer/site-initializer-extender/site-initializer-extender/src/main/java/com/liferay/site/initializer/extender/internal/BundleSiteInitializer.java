@@ -371,7 +371,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								MimeTypesUtil.getContentType(fileName),
 								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
-						null, values));
+						__ -> _objectMapper, values));
 
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					document.getId());
