@@ -515,8 +515,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 			while (ddmFieldInfoMap.containsKey(instanceId)) {
 				instanceId =
-					com.liferay.portal.kernel.util.StringUtil.
-						randomString();
+					com.liferay.portal.kernel.util.StringUtil.randomString();
 			}
 
 			DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
@@ -543,8 +542,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 			_collectDDMFieldInfos(
 				ddmFieldInfoMap, ddmFormFieldMap,
-				ddmFormFieldValue.getNestedDDMFormFieldValues(),
-				instanceId);
+				ddmFormFieldValue.getNestedDDMFormFieldValues(), instanceId);
 		}
 	}
 
