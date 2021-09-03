@@ -98,8 +98,8 @@ import org.osgi.framework.wiring.BundleWiring;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
-		AssetListEntryLocalService assetListEntryLocalService,
-		Bundle bundle, DDMStructureLocalService ddmStructureLocalService,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		DLURLHelper dlURLHelper,
@@ -206,7 +206,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	private void _addAssetListEntries(ServiceContext serviceContext) throws Exception {
+	private void _addAssetListEntries(ServiceContext serviceContext)
+		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/asset-list");
@@ -220,58 +221,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_read(resourcePath));
 
 			for (int i = 0; i < assetListJSONArray.length(); i++) {
-				JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(i);
+				JSONObject assetListJSONObject =
+					assetListJSONArray.getJSONObject(i);
 
-				String[] assetTagNames = JSONUtil.toStringArray(assetListJSONObject.getJSONArray("tags"));
+				String[] assetTagNames = JSONUtil.toStringArray(
+					assetListJSONObject.getJSONArray("tags"));
 
 				_assetListEntryLocalService.addDynamicAssetListEntry(
-					serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-					assetListJSONObject.getString("title"), _getDynamicCollectionTypeSettings(assetListJSONObject.getString("ddmStructureKey"), assetTagNames,
-					serviceContext), serviceContext);
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					assetListJSONObject.getString("title"),
+					_getDynamicCollectionTypeSettings(
+						assetListJSONObject.getString("ddmStructureKey"),
+						assetTagNames, serviceContext),
+					serviceContext);
 			}
 		}
-	}
-
-	private String _getDynamicCollectionTypeSettings(
-		String ddmStructureKey, String[] assetTagNames, ServiceContext serviceContext)
-		throws Exception {
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.put(
-			"anyAssetType",
-			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			ddmStructureKey);
-
-		unicodeProperties.put(
-			"anyClassTypeJournalArticleAssetRendererFactory",
-			String.valueOf(ddmStructure.getStructureId()));
-
-		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
-		unicodeProperties.put(
-			"classTypeIdsJournalArticleAssetRendererFactory",
-			String.valueOf(ddmStructure.getStructureId()));
-		unicodeProperties.put(
-			"groupIds", String.valueOf(serviceContext.getScopeGroupId()));
-		unicodeProperties.put("orderByColumn1", "modifiedDate");
-		unicodeProperties.put("orderByColumn2", "title");
-		unicodeProperties.put("orderByType1", "ASC");
-		unicodeProperties.put("orderByType2", "ASC");
-
-		if (ArrayUtil.isNotEmpty(assetTagNames)) {
-			for (int i = 0; i < assetTagNames.length; i++) {
-				unicodeProperties.put("queryAndOperator" + i, "true");
-				unicodeProperties.put("queryContains" + i, "true");
-				unicodeProperties.put("queryName" + i, "assetTags");
-				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
-			}
-		}
-
-		return unicodeProperties.toString();
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -725,6 +690,49 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addTaxonomyVocabularies(
 			serviceContext.getScopeGroupId(),
 			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
+	}
+
+	private String _getDynamicCollectionTypeSettings(
+			String ddmStructureKey, String[] assetTagNames,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.put(
+			"anyAssetType",
+			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			ddmStructureKey);
+
+		unicodeProperties.put(
+			"anyClassTypeJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+
+		unicodeProperties.put("classNameIds", JournalArticle.class.getName());
+		unicodeProperties.put(
+			"classTypeIdsJournalArticleAssetRendererFactory",
+			String.valueOf(ddmStructure.getStructureId()));
+		unicodeProperties.put(
+			"groupIds", String.valueOf(serviceContext.getScopeGroupId()));
+		unicodeProperties.put("orderByColumn1", "modifiedDate");
+		unicodeProperties.put("orderByColumn2", "title");
+		unicodeProperties.put("orderByType1", "ASC");
+		unicodeProperties.put("orderByType2", "ASC");
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			for (int i = 0; i < assetTagNames.length; i++) {
+				unicodeProperties.put("queryAndOperator" + i, "true");
+				unicodeProperties.put("queryContains" + i, "true");
+				unicodeProperties.put("queryName" + i, "assetTags");
+				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+			}
+		}
+
+		return unicodeProperties.toString();
 	}
 
 	private String _read(String resourcePath) throws Exception {

@@ -47,8 +47,8 @@ import org.osgi.framework.BundleContext;
 public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
-		AssetListEntryLocalService assetListEntryLocalService,
-		Bundle bundle, BundleContext bundleContext,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,

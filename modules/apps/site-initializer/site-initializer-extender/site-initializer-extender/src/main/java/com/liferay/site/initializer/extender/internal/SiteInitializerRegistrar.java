@@ -46,8 +46,8 @@ import org.osgi.framework.ServiceRegistration;
 public class SiteInitializerRegistrar {
 
 	public SiteInitializerRegistrar(
-		AssetListEntryLocalService assetListEntryLocalService,
-		Bundle bundle, BundleContext bundleContext,
+		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
+		BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -112,6 +112,7 @@ public class SiteInitializerRegistrar {
 	protected void stop() {
 		_serviceRegistration.unregister();
 	}
+
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
