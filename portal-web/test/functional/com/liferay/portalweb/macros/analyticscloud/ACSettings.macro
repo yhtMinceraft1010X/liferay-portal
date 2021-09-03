@@ -1,5 +1,11 @@
 definition {
 
+	macro viewPropertyEntryName {
+		AssertElementPresent(
+			entryName = "${propertyName}",
+			locator1 = "ACSettings#PROPERTIES_LIST_NAME");
+	}
+
 	macro viewPropertyListDefaultMessage {
 		AssertElementPresent(
 			key_text = "No Properties Found",
