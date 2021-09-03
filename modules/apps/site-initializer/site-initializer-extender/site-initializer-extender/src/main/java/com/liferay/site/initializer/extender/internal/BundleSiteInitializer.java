@@ -369,12 +369,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 								urlConnection.getContentLength())),
 						__ -> _objectMapper, values));
 
-				// TODO File name must include its parent folder names
+				// TODO File name must include its parent folder names. Use a
+				// shortened version of the resource path.
+
+				String key = fileName;
 
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					document.getId());
-
-				String key = fileEntry.getFileName();
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.looseSerialize(fileEntry));
