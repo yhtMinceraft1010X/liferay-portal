@@ -1,5 +1,9 @@
 definition {
 
+	macro viewPropertyInfo {
+		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_HEADER_DESCRIPTION");
+	}
+
 	macro viewFilterButton {
 		if(isSet(nofilter)){
 			AssertElementNotPresent(
