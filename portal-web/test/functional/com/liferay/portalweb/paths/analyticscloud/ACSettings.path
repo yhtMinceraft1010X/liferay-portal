@@ -220,6 +220,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTIES_HEADER_DESCRIPTION</td>
+	<td>//div[contains(@class,'header-text')]//div[contains(text(),'Analytics Cloud allows for customized user access settings per property managed.')]/following-sibling::div[contains(text(),'By default, property access settings will be set to all users.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_SELECT_USERS_OKAY_BUTTON</td>
 	<td>//button[contains(@class,'button-root btn btn-warning') and text()='Okay']</td>
 	<td></td>
