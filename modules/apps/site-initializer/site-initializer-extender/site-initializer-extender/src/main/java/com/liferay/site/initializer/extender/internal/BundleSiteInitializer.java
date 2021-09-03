@@ -461,7 +461,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.setAssetTagNames(
 				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
 
-			Long journalFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			long journalFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 			if (documentFolderId != null) {
 				journalFolderId = documentFolderId;
