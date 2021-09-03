@@ -27,12 +27,33 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9121 | Test Summary: Settings page properties list is searchable"
-	@ignore = "true"
 	@priority = "3"
 	test CanSearchForPagePropertiesList {
 
-		// TODO LRAC-9121 CanSearchForPagePropertiesList pending implementation
+		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4";
 
+		task ("go to property and add new  properties") {
+			ACNavigation.goToSettings();
+
+			for (var n : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${n}");
+			}
+
+		}
+
+		task ("search the properties") {
+			ACSettings.goToProperties();
+
+			for (var n : list "${propertyList}") {
+				ACUtils.searchBar(searchItem = "${n}");
+
+				ACSettings.viewPropertyEntryName(propertyName = "${n}");
+			}
+
+		}
+			
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
