@@ -39,7 +39,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -74,13 +73,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -461,18 +458,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
 
-			List<String> assetTagNames = new ArrayList<>();
-
-			JSONArray assetTagNamesJSONArray = jsonObject.getJSONArray("tags");
-
-			if (assetTagNamesJSONArray != null) {
-				for (int i = 0; i < assetTagNamesJSONArray.length(); i++) {
-					assetTagNames.add(assetTagNamesJSONArray.getString(i));
-				}
-			}
-
 			serviceContext.setAssetTagNames(
-				assetTagNames.toArray(new String[0]));
+				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
 
 			Long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
