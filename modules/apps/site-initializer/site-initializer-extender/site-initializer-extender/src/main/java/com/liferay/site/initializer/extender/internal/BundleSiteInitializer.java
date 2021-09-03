@@ -373,20 +373,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 								urlConnection.getContentLength())),
 						__ -> _objectMapper, values));
 
+				// TODO File name must include its parent folder names
+
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					document.getId());
+
+				String key = fileEntry.getFileName();
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.looseSerialize(fileEntry));
 
 				jsonObject.put("alt", StringPool.BLANK);
 
-				// TODO File name must include its parent folder names
-
-				String key = fileEntry.getFileName();
-
 				documentsStringUtilReplaceValues.put(
 					"DOCUMENT_JSON:" + key, jsonObject.toString());
+
 				documentsStringUtilReplaceValues.put(
 					"DOCUMENT_URL:" + key,
 					_dlURLHelper.getPreviewURL(
