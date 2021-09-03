@@ -451,6 +451,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			long journalFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (documentFolderId != null) {
+				journalFolderId = documentFolderId;
+			}
+
 			String json = _read(resourcePath);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -458,17 +464,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
 
-			serviceContext.setAssetTagNames(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
-
-			long journalFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-			if (documentFolderId != null) {
-				journalFolderId = documentFolderId;
-			}
-
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
+
+			serviceContext.setAssetTagNames(
+				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
 
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
