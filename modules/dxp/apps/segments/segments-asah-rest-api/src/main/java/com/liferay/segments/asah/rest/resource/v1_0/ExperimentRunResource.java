@@ -24,6 +24,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -95,7 +96,8 @@ public interface ExperimentRunResource {
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
 	public default Filter toFilter(String filterString) {
-		return toFilter(filterString, null);
+		return toFilter(
+			filterString, Collections.<String, List<String>>emptyMap());
 	}
 
 	public default Filter toFilter(
