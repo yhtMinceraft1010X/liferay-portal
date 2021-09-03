@@ -66,9 +66,9 @@ public class TemplateInfoItemFieldSetProviderImpl
 				}
 			}
 		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "information-templates")
+			InfoLocalizedValue.localize(getClass(), "templates")
 		).name(
-			"information-templates"
+			"templates"
 		).build();
 	}
 
