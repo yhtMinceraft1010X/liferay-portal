@@ -179,12 +179,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
+			Map<String, String> documentsStringUtilReplaceValues =
+				_addDocuments(serviceContext);
+
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
-			_addDocuments(serviceContext);
-
-			_addJournalArticles(serviceContext);
 			_addFragmentEntries(serviceContext);
+			_addJournalArticles(
+				documentsStringUtilReplaceValues, serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
@@ -297,16 +299,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return documentFolder.getId();
 	}
 
-	private void _addDocuments(
+	private Map<String, String> _addDocuments(
 			Long documentFolderId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		Map<String, String> documentsStringUtilReplaceValues = new HashMap<>();
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return documentsStringUtilReplaceValues;
 		}
 
 		DocumentResource.Builder documentResourceBuilder =
@@ -316,14 +320,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
-		_fileEntries = new ArrayList<>();
-
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				_addDocuments(
-					_addDocumentFolder(
-						documentFolderId, resourcePath, serviceContext),
-					resourcePath, serviceContext);
+				documentsStringUtilReplaceValues.putAll(
+					_addDocuments(
+						_addDocumentFolder(
+							documentFolderId, resourcePath, serviceContext),
+						resourcePath, serviceContext));
 
 				continue;
 			}
@@ -373,13 +376,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					document.getId());
 
-				_fileEntries.add(fileEntry);
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.looseSerialize(fileEntry));
+
+				jsonObject.put("alt", StringPool.BLANK);
+
+				// TODO File name must include its parent folder names
+
+				String key = fileEntry.getFileName();
+
+				documentsStringUtilReplaceValues.put(
+					"DOCUMENT_JSON:" + key, jsonObject.toString());
+				documentsStringUtilReplaceValues.put(
+					"DOCUMENT_URL:" + key,
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, false));
 			}
 		}
+
+		return documentsStringUtilReplaceValues;
 	}
 
-	private void _addDocuments(ServiceContext serviceContext) throws Exception {
-		_addDocuments(null, "/site-initializer/documents", serviceContext);
+	private Map<String, String> _addDocuments(ServiceContext serviceContext)
+		throws Exception {
+
+		return _addDocuments(
+			null, "/site-initializer/documents", serviceContext);
 	}
 
 	private void _addFragmentEntries(ServiceContext serviceContext)
@@ -397,8 +420,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addJournalArticles(
-			Long documentFolderId, String parentResourcePath,
-			ServiceContext serviceContext)
+			Long documentFolderId,
+			Map<String, String> documentsStringUtilReplaceValues,
+			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -418,7 +442,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_addJournalArticles(
 					_addStructuredContentFolders(
 						documentFolderId, parentResourcePath, serviceContext),
-					resourcePath, serviceContext);
+					documentsStringUtilReplaceValues, resourcePath,
+					serviceContext);
 
 				continue;
 			}
@@ -458,8 +483,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				folderId = documentFolderId;
 			}
 
-			Map<String, String> fileEntriesMap = _getFileEntriesMap();
-
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
 
@@ -471,7 +494,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				titleMap, null, titleMap,
 				StringUtil.replace(
 					_read(StringUtil.replace(resourcePath, ".json", ".xml")),
-					"[$", "$]", fileEntriesMap),
+					"[$", "$]", documentsStringUtilReplaceValues),
 				journalArticleJSONObject.getString("ddmStructureKey"),
 				journalArticleJSONObject.getString("ddmTemplateKey"), null,
 				calendar.get(Calendar.MONTH),
@@ -484,11 +507,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addJournalArticles(ServiceContext serviceContext)
+	private void _addJournalArticles(
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		_addJournalArticles(
-			null, "/site-initializer/journal-articles", serviceContext);
+			null, documentsStringUtilReplaceValues,
+			"/site-initializer/journal-articles", serviceContext);
 	}
 
 	private void _addObjectDefinitions(ServiceContext serviceContext)
@@ -639,28 +665,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
 	}
 
-	private Map<String, String> _getFileEntriesMap() throws Exception {
-		Map<String, String> fileEntriesMap = new HashMap<>();
-
-		for (FileEntry fileEntry : _fileEntries) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(fileEntry));
-
-			jsonObject.put("alt", StringPool.BLANK);
-
-			fileEntriesMap.put(
-				"JSON_" + fileEntry.getFileName(), jsonObject.toString());
-
-			fileEntriesMap.put(
-				"URL_" + fileEntry.getFileName(),
-				_dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, false));
-		}
-
-		return fileEntriesMap;
-	}
-
 	private String _read(String resourcePath) throws Exception {
 		InputStream inputStream = _servletContext.getResourceAsStream(
 			resourcePath);
@@ -694,7 +698,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
-	private List<FileEntry> _fileEntries;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
