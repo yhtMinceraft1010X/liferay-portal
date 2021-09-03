@@ -234,22 +234,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			JSONObject ddmTemplateJSONObject = JSONFactoryUtil.createJSONObject(
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(url.openStream()));
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
 					serviceContext.getScopeGroupId(), resourceClassNameId,
-					ddmTemplateJSONObject.getString("ddmStructureKey"));
+					jsonObject.getString("ddmStructureKey"));
 
 			_ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), resourceClassNameId,
-				ddmTemplateJSONObject.getString("ddmTemplateKey"),
+				jsonObject.getString("ddmTemplateKey"),
 				HashMapBuilder.put(
-					LocaleUtil.getSiteDefault(),
-					ddmTemplateJSONObject.getString("name")
+					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
 				).build(),
 				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL, _read("ddm-template.ftl", url),
@@ -457,17 +456,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			String json = _read(resourcePath);
 
-			JSONObject journalArticleJSONObject =
-				JSONFactoryUtil.createJSONObject(json);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
-				LocaleUtil.getSiteDefault(),
-				journalArticleJSONObject.getString("name"));
+				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
 
 			List<String> assetTagNames = new ArrayList<>();
 
-			JSONArray assetTagNamesJSONArray =
-				journalArticleJSONObject.getJSONArray("tags");
+			JSONArray assetTagNamesJSONArray = jsonObject.getJSONArray("tags");
 
 			if (assetTagNamesJSONArray != null) {
 				for (int i = 0; i < assetTagNamesJSONArray.length(); i++) {
@@ -491,13 +487,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				null, serviceContext.getUserId(),
 				serviceContext.getScopeGroupId(), folderId,
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
-				journalArticleJSONObject.getString("articleId"), false, 1,
-				titleMap, null, titleMap,
+				jsonObject.getString("articleId"), false, 1, titleMap, null,
+				titleMap,
 				StringUtil.replace(
 					_read(StringUtil.replace(resourcePath, ".json", ".xml")),
 					"[$", "$]", documentsStringUtilReplaceValues),
-				journalArticleJSONObject.getString("ddmStructureKey"),
-				journalArticleJSONObject.getString("ddmTemplateKey"), null,
+				jsonObject.getString("ddmStructureKey"),
+				jsonObject.getString("ddmTemplateKey"), null,
 				calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
