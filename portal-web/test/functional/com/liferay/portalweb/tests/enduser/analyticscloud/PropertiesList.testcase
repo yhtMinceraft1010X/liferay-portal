@@ -45,11 +45,24 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
-	@ignore = "true"
 	@priority = "3"
 	test CanUserSelectPropertyFromTheDropDownByFirstTime {
 
-		// TODO LRAC-9117 CanUserSelectPropertyFromTheDropDownByFirstTime pending implementation
+		var propertyName = "Property Name 1";
+
+		task ("go to properties and add a new property") {
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+
+			ACProperties.addNewProperty(propertyName = "${propertyName}");
+		}
+
+		task ("select new property") {
+			ACNavigation.exitSettings();
+
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
 
 	}
 
