@@ -1,5 +1,13 @@
 definition {
 
+	macro viewPropertyListDefaultMessage {
+		AssertElementPresent(
+			key_text = "No Properties Found",
+			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
+
+		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
+	}
+
 	macro viewPropertyInfo {
 		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_HEADER_DESCRIPTION");
 	}
