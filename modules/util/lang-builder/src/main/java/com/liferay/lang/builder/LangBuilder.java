@@ -798,7 +798,7 @@ public class LangBuilder {
 
 	private static final String[][] _CONTRACTIONS = {
 		{"Aren't", "Are not"}, {"Can't", "Cannot"}, {"Could've", "Could have"},
-		{"Couldn't", "Coudd not"}, {"Didn't", "Did not"},
+		{"Couldn't", "Could not"}, {"Didn't", "Did not"},
 		{"Doesn't", "Does not"}, {"Don't", "Do not"}, {"Hadn't", "Had not"},
 		{"Hasn't", "Has not"}, {"Haven't", "Have not"}, {"How's", "How is"},
 		{"I'd", "I would"}, {"I'll", "I will"}, {"I've", "I have"},
