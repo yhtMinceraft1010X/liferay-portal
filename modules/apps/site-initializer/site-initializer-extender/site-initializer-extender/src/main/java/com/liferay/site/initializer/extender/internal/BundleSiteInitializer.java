@@ -226,8 +226,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		long resourceClassNameId = _portal.getClassNameId(JournalArticle.class);
-
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
@@ -236,13 +234,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					serviceContext.getScopeGroupId(), resourceClassNameId,
+					serviceContext.getScopeGroupId(),
+					_portal.getClassNameId(JournalArticle.class),
 					jsonObject.getString("ddmStructureKey"));
 
 			_ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(DDMStructure.class),
-				ddmStructure.getStructureId(), resourceClassNameId,
+				ddmStructure.getStructureId(),
+				_portal.getClassNameId(JournalArticle.class),
 				jsonObject.getString("ddmTemplateKey"),
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
