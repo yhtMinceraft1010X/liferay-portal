@@ -57,15 +57,16 @@ public class RestoreCollectionDisplayConfigMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String filterFragmentEntryLinks = ParamUtil.getString(
-			actionRequest, "filterFragmentEntryLinks");
-		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
+		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		String filterFragmentEntryLinks = ParamUtil.getString(
+			actionRequest, "filterFragmentEntryLinks");
 
 		JSONArray filterFragmentEntryLinksJSONArray =
 			JSONFactoryUtil.createJSONArray(filterFragmentEntryLinks);
