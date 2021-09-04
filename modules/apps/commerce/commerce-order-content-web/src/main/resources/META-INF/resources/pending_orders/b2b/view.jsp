@@ -18,8 +18,6 @@
 
 <%
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
-
-int commerceOrderTypesCount = commerceOrderContentDisplayContext.getCommerceOrderTypesCount();
 %>
 
 <liferay-ui:error exception="<%= CommerceOrderAccountLimitException.class %>" message="unable-to-create-a-new-order-as-the-open-order-limit-has-been-reached" />
@@ -65,7 +63,7 @@ int commerceOrderTypesCount = commerceOrderContentDisplayContext.getCommerceOrde
 				/>
 			</aui:form>
 
-			<c:if test="<%= commerceOrderTypesCount > 1 %>">
+			<c:if test="<%= commerceOrderContentDisplayContext.getCommerceOrderTypesCount() > 1 %>">
 				<portlet:renderURL var="viewCommerceOrderOrderTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_order_type_modal" />
 				</portlet:renderURL>
