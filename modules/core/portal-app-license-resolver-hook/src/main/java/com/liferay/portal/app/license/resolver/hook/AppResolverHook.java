@@ -49,13 +49,14 @@ public class AppResolverHook implements ResolverHook {
 
 	public AppResolverHook(
 		ServiceTracker<AppLicenseVerifier, AppLicenseVerifier> serviceTracker,
-		Set<String> filteredBundleSymbolicNames, Set<String> filteredProductIds,
-		Set<String> allowedSymbolicNames) {
+		Set<String> allowedSymbolicNames,
+		Set<String> filteredBundleSymbolicNames,
+		Set<String> filteredProductIds) {
 
 		_serviceTracker = serviceTracker;
+		_allowedSymbolicNames = allowedSymbolicNames;
 		_filteredBundleSymbolicNames = filteredBundleSymbolicNames;
 		_filteredProductIds = filteredProductIds;
-		_allowedSymbolicNames = allowedSymbolicNames;
 	}
 
 	@Override

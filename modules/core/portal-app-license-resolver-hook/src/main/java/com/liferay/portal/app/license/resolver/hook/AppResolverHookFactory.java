@@ -116,8 +116,8 @@ public class AppResolverHookFactory implements ResolverHookFactory {
 	@Override
 	public ResolverHook begin(Collection<BundleRevision> triggers) {
 		return new AppResolverHook(
-			_serviceTracker, _filteredBundleSymbolicNames, _filteredProductIds,
-			_allowedSymbolicNames);
+			_serviceTracker, _allowedSymbolicNames,
+			_filteredBundleSymbolicNames, _filteredProductIds);
 	}
 
 	public void close() {
