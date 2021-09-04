@@ -94,7 +94,5 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-String languageId = LanguageUtil.getLanguageId(locale);
-
 String redirect = ParamUtil.getString(request, "redirect");
 %>

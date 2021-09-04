@@ -186,7 +186,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "order-type") %>'
 					>
-						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceOrderTypeName(languageId)) %>
+						<%= HtmlUtil.escape(commerceOrderEditDisplayContext.getCommerceOrderTypeName(LanguageUtil.getLanguageId(locale))) %>
 					</commerce-ui:info-box>
 
 					<commerce-ui:info-box
