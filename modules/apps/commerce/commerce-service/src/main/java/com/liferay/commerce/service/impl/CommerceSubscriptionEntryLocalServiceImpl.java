@@ -31,6 +31,7 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -791,6 +792,13 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 						"commerceSubscriptionEntryId",
 						commerceSubscriptionEntryId);
 					message.put("subscriptionStatus", subscriptionStatus);
+					message.setPayload(
+						JSONUtil.put(
+							"commerceSubscriptionEntryId",
+							commerceSubscriptionEntryId
+						).put(
+							"subscriptionStatus", subscriptionStatus
+						));
 
 					MessageBusUtil.sendMessage(
 						CommerceDestinationNames.SUBSCRIPTION_STATUS, message);
