@@ -294,9 +294,6 @@ public class OrderResourceImpl
 			_commerceCurrencyService.getCommerceCurrency(
 				commerceChannel.getCompanyId(), order.getCurrencyCode());
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceChannel.getGroupId());
-
 		int commerceOrderTypesCount =
 			_commerceOrderTypeService.getCommerceOrderTypesCount(
 				CommerceChannel.class.getName(),
@@ -320,6 +317,9 @@ public class OrderResourceImpl
 
 			order.setOrderTypeId(Long.valueOf(0));
 		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceChannel.getGroupId());
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addOrUpdateCommerceOrder(
