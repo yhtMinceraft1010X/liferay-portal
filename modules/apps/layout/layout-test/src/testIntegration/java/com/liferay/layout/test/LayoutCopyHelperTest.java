@@ -129,7 +129,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyContentLayoutStructure() throws Exception {
-		Layout sourceLayout = _addTypeContentLayout();
+		Layout sourceLayout = _addContentLayout();
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -165,7 +165,7 @@ public class LayoutCopyHelperTest {
 			sourceLayout.getPlid(), layoutStructure.toString(),
 			_serviceContext);
 
-		Layout targetLayout = _addTypeContentLayout();
+		Layout targetLayout = _addContentLayout();
 
 		Assert.assertTrue(
 			ListUtil.isNotEmpty(
@@ -337,7 +337,7 @@ public class LayoutCopyHelperTest {
 				"lfr-theme:regular:show-header"));
 	}
 
-	private Layout _addTypeContentLayout() throws Exception {
+	private Layout _addContentLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
