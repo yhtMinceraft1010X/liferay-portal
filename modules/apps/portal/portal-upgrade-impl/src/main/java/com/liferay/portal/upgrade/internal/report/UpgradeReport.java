@@ -149,13 +149,13 @@ public class UpgradeReport {
 		if (!StringUtil.endsWith(
 				PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
-			return "Check your external document library repository to know " +
-				"the size of your database";
+			return "Check your external repository to know the document " +
+				"library storage size";
 		}
 
 		if (_rootDir == null) {
-			return "\"rootDir\" was not set, unable to determine the size of " +
-				"the document library\n";
+			return "Unable to determine the document library storage size " +
+				"because the property \"rootDir\" was not set\n";
 		}
 
 		double bytes = 0;
@@ -183,7 +183,7 @@ public class UpgradeReport {
 			String.format("%." + 2 + "f", bytes), StringPool.SPACE,
 			dictionary[index]);
 
-		return "The document library size is " + size;
+		return "The document library storage size is " + size;
 	}
 
 	private String _getLogEvents(String type) {
@@ -205,40 +205,40 @@ public class UpgradeReport {
 		sb.append(StringUtil.upperCaseFirstLetter(type));
 		sb.append(" thrown during upgrade process\n");
 
-		Stream<Map.Entry<String, Map<String, Integer>>> entrySetStream =
+		Stream<Map.Entry<String, Map<String, Integer>>> stream =
 			entrySet.stream();
 
-		Map<String, Map<String, Integer>> sortedErrors = entrySetStream.sorted(
+		Map<String, Map<String, Integer>> sortedErrors = stream.sorted(
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
 					new Comparator<Map<String, Integer>>() {
 
 						@Override
 						public int compare(
-							Map<String, Integer> o1, Map<String, Integer> o2) {
+							Map<String, Integer> object1,
+							Map<String, Integer> object2) {
 
-							return Integer.compare(o1.size(), o2.size());
+							return Integer.compare(
+								object1.size(), object2.size());
 						}
 
 					}))
 		).collect(
 			Collectors.toMap(
-				Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-				LinkedHashMap::new)
+				Map.Entry::getKey, Map.Entry::getValue,
+				(object1, object2) -> object2, LinkedHashMap::new)
 		);
 
 		for (Map.Entry<String, Map<String, Integer>> entry :
 				sortedErrors.entrySet()) {
 
-			sb.append("ClassName: ");
+			sb.append("Class name: ");
 			sb.append(entry.getKey());
 			sb.append(StringPool.NEW_LINE);
 
-			Map<String, Integer> submapSorted = _sort(entry.getValue());
+			Map<String, Integer> value = _sort(entry.getValue());
 
-			for (Map.Entry<String, Integer> valueEntry :
-					submapSorted.entrySet()) {
-
+			for (Map.Entry<String, Integer> valueEntry : value.entrySet()) {
 				sb.append(StringPool.TAB);
 				sb.append(valueEntry.getValue());
 				sb.append(" occurrences of the following ");
@@ -413,7 +413,7 @@ public class UpgradeReport {
 	}
 
 	private String _getUpgradeTimes() {
-		List<String> upgradeTimes = _eventMessages.get(
+		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
 		if (_eventMessages.size() == 0) {
@@ -425,33 +425,33 @@ public class UpgradeReport {
 		sb.append(_UPGRADE_PROCESS_TIMES_MAX);
 		sb.append(" longest running upgrade processes:\n");
 
-		Map<String, Integer> upgradeProcessMap = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 
-		for (String entry : upgradeTimes) {
-			int startIndex = entry.indexOf("com.");
+		for (String message : messages) {
+			int startIndex = message.indexOf("com.");
 
-			int endIndex = entry.indexOf(StringPool.SPACE, startIndex);
+			int endIndex = message.indexOf(StringPool.SPACE, startIndex);
 
-			String className = entry.substring(startIndex, endIndex);
+			String className = message.substring(startIndex, endIndex);
 
 			if (className.equals(PortalUpgradeProcess.class.getName())) {
 				continue;
 			}
 
-			startIndex = entry.indexOf(StringPool.SPACE, endIndex + 1);
+			startIndex = message.indexOf(StringPool.SPACE, endIndex + 1);
 
-			endIndex = entry.indexOf(StringPool.SPACE, startIndex + 1);
+			endIndex = message.indexOf(StringPool.SPACE, startIndex + 1);
 
-			upgradeProcessMap.put(
+			map.put(
 				className,
-				GetterUtil.getInteger(entry.substring(startIndex, endIndex)));
+				GetterUtil.getInteger(message.substring(startIndex, endIndex)));
 		}
 
-		upgradeProcessMap = _sort(upgradeProcessMap);
+		map = _sort(map);
 
 		int upgradeProcessesPrinted = 0;
 
-		for (Map.Entry<String, Integer> entry : upgradeProcessMap.entrySet()) {
+		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			sb.append(StringPool.TAB);
 			sb.append(entry.getKey());
 			sb.append(" took ");
@@ -469,25 +469,25 @@ public class UpgradeReport {
 	}
 
 	private Map<String, Integer> _sort(Map<String, Integer> map) {
-		Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+		Set<Map.Entry<String, Integer>> set = map.entrySet();
 
-		Stream<Map.Entry<String, Integer>> entrySetStream = entrySet.stream();
+		Stream<Map.Entry<String, Integer>> stream = set.stream();
 
-		return entrySetStream.sorted(
+		return stream.sorted(
 			Collections.reverseOrder(
 				Map.Entry.comparingByValue(
 					new Comparator<Integer>() {
 
 						@Override
-						public int compare(Integer o1, Integer o2) {
-							return Integer.compare(o1, o2);
+						public int compare(Integer object1, Integer object2) {
+							return Integer.compare(object1, object2);
 						}
 
 					}))
 		).collect(
 			Collectors.toMap(
-				Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
-				LinkedHashMap::new)
+				Map.Entry::getKey, Map.Entry::getValue,
+				(object1, object2) -> object2, LinkedHashMap::new)
 		);
 	}
 
