@@ -163,9 +163,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9101 | Test Summary: [AC] It is possible create Properties when no data source is created yet"
 	@priority = "3"
 	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
-
 		task ("Remove all data sources present") {
-			ACUtils.launchAC();		
+			ACUtils.launchAC();
 
 			ACSettings.deleteAllDataSource();
 		}
@@ -175,7 +174,6 @@ definition {
 
 			ACProperties.addNewProperty(propertyName = "AC Test Property");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9107 | Test Summary: [AC] Canceling a property creation by clicking in Cancel button, x button or clicking outside the modal area"
@@ -580,9 +578,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9109 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test PropertyFieldDisplayedWhenNoPropertyAvailable {
-
 		task ("Go to properties") {
-
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
@@ -593,13 +589,11 @@ definition {
 		task ("assert empty state on properties page") {
 			ACProperties.assertNoProperties();
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9106 | Test Summary: [AC] Property name with the maximum and minimal char quantity validation"
 	@priority = "3"
 	test PropertyNameWithCharQuantityValidation {
-
 		task ("Go to properties") {
 			ACUtils.launchAC();
 
@@ -614,10 +608,9 @@ definition {
 
 		task ("Add a new property with the maximum char quantity") {
 			ACSettings.goToProperties();
-			
+
 			ACProperties.addNewProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMa");
 		}
-
 	}
 
 }
