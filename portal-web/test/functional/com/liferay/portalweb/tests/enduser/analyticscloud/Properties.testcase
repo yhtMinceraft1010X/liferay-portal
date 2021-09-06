@@ -27,17 +27,17 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownDXP();
+		// ACUtils.tearDownDXP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
+		// if ("${testPortalInstance}" == "true") {
+		// 	PortalInstances.tearDownCP();
+		// }
 
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
+		// else {
+		// 	JSONGroup.deleteGroupByName(groupName = "Site Name");
+		// }
 
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9034 | Test Summary: As a Business User, I should be able to create multiple properties with multiple sites"
@@ -161,11 +161,16 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9101 | Test Summary: [AC] It is possible create Properties when no data source is created yet"
-	@ignore = "true"
 	@priority = "3"
 	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
 
-		// TODO LRAC-9101 CanCreatePropertiesWhenNoDataSourceIsCreatedYet pending implementation
+		ACUtils.launchAC();		
+
+		ACSettings.deleteAllDataSource();
+
+		ACSettings.goToProperties();
+
+		ACProperties.addNewProperty(propertyName = "AC Test Property");
 
 	}
 
