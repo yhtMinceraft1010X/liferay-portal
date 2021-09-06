@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
-
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
+long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 renderResponse.setTitle(LanguageUtil.get(request, "export"));
 %>
@@ -72,21 +72,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 		<clay:content-section>
 			<clay:row>
 				<clay:col>
-
-					<%
-					List<SelectOption> selectOptions = new ArrayList<>();
-
-					selectOptions.add(new SelectOption("CSV", "CSV"));
-					selectOptions.add(new SelectOption("TXT", "TXT"));
-					selectOptions.add(new SelectOption("XLS", "XLS"));
-					selectOptions.add(new SelectOption("XML", "XML"));
-					%>
-
 					<clay:select
 						id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
 						label="external-type"
 						name='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
-						options="<%= selectOptions %>"
+						options="<%=
+							Arrays.asList(
+								new SelectOption("CSV", "CSV"),
+								new SelectOption("TXT", "TXT"),
+								new SelectOption("XLS", "XLS"),
+								new SelectOption("XML", "XML"))
+						%>"
 					/>
 				</clay:col>
 			</clay:row>
