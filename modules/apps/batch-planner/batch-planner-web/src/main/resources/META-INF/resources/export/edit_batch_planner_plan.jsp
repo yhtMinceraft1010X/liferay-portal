@@ -29,9 +29,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 <liferay-frontend:edit-form
 	action="<%= exportBatchPlannerPlanURL %>"
 >
-	<aui:input name="export" type="hidden" value="<%= true %>" />
 	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 	<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
+	<aui:input name="export" type="hidden" value="<%= true %>" />
 
 	<liferay-frontend:edit-form-body>
 		<aui:input name="name" />
