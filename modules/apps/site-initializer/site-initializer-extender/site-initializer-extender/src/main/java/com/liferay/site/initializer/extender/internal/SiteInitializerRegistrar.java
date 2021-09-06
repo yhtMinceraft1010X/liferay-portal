@@ -95,12 +95,11 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_assetListEntryLocalService,
-				_bundle, _ddmStructureLocalService, _ddmTemplateLocalService,
-				_defaultDDMStructureHelper, _dlURLHelper,
-				_documentFolderResourceFactory, _documentResourceFactory,
-				_fragmentsImporter, _groupLocalService,
-				_journalArticleLocalService, _jsonFactory,
+				_assetListEntryLocalService, _bundle, _ddmStructureLocalService,
+				_ddmTemplateLocalService, _defaultDDMStructureHelper,
+				_dlURLHelper, _documentFolderResourceFactory,
+				_documentResourceFactory, _fragmentsImporter,
+				_groupLocalService, _journalArticleLocalService, _jsonFactory,
 				_objectDefinitionResourceFactory, _portal, _servletContext,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyVocabularyResourceFactory,

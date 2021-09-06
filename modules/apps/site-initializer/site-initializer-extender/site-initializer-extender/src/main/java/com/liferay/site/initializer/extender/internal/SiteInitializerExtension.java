@@ -73,9 +73,9 @@ public class SiteInitializerExtension {
 
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
-				assetListEntryLocalService,
-				bundle, bundleContext, ddmStructureLocalService,
-				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
+				assetListEntryLocalService, bundle, bundleContext,
+				ddmStructureLocalService, ddmTemplateLocalService,
+				defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, journalArticleLocalService,
 				groupLocalService, jsonFactory, objectDefinitionResourceFactory,
