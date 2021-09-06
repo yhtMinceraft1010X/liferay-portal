@@ -71,19 +71,19 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 				true, externalType, StringPool.SLASH, internalClassName, name,
 				false);
 
-		boolean hasColumnHeaders = ParamUtil.getBoolean(
-			actionRequest, "hasColumnHeaders");
+		boolean containsHeaders = ParamUtil.getBoolean(
+			actionRequest, "containsHeaders");
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
-			batchPlannerPlan.getBatchPlannerPlanId(), "hasColumnHeaders",
-			String.valueOf(hasColumnHeaders));
+			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
+			String.valueOf(containsHeaders));
 
-		boolean saveForLaterDownload = ParamUtil.getBoolean(
-			actionRequest, "saveForLaterDownload");
+		boolean saveExport = ParamUtil.getBoolean(
+			actionRequest, "saveExport");
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
-			batchPlannerPlan.getBatchPlannerPlanId(), "saveForLaterDownload",
-			String.valueOf(saveForLaterDownload));
+			batchPlannerPlan.getBatchPlannerPlanId(), "saveExport",
+			String.valueOf(saveExport));
 
 		List<BatchPlannerMapping> batchPlannerMappings =
 			_getBatchPlannerMappings(actionRequest);
