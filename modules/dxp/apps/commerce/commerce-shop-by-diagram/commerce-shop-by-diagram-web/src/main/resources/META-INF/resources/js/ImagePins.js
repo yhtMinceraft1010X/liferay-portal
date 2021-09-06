@@ -15,6 +15,8 @@ import React, {useLayoutEffect, useRef} from 'react';
 
 import {moveController, zoomIn, zoomOut} from './NavigationsUtils';
 
+const COLOR_ORANGE = '#ffa500';
+
 const PIN_ATTRIBUTES = [
 	'cx',
 	'cy',
@@ -56,6 +58,7 @@ const ImagePins = ({
 	setShowTooltip,
 	setZoomInHandler,
 	setZoomOutHandler,
+	showTooltip,
 	zoomInHandler,
 	zoomOutHandler,
 }) => {
@@ -147,8 +150,9 @@ const ImagePins = ({
 
 		function dragStarted() {
 			const pinContainer = select(this);
+
 			pinContainer.raise().classed('active', true);
-			pinContainer.selectAll('circle').attr('stroke', `#ffa500`);
+			pinContainer.selectAll('circle').attr('stroke', COLOR_ORANGE);
 		}
 
 		function dragged() {
@@ -298,7 +302,8 @@ const ImagePins = ({
 					.call(dragHandler)
 					.on('mouseover', function () {
 						const gPin = select(this);
-						gPin.selectAll('circle').attr('stroke', `#ffa500`);
+
+						gPin.selectAll('circle').attr('stroke', COLOR_ORANGE);
 					})
 					.on('mouseout', function () {
 						const gPin = select(this);
@@ -311,7 +316,11 @@ const ImagePins = ({
 				cont.append('circle')
 					.attr('fill', () => 'transparent')
 					.attr('r', () => addNewPinState.radius)
-					.attr('stroke', () => `#${addNewPinState.fill}`)
+					.attr('stroke', () =>
+						showTooltip.tooltip
+							? '#ffa500'
+							: `#${addNewPinState.fill}`
+					)
 					.attr('stroke-width', 0.5);
 			}
 			else {
@@ -384,6 +393,7 @@ const ImagePins = ({
 		setSelectedOption,
 		setZoomInHandler,
 		setZoomOutHandler,
+		showTooltip,
 		zoomOutHandler,
 		zoomInHandler,
 		pinClickAction,
