@@ -30,7 +30,6 @@ import {
 	changeNodesParentOrganization,
 	formatChild,
 	formatItem,
-	formatItemDescription,
 	formatItemName,
 	formatRootData,
 	getMinWidth,
@@ -41,7 +40,12 @@ import {
 	showChildren,
 	tree,
 } from './utils/index';
-import {fillAddButtons, fillEntityNode, getLinkDiagonal} from './utils/paint';
+import {
+	fillAddButtons,
+	fillEntityNode,
+	getLinkDiagonal,
+	printDescription,
+} from './utils/paint';
 
 class D3OrganizationChart {
 	constructor(rootData, refs, spritemap, modalActions, nodeMenuActions) {
@@ -194,9 +198,11 @@ class D3OrganizationChart {
 
 		nodesToBeUpdated.selectAll('.node-title').text(formatItemName);
 
-		nodesToBeUpdated
-			.selectAll('.node-description')
-			.text(formatItemDescription);
+		nodesToBeUpdated.selectAll('.node-description').remove();
+
+		nodesToBeUpdated.each((d, index, nodes) =>
+			printDescription(d, nodes[index], this._spritemap)
+		);
 	}
 
 	collapseAllNodes() {

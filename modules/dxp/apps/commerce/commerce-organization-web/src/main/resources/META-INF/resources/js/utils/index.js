@@ -230,16 +230,6 @@ export const formatRootData = (rootData) => {
 	return rootData;
 };
 
-export const formatOrganizationDescription = (d) => {
-	return `${d.data[COUNTER_KEYS_MAP.organization]} ${Liferay.Language.get(
-		'organizations-short-name'
-	)} | ${d.data[COUNTER_KEYS_MAP.account]} ${Liferay.Language.get(
-		'accounts-short-name'
-	)} | ${d.data[COUNTER_KEYS_MAP.user]} ${Liferay.Language.get(
-		'users-short-name'
-	)}`;
-};
-
 export const formatAccountDescription = (d) => {
 	return `${d.data[COUNTER_KEYS_MAP.user]} ${Liferay.Language.get('users')}`;
 };
@@ -284,12 +274,6 @@ export const formatUserDescription = (d) => {
 	return description;
 };
 
-const formatDescriptionMap = {
-	account: formatAccountDescription,
-	organization: formatOrganizationDescription,
-	user: formatUserDescription,
-};
-
 export const trimString = (string, nodeType) =>
 	string.length > MAX_NAME_LENGTH[nodeType]
 		? string.slice(0, MAX_NAME_LENGTH[nodeType] - 1).trim() + '…'
@@ -299,10 +283,6 @@ export const formatItemName = (d) => {
 	const name = d.data.name || d.data.emailAddress;
 
 	return trimString(name, d.data.type);
-};
-
-export const formatItemDescription = (d) => {
-	return formatDescriptionMap[d.data.type](d);
 };
 
 export function getMinWidth(nodes) {
