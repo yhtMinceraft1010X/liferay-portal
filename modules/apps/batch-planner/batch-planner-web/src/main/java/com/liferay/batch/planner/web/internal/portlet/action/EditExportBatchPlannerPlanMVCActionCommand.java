@@ -25,6 +25,7 @@ import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -129,7 +130,7 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 				actionRequest, parameterName);
 
 			if (_isCheckboxValue(externalFieldNameParamValue)) {
-				if (Boolean.parseBoolean(externalFieldNameParamValue)) {
+				if (GetterUtil.getBoolean(externalFieldNameParamValue)) {
 					externalFieldNameParamValue = internalFieldNameParamValue;
 				}
 				else {
