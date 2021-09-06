@@ -206,7 +206,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 					);
 				}
 
-				renderMappings();
+				<portlet:namespace />renderMappings();
 
 				internalClassName.attr('disabled', false);
 			})
@@ -223,12 +223,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 	A.one('#<portlet:namespace />internalClassName').on('change', function (event) {
 		this.attr('disabled', true);
 
-		renderMappings();
+		<portlet:namespace />renderMappings();
 
 		this.attr('disabled', false);
 	});
 
-	function renderMappings() {
+	function <portlet:namespace />renderMappings() {
 		var openapiURL = A.one('#<portlet:namespace />headlessEndpoint').val();
 
 		var internalClassName = A.one(
