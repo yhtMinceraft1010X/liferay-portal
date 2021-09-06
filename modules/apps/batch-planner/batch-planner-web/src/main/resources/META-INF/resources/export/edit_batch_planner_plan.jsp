@@ -76,13 +76,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 						id='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
 						label="external-type"
 						name='<%= liferayPortletResponse.getNamespace() + "externalType" %>'
-						options="<%=
-							Arrays.asList(
-								new SelectOption("CSV", "CSV"),
-								new SelectOption("TXT", "TXT"),
-								new SelectOption("XLS", "XLS"),
-								new SelectOption("XML", "XML"))
-						%>"
+						options='<%=
+							Arrays.asList(new SelectOption("CSV", "CSV"), new SelectOption("TXT", "TXT"), new SelectOption("XLS", "XLS"), new SelectOption("XML", "XML"))
+						%>'
 					/>
 				</clay:col>
 			</clay:row>

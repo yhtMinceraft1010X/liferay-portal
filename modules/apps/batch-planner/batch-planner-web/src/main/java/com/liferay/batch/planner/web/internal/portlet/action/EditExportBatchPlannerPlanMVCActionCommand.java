@@ -78,8 +78,7 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
 			String.valueOf(containsHeaders));
 
-		boolean saveExport = ParamUtil.getBoolean(
-			actionRequest, "saveExport");
+		boolean saveExport = ParamUtil.getBoolean(actionRequest, "saveExport");
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "saveExport",
