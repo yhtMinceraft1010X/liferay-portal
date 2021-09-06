@@ -164,13 +164,17 @@ definition {
 	@priority = "3"
 	test CanCreatePropertiesWhenNoDataSourceIsCreatedYet {
 
-		ACUtils.launchAC();		
+		task ("Remove all data sources present") {
+			ACUtils.launchAC();		
 
-		ACSettings.deleteAllDataSource();
+			ACSettings.deleteAllDataSource();
+		}
 
-		ACSettings.goToProperties();
+		task ("Create a new property") {
+			ACSettings.goToProperties();
 
-		ACProperties.addNewProperty(propertyName = "AC Test Property");
+			ACProperties.addNewProperty(propertyName = "AC Test Property");
+		}
 
 	}
 
@@ -583,11 +587,26 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9106 | Test Summary: [AC] Property name with the maximum and minimal char quantity validation"
-	@ignore = "true"
 	@priority = "3"
 	test PropertyNameWithCharQuantityValidation {
 
-		// TODO LRAC-9106 PropertyNameWithCharQuantityValidation pending implementation
+		task ("Go to properties") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToProperties();
+		}
+
+		task ("Add a new property with the minimum char quantity") {
+			ACProperties.addNewProperty(propertyName = "Min");
+		}
+
+		task ("Add a new property with the maximum char quantity") {
+			ACSettings.goToProperties();
+			
+			ACProperties.addNewProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMa");
+		}
 
 	}
 
