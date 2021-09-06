@@ -71,14 +71,14 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 				false);
 
 		boolean hasColumnHeaders = ParamUtil.getBoolean(
-			actionRequest, "policyHasColumnHeaders");
+			actionRequest, "hasColumnHeaders");
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "hasColumnHeaders",
 			String.valueOf(hasColumnHeaders));
 
 		boolean saveForLaterDownload = ParamUtil.getBoolean(
-			actionRequest, "policySaveForLaterDownload");
+			actionRequest, "saveForLaterDownload");
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "saveForLaterDownload",
