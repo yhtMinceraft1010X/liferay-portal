@@ -116,27 +116,23 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "batchPlannerPlanId");
 
 		if (batchPlannerPlanId == 0) {
-			return _renderFromNavigation(renderRequest);
+			if (Validator.isNull(
+					ParamUtil.getString(renderRequest, "navigation"))) {
+
+				return "/view.jsp";
+			}
+
+			if (_isExport(ParamUtil.getString(renderRequest, "navigation"))) {
+				return "/export/edit_batch_planner_plan.jsp";
+			}
+
+			return "/import/edit_batch_planner_plan.jsp";
 		}
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.getBatchPlannerPlan(batchPlannerPlanId);
 
 		if (batchPlannerPlan.isExport()) {
-			return "/export/edit_batch_planner_plan.jsp";
-		}
-
-		return "/import/edit_batch_planner_plan.jsp";
-	}
-
-	private String _renderFromNavigation(RenderRequest renderRequest) {
-		if (Validator.isNull(
-				ParamUtil.getString(renderRequest, "navigation"))) {
-
-			return "/view.jsp";
-		}
-
-		if (_isExport(ParamUtil.getString(renderRequest, "navigation"))) {
 			return "/export/edit_batch_planner_plan.jsp";
 		}
 
