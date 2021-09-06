@@ -106,7 +106,7 @@ public class UpgradeReport {
 					new String[] {
 						_getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
-						_getUpgradeTimes(), _getLogEvents("errors"),
+						_getUpgradeTimesContent(), _getLogEvents("errors"),
 						_getLogEvents("warnings")
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
@@ -412,7 +412,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private String _getUpgradeTimes() {
+	private String _getUpgradeTimesContent() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
@@ -422,6 +422,7 @@ public class UpgradeReport {
 
 		StringBundler sb = new StringBundler();
 
+		sb.append("Top ");
 		sb.append(_UPGRADE_PROCESS_TIMES_MAX);
 		sb.append(" longest running upgrade processes:\n");
 
@@ -449,7 +450,7 @@ public class UpgradeReport {
 
 		map = _sort(map);
 
-		int upgradeProcessesPrinted = 0;
+		int count = 0;
 
 		for (Map.Entry<String, Integer> entry : map.entrySet()) {
 			sb.append(StringPool.TAB);
@@ -458,9 +459,9 @@ public class UpgradeReport {
 			sb.append(entry.getValue());
 			sb.append(" ms to complete\n");
 
-			upgradeProcessesPrinted++;
+			count++;
 
-			if (upgradeProcessesPrinted >= _UPGRADE_PROCESS_TIMES_MAX) {
+			if (count >= _UPGRADE_PROCESS_TIMES_MAX) {
 				break;
 			}
 		}
