@@ -909,9 +909,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -961,9 +962,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 
 		mockHttpServletResponse.reset();
 
@@ -975,9 +976,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		document = Jsoup.parse(mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _language.getAvailableLocales(_group.getGroupId()));
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
@@ -1022,9 +1023,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 
 		Stream<String> stream = Arrays.stream(
 			_layout.getAvailableLanguageIds());
@@ -1056,9 +1057,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _getAvailableLocalesLayoutTranslatedLanguages());
+		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 	}
 
 	@Test
