@@ -51,25 +51,27 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 			(Image image) -> {
 				String fileName = _getFileName(image);
 
-				if (store.hasFile(
+				if (!store.hasFile(
 						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
 						StringPool.BLANK)) {
 
-					try (InputStream inputStream = store.getFileAsStream(
-							CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
-							StringPool.BLANK)) {
+					return;
+				}
 
-						store.addFile(
-							image.getCompanyId(), _REPOSITORY_ID, fileName,
-							Store.VERSION_DEFAULT, inputStream);
+				try (InputStream inputStream = store.getFileAsStream(
+						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
+						StringPool.BLANK)) {
 
-						store.deleteFile(
-							CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
-							Store.VERSION_DEFAULT);
-					}
-					catch (Exception exception) {
-						_log.error(exception, exception);
-					}
+					store.addFile(
+						image.getCompanyId(), _REPOSITORY_ID, fileName,
+						Store.VERSION_DEFAULT, inputStream);
+
+					store.deleteFile(
+						CompanyConstants.SYSTEM, _REPOSITORY_ID, fileName,
+						Store.VERSION_DEFAULT);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			});
 
