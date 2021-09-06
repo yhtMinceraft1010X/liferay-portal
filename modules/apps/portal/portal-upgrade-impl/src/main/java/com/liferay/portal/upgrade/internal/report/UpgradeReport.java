@@ -416,7 +416,7 @@ public class UpgradeReport {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
-		if (_eventMessages.size() == 0) {
+		if (messages.size() == 0) {
 			return "No upgrade processes registered";
 		}
 
