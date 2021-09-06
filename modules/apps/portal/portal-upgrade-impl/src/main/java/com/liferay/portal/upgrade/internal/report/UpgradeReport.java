@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -416,7 +417,7 @@ public class UpgradeReport {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
-		if (messages.size() == 0) {
+		if (ListUtil.isEmpty(messages)) {
 			return "No upgrade processes registered";
 		}
 
