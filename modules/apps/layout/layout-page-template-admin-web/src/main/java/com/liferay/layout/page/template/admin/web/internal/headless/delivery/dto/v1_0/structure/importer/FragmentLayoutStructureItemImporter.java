@@ -113,11 +113,11 @@ public class FragmentLayoutStructureItemImporter
 			Map<String, Object> fragmentStyleMap =
 				(Map<String, Object>)definitionMap.get("fragmentStyle");
 
-			int oldVersionComparison = Double.compare(
+			int oldVersionCompareValue = Double.compare(
 				layoutStructureItemImporterContext.getPageDefinitionVersion(),
 				1.1);
 
-			if (oldVersionComparison < 0) {
+			if (oldVersionCompareValue < 0) {
 				Map<String, Object> fragmentConfigMap =
 					(Map<String, Object>)definitionMap.get("fragmentConfig");
 
