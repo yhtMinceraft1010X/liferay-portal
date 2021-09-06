@@ -84,12 +84,13 @@ public class UpgradeReportLogAppenderTest {
 
 		String fasterUpgradeProcessName =
 			"com.liferay.portal.FasterUpgradeTest";
-		String slowerUpgradeProcessName =
-			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			"Completed upgrade process " + fasterUpgradeProcessName +
 				" in 10 ms");
+
+		String slowerUpgradeProcessName =
+			"com.liferay.portal.SlowerUpgradeTest";
 
 		log.info(
 			"Completed upgrade process " + slowerUpgradeProcessName +
@@ -122,7 +123,6 @@ public class UpgradeReportLogAppenderTest {
 		_appender.stop();
 
 		_assertReport("2 occurrences of the following warnings: Warning");
-
 		_assertReport(
 			"com.liferay.portal.UpgradeTest took 20401 ms to complete");
 	}
@@ -133,38 +133,34 @@ public class UpgradeReportLogAppenderTest {
 
 		_appender.stop();
 
-		_assertReport("No upgrade processes registered");
-
 		_assertReport("No errors thrown during upgrade");
-
+		_assertReport("No upgrade processes registered");
 		_assertReport("No warnings thrown during upgrade");
 	}
 
 	@Test
 	public void testProperties() throws Exception {
-		StringBuffer sb = new StringBuffer(15);
-
-		sb.append(PropsKeys.LIFERAY_HOME);
-		sb.append(StringPool.EQUAL);
-		sb.append(PropsValues.LIFERAY_HOME);
-		sb.append(StringPool.NEW_LINE);
-		sb.append(PropsKeys.LOCALES);
-		sb.append(StringPool.EQUAL);
-		sb.append(Arrays.toString(PropsValues.LOCALES));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(PropsKeys.LOCALES_ENABLED);
-		sb.append(StringPool.EQUAL);
-		sb.append(Arrays.toString(PropsValues.LOCALES_ENABLED));
-		sb.append(StringPool.NEW_LINE);
-		sb.append(PropsKeys.DL_STORE_IMPL);
-		sb.append(StringPool.EQUAL);
-		sb.append(PropsValues.DL_STORE_IMPL);
-
 		_appender.start();
 
 		_appender.stop();
 
-		_assertReport(sb.toString());
+		_assertReport(
+			StringBundler.concat(
+				PropsKeys.LIFERAY_HOME,
+				StringPool.EQUAL,
+				PropsValues.LIFERAY_HOME,
+				StringPool.NEW_LINE,
+				PropsKeys.LOCALES,
+				StringPool.EQUAL,
+				Arrays.toString(PropsValues.LOCALES),
+				StringPool.NEW_LINE,
+				PropsKeys.LOCALES_ENABLED,
+				StringPool.EQUAL,
+				Arrays.toString(PropsValues.LOCALES_ENABLED),
+				StringPool.NEW_LINE,
+				PropsKeys.DL_STORE_IMPL,
+				StringPool.EQUAL,
+				PropsValues.DL_STORE_IMPL));
 	}
 
 	@Test
@@ -195,17 +191,16 @@ public class UpgradeReportLogAppenderTest {
 		Version latestSchemaVersion =
 			PortalUpgradeProcess.getLatestSchemaVersion();
 
-		String testString = StringBundler.concat(
-			"Initial portal build number: 7100\n",
-			"Initial portal schema version: 1.0.0\n",
-			"Final portal build number: ", ReleaseInfo.getBuildNumber(),
-			StringPool.NEW_LINE, "Final portal schema version: ",
-			latestSchemaVersion.toString(), StringPool.NEW_LINE,
-			"Expected portal build number: ", ReleaseInfo.getBuildNumber(),
-			StringPool.NEW_LINE, "Expected portal schema version: ",
-			latestSchemaVersion.toString(), StringPool.NEW_LINE);
-
-		_assertReport(testString);
+		_assertReport(
+			StringBundler.concat(
+				"Initial portal build number: 7100\n",
+				"Initial portal schema version: 1.0.0\n",
+				"Final portal build number: ", ReleaseInfo.getBuildNumber(),
+				StringPool.NEW_LINE, "Final portal schema version: ",
+				latestSchemaVersion.toString(), StringPool.NEW_LINE,
+				"Expected portal build number: ", ReleaseInfo.getBuildNumber(),
+				StringPool.NEW_LINE, "Expected portal schema version: ",
+				latestSchemaVersion.toString(), StringPool.NEW_LINE));
 	}
 
 	private void _assertReport(String testString) throws Exception {

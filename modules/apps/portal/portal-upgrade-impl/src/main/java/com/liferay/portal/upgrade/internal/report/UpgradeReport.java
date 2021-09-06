@@ -92,11 +92,11 @@ public class UpgradeReport {
 		Map<String, Integer> warningMessages = _warningMessages.computeIfAbsent(
 			loggerName, key -> new ConcurrentHashMap<>());
 
-		int occurrences = warningMessages.computeIfAbsent(message, key -> 0);
+		int count = warningMessages.computeIfAbsent(message, key -> 0);
 
-		occurrences++;
+		count++;
 
-		warningMessages.put(message, occurrences);
+		warningMessages.put(message, count);
 	}
 
 	public void generateReport() {
@@ -107,7 +107,7 @@ public class UpgradeReport {
 					new String[] {
 						_getPortalVersions(), _getDialectInfo(),
 						_getProperties(), _getDLStorageSize(),
-						_getUpgradeTimesContent(), _getLogEvents("errors"),
+						_getUpgradeProcessesContent(), _getLogEvents("errors"),
 						_getLogEvents("warnings")
 					},
 					StringPool.NEW_LINE + StringPool.NEW_LINE));
@@ -413,7 +413,7 @@ public class UpgradeReport {
 		return null;
 	}
 
-	private String _getUpgradeTimesContent() {
+	private String _getUpgradeProcessesContent() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
 
