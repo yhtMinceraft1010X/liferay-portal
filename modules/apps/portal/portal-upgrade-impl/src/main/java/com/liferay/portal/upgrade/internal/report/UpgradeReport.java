@@ -424,7 +424,7 @@ public class UpgradeReport {
 		StringBundler sb = new StringBundler();
 
 		sb.append("Top ");
-		sb.append(_UPGRADE_PROCESS_TIMES_MAX);
+		sb.append(_UPGRADE_PROCESSES_COUNT);
 		sb.append(" longest running upgrade processes:\n");
 
 		Map<String, Integer> map = new HashMap<>();
@@ -462,7 +462,7 @@ public class UpgradeReport {
 
 			count++;
 
-			if (count >= _UPGRADE_PROCESS_TIMES_MAX) {
+			if (count >= _UPGRADE_PROCESSES_COUNT) {
 				break;
 			}
 		}
@@ -501,7 +501,7 @@ public class UpgradeReport {
 		"com.liferay.portal.store.file.system.configuration." +
 			"FileSystemStoreConfiguration";
 
-	private static final int _UPGRADE_PROCESS_TIMES_MAX = 20;
+	private static final int _UPGRADE_PROCESSES_COUNT = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeReport.class);
 
