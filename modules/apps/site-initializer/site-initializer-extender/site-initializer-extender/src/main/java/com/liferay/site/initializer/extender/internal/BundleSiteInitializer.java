@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
-
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -183,15 +182,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
-
-			_addAssetListEntries(serviceContext);
 			Map<String, String> documentsStringUtilReplaceValues =
 				_addDocuments(serviceContext);
+
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
 				documentsStringUtilReplaceValues, serviceContext);
+			_addAssetListEntries(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
@@ -382,8 +381,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				values = Collections.singletonMap("document", json);
 			}
 
+			Document document = null;
+
 			if (documentFolderId != null) {
-				documentResource.postDocumentFolderDocument(
+				document = documentResource.postDocumentFolderDocument(
 					documentFolderId,
 					MultipartBody.of(
 						Collections.singletonMap(
@@ -395,7 +396,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						__ -> _objectMapper, values));
 			}
 			else {
-				Document document = documentResource.postSiteDocument(
+				document = documentResource.postSiteDocument(
 					serviceContext.getScopeGroupId(),
 					MultipartBody.of(
 						Collections.singletonMap(
@@ -405,29 +406,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 								fileName, urlConnection.getInputStream(),
 								urlConnection.getContentLength())),
 						__ -> _objectMapper, values));
-
-				// TODO File name must include its parent folder names. Use a
-				// shortened version of the resource path.
-
-				String key = fileName;
-
-				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-					document.getId());
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					JSONFactoryUtil.looseSerialize(fileEntry));
-
-				jsonObject.put("alt", StringPool.BLANK);
-
-				documentsStringUtilReplaceValues.put(
-					"DOCUMENT_JSON:" + key, jsonObject.toString());
-
-				documentsStringUtilReplaceValues.put(
-					"DOCUMENT_URL:" + key,
-					_dlURLHelper.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK, false, false));
 			}
+
+			String key = resourcePath;
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				document.getId());
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(fileEntry));
+
+			jsonObject.put("alt", StringPool.BLANK);
+
+			documentsStringUtilReplaceValues.put(
+				"DOCUMENT_JSON:" + key, jsonObject.toString());
+
+			documentsStringUtilReplaceValues.put(
+				"DOCUMENT_URL:" + key,
+				_dlURLHelper.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK, false, false));
 		}
 
 		return documentsStringUtilReplaceValues;
