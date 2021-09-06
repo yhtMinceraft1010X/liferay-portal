@@ -164,7 +164,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 		).toArray();
 	}
 
-	private String _getGroupLabel(Group group, Locale locale) {
+	private String _getGroupName(Group group, Locale locale) {
 		try {
 			return group.getDescriptiveName(locale);
 		}
@@ -210,7 +210,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 					"x-group-x",
 					new String[] {
 						labelInfoLocalizedValue.getValue(locale),
-						_getGroupLabel(group, locale)
+						_getGroupName(group, locale)
 					});
 			}
 		).orElseGet(
