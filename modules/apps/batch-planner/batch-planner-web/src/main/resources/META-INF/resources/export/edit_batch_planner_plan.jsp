@@ -93,7 +93,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 				>
 					<clay:checkbox
 						id='<%= liferayPortletResponse.getNamespace() + "saveForLaterDownload" %>'
-						label="save-export-to-the-server-for-later-download"
+						label="save-export"
 						name='<%= liferayPortletResponse.getNamespace() + "saveForLaterDownload" %>'
 					/>
 				</clay:col>
@@ -106,7 +106,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 					<clay:checkbox
 						checked="<%= true %>"
 						id='<%= liferayPortletResponse.getNamespace() + "hasColumnHeaders" %>'
-						label="this-file-contains-headers"
+						label="contains-headers"
 						name='<%= liferayPortletResponse.getNamespace() + "hasColumnHeaders" %>'
 					/>
 				</clay:col>
