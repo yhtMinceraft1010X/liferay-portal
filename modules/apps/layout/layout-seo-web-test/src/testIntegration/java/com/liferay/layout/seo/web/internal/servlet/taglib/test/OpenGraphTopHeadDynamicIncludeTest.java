@@ -1005,9 +1005,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	public void testIncludeLocalesLayoutTranslatedLanguagesPortletLayout()
 		throws Exception {
 
-		_layout.setType(LayoutConstants.TYPE_PORTLET);
-
 		_layout.setTitle(RandomTestUtil.randomString(), LocaleUtil.SPAIN);
+		_layout.setType(LayoutConstants.TYPE_PORTLET);
 
 		_layout = _layoutLocalService.updateLayout(_layout);
 
