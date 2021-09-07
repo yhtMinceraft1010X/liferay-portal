@@ -212,6 +212,13 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 		searchContext.setCompanyId(serviceContext.getCompanyId());
 
+		Pagination pagination = collectionQuery.getPagination();
+
+		searchContext.setEnd(pagination.getEnd());
+
+		searchContext.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
+
 		Optional<KeywordsInfoFilter> keywordsInfoFilterOptional =
 			collectionQuery.getInfoFilterOptional(KeywordsInfoFilter.class);
 
@@ -221,13 +228,6 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 
 			searchContext.setKeywords(keywordsInfoFilter.getKeywords());
 		}
-
-		Pagination pagination = collectionQuery.getPagination();
-
-		searchContext.setEnd(pagination.getEnd());
-
-		searchContext.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
 
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 
