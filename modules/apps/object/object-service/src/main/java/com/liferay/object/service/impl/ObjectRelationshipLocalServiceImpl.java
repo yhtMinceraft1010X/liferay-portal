@@ -117,7 +117,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 			objectRelationship.setDBTableName(tableName);
 
-			//TODO Delete the rel table when Objetcrelationship get deleted
 			runSQL(
 				_getCreateMappingTableSQL(
 					tableName, objectDefinition1.getPKObjectFieldDBColumnName(),
@@ -125,6 +124,28 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
+	@Override
+	public ObjectRelationship deleteObjectRelationship(
+			long objectRelationshipId)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		return deleteObjectRelationship(objectRelationship);
+	}
+
+	@Override
+	public ObjectRelationship deleteObjectRelationship(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		// TODO Delete tables and object fields
+
+		return objectRelationshipPersistence.remove(objectRelationship);
 	}
 
 	@Override
