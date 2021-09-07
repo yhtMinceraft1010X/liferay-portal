@@ -115,9 +115,12 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.setDBTableName("R_" + StringUtil.trim(name));
 
 			runSQL(
-				_getCreateMappingTableSQL(
-					tableName, objectDefinition1.getPKObjectFieldDBColumnName(),
-					objectDefinition2.getPKObjectFieldDBColumnName()));
+				StringBundler.concat(
+					"create table ", objectRelationship.getDBTableName(), " (",
+					objectDefinition1.getPKObjectFieldDBColumnName(),
+					" LONG not null primary key ,",
+					objectDefinition2.getPKObjectFieldDBColumnName(),
+					" LONG not null primary key)"));
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);
@@ -163,22 +166,6 @@ public class ObjectRelationshipLocalServiceImpl
 		return _objectFieldLocalService.addRelationshipObjectField(
 			userId, null, objectDefinitionId, objectDefinition.getLabelMap(),
 			name);
-	}
-
-	private String _getCreateMappingTableSQL(
-		String tableName, String column1, String column2) {
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("create table ");
-		sb.append(tableName);
-		sb.append(" (");
-		sb.append(column1);
-		sb.append(" LONG not null primary key ,");
-		sb.append(column2);
-		sb.append(" LONG not null primary key)");
-
-		return sb.toString();
 	}
 
 	private void _validate(String name, String type) throws PortalException {
