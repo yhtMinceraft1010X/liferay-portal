@@ -46,6 +46,8 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
+		OutputData outputData = _getOutputData(renderRequest);
+
 		ScriptData scriptData = new ScriptData();
 
 		scriptData.append(
@@ -58,8 +60,6 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		scriptData.writeTo(stringWriter);
 
 		StringBuffer stringBuffer = stringWriter.getBuffer();
-
-		OutputData outputData = _getOutputData(renderRequest);
 
 		outputData.setDataSB(
 			RemoteAppEntryPortlet.class.toString(), WebKeys.PAGE_TOP,
