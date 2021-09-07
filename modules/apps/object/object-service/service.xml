@@ -184,7 +184,7 @@
 			<finder-column name="objectDefinitionId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectLayoutBox" remote-service="true" uuid="true">
+	<entity local-service="false" name="ObjectLayoutBox" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -211,7 +211,7 @@
 			<finder-column name="objectLayoutTabId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectLayoutBoxColumn" remote-service="true" uuid="true">
+	<entity local-service="false" name="ObjectLayoutBoxColumn" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -237,7 +237,7 @@
 			<finder-column name="objectLayoutBoxRowId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectLayoutBoxRow" remote-service="true" uuid="true">
+	<entity local-service="false" name="ObjectLayoutBoxRow" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -262,7 +262,7 @@
 			<finder-column name="objectLayoutBoxId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectLayoutTab" remote-service="true" uuid="true">
+	<entity local-service="false" name="ObjectLayoutTab" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
