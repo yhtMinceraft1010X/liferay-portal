@@ -94,12 +94,12 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationCategory
 		dynamicServletRequest.appendParameter(Constants.CMD, Constants.VIEW);
 		dynamicServletRequest.appendParameter("tabs1", doGetTabs1());
 		dynamicServletRequest.appendParameter(
-			"accountRoleGroupScope",
-			String.valueOf(doIsAccountRoleGroupScope()));
-		dynamicServletRequest.appendParameter(
 			"redirect", _getRedirect(httpServletRequest));
 		dynamicServletRequest.appendParameter(
 			"backURL", _getBackURL(httpServletRequest));
+		dynamicServletRequest.appendParameter(
+			"accountRoleGroupScope",
+			String.valueOf(doIsAccountRoleGroupScope()));
 
 		AccountRole accountRole = accountRoleLocalService.fetchAccountRole(
 			ParamUtil.getLong(httpServletRequest, "accountRoleId"));
