@@ -53,7 +53,6 @@ components:
                     type: boolean
             type: object
         ObjectField:
-            # @review
             properties:
                 actions:
                     additionalProperties:
@@ -84,11 +83,9 @@ components:
                 required:
                     type: boolean
                 type:
-                    description:
-                        "The available default types are: BigDecimal, Boolean, Date, Double, Integer, Long and String."
+                    enum: [BigDecimal, Boolean, Date, Double, Integer, Long, String]
                     type: string
         ObjectRelationship:
-            # @review
             properties:
                 actions:
                     additionalProperties:
@@ -114,8 +111,7 @@ components:
                     format: int64
                     type: integer
                 type:
-                    description:
-                        "The available default types are: one_to_one, one_to_many, many_to_one and many_to_many"
+                    enum: [one_to_many, one_to_one, many_to_many, many_to_one]
                     type: string
         Status:
             properties:

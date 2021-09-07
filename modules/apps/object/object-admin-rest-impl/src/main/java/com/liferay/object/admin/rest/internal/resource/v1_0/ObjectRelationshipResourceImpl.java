@@ -67,7 +67,7 @@ public class ObjectRelationshipResourceImpl
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(), objectDefinitionId,
 				objectRelationship.getObjectDefinitionId2(),
-				objectRelationship.getType()));
+				objectRelationship.getTypeAsString()));
 	}
 
 	private ObjectRelationship _toObjectRelationship(
@@ -83,7 +83,8 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
-				type = objectRelationship.getType();
+				type = ObjectRelationship.Type.valueOf(
+					objectRelationship.getType());
 			}
 		};
 	}
