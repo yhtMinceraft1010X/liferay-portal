@@ -112,9 +112,8 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectField objectField = _addObjectField(
-			userId, 0, objectDefinitionId, name + StringPool.UNDERLINE,
-			dbTableName, false, false, null, labelMap, name, true, false,
-			"Long");
+			userId, 0, objectDefinitionId, name, dbTableName, false, false,
+			null, labelMap, name, true, false, "Long");
 
 		if (objectDefinition.isApproved()) {
 			runSQL(

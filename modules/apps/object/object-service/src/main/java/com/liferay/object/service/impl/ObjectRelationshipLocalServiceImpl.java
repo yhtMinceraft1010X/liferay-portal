@@ -164,8 +164,7 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		return _objectFieldLocalService.addRelationshipObjectField(
-			userId, objectDefinitionId, objectDefinition.getLabelMap(),
-			name);
+			userId, objectDefinitionId, objectDefinition.getLabelMap(), name);
 	}
 
 	private void _validate(String name, String type) throws PortalException {
