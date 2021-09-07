@@ -280,24 +280,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String[] assetTagNames = JSONUtil.toStringArray(
 			assetListJSONObject.getJSONArray("tags"));
 
-		if (ArrayUtil.isNotEmpty(assetTagNames)) {
-			for (int i = 0; i < assetTagNames.length; i++) {
-				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+		for (int i = 0; i < assetTagNames.length; i++) {
+			unicodeProperties.put("queryValues" + i, assetTagNames[i]);
 
-				JSONArray queryPropertiesJSONArray =
-					unicodePropertiesJSONObject.getJSONArray("query");
+			JSONArray queryPropertiesJSONArray =
+				unicodePropertiesJSONObject.getJSONArray("query");
 
-				if (queryPropertiesJSONArray != null) {
-					for (int j = 0; j < queryPropertiesJSONArray.length();
-						 j++) {
+			if (queryPropertiesJSONArray != null) {
+				for (int j = 0; j < queryPropertiesJSONArray.length();
+					 j++) {
 
-						JSONObject queryJSONObject =
-							queryPropertiesJSONArray.getJSONObject(i);
+					JSONObject queryJSONObject =
+						queryPropertiesJSONArray.getJSONObject(i);
 
-						unicodeProperties.put(
-							queryJSONObject.getString("key"),
-							queryJSONObject.getString("value"));
-					}
+					unicodeProperties.put(
+						queryJSONObject.getString("key"),
+						queryJSONObject.getString("value"));
 				}
 			}
 		}
