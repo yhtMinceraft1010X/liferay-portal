@@ -229,8 +229,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject assetListJSONObject, ServiceContext serviceContext)
 		throws Exception {
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
 		JSONObject unicodePropertiesJSONObject =
 			assetListJSONObject.getJSONObject("unicodeProperties");
 
@@ -240,24 +238,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 				unicodePropertiesJSONObject.getString("classNameIds")),
 			assetListJSONObject.getString("ddmStructureKey"));
 
-		unicodeProperties.putAll(
-			HashMapBuilder.put(
-				"anyAssetType",
-				String.valueOf(
-					_portal.getClassNameId(
-						unicodePropertiesJSONObject.getString("classNameIds")))
-			).put(
-				unicodePropertiesJSONObject.getString("anyClassType"),
-				String.valueOf(ddmStructure.getStructureId())
-			).put(
-				"classNameIds",
-				unicodePropertiesJSONObject.getString("classNameIds")
-			).put(
-				unicodePropertiesJSONObject.getString("classTypeIds"),
-				String.valueOf(ddmStructure.getStructureId())
-			).put(
-				"groupIds", String.valueOf(serviceContext.getScopeGroupId())
-			).build());
+		Map<String, String> map = HashMapBuilder.put(
+			"anyAssetType",
+			String.valueOf(
+				_portal.getClassNameId(
+					unicodePropertiesJSONObject.getString("classNameIds")))
+		).put(
+			unicodePropertiesJSONObject.getString("anyClassType"),
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"classNameIds",
+			unicodePropertiesJSONObject.getString("classNameIds")
+		).put(
+			unicodePropertiesJSONObject.getString("classTypeIds"),
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
+		).build();
 
 		Object[] orderByObjects = JSONUtil.toObjectArray(
 			unicodePropertiesJSONObject.getJSONArray("orderBy"));
@@ -265,7 +262,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (Object orderByObject : orderByObjects) {
 			JSONObject orderByJSONObject = (JSONObject)orderByObject;
 
-			unicodeProperties.put(
+			map.put(
 				orderByJSONObject.getString("key"),
 				orderByJSONObject.getString("value"));
 		}
@@ -274,7 +271,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			assetListJSONObject.getJSONArray("tags"));
 
 		for (int i = 0; i < assetTagNames.length; i++) {
-			unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+			map.put("queryValues" + i, assetTagNames[i]);
 
 			Object[] queryObjects = JSONUtil.toObjectArray(
 				unicodePropertiesJSONObject.getJSONArray("query"));
@@ -282,7 +279,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			for (Object queryObject : queryObjects) {
 				JSONObject queryJSONObject = (JSONObject)queryObject;
 
-				unicodeProperties.put(
+				map.put(
 					queryJSONObject.getString("key"),
 					queryJSONObject.getString("value"));
 			}
@@ -291,7 +288,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetListEntryLocalService.addDynamicAssetListEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			assetListJSONObject.getString("title"),
-			unicodeProperties.toString(), serviceContext);
+			String.valueOf(new UnicodeProperties(map, true)), serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
