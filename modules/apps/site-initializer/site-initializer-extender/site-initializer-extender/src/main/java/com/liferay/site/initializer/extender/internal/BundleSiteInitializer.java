@@ -181,10 +181,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
+			_addDDMStructures(serviceContext);
+
 			Map<String, String> documentsStringUtilReplaceValues =
 				_addDocuments(serviceContext);
-
-			_addDDMStructures(serviceContext);
 
 			_addAssetListEntries(serviceContext);
 			_addDDMTemplates(serviceContext);
