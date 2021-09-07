@@ -43,7 +43,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			new RemoteAppEntryPortlet(
 				remoteAppEntry,
 				_npmResolver.resolveModuleName(
-					"@liferay/remote-app-admin-web/remote_protocol/bridge")),
+					"@liferay/remote-app-web/remote_protocol/bridge")),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
 			).put(

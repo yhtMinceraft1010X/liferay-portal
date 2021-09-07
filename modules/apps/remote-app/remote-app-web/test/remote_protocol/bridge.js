@@ -19,7 +19,7 @@ import {
 
 const originalAddEventListener = window.__proto__.addEventListener;
 
-describe('remote-app-admin-web', () => {
+describe('remote-app-web', () => {
 	let iframe;
 	let init;
 	let ms;
