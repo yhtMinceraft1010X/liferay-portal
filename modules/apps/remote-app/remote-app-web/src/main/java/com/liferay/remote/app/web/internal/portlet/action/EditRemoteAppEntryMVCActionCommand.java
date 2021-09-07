@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;

@@ -15,10 +15,10 @@
 package com.liferay.remote.app.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

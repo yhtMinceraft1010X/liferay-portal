@@ -18,9 +18,9 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 
 import javax.portlet.Portlet;
 
