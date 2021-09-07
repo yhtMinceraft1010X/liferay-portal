@@ -131,7 +131,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 		};
 
 		makeRequest();
-	}, []);
+	});
 
 	return (
 		<>
