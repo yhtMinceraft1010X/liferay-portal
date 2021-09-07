@@ -73,15 +73,15 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	private void _addObjectLayoutBox(JSONObject jsonObject) {
-		_addObjectLayoutBoxRows(jsonObject.getJSONArray("objectLayoutBoxRow"));
+		_addObjectLayoutRows(jsonObject.getJSONArray("objectLayoutRow"));
 	}
 
-	private void _addObjectLayoutBoxColumn(JSONObject jsonObject) {
+	private void _addObjectLayoutColumn(JSONObject jsonObject) {
 	}
 
-	private void _addObjectLayoutBoxColumns(JSONArray jsonArray) {
+	private void _addObjectLayoutColumns(JSONArray jsonArray) {
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutBoxColumn(jsonArray.getJSONObject(i));
+			_addObjectLayoutColumn(jsonArray.getJSONObject(i));
 		}
 	}
 
@@ -91,14 +91,14 @@ public class ObjectLayoutLocalServiceImpl
 		}
 	}
 
-	private void _addObjectLayoutBoxRow(JSONObject jsonObject) {
-		_addObjectLayoutBoxColumns(
-			jsonObject.getJSONArray("objectLayoutBoxColumn"));
+	private void _addObjectLayoutRow(JSONObject jsonObject) {
+		_addObjectLayoutColumns(
+			jsonObject.getJSONArray("objectLayoutColumn"));
 	}
 
-	private void _addObjectLayoutBoxRows(JSONArray jsonArray) {
+	private void _addObjectLayoutRows(JSONArray jsonArray) {
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addObjectLayoutBoxRow(jsonArray.getJSONObject(i));
+			_addObjectLayoutRow(jsonArray.getJSONObject(i));
 		}
 	}
 
