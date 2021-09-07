@@ -304,6 +304,8 @@
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldType</exception>
+		<exception>ObjectRelationshipName</exception>
+		<exception>ObjectRelationshipType</exception>
 		<exception>ReservedObjectField</exception>
 	</exceptions>
 </service-builder>
