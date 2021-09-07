@@ -15,7 +15,6 @@
 package com.liferay.remote.app.web.internal.deployer;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
@@ -60,10 +59,9 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 				remoteAppEntry.getName(LocaleUtil.US)
 			).put(
 				"javax.portlet.name",
-				StringBundler.concat(
-					"com_liferay_remote_app_admin_web_internal_portlet_",
-					"RemoteAppEntryPortlet_",
-					remoteAppEntry.getRemoteAppEntryId())
+				"com_liferay_remote_app_web_internal_portlet_" +
+					"RemoteAppEntryPortlet_" +
+						remoteAppEntry.getRemoteAppEntryId()
 			).put(
 				"javax.portlet.security-role-ref", "power-user,user"
 			).build());
