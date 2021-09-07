@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -263,18 +262,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"groupIds", String.valueOf(serviceContext.getScopeGroupId())
 			).build());
 
-		JSONArray orderByPropertiesJSONArray =
-			unicodePropertiesJSONObject.getJSONArray("orderBy");
+		Object[] orderByObjects = JSONUtil.toObjectArray(
+			unicodePropertiesJSONObject.getJSONArray("orderBy"));
 
-		if (orderByPropertiesJSONArray != null) {
-			for (int i = 0; i < orderByPropertiesJSONArray.length(); i++) {
-				JSONObject orderByJSONObject =
-					orderByPropertiesJSONArray.getJSONObject(i);
+		for (Object orderByObject : orderByObjects) {
+			JSONObject orderByJSONObject = (JSONObject)orderByObject;
 
-				unicodeProperties.put(
-					orderByJSONObject.getString("key"),
-					orderByJSONObject.getString("value"));
-			}
+			unicodeProperties.put(
+				orderByJSONObject.getString("key"),
+				orderByJSONObject.getString("value"));
 		}
 
 		String[] assetTagNames = JSONUtil.toStringArray(
@@ -283,20 +279,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < assetTagNames.length; i++) {
 			unicodeProperties.put("queryValues" + i, assetTagNames[i]);
 
-			JSONArray queryPropertiesJSONArray =
-				unicodePropertiesJSONObject.getJSONArray("query");
+			Object[] queryObjects = JSONUtil.toObjectArray(
+				unicodePropertiesJSONObject.getJSONArray("query"));
 
-			if (queryPropertiesJSONArray != null) {
-				for (int j = 0; j < queryPropertiesJSONArray.length();
-					 j++) {
+			for (Object queryObject : queryObjects) {
+				JSONObject queryJSONObject = (JSONObject)queryObject;
 
-					JSONObject queryJSONObject =
-						queryPropertiesJSONArray.getJSONObject(i);
-
-					unicodeProperties.put(
-						queryJSONObject.getString("key"),
-						queryJSONObject.getString("value"));
-				}
+				unicodeProperties.put(
+					queryJSONObject.getString("key"),
+					queryJSONObject.getString("value"));
 			}
 		}
 
