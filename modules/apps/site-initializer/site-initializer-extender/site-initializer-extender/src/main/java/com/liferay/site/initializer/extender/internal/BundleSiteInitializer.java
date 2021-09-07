@@ -249,9 +249,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"anyAssetType",
 				String.valueOf(
 					_portal.getClassNameId(
-						Class.forName(
-							unicodePropertiesJSONObject.getString(
-								"classNameIds"))))
+						unicodePropertiesJSONObject.getString("classNameIds")))
 			).put(
 				unicodePropertiesJSONObject.getString("anyClassType"),
 				String.valueOf(ddmStructure.getStructureId())
