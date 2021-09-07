@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClaySelect, ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
@@ -41,7 +41,7 @@ const objectRelationshipTypes = [
 	'one_to_one',
 	'one_to_many',
 	'many_to_one',
-	'many_to_many'
+	'many_to_many',
 ];
 
 const headers = new Headers({
@@ -99,13 +99,15 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 		Liferay.on('addObjectRelationship', handleOpenObjectRelationshipModal);
 
 		return () => {
-			Liferay.detach('addObjectRelationship', handleOpenObjectRelationshipModal);
+			Liferay.detach(
+				'addObjectRelationship',
+				handleOpenObjectRelationshipModal
+			);
 		};
 	}, []);
 
 	useEffect(() => {
 		const makeRequest = async () => {
-
 			const result = await Liferay.Util.fetch(
 				'/o/object-admin/v1.0/object-definitions',
 				{
@@ -114,9 +116,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 				}
 			);
 
-			const {
-				items = [],
-			} = await result.json();
+			const {items = []} = await result.json();
 
 			setFormState({
 				...formState,
@@ -128,7 +128,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 				),
 				type: 'String',
 			});
-		}
+		};
 
 		makeRequest();
 	}, []);
@@ -220,7 +220,6 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 							<ClaySelect
 								id="objectDefinitionId2"
 								onChange={async ({target: {value}}) => {
-
 									setFormState({
 										...formState,
 										objectDefinitionId2: Number(value),
@@ -239,13 +238,15 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 									)}
 								/>
 
-								{formState.objectDefinitions.map(({id, name}) => (
-									<ClaySelect.Option
-										key={id}
-										label={name}
-										value={id}
-									/>
-								))}
+								{formState.objectDefinitions.map(
+									({id, name}) => (
+										<ClaySelect.Option
+											key={id}
+											label={name}
+											value={id}
+										/>
+									)
+								)}
 							</ClaySelect>
 						</ClayForm.Group>
 					</ClayModal.Body>
@@ -262,7 +263,9 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({apiURL, spritemap}) => {
 
 								<ClayButton
 									displayType="primary"
-									onClick={() => handleSaveObjectRelationship()}
+									onClick={() =>
+										handleSaveObjectRelationship()
+									}
 								>
 									{Liferay.Language.get('save')}
 								</ClayButton>
