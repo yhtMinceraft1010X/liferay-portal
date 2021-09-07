@@ -102,7 +102,7 @@ public class ObjectFieldLocalServiceImpl
 
 		name = StringUtil.trim(
 			StringBundler.concat(
-				"rel_", name, "_", objectDefinition.getPKObjectFieldName()));
+				"r_", name, "_", objectDefinition.getPKObjectFieldName()));
 
 		if (Validator.isNull(dbTableName)) {
 			dbTableName = objectDefinition.getDBTableName();

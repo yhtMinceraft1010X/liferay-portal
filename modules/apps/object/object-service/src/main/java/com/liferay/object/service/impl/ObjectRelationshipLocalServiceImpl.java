@@ -112,10 +112,7 @@ public class ObjectRelationshipLocalServiceImpl
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectDefinitionId2);
 
-			//TODO find better name convention
-			String tableName = "rel_" + StringUtil.trim(name) + "map";
-
-			objectRelationship.setDBTableName(tableName);
+			objectRelationship.setDBTableName("R_" + StringUtil.trim(name));
 
 			runSQL(
 				_getCreateMappingTableSQL(
