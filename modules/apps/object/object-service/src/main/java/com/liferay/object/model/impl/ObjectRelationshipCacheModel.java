@@ -78,7 +78,7 @@ public class ObjectRelationshipCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class ObjectRelationshipCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", dbTableName=");
+		sb.append(dbTableName);
 		sb.append(", label=");
 		sb.append(label);
 		sb.append(", name=");
@@ -154,6 +156,13 @@ public class ObjectRelationshipCacheModel
 			objectRelationshipImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (dbTableName == null) {
+			objectRelationshipImpl.setDBTableName("");
+		}
+		else {
+			objectRelationshipImpl.setDBTableName(dbTableName);
+		}
+
 		if (label == null) {
 			objectRelationshipImpl.setLabel("");
 		}
@@ -198,6 +207,7 @@ public class ObjectRelationshipCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
 
@@ -238,6 +248,13 @@ public class ObjectRelationshipCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (dbTableName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dbTableName);
+		}
+
 		if (label == null) {
 			objectOutput.writeUTF("");
 		}
@@ -276,6 +293,7 @@ public class ObjectRelationshipCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String dbTableName;
 	public String label;
 	public String name;
 	public long objectDefinitionId1;

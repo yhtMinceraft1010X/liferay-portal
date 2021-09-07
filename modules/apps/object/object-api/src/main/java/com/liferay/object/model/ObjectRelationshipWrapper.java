@@ -51,6 +51,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("objectDefinitionId1", getObjectDefinitionId1());
@@ -111,6 +112,12 @@ public class ObjectRelationshipWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String dbTableName = (String)attributes.get("dbTableName");
+
+		if (dbTableName != null) {
+			setDBTableName(dbTableName);
 		}
 
 		String label = (String)attributes.get("label");
@@ -184,6 +191,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the db table name of this object relationship.
+	 *
+	 * @return the db table name of this object relationship
+	 */
+	@Override
+	public String getDBTableName() {
+		return model.getDBTableName();
 	}
 
 	@Override
@@ -445,6 +462,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the db table name of this object relationship.
+	 *
+	 * @param dbTableName the db table name of this object relationship
+	 */
+	@Override
+	public void setDBTableName(String dbTableName) {
+		model.setDBTableName(dbTableName);
 	}
 
 	/**

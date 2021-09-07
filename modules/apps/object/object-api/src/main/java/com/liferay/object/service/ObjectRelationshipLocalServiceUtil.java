@@ -120,9 +120,11 @@ public class ObjectRelationshipLocalServiceUtil {
 	 *
 	 * @param objectRelationship the object relationship
 	 * @return the object relationship that was removed
+	 * @throws PortalException
 	 */
 	public static ObjectRelationship deleteObjectRelationship(
-		ObjectRelationship objectRelationship) {
+			ObjectRelationship objectRelationship)
+		throws PortalException {
 
 		return getService().deleteObjectRelationship(objectRelationship);
 	}

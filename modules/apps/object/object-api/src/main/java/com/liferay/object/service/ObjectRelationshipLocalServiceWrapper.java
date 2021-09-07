@@ -118,10 +118,12 @@ public class ObjectRelationshipLocalServiceWrapper
 	 *
 	 * @param objectRelationship the object relationship
 	 * @return the object relationship that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.object.model.ObjectRelationship deleteObjectRelationship(
-		com.liferay.object.model.ObjectRelationship objectRelationship) {
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

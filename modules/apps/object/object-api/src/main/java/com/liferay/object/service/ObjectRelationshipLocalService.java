@@ -125,10 +125,12 @@ public interface ObjectRelationshipLocalService
 	 *
 	 * @param objectRelationship the object relationship
 	 * @return the object relationship that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ObjectRelationship deleteObjectRelationship(
-		ObjectRelationship objectRelationship);
+			ObjectRelationship objectRelationship)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
