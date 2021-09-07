@@ -525,6 +525,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryId, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
+		objectEntry.setValues(null);
 
 		objectEntry = objectEntryPersistence.update(objectEntry);
 
