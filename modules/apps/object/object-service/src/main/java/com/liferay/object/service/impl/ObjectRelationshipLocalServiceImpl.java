@@ -164,7 +164,7 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		return _objectFieldLocalService.addRelationshipObjectField(
-			userId, null, objectDefinitionId, objectDefinition.getLabelMap(),
+			userId, objectDefinitionId, objectDefinition.getLabelMap(),
 			name);
 	}
 

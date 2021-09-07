@@ -93,23 +93,22 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public ObjectField addRelationshipObjectField(
-			long userId, String dbTableName, long objectDefinitionId,
-			Map<Locale, String> labelMap, String name)
+			long userId, long objectDefinitionId, Map<Locale, String> labelMap,
+			String name)
 		throws PortalException {
+
+		name = StringUtil.trim(name);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		name = StringUtil.trim(
-			StringBundler.concat(
-				"r_", name, "_", objectDefinition.getPKObjectFieldName()));
+		name = StringBundler.concat(
+			"r_", name, "_", objectDefinition.getPKObjectFieldName());
 
-		if (Validator.isNull(dbTableName)) {
-			dbTableName = objectDefinition.getDBTableName();
+		String dbTableName = objectDefinition.getDBTableName();
 
-			if (objectDefinition.isApproved()) {
-				dbTableName = objectDefinition.getExtensionDBTableName();
-			}
+		if (objectDefinition.isApproved()) {
+			dbTableName = objectDefinition.getExtensionDBTableName();
 		}
 
 		ObjectField objectField = _addObjectField(
