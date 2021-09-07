@@ -45,6 +45,7 @@ Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrgani
 
 			<div>
 				<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+
 				<react:component
 					module="js/configuration"
 					props='<%=
@@ -66,7 +67,6 @@ Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrgani
 					%>'
 				/>
 			</div>
-
 		</div>
 	</liferay-frontend:edit-form-body>
 
