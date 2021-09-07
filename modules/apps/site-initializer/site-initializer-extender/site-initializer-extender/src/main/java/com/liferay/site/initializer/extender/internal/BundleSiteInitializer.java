@@ -224,14 +224,90 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONObject assetListJSONObject =
 					assetListJSONArray.getJSONObject(i);
 
-				_assetListEntryLocalService.addDynamicAssetListEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					assetListJSONObject.getString("title"),
-					_getTypeSettings(assetListJSONObject, serviceContext),
-					serviceContext);
+				_addAssetListEntry(assetListJSONObject, serviceContext);
 			}
 		}
+	}
+
+	private void _addAssetListEntry(
+			JSONObject assetListJSONObject, ServiceContext serviceContext)
+		throws Exception {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		JSONObject unicodePropertiesJSONObject =
+			assetListJSONObject.getJSONObject("unicodeProperties");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(
+				unicodePropertiesJSONObject.getString("classNameIds")),
+			assetListJSONObject.getString("ddmStructureKey"));
+
+		unicodeProperties.putAll(
+			HashMapBuilder.put(
+				"anyAssetType",
+				String.valueOf(
+					_portal.getClassNameId(
+						Class.forName(
+							unicodePropertiesJSONObject.getString(
+								"classNameIds"))))
+			).put(
+				unicodePropertiesJSONObject.getString("anyClassType"),
+				String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"classNameIds",
+				unicodePropertiesJSONObject.getString("classNameIds")
+			).put(
+				unicodePropertiesJSONObject.getString("classTypeIds"),
+				String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"groupIds", String.valueOf(serviceContext.getScopeGroupId())
+			).build());
+
+		JSONArray orderByPropertiesJSONArray =
+			unicodePropertiesJSONObject.getJSONArray("orderBy");
+
+		if (orderByPropertiesJSONArray != null) {
+			for (int i = 0; i < orderByPropertiesJSONArray.length(); i++) {
+				JSONObject orderByJSONObject =
+					orderByPropertiesJSONArray.getJSONObject(i);
+
+				unicodeProperties.put(
+					orderByJSONObject.getString("key"),
+					orderByJSONObject.getString("value"));
+			}
+		}
+
+		String[] assetTagNames = JSONUtil.toStringArray(
+			assetListJSONObject.getJSONArray("tags"));
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			for (int i = 0; i < assetTagNames.length; i++) {
+				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
+
+				JSONArray queryPropertiesJSONArray =
+					unicodePropertiesJSONObject.getJSONArray("query");
+
+				if (queryPropertiesJSONArray != null) {
+					for (int j = 0; j < queryPropertiesJSONArray.length();
+						 j++) {
+
+						JSONObject queryJSONObject =
+							queryPropertiesJSONArray.getJSONObject(i);
+
+						unicodeProperties.put(
+							queryJSONObject.getString("key"),
+							queryJSONObject.getString("value"));
+					}
+				}
+			}
+		}
+
+		_assetListEntryLocalService.addDynamicAssetListEntry(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			assetListJSONObject.getString("title"),
+			unicodeProperties.toString(), serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -684,84 +760,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addTaxonomyVocabularies(
 			serviceContext.getScopeGroupId(),
 			"/site-initializer/taxonomy-vocabularies/group", serviceContext);
-	}
-
-	private String _getTypeSettings(
-			JSONObject assetListJSONObject, ServiceContext serviceContext)
-		throws Exception {
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		JSONObject unicodePropertiesJSONObject =
-			assetListJSONObject.getJSONObject("unicodeProperties");
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(
-				unicodePropertiesJSONObject.getString("classNameIds")),
-			assetListJSONObject.getString("ddmStructureKey"));
-
-		unicodeProperties.putAll(
-			HashMapBuilder.put(
-				"anyAssetType",
-				String.valueOf(
-					_portal.getClassNameId(
-						Class.forName(
-							unicodePropertiesJSONObject.getString(
-								"classNameIds"))))
-			).put(
-				unicodePropertiesJSONObject.getString("anyClassType"),
-				String.valueOf(ddmStructure.getStructureId())
-			).put(
-				"classNameIds",
-				unicodePropertiesJSONObject.getString("classNameIds")
-			).put(
-				unicodePropertiesJSONObject.getString("classTypeIds"),
-				String.valueOf(ddmStructure.getStructureId())
-			).put(
-				"groupIds", String.valueOf(serviceContext.getScopeGroupId())
-			).build());
-
-		JSONArray orderByPropertiesJSONArray =
-			unicodePropertiesJSONObject.getJSONArray("orderBy");
-
-		if (orderByPropertiesJSONArray != null) {
-			for (int i = 0; i < orderByPropertiesJSONArray.length(); i++) {
-				JSONObject orderByJSONObject =
-					orderByPropertiesJSONArray.getJSONObject(i);
-
-				unicodeProperties.put(
-					orderByJSONObject.getString("key"),
-					orderByJSONObject.getString("value"));
-			}
-		}
-
-		String[] assetTagNames = JSONUtil.toStringArray(
-			assetListJSONObject.getJSONArray("tags"));
-
-		if (ArrayUtil.isNotEmpty(assetTagNames)) {
-			for (int i = 0; i < assetTagNames.length; i++) {
-				unicodeProperties.put("queryValues" + i, assetTagNames[i]);
-
-				JSONArray queryPropertiesJSONArray =
-					unicodePropertiesJSONObject.getJSONArray("query");
-
-				if (queryPropertiesJSONArray != null) {
-					for (int j = 0; j < queryPropertiesJSONArray.length();
-						 j++) {
-
-						JSONObject queryJSONObject =
-							queryPropertiesJSONArray.getJSONObject(i);
-
-						unicodeProperties.put(
-							queryJSONObject.getString("key"),
-							queryJSONObject.getString("value"));
-					}
-				}
-			}
-		}
-
-		return unicodeProperties.toString();
 	}
 
 	private String _read(String resourcePath) throws Exception {
