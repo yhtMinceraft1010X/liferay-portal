@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.admin.web.internal.frontend.taglib.clay.data.set.view.table;
+package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminConstants;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.admin.web.internal.upgrade;
+package com.liferay.remote.app.web.internal.upgrade;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;

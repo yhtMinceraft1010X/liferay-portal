@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.admin.web.internal.constants;
+package com.liferay.remote.app.web.internal.constants;
 
 /**
  * @author Bruno Basto
