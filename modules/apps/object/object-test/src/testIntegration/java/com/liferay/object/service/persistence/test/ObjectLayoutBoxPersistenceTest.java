@@ -17,10 +17,8 @@ package com.liferay.object.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.NoSuchObjectLayoutBoxException;
 import com.liferay.object.model.ObjectLayoutBox;
-import com.liferay.object.service.ObjectLayoutBoxLocalServiceUtil;
 import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutBoxUtil;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -204,6 +201,13 @@ public class ObjectLayoutBoxPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectLayoutTabId() throws Exception {
+		_persistence.countByObjectLayoutTabId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectLayoutTabId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectLayoutBox newObjectLayoutBox = addObjectLayoutBox();
 
@@ -345,30 +349,6 @@ public class ObjectLayoutBoxPersistenceTest {
 		Assert.assertEquals(
 			newObjectLayoutBox,
 			objectLayoutBoxes.get(newObjectLayoutBox.getPrimaryKey()));
-	}
-
-	@Test
-	public void testActionableDynamicQuery() throws Exception {
-		final IntegerWrapper count = new IntegerWrapper();
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			ObjectLayoutBoxLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<ObjectLayoutBox>() {
-
-				@Override
-				public void performAction(ObjectLayoutBox objectLayoutBox) {
-					Assert.assertNotNull(objectLayoutBox);
-
-					count.increment();
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		Assert.assertEquals(count.getValue(), _persistence.countAll());
 	}
 
 	@Test

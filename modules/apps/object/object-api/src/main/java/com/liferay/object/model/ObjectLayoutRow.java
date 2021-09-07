@@ -20,27 +20,27 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the ObjectLayoutBox service. Represents a row in the &quot;ObjectLayoutBox&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ObjectLayoutRow service. Represents a row in the &quot;ObjectLayoutRow&quot; database table, with each column mapped to a property of this class.
  *
  * @author Marco Leo
- * @see ObjectLayoutBoxModel
+ * @see ObjectLayoutRowModel
  * @generated
  */
-@ImplementationClassName("com.liferay.object.model.impl.ObjectLayoutBoxImpl")
+@ImplementationClassName("com.liferay.object.model.impl.ObjectLayoutRowImpl")
 @ProviderType
-public interface ObjectLayoutBox extends ObjectLayoutBoxModel {
+public interface ObjectLayoutRow extends ObjectLayoutRowModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.object.model.impl.ObjectLayoutBoxImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.object.model.impl.ObjectLayoutRowImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ObjectLayoutBox, Long>
-		OBJECT_LAYOUT_BOX_ID_ACCESSOR = new Accessor<ObjectLayoutBox, Long>() {
+	public static final Accessor<ObjectLayoutRow, Long>
+		OBJECT_LAYOUT_ROW_ID_ACCESSOR = new Accessor<ObjectLayoutRow, Long>() {
 
 			@Override
-			public Long get(ObjectLayoutBox objectLayoutBox) {
-				return objectLayoutBox.getObjectLayoutBoxId();
+			public Long get(ObjectLayoutRow objectLayoutRow) {
+				return objectLayoutRow.getObjectLayoutRowId();
 			}
 
 			@Override
@@ -49,8 +49,8 @@ public interface ObjectLayoutBox extends ObjectLayoutBoxModel {
 			}
 
 			@Override
-			public Class<ObjectLayoutBox> getTypeClass() {
-				return ObjectLayoutBox.class;
+			public Class<ObjectLayoutRow> getTypeClass() {
+				return ObjectLayoutRow.class;
 			}
 
 		};

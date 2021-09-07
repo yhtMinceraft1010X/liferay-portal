@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectLayoutTabModel;
-import com.liferay.object.model.ObjectLayoutTabSoap;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -47,12 +46,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -72,7 +69,6 @@ import java.util.function.Function;
  * @see ObjectLayoutTabImpl
  * @generated
  */
-@JSON(strict = true)
 public class ObjectLayoutTabModelImpl
 	extends BaseModelImpl<ObjectLayoutTab> implements ObjectLayoutTabModel {
 
@@ -136,14 +132,20 @@ public class ObjectLayoutTabModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long OBJECTLAYOUTID_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTLAYOUTTABID_COLUMN_BITMASK = 4L;
+	public static final long OBJECTLAYOUTTABID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -157,61 +159,6 @@ public class ObjectLayoutTabModelImpl
 	 */
 	@Deprecated
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ObjectLayoutTab toModel(ObjectLayoutTabSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		ObjectLayoutTab model = new ObjectLayoutTabImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setUuid(soapModel.getUuid());
-		model.setObjectLayoutTabId(soapModel.getObjectLayoutTabId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setObjectLayoutId(soapModel.getObjectLayoutId());
-		model.setName(soapModel.getName());
-		model.setPriority(soapModel.getPriority());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<ObjectLayoutTab> toModels(
-		ObjectLayoutTabSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<ObjectLayoutTab> models = new ArrayList<ObjectLayoutTab>(
-			soapModels.length);
-
-		for (ObjectLayoutTabSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public ObjectLayoutTabModelImpl() {
@@ -399,7 +346,6 @@ public class ObjectLayoutTabModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -414,7 +360,6 @@ public class ObjectLayoutTabModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
-	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -443,7 +388,6 @@ public class ObjectLayoutTabModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
-	@JSON
 	@Override
 	public long getObjectLayoutTabId() {
 		return _objectLayoutTabId;
@@ -458,7 +402,6 @@ public class ObjectLayoutTabModelImpl
 		_objectLayoutTabId = objectLayoutTabId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -483,7 +426,6 @@ public class ObjectLayoutTabModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -514,7 +456,6 @@ public class ObjectLayoutTabModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -534,7 +475,6 @@ public class ObjectLayoutTabModelImpl
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -549,7 +489,6 @@ public class ObjectLayoutTabModelImpl
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -570,7 +509,6 @@ public class ObjectLayoutTabModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public long getObjectLayoutId() {
 		return _objectLayoutId;
@@ -585,7 +523,16 @@ public class ObjectLayoutTabModelImpl
 		_objectLayoutId = objectLayoutId;
 	}
 
-	@JSON
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalObjectLayoutId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("objectLayoutId"));
+	}
+
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -692,7 +639,6 @@ public class ObjectLayoutTabModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@JSON
 	@Override
 	public int getPriority() {
 		return _priority;

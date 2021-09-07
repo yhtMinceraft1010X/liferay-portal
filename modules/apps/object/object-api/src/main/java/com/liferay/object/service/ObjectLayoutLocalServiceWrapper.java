@@ -33,6 +33,18 @@ public class ObjectLayoutLocalServiceWrapper
 		_objectLayoutLocalService = objectLayoutLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectLayout addObjectLayout(
+			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			java.util.Map<java.util.Locale, String> nameMap,
+			com.liferay.portal.kernel.json.JSONArray objectLayoutTabsJSONArray)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectLayoutLocalService.addObjectLayout(
+			userId, objectDefinitionId, defaultObjectLayout, nameMap,
+			objectLayoutTabsJSONArray);
+	}
+
 	/**
 	 * Adds the object layout to the database. Also notifies the appropriate model listeners.
 	 *

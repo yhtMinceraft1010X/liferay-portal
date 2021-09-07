@@ -96,23 +96,23 @@
 		<field localized="true" name="name" type="String" />
 		<field name="priority" type="int" />
 	</model>
-	<model name="com.liferay.object.model.ObjectLayoutBoxColumn">
+	<model name="com.liferay.object.model.ObjectLayoutColumn">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="objectLayoutBoxColumnId" type="long" />
+		<field name="objectLayoutColumnId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectFieldId" type="long" />
-		<field name="objectLayoutBoxRowId" type="long" />
+		<field name="objectLayoutRowId" type="long" />
 		<field name="priority" type="int" />
 	</model>
-	<model name="com.liferay.object.model.ObjectLayoutBoxRow">
+	<model name="com.liferay.object.model.ObjectLayoutRow">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="objectLayoutBoxRowId" type="long" />
+		<field name="objectLayoutRowId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

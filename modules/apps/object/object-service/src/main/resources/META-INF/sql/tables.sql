@@ -92,24 +92,24 @@ create table ObjectLayoutBox (
 	priority INTEGER
 );
 
-create table ObjectLayoutBoxColumn (
+create table ObjectLayoutColumn (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	objectLayoutBoxColumnId LONG not null primary key,
+	objectLayoutColumnId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectFieldId LONG,
-	objectLayoutBoxRowId LONG,
+	objectLayoutRowId LONG,
 	priority INTEGER
 );
 
-create table ObjectLayoutBoxRow (
+create table ObjectLayoutRow (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	objectLayoutBoxRowId LONG not null primary key,
+	objectLayoutRowId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

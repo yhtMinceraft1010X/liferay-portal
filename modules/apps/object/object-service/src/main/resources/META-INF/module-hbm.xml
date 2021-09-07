@@ -7,8 +7,8 @@
 	<import class="com.liferay.object.model.ObjectField" />
 	<import class="com.liferay.object.model.ObjectLayout" />
 	<import class="com.liferay.object.model.ObjectLayoutBox" />
-	<import class="com.liferay.object.model.ObjectLayoutBoxColumn" />
-	<import class="com.liferay.object.model.ObjectLayoutBoxRow" />
+	<import class="com.liferay.object.model.ObjectLayoutColumn" />
+	<import class="com.liferay.object.model.ObjectLayoutRow" />
 	<import class="com.liferay.object.model.ObjectLayoutTab" />
 	<import class="com.liferay.object.model.ObjectRelationship" />
 	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectDefinitionImpl" table="ObjectDefinition">
@@ -110,8 +110,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectLayoutBoxColumnImpl" table="ObjectLayoutBoxColumn">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutBoxColumnId" type="long">
+	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectLayoutColumnImpl" table="ObjectLayoutColumn">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutColumnId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
@@ -122,11 +122,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectFieldId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutBoxRowId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutRowId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectLayoutBoxRowImpl" table="ObjectLayoutBoxRow">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutBoxRowId" type="long">
+	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectLayoutRowImpl" table="ObjectLayoutRow">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectLayoutRowId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />

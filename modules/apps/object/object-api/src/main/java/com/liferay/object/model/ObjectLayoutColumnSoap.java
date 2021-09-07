@@ -28,30 +28,31 @@ import java.util.List;
  * @generated
  */
 @Deprecated
-public class ObjectLayoutBoxSoap implements Serializable {
+public class ObjectLayoutColumnSoap implements Serializable {
 
-	public static ObjectLayoutBoxSoap toSoapModel(ObjectLayoutBox model) {
-		ObjectLayoutBoxSoap soapModel = new ObjectLayoutBoxSoap();
+	public static ObjectLayoutColumnSoap toSoapModel(ObjectLayoutColumn model) {
+		ObjectLayoutColumnSoap soapModel = new ObjectLayoutColumnSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setObjectLayoutBoxId(model.getObjectLayoutBoxId());
+		soapModel.setObjectLayoutColumnId(model.getObjectLayoutColumnId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setObjectLayoutTabId(model.getObjectLayoutTabId());
-		soapModel.setCollapsable(model.isCollapsable());
-		soapModel.setName(model.getName());
+		soapModel.setObjectFieldId(model.getObjectFieldId());
+		soapModel.setObjectLayoutRowId(model.getObjectLayoutRowId());
 		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
 	}
 
-	public static ObjectLayoutBoxSoap[] toSoapModels(ObjectLayoutBox[] models) {
-		ObjectLayoutBoxSoap[] soapModels =
-			new ObjectLayoutBoxSoap[models.length];
+	public static ObjectLayoutColumnSoap[] toSoapModels(
+		ObjectLayoutColumn[] models) {
+
+		ObjectLayoutColumnSoap[] soapModels =
+			new ObjectLayoutColumnSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -60,17 +61,17 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ObjectLayoutBoxSoap[][] toSoapModels(
-		ObjectLayoutBox[][] models) {
+	public static ObjectLayoutColumnSoap[][] toSoapModels(
+		ObjectLayoutColumn[][] models) {
 
-		ObjectLayoutBoxSoap[][] soapModels = null;
+		ObjectLayoutColumnSoap[][] soapModels = null;
 
 		if (models.length > 0) {
 			soapModels =
-				new ObjectLayoutBoxSoap[models.length][models[0].length];
+				new ObjectLayoutColumnSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new ObjectLayoutBoxSoap[0][0];
+			soapModels = new ObjectLayoutColumnSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -80,28 +81,29 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static ObjectLayoutBoxSoap[] toSoapModels(
-		List<ObjectLayoutBox> models) {
+	public static ObjectLayoutColumnSoap[] toSoapModels(
+		List<ObjectLayoutColumn> models) {
 
-		List<ObjectLayoutBoxSoap> soapModels =
-			new ArrayList<ObjectLayoutBoxSoap>(models.size());
+		List<ObjectLayoutColumnSoap> soapModels =
+			new ArrayList<ObjectLayoutColumnSoap>(models.size());
 
-		for (ObjectLayoutBox model : models) {
+		for (ObjectLayoutColumn model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new ObjectLayoutBoxSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new ObjectLayoutColumnSoap[soapModels.size()]);
 	}
 
-	public ObjectLayoutBoxSoap() {
+	public ObjectLayoutColumnSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _objectLayoutBoxId;
+		return _objectLayoutColumnId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setObjectLayoutBoxId(pk);
+		setObjectLayoutColumnId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -120,12 +122,12 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getObjectLayoutBoxId() {
-		return _objectLayoutBoxId;
+	public long getObjectLayoutColumnId() {
+		return _objectLayoutColumnId;
 	}
 
-	public void setObjectLayoutBoxId(long objectLayoutBoxId) {
-		_objectLayoutBoxId = objectLayoutBoxId;
+	public void setObjectLayoutColumnId(long objectLayoutColumnId) {
+		_objectLayoutColumnId = objectLayoutColumnId;
 	}
 
 	public long getCompanyId() {
@@ -168,32 +170,20 @@ public class ObjectLayoutBoxSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getObjectLayoutTabId() {
-		return _objectLayoutTabId;
+	public long getObjectFieldId() {
+		return _objectFieldId;
 	}
 
-	public void setObjectLayoutTabId(long objectLayoutTabId) {
-		_objectLayoutTabId = objectLayoutTabId;
+	public void setObjectFieldId(long objectFieldId) {
+		_objectFieldId = objectFieldId;
 	}
 
-	public boolean getCollapsable() {
-		return _collapsable;
+	public long getObjectLayoutRowId() {
+		return _objectLayoutRowId;
 	}
 
-	public boolean isCollapsable() {
-		return _collapsable;
-	}
-
-	public void setCollapsable(boolean collapsable) {
-		_collapsable = collapsable;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
+	public void setObjectLayoutRowId(long objectLayoutRowId) {
+		_objectLayoutRowId = objectLayoutRowId;
 	}
 
 	public int getPriority() {
@@ -206,15 +196,14 @@ public class ObjectLayoutBoxSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
-	private long _objectLayoutBoxId;
+	private long _objectLayoutColumnId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _objectLayoutTabId;
-	private boolean _collapsable;
-	private String _name;
+	private long _objectFieldId;
+	private long _objectLayoutRowId;
 	private int _priority;
 
 }
