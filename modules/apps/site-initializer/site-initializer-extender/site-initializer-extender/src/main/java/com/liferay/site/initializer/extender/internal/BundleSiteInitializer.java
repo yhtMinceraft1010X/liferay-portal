@@ -208,23 +208,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addAssetListEntries(ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/asset-list");
+		String json = _read("/site-initializer/asset-list-entries.json");
 
-		if (SetUtil.isEmpty(resourcePaths)) {
+		if (json == null) {
 			return;
 		}
 
-		for (String resourcePath : resourcePaths) {
-			JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(
-				_read(resourcePath));
+		JSONArray assetListJSONArray = JSONFactoryUtil.createJSONArray(
+			_read(json));
 
-			for (int i = 0; i < assetListJSONArray.length(); i++) {
-				JSONObject assetListJSONObject =
-					assetListJSONArray.getJSONObject(i);
+		for (int i = 0; i < assetListJSONArray.length(); i++) {
+			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
+				i);
 
-				_addAssetListEntry(assetListJSONObject, serviceContext);
-			}
+			_addAssetListEntry(assetListJSONObject, serviceContext);
 		}
 	}
 
