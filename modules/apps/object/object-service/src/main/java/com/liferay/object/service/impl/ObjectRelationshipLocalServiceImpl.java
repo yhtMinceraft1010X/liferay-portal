@@ -58,7 +58,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		name = StringUtil.trim(StringUtil.toLowerCase(name));
 
-		_validate(name, type);
+		_validate(name, objectDefinitionId1, objectDefinitionId2, type);
 
 		long objectRelationshipId = counterLocalService.increment();
 
@@ -167,7 +167,10 @@ public class ObjectRelationshipLocalServiceImpl
 			userId, objectDefinitionId, objectDefinition.getLabelMap(), name);
 	}
 
-	private void _validate(String name, String type) throws PortalException {
+	private void _validate(
+			String name, long objectDefinitionId1, long objectDefinitionId2,
+			String type)
+		throws PortalException {
 
 		// TODO
 
@@ -177,6 +180,14 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (Validator.isNull(type)) {
 			throw new ObjectRelationshipTypeException();
+		}
+
+		if (objectDefinitionId1 == objectDefinitionId2) {
+
+			// Also check that two object definitions never have more than one
+			// type of relationship
+
+			throw new PortalException();
 		}
 	}
 
