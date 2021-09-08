@@ -112,7 +112,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
 	@priority = "3"
 	test ViewSettingInfoAreGlobalAndDontDependOfProperty {
-		task ("go to properties and add a new property") {
+		task ("go to properties and add 2 new properties") {
 			ACNavigation.goToSettings();
 
 			var propertyList = "Property Name 1,Property Name 2";
@@ -123,7 +123,7 @@ definition {
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
 		}
-		task ("assert the property description wont change") {
+		task ("switch between properties and assert the workspace settings is the same for those properties") {
 			for (var n : list "${propertyList}") {
 				ACNavigation.exitSettings();
 
@@ -131,9 +131,12 @@ definition {
 
 				ACNavigation.goToSettings();
 
-				ACSettings.goToProperties();
+				ACSettings.goToWorkspace();
 
-				ACSettings.viewPropertyInfo();
+				ACWorkspace.viewWorkspaceSettings(
+					timezone = "UTC",
+					timezoneId = "UTC Coordinated Universal Time (UTC)",
+					workspaceName = "FARO-DEV-liferay");
 			}
 		}
 	}

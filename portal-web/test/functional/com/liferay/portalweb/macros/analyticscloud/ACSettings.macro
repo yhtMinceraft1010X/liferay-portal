@@ -818,12 +818,6 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro viewUserNotSelectable {
-		AssertElementPresent(
-			locator1 = "ACSettings#USER_UNSELECTABLE",
-			userEmail = "${email}");
-	}
-
 	macro viewFilterButton {
 		if (isSet(nofilter)) {
 			AssertElementNotPresent(
@@ -852,6 +846,12 @@ definition {
 			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
 
 		AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");
+	}
+
+	macro viewUserNotSelectable {
+		AssertElementPresent(
+			locator1 = "ACSettings#USER_UNSELECTABLE",
+			userEmail = "${email}");
 	}
 
 }
