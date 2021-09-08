@@ -602,6 +602,14 @@ definition {
 			ACSettings.goToProperties();
 		}
 
+		task ("assert you cannot add a property with char quantity lower than the minimum quantity ") {
+			ACProperties.assertCannotAddProperty(propertyName = "Mi");
+		}
+
+		task ("assert you cannot add a property with char quantity higher than the minimum quantity ") {
+			ACProperties.assertCannotAddProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMax");
+		}
+
 		task ("Add a new property with the minimum char quantity") {
 			ACProperties.addNewProperty(propertyName = "Min");
 		}
@@ -610,6 +618,8 @@ definition {
 			ACSettings.goToProperties();
 
 			ACProperties.addNewProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMa");
+
+
 		}
 	}
 
