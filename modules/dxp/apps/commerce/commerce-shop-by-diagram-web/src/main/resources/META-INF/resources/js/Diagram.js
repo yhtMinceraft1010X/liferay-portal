@@ -43,7 +43,7 @@ const Diagram = ({
 	type,
 	zoomController,
 }) => {
-	const [pinImport, setPinImport] = useState([]);
+	const [pinImport] = useState([]);
 	const [svgString, setSvgString] = useState('');
 	const [imageState] = useState(imageURL);
 	const [pinClickHandler, setPinClickHandler] = useState(false);
@@ -236,6 +236,7 @@ const Diagram = ({
 					setZoomInHandler={setZoomInHandler}
 					setZoomOutHandler={setZoomOutHandler}
 					showTooltip={showTooltip}
+					svgString={svgString}
 					zoomController={zoomController}
 					zoomInHandler={zoomInHandler}
 					zoomOutHandler={zoomOutHandler}
