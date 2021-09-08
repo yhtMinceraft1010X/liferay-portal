@@ -40,6 +40,18 @@ definition {
 			locator1 = "ACSettings#PROPERTIES_ASSET_LIST");
 	}
 
+	macro assertCannotAddProperty {
+		Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+		Type(
+			locator1 = "ACSettings#PROPERTY_INPUT",
+			value1 = "${propertyName}");
+
+		AssertElementPresent(locator1 = "AppBuilder#SAVE_BUTTON_DISABLED");
+
+		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+	}
+
 	@summary = "Asserts that the workspace is scoped by a specific Property"
 	macro assertCurrentActiveProperty {
 		AssertTextEquals(

@@ -618,8 +618,6 @@ definition {
 			ACSettings.goToProperties();
 
 			ACProperties.addNewProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMa");
-
-
 		}
 	}
 
