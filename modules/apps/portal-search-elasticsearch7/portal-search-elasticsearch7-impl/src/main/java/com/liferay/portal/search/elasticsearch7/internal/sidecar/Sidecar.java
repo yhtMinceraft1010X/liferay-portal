@@ -133,8 +133,6 @@ public class Sidecar {
 			_log.info("Stopping sidecar Elasticsearch");
 		}
 
-		PathUtil.deleteDir(_sidecarTempDirPath);
-
 		if (_processChannel == null) {
 			return;
 		}
@@ -167,6 +165,8 @@ public class Sidecar {
 				noticeableFuture.cancel(true);
 			}
 		}
+
+		PathUtil.deleteDir(_sidecarTempDirPath);
 
 		_processChannel = null;
 	}
