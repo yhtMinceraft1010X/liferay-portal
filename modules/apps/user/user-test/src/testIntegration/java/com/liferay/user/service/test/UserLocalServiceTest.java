@@ -115,30 +115,25 @@ public class UserLocalServiceTest {
 	public void testDeleteUserDeletesPreferences() throws Exception {
 		User user = UserTestUtil.addUser();
 
+		_portalPreferencesLocalService.addPortalPreferences(
+			user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, null);
 		_portletPreferencesLocalService.addPortletPreferences(
 			user.getCompanyId(), user.getUserId(),
 			PortletKeys.PREFS_OWNER_TYPE_USER, 0, null, null, null);
 
-		_portalPreferencesLocalService.addPortalPreferences(
-			user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, null);
-
 		_userLocalService.deleteUser(user);
-
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.fetchPortletPreferences(
-				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, 0, null);
-
-		Assert.assertNull(
-			"The portletPreferences should be deleted with the user",
-			portletPreferences);
 
 		PortalPreferences portalPreferences =
 			_portalPreferencesLocalService.fetchPortalPreferences(
 				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER);
 
-		Assert.assertNull(
-			"The portalPreferences should be deleted with the user",
-			portalPreferences);
+		Assert.assertNull(portalPreferences);
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, 0, null);
+
+		Assert.assertNull(portletPreferences);
 	}
 
 	@Test
