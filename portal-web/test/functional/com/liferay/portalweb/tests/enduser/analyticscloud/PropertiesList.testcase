@@ -13,8 +13,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		//ACUtils.tearDownAC();
-
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
@@ -105,7 +104,11 @@ definition {
 			ACSettings.goToProperties();
 		}
 
-		task ("assert default view") {
+		task ("delete all properties and assert default view") {
+			ACSettings.deleteAllProperties();
+
+			ACSettings.goToProperties();
+
 			ACSettings.viewPropertyListDefaultMessage();
 		}
 	}
