@@ -42,7 +42,7 @@ public class UserAccountEmailAddressExceptionMapper
 		UserEmailAddressException userEmailAddressException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Email address is not valid");
+			Response.Status.BAD_REQUEST, "Email address is invalid");
 	}
 
 }
