@@ -180,6 +180,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROPERTY_NAME_HEADER</td>
+	<td>//div[contains(@class,'header')]//a[contains(@class,'breadcrumb-link') and contains(text(),'${propertyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_CONFIRMATION_BUTTON</td>
 	<td>//button[contains(@class,'btn-warning')]</td>
 	<td></td>
