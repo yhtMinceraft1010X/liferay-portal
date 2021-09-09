@@ -13,7 +13,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		// ACUtils.tearDownAC();
+		//ACUtils.tearDownAC();
+
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
@@ -131,7 +132,7 @@ definition {
 
 				ACNavigation.goToSettings();
 
-				ACSettings.goToWorkspace();	
+				ACSettings.goToWorkspace();
 
 				ACWorkspace.viewWorkspaceSettings(
 					timezone = "UTC",
@@ -151,7 +152,7 @@ definition {
 
 			for (var n : list "${propertyList}") {
 				ACSettings.goToProperties();
-					
+
 				ACProperties.addNewProperty(propertyName = "${n}");
 			}
 		}
@@ -167,10 +168,8 @@ definition {
 				ACProperties.assertSitesOverviewPropertyHeader(propertyName = "${n}");
 
 				ACProperties.assertCurrentActiveProperty(propertyName = "${n}");
-		
 			}
 		}
-		
 	}
 
 }

@@ -55,6 +55,12 @@ definition {
 			value1 = "${propertyName}");
 	}
 
+	macro assertPropertyHeader {
+		AssertElementPresent(
+			locator1 = "ACSettings#PROPERTY_NAME_HEADER",
+			propertyName = "${propertyName}");
+	}
+
 	@summary = "Asserts the list of properties shown in the Property Menu"
 	macro assertPropertyMenuList {
 		for (var key_propertyName : list "${propertyList}") {
@@ -83,6 +89,12 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSettings#PROPERTIES_ASSET_TITLE_LIST",
 			value1 = "${propertyName}");
+	}
+
+	macro assertSitesOverviewPropertyHeader {
+		AssertElementPresent(
+			locator1 = "ACSites#OVERVIEW_HEADER_PROPERTY_NAME",
+			propertyName = "${propertyName}");
 	}
 
 	@summary = "Clicks the Property Menu Dropdown Button in the sidebar"
