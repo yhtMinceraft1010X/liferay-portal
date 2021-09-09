@@ -273,7 +273,7 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return _getStatementWrapper(super.createStatement());
+				return _wrapStatement(super.createStatement());
 			}
 
 			@Override
@@ -284,7 +284,7 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return _getStatementWrapper(
+				return _wrapStatement(
 					super.createStatement(resultSetType, resultSetConcurrency));
 			}
 
@@ -297,7 +297,7 @@ public class DBPartitionUtil {
 				connection.setCatalog(
 					_getSchemaName(CompanyThreadLocal.getCompanyId()));
 
-				return _getStatementWrapper(
+				return _wrapStatement(
 					super.createStatement(
 						resultSetType, resultSetConcurrency,
 						resultSetHoldability));
@@ -416,23 +416,23 @@ public class DBPartitionUtil {
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
-	private static Statement _getStatementWrapper(Statement statement) {
+	private static Statement _wrapStatement(Statement statement) {
 		return new StatementWrapper(statement) {
 
 			@Override
 			public int executeUpdate(String sql) throws SQLException {
-				String lowerCaseSql = StringUtil.toLowerCase(sql);
+				String lowerCaseSQL = StringUtil.toLowerCase(sql);
 
 				String[] query = sql.split(StringPool.SPACE);
 
-				if ((StringUtil.startsWith(lowerCaseSql, "alter table") &&
-					 _skipSQLStatement(query[2])) ||
-					((StringUtil.startsWith(lowerCaseSql, "create index") ||
-					  StringUtil.startsWith(lowerCaseSql, "drop index")) &&
-					 _skipSQLStatement(query[4])) ||
+				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
+					 _isSkip(query[2])) ||
+					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
+					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
+					 _isSkip(query[4])) ||
 					(StringUtil.startsWith(
-						lowerCaseSql, "create unique index") &&
-					 _skipSQLStatement(query[5]))) {
+						lowerCaseSQL, "create unique index") &&
+					 _isSkip(query[5]))) {
 
 					return 0;
 				}
@@ -512,7 +512,7 @@ public class DBPartitionUtil {
 		statement.executeUpdate(_getCreateViewSQL(companyId, tableName));
 	}
 
-	private static boolean _skipSQLStatement(String tableName)
+	private static boolean _isSkip(String tableName)
 		throws SQLException {
 
 		try (Connection connection = DataAccess.getConnection()) {
