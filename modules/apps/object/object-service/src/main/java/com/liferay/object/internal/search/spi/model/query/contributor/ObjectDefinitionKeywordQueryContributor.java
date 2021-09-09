@@ -43,13 +43,13 @@ public class ObjectDefinitionKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
-		queryHelper.addSearchTerm(
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		queryHelper.addSearchTerm(
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.NAME, false);
 	}
 
 	@Reference
-	protected QueryHelper queryHelper;
+	private QueryHelper _queryHelper;
 
 }
