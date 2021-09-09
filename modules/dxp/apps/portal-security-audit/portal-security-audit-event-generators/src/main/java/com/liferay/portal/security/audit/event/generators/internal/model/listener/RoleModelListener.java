@@ -73,20 +73,18 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			associationClassPK);
 	}
 
-	public void onBeforeUpdate(Role originalNewRole, Role newRole)
+	public void onBeforeUpdate(Role originalRole, Role role)
 		throws ModelListenerException {
 
 		try {
-			Role oldRole = _roleLocalService.getRole(newRole.getRoleId());
-
 			List<Attribute> attributes = getModifiedAttributes(
-				newRole, oldRole);
+				originalRole, role);
 
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
 					AuditMessageBuilder.buildAuditMessage(
 						EventTypes.UPDATE, Role.class.getName(),
-						newRole.getRoleId(), attributes);
+						role.getRoleId(), attributes);
 
 				_auditRouter.route(auditMessage);
 			}
@@ -158,10 +156,10 @@ public class RoleModelListener extends BaseModelListener<Role> {
 	}
 
 	protected List<Attribute> getModifiedAttributes(
-		Role newRole, Role oldRole) {
+		Role originalRole, Role role) {
 
 		AttributesBuilder attributesBuilder = new AttributesBuilder(
-			newRole, oldRole);
+			role, originalRole);
 
 		attributesBuilder.add("description");
 		attributesBuilder.add("name");
