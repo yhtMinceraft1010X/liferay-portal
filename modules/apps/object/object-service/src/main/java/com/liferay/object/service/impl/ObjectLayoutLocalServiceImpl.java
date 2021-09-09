@@ -90,12 +90,10 @@ public class ObjectLayoutLocalServiceImpl
 	public ObjectLayout deleteObjectLayout(long objectLayoutId)
 		throws PortalException {
 
-		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
+		ObjectLayout objectLayout = objectLayoutPersistence.remove(
 			objectLayoutId);
 
 		_deleteObjectLayoutTabs(objectLayoutId);
-
-		objectLayoutPersistence.remove(objectLayoutId);
 
 		return objectLayout;
 	}
@@ -306,12 +304,12 @@ public class ObjectLayoutLocalServiceImpl
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
+				objectLayoutTab.getObjectLayoutTabId());
+
 			_deleteObjectLayoutRows(
 				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
 					objectLayoutTab.getObjectLayoutTabId()));
-
-			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
-				objectLayoutTab.getObjectLayoutTabId());
 		}
 	}
 
@@ -328,20 +326,20 @@ public class ObjectLayoutLocalServiceImpl
 		List<ObjectLayoutBox> objectLayoutBoxes) {
 
 		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			_objectLayoutRowPersistence.removeByObjectLayoutBoxId(
+				objectLayoutBox.getObjectLayoutBoxId());
+
 			_deleteObjectLayoutColumns(
 				_objectLayoutRowPersistence.findByObjectLayoutBoxId(
 					objectLayoutBox.getObjectLayoutBoxId()));
-
-			_objectLayoutRowPersistence.removeByObjectLayoutBoxId(
-				objectLayoutBox.getObjectLayoutBoxId());
 		}
 	}
 
 	private void _deleteObjectLayoutTabs(long objectLayoutId) {
+		_objectLayoutTabPersistence.removeByObjectLayoutId(objectLayoutId);
+
 		_deleteObjectLayoutBoxes(
 			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId));
-
-		_objectLayoutTabPersistence.removeByObjectLayoutId(objectLayoutId);
 	}
 
 	private List<ObjectLayoutBox> _getObjectLayoutBoxes(
