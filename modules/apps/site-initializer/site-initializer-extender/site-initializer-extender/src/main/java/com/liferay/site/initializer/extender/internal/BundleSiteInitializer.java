@@ -203,7 +203,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addAssetListEntries(serviceContext);
 			_addCommerceCatalogs(serviceContext);
 			_addCommerceChannels(serviceContext);
-			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
