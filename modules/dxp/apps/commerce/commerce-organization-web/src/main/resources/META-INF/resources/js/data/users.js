@@ -131,7 +131,7 @@ export function addUserEmailsToOrganization(organizationId, roleIds, emails) {
 
 export function removeUserFromAccount(userEmail, accountId) {
 	const url = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-users/by-email-address`,
+		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/user-accounts/by-email-address`,
 		themeDisplay.getPortalURL()
 	);
 
