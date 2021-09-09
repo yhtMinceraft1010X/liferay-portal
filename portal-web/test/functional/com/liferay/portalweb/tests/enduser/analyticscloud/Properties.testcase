@@ -603,11 +603,27 @@ definition {
 		}
 
 		task ("assert you cannot add a property with char quantity lower than the minimum quantity ") {
-			ACProperties.assertCannotAddProperty(propertyName = "Mi");
+			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+			Type(
+				locator1 = "ACSettings#PROPERTY_INPUT",
+				value1 = "Mi");
+
+			ACProperties.assertCannotAddProperty();
+
+			Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
 		}
 
-		task ("assert you cannot add a property with char quantity higher than the minimum quantity ") {
-			ACProperties.assertCannotAddProperty(propertyName = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMax");
+		task ("assert you cannot add a property with char quantity higher than the maximum quantity ") {
+			Click(locator1 = "ACSettings#NEW_PROPERTY_BUTTON");
+
+			Type(
+				locator1 = "ACSettings#PROPERTY_INPUT",
+				value1 = "MaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMaximumMax");
+
+			ACProperties.assertCannotAddProperty();
+
+			Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
 		}
 
 		task ("Add a new property with the minimum char quantity") {
