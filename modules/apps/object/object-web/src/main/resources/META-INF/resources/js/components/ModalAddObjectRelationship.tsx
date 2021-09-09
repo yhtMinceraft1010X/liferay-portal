@@ -37,11 +37,7 @@ type TFormState = {
 	type: string;
 };
 
-const objectRelationshipTypes = [
-	'one_to_one',
-	'one_to_many',
-	'many_to_many',
-];
+const objectRelationshipTypes = ['one_to_one', 'one_to_many', 'many_to_many'];
 
 const headers = new Headers({
 	Accept: 'application/json',
