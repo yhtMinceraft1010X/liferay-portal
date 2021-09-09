@@ -77,6 +77,9 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setName(name);
 		objectRelationship.setType(type);
 
+		objectRelationship = objectRelationshipPersistence.update(
+			objectRelationship);
+
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
 			ObjectField objectField = _addObjectField(
 				user, name, objectDefinitionId1, objectDefinitionId2);
