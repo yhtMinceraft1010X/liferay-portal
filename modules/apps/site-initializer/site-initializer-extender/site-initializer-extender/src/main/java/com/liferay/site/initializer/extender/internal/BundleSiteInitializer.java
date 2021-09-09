@@ -201,8 +201,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_addDocuments(serviceContext);
 
 			_addAssetListEntries(serviceContext);
-			_addCatalog(serviceContext);
-			_addChannel(serviceContext);
+			_addCommerceCatalogs(serviceContext);
+			_addCommerceChannels(serviceContext);
 			_addDDMStructures(serviceContext);
 			_addDDMTemplates(serviceContext);
 			_addFragmentEntries(serviceContext);
@@ -307,11 +307,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String.valueOf(new UnicodeProperties(map, true)), serviceContext);
 	}
 
-	private void _addCatalog(ServiceContext serviceContext) throws Exception {
-		_addCatalog("/site-initializer/catalogs", serviceContext);
+	private void _addCommerceCatalogs(ServiceContext serviceContext)
+		throws Exception {
+
+		_addCommerceCatalogs(
+			"/site-initializer/commerce-catalogs", serviceContext);
 	}
 
-	private void _addCatalog(
+	private void _addCommerceCatalogs(
 			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -336,7 +339,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (catalog == null) {
 				_log.error(
-					"Unable to transform catalog from JSON: " + json);
+					"Unable to transform commerce catalog from JSON: " + json);
 
 				continue;
 			}
@@ -345,11 +348,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addChannel(ServiceContext serviceContext) throws Exception {
-		_addChannel("/site-initializer/channels", serviceContext);
+	private void _addCommerceChannels(ServiceContext serviceContext)
+		throws Exception {
+
+		_addCommerceChannels(
+			"/site-initializer/commerce-channels", serviceContext);
 	}
 
-	private void _addChannel(
+	private void _addCommerceChannels(
 			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -374,7 +380,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (channel == null) {
 				_log.error(
-					"Unable to transform channel from JSON: " + json);
+					"Unable to transform commerce channel from JSON: " + json);
 
 				continue;
 			}
