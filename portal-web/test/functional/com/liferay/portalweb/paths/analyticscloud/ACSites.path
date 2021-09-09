@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OVERVIEW_HEADER_PROPERTY_NAME</td>
+	<td>//div[contains(@class,'card-header')]//h5[contains(text(),'${propertyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVITIES_CARD_ATRIBUTE_AND_VALUE</td>
 	<td>//span[contains(text(),'${key_entry}')]/../../button//*[contains(text(),'${key_number}')]</td>
 	<td></td>
