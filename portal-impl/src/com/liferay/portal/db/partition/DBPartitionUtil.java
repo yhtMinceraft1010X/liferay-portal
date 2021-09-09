@@ -416,33 +416,6 @@ public class DBPartitionUtil {
 		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
-	private static Statement _wrapStatement(Statement statement) {
-		return new StatementWrapper(statement) {
-
-			@Override
-			public int executeUpdate(String sql) throws SQLException {
-				String lowerCaseSQL = StringUtil.toLowerCase(sql);
-
-				String[] query = sql.split(StringPool.SPACE);
-
-				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
-					 _isSkip(query[2])) ||
-					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
-					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
-					 _isSkip(query[4])) ||
-					(StringUtil.startsWith(
-						lowerCaseSQL, "create unique index") &&
-					 _isSkip(query[5]))) {
-
-					return 0;
-				}
-
-				return super.executeUpdate(sql);
-			}
-
-		};
-	}
-
 	private static boolean _isControlTable(
 			DBInspector dbInspector, String tableName)
 		throws Exception {
@@ -452,6 +425,26 @@ public class DBPartitionUtil {
 			!dbInspector.hasColumn(tableName, "companyId")) {
 
 			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isSkip(String tableName) throws SQLException {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			if (_isControlTable(dbInspector, tableName) &&
+				!(CompanyThreadLocal.getCompanyId() == _defaultCompanyId)) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			throw new SQLException(
+				"Unable to check if the table " + tableName +
+					" is a control table",
+				exception);
 		}
 
 		return false;
@@ -512,26 +505,31 @@ public class DBPartitionUtil {
 		statement.executeUpdate(_getCreateViewSQL(companyId, tableName));
 	}
 
-	private static boolean _isSkip(String tableName)
-		throws SQLException {
+	private static Statement _wrapStatement(Statement statement) {
+		return new StatementWrapper(statement) {
 
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
+			@Override
+			public int executeUpdate(String sql) throws SQLException {
+				String lowerCaseSQL = StringUtil.toLowerCase(sql);
 
-			if (_isControlTable(dbInspector, tableName) &&
-				!(CompanyThreadLocal.getCompanyId() == _defaultCompanyId)) {
+				String[] query = sql.split(StringPool.SPACE);
 
-				return true;
+				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
+					 _isSkip(query[2])) ||
+					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
+					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
+					 _isSkip(query[4])) ||
+					(StringUtil.startsWith(
+						lowerCaseSQL, "create unique index") &&
+					 _isSkip(query[5]))) {
+
+					return 0;
+				}
+
+				return super.executeUpdate(sql);
 			}
-		}
-		catch (Exception exception) {
-			throw new SQLException(
-				"Unable to check if the table " + tableName +
-					" is a control table",
-				exception);
-		}
 
-		return false;
+		};
 	}
 
 	private static final boolean _DATABASE_PARTITION_ENABLED =
