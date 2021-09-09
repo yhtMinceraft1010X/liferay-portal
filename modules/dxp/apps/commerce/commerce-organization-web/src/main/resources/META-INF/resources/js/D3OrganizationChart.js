@@ -426,7 +426,26 @@ class D3OrganizationChart {
 						nodesToBeMoved.push(d);
 					}
 
-					this._moveNodes(nodesToBeMoved, target);
+					const message =
+						nodesToBeMoved.length === 1
+							? Liferay.Util.sub(
+									Liferay.Language.get(
+										'x-will-be-moved-into-x'
+									),
+									nodesToBeMoved[0].data.name,
+									target.data.name
+							  )
+							: Liferay.Util.sub(
+									Liferay.Language.get(
+										'x-items-will-be-moved-into-x'
+									),
+									nodesToBeMoved.length,
+									target.data.name
+							  );
+
+					if (confirm(message)) {
+						this._moveNodes(nodesToBeMoved, target);
+					}
 				}
 			});
 	}
