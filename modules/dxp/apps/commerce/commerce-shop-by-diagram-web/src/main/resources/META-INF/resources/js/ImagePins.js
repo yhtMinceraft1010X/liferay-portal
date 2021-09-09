@@ -51,15 +51,14 @@ const ImagePins = ({
 	setAddPinHandler,
 	setChangedScale,
 	setCpins,
-	svgString,
 	setPinClickHandler,
 	setRemovePinHandler,
 	setResetZoom,
 	setSelectedOption,
-	setShowTooltip,
 	setZoomInHandler,
 	setZoomOutHandler,
 	showTooltip,
+	svgString,
 	zoomInHandler,
 	zoomOutHandler,
 }) => {
@@ -281,40 +280,54 @@ const ImagePins = ({
 			}
 
 			if (isAdmin) {
-
-				console.log('test')
 				container
-				.attr('height', imageSettings.height)
-				.attr('width', imageSettings.width)
-				.attr('id', 'sbdtest')
-				.html(svgString)
+					.attr('height', imageSettings.height)
+					.attr('width', imageSettings.width)
+					.attr('id', 'sbdtest')
+					.html(svgString);
 
-				const rootLevel = document.getElementById('Livello_Testi')
-				console.log({ rootLevel})
+				const rootLevel = document.getElementById('Livello_Testi');
 
 				if (rootLevel) {
 					const textDatas = [];
 					const pinDatas = [];
 					const rects = rootLevel.getElementsByTagName('rect');
-					console.log(rects)
+					console.log(rects);
 					const texts = rootLevel.getElementsByTagName('text');
-					console.log(texts)
+					console.log(texts);
 
-					Array.from(rects).map((r, i) => {
-						r.addEventListener('click', () => console.log(`ciao ${i}`))
-						// .onclick(()=> console.log(`ciao ${i}`))
+					Array.from(rects).map((rect, i) => {
+						rect.addEventListener('click', () =>
+							console.log(`ciao ${i}`)
+						);
 					});
-					Array.from(texts).map((t,i) => {
+					Array.from(texts).map((text, i) => {
 						textDatas.push({
-							label: t.textContent,
+							label: text.textContent,
 						});
-						t.addEventListener('click', () => console.log(textDatas[i].label))
-
+						text.addEventListener('click', () => {
+							const test1 = {
+								details: {
+									cx: null,
+									cy: null,
+									id: null,
+									label: textDatas[i].label,
+									linked_to_sku: 'sku',
+									quantity: null,
+									sku: '',
+									transform:
+										'matrix(0.9999 0.0165 -0.0165 0.9999 86.0798 171.5356)',
+								},
+								tooltip: true,
+							}
+							pinClickAction(test1);
+							console.log(test1);
+						});
 					});
 				}
 
-
-				container.selectAll('g')
+				container
+					.selectAll('g')
 					.data(cPins)
 					.enter()
 					.append('g')
@@ -348,7 +361,8 @@ const ImagePins = ({
 						);
 					});
 
-				container.append('circle')
+				container
+					.append('circle')
 					.attr('fill', () => 'transparent')
 					.attr('r', () => addNewPinState.radius)
 					.attr('stroke', () =>
@@ -382,13 +396,15 @@ const ImagePins = ({
 					.attr('class', 'circle_pin')
 					.call(dragHandler);
 
-				container.append('circle')
+				container
+					.append('circle')
 					.attr('fill', () => '#ffffff')
 					.attr('r', () => addNewPinState.radius)
 					.attr('stroke', () => `#${addNewPinState.fill}`)
 					.attr('stroke-width', 0.5);
 
-				container.append('text')
+				container
+					.append('text')
 					.text((attr) => attr.label)
 					.attr(
 						'font-size',
@@ -424,11 +440,11 @@ const ImagePins = ({
 		setPinClickHandler,
 		setResetZoom,
 		setRemovePinHandler,
-		setShowTooltip,
 		setSelectedOption,
 		setZoomInHandler,
 		setZoomOutHandler,
 		showTooltip,
+		svgString,
 		zoomOutHandler,
 		zoomInHandler,
 		pinClickAction,
@@ -438,23 +454,23 @@ const ImagePins = ({
 		<div
 			className="diagram-pins-container"
 			height={imageSettings.height}
+			ref={containerRef}
 			style={{
 				height: `${imageSettings.height}`,
 				width: `${imageSettings.width}`,
 			}}
-			ref={containerRef}
 		>
 			{/* <svg
 				height={imageSettings.height}
 				ref={svgRef}
 				width={imageSettings.width}
 			> */}
-				<g data-testid={`${namespace}container`} >
-					{/* <image
+			<g data-testid={`${namespace}container`}>
+				{/* <image
 						height={imageSettings.height}
 						href={imageURL}
 					></image> */}
-				</g>
+			</g>
 			{/* </svg> */}
 
 			{children}
@@ -511,7 +527,6 @@ ImagePins.propTypes = {
 	setAddPinHandler: PropTypes.func,
 	setCpins: PropTypes.func,
 	setImageState: PropTypes.func,
-	setShowTooltip: PropTypes.func,
 	setZoomInHandler: PropTypes.func,
 	setZoomOutHandler: PropTypes.func,
 	showTooltip: PropTypes.shape({

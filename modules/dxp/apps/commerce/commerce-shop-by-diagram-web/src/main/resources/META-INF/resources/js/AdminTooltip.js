@@ -31,7 +31,7 @@ const AdminTooltip = ({
 	const [active, setActive] = useState(false);
 	const [products, setProducts] = useState(null);
 	const [pinPositionLabel, setPinPositionLabel] = useState(
-		showTooltip.details.label
+		showTooltip.details.label || ''
 	);
 	const node = useRef();
 	const dropdownNode = useRef();
@@ -78,8 +78,11 @@ const AdminTooltip = ({
 		<ClayCard
 			className="admin-tooltip"
 			style={{
-				left: showTooltip.details.cx,
-				top: showTooltip.details.cy,
+
+				// transform: showTooltip.details.transform,
+
+				left: 50,
+				top: 50,
 			}}
 		>
 			<ClayCard.Body className="row">
@@ -212,6 +215,7 @@ const AdminTooltip = ({
 									linked_to_sku: SKU,
 									quantity: null,
 									sku: '',
+									transform: '',
 								},
 								tooltip: false,
 							});
@@ -230,13 +234,14 @@ const AdminTooltip = ({
 						onClick={() => {
 							setShowTooltip({
 								details: {
-									cx: null,
-									cy: null,
-									id: null,
+									cx: '',
+									cy: '',
+									id: '',
 									label: '',
 									linked_to_sku: SKU,
 									quantity: null,
 									sku: '',
+									transform: '',
 								},
 								tooltip: false,
 							});
@@ -270,7 +275,8 @@ const AdminTooltip = ({
 									label: pinPositionLabel,
 									linked_to_sku: linkedValue,
 									quantity,
-									sku: selectedProduct.sku,
+									sku,
+									transform: details.transform || '',
 								},
 								tooltip: false,
 							});
