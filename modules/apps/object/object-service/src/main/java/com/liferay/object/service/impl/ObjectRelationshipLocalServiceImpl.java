@@ -87,9 +87,8 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
 		}
-
-		if (Objects.equals(
-				type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+		else if (Objects.equals(
+					type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
