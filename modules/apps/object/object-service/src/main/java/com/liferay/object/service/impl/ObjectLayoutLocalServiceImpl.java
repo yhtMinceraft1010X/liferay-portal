@@ -32,6 +32,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,18 +166,13 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutBox> objectLayoutBoxes)
 		throws PortalException {
 
-		List<ObjectLayoutBox> newObjectLayoutBoxes = new ArrayList<>();
-
-		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
-			newObjectLayoutBoxes.add(
-				_addObjectLayoutBox(
-					user, objectDefinitionId, objectLayoutTabId,
-					objectLayoutBox.isCollapsable(),
-					objectLayoutBox.getNameMap(), objectLayoutBox.getPriority(),
-					objectLayoutBox.getObjectLayoutRows()));
-		}
-
-		return newObjectLayoutBoxes;
+		return TransformUtil.transform(
+			objectLayoutBoxes,
+			objectLayoutBox -> _addObjectLayoutBox(
+				user, objectDefinitionId, objectLayoutTabId,
+				objectLayoutBox.isCollapsable(), objectLayoutBox.getNameMap(),
+				objectLayoutBox.getPriority(),
+				objectLayoutBox.getObjectLayoutRows()));
 	}
 
 	private ObjectLayoutColumn _addObjectLayoutColumn(
@@ -255,17 +251,13 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutRow> objectLayoutRows)
 		throws PortalException {
 
-		List<ObjectLayoutRow> addObjectLayoutRows = new ArrayList<>();
-
-		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
-			addObjectLayoutRows.add(
+		return TransformUtil.transform(
+			objectLayoutRows,
+			objectLayoutRow ->
 				_addObjectLayoutRow(
 					user, objectDefinitionId, objectLayoutBoxId,
 					objectLayoutRow.getPriority(),
 					objectLayoutRow.getObjectLayoutColumns()));
-		}
-
-		return addObjectLayoutRows;
 	}
 
 	private ObjectLayoutTab _addObjectLayoutTab(
@@ -300,18 +292,13 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		List<ObjectLayoutTab> newObjectLayoutTabs = new ArrayList<>();
-
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			newObjectLayoutTabs.add(
-				_addObjectLayoutTab(
-					user, objectDefinitionId, objectLayoutId,
-					objectLayoutTab.getObjectRelationshipId(),
-					objectLayoutTab.getNameMap(), objectLayoutTab.getPriority(),
-					objectLayoutTab.getObjectLayoutBoxes()));
-		}
-
-		return newObjectLayoutTabs;
+		return TransformUtil.transform(
+			objectLayoutTabs,
+			objectLayoutTab -> _addObjectLayoutTab(
+				user, objectDefinitionId, objectLayoutId,
+				objectLayoutTab.getObjectRelationshipId(),
+				objectLayoutTab.getNameMap(), objectLayoutTab.getPriority(),
+				objectLayoutTab.getObjectLayoutBoxes()));
 	}
 
 	private void _deleteObjectLayoutBoxes(
