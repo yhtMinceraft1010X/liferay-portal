@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.object.internal.data.provider;
+package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.data.provider.RelationshipDataProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 
 import java.util.List;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
-public class ObjectEntryOneToOneRelationshipDataProvider
-	implements RelationshipDataProvider<ObjectEntry> {
+public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
+	implements ObjectRelatedModelsProvider<ObjectEntry> {
 
-	public ObjectEntryOneToOneRelationshipDataProvider(
+	public ObjectEntry1to1ObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition) {
 
 		_className = objectDefinition.getClassName();
@@ -42,9 +43,9 @@ public class ObjectEntryOneToOneRelationshipDataProvider
 		return ObjectRelationshipConstants.TYPE_ONE_TO_ONE;
 	}
 
-	public List<ObjectEntry> getRelatedEntities(
-		long groupId, long relatedPrimaryKey, long objectRelationshipId,
-		int start, int end) {
+	public List<ObjectEntry> getRelatedModels(
+		long groupId, long objectRelationshipId, long primaryKey, int start,
+		int end) {
 
 		return null;
 	}

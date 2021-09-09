@@ -12,27 +12,26 @@
  * details.
  */
 
-package com.liferay.object.service.test;
+package com.liferay.object.related.models.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.data.provider.RelationshipDataProvider;
-import com.liferay.object.data.provider.RelationshipDataProviderRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -56,19 +55,17 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  */
 @RunWith(Arquillian.class)
-public class ObjectEntryOneToManyRelationshipDataProviderTest {
+public class ObjectRelatedModelsProviderTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition1 =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Left"), "Left", null, null,
 				LocalizedMapUtil.getLocalizedMap("Left"),
@@ -78,12 +75,12 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 						true, false, "Random", "random", false, "String")));
 
 		_objectDefinition1 =
-			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId());
 
 		_objectDefinition2 =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Right"), "Right", null, null,
 				LocalizedMapUtil.getLocalizedMap("Right"),
@@ -93,12 +90,12 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 						true, false, "Random", "random", false, "String")));
 
 		_objectDefinition2 =
-			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
 
 		_objectRelationship =
-			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
+			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
@@ -107,27 +104,28 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 	}
 
 	@Test
-	public void testCustomObjectsOneToManyRelationship() throws Exception {
-		RelationshipDataProvider<ObjectEntry> relationshipDataProvider =
-			_relationshipDataProviderRegistry.getRelationshipDataProvider(
+	public void testObjectEntry1to1ObjectRelatedModelsProviderImpl()
+		throws Exception {
+
+		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				_objectDefinition2.getClassName(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		Assert.assertNotNull(relationshipDataProvider);
+		Assert.assertNotNull(objectRelatedModelsProvider);
 
-		ObjectEntry leftObjectEntry =
-			ObjectEntryLocalServiceUtil.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
-				_objectDefinition1.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"random", RandomTestUtil.randomString()
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
+		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"random", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.getObjectField(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectRelationship.getObjectFieldId2());
 
-		ObjectEntryLocalServiceUtil.addObjectEntry(
+		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -137,16 +135,15 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		List<ObjectEntry> relatedEntities =
-			relationshipDataProvider.getRelatedEntities(
-				0, leftObjectEntry.getObjectEntryId(),
-				_objectRelationship.getObjectRelationshipId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<ObjectEntry> objectEntries =
+			objectRelatedModelsProvider.getRelatedModels(
+				0, _objectRelationship.getObjectRelationshipId(),
+				leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(
-			relatedEntities.toString(), 1, relatedEntities.size());
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
-		ObjectEntryLocalServiceUtil.addObjectEntry(
+		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -156,15 +153,14 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		relatedEntities = relationshipDataProvider.getRelatedEntities(
-			0, leftObjectEntry.getObjectEntryId(),
-			_objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+		objectEntries = objectRelatedModelsProvider.getRelatedModels(
+			0, _objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(
-			relatedEntities.toString(), 2, relatedEntities.size());
+		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
-		ObjectEntryLocalServiceUtil.addObjectEntry(
+		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -174,13 +170,12 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		relatedEntities = relationshipDataProvider.getRelatedEntities(
-			0, leftObjectEntry.getObjectEntryId(),
-			_objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+		objectEntries = objectRelatedModelsProvider.getRelatedModels(
+			0, _objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(
-			relatedEntities.toString(), 2, relatedEntities.size());
+		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 	}
 
 	@DeleteAfterTestRun
@@ -189,10 +184,23 @@ public class ObjectEntryOneToManyRelationshipDataProviderTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
 
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
+
 	@DeleteAfterTestRun
 	private ObjectRelationship _objectRelationship;
 
 	@Inject
-	private RelationshipDataProviderRegistry _relationshipDataProviderRegistry;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

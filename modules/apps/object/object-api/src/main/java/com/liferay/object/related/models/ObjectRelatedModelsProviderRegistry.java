@@ -12,25 +12,21 @@
  * details.
  */
 
-package com.liferay.object.data.provider;
+package com.liferay.object.related.models;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
 
-import java.util.List;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
-public interface RelationshipDataProvider<T extends BaseModel<T>> {
+@ProviderType
+public interface ObjectRelatedModelsProviderRegistry {
 
-	public String getClassName();
-
-	public String getObjectRelationshipType();
-
-	public List<T> getRelatedEntities(
-			long groupId, long relatedPrimaryKey, long objectRelationshipId,
-			int start, int end)
+	public ObjectRelatedModelsProvider getObjectRelatedModelsProvider(
+			String className, String type)
 		throws PortalException;
 
 }

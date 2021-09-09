@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.object.internal.data.provider;
+package com.liferay.object.internal.related.models;
 
-import com.liferay.object.data.provider.RelationshipDataProvider;
-import com.liferay.object.data.provider.RelationshipDataProviderRegistry;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.framework.BundleContext;
@@ -27,40 +28,45 @@ import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = RelationshipDataProviderRegistry.class)
-public class RelationshipDataProviderRegistryImpl
-	implements RelationshipDataProviderRegistry {
+@Component(
+	immediate = true, service = ObjectRelatedModelsProviderRegistry.class
+)
+public class ObjectRelatedModelsProviderRegistryImpl
+	implements ObjectRelatedModelsProviderRegistry {
 
 	@Override
-	public RelationshipDataProvider getRelationshipDataProvider(
+	public ObjectRelatedModelsProvider getObjectRelatedModelsProvider(
 			String className, String type)
 		throws PortalException {
 
-		RelationshipDataProvider relationshipDataProvider =
-			_serviceTrackerMap.getService(_formatKey(className, type));
+		String key = _getKey(className, type);
 
-		if (relationshipDataProvider == null) {
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_serviceTrackerMap.getService(key);
+
+		if (objectRelatedModelsProvider == null) {
 			throw new IllegalArgumentException(
-				"No relationship data provider found with key " +
-					_formatKey(className, type));
+				"No object related models provider found with key " + key);
 		}
 
-		return relationshipDataProvider;
+		return objectRelatedModelsProvider;
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, RelationshipDataProvider.class, null,
+			bundleContext, ObjectRelatedModelsProvider.class, null,
 			(serviceReference, emitter) -> {
-				RelationshipDataProvider relationshipDataProvider =
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
 					bundleContext.getService(serviceReference);
 
 				emitter.emit(
-					_formatKey(
-						relationshipDataProvider.getClassName(),
-						relationshipDataProvider.getObjectRelationshipType()));
+					_getKey(
+						objectRelatedModelsProvider.getClassName(),
+						objectRelatedModelsProvider.
+							getObjectRelationshipType()));
 			});
 	}
 
@@ -69,11 +75,11 @@ public class RelationshipDataProviderRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private String _formatKey(String className, String type) {
-		return className + "_" + type;
+	private String _getKey(String className, String type) {
+		return className + StringPool.POUND + type;
 	}
 
-	private ServiceTrackerMap<String, RelationshipDataProvider>
+	private ServiceTrackerMap<String, ObjectRelatedModelsProvider>
 		_serviceTrackerMap;
 
 }

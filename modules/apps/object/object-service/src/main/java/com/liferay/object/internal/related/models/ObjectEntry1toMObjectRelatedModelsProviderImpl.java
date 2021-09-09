@@ -12,23 +12,29 @@
  * details.
  */
 
-package com.liferay.object.internal.data.provider;
+package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.data.provider.RelationshipDataProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
-public class ObjectEntryManyToOneRelationshipDataProvider
-	implements RelationshipDataProvider<ObjectEntry> {
+public class ObjectEntry1toMObjectRelatedModelsProviderImpl
+	implements ObjectRelatedModelsProvider<ObjectEntry> {
 
-	public ObjectEntryManyToOneRelationshipDataProvider(
-		ObjectDefinition objectDefinition) {
+	public ObjectEntry1toMObjectRelatedModelsProviderImpl(
+		ObjectDefinition objectDefinition,
+		ObjectEntryLocalService objectEntryLocalService) {
+
+		_objectEntryLocalService = objectEntryLocalService;
 
 		_className = objectDefinition.getClassName();
 		_objectDefinitionId = objectDefinition.getObjectDefinitionId();
@@ -39,17 +45,20 @@ public class ObjectEntryManyToOneRelationshipDataProvider
 	}
 
 	public String getObjectRelationshipType() {
-		return ObjectRelationshipConstants.TYPE_MANY_TO_ONE;
+		return ObjectRelationshipConstants.TYPE_ONE_TO_MANY;
 	}
 
-	public List<ObjectEntry> getRelatedEntities(
-		long groupId, long relatedPrimaryKey, long objectRelationshipId,
-		int start, int end) {
+	public List<ObjectEntry> getRelatedModels(
+			long groupId, long objectRelationshipId, long primaryKey, int start,
+			int end)
+		throws PortalException {
 
-		return null;
+		return _objectEntryLocalService.getOneToManyRelatedObjectEntries(
+			groupId, objectRelationshipId, primaryKey, start, end);
 	}
 
 	private final String _className;
 	private final long _objectDefinitionId;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }
