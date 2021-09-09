@@ -178,10 +178,6 @@ public class ObjectLayoutLocalServiceImpl
 			long objectLayoutRowId, int priority)
 		throws PortalException {
 
-		ObjectLayoutColumn objectLayoutColumn =
-			_objectLayoutColumnPersistence.create(
-				counterLocalService.increment());
-
 		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
 
@@ -191,6 +187,10 @@ public class ObjectLayoutLocalServiceImpl
 
 			throw new PortalException();
 		}
+
+		ObjectLayoutColumn objectLayoutColumn =
+			_objectLayoutColumnPersistence.create(
+				counterLocalService.increment());
 
 		objectLayoutColumn.setCompanyId(user.getCompanyId());
 		objectLayoutColumn.setUserId(user.getUserId());
