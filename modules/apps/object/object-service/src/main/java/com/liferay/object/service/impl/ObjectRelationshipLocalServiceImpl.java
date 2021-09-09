@@ -77,9 +77,6 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setName(name);
 		objectRelationship.setType(type);
 
-		objectRelationship = objectRelationshipPersistence.update(
-			objectRelationship);
-
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
 			Objects.equals(
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
