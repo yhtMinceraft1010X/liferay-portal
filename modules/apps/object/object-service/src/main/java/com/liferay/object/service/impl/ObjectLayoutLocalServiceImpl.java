@@ -213,8 +213,7 @@ public class ObjectLayoutLocalServiceImpl
 			addObjectLayoutColumns.add(
 				_addObjectLayoutColumn(
 					user, objectDefinitionId,
-					objectLayoutColumn.getObjectFieldId(),
-					 objectLayoutRowId,
+					objectLayoutColumn.getObjectFieldId(), objectLayoutRowId,
 					objectLayoutColumn.getPriority()));
 		}
 
@@ -252,11 +251,10 @@ public class ObjectLayoutLocalServiceImpl
 
 		return TransformUtil.transform(
 			objectLayoutRows,
-			objectLayoutRow ->
-				_addObjectLayoutRow(
-					user, objectDefinitionId, objectLayoutBoxId,
-					objectLayoutRow.getPriority(),
-					objectLayoutRow.getObjectLayoutColumns()));
+			objectLayoutRow -> _addObjectLayoutRow(
+				user, objectDefinitionId, objectLayoutBoxId,
+				objectLayoutRow.getPriority(),
+				objectLayoutRow.getObjectLayoutColumns()));
 	}
 
 	private ObjectLayoutTab _addObjectLayoutTab(
