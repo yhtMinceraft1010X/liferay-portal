@@ -123,7 +123,7 @@ public class ObjectLayoutLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
 		objectLayoutTab.setPriority(0);
 		objectLayoutTab.setObjectLayoutBoxes(
-			Collections.singletonList(_addObjectLayoutBox()));
+			Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
 
 		return _objectLayoutLocalService.addObjectLayout(
 			TestPropsValues.getUserId(),
@@ -140,7 +140,9 @@ public class ObjectLayoutLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
 		objectLayoutBox.setPriority(0);
 		objectLayoutBox.setObjectLayoutRows(
-			Collections.singletonList(_addObjectLayoutRow()));
+			Arrays.asList(
+				_addObjectLayoutRow(), _addObjectLayoutRow(),
+				_addObjectLayoutRow()));
 
 		return objectLayoutBox;
 	}
@@ -160,7 +162,9 @@ public class ObjectLayoutLocalServiceTest {
 
 		objectLayoutRow.setPriority(0);
 		objectLayoutRow.setObjectLayoutColumns(
-			Arrays.asList(_addObjectLayoutColumn(), _addObjectLayoutColumn()));
+			Arrays.asList(
+				_addObjectLayoutColumn(), _addObjectLayoutColumn(),
+				_addObjectLayoutColumn(), _addObjectLayoutColumn()));
 
 		return objectLayoutRow;
 	}
@@ -178,7 +182,7 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutTab.getObjectLayoutBoxes();
 
 		Assert.assertEquals(
-			objectLayoutBoxes.toString(), 1, objectLayoutBoxes.size());
+			objectLayoutBoxes.toString(), 2, objectLayoutBoxes.size());
 
 		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
 
@@ -186,7 +190,7 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutBox.getObjectLayoutRows();
 
 		Assert.assertEquals(
-			objectLayoutRows.toString(), 1, objectLayoutRows.size());
+			objectLayoutRows.toString(), 3, objectLayoutRows.size());
 
 		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
 
@@ -194,7 +198,7 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutRow.getObjectLayoutColumns();
 
 		Assert.assertEquals(
-			objectLayoutColumns.toString(), 2, objectLayoutColumns.size());
+			objectLayoutColumns.toString(), 4, objectLayoutColumns.size());
 	}
 
 	@DeleteAfterTestRun
