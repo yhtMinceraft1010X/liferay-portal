@@ -1038,15 +1038,12 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long groupId, boolean remote, boolean privateLayout)
 		throws PortalException {
 
-		int configurationType;
+		int configurationType =
+			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
 
 		if (remote) {
 			configurationType =
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-		}
-		else {
-			configurationType =
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
 		}
 
 		List<ExportImportConfiguration> exportImportConfigurations =
