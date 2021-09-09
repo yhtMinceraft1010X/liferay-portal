@@ -176,8 +176,8 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	private ObjectLayoutColumn _addObjectLayoutColumn(
-			User user, long objectDefinitionId, long objectLayoutRowId,
-			long objectFieldId, int priority)
+			User user, long objectDefinitionId, long objectFieldId,
+			long objectLayoutRowId, int priority)
 		throws PortalException {
 
 		ObjectLayoutColumn objectLayoutColumn =
@@ -214,8 +214,9 @@ public class ObjectLayoutLocalServiceImpl
 		for (ObjectLayoutColumn objectLayoutColumn : objectLayoutColumns) {
 			addObjectLayoutColumns.add(
 				_addObjectLayoutColumn(
-					user, objectDefinitionId, objectLayoutRowId,
+					user, objectDefinitionId,
 					objectLayoutColumn.getObjectFieldId(),
+					 objectLayoutRowId,
 					objectLayoutColumn.getPriority()));
 		}
 
