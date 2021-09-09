@@ -45,8 +45,9 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		if (
 			confirm(
 				Liferay.Util.sub(
-					Liferay.Language.get('x-will-be-removed'),
-					data.name
+					Liferay.Language.get('x-will-be-removed-from-x'),
+					data.name,
+					parentData.name
 				)
 			)
 		) {

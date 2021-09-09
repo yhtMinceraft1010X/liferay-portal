@@ -62,12 +62,20 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 
 		inviteUser(parentData.id, selectedRoleIds.join(','), typedEmails)
 			.then((users) => {
+				const message =
+					users.length === 1
+						? Liferay.Util.sub(
+								Liferay.Language.get('1-user-was-added-to-x'),
+								parentData.name
+						  )
+						: Liferay.Util.sub(
+								Liferay.Language.get('x-users-were-added-to-x'),
+								users.length,
+								parentData.name
+						  );
+
 				openToast({
-					message: Liferay.Util.sub(
-						Liferay.Language.get('x-users-were-added-to-x'),
-						users.length,
-						parentData.name
-					),
+					message,
 					type: 'success',
 				});
 
@@ -96,7 +104,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 					className={classNames(errors.length && 'has-error')}
 				>
 					<label htmlFor="inviteUsersEmailInput">
-						{Liferay.Language.get('email')}
+						{Liferay.Language.get('emails')}
 
 						<ClayIcon
 							className="ml-1 reference-mark"

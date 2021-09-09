@@ -65,14 +65,24 @@ export default function AddOrganizationModal({
 				setQuery('');
 
 				if (newOrganizationsDetails.length) {
+					const message =
+						newOrganizationsDetails.length === 1
+							? Liferay.Util.sub(
+									Liferay.Language.get(
+										'1-organization-was-added-to-x'
+									),
+									parentData.name
+							  )
+							: Liferay.Util.sub(
+									Liferay.Language.get(
+										'x-organizations-were-added-to-x'
+									),
+									newOrganizationsDetails.length,
+									parentData.name
+							  );
+
 					openToast({
-						message: Liferay.Util.sub(
-							Liferay.Language.get(
-								'x-organizations-were-added-to-x'
-							),
-							newOrganizationsDetails.length,
-							parentData.name
-						),
+						message,
 						type: 'success',
 					});
 

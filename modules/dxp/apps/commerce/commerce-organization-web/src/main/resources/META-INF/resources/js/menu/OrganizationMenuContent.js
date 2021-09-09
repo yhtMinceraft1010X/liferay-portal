@@ -17,7 +17,7 @@ import {deleteOrganization, updateOrganization} from '../data/organizations';
 import {ACTION_KEYS} from '../utils/constants';
 import {hasPermission} from '../utils/index';
 
-export default function OrganizationMenuContent({closeMenu, data}) {
+export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
@@ -41,10 +41,9 @@ export default function OrganizationMenuContent({closeMenu, data}) {
 		if (
 			confirm(
 				Liferay.Util.sub(
-					Liferay.Language.get(
-						'x-will-be-removed-from-its-parent-organization'
-					),
-					data.name
+					Liferay.Language.get('x-will-be-removed-from-x'),
+					data.name,
+					parentData.name
 				)
 			)
 		) {

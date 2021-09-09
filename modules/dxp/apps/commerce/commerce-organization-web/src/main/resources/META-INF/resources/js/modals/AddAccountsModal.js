@@ -72,6 +72,14 @@ export default function AddOrganizationModal({
 		if (newAccountMode) {
 			createAccount(newAccountName, [parentData.id])
 				.then((accountData) => {
+					openToast({
+						message: Liferay.Util.sub(
+							Liferay.Language.get('1-account-was-added-to-x'),
+							parentData.name
+						),
+						type: 'success',
+					});
+
 					chartInstanceRef.current.addNodes(
 						[accountData],
 						'account',
@@ -122,6 +130,27 @@ export default function AddOrganizationModal({
 					});
 
 					setErrors(newErrors);
+
+					const message =
+						nodeChildren.length === 1
+							? Liferay.Util.sub(
+									Liferay.Language.get(
+										'1-account-was-added-to-x'
+									),
+									parentData.name
+							  )
+							: Liferay.Util.sub(
+									Liferay.Language.get(
+										'x-accounts-were-added-to-x'
+									),
+									nodeChildren.length,
+									parentData.name
+							  );
+
+					openToast({
+						message,
+						type: 'success',
+					});
 
 					chartInstanceRef.current.addNodes(
 						nodeChildren,
