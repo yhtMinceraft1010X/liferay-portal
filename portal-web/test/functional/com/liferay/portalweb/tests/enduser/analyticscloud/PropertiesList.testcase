@@ -13,7 +13,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.tearDownAC();
+		// ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
@@ -131,7 +131,7 @@ definition {
 
 				ACNavigation.goToSettings();
 
-				ACSettings.goToWorkspace();
+				ACSettings.goToWorkspace();	
 
 				ACWorkspace.viewWorkspaceSettings(
 					timezone = "UTC",
@@ -144,34 +144,33 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9116 | Test Summary: Dropdown transiction between no properties or no site and one or more properties available"
 	@priority = "3"
 	test ViewTheDropdownTransition {
-		task ("go to properties page") {
+		task ("go to properties page and add 2 new properties") {
+			var propertyList = "Property Name 1,Property Name 2";
+
 			ACNavigation.goToSettings();
 
-			ACSettings.goToProperties();
+			for (var n : list "${propertyList}") {
+				ACSettings.goToProperties();
+					
+				ACProperties.addNewProperty(propertyName = "${n}");
+			}
 		}
 
-		task ("assert dropdown not present") {
-			ACSettings.viewFilterButton(nofilter = "20 Items");
-		}
+		task ("assert transition when switching between properties") {
+			ACNavigation.exitSettings();
 
-		task ("add new property") {
-			ACProperties.addNewProperty(propertyName = "Property Name 1");
+			for (var n : list "${propertyList}") {
+				ACProperties.switchProperty(propertyName = "${n}");
 
-			ACSettings.goToProperties();
-		}
+				ACProperties.assertPropertyHeader(propertyName = "${n}");
 
-		task ("assert dropdown present") {
-			ACSettings.viewFilterButton(filter = "20 Items");
-		}
-		task ("delete property") {
-			ACSettings.deleteAllProperties();
+				ACProperties.assertSitesOverviewPropertyHeader(propertyName = "${n}");
 
-			ACSettings.goToProperties();
+				ACProperties.assertCurrentActiveProperty(propertyName = "${n}");
+		
+			}
 		}
-
-		task ("assert dropdown not present") {
-			ACSettings.viewFilterButton(nofilter = "20 Items");
-		}
+		
 	}
 
 }
