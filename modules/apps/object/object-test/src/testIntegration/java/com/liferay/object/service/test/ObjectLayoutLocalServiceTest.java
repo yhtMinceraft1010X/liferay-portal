@@ -23,18 +23,20 @@ import com.liferay.object.model.ObjectLayoutBox;
 import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.object.service.ObjectLayoutLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -63,7 +65,7 @@ public class ObjectLayoutLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
 				LocalizedMapUtil.getLocalizedMap("Tests"),
@@ -72,152 +74,146 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Test
 	public void testAddObjectLayout() throws Exception {
-		ObjectLayout objectLayout = _addRandomObjectLayout();
+		ObjectLayout objectLayout = _addObjectLayout();
 
-		List<ObjectLayoutTab> objectLayoutTabs =
-			objectLayout.getObjectLayoutTabs();
+		_assertObjectLayout(objectLayout);
 
-		Assert.assertEquals(
-			objectLayoutTabs.toString(), 1, objectLayoutTabs.size());
-
-		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
-
-		List<ObjectLayoutBox> objectLayoutBoxes =
-			objectLayoutTab.getObjectLayoutBoxes();
-
-		Assert.assertEquals(
-			objectLayoutBoxes.toString(), 1, objectLayoutBoxes.size());
-
-		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
-
-		List<ObjectLayoutRow> objectLayoutRows =
-			objectLayoutBox.getObjectLayoutRows();
-
-		Assert.assertEquals(
-			objectLayoutRows.toString(), 1, objectLayoutRows.size());
-
-		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
-
-		List<ObjectLayoutColumn> objectLayoutColumns =
-			objectLayoutRow.getObjectLayoutColumns();
-
-		Assert.assertEquals(
-			objectLayoutColumns.toString(), 2, objectLayoutColumns.size());
-
-		ObjectLayoutLocalServiceUtil.deleteObjectLayout(
+		_objectLayoutLocalService.deleteObjectLayout(
 			objectLayout.getObjectLayoutId());
 	}
 
 	@Test
 	public void testGetObjectLayout() throws Exception {
-		ObjectLayout objectLayout = _addRandomObjectLayout();
+		_addObjectLayout();
 
-		objectLayout = ObjectLayoutLocalServiceUtil.getObjectLayout(
+		List<ObjectLayout> objectLayouts =
+			_objectLayoutLocalService.getObjectLayouts(
+				_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		ObjectLayout objectLayout = objectLayouts.get(0);
+
+		Assert.assertNull(objectLayout.getObjectLayoutTabs());
+
+		objectLayout = _objectLayoutLocalService.getObjectLayout(
 			objectLayout.getObjectLayoutId());
 
-		List<ObjectLayoutTab> objectLayoutTabs =
-			objectLayout.getObjectLayoutTabs();
+		_assertObjectLayout(objectLayout);
 
-		Assert.assertEquals(
-			objectLayoutTabs.toString(), 1, objectLayoutTabs.size());
-
-		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
-
-		List<ObjectLayoutBox> objectLayoutBoxes =
-			objectLayoutTab.getObjectLayoutBoxes();
-
-		Assert.assertEquals(
-			objectLayoutBoxes.toString(), 1, objectLayoutBoxes.size());
-
-		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
-
-		List<ObjectLayoutRow> objectLayoutRows =
-			objectLayoutBox.getObjectLayoutRows();
-
-		Assert.assertEquals(
-			objectLayoutRows.toString(), 1, objectLayoutRows.size());
-
-		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
-
-		List<ObjectLayoutColumn> objectLayoutColumns =
-			objectLayoutRow.getObjectLayoutColumns();
-
-		Assert.assertEquals(
-			objectLayoutColumns.toString(), 2, objectLayoutColumns.size());
-
-		ObjectLayoutLocalServiceUtil.deleteObjectLayout(
+		_objectLayoutLocalService.deleteObjectLayout(
 			objectLayout.getObjectLayoutId());
 	}
 
-	private ObjectField _addObjectField(long objectDefinitionId, String name)
-		throws Exception {
+	private long _addObjectField() throws Exception {
+		String name = RandomTestUtil.randomString();
 
-		return ObjectFieldLocalServiceUtil.addCustomObjectField(
-			TestPropsValues.getUserId(), 0, objectDefinitionId, false, false,
-			null, LocalizedMapUtil.getLocalizedMap(name), "a" + name, true,
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), false, false, null,
+			LocalizedMapUtil.getLocalizedMap(name), StringUtil.randomId(), true,
 			"String");
+
+		return objectField.getObjectFieldId();
 	}
 
-	private ObjectLayout _addRandomObjectLayout() throws Exception {
-		ObjectField objectField1 = _addObjectField(
-			_objectDefinition.getObjectDefinitionId(), "Able");
-
-		ObjectLayoutColumn objectLayoutColumn1 =
-			_objectLayoutColumnPersistence.create(0L);
-
-		objectLayoutColumn1.setObjectFieldId(objectField1.getObjectFieldId());
-		objectLayoutColumn1.setPriority(0);
-
-		ObjectField objectField2 = _addObjectField(
-			_objectDefinition.getObjectDefinitionId(), "Baker");
-
-		ObjectLayoutColumn objectLayoutColumn2 =
-			_objectLayoutColumnPersistence.create(0L);
-
-		objectLayoutColumn2.setObjectFieldId(objectField2.getObjectFieldId());
-		objectLayoutColumn2.setPriority(0);
-
-		ObjectLayoutRow objectLayoutRow = _objectLayoutRowPersistence.create(
-			0L);
-
-		objectLayoutRow.setPriority(0);
-		objectLayoutRow.setObjectLayoutColumns(
-			Arrays.asList(objectLayoutColumn1, objectLayoutColumn2));
-
-		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(
-			0L);
-
-		objectLayoutBox.setCollapsable(false);
-		objectLayoutBox.setNameMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
-		objectLayoutBox.setPriority(0);
-		objectLayoutBox.setObjectLayoutRows(
-			Collections.singletonList(objectLayoutRow));
-
-		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(
-			0L);
+	private ObjectLayout _addObjectLayout() throws Exception {
+		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(0);
 
 		objectLayoutTab.setNameMap(
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
 		objectLayoutTab.setPriority(0);
 		objectLayoutTab.setObjectLayoutBoxes(
-			Collections.singletonList(objectLayoutBox));
+			Collections.singletonList(_addObjectLayoutBox()));
 
-		return ObjectLayoutLocalServiceUtil.addObjectLayout(
+		return _objectLayoutLocalService.addObjectLayout(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(objectLayoutTab));
 	}
 
+	private ObjectLayoutBox _addObjectLayoutBox() throws Exception {
+		ObjectLayoutBox objectLayoutBox = _objectLayoutBoxPersistence.create(0);
+
+		objectLayoutBox.setCollapsable(false);
+		objectLayoutBox.setNameMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectLayoutBox.setPriority(0);
+		objectLayoutBox.setObjectLayoutRows(
+			Collections.singletonList(_addObjectLayoutRow()));
+
+		return objectLayoutBox;
+	}
+
+	private ObjectLayoutColumn _addObjectLayoutColumn() throws Exception {
+		ObjectLayoutColumn objectLayoutColumn =
+			_objectLayoutColumnPersistence.create(0);
+
+		objectLayoutColumn.setObjectFieldId(_addObjectField());
+		objectLayoutColumn.setPriority(0);
+
+		return objectLayoutColumn;
+	}
+
+	private ObjectLayoutRow _addObjectLayoutRow() throws Exception {
+		ObjectLayoutRow objectLayoutRow = _objectLayoutRowPersistence.create(0);
+
+		objectLayoutRow.setPriority(0);
+		objectLayoutRow.setObjectLayoutColumns(
+			Arrays.asList(_addObjectLayoutColumn(), _addObjectLayoutColumn()));
+
+		return objectLayoutRow;
+	}
+
+	private void _assertObjectLayout(ObjectLayout objectLayout) {
+		List<ObjectLayoutTab> objectLayoutTabs =
+			objectLayout.getObjectLayoutTabs();
+
+		Assert.assertEquals(
+			objectLayoutTabs.toString(), 1, objectLayoutTabs.size());
+
+		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
+
+		List<ObjectLayoutBox> objectLayoutBoxes =
+			objectLayoutTab.getObjectLayoutBoxes();
+
+		Assert.assertEquals(
+			objectLayoutBoxes.toString(), 1, objectLayoutBoxes.size());
+
+		ObjectLayoutBox objectLayoutBox = objectLayoutBoxes.get(0);
+
+		List<ObjectLayoutRow> objectLayoutRows =
+			objectLayoutBox.getObjectLayoutRows();
+
+		Assert.assertEquals(
+			objectLayoutRows.toString(), 1, objectLayoutRows.size());
+
+		ObjectLayoutRow objectLayoutRow = objectLayoutRows.get(0);
+
+		List<ObjectLayoutColumn> objectLayoutColumns =
+			objectLayoutRow.getObjectLayoutColumns();
+
+		Assert.assertEquals(
+			objectLayoutColumns.toString(), 2, objectLayoutColumns.size());
+	}
+
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectLayoutBoxPersistence _objectLayoutBoxPersistence;
 
 	@Inject
 	private ObjectLayoutColumnPersistence _objectLayoutColumnPersistence;
+
+	@Inject
+	private ObjectLayoutLocalService _objectLayoutLocalService;
 
 	@Inject
 	private ObjectLayoutRowPersistence _objectLayoutRowPersistence;
