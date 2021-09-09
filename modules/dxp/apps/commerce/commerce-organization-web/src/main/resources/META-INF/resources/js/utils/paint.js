@@ -206,12 +206,16 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 		printDescription(d, nodes[index], spritemap)
 	);
 
-	const nodesWithMenu = nodeEnter.filter((chartItem) =>
-		hasPermissions(chartItem.data, [
+	const nodesWithMenu = nodeEnter.filter((chartItem) => {
+		if (!chartItem.parent || chartItem.parent.data.type === 'fakeRoot') {
+			return false;
+		}
+
+		return hasPermissions(chartItem.data, [
 			ACTION_KEYS[chartItem.data.type].REMOVE,
 			ACTION_KEYS[chartItem.data.type].DELETE,
-		])
-	);
+		]);
+	});
 
 	const menuWrapper = nodesWithMenu
 		.append('g')

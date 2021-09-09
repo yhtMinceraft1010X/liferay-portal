@@ -136,17 +136,6 @@ class D3OrganizationChart {
 
 		this._root.each((node) => {
 			if (nodesToBeDeletedIds.has(node.data[propertyToMatch])) {
-				if (!node.parent) {
-					openToast({
-						message: Liferay.Language.get(
-							'root-organization-cant-be-deleted'
-						),
-						type: 'danger',
-					});
-
-					return;
-				}
-
 				if (updateCounter) {
 					const currentQuantity =
 						node.parent.data[COUNTER_KEYS_MAP[node.data.type]];
