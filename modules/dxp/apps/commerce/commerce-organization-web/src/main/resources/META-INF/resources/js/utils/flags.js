@@ -9,4 +9,4 @@
  * distribution rights of the Software.
  */
 
-export const PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS = false;
+export const PERMISSION_CHECK_ON_HEADLESS_API_ACTIONS = true;

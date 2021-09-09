@@ -19,6 +19,17 @@ import {
 	USERS_PROPERTY_NAME_IN_ORGANIZATION,
 } from '../src/main/resources/META-INF/resources/js/utils/constants';
 
+const actions = {
+	delete: {
+		href: '#',
+		method: 'test',
+	},
+	update: {
+		href: '#',
+		method: 'test',
+	},
+};
+
 jest.mock(
 	'../src/main/resources/META-INF/resources/js/data/organizations',
 	() => ({
@@ -113,50 +124,60 @@ const countLinks = (root) => {
 const INITIAL_DATA = {
 	[ACCOUNTS_PROPERTY_NAME]: [
 		{
+			actions,
 			id: '1',
 			name: `Auto Care`,
 		},
 		{
+			actions,
 			id: '0000',
 			name: `CC West`,
 		},
 		{
+			actions,
 			id: '3',
 			name: `Leo Auto`,
 		},
 		{
+			actions,
 			id: '5',
 			name: `Repair World`,
 		},
 	],
 	[ORGANIZATIONS_PROPERTY_NAME]: [
 		{
+			actions,
 			id: '999',
 			name: `Canada`,
 		},
 		{
+			actions,
 			id: '2',
 			name: `Italy`,
 		},
 		{
+			actions,
 			id: '40',
 			name: `Spain`,
 		},
 	],
 	[USERS_PROPERTY_NAME_IN_ORGANIZATION]: [
 		{
+			actions,
 			id: '1',
 			name: `Mark`,
 			[BRIEFS_KEYS_MAP.organization]: [],
 			[BRIEFS_KEYS_MAP.account]: [],
 		},
 		{
+			actions,
 			id: '2',
 			name: `John`,
 			[BRIEFS_KEYS_MAP.organization]: [],
 			[BRIEFS_KEYS_MAP.account]: [],
 		},
 	],
+	actions,
 	id: '0',
 	name: `Root`,
 };
@@ -428,15 +449,15 @@ describe('D3OrganizationChart implementation', () => {
 		it('must open an action menu when a menu button is clicked', async () => {
 			new D3OrganizationChart(INITIAL_DATA, ...defaultParams);
 
-			const rootNode = getChartNodes('Root', 'name')[0];
-			const menuButton = rootNode.querySelector('.node-menu-wrapper');
+			const node = getChartNodes('Italy', 'name')[0];
+			const menuButton = node.querySelector('.node-menu-wrapper');
 
 			expect(menuButton).toBeTruthy();
 
 			await d3click(menuButton);
 
 			expect(lastActionPerformed.name).toBe('menu opened');
-			expect(lastActionPerformed.details.data.name).toBe('Root');
+			expect(lastActionPerformed.details.data.name).toBe('Italy');
 		});
 	});
 });

@@ -66,7 +66,7 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 
 	const actions = [];
 
-	if (hasPermission(data, ACTION_KEYS.user.REMOVE_USER)) {
+	if (hasPermission(data, ACTION_KEYS.user.REMOVE)) {
 		actions.push(
 			<ClayDropDown.Item key="remove" onClick={handleRemove}>
 				{Liferay.Language.get('remove')}
@@ -74,7 +74,7 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		);
 	}
 
-	if (hasPermission(data, ACTION_KEYS.user.DELETE_USER)) {
+	if (hasPermission(data, ACTION_KEYS.user.DELETE)) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}

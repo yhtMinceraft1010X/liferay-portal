@@ -59,7 +59,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 
 	const actions = [];
 
-	if (hasPermission(data, ACTION_KEYS.organization.REMOVE_ORGANIZATION)) {
+	if (hasPermission(data, ACTION_KEYS.organization.REMOVE)) {
 		actions.push(
 			<ClayDropDown.Item key="remove" onClick={handleRemove}>
 				{Liferay.Language.get('remove')}
@@ -67,7 +67,7 @@ export default function OrganizationMenuContent({closeMenu, data, parentData}) {
 		);
 	}
 
-	if (hasPermission(data, ACTION_KEYS.organization.DELETE_ORGANIZATION)) {
+	if (hasPermission(data, ACTION_KEYS.organization.DELETE)) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}
