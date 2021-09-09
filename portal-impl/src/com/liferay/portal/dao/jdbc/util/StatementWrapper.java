@@ -212,8 +212,8 @@ public class StatementWrapper implements Statement {
 	}
 
 	@Override
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		return Statement.class.equals(iface);
+	public boolean isWrapperFor(Class<?> clazz) throws SQLException {
+		return Statement.class.equals(clazz);
 	}
 
 	@Override
@@ -257,9 +257,9 @@ public class StatementWrapper implements Statement {
 	}
 
 	@Override
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		if (!Statement.class.equals(iface)) {
-			throw new SQLException("Invalid class " + iface);
+	public <T> T unwrap(Class<T> clazz) throws SQLException {
+		if (!Statement.class.equals(clazz)) {
+			throw new SQLException("Invalid class " + clazz);
 		}
 
 		return (T)this;
