@@ -22,41 +22,41 @@ import java.sql.Types;
 /**
  * @author Marco Leo
  */
-public class DynamicObjectRelationshipMapTable
-	extends BaseTable<DynamicObjectRelationshipMapTable> {
+public class DynamicObjectRelationshipMappingTable
+	extends BaseTable<DynamicObjectRelationshipMappingTable> {
 
-	public DynamicObjectRelationshipMapTable(
-		String pkObjectFieldDBColumnName1, String pkObjectFieldDBColumnName2,
+	public DynamicObjectRelationshipMappingTable(
+		String primaryKeyColumnName1, String primaryKeyColumnName2,
 		String tableName) {
 
 		super(tableName, () -> null);
 
-		_pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnName1;
-		_pkObjectFieldDBColumnName2 = pkObjectFieldDBColumnName2;
+		_primaryKeyColumnName1 = primaryKeyColumnName1;
+		_primaryKeyColumnName2 = primaryKeyColumnName2;
 
 		createColumn(
-			_pkObjectFieldDBColumnName1, Long.class, Types.BIGINT,
+			_primaryKeyColumnName1, Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
 		createColumn(
-			_pkObjectFieldDBColumnName2, Long.class, Types.BIGINT,
+			_primaryKeyColumnName2, Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
 	}
 
-	public Column<DynamicObjectRelationshipMapTable, Long>
+	public Column<DynamicObjectRelationshipMappingTable, Long>
 		getPrimaryKeyColumn1() {
 
-		return (Column<DynamicObjectRelationshipMapTable, Long>)getColumn(
-			_pkObjectFieldDBColumnName1);
+		return (Column<DynamicObjectRelationshipMappingTable, Long>)getColumn(
+			_primaryKeyColumnName1);
 	}
 
-	public Column<DynamicObjectRelationshipMapTable, Long>
+	public Column<DynamicObjectRelationshipMappingTable, Long>
 		getPrimaryKeyColumn2() {
 
-		return (Column<DynamicObjectRelationshipMapTable, Long>)getColumn(
-			_pkObjectFieldDBColumnName2);
+		return (Column<DynamicObjectRelationshipMappingTable, Long>)getColumn(
+			_primaryKeyColumnName2);
 	}
 
-	private final String _pkObjectFieldDBColumnName1;
-	private final String _pkObjectFieldDBColumnName2;
+	private final String _primaryKeyColumnName1;
+	private final String _primaryKeyColumnName2;
 
 }

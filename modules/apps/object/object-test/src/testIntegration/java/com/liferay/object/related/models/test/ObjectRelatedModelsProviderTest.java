@@ -93,19 +93,19 @@ public class ObjectRelatedModelsProviderTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
+	}
 
-		_objectRelationship =
+	@Test
+	public void testObjectEntry1toMObjectRelatedModelsProviderImpl()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(),
 				LocalizedMapUtil.getLocalizedMap("onetomany"), "onetomany",
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-	}
-
-	@Test
-	public void testObjectEntry1to1ObjectRelatedModelsProviderImpl()
-		throws Exception {
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -123,7 +123,7 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2());
+			objectRelationship.getObjectFieldId2());
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -137,7 +137,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
-				0, _objectRelationship.getObjectRelationshipId(),
+				0, objectRelationship.getObjectRelationshipId(),
 				leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -154,7 +154,7 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, _objectRelationship.getObjectRelationshipId(),
+			0, objectRelationship.getObjectRelationshipId(),
 			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
@@ -171,11 +171,101 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, _objectRelationship.getObjectRelationshipId(),
+			0, objectRelationship.getObjectRelationshipId(),
 			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+	}
+
+	@Test
+	public void testObjectEntryMtoMObjectRelatedModelsProviderImpl()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap("manytomany"), "manytomany",
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				_objectDefinition2.getClassName(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Assert.assertNotNull(objectRelatedModelsProvider);
+
+		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"random", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry rightObjectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"random", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(),
+			rightObjectEntry.getObjectEntryId());
+
+		List<ObjectEntry> objectEntries =
+			objectRelatedModelsProvider.getRelatedModels(
+				0, leftObjectEntry.getObjectEntryId(),
+				objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		rightObjectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"random", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(),
+			rightObjectEntry.getObjectEntryId());
+
+		objectEntries = objectRelatedModelsProvider.getRelatedModels(
+			0, leftObjectEntry.getObjectEntryId(),
+			objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"random", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntries = objectRelatedModelsProvider.getRelatedModels(
+			0, leftObjectEntry.getObjectEntryId(),
+			objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
 	}
 
 	@DeleteAfterTestRun
@@ -196,9 +286,6 @@ public class ObjectRelatedModelsProviderTest {
 	@Inject
 	private ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
-
-	@DeleteAfterTestRun
-	private ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

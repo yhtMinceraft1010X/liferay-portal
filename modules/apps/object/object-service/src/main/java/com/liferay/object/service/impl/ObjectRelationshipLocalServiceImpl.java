@@ -27,17 +27,12 @@ import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import java.util.List;
 import java.util.Locale;
@@ -127,8 +122,8 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition1.getPKObjectFieldDBColumnName(),
 					" LONG not null,",
 					objectDefinition2.getPKObjectFieldDBColumnName(),
-					" LONG not null, PRIMARY KEY( ",
-					objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
+					" LONG not null, primary key (",
+					objectDefinition1.getPKObjectFieldDBColumnName(), ", ",
 					objectDefinition2.getPKObjectFieldDBColumnName(), "))"));
 		}
 
@@ -136,7 +131,7 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
-	public void addObjectRelationshipMapEntry(
+	public void addObjectRelationshipMappingTableValues(
 			long objectRelationshipId, long primaryKey1, long primaryKey2)
 		throws PortalException {
 
@@ -147,35 +142,16 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
-
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("insert into ");
-		sb.append(objectRelationship.getDBTableName());
-		sb.append(" (");
-		sb.append(objectDefinition1.getPKObjectFieldDBColumnName());
-		sb.append(" , ");
-		sb.append(objectDefinition2.getPKObjectFieldDBColumnName());
-		sb.append(") VALUES (?, ?) ");
-
-		Connection connection = CurrentConnectionUtil.getConnection(
-			objectRelationshipPersistence.getDataSource());
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
-
-			preparedStatement.setLong(1, primaryKey1);
-			preparedStatement.setLong(2, primaryKey2);
-
-			preparedStatement.executeUpdate();
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+		runSQL(
+			StringBundler.concat(
+				"insert into ", objectRelationship.getDBTableName(), " (",
+				objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
+				objectDefinition2.getPKObjectFieldDBColumnName(), ") values (",
+				primaryKey1, ", ", primaryKey2, ")"));
 	}
 
 	@Override
