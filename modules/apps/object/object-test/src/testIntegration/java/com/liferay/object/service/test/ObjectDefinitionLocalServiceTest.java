@@ -263,10 +263,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Before publish, database table
 
-		Assert.assertEquals(
-			false, _hasTable(objectDefinition.getDBTableName()));
-		Assert.assertEquals(
-			false, _hasTable(objectDefinition.getExtensionDBTableName()));
+		Assert.assertFalse(_hasTable(objectDefinition.getDBTableName()));
+		Assert.assertFalse(
+			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// Before publish, messaging
 
@@ -320,27 +319,25 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// After publish, database table
 
-		Assert.assertEquals(
-			false, _hasColumn(objectDefinition.getDBTableName(), "able"));
-		Assert.assertEquals(
-			true, _hasColumn(objectDefinition.getDBTableName(), "able_"));
-		Assert.assertEquals(
-			false, _hasColumn(objectDefinition.getDBTableName(), "baker"));
-		Assert.assertEquals(
-			true, _hasColumn(objectDefinition.getDBTableName(), "baker_"));
-		Assert.assertEquals(
-			false, _hasColumn(objectDefinition.getDBTableName(), "charlie"));
-		Assert.assertEquals(
-			true, _hasColumn(objectDefinition.getDBTableName(), "charlie_"));
-		Assert.assertEquals(
-			false,
+		Assert.assertFalse(
+			_hasColumn(objectDefinition.getDBTableName(), "able"));
+		Assert.assertTrue(
+			_hasColumn(objectDefinition.getDBTableName(), "able_"));
+		Assert.assertFalse(
+			_hasColumn(objectDefinition.getDBTableName(), "baker"));
+		Assert.assertTrue(
+			_hasColumn(objectDefinition.getDBTableName(), "baker_"));
+		Assert.assertFalse(
+			_hasColumn(objectDefinition.getDBTableName(), "charlie"));
+		Assert.assertTrue(
+			_hasColumn(objectDefinition.getDBTableName(), "charlie_"));
+		Assert.assertFalse(
 			_hasColumn(objectDefinition.getExtensionDBTableName(), "dog"));
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			_hasColumn(objectDefinition.getExtensionDBTableName(), "dog_"));
-		Assert.assertEquals(true, _hasTable(objectDefinition.getDBTableName()));
-		Assert.assertEquals(
-			true, _hasTable(objectDefinition.getExtensionDBTableName()));
+		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
+		Assert.assertTrue(
+			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// After publish, messaging
 
@@ -763,16 +760,13 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Database table
 
-		Assert.assertEquals(
-			false,
+		Assert.assertFalse(
 			_hasColumn(objectDefinition.getExtensionDBTableName(), "able"));
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			_hasColumn(objectDefinition.getExtensionDBTableName(), "able_"));
-		Assert.assertEquals(
-			false, _hasTable(objectDefinition.getDBTableName()));
-		Assert.assertEquals(
-			true, _hasTable(objectDefinition.getExtensionDBTableName()));
+		Assert.assertFalse(_hasTable(objectDefinition.getDBTableName()));
+		Assert.assertTrue(
+			_hasTable(objectDefinition.getExtensionDBTableName()));
 
 		// Messaging
 
@@ -970,8 +964,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(), name);
 
 		Assert.assertEquals(dbColumnName, objectField.getDBColumnName());
-		Assert.assertEquals(false, objectField.isIndexed());
-		Assert.assertEquals(false, objectField.isIndexedAsKeyword());
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertFalse(objectField.isIndexedAsKeyword());
 		Assert.assertEquals("", objectField.getIndexedLanguageId());
 		Assert.assertEquals(required, objectField.isRequired());
 		Assert.assertEquals(type, objectField.getType());
