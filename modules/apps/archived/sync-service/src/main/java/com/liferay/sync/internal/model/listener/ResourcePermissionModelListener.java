@@ -80,10 +80,6 @@ public class ResourcePermissionModelListener
 			return;
 		}
 
-		ResourcePermission originalResourcePermission =
-			resourcePermissionLocalService.fetchResourcePermission(
-				resourcePermission.getResourcePermissionId());
-
 		if (originalResourcePermission.hasActionId(ActionKeys.VIEW) &&
 			!resourcePermission.hasActionId(ActionKeys.VIEW)) {
 
