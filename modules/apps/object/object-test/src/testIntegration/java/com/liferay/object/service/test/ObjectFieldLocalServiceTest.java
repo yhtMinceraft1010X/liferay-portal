@@ -268,6 +268,13 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectField() throws Exception {
+
+		// TODO RequiredObjectFieldException
+
+	}
+
+	@Test
 	public void testUpdateCustomObjectField() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(

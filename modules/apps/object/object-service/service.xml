@@ -349,6 +349,7 @@
 		<exception>ObjectFieldType</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipType</exception>
+		<exception>RequiredObjectField</exception>
 		<exception>ReservedObjectField</exception>
 	</exceptions>
 </service-builder>

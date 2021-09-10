@@ -19,6 +19,7 @@ import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectFieldLabelException;
 import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldTypeException;
+import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.exception.ReservedObjectFieldException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
@@ -113,6 +114,31 @@ public class ObjectFieldLocalServiceImpl
 			userId, 0, objectDefinitionId, dbColumnName,
 			objectDefinition.getDBTableName(), indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, type);
+	}
+
+	@Override
+	public ObjectField deleteObjectField(long objectFieldId)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		return deleteObjectField(objectField);
+	}
+
+	@Override
+	public ObjectField deleteObjectField(ObjectField objectField)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		if (objectDefinition.isApproved() || objectDefinition.isSystem()) {
+			throw new RequiredObjectFieldException();
+		}
+
+		return objectFieldPersistence.remove(objectField);
 	}
 
 	@Override
