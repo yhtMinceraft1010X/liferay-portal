@@ -147,6 +147,10 @@ public class DynamicObjectDefinitionTable
 			_primaryKeyColumnName);
 	}
 
+	public String getPrimaryKeyColumnName() {
+		return _primaryKeyColumnName;
+	}
+
 	public Expression<?>[] getSelectExpressions() {
 		return _selectExpressions;
 	}

@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -807,7 +808,7 @@ public class ObjectEntryLocalServiceImpl
 	 * @see com.liferay.portal.upgrade.util.Table#getValue
 	 */
 	private Object _getValue(ResultSet resultSet, String name, int sqlType)
-		throws Exception {
+		throws SQLException {
 
 		if (sqlType == Types.BIGINT) {
 			return resultSet.getLong(name);
@@ -901,6 +902,15 @@ public class ObjectEntryLocalServiceImpl
 				}
 
 				continue;
+			}
+
+			if (Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
+
+				_validateOneToOneInsert(
+					objectField.getDBColumnName(), GetterUtil.getLong(value),
+					dynamicObjectDefinitionTable);
 			}
 
 			sb.append(", ");
@@ -997,9 +1007,6 @@ public class ObjectEntryLocalServiceImpl
 					results.add(result);
 				}
 			}
-		}
-		catch (Exception exception) {
-			throw new SQLException(exception);
 		}
 	}
 
@@ -1236,6 +1243,15 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
+			if (Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
+
+				_validateOneToOneUpdate(
+					objectField.getDBColumnName(), GetterUtil.getLong(value),
+					dynamicObjectDefinitionTable, objectEntryId);
+			}
+
 			if (count > 0) {
 				sb.append(", ");
 			}
@@ -1313,6 +1329,85 @@ public class ObjectEntryLocalServiceImpl
 				StringBundler.concat(
 					"Group ID ", groupId, " is not valid for scope \"", scope,
 					"\""));
+		}
+	}
+
+	private void _validateOneToOneInsert(
+			String dbColumnName, long dbColumnValue,
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
+		throws PortalException {
+
+		if (dbColumnValue == 0) {
+			return;
+		}
+
+		int count = 0;
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			objectEntryPersistence.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(*) from ",
+					dynamicObjectDefinitionTable.getTableName(), " where ",
+					dbColumnName, " = ", dbColumnValue));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			count = resultSet.getInt(1);
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		if (count > 0) {
+			throw new ObjectEntryValuesException(
+				StringBundler.concat(
+					"One to one constraint violation for ",
+					dynamicObjectDefinitionTable.getTableName(), ".",
+					dbColumnName, " with value ", dbColumnValue));
+		}
+	}
+
+	private void _validateOneToOneUpdate(
+			String dbColumnName, long dbColumnValue,
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			long objectEntryId)
+		throws PortalException {
+
+		if (dbColumnValue == 0) {
+			return;
+		}
+
+		int count = 0;
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			objectEntryPersistence.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(*) from ",
+					dynamicObjectDefinitionTable.getTableName(), " where ",
+					dynamicObjectDefinitionTable.getPrimaryKeyColumnName(),
+					" != ", objectEntryId, " and ", dbColumnName, " = ",
+					dbColumnValue));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			count = resultSet.getInt(1);
+		}
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
+		}
+
+		if (count > 0) {
+			throw new ObjectEntryValuesException(
+				StringBundler.concat(
+					"One to one constraint violation for ",
+					dynamicObjectDefinitionTable.getTableName(), ".",
+					dbColumnName, " with value ", dbColumnValue));
 		}
 	}
 

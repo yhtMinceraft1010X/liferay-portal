@@ -81,7 +81,7 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId1, objectDefinitionId2);
+				user, name, objectDefinitionId1, objectDefinitionId2, type);
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
@@ -196,7 +196,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private ObjectField _addObjectField(
 			User user, String name, long objectDefinitionId1,
-			long objectDefinitionId2)
+			long objectDefinitionId2, String type)
 		throws PortalException {
 
 		ObjectField objectField = _objectFieldPersistence.create(
@@ -233,7 +233,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setLabelMap(
 			objectDefinition1.getLabelMap(), LocaleUtil.getSiteDefault());
 		objectField.setName(dbColumnName);
-		objectField.setRelationship(true);
+		objectField.setRelationshipType(type);
 		objectField.setRequired(false);
 		objectField.setType("Long");
 
