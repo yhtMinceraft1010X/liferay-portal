@@ -21,7 +21,7 @@ render(
 		namespace: 'portlet_shop_by_diagram_namespace_',
 		productId: 44212,
 		spritemap: './assets/clay/icons.svg',
-		type: 'diagram.type.default'
+		type: 'diagram.type.default',
 	},
 	document.getElementById('shop-by-diagram')
 );
