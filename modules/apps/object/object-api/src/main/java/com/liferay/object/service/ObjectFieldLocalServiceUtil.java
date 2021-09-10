@@ -130,8 +130,11 @@ public class ObjectFieldLocalServiceUtil {
 	 *
 	 * @param objectField the object field
 	 * @return the object field that was removed
+	 * @throws PortalException
 	 */
-	public static ObjectField deleteObjectField(ObjectField objectField) {
+	public static ObjectField deleteObjectField(ObjectField objectField)
+		throws PortalException {
+
 		return getService().deleteObjectField(objectField);
 	}
 
