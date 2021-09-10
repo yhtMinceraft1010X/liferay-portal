@@ -764,13 +764,13 @@ public class GraphQLServletExtender {
 		return typeName.contains("MultipartBody");
 	}
 
-	private GraphQLArgument _addArgument(
+	private GraphQLArgument _addGraphQLArgument(
 		GraphQLInputType graphQLInputType, String name) {
 
-		return _addArgument(null, graphQLInputType, name);
+		return _addGraphQLArgument(null, graphQLInputType, name);
 	}
 
-	private GraphQLArgument _addArgument(
+	private GraphQLArgument _addGraphQLArgument(
 		Object defaultValue, GraphQLInputType graphQLInputType, String name) {
 
 		GraphQLArgument.Builder graphQLArgumentBuilder =
@@ -879,8 +879,8 @@ public class GraphQLServletExtender {
 
 		return _addField(
 			graphQLOutputType, "graphQLNode",
-			_addArgument(Scalars.GraphQLString, "dataType"),
-			_addArgument(Scalars.GraphQLLong, "id"));
+			_addGraphQLArgument(Scalars.GraphQLString, "dataType"),
+			_addGraphQLArgument(Scalars.GraphQLLong, "id"));
 	}
 
 	private GraphQLInterfaceType _createNodeGraphQLInterfaceType() {
@@ -1596,7 +1596,6 @@ public class GraphQLServletExtender {
 
 		graphQLObjectTypeBuilder.field(
 			_addField(Scalars.GraphQLLong, graphQLDTOContributor.getIdName()));
-
 		graphQLObjectTypeBuilder.name(graphQLDTOContributor.getTypeName());
 
 		for (GraphQLDTOProperty graphQLDTOProperty :
@@ -1729,10 +1728,10 @@ public class GraphQLServletExtender {
 	private void _registerGraphQLDTOContributor(
 		GraphQLDTOContributor graphQLDTOContributor,
 		GraphQLSchema.Builder graphQLSchemaBuilder,
-		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder,
 		GraphQLObjectType.Builder mutationGraphQLObjectTypeBuilder,
 		String mutationNamespace, String namespace,
-		ProcessingElementsContainer processingElementsContainer) {
+		ProcessingElementsContainer processingElementsContainer,
+		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder) {
 
 		// Create
 
@@ -1748,11 +1747,11 @@ public class GraphQLServletExtender {
 
 		List<GraphQLArgument> graphQLArguments = new ArrayList<>();
 
-		graphQLArguments.add(_addArgument(graphQLInputType, resourceName));
+		graphQLArguments.add(_addGraphQLArgument(graphQLInputType, resourceName));
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
-				_addArgument(Scalars.GraphQLString, "scopeKey"));
+				_addGraphQLArgument(Scalars.GraphQLString, "scopeKey"));
 		}
 
 		mutationGraphQLObjectTypeBuilder.field(
@@ -1787,7 +1786,7 @@ public class GraphQLServletExtender {
 		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				Scalars.GraphQLBoolean, deleteName,
-				_addArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
 
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -1804,7 +1803,7 @@ public class GraphQLServletExtender {
 		queryGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, getName,
-				_addArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates(namespace, getName),
@@ -1823,17 +1822,17 @@ public class GraphQLServletExtender {
 
 		graphQLArguments = new ArrayList<>(
 			Arrays.asList(
-				_addArgument(
+				_addGraphQLArgument(
 					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
-				_addArgument(Scalars.GraphQLString, "filter"),
-				_addArgument(1, Scalars.GraphQLInt, "page"),
-				_addArgument(20, Scalars.GraphQLInt, "pageSize"),
-				_addArgument(Scalars.GraphQLString, "search"),
-				_addArgument(Scalars.GraphQLString, "sort")));
+				_addGraphQLArgument(Scalars.GraphQLString, "filter"),
+				_addGraphQLArgument(1, Scalars.GraphQLInt, "page"),
+				_addGraphQLArgument(20, Scalars.GraphQLInt, "pageSize"),
+				_addGraphQLArgument(Scalars.GraphQLString, "search"),
+				_addGraphQLArgument(Scalars.GraphQLString, "sort")));
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
-				_addArgument(Scalars.GraphQLString, "scopeKey"));
+				_addGraphQLArgument(Scalars.GraphQLString, "scopeKey"));
 		}
 
 		queryGraphQLObjectTypeBuilder.field(
@@ -1902,8 +1901,8 @@ public class GraphQLServletExtender {
 		mutationGraphQLObjectTypeBuilder.field(
 			_addField(
 				graphQLObjectType, updateName,
-				_addArgument(graphQLInputType, resourceName),
-				_addArgument(Scalars.GraphQLLong, idName)));
+				_addGraphQLArgument(graphQLInputType, resourceName),
+				_addGraphQLArgument(Scalars.GraphQLLong, idName)));
 
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -1945,8 +1944,9 @@ public class GraphQLServletExtender {
 
 			_registerGraphQLDTOContributor(
 				graphQLDTOContributor, graphQLSchemaBuilder,
-				queryGraphQLObjectTypeBuilder, mutationGraphQLObjectTypeBuilder,
-				"Mutation" + namespace, namespace, processingElementsContainer);
+				mutationGraphQLObjectTypeBuilder,
+				"Mutation" + namespace, namespace, processingElementsContainer,
+				queryGraphQLObjectTypeBuilder);
 		}
 
 		rootQueryGraphQLObjectTypeBuilder.field(
