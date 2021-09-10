@@ -145,7 +145,6 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 
 		searchContext.setEntryClassNames(
 			new String[] {DLFileEntryConstants.getClassName()});
-
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
 
