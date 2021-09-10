@@ -28,7 +28,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -42,7 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -72,9 +71,7 @@ public class ObjectRelatedModelsProviderTest {
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						true, false, "Random", "random", false, "String")));
+				Collections.<ObjectField>emptyList());
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -88,9 +85,7 @@ public class ObjectRelatedModelsProviderTest {
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						true, false, "Random", "random", false, "String")));
+				Collections.<ObjectField>emptyList());
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -121,9 +116,7 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition1.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).build(),
+			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -133,8 +126,6 @@ public class ObjectRelatedModelsProviderTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).put(
 				objectField.getName(), leftObjectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
@@ -151,8 +142,6 @@ public class ObjectRelatedModelsProviderTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).put(
 				objectField.getName(), leftObjectEntry.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
@@ -168,8 +157,6 @@ public class ObjectRelatedModelsProviderTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).put(
 				objectField.getName(), 0
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
@@ -208,17 +195,13 @@ public class ObjectRelatedModelsProviderTest {
 		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition1.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).build(),
+			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry rightObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).build(),
+			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
@@ -237,9 +220,7 @@ public class ObjectRelatedModelsProviderTest {
 		rightObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).build(),
+			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
@@ -257,9 +238,7 @@ public class ObjectRelatedModelsProviderTest {
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				"random", RandomTestUtil.randomString()
-			).build(),
+			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
