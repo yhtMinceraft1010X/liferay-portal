@@ -223,8 +223,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
-				0, leftObjectEntry.getObjectEntryId(),
-				objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+				0, objectRelationship.getObjectRelationshipId(),
+				leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
@@ -243,8 +243,8 @@ public class ObjectRelatedModelsProviderTest {
 			rightObjectEntry.getObjectEntryId());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, leftObjectEntry.getObjectEntryId(),
-			objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			0, objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
@@ -258,8 +258,8 @@ public class ObjectRelatedModelsProviderTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, leftObjectEntry.getObjectEntryId(),
-			objectRelationship.getObjectRelationshipId(), QueryUtil.ALL_POS,
+			0, objectRelationship.getObjectRelationshipId(),
+			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
