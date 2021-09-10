@@ -76,6 +76,17 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro clickFieldsSearchableSectionRadioOption {
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click.javaScriptClick(
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION",
+			key_radioOption = "${radioOption}"
+		);
+		
+	}
+
 	macro goToCustomObject {
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
@@ -83,6 +94,22 @@ definition {
 			userPassword = "${userPassword}");
 
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectID}");
+	}
+
+	macro goToFieldsDetails {
+		Click(
+			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD",
+			key_fieldName = "${fieldName}");
+
+
+
+	}
+
+	macro goToFieldsTab{
+		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TAB");
+
+
+		
 	}
 
 	macro openObjectAdmin {
@@ -105,6 +132,15 @@ definition {
 			key_name = "${name}",
 			key_system = "No",
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
+	}
+
+	macro viewFieldSearchableSectionLanguage {
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL"
+		);
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION"
+		);
 	}
 
 	macro viewSystemObject {

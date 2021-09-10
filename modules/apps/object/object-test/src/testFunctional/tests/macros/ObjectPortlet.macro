@@ -20,4 +20,11 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro selectCustomObject {
+		Click(
+			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT",
+			key_name = "${name}"
+		);
+	}
+
 }
