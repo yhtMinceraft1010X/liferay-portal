@@ -1743,10 +1743,10 @@ public class GraphQLServletExtender {
 
 		String createName = "create" + resourceName;
 
+		List<GraphQLArgument> graphQLArguments = new ArrayList<>();
+
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
 			graphQLDTOContributor);
-
-		List<GraphQLArgument> graphQLArguments = new ArrayList<>();
 
 		graphQLArguments.add(
 			_addGraphQLArgument(graphQLInputType, resourceName));
