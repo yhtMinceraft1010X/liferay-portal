@@ -70,22 +70,19 @@ public class ObjectDefinitionGraphQLTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinitionLabel = "A" + RandomTestUtil.randomString();
-		_objectDefinitionPluralLabel = RandomTestUtil.randomString() + "s";
-		_objectFieldLabel = "A" + RandomTestUtil.randomString();
-		_objectFieldName = "a" + RandomTestUtil.randomString();
+		_objectFieldName = StringUtil.randomId();
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(_objectDefinitionLabel),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(_objectDefinitionPluralLabel),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
-						true, true, _objectFieldLabel, _objectFieldName, false,
-						"String")));
+						true, true, RandomTestUtil.randomString(),
+						_objectFieldName, false, "String")));
 
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
@@ -332,11 +329,8 @@ public class ObjectDefinitionGraphQLTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
-	private String _objectDefinitionLabel;
 	private String _objectDefinitionName;
-	private String _objectDefinitionPluralLabel;
 	private ObjectEntry _objectEntry;
-	private String _objectFieldLabel;
 	private String _objectFieldName;
 
 	private static class GraphQLField {
