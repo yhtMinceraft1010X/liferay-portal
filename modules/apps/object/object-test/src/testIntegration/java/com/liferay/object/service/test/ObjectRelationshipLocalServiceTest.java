@@ -19,15 +19,23 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
 
 import java.util.Collections;
 
@@ -80,21 +88,96 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testAddObjectRelationship() throws Exception {
-		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(),
-			LocalizedMapUtil.getLocalizedMap("Marriage"), "marriage",
-			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+		_testAddObjectRelationship(ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+		_testAddObjectRelationship(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		Assert.assertNotNull(
-			_objectFieldLocalService.fetchObjectField(
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
-				"r_marriage_" + _objectDefinition2.getPKObjectFieldName()));
+				_objectDefinition2.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"R_", objectRelationship.getCompanyId(),
+				_objectDefinition1.getShortName(), "_",
+				_objectDefinition2.getShortName(), "_", name),
+			objectRelationship.getDBTableName());
+		Assert.assertTrue(
+			_hasColumn(
+				objectRelationship.getDBTableName(),
+				_objectDefinition1.getPKObjectFieldDBColumnName()));
+		Assert.assertTrue(
+			_hasColumn(
+				objectRelationship.getDBTableName(),
+				_objectDefinition2.getPKObjectFieldDBColumnName()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		Assert.assertFalse(_hasTable(objectRelationship.getDBTableName()));
+	}
+
+	private boolean _hasColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasColumn(tableName, columnName);
+		}
+	}
+
+	private boolean _hasTable(String tableName) throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasTable(tableName);
+		}
+	}
+
+	private void _testAddObjectRelationship(String type) throws Exception {
+		String name = StringUtil.randomId();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, type);
+
+		String objectFieldNamePrefix = "r_" + name + "_";
+
+		Assert.assertTrue(
+			_hasColumn(
+				_objectDefinition2.getExtensionDBTableName(),
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
 		Assert.assertNotNull(
 			_objectFieldLocalService.fetchObjectField(
 				_objectDefinition2.getObjectDefinitionId(),
-				"r_marriage_" + _objectDefinition1.getPKObjectFieldName()));
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		Assert.assertFalse(
+			_hasColumn(
+				_objectDefinition1.getExtensionDBTableName(),
+				objectFieldNamePrefix +
+					_objectDefinition2.getPKObjectFieldName()));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				_objectDefinition2.getObjectDefinitionId(),
+				objectFieldNamePrefix +
+					_objectDefinition1.getPKObjectFieldName()));
 	}
 
 	@DeleteAfterTestRun

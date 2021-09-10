@@ -241,6 +241,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_objectFieldPersistence.removeByObjectDefinitionId(objectDefinitionId);
 
+		// TODO Deleting an object definition should delete related object
+		// relationships
+
 		objectDefinitionPersistence.remove(objectDefinition);
 
 		resourceLocalService.deleteResource(

@@ -82,7 +82,7 @@ public class ObjectRelationshipLocalServiceImpl
 				type, ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 			ObjectField objectField = _addObjectField(
-				user, name, objectDefinitionId2, objectDefinitionId1);
+				user, name, objectDefinitionId1, objectDefinitionId2);
 
 			objectRelationship.setObjectFieldId2(
 				objectField.getObjectFieldId());
@@ -99,10 +99,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 			objectRelationship.setDBTableName(
 				StringBundler.concat(
-					"R_", objectDefinition1.getCompanyId(),
+					"R_", user.getCompanyId(),
 					objectDefinition1.getShortName(), "_",
-					objectDefinition2.getShortName(), "_",
-					StringUtil.trim(name)));
+					objectDefinition2.getShortName(), "_", name));
 
 			runSQL(
 				StringBundler.concat(
@@ -159,12 +158,29 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
+		// TODO When should we allow an object relationship to be deleted?
+
 		objectRelationship = objectRelationshipPersistence.remove(
 			objectRelationship);
 
 		if (Objects.equals(
 				objectRelationship.getType(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+				ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
+			Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			ObjectField objectField = _objectFieldPersistence.remove(
+				objectRelationship.getObjectFieldId2());
+
+			runSQL(
+				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
+					objectField.getDBTableName(),
+					objectField.getDBColumnName()));
+		}
+		else if (Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
 			runSQL("drop table " + objectRelationship.getDBTableName());
 		}
@@ -192,23 +208,23 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setUserId(user.getUserId());
 		objectField.setUserName(user.getFullName());
 		objectField.setListTypeDefinitionId(0);
-		objectField.setObjectDefinitionId(objectDefinitionId1);
-
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
-
-		String dbColumnName = StringBundler.concat(
-			"r_", name, "_", objectDefinition2.getPKObjectFieldName());
-
-		objectField.setDBColumnName(dbColumnName);
+		objectField.setObjectDefinitionId(objectDefinitionId2);
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
 
-		String dbTableName = objectDefinition1.getDBTableName();
+		String dbColumnName = StringBundler.concat(
+			"r_", name, "_", objectDefinition1.getPKObjectFieldName());
 
-		if (objectDefinition1.isApproved()) {
-			dbTableName = objectDefinition1.getExtensionDBTableName();
+		objectField.setDBColumnName(dbColumnName);
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
+
+		String dbTableName = objectDefinition2.getDBTableName();
+
+		if (objectDefinition2.isApproved()) {
+			dbTableName = objectDefinition2.getExtensionDBTableName();
 		}
 
 		objectField.setDBTableName(dbTableName);
@@ -217,7 +233,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setIndexedAsKeyword(false);
 		objectField.setIndexedLanguageId(null);
 		objectField.setLabelMap(
-			objectDefinition2.getLabelMap(), LocaleUtil.getSiteDefault());
+			objectDefinition1.getLabelMap(), LocaleUtil.getSiteDefault());
 		objectField.setName(dbColumnName);
 		objectField.setRelationship(true);
 		objectField.setRequired(false);
@@ -225,7 +241,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectField = _objectFieldPersistence.update(objectField);
 
-		if (objectDefinition1.isApproved()) {
+		if (objectDefinition2.isApproved()) {
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), "Long"));
