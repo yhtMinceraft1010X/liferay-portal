@@ -41,6 +41,8 @@ const ImagePins = ({
 	imageSettings,
 	imageURL,
 	isAdmin,
+	visible,
+	setVisible,
 	namespace,
 	navigationController,
 	newPinSettings,
@@ -306,6 +308,7 @@ const ImagePins = ({
 							label: text.textContent,
 						});
 						text.addEventListener('click', () => {
+							setVisible(true)
 							const test1 = {
 								details: {
 									cx: null,
@@ -322,6 +325,8 @@ const ImagePins = ({
 							}
 							pinClickAction(test1);
 							console.log(test1);
+							setVisible(true)
+							setShowTooltip(test1);
 						});
 					});
 				}

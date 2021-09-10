@@ -12,6 +12,9 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
 // import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
+import ClayButton from '@clayui/button';
+import ClayModal, { useModal } from '@clayui/modal';
+
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -79,6 +82,11 @@ const Diagram = ({
 		fill: newPinSettings.colorPicker.selectedColor,
 		radius: newPinSettings.defaultRadius,
 	});
+	const [visible, setVisible] = useState(false);
+	const { observer, onClose } = useModal({
+		onClose: () => setVisible(false)
+	});
+
 
 	const importPinSchema = () => {
 		const textDatas = [];
@@ -212,6 +220,8 @@ const Diagram = ({
 					diagramSizes={diagramSizes}
 					enablePanZoom={enablePanZoom}
 					enableResetZoom={enableResetZoom}
+					visible={visible}
+					setVisible={setVisible}
 					imageSettings={imageSettings}
 					imageURL={imageURL}
 					isAdmin={isAdmin}
@@ -244,6 +254,29 @@ const Diagram = ({
 					zoomInHandler={zoomInHandler}
 					zoomOutHandler={zoomOutHandler}
 				>
+					{visible && (
+						<ClayModal
+							observer={observer}
+							size="lg"
+							spritemap={spritemap}
+							status="info"
+						>
+							<ClayModal.Header>{"Title"}</ClayModal.Header>
+							<ClayModal.Body>
+								<h1>{"Hello world!"}</h1>
+								<p>{JSON.stringify(showTooltip)}</p>
+							</ClayModal.Body>
+							<ClayModal.Footer
+								first={
+									<ClayButton.Group spaced>
+										<ClayButton displayType="secondary">{"Secondary"}</ClayButton>
+										<ClayButton displayType="secondary">{"Secondary"}</ClayButton>
+									</ClayButton.Group>
+								}
+								last={<ClayButton onClick={onClose}>{"Primary"}</ClayButton>}
+							/>
+						</ClayModal>
+					)}
 					{showTooltip.tooltip && (
 						<AdminTooltip
 							deletePin={deletePin}
@@ -333,7 +366,7 @@ Diagram.defaultProps = {
 		details: {
 			cx: 0,
 			cy: 0,
-			id: '',
+			id: 0,
 			label: 'null',
 			linked_to_sku: 'sku',
 			quantity: 1,
