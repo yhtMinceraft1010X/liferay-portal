@@ -1952,7 +1952,6 @@ public class GraphQLServletExtender {
 
 		rootQueryGraphQLObjectTypeBuilder.field(
 			_addField(queryGraphQLObjectTypeBuilder.build(), namespace));
-
 		rootMutationGraphQLObjectTypeBuilder.field(
 			_addField(mutationGraphQLObjectTypeBuilder.build(), namespace));
 
@@ -1964,7 +1963,6 @@ public class GraphQLServletExtender {
 				FieldCoordinates.coordinates("query", namespace),
 				(DataFetcher<Object>)dataFetchingEnvironment -> new Object()
 			).build());
-
 		graphQLSchemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", namespace),
