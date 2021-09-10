@@ -348,11 +348,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					(String)optionValueJSONArray.get(0));
 			}
 
-			Map<String, String> optionsReferences =
-				ddmFormFieldOptions.getOptionsReferences();
-
 			JSONArray optionReferencesValuesJSONArray =
 				JSONFactoryUtil.createJSONArray();
+
+			Map<String, String> optionsReferences =
+				ddmFormFieldOptions.getOptionsReferences();
 
 			for (Map.Entry<String, String> entry :
 					optionsReferences.entrySet()) {
