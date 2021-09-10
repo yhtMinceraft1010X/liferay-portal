@@ -113,7 +113,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
 
-		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition1.getObjectDefinitionId(),
 			Collections.<String, Serializable>emptyMap(),
@@ -126,14 +126,14 @@ public class ObjectRelatedModelsProviderTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), leftObjectEntry.getObjectEntryId()
+				objectField.getName(), objectEntry1.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
-				leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
@@ -142,13 +142,13 @@ public class ObjectRelatedModelsProviderTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), leftObjectEntry.getObjectEntryId()
+				objectField.getName(), objectEntry1.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
@@ -163,7 +163,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
@@ -192,13 +192,12 @@ public class ObjectRelatedModelsProviderTest {
 
 		Assert.assertNotNull(objectRelatedModelsProvider);
 
-		ObjectEntry leftObjectEntry = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition1.getObjectDefinitionId(),
 			Collections.<String, Serializable>emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
-
-		ObjectEntry rightObjectEntry = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			Collections.<String, Serializable>emptyMap(),
@@ -206,18 +205,17 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(),
-			rightObjectEntry.getObjectEntryId());
+			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
 				0, objectRelationship.getObjectRelationshipId(),
-				leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+				objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
-		rightObjectEntry = _objectEntryLocalService.addObjectEntry(
+		objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition2.getObjectDefinitionId(),
 			Collections.<String, Serializable>emptyMap(),
@@ -225,12 +223,11 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(),
-			rightObjectEntry.getObjectEntryId());
+			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
@@ -243,7 +240,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntries = objectRelatedModelsProvider.getRelatedModels(
 			0, objectRelationship.getObjectRelationshipId(),
-			leftObjectEntry.getObjectEntryId(), QueryUtil.ALL_POS,
+			objectEntry1.getObjectEntryId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
