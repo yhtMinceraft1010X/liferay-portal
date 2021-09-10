@@ -58,7 +58,7 @@ create table ObjectField (
 	indexedLanguageId VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,
-	relationship BOOLEAN,
+	relationshipType VARCHAR(75) null,
 	required BOOLEAN,
 	type_ VARCHAR(75) null
 );

@@ -65,7 +65,7 @@
 		<field name="indexedLanguageId" type="String" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
-		<field name="relationship" type="boolean" />
+		<field name="relationshipType" type="String" />
 		<field name="required" type="boolean" />
 		<field name="type" type="String" />
 	</model>
