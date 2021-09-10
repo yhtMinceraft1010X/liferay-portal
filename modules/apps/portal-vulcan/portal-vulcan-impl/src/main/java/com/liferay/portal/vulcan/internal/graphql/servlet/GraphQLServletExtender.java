@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1135,8 +1136,8 @@ public class GraphQLServletExtender {
 				GraphQLSchema.newSchema();
 
 			_registerGraphQLDTOContributors(
-				companyId, graphQLSchemaBuilder,
-				mutationGraphQLObjectTypeBuilder, processingElementsContainer,
+				companyId, graphQLSchemaBuilder, processingElementsContainer,
+				mutationGraphQLObjectTypeBuilder,
 				queryGraphQLObjectTypeBuilder);
 			_registerInterfaces(
 				graphQLSchemaBuilder, processingElementsContainer,
@@ -1747,7 +1748,8 @@ public class GraphQLServletExtender {
 
 		List<GraphQLArgument> graphQLArguments = new ArrayList<>();
 
-		graphQLArguments.add(_addGraphQLArgument(graphQLInputType, resourceName));
+		graphQLArguments.add(
+			_addGraphQLArgument(graphQLInputType, resourceName));
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
@@ -1820,15 +1822,14 @@ public class GraphQLServletExtender {
 		String listName = StringUtil.lowerCaseFirstLetter(
 			TextFormatter.formatPlural(resourceName));
 
-		graphQLArguments = new ArrayList<>(
-			Arrays.asList(
-				_addGraphQLArgument(
-					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
-				_addGraphQLArgument(Scalars.GraphQLString, "filter"),
-				_addGraphQLArgument(1, Scalars.GraphQLInt, "page"),
-				_addGraphQLArgument(20, Scalars.GraphQLInt, "pageSize"),
-				_addGraphQLArgument(Scalars.GraphQLString, "search"),
-				_addGraphQLArgument(Scalars.GraphQLString, "sort")));
+		graphQLArguments = ListUtil.fromArray(
+			_addGraphQLArgument(
+				GraphQLList.list(Scalars.GraphQLString), "aggregation"),
+			_addGraphQLArgument(Scalars.GraphQLString, "filter"),
+			_addGraphQLArgument(1, Scalars.GraphQLInt, "page"),
+			_addGraphQLArgument(20, Scalars.GraphQLInt, "pageSize"),
+			_addGraphQLArgument(Scalars.GraphQLString, "search"),
+			_addGraphQLArgument(Scalars.GraphQLString, "sort"));
 
 		if (graphQLDTOContributor.hasScope()) {
 			graphQLArguments.add(
@@ -1919,8 +1920,8 @@ public class GraphQLServletExtender {
 
 	private void _registerGraphQLDTOContributors(
 		long companyId, GraphQLSchema.Builder graphQLSchemaBuilder,
-		GraphQLObjectType.Builder rootMutationGraphQLObjectTypeBuilder,
 		ProcessingElementsContainer processingElementsContainer,
+		GraphQLObjectType.Builder rootMutationGraphQLObjectTypeBuilder,
 		GraphQLObjectType.Builder rootQueryGraphQLObjectTypeBuilder) {
 
 		String namespace = "c";
@@ -1944,8 +1945,8 @@ public class GraphQLServletExtender {
 
 			_registerGraphQLDTOContributor(
 				graphQLDTOContributor, graphQLSchemaBuilder,
-				mutationGraphQLObjectTypeBuilder,
-				"Mutation" + namespace, namespace, processingElementsContainer,
+				mutationGraphQLObjectTypeBuilder, "Mutation" + namespace,
+				namespace, processingElementsContainer,
 				queryGraphQLObjectTypeBuilder);
 		}
 
