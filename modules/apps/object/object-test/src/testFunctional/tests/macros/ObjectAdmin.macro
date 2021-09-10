@@ -44,6 +44,14 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro clickFieldsSearchableSectionRadioOption {
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click.javaScriptClick(
+			key_radioOption = "${radioOption}",
+			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
+	}
+
 	macro createCustomObject {
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
@@ -76,17 +84,6 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
-	macro clickFieldsSearchableSectionRadioOption {
-
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
-		Click.javaScriptClick(
-			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION",
-			key_radioOption = "${radioOption}"
-		);
-		
-	}
-
 	macro goToCustomObject {
 		var objectID = JSONObject.getObjectId(
 			objectName = "${objectName}",
@@ -98,18 +95,12 @@ definition {
 
 	macro goToFieldsDetails {
 		Click(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD",
-			key_fieldName = "${fieldName}");
-
-
-
+			key_fieldName = "${fieldName}",
+			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 	}
 
-	macro goToFieldsTab{
+	macro goToFieldsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TAB");
-
-
-		
 	}
 
 	macro openObjectAdmin {
@@ -135,12 +126,8 @@ definition {
 	}
 
 	macro viewFieldSearchableSectionLanguage {
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL"
-		);
-		AssertElementPresent(
-			locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION"
-		);
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL");
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
 	}
 
 	macro viewSystemObject {
