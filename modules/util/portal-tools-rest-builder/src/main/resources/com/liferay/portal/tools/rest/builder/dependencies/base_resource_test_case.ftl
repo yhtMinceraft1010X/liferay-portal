@@ -1878,6 +1878,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#if>
 	</#if>
 
+	protected void assertContains(${schemaClientJavaType} ${schemaVarName}, List<${schemaClientJavaType}> ${schemaVarNames}) {
+		boolean contains = false;
+
+		for (${schemaClientJavaType} item : ${schemaVarNames}) {
+			if (equals(${schemaVarName}, item)) {
+				contains = true;
+				break;
+			}
+		}
+
+		Assert.assertTrue(${schemaVarNames} + " does not contain " + ${schemaVarName}, contains);
+	}
+
 	protected void assertHttpResponseStatusCode(int expectedHttpResponseStatusCode, HttpInvoker.HttpResponse actualHttpResponse) {
 		Assert.assertEquals(expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
@@ -1907,19 +1920,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			Assert.assertTrue(${relatedSchemaVarName}1 + " does not equal " + ${relatedSchemaVarName}2, equals(${relatedSchemaVarName}1, ${relatedSchemaVarName}2));
 		}
 	</#list>
-
-	protected void assertContains(${schemaClientJavaType} ${schemaVarName}, List<${schemaClientJavaType}> ${schemaVarNames}) {
-		boolean contains = false;
-
-		for (${schemaClientJavaType} item : ${schemaVarNames}) {
-			if (equals(${schemaVarName}, item)) {
-				contains = true;
-				break;
-			}
-		}
-
-		Assert.assertTrue(${schemaVarNames} + " does not contain " + ${schemaVarName}, contains);
-	}
 
 	protected void assertEqualsIgnoringOrder(List<${schemaClientJavaType}> ${schemaVarNames}1, List<${schemaClientJavaType}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
