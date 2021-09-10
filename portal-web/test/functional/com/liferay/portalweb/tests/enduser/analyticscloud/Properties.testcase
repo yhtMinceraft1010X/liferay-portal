@@ -586,7 +586,13 @@ definition {
 			ACSettings.goToProperties();
 		}
 
+		task ("Delete all properties") {
+			ACSettings.deleteAllProperties();
+		}
+
 		task ("assert empty state on properties page") {
+			ACSettings.goToProperties();
+
 			ACProperties.assertNoProperties();
 		}
 	}

@@ -58,14 +58,14 @@ definition {
 			value1 = "${propertyName}");
 	}
 
+	macro assertNoProperties {
+		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
+	}
+
 	macro assertPropertyHeader {
 		AssertElementPresent(
 			locator1 = "ACSettings#PROPERTY_NAME_HEADER",
 			propertyName = "${propertyName}");
-	}
-
-	macro assertNoProperties {
-		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
 	}
 
 	@summary = "Asserts the list of properties shown in the Property Menu"
