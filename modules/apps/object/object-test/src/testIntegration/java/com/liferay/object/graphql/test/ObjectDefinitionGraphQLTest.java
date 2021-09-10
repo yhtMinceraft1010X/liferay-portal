@@ -137,7 +137,8 @@ public class ObjectDefinitionGraphQLTest {
 				new GraphQLField(
 					"delete" + _objectDefinitionName,
 					HashMapBuilder.<String, Object>put(
-						_objectDefinitionPrimaryKeyName, _objectEntry.getObjectEntryId()
+						_objectDefinitionPrimaryKeyName,
+						_objectEntry.getObjectEntryId()
 					).build())));
 
 		JSONObject jsonObject = _invoke(graphQLField);
@@ -316,13 +317,13 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(
 								"update" + _objectDefinitionName,
 								HashMapBuilder.<String, Object>put(
-									_objectDefinitionPrimaryKeyName,
-									String.valueOf(objectEntryId)
-								).put(
 									_objectDefinitionName,
 									StringBundler.concat(
 										"{", _objectFieldName, ": \"", value,
 										"\"}")
+								).put(
+									_objectDefinitionPrimaryKeyName,
+									String.valueOf(objectEntryId)
 								).build(),
 								new GraphQLField(_objectFieldName))))),
 				"JSONObject/data", "JSONObject/c",
@@ -354,8 +355,8 @@ public class ObjectDefinitionGraphQLTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
-	private String _objectDefinitionPrimaryKeyName;
 	private String _objectDefinitionName;
+	private String _objectDefinitionPrimaryKeyName;
 	private ObjectEntry _objectEntry;
 	private String _objectFieldName;
 
