@@ -71,15 +71,14 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectEntry objectEntry)
 		throws Exception {
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addObjectEntry(
 				userId, _getGroupId(objectDefinition, scopeKey),
-				objectDefinitionId,
+				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					objectDefinitionId, objectEntry.getProperties(),
+					objectDefinition.getObjectDefinitionId(),
+					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				new ServiceContext()));
 	}
@@ -91,15 +90,14 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
 			_objectEntryLocalService.addOrUpdateObjectEntry(
 				externalReferenceCode, userId,
 				_getGroupId(objectDefinition, scopeKey), objectDefinitionId,
 				_toObjectValues(
-					objectDefinitionId, objectEntry.getProperties(),
+					objectDefinition.getObjectDefinitionId(),
+					objectEntry.getProperties(),
 					dtoConverterContext.getLocale()),
 				new ServiceContext()));
 	}
