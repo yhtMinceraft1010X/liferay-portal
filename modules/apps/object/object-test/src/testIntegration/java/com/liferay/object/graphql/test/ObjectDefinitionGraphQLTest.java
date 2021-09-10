@@ -89,9 +89,9 @@ public class ObjectDefinitionGraphQLTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinitionIdName = StringUtil.removeSubstring(
-			_objectDefinition.getPKObjectFieldName(), "c_");
 		_objectDefinitionName = _objectDefinition.getShortName();
+		_objectDefinitionPrimaryKeyName = StringUtil.removeSubstring(
+			_objectDefinition.getPKObjectFieldName(), "c_");
 
 		_objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -137,7 +137,7 @@ public class ObjectDefinitionGraphQLTest {
 				new GraphQLField(
 					"delete" + _objectDefinitionName,
 					HashMapBuilder.<String, Object>put(
-						_objectDefinitionIdName, _objectEntry.getObjectEntryId()
+						_objectDefinitionPrimaryKeyName, _objectEntry.getObjectEntryId()
 					).build())));
 
 		JSONObject jsonObject = _invoke(graphQLField);
@@ -264,7 +264,7 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(
 								key,
 								HashMapBuilder.<String, Object>put(
-									_objectDefinitionIdName,
+									_objectDefinitionPrimaryKeyName,
 									_objectEntry.getObjectEntryId()
 								).build(),
 								new GraphQLField(_objectFieldName))))),
@@ -289,7 +289,7 @@ public class ObjectDefinitionGraphQLTest {
 								"{", _objectFieldName, ": \"", value, "\"}")
 						).build(),
 						new GraphQLField(_objectFieldName),
-						new GraphQLField(_objectDefinitionIdName)))));
+						new GraphQLField(_objectDefinitionPrimaryKeyName)))));
 
 		Assert.assertEquals(
 			value,
@@ -303,7 +303,7 @@ public class ObjectDefinitionGraphQLTest {
 		Long objectEntryId = JSONUtil.getValueAsLong(
 			jsonObject, "JSONObject/data", "JSONObject/c",
 			"JSONObject/create" + _objectDefinitionName,
-			"Object/" + _objectDefinitionIdName);
+			"Object/" + _objectDefinitionPrimaryKeyName);
 
 		Assert.assertEquals(
 			value,
@@ -316,7 +316,7 @@ public class ObjectDefinitionGraphQLTest {
 							new GraphQLField(
 								"update" + _objectDefinitionName,
 								HashMapBuilder.<String, Object>put(
-									_objectDefinitionIdName,
+									_objectDefinitionPrimaryKeyName,
 									String.valueOf(objectEntryId)
 								).put(
 									_objectDefinitionName,
@@ -354,7 +354,7 @@ public class ObjectDefinitionGraphQLTest {
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
-	private String _objectDefinitionIdName;
+	private String _objectDefinitionPrimaryKeyName;
 	private String _objectDefinitionName;
 	private ObjectEntry _objectEntry;
 	private String _objectFieldName;

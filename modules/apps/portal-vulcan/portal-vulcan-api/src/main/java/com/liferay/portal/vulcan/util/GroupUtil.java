@@ -71,12 +71,12 @@ public class GroupUtil {
 	}
 
 	public static Long getGroupId(
-		long companyId, String groupKey, GroupLocalService groupLocalService) {
+		long companyId, String siteKey, GroupLocalService groupLocalService) {
 
-		Group group = groupLocalService.fetchGroup(companyId, groupKey);
+		Group group = groupLocalService.fetchGroup(companyId, siteKey);
 
 		if (group == null) {
-			group = groupLocalService.fetchGroup(GetterUtil.getLong(groupKey));
+			group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
 		}
 
 		if (_checkGroup(group)) {
