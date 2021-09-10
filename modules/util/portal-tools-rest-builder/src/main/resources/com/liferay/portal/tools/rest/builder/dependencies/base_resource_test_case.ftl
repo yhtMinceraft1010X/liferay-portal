@@ -1884,6 +1884,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		for (${schemaClientJavaType} item : ${schemaVarNames}) {
 			if (equals(${schemaVarName}, item)) {
 				contains = true;
+
 				break;
 			}
 		}
