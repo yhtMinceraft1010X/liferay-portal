@@ -93,11 +93,11 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 
 		_cpDefinitionDiagramSettingService.updateCPDefinitionDiagramSetting(
 			diagramId, cpDefinitionDiagramSetting.getCPAttachmentFileEntryId(),
-			GetterUtil.get(
+			GetterUtil.getString(
 				diagram.getColor(), cpDefinitionDiagramSetting.getColor()),
-			GetterUtil.get(
+			GetterUtil.getDouble(
 				diagram.getRadius(), cpDefinitionDiagramSetting.getRadius()),
-			GetterUtil.get(
+			GetterUtil.getString(
 				diagram.getType(), cpDefinitionDiagramSetting.getType()));
 
 		return _toDiagram(diagramId);
