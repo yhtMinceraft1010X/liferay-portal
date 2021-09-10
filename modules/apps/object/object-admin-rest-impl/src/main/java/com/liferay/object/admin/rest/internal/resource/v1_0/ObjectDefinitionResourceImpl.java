@@ -139,13 +139,16 @@ public class ObjectDefinitionResourceImpl
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (objectDefinition.isSystem()) {
+						if (objectDefinition.isApproved() ||
+							objectDefinition.isSystem()) {
+
 							return null;
 						}
 
 						return addAction(
 							ActionKeys.DELETE, "deleteObjectDefinition",
-							ObjectDefinition.class.getName(),
+							com.liferay.object.model.ObjectDefinition.class.
+								getName(),
 							objectDefinition.getObjectDefinitionId());
 					}
 				).put(
