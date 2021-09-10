@@ -94,7 +94,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 			dtoConverterContext,
 			_objectEntryLocalService.addOrUpdateObjectEntry(
 				externalReferenceCode, userId,
-				_getGroupId(objectDefinition, scopeKey), objectDefinitionId,
+				_getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
 					objectDefinition.getObjectDefinitionId(),
 					objectEntry.getProperties(),
