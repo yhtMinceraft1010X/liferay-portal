@@ -44,18 +44,8 @@ public class UserSystemObjectDefinitionMetadata
 	}
 
 	@Override
-	public String getDBTableName() {
-		return "User_";
-	}
-
-	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("user");
-	}
-
-	@Override
-	public String getName() {
-		return "User";
 	}
 
 	@Override
@@ -72,6 +62,7 @@ public class UserSystemObjectDefinitionMetadata
 		return createLabelMap("users");
 	}
 
+	@Override
 	public Column<?, Long> getPrimaryKeyColumn() {
 		return UserTable.INSTANCE.userId;
 	}
@@ -81,6 +72,7 @@ public class UserSystemObjectDefinitionMetadata
 		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}
 
+	@Override
 	public Table getTable() {
 		return UserTable.INSTANCE;
 	}

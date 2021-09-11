@@ -28,13 +28,7 @@ import java.util.Map;
  */
 public interface SystemObjectDefinitionMetadata {
 
-	public default String getClassName() {
-		return null;
-	}
-
-	public default String getDBTableName() {
-		return null;
-	}
+	public String getClassName();
 
 	public Map<Locale, String> getLabelMap();
 
@@ -42,25 +36,13 @@ public interface SystemObjectDefinitionMetadata {
 
 	public List<ObjectField> getObjectFields();
 
-	public default String getPKObjectFieldDBColumnName() {
-		return null;
-	}
-
-	public default String getPKObjectFieldName() {
-		return null;
-	}
-
 	public Map<Locale, String> getPluralLabelMap();
 
-	public default Column<?, Long> getPrimaryKeyColumn() {
-		return null;
-	}
+	public Column<?, Long> getPrimaryKeyColumn();
 
 	public String getScope();
 
-	public default Table getTable() {
-		return null;
-	}
+	public Table getTable();
 
 	public int getVersion();
 

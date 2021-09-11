@@ -36,6 +36,8 @@ import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -129,12 +131,15 @@ public class ObjectDefinitionLocalServiceImpl
 		long userId = _userLocalService.getDefaultUserId(companyId);
 
 		if (objectDefinition == null) {
+			Table table = systemObjectDefinitionMetadata.getTable();
+			Column<?, Long> primaryKeyColumn =
+				systemObjectDefinitionMetadata.getPrimaryKeyColumn();
+
 			return addSystemObjectDefinition(
-				userId, systemObjectDefinitionMetadata.getDBTableName(),
+				userId, table.getTableName(),
 				systemObjectDefinitionMetadata.getLabelMap(),
 				systemObjectDefinitionMetadata.getName(),
-				systemObjectDefinitionMetadata.getPKObjectFieldDBColumnName(),
-				systemObjectDefinitionMetadata.getPKObjectFieldName(),
+				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionMetadata.getPluralLabelMap(),
 				systemObjectDefinitionMetadata.getScope(),
 				systemObjectDefinitionMetadata.getVersion(),

@@ -19,6 +19,7 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.petra.sql.dsl.Table;
 
 import java.util.Locale;
 import java.util.Map;
@@ -29,6 +30,19 @@ import java.util.Map;
  */
 public abstract class BaseSystemObjectDefinitionMetadata
 	implements SystemObjectDefinitionMetadata {
+
+	@Override
+	public String getName() {
+		Table table = getTable();
+
+		String tableName = table.getName();
+
+		if (tableName.endsWith("_")) {
+			return tableName.substring(0, tableName.length() - 1);
+		}
+
+		return tableName;
+	}
 
 	protected Map<Locale, String> createLabelMap(String labelKey) {
 		return LocalizedMapUtil.getLocalizedMap(_translate(labelKey));

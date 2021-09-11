@@ -14,9 +14,14 @@
 
 package com.liferay.commerce.internal.object.system;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderTable;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,13 +42,13 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
-	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("commerce-order");
+	public String getClassName() {
+		return CommerceOrder.class.getName();
 	}
 
 	@Override
-	public String getName() {
-		return "CommerceOrder";
+	public Map<Locale, String> getLabelMap() {
+		return createLabelMap("commerce-order");
 	}
 
 	@Override
@@ -60,8 +65,18 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public Column<?, Long> getPrimaryKeyColumn() {
+		return CommerceOrderTable.INSTANCE.commerceOrderId;
+	}
+
+	@Override
 	public String getScope() {
-		return "company";
+		return ObjectDefinitionConstants.SCOPE_COMPANY;
+	}
+
+	@Override
+	public Table getTable() {
+		return CommerceOrderTable.INSTANCE;
 	}
 
 	@Override
