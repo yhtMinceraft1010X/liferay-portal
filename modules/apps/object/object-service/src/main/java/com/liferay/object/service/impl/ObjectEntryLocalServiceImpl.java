@@ -37,7 +37,6 @@ import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.StringBundler;
@@ -302,22 +301,6 @@ public class ObjectEntryLocalServiceImpl
 		Column<DynamicObjectRelationshipMappingTable, Long> primaryKeyColumn2 =
 			dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn2();
 
-		Predicate predicate = ObjectEntryTable.INSTANCE.groupId.eq(
-			groupId
-		).and(
-			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-				objectRelationship.getObjectDefinitionId2())
-		).and(
-			primaryKeyColumn1.eq(primaryKey)
-		);
-
-		if (PermissionThreadLocal.getPermissionChecker() != null) {
-			predicate = predicate.and(
-				_inlineSQLHelper.getPermissionWherePredicate(
-					dynamicObjectDefinitionTable.getName(),
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn()));
-		}
-
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
 			ObjectEntryTable.INSTANCE
 		).from(
@@ -337,7 +320,24 @@ public class ObjectEntryLocalServiceImpl
 			primaryKeyColumn2.eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 		).where(
-			predicate
+			ObjectEntryTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectRelationship.getObjectDefinitionId2())
+			).and(
+				primaryKeyColumn1.eq(primaryKey)
+			).and(
+				() -> {
+					if (PermissionThreadLocal.getPermissionChecker() == null) {
+						return null;
+					}
+
+					return _inlineSQLHelper.getPermissionWherePredicate(
+						dynamicObjectDefinitionTable.getName(),
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+				}
+			)
 		).limit(
 			start, end
 		);
@@ -391,38 +391,22 @@ public class ObjectEntryLocalServiceImpl
 		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
 
-		Column<DynamicObjectDefinitionTable, Long> column = null;
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn = null;
 
 		if (Objects.equals(
 				objectField.getDBTableName(),
 				dynamicObjectDefinitionTable.getName())) {
 
-			column =
+			primaryKeyColumn =
 				(Column<DynamicObjectDefinitionTable, Long>)
 					dynamicObjectDefinitionTable.getColumn(
 						objectField.getDBColumnName());
 		}
 		else {
-			column =
+			primaryKeyColumn =
 				(Column<DynamicObjectDefinitionTable, Long>)
 					extensionDynamicObjectDefinitionTable.getColumn(
 						objectField.getDBColumnName());
-		}
-
-		Predicate predicate = ObjectEntryTable.INSTANCE.groupId.eq(
-			groupId
-		).and(
-			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-				objectRelationship.getObjectDefinitionId2())
-		).and(
-			column.eq(primaryKey)
-		);
-
-		if (PermissionThreadLocal.getPermissionChecker() != null) {
-			predicate = predicate.and(
-				_inlineSQLHelper.getPermissionWherePredicate(
-					dynamicObjectDefinitionTable.getName(),
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn()));
 		}
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
@@ -440,7 +424,24 @@ public class ObjectEntryLocalServiceImpl
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 			)
 		).where(
-			predicate
+			ObjectEntryTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectRelationship.getObjectDefinitionId2())
+			).and(
+				primaryKeyColumn.eq(primaryKey)
+			).and(
+				() -> {
+					if (PermissionThreadLocal.getPermissionChecker() == null) {
+						return null;
+					}
+
+					return _inlineSQLHelper.getPermissionWherePredicate(
+						dynamicObjectDefinitionTable.getName(),
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+				}
+			)
 		).limit(
 			start, end
 		);
@@ -519,22 +520,6 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getSelectExpressions(),
 			extensionDynamicObjectDefinitionTable.getSelectExpressions());
 
-		Predicate predicate = ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-			objectDefinitionId);
-
-		if (!ArrayUtil.isEmpty(statuses)) {
-			predicate = predicate.and(
-				ObjectEntryTable.INSTANCE.status.in(
-					ArrayUtil.toArray(statuses)));
-		}
-
-		if (PermissionThreadLocal.getPermissionChecker() != null) {
-			predicate.and(
-				_inlineSQLHelper.getPermissionWherePredicate(
-					dynamicObjectDefinitionTable.getName(),
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn()));
-		}
-
 		List<Object[]> rows = _list(
 			DSLQueryFactoryUtil.selectDistinct(
 				selectExpressions
@@ -551,7 +536,30 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 				)
 			).where(
-				predicate
+				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+					objectDefinitionId
+				).and(
+					() -> {
+						if (ArrayUtil.isEmpty(statuses)) {
+							return null;
+						}
+
+						return ObjectEntryTable.INSTANCE.status.in(
+							ArrayUtil.toArray(statuses));
+					}
+				).and(
+					() -> {
+						if (PermissionThreadLocal.getPermissionChecker() ==
+								null) {
+
+							return null;
+						}
+
+						return _inlineSQLHelper.getPermissionWherePredicate(
+							dynamicObjectDefinitionTable.getName(),
+							dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+					}
+				)
 			).limit(
 				start, end
 			),
