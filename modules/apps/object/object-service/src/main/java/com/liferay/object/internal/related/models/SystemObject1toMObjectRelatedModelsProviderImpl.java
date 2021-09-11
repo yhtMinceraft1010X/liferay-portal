@@ -26,8 +26,6 @@ import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
@@ -63,6 +61,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 				objectDefinition.getObjectDefinitionId(),
 				objectDefinition.getExtensionDBTableName()),
 			objectDefinition.getExtensionDBTableName());
+		_table = systemObjectDefinitionMetadata.getTable();
 	}
 
 	public String getClassName() {
@@ -78,6 +77,10 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			int end)
 		throws PortalException {
 
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				_systemObjectDefinitionMetadata.getClassName());
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
@@ -85,59 +88,59 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		Column<?, Long> column = null;
-		Table table = _systemObjectDefinitionMetadata.getTable();
+		Column<?, Long> primaryKeyColumn = null;
 
-		if (Objects.equals(
-				objectField.getDBTableName(),
-				_systemObjectDefinitionMetadata.getTable())) {
-
-			column = (Column<?, Long>)table.getColumn(
+		if (Objects.equals(objectField.getDBTableName(), _table)) {
+			primaryKeyColumn = (Column<?, Long>)_table.getColumn(
 				objectField.getDBColumnName());
 		}
 		else {
-			column =
+			primaryKeyColumn =
 				(Column<DynamicObjectDefinitionTable, Long>)
 					_dynamicObjectDefinitionTable.getColumn(
 						objectField.getDBColumnName());
 		}
 
-		Predicate predicate = column.eq(primaryKey);
+		return persistedModelLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				_table
+			).from(
+				_table
+			).innerJoinON(
+				_dynamicObjectDefinitionTable,
+				_dynamicObjectDefinitionTable.getPrimaryKeyColumn(
+				).eq(
+					_systemObjectDefinitionMetadata.getPrimaryKeyColumn()
+				)
+			).where(
+				primaryKeyColumn.eq(
+					primaryKey
+				).and(
+					() -> {
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
 
-		Column<?, Long> groupColumn = table.getColumn("groupId");
+						if (groupIdColumn == null) {
+							return null;
+						}
 
-		if (groupColumn != null) {
-			predicate = predicate.and(groupColumn.eq(groupId));
-		}
+						return groupIdColumn.eq(groupId);
+					}
+				).and(
+					() -> {
+						Column<?, Long> companyIdColumn = _table.getColumn(
+							"companyId");
 
-		Column<?, Long> companyColumn = table.getColumn("companyId");
+						if (companyIdColumn == null) {
+							return null;
+						}
 
-		if (groupColumn != null) {
-			predicate = predicate.and(
-				companyColumn.eq(objectField.getCompanyId()));
-		}
-
-		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
-			table
-		).from(
-			table
-		).innerJoinON(
-			_dynamicObjectDefinitionTable,
-			_dynamicObjectDefinitionTable.getPrimaryKeyColumn(
-			).eq(
-				_systemObjectDefinitionMetadata.getPrimaryKeyColumn()
-			)
-		).where(
-			predicate
-		).limit(
-			start, end
-		);
-
-		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				_systemObjectDefinitionMetadata.getClassName());
-
-		return persistedModelLocalService.dslQuery(dslQuery);
+						return companyIdColumn.eq(objectField.getCompanyId());
+					}
+				)
+			).limit(
+				start, end
+			));
 	}
 
 	private final DynamicObjectDefinitionTable _dynamicObjectDefinitionTable;
@@ -148,5 +151,6 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionMetadata
 		_systemObjectDefinitionMetadata;
+	private final Table _table;
 
 }
