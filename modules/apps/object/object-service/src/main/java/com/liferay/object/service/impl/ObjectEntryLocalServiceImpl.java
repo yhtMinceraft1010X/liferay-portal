@@ -323,6 +323,9 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE.groupId.eq(
 				groupId
 			).and(
+				ObjectEntryTable.INSTANCE.companyId.eq(
+					objectRelationship.getCompanyId())
+			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())
 			).and(
@@ -426,6 +429,9 @@ public class ObjectEntryLocalServiceImpl
 		).where(
 			ObjectEntryTable.INSTANCE.groupId.eq(
 				groupId
+			).and(
+				ObjectEntryTable.INSTANCE.companyId.eq(
+					objectRelationship.getCompanyId())
 			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())
