@@ -394,24 +394,6 @@ public class ObjectEntryLocalServiceImpl
 		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
 			objectRelationship.getObjectFieldId2());
 
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn = null;
-
-		if (Objects.equals(
-				objectField.getDBTableName(),
-				dynamicObjectDefinitionTable.getName())) {
-
-			primaryKeyColumn =
-				(Column<DynamicObjectDefinitionTable, Long>)
-					dynamicObjectDefinitionTable.getColumn(
-						objectField.getDBColumnName());
-		}
-		else {
-			primaryKeyColumn =
-				(Column<DynamicObjectDefinitionTable, Long>)
-					extensionDynamicObjectDefinitionTable.getColumn(
-						objectField.getDBColumnName());
-		}
-
 		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
 			ObjectEntryTable.INSTANCE
 		).from(
@@ -436,7 +418,28 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())
 			).and(
-				primaryKeyColumn.eq(primaryKey)
+				() -> {
+					Column<DynamicObjectDefinitionTable, Long>
+						primaryKeyColumn = null;
+
+					if (Objects.equals(
+							objectField.getDBTableName(),
+							dynamicObjectDefinitionTable.getName())) {
+
+						primaryKeyColumn =
+							(Column<DynamicObjectDefinitionTable, Long>)
+								dynamicObjectDefinitionTable.getColumn(
+									objectField.getDBColumnName());
+					}
+					else {
+						primaryKeyColumn =
+							(Column<DynamicObjectDefinitionTable, Long>)
+								extensionDynamicObjectDefinitionTable.getColumn(
+									objectField.getDBColumnName());
+					}
+
+					return primaryKeyColumn.eq(primaryKey);
+				}
 			).and(
 				() -> {
 					if (PermissionThreadLocal.getPermissionChecker() == null) {
