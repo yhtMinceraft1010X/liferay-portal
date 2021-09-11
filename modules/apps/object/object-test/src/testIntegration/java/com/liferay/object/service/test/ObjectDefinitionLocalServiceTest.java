@@ -31,12 +31,16 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -418,14 +422,14 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
-					public Map<Locale, String> getLabelMap() {
-						return LocalizedMapUtil.getLocalizedMap(
-							"User Notification Event");
+					public String getClassName() {
+						return UserNotificationEvent.class.getName();
 					}
 
 					@Override
-					public String getName() {
-						return "UserNotificationEvent";
+					public Map<Locale, String> getLabelMap() {
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Event");
 					}
 
 					@Override
@@ -447,8 +451,19 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public Column<?, Long> getPrimaryKeyColumn() {
+						return UserNotificationEventTable.INSTANCE.
+							userNotificationEventId;
+					}
+
+					@Override
 					public String getScope() {
 						return ObjectDefinitionConstants.SCOPE_COMPANY;
+					}
+
+					@Override
+					public Table getTable() {
+						return UserNotificationEventTable.INSTANCE;
 					}
 
 					@Override
@@ -492,14 +507,14 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
-					public Map<Locale, String> getLabelMap() {
-						return LocalizedMapUtil.getLocalizedMap(
-							"User Notification Event");
+					public String getClassName() {
+						return UserNotificationEvent.class.getName();
 					}
 
 					@Override
-					public String getName() {
-						return "UserNotificationEvent";
+					public Map<Locale, String> getLabelMap() {
+						return LocalizedMapUtil.getLocalizedMap(
+							"User Notification Event");
 					}
 
 					@Override
@@ -520,8 +535,19 @@ public class ObjectDefinitionLocalServiceTest {
 					}
 
 					@Override
+					public Column<?, Long> getPrimaryKeyColumn() {
+						return UserNotificationEventTable.INSTANCE.
+							userNotificationEventId;
+					}
+
+					@Override
 					public String getScope() {
 						return ObjectDefinitionConstants.SCOPE_COMPANY;
+					}
+
+					@Override
+					public Table getTable() {
+						return UserNotificationEventTable.INSTANCE;
 					}
 
 					@Override
