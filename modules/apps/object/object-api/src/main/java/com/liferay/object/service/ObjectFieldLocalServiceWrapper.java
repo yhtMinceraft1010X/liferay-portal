@@ -372,6 +372,14 @@ public class ObjectFieldLocalServiceWrapper
 		return _objectFieldLocalService.getObjectFields(objectDefinitionId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectField> getObjectFields(
+		long objectDefinitionId, String dbTableName) {
+
+		return _objectFieldLocalService.getObjectFields(
+			objectDefinitionId, dbTableName);
+	}
+
 	/**
 	 * Returns the number of object fields.
 	 *
