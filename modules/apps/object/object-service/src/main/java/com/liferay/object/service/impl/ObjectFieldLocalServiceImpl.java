@@ -134,11 +134,27 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectField.getObjectDefinitionId());
 
-		if (objectDefinition.isApproved() || objectDefinition.isSystem()) {
+		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
+			!Objects.equals(
+				objectDefinition.getExtensionDBTableName(),
+				objectField.getDBTableName())) {
+
 			throw new RequiredObjectFieldException();
 		}
 
-		return objectFieldPersistence.remove(objectField);
+		objectField = objectFieldPersistence.remove(objectField);
+
+		if (Objects.equals(
+				objectDefinition.getExtensionDBTableName(),
+				objectField.getDBTableName())) {
+
+			runSQL(
+				DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
+					objectField.getDBTableName(),
+					objectField.getDBColumnName()));
+		}
+
+		return objectField;
 	}
 
 	@Override
