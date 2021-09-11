@@ -176,6 +176,14 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectField> getObjectFields(
+		long objectDefinitionId, String dbTableName) {
+
+		return objectFieldPersistence.findByODI_DTN(
+			objectDefinitionId, dbTableName);
+	}
+
+	@Override
 	public int getObjectFieldsCount(long objectDefinitionId) {
 		return objectFieldPersistence.countByObjectDefinitionId(
 			objectDefinitionId);

@@ -20,8 +20,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
-import com.liferay.object.service.persistence.ObjectFieldPersistence;
-import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,20 +46,20 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	public SystemObject1toMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
-		ObjectFieldPersistence objectFieldPersistence,
-		ObjectRelationshipPersistence objectRelationshipPersistence,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
 
-		_objectFieldPersistence = objectFieldPersistence;
-		_objectRelationshipPersistence = objectRelationshipPersistence;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 		_systemObjectDefinitionMetadata = systemObjectDefinitionMetadata;
 
 		_dynamicObjectDefinitionTable = new DynamicObjectDefinitionTable(
 			objectDefinition,
-			_objectFieldPersistence.findByODI_DTN(
+			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId(),
 				objectDefinition.getExtensionDBTableName()),
 			objectDefinition.getExtensionDBTableName());
@@ -80,10 +79,10 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.findByPrimaryKey(
+			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
-		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
 		Column<?, Long> column = null;
@@ -138,15 +137,13 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getClassName());
 
-		BasePersistence<?> basePersistence =
-			persistedModelLocalService.getBasePersistence();
-
-		return basePersistence.dslQuery(dslQuery);
+		return persistedModelLocalService.dslQuery(dslQuery);
 	}
 
 	private final DynamicObjectDefinitionTable _dynamicObjectDefinitionTable;
-	private final ObjectFieldPersistence _objectFieldPersistence;
-	private final ObjectRelationshipPersistence _objectRelationshipPersistence;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionMetadata

@@ -18,8 +18,8 @@ import com.liferay.object.internal.related.models.SystemObject1toMObjectRelatedM
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.persistence.ObjectFieldPersistence;
-import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -150,8 +150,8 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,
 				new SystemObject1toMObjectRelatedModelsProviderImpl(
-					objectDefinition, _objectFieldPersistence,
-					_objectRelationshipPersistence,
+					objectDefinition, _objectFieldLocalService,
+					_objectRelationshipLocalService,
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata),
 				null);
@@ -173,10 +173,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectFieldPersistence _objectFieldPersistence;
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
-	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private PersistedModelLocalServiceRegistry
