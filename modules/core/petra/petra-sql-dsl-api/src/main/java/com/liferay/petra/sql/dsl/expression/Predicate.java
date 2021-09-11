@@ -14,6 +14,8 @@
 
 package com.liferay.petra.sql.dsl.expression;
 
+import com.liferay.petra.function.UnsafeSupplier;
+
 /**
  * @author Preston Crary
  */
@@ -49,7 +51,13 @@ public interface Predicate extends Expression<Boolean> {
 
 	public Predicate and(Expression<Boolean> expression);
 
+	public Predicate and(
+		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier);
+
 	public Predicate or(Expression<Boolean> expression);
+
+	public Predicate or(
+		UnsafeSupplier<Expression<Boolean>, Exception> unsafeSupplier);
 
 	public Predicate withParentheses();
 
