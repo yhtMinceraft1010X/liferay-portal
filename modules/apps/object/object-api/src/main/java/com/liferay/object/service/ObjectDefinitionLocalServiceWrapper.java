@@ -79,7 +79,7 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition addSystemObjectDefinition(
-			long userId, String dbTableName,
+			long userId, String className, String dbTableName,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			String pkObjectFieldDBColumnName, String pkObjectFieldName,
 			java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -88,8 +88,9 @@ public class ObjectDefinitionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, dbTableName, labelMap, name, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, scope, version, objectFields);
+			userId, className, dbTableName, labelMap, name,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
+			version, objectFields);
 	}
 
 	/**
