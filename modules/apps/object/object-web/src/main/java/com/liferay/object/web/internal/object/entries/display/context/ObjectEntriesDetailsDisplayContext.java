@@ -30,8 +30,10 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.util.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
@@ -59,12 +62,14 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntryService objectEntryService,
-		ObjectFieldLocalService objectFieldLocalService) {
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		_ddmFormRenderer = ddmFormRenderer;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectEntryService = objectEntryService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -168,8 +173,16 @@ public class ObjectEntriesDetailsDisplayContext {
 	}
 
 	private DDMFormField _getDDMFormField(ObjectField objectField) {
+
+		//TODO this type should be stored in the DB together with the DB Type
+		String type = DDMFormFieldTypeConstants.TEXT;
+
+		if (Validator.isNotNull(objectField.getRelationshipType())) {
+			type = "object-relationship";
+		}
+
 		DDMFormField ddmFormField = new DDMFormField(
-			objectField.getName(), DDMFormFieldTypeConstants.TEXT);
+			objectField.getName(), type);
 
 		_setDDMFormFieldProperties(
 			ddmFormField,
@@ -186,6 +199,17 @@ public class ObjectEntriesDetailsDisplayContext {
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
 		ddmFormField.setRequired(objectField.isRequired());
+
+		if (Validator.isNotNull(objectField.getRelationshipType())) {
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
+
+			ddmFormField.setProperty(
+				"objectDefinitionId",
+				objectRelationship.getObjectDefinitionId1());
+		}
 
 		return ddmFormField;
 	}
@@ -266,6 +290,8 @@ public class ObjectEntriesDetailsDisplayContext {
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

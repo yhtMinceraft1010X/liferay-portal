@@ -22,6 +22,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntriesDetailsDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -84,7 +85,7 @@ public class ObjectEntriesDetailsScreenNavigationCategory
 			new ObjectEntriesDetailsDisplayContext(
 				_ddmFormRenderer, httpServletRequest,
 				_listTypeEntryLocalService, _objectEntryService,
-				_objectFieldLocalService));
+				_objectFieldLocalService, _objectRelationshipLocalService));
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
@@ -105,5 +106,8 @@ public class ObjectEntriesDetailsScreenNavigationCategory
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }
