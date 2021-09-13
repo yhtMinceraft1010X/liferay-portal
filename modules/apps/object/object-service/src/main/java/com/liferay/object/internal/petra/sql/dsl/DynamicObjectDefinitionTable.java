@@ -168,28 +168,26 @@ public class DynamicObjectDefinitionTable
 
 	private static String _getSQLColumnNull(String type) {
 		if (type.equals("BigDecimal")) {
-			return _DEFAULT + BigDecimal.ZERO;
+			return " default " + BigDecimal.ZERO;
 		}
 		else if (type.equals("Boolean")) {
-			return _DEFAULT + GetterUtil.DEFAULT_BOOLEAN;
+			return " default " + GetterUtil.DEFAULT_BOOLEAN;
 		}
 		else if (type.equals("Date")) {
 			return " null";
 		}
 		else if (type.equals("Double")) {
-			return _DEFAULT + GetterUtil.DEFAULT_DOUBLE;
+			return " default " + GetterUtil.DEFAULT_DOUBLE;
 		}
 		else if (type.equals("Integer")) {
-			return _DEFAULT + GetterUtil.DEFAULT_INTEGER;
+			return " default " + GetterUtil.DEFAULT_INTEGER;
 		}
 		else if (type.equals("Long")) {
-			return _DEFAULT + GetterUtil.DEFAULT_LONG;
+			return " default " + GetterUtil.DEFAULT_LONG;
 		}
 
 		return StringPool.BLANK;
 	}
-
-	private static final String _DEFAULT = " default ";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionTable.class);
