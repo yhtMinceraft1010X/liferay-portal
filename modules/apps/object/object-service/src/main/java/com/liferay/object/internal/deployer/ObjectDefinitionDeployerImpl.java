@@ -156,16 +156,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"indexer.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				RESTContextPathResolver.class,
-				new RESTContextPathResolverImpl(
-					"/o/" + objectDefinition.getRESTContextPath(),
-					_objectScopeProviderRegistry.getObjectScopeProvider(
-						objectDefinition.getScope()),
-					false),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
-				).build()),
-			_bundleContext.registerService(
 				ModelIndexerWriterContributor.class,
 				objectEntryModelIndexerWriterContributor,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -209,6 +199,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"com.liferay.object", "true"
 				).put(
 					"resource.name", objectDefinition.getResourceName()
+				).build()),
+			_bundleContext.registerService(
+				RESTContextPathResolver.class,
+				new RESTContextPathResolverImpl(
+					"/o/" + objectDefinition.getRESTContextPath(),
+					_objectScopeProviderRegistry.getObjectScopeProvider(
+						objectDefinition.getScope()),
+					false),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
 				WorkflowHandler.class,
