@@ -168,22 +168,22 @@ public class DynamicObjectDefinitionTable
 
 	private static String _getSQLColumnNull(String type) {
 		if (type.equals("BigDecimal")) {
-			return " default " + BigDecimal.ZERO;
+			return " default 0";
 		}
 		else if (type.equals("Boolean")) {
-			return " default " + GetterUtil.DEFAULT_BOOLEAN;
+			return " default FALSE";
 		}
 		else if (type.equals("Date")) {
 			return " null";
 		}
 		else if (type.equals("Double")) {
-			return " default " + GetterUtil.DEFAULT_DOUBLE;
+			return " default 0";
 		}
 		else if (type.equals("Integer")) {
-			return " default " + GetterUtil.DEFAULT_INTEGER;
+			return " default 0";
 		}
 		else if (type.equals("Long")) {
-			return " default " + GetterUtil.DEFAULT_LONG;
+			return " default 0";
 		}
 
 		return StringPool.BLANK;
