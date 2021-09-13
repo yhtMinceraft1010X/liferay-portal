@@ -232,14 +232,14 @@ public class ObjectEntriesDetailsDisplayContext {
 		DDMFormField ddmFormField, long listTypeDefinitionId, String type) {
 
 		if (_doubleTypes.contains(type)) {
-			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
+			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
 		else if (_integerTypes.contains(type)) {
-			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
+			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
 		else if (StringUtil.equals(type, "Boolean")) {
 			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
@@ -250,9 +250,9 @@ public class ObjectEntriesDetailsDisplayContext {
 		else if (StringUtil.equals(type, "String") &&
 				 (listTypeDefinitionId > 0)) {
 
-			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
 			ddmFormField.setDDMFormFieldOptions(
 				_getDDMFieldOptions(listTypeDefinitionId));
+			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
 		}
 	}
 
