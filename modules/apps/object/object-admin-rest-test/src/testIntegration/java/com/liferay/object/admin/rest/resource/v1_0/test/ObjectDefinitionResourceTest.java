@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,16 +39,21 @@ public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {
 
 	@After
-	@Override
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		if (_objectDefinition != null) {
 			try {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					_objectDefinition.getId());
 			}
-			catch (Exception exception) {
+			catch (NoSuchObjectDefinitionException
+						noSuchObjectDefinitionException) {
+
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(
+						noSuchObjectDefinitionException,
+						noSuchObjectDefinitionException);
 				}
 			}
 		}
@@ -150,11 +156,11 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private ObjectDefinition _addObjectDefinition(
-			ObjectDefinition randomObjectDefinition)
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_objectDefinition = objectDefinitionResource.postObjectDefinition(
-			randomObjectDefinition);
+			objectDefinition);
 
 		return _objectDefinition;
 	}

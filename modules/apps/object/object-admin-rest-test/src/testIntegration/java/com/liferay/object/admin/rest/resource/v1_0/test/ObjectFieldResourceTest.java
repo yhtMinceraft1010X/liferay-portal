@@ -18,13 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
 
@@ -47,7 +45,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		String value = "A" + RandomTestUtil.randomString();
 
 		_objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
 				LocalizedMapUtil.getLocalizedMap(value),
@@ -59,16 +57,9 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		if (_objectField != null) {
-			try {
-				ObjectFieldLocalServiceUtil.deleteObjectField(
-					_objectField.getId());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
-			}
+		if (_objectDefinition != null) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition.getObjectDefinitionId());
 		}
 	}
 
@@ -141,10 +132,11 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		return _objectField;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectFieldResourceTest.class);
-
 	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private ObjectField _objectField;
 
 }
