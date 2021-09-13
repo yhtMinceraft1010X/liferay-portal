@@ -261,10 +261,21 @@ const Diagram = ({
 							spritemap={spritemap}
 							status="info"
 						>
-							<ClayModal.Header>{"Title"}</ClayModal.Header>
+							<ClayModal.Header>{showTooltip.details.label}</ClayModal.Header>
 							<ClayModal.Body>
-								<h1>{"Hello world!"}</h1>
-								<p>{JSON.stringify(showTooltip)}</p>
+								<AdminTooltip
+									deletePin={deletePin}
+									namespace={namespace}
+									pinsEndpoint={pinsEndpoint}
+									removePinHandler={removePinHandler}
+									searchSkus={searchSkus}
+									setRemovePinHandler={setRemovePinHandler}
+									setShowTooltip={setShowTooltip}
+									setSkus={setSkus}
+									showTooltip={showTooltip}
+									skus={skus}
+									updatePin={updatePin}
+								/>
 							</ClayModal.Body>
 							<ClayModal.Footer
 								first={
@@ -277,7 +288,7 @@ const Diagram = ({
 							/>
 						</ClayModal>
 					)}
-					{showTooltip.tooltip && (
+					{/* {showTooltip.tooltip && (
 						<AdminTooltip
 							deletePin={deletePin}
 							namespace={namespace}
@@ -290,7 +301,7 @@ const Diagram = ({
 							skus={skus}
 							updatePin={updatePin}
 						/>
-					)}
+					)} */}
 				</ImagePins>
 
 				<DiagramFooter
