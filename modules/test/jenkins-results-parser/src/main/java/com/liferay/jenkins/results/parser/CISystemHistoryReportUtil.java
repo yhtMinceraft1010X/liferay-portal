@@ -47,18 +47,18 @@ public class CISystemHistoryReportUtil {
 			String jobName, String testSuiteName)
 		throws IOException {
 
-		writeAllDurationsJavascriptFile();
+		writeAllDurationsJavaScriptFile();
 
-		writeDateDurationsJavascriptFiles(jobName, testSuiteName);
+		writeDateDurationsJavaScriptFiles(jobName, testSuiteName);
 
 		writeIndexHtmlFile();
 	}
 
-	protected static void writeAllDurationsJavascriptFile() throws IOException {
+	protected static void writeAllDurationsJavaScriptFile() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		for (DurationReport durationReport : _getDurationReports()) {
-			sb.append(durationReport.getAllDurationsJavascriptContent());
+			sb.append(durationReport.getAllDurationsJavaScriptContent());
 		}
 
 		JenkinsResultsParserUtil.write(
@@ -66,7 +66,7 @@ public class CISystemHistoryReportUtil {
 			sb.toString());
 	}
 
-	protected static void writeDateDurationsJavascriptFile(
+	protected static void writeDateDurationsJavaScriptFile(
 			String jobName, String testSuiteName, String dateString)
 		throws IOException {
 
@@ -77,7 +77,7 @@ public class CISystemHistoryReportUtil {
 
 		for (DurationReport durationReport : _getDurationReports()) {
 			sb.append(
-				durationReport.getDateDurationsJavascriptContent(
+				durationReport.getDateDurationsJavaScriptContent(
 					buildResultJSONObjects, dateString));
 		}
 
@@ -88,12 +88,12 @@ public class CISystemHistoryReportUtil {
 			sb.toString());
 	}
 
-	protected static void writeDateDurationsJavascriptFiles(
+	protected static void writeDateDurationsJavaScriptFiles(
 			String jobName, String testSuiteName)
 		throws IOException {
 
 		for (String dateString : _dateStrings) {
-			writeDateDurationsJavascriptFile(
+			writeDateDurationsJavaScriptFile(
 				jobName, testSuiteName, dateString);
 		}
 	}
@@ -461,33 +461,33 @@ public class CISystemHistoryReportUtil {
 			return id.compareTo(_getID());
 		}
 
-		public String getAllDurationsJavascriptContent() {
+		public String getAllDurationsJavaScriptContent() {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("var ");
-			sb.append(getAllDurationsJavascriptVarName());
+			sb.append(getAllDurationsJavaScriptVarName());
 			sb.append(" = ");
-			sb.append(getAllDurationsJavascriptVarValue());
+			sb.append(getAllDurationsJavaScriptVarValue());
 			sb.append(";\n");
 
 			sb.append("createContainer(");
-			sb.append(getAllDurationsJavascriptVarName());
+			sb.append(getAllDurationsJavaScriptVarName());
 			sb.append(");\n\n");
 
 			return sb.toString();
 		}
 
-		public String getAllDurationsJavascriptVarName() {
+		public String getAllDurationsJavaScriptVarName() {
 			return JenkinsResultsParserUtil.combine(
-				_getJavascriptID(), "_all_durations");
+				_getJavaScriptID(), "_all_durations");
 		}
 
-		public String getAllDurationsJavascriptVarValue() {
+		public String getAllDurationsJavaScriptVarValue() {
 			JSONObject jsonObject = new JSONObject();
 
 			jsonObject.put("description", _description);
-			jsonObject.put("durations", getDurationsJavascriptVarNames());
-			jsonObject.put("durations_dates", getDateJavascriptVarNames());
+			jsonObject.put("durations", getDurationsJavaScriptVarNames());
+			jsonObject.put("durations_dates", getDateJavaScriptVarNames());
 			jsonObject.put("id", _getID());
 			jsonObject.put(
 				"modification_date", "new Date(" + _START_TIME + ")");
@@ -499,7 +499,7 @@ public class CISystemHistoryReportUtil {
 				"\\\"([^\\\"]+_\\d{4}_\\d{2})\\\"", "$1");
 		}
 
-		public String getDateDurationsJavascriptContent(
+		public String getDateDurationsJavaScriptContent(
 			List<JSONObject> buildResultJSONObjects, String dateString) {
 
 			List<Long> durations = getDurations(buildResultJSONObjects);
@@ -507,12 +507,12 @@ public class CISystemHistoryReportUtil {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("var ");
-			sb.append(getDateJavascriptVarName(dateString));
+			sb.append(getDateJavaScriptVarName(dateString));
 			sb.append(" = ");
-			sb.append(getDateJavascriptVarValue(dateString, durations));
+			sb.append(getDateJavaScriptVarValue(dateString, durations));
 
 			sb.append("\nvar ");
-			sb.append(getDurationsJavascriptVarName(dateString));
+			sb.append(getDurationsJavaScriptVarName(dateString));
 			sb.append(" = ");
 			sb.append(durations);
 			sb.append("\n\n");
@@ -520,23 +520,23 @@ public class CISystemHistoryReportUtil {
 			return sb.toString();
 		}
 
-		public String getDateJavascriptVarName(String dateString) {
+		public String getDateJavaScriptVarName(String dateString) {
 			return JenkinsResultsParserUtil.combine(
-				_getJavascriptID(), "_date_", dateString.replaceAll("-", "_"));
+				_getJavaScriptID(), "_date_", dateString.replaceAll("-", "_"));
 		}
 
-		public List<String> getDateJavascriptVarNames() {
-			List<String> dateDurationJavascriptVars = new ArrayList<>();
+		public List<String> getDateJavaScriptVarNames() {
+			List<String> dateDurationJavaScriptVars = new ArrayList<>();
 
 			for (String dateString : _dateStrings) {
-				dateDurationJavascriptVars.add(
-					getDateJavascriptVarName(dateString));
+				dateDurationJavaScriptVars.add(
+					getDateJavaScriptVarName(dateString));
 			}
 
-			return dateDurationJavascriptVars;
+			return dateDurationJavaScriptVars;
 		}
 
-		public String getDateJavascriptVarValue(
+		public String getDateJavaScriptVarValue(
 			String dateString, List<Long> durations) {
 
 			JSONArray jsonArray = new JSONArray();
@@ -629,21 +629,21 @@ public class CISystemHistoryReportUtil {
 			return durations;
 		}
 
-		public String getDurationsJavascriptVarName(String dateString) {
+		public String getDurationsJavaScriptVarName(String dateString) {
 			return JenkinsResultsParserUtil.combine(
-				_getJavascriptID(), "_durations_",
+				_getJavaScriptID(), "_durations_",
 				dateString.replaceAll("-", "_"));
 		}
 
-		public List<String> getDurationsJavascriptVarNames() {
-			List<String> durationsJavascriptVarNames = new ArrayList<>();
+		public List<String> getDurationsJavaScriptVarNames() {
+			List<String> durationsJavaScriptVarNames = new ArrayList<>();
 
 			for (String dateString : _dateStrings) {
-				durationsJavascriptVarNames.add(
-					getDurationsJavascriptVarName(dateString));
+				durationsJavaScriptVarNames.add(
+					getDurationsJavaScriptVarName(dateString));
 			}
 
-			return durationsJavascriptVarNames;
+			return durationsJavaScriptVarNames;
 		}
 
 		private DurationReport(String buildType, String durationReportType) {
@@ -716,7 +716,7 @@ public class CISystemHistoryReportUtil {
 			return id;
 		}
 
-		private String _getJavascriptID() {
+		private String _getJavaScriptID() {
 			String javascriptID = _buildType + "_" + _durationReportType;
 
 			javascriptID = javascriptID.replaceAll("-", "_");
