@@ -167,7 +167,9 @@ public class DynamicObjectDefinitionTable
 	}
 
 	private static String _getSQLColumnNull(String type) {
-		if (type.equals("BigDecimal")) {
+		if (type.equals("BigDecimal") || type.equals("Double") ||
+			type.equals("Integer") || type.equals("Long")) {
+
 			return " default 0";
 		}
 		else if (type.equals("Boolean")) {
@@ -175,15 +177,6 @@ public class DynamicObjectDefinitionTable
 		}
 		else if (type.equals("Date")) {
 			return " null";
-		}
-		else if (type.equals("Double")) {
-			return " default 0";
-		}
-		else if (type.equals("Integer")) {
-			return " default 0";
-		}
-		else if (type.equals("Long")) {
-			return " default 0";
 		}
 
 		return StringPool.BLANK;
