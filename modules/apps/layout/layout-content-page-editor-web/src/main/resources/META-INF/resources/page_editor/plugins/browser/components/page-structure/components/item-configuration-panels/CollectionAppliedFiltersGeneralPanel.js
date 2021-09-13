@@ -110,7 +110,7 @@ export const CollectionAppliedFiltersGeneralPanel = ({item}) => {
 		return (
 			<p className="alert alert-info text-center" role="alert">
 				{Liferay.Language.get(
-					'display-a-collection-on-the-page-which-support-at-least-one-type-of-filter'
+					'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
 				)}
 			</p>
 		);
