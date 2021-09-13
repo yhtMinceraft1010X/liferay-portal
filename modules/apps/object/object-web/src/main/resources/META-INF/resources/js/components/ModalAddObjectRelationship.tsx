@@ -22,8 +22,8 @@ import RequiredMask from './RequiredMask';
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	spritemap: string;
 	objectDefinitions: TObjectDefinition[];
+	spritemap: string;
 }
 
 type TObjectDefinition = {
