@@ -174,7 +174,8 @@ public class ObjectEntriesDetailsDisplayContext {
 
 	private DDMFormField _getDDMFormField(ObjectField objectField) {
 
-		//TODO this type should be stored in the DB together with the DB Type
+		// TODO Store the type and the object field type in the database
+
 		String type = DDMFormFieldTypeConstants.TEXT;
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
