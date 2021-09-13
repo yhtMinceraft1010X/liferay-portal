@@ -54,24 +54,24 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		long objectDefinitionId = GetterUtil.getLong(
-			ddmFormField.getProperty("objectDefinitionId"));
-
 		try {
+			String apiURL = _portal.getPortalURL(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+
+			long objectDefinitionId = GetterUtil.getLong(
+				ddmFormField.getProperty("objectDefinitionId"));
+
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectDefinitionId);
 
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
-
-			String apiURL = _portal.getPortalURL(
-				ddmFormFieldRenderingContext.getHttpServletRequest());
-
 			RESTContextPathResolver restContextPathResolver =
 				_restContextPathResolverRegistry.getRESTContextPathResolver(
 					objectDefinition.getClassName());
+
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
 
 			String restContextPath = restContextPathResolver.getRESTContextPath(
 				objectScopeProvider.getGroupId(
