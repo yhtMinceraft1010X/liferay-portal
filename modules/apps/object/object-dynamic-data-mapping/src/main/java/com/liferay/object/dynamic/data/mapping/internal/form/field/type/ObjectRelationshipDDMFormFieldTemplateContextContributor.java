@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,7 +93,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			_log.error(portalException, portalException);
 		}
 
-		return new HashMap<>();
+		return Collections.<String, Object>emptyMap();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
