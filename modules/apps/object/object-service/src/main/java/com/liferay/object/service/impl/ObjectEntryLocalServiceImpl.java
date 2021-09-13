@@ -1377,23 +1377,25 @@ public class ObjectEntryLocalServiceImpl
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectDefinitionId, entry.getKey());
 
-			if (objectField.getListTypeDefinitionId() > 0) {
-				List<ListTypeEntry> listTypeEntries =
-					_listTypeEntryLocalService.getListTypeEntries(
-						objectField.getListTypeDefinitionId());
+			if (objectField.getListTypeDefinitionId() == 0) {
+				continue;
+			}
 
-				Stream<ListTypeEntry> listTypeEntryStream =
-					listTypeEntries.stream();
+			List<ListTypeEntry> listTypeEntries =
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId());
 
-				boolean exists = listTypeEntryStream.anyMatch(
-					listTypeEntry -> StringUtil.equals(
-						listTypeEntry.getKey(),
-						(String)values.get(entry.getKey())));
+			Stream<ListTypeEntry> listTypeEntryStream =
+				listTypeEntries.stream();
 
-				if (!exists) {
-					throw new ObjectEntryValuesException(
-						"This key is not defined on list type entries");
-				}
+			boolean exists = listTypeEntryStream.anyMatch(
+				listTypeEntry -> StringUtil.equals(
+					listTypeEntry.getKey(),
+					(String)values.get(entry.getKey())));
+
+			if (!exists) {
+				throw new ObjectEntryValuesException(
+					"This key is not defined on list type entries");
 			}
 		}
 	}
