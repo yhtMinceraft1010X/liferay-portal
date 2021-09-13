@@ -44,7 +44,6 @@ import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
