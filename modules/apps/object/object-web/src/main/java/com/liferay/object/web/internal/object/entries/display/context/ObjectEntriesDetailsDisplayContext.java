@@ -238,15 +238,15 @@ public class ObjectEntriesDetailsDisplayContext {
 				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
+		else if (StringUtil.equals(type, "Boolean")) {
+			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
+		}
 		else if (StringUtil.equals(type, "Integer") ||
 				 StringUtil.equals(type, "Long")) {
 
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
-		}
-		else if (StringUtil.equals(type, "Boolean")) {
-			ddmFormField.setType(DDMFormFieldTypeConstants.CHECKBOX);
 		}
 		else if (StringUtil.equals(type, "Date")) {
 			ddmFormField.setType(DDMFormFieldTypeConstants.DATE);
