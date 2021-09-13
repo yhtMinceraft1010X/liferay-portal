@@ -581,7 +581,7 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setClassName(
 			_getClassName(
-				className, objectDefinition.getObjectDefinitionId(), system));
+				objectDefinition.getObjectDefinitionId(), className, system));
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setName(name);
 		objectDefinition.setPanelAppOrder(panelAppOrder);
@@ -658,7 +658,7 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private String _getClassName(
-		String className, long objectDefinitionId, boolean system) {
+		long objectDefinitionId, String className, boolean system) {
 
 		if (system) {
 			return className;
