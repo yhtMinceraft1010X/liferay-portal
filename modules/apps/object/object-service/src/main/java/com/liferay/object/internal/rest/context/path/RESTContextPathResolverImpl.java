@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.object.internal.rest.context;
+package com.liferay.object.internal.rest.context.path;
 
-import com.liferay.object.rest.context.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.portal.kernel.util.StringUtil;
 

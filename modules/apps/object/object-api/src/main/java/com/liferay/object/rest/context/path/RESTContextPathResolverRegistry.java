@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.object.rest.context;
+package com.liferay.object.rest.context.path;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Marco Leo
  */
-public interface RESTContextPathResolver {
+@ProviderType
+public interface RESTContextPathResolverRegistry {
 
-	public String getRESTContextPath(long groupId);
+	public RESTContextPathResolver getRESTContextPathResolver(String className);
 
 }

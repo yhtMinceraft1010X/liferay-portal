@@ -18,8 +18,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateCont
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.context.RESTContextPathResolver;
-import com.liferay.object.rest.context.RESTContextPathResolverRegistry;
+import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;

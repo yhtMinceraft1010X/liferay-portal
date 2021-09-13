@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.object.internal.rest.context;
+package com.liferay.object.internal.rest.context.path;
 
-import com.liferay.object.rest.context.RESTContextPathResolver;
-import com.liferay.object.rest.context.RESTContextPathResolverRegistry;
+import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
