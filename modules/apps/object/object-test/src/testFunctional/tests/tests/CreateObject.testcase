@@ -602,12 +602,31 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on the eye icon"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewFieldsDetailsByClickingEyeIcon {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138833 CanViewFieldsDetailsByClickingEyeIcon pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.selectCustomObjectFieldKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.viewFieldDetails();
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"

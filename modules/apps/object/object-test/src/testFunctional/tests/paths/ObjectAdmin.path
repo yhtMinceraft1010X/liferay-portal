@@ -101,6 +101,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELDS_DETAILS_IFRAME</td>
+		<td>//div[contains(@class, 'side-panel-iframe')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FIELDS_DETAILS_TITLE</td>
+		<td>//div[contains(@class, 'side-panel-iframe')]//h3[contains(@class, 'mb-0')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
 		<td></td>
@@ -123,6 +133,16 @@
 	<tr>
 		<td>VIEW_OBJECT_FIELD_TYPE</td>
 		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldType}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>KEBAB_MENU</td>
+		<td>//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>KEBAB_MENU_OPTION</td>
+		<td>//button[contains(text(), '${kebabOption}')]</td>
 		<td></td>
 	</tr>
 </tbody>
