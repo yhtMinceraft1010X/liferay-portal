@@ -66,7 +66,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				_objectScopeProviderRegistry.getObjectScopeProvider(
 					objectDefinition.getScope());
 
-			String apiUrl = _portal.getPortalURL(
+			String apiURL = _portal.getPortalURL(
 				ddmFormFieldRenderingContext.getHttpServletRequest());
 
 			RESTContextPathResolver restContextPathResolver =
@@ -77,10 +77,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				objectScopeProvider.getGroupId(
 					ddmFormFieldRenderingContext.getHttpServletRequest()));
 
-			apiUrl = apiUrl + restContextPath;
+			apiURL = apiURL + restContextPath;
 
 			return HashMapBuilder.<String, Object>put(
-				"apiUrl", apiUrl
+				"apiURL", apiURL
 			).put(
 				"inputName", ddmFormField.getName()
 			).put(
