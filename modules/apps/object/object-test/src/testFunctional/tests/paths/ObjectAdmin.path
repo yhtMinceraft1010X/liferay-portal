@@ -51,6 +51,26 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_FIELDS_TAB</td>
+		<td>//a[contains(text(),'Fields')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELDS_LABEL_INPUT</td>
+		<td>//input[contains(@id,'objectFieldLabel')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH</td>
+		<td>//input[contains(@class,'toggle-switch-check')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>OBJECT_FIELDS_TYPE</td>
+		<td>//select[contains(@id,'objectFieldType')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DELETE_CUSTOM_OBJECT</td>
 		<td>//button[(@class='dropdown-item') and contains(text(),'Delete')]</td>
 		<td></td>
@@ -58,11 +78,6 @@
 	<tr>
 		<td>SELECT_OBJECT_FIELD</td>
 		<td>//a[contains(text(),'${key_fieldName}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_TAB</td>
-		<td>//a[contains(text(),'Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -80,7 +95,17 @@
 		<td>//div[contains(@class,'form-group input-select-wrapper')]//option[contains(@value, 'en_US')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_OBJECT_FIELD_NAME</td>
+		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_OBJECT_FIELD_TYPE</td>
+		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldType}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>
-</html>
+</html>	

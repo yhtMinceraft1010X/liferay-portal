@@ -106,12 +106,33 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a Long field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateLongField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138822 CanCreateLongField pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldType = "Long",
+			isMandatory = "false"
+		);
+
+		ObjectAdmin.assertObjectField(
+			fieldName = "customField",
+			fieldType = "Long");
+
+
+			
 	}
 
 	@description = "LPS-135549 - Verify it is possible to create a String field"
