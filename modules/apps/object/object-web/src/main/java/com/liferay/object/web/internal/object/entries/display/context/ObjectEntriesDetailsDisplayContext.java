@@ -91,7 +91,9 @@ public class ObjectEntriesDetailsDisplayContext {
 		return _objectEntry;
 	}
 
-	public String renderDDMForm(PageContext pageContext) throws Exception {
+	public String renderDDMForm(PageContext pageContext)
+		throws PortalException {
+
 		DDMForm ddmForm = _getDDMForm();
 
 		DDMFormRenderingContext ddmFormRenderingContext =
