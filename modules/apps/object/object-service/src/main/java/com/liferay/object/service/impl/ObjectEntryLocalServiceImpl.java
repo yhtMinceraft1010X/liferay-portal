@@ -1385,15 +1385,13 @@ public class ObjectEntryLocalServiceImpl
 				_listTypeEntryLocalService.getListTypeEntries(
 					objectField.getListTypeDefinitionId());
 
-			Stream<ListTypeEntry> stream =
-				listTypeEntries.stream();
+			Stream<ListTypeEntry> stream = listTypeEntries.stream();
 
-			boolean exists = stream.anyMatch(
+			if (!stream.anyMatch(
 				listTypeEntry -> StringUtil.equals(
 					listTypeEntry.getKey(),
-					(String)values.get(entry.getKey())));
+					(String)values.get(entry.getKey())))) {
 
-			if (!exists) {
 				throw new ObjectEntryValuesException(
 					"This key is not defined on list type entries");
 			}
