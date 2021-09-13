@@ -602,6 +602,8 @@ definition {
 				siteName = "Site Name");
 		}
 
+		ACUtils.closeAllSessionsAndWait();
+
 		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "${propertyName}");
@@ -653,6 +655,8 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
+
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
