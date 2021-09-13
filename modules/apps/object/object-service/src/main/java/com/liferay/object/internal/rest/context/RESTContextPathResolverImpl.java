@@ -38,18 +38,15 @@ public class RESTContextPathResolverImpl implements RESTContextPathResolver {
 
 	@Override
 	public String getRESTContextPath(long groupId) {
-		String restContextPath = _contextPath;
+		if (!_objectScopeProvider.isGroupAware() ||
+			!_objectScopeProvider.isValidGroupId(groupId)) {
 
-		if (_objectScopeProvider.isGroupAware() &&
-			_objectScopeProvider.isValidGroupId(groupId)) {
-
-			restContextPath = StringUtil.replace(
-				"{scopeKey}", restContextPath, String.valueOf(groupId));
-			restContextPath = StringUtil.replace(
-				"{groupId}", restContextPath, String.valueOf(groupId));
+			return _contextPath;
 		}
 
-		return restContextPath;
+		return StringUtil.replace(
+			_contextPath, new String[] {"{groupId}", "{scopeKey}"},
+			new String[] {String.valueOf(groupId), String.valueOf(groupId)});
 	}
 
 	private final String _contextPath;
