@@ -189,7 +189,7 @@ public class DynamicObjectDefinitionTable
 		return StringPool.BLANK;
 	}
 
-	private static final String _DEFAULT = " DEFAULT ";
+	private static final String _DEFAULT = " default ";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionTable.class);
