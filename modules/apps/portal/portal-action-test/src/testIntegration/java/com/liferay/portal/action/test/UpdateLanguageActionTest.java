@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -210,7 +211,8 @@ public class UpdateLanguageActionTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setParameter("redirect", "INVALID VALUE");
+		mockHttpServletRequest.setParameter(
+			"redirect", RandomTestUtil.randomString());
 
 		updateLanguageAction.getRedirect(
 			mockHttpServletRequest, new ThemeDisplay(), _targetLocale);
