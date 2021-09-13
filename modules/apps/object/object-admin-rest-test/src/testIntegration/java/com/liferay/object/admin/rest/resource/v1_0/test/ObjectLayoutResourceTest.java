@@ -175,6 +175,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 				objectLayoutBoxes = new ObjectLayoutBox[] {
 					_randomObjectLayoutBox()
 				};
+				objectRelationshipId = 0L;
 				priority = RandomTestUtil.randomInt();
 			}
 		};
