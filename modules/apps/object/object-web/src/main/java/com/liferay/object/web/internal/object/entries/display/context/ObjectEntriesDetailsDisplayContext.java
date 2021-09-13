@@ -231,12 +231,16 @@ public class ObjectEntriesDetailsDisplayContext {
 	private void _setDDMFormFieldProperties(
 		DDMFormField ddmFormField, long listTypeDefinitionId, String type) {
 
-		if (_doubleTypes.contains(type)) {
+		if (StringUtil.equals(type, "BigDecimal") ||
+			StringUtil.equals(type, "Double")) {
+
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.DOUBLE);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
 		}
-		else if (_integerTypes.contains(type)) {
+		else if (StringUtil.equals(type, "Integer") ||
+				 StringUtil.equals(type, "Long")) {
+
 			ddmFormField.setProperty(
 				FieldConstants.DATA_TYPE, FieldConstants.INTEGER);
 			ddmFormField.setType(DDMFormFieldTypeConstants.NUMERIC);
@@ -255,11 +259,6 @@ public class ObjectEntriesDetailsDisplayContext {
 			ddmFormField.setType(DDMFormFieldTypeConstants.SELECT);
 		}
 	}
-
-	private static final List<String> _doubleTypes = Arrays.asList(
-		"BigDecimal", "Double");
-	private static final List<String> _integerTypes = Arrays.asList(
-		"Integer", "Long");
 
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
