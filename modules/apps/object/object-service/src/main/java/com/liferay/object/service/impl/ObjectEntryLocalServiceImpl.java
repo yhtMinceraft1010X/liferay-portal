@@ -1394,7 +1394,8 @@ public class ObjectEntryLocalServiceImpl
 						(String)values.get(entry.getKey())))) {
 
 				throw new ObjectEntryValuesException(
-					"This key is not defined on list type entries");
+					"Object field name " + entry.getKey() +
+						" is not mapped to a valid list type entry");
 			}
 		}
 	}
