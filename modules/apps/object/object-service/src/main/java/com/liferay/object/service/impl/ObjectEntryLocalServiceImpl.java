@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
@@ -1388,9 +1389,9 @@ public class ObjectEntryLocalServiceImpl
 			Stream<ListTypeEntry> stream = listTypeEntries.stream();
 
 			if (!stream.anyMatch(
-				listTypeEntry -> StringUtil.equals(
-					listTypeEntry.getKey(),
-					(String)values.get(entry.getKey())))) {
+					listTypeEntry -> Objects.equals(
+						listTypeEntry.getKey(),
+						(String)values.get(entry.getKey())))) {
 
 				throw new ObjectEntryValuesException(
 					"This key is not defined on list type entries");
