@@ -1385,10 +1385,10 @@ public class ObjectEntryLocalServiceImpl
 				_listTypeEntryLocalService.getListTypeEntries(
 					objectField.getListTypeDefinitionId());
 
-			Stream<ListTypeEntry> listTypeEntryStream =
+			Stream<ListTypeEntry> stream =
 				listTypeEntries.stream();
 
-			boolean exists = listTypeEntryStream.anyMatch(
+			boolean exists = stream.anyMatch(
 				listTypeEntry -> StringUtil.equals(
 					listTypeEntry.getKey(),
 					(String)values.get(entry.getKey())));
