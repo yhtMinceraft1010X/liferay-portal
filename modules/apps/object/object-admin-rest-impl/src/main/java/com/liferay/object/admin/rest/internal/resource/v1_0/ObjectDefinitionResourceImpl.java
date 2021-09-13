@@ -134,7 +134,6 @@ public class ObjectDefinitionResourceImpl
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 
@@ -151,26 +150,28 @@ public class ObjectDefinitionResourceImpl
 
 						return addAction(
 							ActionKeys.DELETE, "deleteObjectDefinition",
-							permissionName, objectDefinitionId);
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
 					}
 				).put(
 					"get",
 					addAction(
 						ActionKeys.VIEW, "getObjectDefinition", permissionName,
-						objectDefinitionId)
+						objectDefinition.getObjectDefinitionId())
 				).put(
 					"update",
 					addAction(
 						ActionKeys.UPDATE, "postObjectDefinition",
-						permissionName, objectDefinitionId)
+						permissionName,
+						objectDefinition.getObjectDefinitionId())
 				).build();
 				dateCreated = objectDefinition.getCreateDate();
 				dateModified = objectDefinition.getModifiedDate();
-				id = objectDefinitionId;
+				id = objectDefinition.getObjectDefinitionId();
 				name = objectDefinition.getShortName();
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
-						objectDefinitionId),
+						objectDefinition.getObjectDefinitionId()),
 					ObjectFieldUtil::toObjectField, ObjectField.class);
 				scope = objectDefinition.getScope();
 				status = new Status() {
