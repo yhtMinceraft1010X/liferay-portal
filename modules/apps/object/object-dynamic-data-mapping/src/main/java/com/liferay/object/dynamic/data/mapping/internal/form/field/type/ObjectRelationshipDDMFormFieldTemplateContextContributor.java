@@ -55,32 +55,8 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		try {
-			String apiURL = _portal.getPortalURL(
-				ddmFormFieldRenderingContext.getHttpServletRequest());
-
-			long objectDefinitionId = GetterUtil.getLong(
-				ddmFormField.getProperty("objectDefinitionId"));
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
-			RESTContextPathResolver restContextPathResolver =
-				_restContextPathResolverRegistry.getRESTContextPathResolver(
-					objectDefinition.getClassName());
-
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					objectDefinition.getScope());
-
-			String restContextPath = restContextPathResolver.getRESTContextPath(
-				objectScopeProvider.getGroupId(
-					ddmFormFieldRenderingContext.getHttpServletRequest()));
-
-			apiURL = apiURL + restContextPath;
-
 			return HashMapBuilder.<String, Object>put(
-				"apiURL", apiURL
+				"apiURL", _getAPIURL(ddmFormField, ddmFormFieldRenderingContext)
 			).put(
 				"inputName", ddmFormField.getName()
 			).put(
@@ -94,6 +70,36 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 		}
 
 		return Collections.<String, Object>emptyMap();
+	}
+
+	private String _getAPIURL(
+			DDMFormField ddmFormField,
+			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
+		throws PortalException {
+
+		String apiURL = _portal.getPortalURL(
+			ddmFormFieldRenderingContext.getHttpServletRequest());
+
+		long objectDefinitionId = GetterUtil.getLong(
+			ddmFormField.getProperty("objectDefinitionId"));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
+		RESTContextPathResolver restContextPathResolver =
+			_restContextPathResolverRegistry.getRESTContextPathResolver(
+				objectDefinition.getClassName());
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		String restContextPath = restContextPathResolver.getRESTContextPath(
+			objectScopeProvider.getGroupId(
+				ddmFormFieldRenderingContext.getHttpServletRequest()));
+
+		return apiURL + restContextPath;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
