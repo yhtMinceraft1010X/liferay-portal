@@ -312,36 +312,4 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();
 
-	//	private static class MockServiceTrackerMap
-	//		implements ServiceTrackerMap<String, WorkflowHandler<?>> {
-	//
-	//		public MockServiceTrackerMap(
-	//			Map<String, WorkflowHandler<?>> workflowHandlerMap) {
-	//
-	//			_workflowHandlerMap = workflowHandlerMap;
-	//		}
-	//
-	//		@Override
-	//		public void close() {
-	//		}
-	//
-	//		@Override
-	//		public boolean containsKey(String key) {
-	//			return _workflowHandlerMap.containsKey(key);
-	//		}
-	//
-	//		@Override
-	//		public WorkflowHandler<?> getService(String key) {
-	//			return _workflowHandlerMap.get(key);
-	//		}
-	//
-	//		@Override
-	//		public Set<String> keySet() {
-	//			return _workflowHandlerMap.keySet();
-	//		}
-	//
-	//		private final Map<String, WorkflowHandler<?>> _workflowHandlerMap;
-	//
-	//	}
-
 }
