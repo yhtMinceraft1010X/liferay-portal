@@ -129,10 +129,10 @@ public class ObjectEntriesDetailsDisplayContext {
 	}
 
 	private DDMFormFieldOptions _getDDMFieldOptions(long listTypeDefinitionId) {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
 		List<ListTypeEntry> listTypeEntries =
 			_listTypeEntryLocalService.getListTypeEntries(listTypeDefinitionId);
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			ddmFormFieldOptions.addOptionLabel(
