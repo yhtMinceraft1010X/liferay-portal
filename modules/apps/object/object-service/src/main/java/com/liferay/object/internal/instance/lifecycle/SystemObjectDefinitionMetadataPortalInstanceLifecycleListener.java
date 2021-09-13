@@ -159,7 +159,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionMetadata),
 				null);
-
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(
