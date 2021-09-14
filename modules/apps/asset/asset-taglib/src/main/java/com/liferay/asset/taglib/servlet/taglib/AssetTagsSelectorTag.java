@@ -169,14 +169,14 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	}
 
 	protected long[] getGroupIds() {
-		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
 			if (ArrayUtil.isEmpty(_groupIds)) {
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				return PortalUtil.getCurrentAndAncestorSiteGroupIds(
 					themeDisplay.getScopeGroupId());
 			}
@@ -187,9 +187,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
-		}
 
-		return new long[0];
+			return new long[0];
+		}
 	}
 
 	protected String getId() {
