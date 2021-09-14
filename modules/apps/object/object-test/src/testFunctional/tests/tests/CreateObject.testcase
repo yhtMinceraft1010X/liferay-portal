@@ -807,7 +807,6 @@ definition {
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
 	@priority = "4"
 	test FieldNameIsAutofilled {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -823,14 +822,7 @@ definition {
 
 		CreateObject.assertObjectFieldNameIsAutofilled(
 			fieldLabel = "Custom Field",
-			fieldName = "customField"
-		);
-
-
-		
-
-		
-
+			fieldName = "customField");
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"

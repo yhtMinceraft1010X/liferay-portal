@@ -8,11 +8,8 @@ definition {
 			value1 = "${fieldLabel}");
 
 		AssertElementPresent(
-			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME",
-			key_fieldName = "${fieldName}"
-		);
-
-		
+			key_fieldName = "${fieldName}",
+			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME");
 	}
 
 	macro assertObjectLabel {
