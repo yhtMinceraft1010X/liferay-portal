@@ -1,5 +1,20 @@
 definition {
 
+	macro assertObjectFieldNameIsAutofilled {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
+			value1 = "${fieldLabel}");
+
+		AssertElementPresent(
+			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME",
+			key_fieldName = "${fieldName}"
+		);
+
+		
+	}
+
 	macro assertObjectLabel {
 		AssertTextEquals(
 			locator1 = "CreateObject#OBJECT_LABEL",
