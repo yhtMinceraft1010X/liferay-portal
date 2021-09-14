@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.list.type.application.list;
+package com.liferay.object.web.internal.list.type.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;

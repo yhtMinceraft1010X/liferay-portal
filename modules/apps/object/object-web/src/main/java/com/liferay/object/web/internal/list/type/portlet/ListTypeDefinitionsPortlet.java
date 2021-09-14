@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.list.type.portlet;
+package com.liferay.object.web.internal.list.type.portlet;
 
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.web.internal.object.list.type.display.context.ViewListTypeDefinitionsDisplayContext;
+import com.liferay.object.web.internal.list.type.display.context.ViewListTypeDefinitionsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;

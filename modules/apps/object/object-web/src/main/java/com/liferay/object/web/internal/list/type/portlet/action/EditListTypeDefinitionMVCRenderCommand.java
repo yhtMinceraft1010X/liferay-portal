@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.list.type.portlet.action;
+package com.liferay.object.web.internal.list.type.portlet.action;
 
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
-import com.liferay.object.web.internal.object.list.type.display.context.ViewListTypeEntriesDisplayContext;
+import com.liferay.object.web.internal.list.type.display.context.ViewListTypeEntriesDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;

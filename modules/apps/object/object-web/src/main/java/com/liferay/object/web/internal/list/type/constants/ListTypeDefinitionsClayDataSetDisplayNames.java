@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.web.internal.object.list.type.constants;
+package com.liferay.object.web.internal.list.type.constants;
 
 /**
  * @author Gabriel Albuquerque
