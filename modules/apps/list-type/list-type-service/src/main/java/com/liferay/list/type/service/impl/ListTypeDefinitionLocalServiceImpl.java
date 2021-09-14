@@ -62,10 +62,13 @@ public class ListTypeDefinitionLocalServiceImpl
 	public ListTypeDefinition deleteListTypeDefinition(
 		ListTypeDefinition listTypeDefinition) {
 
+		listTypeDefinition = listTypeDefinitionPersistence.remove(
+			listTypeDefinition);
+
 		_listTypeEntryPersistence.removeByListTypeDefinitionId(
 			listTypeDefinition.getListTypeDefinitionId());
 
-		return listTypeDefinitionPersistence.remove(listTypeDefinition);
+		return listTypeDefinition;
 	}
 
 	@Override
