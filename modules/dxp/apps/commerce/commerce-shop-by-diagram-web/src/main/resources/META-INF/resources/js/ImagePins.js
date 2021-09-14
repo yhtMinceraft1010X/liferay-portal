@@ -312,22 +312,6 @@ const ImagePins = ({
 								setShowTooltip(pinDefinition);
 							});
 						});
-					} else {
-						const pins = document.querySelectorAll('[id^="MTEXT_"]>text');
-						const matrix = pins.match(/(?<=matrix\()(.*)(?=\))/g)
-						const labels = pins.map(m => m.value)
-
-						const everyPinData = matrix.map((t, i) => {
-							const coo = t.match(/\d*\.\d*/g)
-
-							return {
-								label: labels[i].label,
-								x: coo[1],
-								y: coo[2]
-							}
-						})
-						console.log(everyPinData)
-
 					}
 				}
 

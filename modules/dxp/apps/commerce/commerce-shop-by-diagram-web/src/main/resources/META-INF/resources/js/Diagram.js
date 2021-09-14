@@ -14,6 +14,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, openToast} from 'frontend-js-web';
 import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
+import { searchSkus} from './utilities/utilities'
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -116,7 +117,6 @@ const Diagram = ({
 			});
 
 			setPinImport(pinData);
-
 			return pinData;
 		}
 	}, [svgString]);
@@ -152,6 +152,7 @@ const Diagram = ({
 	};
 
 	const updatePin = (node) => {
+
 		if (node.id) {
 			return fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
 				body: JSON.stringify(node),
@@ -159,7 +160,6 @@ const Diagram = ({
 				method: 'PATCH',
 			});
 		}
-
 		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
 			body: JSON.stringify(node),
 			headers: HEADERS,
@@ -202,6 +202,14 @@ const Diagram = ({
 				});
 			});
 	};
+
+	const updateMappedProduct = (node) => {
+		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/diagramEntries`, {
+			headers: HEADERS,
+			method: 'GET',
+		}).then((res) => res.json())
+		.then(console.log)
+	}
 
 	const pinClickAction = (updatedPin) => {
 		setShowTooltip({
@@ -404,7 +412,6 @@ const Diagram = ({
 										>
 											{Liferay.Language.get('delete')}
 										</ClayButton>
-
 										<ClayButton
 											displayType="secondary"
 											onClick={() => {
@@ -519,7 +526,8 @@ Diagram.defaultProps = {
 		defaultRadius: 10,
 	},
 	pins: [],
-	pinsEndpoint: '/o/headless-commerce-admin-catalog/v1.0/',
+	pinsEndpoint:
+		'/o/headless-commerce-admin-catalog/v1.0/',
 	productId: 44206,
 	showTooltip: {
 		details: {
