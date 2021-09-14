@@ -181,7 +181,7 @@ definition {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
-			kebabOption = "${kebabOption}",
+			key_kebabOption = "${kebabOption}",
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
