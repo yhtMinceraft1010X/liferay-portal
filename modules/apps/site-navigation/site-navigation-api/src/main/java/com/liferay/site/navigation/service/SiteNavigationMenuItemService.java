@@ -75,7 +75,7 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getSiteNavigationMenuItemParentIds(
+	public List<Long> getParentSiteNavigationMenuItemIds(
 		long siteNavigationMenuId, String typeSettingsKeyword);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

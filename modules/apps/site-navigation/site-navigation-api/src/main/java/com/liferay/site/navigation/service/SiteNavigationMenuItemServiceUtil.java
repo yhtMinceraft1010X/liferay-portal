@@ -73,10 +73,10 @@ public class SiteNavigationMenuItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static List<Long> getSiteNavigationMenuItemParentIds(
+	public static List<Long> getParentSiteNavigationMenuItemIds(
 		long siteNavigationMenuId, String typeSettingsKeyword) {
 
-		return getService().getSiteNavigationMenuItemParentIds(
+		return getService().getParentSiteNavigationMenuItemIds(
 			siteNavigationMenuId, typeSettingsKeyword);
 	}
 

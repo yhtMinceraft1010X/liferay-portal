@@ -260,6 +260,10 @@ public interface SiteNavigationMenuItemLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getParentSiteNavigationMenuItemIds(
+		long siteNavigationMenuId, String typeSettingsKeyword);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -292,10 +296,6 @@ public interface SiteNavigationMenuItemLocalService
 	public SiteNavigationMenuItem getSiteNavigationMenuItemByUuidAndGroupId(
 			String uuid, long groupId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getSiteNavigationMenuItemParentIds(
-		long siteNavigationMenuId, String typeSettingsKeyword);
 
 	/**
 	 * Returns a range of all the site navigation menu items.

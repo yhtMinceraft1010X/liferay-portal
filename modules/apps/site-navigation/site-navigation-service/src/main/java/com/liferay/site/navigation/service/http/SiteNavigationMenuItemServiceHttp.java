@@ -179,15 +179,15 @@ public class SiteNavigationMenuItemServiceHttp {
 		}
 	}
 
-	public static java.util.List<Long> getSiteNavigationMenuItemParentIds(
+	public static java.util.List<Long> getParentSiteNavigationMenuItemIds(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
 		String typeSettingsKeyword) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				SiteNavigationMenuItemServiceUtil.class,
-				"getSiteNavigationMenuItemParentIds",
-				_getSiteNavigationMenuItemParentIdsParameterTypes3);
+				"getParentSiteNavigationMenuItemIds",
+				_getParentSiteNavigationMenuItemIdsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, siteNavigationMenuId, typeSettingsKeyword);
@@ -402,7 +402,7 @@ public class SiteNavigationMenuItemServiceHttp {
 			long.class
 		};
 	private static final Class<?>[]
-		_getSiteNavigationMenuItemParentIdsParameterTypes3 = new Class[] {
+		_getParentSiteNavigationMenuItemIdsParameterTypes3 = new Class[] {
 			long.class, String.class
 		};
 	private static final Class<?>[] _getSiteNavigationMenuItemsParameterTypes4 =

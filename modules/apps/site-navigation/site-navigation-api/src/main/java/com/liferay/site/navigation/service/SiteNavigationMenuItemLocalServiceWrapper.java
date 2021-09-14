@@ -332,6 +332,15 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		return _siteNavigationMenuItemLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.util.List<Long> getParentSiteNavigationMenuItemIds(
+		long siteNavigationMenuId, String typeSettingsKeyword) {
+
+		return _siteNavigationMenuItemLocalService.
+			getParentSiteNavigationMenuItemIds(
+				siteNavigationMenuId, typeSettingsKeyword);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -375,15 +384,6 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 		return _siteNavigationMenuItemLocalService.
 			getSiteNavigationMenuItemByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public java.util.List<Long> getSiteNavigationMenuItemParentIds(
-		long siteNavigationMenuId, String typeSettingsKeyword) {
-
-		return _siteNavigationMenuItemLocalService.
-			getSiteNavigationMenuItemParentIds(
-				siteNavigationMenuId, typeSettingsKeyword);
 	}
 
 	/**

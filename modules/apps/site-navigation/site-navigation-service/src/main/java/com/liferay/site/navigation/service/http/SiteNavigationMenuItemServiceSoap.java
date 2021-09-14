@@ -123,14 +123,14 @@ public class SiteNavigationMenuItemServiceSoap {
 		}
 	}
 
-	public static Long[] getSiteNavigationMenuItemParentIds(
+	public static Long[] getParentSiteNavigationMenuItemIds(
 			long siteNavigationMenuId, String typeSettingsKeyword)
 		throws RemoteException {
 
 		try {
 			java.util.List<Long> returnValue =
 				SiteNavigationMenuItemServiceUtil.
-					getSiteNavigationMenuItemParentIds(
+					getParentSiteNavigationMenuItemIds(
 						siteNavigationMenuId, typeSettingsKeyword);
 
 			return returnValue.toArray(new Long[returnValue.size()]);
