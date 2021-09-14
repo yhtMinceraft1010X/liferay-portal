@@ -33,6 +33,12 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
 			value1 = "${fieldLabel}");
 
+		if (isSet(fieldName)) {
+			Type(
+				locator1 = "ObjectAdmin#OBJECT_FIELDS_NAME_INPUT",
+				value1 = "${fieldName}");
+		}
+
 		Select(
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE",
 			value1 = "${fieldType}");
@@ -192,6 +198,12 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_TITLE");
+	}
+
+	macro viewFieldErrorMessage {
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "${message}");
 	}
 
 	macro viewFieldSearchableSectionLanguage {

@@ -240,12 +240,28 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveSpecialCharacterFieldName {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138826 CannotSaveSpecialCharacterFieldName pending implementation
+		Navigator.openURL();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldName = "customField#$%",
+			fieldType = "Long",
+			isMandatory = "false");
+
+		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"

@@ -81,6 +81,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_FIELDS_NAME_INPUT</td>
+		<td>//input[contains(@id,'objectFieldName')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH</td>
 		<td>//input[contains(@class,'toggle-switch-check')]</td>
 		<td></td>
