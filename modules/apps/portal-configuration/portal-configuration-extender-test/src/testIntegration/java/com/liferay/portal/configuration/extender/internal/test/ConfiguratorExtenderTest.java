@@ -83,12 +83,6 @@ public class ConfiguratorExtenderTest {
 		Assert.assertNotNull(
 			"Unable to find bundle with symbolic name: " + symbolicName,
 			_bundle);
-
-		try {
-			_uninstallJAR();
-		}
-		catch (Exception exception) {
-		}
 	}
 
 	@After
@@ -120,7 +114,7 @@ public class ConfiguratorExtenderTest {
 				properties.get(_JAR_BUNDLE_SERVICE_PROPERTY_KEY));
 		}
 		finally {
-			_uninstallJAR(bundle);
+			bundle.uninstall();
 		}
 	}
 
@@ -471,28 +465,6 @@ public class ConfiguratorExtenderTest {
 				},
 				_configurationAdmin, namespace,
 				Arrays.asList(namedConfigurationContents));
-		}
-	}
-
-	private void _uninstallJAR() throws Exception {
-		Bundle bundle = null;
-
-		BundleContext bundleContext = _bundle.getBundleContext();
-
-		for (Bundle curBundle : bundleContext.getBundles()) {
-			if (_JAR_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
-				bundle = curBundle;
-
-				break;
-			}
-		}
-
-		_uninstallJAR(bundle);
-	}
-
-	private void _uninstallJAR(Bundle bundle) throws Exception {
-		if (bundle != null) {
-			bundle.uninstall();
 		}
 	}
 
