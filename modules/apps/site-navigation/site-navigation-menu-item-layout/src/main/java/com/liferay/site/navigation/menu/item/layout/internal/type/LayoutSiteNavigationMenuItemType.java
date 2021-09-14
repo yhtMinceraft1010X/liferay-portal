@@ -394,7 +394,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		List<Long> parentSiteNavigationMenuItemIds =
 			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemParentIds(
+				getParentSiteNavigationMenuItemIds(
 					siteNavigationMenuItem.getSiteNavigationMenuId(),
 					StringBundler.concat(
 						"%layoutUuid=", curLayout.getUuid(),

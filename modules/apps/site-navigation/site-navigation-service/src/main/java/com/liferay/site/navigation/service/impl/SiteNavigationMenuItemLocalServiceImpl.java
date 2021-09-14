@@ -194,7 +194,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getSiteNavigationMenuItemParentIds(
+	public List<Long> getParentSiteNavigationMenuItemIds(
 		long siteNavigationMenuId, String typeSettingsKeyword) {
 
 		return siteNavigationMenuItemPersistence.dslQuery(
