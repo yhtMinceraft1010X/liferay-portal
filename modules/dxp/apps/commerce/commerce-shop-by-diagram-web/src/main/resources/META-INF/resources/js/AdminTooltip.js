@@ -29,9 +29,9 @@ const AdminTooltip = ({
 }) => {
 	const [active, setActive] = useState(false);
 	const [products, setProducts] = useState(null);
-	const [pinPositionLabel, setPinPositionLabel] = useState(
-		showTooltip.details.label || ''
-	);
+	// const [pinPositionLabel, setPinPositionLabel] = useState(
+	// 	showTooltip.details.label || ''
+	// );
 	const node = useRef();
 	const dropdownNode = useRef();
 	const [query, setQuery] = useState('');
@@ -89,7 +89,7 @@ const AdminTooltip = ({
 						'insert-your-name-here'
 					)}
 					type="text"
-					value={pinPositionLabel}
+					value={selectedProduct.label}
 				/>
 			</ClayForm.Group>
 
@@ -178,7 +178,7 @@ const AdminTooltip = ({
 				/>
 			</ClayForm.Group>
 
-			<ClayForm.Group
+			{/* <ClayForm.Group
 				className="col-6 d-flex justify-content-start mt-4"
 				small
 			>
@@ -189,7 +189,7 @@ const AdminTooltip = ({
 							id: showTooltip.details.id,
 							positionX: showTooltip.details.cx,
 							positionY: showTooltip.details.cy,
-							sequence: pinPositionLabel,
+							sequence: selectedProduct.label,
 						});
 						setRemovePinHandler({
 							handler: true,
@@ -201,7 +201,7 @@ const AdminTooltip = ({
 								cy: null,
 								id: null,
 								label: null,
-								linked_to_sku: SKU,
+								linkedToSku: SKU,
 								quantity: null,
 								sku: '',
 								transform: '',
@@ -227,7 +227,7 @@ const AdminTooltip = ({
 								cy: '',
 								id: '',
 								label: '',
-								linked_to_sku: SKU,
+								linkedToSku: SKU,
 								quantity: null,
 								sku: '',
 								transform: '',
@@ -247,22 +247,22 @@ const AdminTooltip = ({
 								diagram: linkedValue === SKU,
 								productId: selectedProduct.productId,
 								quantity,
-								sequence: pinPositionLabel,
+								sequence: selectedProduct.label,
 								sku: selectedProduct.sku,
 								skuUuid: selectedProduct.id,
 							},
 							id: showTooltip.details.id,
 							positionX: showTooltip.details.cx,
 							positionY: showTooltip.details.cy,
-							sequence: pinPositionLabel,
+							sequence: selectedProduct.label,
 						});
 						setShowTooltip({
 							details: {
 								cx: showTooltip.details.cx,
 								cy: showTooltip.details.cy,
 								id: showTooltip.details.id,
-								label: pinPositionLabel,
-								linked_to_sku: linkedValue,
+								label: selectedProduct.label,
+								linkedToSku: linkedValue,
 								quantity,
 								sku,
 								transform: details.transform || '',
@@ -273,7 +273,7 @@ const AdminTooltip = ({
 				>
 					{Liferay.Language.get('save')}
 				</ClayButton>
-			</ClayForm.Group>	
+			</ClayForm.Group>	 */}
 		</>	
 	);
 };
@@ -286,7 +286,7 @@ AdminTooltip.propTypes = {
 			cy: PropTypes.double,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf([SKU, DIAGRAM]),
+			linkedToSku: PropTypes.oneOf([SKU, DIAGRAM]),
 			quantity: PropTypes.number,
 			sku: PropTypes.string,
 		}),

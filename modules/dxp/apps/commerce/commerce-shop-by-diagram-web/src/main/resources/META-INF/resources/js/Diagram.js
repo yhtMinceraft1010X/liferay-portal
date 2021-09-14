@@ -14,6 +14,7 @@ import {fetch} from 'frontend-js-web';
 // import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import ClayButton from '@clayui/button';
 import ClayModal, { useModal } from '@clayui/modal';
+import { searchSkus} from './utilities/utilities'
 
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
@@ -183,7 +184,7 @@ const Diagram = ({
 				cy: updatedPin.cy,
 				id: updatedPin.id,
 				label: updatedPin.label || '',
-				linkedToSku: updatedPin.linkedToSku || '',
+				linkedToSku: updatedPin.linkedToSku,
 				quantity: updatedPin.quantity || 1,
 				sku: updatedPin.sku,
 				transform: updatedPin.transform,
@@ -280,11 +281,99 @@ const Diagram = ({
 							<ClayModal.Footer
 								first={
 									<ClayButton.Group spaced>
-										<ClayButton displayType="secondary">{"Secondary"}</ClayButton>
-										<ClayButton displayType="secondary">{"Secondary"}</ClayButton>
+										<ClayButton
+											displayType="link"
+											onClick={() => {
+												deletePin({
+													id: showTooltip.details.id,
+													positionX: showTooltip.details.cx,
+													positionY: showTooltip.details.cy,
+													sequence: showTooltip.details.label,
+												});
+												setRemovePinHandler({
+													handler: true,
+													pin: showTooltip.details.id,
+												});
+												setShowTooltip({
+													details: {
+														cx: null,
+														cy: null,
+														id: null,
+														label: null,
+														linkedToSku: SKU,
+														quantity: null,
+														sku: '',
+														transform: '',
+													},
+													tooltip: false,
+												});
+												onClose();
+											}}
+										>
+											{Liferay.Language.get('delete')}
+										</ClayButton>
+								
+										<ClayButton
+											displayType="secondary"
+											onClick={() => {
+												setShowTooltip({
+													details: {
+														cx: '',
+														cy: '',
+														id: '',
+														label: '',
+														linkedToSku: 'sku',
+														quantity: null,
+														sku: '',
+														transform: '',
+													},
+													tooltip: false,
+												});
+												onClose();
+											}}
+										>
+											{Liferay.Language.get('close')}
+										</ClayButton>
+
 									</ClayButton.Group>
 								}
-								last={<ClayButton onClick={onClose}>{"Primary"}</ClayButton>}
+								last={
+									<ClayButton
+										displayType="primary"
+										onClick={() => {
+											updatePin({
+												diagramEntry: {
+													diagram: showTooltip.details.linkedToSku === 'sku',
+													productId: showTooltip.details.productId,
+													quantity: showTooltip.details.quantity,
+													sequence: showTooltip.details.label,
+													sku: showTooltip.details.sku,
+													skuUuid: showTooltip.details.id,
+												},
+												id: showTooltip.details.id,
+												positionX: showTooltip.details.cx,
+												positionY: showTooltip.details.cy,
+												sequence: showTooltip.details.label,
+											});
+											setShowTooltip({
+												details: {
+													cx: showTooltip.details.cx,
+													cy: showTooltip.details.cy,
+													id: showTooltip.details.id,
+													label: showTooltip.details.label,
+													linkedToSku: showTooltip.details.linkedToSku,
+													quantity: showTooltip.details.quantity,
+													sku: showTooltip.details.sku,
+													transform: details.transform || '',
+												},
+												tooltip: false,
+											});
+											onClose()
+										}}
+									>
+										{Liferay.Language.get('save')}
+									</ClayButton>
+								}						
 							/>
 						</ClayModal>
 					)}
@@ -379,7 +468,7 @@ Diagram.defaultProps = {
 			cy: 0,
 			id: 0,
 			label: 'null',
-			linked_to_sku: 'sku',
+			linkedToSku: 'sku',
 			quantity: 1,
 			sku: '',
 			transform: '',

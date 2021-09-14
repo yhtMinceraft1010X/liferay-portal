@@ -23,7 +23,7 @@ const PIN_ATTRIBUTES = [
 	'fill',
 	'id',
 	'label',
-	'linked_to_sku',
+	'linkedToSku',
 	'quantity',
 	'r',
 	'sku',
@@ -57,6 +57,7 @@ const ImagePins = ({
 	setRemovePinHandler,
 	setResetZoom,
 	setSelectedOption,
+	setShowTooltip,
 	setZoomInHandler,
 	setZoomOutHandler,
 	showTooltip,
@@ -96,7 +97,7 @@ const ImagePins = ({
 						cy: y,
 						fill: `#${addNewPinState.fill}`,
 						label: '',
-						linked_to_sku: 'sku',
+						linkedToSku: 'sku',
 						quantity: 1,
 						r: addNewPinState.radius,
 						sku: addNewPinState.sku,
@@ -230,7 +231,7 @@ const ImagePins = ({
 					cy: 50,
 					fill: '#' + addNewPinState.fill,
 					label: '',
-					linked_to_sku: 'sku',
+					linkedToSku: 'sku',
 					quantity: 1,
 					r: addNewPinState.radius,
 					sku: addNewPinState.sku,
@@ -248,7 +249,7 @@ const ImagePins = ({
 					fill: pin.fill,
 					id: i,
 					label: pin.label,
-					linked_to_sku: pin.linked_to_sku,
+					linkedToSku: pin.linkedToSku,
 					quantity: pin.quantity,
 					r: pin.r,
 					sku: pin.sku,
@@ -294,9 +295,7 @@ const ImagePins = ({
 					const textDatas = [];
 					const pinDatas = [];
 					const rects = rootLevel.getElementsByTagName('rect');
-					console.log(rects);
 					const texts = rootLevel.getElementsByTagName('text');
-					console.log(texts);
 
 					Array.from(rects).map((rect, i) => {
 						rect.addEventListener('click', () =>
@@ -315,7 +314,7 @@ const ImagePins = ({
 									cy: null,
 									id: null,
 									label: textDatas[i].label,
-									linked_to_sku: 'sku',
+									linkedToSku: 'sku',
 									quantity: null,
 									sku: '',
 									transform:
@@ -346,7 +345,7 @@ const ImagePins = ({
 					.attr('label', (attr) => attr.label)
 					.attr('fill', () => `#${addNewPinState.fill}`)
 					.attr('font-size', 4)
-					.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+					.attr('linkedToSku', (attr) => attr.linkedToSku)
 					.attr('quantity', (attr) => attr.quantity)
 					.attr('r', () => addNewPinState.radius)
 					.attr('sku', (attr) => attr.sku)
@@ -393,7 +392,7 @@ const ImagePins = ({
 					.attr('label', (attr) => attr.label)
 					.attr('fill', () => `#${addNewPinState.fill}`)
 					.attr('font-size', 4)
-					.attr('linked_to_sku', (attr) => attr.linked_to_sku)
+					.attr('linkedToSku', (attr) => attr.linkedToSku)
 					.attr('quantity', (attr) => attr.quantity)
 					.attr('r', () => addNewPinState.radius)
 					.attr('sku', (attr) => attr.sku)
@@ -498,7 +497,7 @@ ImagePins.propTypes = {
 			fill: PropTypes.string,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
+			linkedToSku: PropTypes.oneOf(['sku', 'diagram']),
 			quantity: PropTypes.number,
 			r: PropTypes.number,
 			sku: PropTypes.string,
@@ -540,7 +539,7 @@ ImagePins.propTypes = {
 			cy: PropTypes.double,
 			id: PropTypes.number,
 			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram', '']),
+			linkedToSku: PropTypes.oneOf(['sku', 'diagram', '']),
 			quantity: PropTypes.number,
 			sku: PropTypes.string,
 		}),
