@@ -652,11 +652,34 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateObjectPanelCategoryKeyAfterPublished {
 
-		// TODO LPS-138845 CanUpdateObjectPanelCategoryKeyAfterPublished pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+
+
+
 
 	}
 

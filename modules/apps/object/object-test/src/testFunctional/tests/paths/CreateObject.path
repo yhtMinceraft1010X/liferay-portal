@@ -26,6 +26,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>PANEL_CATEGORY_KEY</td>
+		<td>//select[contains(@id,'_panelCategoryKey')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>PANEL_CATEGORY_KEY_SELECTED</td>
+		<td>//select[contains(@id,'_panelCategoryKey')]//option[contains(@selected,'') and contains(text(),'${key_panelCategoryKey}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SAVE_BUTTON</td>
 		<td>//button[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_save']</td>
 		<td></td>
