@@ -120,7 +120,7 @@ public class ListTypeDefinitionResourceImpl
 							getListTypeDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
-						contextAcceptLanguage.getPreferredLocale(),
+						null, contextAcceptLanguage.getPreferredLocale(),
 						listTypeEntry),
 					ListTypeEntry.class);
 				name = serviceBuilderListTypeDefinition.getName(

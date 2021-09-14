@@ -75,7 +75,7 @@ public class ListTypeEntryResourceImpl
 		throws Exception {
 
 		return ListTypeEntryUtil.toListTypeEntry(
-			contextAcceptLanguage.getPreferredLocale(),
+			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryLocalService.addListTypeEntry(
 				contextUser.getUserId(), listTypeDefinitionId,
 				listTypeEntry.getKey(),
