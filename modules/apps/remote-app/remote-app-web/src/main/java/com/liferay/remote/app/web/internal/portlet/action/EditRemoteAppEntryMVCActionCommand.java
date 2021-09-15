@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void doAdd(
+	private void _add(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
@@ -86,10 +86,10 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 			if (cmd.equals(Constants.ADD)) {
-				doAdd(actionRequest, actionResponse);
+				_add(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				doUpdate(actionRequest, actionResponse);
+				_update(actionRequest, actionResponse);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -108,7 +108,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void doUpdate(
+	private void _update(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
