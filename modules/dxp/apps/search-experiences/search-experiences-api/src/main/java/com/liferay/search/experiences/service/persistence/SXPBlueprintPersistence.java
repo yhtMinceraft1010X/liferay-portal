@@ -184,6 +184,56 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	public int countByUuid(String uuid);
 
 	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSXPBlueprintException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching sxp blueprint
+	 * @throws NoSuchSXPBlueprintException if a matching sxp blueprint could not be found
+	 */
+	public SXPBlueprint findByUUID_G(String uuid, long groupId)
+		throws NoSuchSXPBlueprintException;
+
+	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public SXPBlueprint fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the sxp blueprint where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching sxp blueprint, or <code>null</code> if a matching sxp blueprint could not be found
+	 */
+	public SXPBlueprint fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the sxp blueprint where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the sxp blueprint that was removed
+	 */
+	public SXPBlueprint removeByUUID_G(String uuid, long groupId)
+		throws NoSuchSXPBlueprintException;
+
+	/**
+	 * Returns the number of sxp blueprints where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching sxp blueprints
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
 	 * Returns all the sxp blueprints where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
