@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -55,29 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	private void _add(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		String type = ParamUtil.getString(actionRequest, "type");
-
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			_remoteAppEntryService.addCustomElementRemoteAppEntry(
-				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
-				ParamUtil.getString(
-					actionRequest, "customElementHTMLElementName"),
-				ParamUtil.getString(actionRequest, "customElementURLs"),
-				nameMap);
-		}
-		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			_remoteAppEntryService.addIFrameRemoteAppEntry(
-				ParamUtil.getString(actionRequest, "iFrameURL"),
-				nameMap);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -106,6 +81,28 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				throw exception;
 			}
+		}
+	}
+
+	private void _add(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String type = ParamUtil.getString(actionRequest, "type");
+
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_remoteAppEntryService.addCustomElementRemoteAppEntry(
+				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				ParamUtil.getString(actionRequest, "customElementURLs"),
+				nameMap);
+		}
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_remoteAppEntryService.addIFrameRemoteAppEntry(
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap);
 		}
 	}
 
@@ -145,8 +142,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,
-				ParamUtil.getString(actionRequest, "iFrameURL"),
-				nameMap);
+				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap);
 		}
 	}
 

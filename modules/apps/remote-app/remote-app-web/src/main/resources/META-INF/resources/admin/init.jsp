@@ -28,5 +28,4 @@ page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminConstan
 page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys" %><%@
 page import="com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.Arrays" %>

@@ -81,8 +81,8 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		printWriter.print(
 			StringBundler.concat(
 				StringPool.LESS_THAN,
+				_remoteAppEntry.getCustomElementHTMLElementName(), "></",
 				_remoteAppEntry.getCustomElementHTMLElementName(),
-				"></", _remoteAppEntry.getCustomElementHTMLElementName(),
 				StringPool.GREATER_THAN));
 
 		printWriter.flush();
