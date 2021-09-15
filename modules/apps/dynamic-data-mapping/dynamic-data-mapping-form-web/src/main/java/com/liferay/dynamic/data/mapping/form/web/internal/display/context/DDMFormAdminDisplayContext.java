@@ -700,7 +700,8 @@ public class DDMFormAdminDisplayContext {
 			}
 		).add(
 			() -> !((ddmFormInstance != null) &&
-			  Objects.equals(ddmFormInstance.getStorageType(), "object")),
+					Objects.equals(
+						ddmFormInstance.getStorageType(), "object")),
 			navigationItem -> {
 				navigationItem.putData("action", "showReport");
 
