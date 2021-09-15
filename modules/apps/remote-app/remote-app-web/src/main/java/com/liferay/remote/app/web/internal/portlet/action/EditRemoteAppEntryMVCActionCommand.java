@@ -34,6 +34,7 @@ import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -118,15 +119,15 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		RemoteAppEntry remoteAppEntry =
 			_remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
 
-		String type = remoteAppEntry.getType();
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 
-		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (Objects.equals(
+				remoteAppEntry.getType(),
+				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+
 			String[] customElementCSSURLs = ParamUtil.getStringValues(
 				actionRequest, "customElementCSSURLs");
-
 			String[] customElementURLs = ParamUtil.getStringValues(
 				actionRequest, "customElementURLs");
 
@@ -138,7 +139,10 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
 				nameMap);
 		}
-		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+		else if (Objects.equals(
+					remoteAppEntry.getType(),
+					RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+
 			_remoteAppEntryService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,
 				ParamUtil.getString(actionRequest, "iFrameURL"),
