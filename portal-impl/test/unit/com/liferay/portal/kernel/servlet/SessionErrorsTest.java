@@ -107,7 +107,7 @@ public class SessionErrorsTest extends BaseSessionMapsTestCase {
 
 		Assert.assertFalse(SessionErrors.isEmpty(httpSession));
 
-		// KeySet and iterator
+		// Key set and iterator
 
 		Set<String> addedKeys = new HashSet<>();
 

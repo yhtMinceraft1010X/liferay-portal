@@ -109,7 +109,7 @@ public class SessionMessagesTest extends BaseSessionMapsTestCase {
 
 		Assert.assertFalse(SessionMessages.isEmpty(httpSession));
 
-		// KeySet and iterator
+		// Key set and iterator
 
 		Set<String> addedKeys = new HashSet<>();
 
