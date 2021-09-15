@@ -26,12 +26,6 @@
 		<column localized="true" name="name" type="String" uad-nonanonymizable="true" />
 		<column name="type" type="String" uad-nonanonymizable="true" />
 
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column case-sensitive="false" name="name" />
-		</order>
-
 		<!-- References -->
 
 		<reference entity="User" package-path="com.liferay.portal" />
