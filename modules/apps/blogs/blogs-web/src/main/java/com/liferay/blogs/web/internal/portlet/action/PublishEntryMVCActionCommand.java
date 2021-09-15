@@ -63,7 +63,7 @@ public class PublishEntryMVCActionCommand extends BaseMVCActionCommand {
 		_exportImportChangesetMVCActionCommand.processPublishAction(
 			actionRequest, actionResponse, changeset);
 
-		SessionMessages.add(actionRequest, "blogEntryPublished");
+		SessionMessages.add(actionRequest, "blogsEntryPublished");
 	}
 
 	private BlogsEntry _fetchEntry(long entryId) {
