@@ -73,7 +73,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
@@ -95,7 +95,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override
@@ -110,7 +110,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
 	@Override
@@ -126,7 +126,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
@@ -144,7 +144,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Override

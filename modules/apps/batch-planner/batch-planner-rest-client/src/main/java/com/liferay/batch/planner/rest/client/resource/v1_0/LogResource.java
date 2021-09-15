@@ -196,7 +196,7 @@ public interface LogResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans/{planId}/logs");
+						"/o/batch-planner/v1.0/plans/{planId}/logs");
 
 			httpInvoker.path("planId", planId);
 

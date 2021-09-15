@@ -26,13 +26,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"liferay.jackson=false",
-		"osgi.jaxrs.application.base=/headless-admin-batch-planner",
+		"liferay.jackson=false", "osgi.jaxrs.application.base=/batch-planner",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Batch.Planner"
+		"osgi.jaxrs.name=Liferay.Batch.Planner.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class HeadlessAdminBatchPlannerApplication extends Application {
+public class BatchPlannerRESTApplication extends Application {
 }

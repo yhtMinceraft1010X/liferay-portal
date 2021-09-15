@@ -213,8 +213,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans");
+					_builder._port + "/o/batch-planner/v1.0/plans");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -290,8 +289,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans");
+					_builder._port + "/o/batch-planner/v1.0/plans");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -366,8 +364,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans/{planId}");
+					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 
@@ -443,8 +440,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans/{planId}");
+					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 
@@ -524,8 +520,7 @@ public interface PlanResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-batch-planner/v1.0/plans/{planId}");
+					_builder._port + "/o/batch-planner/v1.0/plans/{planId}");
 
 			httpInvoker.path("planId", planId);
 

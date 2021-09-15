@@ -43,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-admin-batch-planner/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/batch-planner/v1.0
  *
  * @author Matija Petanjek
  * @generated

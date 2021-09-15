@@ -68,7 +68,7 @@ public abstract class BaseLogResourceImpl implements LogResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-batch-planner/v1.0/plans/{planId}/logs'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}/logs'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
