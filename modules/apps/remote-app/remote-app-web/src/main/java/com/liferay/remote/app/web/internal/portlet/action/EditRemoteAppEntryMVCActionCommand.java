@@ -84,9 +84,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _add(ActionRequest actionRequest)
-		throws PortalException {
-
+	private void _add(ActionRequest actionRequest) throws PortalException {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		String type = ParamUtil.getString(actionRequest, "type");
@@ -105,9 +103,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _update(ActionRequest actionRequest)
-		throws PortalException {
-
+	private void _update(ActionRequest actionRequest) throws PortalException {
 		long remoteAppEntryId = ParamUtil.getLong(
 			actionRequest, "remoteAppEntryId");
 
