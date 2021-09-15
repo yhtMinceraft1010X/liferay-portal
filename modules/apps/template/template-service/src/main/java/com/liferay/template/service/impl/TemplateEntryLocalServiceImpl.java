@@ -40,8 +40,8 @@ public class TemplateEntryLocalServiceImpl
 
 	@Override
 	public TemplateEntry addTemplateEntry(
-			long userId, long groupId, String infoItemClassName,
-			String infoItemFormVariationKey, long ddmTemplateId,
+			long userId, long groupId, long ddmTemplateId, String infoItemClassName,
+			String infoItemFormVariationKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -60,9 +60,9 @@ public class TemplateEntryLocalServiceImpl
 		templateEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		templateEntry.setGroupId(groupId);
+		templateEntry.setDDMTemplateId(ddmTemplateId);
 		templateEntry.setInfoItemClassName(infoItemClassName);
 		templateEntry.setInfoItemFormVariationKey(infoItemFormVariationKey);
-		templateEntry.setDDMTemplateId(ddmTemplateId);
 
 		return templateEntryPersistence.update(templateEntry);
 	}
