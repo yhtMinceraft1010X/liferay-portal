@@ -45,6 +45,6 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateRemoteAppEntry</exception>
-		<exception>InvalidRemoteAppEntryType</exception>
+		<exception>RemoteAppEntryType</exception>
 	</exceptions>
 </service-builder>

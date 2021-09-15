@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
-import com.liferay.remote.app.exception.InvalidRemoteAppEntryTypeException;
+import com.liferay.remote.app.exception.RemoteAppEntryTypeException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
@@ -357,12 +357,12 @@ public class RemoteAppEntryLocalServiceImpl
 
 	private void _validateCustomElementRemoteAppEntry(
 			RemoteAppEntry remoteAppEntry)
-		throws InvalidRemoteAppEntryTypeException {
+		throws RemoteAppEntryTypeException {
 
 		String type = remoteAppEntry.getType();
 
 		if (!type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			throw new InvalidRemoteAppEntryTypeException(type);
+			throw new RemoteAppEntryTypeException(type);
 		}
 	}
 
