@@ -21,7 +21,6 @@ import com.liferay.object.model.ObjectLayoutBox;
 import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
-import com.liferay.object.model.ObjectLayoutTable;
 import com.liferay.object.service.base.ObjectLayoutLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -29,8 +28,6 @@ import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -109,23 +106,8 @@ public class ObjectLayoutLocalServiceImpl
 	public ObjectLayout getDefaultObjectLayout(long objectDefinitionId)
 		throws PortalException {
 
-		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
-			ObjectLayoutTable.INSTANCE.objectLayoutId
-		).from(
-			ObjectLayoutTable.INSTANCE
-		).where(
-			ObjectLayoutTable.INSTANCE.defaultObjectLayout.eq(
-				true
-			).and(
-				ObjectLayoutTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinitionId)
-			)
-		);
-
-		List<Long> objectLayoutIds = objectLayoutPersistence.dslQuery(
-			dslQuery);
-
-		return getObjectLayout(objectLayoutIds.get(0));
+		return objectLayoutPersistence.findByODI_DOL_First(
+			objectDefinitionId, true, null);
 	}
 
 	@Override
