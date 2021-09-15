@@ -86,7 +86,7 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 		String namespace = GetterUtil.getString(
 			serviceContext.getAttribute("namespace"));
 
-		for (String portletId : _WORKFLOW_PORTLET_IDS) {
+		for (String portletId : _PORTLET_IDS) {
 			if (namespace.contains(portletId)) {
 				return true;
 			}
@@ -95,7 +95,7 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 		return false;
 	}
 
-	private static final String[] _WORKFLOW_PORTLET_IDS = {
+	private static final String[] _PORTLET_IDS = {
 		"com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet",
 		"com_liferay_portal_workflow_web_internal_portlet_UserWorkflowPortlet"
 	};
