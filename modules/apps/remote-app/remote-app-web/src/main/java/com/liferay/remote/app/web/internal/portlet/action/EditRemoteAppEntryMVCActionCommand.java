@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
@@ -104,7 +104,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateRemoteAppEntryException) {
+			if (exception instanceof RemoteAppEntryIFrameURLException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {

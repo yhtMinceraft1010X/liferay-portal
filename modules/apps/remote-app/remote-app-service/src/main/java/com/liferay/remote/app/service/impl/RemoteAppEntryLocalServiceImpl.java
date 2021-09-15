@@ -34,9 +34,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
-import com.liferay.remote.app.exception.DuplicateRemoteAppEntryException;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
@@ -79,6 +82,10 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
 
+		_validateCustomElement(
+			customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs);
+
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			counterLocalService.increment());
 
@@ -110,10 +117,10 @@ public class RemoteAppEntryLocalServiceImpl
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
-		long remoteAppEntryId = counterLocalService.increment();
+		_validateIFrameURL(iFrameURL);
 
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			remoteAppEntryId);
+			counterLocalService.increment());
 
 		User user = userLocalService.getUser(userId);
 
@@ -124,8 +131,6 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
-
-		_validateIFrameRemoteAppEntry(remoteAppEntry);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -240,6 +245,10 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
 
+		_validateCustomElement(
+			customElementCSSURLs, customElementHTMLElementName,
+			customElementURLs);
+
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
@@ -265,13 +274,13 @@ public class RemoteAppEntryLocalServiceImpl
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
+		_validateIFrameURL(iFrameURL);
+
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
-
-		_validateIFrameRemoteAppEntry(remoteAppEntry);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -348,18 +357,55 @@ public class RemoteAppEntryLocalServiceImpl
 		return remoteAppEntries;
 	}
 
-	private void _validateIFrameRemoteAppEntry(RemoteAppEntry remoteAppEntry)
+	private void _validateCustomElement(
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs)
 		throws PortalException {
 
-		RemoteAppEntry remoteAppEntry2 = remoteAppEntryPersistence.fetchByC_IU(
-			remoteAppEntry.getCompanyId(), remoteAppEntry.getIFrameURL());
+		if (Validator.isNull(customElementHTMLElementName)) {
+			throw new RemoteAppEntryCustomElementHTMLElementNameException(
+				"Custom element HTML element name is null");
+		}
 
-		if ((remoteAppEntry2 != null) &&
-			(remoteAppEntry2.getRemoteAppEntryId() !=
-				remoteAppEntry.getRemoteAppEntryId())) {
+		char[] customElementHTMLElementNameCharArray =
+			customElementHTMLElementName.toCharArray();
 
-			throw new DuplicateRemoteAppEntryException(
-				"Duplicate iframe URL " + remoteAppEntry.getIFrameURL());
+		if (!Validator.isChar(customElementHTMLElementNameCharArray[0]) ||
+			!Character.isLowerCase(customElementHTMLElementNameCharArray[0])) {
+
+			throw new RemoteAppEntryCustomElementHTMLElementNameException(
+				"Custom element HTML element name must start with a " +
+					"lowercase letter");
+		}
+
+		boolean containsDash = false;
+
+		for (char c : customElementHTMLElementNameCharArray) {
+			if (c == CharPool.DASH) {
+				containsDash = true;
+			}
+
+			if ((Validator.isChar(c) && Character.isLowerCase(c)) ||
+				(c == CharPool.DASH)) {
+			}
+			else {
+				throw new RemoteAppEntryCustomElementHTMLElementNameException(
+					"Custom element HTML element name must only contain " +
+						"lowercase letters or hyphens");
+			}
+		}
+
+		if (!containsDash) {
+			throw new RemoteAppEntryCustomElementHTMLElementNameException(
+				"Custom element HTML element name must contain at least one " +
+					"hyphen");
+		}
+	}
+
+	private void _validateIFrameURL(String iFrameURL) throws PortalException {
+		if (!Validator.isUrl(iFrameURL)) {
+			throw new RemoteAppEntryIFrameURLException(
+				"Invalid IFrame URL " + iFrameURL);
 		}
 	}
 
