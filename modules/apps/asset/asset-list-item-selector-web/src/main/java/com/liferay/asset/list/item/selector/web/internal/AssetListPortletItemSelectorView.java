@@ -83,14 +83,14 @@ public class AssetListPortletItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher("/view.jsp");
+
 		servletRequest.setAttribute(
 			AssetListEntryItemSelectorDisplayContext.class.getName(),
 			new AssetListEntryItemSelectorDisplayContext(
 				(HttpServletRequest)servletRequest, itemSelectedEventName,
 				_language, portletURL, infoListItemSelectorCriterion));
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/view.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
