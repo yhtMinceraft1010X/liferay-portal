@@ -42,6 +42,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -546,12 +547,11 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			BaseAsyncDestination baseAsyncDestination =
 				(BaseAsyncDestination)destination;
 
-			String type = baseAsyncDestination.getDestinationType();
-
 			baseAsyncDestination.setMaximumQueueSize(
 				destinationWorkerConfiguration.maxQueueSize());
 
-			if (!type.equals(
+			if (!Objects.equals(
+					baseAsyncDestination.getDestinationType(),
 					DestinationConfiguration.DESTINATION_TYPE_SERIAL)) {
 
 				baseAsyncDestination.setWorkersSize(
