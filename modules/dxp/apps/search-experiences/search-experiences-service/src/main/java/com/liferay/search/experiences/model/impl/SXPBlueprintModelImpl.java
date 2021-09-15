@@ -89,9 +89,9 @@ public class SXPBlueprintModelImpl
 		{"sxpBlueprintId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"configurationJSON", Types.VARCHAR},
-		{"description", Types.VARCHAR},
-		{"elementInstanceJSONArray", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"modifiedDate", Types.TIMESTAMP},
+		{"configurationsJSON", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"elementInstancesJSON", Types.VARCHAR}, {"title", Types.VARCHAR},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -109,9 +109,9 @@ public class SXPBlueprintModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("configurationJSON", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("configurationsJSON", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("elementInstanceJSONArray", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("elementInstancesJSON", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -120,7 +120,7 @@ public class SXPBlueprintModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SXPBlueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpBlueprintId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,configurationJSON VARCHAR(75) null,description STRING null,elementInstanceJSONArray VARCHAR(75) null,title STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table SXPBlueprint (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpBlueprintId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,configurationsJSON VARCHAR(75) null,description STRING null,elementInstancesJSON VARCHAR(75) null,title STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SXPBlueprint";
 
@@ -199,10 +199,9 @@ public class SXPBlueprintModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setConfigurationJSON(soapModel.getConfigurationJSON());
+		model.setConfigurationsJSON(soapModel.getConfigurationsJSON());
 		model.setDescription(soapModel.getDescription());
-		model.setElementInstanceJSONArray(
-			soapModel.getElementInstanceJSONArray());
+		model.setElementInstancesJSON(soapModel.getElementInstancesJSON());
 		model.setTitle(soapModel.getTitle());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
@@ -397,23 +396,22 @@ public class SXPBlueprintModelImpl
 			"modifiedDate",
 			(BiConsumer<SXPBlueprint, Date>)SXPBlueprint::setModifiedDate);
 		attributeGetterFunctions.put(
-			"configurationJSON", SXPBlueprint::getConfigurationJSON);
+			"configurationsJSON", SXPBlueprint::getConfigurationsJSON);
 		attributeSetterBiConsumers.put(
-			"configurationJSON",
+			"configurationsJSON",
 			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setConfigurationJSON);
+				SXPBlueprint::setConfigurationsJSON);
 		attributeGetterFunctions.put(
 			"description", SXPBlueprint::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
 			(BiConsumer<SXPBlueprint, String>)SXPBlueprint::setDescription);
 		attributeGetterFunctions.put(
-			"elementInstanceJSONArray",
-			SXPBlueprint::getElementInstanceJSONArray);
+			"elementInstancesJSON", SXPBlueprint::getElementInstancesJSON);
 		attributeSetterBiConsumers.put(
-			"elementInstanceJSONArray",
+			"elementInstancesJSON",
 			(BiConsumer<SXPBlueprint, String>)
-				SXPBlueprint::setElementInstanceJSONArray);
+				SXPBlueprint::setElementInstancesJSON);
 		attributeGetterFunctions.put("title", SXPBlueprint::getTitle);
 		attributeSetterBiConsumers.put(
 			"title", (BiConsumer<SXPBlueprint, String>)SXPBlueprint::setTitle);
@@ -640,22 +638,22 @@ public class SXPBlueprintModelImpl
 
 	@JSON
 	@Override
-	public String getConfigurationJSON() {
-		if (_configurationJSON == null) {
+	public String getConfigurationsJSON() {
+		if (_configurationsJSON == null) {
 			return "";
 		}
 		else {
-			return _configurationJSON;
+			return _configurationsJSON;
 		}
 	}
 
 	@Override
-	public void setConfigurationJSON(String configurationJSON) {
+	public void setConfigurationsJSON(String configurationsJSON) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_configurationJSON = configurationJSON;
+		_configurationsJSON = configurationsJSON;
 	}
 
 	@JSON
@@ -772,22 +770,22 @@ public class SXPBlueprintModelImpl
 
 	@JSON
 	@Override
-	public String getElementInstanceJSONArray() {
-		if (_elementInstanceJSONArray == null) {
+	public String getElementInstancesJSON() {
+		if (_elementInstancesJSON == null) {
 			return "";
 		}
 		else {
-			return _elementInstanceJSONArray;
+			return _elementInstancesJSON;
 		}
 	}
 
 	@Override
-	public void setElementInstanceJSONArray(String elementInstanceJSONArray) {
+	public void setElementInstancesJSON(String elementInstancesJSON) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_elementInstanceJSONArray = elementInstanceJSONArray;
+		_elementInstancesJSON = elementInstancesJSON;
 	}
 
 	@JSON
@@ -1219,10 +1217,9 @@ public class SXPBlueprintModelImpl
 		sxpBlueprintImpl.setUserName(getUserName());
 		sxpBlueprintImpl.setCreateDate(getCreateDate());
 		sxpBlueprintImpl.setModifiedDate(getModifiedDate());
-		sxpBlueprintImpl.setConfigurationJSON(getConfigurationJSON());
+		sxpBlueprintImpl.setConfigurationsJSON(getConfigurationsJSON());
 		sxpBlueprintImpl.setDescription(getDescription());
-		sxpBlueprintImpl.setElementInstanceJSONArray(
-			getElementInstanceJSONArray());
+		sxpBlueprintImpl.setElementInstancesJSON(getElementInstancesJSON());
 		sxpBlueprintImpl.setTitle(getTitle());
 		sxpBlueprintImpl.setStatus(getStatus());
 		sxpBlueprintImpl.setStatusByUserId(getStatusByUserId());
@@ -1254,12 +1251,12 @@ public class SXPBlueprintModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		sxpBlueprintImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		sxpBlueprintImpl.setConfigurationJSON(
-			this.<String>getColumnOriginalValue("configurationJSON"));
+		sxpBlueprintImpl.setConfigurationsJSON(
+			this.<String>getColumnOriginalValue("configurationsJSON"));
 		sxpBlueprintImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
-		sxpBlueprintImpl.setElementInstanceJSONArray(
-			this.<String>getColumnOriginalValue("elementInstanceJSONArray"));
+		sxpBlueprintImpl.setElementInstancesJSON(
+			this.<String>getColumnOriginalValue("elementInstancesJSON"));
 		sxpBlueprintImpl.setTitle(this.<String>getColumnOriginalValue("title"));
 		sxpBlueprintImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
@@ -1391,12 +1388,14 @@ public class SXPBlueprintModelImpl
 			sxpBlueprintCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		sxpBlueprintCacheModel.configurationJSON = getConfigurationJSON();
+		sxpBlueprintCacheModel.configurationsJSON = getConfigurationsJSON();
 
-		String configurationJSON = sxpBlueprintCacheModel.configurationJSON;
+		String configurationsJSON = sxpBlueprintCacheModel.configurationsJSON;
 
-		if ((configurationJSON != null) && (configurationJSON.length() == 0)) {
-			sxpBlueprintCacheModel.configurationJSON = null;
+		if ((configurationsJSON != null) &&
+			(configurationsJSON.length() == 0)) {
+
+			sxpBlueprintCacheModel.configurationsJSON = null;
 		}
 
 		sxpBlueprintCacheModel.description = getDescription();
@@ -1407,16 +1406,15 @@ public class SXPBlueprintModelImpl
 			sxpBlueprintCacheModel.description = null;
 		}
 
-		sxpBlueprintCacheModel.elementInstanceJSONArray =
-			getElementInstanceJSONArray();
+		sxpBlueprintCacheModel.elementInstancesJSON = getElementInstancesJSON();
 
-		String elementInstanceJSONArray =
-			sxpBlueprintCacheModel.elementInstanceJSONArray;
+		String elementInstancesJSON =
+			sxpBlueprintCacheModel.elementInstancesJSON;
 
-		if ((elementInstanceJSONArray != null) &&
-			(elementInstanceJSONArray.length() == 0)) {
+		if ((elementInstancesJSON != null) &&
+			(elementInstancesJSON.length() == 0)) {
 
-			sxpBlueprintCacheModel.elementInstanceJSONArray = null;
+			sxpBlueprintCacheModel.elementInstancesJSON = null;
 		}
 
 		sxpBlueprintCacheModel.title = getTitle();
@@ -1548,10 +1546,10 @@ public class SXPBlueprintModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _configurationJSON;
+	private String _configurationsJSON;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
-	private String _elementInstanceJSONArray;
+	private String _elementInstancesJSON;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private int _status;
@@ -1597,10 +1595,10 @@ public class SXPBlueprintModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("configurationJSON", _configurationJSON);
+		_columnOriginalValues.put("configurationsJSON", _configurationsJSON);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put(
-			"elementInstanceJSONArray", _elementInstanceJSONArray);
+			"elementInstancesJSON", _elementInstancesJSON);
 		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1647,11 +1645,11 @@ public class SXPBlueprintModelImpl
 
 		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("configurationJSON", 512L);
+		columnBitmasks.put("configurationsJSON", 512L);
 
 		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("elementInstanceJSONArray", 2048L);
+		columnBitmasks.put("elementInstancesJSON", 2048L);
 
 		columnBitmasks.put("title", 4096L);
 

@@ -227,19 +227,19 @@ public interface SXPBlueprintModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the configuration json of this sxp blueprint.
+	 * Returns the configurations json of this sxp blueprint.
 	 *
-	 * @return the configuration json of this sxp blueprint
+	 * @return the configurations json of this sxp blueprint
 	 */
 	@AutoEscape
-	public String getConfigurationJSON();
+	public String getConfigurationsJSON();
 
 	/**
-	 * Sets the configuration json of this sxp blueprint.
+	 * Sets the configurations json of this sxp blueprint.
 	 *
-	 * @param configurationJSON the configuration json of this sxp blueprint
+	 * @param configurationsJSON the configurations json of this sxp blueprint
 	 */
-	public void setConfigurationJSON(String configurationJSON);
+	public void setConfigurationsJSON(String configurationsJSON);
 
 	/**
 	 * Returns the description of this sxp blueprint.
@@ -343,19 +343,19 @@ public interface SXPBlueprintModel
 		Map<Locale, String> descriptionMap, Locale defaultLocale);
 
 	/**
-	 * Returns the element instance json array of this sxp blueprint.
+	 * Returns the element instances json of this sxp blueprint.
 	 *
-	 * @return the element instance json array of this sxp blueprint
+	 * @return the element instances json of this sxp blueprint
 	 */
 	@AutoEscape
-	public String getElementInstanceJSONArray();
+	public String getElementInstancesJSON();
 
 	/**
-	 * Sets the element instance json array of this sxp blueprint.
+	 * Sets the element instances json of this sxp blueprint.
 	 *
-	 * @param elementInstanceJSONArray the element instance json array of this sxp blueprint
+	 * @param elementInstancesJSON the element instances json of this sxp blueprint
 	 */
-	public void setElementInstanceJSONArray(String elementInstanceJSONArray);
+	public void setElementInstancesJSON(String elementInstancesJSON);
 
 	/**
 	 * Returns the title of this sxp blueprint.

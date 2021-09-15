@@ -141,12 +141,11 @@ public class SXPBlueprintPersistenceTest {
 
 		newSXPBlueprint.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSXPBlueprint.setConfigurationJSON(RandomTestUtil.randomString());
+		newSXPBlueprint.setConfigurationsJSON(RandomTestUtil.randomString());
 
 		newSXPBlueprint.setDescription(RandomTestUtil.randomString());
 
-		newSXPBlueprint.setElementInstanceJSONArray(
-			RandomTestUtil.randomString());
+		newSXPBlueprint.setElementInstancesJSON(RandomTestUtil.randomString());
 
 		newSXPBlueprint.setTitle(RandomTestUtil.randomString());
 
@@ -187,14 +186,14 @@ public class SXPBlueprintPersistenceTest {
 			Time.getShortTimestamp(existingSXPBlueprint.getModifiedDate()),
 			Time.getShortTimestamp(newSXPBlueprint.getModifiedDate()));
 		Assert.assertEquals(
-			existingSXPBlueprint.getConfigurationJSON(),
-			newSXPBlueprint.getConfigurationJSON());
+			existingSXPBlueprint.getConfigurationsJSON(),
+			newSXPBlueprint.getConfigurationsJSON());
 		Assert.assertEquals(
 			existingSXPBlueprint.getDescription(),
 			newSXPBlueprint.getDescription());
 		Assert.assertEquals(
-			existingSXPBlueprint.getElementInstanceJSONArray(),
-			newSXPBlueprint.getElementInstanceJSONArray());
+			existingSXPBlueprint.getElementInstancesJSON(),
+			newSXPBlueprint.getElementInstancesJSON());
 		Assert.assertEquals(
 			existingSXPBlueprint.getTitle(), newSXPBlueprint.getTitle());
 		Assert.assertEquals(
@@ -272,8 +271,8 @@ public class SXPBlueprintPersistenceTest {
 			"SXPBlueprint", "mvccVersion", true, "uuid", true, "sxpBlueprintId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"configurationJSON", true, "description", true,
-			"elementInstanceJSONArray", true, "title", true, "status", true,
+			"configurationsJSON", true, "description", true,
+			"elementInstancesJSON", true, "title", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
@@ -575,11 +574,11 @@ public class SXPBlueprintPersistenceTest {
 
 		sxpBlueprint.setModifiedDate(RandomTestUtil.nextDate());
 
-		sxpBlueprint.setConfigurationJSON(RandomTestUtil.randomString());
+		sxpBlueprint.setConfigurationsJSON(RandomTestUtil.randomString());
 
 		sxpBlueprint.setDescription(RandomTestUtil.randomString());
 
-		sxpBlueprint.setElementInstanceJSONArray(RandomTestUtil.randomString());
+		sxpBlueprint.setElementInstancesJSON(RandomTestUtil.randomString());
 
 		sxpBlueprint.setTitle(RandomTestUtil.randomString());
 

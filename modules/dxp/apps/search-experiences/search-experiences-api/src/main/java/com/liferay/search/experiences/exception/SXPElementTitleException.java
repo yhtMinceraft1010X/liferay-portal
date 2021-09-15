@@ -13,25 +13,25 @@
  */
 package com.liferay.search.experiences.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchSXPElementException extends NoSuchModelException {
+public class SXPElementTitleException extends PortalException {
 
-	public NoSuchSXPElementException() {
+	public SXPElementTitleException() {
 	}
 
-	public NoSuchSXPElementException(String msg) {
+	public SXPElementTitleException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchSXPElementException(String msg, Throwable throwable) {
+	public SXPElementTitleException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchSXPElementException(Throwable throwable) {
+	public SXPElementTitleException(Throwable throwable) {
 		super(throwable);
 	}
 

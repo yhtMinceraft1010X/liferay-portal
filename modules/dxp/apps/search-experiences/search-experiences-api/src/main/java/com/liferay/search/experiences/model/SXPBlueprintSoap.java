@@ -42,10 +42,9 @@ public class SXPBlueprintSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setConfigurationJSON(model.getConfigurationJSON());
+		soapModel.setConfigurationsJSON(model.getConfigurationsJSON());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setElementInstanceJSONArray(
-			model.getElementInstanceJSONArray());
+		soapModel.setElementInstancesJSON(model.getElementInstancesJSON());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -176,12 +175,12 @@ public class SXPBlueprintSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getConfigurationJSON() {
-		return _configurationJSON;
+	public String getConfigurationsJSON() {
+		return _configurationsJSON;
 	}
 
-	public void setConfigurationJSON(String configurationJSON) {
-		_configurationJSON = configurationJSON;
+	public void setConfigurationsJSON(String configurationsJSON) {
+		_configurationsJSON = configurationsJSON;
 	}
 
 	public String getDescription() {
@@ -192,12 +191,12 @@ public class SXPBlueprintSoap implements Serializable {
 		_description = description;
 	}
 
-	public String getElementInstanceJSONArray() {
-		return _elementInstanceJSONArray;
+	public String getElementInstancesJSON() {
+		return _elementInstancesJSON;
 	}
 
-	public void setElementInstanceJSONArray(String elementInstanceJSONArray) {
-		_elementInstanceJSONArray = elementInstanceJSONArray;
+	public void setElementInstancesJSON(String elementInstancesJSON) {
+		_elementInstancesJSON = elementInstancesJSON;
 	}
 
 	public String getTitle() {
@@ -249,9 +248,9 @@ public class SXPBlueprintSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _configurationJSON;
+	private String _configurationsJSON;
 	private String _description;
-	private String _elementInstanceJSONArray;
+	private String _elementInstancesJSON;
 	private String _title;
 	private int _status;
 	private long _statusByUserId;
