@@ -347,6 +347,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DefaultObjectLayout</exception>
 		<exception>DuplicateObjectDefinition</exception>
 		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>

@@ -14,6 +14,8 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.exception.DefaultObjectLayoutException;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
@@ -62,14 +64,20 @@ public class ObjectLayoutLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		if (objectDefinition.isSystem()) {
+
+			// TODO Add test
+
+			throw new NoSuchObjectDefinitionException(
+				"Object layouts require a custom object definition");
+		}
+
+		_validate(0, objectDefinitionId, defaultObjectLayout);
+
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
 			counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
-
-		// TODO Add validators
-		// TODO Only a default layout per time can exist
-		// TODO System object don't support layout for now
 
 		objectLayout.setCompanyId(user.getCompanyId());
 		objectLayout.setUserId(user.getUserId());
@@ -152,6 +160,10 @@ public class ObjectLayoutLocalServiceImpl
 
 		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
+
+		_validate(
+			objectLayoutId, objectLayout.getObjectDefinitionId(),
+			defaultObjectLayout);
 
 		_deleteObjectLayoutTabs(objectLayoutId);
 
@@ -407,6 +419,28 @@ public class ObjectLayoutLocalServiceImpl
 		}
 
 		return objectLayoutRows;
+	}
+
+	private void _validate(
+			long objectLayoutId, long objectDefinitionId,
+			boolean defaultObjectLayout)
+		throws PortalException {
+
+		// TODO Add test
+
+		if (!defaultObjectLayout) {
+			return;
+		}
+
+		ObjectLayout objectLayout =
+			objectLayoutPersistence.fetchByODI_DOL_First(
+				objectDefinitionId, defaultObjectLayout, null);
+
+		if ((objectLayout != null) &&
+			(objectLayout.getObjectLayoutId() != objectLayoutId)) {
+
+			throw new DefaultObjectLayoutException();
+		}
 	}
 
 	@Reference
