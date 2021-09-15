@@ -40,14 +40,12 @@ public class TemplateEntryLocalServiceImpl
 	@Override
 	public TemplateEntry addTemplateEntry(
 			long userId, long groupId, long ddmTemplateId,
-			String infoItemClassName, String infoItemFormVariationKey,
-			ServiceContext serviceContext)
+			String infoItemClassName, String infoItemFormVariationKey)
 		throws PortalException {
 
 		TemplateEntry templateEntry = templateEntryPersistence.create(
 			counterLocalService.increment());
 
-		templateEntry.setUuid(serviceContext.getUuid());
 		templateEntry.setGroupId(groupId);
 
 		User user = userLocalService.getUser(userId);
@@ -90,8 +88,7 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
-	public TemplateEntry updateTemplateEntry(
-			long templateEntryId, ServiceContext serviceContext)
+	public TemplateEntry updateTemplateEntry(long templateEntryId)
 		throws PortalException {
 
 		TemplateEntry templateEntry = templateEntryPersistence.findByPrimaryKey(
