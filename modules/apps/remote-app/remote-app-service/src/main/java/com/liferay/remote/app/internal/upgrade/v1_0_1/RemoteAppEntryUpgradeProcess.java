@@ -20,7 +20,7 @@ import com.liferay.remote.app.internal.upgrade.v1_0_1.util.RemoteAppEntryTable;
 /**
  * @author Iván Zaera Avellón
  */
-public class RemoteAppEntryURLUpgradeProcess extends UpgradeProcess {
+public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
