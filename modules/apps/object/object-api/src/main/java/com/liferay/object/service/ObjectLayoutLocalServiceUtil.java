@@ -116,8 +116,11 @@ public class ObjectLayoutLocalServiceUtil {
 	 *
 	 * @param objectLayout the object layout
 	 * @return the object layout that was removed
+	 * @throws PortalException
 	 */
-	public static ObjectLayout deleteObjectLayout(ObjectLayout objectLayout) {
+	public static ObjectLayout deleteObjectLayout(ObjectLayout objectLayout)
+		throws PortalException {
+
 		return getService().deleteObjectLayout(objectLayout);
 	}
 

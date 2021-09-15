@@ -124,9 +124,11 @@ public interface ObjectLayoutLocalService
 	 *
 	 * @param objectLayout the object layout
 	 * @return the object layout that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ObjectLayout deleteObjectLayout(ObjectLayout objectLayout);
+	public ObjectLayout deleteObjectLayout(ObjectLayout objectLayout)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
