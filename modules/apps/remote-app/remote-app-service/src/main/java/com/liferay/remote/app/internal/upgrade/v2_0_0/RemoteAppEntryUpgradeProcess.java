@@ -16,6 +16,7 @@ package com.liferay.remote.app.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.remote.app.internal.upgrade.v1_0_1.util.RemoteAppEntryTable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,10 +59,12 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 				RemoteAppEntryTable.class,
 				new AlterTableAddColumn("type_", "VARCHAR(75)"));
 
-			String defaultType = StringUtil.quote(
-				RemoteAppConstants.TYPE_IFRAME, StringPool.APOSTROPHE);
-
-			runSQL("update RemoteAppEntry set type_ = " + defaultType);
+			runSQL(
+				StringBundler.concat(
+					"update RemoteAppEntry set type_ = ",
+					StringUtil.quote(
+						RemoteAppConstants.TYPE_IFRAME,
+						StringPool.APOSTROPHE)));
 		}
 	}
 
