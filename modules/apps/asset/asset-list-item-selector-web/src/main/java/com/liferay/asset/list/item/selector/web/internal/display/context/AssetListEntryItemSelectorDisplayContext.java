@@ -342,16 +342,17 @@ public class AssetListEntryItemSelectorDisplayContext {
 			PortletURL currentURL)
 		throws PortalException {
 
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
 		breadcrumbEntry.setTitle(
 			scopeGroup.getDescriptiveName(_httpServletRequest.getLocale()));
+
 		breadcrumbEntry.setURL(currentURL.toString());
 
 		return breadcrumbEntry;
