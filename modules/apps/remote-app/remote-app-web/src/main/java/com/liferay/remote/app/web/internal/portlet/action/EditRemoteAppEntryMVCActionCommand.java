@@ -62,10 +62,10 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 			if (cmd.equals(Constants.ADD)) {
-				_add(actionRequest, actionResponse);
+				_add(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
-				_update(actionRequest, actionResponse);
+				_update(actionRequest);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -84,8 +84,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _add(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _add(ActionRequest actionRequest)
 		throws PortalException {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
@@ -106,8 +105,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _update(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _update(ActionRequest actionRequest)
 		throws PortalException {
 
 		long remoteAppEntryId = ParamUtil.getLong(
