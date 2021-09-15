@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
-import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.service.RemoteAppEntryService;
 import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 
 import java.util.Locale;
@@ -62,12 +62,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RemoteAppEntry.class.getName(), actionRequest);
-
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
-				serviceContext.getUserId(),
+			_remoteAppEntryService.addCustomElementRemoteAppEntry(
 				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
@@ -75,8 +71,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				nameMap);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			_remoteAppEntryLocalService.addIFrameRemoteAppEntry(
-				serviceContext.getUserId(),
+			_remoteAppEntryService.addIFrameRemoteAppEntry(
 				ParamUtil.getString(actionRequest, "iFrameURL"),
 				nameMap);
 		}
@@ -121,7 +116,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "remoteAppEntryId");
 
 		RemoteAppEntry remoteAppEntry =
-			_remoteAppEntryLocalService.getRemoteAppEntry(remoteAppEntryId);
+			_remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
 
 		String type = remoteAppEntry.getType();
 
@@ -135,7 +130,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			String[] customElementURLs = ParamUtil.getStringValues(
 				actionRequest, "customElementURLs");
 
-			_remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
+			_remoteAppEntryService.updateCustomElementRemoteAppEntry(
 				remoteAppEntryId,
 				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
 				ParamUtil.getString(
@@ -144,7 +139,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				nameMap);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			_remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
+			_remoteAppEntryService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,
 				ParamUtil.getString(actionRequest, "iFrameURL"),
 				nameMap);
@@ -152,6 +147,6 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }
