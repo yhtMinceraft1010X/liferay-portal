@@ -115,9 +115,6 @@ public class JournalHelperImpl implements JournalHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return themeDisplay.translate("home");
 		}
@@ -133,6 +130,9 @@ public class JournalHelperImpl implements JournalHelper {
 
 		sb.append(themeDisplay.translate("home"));
 		sb.append(StringPool.SPACE);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
 		for (JournalFolder curFolder : folders) {
 			if (permissionChecker.hasPermission(
