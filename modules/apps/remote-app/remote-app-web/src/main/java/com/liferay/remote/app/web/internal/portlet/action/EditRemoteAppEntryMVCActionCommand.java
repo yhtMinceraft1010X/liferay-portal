@@ -68,18 +68,18 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			_remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
-				serviceContext.getUserId(), nameMap,
+				serviceContext.getUserId(),
 				ParamUtil.getString(actionRequest, "customElementCSSURLs"),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
 				ParamUtil.getString(actionRequest, "customElementURLs"),
-				serviceContext);
+				nameMap);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryLocalService.addIFrameRemoteAppEntry(
-				serviceContext.getUserId(), nameMap,
+				serviceContext.getUserId(),
 				ParamUtil.getString(actionRequest, "iframeURL"),
-				serviceContext);
+				nameMap);
 		}
 		else {
 			throw new RemoteAppEntryTypeException(type);
@@ -140,16 +140,18 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "customElementURLs");
 
 			_remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
-				remoteAppEntryId, nameMap,
+				remoteAppEntryId,
 				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
-				StringUtil.merge(customElementURLs, StringPool.NEW_LINE));
+				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
+				nameMap);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
-				remoteAppEntryId, nameMap,
-				ParamUtil.getString(actionRequest, "iframeURL"));
+				remoteAppEntryId,
+				ParamUtil.getString(actionRequest, "iframeURL"),
+				nameMap);
 		}
 		else {
 			throw new RemoteAppEntryTypeException(type);

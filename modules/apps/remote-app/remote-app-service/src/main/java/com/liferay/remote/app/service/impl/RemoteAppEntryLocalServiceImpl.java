@@ -70,9 +70,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, ServiceContext serviceContext)
+			long userId, String customElementCSSURLs,
+			String customElementHTMLElementName,
+			String customElementURLs, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -80,22 +80,20 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
 
-		long remoteAppEntryId = counterLocalService.increment();
-
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			remoteAppEntryId);
+			counterLocalService.increment());
 
 		User user = userLocalService.getUser(userId);
 
-		remoteAppEntry.setUuid(serviceContext.getUuid());
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
-		remoteAppEntry.setNameMap(nameMap);
+
 		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
 
 		_validateCustomElementRemoteAppEntry(remoteAppEntry);
@@ -110,8 +108,7 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap, String iframeURL,
-			ServiceContext serviceContext)
+			long userId, String iframeURL, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -122,12 +119,11 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			remoteAppEntryId);
 
-		remoteAppEntry.setUuid(serviceContext.getUuid());
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setIFrameURL(iframeURL);
+		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
 		_validateIFrameRemoteAppEntry(remoteAppEntry);
@@ -235,9 +231,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap,
+			long remoteAppEntryId,
 			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs)
+			String customElementURLs, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -248,11 +244,11 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
+		remoteAppEntry.setNameMap(nameMap);
 
 		_validateCustomElementRemoteAppEntry(remoteAppEntry);
 
@@ -266,8 +262,8 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap,
-			String iframeURL)
+			long remoteAppEntryId, String iframeURL,
+			Map<Locale, String> nameMap)
 		throws PortalException {
 
 		iframeURL = StringUtil.trim(iframeURL);
@@ -275,8 +271,8 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
-		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setIFrameURL(iframeURL);
+		remoteAppEntry.setNameMap(nameMap);
 
 		_validateIFrameRemoteAppEntry(remoteAppEntry);
 
