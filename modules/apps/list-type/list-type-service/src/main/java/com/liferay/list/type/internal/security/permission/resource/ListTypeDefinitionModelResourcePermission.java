@@ -51,14 +51,14 @@ public class ListTypeDefinitionModelResourcePermission
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long objectDefinitionId,
+			PermissionChecker permissionChecker, long listTypeDefinitionId,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, objectDefinitionId, actionId)) {
+		if (!contains(permissionChecker, listTypeDefinitionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, ListTypeDefinition.class.getName(),
-				objectDefinitionId, actionId);
+				listTypeDefinitionId, actionId);
 		}
 	}
 
@@ -75,12 +75,12 @@ public class ListTypeDefinitionModelResourcePermission
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long objectDefinitionId,
+			PermissionChecker permissionChecker, long listTypeDefinitionId,
 			String actionId)
 		throws PortalException {
 
 		return permissionChecker.hasPermission(
-			null, ListTypeDefinition.class.getName(), objectDefinitionId,
+			null, ListTypeDefinition.class.getName(), listTypeDefinitionId,
 			actionId);
 	}
 
