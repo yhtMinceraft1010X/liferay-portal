@@ -23,9 +23,9 @@
 
 		<!-- Other fields -->
 
-		<column name="configurationJSON" type="String" />
+		<column name="configurationsJSON" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="elementInstanceJSONArray" type="String" />
+		<column name="elementInstancesJSON" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -79,7 +79,9 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>SXPBlueprintConfigurationJSON</exception>
+		<exception>SXPBlueprintConfigurationsJSON</exception>
+		<exception>SXPBlueprintTitle</exception>
 		<exception>SXPElementElementDefinitionJSON</exception>
+		<exception>SXPElementTitle</exception>
 	</exceptions>
 </service-builder>
