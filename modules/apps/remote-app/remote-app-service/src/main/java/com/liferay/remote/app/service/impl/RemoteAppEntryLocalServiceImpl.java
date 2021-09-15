@@ -108,7 +108,6 @@ public class RemoteAppEntryLocalServiceImpl
 			long userId, String iFrameURL, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
 		iFrameURL = StringUtil.trim(iFrameURL);
 
 		long remoteAppEntryId = counterLocalService.increment();
@@ -116,9 +115,12 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			remoteAppEntryId);
 
+		User user = userLocalService.getUser(userId);
+
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
+
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
