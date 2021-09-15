@@ -53,10 +53,10 @@ public class TemplateEntryLocalServiceImpl
 			templateEntryId);
 
 		templateEntry.setUuid(PortalUUIDUtil.generate());
+		templateEntry.setGroupId(groupId);
 		templateEntry.setCompanyId(user.getCompanyId());
 		templateEntry.setUserId(user.getUserId());
 		templateEntry.setUserName(user.getFullName());
-		templateEntry.setGroupId(groupId);
 		templateEntry.setDDMTemplateId(ddmTemplateId);
 		templateEntry.setInfoItemClassName(infoItemClassName);
 		templateEntry.setInfoItemFormVariationKey(infoItemFormVariationKey);
