@@ -15,9 +15,7 @@
 package com.liferay.remote.app.internal.upgrade.v2_0_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.internal.upgrade.v1_0_1.util.RemoteAppEntryTable;
 

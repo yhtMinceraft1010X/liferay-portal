@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
 import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
@@ -361,6 +363,14 @@ public class RemoteAppEntryLocalServiceImpl
 			String customElementURLs)
 		throws PortalException {
 
+		if (Validator.isNull(customElementCSSURLs)) {
+
+			// TODO Allow this to be empty. But if it is not empty, make sure
+			// each line is a valid URL.
+
+			throw new RemoteAppEntryCustomElementCSSURLsException();
+		}
+
 		if (Validator.isNull(customElementHTMLElementName)) {
 			throw new RemoteAppEntryCustomElementHTMLElementNameException(
 				"Custom element HTML element name is null");
@@ -398,6 +408,14 @@ public class RemoteAppEntryLocalServiceImpl
 			throw new RemoteAppEntryCustomElementHTMLElementNameException(
 				"Custom element HTML element name must contain at least one " +
 					"hyphen");
+		}
+
+		if (Validator.isNull(customElementURLs)) {
+
+			// TODO Allow this to be empty. But if it is not empty, make sure
+			// each line is a valid URL.
+
+			throw new RemoteAppEntryCustomElementURLsException();
 		}
 	}
 

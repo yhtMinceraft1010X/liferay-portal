@@ -37,7 +37,9 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
+		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
 		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
+		<exception>RemoteAppEntryCustomElementURLs</exception>
 		<exception>RemoteAppEntryIFrameURL</exception>
 	</exceptions>
 </service-builder>
