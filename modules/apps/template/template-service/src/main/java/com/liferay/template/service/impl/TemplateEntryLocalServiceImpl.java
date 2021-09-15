@@ -17,9 +17,7 @@ package com.liferay.template.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.base.TemplateEntryLocalServiceBaseImpl;
 
