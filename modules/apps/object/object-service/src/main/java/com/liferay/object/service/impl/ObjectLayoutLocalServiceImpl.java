@@ -117,8 +117,7 @@ public class ObjectLayoutLocalServiceImpl
 	public ObjectLayout deleteObjectLayout(ObjectLayout objectLayout)
 		throws PortalException {
 
-		ObjectLayout objectLayout = objectLayoutPersistence.remove(
-			objectLayout);
+		objectLayout = objectLayoutPersistence.remove(objectLayout);
 
 		_deleteObjectLayoutTabs(objectLayout.getObjectLayoutId());
 
