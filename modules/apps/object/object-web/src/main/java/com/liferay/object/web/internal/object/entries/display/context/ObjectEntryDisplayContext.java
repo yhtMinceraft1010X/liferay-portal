@@ -92,14 +92,12 @@ public class ObjectEntryDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
+		NavigationItemList navigationItemList = new NavigationItemList();
+
 		ObjectLayout objectLayout = getObjectLayout();
-
 		ObjectLayoutTab currentObjectLayoutTab = getObjectLayoutTab();
-
 		LiferayPortletResponse liferayPortletResponse =
 			_objectRequestHelper.getLiferayPortletResponse();
-
-		NavigationItemList navigationItemList = new NavigationItemList();
 
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
@@ -165,12 +163,12 @@ public class ObjectEntryDisplayContext {
 
 		Stream<ObjectLayoutTab> stream = objectLayoutTabs.stream();
 
-		Optional<ObjectLayoutTab> first = stream.filter(
+		Optional<ObjectLayoutTab> optional = stream.filter(
 			objectLayoutTab ->
 				objectLayoutTab.getObjectLayoutTabId() == objectLayoutTabId
 		).findFirst();
 
-		return first.get();
+		return optional.get();
 	}
 
 	public String renderDDMForm(PageContext pageContext)
@@ -295,11 +293,11 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private DDMFormLayout _getDDMFormLayout() throws PortalException {
-		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
-
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		ObjectLayoutTab objectLayoutTab = getObjectLayoutTab();
 
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
@@ -323,13 +321,13 @@ public class ObjectEntryDisplayContext {
 
 		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn();
 
-		ddmFormLayoutColumn.setSize(size);
-
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectLayoutColumn.getObjectFieldId());
 
 		ddmFormLayoutColumn.setDDMFormFieldNames(
 			ListUtil.fromArray(objectField.getName()));
+
+		ddmFormLayoutColumn.setSize(size);
 
 		return ddmFormLayoutColumn;
 	}

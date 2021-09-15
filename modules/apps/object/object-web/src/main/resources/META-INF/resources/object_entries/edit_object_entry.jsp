@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long objectEntryId = ParamUtil.getLong(request, "objectEntryId");
+
 ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
-
-long objectEntryId = ParamUtil.getLong(request, "objectEntryId");
 %>
 
 <clay:navigation-bar
