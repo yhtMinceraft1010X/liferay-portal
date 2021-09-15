@@ -105,11 +105,11 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry addIFrameRemoteAppEntry(
-			long userId, String iframeURL, Map<Locale, String> nameMap)
+			long userId, String iFrameURL, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
-		iframeURL = StringUtil.trim(iframeURL);
+		iFrameURL = StringUtil.trim(iFrameURL);
 
 		long remoteAppEntryId = counterLocalService.increment();
 
@@ -119,7 +119,7 @@ public class RemoteAppEntryLocalServiceImpl
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
-		remoteAppEntry.setIFrameURL(iframeURL);
+		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
@@ -257,16 +257,16 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iframeURL,
+			long remoteAppEntryId, String iFrameURL,
 			Map<Locale, String> nameMap)
 		throws PortalException {
 
-		iframeURL = StringUtil.trim(iframeURL);
+		iFrameURL = StringUtil.trim(iFrameURL);
 
 		RemoteAppEntry remoteAppEntry =
 			remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 
-		remoteAppEntry.setIFrameURL(iframeURL);
+		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
 
 		_validateIFrameRemoteAppEntry(remoteAppEntry);

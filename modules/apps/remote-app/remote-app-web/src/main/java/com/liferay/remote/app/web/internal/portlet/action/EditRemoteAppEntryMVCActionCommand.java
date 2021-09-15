@@ -77,7 +77,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryLocalService.addIFrameRemoteAppEntry(
 				serviceContext.getUserId(),
-				ParamUtil.getString(actionRequest, "iframeURL"),
+				ParamUtil.getString(actionRequest, "iFrameURL"),
 				nameMap);
 		}
 	}
@@ -146,7 +146,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
 				remoteAppEntryId,
-				ParamUtil.getString(actionRequest, "iframeURL"),
+				ParamUtil.getString(actionRequest, "iFrameURL"),
 				nameMap);
 		}
 	}
