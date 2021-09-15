@@ -362,14 +362,15 @@ public class AssetListEntryItemSelectorDisplayContext {
 			PortletURL currentURL)
 		throws PortletException {
 
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		breadcrumbEntry.setURL(
 			PortletURLBuilder.create(
 				PortletURLUtil.clone(
