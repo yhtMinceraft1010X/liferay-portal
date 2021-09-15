@@ -14,6 +14,7 @@
 
 package com.liferay.remote.app.service.impl;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,12 +31,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.petra.string.CharPool;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
@@ -73,8 +72,8 @@ public class RemoteAppEntryLocalServiceImpl
 	@Override
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			long userId, String customElementCSSURLs,
-			String customElementHTMLElementName,
-			String customElementURLs, Map<Locale, String> nameMap)
+			String customElementHTMLElementName, String customElementURLs,
+			Map<Locale, String> nameMap)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -235,9 +234,9 @@ public class RemoteAppEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
-			long remoteAppEntryId,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, Map<Locale, String> nameMap)
+			long remoteAppEntryId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			Map<Locale, String> nameMap)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
