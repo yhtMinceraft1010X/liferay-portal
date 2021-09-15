@@ -68,7 +68,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			_addCustomElementProperties(dictionary, remoteAppEntry);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			_addIframeProperties(dictionary);
+			_addIFrameProperties(dictionary);
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -105,7 +105,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			customElementCSSURLs.split(StringPool.NEW_LINE));
 	}
 
-	private void _addIframeProperties(Dictionary<String, Object> dictionary) {
+	private void _addIFrameProperties(Dictionary<String, Object> dictionary) {
 		dictionary.put(
 			"com.liferay.portlet.header-portlet-css", "/display/css/main.css");
 	}

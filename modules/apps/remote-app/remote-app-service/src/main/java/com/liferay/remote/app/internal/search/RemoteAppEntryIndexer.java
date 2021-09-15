@@ -114,7 +114,7 @@ public class RemoteAppEntryIndexer extends BaseIndexer<RemoteAppEntry> {
 				Field.URL, customElementURLs.split(StringPool.NEW_LINE)[0]);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			document.addText(Field.URL, remoteAppEntry.getIframeURL());
+			document.addText(Field.URL, remoteAppEntry.getIFrameURL());
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -63,7 +63,7 @@ public class RemoteAppClayDataSetEntry {
 			return customElementURLs.split(StringPool.NEW_LINE)[0];
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			return _remoteAppEntry.getIframeURL();
+			return _remoteAppEntry.getIFrameURL();
 		}
 
 		return StringPool.BLANK;

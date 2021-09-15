@@ -53,7 +53,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			_renderCustomElement(renderResponse);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
-			_renderIframe(renderRequest, renderResponse);
+			_renderIFrame(renderRequest, renderResponse);
 		}
 		else {
 			throw new IOException("Invalid remote app entry type: " + type);
@@ -87,7 +87,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		printWriter.flush();
 	}
 
-	private void _renderIframe(
+	private void _renderIFrame(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
@@ -113,7 +113,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print("<iframe src=\"");
-		printWriter.print(_remoteAppEntry.getIframeURL());
+		printWriter.print(_remoteAppEntry.getIFrameURL());
 		printWriter.print("\"></iframe>");
 
 		printWriter.flush();
