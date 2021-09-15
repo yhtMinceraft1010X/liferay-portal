@@ -53,18 +53,13 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				/>
 			</aui:field-wrapper>
 
-			<%
-			List<SelectOption> selectOptions = new ArrayList<>();
-
-			selectOptions.add(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())));
-			selectOptions.add(new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())));
-			%>
-
 			<clay:select
 				disabled="<%= remoteAppEntry != null %>"
 				label="type"
 				name="type"
-				options="<%= selectOptions %>"
+				options='<%=
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())))
+				%>'
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
 
