@@ -89,7 +89,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid remote app entry type " + remoteAppEntry.getType());
+				"Invalid remote app entry type: " + remoteAppEntry.getType());
 		}
 
 		return _bundleContext.registerService(
