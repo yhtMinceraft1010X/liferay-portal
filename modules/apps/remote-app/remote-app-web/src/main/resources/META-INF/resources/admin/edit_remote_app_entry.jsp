@@ -79,15 +79,15 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<aui:input label="html-element-name" name="customElementHTMLElementName" />
 
 				<%
-				String[] customElementURLs = new String[0];
+				String[] customElementURLsArray = new String[0];
 
 				if (remoteAppEntry != null) {
-					String customElementURLsString = remoteAppEntry.getCustomElementURLs();
+					String customElementURLs = remoteAppEntry.getCustomElementURLs();
 
-					customElementURLs = customElementURLsString.split(StringPool.NEW_LINE);
+					customElementURLsArray = customElementURLs.split(StringPool.NEW_LINE);
 				}
 
-				for (String customElementURL : customElementURLs) {
+				for (String customElementURL : customElementURLsArray) {
 				%>
 
 					<div class="repeatable">
@@ -99,15 +99,15 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 				<%
 				}
 
-				String[] customElementCSSURLs = new String[0];
+				String[] customElementCSSURLsArray = new String[0];
 
 				if (remoteAppEntry != null) {
-					String customElementURLsCSSString = remoteAppEntry.getCustomElementCSSURLs();
+					String customElementCSSURLs = remoteAppEntry.getCustomElementCSSURLs();
 
-					customElementCSSURLs = customElementURLsCSSString.split(StringPool.NEW_LINE);
+					customElementCSSURLsArray = customElementCSSURLs.split(StringPool.NEW_LINE);
 				}
 
-				for (String customElementCSSURL : customElementCSSURLs) {
+				for (String customElementCSSURL : customElementCSSURLsArray) {
 				%>
 
 					<div class="repeatable">
