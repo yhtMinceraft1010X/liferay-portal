@@ -228,6 +228,23 @@ public class SXPElementPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_T(0L, 0);
+	}
+
+	@Test
+	public void testCountByG_T_S() throws Exception {
+		_persistence.countByG_T_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_T_S(0L, 0, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SXPElement newSXPElement = addSXPElement();
 

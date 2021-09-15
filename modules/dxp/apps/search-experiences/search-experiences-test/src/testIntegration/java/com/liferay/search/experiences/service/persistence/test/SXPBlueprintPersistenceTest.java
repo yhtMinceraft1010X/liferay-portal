@@ -238,6 +238,13 @@ public class SXPBlueprintPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SXPBlueprint newSXPBlueprint = addSXPBlueprint();
 
