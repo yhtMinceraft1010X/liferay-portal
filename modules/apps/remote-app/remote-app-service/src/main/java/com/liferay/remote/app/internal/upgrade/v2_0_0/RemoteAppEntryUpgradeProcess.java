@@ -36,7 +36,7 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 			alter(
 				RemoteAppEntryTable.class,
 				new AlterTableAddColumn(
-					"customElementHTMLElementName", "VARCHAR(256)"));
+					"customElementHTMLElementName", "VARCHAR(255)"));
 		}
 
 		if (!hasColumn("RemoteAppEntry", "customElementURLs")) {
