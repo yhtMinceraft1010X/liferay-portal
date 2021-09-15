@@ -116,6 +116,7 @@ public class ObjectFieldLocalServiceImpl
 			indexedLanguageId, labelMap, name, required, type);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectField deleteObjectField(long objectFieldId)
 		throws PortalException {
@@ -126,6 +127,7 @@ public class ObjectFieldLocalServiceImpl
 		return deleteObjectField(objectField);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectField deleteObjectField(ObjectField objectField)
 		throws PortalException {

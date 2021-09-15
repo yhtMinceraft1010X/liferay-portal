@@ -101,6 +101,7 @@ public class ObjectLayoutLocalServiceImpl
 		return objectLayout;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectLayout deleteObjectLayout(long objectLayoutId)
 		throws PortalException {
