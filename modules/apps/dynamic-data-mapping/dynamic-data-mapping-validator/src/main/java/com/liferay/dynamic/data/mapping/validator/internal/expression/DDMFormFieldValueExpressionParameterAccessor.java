@@ -56,7 +56,7 @@ public class DDMFormFieldValueExpressionParameterAccessor
 	}
 
 	@Override
-	public JSONArray getObjectFields() {
+	public JSONArray getObjectFieldsJSONArray() {
 		return JSONFactoryUtil.createJSONArray();
 	}
 

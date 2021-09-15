@@ -34,7 +34,7 @@ public interface DDMExpressionParameterAccessor {
 
 	public Locale getLocale();
 
-	public JSONArray getObjectFields();
+	public JSONArray getObjectFieldsJSONArray();
 
 	public String getTimeZoneId();
 

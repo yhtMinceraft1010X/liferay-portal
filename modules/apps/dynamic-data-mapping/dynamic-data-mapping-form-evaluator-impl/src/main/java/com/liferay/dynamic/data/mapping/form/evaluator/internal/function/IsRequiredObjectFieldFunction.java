@@ -42,7 +42,7 @@ public class IsRequiredObjectFieldFunction
 		fieldName = fieldName.replaceAll("\\[|\\]|\"", StringPool.BLANK);
 
 		JSONArray objectFieldsJSONArray =
-			_ddmExpressionParameterAccessor.getObjectFields();
+			_ddmExpressionParameterAccessor.getObjectFieldsJSONArray();
 
 		for (int i = 0; i < objectFieldsJSONArray.length(); i++) {
 			JSONObject jsonObject = objectFieldsJSONArray.getJSONObject(i);

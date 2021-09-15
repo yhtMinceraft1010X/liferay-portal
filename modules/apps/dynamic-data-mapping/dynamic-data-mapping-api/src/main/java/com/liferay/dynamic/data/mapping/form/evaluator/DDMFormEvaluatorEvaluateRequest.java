@@ -58,7 +58,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _locale;
 	}
 
-	public JSONArray getObjectFields() {
+	public JSONArray getObjectFieldsJSONArray() {
 		return _objectFieldsJSONArray;
 	}
 
@@ -129,7 +129,9 @@ public final class DDMFormEvaluatorEvaluateRequest {
 			return this;
 		}
 
-		public Builder withObjectFields(JSONArray objectFieldsJSONArray) {
+		public Builder withObjectFieldsJSONArray(
+			JSONArray objectFieldsJSONArray) {
+
 			_ddmFormEvaluatorEvaluateRequest._objectFieldsJSONArray =
 				objectFieldsJSONArray;
 

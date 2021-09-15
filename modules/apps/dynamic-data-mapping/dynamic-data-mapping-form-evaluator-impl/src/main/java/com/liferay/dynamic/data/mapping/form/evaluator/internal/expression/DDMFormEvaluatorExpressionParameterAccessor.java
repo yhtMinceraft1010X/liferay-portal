@@ -53,8 +53,8 @@ public class DDMFormEvaluatorExpressionParameterAccessor
 	}
 
 	@Override
-	public JSONArray getObjectFields() {
-		return _ddmFormEvaluatorEvaluateRequest.getObjectFields();
+	public JSONArray getObjectFieldsJSONArray() {
+		return _ddmFormEvaluatorEvaluateRequest.getObjectFieldsJSONArray();
 	}
 
 	@Override

@@ -369,8 +369,8 @@ public class DDMFormPagesTemplateContextFactory {
 					_groupLocalService)
 			).withGroupId(
 				_ddmFormRenderingContext.getGroupId()
-			).withObjectFields(
-				_ddmForm.getObjectFields()
+			).withObjectFieldsJSONArray(
+				_ddmForm.getObjectFieldsJSONArray()
 			).withTimeZoneId(
 				_getTimeZoneId(httpServletRequest)
 			).withUserId(

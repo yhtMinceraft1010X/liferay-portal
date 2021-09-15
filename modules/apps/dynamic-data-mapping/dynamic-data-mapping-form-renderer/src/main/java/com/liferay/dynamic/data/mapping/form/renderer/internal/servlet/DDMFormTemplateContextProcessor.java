@@ -247,11 +247,11 @@ public class DDMFormTemplateContextProcessor {
 	protected void initModels() {
 		setDDMFormDefaultLocale();
 		setDDMFormInstanceId();
-		setDDMFormObjectFields();
 		setDDMFormRules();
 		setDDMFormValuesAvailableLocales();
 		setDDMFormValuesDefaultLocale();
 		setGroupId();
+		setObjectFieldsJSONArray();
 	}
 
 	protected void process() {
@@ -621,11 +621,6 @@ public class DDMFormTemplateContextProcessor {
 		_ddmFormInstanceId = _jsonObject.getLong("formId", 0);
 	}
 
-	protected void setDDMFormObjectFields() {
-		_ddmForm.setDDMFormObjectFields(
-			_jsonObject.getJSONArray("objectFields"));
-	}
-
 	protected void setDDMFormRules() {
 		List<DDMFormRule> ddmFormRules = getDDMFormRules(
 			_jsonObject.getJSONArray("rules"));
@@ -643,6 +638,11 @@ public class DDMFormTemplateContextProcessor {
 
 	protected void setGroupId() {
 		_groupId = _jsonObject.getLong("groupId", 0);
+	}
+
+	protected void setObjectFieldsJSONArray() {
+		_ddmForm.setObjectFieldsJSONArray(
+			_jsonObject.getJSONArray("objectFields"));
 	}
 
 	protected void traverseColumns(
