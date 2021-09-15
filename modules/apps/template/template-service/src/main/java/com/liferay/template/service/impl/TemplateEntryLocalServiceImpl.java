@@ -98,9 +98,6 @@ public class TemplateEntryLocalServiceImpl
 		TemplateEntry templateEntry = templateEntryPersistence.findByPrimaryKey(
 			templateEntryId);
 
-		templateEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-
 		return templateEntryPersistence.update(templateEntry);
 	}
 
