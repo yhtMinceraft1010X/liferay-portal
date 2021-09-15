@@ -147,7 +147,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, "orderByCol", "create-date");
-
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType", "asc");
 
@@ -173,7 +172,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						themeDisplay.getScopeGroupId(), keywords,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						themeDisplay.getScopeGroupId(), keywords);
@@ -184,7 +182,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						themeDisplay.getScopeGroupId(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						themeDisplay.getScopeGroupId());
@@ -200,7 +197,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						itemTypes.toArray(new String[0]),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
@@ -213,7 +209,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						itemTypes.toArray(new String[0]),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
@@ -229,7 +224,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						_infoListItemSelectorCriterion.getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()}, keywords,
@@ -244,7 +238,6 @@ public class AssetListEntryItemSelectorDisplayContext {
 						_infoListItemSelectorCriterion.getItemType(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator());
-
 				assetListEntriesCount =
 					AssetListEntryServiceUtil.getAssetListEntriesCount(
 						new long[] {themeDisplay.getScopeGroupId()},
