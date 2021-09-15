@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -146,7 +144,7 @@ public class RemoteAppEntryPersistenceTest {
 
 		newRemoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
-		newRemoteAppEntry.setIframeURL(RandomTestUtil.randomString());
+		newRemoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
 
 		newRemoteAppEntry.setName(RandomTestUtil.randomString());
 
@@ -189,8 +187,8 @@ public class RemoteAppEntryPersistenceTest {
 			existingRemoteAppEntry.getCustomElementURLs(),
 			newRemoteAppEntry.getCustomElementURLs());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getIframeURL(),
-			newRemoteAppEntry.getIframeURL());
+			existingRemoteAppEntry.getIFrameURL(),
+			newRemoteAppEntry.getIFrameURL());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getName(), newRemoteAppEntry.getName());
 		Assert.assertEquals(
@@ -213,15 +211,6 @@ public class RemoteAppEntryPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByC_IU() throws Exception {
-		_persistence.countByC_IU(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_IU(0L, "null");
-
-		_persistence.countByC_IU(0L, (String)null);
 	}
 
 	@Test
@@ -252,7 +241,7 @@ public class RemoteAppEntryPersistenceTest {
 			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
 			"remoteAppEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"customElementHTMLElementName", true, "iframeURL", true, "name",
+			"customElementHTMLElementName", true, "iFrameURL", true, "name",
 			true, "type", true);
 	}
 
@@ -470,69 +459,6 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
-
-		_persistence.clearCache();
-
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newRemoteAppEntry.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		RemoteAppEntry newRemoteAppEntry = addRemoteAppEntry();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			RemoteAppEntry.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"remoteAppEntryId", newRemoteAppEntry.getRemoteAppEntryId()));
-
-		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(RemoteAppEntry remoteAppEntry) {
-		Assert.assertEquals(
-			Long.valueOf(remoteAppEntry.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				remoteAppEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			remoteAppEntry.getIframeURL(),
-			ReflectionTestUtil.invoke(
-				remoteAppEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "iframeURL"));
-	}
-
 	protected RemoteAppEntry addRemoteAppEntry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -559,7 +485,7 @@ public class RemoteAppEntryPersistenceTest {
 
 		remoteAppEntry.setCustomElementURLs(RandomTestUtil.randomString());
 
-		remoteAppEntry.setIframeURL(RandomTestUtil.randomString());
+		remoteAppEntry.setIFrameURL(RandomTestUtil.randomString());
 
 		remoteAppEntry.setName(RandomTestUtil.randomString());
 

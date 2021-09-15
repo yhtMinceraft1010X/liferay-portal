@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.remote.app.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RemoteAppEntryTypeException extends PortalException {
+public class RemoteAppEntryIFrameURLException extends PortalException {
 
-	public RemoteAppEntryTypeException() {
+	public RemoteAppEntryIFrameURLException() {
 	}
 
-	public RemoteAppEntryTypeException(String msg) {
+	public RemoteAppEntryIFrameURLException(String msg) {
 		super(msg);
 	}
 
-	public RemoteAppEntryTypeException(String msg, Throwable throwable) {
+	public RemoteAppEntryIFrameURLException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public RemoteAppEntryTypeException(Throwable throwable) {
+	public RemoteAppEntryIFrameURLException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -8,9 +8,9 @@ create table RemoteAppEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	customElementCSSURLs TEXT null,
-	customElementHTMLElementName VARCHAR(256) null,
+	customElementHTMLElementName VARCHAR(255) null,
 	customElementURLs TEXT null,
-	iframeURL VARCHAR(1024) null,
+	iFrameURL VARCHAR(1024) null,
 	name STRING null,
 	type_ VARCHAR(75) null
 );

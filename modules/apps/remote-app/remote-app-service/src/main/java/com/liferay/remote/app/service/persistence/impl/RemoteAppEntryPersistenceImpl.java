@@ -1208,253 +1208,6 @@ public class RemoteAppEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"remoteAppEntry.companyId = ?";
 
-	private FinderPath _finderPathFetchByC_IU;
-	private FinderPath _finderPathCountByC_IU;
-
-	/**
-	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param iframeURL the iframe url
-	 * @return the matching remote app entry
-	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
-	 */
-	@Override
-	public RemoteAppEntry findByC_IU(long companyId, String iframeURL)
-		throws NoSuchRemoteAppEntryException {
-
-		RemoteAppEntry remoteAppEntry = fetchByC_IU(companyId, iframeURL);
-
-		if (remoteAppEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", iframeURL=");
-			sb.append(iframeURL);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchRemoteAppEntryException(sb.toString());
-		}
-
-		return remoteAppEntry;
-	}
-
-	/**
-	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param iframeURL the iframe url
-	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
-	 */
-	@Override
-	public RemoteAppEntry fetchByC_IU(long companyId, String iframeURL) {
-		return fetchByC_IU(companyId, iframeURL, true);
-	}
-
-	/**
-	 * Returns the remote app entry where companyId = &#63; and iframeURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param iframeURL the iframe url
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
-	 */
-	@Override
-	public RemoteAppEntry fetchByC_IU(
-		long companyId, String iframeURL, boolean useFinderCache) {
-
-		iframeURL = Objects.toString(iframeURL, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, iframeURL};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_IU, finderArgs);
-		}
-
-		if (result instanceof RemoteAppEntry) {
-			RemoteAppEntry remoteAppEntry = (RemoteAppEntry)result;
-
-			if ((companyId != remoteAppEntry.getCompanyId()) ||
-				!Objects.equals(iframeURL, remoteAppEntry.getIframeURL())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_REMOTEAPPENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_IU_COMPANYID_2);
-
-			boolean bindIframeURL = false;
-
-			if (iframeURL.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_3);
-			}
-			else {
-				bindIframeURL = true;
-
-				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindIframeURL) {
-					queryPos.add(iframeURL);
-				}
-
-				List<RemoteAppEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_IU, finderArgs, list);
-					}
-				}
-				else {
-					RemoteAppEntry remoteAppEntry = list.get(0);
-
-					result = remoteAppEntry;
-
-					cacheResult(remoteAppEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (RemoteAppEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the remote app entry where companyId = &#63; and iframeURL = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param iframeURL the iframe url
-	 * @return the remote app entry that was removed
-	 */
-	@Override
-	public RemoteAppEntry removeByC_IU(long companyId, String iframeURL)
-		throws NoSuchRemoteAppEntryException {
-
-		RemoteAppEntry remoteAppEntry = findByC_IU(companyId, iframeURL);
-
-		return remove(remoteAppEntry);
-	}
-
-	/**
-	 * Returns the number of remote app entries where companyId = &#63; and iframeURL = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param iframeURL the iframe url
-	 * @return the number of matching remote app entries
-	 */
-	@Override
-	public int countByC_IU(long companyId, String iframeURL) {
-		iframeURL = Objects.toString(iframeURL, "");
-
-		FinderPath finderPath = _finderPathCountByC_IU;
-
-		Object[] finderArgs = new Object[] {companyId, iframeURL};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_REMOTEAPPENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_IU_COMPANYID_2);
-
-			boolean bindIframeURL = false;
-
-			if (iframeURL.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_3);
-			}
-			else {
-				bindIframeURL = true;
-
-				sb.append(_FINDER_COLUMN_C_IU_IFRAMEURL_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindIframeURL) {
-					queryPos.add(iframeURL);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_IU_COMPANYID_2 =
-		"remoteAppEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_IU_IFRAMEURL_2 =
-		"remoteAppEntry.iframeURL = ?";
-
-	private static final String _FINDER_COLUMN_C_IU_IFRAMEURL_3 =
-		"(remoteAppEntry.iframeURL IS NULL OR remoteAppEntry.iframeURL = '')";
-
 	public RemoteAppEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1480,13 +1233,6 @@ public class RemoteAppEntryPersistenceImpl
 	public void cacheResult(RemoteAppEntry remoteAppEntry) {
 		entityCache.putResult(
 			RemoteAppEntryImpl.class, remoteAppEntry.getPrimaryKey(),
-			remoteAppEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_IU,
-			new Object[] {
-				remoteAppEntry.getCompanyId(), remoteAppEntry.getIframeURL()
-			},
 			remoteAppEntry);
 	}
 
@@ -1547,19 +1293,6 @@ public class RemoteAppEntryPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(RemoteAppEntryImpl.class, primaryKey);
 		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RemoteAppEntryModelImpl remoteAppEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			remoteAppEntryModelImpl.getCompanyId(),
-			remoteAppEntryModelImpl.getIframeURL()
-		};
-
-		finderCache.putResult(_finderPathCountByC_IU, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByC_IU, args, remoteAppEntryModelImpl);
 	}
 
 	/**
@@ -1746,8 +1479,6 @@ public class RemoteAppEntryPersistenceImpl
 
 		entityCache.putResult(
 			RemoteAppEntryImpl.class, remoteAppEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(remoteAppEntryModelImpl);
 
 		if (isNew) {
 			remoteAppEntry.setNew(false);
@@ -2066,16 +1797,6 @@ public class RemoteAppEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
-
-		_finderPathFetchByC_IU = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_IU",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "iframeURL"}, true);
-
-		_finderPathCountByC_IU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_IU",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "iframeURL"}, false);
 	}
 
 	@Deactivate

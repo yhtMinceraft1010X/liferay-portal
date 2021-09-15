@@ -256,19 +256,19 @@ public interface RemoteAppEntryModel
 	public void setCustomElementURLs(String customElementURLs);
 
 	/**
-	 * Returns the iframe url of this remote app entry.
+	 * Returns the i frame url of this remote app entry.
 	 *
-	 * @return the iframe url of this remote app entry
+	 * @return the i frame url of this remote app entry
 	 */
 	@AutoEscape
-	public String getIframeURL();
+	public String getIFrameURL();
 
 	/**
-	 * Sets the iframe url of this remote app entry.
+	 * Sets the i frame url of this remote app entry.
 	 *
-	 * @param iframeURL the iframe url of this remote app entry
+	 * @param iFrameURL the i frame url of this remote app entry
 	 */
-	public void setIframeURL(String iframeURL);
+	public void setIFrameURL(String iFrameURL);
 
 	/**
 	 * Returns the name of this remote app entry.

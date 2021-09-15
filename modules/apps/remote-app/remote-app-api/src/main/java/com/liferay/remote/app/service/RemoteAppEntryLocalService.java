@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -70,15 +69,14 @@ public interface RemoteAppEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry addCustomElementRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, ServiceContext serviceContext)
+			long userId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			Map<Locale, String> nameMap)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public RemoteAppEntry addIframeRemoteAppEntry(
-			long userId, Map<Locale, String> nameMap, String iframeURL,
-			ServiceContext serviceContext)
+	public RemoteAppEntry addIFrameRemoteAppEntry(
+			long userId, String iFrameURL, Map<Locale, String> nameMap)
 		throws PortalException;
 
 	/**
@@ -320,15 +318,15 @@ public interface RemoteAppEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs)
+			long remoteAppEntryId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			Map<Locale, String> nameMap)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public RemoteAppEntry updateIframeRemoteAppEntry(
-			long remoteAppEntryId, Map<Locale, String> nameMap,
-			String iframeURL)
+	public RemoteAppEntry updateIFrameRemoteAppEntry(
+			long remoteAppEntryId, String iFrameURL,
+			Map<Locale, String> nameMap)
 		throws PortalException;
 
 	/**

@@ -55,7 +55,7 @@ public class RemoteAppEntryWrapper
 		attributes.put(
 			"customElementHTMLElementName", getCustomElementHTMLElementName());
 		attributes.put("customElementURLs", getCustomElementURLs());
-		attributes.put("iframeURL", getIframeURL());
+		attributes.put("iFrameURL", getIFrameURL());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -132,10 +132,10 @@ public class RemoteAppEntryWrapper
 			setCustomElementURLs(customElementURLs);
 		}
 
-		String iframeURL = (String)attributes.get("iframeURL");
+		String iFrameURL = (String)attributes.get("iFrameURL");
 
-		if (iframeURL != null) {
-			setIframeURL(iframeURL);
+		if (iFrameURL != null) {
+			setIFrameURL(iFrameURL);
 		}
 
 		String name = (String)attributes.get("name");
@@ -237,13 +237,13 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
-	 * Returns the iframe url of this remote app entry.
+	 * Returns the i frame url of this remote app entry.
 	 *
-	 * @return the iframe url of this remote app entry
+	 * @return the i frame url of this remote app entry
 	 */
 	@Override
-	public String getIframeURL() {
-		return model.getIframeURL();
+	public String getIFrameURL() {
+		return model.getIFrameURL();
 	}
 
 	/**
@@ -505,13 +505,13 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
-	 * Sets the iframe url of this remote app entry.
+	 * Sets the i frame url of this remote app entry.
 	 *
-	 * @param iframeURL the iframe url of this remote app entry
+	 * @param iFrameURL the i frame url of this remote app entry
 	 */
 	@Override
-	public void setIframeURL(String iframeURL) {
-		model.setIframeURL(iframeURL);
+	public void setIFrameURL(String iFrameURL) {
+		model.setIFrameURL(iFrameURL);
 	}
 
 	/**

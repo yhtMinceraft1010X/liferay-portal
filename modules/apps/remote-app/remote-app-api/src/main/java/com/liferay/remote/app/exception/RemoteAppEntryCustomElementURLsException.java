@@ -19,20 +19,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DuplicateRemoteAppEntryException extends PortalException {
+public class RemoteAppEntryCustomElementURLsException extends PortalException {
 
-	public DuplicateRemoteAppEntryException() {
+	public RemoteAppEntryCustomElementURLsException() {
 	}
 
-	public DuplicateRemoteAppEntryException(String msg) {
+	public RemoteAppEntryCustomElementURLsException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateRemoteAppEntryException(String msg, Throwable throwable) {
+	public RemoteAppEntryCustomElementURLsException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public DuplicateRemoteAppEntryException(Throwable throwable) {
+	public RemoteAppEntryCustomElementURLsException(Throwable throwable) {
 		super(throwable);
 	}
 

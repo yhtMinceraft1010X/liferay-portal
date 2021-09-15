@@ -101,8 +101,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(customElementHTMLElementName);
 		sb.append(", customElementURLs=");
 		sb.append(customElementURLs);
-		sb.append(", iframeURL=");
-		sb.append(iframeURL);
+		sb.append(", iFrameURL=");
+		sb.append(iFrameURL);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", type=");
@@ -172,11 +172,11 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setCustomElementURLs(customElementURLs);
 		}
 
-		if (iframeURL == null) {
-			remoteAppEntryImpl.setIframeURL("");
+		if (iFrameURL == null) {
+			remoteAppEntryImpl.setIFrameURL("");
 		}
 		else {
-			remoteAppEntryImpl.setIframeURL(iframeURL);
+			remoteAppEntryImpl.setIFrameURL(iFrameURL);
 		}
 
 		if (name == null) {
@@ -216,7 +216,7 @@ public class RemoteAppEntryCacheModel
 		customElementCSSURLs = (String)objectInput.readObject();
 		customElementHTMLElementName = objectInput.readUTF();
 		customElementURLs = (String)objectInput.readObject();
-		iframeURL = objectInput.readUTF();
+		iFrameURL = objectInput.readUTF();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
@@ -269,11 +269,11 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeObject(customElementURLs);
 		}
 
-		if (iframeURL == null) {
+		if (iFrameURL == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(iframeURL);
+			objectOutput.writeUTF(iFrameURL);
 		}
 
 		if (name == null) {
@@ -302,7 +302,7 @@ public class RemoteAppEntryCacheModel
 	public String customElementCSSURLs;
 	public String customElementHTMLElementName;
 	public String customElementURLs;
-	public String iframeURL;
+	public String iFrameURL;
 	public String name;
 	public String type;
 

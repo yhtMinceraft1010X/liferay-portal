@@ -86,8 +86,8 @@ public abstract class BaseRemoteAppEntryUADExporter
 		sb.append(remoteAppEntry.getCustomElementURLs());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>iframeURL</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getIframeURL());
+			"<column><column-name>iFrameURL</column-name><column-value><![CDATA[");
+		sb.append(remoteAppEntry.getIFrameURL());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");

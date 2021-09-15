@@ -1,2 +1,2 @@
-create unique index IX_60B7390 on RemoteAppEntry (companyId, iframeURL[$COLUMN_LENGTH:1024$]);
+create unique index IX_7CDD4FB0 on RemoteAppEntry (companyId, iFrameURL[$COLUMN_LENGTH:1024$]);
 create index IX_5F8F9C11 on RemoteAppEntry (uuid_[$COLUMN_LENGTH:75$], companyId);

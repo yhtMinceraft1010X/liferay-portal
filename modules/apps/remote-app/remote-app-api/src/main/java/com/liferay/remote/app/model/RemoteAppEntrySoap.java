@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.remote.app.service.http.RemoteAppEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -45,7 +45,7 @@ public class RemoteAppEntrySoap implements Serializable {
 		soapModel.setCustomElementHTMLElementName(
 			model.getCustomElementHTMLElementName());
 		soapModel.setCustomElementURLs(model.getCustomElementURLs());
-		soapModel.setIframeURL(model.getIframeURL());
+		soapModel.setIFrameURL(model.getIFrameURL());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
 
@@ -196,12 +196,12 @@ public class RemoteAppEntrySoap implements Serializable {
 		_customElementURLs = customElementURLs;
 	}
 
-	public String getIframeURL() {
-		return _iframeURL;
+	public String getIFrameURL() {
+		return _iFrameURL;
 	}
 
-	public void setIframeURL(String iframeURL) {
-		_iframeURL = iframeURL;
+	public void setIFrameURL(String iFrameURL) {
+		_iFrameURL = iFrameURL;
 	}
 
 	public String getName() {
@@ -231,7 +231,7 @@ public class RemoteAppEntrySoap implements Serializable {
 	private String _customElementCSSURLs;
 	private String _customElementHTMLElementName;
 	private String _customElementURLs;
-	private String _iframeURL;
+	private String _iFrameURL;
 	private String _name;
 	private String _type;
 
