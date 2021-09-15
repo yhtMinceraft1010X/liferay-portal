@@ -78,4 +78,8 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>SXPBlueprintConfigurationJSON</exception>
+		<exception>SXPElementElementDefinitionJSON</exception>
+	</exceptions>
 </service-builder>
