@@ -215,11 +215,9 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowDefinition.setUserId(kaleoDefinitionVersion.getUserId());
 		defaultWorkflowDefinition.setVersion(
 			getVersion(kaleoDefinitionVersion.getVersion()));
-
 		defaultWorkflowDefinition.setWorkflowNodes(
 			_getWorkflowNodes(
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId()));
-
 		defaultWorkflowDefinition.setWorkflowTransitions(
 			_getWorkflowTransitions(
 				kaleoDefinitionVersion.getKaleoDefinitionVersionId()));
