@@ -284,10 +284,12 @@ const ImagePins = ({
 
 			if (isAdmin) {
 				container
-					.attr('height', imageSettings.height)
 					.attr('width', imageSettings.width)
 					.attr('id', 'sbdtest')
 					.html(svgString);
+
+				// container.children.attr('height','300px')
+				
 
 				const rootLevel = document.getElementById('Livello_Testi');
 
@@ -302,6 +304,7 @@ const ImagePins = ({
 							console.log(`ciao ${i}`)
 						);
 					});
+					
 					Array.from(texts).map((text, i) => {
 						textDatas.push({
 							label: text.textContent,
@@ -315,7 +318,7 @@ const ImagePins = ({
 									id: null,
 									label: textDatas[i].label,
 									linkedToSku: 'sku',
-									quantity: null,
+									quantity: 1,
 									sku: '',
 									transform:
 										'matrix(0.9999 0.0165 -0.0165 0.9999 86.0798 171.5356)',
@@ -323,7 +326,6 @@ const ImagePins = ({
 								tooltip: true,
 							}
 							pinClickAction(test1);
-							console.log(test1);
 							setVisible(true)
 							setShowTooltip(test1);
 						});
@@ -457,25 +459,20 @@ const ImagePins = ({
 	return (
 		<div
 			className="diagram-pins-container"
-			height={imageSettings.height}
 			ref={containerRef}
-			style={{
-				height: `${imageSettings.height}`,
-				width: `${imageSettings.width}`,
-			}}
 		>
-			{/* <svg
+			<svg
 				height={imageSettings.height}
 				ref={svgRef}
 				width={imageSettings.width}
-			> */}
+			>
 			<g data-testid={`${namespace}container`}>
 				{/* <image
 						height={imageSettings.height}
 						href={imageURL}
 					></image> */}
 			</g>
-			{/* </svg> */}
+			</svg>
 
 			{children}
 		</div>

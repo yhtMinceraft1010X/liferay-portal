@@ -25,13 +25,11 @@ import {
 const DiagramHeader = ({
 	addNewPinState,
 	diagramId,
-	importPinSchema,
 	isAdmin,
 	namespace,
 	newPinSettings,
 	setAddNewPinState,
 	setAddPinHandler,
-	type,
 }) => {
 	const RADIUS_CHOICE = [
 		{
@@ -163,15 +161,6 @@ const DiagramHeader = ({
 							</ClayForm>
 						</ClayDropDown.Caption>
 					</ClayDropDown>
-					<ClayButton
-						aria-label={Liferay.Language.get('auto-mapping')}
-						className="ml-3 select-diameter"
-						disabled={type === 'diagram.type.svg' ? false : true}
-						displayType="secondary"
-						onClick={() => importPinSchema()}
-					>
-						{Liferay.Language.get('auto-mapping')}
-					</ClayButton>
 				</div>
 			)}
 		</div>

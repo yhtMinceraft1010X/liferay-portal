@@ -20,18 +20,12 @@ import {searchDiagrams, searchSkus} from './utilities/utilities';
 const SKU = 'sku';
 const DIAGRAM = 'diagram';
 const AdminTooltip = ({
-	deletePin,
 	namespace,
-	setRemovePinHandler,
-	setShowTooltip,
 	showTooltip,
-	updatePin,
+	type,
 }) => {
 	const [active, setActive] = useState(false);
 	const [products, setProducts] = useState(null);
-	// const [pinPositionLabel, setPinPositionLabel] = useState(
-	// 	showTooltip.details.label || ''
-	// );
 	const node = useRef();
 	const dropdownNode = useRef();
 	const [query, setQuery] = useState('');
@@ -75,23 +69,25 @@ const AdminTooltip = ({
 
 	return (
 		<>
-			<ClayForm.Group className="col-12 text-left" small>
-				<label htmlFor={`${namespace}pin-position`}>
-					{Liferay.Language.get('position')}
-				</label>
+			{type !== 'diagram.type.svg' && (
+				<ClayForm.Group className="col-12 text-left" small>
+					<label htmlFor={`${namespace}pin-position`}>
+						{Liferay.Language.get('position')}
+					</label>
 
-				<ClayInput
-					id={`${namespace}pin-position`}
-					onChange={(event) =>
-						setPinPositionLabel(event.target.value)
-					}
-					placeholder={Liferay.Language.get(
-						'insert-your-name-here'
-					)}
-					type="text"
-					value={selectedProduct.label}
-				/>
-			</ClayForm.Group>
+					<ClayInput
+						id={`${namespace}pin-position`}
+						onChange={(event) =>
+							setPinPositionLabel(event.target.value)
+						}
+						placeholder={Liferay.Language.get(
+							'insert-your-position-here'
+						)}
+						type="text"
+						value={selectedProduct?.label || ""}
+					/>
+				</ClayForm.Group>
+			)}
 
 			<ClayForm.Group className="col-12" small>
 				<ClayRadioGroup
@@ -117,7 +113,7 @@ const AdminTooltip = ({
 					{Liferay.Language.get('select-sku')}
 				</label>
 
-				{/* <ClayAutocomplete ref={node}>
+				<ClayAutocomplete ref={node}>
 					<ClayAutocomplete.Input
 						onChange={(event) => {
 							setSelectedProduct(null);
@@ -136,7 +132,8 @@ const AdminTooltip = ({
 					<ClayAutocomplete.DropDown active={active && products}>
 						<div ref={dropdownNode}>
 							<ClayDropDown.ItemList>
-								{!!products?.length && (
+								
+								{!products?.length && (
 									<ClayDropDown.Item disabled>
 										{Liferay.Language.get(
 											'no-results-found'
@@ -160,7 +157,7 @@ const AdminTooltip = ({
 							</ClayDropDown.ItemList>
 						</div>
 					</ClayAutocomplete.DropDown>
-				</ClayAutocomplete> */}
+				</ClayAutocomplete>
 			</ClayForm.Group>
 
 			<ClayForm.Group className="col-3" small>
@@ -178,102 +175,7 @@ const AdminTooltip = ({
 				/>
 			</ClayForm.Group>
 
-			{/* <ClayForm.Group
-				className="col-6 d-flex justify-content-start mt-4"
-				small
-			>
-				<ClayButton
-					displayType="link"
-					onClick={() => {
-						deletePin({
-							id: showTooltip.details.id,
-							positionX: showTooltip.details.cx,
-							positionY: showTooltip.details.cy,
-							sequence: selectedProduct.label,
-						});
-						setRemovePinHandler({
-							handler: true,
-							pin: showTooltip.details.id,
-						});
-						setShowTooltip({
-							details: {
-								cx: null,
-								cy: null,
-								id: null,
-								label: null,
-								linkedToSku: SKU,
-								quantity: null,
-								sku: '',
-								transform: '',
-							},
-							tooltip: false,
-						});
-					}}
-				>
-					{Liferay.Language.get('delete')}
-				</ClayButton>
-			</ClayForm.Group>
-
-			<ClayForm.Group
-				className="col-6 d-flex justify-content-between mt-4"
-				small
-			>
-				<ClayButton
-					displayType="secondary"
-					onClick={() => {
-						setShowTooltip({
-							details: {
-								cx: '',
-								cy: '',
-								id: '',
-								label: '',
-								linkedToSku: SKU,
-								quantity: null,
-								sku: '',
-								transform: '',
-							},
-							tooltip: false,
-						});
-					}}
-				>
-					{Liferay.Language.get('close')}
-				</ClayButton>
-
-				<ClayButton
-					displayType="primary"
-					onClick={() => {
-						updatePin({
-							diagramEntry: {
-								diagram: linkedValue === SKU,
-								productId: selectedProduct.productId,
-								quantity,
-								sequence: selectedProduct.label,
-								sku: selectedProduct.sku,
-								skuUuid: selectedProduct.id,
-							},
-							id: showTooltip.details.id,
-							positionX: showTooltip.details.cx,
-							positionY: showTooltip.details.cy,
-							sequence: selectedProduct.label,
-						});
-						setShowTooltip({
-							details: {
-								cx: showTooltip.details.cx,
-								cy: showTooltip.details.cy,
-								id: showTooltip.details.id,
-								label: selectedProduct.label,
-								linkedToSku: linkedValue,
-								quantity,
-								sku,
-								transform: details.transform || '',
-							},
-							tooltip: false,
-						});
-					}}
-				>
-					{Liferay.Language.get('save')}
-				</ClayButton>
-			</ClayForm.Group>	 */}
+			
 		</>	
 	);
 };

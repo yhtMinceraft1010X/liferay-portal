@@ -72,7 +72,7 @@ const Diagram = ({
 			id: null,
 			label: '',
 			linkedToSku: 'sku',
-			quantity: null,
+			quantity: 1,
 			sku: '',
 			transform: '',
 		},
@@ -91,7 +91,7 @@ const Diagram = ({
 
 	const importPinSchema = () => {
 		const textDatas = [];
-		const pinDatas = [];
+		const pinData = [];
 		const parser = new DOMParser();
 		const xmlImage = parser.parseFromString(svgString, 'image/svg+xml');
 		const rootLevel = xmlImage.getElementById('Livello_Testi');
@@ -106,7 +106,7 @@ const Diagram = ({
 			});
 
 			Array.from(rects).map((r, i) => {
-				pinDatas.push({
+				pinData.push({
 					cx: r.attributes.x.value / 2.78,
 					cy: r.attributes.y.value / 2.78,
 					id: i,
@@ -114,7 +114,8 @@ const Diagram = ({
 				});
 			});
 
-			setPinImport(pinDatas);
+			setPinImport(pinData);
+			return pinData;
 		}
 	};
 
@@ -122,11 +123,7 @@ const Diagram = ({
 		setCpins(pinImport);
 	}, [pinImport]);
 
-	useEffect(() => {
-		fetch(imageState)
-			.then((response) => response.text())
-			.then((text) => setSvgString(text));
-	}, [imageState]);
+	
 
 	const loadPins = useCallback(
 		() =>
@@ -155,27 +152,36 @@ const Diagram = ({
 	};
 
 	const updatePin = (node) => {
+
 		if (node.id) {
-			fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
+			return fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
 				body: JSON.stringify(node),
 				headers: HEADERS,
 				method: 'PATCH',
 			});
 		}
-		else {
-			fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
-				body: JSON.stringify(node),
-				headers: HEADERS,
-				method: 'POST',
-			}).then(() => {
-				if (datasetDisplayId) {
-					Liferay.fire(UPDATE_DATASET_DISPLAY, {
-						id: datasetDisplayId,
-					});
-				}
-			});
-		}
+		
+		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
+			body: JSON.stringify(node),
+			headers: HEADERS,
+			method: 'POST',
+		}).then(() => {
+			if (datasetDisplayId) {
+				Liferay.fire(UPDATE_DATASET_DISPLAY, {
+					id: datasetDisplayId,
+				});
+			}
+		});
+		
 	};
+
+	const updateMappedProduct = (node) => {
+		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/diagramEntries`, {
+			headers: HEADERS,
+			method: 'GET',
+		}).then((res) => res.json())
+		.then(console.log)
+	}
 
 	const pinClickAction = (updatedPin) => {
 		setShowTooltip({
@@ -193,9 +199,64 @@ const Diagram = ({
 		});
 	};
 
+	const handleTooltipSave = () => {
+
+		if (type !== 'diagram.type.svg') {
+			updatePin({
+				diagramEntry: {
+					diagram: showTooltip.details.linkedToSku === 'sku',
+					productId: showTooltip.details.productId,
+					quantity: showTooltip.details.quantity,
+					sequence: showTooltip.details.label,
+					sku: showTooltip.details.sku,
+					skuUuid: showTooltip.details.id,
+				},
+				id: showTooltip.details.id,
+				positionX: showTooltip.details.cx,
+				positionY: showTooltip.details.cy,
+				sequence: showTooltip.details.label,
+			});
+		} else {
+			updateMappedProduct({
+				diagramEntry: {
+					quantity: showTooltip.details.quantity,
+					sequence: showTooltip.details.label,
+					sku: showTooltip.details.sku,
+				},
+				sequence: showTooltip.details.label,
+			});
+		}
+
+		setShowTooltip({
+			details: {
+				cx: showTooltip.details.cx,
+				cy: showTooltip.details.cy,
+				id: showTooltip.details.id,
+				label: showTooltip.details.label,
+				linkedToSku: showTooltip.details.linkedToSku,
+				quantity: showTooltip.details.quantity,
+				sku: showTooltip.details.sku,
+			},
+			tooltip: false,
+		});
+
+		onClose()
+
+	}
+
 	useEffect(() => {
-		loadPins();
-	}, [pinsEndpoint, productId, loadPins]);
+		fetch(imageState)
+			.then((response) => response.text())
+			.then((text) => {
+				setSvgString(text)
+				if (type === 'diagram.type.svg') {
+					const schema = importPinSchema()
+					setCpins(schema|| [])
+				} else if (type === 'diagram.type.default') {
+					loadPins();
+				}
+			})
+	}, [imageState, pinsEndpoint, productId, loadPins, type]);
 
 	return imageState ? (
 		<div className="diagram mx-auto">
@@ -275,6 +336,7 @@ const Diagram = ({
 									setSkus={setSkus}
 									showTooltip={showTooltip}
 									skus={skus}
+									type={type}
 									updatePin={updatePin}
 								/>
 							</ClayModal.Body>
@@ -323,7 +385,7 @@ const Diagram = ({
 														id: '',
 														label: '',
 														linkedToSku: 'sku',
-														quantity: null,
+														quantity: 1,
 														sku: '',
 														transform: '',
 													},
@@ -340,36 +402,7 @@ const Diagram = ({
 								last={
 									<ClayButton
 										displayType="primary"
-										onClick={() => {
-											updatePin({
-												diagramEntry: {
-													diagram: showTooltip.details.linkedToSku === 'sku',
-													productId: showTooltip.details.productId,
-													quantity: showTooltip.details.quantity,
-													sequence: showTooltip.details.label,
-													sku: showTooltip.details.sku,
-													skuUuid: showTooltip.details.id,
-												},
-												id: showTooltip.details.id,
-												positionX: showTooltip.details.cx,
-												positionY: showTooltip.details.cy,
-												sequence: showTooltip.details.label,
-											});
-											setShowTooltip({
-												details: {
-													cx: showTooltip.details.cx,
-													cy: showTooltip.details.cy,
-													id: showTooltip.details.id,
-													label: showTooltip.details.label,
-													linkedToSku: showTooltip.details.linkedToSku,
-													quantity: showTooltip.details.quantity,
-													sku: showTooltip.details.sku,
-													transform: details.transform || '',
-												},
-												tooltip: false,
-											});
-											onClose()
-										}}
+										onClick={handleTooltipSave}
 									>
 										{Liferay.Language.get('save')}
 									</ClayButton>
@@ -377,20 +410,6 @@ const Diagram = ({
 							/>
 						</ClayModal>
 					)}
-					{/* {showTooltip.tooltip && (
-						<AdminTooltip
-							deletePin={deletePin}
-							namespace={namespace}
-							pinsEndpoint={pinsEndpoint}
-							removePinHandler={removePinHandler}
-							setRemovePinHandler={setRemovePinHandler}
-							setShowTooltip={setShowTooltip}
-							setSkus={setSkus}
-							showTooltip={showTooltip}
-							skus={skus}
-							updatePin={updatePin}
-						/>
-					)} */}
 				</ImagePins>
 
 				<DiagramFooter
@@ -404,6 +423,7 @@ const Diagram = ({
 					setSelectedOption={setSelectedOption}
 					setZoomInHandler={setZoomInHandler}
 					setZoomOutHandler={setZoomOutHandler}
+					type={type}
 				/>
 			</ClayIconSpriteContext.Provider>
 		</div>
@@ -460,7 +480,7 @@ Diagram.defaultProps = {
 	},
 	pins: [],
 	pinsEndpoint:
-		'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/',
+		'/o/headless-commerce-admin-catalog/v1.0/',
 	productId: 44206,
 	showTooltip: {
 		details: {
