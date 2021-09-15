@@ -1,9 +1,9 @@
 apiDir: "../batch-planner-rest-api/src/main/java"
 apiPackagePath: "com.liferay.batch.planner.rest"
 application:
-    baseURI: "/headless-admin-batch-planner"
-    className: "HeadlessAdminBatchPlannerApplication"
-    name: "Liferay.Headless.Admin.Batch.Planner"
+    baseURI: "/batch-planner"
+    className: "BatchPlannerRESTApplication"
+    name: "Liferay.Batch.Planner.REST"
 author: "Matija Petanjek"
 clientDir: "../batch-planner-rest-client/src/main/java"
 forcePredictableOperationId: true
