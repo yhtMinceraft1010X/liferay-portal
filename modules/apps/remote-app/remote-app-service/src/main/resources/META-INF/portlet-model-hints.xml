@@ -14,7 +14,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="customElementHTMLElementName" type="String">
-			<hint name="max-length">256</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="customElementURLs" type="String">
 			<hint-collection name="CLOB" />
