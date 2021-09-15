@@ -56,9 +56,6 @@ public class TemplateEntryLocalServiceImpl
 		templateEntry.setCompanyId(user.getCompanyId());
 		templateEntry.setUserId(user.getUserId());
 		templateEntry.setUserName(user.getFullName());
-		templateEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		templateEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		templateEntry.setGroupId(groupId);
 		templateEntry.setDDMTemplateId(ddmTemplateId);
 		templateEntry.setInfoItemClassName(infoItemClassName);
