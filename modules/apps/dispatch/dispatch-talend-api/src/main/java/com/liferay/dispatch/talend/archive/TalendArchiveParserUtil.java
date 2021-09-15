@@ -398,14 +398,14 @@ public class TalendArchiveParserUtil {
 	private static TalendArchive _parse(InputStream jobZIPInputStream)
 		throws IOException {
 
+		TalendArchive.Builder talendArchiveBuilder =
+			new TalendArchive.Builder();
+
 		File jobDirectory = _getJobDirectory(jobZIPInputStream);
 
 		Path jobDirectoryPath = jobDirectory.toPath();
 
 		Properties jobProperties = _getJobProperties(jobDirectory);
-
-		TalendArchive.Builder talendArchiveBuilder =
-			new TalendArchive.Builder();
 
 		String jobName = (String)jobProperties.get("job");
 
