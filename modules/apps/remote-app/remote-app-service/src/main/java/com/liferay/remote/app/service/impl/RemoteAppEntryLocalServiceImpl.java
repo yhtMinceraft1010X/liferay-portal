@@ -412,8 +412,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 		if (Validator.isNull(customElementURLs)) {
 
-			// TODO Allow this to be empty. But if it is not empty, make sure
-			// each line is a valid URL.
+			// TODO Make sure each line is a valid URL and that there is at
+			// least one URL
 
 			throw new RemoteAppEntryCustomElementURLsException();
 		}
