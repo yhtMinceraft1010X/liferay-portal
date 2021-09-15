@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -90,7 +91,7 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			counterLocalService.increment());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
@@ -123,7 +124,7 @@ public class RemoteAppEntryLocalServiceImpl
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
 			counterLocalService.increment());
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
@@ -433,5 +434,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 	private final Map<Long, ServiceRegistration<Portlet>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
