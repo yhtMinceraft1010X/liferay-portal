@@ -44,18 +44,18 @@ public class TemplateEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		TemplateEntry templateEntry = templateEntryPersistence.create(
+			counterLocalService.increment());
+
+		templateEntry.setUuid(serviceContext.getUuid());
+		templateEntry.setGroupId(groupId);
+
 		User user = userLocalService.getUser(userId);
 
-		long templateEntryId = counterLocalService.increment();
-
-		TemplateEntry templateEntry = templateEntryPersistence.create(
-			templateEntryId);
-
-		templateEntry.setUuid(PortalUUIDUtil.generate());
-		templateEntry.setGroupId(groupId);
 		templateEntry.setCompanyId(user.getCompanyId());
 		templateEntry.setUserId(user.getUserId());
 		templateEntry.setUserName(user.getFullName());
+
 		templateEntry.setDDMTemplateId(ddmTemplateId);
 		templateEntry.setInfoItemClassName(infoItemClassName);
 		templateEntry.setInfoItemFormVariationKey(infoItemFormVariationKey);
