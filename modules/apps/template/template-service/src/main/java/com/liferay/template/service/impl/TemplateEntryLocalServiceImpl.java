@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.base.TemplateEntryLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +39,8 @@ public class TemplateEntryLocalServiceImpl
 
 	@Override
 	public TemplateEntry addTemplateEntry(
-			long userId, long groupId, long ddmTemplateId, String infoItemClassName,
-			String infoItemFormVariationKey,
+			long userId, long groupId, long ddmTemplateId,
+			String infoItemClassName, String infoItemFormVariationKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
