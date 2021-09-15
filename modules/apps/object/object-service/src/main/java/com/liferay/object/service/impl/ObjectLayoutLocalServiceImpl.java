@@ -106,10 +106,21 @@ public class ObjectLayoutLocalServiceImpl
 	public ObjectLayout deleteObjectLayout(long objectLayoutId)
 		throws PortalException {
 
-		ObjectLayout objectLayout = objectLayoutPersistence.remove(
+		ObjectLayout objectLayout = objectLayoutPersistence.findByPrimaryKey(
 			objectLayoutId);
 
-		_deleteObjectLayoutTabs(objectLayoutId);
+		return deleteObjectLayout(objectLayout);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public ObjectLayout deleteObjectLayout(ObjectLayout objectLayout)
+		throws PortalException {
+
+		ObjectLayout objectLayout = objectLayoutPersistence.remove(
+			objectLayout);
+
+		_deleteObjectLayoutTabs(objectLayout.getObjectLayoutId());
 
 		return objectLayout;
 	}
