@@ -78,11 +78,12 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print(StringPool.LESS_THAN);
-		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
-		printWriter.print("></");
-		printWriter.print(_remoteAppEntry.getCustomElementHTMLElementName());
-		printWriter.print(StringPool.GREATER_THAN);
+		printWriter.print(
+			StringBundler.concat(
+				StringPool.LESS_THAN,
+				_remoteAppEntry.getCustomElementHTMLElementName(),
+				"></", _remoteAppEntry.getCustomElementHTMLElementName(),
+				StringPool.GREATER_THAN));
 
 		printWriter.flush();
 	}
@@ -112,9 +113,10 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print("<iframe src=\"");
-		printWriter.print(_remoteAppEntry.getIFrameURL());
-		printWriter.print("\"></iframe>");
+		printWriter.print(
+			StringBundler.concat(
+				"<iframe src=\"", _remoteAppEntry.getIFrameURL(),
+				"\"></iframe>"));
 
 		printWriter.flush();
 	}
