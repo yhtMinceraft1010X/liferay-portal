@@ -227,7 +227,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceOrder.setShippingOptionName(shippingOptionName);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
-		commerceOrder.setPaymentStatus(paymentStatus);
 
 		_setCommerceOrderPrices(
 			commerceOrder, subtotal, shippingAmount, taxAmount, total,
@@ -239,6 +238,8 @@ public class CommerceOrderLocalServiceImpl
 		_setCommerceOrderSubtotalDiscountValue(commerceOrder, null, false);
 		_setCommerceOrderTotalDiscountValue(commerceOrder, null, true);
 		_setCommerceOrderTotalDiscountValue(commerceOrder, null, false);
+
+		commerceOrder.setPaymentStatus(paymentStatus);
 
 		Date orderDate = PortalUtil.getDate(
 			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
