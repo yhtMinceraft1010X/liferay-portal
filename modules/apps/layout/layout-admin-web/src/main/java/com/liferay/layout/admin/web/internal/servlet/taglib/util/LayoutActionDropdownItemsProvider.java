@@ -221,7 +221,6 @@ public class LayoutActionDropdownItemsProvider {
 								layout),
 						dropdownItem -> {
 							dropdownItem.put("symbolRight", "shortcut");
-
 							dropdownItem.setHref(
 								_layoutsAdminDisplayContext.getPreviewDraftURL(
 									layout));
