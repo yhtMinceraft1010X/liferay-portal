@@ -986,8 +986,6 @@ definition {
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
 	@priority = "4"
 	test CanViewFieldsDetailsByClickingName {
-
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1009,8 +1007,6 @@ definition {
 		ObjectAdmin.goToFieldsDetails(fieldName = "customObjectField");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
-
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
