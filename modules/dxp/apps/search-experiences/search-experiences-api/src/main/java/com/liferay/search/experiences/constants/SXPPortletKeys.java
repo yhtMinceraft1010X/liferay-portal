@@ -19,8 +19,8 @@ package com.liferay.search.experiences.constants;
  */
 public class SXPPortletKeys {
 
-	public static final String SXP_BLUEPRINTS_ADMIN =
+	public static final String SXP_BLUEPRINT =
 		"com_liferay_search_experiences_web_internal_" +
-			"_portlet_SXPBlueprintsAdminPortlet";
+			"_portlet_SXPBlueprintPortlet";
 
 }

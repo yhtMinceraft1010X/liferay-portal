@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = {})
-public class SXPBlueprintsAdminPortletResourcePermissionRegistrar {
+public class SXPBlueprintPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -42,7 +42,7 @@ public class SXPBlueprintsAdminPortletResourcePermissionRegistrar {
 			PortletResourcePermissionFactory.create(
 				SXPConstants.RESOURCE_NAME,
 				new StagedPortletPermissionLogic(
-					_stagingPermission, SXPPortletKeys.SXP_BLUEPRINTS_ADMIN)),
+					_stagingPermission, SXPPortletKeys.SXP_BLUEPRINT)),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"resource.name", SXPConstants.RESOURCE_NAME
 			).build());

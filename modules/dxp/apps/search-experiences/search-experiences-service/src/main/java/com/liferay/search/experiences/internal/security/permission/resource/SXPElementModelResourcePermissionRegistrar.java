@@ -49,7 +49,7 @@ public class SXPElementModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					new StagedModelPermissionLogic<>(
-						_stagingPermission, SXPPortletKeys.SXP_BLUEPRINTS_ADMIN,
+						_stagingPermission, SXPPortletKeys.SXP_BLUEPRINT,
 						SXPElement::getSXPElementId))),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"model.class.name", SXPElement.class.getName()
