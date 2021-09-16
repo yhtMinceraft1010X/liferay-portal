@@ -448,15 +448,9 @@ definition {
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
 			fieldName = "CustomField",
-			fieldType = "String"
-		);
+			fieldType = "String");
 
 		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be a lower case letter");
-		
-
-
-
-
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
