@@ -130,8 +130,6 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.search.experiences.model.Blueprint)"
 	)
 	private volatile ModelResourcePermission<SXPBlueprint>
