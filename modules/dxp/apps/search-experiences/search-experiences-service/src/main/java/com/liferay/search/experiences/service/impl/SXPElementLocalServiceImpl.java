@@ -114,28 +114,22 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		return sxpElement;
 	}
 
-	@Indexable(type = IndexableType.DELETE)
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public SXPElement deleteSystemSXPElement(long sxpElementId)
+	public SXPElement updateStatus(
+			long userId, long sxpElementId, int status)
 		throws PortalException {
 
 		SXPElement sxpElement = sxpElementPersistence.findByPrimaryKey(
 			sxpElementId);
 
-		return deleteSXPElement(sxpElement);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public SXPElement updateStatus(long userId, long sxpElementId, int status)
-		throws PortalException {
-
-		SXPElement sxpElement = getSXPElement(sxpElementId);
+		if (sxpElement.getStatus() == status) {
+			return sxpElement;
+		}
 
 		sxpElement.setStatus(status);
 
-		return updateSXPElement(sxpElement);
+		return sxpElementPersistence.update(sxpElement);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
