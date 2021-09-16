@@ -54,8 +54,8 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	@Override
 	public SXPElement addSXPElement(
 			long userId, long groupId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, Map<Locale, String> titleMap,
-			int type, ServiceContext serviceContext)
+			String elementDefinitionJSON, boolean readOnly,
+			Map<Locale, String> titleMap, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(sxpElementDefinitionJSON, titleMap, type, serviceContext);
@@ -74,7 +74,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(false);
-		sxpElement.setReadOnly(_isReadOnly(serviceContext));
+		sxpElement.setReadOnly(readOnly);
 		sxpElement.setTitleMap(titleMap);
 		sxpElement.setType(type);
 		sxpElement.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -146,20 +146,12 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			elementDefinitionJSON, titleMap, sxpElement.getType(),
 			serviceContext);
 
-		sxpElement.setModifiedDate(serviceContext.getModifiedDate(new Date()));
-
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
 		sxpElement.setTitleMap(titleMap);
 
 		return updateSXPElement(sxpElement);
-	}
-
-	private Boolean _isReadOnly(ServiceContext serviceContext) {
-		return GetterUtil.getBoolean(
-			serviceContext.getAttribute(
-				SXPElementLocalServiceImpl.class.getName() + "#_read-only"));
 	}
 
 	private void _validate(
