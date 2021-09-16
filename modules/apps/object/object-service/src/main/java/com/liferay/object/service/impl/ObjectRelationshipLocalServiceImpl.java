@@ -22,6 +22,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectRelationshipLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -245,7 +246,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setRequired(false);
 		objectField.setType("Long");
 
-		objectField = _objectFieldPersistence.update(objectField);
+		objectField = _objectFieldLocalService.updateObjectField(objectField);
 
 		if (objectDefinition2.isApproved()) {
 			runSQL(
@@ -319,6 +320,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
