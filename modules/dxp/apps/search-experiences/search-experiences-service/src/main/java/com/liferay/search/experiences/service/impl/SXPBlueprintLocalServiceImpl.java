@@ -69,10 +69,8 @@ public class SXPBlueprintLocalServiceImpl
 
 		_validate(configurationsJSON, titleMap, serviceContext);
 
-		long sxpBlueprintId = counterLocalService.increment(
-			Blueprint.class.getName());
-
-		SXPBlueprint sxpBlueprint = createSXPBlueprint(sxpBlueprintId);
+		SXPBlueprint sxpBlueprint = createSXPBlueprint(
+			counterLocalService.increment());
 
 		sxpBlueprint.setGroupId(groupId);
 		sxpBlueprint.setCompanyId(user.getCompanyId());
