@@ -134,7 +134,8 @@ public class SXPBlueprintLocalServiceImpl
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
-		Blueprint sxpBlueprint = getSXPBlueprint(sxpBlueprintId);
+		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(
+			sxpBlueprintId);
 
 		sxpBlueprint.setStatus(status);
 		sxpBlueprint.setStatusByUserId(userId);
@@ -152,7 +153,8 @@ public class SXPBlueprintLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SXPBlueprint sxpBlueprint = getBlueprint(sxpBlueprintId);
+		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(
+			sxpBlueprintId);
 
 		_validate(configurationsJSON, titleMap, serviceContext);
 
@@ -185,7 +187,7 @@ public class SXPBlueprintLocalServiceImpl
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			sxpBlueprint.getCompanyId(), sxpBlueprint.getGroupId(), userId,
-			Blueprint.class.getName(), sxpBlueprint.getSXPBlueprintId(),
+			SXPBlueprint.class.getName(), sxpBlueprint.getSXPBlueprintId(),
 			sxpBlueprint, serviceContext,
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
