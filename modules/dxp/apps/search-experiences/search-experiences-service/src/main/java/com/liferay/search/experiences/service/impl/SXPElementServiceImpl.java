@@ -16,28 +16,22 @@ package com.liferay.search.experiences.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 import com.liferay.search.experiences.service.base.SXPElementServiceBaseImpl;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,7 +47,8 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 	@Override
 	public SXPElement addSXPElement(
-			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
+			long groupId, Map<Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean readOnly,
 			Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -63,7 +58,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 		return sxpElementLocalService.addSXPElement(
 			getUserId(), groupId, descriptionMap, elementDefinitionJSON,
-			titleMap, type, serviceContext);
+			readOnly, titleMap, type, serviceContext);
 	}
 
 	@Override
@@ -102,9 +97,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 			hidden, titleMap, serviceContext);
 	}
 
-	@Reference(
-		target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")
 	private volatile PortletResourcePermission _portletResourcePermission;
 
 	@Reference

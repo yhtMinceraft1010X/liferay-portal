@@ -27,14 +27,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.search.experiences.exception.SXPElementReadOnlyException;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
+import com.liferay.search.experiences.exception.SXPElementReadOnlyException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.base.SXPElementLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPElementValidator;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,10 +54,11 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	public SXPElement addSXPElement(
 			long userId, long groupId, Map<Locale, String> descriptionMap,
 			String elementDefinitionJSON, boolean readOnly,
-			Map<Locale, String> titleMap, int type, ServiceContext serviceContext)
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(sxpElementDefinitionJSON, titleMap, type, serviceContext);
+		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));
@@ -93,7 +93,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		SXPElement sxpElement = sxpElementPersistence.findByPrimaryKey(
 			sxpElementId);
 
-		return deleteElement(sxpElement);
+		return deleteSXPElement(sxpElement);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -116,8 +116,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public SXPElement updateStatus(
-			long userId, long sxpElementId, int status)
+	public SXPElement updateStatus(long userId, long sxpElementId, int status)
 		throws PortalException {
 
 		SXPElement sxpElement = sxpElementPersistence.findByPrimaryKey(
