@@ -946,7 +946,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 
 		CreateObject.saveObject();
 
@@ -954,7 +954,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
-		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
@@ -973,7 +973,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 
 		CreateObject.saveObject();
 
@@ -981,7 +981,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
-		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Users");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object plural label after it is published"
