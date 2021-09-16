@@ -290,11 +290,34 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Field Name field blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveFieldNameBlank {
 
-		// TODO LPS-138828 CannotLeaveFieldNameBlank pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldName = " ",
+			fieldType = "String"
+		);
+
+		ObjectAdmin.viewFieldErrorMessage(
+			message = "Name is null"
+		);
+
+
+
 
 	}
 
