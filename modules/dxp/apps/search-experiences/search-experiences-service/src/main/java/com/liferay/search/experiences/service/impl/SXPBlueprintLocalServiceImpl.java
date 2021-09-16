@@ -205,10 +205,13 @@ public class SXPBlueprintLocalServiceImpl
 		if (!GetterUtil.getBoolean(
 				serviceContext.getAttribute(
 					SXPBlueprintLocalServiceImpl.class.getName() +
-						"#_validate"))) {
+						"#_validate"),
+				true)) {
 
-			_sxpBlueprintValidator.validate(configurationsJSON, titleMap);
+			return;
 		}
+
+		_sxpBlueprintValidator.validate(configurationsJSON, titleMap);
 	}
 
 	@Reference
