@@ -10,7 +10,6 @@
  */
 
 import ClayAutocomplete from '@clayui/autocomplete';
-import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import PropTypes from 'prop-types';
@@ -21,7 +20,12 @@ const SKU = 'sku';
 const DIAGRAM = 'diagram';
 const AdminTooltip = ({
 	namespace,
-	showTooltip,
+	selectedProduct,
+	selectedProductQuantity,
+	selectedProductSequence,
+	setSelectedProduct,
+	setSelectedProductQuantity,
+	setSelectedProductSequence,
 	type,
 }) => {
 	const [active, setActive] = useState(false);
@@ -30,8 +34,6 @@ const AdminTooltip = ({
 	const dropdownNode = useRef();
 	const [query, setQuery] = useState('');
 	const [linkedValue, setLinkedValue] = useState(SKU);
-	const [selectedProduct, setSelectedProduct] = useState(showTooltip.details);
-	const [quantity, setQuantity] = useState(showTooltip.details.quantity);
 
 	useEffect(() => {
 		const getProducts = linkedValue === SKU ? searchSkus : searchDiagrams;
@@ -41,10 +43,7 @@ const AdminTooltip = ({
 				setProducts(jsonResponse.items)
 			);
 		}
-		else {
-			setSelectedProduct(showTooltip.details);
-		}
-	}, [query, linkedValue, showTooltip]);
+	}, [query, linkedValue, setSelectedProduct]);
 
 	useEffect(() => {
 		function handleClick(event) {
@@ -77,14 +76,14 @@ const AdminTooltip = ({
 
 					<ClayInput
 						id={`${namespace}pin-position`}
-						onChange={(event) =>
-							setPinPositionLabel(event.target.value)
-						}
+						onChange={(event) => {
+							setSelectedProductSequence(event.target.value)
+						}}
 						placeholder={Liferay.Language.get(
 							'insert-your-position-here'
 						)}
 						type="text"
-						value={selectedProduct?.label || ""}
+						value={selectedProductSequence || ""}
 					/>
 				</ClayForm.Group>
 			)}
@@ -116,8 +115,6 @@ const AdminTooltip = ({
 				<ClayAutocomplete ref={node}>
 					<ClayAutocomplete.Input
 						onChange={(event) => {
-							setSelectedProduct(null);
-
 							setQuery(event.target.value);
 						}}
 						onFocus={() => {
@@ -132,7 +129,6 @@ const AdminTooltip = ({
 					<ClayAutocomplete.DropDown active={active && products}>
 						<div ref={dropdownNode}>
 							<ClayDropDown.ItemList>
-								
 								{!products?.length && (
 									<ClayDropDown.Item disabled>
 										{Liferay.Language.get(
@@ -148,7 +144,6 @@ const AdminTooltip = ({
 											match={selectedProduct?.sku}
 											onClick={() => {
 												setSelectedProduct(product);
-
 												setActive(false);
 											}}
 											value={`${product.sku} - ${product.productName.en_US}`}
@@ -167,21 +162,21 @@ const AdminTooltip = ({
 
 				<ClayInput
 					id={`${namespace}pin-quantity`}
+					min={1}
 					onChange={(event) =>
-						setQuantity(parseInt(event.target.value, 10))
+						setSelectedProductQuantity(
+							parseInt(event.target.value, 10)
+						)
 					}
 					type="number"
-					value={quantity}
+					value={selectedProductQuantity}
 				/>
 			</ClayForm.Group>
-
-			
-		</>	
+		</>
 	);
 };
 
 AdminTooltip.propTypes = {
-	setShowTooltip: PropTypes.func,
 	showTooltip: PropTypes.shape({
 		details: PropTypes.shape({
 			cx: PropTypes.double,

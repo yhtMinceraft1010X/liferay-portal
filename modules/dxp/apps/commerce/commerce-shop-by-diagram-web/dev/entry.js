@@ -20,6 +20,7 @@ render(
 		isAdmin: true,
 		namespace: 'portlet_shop_by_diagram_namespace_',
 		spritemap: './assets/clay/icons.svg',
+		productId: 44212,
 	},
 	document.getElementById('shop-by-diagram')
 );

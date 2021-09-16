@@ -101,6 +101,10 @@ module.exports = {
 				__dirname,
 				'../../../../node_modules/frontend-js-web/src/main/resources/META-INF/resources/index.es.js'
 			),
+			'frontend-taglib-clay/data_set_display/utils/eventsDefinitions': path.resolve(
+				__dirname,
+				'../../../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/utils/eventsDefinitions.js'
+			),
 		},
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	},

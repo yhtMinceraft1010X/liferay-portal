@@ -9,13 +9,11 @@
  * distribution rights of the Software.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
-import {fetch} from 'frontend-js-web';
-// import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import ClayButton from '@clayui/button';
-import ClayModal, { useModal } from '@clayui/modal';
-import { searchSkus} from './utilities/utilities'
-
+import {ClayIconSpriteContext} from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
+import { fetch, openToast} from 'frontend-js-web';
+import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -56,7 +54,6 @@ const Diagram = ({
 		handler: false,
 		pin: null,
 	});
-	const [skus, setSkus] = useState([]);
 	const [diagramSizes, setDiagramSizes] = useState({k: 1, x: 0, y: 0});
 	const [resetZoom, setResetZoom] = useState(false);
 	const [zoomInHandler, setZoomInHandler] = useState(false);
@@ -65,6 +62,8 @@ const Diagram = ({
 	const [scale, setScale] = useState(1);
 	const [selectedOption, setSelectedOption] = useState(1);
 	const [cPins, setCpins] = useState([]);
+	const [selectedProductQuantity, setSelectedProductQuantity] = useState(1);
+	const [selectedProductSequence, setSelectedProductSequence] = useState(1);
 	const [showTooltip, setShowTooltip] = useState({
 		details: {
 			cx: 0,
@@ -84,17 +83,18 @@ const Diagram = ({
 		radius: newPinSettings.defaultRadius,
 	});
 	const [visible, setVisible] = useState(false);
-	const { observer, onClose } = useModal({
-		onClose: () => setVisible(false)
+	const {observer, onClose} = useModal({
+		onClose: () => setVisible(false),
 	});
+	const [selectedProduct, setSelectedProduct] = useState(null);
 
-
-	const importPinSchema = () => {
+	const importPinSchema = useCallback(() => {
 		const textDatas = [];
 		const pinData = [];
 		const parser = new DOMParser();
 		const xmlImage = parser.parseFromString(svgString, 'image/svg+xml');
 		const rootLevel = xmlImage.getElementById('Livello_Testi');
+
 		if (rootLevel) {
 			const rects = rootLevel.getElementsByTagName('rect');
 			const text = rootLevel.getElementsByTagName('text');
@@ -115,15 +115,14 @@ const Diagram = ({
 			});
 
 			setPinImport(pinData);
+
 			return pinData;
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		setCpins(pinImport);
 	}, [pinImport]);
-
-	
 
 	const loadPins = useCallback(
 		() =>
@@ -152,7 +151,6 @@ const Diagram = ({
 	};
 
 	const updatePin = (node) => {
-
 		if (node.id) {
 			return fetch(`${pinsEndpoint}${PINS}/${node.id}`, {
 				body: JSON.stringify(node),
@@ -160,7 +158,7 @@ const Diagram = ({
 				method: 'PATCH',
 			});
 		}
-		
+
 		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/${PINS}`, {
 			body: JSON.stringify(node),
 			headers: HEADERS,
@@ -172,16 +170,37 @@ const Diagram = ({
 				});
 			}
 		});
-		
+	};
+
+	const updateDiagramEntry = (node, entryId) => {
+		return fetch(`${pinsEndpoint}diagramEntries/${entryId}`, {
+			body: JSON.stringify(node),
+			headers: HEADERS,
+			method: 'PATCH',
+		});
 	};
 
 	const updateMappedProduct = (node) => {
 		return fetch(`${pinsEndpoint}${PRODUCTS}/${productId}/diagramEntries`, {
 			headers: HEADERS,
 			method: 'GET',
-		}).then((res) => res.json())
-		.then(console.log)
-	}
+		})
+			.then((res) => res.json())
+			.then((jsonResponse) => {
+				const pinToBeUpdated = jsonResponse.items.find(
+					(pin) => pin.sequence === node.sequence
+				);
+				if (pinToBeUpdated) {
+					return updateDiagramEntry(node, pinToBeUpdated?.id);
+				}
+				openToast({
+					message: Liferay.Language.get(
+						'unable-to-create-a-new-pin-definition'
+					),
+					type: 'danger',
+				});
+			});
+	};
 
 	const pinClickAction = (updatedPin) => {
 		setShowTooltip({
@@ -200,30 +219,27 @@ const Diagram = ({
 	};
 
 	const handleTooltipSave = () => {
-
 		if (type !== 'diagram.type.svg') {
 			updatePin({
 				diagramEntry: {
 					diagram: showTooltip.details.linkedToSku === 'sku',
 					productId: showTooltip.details.productId,
 					quantity: showTooltip.details.quantity,
-					sequence: showTooltip.details.label,
-					sku: showTooltip.details.sku,
+					sequence: selectedProductSequence,
+					sku: selectedProduct.sku,
 					skuUuid: showTooltip.details.id,
 				},
 				id: showTooltip.details.id,
 				positionX: showTooltip.details.cx,
 				positionY: showTooltip.details.cy,
-				sequence: showTooltip.details.label,
+				sequence: selectedProductSequence,
 			});
-		} else {
+		}
+		else {
 			updateMappedProduct({
-				diagramEntry: {
-					quantity: showTooltip.details.quantity,
-					sequence: showTooltip.details.label,
-					sku: showTooltip.details.sku,
-				},
-				sequence: showTooltip.details.label,
+				quantity: selectedProductQuantity,
+				sequence: selectedProductSequence,
+				sku: selectedProduct.sku,
 			});
 		}
 
@@ -240,22 +256,22 @@ const Diagram = ({
 			tooltip: false,
 		});
 
-		onClose()
-
-	}
+		onClose();
+	};
 
 	useEffect(() => {
 		fetch(imageState)
 			.then((response) => response.text())
 			.then((text) => {
-				setSvgString(text)
+				setSvgString(text);
 				if (type === 'diagram.type.svg') {
-					const schema = importPinSchema()
-					setCpins(schema|| [])
-				} else if (type === 'diagram.type.default') {
+					const schema = importPinSchema();
+					setCpins(schema || []);
+				}
+				else if (type === 'diagram.type.default') {
 					loadPins();
 				}
-			})
+			});
 	}, [imageState, pinsEndpoint, productId, loadPins, type]);
 
 	return imageState ? (
@@ -282,8 +298,6 @@ const Diagram = ({
 					diagramSizes={diagramSizes}
 					enablePanZoom={enablePanZoom}
 					enableResetZoom={enableResetZoom}
-					visible={visible}
-					setVisible={setVisible}
 					imageSettings={imageSettings}
 					imageURL={imageURL}
 					isAdmin={isAdmin}
@@ -307,11 +321,14 @@ const Diagram = ({
 					setResetZoom={setResetZoom}
 					setScale={setScale}
 					setSelectedOption={setSelectedOption}
+					setSelectedProductSequence={setSelectedProductSequence}
 					setShowTooltip={setShowTooltip}
+					setVisible={setVisible}
 					setZoomInHandler={setZoomInHandler}
 					setZoomOutHandler={setZoomOutHandler}
 					showTooltip={showTooltip}
 					svgString={svgString}
+					visible={visible}
 					zoomController={zoomController}
 					zoomInHandler={zoomInHandler}
 					zoomOutHandler={zoomOutHandler}
@@ -323,21 +340,26 @@ const Diagram = ({
 							spritemap={spritemap}
 							status="info"
 						>
-							<ClayModal.Header>{showTooltip.details.label}</ClayModal.Header>
+							<ClayModal.Header>
+								{showTooltip.details.label}
+							</ClayModal.Header>
 							<ClayModal.Body>
 								<AdminTooltip
-									deletePin={deletePin}
+									initialSequence={showTooltip.details.label}
 									namespace={namespace}
-									pinsEndpoint={pinsEndpoint}
-									removePinHandler={removePinHandler}
-									searchSkus={searchSkus}
-									setRemovePinHandler={setRemovePinHandler}
-									setShowTooltip={setShowTooltip}
-									setSkus={setSkus}
-									showTooltip={showTooltip}
-									skus={skus}
+									selectedProduct={selectedProduct}
+									selectedProductQuantity={
+										selectedProductQuantity
+									}
+									selectedProductSequence={
+										selectedProductSequence
+									}
+									setSelectedProduct={setSelectedProduct}
+									setSelectedProductQuantity={
+										setSelectedProductQuantity
+									}
+									setSelectedProductSequence={setSelectedProductSequence}
 									type={type}
-									updatePin={updatePin}
 								/>
 							</ClayModal.Body>
 							<ClayModal.Footer
@@ -348,9 +370,13 @@ const Diagram = ({
 											onClick={() => {
 												deletePin({
 													id: showTooltip.details.id,
-													positionX: showTooltip.details.cx,
-													positionY: showTooltip.details.cy,
-													sequence: showTooltip.details.label,
+													positionX:
+														showTooltip.details.cx,
+													positionY:
+														showTooltip.details.cy,
+													sequence:
+														showTooltip.details
+															.label,
 												});
 												setRemovePinHandler({
 													handler: true,
@@ -362,7 +388,7 @@ const Diagram = ({
 														cy: null,
 														id: null,
 														label: null,
-														linkedToSku: SKU,
+														linkedToSku: 'sku',
 														quantity: null,
 														sku: '',
 														transform: '',
@@ -374,7 +400,7 @@ const Diagram = ({
 										>
 											{Liferay.Language.get('delete')}
 										</ClayButton>
-								
+
 										<ClayButton
 											displayType="secondary"
 											onClick={() => {
@@ -396,7 +422,6 @@ const Diagram = ({
 										>
 											{Liferay.Language.get('close')}
 										</ClayButton>
-
 									</ClayButton.Group>
 								}
 								last={
@@ -406,7 +431,7 @@ const Diagram = ({
 									>
 										{Liferay.Language.get('save')}
 									</ClayButton>
-								}						
+								}
 							/>
 						</ClayModal>
 					)}
@@ -479,8 +504,7 @@ Diagram.defaultProps = {
 		defaultRadius: 10,
 	},
 	pins: [],
-	pinsEndpoint:
-		'/o/headless-commerce-admin-catalog/v1.0/',
+	pinsEndpoint: '/o/headless-commerce-admin-catalog/v1.0/',
 	productId: 44206,
 	showTooltip: {
 		details: {

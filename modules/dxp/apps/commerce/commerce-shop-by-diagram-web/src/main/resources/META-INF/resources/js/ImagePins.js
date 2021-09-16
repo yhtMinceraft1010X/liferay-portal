@@ -41,8 +41,6 @@ const ImagePins = ({
 	imageSettings,
 	imageURL,
 	isAdmin,
-	visible,
-	setVisible,
 	namespace,
 	navigationController,
 	newPinSettings,
@@ -57,7 +55,9 @@ const ImagePins = ({
 	setRemovePinHandler,
 	setResetZoom,
 	setSelectedOption,
+	setSelectedProductSequence,
 	setShowTooltip,
+	setVisible,
 	setZoomInHandler,
 	setZoomOutHandler,
 	showTooltip,
@@ -272,8 +272,6 @@ const ImagePins = ({
 			addPin();
 		}
 
-		// select(container).append('img').html(svgString);
-
 		if (!removePinHandler.handler && !addPinHandler) {
 			try {
 				container.selectAll('.circle_pin').remove();
@@ -288,46 +286,28 @@ const ImagePins = ({
 					.attr('id', 'sbdtest')
 					.html(svgString);
 
-				// container.children.attr('height','300px')
-				
-
 				const rootLevel = document.getElementById('Livello_Testi');
 
 				if (rootLevel) {
-					const textDatas = [];
-					const pinDatas = [];
-					const rects = rootLevel.getElementsByTagName('rect');
 					const texts = rootLevel.getElementsByTagName('text');
 
-					Array.from(rects).map((rect, i) => {
-						rect.addEventListener('click', () =>
-							console.log(`ciao ${i}`)
-						);
-					});
-					
-					Array.from(texts).map((text, i) => {
-						textDatas.push({
-							label: text.textContent,
-						});
+					texts.forEach((text, i) => {
 						text.addEventListener('click', () => {
-							setVisible(true)
-							const test1 = {
+
+							setVisible(true);
+							const pinDefinition = {
 								details: {
-									cx: null,
-									cy: null,
-									id: null,
-									label: textDatas[i].label,
+									label: text.textContent,
 									linkedToSku: 'sku',
 									quantity: 1,
-									sku: '',
-									transform:
-										'matrix(0.9999 0.0165 -0.0165 0.9999 86.0798 171.5356)',
 								},
 								tooltip: true,
-							}
-							pinClickAction(test1);
-							setVisible(true)
-							setShowTooltip(test1);
+							};
+
+							setSelectedProductSequence(text.textContent);
+							pinClickAction(pinDefinition);
+							setVisible(true);
+							setShowTooltip(pinDefinition);
 						});
 					});
 				}
@@ -425,53 +405,21 @@ const ImagePins = ({
 		if (isAdmin) {
 			select('#newPin').on('click', handleAddPin);
 		}
-	}, [
-		addNewPinState,
-		addPinHandler,
-		changedScale,
-		cPins,
-		execZoomIn,
-		selectedOption,
-		isAdmin,
-		enablePanZoom,
-		imageSettings,
-		navigationController,
-		newPinSettings,
-		removePinHandler,
-		handleAddPin,
-		resetZoom,
-		setAddPinHandler,
-		setChangedScale,
-		setCpins,
-		setPinClickHandler,
-		setResetZoom,
-		setRemovePinHandler,
-		setSelectedOption,
-		setZoomInHandler,
-		setZoomOutHandler,
-		showTooltip,
-		svgString,
-		zoomOutHandler,
-		zoomInHandler,
-		pinClickAction,
-	]);
+	}, [addNewPinState, addPinHandler, changedScale, cPins, execZoomIn, selectedOption, isAdmin, enablePanZoom, imageSettings, navigationController, newPinSettings, removePinHandler, handleAddPin, resetZoom, setAddPinHandler, setChangedScale, setCpins, setPinClickHandler, setResetZoom, setRemovePinHandler, setSelectedOption, setZoomInHandler, setZoomOutHandler, showTooltip, svgString, zoomOutHandler, zoomInHandler, pinClickAction, setVisible, setShowTooltip]);
 
 	return (
-		<div
-			className="diagram-pins-container"
-			ref={containerRef}
-		>
+		<div className="diagram-pins-container" ref={containerRef}>
 			<svg
 				height={imageSettings.height}
 				ref={svgRef}
 				width={imageSettings.width}
 			>
-			<g data-testid={`${namespace}container`}>
-				{/* <image
+				<g data-testid={`${namespace}container`}>
+					{/* <image
 						height={imageSettings.height}
 						href={imageURL}
 					></image> */}
-			</g>
+				</g>
 			</svg>
 
 			{children}
