@@ -55,9 +55,6 @@ public class RelatedModelsDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		long objectEntryId = ParamUtil.getLong(
-			httpServletRequest, "objectEntryId");
-
 		long objectRelationshipId = ParamUtil.getLong(
 			httpServletRequest, "objectRelationshipId");
 
@@ -76,6 +73,9 @@ public class RelatedModelsDataSetDataProvider
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
+
+		long objectEntryId = ParamUtil.getLong(
+			httpServletRequest, "objectEntryId");
 
 		return TransformUtil.transform(
 			objectRelatedModelsProvider.getRelatedModels(
@@ -92,9 +92,6 @@ public class RelatedModelsDataSetDataProvider
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		long objectEntryId = ParamUtil.getLong(
-			httpServletRequest, "objectEntryId");
-
 		long objectRelationshipId = ParamUtil.getLong(
 			httpServletRequest, "objectRelationshipId");
 
@@ -113,6 +110,9 @@ public class RelatedModelsDataSetDataProvider
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
+
+		long objectEntryId = ParamUtil.getLong(
+			httpServletRequest, "objectEntryId");
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
 			objectScopeProvider.getGroupId(httpServletRequest),
