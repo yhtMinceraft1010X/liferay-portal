@@ -122,19 +122,14 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 	@Override
 	protected Document doGetDocument(SXPElement sxpElement) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Indexing document " +
-					sxpElement.getSXPElementId());
+			_log.debug("Indexing document " + sxpElement.getSXPElementId());
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, sxpElement);
 
 		document.addDate(Field.MODIFIED_DATE, sxpElement.getModifiedDate());
-
 		document.addNumber(Field.TYPE, sxpElement.getType());
-
 		document.addKeyword("hidden", sxpElement.isHidden());
-
 		document.addKeyword("readOnly", sxpElement.isReadOnly());
 
 		for (Locale locale :
@@ -158,9 +153,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Document " + sxpElement +
-					" indexed successfully");
+			_log.debug("Document " + sxpElement + " indexed successfully");
 		}
 
 		return document;
@@ -175,7 +168,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexSXPElements(companyId);
+		_reindexSXPElements(companyId);
 	}
 
 	@Override
@@ -185,7 +178,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 			getDocument(sxpElement), isCommitImmediately());
 	}
 
-	protected void reindexSXPElements(long companyId) throws PortalException {
+	private void _reindexSXPElements(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpElementLocalService.getIndexableActionableDynamicQuery();
 
