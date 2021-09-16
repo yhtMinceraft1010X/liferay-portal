@@ -39,12 +39,20 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.NestedQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -190,15 +198,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		searchContext.setAttribute(
 			"objectDefinitionId", _objectDefinition.getObjectDefinitionId());
 
-		Optional<Map<String, String[]>> configurationOptional =
-			collectionQuery.getConfigurationOptional();
-
-		Map<String, String[]> configuration = configurationOptional.orElse(
-			Collections.emptyMap());
-
-		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
-			searchContext.setAttribute(entry.getKey(), entry.getValue());
-		}
+		searchContext.setBooleanClauses(_getBooleanClauses(collectionQuery));
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -231,6 +231,69 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return searchContext;
 	}
 
+	private BooleanClause[] _getBooleanClauses(CollectionQuery collectionQuery)
+		throws ParseException {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		Optional<Map<String, String[]>> configurationOptional =
+			collectionQuery.getConfigurationOptional();
+
+		Map<String, String[]> configuration = configurationOptional.orElse(
+			Collections.emptyMap());
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId());
+
+		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
+			String[] values = entry.getValue();
+
+			if ((values == null) || (values.length == 0) ||
+				values[0].isEmpty()) {
+
+				continue;
+			}
+
+			ObjectField objectField = _getObjectField(
+				entry.getKey(), objectFields);
+
+			if (objectField != null) {
+				BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+
+				nestedBooleanQuery.add(
+					new TermQueryImpl(
+						"nestedFieldArray.fieldName", entry.getKey()),
+					BooleanClauseOccur.MUST);
+
+				nestedBooleanQuery.add(
+					new TermQueryImpl(
+						_getField(objectField), entry.getValue()[0]),
+					BooleanClauseOccur.MUST);
+
+				booleanQuery.add(
+					new NestedQuery("nestedFieldArray", nestedBooleanQuery),
+					BooleanClauseOccur.MUST);
+			}
+		}
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQuery, BooleanClauseOccur.MUST.getName())
+		};
+	}
+
+	private String _getField(ObjectField objectField) {
+		if (Objects.equals(objectField.getType(), "Boolean")) {
+			return "nestedFieldArray.value_boolean";
+		}
+		else if (Objects.equals(objectField.getType(), "String")) {
+			return "nestedFieldArray.value_text";
+		}
+
+		return "";
+	}
+
 	private long _getGroupId() throws PortalException {
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -244,6 +307,18 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		return objectScopeProvider.getGroupId(serviceContext.getRequest());
+	}
+
+	private ObjectField _getObjectField(
+		String name, List<ObjectField> objectFields) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(name, objectField.getName())) {
+				return objectField;
+			}
+		}
+
+		return null;
 	}
 
 	private List<SelectInfoFieldType.Option> _getOptions(
