@@ -1061,7 +1061,6 @@ definition {
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
 	@priority = "4"
 	test ColumnsAreDisplayedFieldsTable {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1083,10 +1082,6 @@ definition {
 		ObjectAdmin.goToFieldsTab();
 
 		ObjectAdmin.assertFieldsTableColumnsAreDisplayed();
-
-		
-
-
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"

@@ -74,9 +74,6 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_NAME_COLUMN");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
-
-
-		
 	}
 
 	macro assertKeywordAndText {
