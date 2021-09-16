@@ -52,13 +52,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 	@Override
-	public SXPElement addCompanySXPElement(
+	public SXPElement addSXPElement(
 			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
 			Map<Locale, String> titleMap, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		long groupId = _getCompanyGroupId(serviceContext);
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, SXPActionKeys.ADD_SXP_ELEMENT);
