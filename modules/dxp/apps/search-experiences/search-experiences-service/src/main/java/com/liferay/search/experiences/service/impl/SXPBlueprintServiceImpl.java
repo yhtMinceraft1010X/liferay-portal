@@ -130,7 +130,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.search.experiences.model.Blueprint)"
+		target = "(model.class.name=com.liferay.search.experiences.model.SXPBlueprint)"
 	)
 	private volatile ModelResourcePermission<SXPBlueprint>
 		_sxpBlueprintModelResourcePermission;
