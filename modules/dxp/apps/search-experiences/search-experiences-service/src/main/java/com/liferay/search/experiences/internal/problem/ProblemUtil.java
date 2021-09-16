@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.search.experiences.internal.problems;
+package com.liferay.search.experiences.internal.problem;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.search.experiences.problems.Problem;
-import com.liferay.search.experiences.problems.Severity;
+import com.liferay.search.experiences.problem.Problem;
+import com.liferay.search.experiences.problem.Severity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
  * @author Petteri Karttunen
  * @author Brian Wing Shun Chan
  */
-public class ProblemsUtil {
+public class ProblemUtil {
 
 	public static void addProblem(Problem problem) {
 	}
@@ -44,6 +44,6 @@ public class ProblemsUtil {
 
 	private static final ThreadLocal<List<Problem>> _threadLocal =
 		new CentralizedThreadLocal<>(
-			ProblemsUtil.class.getName() + "._threadLocal", ArrayList::new);
+			ProblemUtil.class.getName() + "._threadLocal", ArrayList::new);
 
 }

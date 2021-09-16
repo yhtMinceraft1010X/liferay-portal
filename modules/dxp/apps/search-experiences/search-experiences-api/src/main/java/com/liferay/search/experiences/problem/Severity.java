@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.problems;
+package com.liferay.search.experiences.problem;
 
 /**
  * @author Petteri Karttunen
