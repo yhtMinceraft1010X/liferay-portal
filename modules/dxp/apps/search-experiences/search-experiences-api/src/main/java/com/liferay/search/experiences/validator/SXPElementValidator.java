@@ -25,8 +25,7 @@ import java.util.Map;
  */
 public interface SXPElementValidator {
 
-	public void validate(
-			String elementDefinitionJSON, int type)
+	public void validate(String elementDefinitionJSON, int type)
 		throws SXPElementElementDefinitionJSONException;
 
 	public void validate(
