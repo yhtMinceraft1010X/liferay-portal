@@ -64,8 +64,8 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 			getPermissionChecker(), groupId, SXPActionKeys.ADD_SXP_BLUEPRINT);
 
 		return sxpBlueprintLocalService.addSXPBlueprint(
-			getUserId(), groupId, titleMap, descriptionMap, configurationsJSON,
-			elementInstancesJSON, serviceContext);
+			getUserId(), groupId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	@Override
@@ -103,8 +103,8 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 			getPermissionChecker(), sxpBlueprintId, ActionKeys.UPDATE);
 
 		return _sxpBlueprintLocalService.updateSXPBlueprint(
-			getUserId(), sxpBlueprintId, titleMap, descriptionMap,
-			configurationsJSON, elementInstancesJSON, serviceContext);
+			getUserId(), sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	private long _getCompanyGroupId(ServiceContext serviceContext)
