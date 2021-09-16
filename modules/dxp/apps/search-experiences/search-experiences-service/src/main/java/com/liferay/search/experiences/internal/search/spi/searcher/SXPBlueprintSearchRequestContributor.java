@@ -81,8 +81,8 @@ public class SXPBlueprintSearchRequestContributor
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
-	@Reference
-	private SXPBlueprintSearchRequestEnhancer
-		_sxpBlueprintSearchRequestEnhancer;
+	private final SXPBlueprintSearchRequestEnhancer
+		_sxpBlueprintSearchRequestEnhancer =
+			new SXPBlueprintSearchRequestEnhancer();
 
 }

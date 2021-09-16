@@ -17,12 +17,9 @@ package com.liferay.search.experiences.internal.enhancer;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SXPBlueprintSearchRequestEnhancer.class)
 public class SXPBlueprintSearchRequestEnhancer {
 
 	public void enhance(
