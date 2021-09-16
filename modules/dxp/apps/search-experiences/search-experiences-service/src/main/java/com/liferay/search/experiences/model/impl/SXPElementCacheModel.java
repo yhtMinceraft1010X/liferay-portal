@@ -188,7 +188,9 @@ public class SXPElementCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -203,7 +205,7 @@ public class SXPElementCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		description = objectInput.readUTF();
-		elementDefinitionJSON = objectInput.readUTF();
+		elementDefinitionJSON = (String)objectInput.readObject();
 
 		hidden = objectInput.readBoolean();
 
@@ -252,10 +254,10 @@ public class SXPElementCacheModel
 		}
 
 		if (elementDefinitionJSON == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(elementDefinitionJSON);
+			objectOutput.writeObject(elementDefinitionJSON);
 		}
 
 		objectOutput.writeBoolean(hidden);

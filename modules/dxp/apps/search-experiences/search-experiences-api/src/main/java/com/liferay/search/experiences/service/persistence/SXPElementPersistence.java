@@ -525,6 +525,66 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 		throws NoSuchSXPElementException;
 
 	/**
+	 * Returns all the sxp elements that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T(long groupId, int type);
+
+	/**
+	 * Returns a range of all the sxp elements that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPElementModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of sxp elements
+	 * @param end the upper bound of the range of sxp elements (not inclusive)
+	 * @return the range of matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T(
+		long groupId, int type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the sxp elements that the user has permissions to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPElementModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of sxp elements
+	 * @param end the upper bound of the range of sxp elements (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
+			orderByComparator);
+
+	/**
+	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param sxpElementId the primary key of the current sxp element
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp element
+	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
+	 */
+	public SXPElement[] filterFindByG_T_PrevAndNext(
+			long sxpElementId, long groupId, int type,
+			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
+				orderByComparator)
+		throws NoSuchSXPElementException;
+
+	/**
 	 * Removes all the sxp elements where groupId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -540,6 +600,15 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements
 	 */
 	public int countByG_T(long groupId, int type);
+
+	/**
+	 * Returns the number of sxp elements that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the number of matching sxp elements that the user has permission to view
+	 */
+	public int filterCountByG_T(long groupId, int type);
 
 	/**
 	 * Returns all the sxp elements where groupId = &#63; and type = &#63; and status = &#63;.
@@ -689,6 +758,71 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 		throws NoSuchSXPElementException;
 
 	/**
+	 * Returns all the sxp elements that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T_S(
+		long groupId, int type, int status);
+
+	/**
+	 * Returns a range of all the sxp elements that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPElementModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp elements
+	 * @param end the upper bound of the range of sxp elements (not inclusive)
+	 * @return the range of matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T_S(
+		long groupId, int type, int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the sxp elements that the user has permissions to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SXPElementModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of sxp elements
+	 * @param end the upper bound of the range of sxp elements (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sxp elements that the user has permission to view
+	 */
+	public java.util.List<SXPElement> filterFindByG_T_S(
+		long groupId, int type, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
+			orderByComparator);
+
+	/**
+	 * Returns the sxp elements before and after the current sxp element in the ordered set of sxp elements that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param sxpElementId the primary key of the current sxp element
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next sxp element
+	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
+	 */
+	public SXPElement[] filterFindByG_T_S_PrevAndNext(
+			long sxpElementId, long groupId, int type, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<SXPElement>
+				orderByComparator)
+		throws NoSuchSXPElementException;
+
+	/**
 	 * Removes all the sxp elements where groupId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -706,6 +840,16 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	 * @return the number of matching sxp elements
 	 */
 	public int countByG_T_S(long groupId, int type, int status);
+
+	/**
+	 * Returns the number of sxp elements that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching sxp elements that the user has permission to view
+	 */
+	public int filterCountByG_T_S(long groupId, int type, int status);
 
 	/**
 	 * Caches the sxp element in the entity cache if it is enabled.

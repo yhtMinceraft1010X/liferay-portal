@@ -272,8 +272,8 @@ public class SXPElementPersistenceTest {
 			"SXPElement", "mvccVersion", true, "uuid", true, "sxpElementId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"description", true, "elementDefinitionJSON", true, "hidden", true,
-			"readOnly", true, "title", true, "type", true, "status", true);
+			"description", true, "hidden", true, "readOnly", true, "title",
+			true, "type", true, "status", true);
 	}
 
 	@Test

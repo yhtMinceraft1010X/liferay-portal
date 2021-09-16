@@ -89,7 +89,7 @@ public class SXPElementModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"description", Types.VARCHAR},
-		{"elementDefinitionJSON", Types.VARCHAR}, {"hidden_", Types.BOOLEAN},
+		{"elementDefinitionJSON", Types.CLOB}, {"hidden_", Types.BOOLEAN},
 		{"readOnly", Types.BOOLEAN}, {"title", Types.VARCHAR},
 		{"type_", Types.INTEGER}, {"status", Types.INTEGER}
 	};
@@ -108,7 +108,7 @@ public class SXPElementModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("elementDefinitionJSON", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("elementDefinitionJSON", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
@@ -117,7 +117,7 @@ public class SXPElementModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SXPElement (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpElementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description STRING null,elementDefinitionJSON VARCHAR(75) null,hidden_ BOOLEAN,readOnly BOOLEAN,title STRING null,type_ INTEGER,status INTEGER)";
+		"create table SXPElement (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,sxpElementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description STRING null,elementDefinitionJSON TEXT null,hidden_ BOOLEAN,readOnly BOOLEAN,title STRING null,type_ INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table SXPElement";
 

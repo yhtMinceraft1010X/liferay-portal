@@ -271,8 +271,7 @@ public class SXPBlueprintPersistenceTest {
 			"SXPBlueprint", "mvccVersion", true, "uuid", true, "sxpBlueprintId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"configurationsJSON", true, "description", true,
-			"elementInstancesJSON", true, "title", true, "status", true,
+			"description", true, "title", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
