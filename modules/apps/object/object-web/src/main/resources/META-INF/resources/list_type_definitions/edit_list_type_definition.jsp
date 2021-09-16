@@ -154,9 +154,9 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 			});
 	}
 
-	function handleDestroyPortlet() {
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	function <portlet:namespace />handleDestroyPortlet() {
+		Liferay.detach('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
 	}
 
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
+	Liferay.on('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
 </script>
