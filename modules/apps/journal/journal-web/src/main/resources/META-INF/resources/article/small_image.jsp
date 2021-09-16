@@ -61,6 +61,11 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallFileContainer">
 	<div>
+
+		<%
+		ThemeDisplay finalThemeDisplay = themeDisplay;
+		%>
+
 		<react:component
 			module="js/ImageInput.es"
 			props='<%=
@@ -76,8 +81,8 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 				).put(
 					"previewURL",
 					() -> {
-						if ((article != null) && Validator.isNotNull(article.getArticleImageURL(themeDisplay))) {
-							return article.getArticleImageURL(themeDisplay);
+						if ((article != null) && Validator.isNotNull(article.getArticleImageURL(finalThemeDisplay))) {
+							return article.getArticleImageURL(finalThemeDisplay);
 						}
 
 						return StringPool.BLANK;

@@ -58,6 +58,11 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 
 <div class="<%= Objects.equals(smallImageSource, "file") ? "" : "hide" %>" id="<portlet:namespace />smallImageFileContainer">
 	<div>
+
+		<%
+		ThemeDisplay finalThemeDisplay = themeDisplay;
+		%>
+
 		<react:component
 			module="js/ImageInput.es"
 			props='<%=
@@ -67,7 +72,7 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 					"previewURL",
 					() -> {
 						if (journalEditDDMTemplateDisplayContext.isSmallImage() && (ddmTemplate != null) && (ddmTemplate.getSmallImageId() > 0)) {
-							return ddmTemplate.getTemplateImageURL(themeDisplay);
+							return ddmTemplate.getTemplateImageURL(finalThemeDisplay);
 						}
 
 						return StringPool.BLANK;
