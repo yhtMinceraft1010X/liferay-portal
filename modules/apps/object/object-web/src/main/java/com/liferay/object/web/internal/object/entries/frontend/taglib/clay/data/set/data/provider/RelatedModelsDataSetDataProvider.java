@@ -26,7 +26,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.web.internal.object.entries.constants.RelatedObjectEntryClayDataSetDisplayNames;
+import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesClayDataSetDisplayNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.provider.key=" + RelatedObjectEntryClayDataSetDisplayNames.RELATED_ITEMS,
+	property = "clay.data.provider.key=" + ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS,
 	service = ClayDataSetDataProvider.class
 )
 public class RelatedModelsDataSetDataProvider

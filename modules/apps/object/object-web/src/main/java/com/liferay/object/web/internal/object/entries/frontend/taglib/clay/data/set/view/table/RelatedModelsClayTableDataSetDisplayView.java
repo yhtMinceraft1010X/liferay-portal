@@ -20,7 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.object.web.internal.object.entries.constants.RelatedObjectEntryClayDataSetDisplayNames;
+import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesClayDataSetDisplayNames;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.set.display.name=" + RelatedObjectEntryClayDataSetDisplayNames.RELATED_ITEMS,
+	property = "clay.data.set.display.name=" + ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS,
 	service = ClayDataSetDisplayView.class
 )
 public class RelatedModelsClayTableDataSetDisplayView

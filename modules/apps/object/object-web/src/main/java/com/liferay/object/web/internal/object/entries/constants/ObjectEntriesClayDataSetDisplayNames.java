@@ -17,7 +17,7 @@ package com.liferay.object.web.internal.object.entries.constants;
 /**
  * @author Marco Leo
  */
-public class RelatedObjectEntryClayDataSetDisplayNames {
+public class ObjectEntriesClayDataSetDisplayNames {
 
 	public static final String RELATED_ITEMS = "relatedItems";
 
