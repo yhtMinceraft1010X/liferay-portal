@@ -188,7 +188,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 			document.get(prefix + descriptionField, descriptionField));
 	}
 
-	private void _reindexSXPElements(long companyId) throws PortalException {
+	private void _reindexSXPElements(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpElementLocalService.getIndexableActionableDynamicQuery();
 

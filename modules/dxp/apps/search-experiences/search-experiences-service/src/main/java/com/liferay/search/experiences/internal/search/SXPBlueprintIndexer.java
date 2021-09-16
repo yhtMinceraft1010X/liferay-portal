@@ -188,7 +188,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 			document.get(prefix + descriptionField, descriptionField));
 	}
 
-	private void _reindexSXPBlueprints(long companyId) throws PortalException {
+	private void _reindexSXPBlueprints(long companyId) throws Exception {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpBlueprintLocalService.getIndexableActionableDynamicQuery();
 
