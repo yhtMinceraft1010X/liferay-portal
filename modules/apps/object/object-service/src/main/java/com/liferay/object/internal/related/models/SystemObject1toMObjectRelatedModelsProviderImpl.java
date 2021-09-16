@@ -87,7 +87,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getClassName());
 
-		DSLQuery dslQuery = _getRelatedModelsGroupByStep(
+		DSLQuery dslQuery = _getGroupByStep(
 			groupId, objectRelationshipId, primaryKey,
 			DSLQueryFactoryUtil.selectDistinct(_table)
 		).limit(
@@ -106,14 +106,14 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionMetadata.getClassName());
 
-		DSLQuery dslQuery = _getRelatedModelsGroupByStep(
+		DSLQuery dslQuery = _getGroupByStep(
 			groupId, objectRelationshipId, primaryKey,
 			DSLQueryFactoryUtil.selectDistinct(_table));
 
 		return persistedModelLocalService.dslQueryCount(dslQuery);
 	}
 
-	private GroupByStep _getRelatedModelsGroupByStep(
+	private GroupByStep _getGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
 			FromStep fromStep)
 		throws PortalException {
