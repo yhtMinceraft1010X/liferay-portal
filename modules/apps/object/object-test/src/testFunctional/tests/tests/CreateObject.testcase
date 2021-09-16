@@ -933,11 +933,32 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateObjectPanelCategoryBeforePublished {
 
-		// TODO LPS-138840 CanUpdateObjectPanelCategoryBeforePublished pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
+
+
+
 
 	}
 
