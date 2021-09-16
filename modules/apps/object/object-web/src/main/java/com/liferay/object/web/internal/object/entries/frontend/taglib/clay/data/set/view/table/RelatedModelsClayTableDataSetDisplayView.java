@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.set.display.name=" + RelatedObjectEntryClayDataSetDisplayNames.RELATED_ITEMS,
 	service = ClayDataSetDisplayView.class
 )
-public class RelatedObjectEntryClayTableDataSetDisplayView
+public class RelatedModelsClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override

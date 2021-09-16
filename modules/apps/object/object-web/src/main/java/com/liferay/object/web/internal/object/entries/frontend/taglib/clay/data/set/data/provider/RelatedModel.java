@@ -17,9 +17,9 @@ package com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data
 /**
  * @author Marco Leo
  */
-public class RelatedObjectEntryModel {
+public class RelatedModel {
 
-	public RelatedObjectEntryModel(long id, String label) {
+	public RelatedModel(long id, String label) {
 		_id = id;
 		_label = label;
 	}

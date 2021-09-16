@@ -46,11 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.provider.key=" + RelatedObjectEntryClayDataSetDisplayNames.RELATED_ITEMS,
 	service = ClayDataSetDataProvider.class
 )
-public class RelatedObjectEntryDataSetDataProvider
-	implements ClayDataSetDataProvider<RelatedObjectEntryModel> {
+public class RelatedModelsDataSetDataProvider
+	implements ClayDataSetDataProvider<RelatedModel> {
 
 	@Override
-	public List<RelatedObjectEntryModel> getItems(
+	public List<RelatedModel> getItems(
 			HttpServletRequest httpServletRequest, Filter filter,
 			Pagination pagination, Sort sort)
 		throws PortalException {
@@ -77,8 +77,7 @@ public class RelatedObjectEntryDataSetDataProvider
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		List<RelatedObjectEntryModel> relatedObjectEntryModels =
-			new ArrayList<>();
+		List<RelatedModel> relatedObjectEntryModels = new ArrayList<>();
 
 		List<ObjectEntry> objectEntries =
 			objectRelatedModelsProvider.getRelatedModels(
@@ -88,7 +87,7 @@ public class RelatedObjectEntryDataSetDataProvider
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			relatedObjectEntryModels.add(
-				new RelatedObjectEntryModel(
+				new RelatedModel(
 					objectEntry.getObjectEntryId(),
 					String.valueOf(objectEntry.getObjectEntryId())));
 		}
