@@ -17,22 +17,22 @@ package com.liferay.search.experiences.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Kevin Tan
+ * @author Brian Wing Shun Chan
  */
-public class DefaultSXPElementException extends PortalException {
+public class SXPElementReadOnlyException extends PortalException {
 
-	public DefaultSXPElementException() {
+	public SXPElementReadOnlyException() {
 	}
 
-	public DefaultSXPElementException(String msg) {
+	public SXPElementReadOnlyException(String msg) {
 		super(msg);
 	}
 
-	public DefaultSXPElementException(String msg, Throwable throwable) {
+	public SXPElementReadOnlyException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public DefaultSXPElementException(Throwable throwable) {
+	public SXPElementReadOnlyException(Throwable throwable) {
 		super(throwable);
 	}
 
