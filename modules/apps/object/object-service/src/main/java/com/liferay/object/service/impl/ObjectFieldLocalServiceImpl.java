@@ -148,6 +148,10 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField = objectFieldPersistence.remove(objectField);
 
+		_resourceLocalService.deleteResource(
+			objectField.getCompanyId(), ObjectField.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, objectField.getObjectFieldId());
+
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
 				objectField.getDBTableName())) {
@@ -157,10 +161,6 @@ public class ObjectFieldLocalServiceImpl
 					objectField.getDBTableName(),
 					objectField.getDBColumnName()));
 		}
-
-		_resourceLocalService.deleteResource(
-			objectField.getCompanyId(), ObjectField.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, objectField.getObjectFieldId());
 
 		return objectField;
 	}
@@ -293,12 +293,14 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setRequired(required);
 		objectField.setType(type);
 
+		objectField = objectFieldPersistence.update(objectField);
+
 		_resourceLocalService.addResources(
 			objectField.getCompanyId(), 0, objectField.getUserId(),
 			ObjectField.class.getName(), objectField.getObjectFieldId(), false,
 			true, true);
 
-		return objectFieldPersistence.update(objectField);
+		return objectField;
 	}
 
 	private void _validateIndexed(

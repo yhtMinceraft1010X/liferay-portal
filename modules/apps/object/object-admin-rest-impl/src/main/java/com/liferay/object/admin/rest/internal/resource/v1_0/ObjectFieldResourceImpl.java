@@ -139,7 +139,7 @@ public class ObjectFieldResourceImpl
 		com.liferay.object.model.ObjectDefinition objectDefinition,
 		com.liferay.object.model.ObjectField objectField) {
 
-		boolean updatable =
+		boolean updateable =
 			(!objectDefinition.isApproved() && !objectDefinition.isSystem()) ||
 			Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
@@ -149,7 +149,7 @@ public class ObjectFieldResourceImpl
 			HashMapBuilder.put(
 				"delete",
 				() -> {
-					if (!updatable) {
+					if (!updateable) {
 						return null;
 					}
 
@@ -167,7 +167,7 @@ public class ObjectFieldResourceImpl
 			).put(
 				"update",
 				() -> {
-					if (!updatable) {
+					if (!updateable) {
 						return null;
 					}
 

@@ -138,8 +138,6 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
 		long groupId = _getGroupId(objectDefinition, scopeKey);
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 		Optional<UriInfo> uriInfoOptional =
 			dtoConverterContext.getUriInfoOptional();
 
@@ -151,14 +149,16 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				ActionUtil.addAction(
 					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
 					"postObjectEntry", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(objectDefinitionId),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
 					groupId, uriInfo)
 			).put(
 				"get",
 				ActionUtil.addAction(
 					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
 					"getObjectEntriesPage", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(objectDefinitionId),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
 					groupId, uriInfo)
 			).build(),
 			booleanQuery -> {
@@ -168,7 +168,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				booleanFilter.add(
 					new TermFilter(
 						"objectDefinitionId",
-						String.valueOf(objectDefinitionId)),
+						String.valueOf(
+							objectDefinition.getObjectDefinitionId())),
 					BooleanClauseOccur.MUST);
 			},
 			filter, objectDefinition.getClassName(), search, pagination,
@@ -179,7 +180,8 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				searchContext.setAttribute(
 					Field.STATUS, WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
-					"objectDefinitionId", objectDefinitionId);
+					"objectDefinitionId",
+					objectDefinition.getObjectDefinitionId());
 				searchContext.setCompanyId(companyId);
 				searchContext.setGroupIds(new long[] {groupId});
 			},
