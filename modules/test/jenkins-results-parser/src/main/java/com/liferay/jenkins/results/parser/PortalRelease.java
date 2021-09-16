@@ -151,11 +151,11 @@ public class PortalRelease {
 
 	public PortalRelease(URL bundlesBaseURL, String portalVersion) {
 		if (bundlesBaseURL == null) {
-			throw new RuntimeException("Please set bundlesBaseURL");
+			throw new RuntimeException("Bundles base URL is null");
 		}
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalVersion)) {
-			throw new RuntimeException("Please set a portalVersion");
+			throw new RuntimeException("Portal version is null or empty");
 		}
 
 		_portalVersion = portalVersion;
