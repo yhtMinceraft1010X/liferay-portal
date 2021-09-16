@@ -17,7 +17,7 @@ package com.liferay.object.web.internal.list.type.constants;
 /**
  * @author Gabriel Albuquerque
  */
-public class ListTypeDefinitionsClayDataSetDisplayNames {
+public class ListTypeClayDataSetDisplayNames {
 
 	public static final String LIST_TYPE_DEFINITION_ITEMS =
 		"listTypeDefinitionItems";
