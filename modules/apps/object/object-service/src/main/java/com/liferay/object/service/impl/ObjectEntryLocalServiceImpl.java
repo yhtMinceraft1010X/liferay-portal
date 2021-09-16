@@ -222,40 +222,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public int getManyToManyRelatedObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey)
-		throws PortalException {
-
-		DSLQuery dslQuery = _getManyToManyRelatedObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey,
-			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Get many to many related object entries: " + dslQuery);
-		}
-
-		return objectEntryPersistence.dslQueryCount(dslQuery);
-	}
-
-	@Override
-	public int getOneToManyRelatedObjectEntriesCount(
-			long groupId, long objectRelationshipId, long primaryKey)
-		throws PortalException {
-
-		DSLQuery dslQuery = _getOneToManyRelatedObjectEntriesGroupByStep(
-			groupId, objectRelationshipId, primaryKey,
-			DSLQueryFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Count one to many related object entries: " + dslQuery);
-		}
-
-		return objectEntryPersistence.dslQueryCount(dslQuery);
-	}
-
-	@Override
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -329,6 +295,23 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getManyToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		DSLQuery dslQuery = _getManyToManyRelatedObjectEntriesGroupByStep(
+			groupId, objectRelationshipId, primaryKey,
+			DSLQueryFactoryUtil.countDistinct(
+				ObjectEntryTable.INSTANCE.objectEntryId));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Get many to many related object entries: " + dslQuery);
+		}
+
+		return objectEntryPersistence.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public List<ObjectEntry> getObjectEntries(
 			long groupId, long objectDefinitionId, int start, int end)
 		throws PortalException {
@@ -369,6 +352,23 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return objectEntryPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int getOneToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		DSLQuery dslQuery = _getOneToManyRelatedObjectEntriesGroupByStep(
+			groupId, objectRelationshipId, primaryKey,
+			DSLQueryFactoryUtil.countDistinct(
+				ObjectEntryTable.INSTANCE.objectEntryId));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Count one to many related object entries: " + dslQuery);
+		}
+
+		return objectEntryPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override
