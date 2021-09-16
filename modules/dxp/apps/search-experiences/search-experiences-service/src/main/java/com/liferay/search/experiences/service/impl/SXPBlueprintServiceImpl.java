@@ -120,8 +120,6 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")"
 	)
 	private volatile PortletResourcePermission _portletResourcePermission;
