@@ -126,11 +126,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		return deleteSXPElement(sxpElement);
 	}
 
-	@Override
-	public int getCompanySXPElementsCount(long companyId, int type) {
-		return sxpElementPersistence.councountByC_T(companyId, type);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPElement updateStatus(long userId, long sxpElementId, int status)

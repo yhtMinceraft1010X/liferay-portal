@@ -77,36 +77,6 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 	}
 
 	@Override
-	public List<SXPElement> getGroupSXPElements(
-		long companyId, int type, int start, int end) {
-
-		return getGroupSXPElements(
-			companyId, WorkflowConstants.STATUS_APPROVED, type, start, end);
-	}
-
-	@Override
-	public List<SXPElement> getGroupSXPElements(
-		long groupId, int status, int type, int start, int end) {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return sxpElementPersistence.filterFindByG_T(
-				groupId, type, start, end);
-		}
-
-		return sxpElementPersistence.filterFindByG_T_S(
-			groupId, type, status, start, end);
-	}
-
-	@Override
-	public int getGroupSXPElementsCount(long companyId, int status, int type) {
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return sxpElementPersistence.countByG_T(companyId, type);
-		}
-
-		return sxpElementPersistence.countByG_S_T(companyId, status, type);
-	}
-
-	@Override
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException {
 		SXPElement sxpElement = _sxpElementLocalService.getSXPElement(
 			sxpElementId);
