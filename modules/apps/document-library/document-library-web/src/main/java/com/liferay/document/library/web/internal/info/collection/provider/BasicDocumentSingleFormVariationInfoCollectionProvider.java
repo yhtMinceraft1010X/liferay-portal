@@ -127,6 +127,21 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 				"latest", true
 			).build());
 
+		Optional<CategoriesInfoFilter> categoriesInfoFilterOptional =
+			collectionQuery.getInfoFilterOptional(CategoriesInfoFilter.class);
+
+		if (categoriesInfoFilterOptional.isPresent()) {
+			CategoriesInfoFilter categoriesInfoFilter =
+				categoriesInfoFilterOptional.get();
+
+			long[] categoryIds = ArrayUtil.append(
+				categoriesInfoFilter.getCategoryIds());
+
+			categoryIds = ArrayUtil.unique(categoryIds);
+
+			searchContext.setAssetCategoryIds(categoryIds);
+		}
+
 		Optional<Map<String, String[]>> configurationOptional =
 			collectionQuery.getConfigurationOptional();
 
@@ -157,21 +172,6 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 			new String[] {DLFileEntryConstants.getClassName()});
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
-
-		Optional<CategoriesInfoFilter> categoriesInfoFilterOptional =
-			collectionQuery.getInfoFilterOptional(CategoriesInfoFilter.class);
-
-		if (categoriesInfoFilterOptional.isPresent()) {
-			CategoriesInfoFilter categoriesInfoFilter =
-				categoriesInfoFilterOptional.get();
-
-			long[] categoryIds = ArrayUtil.append(
-				categoriesInfoFilter.getCategoryIds());
-
-			categoryIds = ArrayUtil.unique(categoryIds);
-
-			searchContext.setAssetCategoryIds(categoryIds);
-		}
 
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();
 
