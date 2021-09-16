@@ -71,8 +71,9 @@ public interface SXPElementLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPElement addSXPElement(
 			long userId, long groupId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, Map<Locale, String> titleMap,
-			int type, ServiceContext serviceContext)
+			String elementDefinitionJSON, boolean readOnly,
+			Map<Locale, String> titleMap, int type,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -139,11 +140,6 @@ public interface SXPElementLocalService
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SXPElement deleteSXPElement(SXPElement sxpElement)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public SXPElement deleteSystemSXPElement(long sxpElementId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -234,9 +230,6 @@ public interface SXPElementLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanySXPElementsCount(long companyId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

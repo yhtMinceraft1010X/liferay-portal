@@ -52,9 +52,9 @@ import com.liferay.search.experiences.service.SXPElementServiceUtil;
 public class SXPElementServiceHttp {
 
 	public static com.liferay.search.experiences.model.SXPElement addSXPElement(
-			HttpPrincipal httpPrincipal,
+			HttpPrincipal httpPrincipal, long groupId,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON,
+			String elementDefinitionJSON, boolean readOnly,
 			java.util.Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,8 +65,8 @@ public class SXPElementServiceHttp {
 				_addSXPElementParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, descriptionMap, elementDefinitionJSON, titleMap,
-				type, serviceContext);
+				methodKey, groupId, descriptionMap, elementDefinitionJSON,
+				readOnly, titleMap, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -136,108 +136,6 @@ public class SXPElementServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.search.experiences.model.SXPElement> getGroupSXPElements(
-			HttpPrincipal httpPrincipal, long companyId, int type, int start,
-			int end) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SXPElementServiceUtil.class, "getGroupSXPElements",
-				_getGroupSXPElementsParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, type, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.search.experiences.model.SXPElement>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
-		<com.liferay.search.experiences.model.SXPElement> getGroupSXPElements(
-			HttpPrincipal httpPrincipal, long groupId, int status, int type,
-			int start, int end) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SXPElementServiceUtil.class, "getGroupSXPElements",
-				_getGroupSXPElementsParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, status, type, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.search.experiences.model.SXPElement>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static int getGroupSXPElementsCount(
-		HttpPrincipal httpPrincipal, long companyId, int status, int type) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SXPElementServiceUtil.class, "getGroupSXPElementsCount",
-				_getGroupSXPElementsCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, status, type);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static com.liferay.search.experiences.model.SXPElement getSXPElement(
 			HttpPrincipal httpPrincipal, long sxpElementId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -245,7 +143,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "getSXPElement",
-				_getSXPElementParameterTypes5);
+				_getSXPElementParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId);
@@ -290,7 +188,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "updateSXPElement",
-				_updateSXPElementParameterTypes6);
+				_updateSXPElementParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
@@ -329,20 +227,15 @@ public class SXPElementServiceHttp {
 
 	private static final Class<?>[] _addSXPElementParameterTypes0 =
 		new Class[] {
-			java.util.Map.class, String.class, java.util.Map.class, int.class,
+			long.class, java.util.Map.class, String.class, boolean.class,
+			java.util.Map.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSXPElementParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getGroupSXPElementsParameterTypes2 =
-		new Class[] {long.class, int.class, int.class, int.class};
-	private static final Class<?>[] _getGroupSXPElementsParameterTypes3 =
-		new Class[] {long.class, int.class, int.class, int.class, int.class};
-	private static final Class<?>[] _getGroupSXPElementsCountParameterTypes4 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getSXPElementParameterTypes5 =
+	private static final Class<?>[] _getSXPElementParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateSXPElementParameterTypes6 =
+	private static final Class<?>[] _updateSXPElementParameterTypes3 =
 		new Class[] {
 			long.class, java.util.Map.class, String.class, boolean.class,
 			java.util.Map.class,

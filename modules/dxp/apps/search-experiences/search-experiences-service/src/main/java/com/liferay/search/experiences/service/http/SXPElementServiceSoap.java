@@ -69,9 +69,10 @@ public class SXPElementServiceSoap {
 
 	public static com.liferay.search.experiences.model.SXPElementSoap
 			addSXPElement(
-				String[] descriptionMapLanguageIds,
+				long groupId, String[] descriptionMapLanguageIds,
 				String[] descriptionMapValues, String elementDefinitionJSON,
-				String[] titleMapLanguageIds, String[] titleMapValues, int type,
+				boolean readOnly, String[] titleMapLanguageIds,
+				String[] titleMapValues, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -84,8 +85,8 @@ public class SXPElementServiceSoap {
 
 			com.liferay.search.experiences.model.SXPElement returnValue =
 				SXPElementServiceUtil.addSXPElement(
-					descriptionMap, elementDefinitionJSON, titleMap, type,
-					serviceContext);
+					groupId, descriptionMap, elementDefinitionJSON, readOnly,
+					titleMap, type, serviceContext);
 
 			return com.liferay.search.experiences.model.SXPElementSoap.
 				toSoapModel(returnValue);
@@ -107,62 +108,6 @@ public class SXPElementServiceSoap {
 
 			return com.liferay.search.experiences.model.SXPElementSoap.
 				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.search.experiences.model.SXPElementSoap[]
-			getGroupSXPElements(long companyId, int type, int start, int end)
-		throws RemoteException {
-
-		try {
-			java.util.List<com.liferay.search.experiences.model.SXPElement>
-				returnValue = SXPElementServiceUtil.getGroupSXPElements(
-					companyId, type, start, end);
-
-			return com.liferay.search.experiences.model.SXPElementSoap.
-				toSoapModels(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.search.experiences.model.SXPElementSoap[]
-			getGroupSXPElements(
-				long groupId, int status, int type, int start, int end)
-		throws RemoteException {
-
-		try {
-			java.util.List<com.liferay.search.experiences.model.SXPElement>
-				returnValue = SXPElementServiceUtil.getGroupSXPElements(
-					groupId, status, type, start, end);
-
-			return com.liferay.search.experiences.model.SXPElementSoap.
-				toSoapModels(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static int getGroupSXPElementsCount(
-			long companyId, int status, int type)
-		throws RemoteException {
-
-		try {
-			int returnValue = SXPElementServiceUtil.getGroupSXPElementsCount(
-				companyId, status, type);
-
-			return returnValue;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

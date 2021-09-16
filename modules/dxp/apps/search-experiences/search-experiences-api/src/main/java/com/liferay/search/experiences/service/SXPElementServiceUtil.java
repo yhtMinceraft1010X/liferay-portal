@@ -17,7 +17,6 @@ package com.liferay.search.experiences.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.search.experiences.model.SXPElement;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,40 +39,21 @@ public class SXPElementServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPElementServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SXPElement addSXPElement(
-			Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON,
+			long groupId, Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean readOnly,
 			Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPElement(
-			descriptionMap, elementDefinitionJSON, titleMap, type,
-			serviceContext);
+			groupId, descriptionMap, elementDefinitionJSON, readOnly, titleMap,
+			type, serviceContext);
 	}
 
 	public static SXPElement deleteSXPElement(long sxpElementId)
 		throws PortalException {
 
 		return getService().deleteSXPElement(sxpElementId);
-	}
-
-	public static List<SXPElement> getGroupSXPElements(
-		long companyId, int type, int start, int end) {
-
-		return getService().getGroupSXPElements(companyId, type, start, end);
-	}
-
-	public static List<SXPElement> getGroupSXPElements(
-		long groupId, int status, int type, int start, int end) {
-
-		return getService().getGroupSXPElements(
-			groupId, status, type, start, end);
-	}
-
-	public static int getGroupSXPElementsCount(
-		long companyId, int status, int type) {
-
-		return getService().getGroupSXPElementsCount(companyId, status, type);
 	}
 
 	/**

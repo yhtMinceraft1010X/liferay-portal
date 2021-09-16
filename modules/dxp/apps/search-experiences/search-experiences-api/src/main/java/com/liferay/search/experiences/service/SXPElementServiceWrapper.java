@@ -32,15 +32,16 @@ public class SXPElementServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPElement addSXPElement(
+			long groupId,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON,
+			String elementDefinitionJSON, boolean readOnly,
 			java.util.Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpElementService.addSXPElement(
-			descriptionMap, elementDefinitionJSON, titleMap, type,
-			serviceContext);
+			groupId, descriptionMap, elementDefinitionJSON, readOnly, titleMap,
+			type, serviceContext);
 	}
 
 	@Override
@@ -49,29 +50,6 @@ public class SXPElementServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpElementService.deleteSXPElement(sxpElementId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.search.experiences.model.SXPElement>
-		getGroupSXPElements(long companyId, int type, int start, int end) {
-
-		return _sxpElementService.getGroupSXPElements(
-			companyId, type, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.search.experiences.model.SXPElement>
-		getGroupSXPElements(
-			long groupId, int status, int type, int start, int end) {
-
-		return _sxpElementService.getGroupSXPElements(
-			groupId, status, type, start, end);
-	}
-
-	@Override
-	public int getGroupSXPElementsCount(long companyId, int status, int type) {
-		return _sxpElementService.getGroupSXPElementsCount(
-			companyId, status, type);
 	}
 
 	/**

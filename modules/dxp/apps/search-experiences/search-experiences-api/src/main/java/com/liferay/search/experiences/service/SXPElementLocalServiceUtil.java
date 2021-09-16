@@ -48,14 +48,14 @@ public class SXPElementLocalServiceUtil {
 	public static SXPElement addSXPElement(
 			long userId, long groupId,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON,
+			String elementDefinitionJSON, boolean readOnly,
 			Map<java.util.Locale, String> titleMap, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPElement(
-			userId, groupId, descriptionMap, elementDefinitionJSON, titleMap,
-			type, serviceContext);
+			userId, groupId, descriptionMap, elementDefinitionJSON, readOnly,
+			titleMap, type, serviceContext);
 	}
 
 	/**
@@ -134,12 +134,6 @@ public class SXPElementLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteSXPElement(sxpElement);
-	}
-
-	public static SXPElement deleteSystemSXPElement(long sxpElementId)
-		throws PortalException {
-
-		return getService().deleteSystemSXPElement(sxpElementId);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -248,10 +242,6 @@ public class SXPElementLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
-	}
-
-	public static int getCompanySXPElementsCount(long companyId, int type) {
-		return getService().getCompanySXPElementsCount(companyId, type);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
