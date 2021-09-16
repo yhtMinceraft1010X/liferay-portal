@@ -24,10 +24,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +40,8 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -63,6 +68,12 @@ public interface SXPBlueprintLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sxp blueprint local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SXPBlueprintLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint addSXPBlueprint(
+			long userId, long groupId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the sxp blueprint to the database. Also notifies the appropriate model listeners.
@@ -123,9 +134,12 @@ public interface SXPBlueprintLocalService
 	 *
 	 * @param sxpBlueprint the sxp blueprint
 	 * @return the sxp blueprint that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint);
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -215,6 +229,9 @@ public interface SXPBlueprintLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanySXPBlueprintsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -309,6 +326,18 @@ public interface SXPBlueprintLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSXPBlueprintsCount();
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint updateStatus(
+			long userId, long sxpBlueprintId, int status)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public SXPBlueprint updateSXPBlueprint(
+			long userId, long sxpBlueprintId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Updates the sxp blueprint in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

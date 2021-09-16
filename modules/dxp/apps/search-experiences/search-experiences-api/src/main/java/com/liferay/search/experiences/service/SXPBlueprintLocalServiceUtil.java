@@ -24,6 +24,7 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for SXPBlueprint. This utility wraps
@@ -44,6 +45,17 @@ public class SXPBlueprintLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static SXPBlueprint addSXPBlueprint(
+			long userId, long groupId, String configurationsJSON,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSXPBlueprint(
+			userId, groupId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
+	}
 
 	/**
 	 * Adds the sxp blueprint to the database. Also notifies the appropriate model listeners.
@@ -115,8 +127,11 @@ public class SXPBlueprintLocalServiceUtil {
 	 *
 	 * @param sxpBlueprint the sxp blueprint
 	 * @return the sxp blueprint that was removed
+	 * @throws PortalException
 	 */
-	public static SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint) {
+	public static SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws PortalException {
+
 		return getService().deleteSXPBlueprint(sxpBlueprint);
 	}
 
@@ -226,6 +241,10 @@ public class SXPBlueprintLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static int getCompanySXPBlueprintsCount(long companyId) {
+		return getService().getCompanySXPBlueprintsCount(companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -342,6 +361,25 @@ public class SXPBlueprintLocalServiceUtil {
 	 */
 	public static int getSXPBlueprintsCount() {
 		return getService().getSXPBlueprintsCount();
+	}
+
+	public static SXPBlueprint updateStatus(
+			long userId, long sxpBlueprintId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, sxpBlueprintId, status);
+	}
+
+	public static SXPBlueprint updateSXPBlueprint(
+			long userId, long sxpBlueprintId, String configurationsJSON,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateSXPBlueprint(
+			userId, sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	/**

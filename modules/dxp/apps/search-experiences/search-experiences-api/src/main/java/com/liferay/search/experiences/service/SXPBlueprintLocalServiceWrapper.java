@@ -33,6 +33,20 @@ public class SXPBlueprintLocalServiceWrapper
 		_sxpBlueprintLocalService = sxpBlueprintLocalService;
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint addSXPBlueprint(
+			long userId, long groupId, String configurationsJSON,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintLocalService.addSXPBlueprint(
+			userId, groupId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
+	}
+
 	/**
 	 * Adds the sxp blueprint to the database. Also notifies the appropriate model listeners.
 	 *
@@ -113,10 +127,12 @@ public class SXPBlueprintLocalServiceWrapper
 	 *
 	 * @param sxpBlueprint the sxp blueprint
 	 * @return the sxp blueprint that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint deleteSXPBlueprint(
-		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
+			com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintLocalService.deleteSXPBlueprint(sxpBlueprint);
 	}
@@ -253,6 +269,12 @@ public class SXPBlueprintLocalServiceWrapper
 	}
 
 	@Override
+	public int getCompanySXPBlueprintsCount(long companyId) {
+		return _sxpBlueprintLocalService.getCompanySXPBlueprintsCount(
+			companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -385,6 +407,29 @@ public class SXPBlueprintLocalServiceWrapper
 	@Override
 	public int getSXPBlueprintsCount() {
 		return _sxpBlueprintLocalService.getSXPBlueprintsCount();
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint updateStatus(
+			long userId, long sxpBlueprintId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintLocalService.updateStatus(
+			userId, sxpBlueprintId, status);
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint updateSXPBlueprint(
+			long userId, long sxpBlueprintId, String configurationsJSON,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintLocalService.updateSXPBlueprint(
+			userId, sxpBlueprintId, configurationsJSON, descriptionMap,
+			elementInstancesJSON, titleMap, serviceContext);
 	}
 
 	/**

@@ -147,10 +147,13 @@ public abstract class SXPBlueprintLocalServiceBaseImpl
 	 *
 	 * @param sxpBlueprint the sxp blueprint
 	 * @return the sxp blueprint that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint) {
+	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws PortalException {
+
 		return sxpBlueprintPersistence.remove(sxpBlueprint);
 	}
 
