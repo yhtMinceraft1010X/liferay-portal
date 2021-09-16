@@ -25,12 +25,12 @@ import java.util.Map;
  */
 public interface SXPElementValidator {
 
-	public void validateElementDefinitionJSON(
+	public void validate(
 			String elementDefinitionJSON, int type)
 		throws SXPElementElementDefinitionJSONException;
 
-	public void validateSXPElement(
-			Map<Locale, String> titleMap, String elementDefinitionJSON,
+	public void validate(
+			String elementDefinitionJSON, Map<Locale, String> titleMap,
 			int type)
 		throws SXPElementElementDefinitionJSONException,
 			   SXPElementTitleException;

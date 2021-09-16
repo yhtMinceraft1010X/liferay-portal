@@ -25,11 +25,11 @@ import java.util.Map;
  */
 public interface SXPBlueprintValidator {
 
-	public void validateConfigurationJSON(String configurationJSON)
+	public void validate(String configurationsJSON)
 		throws SXPBlueprintConfigurationsJSONException;
 
-	public void validateSXPBlueprint(
-			Map<Locale, String> titleMap, String configurationJSON)
+	public void validate(
+			String configurationsJSON, Map<Locale, String> titleMap)
 		throws SXPBlueprintConfigurationsJSONException,
 			   SXPBlueprintTitleException;
 

@@ -42,37 +42,37 @@ public class SXPBlueprintValidatorImpl
 	extends BaseJSONValidator implements SXPBlueprintValidator {
 
 	@Override
-	public void validateConfigurationJSON(String configurationJSON)
+	public void validate(String configurationsJSON)
 		throws SXPBlueprintConfigurationsJSONException {
 
-		_validateConfigurationJSON(configurationJSON);
+		_validateConfigurationsJSON(configurationsJSON);
 	}
 
 	@Override
-	public void validateSXPBlueprint(
-			Map<Locale, String> titleMap, String configurationJSON)
+	public void validate(
+			String configurationsJSON, Map<Locale, String> titleMap)
 		throws SXPBlueprintConfigurationsJSONException,
 			   SXPBlueprintTitleException {
 
 		_validateTitle(titleMap);
 
-		_validateConfigurationJSON(configurationJSON);
+		_validateConfigurationsJSON(configurationsJSON);
 	}
 
-	private void _validateConfigurationJSON(String configurationJSON)
+	private void _validateConfigurationsJSON(String configurationsJSON)
 		throws SXPBlueprintConfigurationsJSONException {
 
-		if (Validator.isNull(configurationJSON)) {
+		if (Validator.isNull(configurationsJSON)) {
 			return;
 		}
 
 		try {
-			InputStream configurationJSONSchemaInputStream =
+			InputStream configurationsJSONSchemaInputStream =
 				SXPBlueprintValidatorImpl.class.getResourceAsStream(
 					"dependencies/sxpblueprint.schema.json");
 
 			JSONSchemaValidatorUtil.validate(
-				configurationJSON, configurationJSONSchemaInputStream);
+				configurationsJSON, configurationsJSONSchemaInputStream);
 		}
 		catch (ValidationException validationException) {
 			List<Problem> problems = new ArrayList<>();
