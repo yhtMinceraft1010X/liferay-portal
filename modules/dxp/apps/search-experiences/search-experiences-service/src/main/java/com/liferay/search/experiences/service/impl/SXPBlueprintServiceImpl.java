@@ -52,13 +52,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 	@Override
-	public SXPBlueprint addCompanySXPBlueprint(
-			String configurationsJSON, Map<Locale, String> descriptionMap,
+	public SXPBlueprint addSXPBlueprint(
+			long groupId, String configurationsJSON, Map<Locale, String> descriptionMap,
 			String elementInstancesJSON, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		long groupId = _getCompanyGroupId(serviceContext);
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, SXPActionKeys.ADD_SXP_BLUEPRINT);
@@ -105,15 +103,6 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		return _sxpBlueprintLocalService.updateSXPBlueprint(
 			getUserId(), sxpBlueprintId, configurationsJSON, descriptionMap,
 			elementInstancesJSON, titleMap, serviceContext);
-	}
-
-	private long _getCompanyGroupId(ServiceContext serviceContext)
-		throws PortalException {
-
-		Company company = _companyLocalService.getCompany(
-			serviceContext.getCompanyId());
-
-		return company.getGroupId();
 	}
 
 	@Reference
