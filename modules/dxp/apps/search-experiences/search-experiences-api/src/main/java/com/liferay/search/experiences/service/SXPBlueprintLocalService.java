@@ -122,6 +122,7 @@ public interface SXPBlueprintLocalService
 	 * @throws PortalException if a sxp blueprint with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
 		throws PortalException;
 

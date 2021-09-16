@@ -102,21 +102,7 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 			hidden, titleMap, serviceContext);
 	}
 
-	private long _getCompanyGroupId(ServiceContext serviceContext)
-		throws PortalException {
-
-		Company company = _companyLocalService.getCompany(
-			serviceContext.getCompanyId());
-
-		return company.getGroupId();
-	}
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")"
 	)
 	private volatile PortletResourcePermission _portletResourcePermission;
@@ -125,8 +111,6 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 	private SXPElementLocalService _sxpElementLocalService;
 
 	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.search.experiences.model.SXPElement)"
 	)
 	private volatile ModelResourcePermission<SXPElement>

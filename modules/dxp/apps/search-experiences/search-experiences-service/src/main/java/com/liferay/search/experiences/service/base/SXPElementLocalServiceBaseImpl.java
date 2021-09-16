@@ -139,10 +139,13 @@ public abstract class SXPElementLocalServiceBaseImpl
 	 *
 	 * @param sxpElement the sxp element
 	 * @return the sxp element that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public SXPElement deleteSXPElement(SXPElement sxpElement) {
+	public SXPElement deleteSXPElement(SXPElement sxpElement)
+		throws PortalException {
+
 		return sxpElementPersistence.remove(sxpElement);
 	}
 

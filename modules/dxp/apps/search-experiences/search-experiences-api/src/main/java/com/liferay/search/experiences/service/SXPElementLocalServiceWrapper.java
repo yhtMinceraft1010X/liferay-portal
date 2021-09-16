@@ -32,6 +32,20 @@ public class SXPElementLocalServiceWrapper
 		_sxpElementLocalService = sxpElementLocalService;
 	}
 
+	@Override
+	public com.liferay.search.experiences.model.SXPElement addSXPElement(
+			long userId, long groupId,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON,
+			java.util.Map<java.util.Locale, String> titleMap, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementLocalService.addSXPElement(
+			userId, groupId, descriptionMap, elementDefinitionJSON, titleMap,
+			type, serviceContext);
+	}
+
 	/**
 	 * Adds the sxp element to the database. Also notifies the appropriate model listeners.
 	 *
@@ -112,12 +126,22 @@ public class SXPElementLocalServiceWrapper
 	 *
 	 * @param sxpElement the sxp element
 	 * @return the sxp element that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.search.experiences.model.SXPElement deleteSXPElement(
-		com.liferay.search.experiences.model.SXPElement sxpElement) {
+			com.liferay.search.experiences.model.SXPElement sxpElement)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpElementLocalService.deleteSXPElement(sxpElement);
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPElement
+			deleteSystemSXPElement(long sxpElementId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementLocalService.deleteSystemSXPElement(sxpElementId);
 	}
 
 	@Override
@@ -249,6 +273,12 @@ public class SXPElementLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _sxpElementLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public int getCompanySXPElementsCount(long companyId, int type) {
+		return _sxpElementLocalService.getCompanySXPElementsCount(
+			companyId, type);
 	}
 
 	@Override
@@ -384,6 +414,29 @@ public class SXPElementLocalServiceWrapper
 	@Override
 	public int getSXPElementsCount() {
 		return _sxpElementLocalService.getSXPElementsCount();
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPElement updateStatus(
+			long userId, long sxpElementId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementLocalService.updateStatus(
+			userId, sxpElementId, status);
+	}
+
+	@Override
+	public com.liferay.search.experiences.model.SXPElement updateSXPElement(
+			long userId, long sxpElementId,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean hidden,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementLocalService.updateSXPElement(
+			userId, sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
+			titleMap, serviceContext);
 	}
 
 	/**

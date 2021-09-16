@@ -24,6 +24,7 @@ import com.liferay.search.experiences.model.SXPElement;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for SXPElement. This utility wraps
@@ -44,6 +45,18 @@ public class SXPElementLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPElementLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static SXPElement addSXPElement(
+			long userId, long groupId,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON,
+			Map<java.util.Locale, String> titleMap, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addSXPElement(
+			userId, groupId, descriptionMap, elementDefinitionJSON, titleMap,
+			type, serviceContext);
+	}
 
 	/**
 	 * Adds the sxp element to the database. Also notifies the appropriate model listeners.
@@ -115,9 +128,18 @@ public class SXPElementLocalServiceUtil {
 	 *
 	 * @param sxpElement the sxp element
 	 * @return the sxp element that was removed
+	 * @throws PortalException
 	 */
-	public static SXPElement deleteSXPElement(SXPElement sxpElement) {
+	public static SXPElement deleteSXPElement(SXPElement sxpElement)
+		throws PortalException {
+
 		return getService().deleteSXPElement(sxpElement);
+	}
+
+	public static SXPElement deleteSystemSXPElement(long sxpElementId)
+		throws PortalException {
+
+		return getService().deleteSystemSXPElement(sxpElementId);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -226,6 +248,10 @@ public class SXPElementLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static int getCompanySXPElementsCount(long companyId, int type) {
+		return getService().getCompanySXPElementsCount(companyId, type);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -342,6 +368,26 @@ public class SXPElementLocalServiceUtil {
 	 */
 	public static int getSXPElementsCount() {
 		return getService().getSXPElementsCount();
+	}
+
+	public static SXPElement updateStatus(
+			long userId, long sxpElementId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(userId, sxpElementId, status);
+	}
+
+	public static SXPElement updateSXPElement(
+			long userId, long sxpElementId,
+			Map<java.util.Locale, String> descriptionMap,
+			String elementDefinitionJSON, boolean hidden,
+			Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateSXPElement(
+			userId, sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
+			titleMap, serviceContext);
 	}
 
 	/**
