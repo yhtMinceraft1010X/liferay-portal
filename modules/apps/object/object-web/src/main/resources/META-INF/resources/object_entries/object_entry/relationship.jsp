@@ -35,9 +35,9 @@ portletDisplay.setURLBack(backURL);
 			"objectRelationshipId", String.valueOf(objectLayoutTab.getObjectRelationshipId())
 		).build()
 	%>'
-	dataProviderKey="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS %>"
+	dataProviderKey="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS %>"
 	formId="fm"
-	id="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS %>"
+	id="<%= ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

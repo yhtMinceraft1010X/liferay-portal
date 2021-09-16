@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.set.display.name=" + ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS,
+	property = "clay.data.set.display.name=" + ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS,
 	service = ClayDataSetDisplayView.class
 )
 public class RelatedModelsClayTableDataSetDisplayView

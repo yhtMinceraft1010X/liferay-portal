@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = "clay.data.provider.key=" + ObjectEntriesClayDataSetDisplayNames.RELATED_ITEMS,
+	property = "clay.data.provider.key=" + ObjectEntriesClayDataSetDisplayNames.RELATED_MODELS,
 	service = ClayDataSetDataProvider.class
 )
 public class RelatedModelsDataSetDataProvider
