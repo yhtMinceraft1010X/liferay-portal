@@ -52,8 +52,9 @@ import com.liferay.search.experiences.service.SXPBlueprintServiceUtil;
 public class SXPBlueprintServiceHttp {
 
 	public static com.liferay.search.experiences.model.SXPBlueprint
-			addCompanySXPBlueprint(
-				HttpPrincipal httpPrincipal, String configurationsJSON,
+			addSXPBlueprint(
+				HttpPrincipal httpPrincipal, long groupId,
+				String configurationsJSON,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				String elementInstancesJSON,
 				java.util.Map<java.util.Locale, String> titleMap,
@@ -62,11 +63,11 @@ public class SXPBlueprintServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				SXPBlueprintServiceUtil.class, "addCompanySXPBlueprint",
-				_addCompanySXPBlueprintParameterTypes0);
+				SXPBlueprintServiceUtil.class, "addSXPBlueprint",
+				_addSXPBlueprintParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, configurationsJSON, descriptionMap,
+				methodKey, groupId, configurationsJSON, descriptionMap,
 				elementInstancesJSON, titleMap, serviceContext);
 
 			Object returnObj = null;
@@ -227,9 +228,9 @@ public class SXPBlueprintServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintServiceHttp.class);
 
-	private static final Class<?>[] _addCompanySXPBlueprintParameterTypes0 =
+	private static final Class<?>[] _addSXPBlueprintParameterTypes0 =
 		new Class[] {
-			String.class, java.util.Map.class, String.class,
+			long.class, String.class, java.util.Map.class, String.class,
 			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

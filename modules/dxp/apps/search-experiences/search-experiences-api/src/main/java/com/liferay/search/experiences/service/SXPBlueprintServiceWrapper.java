@@ -31,18 +31,17 @@ public class SXPBlueprintServiceWrapper
 	}
 
 	@Override
-	public com.liferay.search.experiences.model.SXPBlueprint
-			addCompanySXPBlueprint(
-				String configurationsJSON,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				String elementInstancesJSON,
-				java.util.Map<java.util.Locale, String> titleMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.search.experiences.model.SXPBlueprint addSXPBlueprint(
+			long groupId, String configurationsJSON,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			java.util.Map<java.util.Locale, String> titleMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _sxpBlueprintService.addCompanySXPBlueprint(
-			configurationsJSON, descriptionMap, elementInstancesJSON, titleMap,
-			serviceContext);
+		return _sxpBlueprintService.addSXPBlueprint(
+			groupId, configurationsJSON, descriptionMap, elementInstancesJSON,
+			titleMap, serviceContext);
 	}
 
 	@Override
