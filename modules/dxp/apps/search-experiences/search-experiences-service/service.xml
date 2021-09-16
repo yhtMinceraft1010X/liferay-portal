@@ -79,6 +79,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DefaultSXPElement</exception>
 		<exception>SXPBlueprintConfigurationsJSON</exception>
 		<exception>SXPBlueprintTitle</exception>
 		<exception>SXPElementElementDefinitionJSON</exception>
