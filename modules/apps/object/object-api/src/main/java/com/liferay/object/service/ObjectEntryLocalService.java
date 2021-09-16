@@ -400,8 +400,7 @@ public interface ObjectEntryLocalService
 
 	public ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
-			ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

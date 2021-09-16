@@ -548,12 +548,11 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			java.util.Map<String, java.io.Serializable> workflowContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.updateStatus(
-			userId, objectEntryId, status, serviceContext, workflowContext);
+			userId, objectEntryId, status, serviceContext);
 	}
 
 	@Override

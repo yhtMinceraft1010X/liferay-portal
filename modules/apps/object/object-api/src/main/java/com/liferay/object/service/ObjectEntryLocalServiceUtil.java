@@ -481,12 +481,11 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateStatus(
-			userId, objectEntryId, status, serviceContext, workflowContext);
+			userId, objectEntryId, status, serviceContext);
 	}
 
 	public static ObjectEntryLocalService getService() {
