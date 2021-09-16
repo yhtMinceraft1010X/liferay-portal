@@ -315,6 +315,15 @@ public class ObjectEntryLocalServiceWrapper
 			groupId, objectRelationshipId, primaryKey, start, end);
 	}
 
+	@Override
+	public int getManyToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getManyToManyRelatedObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	/**
 	 * Returns a range of all the object entries.
 	 *
@@ -445,6 +454,15 @@ public class ObjectEntryLocalServiceWrapper
 
 		return _objectEntryLocalService.getOneToManyRelatedObjectEntries(
 			groupId, objectRelationshipId, primaryKey, start, end);
+	}
+
+	@Override
+	public int getOneToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getOneToManyRelatedObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey);
 	}
 
 	/**

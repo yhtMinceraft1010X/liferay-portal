@@ -251,6 +251,11 @@ public interface ObjectEntryLocalService
 			int end)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getManyToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException;
+
 	/**
 	 * Returns a range of all the object entries.
 	 *
@@ -339,6 +344,11 @@ public interface ObjectEntryLocalService
 	public List<ObjectEntry> getOneToManyRelatedObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey, int start,
 			int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOneToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException;
 
 	/**

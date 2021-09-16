@@ -284,6 +284,14 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectRelationshipId, primaryKey, start, end);
 	}
 
+	public static int getManyToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().getManyToManyRelatedObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey);
+	}
+
 	/**
 	 * Returns a range of all the object entries.
 	 *
@@ -396,6 +404,14 @@ public class ObjectEntryLocalServiceUtil {
 
 		return getService().getOneToManyRelatedObjectEntries(
 			groupId, objectRelationshipId, primaryKey, start, end);
+	}
+
+	public static int getOneToManyRelatedObjectEntriesCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return getService().getOneToManyRelatedObjectEntriesCount(
+			groupId, objectRelationshipId, primaryKey);
 	}
 
 	/**
