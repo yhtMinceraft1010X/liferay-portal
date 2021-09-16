@@ -45,7 +45,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
-		return _objectEntryLocalService.countManyToManyRelatedObjectEntries(
+		return _objectEntryLocalService.getManyToManyRelatedObjectEntriesCount(
 			groupId, objectRelationshipId, primaryKey);
 	}
 

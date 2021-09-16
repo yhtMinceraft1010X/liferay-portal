@@ -222,7 +222,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public int countManyToManyRelatedObjectEntries(
+	public int getManyToManyRelatedObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
@@ -239,7 +239,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public int countOneToManyRelatedObjectEntries(
+	public int getOneToManyRelatedObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
