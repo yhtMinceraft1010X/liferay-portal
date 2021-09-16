@@ -43,8 +43,6 @@ public class SXPBlueprintPermissionUpdateHandler
 			return;
 		}
 
-		sxpBlueprint.setModifiedDate(new Date());
-
 		_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint);
 	}
 

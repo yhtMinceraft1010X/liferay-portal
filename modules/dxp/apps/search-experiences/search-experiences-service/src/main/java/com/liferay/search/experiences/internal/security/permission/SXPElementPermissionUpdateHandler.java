@@ -43,8 +43,6 @@ public class SXPElementPermissionUpdateHandler
 			return;
 		}
 
-		sxpElement.setModifiedDate(new Date());
-
 		_sxpElementLocalService.updateSXPElement(sxpElement);
 	}
 
