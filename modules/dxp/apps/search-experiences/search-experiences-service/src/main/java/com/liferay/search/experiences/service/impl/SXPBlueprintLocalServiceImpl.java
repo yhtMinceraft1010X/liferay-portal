@@ -203,7 +203,9 @@ public class SXPBlueprintLocalServiceImpl
 			   SXPBlueprintTitleException {
 
 		if (!GetterUtil.getBoolean(
-				serviceContext.getAttribute("skip.sxp_blueprint.validation"))) {
+				serviceContext.getAttribute(
+					SXPBlueprintLocalServiceImpl.class.getName() +
+						"#_validate"))) {
 
 			_sxpBlueprintValidator.validateSXPBlueprint(
 				titleMap, configurationsJSON);
