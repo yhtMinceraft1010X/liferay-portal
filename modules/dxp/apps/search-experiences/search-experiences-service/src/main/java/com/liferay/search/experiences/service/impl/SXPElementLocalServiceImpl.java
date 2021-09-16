@@ -50,11 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.search.experiences.sxpElements.service.ElementLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.search.experiences.blueprints.service.ElementLocalServiceUtil</code>.
-	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPElement addSXPElement(

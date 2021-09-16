@@ -51,11 +51,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.search.experiences.sxpElements.service.SXPElementServiceUtil</code> to access the sxpElement remote service.
-	 */
 	@Override
 	public SXPElement addCompanySXPElement(
 			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
