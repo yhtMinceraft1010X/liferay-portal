@@ -78,10 +78,6 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
-		sxpBlueprint.setCreateDate(serviceContext.getCreateDate(new Date()));
-		sxpBlueprint.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-		sxpBlueprint.setUuid(serviceContext.getUuid());
 
 		sxpBlueprint.setTitleMap(titleMap);
 		sxpBlueprint.setDescriptionMap(descriptionMap);
