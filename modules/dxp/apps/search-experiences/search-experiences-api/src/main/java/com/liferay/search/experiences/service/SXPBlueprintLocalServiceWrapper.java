@@ -411,11 +411,12 @@ public class SXPBlueprintLocalServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint updateStatus(
-			long userId, long sxpBlueprintId, int status)
+			long userId, long sxpBlueprintId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintLocalService.updateStatus(
-			userId, sxpBlueprintId, status);
+			userId, sxpBlueprintId, status, serviceContext);
 	}
 
 	@Override

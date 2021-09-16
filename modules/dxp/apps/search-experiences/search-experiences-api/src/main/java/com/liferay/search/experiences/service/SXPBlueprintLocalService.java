@@ -329,7 +329,8 @@ public interface SXPBlueprintLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint updateStatus(
-			long userId, long sxpBlueprintId, int status)
+			long userId, long sxpBlueprintId, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

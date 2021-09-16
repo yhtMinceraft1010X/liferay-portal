@@ -364,10 +364,12 @@ public class SXPBlueprintLocalServiceUtil {
 	}
 
 	public static SXPBlueprint updateStatus(
-			long userId, long sxpBlueprintId, int status)
+			long userId, long sxpBlueprintId, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().updateStatus(userId, sxpBlueprintId, status);
+		return getService().updateStatus(
+			userId, sxpBlueprintId, status, serviceContext);
 	}
 
 	public static SXPBlueprint updateSXPBlueprint(
