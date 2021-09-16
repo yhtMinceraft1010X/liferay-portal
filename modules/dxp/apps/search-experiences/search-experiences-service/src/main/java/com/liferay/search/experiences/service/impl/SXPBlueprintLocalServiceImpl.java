@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.service.impl;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.search.experiences.exception.SXPBlueprintConfigurationsJSONException;
@@ -37,9 +35,6 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
-import java.io.Serializable;
-
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -111,6 +106,8 @@ public class SXPBlueprintLocalServiceImpl
 	public SXPBlueprint deleteSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws PortalException {
 
+		sxpBlueprint = sxpBlueprintPersistence.remove(sxpBlueprint);
+
 		_resourceLocalService.deleteResource(
 			sxpBlueprint, ResourceConstants.SCOPE_INDIVIDUAL);
 
@@ -118,7 +115,7 @@ public class SXPBlueprintLocalServiceImpl
 			sxpBlueprint.getCompanyId(), sxpBlueprint.getGroupId(),
 			SXPBlueprint.class.getName(), sxpBlueprint.getSXPBlueprintId());
 
-		return super.deleteSXPBlueprint(sxpBlueprint);
+		return sxpBlueprint;
 	}
 
 	public int getCompanySXPBlueprintsCount(long companyId) {
@@ -128,19 +125,27 @@ public class SXPBlueprintLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPBlueprint updateStatus(
-			long userId, long sxpBlueprintId, int status)
+			long userId, long sxpBlueprintId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(
 			sxpBlueprintId);
 
-		sxpBlueprint.setStatus(status);
-		sxpBlueprint.setStatusByUserId(userId);
-		sxpBlueprint.setStatusByUserName(user.getScreenName());
-		sxpBlueprint.setStatusDate(new Date());
+		if (sxpBlueprint.getStatus() == status) {
+			return sxpBlueprint;
+		}
 
-		return updateSXPBlueprint(sxpBlueprint);
+		sxpBlueprint.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		sxpBlueprint.setStatusByUserId(user.getUserId());
+		sxpBlueprint.setStatusByUserName(user.getFullName());
+
+		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
+
+		return sxpBlueprintPersistence.update(sxpBlueprint);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -150,18 +155,15 @@ public class SXPBlueprintLocalServiceImpl
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
+		_validate(configurationsJSON, titleMap, serviceContext);
+
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(
 			sxpBlueprintId);
 
-		_validate(configurationsJSON, titleMap, serviceContext);
-
-		sxpBlueprint.setDescriptionMap(descriptionMap);
-		sxpBlueprint.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-		sxpBlueprint.setTitleMap(titleMap);
-
 		sxpBlueprint.setConfigurationsJSON(configurationsJSON);
+		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
+		sxpBlueprint.setTitleMap(titleMap);
 
 		return updateSXPBlueprint(sxpBlueprint);
 	}
