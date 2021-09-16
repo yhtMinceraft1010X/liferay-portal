@@ -178,6 +178,16 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 			getDocument(sxpBlueprint), isCommitImmediately());
 	}
 
+	private Summary _createSummary(
+		Document document, String descriptionField, String titleField) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		return new Summary(
+			document.get(prefix + titleField, titleField),
+			document.get(prefix + descriptionField, descriptionField));
+	}
+
 	private void _reindexSXPBlueprints(long companyId) throws PortalException {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpBlueprintLocalService.getIndexableActionableDynamicQuery();
@@ -199,16 +209,6 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private Summary _createSummary(
-		Document document, String descriptionField, String titleField) {
-
-		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
-
-		return new Summary(
-			document.get(prefix + titleField, titleField),
-			document.get(prefix + descriptionField, descriptionField));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
