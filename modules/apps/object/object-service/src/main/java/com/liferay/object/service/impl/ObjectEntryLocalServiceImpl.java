@@ -738,8 +738,7 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry updateStatus(
 			long userId, long objectEntryId, int status,
-			ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.findByPrimaryKey(
