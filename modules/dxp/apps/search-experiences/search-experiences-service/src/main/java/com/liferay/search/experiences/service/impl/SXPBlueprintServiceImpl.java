@@ -52,8 +52,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 	public SXPBlueprint addCompanySXPBlueprint(
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String configurationsJSON, String elementInstancesJSON,
+			String configurationsJSON,  Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -90,9 +90,10 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	}
 
 	public SXPBlueprint updateSXPBlueprint(
-			long sxpBlueprintId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String configurationsJSON,
-			String elementInstancesJSON, ServiceContext serviceContext)
+			long sxpBlueprintId, String configurationsJSON,
+			Map<Locale, String> descriptionMap,
+			String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_sxpBlueprintModelResourcePermission.check(

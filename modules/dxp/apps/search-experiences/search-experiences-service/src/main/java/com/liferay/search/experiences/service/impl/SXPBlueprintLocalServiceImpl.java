@@ -59,9 +59,10 @@ public class SXPBlueprintLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPBlueprint addSXPBlueprint(
-			long userId, long groupId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String configurationsJSON,
-			String elementInstancesJSON, ServiceContext serviceContext)
+			long userId, long groupId, String configurationsJSON,
+			Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -151,9 +152,10 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String configurationsJSON,
-			String elementInstancesJSON, ServiceContext serviceContext)
+			long userId, long sxpBlueprintId,  String configurationsJSON,
+			Map<Locale, String> descriptionMap,
+			String elementInstancesJSON, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SXPBlueprint sxpBlueprint = getBlueprint(sxpBlueprintId);
