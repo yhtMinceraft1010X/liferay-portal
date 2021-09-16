@@ -935,7 +935,6 @@ definition {
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key before it is published"
 	@priority = "4"
 	test CanUpdateObjectPanelCategoryBeforePublished {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -956,10 +955,6 @@ definition {
 		ObjectPortlet.selectCustomObject(name = "CustomObject");
 
 		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel >> Object");
-
-
-
-
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object panel category key after it is published"
