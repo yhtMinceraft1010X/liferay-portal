@@ -58,19 +58,18 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		_validate(sxpElementDefinitionJSON, titleMap, type, serviceContext);
 
 		SXPElement sxpElement = createSXPElement(
 			counterLocalService.increment(SXPElement.class.getName()));
 
 		sxpElement.setGroupId(groupId);
+
+		User user = _userLocalService.getUser(userId);
+
 		sxpElement.setCompanyId(user.getCompanyId());
 		sxpElement.setUserId(user.getUserId());
 		sxpElement.setUserName(user.getFullName());
-		sxpElement.setCreateDate(serviceContext.getCreateDate(new Date()));
-		sxpElement.setModifiedDate(serviceContext.getModifiedDate(new Date()));
 
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
@@ -80,7 +79,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setType(type);
 		sxpElement.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		sxpElement = super.addSXPElement(sxpElement);
+		sxpElement = sxpElementPersistence.update(sxpElement);
 
 		_resourceLocalService.addModelResources(sxpElement, serviceContext);
 
@@ -104,26 +103,29 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (sxpElement.isReadOnly()) {
-			throw new DefaultSXPElementException(
-				"Cannot delete system read-only SXPElement");
+			throw new DefaultSXPElementException();
 		}
+
+		sxpElement = sxpElementPersistence.remove(sxpElement);
+
+		sxpElementPersistence.remove(sxpElement);
 
 		_resourceLocalService.deleteResource(
 			sxpElement, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		return super.deleteSXPElement(sxpElement);
+		return sxpElement;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public SXPElement deleteSystemSXPElement(SXPElement sxpElement)
+	public SXPElement deleteSystemSXPElement(long sxpElementId)
 		throws PortalException {
 
-		_resourceLocalService.deleteResource(
-			sxpElement, ResourceConstants.SCOPE_INDIVIDUAL);
+		SXPElement sxpElement = sxpElementPersistence.findByPrimaryKey(
+			sxpElementId);
 
-		return super.deleteSXPElement(sxpElement);
+		return deleteSXPElement(sxpElement);
 	}
 
 	@Override

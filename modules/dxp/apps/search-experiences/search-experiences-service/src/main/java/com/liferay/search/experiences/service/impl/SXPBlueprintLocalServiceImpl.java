@@ -90,7 +90,9 @@ public class SXPBlueprintLocalServiceImpl
 		return sxpBlueprint;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
 		throws PortalException {
 
