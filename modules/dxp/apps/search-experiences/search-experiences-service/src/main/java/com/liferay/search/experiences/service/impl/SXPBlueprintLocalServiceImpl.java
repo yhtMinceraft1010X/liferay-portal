@@ -67,7 +67,7 @@ public class SXPBlueprintLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(titleMap, configuration, serviceContext);
+		_validate(configurationsJSON, titleMap, serviceContext);
 
 		long sxpBlueprintId = counterLocalService.increment(
 			Blueprint.class.getName());
@@ -156,7 +156,7 @@ public class SXPBlueprintLocalServiceImpl
 
 		SXPBlueprint sxpBlueprint = getBlueprint(sxpBlueprintId);
 
-		_validate(titleMap, configurationsJSON, serviceContext);
+		_validate(configurationsJSON, titleMap, serviceContext);
 
 		sxpBlueprint.setDescriptionMap(descriptionMap);
 		sxpBlueprint.setModifiedDate(
@@ -197,7 +197,7 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private void _validate(
-			Map<Locale, String> titleMap, String configurationsJSON,
+			String configurationsJSON, Map<Locale, String> titleMap
 			ServiceContext serviceContext)
 		throws SXPBlueprintConfigurationsJSONException,
 			   SXPBlueprintTitleException {
@@ -207,8 +207,7 @@ public class SXPBlueprintLocalServiceImpl
 					SXPBlueprintLocalServiceImpl.class.getName() +
 						"#_validate"))) {
 
-			_sxpBlueprintValidator.validateSXPBlueprint(
-				titleMap, configurationsJSON);
+			_sxpBlueprintValidator.validate(configurationsJSON, titleMap);
 		}
 	}
 
