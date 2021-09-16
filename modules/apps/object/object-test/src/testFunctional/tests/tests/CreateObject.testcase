@@ -432,11 +432,30 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSaveUpperCaseFieldName {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138825 CannotSaveUpperCaseFieldName pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Field",
+			fieldName = "CustomField",
+			fieldType = "String"
+		);
+
+		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be a lower case letter");
+		
+
+
+
 
 	}
 
