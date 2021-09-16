@@ -89,6 +89,7 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 			},
 			{}
 		);
+
 		Liferay.Util.fetch(
 			'/o/headless-admin-list-type/v1.0/list-type-entries/<%= listTypeEntry.getListTypeEntryId() %>',
 			{
@@ -133,5 +134,6 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 	function <portlet:namespace />handleDestroyPortlet() {
 		Liferay.detach('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
 	}
+
 	Liferay.on('destroyPortlet', <portlet:namespace />handleDestroyPortlet);
 </script>

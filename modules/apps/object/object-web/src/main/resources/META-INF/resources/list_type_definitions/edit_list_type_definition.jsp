@@ -89,8 +89,6 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 
 <script>
 	function <portlet:namespace />saveListTypeDefinition() {
-		const inputName = document.querySelector('#<portlet:namespace />name');
-
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
