@@ -108,8 +108,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 		sxpElement = sxpElementPersistence.remove(sxpElement);
 
-		sxpElementPersistence.remove(sxpElement);
-
 		_resourceLocalService.deleteResource(
 			sxpElement, ResourceConstants.SCOPE_INDIVIDUAL);
 
