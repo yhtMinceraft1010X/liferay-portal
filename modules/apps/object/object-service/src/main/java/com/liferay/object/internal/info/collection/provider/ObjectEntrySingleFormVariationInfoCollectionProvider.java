@@ -16,10 +16,13 @@ package com.liferay.object.internal.info.collection.provider;
 
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.SelectInfoFieldType;
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.KeywordsInfoFilter;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
@@ -50,6 +53,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -63,6 +67,7 @@ import java.util.ResourceBundle;
  */
 public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	implements ConfigurableInfoCollectionProvider<ObjectEntry>,
+			   FilteredInfoCollectionProvider<ObjectEntry>,
 			   SingleFormVariationInfoCollectionProvider<ObjectEntry> {
 
 	public ObjectEntrySingleFormVariationInfoCollectionProvider(
@@ -170,12 +175,16 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return _objectDefinition.getPluralLabel(locale);
 	}
 
+	@Override
+	public List<InfoFilter> getSupportedInfoFilters() {
+		return Arrays.asList(new KeywordsInfoFilter());
+	}
+
 	private SearchContext _buildSearchContext(CollectionQuery collectionQuery)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAndSearch(true);
 		searchContext.setAttribute(
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		searchContext.setAttribute(
@@ -201,6 +210,17 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		searchContext.setEnd(pagination.getEnd());
 
 		searchContext.setGroupIds(new long[] {_getGroupId()});
+
+		Optional<KeywordsInfoFilter> keywordsInfoFilterOptional =
+			collectionQuery.getInfoFilterOptional(KeywordsInfoFilter.class);
+
+		if (keywordsInfoFilterOptional.isPresent()) {
+			KeywordsInfoFilter keywordsInfoFilter =
+				keywordsInfoFilterOptional.get();
+
+			searchContext.setKeywords(keywordsInfoFilter.getKeywords());
+		}
+
 		searchContext.setStart(pagination.getStart());
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
