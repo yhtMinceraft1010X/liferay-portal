@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.configuration.category;
+package com.liferay.search.experiences.web.internal.configuration.admin.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 
