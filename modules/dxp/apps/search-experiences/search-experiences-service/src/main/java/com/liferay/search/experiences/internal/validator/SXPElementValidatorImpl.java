@@ -42,8 +42,7 @@ public class SXPElementValidatorImpl
 	extends BaseJSONValidator implements SXPElementValidator {
 
 	@Override
-	public void validate(
-			String elementDefinitionJSON, int type)
+	public void validate(String elementDefinitionJSON, int type)
 		throws SXPElementElementDefinitionJSONException {
 
 		_validateElementDefinitionJSON(elementDefinitionJSON, type);
