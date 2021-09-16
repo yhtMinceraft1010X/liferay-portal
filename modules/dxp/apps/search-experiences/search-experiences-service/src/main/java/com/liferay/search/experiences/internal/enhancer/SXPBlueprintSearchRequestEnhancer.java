@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = {})
+@Component(immediate = true, service = SXPBlueprintSearchRequestEnhancer.class)
 public class SXPBlueprintSearchRequestEnhancer {
 
 	public void enhance(
