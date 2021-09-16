@@ -27,14 +27,12 @@ public class SXPBlueprintTitleException extends PortalException {
 	public SXPBlueprintTitleException() {
 	}
 
-	public SXPBlueprintTitleException(String msg) {
-		super(msg);
+	public SXPBlueprintTitleException(List<Problem> problems) {
+		_problems = problems;
 	}
 
-	public SXPBlueprintTitleException(String msg, List<Problem> problems) {
+	public SXPBlueprintTitleException(String msg) {
 		super(msg);
-
-		_problems = problems;
 	}
 
 	public SXPBlueprintTitleException(String msg, Throwable throwable) {

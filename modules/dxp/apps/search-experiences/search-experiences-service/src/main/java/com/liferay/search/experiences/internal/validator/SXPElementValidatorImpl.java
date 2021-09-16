@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.validator;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
@@ -23,14 +24,9 @@ import com.liferay.search.experiences.problem.Problem;
 import com.liferay.search.experiences.problem.Severity;
 import com.liferay.search.experiences.validator.SXPElementValidator;
 
-import java.io.InputStream;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.everit.json.schema.ValidationException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = SXPElementValidator.class)
-public class SXPElementValidatorImpl
-	extends BaseJSONValidator implements SXPElementValidator {
+public class SXPElementValidatorImpl implements SXPElementValidator {
 
 	@Override
 	public void validate(String elementDefinitionJSON, int type)
@@ -49,20 +44,14 @@ public class SXPElementValidatorImpl
 			return;
 		}
 
-		try {
-			JSONSchemaValidatorUtil.validate(
-				_wrapConfiguration(elementDefinitionJSON, type),
-				SXPElementValidatorImpl.class.getResourceAsStream(
-					"dependencies/sxpelement.schema.json"));
-		}
-		catch (ValidationException validationException) {
-			List<Problem> problems = new ArrayList<>();
+		// TODO What should the standard be for JSON schema files?
 
-			addJSONValidationProblems(problems, validationException);
+		List<Problem> problems = JSONSchemaValidatorUtil.validate(
+			SXPElementValidatorImpl.class, _wrap(elementDefinitionJSON, type),
+			"dependencies/sxpelement.schema.json");
 
-			throw new SXPElementElementDefinitionJSONException(
-				"There were (" + problems.size() + ") validation errors",
-				problems);
+		if (!ListUtil.isEmpty(problems)) {
+			throw new SXPElementElementDefinitionJSONException(problems);
 		}
 	}
 
@@ -76,24 +65,20 @@ public class SXPElementValidatorImpl
 		validate(elementDefinitionJSON, type);
 
 		if (MapUtil.isEmpty(titleMap)) {
-			List<Problem> problems = new ArrayList<>();
-
-			problems.add(
-				new Problem.Builder().message(
-					"Title empty"
-				).languageKey(
-					"core.errors.title-empty"
-				).severity(
-					Severity.ERROR
-				).build());
-
 			throw new SXPElementTitleException(
-				"Title cannot be empty", problems);
+				ListUtil.fromArray(
+					new Problem.Builder().message(
+						"Title is empty"
+					).severity(
+						Severity.ERROR
+					).build()));
 		}
 	}
 
-	private String _wrapConfiguration(String elementDefinitionJSON, int type) {
+	private String _wrap(String elementDefinitionJSON, int type) {
 		StringBuilder sb = new StringBuilder();
+
+		// TODO Use a constants class for type
 
 		if (type == 1) {
 			sb.append("{\"aggregation_element\": ");

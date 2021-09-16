@@ -27,16 +27,12 @@ public class SXPBlueprintConfigurationsJSONException extends PortalException {
 	public SXPBlueprintConfigurationsJSONException() {
 	}
 
-	public SXPBlueprintConfigurationsJSONException(String msg) {
-		super(msg);
+	public SXPBlueprintConfigurationsJSONException(List<Problem> problems) {
+		_problems = problems;
 	}
 
-	public SXPBlueprintConfigurationsJSONException(
-		String msg, List<Problem> problems) {
-
+	public SXPBlueprintConfigurationsJSONException(String msg) {
 		super(msg);
-
-		_problems = problems;
 	}
 
 	public SXPBlueprintConfigurationsJSONException(

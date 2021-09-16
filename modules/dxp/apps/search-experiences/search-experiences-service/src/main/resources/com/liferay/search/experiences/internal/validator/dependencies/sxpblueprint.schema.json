@@ -1,7 +1,6 @@
 {
 	"$id": "sxpblueprint.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"description": "SXPBlueprint configuration schema",
 	"properties": {
 		"advanced_configuration": {
 			"$ref": "advanced_configuration.schema.json"
@@ -28,6 +27,5 @@
 			"$ref": "sort_configuration.schema.json"
 		}
 	},
-	"title": "SXPBlueprint",
 	"type": "object"
 }

@@ -70,7 +70,6 @@
 			"type": "object"
 		}
 	},
-	"description": "Blueprint parameters schema",
 	"properties": {
 		"custom": {
 			"items": {
@@ -128,6 +127,5 @@
 			"type": "object"
 		}
 	},
-	"title": "Blueprint Parameters",
 	"type": "object"
 }

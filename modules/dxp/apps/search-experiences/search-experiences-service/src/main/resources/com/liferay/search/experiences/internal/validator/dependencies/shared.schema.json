@@ -96,7 +96,5 @@
 			]
 		}
 	},
-	"description": "Schema for shared Blueprint properties",
-	"title": "Blueprint Shared",
 	"type": "object"
 }

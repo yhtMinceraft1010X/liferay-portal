@@ -368,7 +368,6 @@
 			}
 		}
 	},
-	"description": "Schema for Element UI Configuration",
 	"properties": {
 		"fieldSets": {
 			"items": {
@@ -379,6 +378,5 @@
 	},
 	"required": [
 	],
-	"title": "Element UI Configuration",
 	"type": "object"
 }

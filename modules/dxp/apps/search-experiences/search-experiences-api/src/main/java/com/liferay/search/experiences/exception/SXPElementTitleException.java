@@ -27,14 +27,12 @@ public class SXPElementTitleException extends PortalException {
 	public SXPElementTitleException() {
 	}
 
-	public SXPElementTitleException(String msg) {
-		super(msg);
+	public SXPElementTitleException(List<Problem> problems) {
+		_problems = problems;
 	}
 
-	public SXPElementTitleException(String msg, List<Problem> problems) {
+	public SXPElementTitleException(String msg) {
 		super(msg);
-
-		_problems = problems;
 	}
 
 	public SXPElementTitleException(String msg, Throwable throwable) {

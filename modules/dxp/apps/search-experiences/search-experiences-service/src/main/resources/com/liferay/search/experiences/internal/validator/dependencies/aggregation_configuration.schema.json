@@ -884,7 +884,5 @@
 			}
 		}
 	},
-	"description": "Schema for Blueprint aggregations configuration",
-	"title": "Blueprint Aggregations",
 	"type": "object"
 }

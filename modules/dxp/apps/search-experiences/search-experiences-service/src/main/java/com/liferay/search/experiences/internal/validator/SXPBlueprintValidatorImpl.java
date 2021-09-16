@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.validator;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.exception.SXPBlueprintConfigurationsJSONException;
@@ -23,14 +24,9 @@ import com.liferay.search.experiences.problem.Problem;
 import com.liferay.search.experiences.problem.Severity;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
-import java.io.InputStream;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.everit.json.schema.ValidationException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Petteri Karttunen
  */
 @Component(immediate = true, service = SXPBlueprintValidator.class)
-public class SXPBlueprintValidatorImpl
-	extends BaseJSONValidator implements SXPBlueprintValidator {
+public class SXPBlueprintValidatorImpl implements SXPBlueprintValidator {
 
 	@Override
 	public void validate(String configurationsJSON)
@@ -49,20 +44,14 @@ public class SXPBlueprintValidatorImpl
 			return;
 		}
 
-		try {
-			JSONSchemaValidatorUtil.validate(
-				configurationsJSON,
-				SXPBlueprintValidatorImpl.class.getResourceAsStream(
-					"dependencies/sxpblueprint.schema.json"));
-		}
-		catch (ValidationException validationException) {
-			List<Problem> problems = new ArrayList<>();
+		// TODO What should the standard be for JSON schema files?
 
-			addJSONValidationProblems(problems, validationException);
+		List<Problem> problems = JSONSchemaValidatorUtil.validate(
+			SXPBlueprintValidatorImpl.class, configurationsJSON,
+			"dependencies/sxpblueprint.schema.json");
 
-			throw new SXPBlueprintConfigurationsJSONException(
-				"There were (" + problems.size() + ") validation errors",
-				problems);
+		if (!ListUtil.isEmpty(problems)) {
+			throw new SXPBlueprintConfigurationsJSONException(problems);
 		}
 	}
 
@@ -75,19 +64,13 @@ public class SXPBlueprintValidatorImpl
 		validate(configurationsJSON);
 
 		if (MapUtil.isEmpty(titleMap)) {
-			List<Problem> problems = new ArrayList<>();
-
-			problems.add(
-				new Problem.Builder().message(
-					"Title empty"
-				).languageKey(
-					"core.errors.title-empty"
-				).severity(
-					Severity.ERROR
-				).build());
-
 			throw new SXPBlueprintTitleException(
-				"Title cannot be empty", problems);
+				ListUtil.fromArray(
+					new Problem.Builder().message(
+						"Title is empty"
+					).severity(
+						Severity.ERROR
+					).build()));
 		}
 	}
 

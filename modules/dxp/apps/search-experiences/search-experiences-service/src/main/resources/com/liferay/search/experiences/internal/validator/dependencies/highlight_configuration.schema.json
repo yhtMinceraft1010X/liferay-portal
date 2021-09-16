@@ -63,7 +63,5 @@
 			"type": "object"
 		}
 	},
-	"description": "Blueprint highlights schema",
-	"title": "Blueprint Highlights",
 	"type": "object"
 }

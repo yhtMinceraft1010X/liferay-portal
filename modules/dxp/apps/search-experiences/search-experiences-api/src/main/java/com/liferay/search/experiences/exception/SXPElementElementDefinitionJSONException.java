@@ -27,16 +27,12 @@ public class SXPElementElementDefinitionJSONException extends PortalException {
 	public SXPElementElementDefinitionJSONException() {
 	}
 
-	public SXPElementElementDefinitionJSONException(String msg) {
-		super(msg);
+	public SXPElementElementDefinitionJSONException(List<Problem> problems) {
+		_problems = problems;
 	}
 
-	public SXPElementElementDefinitionJSONException(
-		String msg, List<Problem> problems) {
-
+	public SXPElementElementDefinitionJSONException(String msg) {
 		super(msg);
-
-		_problems = problems;
 	}
 
 	public SXPElementElementDefinitionJSONException(

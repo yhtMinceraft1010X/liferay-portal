@@ -291,7 +291,6 @@
 			"type": "object"
 		}
 	},
-	"description": "Schema for Blueprint query configuration",
 	"properties": {
 		"category": {
 			"type": "string"
@@ -340,6 +339,5 @@
 	},
 	"required": [
 	],
-	"title": "Blueprint Query",
 	"type": "object"
 }

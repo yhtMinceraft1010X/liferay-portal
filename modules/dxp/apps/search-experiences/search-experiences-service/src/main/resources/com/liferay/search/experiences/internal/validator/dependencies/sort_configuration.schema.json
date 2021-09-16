@@ -134,11 +134,9 @@
 			}
 		}
 	},
-	"description": "Schema for Blueprints sorts",
 	"items": {
 		"$ref": "#/definitions/sorts/properties"
 	},
-	"title": "Blueprint Sorts",
 	"type": [
 		"array"
 	]

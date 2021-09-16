@@ -14,12 +14,17 @@
 
 package com.liferay.search.experiences.internal.validator.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.search.experiences.problem.Problem;
+import com.liferay.search.experiences.problem.Severity;
 
-import java.io.InputStream;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -28,7 +33,6 @@ import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaClient;
 import org.everit.json.schema.loader.SchemaLoader;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -37,25 +41,21 @@ import org.json.JSONTokener;
  */
 public class JSONSchemaValidatorUtil {
 
-	public static void validate(String json, InputStream inputStream)
+	public static List<Problem> validate(
+			Class<?> clazz, String json, String resourcePath)
 		throws ValidationException {
 
 		if (Validator.isNull(json)) {
-			return;
+			return Collections.<Problem>emptyList();
 		}
 
 		try {
-			JSONObject validationJSONObject = _removeEmptyKeys(
-				new JSONObject(json));
-
-			JSONObject schemaJSONObject = new JSONObject(
-				new JSONTokener(inputStream));
-
 			SchemaLoader schemaLoader = SchemaLoader.builder(
 			).schemaClient(
 				SchemaClient.classPathAwareClient()
 			).schemaJson(
-				schemaJSONObject
+				new JSONObject(
+					new JSONTokener(clazz.getResourceAsStream(resourcePath)))
 			).resolutionScope(
 				"classpath://com/liferay/search/experiences/internal" +
 					"/validator/dependencies/"
@@ -65,46 +65,135 @@ public class JSONSchemaValidatorUtil {
 
 			Schema schema = builder.build();
 
-			schema.validate(validationJSONObject);
-		}
-		catch (JSONException jsonException) {
-			_log.error(jsonException.getMessage(), jsonException);
+			schema.validate(_filterJSONObject(new JSONObject(json)));
 
-			throw new RuntimeException(jsonException);
+			return Collections.<Problem>emptyList();
+		}
+		catch (ValidationException validationException) {
+			List<Problem> problems = new ArrayList<>();
+
+			_addProblems(clazz.getName(), problems, validationException);
+
+			return problems;
 		}
 	}
 
-	private static boolean _isEmpty(String key, JSONObject jsonObject) {
-		Object object = jsonObject.get(key);
+	private static void _addProblem(
+		String className, List<Problem> problems,
+		ValidationException validationException) {
 
-		if (object instanceof JSONObject) {
-			JSONObject rootJSONObject = (JSONObject)object;
+		String keyword = validationException.getKeyword();
 
-			if (rootJSONObject.length() == 0) {
-				return true;
+		if (_excludedKeywords.contains(keyword)) {
+			return;
+		}
+
+		String rootJSONObjectPropertyKey =
+			validationException.getPointerToViolation();
+
+		if (StringUtil.startsWith(rootJSONObjectPropertyKey, "#") &&
+			(rootJSONObjectPropertyKey.length() > 1)) {
+
+			rootJSONObjectPropertyKey = rootJSONObjectPropertyKey.substring(1);
+		}
+
+		problems.add(
+			new Problem.Builder().className(
+				className
+			).message(
+				_getMessage(keyword, validationException)
+			).rootConfiguration(
+				_getRootConfiguration(validationException)
+			).rootJSONObjectPropertyKey(
+				rootJSONObjectPropertyKey
+			).severity(
+				Severity.ERROR
+			).throwable(
+				validationException
+			).build());
+	}
+
+	private static void _addProblems(
+		String className, List<Problem> problems,
+		ValidationException validationException1) {
+
+		if (ListUtil.isEmpty(validationException1.getCausingExceptions())) {
+			_addProblem(className, problems, validationException1);
+
+			return;
+		}
+
+		for (ValidationException validationException2 :
+				validationException1.getCausingExceptions()) {
+
+			if (ListUtil.isEmpty(validationException2.getCausingExceptions())) {
+				_addProblem(className, problems, validationException2);
+			}
+			else {
+				_addProblems(className, problems, validationException2);
 			}
 		}
-
-		return false;
 	}
 
-	private static JSONObject _removeEmptyKeys(JSONObject originalJSONObject) {
-		JSONObject cleanedJSONObject = new JSONObject();
+	private static JSONObject _filterJSONObject(JSONObject jsonObject) {
+		JSONObject filteredJSONObject = new JSONObject();
 
-		Set<String> keySet = originalJSONObject.keySet();
+		Set<String> keySet = jsonObject.keySet();
 
 		Stream<String> stream = keySet.stream();
 
 		stream.filter(
-			key -> !_isEmpty(key, originalJSONObject)
+			key -> {
+				Object object = jsonObject.get(key);
+
+				if (object instanceof JSONObject) {
+					JSONObject currentJSONObject = (JSONObject)object;
+
+					if (currentJSONObject.length() == 0) {
+						return false;
+					}
+				}
+
+				return true;
+			}
 		).forEach(
-			key -> cleanedJSONObject.put(key, originalJSONObject.get(key))
+			key -> filteredJSONObject.put(key, jsonObject.get(key))
 		);
 
-		return cleanedJSONObject;
+		return filteredJSONObject;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSONSchemaValidatorUtil.class);
+	private static String _getMessage(
+		String keyword, ValidationException validationException) {
+
+		if (keyword.equals("const") || keyword.equals("enum")) {
+			Schema schema = validationException.getViolatedSchema();
+
+			JSONObject jsonObject = new JSONObject(schema.toString());
+
+			return StringBundler.concat(
+				validationException.getErrorMessage(), ". Expected value is ",
+				jsonObject.get(keyword), ".");
+		}
+
+		return validationException.getErrorMessage();
+	}
+
+	private static String _getRootConfiguration(
+		ValidationException validationException) {
+
+		String rootConfiguration = validationException.getPointerToViolation();
+
+		int end = rootConfiguration.indexOf("/", 2);
+
+		if (StringUtil.startsWith(rootConfiguration, "#") && (end > 0)) {
+			return rootConfiguration.substring(2, end);
+		}
+
+		return null;
+	}
+
+	private static final Set<String> _excludedKeywords = SetUtil.fromArray(
+		new String[] {"allOf", "anyOf", "oneOf", "none"});
 
 }

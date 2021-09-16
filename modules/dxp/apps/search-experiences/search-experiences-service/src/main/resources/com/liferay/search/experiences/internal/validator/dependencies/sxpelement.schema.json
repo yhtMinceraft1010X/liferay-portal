@@ -1,7 +1,6 @@
 {
 	"$id": "sxpelement.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"description": "SXPElement configuration schema",
 	"properties": {
 		"aggregation_element": {
 			"properties": {
@@ -64,6 +63,5 @@
 			"type": "object"
 		}
 	},
-	"title": "SXPElement",
 	"type": "object"
 }
