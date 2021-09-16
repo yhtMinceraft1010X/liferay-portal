@@ -40,17 +40,6 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	@Override
-	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
-		throws PortalException {
-
-		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, 0, 1);
-
-		return relatedModels.size();
-	}
-
-	@Override
 	public String getClassName() {
 		return _className;
 	}
@@ -68,6 +57,17 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getOneToManyRelatedObjectEntries(
 			groupId, objectRelationshipId, primaryKey, 0, 1);
+	}
+
+	@Override
+	public int getRelatedModelsCount(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		List<ObjectEntry> relatedModels = getRelatedModels(
+			groupId, objectRelationshipId, primaryKey, 0, 1);
+
+		return relatedModels.size();
 	}
 
 	private final String _className;
