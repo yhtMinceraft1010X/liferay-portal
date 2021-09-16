@@ -65,36 +65,34 @@ public class SXPBlueprintLocalServiceImpl
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		_validate(configurationsJSON, titleMap, serviceContext);
 
-		SXPBlueprint sxpBlueprint = createSXPBlueprint(
+		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.create(
 			counterLocalService.increment());
 
 		sxpBlueprint.setGroupId(groupId);
+
+		User user = _userLocalService.getUser(userId);
+
 		sxpBlueprint.setCompanyId(user.getCompanyId());
 		sxpBlueprint.setUserId(user.getUserId());
 		sxpBlueprint.setUserName(user.getFullName());
 
-		sxpBlueprint.setTitleMap(titleMap);
+		sxpBlueprint.setConfigurationsJSON(configurationsJSON);
 		sxpBlueprint.setDescriptionMap(descriptionMap);
-
-		int status = WorkflowConstants.STATUS_DRAFT;
-
-		sxpBlueprint.setStatus(status);
-
-		sxpBlueprint.setStatusByUserId(userId);
+		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
+		sxpBlueprint.setTitleMap(titleMap);
+		sxpBlueprint.setStatus(WorkflowConstants.STATUS_DRAFT);
+		sxpBlueprint.setStatusByUserId(user.getUserId());
 		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
 
-		sxpBlueprint.setConfigurationsJSON(configurationsJSON);
-		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
-
-		sxpBlueprint = super.addSXPBlueprint(sxpBlueprint);
+		sxpBlueprint = sxpBlueprintPersistence.update(sxpBlueprint);
 
 		_resourceLocalService.addModelResources(sxpBlueprint, serviceContext);
 
-		return _startWorkflowInstance(userId, sxpBlueprint, serviceContext);
+		_startWorkflowInstance(userId, sxpBlueprint, serviceContext);
+
+		return sxpBlueprint;
 	}
 
 	@Override
@@ -168,31 +166,15 @@ public class SXPBlueprintLocalServiceImpl
 		return updateSXPBlueprint(sxpBlueprint);
 	}
 
-	private SXPBlueprint _startWorkflowInstance(
+	private void _startWorkflowInstance(
 			long userId, SXPBlueprint sxpBlueprint,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String userPortraitURL = StringPool.BLANK;
-		String userURL = StringPool.BLANK;
-
-		if (serviceContext.getThemeDisplay() != null) {
-			User user = _userLocalService.getUser(userId);
-
-			userPortraitURL = user.getPortraitURL(
-				serviceContext.getThemeDisplay());
-			userURL = user.getDisplayURL(serviceContext.getThemeDisplay());
-		}
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			sxpBlueprint.getCompanyId(), sxpBlueprint.getGroupId(), userId,
 			SXPBlueprint.class.getName(), sxpBlueprint.getSXPBlueprintId(),
-			sxpBlueprint, serviceContext,
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
-			).put(
-				WorkflowConstants.CONTEXT_USER_URL, userURL
-			).build());
+			sxpBlueprint, serviceContext);
 	}
 
 	private void _validate(
