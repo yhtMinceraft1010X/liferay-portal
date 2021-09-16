@@ -71,7 +71,6 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 	});
 
 	function <portlet:namespace />editListTypeEntry() {
-		const inputName = document.querySelector('#<portlet:namespace />name');
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
