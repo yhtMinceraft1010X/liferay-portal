@@ -151,6 +151,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELDS_NAME_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Name')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
 		<td></td>
@@ -163,6 +168,11 @@
 	<tr>
 		<td>FIELD_SEARCHABLE_LANGUAGE_OPTION</td>
 		<td>//div[contains(@class,'form-group input-select-wrapper')]//option[contains(@value, 'en_US')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FIELDS_TYPE_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th') and contains(text(),'Type')]</td>
 		<td></td>
 	</tr>
 	<tr>

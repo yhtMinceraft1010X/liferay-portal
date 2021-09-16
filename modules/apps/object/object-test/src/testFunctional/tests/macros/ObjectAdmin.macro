@@ -70,6 +70,15 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro assertFieldsTableColumnsAreDisplayed {
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_NAME_COLUMN");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_TYPE_COLUMN");
+
+
+		
+	}
+
 	macro assertKeywordAndText {
 		AssertElementPresent(locator1 = "ObjectAdmin#SEARCHABLE_SECTION_TITLE");
 

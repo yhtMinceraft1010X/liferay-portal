@@ -1059,11 +1059,33 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify that the columns Name and Type are displayed for the Fields table"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ColumnsAreDisplayedFieldsTable {
 
-		// TODO LPS-138816 ColumnsAreDisplayedFieldsTable pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.assertFieldsTableColumnsAreDisplayed();
+
+		
+
 
 	}
 
