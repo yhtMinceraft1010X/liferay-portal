@@ -51,6 +51,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
+	@Override
 	public SXPBlueprint addCompanySXPBlueprint(
 			String configurationsJSON,  Map<Locale, String> descriptionMap,
 			String elementInstancesJSON, Map<Locale, String> titleMap,
@@ -67,6 +68,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 			elementInstancesJSON, serviceContext);
 	}
 
+	@Override
 	public SXPBlueprint deleteSXPBlueprint(long sxpBlueprintId)
 		throws PortalException {
 
@@ -76,6 +78,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		return sxpBlueprintLocalService.deleteSXPBlueprint(sxpBlueprintId);
 	}
 
+	@Override
 	public SXPBlueprint getSXPBlueprint(long sxpBlueprintId)
 		throws PortalException {
 
@@ -89,6 +92,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 		return sxpBlueprint;
 	}
 
+	@Override
 	public SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationsJSON,
 			Map<Locale, String> descriptionMap,
