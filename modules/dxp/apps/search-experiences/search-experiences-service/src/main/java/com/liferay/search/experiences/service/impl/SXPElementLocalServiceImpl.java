@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.search.experiences.exception.DefaultSXPElementException;
+import com.liferay.search.experiences.exception.SXPElementReadOnlyException;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
@@ -103,7 +103,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (sxpElement.isReadOnly()) {
-			throw new DefaultSXPElementException();
+			throw new SXPElementReadOnlyException();
 		}
 
 		sxpElement = sxpElementPersistence.remove(sxpElement);
