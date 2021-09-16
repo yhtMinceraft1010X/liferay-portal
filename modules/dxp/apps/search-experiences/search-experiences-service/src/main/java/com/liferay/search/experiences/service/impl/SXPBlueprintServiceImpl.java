@@ -16,7 +16,6 @@ package com.liferay.search.experiences.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -34,8 +33,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,9 +50,9 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 	@Override
 	public SXPBlueprint addSXPBlueprint(
-			long groupId, String configurationsJSON, Map<Locale, String> descriptionMap,
-			String elementInstancesJSON, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			long groupId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -108,9 +105,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	@Reference(
-		target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")
 	private volatile PortletResourcePermission _portletResourcePermission;
 
 	@Reference
