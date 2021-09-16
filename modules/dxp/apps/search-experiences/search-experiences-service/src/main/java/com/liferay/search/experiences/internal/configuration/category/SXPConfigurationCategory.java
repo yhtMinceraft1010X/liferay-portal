@@ -26,23 +26,17 @@ public class SXPConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return _CATEGORY_ICON;
+		return "search-experiences";
 	}
 
 	@Override
 	public String getCategoryKey() {
-		return _CATEGORY_KEY;
+		return "search-experiences";
 	}
 
 	@Override
 	public String getCategorySection() {
-		return _CATEGORY_SECTION;
+		return "platform";
 	}
-
-	private static final String _CATEGORY_ICON = "search-experiences";
-
-	private static final String _CATEGORY_KEY = "search-experiences";
-
-	private static final String _CATEGORY_SECTION = "platform";
 
 }
