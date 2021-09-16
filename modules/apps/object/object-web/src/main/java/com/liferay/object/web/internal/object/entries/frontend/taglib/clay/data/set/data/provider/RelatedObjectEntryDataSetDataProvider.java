@@ -123,7 +123,7 @@ public class RelatedObjectEntryDataSetDataProvider
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		return objectRelatedModelsProvider.countRelatedModels(
+		return objectRelatedModelsProvider.getRelatedModelsCount(
 			objectScopeProvider.getGroupId(httpServletRequest),
 			objectRelationshipId, objectEntryId);
 	}

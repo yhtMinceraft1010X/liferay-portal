@@ -25,7 +25,7 @@ import java.util.List;
  */
 public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 
-	public int countRelatedModels(
+	public int getRelatedModelsCount(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException;
 

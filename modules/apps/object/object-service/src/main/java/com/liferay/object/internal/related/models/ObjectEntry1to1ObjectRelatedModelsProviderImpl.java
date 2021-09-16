@@ -40,7 +40,7 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 	}
 
 	@Override
-	public int countRelatedModels(
+	public int getRelatedModelsCount(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {
 
