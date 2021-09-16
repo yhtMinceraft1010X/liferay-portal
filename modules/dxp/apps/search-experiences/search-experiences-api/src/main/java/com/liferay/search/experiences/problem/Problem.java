@@ -101,8 +101,8 @@ public class Problem {
 			_problem = new Problem();
 		}
 
-		public Builder(Problem message) {
-			_problem = message;
+		public Builder(Problem problem) {
+			_problem = problem;
 		}
 
 		public Problem build() {
