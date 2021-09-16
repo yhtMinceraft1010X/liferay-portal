@@ -30,8 +30,8 @@ import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesCla
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,22 +77,14 @@ public class RelatedModelsDataSetDataProvider
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		List<RelatedModel> relatedObjectEntryModels = new ArrayList<>();
-
-		List<ObjectEntry> objectEntries =
+		return TransformUtil.transform(
 			objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
 				objectRelationshipId, objectEntryId,
-				pagination.getStartPosition(), pagination.getEndPosition());
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			relatedObjectEntryModels.add(
-				new RelatedModel(
-					objectEntry.getObjectEntryId(),
-					String.valueOf(objectEntry.getObjectEntryId())));
-		}
-
-		return relatedObjectEntryModels;
+				pagination.getStartPosition(), pagination.getEndPosition()),
+			objectEntry -> new RelatedModel(
+				objectEntry.getObjectEntryId(),
+				String.valueOf(objectEntry.getObjectEntryId())));
 	}
 
 	@Override
