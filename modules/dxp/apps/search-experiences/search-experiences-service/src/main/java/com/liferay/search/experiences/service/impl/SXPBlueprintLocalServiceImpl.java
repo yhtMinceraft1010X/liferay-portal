@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -35,7 +36,6 @@ import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
-import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 
 import java.io.Serializable;
 
@@ -61,9 +61,8 @@ public class SXPBlueprintLocalServiceImpl
 	@Override
 	public SXPBlueprint addSXPBlueprint(
 			long userId, long groupId, String configurationsJSON,
-			Map<Locale, String> descriptionMap,
-			String elementInstancesJSON, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -148,10 +147,9 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	public SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId,  String configurationsJSON,
-			Map<Locale, String> descriptionMap,
-			String elementInstancesJSON, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			long userId, long sxpBlueprintId, String configurationsJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		SXPBlueprint sxpBlueprint = sxpBlueprintPersistence.findByPrimaryKey(

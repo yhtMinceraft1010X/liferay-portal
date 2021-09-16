@@ -53,7 +53,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 
 	@Override
 	public SXPBlueprint addCompanySXPBlueprint(
-			String configurationsJSON,  Map<Locale, String> descriptionMap,
+			String configurationsJSON, Map<Locale, String> descriptionMap,
 			String elementInstancesJSON, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -95,8 +95,7 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	@Override
 	public SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationsJSON,
-			Map<Locale, String> descriptionMap,
-			String elementInstancesJSON,
+			Map<Locale, String> descriptionMap, String elementInstancesJSON,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
