@@ -74,6 +74,7 @@ ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
+
 		const localizedNames = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {
