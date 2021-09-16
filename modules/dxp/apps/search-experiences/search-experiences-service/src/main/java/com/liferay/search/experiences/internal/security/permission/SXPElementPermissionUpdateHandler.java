@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
