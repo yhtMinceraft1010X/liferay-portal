@@ -46,13 +46,13 @@ const types: TTabTypes = {
 	[TYPES.FIELDS]: {
 		active: true,
 		description: Liferay.Language.get(
-			'to-display-fields-and-one-to-one-relationships'
+			'display-fields-and-one-to-one-relationships'
 		),
 		label: Liferay.Language.get('fields'),
 	},
 	[TYPES.RELATIONSHIPS]: {
 		active: false,
-		description: Liferay.Language.get('to-display-multiple-relationships'),
+		description: Liferay.Language.get('display-multiple-relationships'),
 		label: Liferay.Language.get('relationships'),
 	},
 };
