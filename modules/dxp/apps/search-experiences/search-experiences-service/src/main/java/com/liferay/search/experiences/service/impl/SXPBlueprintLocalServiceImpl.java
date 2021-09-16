@@ -96,7 +96,7 @@ public class SXPBlueprintLocalServiceImpl
 
 		_resourceLocalService.addModelResources(sxpBlueprint, serviceContext);
 
-		return startWorkflowInstance(userId, sxpBlueprint, serviceContext);
+		return _startWorkflowInstance(userId, sxpBlueprint, serviceContext);
 	}
 
 	@Override
@@ -169,7 +169,7 @@ public class SXPBlueprintLocalServiceImpl
 		return updateSXPBlueprint(sxpBlueprint);
 	}
 
-	protected SXPBlueprint startWorkflowInstance(
+	private SXPBlueprint _startWorkflowInstance(
 			long userId, SXPBlueprint sxpBlueprint,
 			ServiceContext serviceContext)
 		throws PortalException {
