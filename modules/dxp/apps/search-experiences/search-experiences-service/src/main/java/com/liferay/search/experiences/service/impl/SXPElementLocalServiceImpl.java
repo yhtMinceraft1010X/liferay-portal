@@ -102,6 +102,8 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	public SXPElement deleteSXPElement(SXPElement sxpElement)
 		throws PortalException {
 
+		// TODO Who can and delete create read only search experiences elements?
+
 		if (sxpElement.isReadOnly()) {
 			throw new SXPElementReadOnlyException();
 		}
