@@ -199,7 +199,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	public void testGetListTypeDefinitionsPage() throws Exception {
 		Page<ListTypeDefinition> page =
 			listTypeDefinitionResource.getListTypeDefinitionsPage(
-				RandomTestUtil.randomString(), Pagination.of(1, 10));
+				null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 

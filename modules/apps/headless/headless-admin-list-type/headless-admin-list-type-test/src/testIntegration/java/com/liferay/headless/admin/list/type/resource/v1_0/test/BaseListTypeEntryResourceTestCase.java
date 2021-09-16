@@ -207,8 +207,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		Page<ListTypeEntry> page =
 			listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-				listTypeDefinitionId, RandomTestUtil.randomString(),
-				Pagination.of(1, 10));
+				listTypeDefinitionId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
