@@ -305,7 +305,8 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectEntryId));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Get many to many related object entries: " + dslQuery);
+			_log.debug(
+				"Get many to many related object entries count: " + dslQuery);
 		}
 
 		return objectEntryPersistence.dslQueryCount(dslQuery);
@@ -365,7 +366,8 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectEntryId));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Count one to many related object entries: " + dslQuery);
+			_log.debug(
+				"Get one to many related object entries count: " + dslQuery);
 		}
 
 		return objectEntryPersistence.dslQueryCount(dslQuery);
