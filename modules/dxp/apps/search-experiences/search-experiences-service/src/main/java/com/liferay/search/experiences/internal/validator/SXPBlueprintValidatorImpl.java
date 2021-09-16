@@ -45,34 +45,15 @@ public class SXPBlueprintValidatorImpl
 	public void validate(String configurationsJSON)
 		throws SXPBlueprintConfigurationsJSONException {
 
-		_validateConfigurationsJSON(configurationsJSON);
-	}
-
-	@Override
-	public void validate(
-			String configurationsJSON, Map<Locale, String> titleMap)
-		throws SXPBlueprintConfigurationsJSONException,
-			   SXPBlueprintTitleException {
-
-		_validateTitle(titleMap);
-
-		_validateConfigurationsJSON(configurationsJSON);
-	}
-
-	private void _validateConfigurationsJSON(String configurationsJSON)
-		throws SXPBlueprintConfigurationsJSONException {
-
 		if (Validator.isNull(configurationsJSON)) {
 			return;
 		}
 
 		try {
-			InputStream configurationsJSONSchemaInputStream =
-				SXPBlueprintValidatorImpl.class.getResourceAsStream(
-					"dependencies/sxpblueprint.schema.json");
-
 			JSONSchemaValidatorUtil.validate(
-				configurationsJSON, configurationsJSONSchemaInputStream);
+				configurationsJSON,
+				SXPBlueprintValidatorImpl.class.getResourceAsStream(
+					"dependencies/sxpblueprint.schema.json"));
 		}
 		catch (ValidationException validationException) {
 			List<Problem> problems = new ArrayList<>();
@@ -85,8 +66,13 @@ public class SXPBlueprintValidatorImpl
 		}
 	}
 
-	private void _validateTitle(Map<Locale, String> titleMap)
-		throws SXPBlueprintTitleException {
+	@Override
+	public void validate(
+			String configurationsJSON, Map<Locale, String> titleMap)
+		throws SXPBlueprintConfigurationsJSONException,
+			   SXPBlueprintTitleException {
+
+		validate(configurationsJSON);
 
 		if (MapUtil.isEmpty(titleMap)) {
 			List<Problem> problems = new ArrayList<>();

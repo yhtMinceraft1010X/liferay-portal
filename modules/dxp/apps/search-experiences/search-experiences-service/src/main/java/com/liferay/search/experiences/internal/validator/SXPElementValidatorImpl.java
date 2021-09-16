@@ -45,37 +45,15 @@ public class SXPElementValidatorImpl
 	public void validate(String elementDefinitionJSON, int type)
 		throws SXPElementElementDefinitionJSONException {
 
-		_validateElementDefinitionJSON(elementDefinitionJSON, type);
-	}
-
-	@Override
-	public void validate(
-			String elementDefinitionJSON, Map<Locale, String> titleMap,
-			int type)
-		throws SXPElementElementDefinitionJSONException,
-			   SXPElementTitleException {
-
-		_validateTitle(titleMap);
-
-		_validateElementDefinitionJSON(elementDefinitionJSON, type);
-	}
-
-	private void _validateElementDefinitionJSON(
-			String elementDefinitionJSON, int type)
-		throws SXPElementElementDefinitionJSONException {
-
 		if (Validator.isNull(elementDefinitionJSON)) {
 			return;
 		}
 
 		try {
-			InputStream configurationJSONSchemaInputStream =
-				SXPElementValidatorImpl.class.getResourceAsStream(
-					"dependencies/sxpelement.schema.json");
-
 			JSONSchemaValidatorUtil.validate(
 				_wrapConfiguration(elementDefinitionJSON, type),
-				configurationJSONSchemaInputStream);
+				SXPElementValidatorImpl.class.getResourceAsStream(
+					"dependencies/sxpelement.schema.json"));
 		}
 		catch (ValidationException validationException) {
 			List<Problem> problems = new ArrayList<>();
@@ -88,8 +66,14 @@ public class SXPElementValidatorImpl
 		}
 	}
 
-	private void _validateTitle(Map<Locale, String> titleMap)
-		throws SXPElementTitleException {
+	@Override
+	public void validate(
+			String elementDefinitionJSON, Map<Locale, String> titleMap,
+			int type)
+		throws SXPElementElementDefinitionJSONException,
+			   SXPElementTitleException {
+
+		validate(elementDefinitionJSON, type);
 
 		if (MapUtil.isEmpty(titleMap)) {
 			List<Problem> problems = new ArrayList<>();
