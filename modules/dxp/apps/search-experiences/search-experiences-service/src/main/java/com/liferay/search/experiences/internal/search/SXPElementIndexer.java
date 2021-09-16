@@ -122,7 +122,9 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 	@Override
 	protected Document doGetDocument(SXPElement sxpElement) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing SXPElement " + sxpElement.getSXPElementId());
+			_log.debug(
+				"Indexing document " +
+					sxpElement.getSXPElementId());
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, sxpElement);
@@ -157,7 +159,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + sxpElement.getSXPElementId() +
+				"Document " + sxpElement +
 					" indexed successfully");
 		}
 
@@ -184,7 +186,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 	}
 
 	protected void reindexSXPElements(long companyId) throws PortalException {
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpElementLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
@@ -196,8 +198,8 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(portalException.getMessage(),
-							portalException);
+						_log.warn(
+							portalException.getMessage(), portalException);
 					}
 				}
 			});

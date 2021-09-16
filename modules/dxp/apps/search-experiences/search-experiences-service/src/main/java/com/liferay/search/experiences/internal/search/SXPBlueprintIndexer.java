@@ -126,7 +126,8 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Indexing SXPBlueprint " + sxpBlueprint.getSXPBlueprintId());
+				"Indexing document " +
+					sxpBlueprint.getSXPBlueprintId());
 		}
 
 		Document document = getBaseModelDocument(CLASS_NAME, sxpBlueprint);
@@ -155,7 +156,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + sxpBlueprint.getSXPBlueprintId() +
+				"Document " + sxpBlueprint +
 					" indexed successfully");
 		}
 
@@ -182,7 +183,7 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 	}
 
 	protected void reindexSXPBlueprints(long companyId) throws PortalException {
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_sxpBlueprintLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
@@ -194,8 +195,8 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(portalException.getMessage(),
-							portalException);
+						_log.warn(
+							portalException.getMessage(), portalException);
 					}
 				}
 			});
