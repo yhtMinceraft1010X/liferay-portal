@@ -35,6 +35,7 @@ import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 
 import java.io.Serializable;
 
@@ -116,7 +117,7 @@ public class SXPBlueprintLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			sxpBlueprint, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			sxpBlueprint.getCompanyId(), sxpBlueprint.getGroupId(),
 			SXPBlueprint.class.getName(), sxpBlueprint.getSXPBlueprintId());
 
@@ -222,5 +223,8 @@ public class SXPBlueprintLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }
