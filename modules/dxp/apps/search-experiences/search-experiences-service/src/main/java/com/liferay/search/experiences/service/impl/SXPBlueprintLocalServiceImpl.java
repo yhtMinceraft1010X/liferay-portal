@@ -197,7 +197,7 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private void _validate(
-			String configurationsJSON, Map<Locale, String> titleMap
+			String configurationsJSON, Map<Locale, String> titleMap,
 			ServiceContext serviceContext)
 		throws SXPBlueprintConfigurationsJSONException,
 			   SXPBlueprintTitleException {
