@@ -19,8 +19,9 @@ render(
 		imageURL: './assets/308056.svg',
 		isAdmin: true,
 		namespace: 'portlet_shop_by_diagram_namespace_',
-		spritemap: './assets/clay/icons.svg',
 		productId: 44212,
+		spritemap: './assets/clay/icons.svg',
+		type: 'diagram.type.default'
 	},
 	document.getElementById('shop-by-diagram')
 );

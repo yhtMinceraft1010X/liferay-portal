@@ -62,6 +62,7 @@ const ImagePins = ({
 	setZoomOutHandler,
 	showTooltip,
 	svgString,
+	type,
 	zoomInHandler,
 	zoomOutHandler,
 }) => {
@@ -281,35 +282,53 @@ const ImagePins = ({
 			}
 
 			if (isAdmin) {
-				container
-					.attr('width', imageSettings.width)
-					.attr('id', 'sbdtest')
-					.html(svgString);
+				if (type === 'diagram.type.svg') {
+					container
+						.attr('width', imageSettings.width)
+						.attr('id', 'sbdtest')
 
-				const rootLevel = document.getElementById('Livello_Testi');
+						.html(svgString);
 
-				if (rootLevel) {
-					const texts = rootLevel.getElementsByTagName('text');
+					const rootLevel = document.getElementById('Livello_Testi');
 
-					texts.forEach((text, i) => {
-						text.addEventListener('click', () => {
+					if (rootLevel) {
+						const texts = rootLevel.getElementsByTagName('text');
 
-							setVisible(true);
-							const pinDefinition = {
-								details: {
-									label: text.textContent,
-									linkedToSku: 'sku',
-									quantity: 1,
-								},
-								tooltip: true,
-							};
+						Array.from(texts).forEach((text) => {
+							text.addEventListener('click', () => {
+								setVisible(true);
+								const pinDefinition = {
+									details: {
+										label: text.textContent,
+										linkedToSku: 'sku',
+										quantity: 1,
+									},
+									tooltip: true,
+								};
 
-							setSelectedProductSequence(text.textContent);
-							pinClickAction(pinDefinition);
-							setVisible(true);
-							setShowTooltip(pinDefinition);
+								setSelectedProductSequence(text.textContent);
+								pinClickAction(pinDefinition);
+								setVisible(true);
+								setShowTooltip(pinDefinition);
+							});
 						});
-					});
+					} else {
+						const pins = document.querySelectorAll('[id^="MTEXT_"]>text');
+						const matrix = pins.match(/(?<=matrix\()(.*)(?=\))/g)
+						const labels = pins.map(m => m.value)
+
+						const everyPinData = matrix.map((t, i) => {
+							const coo = t.match(/\d*\.\d*/g)
+
+							return {
+								label: labels[i].label,
+								x: coo[1],
+								y: coo[2]
+							}
+						})
+						console.log(everyPinData)
+
+					}
 				}
 
 				container
@@ -345,9 +364,8 @@ const ImagePins = ({
 							'stroke',
 							`#${addNewPinState.fill}`
 						);
-					});
+					})
 
-				container
 					.append('circle')
 					.attr('fill', () => 'transparent')
 					.attr('r', () => addNewPinState.radius)
@@ -356,7 +374,19 @@ const ImagePins = ({
 							? '#ffa500'
 							: `#${addNewPinState.fill}`
 					)
-					.attr('stroke-width', 0.5);
+					.attr('stroke-width', 0.5)
+
+					.append('text')
+
+					// .text((attr) => attr.label)
+
+					.attr(
+						'font-size',
+						(attr) => (newPinSettings.defaultRadius || attr.r) - 2
+					)
+					.attr('text-anchor', 'middle')
+					.attr('fill', '#000000')
+					.attr('alignment-baseline', 'central');
 			}
 			else {
 				container
@@ -380,16 +410,14 @@ const ImagePins = ({
 					.attr('sku', (attr) => attr.sku)
 					.attr('id', (attr) => attr.id)
 					.attr('class', 'circle_pin')
-					.call(dragHandler);
+					.call(dragHandler)
 
-				container
 					.append('circle')
 					.attr('fill', () => '#ffffff')
 					.attr('r', () => addNewPinState.radius)
 					.attr('stroke', () => `#${addNewPinState.fill}`)
-					.attr('stroke-width', 0.5);
+					.attr('stroke-width', 0.5)
 
-				container
 					.append('text')
 					.text((attr) => attr.label)
 					.attr(
@@ -401,30 +429,82 @@ const ImagePins = ({
 					.attr('alignment-baseline', 'central');
 			}
 		}
+	}, [
+		addNewPinState,
+		addPinHandler,
+		changedScale,
+		cPins,
+		execZoomIn,
+		selectedOption,
+		isAdmin,
+		enablePanZoom,
+		imageSettings,
+		navigationController,
+		newPinSettings,
+		removePinHandler,
+		handleAddPin,
+		resetZoom,
+		setAddPinHandler,
+		setChangedScale,
+		setCpins,
+		setPinClickHandler,
+		setResetZoom,
+		setRemovePinHandler,
+		setSelectedOption,
+		setZoomInHandler,
+		setZoomOutHandler,
+		showTooltip,
+		svgString,
+		zoomOutHandler,
+		zoomInHandler,
+		pinClickAction,
+		setVisible,
+		setShowTooltip,
+		setSelectedProductSequence,
+		type,
+	]);
 
-		if (isAdmin) {
-			select('#newPin').on('click', handleAddPin);
-		}
-	}, [addNewPinState, addPinHandler, changedScale, cPins, execZoomIn, selectedOption, isAdmin, enablePanZoom, imageSettings, navigationController, newPinSettings, removePinHandler, handleAddPin, resetZoom, setAddPinHandler, setChangedScale, setCpins, setPinClickHandler, setResetZoom, setRemovePinHandler, setSelectedOption, setZoomInHandler, setZoomOutHandler, showTooltip, svgString, zoomOutHandler, zoomInHandler, pinClickAction, setVisible, setShowTooltip]);
+	if (type === 'diagram.type.svg') {
+		return (
+			<div className="diagram-pins-container" ref={containerRef}>
+				<svg
+					height={imageSettings.height}
+					ref={svgRef}
+					width={imageSettings.width}
+				>
+					<g data-testid={`${namespace}container`}></g>
+				</svg>
 
-	return (
-		<div className="diagram-pins-container" ref={containerRef}>
-			<svg
-				height={imageSettings.height}
-				ref={svgRef}
-				width={imageSettings.width}
+				{children}
+			</div>
+		);
+	}
+	else {
+		return (
+			<div
+				className="diagram-pins-container"
+				style={{
+					height: `${imageSettings.height}`,
+					width: `${imageSettings.width}`,
+				}}
 			>
-				<g data-testid={`${namespace}container`}>
-					{/* <image
-						height={imageSettings.height}
-						href={imageURL}
-					></image> */}
-				</g>
-			</svg>
+				<svg
+					height={imageSettings.height}
+					ref={svgRef}
+					width={imageSettings.width}
+				>
+					<g data-testid={`${namespace}container`} ref={containerRef}>
+						<image
+							height={imageSettings.height}
+							href={imageURL}
+						></image>
+					</g>
+				</svg>
 
-			{children}
-		</div>
-	);
+				{children}
+			</div>
+		);
+	}
 };
 
 export default ImagePins;

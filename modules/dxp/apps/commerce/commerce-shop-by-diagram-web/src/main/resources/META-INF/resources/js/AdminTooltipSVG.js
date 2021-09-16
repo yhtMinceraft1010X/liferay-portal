@@ -18,7 +18,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {searchDiagrams, searchSkus} from './utilities/utilities';
 const SKU = 'sku';
 const DIAGRAM = 'diagram';
-const AdminTooltip = ({
+const AdminTooltipSVG = ({
 	namespace,
 	selectedProduct,
 	selectedProductQuantity,
@@ -77,13 +77,13 @@ const AdminTooltip = ({
 					<ClayInput
 						id={`${namespace}pin-position`}
 						onChange={(event) => {
-							setSelectedProductSequence(event.target.value)
+							setSelectedProductSequence(event.target.value);
 						}}
 						placeholder={Liferay.Language.get(
 							'insert-your-position-here'
 						)}
 						type="text"
-						value={selectedProductSequence || ""}
+						value={selectedProductSequence || ''}
 					/>
 				</ClayForm.Group>
 			)}
@@ -176,7 +176,7 @@ const AdminTooltip = ({
 	);
 };
 
-AdminTooltip.propTypes = {
+AdminTooltipSVG.propTypes = {
 	showTooltip: PropTypes.shape({
 		details: PropTypes.shape({
 			cx: PropTypes.double,
@@ -191,4 +191,4 @@ AdminTooltip.propTypes = {
 	}),
 };
 
-export default AdminTooltip;
+export default AdminTooltipSVG;

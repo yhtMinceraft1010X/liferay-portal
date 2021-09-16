@@ -12,12 +12,13 @@
 import ClayButton from '@clayui/button';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import { fetch, openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import AdminTooltip from './AdminTooltip';
+import AdminTooltipDefault from './AdminTooltipDefault';
+import AdminTooltipSVG from './AdminTooltipSVG';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
 import ImagePins from './ImagePins';
@@ -118,7 +119,7 @@ const Diagram = ({
 
 			return pinData;
 		}
-	}, []);
+	}, [svgString]);
 
 	useEffect(() => {
 		setCpins(pinImport);
@@ -328,12 +329,13 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 					showTooltip={showTooltip}
 					svgString={svgString}
+					type={type}
 					visible={visible}
 					zoomController={zoomController}
 					zoomInHandler={zoomInHandler}
 					zoomOutHandler={zoomOutHandler}
 				>
-					{visible && (
+					{visible && type === 'diagram.type.svg' && (
 						<ClayModal
 							observer={observer}
 							size="lg"
@@ -344,7 +346,7 @@ const Diagram = ({
 								{showTooltip.details.label}
 							</ClayModal.Header>
 							<ClayModal.Body>
-								<AdminTooltip
+								<AdminTooltipSVG
 									initialSequence={showTooltip.details.label}
 									namespace={namespace}
 									selectedProduct={selectedProduct}
@@ -358,7 +360,9 @@ const Diagram = ({
 									setSelectedProductQuantity={
 										setSelectedProductQuantity
 									}
-									setSelectedProductSequence={setSelectedProductSequence}
+									setSelectedProductSequence={
+										setSelectedProductSequence
+									}
 									type={type}
 								/>
 							</ClayModal.Body>
@@ -434,6 +438,17 @@ const Diagram = ({
 								}
 							/>
 						</ClayModal>
+					)}
+
+					{showTooltip.tooltip && type !== 'diagram.type.svg' && (
+						<AdminTooltipDefault
+							namespace={namespace}
+							removePinHandler={removePinHandler}
+							setRemovePinHandler={setRemovePinHandler}
+							setShowTooltip={setShowTooltip}
+							showTooltip={showTooltip}
+							updatePin={updatePin}
+						/>
 					)}
 				</ImagePins>
 
