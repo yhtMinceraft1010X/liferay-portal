@@ -376,8 +376,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#if serviceBuilder.isVersionGTE_7_0_0()>
 			if ((_valueObjectFinderCacheListThreshold == 0) ||
 				((_valueObjectFinderCacheListThreshold > 0) &&
-				(${entity.pluralVariableName}.size()>
-					_valueObjectFinderCacheListThreshold))) {
+				 (${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold))) {
 
 				return;
 			}
@@ -2442,8 +2441,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 
 		<#if serviceBuilder.isVersionGTE_7_0_0()>
-			_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+			_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 		</#if>
 
 		<#list entity.entityColumns as entityColumn>
