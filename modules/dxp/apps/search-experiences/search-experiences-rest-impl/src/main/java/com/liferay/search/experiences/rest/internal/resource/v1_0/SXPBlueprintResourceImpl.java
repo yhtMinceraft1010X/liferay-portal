@@ -14,10 +14,20 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
+import com.liferay.search.experiences.service.SXPBlueprintService;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -31,18 +41,64 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Override
 	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception {
+		_sxpBlueprintService.deleteSXPBlueprint(sxpBlueprintId);
 	}
 
 	@Override
 	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
-		return null;
+		return _toSXPBlueprint(
+			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
+	}
+
+	@Override
+	public Page<SXPBlueprint> getSXPBlueprintsPage(
+			String search, Pagination pagination)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+			},
+			null,
+			com.liferay.search.experiences.model.SXPBlueprint.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+
+				// TODO Set the relevant search context attributes
+
+				searchContext.setAttribute(Field.DESCRIPTION, search);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toSXPBlueprint(
+				_sxpBlueprintService.getSXPBlueprint(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws Exception {
 
-		return null;
+		return _toSXPBlueprint(
+			_sxpBlueprintService.addSXPBlueprint(
+				null, null, null, null, new ServiceContext()));
 	}
+
+	private SXPBlueprint _toSXPBlueprint(
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
+
+		return new SXPBlueprint() {
+			{
+				description = "";
+				id = sxpBlueprint.getSXPBlueprintId();
+				title = "";
+			}
+		};
+	}
+
+	@Reference
+	private SXPBlueprintService _sxpBlueprintService;
 
 }
