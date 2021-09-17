@@ -239,8 +239,6 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
-
 		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
 			throw new RequiredObjectDefinitionException();
 		}
@@ -248,14 +246,15 @@ public class ObjectDefinitionLocalServiceImpl
 		if (!objectDefinition.isSystem()) {
 			List<ObjectEntry> objectEntries =
 				_objectEntryPersistence.findByObjectDefinitionId(
-					objectDefinitionId);
+					objectDefinition.getObjectDefinitionId());
 
 			for (ObjectEntry objectEntry : objectEntries) {
 				_objectEntryLocalService.deleteObjectEntry(objectEntry);
 			}
 		}
 
-		_objectFieldPersistence.removeByObjectDefinitionId(objectDefinitionId);
+		_objectFieldPersistence.removeByObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
 
 		// TODO Deleting an object definition should delete related object
 		// relationships
