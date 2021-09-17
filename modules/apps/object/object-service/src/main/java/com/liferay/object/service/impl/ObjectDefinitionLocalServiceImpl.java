@@ -242,8 +242,7 @@ public class ObjectDefinitionLocalServiceImpl
 		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
 		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
-			throw new RequiredObjectDefinitionException(
-				"Published object cannot be deleted");
+			throw new RequiredObjectDefinitionException();
 		}
 
 		if (!objectDefinition.isSystem()) {
