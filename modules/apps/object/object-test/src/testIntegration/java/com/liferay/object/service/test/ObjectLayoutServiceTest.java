@@ -69,8 +69,9 @@ public class ObjectLayoutServiceTest {
 		_objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap("Test"), "Test", null, null,
-				LocalizedMapUtil.getLocalizedMap("Tests"),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null);
 	}
 
