@@ -623,10 +623,6 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.assertObjectStatus(status = "Approved");
-
-
-
-
 	}
 
 	@description = "LPS-135389 - Verify it is possible to set a different language value for a Field Label"

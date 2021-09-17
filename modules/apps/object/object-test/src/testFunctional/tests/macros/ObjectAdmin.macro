@@ -127,12 +127,8 @@ definition {
 
 	macro assertObjectStatus {
 		AssertElementPresent(
-			locator1 = "ObjectAdmin#OBJECT_STATUS",
-			key_status = "${status}"
-		);
-
-
-
+			key_status = "${status}",
+			locator1 = "ObjectAdmin#OBJECT_STATUS");
 	}
 
 	macro clickFieldsSearchableSectionRadioOption {
@@ -229,9 +225,6 @@ definition {
 
 	macro publishObjectViaUI {
 		Button.clickPublish();
-
-
-		
 	}
 
 	macro saveCustomObject {
