@@ -149,7 +149,6 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 			collectionId);
 
 		Assert.assertEquals(2, supportedFiltersJSONArray.length());
-
 		Assert.assertTrue(
 			JSONUtil.hasValue(
 				supportedFiltersJSONArray,
@@ -188,7 +187,6 @@ public class GetCollectionSupportedFiltersMVCResourceCommandTest {
 			collectionId);
 
 		Assert.assertEquals(1, supportedFiltersJSONArray.length());
-
 		Assert.assertEquals(
 			CategoriesInfoFilter.FILTER_TYPE_NAME,
 			supportedFiltersJSONArray.get(0));
