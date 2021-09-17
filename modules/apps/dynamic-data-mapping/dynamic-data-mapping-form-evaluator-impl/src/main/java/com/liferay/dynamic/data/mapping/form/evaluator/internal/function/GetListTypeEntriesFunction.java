@@ -37,13 +37,13 @@ import java.util.Objects;
 /**
  * @author Mateus Santana
  */
-public class GetPicklistItemsFunction
+public class GetListTypeEntriesFunction
 	implements DDMExpressionFunction.Function1<String, Map<String, Object>>,
 			   DDMExpressionParameterAccessorAware {
 
-	public static final String NAME = "getPicklistItems";
+	public static final String NAME = "getListTypeEntries";
 
-	public GetPicklistItemsFunction(
+	public GetListTypeEntriesFunction(
 		JSONFactory jsonFactory,
 		ListTypeEntryLocalService listTypeEntryLocalService) {
 

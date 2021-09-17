@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function.factor
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
-import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.GetPicklistItemsFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.function.GetListTypeEntriesFunction;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 
@@ -27,15 +27,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mateus Santana
  */
 @Component(
-	property = "name=" + GetPicklistItemsFunction.NAME,
+	property = "name=" + GetListTypeEntriesFunction.NAME,
 	service = DDMExpressionFunctionFactory.class
 )
-public class GetPicklistItemsFunctionFactory
+public class GetListTypeEntriesFunctionFactory
 	implements DDMExpressionFunctionFactory {
 
 	@Override
 	public DDMExpressionFunction create() {
-		return new GetPicklistItemsFunction(
+		return new GetListTypeEntriesFunction(
 			_jsonFactory, _listTypeEntryLocalService);
 	}
 

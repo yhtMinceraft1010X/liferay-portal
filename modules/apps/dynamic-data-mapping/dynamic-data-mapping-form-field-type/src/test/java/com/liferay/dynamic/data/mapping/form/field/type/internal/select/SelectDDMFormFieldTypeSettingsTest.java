@@ -216,8 +216,8 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(actions.toString(), 1, actions.size());
 		Assert.assertEquals(
-			"setValue('options', getPicklistItems(getValue('objectFieldName'" +
-				")))",
+			"setValue('options', getListTypeEntries(getValue('" +
+				"objectFieldName')))",
 			actions.get(0));
 	}
 

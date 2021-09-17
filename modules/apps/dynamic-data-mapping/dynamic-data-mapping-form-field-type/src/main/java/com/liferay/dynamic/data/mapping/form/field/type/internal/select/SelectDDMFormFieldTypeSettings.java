@@ -58,7 +58,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			condition = "not(equals(getValue('dataSourceType'), \"data-provider\"))"
 		),
 		@DDMFormRule(
-			actions = "setValue('options', getPicklistItems(getValue('objectFieldName')))",
+			actions = "setValue('options', getListTypeEntries(getValue('objectFieldName')))",
 			condition = "hasObjectField(getValue('objectFieldName'))"
 		)
 	}
