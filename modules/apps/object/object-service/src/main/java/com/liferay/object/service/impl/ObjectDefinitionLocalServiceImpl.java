@@ -241,7 +241,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
 
-		_validateObjectDefinitionDeletion(objectDefinition);
+		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
+			throw new RequiredObjectDefinitionException(
+				"Published object cannot be deleted");
+		}
 
 		if (!objectDefinition.isSystem()) {
 			List<ObjectEntry> objectEntries =
@@ -889,16 +892,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 			throw new DuplicateObjectDefinitionException(
 				"Duplicate name " + name);
-		}
-	}
-
-	private void _validateObjectDefinitionDeletion(
-			ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
-			throw new RequiredObjectDefinitionException(
-				"Published object cannot be deleted");
 		}
 	}
 
