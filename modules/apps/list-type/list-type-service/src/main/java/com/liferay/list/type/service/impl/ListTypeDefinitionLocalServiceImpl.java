@@ -109,10 +109,7 @@ public class ListTypeDefinitionLocalServiceImpl
 		listTypeDefinition = deleteListTypeDefinition(listTypeDefinition);
 
 		_resourceLocalService.deleteResource(
-			listTypeDefinition.getCompanyId(),
-			ListTypeDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			listTypeDefinition.getListTypeDefinitionId());
+			listTypeDefinition, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return listTypeDefinition;
 	}
