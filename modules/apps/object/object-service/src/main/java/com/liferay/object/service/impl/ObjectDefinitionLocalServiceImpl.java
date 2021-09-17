@@ -269,7 +269,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectDefinition.isSystem()) {
 			_dropTable(objectDefinition.getExtensionDBTableName());
 		}
-		else if (PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
+		else if (objectDefinition.isApproved()) {
 			for (ResourceAction resourceAction :
 					_resourceActionLocalService.getResourceActions(
 						objectDefinition.getClassName())) {
