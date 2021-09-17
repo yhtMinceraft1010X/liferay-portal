@@ -125,6 +125,16 @@ definition {
 			value1 = "${fieldName}");
 	}
 
+	macro assertObjectStatus {
+		AssertElementPresent(
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			key_status = "${status}"
+		);
+
+
+
+	}
+
 	macro clickFieldsSearchableSectionRadioOption {
 		Click.javaScriptClick(
 			key_radioOption = "${radioOption}",
@@ -215,6 +225,13 @@ definition {
 			objectName = "${objectName}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
+	}
+
+	macro publishObjectViaUI {
+		Button.clickPublish();
+
+
+		
 	}
 
 	macro saveCustomObject {

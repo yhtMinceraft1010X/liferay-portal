@@ -603,12 +603,29 @@ definition {
 	}
 
 	@description = "LPS-135549 - Verify it is possible to Publish a Custom Object"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishCustomObject {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138814 CanPublishCustomObject pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(status = "Draft");
+
+		ObjectPortlet.selectCustomObject(name = "CustomObject");
+
+		ObjectAdmin.publishObjectViaUI();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(status = "Approved");
+
+
+
 
 	}
 
