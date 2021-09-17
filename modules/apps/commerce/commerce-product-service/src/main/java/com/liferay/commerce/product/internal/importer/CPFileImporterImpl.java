@@ -319,14 +319,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 			dependenciesFilePath + ddmTemplateKey + ".ftl");
 
 		if (inputStream != null) {
-			boolean cacheable = jsonObject.getBoolean("cacheable", true);
-
 			fetchOrAddDDMTemplate(
 				_portal.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(),
 				_portal.getClassNameId(JournalArticle.class), ddmTemplateKey,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, "ftl",
-				StringUtil.read(inputStream), cacheable, serviceContext);
+				StringUtil.read(inputStream),
+				jsonObject.getBoolean("cacheable", true), serviceContext);
 		}
 
 		Locale locale = serviceContext.getLocale();
