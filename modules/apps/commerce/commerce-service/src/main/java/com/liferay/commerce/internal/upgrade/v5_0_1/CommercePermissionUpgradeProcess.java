@@ -80,7 +80,6 @@ public class CommercePermissionUpgradeProcess
 					_setResourcePermissions(
 						_PORTLET_NAME_COMMERCE_PRICE_LIST_PRICING,
 						_PORTLET_NAME_COMMERCE_PRICE_LIST, resourcePermission);
-
 					_setResourcePermissions(
 						_PORTLET_NAME_COMMERCE_PROMOTION_PRICING,
 						_PORTLET_NAME_COMMERCE_PRICE_LIST, resourcePermission);
