@@ -1307,7 +1307,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test TableDisplayCorrectValueWhenObjectCreated {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1319,7 +1318,6 @@ definition {
 			name = "CustomObject",
 			status = "Draft",
 			system = "No");
-
 	}
 
 	@description = "LPS-135548 - Verify that user can view custom objects"
