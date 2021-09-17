@@ -45,8 +45,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 
 	@Override
 	public ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId, String key,
-			Map<Locale, String> nameMap)
+			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =
@@ -58,7 +57,7 @@ public class ListTypeEntryServiceImpl extends ListTypeEntryServiceBaseImpl {
 			listTypeDefinition.getListTypeDefinitionId(), ActionKeys.UPDATE);
 
 		return _listTypeEntryLocalService.addListTypeEntry(
-			userId, listTypeDefinitionId, key, nameMap);
+			getUserId(), listTypeDefinitionId, key, nameMap);
 	}
 
 	@Override

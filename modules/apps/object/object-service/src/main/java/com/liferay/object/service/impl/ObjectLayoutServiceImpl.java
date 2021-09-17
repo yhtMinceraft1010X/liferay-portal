@@ -46,7 +46,7 @@ public class ObjectLayoutServiceImpl extends ObjectLayoutServiceBaseImpl {
 
 	@Override
 	public ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			long objectDefinitionId, boolean defaultObjectLayout,
 			Map<Locale, String> nameMap, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
@@ -58,7 +58,7 @@ public class ObjectLayoutServiceImpl extends ObjectLayoutServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectLayoutLocalService.addObjectLayout(
-			userId, objectDefinitionId, defaultObjectLayout, nameMap,
+			getUserId(), objectDefinitionId, defaultObjectLayout, nameMap,
 			objectLayoutTabs);
 	}
 

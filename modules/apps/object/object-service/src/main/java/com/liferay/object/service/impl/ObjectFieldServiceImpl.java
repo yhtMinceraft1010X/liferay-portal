@@ -43,8 +43,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 
 	@Override
 	public ObjectField addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			long listTypeDefinitionId, long objectDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
 			String type)
 		throws PortalException {
@@ -57,7 +57,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return objectFieldLocalService.addCustomObjectField(
-			userId, listTypeDefinitionId, objectDefinitionId, indexed,
+			getUserId(), listTypeDefinitionId, objectDefinitionId, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			type);
 	}
