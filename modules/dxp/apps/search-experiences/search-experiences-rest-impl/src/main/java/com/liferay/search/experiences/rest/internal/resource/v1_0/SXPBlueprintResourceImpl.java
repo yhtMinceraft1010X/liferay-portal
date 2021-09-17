@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,4 +28,21 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SXPBlueprintResource.class
 )
 public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
+
+	@Override
+	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception {
+	}
+
+	@Override
+	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
+		return null;
+	}
+
+	@Override
+	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return null;
+	}
+
 }
