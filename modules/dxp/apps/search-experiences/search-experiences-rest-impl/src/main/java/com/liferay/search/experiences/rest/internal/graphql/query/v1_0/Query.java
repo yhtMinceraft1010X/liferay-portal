@@ -68,6 +68,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprints(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SXPBlueprintPage sXPBlueprints(
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpBlueprintResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpBlueprintResource -> new SXPBlueprintPage(
+				sxpBlueprintResource.getSXPBlueprintsPage(
+					search, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprint(sxpBlueprintId: ___){description, id, title}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -85,20 +105,21 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPBlueprints(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElements(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public SXPBlueprintPage sXPBlueprints(
+	public SXPElementPage sXPElements(
+			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_sxpBlueprintResourceComponentServiceObjects,
+			_sxpElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			sxpBlueprintResource -> new SXPBlueprintPage(
-				sxpBlueprintResource.getSXPBlueprintsPage(
-					Pagination.of(page, pageSize))));
+			sxpElementResource -> new SXPElementPage(
+				sxpElementResource.getSXPElementsPage(
+					search, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -115,25 +136,6 @@ public class Query {
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.getSXPElement(
 				sxpElementId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElements(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public SXPElementPage sXPElements(
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_sxpElementResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			sxpElementResource -> new SXPElementPage(
-				sxpElementResource.getSXPElementsPage(
-					Pagination.of(page, pageSize))));
 	}
 
 	@GraphQLName("SXPBlueprintPage")

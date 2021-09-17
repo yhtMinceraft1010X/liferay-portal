@@ -195,6 +195,104 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	@Test
+	public void testGetSXPBlueprintsPage() throws Exception {
+		Page<SXPBlueprint> page = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		SXPBlueprint sxpBlueprint1 = testGetSXPBlueprintsPage_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		SXPBlueprint sxpBlueprint2 = testGetSXPBlueprintsPage_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		page = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page.getItems());
+		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page.getItems());
+		assertValid(page);
+
+		sxpBlueprintResource.deleteSXPBlueprint(sxpBlueprint1.getId());
+
+		sxpBlueprintResource.deleteSXPBlueprint(sxpBlueprint2.getId());
+	}
+
+	@Test
+	public void testGetSXPBlueprintsPageWithPagination() throws Exception {
+		Page<SXPBlueprint> totalPage =
+			sxpBlueprintResource.getSXPBlueprintsPage(null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		SXPBlueprint sxpBlueprint1 = testGetSXPBlueprintsPage_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		SXPBlueprint sxpBlueprint2 = testGetSXPBlueprintsPage_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		SXPBlueprint sxpBlueprint3 = testGetSXPBlueprintsPage_addSXPBlueprint(
+			randomSXPBlueprint());
+
+		Page<SXPBlueprint> page1 = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, Pagination.of(1, totalCount + 2));
+
+		List<SXPBlueprint> sxpBlueprints1 =
+			(List<SXPBlueprint>)page1.getItems();
+
+		Assert.assertEquals(
+			sxpBlueprints1.toString(), totalCount + 2, sxpBlueprints1.size());
+
+		Page<SXPBlueprint> page2 = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<SXPBlueprint> sxpBlueprints2 =
+			(List<SXPBlueprint>)page2.getItems();
+
+		Assert.assertEquals(
+			sxpBlueprints2.toString(), 1, sxpBlueprints2.size());
+
+		Page<SXPBlueprint> page3 = sxpBlueprintResource.getSXPBlueprintsPage(
+			null, Pagination.of(1, totalCount + 3));
+
+		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page3.getItems());
+		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page3.getItems());
+		assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
+	}
+
+	protected SXPBlueprint testGetSXPBlueprintsPage_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostSXPBlueprint() throws Exception {
+		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
+
+		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
+			randomSXPBlueprint);
+
+		assertEquals(randomSXPBlueprint, postSXPBlueprint);
+		assertValid(postSXPBlueprint);
+	}
+
+	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSXPBlueprint() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPBlueprint sxpBlueprint = testDeleteSXPBlueprint_addSXPBlueprint();
@@ -335,103 +433,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	protected SXPBlueprint testPatchSXPBlueprint_addSXPBlueprint()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSXPBlueprintsPage() throws Exception {
-		Page<SXPBlueprint> page = sxpBlueprintResource.getSXPBlueprintsPage(
-			Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		SXPBlueprint sxpBlueprint1 = testGetSXPBlueprintsPage_addSXPBlueprint(
-			randomSXPBlueprint());
-
-		SXPBlueprint sxpBlueprint2 = testGetSXPBlueprintsPage_addSXPBlueprint(
-			randomSXPBlueprint());
-
-		page = sxpBlueprintResource.getSXPBlueprintsPage(Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page.getItems());
-		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page.getItems());
-		assertValid(page);
-
-		sxpBlueprintResource.deleteSXPBlueprint(sxpBlueprint1.getId());
-
-		sxpBlueprintResource.deleteSXPBlueprint(sxpBlueprint2.getId());
-	}
-
-	@Test
-	public void testGetSXPBlueprintsPageWithPagination() throws Exception {
-		Page<SXPBlueprint> totalPage =
-			sxpBlueprintResource.getSXPBlueprintsPage(null);
-
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
-
-		SXPBlueprint sxpBlueprint1 = testGetSXPBlueprintsPage_addSXPBlueprint(
-			randomSXPBlueprint());
-
-		SXPBlueprint sxpBlueprint2 = testGetSXPBlueprintsPage_addSXPBlueprint(
-			randomSXPBlueprint());
-
-		SXPBlueprint sxpBlueprint3 = testGetSXPBlueprintsPage_addSXPBlueprint(
-			randomSXPBlueprint());
-
-		Page<SXPBlueprint> page1 = sxpBlueprintResource.getSXPBlueprintsPage(
-			Pagination.of(1, totalCount + 2));
-
-		List<SXPBlueprint> sxpBlueprints1 =
-			(List<SXPBlueprint>)page1.getItems();
-
-		Assert.assertEquals(
-			sxpBlueprints1.toString(), totalCount + 2, sxpBlueprints1.size());
-
-		Page<SXPBlueprint> page2 = sxpBlueprintResource.getSXPBlueprintsPage(
-			Pagination.of(2, totalCount + 2));
-
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-		List<SXPBlueprint> sxpBlueprints2 =
-			(List<SXPBlueprint>)page2.getItems();
-
-		Assert.assertEquals(
-			sxpBlueprints2.toString(), 1, sxpBlueprints2.size());
-
-		Page<SXPBlueprint> page3 = sxpBlueprintResource.getSXPBlueprintsPage(
-			Pagination.of(1, totalCount + 3));
-
-		assertContains(sxpBlueprint1, (List<SXPBlueprint>)page3.getItems());
-		assertContains(sxpBlueprint2, (List<SXPBlueprint>)page3.getItems());
-		assertContains(sxpBlueprint3, (List<SXPBlueprint>)page3.getItems());
-	}
-
-	protected SXPBlueprint testGetSXPBlueprintsPage_addSXPBlueprint(
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSXPBlueprint() throws Exception {
-		SXPBlueprint randomSXPBlueprint = randomSXPBlueprint();
-
-		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
-			randomSXPBlueprint);
-
-		assertEquals(randomSXPBlueprint, postSXPBlueprint);
-		assertValid(postSXPBlueprint);
-	}
-
-	protected SXPBlueprint testPostSXPBlueprint_addSXPBlueprint(
-			SXPBlueprint sxpBlueprint)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

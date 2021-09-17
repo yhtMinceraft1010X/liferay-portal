@@ -89,116 +89,13 @@ public abstract class BaseSXPBlueprintResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprint/{sxpBlueprintId}'  -u 'test@liferay.com:test'
-	 */
-	@DELETE
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
-	)
-	@Path("/sxp-blueprint/{sxpBlueprintId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPBlueprint")})
-	public void deleteSXPBlueprint(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
-				sxpBlueprintId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprint/{sxpBlueprintId}/batch'  -u 'test@liferay.com:test'
-	 */
-	@Consumes("application/json")
-	@DELETE
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
-	)
-	@Path("/sxp-blueprint/{sxpBlueprintId}/batch")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "SXPBlueprint")})
-	public Response deleteSXPBlueprintBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
-				sxpBlueprintId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				SXPBlueprint.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprint/{sxpBlueprintId}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
-	)
-	@Path("/sxp-blueprint/{sxpBlueprintId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPBlueprint")})
-	public SXPBlueprint getSXPBlueprint(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
-				sxpBlueprintId)
-		throws Exception {
-
-		return new SXPBlueprint();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprint/{sxpBlueprintId}' -d $'{"description": ___, "id": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
-	)
-	@PATCH
-	@Path("/sxp-blueprint/{sxpBlueprintId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPBlueprint")})
-	public SXPBlueprint patchSXPBlueprint(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
-				sxpBlueprintId,
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		return new SXPBlueprint();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -207,6 +104,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SXPBlueprint")})
 	public Page<SXPBlueprint> getSXPBlueprintsPage(
+			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Pagination pagination)
 		throws Exception {
 
@@ -267,6 +165,110 @@ public abstract class BaseSXPBlueprintResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
+	)
+	@Path("/sxp-blueprints/{sxpBlueprintId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPBlueprint")})
+	public void deleteSXPBlueprint(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
+				sxpBlueprintId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/sxp-blueprints/{sxpBlueprintId}/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SXPBlueprint")})
+	public Response deleteSXPBlueprintBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
+				sxpBlueprintId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				SXPBlueprint.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
+	)
+	@Path("/sxp-blueprints/{sxpBlueprintId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPBlueprint")})
+	public SXPBlueprint getSXPBlueprint(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
+				sxpBlueprintId)
+		throws Exception {
+
+		return new SXPBlueprint();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-blueprints/{sxpBlueprintId}' -d $'{"description": ___, "id": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpBlueprintId")}
+	)
+	@PATCH
+	@Path("/sxp-blueprints/{sxpBlueprintId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPBlueprint")})
+	public SXPBlueprint patchSXPBlueprint(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpBlueprintId") Long
+				sxpBlueprintId,
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		return new SXPBlueprint();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -314,7 +316,7 @@ public abstract class BaseSXPBlueprintResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSXPBlueprintsPage(pagination);
+		return getSXPBlueprintsPage(search, pagination);
 	}
 
 	@Override

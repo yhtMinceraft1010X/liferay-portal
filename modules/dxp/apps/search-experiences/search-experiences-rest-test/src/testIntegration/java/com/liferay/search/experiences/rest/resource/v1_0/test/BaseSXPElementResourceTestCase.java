@@ -195,6 +195,100 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testGetSXPElementsPage() throws Exception {
+		Page<SXPElement> page = sxpElementResource.getSXPElementsPage(
+			null, Pagination.of(1, 10));
+
+		long totalCount = page.getTotalCount();
+
+		SXPElement sxpElement1 = testGetSXPElementsPage_addSXPElement(
+			randomSXPElement());
+
+		SXPElement sxpElement2 = testGetSXPElementsPage_addSXPElement(
+			randomSXPElement());
+
+		page = sxpElementResource.getSXPElementsPage(
+			null, Pagination.of(1, 10));
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(sxpElement1, (List<SXPElement>)page.getItems());
+		assertContains(sxpElement2, (List<SXPElement>)page.getItems());
+		assertValid(page);
+
+		sxpElementResource.deleteSXPElement(sxpElement1.getId());
+
+		sxpElementResource.deleteSXPElement(sxpElement2.getId());
+	}
+
+	@Test
+	public void testGetSXPElementsPageWithPagination() throws Exception {
+		Page<SXPElement> totalPage = sxpElementResource.getSXPElementsPage(
+			null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		SXPElement sxpElement1 = testGetSXPElementsPage_addSXPElement(
+			randomSXPElement());
+
+		SXPElement sxpElement2 = testGetSXPElementsPage_addSXPElement(
+			randomSXPElement());
+
+		SXPElement sxpElement3 = testGetSXPElementsPage_addSXPElement(
+			randomSXPElement());
+
+		Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
+			null, Pagination.of(1, totalCount + 2));
+
+		List<SXPElement> sxpElements1 = (List<SXPElement>)page1.getItems();
+
+		Assert.assertEquals(
+			sxpElements1.toString(), totalCount + 2, sxpElements1.size());
+
+		Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
+			null, Pagination.of(2, totalCount + 2));
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<SXPElement> sxpElements2 = (List<SXPElement>)page2.getItems();
+
+		Assert.assertEquals(sxpElements2.toString(), 1, sxpElements2.size());
+
+		Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
+			null, Pagination.of(1, totalCount + 3));
+
+		assertContains(sxpElement1, (List<SXPElement>)page3.getItems());
+		assertContains(sxpElement2, (List<SXPElement>)page3.getItems());
+		assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
+	}
+
+	protected SXPElement testGetSXPElementsPage_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostSXPElement() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			randomSXPElement);
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	protected SXPElement testPostSXPElement_addSXPElement(SXPElement sxpElement)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteSXPElement() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPElement sxpElement = testDeleteSXPElement_addSXPElement();
@@ -328,99 +422,6 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	protected SXPElement testPatchSXPElement_addSXPElement() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSXPElementsPage() throws Exception {
-		Page<SXPElement> page = sxpElementResource.getSXPElementsPage(
-			Pagination.of(1, 10));
-
-		long totalCount = page.getTotalCount();
-
-		SXPElement sxpElement1 = testGetSXPElementsPage_addSXPElement(
-			randomSXPElement());
-
-		SXPElement sxpElement2 = testGetSXPElementsPage_addSXPElement(
-			randomSXPElement());
-
-		page = sxpElementResource.getSXPElementsPage(Pagination.of(1, 10));
-
-		Assert.assertEquals(totalCount + 2, page.getTotalCount());
-
-		assertContains(sxpElement1, (List<SXPElement>)page.getItems());
-		assertContains(sxpElement2, (List<SXPElement>)page.getItems());
-		assertValid(page);
-
-		sxpElementResource.deleteSXPElement(sxpElement1.getId());
-
-		sxpElementResource.deleteSXPElement(sxpElement2.getId());
-	}
-
-	@Test
-	public void testGetSXPElementsPageWithPagination() throws Exception {
-		Page<SXPElement> totalPage = sxpElementResource.getSXPElementsPage(
-			null);
-
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
-
-		SXPElement sxpElement1 = testGetSXPElementsPage_addSXPElement(
-			randomSXPElement());
-
-		SXPElement sxpElement2 = testGetSXPElementsPage_addSXPElement(
-			randomSXPElement());
-
-		SXPElement sxpElement3 = testGetSXPElementsPage_addSXPElement(
-			randomSXPElement());
-
-		Page<SXPElement> page1 = sxpElementResource.getSXPElementsPage(
-			Pagination.of(1, totalCount + 2));
-
-		List<SXPElement> sxpElements1 = (List<SXPElement>)page1.getItems();
-
-		Assert.assertEquals(
-			sxpElements1.toString(), totalCount + 2, sxpElements1.size());
-
-		Page<SXPElement> page2 = sxpElementResource.getSXPElementsPage(
-			Pagination.of(2, totalCount + 2));
-
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
-
-		List<SXPElement> sxpElements2 = (List<SXPElement>)page2.getItems();
-
-		Assert.assertEquals(sxpElements2.toString(), 1, sxpElements2.size());
-
-		Page<SXPElement> page3 = sxpElementResource.getSXPElementsPage(
-			Pagination.of(1, totalCount + 3));
-
-		assertContains(sxpElement1, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement2, (List<SXPElement>)page3.getItems());
-		assertContains(sxpElement3, (List<SXPElement>)page3.getItems());
-	}
-
-	protected SXPElement testGetSXPElementsPage_addSXPElement(
-			SXPElement sxpElement)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPostSXPElement() throws Exception {
-		SXPElement randomSXPElement = randomSXPElement();
-
-		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
-			randomSXPElement);
-
-		assertEquals(randomSXPElement, postSXPElement);
-		assertValid(postSXPElement);
-	}
-
-	protected SXPElement testPostSXPElement_addSXPElement(SXPElement sxpElement)
-		throws Exception {
-
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

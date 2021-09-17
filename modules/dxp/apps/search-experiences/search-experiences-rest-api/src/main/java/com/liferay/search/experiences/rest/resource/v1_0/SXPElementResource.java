@@ -57,6 +57,16 @@ public interface SXPElementResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<SXPElement> getSXPElementsPage(
+			String search, Pagination pagination)
+		throws Exception;
+
+	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
+
+	public Response postSXPElementBatch(
+			SXPElement sxpElement, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteSXPElement(Long sxpElementId) throws Exception;
 
 	public Response deleteSXPElementBatch(
@@ -66,15 +76,6 @@ public interface SXPElementResource {
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception;
 
 	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
-		throws Exception;
-
-	public Page<SXPElement> getSXPElementsPage(Pagination pagination)
-		throws Exception;
-
-	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception;
-
-	public Response postSXPElementBatch(
-			SXPElement sxpElement, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

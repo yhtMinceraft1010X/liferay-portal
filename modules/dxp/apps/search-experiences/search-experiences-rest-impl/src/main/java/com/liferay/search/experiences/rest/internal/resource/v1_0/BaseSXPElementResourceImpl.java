@@ -89,116 +89,13 @@ public abstract class BaseSXPElementResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-element/{sxpElementId}'  -u 'test@liferay.com:test'
-	 */
-	@DELETE
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
-	)
-	@Path("/sxp-element/{sxpElementId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPElement")})
-	public void deleteSXPElement(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
-				sxpElementId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-element/{sxpElementId}/batch'  -u 'test@liferay.com:test'
-	 */
-	@Consumes("application/json")
-	@DELETE
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "sxpElementId"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
-	)
-	@Path("/sxp-element/{sxpElementId}/batch")
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "SXPElement")})
-	public Response deleteSXPElementBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
-				sxpElementId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				SXPElement.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-element/{sxpElementId}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
-	)
-	@Path("/sxp-element/{sxpElementId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPElement")})
-	public SXPElement getSXPElement(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
-				sxpElementId)
-		throws Exception {
-
-		return new SXPElement();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-element/{sxpElementId}' -d $'{"description": ___, "id": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
-	)
-	@PATCH
-	@Path("/sxp-element/{sxpElementId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "SXPElement")})
-	public SXPElement patchSXPElement(
-			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
-				sxpElementId,
-			SXPElement sxpElement)
-		throws Exception {
-
-		return new SXPElement();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -206,7 +103,9 @@ public abstract class BaseSXPElementResourceImpl
 	@Path("/sxp-elements")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "SXPElement")})
-	public Page<SXPElement> getSXPElementsPage(@Context Pagination pagination)
+	public Page<SXPElement> getSXPElementsPage(
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -264,6 +163,110 @@ public abstract class BaseSXPElementResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
+	)
+	@Path("/sxp-elements/{sxpElementId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPElement")})
+	public void deleteSXPElement(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "sxpElementId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/sxp-elements/{sxpElementId}/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "SXPElement")})
+	public Response deleteSXPElementBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				SXPElement.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
+	)
+	@Path("/sxp-elements/{sxpElementId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPElement")})
+	public SXPElement getSXPElement(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId)
+		throws Exception {
+
+		return new SXPElement();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}' -d $'{"description": ___, "id": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "sxpElementId")}
+	)
+	@PATCH
+	@Path("/sxp-elements/{sxpElementId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "SXPElement")})
+	public SXPElement patchSXPElement(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId,
+			SXPElement sxpElement)
+		throws Exception {
+
+		return new SXPElement();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -311,7 +314,7 @@ public abstract class BaseSXPElementResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSXPElementsPage(pagination);
+		return getSXPElementsPage(search, pagination);
 	}
 
 	@Override

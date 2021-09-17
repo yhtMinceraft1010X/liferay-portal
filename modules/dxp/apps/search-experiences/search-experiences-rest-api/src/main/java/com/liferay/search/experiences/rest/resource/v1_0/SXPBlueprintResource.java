@@ -57,6 +57,17 @@ public interface SXPBlueprintResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<SXPBlueprint> getSXPBlueprintsPage(
+			String search, Pagination pagination)
+		throws Exception;
+
+	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
+		throws Exception;
+
+	public Response postSXPBlueprintBatch(
+			SXPBlueprint sxpBlueprint, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception;
 
 	public Response deleteSXPBlueprintBatch(
@@ -67,16 +78,6 @@ public interface SXPBlueprintResource {
 
 	public SXPBlueprint patchSXPBlueprint(
 			Long sxpBlueprintId, SXPBlueprint sxpBlueprint)
-		throws Exception;
-
-	public Page<SXPBlueprint> getSXPBlueprintsPage(Pagination pagination)
-		throws Exception;
-
-	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
-		throws Exception;
-
-	public Response postSXPBlueprintBatch(
-			SXPBlueprint sxpBlueprint, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
