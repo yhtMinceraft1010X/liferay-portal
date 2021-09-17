@@ -354,7 +354,6 @@
 		<exception>DuplicateObjectDefinition</exception>
 		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>
-		<exception>ObjectDefinitionCannotDelete</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionName</exception>
 		<exception>ObjectDefinitionPluralLabel</exception>
@@ -367,6 +366,7 @@
 		<exception>ObjectFieldType</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipType</exception>
+		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>ReservedObjectField</exception>
 	</exceptions>

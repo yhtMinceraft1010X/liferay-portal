@@ -17,7 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
-import com.liferay.object.exception.ObjectDefinitionCannotDeleteException;
+import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
@@ -897,7 +897,7 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (!PortalRunMode.isTestMode() && objectDefinition.isApproved()) {
-			throw new ObjectDefinitionCannotDeleteException(
+			throw new RequiredObjectDefinitionException(
 				"Published object cannot be deleted");
 		}
 	}
