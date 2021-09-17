@@ -1454,7 +1454,7 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			ObjectField objectField;
+			ObjectField objectField = null;
 
 			try {
 				objectField = _objectFieldLocalService.getObjectField(

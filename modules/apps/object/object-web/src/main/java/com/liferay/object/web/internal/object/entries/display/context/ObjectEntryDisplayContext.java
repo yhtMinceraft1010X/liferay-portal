@@ -422,7 +422,6 @@ public class ObjectEntryDisplayContext {
 						new DDMFormFieldValue();
 
 					ddmFormFieldValue.setName(ddmFormField.getName());
-
 					ddmFormFieldValue.setNestedDDMFormFields(
 						_getNestedDDMFormFieldValues(
 							ddmFormField.getNestedDDMFormFields(), values));
