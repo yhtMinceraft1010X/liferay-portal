@@ -54,8 +54,7 @@ public interface ListTypeEntryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.list.type.service.impl.ListTypeEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the list type entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ListTypeEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public ListTypeEntry addListTypeEntry(
-			long userId, long listTypeDefinitionId, String key,
-			Map<Locale, String> nameMap)
+			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException;
 
 	public ListTypeEntry deleteListTypeEntry(long listTypeEntryId)

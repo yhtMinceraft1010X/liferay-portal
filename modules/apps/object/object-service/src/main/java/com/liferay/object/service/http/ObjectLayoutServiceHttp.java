@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectLayoutServiceHttp {
 
 	public static com.liferay.object.model.ObjectLayout addObjectLayout(
-			HttpPrincipal httpPrincipal, long userId, long objectDefinitionId,
+			HttpPrincipal httpPrincipal, long objectDefinitionId,
 			boolean defaultObjectLayout,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectLayoutTab>
@@ -65,8 +65,8 @@ public class ObjectLayoutServiceHttp {
 				_addObjectLayoutParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, objectDefinitionId, defaultObjectLayout,
-				nameMap, objectLayoutTabs);
+				methodKey, objectDefinitionId, defaultObjectLayout, nameMap,
+				objectLayoutTabs);
 
 			Object returnObj = null;
 
@@ -186,8 +186,7 @@ public class ObjectLayoutServiceHttp {
 
 	private static final Class<?>[] _addObjectLayoutParameterTypes0 =
 		new Class[] {
-			long.class, long.class, boolean.class, java.util.Map.class,
-			java.util.List.class
+			long.class, boolean.class, java.util.Map.class, java.util.List.class
 		};
 	private static final Class<?>[] _getObjectLayoutParameterTypes1 =
 		new Class[] {long.class};

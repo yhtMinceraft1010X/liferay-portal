@@ -68,7 +68,7 @@ import java.util.Map;
 public class ObjectLayoutServiceSoap {
 
 	public static com.liferay.object.model.ObjectLayoutSoap addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			long objectDefinitionId, boolean defaultObjectLayout,
 			String[] nameMapLanguageIds, String[] nameMapValues,
 			com.liferay.object.model.ObjectLayoutTabSoap[] objectLayoutTabs)
 		throws RemoteException {
@@ -79,7 +79,7 @@ public class ObjectLayoutServiceSoap {
 
 			com.liferay.object.model.ObjectLayout returnValue =
 				ObjectLayoutServiceUtil.addObjectLayout(
-					userId, objectDefinitionId, defaultObjectLayout, nameMap,
+					objectDefinitionId, defaultObjectLayout, nameMap,
 					com.liferay.object.model.impl.ObjectLayoutTabModelImpl.
 						toModels(objectLayoutTabs));
 

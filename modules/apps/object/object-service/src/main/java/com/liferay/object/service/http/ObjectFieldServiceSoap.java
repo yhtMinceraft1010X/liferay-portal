@@ -68,8 +68,8 @@ import java.util.Map;
 public class ObjectFieldServiceSoap {
 
 	public static com.liferay.object.model.ObjectFieldSoap addCustomObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			long listTypeDefinitionId, long objectDefinitionId, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId,
 			String[] labelMapLanguageIds, String[] labelMapValues, String name,
 			boolean required, String type)
 		throws RemoteException {
@@ -80,7 +80,7 @@ public class ObjectFieldServiceSoap {
 
 			com.liferay.object.model.ObjectField returnValue =
 				ObjectFieldServiceUtil.addCustomObjectField(
-					userId, listTypeDefinitionId, objectDefinitionId, indexed,
+					listTypeDefinitionId, objectDefinitionId, indexed,
 					indexedAsKeyword, indexedLanguageId, labelMap, name,
 					required, type);
 

@@ -69,7 +69,7 @@ public class ListTypeEntryServiceSoap {
 
 	public static com.liferay.list.type.model.ListTypeEntrySoap
 			addListTypeEntry(
-				long userId, long listTypeDefinitionId, String key,
+				long listTypeDefinitionId, String key,
 				String[] nameMapLanguageIds, String[] nameMapValues)
 		throws RemoteException {
 
@@ -79,7 +79,7 @@ public class ListTypeEntryServiceSoap {
 
 			com.liferay.list.type.model.ListTypeEntry returnValue =
 				ListTypeEntryServiceUtil.addListTypeEntry(
-					userId, listTypeDefinitionId, key, nameMap);
+					listTypeDefinitionId, key, nameMap);
 
 			return com.liferay.list.type.model.ListTypeEntrySoap.toSoapModel(
 				returnValue);

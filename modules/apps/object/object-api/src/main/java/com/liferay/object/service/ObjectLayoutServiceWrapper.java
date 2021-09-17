@@ -32,15 +32,14 @@ public class ObjectLayoutServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			long objectDefinitionId, boolean defaultObjectLayout,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.List<com.liferay.object.model.ObjectLayoutTab>
 				objectLayoutTabs)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectLayoutService.addObjectLayout(
-			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabs);
+			objectDefinitionId, defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	@Override

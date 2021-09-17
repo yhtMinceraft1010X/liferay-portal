@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectFieldServiceHttp {
 
 	public static com.liferay.object.model.ObjectField addCustomObjectField(
-			HttpPrincipal httpPrincipal, long userId, long listTypeDefinitionId,
+			HttpPrincipal httpPrincipal, long listTypeDefinitionId,
 			long objectDefinitionId, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -65,9 +65,9 @@ public class ObjectFieldServiceHttp {
 				_addCustomObjectFieldParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, listTypeDefinitionId, objectDefinitionId,
-				indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-				required, type);
+				methodKey, listTypeDefinitionId, objectDefinitionId, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				type);
 
 			Object returnObj = null;
 
@@ -225,9 +225,8 @@ public class ObjectFieldServiceHttp {
 
 	private static final Class<?>[] _addCustomObjectFieldParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, boolean.class, boolean.class,
-			String.class, java.util.Map.class, String.class, boolean.class,
-			String.class
+			long.class, long.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, boolean.class, String.class
 		};
 	private static final Class<?>[] _deleteObjectFieldParameterTypes1 =
 		new Class[] {long.class};

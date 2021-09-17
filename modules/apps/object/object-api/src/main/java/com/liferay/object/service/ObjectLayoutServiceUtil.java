@@ -40,14 +40,13 @@ public class ObjectLayoutServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectLayoutServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectLayout addObjectLayout(
-			long userId, long objectDefinitionId, boolean defaultObjectLayout,
+			long objectDefinitionId, boolean defaultObjectLayout,
 			Map<java.util.Locale, String> nameMap,
 			List<com.liferay.object.model.ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
 		return getService().addObjectLayout(
-			userId, objectDefinitionId, defaultObjectLayout, nameMap,
-			objectLayoutTabs);
+			objectDefinitionId, defaultObjectLayout, nameMap, objectLayoutTabs);
 	}
 
 	public static ObjectLayout getObjectLayout(long objectLayoutId)
