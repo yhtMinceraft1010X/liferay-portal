@@ -99,15 +99,17 @@ paths:
             parameters:
                 - in: query
                   name: page
-                  required: false
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: false
                   schema:
                       type: integer
-            responses:
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+			responses:
                 200:
                     content:
                         application/json:
@@ -209,14 +211,16 @@ paths:
             parameters:
                 - in: query
                   name: page
-                  required: false
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
-                  required: false
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
