@@ -197,7 +197,6 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		searchContext.setAttribute(
 			"objectDefinitionId", _objectDefinition.getObjectDefinitionId());
-
 		searchContext.setBooleanClauses(_getBooleanClauses(collectionQuery));
 
 		ServiceContext serviceContext =
@@ -236,15 +235,15 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId());
+
 		Optional<Map<String, String[]>> configurationOptional =
 			collectionQuery.getConfigurationOptional();
 
 		Map<String, String[]> configuration = configurationOptional.orElse(
 			Collections.emptyMap());
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
 
 		for (Map.Entry<String, String[]> entry : configuration.entrySet()) {
 			String[] values = entry.getValue();
@@ -258,23 +257,22 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			ObjectField objectField = _getObjectField(
 				entry.getKey(), objectFields);
 
-			if (objectField != null) {
-				BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
-
-				nestedBooleanQuery.add(
-					new TermQueryImpl(
-						"nestedFieldArray.fieldName", entry.getKey()),
-					BooleanClauseOccur.MUST);
-
-				nestedBooleanQuery.add(
-					new TermQueryImpl(
-						_getField(objectField), entry.getValue()[0]),
-					BooleanClauseOccur.MUST);
-
-				booleanQuery.add(
-					new NestedQuery("nestedFieldArray", nestedBooleanQuery),
-					BooleanClauseOccur.MUST);
+			if (objectField == null) {
+				continue;
 			}
+
+			BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+
+			nestedBooleanQuery.add(
+				new TermQueryImpl(_getField(objectField), entry.getValue()[0]),
+				BooleanClauseOccur.MUST);
+			nestedBooleanQuery.add(
+				new TermQueryImpl("nestedFieldArray.fieldName", entry.getKey()),
+				BooleanClauseOccur.MUST);
+
+			booleanQuery.add(
+				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
+				BooleanClauseOccur.MUST);
 		}
 
 		return new BooleanClause[] {
