@@ -157,8 +157,7 @@ public class ObjectLayoutServiceTest {
 			_setUser(user);
 
 			objectLayout = _objectLayoutService.addObjectLayout(
-				user.getUserId(), _objectDefinition.getObjectDefinitionId(),
-				true,
+				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList());
 		}

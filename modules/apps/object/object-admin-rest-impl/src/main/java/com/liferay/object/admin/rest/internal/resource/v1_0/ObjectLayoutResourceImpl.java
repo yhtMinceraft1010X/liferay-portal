@@ -85,7 +85,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 
 		return _toObjectLayout(
 			_objectLayoutService.addObjectLayout(
-				contextUser.getUserId(), objectDefinitionId,
+				objectDefinitionId,
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),
 				LocalizedMapUtil.getLocalizedMap(objectLayout.getName()),
 				transformToList(

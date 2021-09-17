@@ -105,8 +105,7 @@ public class ListTypeEntryResourceImpl
 		return ListTypeEntryUtil.toListTypeEntry(
 			null, contextAcceptLanguage.getPreferredLocale(),
 			_listTypeEntryService.addListTypeEntry(
-				contextUser.getUserId(), listTypeDefinitionId,
-				listTypeEntry.getKey(),
+				listTypeDefinitionId, listTypeEntry.getKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					listTypeEntry.getName_i18n())));
 	}

@@ -110,9 +110,8 @@ public class ObjectFieldResourceImpl
 
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
-				contextUser.getUserId(), objectField.getListTypeDefinitionId(),
-				objectDefinitionId, objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(),
+				objectField.getListTypeDefinitionId(), objectDefinitionId,
+				objectField.getIndexed(), objectField.getIndexedAsKeyword(),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 				objectField.getName(), objectField.getRequired(),

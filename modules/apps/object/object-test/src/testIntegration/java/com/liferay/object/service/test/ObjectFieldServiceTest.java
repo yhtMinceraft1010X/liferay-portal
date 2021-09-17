@@ -178,8 +178,8 @@ public class ObjectFieldServiceTest {
 			_setUser(user);
 
 			objectField = _objectFieldService.addCustomObjectField(
-				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(), false, false, null,
+				0, _objectDefinition.getObjectDefinitionId(), false, false,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true, "String");
 		}
