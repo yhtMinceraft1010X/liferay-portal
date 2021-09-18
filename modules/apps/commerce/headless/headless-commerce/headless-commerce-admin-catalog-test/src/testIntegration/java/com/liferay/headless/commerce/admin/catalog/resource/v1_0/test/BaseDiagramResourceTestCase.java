@@ -274,6 +274,7 @@ public abstract class BaseDiagramResourceTestCase {
 	public void testPutProductByExternalReferenceCodeDiagram()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Diagram postDiagram =
 			testPutProductByExternalReferenceCodeDiagram_addDiagram();
 
