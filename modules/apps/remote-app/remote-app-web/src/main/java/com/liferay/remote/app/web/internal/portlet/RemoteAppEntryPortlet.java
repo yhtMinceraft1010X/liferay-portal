@@ -89,7 +89,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
 		String propertiesString = portletPreferences.getValue(
-			RemoteAppConstants.PROPERTIES, StringPool.BLANK);
+			"properties", StringPool.BLANK);
 
 		properties.load(
 			new ByteArrayInputStream(

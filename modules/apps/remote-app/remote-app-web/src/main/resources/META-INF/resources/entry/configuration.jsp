@@ -29,7 +29,7 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
 	<liferay-frontend:edit-form-body>
-		<aui:input helpMessage="properties-help" label="properties" name="preferences--properties--" type="textarea" value="<%= portletPreferences.getValue(RemoteAppConstants.PROPERTIES, StringPool.BLANK) %>" />
+		<aui:input helpMessage="properties-help" label="properties" name="preferences--properties--" type="textarea" value='<%= portletPreferences.getValue("properties", StringPool.BLANK) %>' />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>
