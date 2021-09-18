@@ -15,11 +15,13 @@
 package com.liferay.remote.app.web.internal.portlet;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.model.RemoteAppEntry;
@@ -113,11 +115,9 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 			printWriter.print(StringPool.SPACE);
 			printWriter.print(entry.getKey());
 			printWriter.print("=\"");
-
-			String value = (String)entry.getValue();
-
-			printWriter.print(value.replaceAll(StringPool.QUOTE, "&quot;"));
-
+			printWriter.print(
+				StringUtil.replace(
+					(String)entry.getValue(), CharPool.QUOTE, "&quot;"));
 			printWriter.print(StringPool.QUOTE);
 		}
 
