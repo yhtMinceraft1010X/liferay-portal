@@ -134,7 +134,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 		return _bundleContext.registerService(
 			Portlet.class,
-			new RemoteAppEntryPortlet(remoteAppEntry, _npmResolver),
+			new RemoteAppEntryPortlet(_npmResolver, remoteAppEntry),
 			dictionary);
 	}
 

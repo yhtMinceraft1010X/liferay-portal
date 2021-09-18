@@ -44,10 +44,10 @@ import javax.portlet.RenderResponse;
 public class RemoteAppEntryPortlet extends MVCPortlet {
 
 	public RemoteAppEntryPortlet(
-		RemoteAppEntry remoteAppEntry, NPMResolver npmResolver) {
+		NPMResolver npmResolver, RemoteAppEntry remoteAppEntry) {
 
-		_remoteAppEntry = remoteAppEntry;
 		_npmResolver = npmResolver;
+		_remoteAppEntry = remoteAppEntry;
 	}
 
 	@Override
