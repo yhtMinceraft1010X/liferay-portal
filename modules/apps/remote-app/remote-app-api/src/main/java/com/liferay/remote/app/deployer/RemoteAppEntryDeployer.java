@@ -16,11 +16,15 @@ package com.liferay.remote.app.deployer;
 
 import com.liferay.remote.app.model.RemoteAppEntry;
 
+import java.util.List;
+
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public interface RemoteAppEntryDeployer {
 
-	public RemoteAppEntryDeployment deploy(RemoteAppEntry remoteAppEntry);
+	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry);
 
 }
