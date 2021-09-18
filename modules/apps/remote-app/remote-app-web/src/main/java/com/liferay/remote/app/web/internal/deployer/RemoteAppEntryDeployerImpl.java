@@ -23,7 +23,7 @@ import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
-import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryPortletConfigurationAction;
+import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -75,8 +75,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 		_registerConfigurationAction(RemoteAppEntry remoteAppEntry) {
 
 		return _bundleContext.registerService(
-			ConfigurationAction.class,
-			new RemoteAppEntryPortletConfigurationAction(),
+			ConfigurationAction.class, new RemoteAppEntryConfigurationAction(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).build());
