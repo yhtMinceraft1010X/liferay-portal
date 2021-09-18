@@ -837,17 +837,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Resources
 
-		// TODO Ignore temporarily
-
-		/*try {
+		Assert.assertEquals(
+			0,
 			_resourceActionLocalService.getResourceActionsCount(
-				objectDefinition.getClassName());
-
-			Assert.fail();
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertNotNull(unsupportedOperationException);
-		}
+				objectDefinition.getClassName()));
 
 		try {
 			_resourceActionLocalService.getResourceActionsCount(
@@ -867,7 +860,7 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Assert.assertNotNull(unsupportedOperationException);
-		}*/
+		}
 
 		Assert.assertEquals(
 			1,
