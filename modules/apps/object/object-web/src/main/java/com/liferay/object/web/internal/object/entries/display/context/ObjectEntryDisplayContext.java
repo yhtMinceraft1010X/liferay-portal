@@ -115,19 +115,38 @@ public class ObjectEntryDisplayContext {
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
 
-			navigationItemList.add(
-				navigationItem -> {
-					navigationItem.setActive(
-						objectLayoutTab.getObjectLayoutTabId() ==
-							currentObjectLayoutTab.getObjectLayoutTabId());
-					navigationItem.setHref(
-						liferayPortletResponse.createRenderURL(),
-						"objectLayoutTabId",
-						objectLayoutTab.getObjectLayoutTabId());
-					navigationItem.setLabel(
-						objectLayoutTab.getName(
-							_objectRequestHelper.getLocale()));
-				});
+			NavigationItem navigationItem = new NavigationItem();
+
+			navigationItem.setActive(
+				objectLayoutTab.getObjectLayoutTabId() ==
+					currentObjectLayoutTab.getObjectLayoutTabId());
+
+			navigationItem.setHref(
+				PortletURLBuilder.create(
+					liferayPortletResponse.createRenderURL()
+				).setMVCRenderCommandName(
+					"/object_entries/edit_object_entry"
+				).setParameter(
+					"objectEntryId", objectEntry.getObjectEntryId()
+				).setParameter(
+					"objectLayoutTabId", objectLayoutTab.getObjectLayoutTabId()
+				).buildString());
+
+			if (objectLayoutTab.getObjectRelationshipId() > 0) {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.fetchObjectRelationship(
+						objectLayoutTab.getObjectRelationshipId());
+
+				navigationItem.setLabel(
+					objectRelationship.getLabel(
+						_objectRequestHelper.getLocale()));
+			}
+			else {
+				navigationItem.setLabel(
+					objectLayoutTab.getName(_objectRequestHelper.getLocale()));
+			}
+
+			navigationItemList.add(navigationItem);
 		}
 
 		return navigationItemList;
