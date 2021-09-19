@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 
@@ -46,7 +47,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 	@Override
 	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
-		return _toSXPBlueprint(
+		return SXPBlueprintUtil.toSXPBlueprint(
 			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
 	}
 
@@ -72,7 +73,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			null,
-			document -> _toSXPBlueprint(
+			document -> SXPBlueprintUtil.toSXPBlueprint(
 				_sxpBlueprintService.getSXPBlueprint(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
@@ -81,21 +82,9 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	public SXPBlueprint postSXPBlueprint(SXPBlueprint sxpBlueprint)
 		throws Exception {
 
-		return _toSXPBlueprint(
+		return SXPBlueprintUtil.toSXPBlueprint(
 			_sxpBlueprintService.addSXPBlueprint(
 				null, null, null, null, new ServiceContext()));
-	}
-
-	private SXPBlueprint _toSXPBlueprint(
-		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
-
-		return new SXPBlueprint() {
-			{
-				description = "";
-				id = sxpBlueprint.getSXPBlueprintId();
-				title = "";
-			}
-		};
 	}
 
 	@Reference
