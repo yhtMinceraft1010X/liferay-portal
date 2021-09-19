@@ -452,6 +452,15 @@ public class ObjectEntryLocalServiceUtil {
 			objectDefinitionId, statuses, start, end);
 	}
 
+	public static void insertIntoOrUpdateExtensionTable(
+			long objectDefinitionId, long primaryKey,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		getService().insertIntoOrUpdateExtensionTable(
+			objectDefinitionId, primaryKey, values);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<ObjectEntry> searchObjectEntries(
 				long groupId, long objectDefinitionId, String keywords, int cur,

@@ -513,6 +513,16 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void insertIntoOrUpdateExtensionTable(
+			long objectDefinitionId, long primaryKey,
+			java.util.Map<String, java.io.Serializable> values)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
+			objectDefinitionId, primaryKey, values);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.object.model.ObjectEntry> searchObjectEntries(
 				long groupId, long objectDefinitionId, String keywords, int cur,
