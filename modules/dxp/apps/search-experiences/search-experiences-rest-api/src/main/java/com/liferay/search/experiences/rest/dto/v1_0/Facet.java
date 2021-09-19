@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,35 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SXPBlueprintConfiguration")
+@GraphQLName("Facet")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SXPBlueprintConfiguration")
-public class SXPBlueprintConfiguration implements Serializable {
+@XmlRootElement(name = "Facet")
+public class Facet implements Serializable {
 
-	public static SXPBlueprintConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			SXPBlueprintConfiguration.class, json);
+	public static Facet toDTO(String json) {
+		return ObjectMapperUtil.readValue(Facet.class, json);
 	}
 
 	@Schema
-	@Valid
-	public FrameworkConfiguration getFrameworkConfiguration() {
-		return frameworkConfiguration;
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setFrameworkConfiguration(
-		FrameworkConfiguration frameworkConfiguration) {
-
-		this.frameworkConfiguration = frameworkConfiguration;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@JsonIgnore
-	public void setFrameworkConfiguration(
-		UnsafeSupplier<FrameworkConfiguration, Exception>
-			frameworkConfigurationUnsafeSupplier) {
+	public void setEnabled(
+		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
 
 		try {
-			frameworkConfiguration = frameworkConfigurationUnsafeSupplier.get();
+			enabled = enabledUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -84,7 +77,7 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FrameworkConfiguration frameworkConfiguration;
+	protected Boolean enabled;
 
 	@Override
 	public boolean equals(Object object) {
@@ -92,14 +85,13 @@ public class SXPBlueprintConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SXPBlueprintConfiguration)) {
+		if (!(object instanceof Facet)) {
 			return false;
 		}
 
-		SXPBlueprintConfiguration sxpBlueprintConfiguration =
-			(SXPBlueprintConfiguration)object;
+		Facet facet = (Facet)object;
 
-		return Objects.equals(toString(), sxpBlueprintConfiguration.toString());
+		return Objects.equals(toString(), facet.toString());
 	}
 
 	@Override
@@ -114,14 +106,14 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (frameworkConfiguration != null) {
+		if (enabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"frameworkConfiguration\": ");
+			sb.append("\"enabled\": ");
 
-			sb.append(String.valueOf(frameworkConfiguration));
+			sb.append(enabled);
 		}
 
 		sb.append("}");
@@ -131,7 +123,7 @@ public class SXPBlueprintConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprintConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Facet",
 		name = "x-class-name"
 	)
 	public String xClassName;

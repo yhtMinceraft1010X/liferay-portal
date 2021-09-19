@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,31 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SXPBlueprint")
+@GraphQLName("Highlight")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SXPBlueprint")
-public class SXPBlueprint implements Serializable {
+@XmlRootElement(name = "Highlight")
+public class Highlight implements Serializable {
 
-	public static SXPBlueprint toDTO(String json) {
-		return ObjectMapperUtil.readValue(SXPBlueprint.class, json);
+	public static Highlight toDTO(String json) {
+		return ObjectMapperUtil.readValue(Highlight.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Configuration getConfiguration() {
-		return configuration;
+	public Integer getFragmentOffset() {
+		return fragmentOffset;
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
+	public void setFragmentOffset(Integer fragmentOffset) {
+		this.fragmentOffset = fragmentOffset;
 	}
 
 	@JsonIgnore
-	public void setConfiguration(
-		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+	public void setFragmentOffset(
+		UnsafeSupplier<Integer, Exception> fragmentOffsetUnsafeSupplier) {
 
 		try {
-			configuration = configurationUnsafeSupplier.get();
+			fragmentOffset = fragmentOffsetUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,89 +77,7 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Configuration configuration;
-
-	@Schema
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
-
-		try {
-			description = descriptionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
-
-	@Schema
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
-
-	@Schema
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
+	protected Integer fragmentOffset;
 
 	@Override
 	public boolean equals(Object object) {
@@ -170,13 +85,13 @@ public class SXPBlueprint implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SXPBlueprint)) {
+		if (!(object instanceof Highlight)) {
 			return false;
 		}
 
-		SXPBlueprint sxpBlueprint = (SXPBlueprint)object;
+		Highlight highlight = (Highlight)object;
 
-		return Objects.equals(toString(), sxpBlueprint.toString());
+		return Objects.equals(toString(), highlight.toString());
 	}
 
 	@Override
@@ -191,52 +106,14 @@ public class SXPBlueprint implements Serializable {
 
 		sb.append("{");
 
-		if (configuration != null) {
+		if (fragmentOffset != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"configuration\": ");
+			sb.append("\"fragmentOffset\": ");
 
-			sb.append(String.valueOf(configuration));
-		}
-
-		if (description != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"description\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(description));
-
-			sb.append("\"");
-		}
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		if (title != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(title));
-
-			sb.append("\"");
+			sb.append(fragmentOffset);
 		}
 
 		sb.append("}");
@@ -246,7 +123,7 @@ public class SXPBlueprint implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Highlight",
 		name = "x-class-name"
 	)
 	public String xClassName;

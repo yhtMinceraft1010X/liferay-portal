@@ -55,6 +55,16 @@ public class SXPBlueprintSerDes {
 
 		sb.append("{");
 
+		if (sxpBlueprint.getConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append(String.valueOf(sxpBlueprint.getConfiguration()));
+		}
+
 		if (sxpBlueprint.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -112,6 +122,15 @@ public class SXPBlueprintSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (sxpBlueprint.getConfiguration() == null) {
+			map.put("configuration", null);
+		}
+		else {
+			map.put(
+				"configuration",
+				String.valueOf(sxpBlueprint.getConfiguration()));
+		}
+
 		if (sxpBlueprint.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -155,7 +174,14 @@ public class SXPBlueprintSerDes {
 			SXPBlueprint sxpBlueprint, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "description")) {
+			if (Objects.equals(jsonParserFieldName, "configuration")) {
+				if (jsonParserFieldValue != null) {
+					sxpBlueprint.setConfiguration(
+						ConfigurationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					sxpBlueprint.setDescription((String)jsonParserFieldValue);
 				}

@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.FrameworkConfigurationSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.AdvancedSerDes;
 
 import java.io.Serializable;
 
@@ -28,36 +28,57 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FrameworkConfiguration implements Cloneable, Serializable {
+public class Advanced implements Cloneable, Serializable {
 
-	public static FrameworkConfiguration toDTO(String json) {
-		return FrameworkConfigurationSerDes.toDTO(json);
+	public static Advanced toDTO(String json) {
+		return AdvancedSerDes.toDTO(json);
 	}
 
-	public Boolean getApplyIndexerClauses() {
-		return applyIndexerClauses;
+	public String[] getExcludes() {
+		return excludes;
 	}
 
-	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
-		this.applyIndexerClauses = applyIndexerClauses;
+	public void setExcludes(String[] excludes) {
+		this.excludes = excludes;
 	}
 
-	public void setApplyIndexerClauses(
-		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
+	public void setExcludes(
+		UnsafeSupplier<String[], Exception> excludesUnsafeSupplier) {
 
 		try {
-			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
+			excludes = excludesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Boolean applyIndexerClauses;
+	protected String[] excludes;
+
+	public String[] getIncludes() {
+		return includes;
+	}
+
+	public void setIncludes(String[] includes) {
+		this.includes = includes;
+	}
+
+	public void setIncludes(
+		UnsafeSupplier<String[], Exception> includesUnsafeSupplier) {
+
+		try {
+			includes = includesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] includes;
 
 	@Override
-	public FrameworkConfiguration clone() throws CloneNotSupportedException {
-		return (FrameworkConfiguration)super.clone();
+	public Advanced clone() throws CloneNotSupportedException {
+		return (Advanced)super.clone();
 	}
 
 	@Override
@@ -66,14 +87,13 @@ public class FrameworkConfiguration implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FrameworkConfiguration)) {
+		if (!(object instanceof Advanced)) {
 			return false;
 		}
 
-		FrameworkConfiguration frameworkConfiguration =
-			(FrameworkConfiguration)object;
+		Advanced advanced = (Advanced)object;
 
-		return Objects.equals(toString(), frameworkConfiguration.toString());
+		return Objects.equals(toString(), advanced.toString());
 	}
 
 	@Override
@@ -84,7 +104,7 @@ public class FrameworkConfiguration implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FrameworkConfigurationSerDes.toJSON(this);
+		return AdvancedSerDes.toJSON(this);
 	}
 
 }

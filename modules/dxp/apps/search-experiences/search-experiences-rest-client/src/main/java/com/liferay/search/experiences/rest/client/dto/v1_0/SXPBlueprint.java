@@ -34,6 +34,27 @@ public class SXPBlueprint implements Cloneable, Serializable {
 		return SXPBlueprintSerDes.toDTO(json);
 	}
 
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
+	public void setConfiguration(
+		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+
+		try {
+			configuration = configurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Configuration configuration;
+
 	public String getDescription() {
 		return description;
 	}

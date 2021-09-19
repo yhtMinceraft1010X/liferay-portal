@@ -44,31 +44,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SXPBlueprint")
+@GraphQLName("Configuration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SXPBlueprint")
-public class SXPBlueprint implements Serializable {
+@XmlRootElement(name = "Configuration")
+public class Configuration implements Serializable {
 
-	public static SXPBlueprint toDTO(String json) {
-		return ObjectMapperUtil.readValue(SXPBlueprint.class, json);
+	public static Configuration toDTO(String json) {
+		return ObjectMapperUtil.readValue(Configuration.class, json);
 	}
 
 	@Schema
 	@Valid
-	public Configuration getConfiguration() {
-		return configuration;
+	public Advanced getAdvanced() {
+		return advanced;
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
+	public void setAdvanced(Advanced advanced) {
+		this.advanced = advanced;
 	}
 
 	@JsonIgnore
-	public void setConfiguration(
-		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+	public void setAdvanced(
+		UnsafeSupplier<Advanced, Exception> advancedUnsafeSupplier) {
 
 		try {
-			configuration = configurationUnsafeSupplier.get();
+			advanced = advancedUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,23 +80,24 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Configuration configuration;
+	protected Advanced advanced;
 
 	@Schema
-	public String getDescription() {
-		return description;
+	@Valid
+	public Aggregration getAggregration() {
+		return aggregration;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAggregration(Aggregration aggregration) {
+		this.aggregration = aggregration;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setAggregration(
+		UnsafeSupplier<Aggregration, Exception> aggregrationUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			aggregration = aggregrationUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -108,21 +109,22 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected Aggregration aggregration;
 
 	@Schema
-	public Long getId() {
-		return id;
+	@Valid
+	public Facet getFacet() {
+		return facet;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setFacet(Facet facet) {
+		this.facet = facet;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setFacet(UnsafeSupplier<Facet, Exception> facetUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			facet = facetUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -134,23 +136,24 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected Facet facet;
 
 	@Schema
-	public String getTitle() {
-		return title;
+	@Valid
+	public General getGeneral() {
+		return general;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setGeneral(General general) {
+		this.general = general;
 	}
 
 	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+	public void setGeneral(
+		UnsafeSupplier<General, Exception> generalUnsafeSupplier) {
 
 		try {
-			title = titleUnsafeSupplier.get();
+			general = generalUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -162,7 +165,36 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
+	protected General general;
+
+	@Schema
+	@Valid
+	public Highlight getHighlight() {
+		return highlight;
+	}
+
+	public void setHighlight(Highlight highlight) {
+		this.highlight = highlight;
+	}
+
+	@JsonIgnore
+	public void setHighlight(
+		UnsafeSupplier<Highlight, Exception> highlightUnsafeSupplier) {
+
+		try {
+			highlight = highlightUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Highlight highlight;
 
 	@Override
 	public boolean equals(Object object) {
@@ -170,13 +202,13 @@ public class SXPBlueprint implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SXPBlueprint)) {
+		if (!(object instanceof Configuration)) {
 			return false;
 		}
 
-		SXPBlueprint sxpBlueprint = (SXPBlueprint)object;
+		Configuration configuration = (Configuration)object;
 
-		return Objects.equals(toString(), sxpBlueprint.toString());
+		return Objects.equals(toString(), configuration.toString());
 	}
 
 	@Override
@@ -191,52 +223,54 @@ public class SXPBlueprint implements Serializable {
 
 		sb.append("{");
 
-		if (configuration != null) {
+		if (advanced != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"configuration\": ");
+			sb.append("\"advanced\": ");
 
-			sb.append(String.valueOf(configuration));
+			sb.append(String.valueOf(advanced));
 		}
 
-		if (description != null) {
+		if (aggregration != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"aggregration\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(description));
-
-			sb.append("\"");
+			sb.append(String.valueOf(aggregration));
 		}
 
-		if (id != null) {
+		if (facet != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"facet\": ");
 
-			sb.append(id);
+			sb.append(String.valueOf(facet));
 		}
 
-		if (title != null) {
+		if (general != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"title\": ");
+			sb.append("\"general\": ");
 
-			sb.append("\"");
+			sb.append(String.valueOf(general));
+		}
 
-			sb.append(_escape(title));
+		if (highlight != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
 
-			sb.append("\"");
+			sb.append("\"highlight\": ");
+
+			sb.append(String.valueOf(highlight));
 		}
 
 		sb.append("}");
@@ -246,7 +280,7 @@ public class SXPBlueprint implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Configuration",
 		name = "x-class-name"
 	)
 	public String xClassName;

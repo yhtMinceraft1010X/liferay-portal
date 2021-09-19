@@ -14,9 +14,11 @@
 
 package com.liferay.search.experiences.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -35,6 +37,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,30 +46,40 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("FrameworkConfiguration")
+@GraphQLName("Aggregration")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FrameworkConfiguration")
-public class FrameworkConfiguration implements Serializable {
+@XmlRootElement(name = "Aggregration")
+public class Aggregration implements Serializable {
 
-	public static FrameworkConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(FrameworkConfiguration.class, json);
+	public static Aggregration toDTO(String json) {
+		return ObjectMapperUtil.readValue(Aggregration.class, json);
 	}
 
 	@Schema
-	public Boolean getApplyIndexerClauses() {
-		return applyIndexerClauses;
-	}
-
-	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
-		this.applyIndexerClauses = applyIndexerClauses;
+	@Valid
+	public DistanceType getDistanceType() {
+		return distanceType;
 	}
 
 	@JsonIgnore
-	public void setApplyIndexerClauses(
-		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
+	public String getDistanceTypeAsString() {
+		if (distanceType == null) {
+			return null;
+		}
+
+		return distanceType.toString();
+	}
+
+	public void setDistanceType(DistanceType distanceType) {
+		this.distanceType = distanceType;
+	}
+
+	@JsonIgnore
+	public void setDistanceType(
+		UnsafeSupplier<DistanceType, Exception> distanceTypeUnsafeSupplier) {
 
 		try {
-			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
+			distanceType = distanceTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,7 +91,35 @@ public class FrameworkConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean applyIndexerClauses;
+	protected DistanceType distanceType;
+
+	@Schema
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@JsonIgnore
+	public void setEnabled(
+		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
+
+		try {
+			enabled = enabledUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enabled;
 
 	@Override
 	public boolean equals(Object object) {
@@ -85,14 +127,13 @@ public class FrameworkConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FrameworkConfiguration)) {
+		if (!(object instanceof Aggregration)) {
 			return false;
 		}
 
-		FrameworkConfiguration frameworkConfiguration =
-			(FrameworkConfiguration)object;
+		Aggregration aggregration = (Aggregration)object;
 
-		return Objects.equals(toString(), frameworkConfiguration.toString());
+		return Objects.equals(toString(), aggregration.toString());
 	}
 
 	@Override
@@ -107,14 +148,28 @@ public class FrameworkConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (applyIndexerClauses != null) {
+		if (distanceType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"applyIndexerClauses\": ");
+			sb.append("\"distanceType\": ");
 
-			sb.append(applyIndexerClauses);
+			sb.append("\"");
+
+			sb.append(distanceType);
+
+			sb.append("\"");
+		}
+
+		if (enabled != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enabled\": ");
+
+			sb.append(enabled);
 		}
 
 		sb.append("}");
@@ -124,10 +179,48 @@ public class FrameworkConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.FrameworkConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Aggregration",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("DistanceType")
+	public static enum DistanceType {
+
+		ARC("arc"), PLANE("plane");
+
+		@JsonCreator
+		public static DistanceType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (DistanceType distanceType : values()) {
+				if (Objects.equals(distanceType.getValue(), value)) {
+					return distanceType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DistanceType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

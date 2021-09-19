@@ -35,8 +35,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,31 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("SXPBlueprint")
+@GraphQLName("General")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SXPBlueprint")
-public class SXPBlueprint implements Serializable {
+@XmlRootElement(name = "General")
+public class General implements Serializable {
 
-	public static SXPBlueprint toDTO(String json) {
-		return ObjectMapperUtil.readValue(SXPBlueprint.class, json);
+	public static General toDTO(String json) {
+		return ObjectMapperUtil.readValue(General.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Configuration getConfiguration() {
-		return configuration;
+	public Boolean getApplyIndexerClauses() {
+		return applyIndexerClauses;
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
+	public void setApplyIndexerClauses(Boolean applyIndexerClauses) {
+		this.applyIndexerClauses = applyIndexerClauses;
 	}
 
 	@JsonIgnore
-	public void setConfiguration(
-		UnsafeSupplier<Configuration, Exception> configurationUnsafeSupplier) {
+	public void setApplyIndexerClauses(
+		UnsafeSupplier<Boolean, Exception> applyIndexerClausesUnsafeSupplier) {
 
 		try {
-			configuration = configurationUnsafeSupplier.get();
+			applyIndexerClauses = applyIndexerClausesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,23 +77,27 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Configuration configuration;
+	protected Boolean applyIndexerClauses;
 
 	@Schema
-	public String getDescription() {
-		return description;
+	public String[] getClauseContributorsExcludes() {
+		return clauseContributorsExcludes;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setClauseContributorsExcludes(
+		String[] clauseContributorsExcludes) {
+
+		this.clauseContributorsExcludes = clauseContributorsExcludes;
 	}
 
 	@JsonIgnore
-	public void setDescription(
-		UnsafeSupplier<String, Exception> descriptionUnsafeSupplier) {
+	public void setClauseContributorsExcludes(
+		UnsafeSupplier<String[], Exception>
+			clauseContributorsExcludesUnsafeSupplier) {
 
 		try {
-			description = descriptionUnsafeSupplier.get();
+			clauseContributorsExcludes =
+				clauseContributorsExcludesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -108,21 +109,27 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String description;
+	protected String[] clauseContributorsExcludes;
 
 	@Schema
-	public Long getId() {
-		return id;
+	public String[] getClauseContributorsIncludes() {
+		return clauseContributorsIncludes;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setClauseContributorsIncludes(
+		String[] clauseContributorsIncludes) {
+
+		this.clauseContributorsIncludes = clauseContributorsIncludes;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setClauseContributorsIncludes(
+		UnsafeSupplier<String[], Exception>
+			clauseContributorsIncludesUnsafeSupplier) {
+
 		try {
-			id = idUnsafeSupplier.get();
+			clauseContributorsIncludes =
+				clauseContributorsIncludesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -134,23 +141,24 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected String[] clauseContributorsIncludes;
 
 	@Schema
-	public String getTitle() {
-		return title;
+	public String[] getSearchableAssetTypes() {
+		return searchableAssetTypes;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setSearchableAssetTypes(String[] searchableAssetTypes) {
+		this.searchableAssetTypes = searchableAssetTypes;
 	}
 
 	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
+	public void setSearchableAssetTypes(
+		UnsafeSupplier<String[], Exception>
+			searchableAssetTypesUnsafeSupplier) {
 
 		try {
-			title = titleUnsafeSupplier.get();
+			searchableAssetTypes = searchableAssetTypesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -162,7 +170,7 @@ public class SXPBlueprint implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String title;
+	protected String[] searchableAssetTypes;
 
 	@Override
 	public boolean equals(Object object) {
@@ -170,13 +178,13 @@ public class SXPBlueprint implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SXPBlueprint)) {
+		if (!(object instanceof General)) {
 			return false;
 		}
 
-		SXPBlueprint sxpBlueprint = (SXPBlueprint)object;
+		General general = (General)object;
 
-		return Objects.equals(toString(), sxpBlueprint.toString());
+		return Objects.equals(toString(), general.toString());
 	}
 
 	@Override
@@ -191,52 +199,86 @@ public class SXPBlueprint implements Serializable {
 
 		sb.append("{");
 
-		if (configuration != null) {
+		if (applyIndexerClauses != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"configuration\": ");
+			sb.append("\"applyIndexerClauses\": ");
 
-			sb.append(String.valueOf(configuration));
+			sb.append(applyIndexerClauses);
 		}
 
-		if (description != null) {
+		if (clauseContributorsExcludes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"description\": ");
+			sb.append("\"clauseContributorsExcludes\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(description));
+			for (int i = 0; i < clauseContributorsExcludes.length; i++) {
+				sb.append("\"");
 
-			sb.append("\"");
+				sb.append(_escape(clauseContributorsExcludes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < clauseContributorsExcludes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (id != null) {
+		if (clauseContributorsIncludes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"clauseContributorsIncludes\": ");
 
-			sb.append(id);
+			sb.append("[");
+
+			for (int i = 0; i < clauseContributorsIncludes.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(clauseContributorsIncludes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < clauseContributorsIncludes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (title != null) {
+		if (searchableAssetTypes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"title\": ");
+			sb.append("\"searchableAssetTypes\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(title));
+			for (int i = 0; i < searchableAssetTypes.length; i++) {
+				sb.append("\"");
 
-			sb.append("\"");
+				sb.append(_escape(searchableAssetTypes[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < searchableAssetTypes.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -246,7 +288,7 @@ public class SXPBlueprint implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.General",
 		name = "x-class-name"
 	)
 	public String xClassName;

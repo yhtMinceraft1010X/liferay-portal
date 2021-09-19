@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.SXPBlueprintConfiguration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,28 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SXPBlueprintConfigurationSerDes {
+public class HighlightSerDes {
 
-	public static SXPBlueprintConfiguration toDTO(String json) {
-		SXPBlueprintConfigurationJSONParser
-			sxpBlueprintConfigurationJSONParser =
-				new SXPBlueprintConfigurationJSONParser();
+	public static Highlight toDTO(String json) {
+		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
 
-		return sxpBlueprintConfigurationJSONParser.parseToDTO(json);
+		return highlightJSONParser.parseToDTO(json);
 	}
 
-	public static SXPBlueprintConfiguration[] toDTOs(String json) {
-		SXPBlueprintConfigurationJSONParser
-			sxpBlueprintConfigurationJSONParser =
-				new SXPBlueprintConfigurationJSONParser();
+	public static Highlight[] toDTOs(String json) {
+		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
 
-		return sxpBlueprintConfigurationJSONParser.parseToDTOs(json);
+		return highlightJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		SXPBlueprintConfiguration sxpBlueprintConfiguration) {
-
-		if (sxpBlueprintConfiguration == null) {
+	public static String toJSON(Highlight highlight) {
+		if (highlight == null) {
 			return "null";
 		}
 
@@ -59,16 +53,14 @@ public class SXPBlueprintConfigurationSerDes {
 
 		sb.append("{");
 
-		if (sxpBlueprintConfiguration.getFrameworkConfiguration() != null) {
+		if (highlight.getFragmentOffset() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"frameworkConfiguration\": ");
+			sb.append("\"fragmentOffset\": ");
 
-			sb.append(
-				String.valueOf(
-					sxpBlueprintConfiguration.getFrameworkConfiguration()));
+			sb.append(highlight.getFragmentOffset());
 		}
 
 		sb.append("}");
@@ -77,58 +69,51 @@ public class SXPBlueprintConfigurationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SXPBlueprintConfigurationJSONParser
-			sxpBlueprintConfigurationJSONParser =
-				new SXPBlueprintConfigurationJSONParser();
+		HighlightJSONParser highlightJSONParser = new HighlightJSONParser();
 
-		return sxpBlueprintConfigurationJSONParser.parseToMap(json);
+		return highlightJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		SXPBlueprintConfiguration sxpBlueprintConfiguration) {
-
-		if (sxpBlueprintConfiguration == null) {
+	public static Map<String, String> toMap(Highlight highlight) {
+		if (highlight == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sxpBlueprintConfiguration.getFrameworkConfiguration() == null) {
-			map.put("frameworkConfiguration", null);
+		if (highlight.getFragmentOffset() == null) {
+			map.put("fragmentOffset", null);
 		}
 		else {
 			map.put(
-				"frameworkConfiguration",
-				String.valueOf(
-					sxpBlueprintConfiguration.getFrameworkConfiguration()));
+				"fragmentOffset",
+				String.valueOf(highlight.getFragmentOffset()));
 		}
 
 		return map;
 	}
 
-	public static class SXPBlueprintConfigurationJSONParser
-		extends BaseJSONParser<SXPBlueprintConfiguration> {
+	public static class HighlightJSONParser extends BaseJSONParser<Highlight> {
 
 		@Override
-		protected SXPBlueprintConfiguration createDTO() {
-			return new SXPBlueprintConfiguration();
+		protected Highlight createDTO() {
+			return new Highlight();
 		}
 
 		@Override
-		protected SXPBlueprintConfiguration[] createDTOArray(int size) {
-			return new SXPBlueprintConfiguration[size];
+		protected Highlight[] createDTOArray(int size) {
+			return new Highlight[size];
 		}
 
 		@Override
 		protected void setField(
-			SXPBlueprintConfiguration sxpBlueprintConfiguration,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			Highlight highlight, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "frameworkConfiguration")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentOffset")) {
 				if (jsonParserFieldValue != null) {
-					sxpBlueprintConfiguration.setFrameworkConfiguration(
-						FrameworkConfigurationSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					highlight.setFragmentOffset(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.FrameworkConfiguration;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Aggregration;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FrameworkConfigurationSerDes {
+public class AggregrationSerDes {
 
-	public static FrameworkConfiguration toDTO(String json) {
-		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
-			new FrameworkConfigurationJSONParser();
+	public static Aggregration toDTO(String json) {
+		AggregrationJSONParser aggregrationJSONParser =
+			new AggregrationJSONParser();
 
-		return frameworkConfigurationJSONParser.parseToDTO(json);
+		return aggregrationJSONParser.parseToDTO(json);
 	}
 
-	public static FrameworkConfiguration[] toDTOs(String json) {
-		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
-			new FrameworkConfigurationJSONParser();
+	public static Aggregration[] toDTOs(String json) {
+		AggregrationJSONParser aggregrationJSONParser =
+			new AggregrationJSONParser();
 
-		return frameworkConfigurationJSONParser.parseToDTOs(json);
+		return aggregrationJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FrameworkConfiguration frameworkConfiguration) {
-		if (frameworkConfiguration == null) {
+	public static String toJSON(Aggregration aggregration) {
+		if (aggregration == null) {
 			return "null";
 		}
 
@@ -55,14 +55,28 @@ public class FrameworkConfigurationSerDes {
 
 		sb.append("{");
 
-		if (frameworkConfiguration.getApplyIndexerClauses() != null) {
+		if (aggregration.getDistanceType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"applyIndexerClauses\": ");
+			sb.append("\"distanceType\": ");
 
-			sb.append(frameworkConfiguration.getApplyIndexerClauses());
+			sb.append("\"");
+
+			sb.append(aggregration.getDistanceType());
+
+			sb.append("\"");
+		}
+
+		if (aggregration.getEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enabled\": ");
+
+			sb.append(aggregration.getEnabled());
 		}
 
 		sb.append("}");
@@ -71,56 +85,65 @@ public class FrameworkConfigurationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FrameworkConfigurationJSONParser frameworkConfigurationJSONParser =
-			new FrameworkConfigurationJSONParser();
+		AggregrationJSONParser aggregrationJSONParser =
+			new AggregrationJSONParser();
 
-		return frameworkConfigurationJSONParser.parseToMap(json);
+		return aggregrationJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		FrameworkConfiguration frameworkConfiguration) {
-
-		if (frameworkConfiguration == null) {
+	public static Map<String, String> toMap(Aggregration aggregration) {
+		if (aggregration == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (frameworkConfiguration.getApplyIndexerClauses() == null) {
-			map.put("applyIndexerClauses", null);
+		if (aggregration.getDistanceType() == null) {
+			map.put("distanceType", null);
 		}
 		else {
 			map.put(
-				"applyIndexerClauses",
-				String.valueOf(
-					frameworkConfiguration.getApplyIndexerClauses()));
+				"distanceType", String.valueOf(aggregration.getDistanceType()));
+		}
+
+		if (aggregration.getEnabled() == null) {
+			map.put("enabled", null);
+		}
+		else {
+			map.put("enabled", String.valueOf(aggregration.getEnabled()));
 		}
 
 		return map;
 	}
 
-	public static class FrameworkConfigurationJSONParser
-		extends BaseJSONParser<FrameworkConfiguration> {
+	public static class AggregrationJSONParser
+		extends BaseJSONParser<Aggregration> {
 
 		@Override
-		protected FrameworkConfiguration createDTO() {
-			return new FrameworkConfiguration();
+		protected Aggregration createDTO() {
+			return new Aggregration();
 		}
 
 		@Override
-		protected FrameworkConfiguration[] createDTOArray(int size) {
-			return new FrameworkConfiguration[size];
+		protected Aggregration[] createDTOArray(int size) {
+			return new Aggregration[size];
 		}
 
 		@Override
 		protected void setField(
-			FrameworkConfiguration frameworkConfiguration,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			Aggregration aggregration, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "applyIndexerClauses")) {
+			if (Objects.equals(jsonParserFieldName, "distanceType")) {
 				if (jsonParserFieldValue != null) {
-					frameworkConfiguration.setApplyIndexerClauses(
-						(Boolean)jsonParserFieldValue);
+					aggregration.setDistanceType(
+						Aggregration.DistanceType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "enabled")) {
+				if (jsonParserFieldValue != null) {
+					aggregration.setEnabled((Boolean)jsonParserFieldValue);
 				}
 			}
 		}
