@@ -240,10 +240,12 @@ public class RemoteAppEntryLocalServiceImpl
 			_serviceRegistrationsMaps.remove(
 				remoteAppEntry.getRemoteAppEntryId());
 
-		for (ServiceRegistration<?> serviceRegistration :
-				serviceRegistrations) {
+		if (serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
 
-			serviceRegistration.unregister();
+				serviceRegistration.unregister();
+			}
 		}
 	}
 
