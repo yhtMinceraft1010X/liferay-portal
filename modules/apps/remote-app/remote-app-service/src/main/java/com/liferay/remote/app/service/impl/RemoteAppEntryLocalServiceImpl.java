@@ -401,6 +401,14 @@ public class RemoteAppEntryLocalServiceImpl
 				"Custom element HTML element name is null");
 		}
 
+		for (String reservedName : _RESERVED_CUSTOM_ELEMENT_NAMES) {
+			if (customElementHTMLElementName.equals(reservedName)) {
+				throw new RemoteAppEntryCustomElementHTMLElementNameException(
+					reservedName + "is a reserved custom element name and " +
+						"cannot be registered as a custom element");
+			}
+		}
+
 		char[] customElementHTMLElementNameCharArray =
 			customElementHTMLElementName.toCharArray();
 
@@ -420,7 +428,8 @@ public class RemoteAppEntryLocalServiceImpl
 			}
 
 			if ((Validator.isChar(c) && Character.isLowerCase(c)) ||
-				(c == CharPool.DASH)) {
+				Validator.isNumber(String.valueOf(c)) || (c == CharPool.DASH) ||
+				(c == CharPool.PERIOD) || (c == CharPool.UNDERLINE)) {
 			}
 			else {
 				throw new RemoteAppEntryCustomElementHTMLElementNameException(
@@ -454,6 +463,11 @@ public class RemoteAppEntryLocalServiceImpl
 				"Invalid IFrame URL " + iFrameURL);
 		}
 	}
+
+	private static final String[] _RESERVED_CUSTOM_ELEMENT_NAMES = {
+		"annotation-xml", "color-profile", "font-face", "font-face-src",
+		"font-face-uri", "font-face-format", "font-face-name", "missing-glyph"
+	};
 
 	private BundleContext _bundleContext;
 
