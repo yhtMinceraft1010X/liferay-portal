@@ -2,6 +2,55 @@ components:
     schemas:
         SXPBlueprint:
             properties:
+                configuration:
+                    properties:
+                        advanced:
+                            properties:
+                                excludes:
+                                    items:
+                                        type: string
+                                    type: array
+                                includes:
+                                    items:
+                                        type: string
+                                    type: array
+                            type: object
+                        aggregration:
+                            properties:
+                                distanceType:
+                                    enum: [arc, plane]
+                                    type: boolean
+                                enabled:
+                                    type: boolean
+                            type: object
+                        facet:
+                            properties:
+                                enabled:
+                                    type: boolean
+                            type: object
+                        general:
+                            properties:
+                                applyIndexerClauses:
+                                    type: boolean
+                                clauseContributorsExcludes:
+                                    items:
+                                        type: string
+                                    type: array
+                                clauseContributorsIncludes:
+                                    items:
+                                        type: string
+                                    type: array
+                                searchableAssetTypes:
+                                    items:
+                                        type: string
+                                    type: array
+                            type: object
+                        highlight:
+                            properties:
+                                fragmentOffset:
+                                    type: integer
+                            type: object
+                    type: object
                 description:
                     type: string
                 id:
@@ -9,14 +58,6 @@ components:
                     type: integer
                 title:
                     type: string
-            type: object
-        SXPBlueprintConfiguration:
-            properties:
-                frameworkConfiguration:
-                    properties:
-                        applyIndexerClauses:
-                            type: boolean
-                    type: object
             type: object
         SXPElement:
             properties:
