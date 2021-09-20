@@ -164,7 +164,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		Properties properties = _getProperties(renderRequest);
 
-		if ((properties != null) && (properties.size() > 0)) {
+		if (properties.size() > 0) {
 			Set<Map.Entry<Object, Object>> propertiesEntrySet =
 				properties.entrySet();
 
