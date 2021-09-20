@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
-import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -53,7 +52,8 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ASSIGN)) {
-			_addObjectRelationshipMappingTableValues(actionRequest, actionResponse);
+			_addObjectRelationshipMappingTableValues(
+				actionRequest, actionResponse);
 		}
 	}
 
@@ -78,11 +78,12 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
-			_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-				_portal.getUserId(actionRequest), objectRelationshipId,
-				objectEntryId, objectRelationshipPrimaryKey2,
-				ServiceContextFactory.getInstance(
-					objectDefinition.getClassName(), actionRequest));
+			_objectRelationshipLocalService.
+				addObjectRelationshipMappingTableValues(
+					_portal.getUserId(actionRequest), objectRelationshipId,
+					objectEntryId, objectRelationshipPrimaryKey2,
+					ServiceContextFactory.getInstance(
+						objectDefinition.getClassName(), actionRequest));
 		}
 		catch (Exception exception) {
 			if (exception instanceof ObjectEntryValuesException) {
