@@ -2415,10 +2415,9 @@ public class LayoutStagedModelDataHandler
 				layoutTypePortlet.getTypeSettingsProperties();
 
 			UnicodeProperties newTypeSettingsUnicodeProperties =
-				new UnicodeProperties();
-
-			newTypeSettingsUnicodeProperties.fastLoad(
-				prototypeTypeSettingsUnicodeProperties.toString());
+				UnicodePropertiesBuilder.fastLoad(
+					prototypeTypeSettingsUnicodeProperties.toString()
+				).build();
 
 			if (newTypeSettingsUnicodeProperties.containsKey(
 					Sites.LAST_MERGE_TIME)) {
