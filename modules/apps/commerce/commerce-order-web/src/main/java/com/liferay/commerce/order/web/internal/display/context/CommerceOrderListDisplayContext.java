@@ -65,7 +65,6 @@ public class CommerceOrderListDisplayContext {
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		PortletDisplay portletDisplay =
 			_commerceOrderRequestHelper.getPortletDisplay();
-
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
 
