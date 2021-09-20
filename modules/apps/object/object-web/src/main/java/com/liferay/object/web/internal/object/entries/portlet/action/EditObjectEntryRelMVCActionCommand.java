@@ -85,9 +85,7 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 					objectDefinition.getClassName(), actionRequest));
 		}
 		catch (Exception exception) {
-			if (exception instanceof ObjectDefinitionScopeException ||
-				exception instanceof ObjectEntryValuesException) {
-
+			if (exception instanceof ObjectEntryValuesException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				String redirect = ParamUtil.getString(
