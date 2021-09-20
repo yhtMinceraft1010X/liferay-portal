@@ -434,7 +434,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith("-resource-permissions.json")) {
+			if (resourcePath.endsWith(".model-resource-permissions.json")) {
 				continue;
 			}
 
@@ -456,7 +456,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addCommerceChannel(
 				channelResource.postChannel(channel), serviceContext,
 				StringUtil.replaceLast(
-					resourcePath, ".json", "-resource-permissions.json"));
+					resourcePath, ".json", ".model-resource-permissions.json"));
 		}
 	}
 
