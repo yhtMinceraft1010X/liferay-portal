@@ -43,8 +43,8 @@ String type = ModelHintsUtil.getType(model, field);
 Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 if (hints != null) {
-	type = GetterUtil.getString(hints.get("type"), type);
 	methodName = GetterUtil.getString(hints.get("method-name"), methodName);
+	type = GetterUtil.getString(hints.get("type"), type);
 }
 %>
 
