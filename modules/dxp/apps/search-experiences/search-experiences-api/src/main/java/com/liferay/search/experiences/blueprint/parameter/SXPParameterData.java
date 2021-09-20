@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import java.util.List;
 import java.util.Optional;

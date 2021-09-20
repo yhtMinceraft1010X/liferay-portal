@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
 import java.util.Map;
@@ -24,11 +24,9 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class DoubleParameter extends BaseParameter implements SXPParameter {
+public class LongParameter extends BaseParameter implements SXPParameter {
 
-	public DoubleParameter(
-		String name, boolean templateVariable, Double value) {
-
+	public LongParameter(String name, boolean templateVariable, Long value) {
 		super(name, templateVariable);
 
 		_value = value;
@@ -48,8 +46,8 @@ public class DoubleParameter extends BaseParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
-	public boolean equalsTo(Double value) {
-		if (_value.doubleValue() == value.doubleValue()) {
+	public boolean equalsTo(Long value) {
+		if (_value.longValue() == value.longValue()) {
 			return true;
 		}
 
@@ -57,7 +55,7 @@ public class DoubleParameter extends BaseParameter implements SXPParameter {
 	}
 
 	@Override
-	public Double getValue() {
+	public Long getValue() {
 		return _value;
 	}
 
@@ -65,7 +63,7 @@ public class DoubleParameter extends BaseParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("DoubleParameter [name=");
+		sb.append("LongParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
@@ -76,6 +74,6 @@ public class DoubleParameter extends BaseParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Double _value;
+	private final Long _value;
 
 }

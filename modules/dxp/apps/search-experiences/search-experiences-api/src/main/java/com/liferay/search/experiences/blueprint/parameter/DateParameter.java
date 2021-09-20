@@ -12,25 +12,22 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
-import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class StringArrayParameter
-	extends BaseParameter implements SXPParameter {
+public class DateParameter extends BaseParameter implements SXPParameter {
 
-	public StringArrayParameter(
-		String name, boolean templateVariable, String[] value) {
-
+	public DateParameter(String name, boolean templateVariable, Date value) {
 		super(name, templateVariable);
 
 		_value = value;
@@ -51,7 +48,7 @@ public class StringArrayParameter
 	}
 
 	@Override
-	public String[] getValue() {
+	public Date getValue() {
 		return _value;
 	}
 
@@ -59,17 +56,17 @@ public class StringArrayParameter
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("StringArrayParameter [name=");
+		sb.append("DateParameter [_name=");
 		sb.append(name);
-		sb.append(", templateVariable=");
+		sb.append(", _templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
+		sb.append(_value);
 		sb.append("]");
 
 		return sb.toString();
 	}
 
-	private final String[] _value;
+	private final Date _value;
 
 }

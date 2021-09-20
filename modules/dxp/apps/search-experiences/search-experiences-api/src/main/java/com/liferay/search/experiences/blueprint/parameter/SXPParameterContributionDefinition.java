@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 /**
  * Used to display information about SXPParameterContributor

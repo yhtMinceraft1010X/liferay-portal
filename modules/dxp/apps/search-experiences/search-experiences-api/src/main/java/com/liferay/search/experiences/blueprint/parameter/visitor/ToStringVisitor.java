@@ -12,18 +12,18 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter.visitor;
+package com.liferay.search.experiences.blueprint.parameter.visitor;
 
-import com.liferay.search.experiences.blueprints.parameter.BooleanParameter;
-import com.liferay.search.experiences.blueprints.parameter.DateParameter;
-import com.liferay.search.experiences.blueprints.parameter.DoubleParameter;
-import com.liferay.search.experiences.blueprints.parameter.FloatParameter;
-import com.liferay.search.experiences.blueprints.parameter.IntegerArrayParameter;
-import com.liferay.search.experiences.blueprints.parameter.IntegerParameter;
-import com.liferay.search.experiences.blueprints.parameter.LongArrayParameter;
-import com.liferay.search.experiences.blueprints.parameter.LongParameter;
-import com.liferay.search.experiences.blueprints.parameter.StringArrayParameter;
-import com.liferay.search.experiences.blueprints.parameter.StringParameter;
+import com.liferay.search.experiences.blueprint.parameter.BooleanParameter;
+import com.liferay.search.experiences.blueprint.parameter.DateParameter;
+import com.liferay.search.experiences.blueprint.parameter.DoubleParameter;
+import com.liferay.search.experiences.blueprint.parameter.FloatParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerArrayParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongArrayParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongParameter;
+import com.liferay.search.experiences.blueprint.parameter.StringArrayParameter;
+import com.liferay.search.experiences.blueprint.parameter.StringParameter;
 
 import java.util.Map;
 

@@ -12,23 +12,22 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class LongArrayParameter extends BaseParameter implements SXPParameter {
+public class StringParameter extends BaseParameter implements SXPParameter {
 
-	public LongArrayParameter(
-		String name, boolean templateVariable, Long[] value) {
+	public StringParameter(
+		String name, boolean templateVariable, String value) {
 
 		super(name, templateVariable);
 
@@ -50,7 +49,7 @@ public class LongArrayParameter extends BaseParameter implements SXPParameter {
 	}
 
 	@Override
-	public Long[] getValue() {
+	public String getValue() {
 		return _value;
 	}
 
@@ -58,17 +57,17 @@ public class LongArrayParameter extends BaseParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("LongArrayParameter [name=");
+		sb.append("StringParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
+		sb.append(_value);
 		sb.append("]");
 
 		return sb.toString();
 	}
 
-	private final Long[] _value;
+	private final String _value;
 
 }

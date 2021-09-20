@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
 import java.util.Map;

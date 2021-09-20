@@ -12,22 +12,23 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class DateParameter extends BaseParameter implements SXPParameter {
+public class IntegerParameter extends BaseParameter implements SXPParameter {
 
-	public DateParameter(String name, boolean templateVariable, Date value) {
+	public IntegerParameter(
+		String name, boolean templateVariable, Integer value) {
+
 		super(name, templateVariable);
 
 		_value = value;
@@ -47,8 +48,16 @@ public class DateParameter extends BaseParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
+	public boolean equalsTo(Integer value) {
+		if (_value.intValue() == value.intValue()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
-	public Date getValue() {
+	public Integer getValue() {
 		return _value;
 	}
 
@@ -56,9 +65,9 @@ public class DateParameter extends BaseParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("DateParameter [_name=");
+		sb.append("IntegerParameter [name=");
 		sb.append(name);
-		sb.append(", _templateVariable=");
+		sb.append(", templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
 		sb.append(_value);
@@ -67,6 +76,6 @@ public class DateParameter extends BaseParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Date _value;
+	private final Integer _value;
 
 }

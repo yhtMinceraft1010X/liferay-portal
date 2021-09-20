@@ -12,35 +12,23 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
+
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.model.SXPBlueprint;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseParameter {
+public interface SXPParameterDataCreator {
 
-	public BaseParameter(String name, boolean templateVariable) {
-		this.name = name;
-		this.templateVariable = templateVariable;
-	}
+	public SXPParameterData create(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
 
-	public String getName() {
-		return name;
-	}
-
-	public String getTemplateVariable() {
-		if (isTemplateVariable()) {
-			return "${" + name + "}";
-		}
-
-		return null;
-	}
-
-	public boolean isTemplateVariable() {
-		return templateVariable;
-	}
-
-	protected final String name;
-	protected final boolean templateVariable;
+	public Map<String, List<SXPParameterContributionDefinition>>
+		getParameterContributionDefinitions();
 
 }

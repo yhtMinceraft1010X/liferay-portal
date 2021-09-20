@@ -12,11 +12,11 @@
  *
  */
 
-package com.liferay.search.experiences.blueprints.parameter;
+package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprints.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprints.parameter.visitor.ToStringVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
+import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 
 import java.util.Map;
@@ -24,11 +24,9 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerParameter extends BaseParameter implements SXPParameter {
+public class FloatParameter extends BaseParameter implements SXPParameter {
 
-	public IntegerParameter(
-		String name, boolean templateVariable, Integer value) {
-
+	public FloatParameter(String name, boolean templateVariable, Float value) {
 		super(name, templateVariable);
 
 		_value = value;
@@ -48,8 +46,8 @@ public class IntegerParameter extends BaseParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
-	public boolean equalsTo(Integer value) {
-		if (_value.intValue() == value.intValue()) {
+	public boolean equalsTo(Float value) {
+		if (_value.floatValue() == value.floatValue()) {
 			return true;
 		}
 
@@ -57,7 +55,7 @@ public class IntegerParameter extends BaseParameter implements SXPParameter {
 	}
 
 	@Override
-	public Integer getValue() {
+	public Float getValue() {
 		return _value;
 	}
 
@@ -65,7 +63,7 @@ public class IntegerParameter extends BaseParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("IntegerParameter [name=");
+		sb.append("FloatParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
@@ -76,6 +74,6 @@ public class IntegerParameter extends BaseParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Integer _value;
+	private final Float _value;
 
 }
