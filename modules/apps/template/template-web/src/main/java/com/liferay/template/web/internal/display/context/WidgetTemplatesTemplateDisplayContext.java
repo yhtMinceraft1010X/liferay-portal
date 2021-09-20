@@ -149,9 +149,6 @@ public class WidgetTemplatesTemplateDisplayContext
 		ddmTemplateSearchContainer.setOrderByComparator(
 			_getTemplateOrderByComparator());
 		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
-		ddmTemplateSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
-
 		ddmTemplateSearchContainer.setResults(
 			DDMTemplateServiceUtil.search(
 				themeDisplay.getCompanyId(),
@@ -161,6 +158,8 @@ public class WidgetTemplatesTemplateDisplayContext
 				ddmTemplateSearchContainer.getStart(),
 				ddmTemplateSearchContainer.getEnd(),
 				ddmTemplateSearchContainer.getOrderByComparator()));
+		ddmTemplateSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		ddmTemplateSearchContainer.setTotal(
 			DDMTemplateServiceUtil.searchCount(
 				themeDisplay.getCompanyId(),
