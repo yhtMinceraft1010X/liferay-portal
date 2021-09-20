@@ -190,7 +190,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public void addOrUpdateExtensionTableEntry(
+	public void insertIntoOrUpdateExtensionTable(
 			long primaryKey, long objectDefinitionId,
 			Map<String, Serializable> values)
 		throws PortalException {

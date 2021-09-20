@@ -157,7 +157,7 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.getObjectFieldId2());
 
 		if (objectDefinition2.isSystem()) {
-			_objectEntryLocalService.addOrUpdateExtensionTableEntry(
+			_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 				primaryKey2, objectRelationship.getObjectDefinitionId2(),
 				HashMapBuilder.<String, Serializable>put(
 					objectField2.getName(), primaryKey1
