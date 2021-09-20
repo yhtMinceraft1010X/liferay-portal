@@ -112,7 +112,7 @@ public class AccountEntryGroupSettingsTest {
 		_accountEntryGroupSettings.setAllowedTypes(
 			_group.getGroupId(), allowedTypes);
 
-		// Force async operations to complete before returning.
+		// Force async operations to complete before returning
 
 		ConfigurationTestUtil.saveConfiguration(
 			RandomTestUtil.randomString(), null);
