@@ -64,7 +64,6 @@ portletDisplay.setURLBack(backURL);
 		'<portlet:namespace />selectRelatedModel',
 		() => {
 			Liferay.Util.openSelectionModal({
-				selectEventName: `<portlet:namespace />selectRelatedModalEntry`,
 				multiple: false,
 				onSelect: (selectedItem) => {
 					const objectEntry = JSON.parse(selectedItem.value);
@@ -81,6 +80,7 @@ portletDisplay.setURLBack(backURL);
 						submitForm(form);
 					}
 				},
+				selectEventName: `<portlet:namespace />selectRelatedModalEntry`,
 				title: '<liferay-ui:message key="select" />',
 				url:
 					'<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL() %>',
