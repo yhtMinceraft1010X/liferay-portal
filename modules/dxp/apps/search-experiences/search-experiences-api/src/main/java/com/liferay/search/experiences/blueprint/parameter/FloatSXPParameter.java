@@ -15,8 +15,8 @@
 package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
-import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
+
+
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.util.Map;
