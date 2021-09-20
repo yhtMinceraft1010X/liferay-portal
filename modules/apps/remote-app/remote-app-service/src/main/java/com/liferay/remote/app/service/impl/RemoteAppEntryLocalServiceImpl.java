@@ -107,7 +107,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
-		_addRemoteAppEntryResources(remoteAppEntry);
+		_addResources(remoteAppEntry);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
@@ -139,7 +139,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
-		_addRemoteAppEntryResources(remoteAppEntry);
+		_addResources(remoteAppEntry);
 
 		remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 
@@ -309,7 +309,7 @@ public class RemoteAppEntryLocalServiceImpl
 		_bundleContext = bundleContext;
 	}
 
-	private void _addRemoteAppEntryResources(RemoteAppEntry remoteAppEntry)
+	private void _addResources(RemoteAppEntry remoteAppEntry)
 		throws PortalException {
 
 		_resourceLocalService.addResources(
