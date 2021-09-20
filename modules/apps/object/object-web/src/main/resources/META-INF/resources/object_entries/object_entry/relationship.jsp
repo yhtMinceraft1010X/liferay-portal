@@ -33,9 +33,9 @@ portletDisplay.setURLBack(backURL);
 <aui:form action="<%= editRelatedModelActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ASSIGN %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>" />
-	<aui:input name="objectEntryRelId" type="hidden" value="" />
 	<aui:input name="objectRelationshipId" type="hidden" value="<%= objectLayoutTab.getObjectRelationshipId() %>" />
+	<aui:input name="objectEntryId" type="hidden" value="<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>" />
+	<aui:input name="objectRelationshipPrimaryKey2" type="hidden" value="" />
 
 	<clay:data-set-display
 		contextParams='<%=
@@ -69,11 +69,11 @@ portletDisplay.setURLBack(backURL);
 				onSelect: (selectedItem) => {
 					const objectEntry = JSON.parse(selectedItem.value);
 
-					const objectEntryRelIdInput = document.getElementById(
-						'<portlet:namespace />objectEntryRelId'
+					const objectRelationshipPrimaryKey2Input = document.getElementById(
+						'<portlet:namespace />objectRelationshipPrimaryKey2'
 					);
 
-					objectEntryRelIdInput.value = objectEntry.classPK;
+					objectRelationshipPrimaryKey2Input.value = objectEntry.classPK;
 
 					const form = document.getElementById('<portlet:namespace />fm');
 

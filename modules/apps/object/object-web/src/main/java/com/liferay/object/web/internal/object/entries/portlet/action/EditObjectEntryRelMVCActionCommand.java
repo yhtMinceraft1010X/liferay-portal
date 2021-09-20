@@ -67,8 +67,8 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 
 			long objectEntryId = ParamUtil.getLong(
 				actionRequest, "objectEntryId");
-			long objectEntryRelId = ParamUtil.getLong(
-				actionRequest, "objectEntryRelId");
+			long objectRelationshipPrimaryKey2 = ParamUtil.getLong(
+				actionRequest, "objectRelationshipPrimaryKey2");
 
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.getObjectRelationship(
@@ -80,7 +80,7 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 
 			_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 				_portal.getUserId(actionRequest), objectRelationshipId,
-				objectEntryId, objectEntryRelId,
+				objectEntryId, objectRelationshipPrimaryKey2,
 				ServiceContextFactory.getInstance(
 					objectDefinition.getClassName(), actionRequest));
 		}
