@@ -239,15 +239,11 @@ public class ObjectEntryDisplayContext {
 
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				String cpDefinitionName = StringPool.BLANK;
-
 				dropdownItem.setHref(
 					liferayPortletResponse.getNamespace() +
 						"selectRelatedModel");
 				dropdownItem.setLabel(
-					LanguageUtil.format(
-						_objectRequestHelper.getRequest(), "add",
-						cpDefinitionName));
+					LanguageUtil.get(_objectRequestHelper.getRequest(), "add"));
 				dropdownItem.setTarget("event");
 			}
 		).build();
