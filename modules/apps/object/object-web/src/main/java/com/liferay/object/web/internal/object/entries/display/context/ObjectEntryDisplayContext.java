@@ -122,13 +122,12 @@ public class ObjectEntryDisplayContext {
 			return Collections.emptyList();
 		}
 
-		ObjectEntry objectEntry = getObjectEntry();
-
 		NavigationItemList navigationItemList = new NavigationItemList();
 
 		ObjectLayoutTab currentObjectLayoutTab = getObjectLayoutTab();
 		LiferayPortletResponse liferayPortletResponse =
 			_objectRequestHelper.getLiferayPortletResponse();
+		ObjectEntry objectEntry = getObjectEntry();
 
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
@@ -138,7 +137,6 @@ public class ObjectEntryDisplayContext {
 			navigationItem.setActive(
 				objectLayoutTab.getObjectLayoutTabId() ==
 					currentObjectLayoutTab.getObjectLayoutTabId());
-
 			navigationItem.setHref(
 				PortletURLBuilder.create(
 					liferayPortletResponse.createRenderURL()
