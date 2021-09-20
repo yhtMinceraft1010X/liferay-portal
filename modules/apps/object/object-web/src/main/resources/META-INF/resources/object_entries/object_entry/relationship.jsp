@@ -80,7 +80,7 @@ portletDisplay.setURLBack(backURL);
 						submitForm(form);
 					}
 				},
-				selectEventName: `<portlet:namespace />selectRelatedModalEntry`,
+				selectEventName: '<portlet:namespace />selectRelatedModalEntry',
 				title: '<liferay-ui:message key="select" />',
 				url:
 					'<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL() %>',
