@@ -53,11 +53,11 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ASSIGN)) {
-			_addOrUpdateObjectEntryRel(actionRequest, actionResponse);
+			_addObjectRelationshipMappingTableValues(actionRequest, actionResponse);
 		}
 	}
 
-	private void _addOrUpdateObjectEntryRel(
+	private void _addObjectRelationshipMappingTableValues(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
