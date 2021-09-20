@@ -359,6 +359,16 @@ public class RemoteAppEntryLocalServiceImpl
 		return searchContext;
 	}
 
+	private String _getPortletCategoryName(String portletCategoryName) {
+		portletCategoryName = StringUtil.trim(portletCategoryName);
+
+		if (Validator.isNotNull(portletCategoryName)) {
+			return portletCategoryName;
+		}
+
+		return "category.sample";
+	}
+
 	private List<RemoteAppEntry> _getRemoteAppEntries(Hits hits)
 		throws PortalException {
 
@@ -467,16 +477,6 @@ public class RemoteAppEntryLocalServiceImpl
 				throw new RemoteAppEntryCustomElementURLsException();
 			}
 		}
-	}
-
-	private String _getPortletCategoryName(String portletCategoryName) {
-		portletCategoryName = StringUtil.trim(portletCategoryName);
-
-		if (Validator.isNotNull(portletCategoryName)) {
-			return portletCategoryName;
-		}
-
-		return "category.sample";
 	}
 
 	private void _validateIFrameURL(String iFrameURL) throws PortalException {
