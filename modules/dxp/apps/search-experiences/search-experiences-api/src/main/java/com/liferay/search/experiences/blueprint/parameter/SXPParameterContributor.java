@@ -24,7 +24,7 @@ import java.util.List;
  */
 public interface SXPParameterContributor {
 
-	public void contribute(		
+	public void contribute(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
 		SXPParameterDataBuilder sxpParameterDataBuilder);
 

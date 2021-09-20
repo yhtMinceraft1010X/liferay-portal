@@ -55,8 +55,8 @@ public abstract class BaseSXPParameter implements SXPParameter {
 
 		return StringBundler.concat(
 			"{className=", clazz.getSimpleName(), ", name=", name,
-			", templateVariable=", templateVariable,
-			", value=", valueString, "}");
+			", templateVariable=", templateVariable, ", value=", valueString,
+			"}");
 	}
 
 	protected final String name;

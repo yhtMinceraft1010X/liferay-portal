@@ -14,9 +14,6 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.petra.string.StringBundler;
-
-
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.util.Map;
@@ -26,7 +23,9 @@ import java.util.Map;
  */
 public class FloatSXPParameter extends BaseSXPParameter {
 
-	public FloatSXPParameter(String name, boolean templateVariable, Float value) {
+	public FloatSXPParameter(
+		String name, boolean templateVariable, Float value) {
+
 		super(name, templateVariable);
 
 		_value = value;
@@ -40,7 +39,8 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public String accept(ToStringVisitor toStringVisitor, Map<String, String> options)
+	public String accept(
+			ToStringVisitor toStringVisitor, Map<String, String> options)
 		throws Exception {
 
 		return toStringVisitor.visit(this, options);

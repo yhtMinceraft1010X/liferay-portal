@@ -14,9 +14,6 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.petra.string.StringBundler;
-
-
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.util.Arrays;
@@ -25,8 +22,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerArraySXPParameter
-	extends BaseSXPParameter {
+public class IntegerArraySXPParameter extends BaseSXPParameter {
 
 	public IntegerArraySXPParameter(
 		String name, boolean templateVariable, Integer[] value) {
@@ -44,7 +40,8 @@ public class IntegerArraySXPParameter
 	}
 
 	@Override
-	public String accept(ToStringVisitor toStringVisitor, Map<String, String> options)
+	public String accept(
+			ToStringVisitor toStringVisitor, Map<String, String> options)
 		throws Exception {
 
 		return toStringVisitor.visit(this, options);

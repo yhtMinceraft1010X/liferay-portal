@@ -16,20 +16,6 @@ package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
-import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.IntegerArraySXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.LongArraySXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
-import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
-
-import java.util.Map;
-
-
 import java.util.Map;
 
 /**
@@ -40,7 +26,8 @@ public interface SXPParameter {
 	public boolean accept(EvaluationVisitor evaluationVisitor)
 		throws SXPParameterException;
 
-	public String accept(ToStringVisitor toStringVisitor, Map<String, String> options)
+	public String accept(
+			ToStringVisitor toStringVisitor, Map<String, String> options)
 		throws Exception;
 
 	public String getName();
@@ -87,37 +74,51 @@ public interface SXPParameter {
 
 	public interface ToStringVisitor {
 
-		public String visit(BooleanSXPParameter booleanSXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(DateSXPParameter dateSXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(DoubleSXPParameter parameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(FloatSXPParameter floatSXPParameter, Map<String, String> options)
+		public String visit(
+				BooleanSXPParameter booleanSXPParameter,
+				Map<String, String> options)
 			throws Exception;
 
 		public String visit(
-				IntegerArraySXPParameter integerArraySXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(IntegerSXPParameter integerSXPParameter, Map<String, String> options)
+				DateSXPParameter dateSXPParameter, Map<String, String> options)
 			throws Exception;
 
 		public String visit(
-				LongArraySXPParameter longArraySXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(LongSXPParameter longSXPParameter, Map<String, String> options)
+				DoubleSXPParameter parameter, Map<String, String> options)
 			throws Exception;
 
 		public String visit(
-				StringArraySXPParameter stringArraySXPParameter, Map<String, String> options)
+				FloatSXPParameter floatSXPParameter,
+				Map<String, String> options)
 			throws Exception;
 
-		public String visit(StringSXPParameter stringSXPParameter, Map<String, String> options)
+		public String visit(
+				IntegerArraySXPParameter integerArraySXPParameter,
+				Map<String, String> options)
+			throws Exception;
+
+		public String visit(
+				IntegerSXPParameter integerSXPParameter,
+				Map<String, String> options)
+			throws Exception;
+
+		public String visit(
+				LongArraySXPParameter longArraySXPParameter,
+				Map<String, String> options)
+			throws Exception;
+
+		public String visit(
+				LongSXPParameter longSXPParameter, Map<String, String> options)
+			throws Exception;
+
+		public String visit(
+				StringArraySXPParameter stringArraySXPParameter,
+				Map<String, String> options)
+			throws Exception;
+
+		public String visit(
+				StringSXPParameter stringSXPParameter,
+				Map<String, String> options)
 			throws Exception;
 
 	}
