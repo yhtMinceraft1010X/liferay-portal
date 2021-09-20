@@ -93,7 +93,7 @@ public class IndexActionsDisplayBuilder {
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to get company with company id " + companyId,
+						"Unable to get company with company ID " + companyId,
 						exception);
 				}
 			}
