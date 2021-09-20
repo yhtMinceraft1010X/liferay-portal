@@ -79,7 +79,7 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId2());
 
-			_objectRelationshipLocalService.addObjectRelationshipMap(
+			_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 				_portal.getUserId(actionRequest), objectRelationshipId,
 				objectEntryId, objectEntryRelId,
 				ServiceContextFactory.getInstance(

@@ -122,7 +122,7 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
-	public void addObjectRelationshipMap(
+	public void addObjectRelationshipMappingTableValues(
 			long userId, long objectRelationshipId, long primaryKey1,
 			long primaryKey2, ServiceContext serviceContext)
 		throws PortalException {
@@ -135,10 +135,19 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-			objectRelationshipLocalService.
-				addObjectRelationshipMappingTableValues(
-					objectRelationship.getObjectRelationshipId(), primaryKey1,
-					primaryKey2);
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+			ObjectDefinition objectDefinition2 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
+
+			runSQL(
+				StringBundler.concat(
+					"insert into ", objectRelationship.getDBTableName(), " (",
+					objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
+					objectDefinition2.getPKObjectFieldDBColumnName(), ") values (",
+					primaryKey1, ", ", primaryKey2, ")"));
 
 			return;
 		}
@@ -165,30 +174,6 @@ public class ObjectRelationshipLocalServiceImpl
 				).build(),
 				serviceContext);
 		}
-	}
-
-	@Override
-	public void addObjectRelationshipMappingTableValues(
-			long objectRelationshipId, long primaryKey1, long primaryKey2)
-		throws PortalException {
-
-		ObjectRelationship objectRelationship =
-			objectRelationshipPersistence.findByPrimaryKey(
-				objectRelationshipId);
-
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId1());
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
-
-		runSQL(
-			StringBundler.concat(
-				"insert into ", objectRelationship.getDBTableName(), " (",
-				objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
-				objectDefinition2.getPKObjectFieldDBColumnName(), ") values (",
-				primaryKey1, ", ", primaryKey2, ")"));
 	}
 
 	@Override
