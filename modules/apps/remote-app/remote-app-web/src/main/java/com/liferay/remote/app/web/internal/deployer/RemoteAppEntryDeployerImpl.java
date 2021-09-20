@@ -60,7 +60,7 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	private String _getPortletCategoryName(RemoteAppEntry remoteAppEntry) {
 		String portletCategoryName = remoteAppEntry.getPortletCategoryName();
 
-		if (Validator.isBlank(portletCategoryName)) {
+		if (Validator.isNull(portletCategoryName)) {
 			return "category.remote-apps";
 		}
 

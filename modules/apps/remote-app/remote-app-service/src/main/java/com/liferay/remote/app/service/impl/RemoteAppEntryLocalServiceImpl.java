@@ -105,8 +105,7 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(
-			_getPortletCategoryName(portletCategoryName));
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -140,8 +139,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(
-			_getPortletCategoryName(portletCategoryName));
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -280,8 +278,7 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(
-			_getPortletCategoryName(portletCategoryName));
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -306,8 +303,7 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(
-			_getPortletCategoryName(portletCategoryName));
+		remoteAppEntry.setPortletCategoryName(portletCategoryName);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -357,16 +353,6 @@ public class RemoteAppEntryLocalServiceImpl
 		searchContext.setStart(start);
 
 		return searchContext;
-	}
-
-	private String _getPortletCategoryName(String portletCategoryName) {
-		portletCategoryName = StringUtil.trim(portletCategoryName);
-
-		if (Validator.isNotNull(portletCategoryName)) {
-			return portletCategoryName;
-		}
-
-		return "category.sample";
 	}
 
 	private List<RemoteAppEntry> _getRemoteAppEntries(Hits hits)
