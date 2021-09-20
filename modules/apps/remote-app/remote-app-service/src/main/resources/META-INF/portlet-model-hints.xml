@@ -23,6 +23,7 @@
 			<hint name="max-length">1024</hint>
 		</field>
 		<field localized="true" name="name" type="String" />
+		<field name="portletCategoryName" type="String" />
 		<field name="type" type="String" />
 	</model>
 </model-hints>
