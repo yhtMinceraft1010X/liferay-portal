@@ -115,7 +115,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						uploadPortletRequest.getFileAsStream("file")) {
 
 					_importZipFile(
-						actionRequest, classPK, groupId, className,
+						actionRequest, groupId, className, classPK,
 						inputStream);
 				}
 			}
@@ -124,7 +124,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						uploadPortletRequest.getFileAsStream("file")) {
 
 					_importXLIFFFile(
-						actionRequest, classPK, groupId, className,
+						actionRequest, groupId, className, classPK,
 						inputStream);
 				}
 			}
@@ -169,9 +169,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkContentType(String contentType)
 		throws XLIFFFileException {
 
-		if (!Objects.equals("application/x-xliff+xml", contentType) &&
-			!Objects.equals("application/xliff+xml", contentType) &&
-			!Objects.equals(ContentTypes.APPLICATION_ZIP, contentType)) {
+		if (!Objects.equals(ContentTypes.APPLICATION_ZIP, contentType) &&
+			!Objects.equals("application/x-xliff+xml", contentType) &&
+			!Objects.equals("application/xliff+xml", contentType)) {
 
 			throw new XLIFFFileException.MustBeValid(
 				"Unsupported content type: " + contentType);
@@ -222,8 +222,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _importXLIFFFile(
-			ActionRequest actionRequest, long classPK, long groupId,
-			String className, InputStream inputStream)
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, InputStream inputStream)
 		throws IOException, PortalException {
 
 		TranslationSnapshot translationSnapshot =
@@ -240,8 +240,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _importZipFile(
-			ActionRequest actionRequest, long classPK, long groupId,
-			String className, InputStream inputStream)
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, InputStream inputStream)
 		throws IOException, PortalException {
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
@@ -252,7 +252,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						zipReader.getEntryAsInputStream(entry)) {
 
 					_importXLIFFFile(
-						actionRequest, classPK, groupId, className,
+						actionRequest, groupId, className, classPK,
 						entryInputStream);
 				}
 			}
