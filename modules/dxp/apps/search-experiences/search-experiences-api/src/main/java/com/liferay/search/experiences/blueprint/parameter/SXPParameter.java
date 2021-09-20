@@ -37,10 +37,10 @@ import java.util.Map;
  */
 public interface SXPParameter {
 
-	public boolean accept(EvaluationVisitor visitor)
+	public boolean accept(EvaluationVisitor evaluationVisitor)
 		throws SXPParameterException;
 
-	public String accept(ToStringVisitor visitor, Map<String, String> options)
+	public String accept(ToStringVisitor toStringVisitor, Map<String, String> options)
 		throws Exception;
 
 	public String getName();

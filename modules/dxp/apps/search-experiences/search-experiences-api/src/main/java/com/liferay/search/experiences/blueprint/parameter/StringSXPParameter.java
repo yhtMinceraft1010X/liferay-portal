@@ -35,17 +35,17 @@ public class StringSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean accept(EvaluationVisitor visitor)
+	public boolean accept(EvaluationVisitor evaluationVisitor)
 		throws SXPParameterException {
 
-		return visitor.visit(this);
+		return evaluationVisitor.visit(this);
 	}
 
 	@Override
-	public String accept(ToStringVisitor visitor, Map<String, String> options)
+	public String accept(ToStringVisitor toStringVisitor, Map<String, String> options)
 		throws Exception {
 
-		return visitor.visit(this, options);
+		return toStringVisitor.visit(this, options);
 	}
 
 	@Override
