@@ -85,7 +85,9 @@ public class AddTemplateEntryMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			new String[] {LocaleUtil.toLanguageId(themeDisplay.getLocale())},
+			new String[] {
+				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
+			},
 			new String[] {ParamUtil.getString(actionRequest, "name")});
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
