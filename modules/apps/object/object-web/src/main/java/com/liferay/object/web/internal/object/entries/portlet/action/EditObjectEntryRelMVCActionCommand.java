@@ -62,14 +62,13 @@ public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			long objectEntryId = ParamUtil.getLong(
-				actionRequest, "objectEntryId");
-
-			long objectEntryRelId = ParamUtil.getLong(
-				actionRequest, "objectEntryRelId");
-
 			long objectRelationshipId = ParamUtil.getLong(
 				actionRequest, "objectRelationshipId");
+
+			long objectEntryId = ParamUtil.getLong(
+				actionRequest, "objectEntryId");
+			long objectEntryRelId = ParamUtil.getLong(
+				actionRequest, "objectEntryRelId");
 
 			ObjectRelationship objectRelationship =
 				_objectRelationshipLocalService.getObjectRelationship(
