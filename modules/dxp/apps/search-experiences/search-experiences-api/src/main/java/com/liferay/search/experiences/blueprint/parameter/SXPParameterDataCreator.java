@@ -29,6 +29,6 @@ public interface SXPParameterDataCreator {
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
 
 	public Map<String, List<SXPParameterContributionDefinition>>
-		getParameterContributionDefinitions();
+		getSXPParameterContributionDefinitions();
 
 }

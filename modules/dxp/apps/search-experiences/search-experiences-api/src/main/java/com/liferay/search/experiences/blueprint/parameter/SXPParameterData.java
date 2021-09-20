@@ -22,10 +22,10 @@ import java.util.Optional;
  */
 public interface SXPParameterData {
 
-	public Optional<SXPParameter> getByNameOptional(String name);
+	public Optional<SXPParameter> getSXPParameterOptionalByName(String name);
 
-	public Optional<SXPParameter> getByTemplateVariableNameOptional(
-		String name);
+	public Optional<SXPParameter>
+		getSXPParameterOptionalByNameTemplateVariableName(String name);
 
 	public int getFrom();
 
