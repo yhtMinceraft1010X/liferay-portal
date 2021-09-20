@@ -131,6 +131,10 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectRelationship.getObjectDefinitionId2());
+
 		if (Objects.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
@@ -138,9 +142,6 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
-			ObjectDefinition objectDefinition2 =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectRelationship.getObjectDefinitionId2());
 
 			runSQL(
 				StringBundler.concat(
@@ -151,10 +152,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 			return;
 		}
-
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
 
 		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
