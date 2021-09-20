@@ -457,8 +457,8 @@ public class RemoteAppEntryLocalServiceImpl
 			}
 			else {
 				throw new RemoteAppEntryCustomElementHTMLElementNameException(
-					"Custom element HTML element name must only contain " +
-						"lowercase letters or hyphens");
+					"Custom element HTML element name contains an invalid " +
+						"character");
 			}
 		}
 
