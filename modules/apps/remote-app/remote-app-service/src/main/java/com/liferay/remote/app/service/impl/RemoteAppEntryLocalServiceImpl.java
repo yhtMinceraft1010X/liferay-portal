@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
@@ -54,6 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -423,12 +425,12 @@ public class RemoteAppEntryLocalServiceImpl
 				"Custom element HTML element name is null");
 		}
 
-		for (String reservedName : _RESERVED_CUSTOM_ELEMENT_NAMES) {
-			if (customElementHTMLElementName.equals(reservedName)) {
-				throw new RemoteAppEntryCustomElementHTMLElementNameException(
-					reservedName + "is a reserved custom element name and " +
-						"cannot be registered as a custom element");
-			}
+		if (_reservedCustomElementHTMLElementNames.contains(
+				customElementHTMLElementName)) {
+
+			throw new RemoteAppEntryCustomElementHTMLElementNameException(
+				"Reserved custom element HTML element name " +
+					customElementHTMLElementName);
 		}
 
 		char[] customElementHTMLElementNameCharArray =
@@ -486,15 +488,18 @@ public class RemoteAppEntryLocalServiceImpl
 		}
 	}
 
-	private static final String[] _RESERVED_CUSTOM_ELEMENT_NAMES = {
-		"annotation-xml", "color-profile", "font-face", "font-face-src",
-		"font-face-uri", "font-face-format", "font-face-name", "missing-glyph"
-	};
-
 	private BundleContext _bundleContext;
 
 	@Reference
 	private RemoteAppEntryDeployer _remoteAppEntryDeployer;
+
+	private final Set<String> _reservedCustomElementHTMLElementNames =
+		SetUtil.fromArray(
+			new String[] {
+				"annotation-xml", "color-profile", "font-face", "font-face-src",
+				"font-face-uri", "font-face-format", "font-face-name",
+				"missing-glyph"
+			});
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;
