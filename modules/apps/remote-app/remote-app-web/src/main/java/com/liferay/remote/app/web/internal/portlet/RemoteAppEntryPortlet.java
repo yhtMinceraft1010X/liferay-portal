@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
@@ -35,9 +36,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -160,25 +158,17 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print("<iframe src=\"");
-		printWriter.print(_remoteAppEntry.getIFrameURL());
+
+		String iFrameURL = _remoteAppEntry.getIFrameURL();
 
 		Properties properties = _getProperties(renderRequest);
 
-		if (properties.size() > 0) {
-			Set<Map.Entry<Object, Object>> propertiesEntrySet =
-				properties.entrySet();
-
-			Stream<Map.Entry<Object, Object>> propertiesStream =
-				propertiesEntrySet.stream();
-
-			String searchParams = propertiesStream.map(
-				entry -> entry.getKey() + "=" + (String)entry.getValue()
-			).collect(
-				Collectors.joining(StringPool.AMPERSAND)
-			);
-
-			printWriter.write(StringPool.QUESTION + searchParams);
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			iFrameURL = HttpUtil.addParameter(
+				iFrameURL, (String)entry.getKey(), (String)entry.getValue());
 		}
+
+		printWriter.print(iFrameURL);
 
 		printWriter.print("\"></iframe>");
 
