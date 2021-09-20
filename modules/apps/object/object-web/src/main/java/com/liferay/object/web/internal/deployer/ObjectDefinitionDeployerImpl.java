@@ -40,7 +40,7 @@ import com.liferay.object.web.internal.object.entries.frontend.taglib.clay.data.
 import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortlet;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
-import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelMVCActionCommand;
+import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -131,13 +131,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				MVCActionCommand.class,
-				new EditObjectEntryRelMVCActionCommand(
+				new EditObjectEntryRelatedModelMVCActionCommand(
 					_objectDefinitionLocalService,
 					_objectRelationshipLocalService, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
-					"mvc.command.name", "/object_entries/edit_object_entry_rel"
+					"mvc.command.name",
+					"/object_entries/edit_object_entry_related_model"
 				).build()),
 			_bundleContext.registerService(
 				MVCRenderCommand.class,

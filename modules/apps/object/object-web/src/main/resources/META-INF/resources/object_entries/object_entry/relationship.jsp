@@ -28,9 +28,9 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 %>
 
-<portlet:actionURL name="/object_entries/edit_object_entry_rel" var="editRelatedModelActionURL" />
+<portlet:actionURL name="/object_entries/edit_object_entry_related_model" var="editObjectEntryRelatedModelActionURL" />
 
-<aui:form action="<%= editRelatedModelActionURL %>" method="post" name="fm">
+<aui:form action="<%= editObjectEntryRelatedModelActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ASSIGN %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="objectRelationshipId" type="hidden" value="<%= objectLayoutTab.getObjectRelationshipId() %>" />

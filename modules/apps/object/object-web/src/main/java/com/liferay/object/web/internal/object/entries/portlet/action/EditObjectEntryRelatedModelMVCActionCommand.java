@@ -32,9 +32,9 @@ import javax.portlet.ActionResponse;
 /**
  * @author Marco Leo
  */
-public class EditObjectEntryRelMVCActionCommand extends BaseMVCActionCommand {
+public class EditObjectEntryRelatedModelMVCActionCommand extends BaseMVCActionCommand {
 
-	public EditObjectEntryRelMVCActionCommand(
+	public EditObjectEntryRelatedModelMVCActionCommand(
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal) {
