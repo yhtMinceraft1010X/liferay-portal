@@ -383,6 +383,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Channel channel, ServiceContext serviceContext, String resourcePath)
 		throws Exception {
 
+		_addModelResourcePermissions(
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+			resourcePath, serviceContext);
+
 		Group group = _groupLocalService.getGroup(
 			serviceContext.getScopeGroupId());
 
@@ -392,10 +396,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
 
 		_groupLocalService.updateGroup(group);
-
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -411,9 +411,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		modifiableSettings.store();
 
-		_addModelResourcePermissions(
-			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-			resourcePath, serviceContext);
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 	}
 
 	private void _addCommerceChannels(ServiceContext serviceContext)
