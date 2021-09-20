@@ -19,7 +19,7 @@ package com.liferay.search.experiences.blueprint.parameter;
  */
 public interface SXPParameterDataBuilder {
 
-	public SXPParameterDataBuilder addParameter(SXPParameter parameter);
+	public SXPParameterDataBuilder addSXPParameter(SXPParameter parameter);
 
 	public SXPParameterData build();
 

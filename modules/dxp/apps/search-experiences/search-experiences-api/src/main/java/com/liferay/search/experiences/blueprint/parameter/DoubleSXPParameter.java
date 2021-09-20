@@ -24,10 +24,10 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
+public class DoubleSXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public IntegerParameter(
-		String name, boolean templateVariable, Integer value) {
+	public DoubleSXPParameter(
+		String name, boolean templateVariable, Double value) {
 
 		super(name, templateVariable);
 
@@ -48,8 +48,8 @@ public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
-	public boolean equalsTo(Integer value) {
-		if (_value.intValue() == value.intValue()) {
+	public boolean equalsTo(Double value) {
+		if (_value.doubleValue() == value.doubleValue()) {
 			return true;
 		}
 
@@ -57,7 +57,7 @@ public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
-	public Integer getValue() {
+	public Double getValue() {
 		return _value;
 	}
 
@@ -65,7 +65,7 @@ public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("IntegerParameter [name=");
+		sb.append("DoubleSXPParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
@@ -76,6 +76,6 @@ public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Integer _value;
+	private final Double _value;
 
 }

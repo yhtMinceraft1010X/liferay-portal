@@ -19,15 +19,17 @@ import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisi
 import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
-import java.util.Date;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class DateParameter extends BaseSXPParameter implements SXPParameter {
+public class LongArraySXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public DateParameter(String name, boolean templateVariable, Date value) {
+	public LongArraySXPParameter(
+		String name, boolean templateVariable, Long[] value) {
+
 		super(name, templateVariable);
 
 		_value = value;
@@ -48,7 +50,7 @@ public class DateParameter extends BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
-	public Date getValue() {
+	public Long[] getValue() {
 		return _value;
 	}
 
@@ -56,17 +58,17 @@ public class DateParameter extends BaseSXPParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("DateParameter [_name=");
+		sb.append("LongArraySXPParameter [name=");
 		sb.append(name);
-		sb.append(", _templateVariable=");
+		sb.append(", templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
-		sb.append(_value);
+		sb.append(Arrays.toString(_value));
 		sb.append("]");
 
 		return sb.toString();
 	}
 
-	private final Date _value;
+	private final Long[] _value;
 
 }

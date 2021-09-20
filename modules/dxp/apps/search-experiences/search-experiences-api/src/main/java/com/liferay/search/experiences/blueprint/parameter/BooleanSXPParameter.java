@@ -24,10 +24,10 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class DoubleParameter extends BaseSXPParameter implements SXPParameter {
+public class BooleanSXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public DoubleParameter(
-		String name, boolean templateVariable, Double value) {
+	public BooleanSXPParameter(
+		String name, boolean templateVariable, Boolean value) {
 
 		super(name, templateVariable);
 
@@ -48,16 +48,7 @@ public class DoubleParameter extends BaseSXPParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
-	public boolean equalsTo(Double value) {
-		if (_value.doubleValue() == value.doubleValue()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Double getValue() {
+	public Boolean getValue() {
 		return _value;
 	}
 
@@ -65,9 +56,9 @@ public class DoubleParameter extends BaseSXPParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("DoubleParameter [name=");
+		sb.append("BooleanSXPParameter [_name=");
 		sb.append(name);
-		sb.append(", templateVariable=");
+		sb.append(", _templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
 		sb.append(_value);
@@ -76,6 +67,6 @@ public class DoubleParameter extends BaseSXPParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Double _value;
+	private final Boolean _value;
 
 }

@@ -19,16 +19,15 @@ import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisi
 import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class LongArrayParameter extends BaseSXPParameter implements SXPParameter {
+public class StringSXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public LongArrayParameter(
-		String name, boolean templateVariable, Long[] value) {
+	public StringSXPParameter(
+		String name, boolean templateVariable, String value) {
 
 		super(name, templateVariable);
 
@@ -50,7 +49,7 @@ public class LongArrayParameter extends BaseSXPParameter implements SXPParameter
 	}
 
 	@Override
-	public Long[] getValue() {
+	public String getValue() {
 		return _value;
 	}
 
@@ -58,17 +57,17 @@ public class LongArrayParameter extends BaseSXPParameter implements SXPParameter
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("LongArrayParameter [name=");
+		sb.append("StringSXPParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
+		sb.append(_value);
 		sb.append("]");
 
 		return sb.toString();
 	}
 
-	private final Long[] _value;
+	private final String _value;
 
 }

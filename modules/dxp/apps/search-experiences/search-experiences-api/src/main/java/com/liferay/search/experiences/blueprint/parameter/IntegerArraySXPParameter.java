@@ -25,10 +25,10 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerArrayParameter
+public class IntegerArraySXPParameter
 	extends BaseSXPParameter implements SXPParameter {
 
-	public IntegerArrayParameter(
+	public IntegerArraySXPParameter(
 		String name, boolean templateVariable, Integer[] value) {
 
 		super(name, templateVariable);
@@ -59,7 +59,7 @@ public class IntegerArrayParameter
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("IntegerArrayParameter [name=");
+		sb.append("IntegerArraySXPParameter [name=");
 		sb.append(name);
 		sb.append(",_templateVariable=");
 		sb.append(templateVariable);

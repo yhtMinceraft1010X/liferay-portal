@@ -24,11 +24,9 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class StringParameter extends BaseSXPParameter implements SXPParameter {
+public class FloatSXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public StringParameter(
-		String name, boolean templateVariable, String value) {
-
+	public FloatSXPParameter(String name, boolean templateVariable, Float value) {
 		super(name, templateVariable);
 
 		_value = value;
@@ -48,8 +46,16 @@ public class StringParameter extends BaseSXPParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
+	public boolean equalsTo(Float value) {
+		if (_value.floatValue() == value.floatValue()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
-	public String getValue() {
+	public Float getValue() {
 		return _value;
 	}
 
@@ -57,7 +63,7 @@ public class StringParameter extends BaseSXPParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("StringParameter [name=");
+		sb.append("FloatSXPParameter [name=");
 		sb.append(name);
 		sb.append(", templateVariable=");
 		sb.append(templateVariable);
@@ -68,6 +74,6 @@ public class StringParameter extends BaseSXPParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final String _value;
+	private final Float _value;
 
 }

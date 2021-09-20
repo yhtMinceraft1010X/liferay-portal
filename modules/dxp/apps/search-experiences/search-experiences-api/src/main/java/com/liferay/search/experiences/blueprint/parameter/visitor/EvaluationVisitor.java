@@ -14,16 +14,16 @@
 
 package com.liferay.search.experiences.blueprint.parameter.visitor;
 
-import com.liferay.search.experiences.blueprint.parameter.BooleanParameter;
-import com.liferay.search.experiences.blueprint.parameter.DateParameter;
-import com.liferay.search.experiences.blueprint.parameter.DoubleParameter;
-import com.liferay.search.experiences.blueprint.parameter.FloatParameter;
-import com.liferay.search.experiences.blueprint.parameter.IntegerArrayParameter;
-import com.liferay.search.experiences.blueprint.parameter.IntegerParameter;
-import com.liferay.search.experiences.blueprint.parameter.LongArrayParameter;
-import com.liferay.search.experiences.blueprint.parameter.LongParameter;
-import com.liferay.search.experiences.blueprint.parameter.StringArrayParameter;
-import com.liferay.search.experiences.blueprint.parameter.StringParameter;
+import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerArraySXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongArraySXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 /**
@@ -31,34 +31,34 @@ import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameter
  */
 public interface EvaluationVisitor {
 
-	public boolean visit(BooleanParameter booleanParameter)
+	public boolean visit(BooleanSXPParameter booleanSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(DateParameter dateParameter)
+	public boolean visit(DateSXPParameter dateSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(DoubleParameter doubleParameter)
+	public boolean visit(DoubleSXPParameter doubleSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(FloatParameter floatParameter)
+	public boolean visit(FloatSXPParameter floatSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(IntegerArrayParameter integerArrayParameter)
+	public boolean visit(IntegerArraySXPParameter integerArraySXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(IntegerParameter integerParameter)
+	public boolean visit(IntegerSXPParameter integerSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(LongArrayParameter longArrayParameter)
+	public boolean visit(LongArraySXPParameter longArraySXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(LongParameter longParameter)
+	public boolean visit(LongSXPParameter longSXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(StringArrayParameter stringArrayParameter)
+	public boolean visit(StringArraySXPParameter stringArraySXPParameter)
 		throws SXPParameterException;
 
-	public boolean visit(StringParameter stringParameter)
+	public boolean visit(StringSXPParameter stringSXPParameter)
 		throws SXPParameterException;
 
 }

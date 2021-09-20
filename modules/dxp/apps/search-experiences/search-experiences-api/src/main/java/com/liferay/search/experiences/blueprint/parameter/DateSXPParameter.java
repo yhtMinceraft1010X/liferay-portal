@@ -19,14 +19,15 @@ import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisi
 import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class LongParameter extends BaseSXPParameter implements SXPParameter {
+public class DateSXPParameter extends BaseSXPParameter implements SXPParameter {
 
-	public LongParameter(String name, boolean templateVariable, Long value) {
+	public DateSXPParameter(String name, boolean templateVariable, Date value) {
 		super(name, templateVariable);
 
 		_value = value;
@@ -46,16 +47,8 @@ public class LongParameter extends BaseSXPParameter implements SXPParameter {
 		return visitor.visit(this, options);
 	}
 
-	public boolean equalsTo(Long value) {
-		if (_value.longValue() == value.longValue()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
-	public Long getValue() {
+	public Date getValue() {
 		return _value;
 	}
 
@@ -63,9 +56,9 @@ public class LongParameter extends BaseSXPParameter implements SXPParameter {
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("LongParameter [name=");
+		sb.append("DateSXPParameter [_name=");
 		sb.append(name);
-		sb.append(", templateVariable=");
+		sb.append(", _templateVariable=");
 		sb.append(templateVariable);
 		sb.append(", _value=");
 		sb.append(_value);
@@ -74,6 +67,6 @@ public class LongParameter extends BaseSXPParameter implements SXPParameter {
 		return sb.toString();
 	}
 
-	private final Long _value;
+	private final Date _value;
 
 }
