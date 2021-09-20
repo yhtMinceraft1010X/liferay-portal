@@ -82,7 +82,7 @@ portletDisplay.setURLBack(backURL);
 					}
 				},
 				title: '<liferay-ui:message key="select" />',
-				url: '<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorUrl() %>',
+				url: '<%= objectEntryDisplayContext.getRelatedObjectEntryItemSelectorURL() %>',
 			});
 		}
 	);

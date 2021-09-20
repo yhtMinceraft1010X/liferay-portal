@@ -249,7 +249,7 @@ public class ObjectEntryDisplayContext {
 		).build();
 	}
 
-	public String getRelatedObjectEntryItemSelectorUrl()
+	public String getRelatedObjectEntryItemSelectorURL()
 		throws PortalException {
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
