@@ -380,7 +380,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addCommerceChannel(
-			Channel channel, String resourcePath, ServiceContext serviceContext)
+			Channel channel, ServiceContext serviceContext, String resourcePath)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(
@@ -455,10 +455,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			_addCommerceChannel(
-				channelResource.postChannel(channel),
+				channelResource.postChannel(channel), serviceContext,
 				StringUtil.replaceLast(
-					resourcePath, ".json", "-resource-permissions.json"),
-				serviceContext);
+					resourcePath, ".json", "-resource-permissions.json"));
 		}
 	}
 
