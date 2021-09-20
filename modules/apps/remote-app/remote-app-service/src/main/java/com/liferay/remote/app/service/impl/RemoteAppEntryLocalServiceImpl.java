@@ -494,9 +494,9 @@ public class RemoteAppEntryLocalServiceImpl
 	private final Set<String> _reservedCustomElementHTMLElementNames =
 		SetUtil.fromArray(
 			new String[] {
-				"annotation-xml", "color-profile", "font-face", "font-face-src",
-				"font-face-uri", "font-face-format", "font-face-name",
-				"missing-glyph"
+				"annotation-xml", "color-profile", "font-face",
+				"font-face-format", "font-face-name", "font-face-src",
+				"font-face-uri", "missing-glyph"
 			});
 
 	@Reference
