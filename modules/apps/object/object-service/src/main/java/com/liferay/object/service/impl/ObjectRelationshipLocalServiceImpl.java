@@ -147,8 +147,8 @@ public class ObjectRelationshipLocalServiceImpl
 				StringBundler.concat(
 					"insert into ", objectRelationship.getDBTableName(), " (",
 					objectDefinition1.getPKObjectFieldDBColumnName(), " , ",
-					objectDefinition2.getPKObjectFieldDBColumnName(), ") values (",
-					primaryKey1, ", ", primaryKey2, ")"));
+					objectDefinition2.getPKObjectFieldDBColumnName(),
+					") values (", primaryKey1, ", ", primaryKey2, ")"));
 
 			return;
 		}

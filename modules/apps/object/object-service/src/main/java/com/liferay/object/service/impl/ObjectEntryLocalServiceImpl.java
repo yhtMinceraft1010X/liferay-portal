@@ -190,34 +190,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public void insertIntoOrUpdateExtensionTable(
-			long primaryKey, long objectDefinitionId,
-			Map<String, Serializable> values)
-		throws PortalException {
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
-
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
-
-		int modelCount = objectEntryPersistence.dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				dynamicObjectDefinitionTable
-			).where(
-				primaryKeyColumn.eq(primaryKey)
-			));
-
-		if (modelCount > 0) {
-			_updateTable(dynamicObjectDefinitionTable, primaryKey, values);
-		}
-		else {
-			_insertIntoTable(dynamicObjectDefinitionTable, primaryKey, values);
-		}
-	}
-
-	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long objectDefinitionId, Map<String, Serializable> values,
@@ -533,6 +505,34 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return valuesList;
+	}
+
+	@Override
+	public void insertIntoOrUpdateExtensionTable(
+			long primaryKey, long objectDefinitionId,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId);
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+		int modelCount = objectEntryPersistence.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				dynamicObjectDefinitionTable
+			).where(
+				primaryKeyColumn.eq(primaryKey)
+			));
+
+		if (modelCount > 0) {
+			_updateTable(dynamicObjectDefinitionTable, primaryKey, values);
+		}
+		else {
+			_insertIntoTable(dynamicObjectDefinitionTable, primaryKey, values);
+		}
 	}
 
 	@Override
