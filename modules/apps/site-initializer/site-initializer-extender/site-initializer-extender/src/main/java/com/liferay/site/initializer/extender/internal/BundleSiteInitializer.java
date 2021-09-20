@@ -393,10 +393,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_groupLocalService.updateGroup(group);
 
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
