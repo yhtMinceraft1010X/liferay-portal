@@ -9,30 +9,19 @@ definition {
 	macro assertEntryRowIsPresent {
 		AssertElementPresent(
 			key_rowNumber = "${rowNumber}",
-			locator1 = "ObjectPortlet#ENTRY_ROW_NUMBER"
-		);
-
-
-
+			locator1 = "ObjectPortlet#ENTRY_ROW_NUMBER");
 	}
 
 	macro assertEntryRowNotDisplayed {
 		AssertElementNotPresent(
 			key_rowNumber = "${rowNumber}",
-			locator1 = "ObjectPortlet#ENTRY_ROW_NUMBER"
-		);
-
-
-
+			locator1 = "ObjectPortlet#ENTRY_ROW_NUMBER");
 	}
 
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
 		MenuItem.click(menuItem = "${itemsPerPage}");
-
-
-
 	}
 
 	macro deleteEntry {

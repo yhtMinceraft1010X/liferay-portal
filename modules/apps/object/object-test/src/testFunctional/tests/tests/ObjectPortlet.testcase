@@ -213,7 +213,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test TableUpdatedWhenChangingPaginationNumber {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -254,11 +253,6 @@ definition {
 		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "7");
 
 		ObjectPortlet.assertEntryRowNotDisplayed(rowNumber = "8");
-
-
-
-
-		
 	}
 
 }
