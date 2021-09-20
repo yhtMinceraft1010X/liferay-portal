@@ -17,9 +17,6 @@ package com.liferay.search.experiences.blueprint.parameter;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author Petteri Karttunen
  */
@@ -27,8 +24,5 @@ public interface SXPParameterDataCreator {
 
 	public SXPParameterData create(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
-
-	public Map<String, List<SXPParameterContributionDefinition>>
-		getSXPParameterContributionDefinitions();
 
 }
