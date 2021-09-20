@@ -15,9 +15,6 @@
 package com.liferay.search.experiences.blueprint.parameter;
 
 /**
- * Used to display information about SXPParameterContributor
- * contributed parameter on UI in the SXPElement editor
- *
  * @author Petteri Karttunen
  */
 public class SXPParameterContributionDefinition {

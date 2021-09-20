@@ -24,12 +24,13 @@ import java.util.List;
  */
 public interface SXPParameterContributor {
 
-	public void contribute(
-		SXPParameterDataBuilder sxpParameterDataBuilder,
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
+	public void contribute(		
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SXPParameterDataBuilder sxpParameterDataBuilder);
 
 	public String getCategoryNameKey();
 
-	public List<SXPParameterContributionDefinition> getParameterDefinitions();
+	public List<SXPParameterContributionDefinition>
+		getSXPParameterContributionDefinitions();
 
 }

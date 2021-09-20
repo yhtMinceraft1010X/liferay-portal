@@ -31,7 +31,7 @@ public interface SXPParameterData {
 
 	public String getKeywords();
 
-	public List<SXPParameter> getParameters();
+	public List<SXPParameter> getSXPParameters();
 
 	public int getSize();
 
