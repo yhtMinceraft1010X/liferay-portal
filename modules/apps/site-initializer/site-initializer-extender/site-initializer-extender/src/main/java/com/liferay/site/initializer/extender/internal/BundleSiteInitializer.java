@@ -379,43 +379,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addCommerceChannel(
-			Channel channel, ServiceContext serviceContext, String resourcePath)
-		throws Exception {
-
-		_addModelResourcePermissions(
-			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
-			resourcePath, serviceContext);
-
-		Group group = _groupLocalService.getGroup(
-			serviceContext.getScopeGroupId());
-
-		group.setType(GroupConstants.TYPE_SITE_PRIVATE);
-		group.setManualMembership(true);
-		group.setMembershipRestriction(
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
-
-		_groupLocalService.updateGroup(group);
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				serviceContext.getScopeGroupId(),
-				CommerceAccountConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		modifiableSettings.setValue(
-			"commerceSiteType",
-			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
-
-		modifiableSettings.store();
-
-		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
-		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
-		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
-	}
-
 	private void _addCommerceChannels(ServiceContext serviceContext)
 		throws Exception {
 
@@ -453,10 +416,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			_addCommerceChannel(
-				channelResource.postChannel(channel), serviceContext,
+			channel = channelResource.postChannel(channel);
+
+			_addModelResourcePermissions(
+				CommerceChannel.class.getName(),
+				String.valueOf(channel.getId()),
 				StringUtil.replaceLast(
-					resourcePath, ".json", ".model-resource-permissions.json"));
+					resourcePath, ".json", ".model-resource-permissions.json"),
+				serviceContext);
+
+			Group group = _groupLocalService.getGroup(
+				serviceContext.getScopeGroupId());
+
+			group.setType(GroupConstants.TYPE_SITE_PRIVATE);
+			group.setManualMembership(true);
+			group.setMembershipRestriction(
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
+
+			_groupLocalService.updateGroup(group);
+
+			Settings settings = _settingsFactory.getSettings(
+				new GroupServiceSettingsLocator(
+					serviceContext.getScopeGroupId(),
+					CommerceAccountConstants.SERVICE_NAME));
+
+			ModifiableSettings modifiableSettings =
+				settings.getModifiableSettings();
+
+			modifiableSettings.setValue(
+				"commerceSiteType",
+				String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+			modifiableSettings.store();
+
+			_commerceAccountRoleHelper.checkCommerceAccountRoles(
+				serviceContext);
+			_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+			_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 		}
 	}
 
