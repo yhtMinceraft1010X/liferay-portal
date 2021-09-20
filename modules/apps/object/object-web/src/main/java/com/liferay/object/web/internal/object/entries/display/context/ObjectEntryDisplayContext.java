@@ -256,6 +256,9 @@ public class ObjectEntryDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(
 				_objectRequestHelper.getRequest());
 
+		LiferayPortletResponse liferayPortletResponse =
+			_objectRequestHelper.getLiferayPortletResponse();
+
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			new InfoItemItemSelectorCriterion();
 
@@ -275,9 +278,6 @@ public class ObjectEntryDisplayContext {
 
 		infoItemItemSelectorCriterion.setItemType(
 			objectDefinition.getClassName());
-
-		LiferayPortletResponse liferayPortletResponse =
-			_objectRequestHelper.getLiferayPortletResponse();
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
