@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -436,10 +435,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
-			if(resourcePath.endsWith( "-resource-permissions.json")) {
+			if (resourcePath.endsWith("-resource-permissions.json")) {
 				continue;
 			}
-			
+
 			String json = _read(resourcePath);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -869,6 +868,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Role role = _roleLocalService.fetchRole(
 				serviceContext.getCompanyId(),
 				jsonObject.getString("roleName"));
+
+			if (role == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No role found with name " +
+							jsonObject.getString("roleName"));
+				}
+			}
 
 			_resourcePermissionLocalService.addResourcePermission(
 				serviceContext.getCompanyId(),
