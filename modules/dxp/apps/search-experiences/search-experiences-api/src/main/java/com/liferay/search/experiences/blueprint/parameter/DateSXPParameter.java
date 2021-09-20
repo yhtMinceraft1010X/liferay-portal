@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class DateSXPParameter extends BaseSXPParameter implements SXPParameter {
+public class DateSXPParameter extends BaseSXPParameter {
 
 	public DateSXPParameter(String name, boolean templateVariable, Date value) {
 		super(name, templateVariable);

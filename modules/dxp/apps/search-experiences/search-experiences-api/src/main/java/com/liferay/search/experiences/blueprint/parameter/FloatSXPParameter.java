@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class FloatSXPParameter extends BaseSXPParameter implements SXPParameter {
+public class FloatSXPParameter extends BaseSXPParameter {
 
 	public FloatSXPParameter(String name, boolean templateVariable, Float value) {
 		super(name, templateVariable);

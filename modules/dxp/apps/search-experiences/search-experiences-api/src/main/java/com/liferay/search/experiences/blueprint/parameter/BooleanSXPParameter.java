@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class BooleanSXPParameter extends BaseSXPParameter implements SXPParameter {
+public class BooleanSXPParameter extends BaseSXPParameter {
 
 	public BooleanSXPParameter(
 		String name, boolean templateVariable, Boolean value) {
