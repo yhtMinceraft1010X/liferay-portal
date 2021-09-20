@@ -32,37 +32,37 @@ import java.util.Map;
  */
 public interface ToStringVisitor {
 
-	public String visit(BooleanParameter parameter, Map<String, String> options)
+	public String visit(BooleanParameter booleanParameter, Map<String, String> options)
 		throws Exception;
 
-	public String visit(DateParameter parameter, Map<String, String> options)
+	public String visit(DateParameter dateParameter, Map<String, String> options)
 		throws Exception;
 
 	public String visit(DoubleParameter parameter, Map<String, String> options)
 		throws Exception;
 
-	public String visit(FloatParameter parameter, Map<String, String> options)
+	public String visit(FloatParameter floatParameter, Map<String, String> options)
 		throws Exception;
 
 	public String visit(
-			IntegerArrayParameter parameter, Map<String, String> options)
+			IntegerArrayParameter integerArrayParameter, Map<String, String> options)
 		throws Exception;
 
-	public String visit(IntegerParameter parameter, Map<String, String> options)
-		throws Exception;
-
-	public String visit(
-			LongArrayParameter parameter, Map<String, String> options)
-		throws Exception;
-
-	public String visit(LongParameter parameter, Map<String, String> options)
+	public String visit(IntegerParameter integerParameter, Map<String, String> options)
 		throws Exception;
 
 	public String visit(
-			StringArrayParameter parameter, Map<String, String> options)
+			LongArrayParameter longArrayParameter, Map<String, String> options)
 		throws Exception;
 
-	public String visit(StringParameter parameter, Map<String, String> options)
+	public String visit(LongParameter longParameter, Map<String, String> options)
+		throws Exception;
+
+	public String visit(
+			StringArrayParameter stringArrayParameter, Map<String, String> options)
+		throws Exception;
+
+	public String visit(StringParameter stringParameter, Map<String, String> options)
 		throws Exception;
 
 }

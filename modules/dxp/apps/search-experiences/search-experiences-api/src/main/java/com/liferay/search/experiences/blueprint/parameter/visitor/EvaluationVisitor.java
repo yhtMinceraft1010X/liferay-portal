@@ -31,34 +31,34 @@ import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameter
  */
 public interface EvaluationVisitor {
 
-	public boolean visit(BooleanParameter parameter)
+	public boolean visit(BooleanParameter booleanParameter)
 		throws SXPParameterException;
 
-	public boolean visit(DateParameter parameter)
+	public boolean visit(DateParameter dateParameter)
 		throws SXPParameterException;
 
-	public boolean visit(DoubleParameter parameter)
+	public boolean visit(DoubleParameter doubleParameter)
 		throws SXPParameterException;
 
-	public boolean visit(FloatParameter parameter)
+	public boolean visit(FloatParameter floatParameter)
 		throws SXPParameterException;
 
-	public boolean visit(IntegerArrayParameter parameter)
+	public boolean visit(IntegerArrayParameter integerArrayParameter)
 		throws SXPParameterException;
 
-	public boolean visit(IntegerParameter parameter)
+	public boolean visit(IntegerParameter integerParameter)
 		throws SXPParameterException;
 
-	public boolean visit(LongArrayParameter parameter)
+	public boolean visit(LongArrayParameter longArrayParameter)
 		throws SXPParameterException;
 
-	public boolean visit(LongParameter parameter)
+	public boolean visit(LongParameter longParameter)
 		throws SXPParameterException;
 
-	public boolean visit(StringArrayParameter parameter)
+	public boolean visit(StringArrayParameter stringArrayParameter)
 		throws SXPParameterException;
 
-	public boolean visit(StringParameter parameter)
+	public boolean visit(StringParameter stringParameter)
 		throws SXPParameterException;
 
 }
