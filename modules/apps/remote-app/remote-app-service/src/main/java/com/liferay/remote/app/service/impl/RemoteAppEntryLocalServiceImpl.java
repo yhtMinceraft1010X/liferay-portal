@@ -87,10 +87,6 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
 
-		if (Validator.isBlank(portletCategoryName)) {
-			portletCategoryName = "category.sample";
-		}
-
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
@@ -109,7 +105,8 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setPortletCategoryName(
+			_getPortletCategoryName(portletCategoryName));
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_CUSTOM_ELEMENT);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -130,10 +127,6 @@ public class RemoteAppEntryLocalServiceImpl
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
-		if (Validator.isBlank(portletCategoryName)) {
-			portletCategoryName = "category.sample";
-		}
-
 		_validateIFrameURL(iFrameURL);
 
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
@@ -147,7 +140,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setPortletCategoryName(
+			_getPortletCategoryName(portletCategoryName));
 		remoteAppEntry.setType(RemoteAppConstants.TYPE_IFRAME);
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
@@ -274,10 +268,6 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		customElementURLs = StringUtil.trim(customElementURLs);
 
-		if (Validator.isBlank(portletCategoryName)) {
-			portletCategoryName = "category.sample";
-		}
-
 		_validateCustomElement(
 			customElementCSSURLs, customElementHTMLElementName,
 			customElementURLs);
@@ -290,7 +280,8 @@ public class RemoteAppEntryLocalServiceImpl
 			customElementHTMLElementName);
 		remoteAppEntry.setCustomElementURLs(customElementURLs);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setPortletCategoryName(
+			_getPortletCategoryName(portletCategoryName));
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -308,10 +299,6 @@ public class RemoteAppEntryLocalServiceImpl
 
 		iFrameURL = StringUtil.trim(iFrameURL);
 
-		if (Validator.isBlank(portletCategoryName)) {
-			portletCategoryName = "category.sample";
-		}
-
 		_validateIFrameURL(iFrameURL);
 
 		RemoteAppEntry remoteAppEntry =
@@ -319,7 +306,8 @@ public class RemoteAppEntryLocalServiceImpl
 
 		remoteAppEntry.setIFrameURL(iFrameURL);
 		remoteAppEntry.setNameMap(nameMap);
-		remoteAppEntry.setPortletCategoryName(portletCategoryName);
+		remoteAppEntry.setPortletCategoryName(
+			_getPortletCategoryName(portletCategoryName));
 
 		remoteAppEntry = remoteAppEntryPersistence.update(remoteAppEntry);
 
@@ -479,6 +467,16 @@ public class RemoteAppEntryLocalServiceImpl
 				throw new RemoteAppEntryCustomElementURLsException();
 			}
 		}
+	}
+
+	private String _getPortletCategoryName(String portletCategoryName) {
+		portletCategoryName = StringUtil.trim(portletCategoryName);
+
+		if (Validator.isNotNull(portletCategoryName)) {
+			return portletCategoryName;
+		}
+
+		return "category.sample";
 	}
 
 	private void _validateIFrameURL(String iFrameURL) throws PortalException {
