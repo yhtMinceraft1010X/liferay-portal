@@ -783,18 +783,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				HashMapBuilder.put(
-					jsonObject.getString("roleName"),
-					ArrayUtil.toStringArray(
-						jsonObject.getJSONArray("actionIds"))
-				).build(),
-				null);
-
 			_resourcePermissionLocalService.addModelResourcePermissions(
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
 				serviceContext.getUserId(), className, primKey,
-				modelPermissions);
+				ModelPermissionsFactory.create(
+					HashMapBuilder.put(
+						jsonObject.getString("roleName"),
+						ArrayUtil.toStringArray(
+							jsonObject.getJSONArray("actionIds"))
+					).build(),
+					null));
 		}
 	}
 
