@@ -61,21 +61,6 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 		return _value;
 	}
 
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("IntegerSXPParameter [name=");
-		sb.append(name);
-		sb.append(", templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(_value);
-		sb.append("]");
-
-		return sb.toString();
-	}
-
 	private final Integer _value;
 
 }

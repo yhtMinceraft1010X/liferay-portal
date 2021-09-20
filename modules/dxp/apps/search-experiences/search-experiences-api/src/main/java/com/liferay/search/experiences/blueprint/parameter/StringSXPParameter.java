@@ -53,21 +53,6 @@ public class StringSXPParameter extends BaseSXPParameter {
 		return _value;
 	}
 
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("StringSXPParameter [name=");
-		sb.append(name);
-		sb.append(", templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(_value);
-		sb.append("]");
-
-		return sb.toString();
-	}
-
 	private final String _value;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.petra.string.StringBundler;
+
 /**
  * @author Petteri Karttunen
  */
@@ -41,6 +43,20 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	@Override
 	public boolean isTemplateVariable() {
 		return templateVariable;
+	}
+
+	@Override
+	public String toString() {
+		return toString(String.valueOf(getValue()));
+	}
+
+	protected String toString(String valueString) {
+		Class<?> clazz = getClass();
+
+		return StringBundler.concat(
+			"{className=", clazz.getSimpleName(), ", name=", name,
+			", templateVariable=", templateVariable,
+			", value=", valueString, "}");
 	}
 
 	protected final String name;

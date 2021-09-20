@@ -57,17 +57,7 @@ public class StringArraySXPParameter
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("StringArraySXPParameter [name=");
-		sb.append(name);
-		sb.append(", templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
-		sb.append("]");
-
-		return sb.toString();
+		return toString(Arrays.toString(_value));
 	}
 
 	private final String[] _value;

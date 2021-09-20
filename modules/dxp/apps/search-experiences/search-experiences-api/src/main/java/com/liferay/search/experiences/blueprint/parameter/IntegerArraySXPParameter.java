@@ -57,17 +57,7 @@ public class IntegerArraySXPParameter
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("IntegerArraySXPParameter [name=");
-		sb.append(name);
-		sb.append(",_templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
-		sb.append("]");
-
-		return sb.toString();
+		return toString(Arrays.toString(_value));
 	}
 
 	private final Integer[] _value;

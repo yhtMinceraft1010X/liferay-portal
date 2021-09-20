@@ -56,17 +56,7 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("LongArraySXPParameter [name=");
-		sb.append(name);
-		sb.append(", templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(Arrays.toString(_value));
-		sb.append("]");
-
-		return sb.toString();
+		return toString(Arrays.toString(_value));
 	}
 
 	private final Long[] _value;

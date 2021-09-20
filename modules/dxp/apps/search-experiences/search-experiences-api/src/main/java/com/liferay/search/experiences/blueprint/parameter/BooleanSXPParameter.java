@@ -52,21 +52,6 @@ public class BooleanSXPParameter extends BaseSXPParameter {
 		return _value;
 	}
 
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("BooleanSXPParameter [_name=");
-		sb.append(name);
-		sb.append(", _templateVariable=");
-		sb.append(templateVariable);
-		sb.append(", _value=");
-		sb.append(_value);
-		sb.append("]");
-
-		return sb.toString();
-	}
-
 	private final Boolean _value;
 
 }
