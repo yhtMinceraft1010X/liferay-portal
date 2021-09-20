@@ -24,7 +24,7 @@ import com.liferay.search.experiences.blueprint.parameter.LongArrayParameter;
 import com.liferay.search.experiences.blueprint.parameter.LongParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringArrayParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringParameter;
-import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
+import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 /**
  * @author Petteri Karttunen
@@ -32,33 +32,33 @@ import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
 public interface EvaluationVisitor {
 
 	public boolean visit(BooleanParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(DateParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(DoubleParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(FloatParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(IntegerArrayParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(IntegerParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(LongArrayParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(LongParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(StringArrayParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public boolean visit(StringParameter parameter)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 }

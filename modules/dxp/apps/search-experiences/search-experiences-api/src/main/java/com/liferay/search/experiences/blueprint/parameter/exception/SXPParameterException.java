@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.exception;
+package com.liferay.search.experiences.blueprint.parameter.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.search.experiences.problem.Problem;
@@ -20,24 +20,24 @@ import com.liferay.search.experiences.problem.Problem;
 /**
  * @author Petteri Karttunen
  */
-public class SXPParameterEvaluationException extends PortalException {
+public class SXPParameterException extends PortalException {
 
-	public SXPParameterEvaluationException() {
+	public SXPParameterException() {
 	}
 
-	public SXPParameterEvaluationException(Problem problem) {
+	public SXPParameterException(Problem problem) {
 		_problem = problem;
 	}
 
-	public SXPParameterEvaluationException(String msg) {
+	public SXPParameterException(String msg) {
 		super(msg);
 	}
 
-	public SXPParameterEvaluationException(String msg, Throwable throwable) {
+	public SXPParameterException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public SXPParameterEvaluationException(Throwable throwable) {
+	public SXPParameterException(Throwable throwable) {
 		super(throwable);
 	}
 

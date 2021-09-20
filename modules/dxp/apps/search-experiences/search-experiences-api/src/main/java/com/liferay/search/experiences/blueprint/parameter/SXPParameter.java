@@ -16,7 +16,7 @@ package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
 import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
-import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
+import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.util.Map;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 public interface SXPParameter {
 
 	public boolean accept(EvaluationVisitor visitor)
-		throws SXPParameterEvaluationException;
+		throws SXPParameterException;
 
 	public String accept(ToStringVisitor visitor, Map<String, String> options)
 		throws Exception;

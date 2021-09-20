@@ -17,7 +17,7 @@ package com.liferay.search.experiences.blueprint.parameter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.search.experiences.blueprint.parameter.visitor.EvaluationVisitor;
 import com.liferay.search.experiences.blueprint.parameter.visitor.ToStringVisitor;
-import com.liferay.search.experiences.exception.SXPParameterEvaluationException;
+import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class BooleanParameter extends BaseParameter implements SXPParameter {
 
 	@Override
 	public boolean accept(EvaluationVisitor visitor)
-		throws SXPParameterEvaluationException {
+		throws SXPParameterException {
 
 		return visitor.visit(this);
 	}
