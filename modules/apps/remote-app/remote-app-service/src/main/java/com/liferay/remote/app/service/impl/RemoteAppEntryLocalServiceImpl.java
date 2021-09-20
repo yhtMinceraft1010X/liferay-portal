@@ -425,14 +425,6 @@ public class RemoteAppEntryLocalServiceImpl
 				"Custom element HTML element name is null");
 		}
 
-		if (_reservedCustomElementHTMLElementNames.contains(
-				customElementHTMLElementName)) {
-
-			throw new RemoteAppEntryCustomElementHTMLElementNameException(
-				"Reserved custom element HTML element name " +
-					customElementHTMLElementName);
-		}
-
 		char[] customElementHTMLElementNameCharArray =
 			customElementHTMLElementName.toCharArray();
 
@@ -466,6 +458,14 @@ public class RemoteAppEntryLocalServiceImpl
 			throw new RemoteAppEntryCustomElementHTMLElementNameException(
 				"Custom element HTML element name must contain at least one " +
 					"hyphen");
+		}
+
+		if (_reservedCustomElementHTMLElementNames.contains(
+				customElementHTMLElementName)) {
+
+			throw new RemoteAppEntryCustomElementHTMLElementNameException(
+				"Reserved custom element HTML element name " +
+					customElementHTMLElementName);
 		}
 
 		if (Validator.isNull(customElementURLs)) {
