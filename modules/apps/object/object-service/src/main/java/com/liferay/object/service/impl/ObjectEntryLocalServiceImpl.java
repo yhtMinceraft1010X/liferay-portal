@@ -519,7 +519,7 @@ public class ObjectEntryLocalServiceImpl
 		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
 
-		int modelCount = objectEntryPersistence.dslQueryCount(
+		int count = objectEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
 				dynamicObjectDefinitionTable
@@ -527,7 +527,7 @@ public class ObjectEntryLocalServiceImpl
 				primaryKeyColumn.eq(primaryKey)
 			));
 
-		if (modelCount > 0) {
+		if (count > 0) {
 			_updateTable(dynamicObjectDefinitionTable, primaryKey, values);
 		}
 		else {
