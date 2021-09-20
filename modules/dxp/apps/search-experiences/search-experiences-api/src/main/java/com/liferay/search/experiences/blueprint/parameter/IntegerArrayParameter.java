@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Petteri Karttunen
  */
 public class IntegerArrayParameter
-	extends BaseParameter implements SXPParameter {
+	extends BaseSXPParameter implements SXPParameter {
 
 	public IntegerArrayParameter(
 		String name, boolean templateVariable, Integer[] value) {

@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerParameter extends BaseParameter implements SXPParameter {
+public class IntegerParameter extends BaseSXPParameter implements SXPParameter {
 
 	public IntegerParameter(
 		String name, boolean templateVariable, Integer value) {

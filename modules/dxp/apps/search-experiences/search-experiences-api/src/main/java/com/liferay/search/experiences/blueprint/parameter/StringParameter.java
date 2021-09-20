@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class StringParameter extends BaseParameter implements SXPParameter {
+public class StringParameter extends BaseSXPParameter implements SXPParameter {
 
 	public StringParameter(
 		String name, boolean templateVariable, String value) {

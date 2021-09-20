@@ -17,9 +17,9 @@ package com.liferay.search.experiences.blueprint.parameter;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseParameter {
+public abstract class BaseSXPParameter {
 
-	public BaseParameter(String name, boolean templateVariable) {
+	public BaseSXPParameter(String name, boolean templateVariable) {
 		this.name = name;
 		this.templateVariable = templateVariable;
 	}
