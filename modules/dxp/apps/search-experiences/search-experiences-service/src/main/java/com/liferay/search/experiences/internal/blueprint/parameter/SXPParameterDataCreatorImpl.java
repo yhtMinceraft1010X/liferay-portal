@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
@@ -121,10 +122,26 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			SXPParameter sxpParameter = _addCustomSXPParameter(
 				jsonArray.getJSONObject(i), searchContext);
 
-			if (sxpParameter != null) {
-				sxpParameters.add(sxpParameter);
+			_addSXParameter(sxpParameter, sxpParameters);
+		}
+	}
+
+	private void _addSXParameter(
+		SXPParameter sxpParameter, List<SXPParameter> sxpParameters) {
+
+		if (sxpParameter == null) {
+			return;
+		}
+
+		for (SXPParameter currentSXPParameter : sxpParameters) {
+			if (Objects.equals(
+					currentSXPParameter.getName(), sxpParameter.getName())) {
+
+				return;
 			}
 		}
+
+		sxpParameters.add(sxpParameter);
 	}
 
 	private SearchContext _getSearchContext(
