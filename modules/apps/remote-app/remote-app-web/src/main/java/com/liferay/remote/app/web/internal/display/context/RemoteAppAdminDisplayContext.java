@@ -136,11 +136,12 @@ public class RemoteAppAdminDisplayContext {
 
 				@Override
 				public int compare(
-					SelectOption selectOption, SelectOption selectOption2) {
+					SelectOption selectOption1, SelectOption selectOption2) {
 
-					String label = selectOption.getLabel();
+					String label1 = selectOption1.getLabel();
+					String label2 = selectOption2.getLabel();
 
-					return label.compareTo(selectOption2.getLabel());
+					return label1.compareTo(label2);
 				}
 
 			});
