@@ -15,6 +15,8 @@
 package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -51,6 +53,7 @@ import java.util.TimeZone;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -64,13 +67,17 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		String keywords = "";
 
+		JSONObject jsonObject = JSONUtil.put("test", "test");
+		SearchContext searchContext = _getSearchContext(searchRequestBuilder);
 		List<SXPParameter> sxpParameters = new ArrayList<>();
 
-		JSONObject jsonObject = JSONUtil.put("test", "test");
-
 		_addCustomSXPParameters(
-			jsonObject.getJSONArray("custom"),
-			_getSearchContext(searchRequestBuilder), sxpParameters);
+			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
+		_addPageSXPParameter(
+			jsonObject.getJSONObject("page"), searchContext, sxpParameters);
+		_addSizeSXPParameter(
+			jsonObject.getJSONObject("size"), searchContext, sxpParameters);
+		_addSortSXPParameter(searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterDataImpl(keywords, sxpParameters);
 	}
@@ -402,6 +409,63 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new DateSXPParameter(name, true, calendar.getTime());
 	}
 
+	private void _addPageSXPParameter(
+		JSONObject jsonObject, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		String name = jsonObject.getString("parameter_name");
+
+		Integer value = _getInteger(name, searchContext);
+
+		if (value != null) {
+			sxpParameters.add(new IntegerSXPParameter(name, true, value));
+		}
+	}
+
+	private void _addSizeSXPParameter(
+		JSONObject jsonObject, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		String name = jsonObject.getString("parameter_name");
+
+		Integer value = _getInteger(name, searchContext);
+
+		if (value != null) {
+			sxpParameters.add(new IntegerSXPParameter(name, true, value));
+		}
+	}
+
+	private void _addSortSXPParameter(
+		SearchContext searchContext, SXPBlueprint sxpBlueprint,
+		List<SXPParameter> sxpParameters) {
+
+		// TODO Replace with real JSON
+
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = _jsonFactory.createJSONObject(
+				sxpBlueprint.getConfigurationsJSON());
+		}
+		catch (JSONException jsonException) {
+			return;
+		}
+
+		for (String key : jsonObject.keySet()) {
+			String value = _getString(key, searchContext);
+
+			if (Validator.isBlank(value) && jsonObject.has("default")) {
+				value = GetterUtil.getString(jsonObject.getString("default"));
+			}
+
+			if (Validator.isBlank(value)) {
+				return;
+			}
+
+			sxpParameters.add(new StringSXPParameter(key, true, value));
+		}
+	}
+
 	private void _addSXParameter(
 		SXPParameter sxpParameter, List<SXPParameter> sxpParameters) {
 
@@ -546,5 +610,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		return array;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }
