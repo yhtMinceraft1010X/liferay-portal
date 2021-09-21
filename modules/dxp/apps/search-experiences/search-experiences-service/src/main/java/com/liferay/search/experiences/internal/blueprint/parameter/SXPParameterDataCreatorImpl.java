@@ -28,6 +28,7 @@ import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.time.LocalDate;
@@ -78,6 +79,10 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return _addCustomSXPParameterDouble(
 				jsonObject, name, searchContext);
 		}
+		else if (type.equals("string")) {
+			return _addCustomSXPParameterString(
+				jsonObject, name, searchContext);
+		}
 
 		return null;
 	}
@@ -119,7 +124,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		Double value = _getDouble(name, searchContext);
 
 		if ((value == null) && jsonObject.has("default")) {
-			value = GetterUtil.getDouble("default");
+			value = jsonObject.getDouble("default");
 		}
 
 		if (value == null) {
@@ -161,6 +166,22 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 			_addSXParameter(sxpParameter, sxpParameters);
 		}
+	}
+
+	private SXPParameter _addCustomSXPParameterString(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		String value = _getString(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = jsonObject.getString("default");
+		}
+
+		if (value == null) {
+			return null;
+		}
+
+		return new StringSXPParameter(name, true, value);
 	}
 
 	private void _addSXParameter(
