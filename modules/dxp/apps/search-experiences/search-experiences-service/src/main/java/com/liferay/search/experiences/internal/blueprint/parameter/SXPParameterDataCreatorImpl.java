@@ -196,7 +196,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return;
 		}
 
-		_addSXPParameter(new DateSXPParameter(name, true, date), sxpParameters);
+		sxpParameters.add(new DateSXPParameter(name, true, date));
 	}
 
 	private void _addDoubleSXPParameter(
@@ -228,8 +228,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		_addSXPParameter(
-			new DoubleSXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new DoubleSXPParameter(name, true, value));
 	}
 
 	private void _addFloatSXPParameter(
@@ -261,8 +260,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		_addSXPParameter(
-			new FloatSXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new FloatSXPParameter(name, true, value));
 	}
 
 	private void _addIntegerArraySXPParameter(
@@ -286,8 +284,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return;
 		}
 
-		_addSXPParameter(
-			new IntegerArraySXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new IntegerArraySXPParameter(name, true, value));
 	}
 
 	private void _addIntegerSXPParameter(
@@ -319,8 +316,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		_addSXPParameter(
-			new IntegerSXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new IntegerSXPParameter(name, true, value));
 	}
 
 	private String _addKeywordsSXPParameters(
@@ -328,9 +324,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		String keywords = GetterUtil.getString(searchContext.getKeywords());
 
-		_addSXPParameter(
-			new StringSXPParameter("keywords.raw", true, keywords),
-			sxpParameters);
+		sxpParameters.add(
+			new StringSXPParameter("keywords.raw", true, keywords));
 
 		if ((StringUtil.count(keywords, CharPool.QUOTE) % 2) != 0) {
 			keywords = StringUtil.replace(
@@ -343,8 +338,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		keywords = keywords.replaceAll("\\\\", "&#92;");
 		keywords = keywords.replaceAll("\\]", "&#93;");
 
-		_addSXPParameter(
-			new StringSXPParameter("keywords", true, keywords), sxpParameters);
+		sxpParameters.add(new StringSXPParameter("keywords", true, keywords));
 
 		return keywords;
 	}
@@ -370,8 +364,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return;
 		}
 
-		_addSXPParameter(
-			new LongArraySXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new LongArraySXPParameter(name, true, value));
 	}
 
 	private void _addLongSXPParameter(
@@ -403,8 +396,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		_addSXPParameter(
-			new LongSXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new LongSXPParameter(name, true, value));
 	}
 
 	private void _addSortSXPParameters(
@@ -452,8 +444,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return;
 		}
 
-		_addSXPParameter(
-			new StringArraySXPParameter(name, true, value), sxpParameters);
+		sxpParameters.add(new StringArraySXPParameter(name, true, value));
 	}
 
 	private void _addStringSXPParameter(
@@ -470,26 +461,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return;
 		}
 
-		_addSXPParameter(
-			new StringSXPParameter(name, true, value), sxpParameters);
-	}
-
-	private void _addSXPParameter(
-		SXPParameter sxpParameter, Set<SXPParameter> sxpParameters) {
-
-		if (sxpParameter == null) {
-			return;
-		}
-
-		for (SXPParameter currentSXPParameter : sxpParameters) {
-			if (Objects.equals(
-					currentSXPParameter.getName(), sxpParameter.getName())) {
-
-				return;
-			}
-		}
-
-		sxpParameters.add(sxpParameter);
+		sxpParameters.add(new StringSXPParameter(name, true, value));
 	}
 
 	private void _addTimeRangeSXPParameter(
@@ -520,9 +492,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			calendar.add(Calendar.YEAR, -1);
 		}
 
-		_addSXPParameter(
-			new DateSXPParameter(name, true, calendar.getTime()),
-			sxpParameters);
+		sxpParameters.add(new DateSXPParameter(name, true, calendar.getTime()));
 	}
 
 	private void _contribute(

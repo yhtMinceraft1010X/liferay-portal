@@ -16,6 +16,8 @@ package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
 
+import java.util.Objects;
+
 /**
  * @author Petteri Karttunen
  */
@@ -24,6 +26,13 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	public BaseSXPParameter(String name, boolean templateVariable) {
 		this.name = name;
 		this.templateVariable = templateVariable;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		SXPParameter sxpParameter = (SXPParameter)object;
+
+		return Objects.equals(name, sxpParameter.getName());
 	}
 
 	@Override
@@ -38,6 +47,11 @@ public abstract class BaseSXPParameter implements SXPParameter {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 
 	@Override
