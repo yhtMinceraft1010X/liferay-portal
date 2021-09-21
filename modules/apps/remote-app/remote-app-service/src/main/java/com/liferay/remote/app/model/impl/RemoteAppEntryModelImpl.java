@@ -118,7 +118,7 @@ public class RemoteAppEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,iFrameURL VARCHAR(1024) null,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,type_ VARCHAR(75) null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,iFrameURL STRING null,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 

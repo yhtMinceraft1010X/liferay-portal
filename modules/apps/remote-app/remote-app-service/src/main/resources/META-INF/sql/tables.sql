@@ -10,7 +10,7 @@ create table RemoteAppEntry (
 	customElementCSSURLs TEXT null,
 	customElementHTMLElementName VARCHAR(255) null,
 	customElementURLs TEXT null,
-	iFrameURL VARCHAR(1024) null,
+	iFrameURL STRING null,
 	name STRING null,
 	portletCategoryName VARCHAR(75) null,
 	properties TEXT null,
