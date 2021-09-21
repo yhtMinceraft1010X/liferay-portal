@@ -124,6 +124,7 @@ if (assetVocabulary != null) {
 			var preferencesRootAssetCategoryId = A.one(
 				'#<portlet:namespace />preferencesRootAssetCategoryId'
 			);
+
 			var form = window.document['<portlet:namespace />fm'];
 
 			var assetCategoryIdsKey = Object.keys(form.elements).filter((input) =>
