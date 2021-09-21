@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -28,6 +29,7 @@ import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
@@ -81,6 +83,10 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 		else if (type.equals("string")) {
 			return _addCustomSXPParameterString(
+				jsonObject, name, searchContext);
+		}
+		else if (type.equals("string_array")) {
+			return _addCustomSXPParameterStringArray(
 				jsonObject, name, searchContext);
 		}
 
@@ -184,6 +190,22 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new StringSXPParameter(name, true, value);
 	}
 
+	private SXPParameter _addCustomSXPParameterStringArray(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		String[] value = _getStringArray(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = JSONUtil.toStringArray(jsonObject.getJSONArray("default"));
+		}
+
+		if (ArrayUtil.isEmpty(value)) {
+			return null;
+		}
+
+		return new StringArraySXPParameter(name, true, value);
+	}
+
 	private void _addSXParameter(
 		SXPParameter sxpParameter, List<SXPParameter> sxpParameters) {
 
@@ -233,6 +255,22 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return value;
+	}
+
+	private String[] _getStringArray(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if ((value == null) || !(value instanceof String[])) {
+			return null;
+		}
+
+		String[] array = (String[])value;
+
+		if (ArrayUtil.isEmpty(array)) {
+			return null;
+		}
+
+		return array;
 	}
 
 }
