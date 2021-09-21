@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
@@ -66,21 +67,23 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private SXPParameter _addCustomSXPParameter(
-		JSONObject jsonObject, SearchContext searchContext) {
+		JSONObject jsonObject, String name, SearchContext searchContext) {
 
 		String type = jsonObject.getString("type");
 
 		if (type.equals("date")) {
-			return _addCustomSXPParameterDate(jsonObject, searchContext);
+			return _addCustomSXPParameterDate(jsonObject, name, searchContext);
+		}
+		else if (type.equals("double")) {
+			return _addCustomSXPParameterDouble(
+				jsonObject, name, searchContext);
 		}
 
 		return null;
 	}
 
 	private SXPParameter _addCustomSXPParameterDate(
-		JSONObject jsonObject, SearchContext searchContext) {
-
-		String name = jsonObject.getString("parameter_name");
+		JSONObject jsonObject, String name, SearchContext searchContext) {
 
 		String dateString = _getString(name, searchContext);
 
@@ -110,6 +113,37 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new DateSXPParameter(name, true, date);
 	}
 
+	private SXPParameter _addCustomSXPParameterDouble(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Double value = _getDouble(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = GetterUtil.getDouble("default");
+		}
+
+		if (value == null) {
+			return null;
+		}
+
+		double minValue = GetterUtil.getDouble(
+			jsonObject.getString("min_value"), Double.MIN_VALUE);
+
+		if (Double.compare(value, minValue) < 0) {
+			value = minValue;
+		}
+		else {
+			double maxValue = GetterUtil.getDouble(
+				jsonObject.getString("max_value"), Double.MAX_VALUE);
+
+			if (Double.compare(value, maxValue) > 0) {
+				value = maxValue;
+			}
+		}
+
+		return new DoubleSXPParameter(name, true, value);
+	}
+
 	private void _addCustomSXPParameters(
 		JSONArray jsonArray, SearchContext searchContext,
 		List<SXPParameter> sxpParameters) {
@@ -119,8 +153,11 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
 			SXPParameter sxpParameter = _addCustomSXPParameter(
-				jsonArray.getJSONObject(i), searchContext);
+				jsonObject, jsonObject.getString("parameter_name"),
+				searchContext);
 
 			_addSXParameter(sxpParameter, sxpParameters);
 		}
@@ -142,6 +179,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		sxpParameters.add(sxpParameter);
+	}
+
+	private Double _getDouble(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if (Objects.isNull(value)) {
+			return null;
+		}
+
+		return GetterUtil.getDouble(value);
 	}
 
 	private SearchContext _getSearchContext(
