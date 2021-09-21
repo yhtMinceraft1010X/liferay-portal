@@ -57,8 +57,8 @@ public class SXPBlueprintSearchRequestEnhancer {
 			_aggregations.avg(name, String.valueOf(aggregation)));
 	}
 
-	protected void processAggregations(Map<String, ?> aggregationsMap) {
-		aggregationsMap.forEach(
+	protected void processAggregations(Map<String, ?> aggregations) {
+		aggregations.forEach(
 			(name, aggregation) -> processAggregation(name, aggregation));
 	}
 
