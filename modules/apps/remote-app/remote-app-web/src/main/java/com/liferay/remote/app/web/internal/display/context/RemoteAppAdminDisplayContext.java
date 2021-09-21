@@ -77,23 +77,20 @@ public class RemoteAppAdminDisplayContext {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
 
-	public List<SelectOption> getPortletCategoryNameSelectOptions() {
+	public List<SelectOption> getPortletCategoryNameSelectOptions()
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletCategory rootPortletCategory = (PortletCategory)WebAppPool.get(
 			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-		try {
-			rootPortletCategory =
-				PortletCategoryUtil.getRelevantPortletCategory(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getCompanyId(), themeDisplay.getLayout(),
-					rootPortletCategory, themeDisplay.getLayoutTypePortlet());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		rootPortletCategory =
+			PortletCategoryUtil.getRelevantPortletCategory(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getCompanyId(), themeDisplay.getLayout(),
+				rootPortletCategory, themeDisplay.getLayoutTypePortlet());
 
 		List<SelectOption> selectOptions = new ArrayList<>();
 
