@@ -59,6 +59,12 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 					"'category.remote-apps'");
 		}
 
+		if (!hasColumn("RemoteAppEntry", "properties")) {
+			alter(
+				RemoteAppEntryTable.class,
+				new AlterTableAddColumn("properties", "TEXT"));
+		}
+
 		if (!hasColumn("RemoteAppEntry", "type_")) {
 			alter(
 				RemoteAppEntryTable.class,
@@ -68,12 +74,6 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"update RemoteAppEntry set type_ = '",
 					RemoteAppConstants.TYPE_IFRAME, "'"));
-		}
-
-		if (!hasColumn("RemoteAppEntry", "properties")) {
-			alter(
-				RemoteAppEntryTable.class,
-				new AlterTableAddColumn("properties", "TEXT"));
 		}
 	}
 
