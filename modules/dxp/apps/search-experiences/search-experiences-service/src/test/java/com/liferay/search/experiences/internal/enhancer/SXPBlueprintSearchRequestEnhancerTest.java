@@ -68,7 +68,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		Configuration configuration = new Configuration() {
 			{
 				aggregations = HashMapBuilder.put(
-					"avg-test",
+					RandomTestUtil.randomString(),
 					() -> {
 						Aggregation aggregation = new Aggregation();
 
@@ -81,7 +81,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 						return aggregation;
 					}
 				).put(
-					"cardinality-test",
+					RandomTestUtil.randomString(),
 					() -> {
 						Aggregation aggregation = new Aggregation();
 
