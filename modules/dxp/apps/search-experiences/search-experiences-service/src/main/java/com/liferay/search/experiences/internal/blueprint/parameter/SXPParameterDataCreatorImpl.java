@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
@@ -73,9 +72,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	@Override
 	public SXPParameterData create(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+		SearchContext searchContext, SXPBlueprint sxpBlueprint) {
 
-		SearchContext searchContext = _getSearchContext(searchRequestBuilder);
 		List<SXPParameter> sxpParameters = new ArrayList<>();
 
 		String keywords = _addKeywordsSXPParameters(
@@ -94,7 +92,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		_addSortSXPParameters(searchContext, sxpBlueprint, sxpParameters);
 
-		_contribute(searchRequestBuilder, sxpBlueprint, sxpParameters);
+		_contribute(searchContext, sxpBlueprint, sxpParameters);
 
 		_addCustomSXPParameters(
 			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
@@ -528,14 +526,14 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private void _contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SearchContext searchContext, SXPBlueprint sxpBlueprint,
 		List<SXPParameter> sxpParameters) {
 
 		for (SXPParameterContributor sxpParameterContributor :
 				_sxpParameterContributors) {
 
 			sxpParameterContributor.contribute(
-				searchRequestBuilder, sxpBlueprint, sxpParameters);
+				searchContext, sxpBlueprint, sxpParameters);
 		}
 	}
 
@@ -637,13 +635,6 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return null;
-	}
-
-	private SearchContext _getSearchContext(
-		SearchRequestBuilder searchRequestBuilder) {
-
-		return searchRequestBuilder.withSearchContextGet(
-			searchContext -> searchContext);
 	}
 
 	private String _getString(String name, SearchContext searchContext) {

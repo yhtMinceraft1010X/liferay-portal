@@ -14,9 +14,9 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.parameter.LongArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
@@ -33,13 +33,11 @@ public class CommerceSXPParameterContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		SearchContext searchContext, SXPBlueprint sxpBlueprint,
 		List<SXPParameter> sxpParameters) {
 
-		long[] commerceAccountGroupIds =
-			searchRequestBuilder.withSearchContextGet(
-				searchContext -> GetterUtil.getLongValues(
-					searchContext.getAttribute("commerceAccountGroupIds")));
+		long[] commerceAccountGroupIds = GetterUtil.getLongValues(
+			searchContext.getAttribute("commerceAccountGroupIds"));
 
 		if (!ArrayUtil.isEmpty(commerceAccountGroupIds)) {
 			sxpParameters.add(
@@ -48,9 +46,8 @@ public class CommerceSXPParameterContributor
 					ArrayUtil.toLongArray(commerceAccountGroupIds)));
 		}
 
-		long commerceChannelGroupId = searchRequestBuilder.withSearchContextGet(
-			searchContext -> GetterUtil.getLong(
-				searchContext.getAttribute("commerceChannelGroupId")));
+		long commerceChannelGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("commerceChannelGroupId"));
 
 		if (commerceChannelGroupId > 0) {
 			sxpParameters.add(

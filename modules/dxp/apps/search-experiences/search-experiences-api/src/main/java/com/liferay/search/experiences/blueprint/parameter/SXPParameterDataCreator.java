@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 /**
@@ -23,6 +23,6 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 public interface SXPParameterDataCreator {
 
 	public SXPParameterData create(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);
+		SearchContext searchContext, SXPBlueprint sxpBlueprint);
 
 }
