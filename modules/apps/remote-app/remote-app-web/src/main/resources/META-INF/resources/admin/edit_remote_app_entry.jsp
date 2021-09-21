@@ -27,20 +27,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
-
-String errorSection = StringPool.BLANK;
-
-if (MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryIFrameURLException.class.getName())) {
-	errorSection = "iframe";
-}
-
-if (MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementCSSURLsException.class.getName()) || MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementHTMLElementNameException.class.getName()) || MultiSessionErrors.contains(liferayPortletRequest, RemoteAppEntryCustomElementURLsException.class.getName())) {
-	errorSection = "customElement";
-}
-
-boolean isCustomElement = errorSection.equals("customElement") || ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType()));
-
-boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType()));
 %>
 
 <portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editRemoteAppEntryURL" />
@@ -71,56 +57,29 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 			</aui:field-wrapper>
 
 			<clay:select
-				label="portlet-category-name"
-				name="portletCategoryName"
-				options="<%=
-					remoteAppAdminDisplayContext.getPortletCategoryNames()
-				%>"
-			/>
-
-			<clay:select
 				disabled="<%= remoteAppEntry != null %>"
 				label="type"
 				name="type"
 				options='<%=
-					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, isCustomElement), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, isIFrame))
+					Arrays.asList(new SelectOption(LanguageUtil.get(request, "custom-element"), RemoteAppConstants.TYPE_CUSTOM_ELEMENT, (remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())), new SelectOption(LanguageUtil.get(request, "iframe"), RemoteAppConstants.TYPE_IFRAME, (remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())))
 				%>'
 				propsTransformer="admin/js/remoteAppEntryTypeSelectPropsTransformer"
 			/>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= isIFrame ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !isIFrame %>"
+				cssClass='<%= ((remoteAppEntry == null) || RemoteAppConstants.TYPE_IFRAME.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
-				<aui:input label="url" name="iFrameURL">
+				<aui:input fieldParam="iFrameURL" label="url" name="IFrameURL">
 					<aui:validator name="url" />
 				</aui:input>
 			</liferay-frontend:fieldset>
 
 			<liferay-frontend:fieldset
-				cssClass='<%= isCustomElement ? StringPool.BLANK : "d-none" %>'
-				disabled="<%= !isCustomElement %>"
+				cssClass='<%= ((remoteAppEntry != null) && RemoteAppConstants.TYPE_CUSTOM_ELEMENT.equals(remoteAppEntry.getType())) ? StringPool.BLANK : "d-none" %>'
 				id='<%= liferayPortletResponse.getNamespace() + "_type_customElement" %>'
 			>
-				<aui:input label="html-element-name" name="customElementHTMLElementName">
-					<aui:validator errorMessage="please-enter-a-valid-html-element-name" name="custom">
-						(val) => {
-							const RESERVED_CUSTOM_ELEMENT_NAMES = [
-								"annotation-xml",
-								"color-profile",
-								"font-face",
-								"font-face-src",
-								"font-face-uri",
-								"font-face-format",
-								"font-face-name",
-								"missing-glyph",
-							];
-
-							return !RESERVED_CUSTOM_ELEMENT_NAMES.includes(val) && /^[a-z]([a-z]|[0-9]|-|\.|_)*-([a-z]|[0-9]|-|\.|_)*/.test(val);
-						}
-					</aui:validator>
-				</aui:input>
+				<aui:input label="html-element-name" name="customElementHTMLElementName" />
 
 				<%
 				String[] customElementURLsArray = new String[1];
@@ -131,14 +90,11 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 					customElementURLsArray = customElementURLs.split(StringPool.NEW_LINE);
 				}
 
-				String[] remoteAppCustomElementURLsArray = ParamUtil.getStringValues(request, "customElementURLs", customElementURLsArray);
-
-				for (String customElementURL : remoteAppCustomElementURLsArray) {
+				for (String customElementURL : customElementURLsArray) {
 				%>
 
 					<div class="repeatable">
 						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
-							<aui:validator name="required" />
 							<aui:validator name="url" />
 						</aui:input>
 					</div>
@@ -154,9 +110,7 @@ boolean isIFrame = !isCustomElement && (errorSection.equals("iframe") || (remote
 					customElementCSSURLsArray = customElementCSSURLs.split(StringPool.NEW_LINE);
 				}
 
-				String[] remoteAppCustomElementCSSURLsArray = ParamUtil.getStringValues(request, "customElementCSSURLs", customElementCSSURLsArray);
-
-				for (String customElementCSSURL : remoteAppCustomElementCSSURLsArray) {
+				for (String customElementCSSURL : customElementCSSURLsArray) {
 				%>
 
 					<div class="repeatable">
