@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -72,29 +75,29 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	public SXPParameterData create(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
-		String keywords = "";
-
+		SearchContext searchContext = _getSearchContext(searchRequestBuilder);
 		List<SXPParameter> sxpParameters = new ArrayList<>();
 
-		for (SXPParameterContributor sxpParameterContributor :
-				_sxpParameterContributors) {
+		String keywords = _addKeywordsSXPParameters(
+			searchContext, sxpParameters);
 
-			sxpParameterContributor.contribute(
-				searchRequestBuilder, sxpBlueprint, sxpParameters);
-		}
+		// TODO Replace with real JSON
 
 		JSONObject jsonObject = JSONUtil.put("test", "test");
-		SearchContext searchContext = _getSearchContext(searchRequestBuilder);
 
-		_addCustomSXPParameters(
-			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
 		_addIntegerSXPParameter(
 			jsonObject.getJSONObject("page"), "page", searchContext,
 			sxpParameters);
 		_addIntegerSXPParameter(
 			jsonObject.getJSONObject("size"), "size", searchContext,
 			sxpParameters);
-		_addSortSXPParameter(searchContext, sxpBlueprint, sxpParameters);
+
+		_addSortSXPParameters(searchContext, sxpBlueprint, sxpParameters);
+
+		_contribute(searchRequestBuilder, sxpBlueprint, sxpParameters);
+
+		_addCustomSXPParameters(
+			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
 
 		return new SXPParameterDataImpl(keywords, sxpParameters);
 	}
@@ -322,6 +325,32 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			new IntegerSXPParameter(name, true, value), sxpParameters);
 	}
 
+	private String _addKeywordsSXPParameters(
+		SearchContext searchContext, List<SXPParameter> sxpParameters) {
+
+		String keywords = GetterUtil.getString(searchContext.getKeywords());
+
+		_addSXPParameter(
+			new StringSXPParameter("keywords.raw", true, keywords),
+			sxpParameters);
+
+		if ((StringUtil.count(keywords, CharPool.QUOTE) % 2) != 0) {
+			keywords = StringUtil.replace(
+				keywords, CharPool.QUOTE, StringPool.BLANK);
+		}
+
+		keywords = keywords.replaceAll("/", "&#8725;");
+		keywords = keywords.replaceAll("\"", "\\\\\"");
+		keywords = keywords.replaceAll("\\[", "&#91;");
+		keywords = keywords.replaceAll("\\\\", "&#92;");
+		keywords = keywords.replaceAll("\\]", "&#93;");
+
+		_addSXPParameter(
+			new StringSXPParameter("keywords", true, keywords), sxpParameters);
+
+		return keywords;
+	}
+
 	private void _addLongArraySXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
 		List<SXPParameter> sxpParameters) {
@@ -380,7 +409,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			new LongSXPParameter(name, true, value), sxpParameters);
 	}
 
-	private void _addSortSXPParameter(
+	private void _addSortSXPParameters(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
 		List<SXPParameter> sxpParameters) {
 
@@ -496,6 +525,18 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		_addSXPParameter(
 			new DateSXPParameter(name, true, calendar.getTime()),
 			sxpParameters);
+	}
+
+	private void _contribute(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		List<SXPParameter> sxpParameters) {
+
+		for (SXPParameterContributor sxpParameterContributor :
+				_sxpParameterContributors) {
+
+			sxpParameterContributor.contribute(
+				searchRequestBuilder, sxpBlueprint, sxpParameters);
+		}
 	}
 
 	private Double _getDouble(String name, SearchContext searchContext) {
