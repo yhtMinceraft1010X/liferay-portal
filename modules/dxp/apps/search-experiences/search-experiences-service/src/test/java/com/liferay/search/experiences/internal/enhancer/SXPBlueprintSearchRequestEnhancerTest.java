@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.enhancer;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -104,7 +105,11 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 									clauses = new Clause[] {
 										new Clause() {
 											{
-												queryJSON = "{ \"term\": { \"status\": 0 } }";
+												queryJSON = JSONUtil.put(
+													"term",
+													JSONUtil.put(
+														"status", 0
+													)).toString();
 												occur = "must_not";
 											}
 										}
