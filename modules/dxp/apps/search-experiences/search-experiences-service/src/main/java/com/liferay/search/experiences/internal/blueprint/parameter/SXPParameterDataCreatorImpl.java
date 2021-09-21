@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
@@ -188,10 +187,6 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			DateTimeFormatter.ofPattern(jsonObject.getString("date_format")));
 
 		TimeZone timeZone = searchContext.getTimeZone();
-
-		if (timeZone == null) {
-			timeZone = TimeZoneUtil.getDefault();
-		}
 
 		Calendar calendar = GregorianCalendar.from(
 			localDate.atStartOfDay(timeZone.toZoneId()));

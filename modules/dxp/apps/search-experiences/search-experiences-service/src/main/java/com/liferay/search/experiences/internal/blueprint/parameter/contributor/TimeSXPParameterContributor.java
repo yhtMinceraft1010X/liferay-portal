@@ -17,7 +17,6 @@ package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
@@ -55,10 +54,6 @@ public class TimeSXPParameterContributor implements SXPParameterContributor {
 		Set<SXPParameter> sxpParameters) {
 
 		TimeZone timeZone = searchContext.getTimeZone();
-
-		if (timeZone == null) {
-			timeZone = TimeZoneUtil.getDefault();
-		}
 
 		LocalDateTime localDateTime = LocalDateTime.now(timeZone.toZoneId());
 
