@@ -14,9 +14,9 @@
 
 package com.liferay.search.experiences.internal.enhancer;
 
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -65,59 +65,53 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testEnhance() {
-		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
+		Configuration configuration = new Configuration() {
 			{
-				configuration = new Configuration() {
-					{
-						aggregations = HashMapBuilder.put(
-							"avg-test",
-							() -> {
-								Aggregation aggregation = new Aggregation();
+				aggregations = HashMapBuilder.put(
+					"avg-test",
+					() -> {
+						Aggregation aggregation = new Aggregation();
 
-								Avg avg = new Avg();
+						Avg avg = new Avg();
 
-								avg.setField(RandomTestUtil.randomString());
+						avg.setField(RandomTestUtil.randomString());
 
-								aggregation.setAvg(avg);
+						aggregation.setAvg(avg);
 
-								return aggregation;
-							}
-						).put(
-							"cardinality-test",
-							() -> {
-								Aggregation aggregation = new Aggregation();
+						return aggregation;
+					}
+				).put(
+					"cardinality-test",
+					() -> {
+						Aggregation aggregation = new Aggregation();
 
-								Cardinality cardinality = new Cardinality();
+						Cardinality cardinality = new Cardinality();
 
-								cardinality.setField(RandomTestUtil.randomString());
-								cardinality.setPrecision_threshold(
-									RandomTestUtil.randomInt());
+						cardinality.setField(RandomTestUtil.randomString());
+						cardinality.setPrecision_threshold(
+							RandomTestUtil.randomInt());
 
-								aggregation.setCardinality(cardinality);
+						aggregation.setCardinality(cardinality);
 
-								return aggregation;
-							}
-						).build();
-						general = new General();
-						queries = new Query[] {
-							new Query() {
-								{
-									clauses = new Clause[] {
-										new Clause() {
-											{
-												queryJSON = JSONUtil.put(
-													"term",
-													JSONUtil.put(
-														"status", 0
-													)).toString();
-												occur = "must_not";
-											}
-										}
-									};
-									enabled = true;
+						return aggregation;
+					}
+				).build();
+				general = new General();
+				queries = new Query[] {
+					new Query() {
+						{
+							clauses = new Clause[] {
+								new Clause() {
+									{
+										occur = "must_not";
+										queryJSON = JSONUtil.put(
+											"term", JSONUtil.put("status", 0)
+										).toString();
+									}
 								}
-							}
-						};
+							};
+							enabled = true;
+						}
 					}
 				};
 			}
@@ -126,7 +120,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			new SXPBlueprintSearchRequestEnhancer(
 				_aggregations, _complexQueryPartBuilderFactory, _queries,
-				_searchRequestBuilder, sxpBlueprint);
+				_searchRequestBuilder,
+				new SXPBlueprint() {
+					{
+						setConfiguration(configuration);
+					}
+				});
 
 		sxpBlueprintSearchRequestEnhancer.enhance();
 
@@ -145,13 +144,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertEquals("must_not", complexQueryPart.getOccur());
 
-		com.liferay.portal.search.query.Query query2 =
-			complexQueryPart.getQuery();
-
-		WrapperQuery wrapperQuery = (WrapperQuery)query2;
+		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
 
 		Assert.assertEquals(
-			"{ \"term\": { \"status\": 0 } }",
+			JSONUtil.put(
+				"term", JSONUtil.put("status", 0)
+			).toString(),
 			new String(wrapperQuery.getSource()));
 	}
 
