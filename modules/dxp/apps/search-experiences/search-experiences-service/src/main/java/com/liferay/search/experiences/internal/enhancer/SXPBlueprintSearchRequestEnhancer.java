@@ -66,7 +66,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
-	protected static <V> void forEachCatching(
+	private <V> void _forEach(
 		Iterable<V> iterable, Consumer<V> consumer,
 		ExceptionListener exceptionListener) {
 
@@ -80,7 +80,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
-	protected static <K, V> void forEachCatching(
+	private <K, V> void _forEach(
 		Map<K, V> map, BiConsumer<K, V> biConsumer,
 		ExceptionListener exceptionListener) {
 
@@ -125,7 +125,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 	}
 
 	protected void processAggregations(Map<String, Aggregation> map) {
-		forEachCatching(
+		_forEach(
 			map, this::processAggregation, _runtimeException::addSuppressed);
 	}
 
@@ -146,7 +146,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	protected void processClauses(Clause[] clauses) {
 		if (!ArrayUtil.isEmpty(clauses)) {
-			forEachCatching(
+			_forEach(
 				Arrays.asList(clauses), this::processClause,
 				_runtimeException::addSuppressed);
 		}
@@ -163,7 +163,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	protected void processQueries(Query[] queries) {
 		if (!ArrayUtil.isEmpty(queries)) {
-			forEachCatching(
+			_forEach(
 				Arrays.asList(queries), this::processQuery,
 				_runtimeException::addSuppressed);
 		}
@@ -186,7 +186,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 			getAggregation(name, aggregation1);
 
 		if (aggregation1.getAggs() != null) {
-			forEachCatching(
+			_forEach(
 				aggregation1.getAggs(),
 				(name1, aggregation) -> aggregation2.addChildAggregation(
 					translateAggregation(name1, aggregation)),
