@@ -15,11 +15,14 @@
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +35,41 @@ public class SystemSXPParameterContributor implements SXPParameterContributor {
 	public void contribute(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
 		Set<SXPParameter> sxpParameters) {
+
+		String[] stringArrayValue = (String[])searchContext.getAttribute(
+			"search.experiences.excluded_search_request_body_contributors");
+
+		if (stringArrayValue != null) {
+			sxpParameters.add(
+				new StringArraySXPParameter(
+					"system.excluded_search_request_body_contributors", false,
+					stringArrayValue));
+		}
+
+		Boolean booleanValue = (Boolean)searchContext.getAttribute(
+			"search.experiences.explain");
+
+		if (booleanValue != null) {
+			sxpParameters.add(
+				new BooleanSXPParameter("explain", false, booleanValue));
+		}
+
+		booleanValue = (Boolean)searchContext.getAttribute(
+			"search.experiences.include_response_string");
+
+		if (booleanValue != null) {
+			sxpParameters.add(
+				new BooleanSXPParameter(
+					"system.include_response_string", false, booleanValue));
+		}
+
+		booleanValue = (Boolean)searchContext.getAttribute(
+			"search.experiences.preview");
+
+		if (booleanValue != null) {
+			sxpParameters.add(
+				new BooleanSXPParameter("preview", false, booleanValue));
+		}
 	}
 
 	@Override
@@ -43,7 +81,7 @@ public class SystemSXPParameterContributor implements SXPParameterContributor {
 	public List<SXPParameterContributorDefinition>
 		getSXPParameterContributorDefinitions() {
 
-		return null;
+		return Collections.<SXPParameterContributorDefinition>emptyList();
 	}
 
 }
