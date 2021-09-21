@@ -97,7 +97,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	private void _processAggregation(String name, Aggregation aggregation) {
 		_searchRequestBuilder.addAggregation(
-			_translateAggregation(name, aggregation));
+			_toAggregation(name, aggregation));
 	}
 
 	private void _processAggregations(Map<String, Aggregation> map) {
@@ -156,7 +156,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 	}
 
 	private com.liferay.portal.search.aggregation.Aggregation
-		_translateAggregation(String name, Aggregation aggregation1) {
+		_toAggregation(String name, Aggregation aggregation1) {
 
 		if (aggregation1.getAvg() != null) {
 			Avg avg = aggregation1.getAvg();
@@ -167,7 +167,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 			_forEach(
 				aggregation1.getAggs(),
 				(name1, aggregation) -> aggregation2.addChildAggregation(
-					_translateAggregation(name1, aggregation)),
+					_toAggregation(name1, aggregation)),
 				_runtimeException::addSuppressed);
 		}
 		else if (aggregation1.getCardinality() != null) {
