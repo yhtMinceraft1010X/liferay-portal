@@ -50,13 +50,13 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.stream.Stream;
 
@@ -74,7 +74,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	public SXPParameterData create(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint) {
 
-		List<SXPParameter> sxpParameters = new ArrayList<>();
+		Set<SXPParameter> sxpParameters = new LinkedHashSet<>();
 
 		String keywords = _addKeywordsSXPParameters(
 			searchContext, sxpParameters);
@@ -112,7 +112,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addCustomSXPParameters(
 		JSONArray jsonArray, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return;
@@ -169,7 +169,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addDateSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		String dateString = _getString(name, searchContext);
 
@@ -201,7 +201,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addDoubleSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Double value = _getDouble(name, searchContext);
 
@@ -234,7 +234,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addFloatSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Float value = _getFloat(name, searchContext);
 
@@ -267,7 +267,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addIntegerArraySXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Integer[] value = _getIntegerArray(name, searchContext);
 
@@ -292,7 +292,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addIntegerSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Integer value = _getInteger(name, searchContext);
 
@@ -324,7 +324,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private String _addKeywordsSXPParameters(
-		SearchContext searchContext, List<SXPParameter> sxpParameters) {
+		SearchContext searchContext, Set<SXPParameter> sxpParameters) {
 
 		String keywords = GetterUtil.getString(searchContext.getKeywords());
 
@@ -351,7 +351,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addLongArraySXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Long[] value = _getLongArray(name, searchContext);
 
@@ -376,7 +376,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addLongSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		Long value = _getLong(name, searchContext);
 
@@ -409,7 +409,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addSortSXPParameters(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		// TODO Replace with real JSON
 
@@ -440,7 +440,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addStringArraySXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		String[] value = _getStringArray(name, searchContext);
 
@@ -458,7 +458,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addStringSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		String value = _getString(name, searchContext);
 
@@ -475,7 +475,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private void _addSXPParameter(
-		SXPParameter sxpParameter, List<SXPParameter> sxpParameters) {
+		SXPParameter sxpParameter, Set<SXPParameter> sxpParameters) {
 
 		if (sxpParameter == null) {
 			return;
@@ -494,7 +494,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _addTimeRangeSXPParameter(
 		String name, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		String value = _getString(name, searchContext);
 
@@ -527,7 +527,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	private void _contribute(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		for (SXPParameterContributor sxpParameterContributor :
 				_sxpParameterContributors) {

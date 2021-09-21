@@ -21,6 +21,7 @@ import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParamet
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Petteri Karttunen
@@ -30,7 +31,7 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 	@Override
 	public void contribute(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 	}
 
 	@Override

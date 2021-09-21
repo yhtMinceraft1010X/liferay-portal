@@ -26,6 +26,7 @@ import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Petteri Karttunen
@@ -36,7 +37,7 @@ public class CommerceSXPParameterContributor
 	@Override
 	public void contribute(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
-		List<SXPParameter> sxpParameters) {
+		Set<SXPParameter> sxpParameters) {
 
 		long[] commerceAccountGroupIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("commerceAccountGroupIds"));

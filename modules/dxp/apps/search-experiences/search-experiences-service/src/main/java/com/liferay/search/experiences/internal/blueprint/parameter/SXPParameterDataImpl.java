@@ -17,9 +17,9 @@ package com.liferay.search.experiences.internal.blueprint.parameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class SXPParameterDataImpl implements SXPParameterData {
 
 	public SXPParameterDataImpl(
-		String keywords, List<SXPParameter> sxpParameters) {
+		String keywords, Set<SXPParameter> sxpParameters) {
 
 		_keywords = keywords;
 		_sxpParameters = sxpParameters;
@@ -61,11 +61,11 @@ public class SXPParameterDataImpl implements SXPParameterData {
 	}
 
 	@Override
-	public List<SXPParameter> getSXPParameters() {
+	public Set<SXPParameter> getSXPParameters() {
 		return _sxpParameters;
 	}
 
 	private final String _keywords;
-	private final List<SXPParameter> _sxpParameters;
+	private final Set<SXPParameter> _sxpParameters;
 
 }
