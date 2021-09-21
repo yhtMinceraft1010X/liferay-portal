@@ -41,7 +41,7 @@ components:
                                             allOf:
                                                 - $ref: "#/definitions/aggregation"
                                             properties:
-                                                precision_threshold:
+                                                precisionThreshold:
                                                     properties:
                                                         maximum: 40000
                                                         minimum: 0
