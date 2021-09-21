@@ -77,7 +77,7 @@ public class RemoteAppAdminDisplayContext {
 		return PortletURLUtil.getCurrent(_renderRequest, _renderResponse);
 	}
 
-	public List<SelectOption> getPortletCategoryNames() {
+	public List<SelectOption> getPortletCategoryNameSelectOptions() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
