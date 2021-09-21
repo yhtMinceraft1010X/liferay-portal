@@ -55,7 +55,7 @@ public abstract class BaseRemoteAppEntryUADExporter
 
 	@Override
 	protected String toXmlString(RemoteAppEntry remoteAppEntry) {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.remote.app.model.RemoteAppEntry");
@@ -72,38 +72,6 @@ public abstract class BaseRemoteAppEntryUADExporter
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(remoteAppEntry.getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>customElementCSSURLs</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getCustomElementCSSURLs());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>customElementHTMLElementName</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getCustomElementHTMLElementName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>customElementURLs</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getCustomElementURLs());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>iFrameURL</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getIFrameURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletCategoryName</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getPortletCategoryName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>properties</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getProperties());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(remoteAppEntry.getType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
