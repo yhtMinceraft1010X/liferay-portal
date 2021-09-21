@@ -63,20 +63,17 @@ public class FragmentViewport implements Serializable {
 
 	@Schema(description = "The fragment's viewport style.")
 	@Valid
-	public FragmentViewportStyle getFragmentViewportStyle() {
+	public Object getFragmentViewportStyle() {
 		return fragmentViewportStyle;
 	}
 
-	public void setFragmentViewportStyle(
-		FragmentViewportStyle fragmentViewportStyle) {
-
+	public void setFragmentViewportStyle(Object fragmentViewportStyle) {
 		this.fragmentViewportStyle = fragmentViewportStyle;
 	}
 
 	@JsonIgnore
 	public void setFragmentViewportStyle(
-		UnsafeSupplier<FragmentViewportStyle, Exception>
-			fragmentViewportStyleUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> fragmentViewportStyleUnsafeSupplier) {
 
 		try {
 			fragmentViewportStyle = fragmentViewportStyleUnsafeSupplier.get();
@@ -92,7 +89,7 @@ public class FragmentViewport implements Serializable {
 	@GraphQLField(description = "The fragment's viewport style.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
-	protected FragmentViewportStyle fragmentViewportStyle;
+	protected Object fragmentViewportStyle;
 
 	@Schema(description = "The fragment viewport's ID.")
 	public String getId() {

@@ -34,19 +34,16 @@ public class FragmentViewport implements Cloneable, Serializable {
 		return FragmentViewportSerDes.toDTO(json);
 	}
 
-	public FragmentViewportStyle getFragmentViewportStyle() {
+	public Object getFragmentViewportStyle() {
 		return fragmentViewportStyle;
 	}
 
-	public void setFragmentViewportStyle(
-		FragmentViewportStyle fragmentViewportStyle) {
-
+	public void setFragmentViewportStyle(Object fragmentViewportStyle) {
 		this.fragmentViewportStyle = fragmentViewportStyle;
 	}
 
 	public void setFragmentViewportStyle(
-		UnsafeSupplier<FragmentViewportStyle, Exception>
-			fragmentViewportStyleUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> fragmentViewportStyleUnsafeSupplier) {
 
 		try {
 			fragmentViewportStyle = fragmentViewportStyleUnsafeSupplier.get();
@@ -56,7 +53,7 @@ public class FragmentViewport implements Cloneable, Serializable {
 		}
 	}
 
-	protected FragmentViewportStyle fragmentViewportStyle;
+	protected Object fragmentViewportStyle;
 
 	public String getId() {
 		return id;

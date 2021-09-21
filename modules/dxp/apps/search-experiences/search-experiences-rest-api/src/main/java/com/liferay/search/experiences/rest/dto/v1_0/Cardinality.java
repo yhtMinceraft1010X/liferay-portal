@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
-package com.liferay.headless.delivery.dto.v1_0;
+package com.liferay.search.experiences.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,72 +36,44 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Javier Gamarra
+ * @author Brian Wing Shun Chan
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a row viewport.", value = "RowViewport")
+@GraphQLName("Cardinality")
 @JsonFilter("Liferay.Vulcan")
-@Schema(
-	description = "Represents a row viewport.",
-	requiredProperties = {"id", "rowViewportDefinition"}
-)
-@XmlRootElement(name = "RowViewport")
-public class RowViewport implements Serializable {
+@Schema(requiredProperties = {"field"})
+@XmlRootElement(name = "Cardinality")
+public class Cardinality implements Serializable {
 
-	public static RowViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowViewport.class, json);
+	public static Cardinality toDTO(String json) {
+		return ObjectMapperUtil.readValue(Cardinality.class, json);
 	}
 
-	@Schema(description = "The row vieport's ID.")
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The row vieport's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
-
-	@Schema(description = "The definition of the row vieport.")
+	@DecimalMax("40000")
+	@DecimalMin("0")
+	@Schema
 	@Valid
-	public Object getRowViewportDefinition() {
-		return rowViewportDefinition;
+	public Number getPrecision_threshold() {
+		return precision_threshold;
 	}
 
-	public void setRowViewportDefinition(Object rowViewportDefinition) {
-		this.rowViewportDefinition = rowViewportDefinition;
+	public void setPrecision_threshold(Number precision_threshold) {
+		this.precision_threshold = precision_threshold;
 	}
 
 	@JsonIgnore
-	public void setRowViewportDefinition(
-		UnsafeSupplier<Object, Exception> rowViewportDefinitionUnsafeSupplier) {
+	public void setPrecision_threshold(
+		UnsafeSupplier<Number, Exception> precision_thresholdUnsafeSupplier) {
 
 		try {
-			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
+			precision_threshold = precision_thresholdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -111,10 +83,9 @@ public class RowViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The definition of the row vieport.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Object rowViewportDefinition;
+	protected Number precision_threshold;
 
 	@Override
 	public boolean equals(Object object) {
@@ -122,13 +93,13 @@ public class RowViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewport)) {
+		if (!(object instanceof Cardinality)) {
 			return false;
 		}
 
-		RowViewport rowViewport = (RowViewport)object;
+		Cardinality cardinality = (Cardinality)object;
 
-		return Objects.equals(toString(), rowViewport.toString());
+		return Objects.equals(toString(), cardinality.toString());
 	}
 
 	@Override
@@ -143,28 +114,14 @@ public class RowViewport implements Serializable {
 
 		sb.append("{");
 
-		if (id != null) {
+		if (precision_threshold != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"precision_threshold\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
-		}
-
-		if (rowViewportDefinition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewportDefinition\": ");
-
-			sb.append(String.valueOf(rowViewportDefinition));
+			sb.append(precision_threshold);
 		}
 
 		sb.append("}");
@@ -174,7 +131,7 @@ public class RowViewport implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewport",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Cardinality",
 		name = "x-class-name"
 	)
 	public String xClassName;

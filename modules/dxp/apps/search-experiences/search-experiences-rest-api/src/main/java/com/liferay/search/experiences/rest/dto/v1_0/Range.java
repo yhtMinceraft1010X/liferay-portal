@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
-package com.liferay.headless.delivery.dto.v1_0;
+package com.liferay.search.experiences.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,43 +35,35 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Javier Gamarra
+ * @author Brian Wing Shun Chan
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a row viewport.", value = "RowViewport")
+@GraphQLName("Range")
 @JsonFilter("Liferay.Vulcan")
-@Schema(
-	description = "Represents a row viewport.",
-	requiredProperties = {"id", "rowViewportDefinition"}
-)
-@XmlRootElement(name = "RowViewport")
-public class RowViewport implements Serializable {
+@XmlRootElement(name = "Range")
+public class Range implements Serializable {
 
-	public static RowViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowViewport.class, json);
+	public static Range toDTO(String json) {
+		return ObjectMapperUtil.readValue(Range.class, json);
 	}
 
-	@Schema(description = "The row vieport's ID.")
-	public String getId() {
-		return id;
+	@Schema
+	public String getKey() {
+		return key;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
 		try {
-			id = idUnsafeSupplier.get();
+			key = keyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -81,40 +73,9 @@ public class RowViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The row vieport's ID.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
-
-	@Schema(description = "The definition of the row vieport.")
-	@Valid
-	public Object getRowViewportDefinition() {
-		return rowViewportDefinition;
-	}
-
-	public void setRowViewportDefinition(Object rowViewportDefinition) {
-		this.rowViewportDefinition = rowViewportDefinition;
-	}
-
-	@JsonIgnore
-	public void setRowViewportDefinition(
-		UnsafeSupplier<Object, Exception> rowViewportDefinitionUnsafeSupplier) {
-
-		try {
-			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The definition of the row vieport.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Object rowViewportDefinition;
+	protected String key;
 
 	@Override
 	public boolean equals(Object object) {
@@ -122,13 +83,13 @@ public class RowViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewport)) {
+		if (!(object instanceof Range)) {
 			return false;
 		}
 
-		RowViewport rowViewport = (RowViewport)object;
+		Range range = (Range)object;
 
-		return Objects.equals(toString(), rowViewport.toString());
+		return Objects.equals(toString(), range.toString());
 	}
 
 	@Override
@@ -143,28 +104,18 @@ public class RowViewport implements Serializable {
 
 		sb.append("{");
 
-		if (id != null) {
+		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"key\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(id));
+			sb.append(_escape(key));
 
 			sb.append("\"");
-		}
-
-		if (rowViewportDefinition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewportDefinition\": ");
-
-			sb.append(String.valueOf(rowViewportDefinition));
 		}
 
 		sb.append("}");
@@ -174,7 +125,7 @@ public class RowViewport implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewport",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Range",
 		name = "x-class-name"
 	)
 	public String xClassName;

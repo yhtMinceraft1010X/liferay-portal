@@ -34,18 +34,16 @@ public class ColumnViewport implements Cloneable, Serializable {
 		return ColumnViewportSerDes.toDTO(json);
 	}
 
-	public ColumnViewportDefinition getColumnViewportDefinition() {
+	public Object getColumnViewportDefinition() {
 		return columnViewportDefinition;
 	}
 
-	public void setColumnViewportDefinition(
-		ColumnViewportDefinition columnViewportDefinition) {
-
+	public void setColumnViewportDefinition(Object columnViewportDefinition) {
 		this.columnViewportDefinition = columnViewportDefinition;
 	}
 
 	public void setColumnViewportDefinition(
-		UnsafeSupplier<ColumnViewportDefinition, Exception>
+		UnsafeSupplier<Object, Exception>
 			columnViewportDefinitionUnsafeSupplier) {
 
 		try {
@@ -57,7 +55,7 @@ public class ColumnViewport implements Cloneable, Serializable {
 		}
 	}
 
-	protected ColumnViewportDefinition columnViewportDefinition;
+	protected Object columnViewportDefinition;
 
 	public String getId() {
 		return id;

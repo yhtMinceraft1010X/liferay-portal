@@ -76,7 +76,11 @@ public class RowViewportSerDes {
 
 			sb.append("\"rowViewportDefinition\": ");
 
-			sb.append(String.valueOf(rowViewport.getRowViewportDefinition()));
+			sb.append("\"");
+
+			sb.append(_escape(rowViewport.getRowViewportDefinition()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -145,8 +149,7 @@ public class RowViewportSerDes {
 
 				if (jsonParserFieldValue != null) {
 					rowViewport.setRowViewportDefinition(
-						RowViewportDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
+						(Object)jsonParserFieldValue);
 				}
 			}
 		}

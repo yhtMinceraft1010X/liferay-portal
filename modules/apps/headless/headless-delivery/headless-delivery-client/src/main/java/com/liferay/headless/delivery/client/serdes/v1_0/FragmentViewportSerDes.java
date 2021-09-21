@@ -62,8 +62,11 @@ public class FragmentViewportSerDes {
 
 			sb.append("\"fragmentViewportStyle\": ");
 
-			sb.append(
-				String.valueOf(fragmentViewport.getFragmentViewportStyle()));
+			sb.append("\"");
+
+			sb.append(_escape(fragmentViewport.getFragmentViewportStyle()));
+
+			sb.append("\"");
 		}
 
 		if (fragmentViewport.getId() != null) {
@@ -139,8 +142,7 @@ public class FragmentViewportSerDes {
 			if (Objects.equals(jsonParserFieldName, "fragmentViewportStyle")) {
 				if (jsonParserFieldValue != null) {
 					fragmentViewport.setFragmentViewportStyle(
-						FragmentViewportStyleSerDes.toDTO(
-							(String)jsonParserFieldValue));
+						(Object)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

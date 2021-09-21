@@ -1,18 +1,18 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
-package com.liferay.headless.delivery.dto.v1_0;
+package com.liferay.search.experiences.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,72 +36,40 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Javier Gamarra
+ * @author Brian Wing Shun Chan
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a row viewport.", value = "RowViewport")
+@GraphQLName("Aggregation")
 @JsonFilter("Liferay.Vulcan")
-@Schema(
-	description = "Represents a row viewport.",
-	requiredProperties = {"id", "rowViewportDefinition"}
-)
-@XmlRootElement(name = "RowViewport")
-public class RowViewport implements Serializable {
+@XmlRootElement(name = "Aggregation")
+public class Aggregation implements Serializable {
 
-	public static RowViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowViewport.class, json);
+	public static Aggregation toDTO(String json) {
+		return ObjectMapperUtil.readValue(Aggregation.class, json);
 	}
 
-	@Schema(description = "The row vieport's ID.")
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The row vieport's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
-
-	@Schema(description = "The definition of the row vieport.")
+	@Schema
 	@Valid
-	public Object getRowViewportDefinition() {
-		return rowViewportDefinition;
+	public Map<String, Aggregations> getAggs() {
+		return aggs;
 	}
 
-	public void setRowViewportDefinition(Object rowViewportDefinition) {
-		this.rowViewportDefinition = rowViewportDefinition;
+	public void setAggs(Map<String, Aggregations> aggs) {
+		this.aggs = aggs;
 	}
 
 	@JsonIgnore
-	public void setRowViewportDefinition(
-		UnsafeSupplier<Object, Exception> rowViewportDefinitionUnsafeSupplier) {
+	public void setAggs(
+		UnsafeSupplier<Map<String, Aggregations>, Exception>
+			aggsUnsafeSupplier) {
 
 		try {
-			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
+			aggs = aggsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -111,10 +79,37 @@ public class RowViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The definition of the row vieport.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Object rowViewportDefinition;
+	protected Map<String, Aggregations> aggs;
+
+	@Schema
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@JsonIgnore
+	public void setEnabled(
+		UnsafeSupplier<Boolean, Exception> enabledUnsafeSupplier) {
+
+		try {
+			enabled = enabledUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enabled;
 
 	@Override
 	public boolean equals(Object object) {
@@ -122,13 +117,13 @@ public class RowViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewport)) {
+		if (!(object instanceof Aggregation)) {
 			return false;
 		}
 
-		RowViewport rowViewport = (RowViewport)object;
+		Aggregation aggregation = (Aggregation)object;
 
-		return Objects.equals(toString(), rowViewport.toString());
+		return Objects.equals(toString(), aggregation.toString());
 	}
 
 	@Override
@@ -143,28 +138,24 @@ public class RowViewport implements Serializable {
 
 		sb.append("{");
 
-		if (id != null) {
+		if (aggs != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"aggs\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
+			sb.append(_toJSON(aggs));
 		}
 
-		if (rowViewportDefinition != null) {
+		if (enabled != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"rowViewportDefinition\": ");
+			sb.append("\"enabled\": ");
 
-			sb.append(String.valueOf(rowViewportDefinition));
+			sb.append(enabled);
 		}
 
 		sb.append("}");
@@ -174,7 +165,7 @@ public class RowViewport implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewport",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Aggregation",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -56,16 +56,17 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Advanced advanced;
 
-	public Map<String, ?> getAggregations() {
+	public Map<String, Aggregations> getAggregations() {
 		return aggregations;
 	}
 
-	public void setAggregations(Map<String, ?> aggregations) {
+	public void setAggregations(Map<String, Aggregations> aggregations) {
 		this.aggregations = aggregations;
 	}
 
 	public void setAggregations(
-		UnsafeSupplier<Map<String, ?>, Exception> aggregationsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, Aggregations>, Exception>
+			aggregationsUnsafeSupplier) {
 
 		try {
 			aggregations = aggregationsUnsafeSupplier.get();
@@ -75,7 +76,7 @@ public class Configuration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Map<String, ?> aggregations;
+	protected Map<String, Aggregations> aggregations;
 
 	public Facet getFacet() {
 		return facet;
