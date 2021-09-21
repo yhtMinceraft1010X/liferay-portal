@@ -55,17 +55,17 @@ public class Query implements Serializable {
 
 	@Schema
 	@Valid
-	public Claus[] getClauses() {
+	public Clause[] getClauses() {
 		return clauses;
 	}
 
-	public void setClauses(Claus[] clauses) {
+	public void setClauses(Clause[] clauses) {
 		this.clauses = clauses;
 	}
 
 	@JsonIgnore
 	public void setClauses(
-		UnsafeSupplier<Claus[], Exception> clausesUnsafeSupplier) {
+		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
 
 		try {
 			clauses = clausesUnsafeSupplier.get();
@@ -80,7 +80,7 @@ public class Query implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Claus[] clauses;
+	protected Clause[] clauses;
 
 	@Schema
 	public Boolean getEnabled() {

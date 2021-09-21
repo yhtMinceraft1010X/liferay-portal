@@ -15,7 +15,7 @@
 package com.liferay.search.experiences.rest.client.dto.v1_0;
 
 import com.liferay.search.experiences.rest.client.function.UnsafeSupplier;
-import com.liferay.search.experiences.rest.client.serdes.v1_0.ClausSerDes;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.ClauseSerDes;
 
 import java.io.Serializable;
 
@@ -28,10 +28,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class Claus implements Cloneable, Serializable {
+public class Clause implements Cloneable, Serializable {
 
-	public static Claus toDTO(String json) {
-		return ClausSerDes.toDTO(json);
+	public static Clause toDTO(String json) {
+		return ClauseSerDes.toDTO(json);
 	}
 
 	public String getContext() {
@@ -98,8 +98,8 @@ public class Claus implements Cloneable, Serializable {
 	protected String queryJSON;
 
 	@Override
-	public Claus clone() throws CloneNotSupportedException {
-		return (Claus)super.clone();
+	public Clause clone() throws CloneNotSupportedException {
+		return (Clause)super.clone();
 	}
 
 	@Override
@@ -108,13 +108,13 @@ public class Claus implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Claus)) {
+		if (!(object instanceof Clause)) {
 			return false;
 		}
 
-		Claus claus = (Claus)object;
+		Clause clause = (Clause)object;
 
-		return Objects.equals(toString(), claus.toString());
+		return Objects.equals(toString(), clause.toString());
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class Claus implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ClausSerDes.toJSON(this);
+		return ClauseSerDes.toJSON(this);
 	}
 
 }

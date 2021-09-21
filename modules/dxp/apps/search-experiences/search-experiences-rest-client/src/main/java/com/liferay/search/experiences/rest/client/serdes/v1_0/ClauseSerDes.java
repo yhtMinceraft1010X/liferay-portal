@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Claus;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ClausSerDes {
+public class ClauseSerDes {
 
-	public static Claus toDTO(String json) {
-		ClausJSONParser clausJSONParser = new ClausJSONParser();
+	public static Clause toDTO(String json) {
+		ClauseJSONParser clauseJSONParser = new ClauseJSONParser();
 
-		return clausJSONParser.parseToDTO(json);
+		return clauseJSONParser.parseToDTO(json);
 	}
 
-	public static Claus[] toDTOs(String json) {
-		ClausJSONParser clausJSONParser = new ClausJSONParser();
+	public static Clause[] toDTOs(String json) {
+		ClauseJSONParser clauseJSONParser = new ClauseJSONParser();
 
-		return clausJSONParser.parseToDTOs(json);
+		return clauseJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(Claus claus) {
-		if (claus == null) {
+	public static String toJSON(Clause clause) {
+		if (clause == null) {
 			return "null";
 		}
 
@@ -53,7 +53,7 @@ public class ClausSerDes {
 
 		sb.append("{");
 
-		if (claus.getContext() != null) {
+		if (clause.getContext() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -62,12 +62,12 @@ public class ClausSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(claus.getContext()));
+			sb.append(_escape(clause.getContext()));
 
 			sb.append("\"");
 		}
 
-		if (claus.getOccur() != null) {
+		if (clause.getOccur() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -76,12 +76,12 @@ public class ClausSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(claus.getOccur()));
+			sb.append(_escape(clause.getOccur()));
 
 			sb.append("\"");
 		}
 
-		if (claus.getQueryJSON() != null) {
+		if (clause.getQueryJSON() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -90,7 +90,7 @@ public class ClausSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(claus.getQueryJSON()));
+			sb.append(_escape(clause.getQueryJSON()));
 
 			sb.append("\"");
 		}
@@ -101,72 +101,72 @@ public class ClausSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ClausJSONParser clausJSONParser = new ClausJSONParser();
+		ClauseJSONParser clauseJSONParser = new ClauseJSONParser();
 
-		return clausJSONParser.parseToMap(json);
+		return clauseJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(Claus claus) {
-		if (claus == null) {
+	public static Map<String, String> toMap(Clause clause) {
+		if (clause == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (claus.getContext() == null) {
+		if (clause.getContext() == null) {
 			map.put("context", null);
 		}
 		else {
-			map.put("context", String.valueOf(claus.getContext()));
+			map.put("context", String.valueOf(clause.getContext()));
 		}
 
-		if (claus.getOccur() == null) {
+		if (clause.getOccur() == null) {
 			map.put("occur", null);
 		}
 		else {
-			map.put("occur", String.valueOf(claus.getOccur()));
+			map.put("occur", String.valueOf(clause.getOccur()));
 		}
 
-		if (claus.getQueryJSON() == null) {
+		if (clause.getQueryJSON() == null) {
 			map.put("queryJSON", null);
 		}
 		else {
-			map.put("queryJSON", String.valueOf(claus.getQueryJSON()));
+			map.put("queryJSON", String.valueOf(clause.getQueryJSON()));
 		}
 
 		return map;
 	}
 
-	public static class ClausJSONParser extends BaseJSONParser<Claus> {
+	public static class ClauseJSONParser extends BaseJSONParser<Clause> {
 
 		@Override
-		protected Claus createDTO() {
-			return new Claus();
+		protected Clause createDTO() {
+			return new Clause();
 		}
 
 		@Override
-		protected Claus[] createDTOArray(int size) {
-			return new Claus[size];
+		protected Clause[] createDTOArray(int size) {
+			return new Clause[size];
 		}
 
 		@Override
 		protected void setField(
-			Claus claus, String jsonParserFieldName,
+			Clause clause, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "context")) {
 				if (jsonParserFieldValue != null) {
-					claus.setContext((String)jsonParserFieldValue);
+					clause.setContext((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "occur")) {
 				if (jsonParserFieldValue != null) {
-					claus.setOccur((String)jsonParserFieldValue);
+					clause.setOccur((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "queryJSON")) {
 				if (jsonParserFieldValue != null) {
-					claus.setQueryJSON((String)jsonParserFieldValue);
+					clause.setQueryJSON((String)jsonParserFieldValue);
 				}
 			}
 		}

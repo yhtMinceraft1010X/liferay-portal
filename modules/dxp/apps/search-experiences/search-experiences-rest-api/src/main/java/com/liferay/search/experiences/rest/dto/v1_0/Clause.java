@@ -42,13 +42,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Claus")
+@GraphQLName("Clause")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Claus")
-public class Claus implements Serializable {
+@XmlRootElement(name = "Clause")
+public class Clause implements Serializable {
 
-	public static Claus toDTO(String json) {
-		return ObjectMapperUtil.readValue(Claus.class, json);
+	public static Clause toDTO(String json) {
+		return ObjectMapperUtil.readValue(Clause.class, json);
 	}
 
 	@Schema
@@ -141,13 +141,13 @@ public class Claus implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Claus)) {
+		if (!(object instanceof Clause)) {
 			return false;
 		}
 
-		Claus claus = (Claus)object;
+		Clause clause = (Clause)object;
 
-		return Objects.equals(toString(), claus.toString());
+		return Objects.equals(toString(), clause.toString());
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public class Claus implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Claus",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Clause",
 		name = "x-class-name"
 	)
 	public String xClassName;

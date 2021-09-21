@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.rest.client.serdes.v1_0;
 
-import com.liferay.search.experiences.rest.client.dto.v1_0.Claus;
+import com.liferay.search.experiences.rest.client.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.client.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.client.json.BaseJSONParser;
 
@@ -143,9 +143,9 @@ public class QuerySerDes {
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> ClausSerDes.toDTO((String)object)
+							object -> ClauseSerDes.toDTO((String)object)
 						).toArray(
-							size -> new Claus[size]
+							size -> new Clause[size]
 						));
 				}
 			}

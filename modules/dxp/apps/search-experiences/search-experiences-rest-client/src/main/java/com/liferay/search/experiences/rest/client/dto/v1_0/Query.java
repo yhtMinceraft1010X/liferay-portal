@@ -34,16 +34,16 @@ public class Query implements Cloneable, Serializable {
 		return QuerySerDes.toDTO(json);
 	}
 
-	public Claus[] getClauses() {
+	public Clause[] getClauses() {
 		return clauses;
 	}
 
-	public void setClauses(Claus[] clauses) {
+	public void setClauses(Clause[] clauses) {
 		this.clauses = clauses;
 	}
 
 	public void setClauses(
-		UnsafeSupplier<Claus[], Exception> clausesUnsafeSupplier) {
+		UnsafeSupplier<Clause[], Exception> clausesUnsafeSupplier) {
 
 		try {
 			clauses = clausesUnsafeSupplier.get();
@@ -53,7 +53,7 @@ public class Query implements Cloneable, Serializable {
 		}
 	}
 
-	protected Claus[] clauses;
+	protected Clause[] clauses;
 
 	public Boolean getEnabled() {
 		return enabled;
