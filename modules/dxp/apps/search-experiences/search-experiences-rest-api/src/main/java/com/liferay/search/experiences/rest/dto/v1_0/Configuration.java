@@ -84,17 +84,17 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, Aggregations> getAggregations() {
+	public Map<String, Aggregation> getAggregations() {
 		return aggregations;
 	}
 
-	public void setAggregations(Map<String, Aggregations> aggregations) {
+	public void setAggregations(Map<String, Aggregation> aggregations) {
 		this.aggregations = aggregations;
 	}
 
 	@JsonIgnore
 	public void setAggregations(
-		UnsafeSupplier<Map<String, Aggregations>, Exception>
+		UnsafeSupplier<Map<String, Aggregation>, Exception>
 			aggregationsUnsafeSupplier) {
 
 		try {
@@ -110,7 +110,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Aggregations> aggregations;
+	protected Map<String, Aggregation> aggregations;
 
 	@Schema
 	@Valid
