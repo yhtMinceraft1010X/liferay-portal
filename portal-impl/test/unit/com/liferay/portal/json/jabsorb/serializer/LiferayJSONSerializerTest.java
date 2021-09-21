@@ -42,7 +42,7 @@ public class LiferayJSONSerializerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetClassFromHintSucceedsWhenClassCantBeLoadedFromContext()
+	public void testGetClassFromHintSucceedsWhenClassCannotBeLoadedFromContext()
 		throws Exception {
 
 		ClassLoaderPool.register(
