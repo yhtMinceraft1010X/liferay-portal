@@ -113,6 +113,9 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return _addCustomSXPParameterStringArray(
 				jsonObject, name, searchContext);
 		}
+		else if (type.equals("time_range")) {
+			return _addCustomSXPParameterTimeRange(name, searchContext);
+		}
 
 		return null;
 	}
@@ -367,6 +370,36 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return new StringArraySXPParameter(name, true, value);
+	}
+
+	private SXPParameter _addCustomSXPParameterTimeRange(
+		String name, SearchContext searchContext) {
+
+		String value = _getString(name, searchContext);
+
+		if (Validator.isBlank(value)) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		if (value.equals("last-day")) {
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+		}
+		else if (value.equals("last-hour")) {
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
+		}
+		else if (value.equals("last-month")) {
+			calendar.add(Calendar.MONTH, -1);
+		}
+		else if (value.equals("last-week")) {
+			calendar.add(Calendar.WEEK_OF_MONTH, -1);
+		}
+		else if (value.equals("last-year")) {
+			calendar.add(Calendar.YEAR, -1);
+		}
+
+		return new DateSXPParameter(name, true, calendar.getTime());
 	}
 
 	private void _addSXParameter(
