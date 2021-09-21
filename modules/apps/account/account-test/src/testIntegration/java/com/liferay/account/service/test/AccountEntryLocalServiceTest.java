@@ -541,36 +541,33 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetUserAccountEntriesOrderByColumn() throws Exception {
-		User accountEntryOwner = UserTestUtil.addUser();
+	public void testGetUserAccountEntriesOrderByComparator() throws Exception {
+		User user = UserTestUtil.addUser();
 
-		long accountEntryOwnerUserId = accountEntryOwner.getUserId();
-
-		List<AccountEntry> expectedList = Arrays.asList(
+		List<AccountEntry> accountEntries = Arrays.asList(
 			_addUserAccountEntry(
-				accountEntryOwnerUserId, RandomTestUtil.randomString(), null,
+				user.getUserId(), RandomTestUtil.randomString(), null,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, null),
 			_addUserAccountEntry(
-				accountEntryOwnerUserId, RandomTestUtil.randomString(), null,
+				user.getUserId(), RandomTestUtil.randomString(), null,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, null),
 			_addUserAccountEntry(
-				accountEntryOwnerUserId, RandomTestUtil.randomString(), null,
+				user.getUserId(), RandomTestUtil.randomString(), null,
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, null));
 
-		expectedList.sort(
+		accountEntries.sort(
 			Comparator.comparing(
 				AccountEntry::getName, String.CASE_INSENSITIVE_ORDER));
 
-		List<AccountEntry> actualList =
+		Assert.assertEquals(
+			accountEntries,
 			_accountEntryLocalService.getUserAccountEntries(
-				accountEntryOwnerUserId, null, null,
+				user.getUserId(), null, null,
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS},
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
 				OrderByComparatorFactoryUtil.create(
-					"AccountEntry", "name", true));
-
-		Assert.assertEquals(expectedList, actualList);
+					"AccountEntry", "name", true)));
 	}
 
 	@Test
