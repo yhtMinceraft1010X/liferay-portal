@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -104,7 +107,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	protected void activate() {
 		_sxpParameterContributors = new SXPParameterContributor[] {
 			new CommerceSXPParameterContributor(),
-			new ContextSXPParameterContributor(),
+			new ContextSXPParameterContributor(
+				_groupLocalService, _language, _layoutLocalService),
 			new SystemSXPParameterContributor(),
 			new TimeSXPParameterContributor(), new UserSXPParameterContributor()
 		};
@@ -628,7 +632,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private SXPParameterContributor[] _sxpParameterContributors;
 

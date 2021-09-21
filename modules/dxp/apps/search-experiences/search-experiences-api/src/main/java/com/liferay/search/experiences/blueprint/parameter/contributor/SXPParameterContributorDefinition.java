@@ -20,10 +20,11 @@ package com.liferay.search.experiences.blueprint.parameter.contributor;
 public class SXPParameterContributorDefinition {
 
 	public SXPParameterContributorDefinition(
-		String className, String languageKey, String name) {
+		Class<?> clazz, String languageKey, String name) {
 
-		_className = className;
 		_languageKey = languageKey;
+
+		_className = clazz.getName();
 
 		_templateVariable = "${" + name + "}";
 	}

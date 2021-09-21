@@ -70,10 +70,10 @@ public class CommerceSXPParameterContributor
 
 		return Arrays.asList(
 			new SXPParameterContributorDefinition(
-				LongSXPParameter.class.getName(), "account-group-ids",
+				LongSXPParameter.class, "account-group-ids",
 				"commerce.account_group_ids"),
 			new SXPParameterContributorDefinition(
-				LongSXPParameter.class.getName(), "channel-group-id",
+				LongSXPParameter.class, "channel-group-id",
 				"commerce.channel_group_id"));
 	}
 
