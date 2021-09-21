@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -110,7 +111,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			new ContextSXPParameterContributor(
 				_groupLocalService, _language, _layoutLocalService),
 			new SystemSXPParameterContributor(),
-			new TimeSXPParameterContributor(), new UserSXPParameterContributor()
+			new TimeSXPParameterContributor(_language, _userLocalService),
+			new UserSXPParameterContributor()
 		};
 	}
 
@@ -644,5 +646,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	private LayoutLocalService _layoutLocalService;
 
 	private SXPParameterContributor[] _sxpParameterContributors;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }
