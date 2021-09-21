@@ -553,7 +553,7 @@ public class ObjectEntryDisplayContext {
 
 				objectFieldOptional.ifPresent(
 					objectField -> {
-						_ddmFormFieldsColumnsSizeMap.put(
+						_objectLayoutColumnSizes.put(
 							objectField.getName(),
 							objectLayoutColumn.getSize());
 
@@ -594,7 +594,7 @@ public class ObjectEntryDisplayContext {
 							"fields", JSONUtil.put(ddmFormField.getName())
 						).put(
 							"size",
-							_ddmFormFieldsColumnsSizeMap.get(
+							_objectLayoutColumnSizes.get(
 								ddmFormField.getName())
 						))));
 		}
@@ -657,7 +657,7 @@ public class ObjectEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDisplayContext.class);
 
-	private final Map<String, Integer> _ddmFormFieldsColumnsSizeMap =
+	private final Map<String, Integer> _objectLayoutColumnSizes =
 		new HashMap<>();
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
