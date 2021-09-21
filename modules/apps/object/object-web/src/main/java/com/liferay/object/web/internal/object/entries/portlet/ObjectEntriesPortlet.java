@@ -74,12 +74,12 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectEntriesDisplayContext(
 				httpServletRequest,
-				_getRestContextPath(httpServletRequest, objectDefinition)));
+				_getRESTContextPath(httpServletRequest, objectDefinition)));
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	private String _getRestContextPath(
+	private String _getRESTContextPath(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
@@ -100,9 +100,9 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException, portalException);
 			}
-		}
 
-		return _restContextPath;
+			return _restContextPath;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
