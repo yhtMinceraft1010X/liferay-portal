@@ -88,11 +88,10 @@ public class RemoteAppAdminDisplayContext {
 		PortletCategory rootPortletCategory = (PortletCategory)WebAppPool.get(
 			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-		rootPortletCategory =
-			PortletCategoryUtil.getRelevantPortletCategory(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getCompanyId(), themeDisplay.getLayout(),
-				rootPortletCategory, themeDisplay.getLayoutTypePortlet());
+		rootPortletCategory = PortletCategoryUtil.getRelevantPortletCategory(
+			themeDisplay.getPermissionChecker(), themeDisplay.getCompanyId(),
+			themeDisplay.getLayout(), rootPortletCategory,
+			themeDisplay.getLayoutTypePortlet());
 
 		RemoteAppEntry remoteAppEntry =
 			(RemoteAppEntry)_renderRequest.getAttribute(
