@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -24,9 +23,9 @@ public interface SXPParameterData {
 
 	public String getKeywords();
 
-	public Optional<SXPParameter> getSXPParameterOptionalByName(String name);
+	public SXPParameter getSXPParameterByName(String name);
 
-	public Optional<SXPParameter> getSXPParameterOptionalByNameTemplateVariable(
+	public SXPParameter getSXPParameterByTemplateVariable(
 		String templateVariable);
 
 	public Set<SXPParameter> getSXPParameters();

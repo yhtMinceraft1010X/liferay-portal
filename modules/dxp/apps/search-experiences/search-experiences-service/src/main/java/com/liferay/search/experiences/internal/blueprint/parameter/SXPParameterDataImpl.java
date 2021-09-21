@@ -18,9 +18,7 @@ import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Petteri Karttunen
@@ -40,24 +38,29 @@ public class SXPParameterDataImpl implements SXPParameterData {
 	}
 
 	@Override
-	public Optional<SXPParameter> getSXPParameterOptionalByName(String name) {
-		Stream<SXPParameter> stream = _sxpParameters.stream();
+	public SXPParameter getSXPParameterByName(String name) {
+		for (SXPParameter sxpParameter : _sxpParameters) {
+			if (Objects.equals(sxpParameter.getName(), name)) {
+				return sxpParameter;
+			}
+		}
 
-		return stream.filter(
-			sxpParameter -> Objects.equals(sxpParameter.getName(), name)
-		).findFirst();
+		return null;
 	}
 
 	@Override
-	public Optional<SXPParameter> getSXPParameterOptionalByNameTemplateVariable(
+	public SXPParameter getSXPParameterByTemplateVariable(
 		String templateVariable) {
 
-		Stream<SXPParameter> stream = _sxpParameters.stream();
+		for (SXPParameter sxpParameter : _sxpParameters) {
+			if (Objects.equals(
+					sxpParameter.getTemplateVariable(), templateVariable)) {
 
-		return stream.filter(
-			sxpParameter -> Objects.equals(
-				sxpParameter.getTemplateVariable(), templateVariable)
-		).findFirst();
+				return sxpParameter;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
