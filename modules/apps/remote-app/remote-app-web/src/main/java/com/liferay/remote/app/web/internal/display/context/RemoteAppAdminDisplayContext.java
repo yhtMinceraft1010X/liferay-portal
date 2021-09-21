@@ -101,7 +101,7 @@ public class RemoteAppAdminDisplayContext {
 		String portletCategoryName = BeanPropertiesUtil.getString(
 			remoteAppEntry, "portletCategoryName", "category.remote-apps");
 
-		boolean categoryRemoteAppsFound = false;
+		boolean found = false;
 
 		for (PortletCategory portletCategory :
 				rootPortletCategory.getCategories()) {
@@ -116,11 +116,11 @@ public class RemoteAppAdminDisplayContext {
 			if (Objects.equals(
 					portletCategory.getName(), "category.remote-apps")) {
 
-				categoryRemoteAppsFound = true;
+				found = true;
 			}
 		}
 
-		if (!categoryRemoteAppsFound) {
+		if (!found) {
 			selectOptions.add(
 				new SelectOption(
 					LanguageUtil.get(
