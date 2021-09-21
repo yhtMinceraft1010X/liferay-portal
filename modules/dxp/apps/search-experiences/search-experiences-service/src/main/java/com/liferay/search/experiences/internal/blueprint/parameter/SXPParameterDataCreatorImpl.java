@@ -82,58 +82,71 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new SXPParameterDataImpl(keywords, sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameter(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addCustomSXPParameters(
+		JSONArray jsonArray, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
-		String type = jsonObject.getString("type");
-
-		if (type.equals("date")) {
-			return _addCustomSXPParameterDate(jsonObject, name, searchContext);
-		}
-		else if (type.equals("double")) {
-			return _addCustomSXPParameterDouble(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("float")) {
-			return _addCustomSXPParameterFloat(jsonObject, name, searchContext);
-		}
-		else if (type.equals("integer")) {
-			return _addCustomSXPParameterInteger(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("integer_array")) {
-			return _addCustomSXPParameterIntegerArray(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("long")) {
-			return _addCustomSXPParameterLong(jsonObject, name, searchContext);
-		}
-		else if (type.equals("long_array")) {
-			return _addCustomSXPParameterLongArray(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("string")) {
-			return _addCustomSXPParameterString(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("string_array")) {
-			return _addCustomSXPParameterStringArray(
-				jsonObject, name, searchContext);
-		}
-		else if (type.equals("time_range")) {
-			return _addCustomSXPParameterTimeRange(name, searchContext);
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
+			return;
 		}
 
-		return null;
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String name = jsonObject.getString("parameter_name");
+
+			String type = jsonObject.getString("type");
+
+			if (type.equals("date")) {
+				_addDateSXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("double")) {
+				_addDoubleSXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("float")) {
+				_addFloatSXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("integer")) {
+				_addIntegerXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("integer_array")) {
+				_addIntegerArraySXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("long")) {
+				_addLongSXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("long_array")) {
+				_addLongArraySXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("string")) {
+				_addStringSXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("string_array")) {
+				_addStringArraySXPParameter(
+					jsonObject, name, searchContext, sxpParameters);
+			}
+			else if (type.equals("time_range")) {
+				_addTimeRangeSXPParameter(name, searchContext, sxpParameters);
+			}
+		}
 	}
 
-	private SXPParameter _addCustomSXPParameterDate(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addDateSXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
 		String dateString = _getString(name, searchContext);
 
 		if (Validator.isBlank(dateString)) {
-			return null;
+			return;
 		}
 
 		LocalDate localDate = LocalDate.parse(
@@ -152,14 +165,15 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		Date date = calendar.getTime();
 
 		if (date == null) {
-			return null;
+			return;
 		}
 
-		return new DateSXPParameter(name, true, date);
+		_addSXPParameter(new DateSXPParameter(name, true, date), sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameterDouble(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addDoubleSXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
 		Double value = _getDouble(name, searchContext);
 
@@ -168,7 +182,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		if (value == null) {
-			return null;
+			return;
 		}
 
 		double minValue = GetterUtil.getDouble(
@@ -186,11 +200,13 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		return new DoubleSXPParameter(name, true, value);
+		_addSXPParameter(
+			new DoubleSXPParameter(name, true, value), sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameterFloat(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addFloatSXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
 		Float value = _getFloat(name, searchContext);
 
@@ -199,7 +215,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		if (value == null) {
-			return null;
+			return;
 		}
 
 		float minValue = GetterUtil.getFloat(
@@ -217,11 +233,38 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		return new FloatSXPParameter(name, true, value);
+		_addSXPParameter(
+			new FloatSXPParameter(name, true, value), sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameterInteger(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addIntegerArraySXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		Integer[] value = _getIntegerArray(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			Stream<String> stream = Arrays.stream(
+				JSONUtil.toStringArray(jsonObject.getJSONArray("default")));
+
+			value = stream.map(
+				GetterUtil::getInteger
+			).toArray(
+				Integer[]::new
+			);
+		}
+
+		if (ArrayUtil.isEmpty(value)) {
+			return;
+		}
+
+		_addSXPParameter(
+			new IntegerArraySXPParameter(name, true, value), sxpParameters);
+	}
+
+	private void _addIntegerXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
 		Integer value = _getInteger(name, searchContext);
 
@@ -230,7 +273,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		if (value == null) {
-			return null;
+			return;
 		}
 
 		int minValue = GetterUtil.getInteger(
@@ -248,34 +291,38 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		return new IntegerSXPParameter(name, true, value);
+		_addSXPParameter(
+			new IntegerSXPParameter(name, true, value), sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameterIntegerArray(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addLongArraySXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
-		Integer[] value = _getIntegerArray(name, searchContext);
+		Long[] value = _getLongArray(name, searchContext);
 
 		if ((value == null) && jsonObject.has("default")) {
 			Stream<String> stream = Arrays.stream(
 				JSONUtil.toStringArray(jsonObject.getJSONArray("default")));
 
 			value = stream.map(
-				GetterUtil::getInteger
+				GetterUtil::getLong
 			).toArray(
-				Integer[]::new
+				Long[]::new
 			);
 		}
 
 		if (ArrayUtil.isEmpty(value)) {
-			return null;
+			return;
 		}
 
-		return new IntegerArraySXPParameter(name, true, value);
+		_addSXPParameter(
+			new LongArraySXPParameter(name, true, value), sxpParameters);
 	}
 
-	private SXPParameter _addCustomSXPParameterLong(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
+	private void _addLongSXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
 
 		Long value = _getLong(name, searchContext);
 
@@ -284,7 +331,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		if (value == null) {
-			return null;
+			return;
 		}
 
 		long minValue = GetterUtil.getLong(
@@ -302,111 +349,8 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			}
 		}
 
-		return new LongSXPParameter(name, true, value);
-	}
-
-	private SXPParameter _addCustomSXPParameterLongArray(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
-
-		Long[] value = _getLongArray(name, searchContext);
-
-		if ((value == null) && jsonObject.has("default")) {
-			Stream<String> stream = Arrays.stream(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("default")));
-
-			value = stream.map(
-				GetterUtil::getLong
-			).toArray(
-				Long[]::new
-			);
-		}
-
-		if (ArrayUtil.isEmpty(value)) {
-			return null;
-		}
-
-		return new LongArraySXPParameter(name, true, value);
-	}
-
-	private void _addCustomSXPParameters(
-		JSONArray jsonArray, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
-
-		if ((jsonArray == null) || (jsonArray.length() == 0)) {
-			return;
-		}
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			SXPParameter sxpParameter = _addCustomSXPParameter(
-				jsonObject, jsonObject.getString("parameter_name"),
-				searchContext);
-
-			_addSXParameter(sxpParameter, sxpParameters);
-		}
-	}
-
-	private SXPParameter _addCustomSXPParameterString(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
-
-		String value = _getString(name, searchContext);
-
-		if (Validator.isBlank(value) && jsonObject.has("default")) {
-			value = GetterUtil.getString(jsonObject.getString("default"));
-		}
-
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
-		return new StringSXPParameter(name, true, value);
-	}
-
-	private SXPParameter _addCustomSXPParameterStringArray(
-		JSONObject jsonObject, String name, SearchContext searchContext) {
-
-		String[] value = _getStringArray(name, searchContext);
-
-		if ((value == null) && jsonObject.has("default")) {
-			value = JSONUtil.toStringArray(jsonObject.getJSONArray("default"));
-		}
-
-		if (ArrayUtil.isEmpty(value)) {
-			return null;
-		}
-
-		return new StringArraySXPParameter(name, true, value);
-	}
-
-	private SXPParameter _addCustomSXPParameterTimeRange(
-		String name, SearchContext searchContext) {
-
-		String value = _getString(name, searchContext);
-
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		if (value.equals("last-day")) {
-			calendar.add(Calendar.DAY_OF_MONTH, -1);
-		}
-		else if (value.equals("last-hour")) {
-			calendar.add(Calendar.HOUR_OF_DAY, -1);
-		}
-		else if (value.equals("last-month")) {
-			calendar.add(Calendar.MONTH, -1);
-		}
-		else if (value.equals("last-week")) {
-			calendar.add(Calendar.WEEK_OF_MONTH, -1);
-		}
-		else if (value.equals("last-year")) {
-			calendar.add(Calendar.YEAR, -1);
-		}
-
-		return new DateSXPParameter(name, true, calendar.getTime());
+		_addSXPParameter(
+			new LongSXPParameter(name, true, value), sxpParameters);
 	}
 
 	private void _addPageSXPParameter(
@@ -466,7 +410,43 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 	}
 
-	private void _addSXParameter(
+	private void _addStringArraySXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		String[] value = _getStringArray(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = JSONUtil.toStringArray(jsonObject.getJSONArray("default"));
+		}
+
+		if (ArrayUtil.isEmpty(value)) {
+			return;
+		}
+
+		_addSXPParameter(
+			new StringArraySXPParameter(name, true, value), sxpParameters);
+	}
+
+	private void _addStringSXPParameter(
+		JSONObject jsonObject, String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		String value = _getString(name, searchContext);
+
+		if (Validator.isBlank(value) && jsonObject.has("default")) {
+			value = GetterUtil.getString(jsonObject.getString("default"));
+		}
+
+		if (Validator.isBlank(value)) {
+			return;
+		}
+
+		_addSXPParameter(
+			new StringSXPParameter(name, true, value), sxpParameters);
+	}
+
+	private void _addSXPParameter(
 		SXPParameter sxpParameter, List<SXPParameter> sxpParameters) {
 
 		if (sxpParameter == null) {
@@ -482,6 +462,39 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		sxpParameters.add(sxpParameter);
+	}
+
+	private void _addTimeRangeSXPParameter(
+		String name, SearchContext searchContext,
+		List<SXPParameter> sxpParameters) {
+
+		String value = _getString(name, searchContext);
+
+		if (Validator.isBlank(value)) {
+			return;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		if (value.equals("last-day")) {
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+		}
+		else if (value.equals("last-hour")) {
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
+		}
+		else if (value.equals("last-month")) {
+			calendar.add(Calendar.MONTH, -1);
+		}
+		else if (value.equals("last-week")) {
+			calendar.add(Calendar.WEEK_OF_MONTH, -1);
+		}
+		else if (value.equals("last-year")) {
+			calendar.add(Calendar.YEAR, -1);
+		}
+
+		_addSXPParameter(
+			new DateSXPParameter(name, true, calendar.getTime()),
+			sxpParameters);
 	}
 
 	private Double _getDouble(String name, SearchContext searchContext) {
