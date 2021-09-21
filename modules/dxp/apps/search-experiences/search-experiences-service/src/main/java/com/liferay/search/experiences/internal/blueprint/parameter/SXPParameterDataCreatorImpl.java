@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
@@ -81,6 +82,9 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return _addCustomSXPParameterDouble(
 				jsonObject, name, searchContext);
 		}
+		else if (type.equals("float")) {
+			return _addCustomSXPParameterFloat(jsonObject, name, searchContext);
+		}
 		else if (type.equals("string")) {
 			return _addCustomSXPParameterString(
 				jsonObject, name, searchContext);
@@ -130,7 +134,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		Double value = _getDouble(name, searchContext);
 
 		if ((value == null) && jsonObject.has("default")) {
-			value = jsonObject.getDouble("default");
+			value = GetterUtil.getDouble(jsonObject.getString("default"));
 		}
 
 		if (value == null) {
@@ -153,6 +157,37 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return new DoubleSXPParameter(name, true, value);
+	}
+
+	private SXPParameter _addCustomSXPParameterFloat(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Float value = _getFloat(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = GetterUtil.getFloat(jsonObject.getString("default"));
+		}
+
+		if (value == null) {
+			return null;
+		}
+
+		float minValue = GetterUtil.getFloat(
+			jsonObject.getString("min_value"), Float.MIN_VALUE);
+
+		if (Float.compare(value, minValue) < 0) {
+			value = minValue;
+		}
+		else {
+			float maxValue = GetterUtil.getFloat(
+				jsonObject.getString("max_value"), Float.MAX_VALUE);
+
+			if (Float.compare(value, maxValue) > 0) {
+				value = maxValue;
+			}
+		}
+
+		return new FloatSXPParameter(name, true, value);
 	}
 
 	private void _addCustomSXPParameters(
@@ -180,10 +215,10 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		String value = _getString(name, searchContext);
 
 		if ((value == null) && jsonObject.has("default")) {
-			value = jsonObject.getString("default");
+			value = GetterUtil.getString(jsonObject.getString("default"));
 		}
 
-		if (value == null) {
+		if (Validator.isBlank(value)) {
 			return null;
 		}
 
@@ -232,6 +267,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return GetterUtil.getDouble(value);
+	}
+
+	private Float _getFloat(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if (Objects.isNull(value)) {
+			return null;
+		}
+
+		return GetterUtil.getFloat(value);
 	}
 
 	private SearchContext _getSearchContext(
