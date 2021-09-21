@@ -64,56 +64,59 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testEnhance() {
-		SXPBlueprint sxpBlueprint = new SXPBlueprint();
+		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
+			{
+				configuration = new Configuration() {
+					{
+						aggregations = HashMapBuilder.put(
+							"avg-test",
+							() -> {
+								Aggregation aggregation = new Aggregation();
 
-		Configuration configuration = new Configuration();
+								Avg avg = new Avg();
 
-		configuration.setAggregations(
-			HashMapBuilder.put(
-				"avg-test",
-				() -> {
-					Aggregation aggregation = new Aggregation();
+								avg.setField(RandomTestUtil.randomString());
 
-					Avg avg = new Avg();
+								aggregation.setAvg(avg);
 
-					avg.setField(RandomTestUtil.randomString());
+								return aggregation;
+							}
+						).put(
+							"cardinality-test",
+							() -> {
+								Aggregation aggregation = new Aggregation();
 
-					aggregation.setAvg(avg);
+								Cardinality cardinality = new Cardinality();
 
-					return aggregation;
-				}
-			).put(
-				"cardinality-test",
-				() -> {
-					Aggregation aggregation = new Aggregation();
+								cardinality.setField(RandomTestUtil.randomString());
+								cardinality.setPrecision_threshold(
+									RandomTestUtil.randomInt());
 
-					Cardinality cardinality = new Cardinality();
+								aggregation.setCardinality(cardinality);
 
-					cardinality.setField(RandomTestUtil.randomString());
-					cardinality.setPrecision_threshold(
-						RandomTestUtil.randomInt());
-
-					aggregation.setCardinality(cardinality);
-
-					return aggregation;
-				}
-			).build());
-		configuration.setGeneral(new General());
-
-		Query query1 = new Query();
-
-		Clause clause = new Clause();
-
-		clause.setQueryJSON("{ \"term\": { \"status\": 0 } }");
-		clause.setOccur("must_not");
-
-		query1.setClauses(new Clause[] {clause});
-
-		query1.setEnabled(true);
-
-		configuration.setQueries(new Query[] {query1});
-
-		sxpBlueprint.setConfiguration(configuration);
+								return aggregation;
+							}
+						).build();
+						general = new General();
+						queries = new Query[] {
+							new Query() {
+								{
+									clauses = new Clause[] {
+										new Clause() {
+											{
+												queryJSON = "{ \"term\": { \"status\": 0 } }";
+												occur = "must_not";
+											}
+										}
+									};
+									enabled = true;
+								}
+							}
+						};
+					}
+				};
+			}
+		};
 
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			new SXPBlueprintSearchRequestEnhancer(
