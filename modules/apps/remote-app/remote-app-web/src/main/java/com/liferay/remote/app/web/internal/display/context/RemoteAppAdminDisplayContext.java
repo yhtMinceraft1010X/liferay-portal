@@ -80,6 +80,8 @@ public class RemoteAppAdminDisplayContext {
 	public List<SelectOption> getPortletCategoryNameSelectOptions()
 		throws Exception {
 
+		List<SelectOption> selectOptions = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -91,8 +93,6 @@ public class RemoteAppAdminDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getCompanyId(), themeDisplay.getLayout(),
 				rootPortletCategory, themeDisplay.getLayoutTypePortlet());
-
-		List<SelectOption> selectOptions = new ArrayList<>();
 
 		RemoteAppEntry remoteAppEntry =
 			(RemoteAppEntry)_renderRequest.getAttribute(
