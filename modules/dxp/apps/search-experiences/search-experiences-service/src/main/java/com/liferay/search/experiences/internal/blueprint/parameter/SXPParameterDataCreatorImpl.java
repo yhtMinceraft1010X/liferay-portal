@@ -27,6 +27,9 @@ import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.IntegerArraySXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongArraySXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
@@ -87,8 +90,19 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		else if (type.equals("float")) {
 			return _addCustomSXPParameterFloat(jsonObject, name, searchContext);
 		}
+		else if (type.equals("integer")) {
+			return _addCustomSXPParameterInteger(
+				jsonObject, name, searchContext);
+		}
 		else if (type.equals("integer_array")) {
 			return _addCustomSXPParameterIntegerArray(
+				jsonObject, name, searchContext);
+		}
+		else if (type.equals("long")) {
+			return _addCustomSXPParameterLong(jsonObject, name, searchContext);
+		}
+		else if (type.equals("long_array")) {
+			return _addCustomSXPParameterLongArray(
 				jsonObject, name, searchContext);
 		}
 		else if (type.equals("string")) {
@@ -196,6 +210,37 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new FloatSXPParameter(name, true, value);
 	}
 
+	private SXPParameter _addCustomSXPParameterInteger(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Integer value = _getInteger(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = GetterUtil.getInteger(jsonObject.getString("default"));
+		}
+
+		if (value == null) {
+			return null;
+		}
+
+		int minValue = GetterUtil.getInteger(
+			jsonObject.getString("min_value"), Integer.MIN_VALUE);
+
+		if (Integer.compare(value, minValue) < 0) {
+			value = minValue;
+		}
+		else {
+			int maxValue = GetterUtil.getInteger(
+				jsonObject.getString("max_value"), Integer.MAX_VALUE);
+
+			if (Integer.compare(value, maxValue) > 0) {
+				value = maxValue;
+			}
+		}
+
+		return new IntegerSXPParameter(name, true, value);
+	}
+
 	private SXPParameter _addCustomSXPParameterIntegerArray(
 		JSONObject jsonObject, String name, SearchContext searchContext) {
 
@@ -217,6 +262,60 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return new IntegerArraySXPParameter(name, true, value);
+	}
+
+	private SXPParameter _addCustomSXPParameterLong(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Long value = _getLong(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			value = GetterUtil.getLong(jsonObject.getString("default"));
+		}
+
+		if (value == null) {
+			return null;
+		}
+
+		long minValue = GetterUtil.getLong(
+			jsonObject.getString("min_value"), Long.MIN_VALUE);
+
+		if (Long.compare(value, minValue) < 0) {
+			value = minValue;
+		}
+		else {
+			long maxValue = GetterUtil.getLong(
+				jsonObject.getString("max_value"), Long.MAX_VALUE);
+
+			if (Long.compare(value, maxValue) > 0) {
+				value = maxValue;
+			}
+		}
+
+		return new LongSXPParameter(name, true, value);
+	}
+
+	private SXPParameter _addCustomSXPParameterLongArray(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Long[] value = _getLongArray(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			Stream<String> stream = Arrays.stream(
+				JSONUtil.toStringArray(jsonObject.getJSONArray("default")));
+
+			value = stream.map(
+				GetterUtil::getLong
+			).toArray(
+				Long[]::new
+			);
+		}
+
+		if (ArrayUtil.isEmpty(value)) {
+			return null;
+		}
+
+		return new LongArraySXPParameter(name, true, value);
 	}
 
 	private void _addCustomSXPParameters(
@@ -308,6 +407,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return GetterUtil.getFloat(value);
 	}
 
+	private Integer _getInteger(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if (Objects.isNull(value)) {
+			return null;
+		}
+
+		return GetterUtil.getInteger(value);
+	}
+
 	private Integer[] _getIntegerArray(
 		String name, SearchContext searchContext) {
 
@@ -317,7 +426,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			return null;
 		}
 
-		if (value instanceof int[]) {
+		if (value instanceof Integer[]) {
+			Integer[] array = (Integer[])value;
+
+			if (ArrayUtil.isEmpty(array)) {
+				return null;
+			}
+
+			return array;
+		}
+		else if (value instanceof int[]) {
 			int[] array = (int[])value;
 
 			if (ArrayUtil.isEmpty(array)) {
@@ -326,14 +444,44 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 			return ArrayUtil.toArray(array);
 		}
-		else if (value instanceof Integer[]) {
-			Integer[] array = (Integer[])value;
+
+		return null;
+	}
+
+	private Long _getLong(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if (Objects.isNull(value)) {
+			return null;
+		}
+
+		return GetterUtil.getLong(value);
+	}
+
+	private Long[] _getLongArray(String name, SearchContext searchContext) {
+		Object value = searchContext.getAttribute(name);
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof Long[]) {
+			Long[] array = (Long[])value;
 
 			if (ArrayUtil.isEmpty(array)) {
 				return null;
 			}
 
 			return array;
+		}
+		else if (value instanceof long[]) {
+			long[] array = (long[])value;
+
+			if (ArrayUtil.isEmpty(array)) {
+				return null;
+			}
+
+			return ArrayUtil.toArray(array);
 		}
 
 		return null;
