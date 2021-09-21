@@ -594,8 +594,7 @@ public class ObjectEntryDisplayContext {
 							"fields", JSONUtil.put(ddmFormField.getName())
 						).put(
 							"size",
-							_objectLayoutColumnSizes.get(
-								ddmFormField.getName())
+							_objectLayoutColumnSizes.get(ddmFormField.getName())
 						))));
 		}
 
@@ -657,8 +656,6 @@ public class ObjectEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDisplayContext.class);
 
-	private final Map<String, Integer> _objectLayoutColumnSizes =
-		new HashMap<>();
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
@@ -666,6 +663,8 @@ public class ObjectEntryDisplayContext {
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final Map<String, Integer> _objectLayoutColumnSizes =
+		new HashMap<>();
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
