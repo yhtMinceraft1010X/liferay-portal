@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +53,7 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.S
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.segments.SegmentsEntryRetriever;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -111,7 +116,10 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 				_groupLocalService, _language, _layoutLocalService),
 			new SystemSXPParameterContributor(),
 			new TimeSXPParameterContributor(_language, _userLocalService),
-			new UserSXPParameterContributor()
+			new UserSXPParameterContributor(
+				_language, _roleLocalService, _segmentsEntryRetriever,
+				_userGroupGroupRoleLocalService, _userGroupLocalService,
+				_userGroupRoleLocalService, _userLocalService)
 		};
 	}
 
@@ -640,7 +648,22 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
 	private SXPParameterContributor[] _sxpParameterContributors;
+
+	@Reference
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
