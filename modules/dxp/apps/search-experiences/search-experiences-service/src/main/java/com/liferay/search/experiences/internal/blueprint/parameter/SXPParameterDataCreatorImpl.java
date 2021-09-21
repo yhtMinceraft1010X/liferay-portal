@@ -73,10 +73,12 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		_addCustomSXPParameters(
 			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
-		_addPageSXPParameter(
-			jsonObject.getJSONObject("page"), searchContext, sxpParameters);
-		_addSizeSXPParameter(
-			jsonObject.getJSONObject("size"), searchContext, sxpParameters);
+		_addIntegerSXPParameter(
+			jsonObject.getJSONObject("page"), "page", searchContext,
+			sxpParameters);
+		_addIntegerSXPParameter(
+			jsonObject.getJSONObject("size"), "size", searchContext,
+			sxpParameters);
 		_addSortSXPParameter(searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterDataImpl(keywords, sxpParameters);
@@ -110,7 +112,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 					jsonObject, name, searchContext, sxpParameters);
 			}
 			else if (type.equals("integer")) {
-				_addIntegerXPParameter(
+				_addIntegerSXPParameter(
 					jsonObject, name, searchContext, sxpParameters);
 			}
 			else if (type.equals("integer_array")) {
@@ -262,7 +264,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 			new IntegerArraySXPParameter(name, true, value), sxpParameters);
 	}
 
-	private void _addIntegerXPParameter(
+	private void _addIntegerSXPParameter(
 		JSONObject jsonObject, String name, SearchContext searchContext,
 		List<SXPParameter> sxpParameters) {
 
@@ -351,32 +353,6 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		_addSXPParameter(
 			new LongSXPParameter(name, true, value), sxpParameters);
-	}
-
-	private void _addPageSXPParameter(
-		JSONObject jsonObject, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
-
-		String name = jsonObject.getString("parameter_name");
-
-		Integer value = _getInteger(name, searchContext);
-
-		if (value != null) {
-			sxpParameters.add(new IntegerSXPParameter(name, true, value));
-		}
-	}
-
-	private void _addSizeSXPParameter(
-		JSONObject jsonObject, SearchContext searchContext,
-		List<SXPParameter> sxpParameters) {
-
-		String name = jsonObject.getString("parameter_name");
-
-		Integer value = _getInteger(name, searchContext);
-
-		if (value != null) {
-			sxpParameters.add(new IntegerSXPParameter(name, true, value));
-		}
 	}
 
 	private void _addSortSXPParameter(
