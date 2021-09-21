@@ -26,6 +26,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.FloatSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.IntegerArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
@@ -37,12 +38,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -83,6 +86,10 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 		else if (type.equals("float")) {
 			return _addCustomSXPParameterFloat(jsonObject, name, searchContext);
+		}
+		else if (type.equals("integer_array")) {
+			return _addCustomSXPParameterIntegerArray(
+				jsonObject, name, searchContext);
 		}
 		else if (type.equals("string")) {
 			return _addCustomSXPParameterString(
@@ -189,6 +196,29 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		return new FloatSXPParameter(name, true, value);
 	}
 
+	private SXPParameter _addCustomSXPParameterIntegerArray(
+		JSONObject jsonObject, String name, SearchContext searchContext) {
+
+		Integer[] value = _getIntegerArray(name, searchContext);
+
+		if ((value == null) && jsonObject.has("default")) {
+			Stream<String> stream = Arrays.stream(
+				JSONUtil.toStringArray(jsonObject.getJSONArray("default")));
+
+			value = stream.map(
+				GetterUtil::getInteger
+			).toArray(
+				Integer[]::new
+			);
+		}
+
+		if (ArrayUtil.isEmpty(value)) {
+			return null;
+		}
+
+		return new IntegerArraySXPParameter(name, true, value);
+	}
+
 	private void _addCustomSXPParameters(
 		JSONArray jsonArray, SearchContext searchContext,
 		List<SXPParameter> sxpParameters) {
@@ -276,6 +306,37 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		}
 
 		return GetterUtil.getFloat(value);
+	}
+
+	private Integer[] _getIntegerArray(
+		String name, SearchContext searchContext) {
+
+		Object value = searchContext.getAttribute(name);
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof int[]) {
+			int[] array = (int[])value;
+
+			if (ArrayUtil.isEmpty(array)) {
+				return null;
+			}
+
+			return ArrayUtil.toArray(array);
+		}
+		else if (value instanceof Integer[]) {
+			Integer[] array = (Integer[])value;
+
+			if (ArrayUtil.isEmpty(array)) {
+				return null;
+			}
+
+			return array;
+		}
+
+		return null;
 	}
 
 	private SearchContext _getSearchContext(
