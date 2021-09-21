@@ -1,16 +1,17 @@
 components:
     schemas:
+        Aggregation:
+            properties:
+                aggs:
+                    additionalProperties:
+                        $ref: "#/components/schemas/Aggregations"
+                    type: object
+                enabled:
+                    type: boolean
         Aggregations:
             properties:
                 aggregation:
-                    properties:
-                        aggs:
-                            additionalProperties:
-                                $ref: "#/components/schemas/Aggregations"
-                            type: object
-                        enabled:
-                            type: boolean
-                    type: object
+                    $ref: "#/components/schemas/Aggregation"
                 aggregations:
                     properties:
                         aggs:
@@ -56,7 +57,7 @@ components:
                             type: object
                         aggregations:
                             additionalProperties:
-                                $ref: "#/components/schemas/Aggregations"
+                                $ref: "#/components/schemas/Aggregation"
                             type: object
                         facet:
                             properties:

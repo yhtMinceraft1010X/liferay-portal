@@ -19,7 +19,8 @@ import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.search.experiences.rest.dto.v1_0.Claus;
+import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
+import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.General;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
@@ -52,19 +53,19 @@ public class SXPBlueprintSearchRequestEnhancer {
 		processQueries(_configuration.getQueries());
 	}
 
-	protected void processAggregation(String name, Object aggregation) {
+	protected void processAggregation(String name, Aggregation aggregation) {
 		_searchRequestBuilder.addAggregation(
 			_aggregations.avg(name, String.valueOf(aggregation)));
 	}
 
-	protected void processAggregations(Map<String, ?> aggregations) {
+	protected void processAggregations(Map<String, Aggregation> aggregations) {
 		aggregations.forEach(
 			(name, aggregation) -> processAggregation(name, aggregation));
 	}
 
-	protected void processClause(Claus claus) {
+	protected void processClause(Clause clause) {
 		com.liferay.portal.search.query.Query query = toQuery(
-			claus.getQueryJSON());
+			clause.getQueryJSON());
 
 		if (query != null) {
 			_searchRequestBuilder.addComplexQueryPart(
@@ -72,14 +73,14 @@ public class SXPBlueprintSearchRequestEnhancer {
 				).query(
 					query
 				).occur(
-					claus.getOccur()
+					clause.getOccur()
 				).build());
 		}
 	}
 
-	protected void processClauses(Claus[] clauses) {
-		for (Claus claus : clauses) {
-			processClause(claus);
+	protected void processClauses(Clause[] clauses) {
+		for (Clause clause : clauses) {
+			processClause(clause);
 		}
 	}
 
