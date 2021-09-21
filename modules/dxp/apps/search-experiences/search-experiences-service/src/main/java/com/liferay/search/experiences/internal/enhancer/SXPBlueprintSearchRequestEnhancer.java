@@ -95,30 +95,6 @@ public class SXPBlueprintSearchRequestEnhancer {
 			});
 	}
 
-	private com.liferay.portal.search.aggregation.Aggregation _getAggregation(
-		String name, Aggregation aggregation) {
-
-		if (aggregation.getAvg() != null) {
-			Avg avg = aggregation.getAvg();
-
-			return _aggregations.avg(name, avg.getField());
-		}
-
-		if (aggregation.getCardinality() != null) {
-			Cardinality cardinality = aggregation.getCardinality();
-
-			CardinalityAggregation cardinalityAggregation =
-				_aggregations.cardinality(name, cardinality.getField());
-
-			cardinalityAggregation.setPrecisionThreshold(
-				cardinality.getPrecision_threshold());
-
-			return cardinalityAggregation;
-		}
-
-		throw new IllegalArgumentException();
-	}
-
 	private void _processAggregation(String name, Aggregation aggregation) {
 		_searchRequestBuilder.addAggregation(
 			_translateAggregation(name, aggregation));
@@ -182,18 +158,31 @@ public class SXPBlueprintSearchRequestEnhancer {
 	private com.liferay.portal.search.aggregation.Aggregation
 		_translateAggregation(String name, Aggregation aggregation1) {
 
-		com.liferay.portal.search.aggregation.Aggregation aggregation2 =
-			_getAggregation(name, aggregation1);
+		if (aggregation1.getAvg() != null) {
+			Avg avg = aggregation1.getAvg();
 
-		if (aggregation1.getAggs() != null) {
+			com.liferay.portal.search.aggregation.Aggregation aggregation2 =
+				_aggregations.avg(name, avg.getField());
+
 			_forEach(
 				aggregation1.getAggs(),
 				(name1, aggregation) -> aggregation2.addChildAggregation(
 					_translateAggregation(name1, aggregation)),
 				_runtimeException::addSuppressed);
 		}
+		else if (aggregation1.getCardinality() != null) {
+			Cardinality cardinality = aggregation1.getCardinality();
 
-		return aggregation2;
+			CardinalityAggregation cardinalityAggregation =
+				_aggregations.cardinality(name, cardinality.getField());
+
+			cardinalityAggregation.setPrecisionThreshold(
+				cardinality.getPrecision_threshold());
+
+			return cardinalityAggregation;
+		}
+
+		throw new IllegalArgumentException();
 	}
 
 	private final Aggregations _aggregations;
