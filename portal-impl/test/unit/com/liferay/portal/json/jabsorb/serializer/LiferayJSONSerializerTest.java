@@ -88,6 +88,8 @@ public class LiferayJSONSerializerTest {
 					" in context TestClassLoader",
 				logEntry.getMessage());
 		}
+
+		ClassLoaderPool.unregister("TestClassLoader");
 	}
 
 }
