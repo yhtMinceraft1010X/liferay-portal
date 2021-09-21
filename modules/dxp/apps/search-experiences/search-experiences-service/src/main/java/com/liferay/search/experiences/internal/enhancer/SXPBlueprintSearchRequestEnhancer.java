@@ -57,9 +57,9 @@ public class SXPBlueprintSearchRequestEnhancer {
 	}
 
 	public void enhance() {
-		processAggregations(_configuration.getAggregations());
-		processGeneral(_configuration.getGeneral());
-		processQueries(_configuration.getQueries());
+		_processAggregations(_configuration.getAggregations());
+		_processGeneral(_configuration.getGeneral());
+		_processQueries(_configuration.getQueries());
 
 		if (!ArrayUtil.isEmpty(_runtimeException.getSuppressed())) {
 			throw _runtimeException;
@@ -95,7 +95,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 			});
 	}
 
-	protected com.liferay.portal.search.aggregation.Aggregation getAggregation(
+	private com.liferay.portal.search.aggregation.Aggregation _getAggregation(
 		String name, Aggregation aggregation) {
 
 		if (aggregation.getAvg() != null) {
@@ -119,18 +119,18 @@ public class SXPBlueprintSearchRequestEnhancer {
 		throw new IllegalArgumentException();
 	}
 
-	protected void processAggregation(String name, Aggregation aggregation) {
+	private void _processAggregation(String name, Aggregation aggregation) {
 		_searchRequestBuilder.addAggregation(
-			translateAggregation(name, aggregation));
+			_translateAggregation(name, aggregation));
 	}
 
-	protected void processAggregations(Map<String, Aggregation> map) {
+	private void _processAggregations(Map<String, Aggregation> map) {
 		_forEach(
-			map, this::processAggregation, _runtimeException::addSuppressed);
+			map, this::_processAggregation, _runtimeException::addSuppressed);
 	}
 
-	protected void processClause(Clause clause) {
-		com.liferay.portal.search.query.Query query = toQuery(
+	private void _processClause(Clause clause) {
+		com.liferay.portal.search.query.Query query = _toQuery(
 			clause.getQueryJSON());
 
 		if (query != null) {
@@ -144,15 +144,15 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
-	protected void processClauses(Clause[] clauses) {
+	private void _processClauses(Clause[] clauses) {
 		if (!ArrayUtil.isEmpty(clauses)) {
 			_forEach(
-				Arrays.asList(clauses), this::processClause,
+				Arrays.asList(clauses), this::_processClause,
 				_runtimeException::addSuppressed);
 		}
 	}
 
-	protected void processGeneral(General general) {
+	private void _processGeneral(General general) {
 		if (general.getApplyIndexerClauses() != null) {
 			_searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setAttribute(
@@ -161,35 +161,35 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
-	protected void processQueries(Query[] queries) {
+	private void _processQueries(Query[] queries) {
 		if (!ArrayUtil.isEmpty(queries)) {
 			_forEach(
-				Arrays.asList(queries), this::processQuery,
+				Arrays.asList(queries), this::_processQuery,
 				_runtimeException::addSuppressed);
 		}
 	}
 
-	protected void processQuery(Query query) {
+	private void _processQuery(Query query) {
 		if (GetterUtil.getBoolean(query.getEnabled())) {
-			processClauses(query.getClauses());
+			_processClauses(query.getClauses());
 		}
 	}
 
-	protected com.liferay.portal.search.query.Query toQuery(String queryJSON) {
+	private com.liferay.portal.search.query.Query _toQuery(String queryJSON) {
 		return _queries.wrapper(queryJSON);
 	}
 
-	protected com.liferay.portal.search.aggregation.Aggregation
-		translateAggregation(String name, Aggregation aggregation1) {
+	private com.liferay.portal.search.aggregation.Aggregation
+		_translateAggregation(String name, Aggregation aggregation1) {
 
 		com.liferay.portal.search.aggregation.Aggregation aggregation2 =
-			getAggregation(name, aggregation1);
+			_getAggregation(name, aggregation1);
 
 		if (aggregation1.getAggs() != null) {
 			_forEach(
 				aggregation1.getAggs(),
 				(name1, aggregation) -> aggregation2.addChildAggregation(
-					translateAggregation(name1, aggregation)),
+					_translateAggregation(name1, aggregation)),
 				_runtimeException::addSuppressed);
 		}
 
