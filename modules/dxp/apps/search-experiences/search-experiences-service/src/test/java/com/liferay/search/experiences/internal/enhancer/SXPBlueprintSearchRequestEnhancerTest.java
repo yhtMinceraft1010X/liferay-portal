@@ -17,19 +17,15 @@ package com.liferay.search.experiences.internal.enhancer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPart;
-import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
 import com.liferay.search.experiences.rest.dto.v1_0.Avg;
@@ -57,11 +53,6 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	public SXPBlueprintSearchRequestEnhancerTest() {
-		_searchRequestBuilder = new SearchRequestBuilderImpl(
-			_searchRequestBuilderFactory);
-	}
 
 	@Test
 	public void testEnhance() {
@@ -119,7 +110,8 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
 			new SXPBlueprintSearchRequestEnhancer(
-				_aggregations, _complexQueryPartBuilderFactory, _queries,
+				new AggregationsImpl(),
+				new ComplexQueryPartBuilderFactoryImpl(), new QueriesImpl(),
 				_searchRequestBuilder,
 				new SXPBlueprint() {
 					{
@@ -153,13 +145,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			new String(wrapperQuery.getSource()));
 	}
 
-	private final Aggregations _aggregations = new AggregationsImpl();
-	private final ComplexQueryPartBuilderFactory
-		_complexQueryPartBuilderFactory =
-			new ComplexQueryPartBuilderFactoryImpl();
-	private final Queries _queries = new QueriesImpl();
-	private final SearchRequestBuilder _searchRequestBuilder;
-	private final SearchRequestBuilderFactory _searchRequestBuilderFactory =
-		new SearchRequestBuilderFactoryImpl();
+	private final SearchRequestBuilder _searchRequestBuilder =
+		new SearchRequestBuilderImpl(new SearchRequestBuilderFactoryImpl());
 
 }
