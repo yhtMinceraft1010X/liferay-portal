@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -214,7 +213,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		String value = _getString(name, searchContext);
 
-		if ((value == null) && jsonObject.has("default")) {
+		if (Validator.isBlank(value) && jsonObject.has("default")) {
 			value = GetterUtil.getString(jsonObject.getString("default"));
 		}
 
@@ -287,19 +286,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 	}
 
 	private String _getString(String name, SearchContext searchContext) {
-		String value = GetterUtil.getString(searchContext.getAttribute(name));
-
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
-		value = StringUtil.trim(value);
-
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
-		return value;
+		return GetterUtil.getString(searchContext.getAttribute(name));
 	}
 
 	private String[] _getStringArray(String name, SearchContext searchContext) {
