@@ -17,6 +17,7 @@ package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.List;
@@ -30,6 +31,18 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 	public void contribute(
 		SearchContext searchContext, SXPBlueprint sxpBlueprint,
 		List<SXPParameter> sxpParameters) {
+	}
+
+	@Override
+	public String getSXPParameterCategoryNameKey() {
+		return "context";
+	}
+
+	@Override
+	public List<SXPParameterContributorDefinition>
+		getSXPParameterContributorDefinitions() {
+
+		return null;
 	}
 
 }

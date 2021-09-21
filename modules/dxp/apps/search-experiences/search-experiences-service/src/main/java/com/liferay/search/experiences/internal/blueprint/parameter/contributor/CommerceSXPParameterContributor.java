@@ -21,8 +21,10 @@ import com.liferay.search.experiences.blueprint.parameter.LongArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.LongSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -54,6 +56,24 @@ public class CommerceSXPParameterContributor
 				new LongSXPParameter(
 					"commerce.channel_group_id", true, commerceChannelGroupId));
 		}
+	}
+
+	@Override
+	public String getSXPParameterCategoryNameKey() {
+		return "commerce";
+	}
+
+	@Override
+	public List<SXPParameterContributorDefinition>
+		getSXPParameterContributorDefinitions() {
+
+		return Arrays.asList(
+			new SXPParameterContributorDefinition(
+				LongSXPParameter.class.getName(), "account-group-ids",
+				"commerce.account_group_ids"),
+			new SXPParameterContributorDefinition(
+				LongSXPParameter.class.getName(), "channel-group-id",
+				"commerce.channel_group_id"));
 	}
 
 }
