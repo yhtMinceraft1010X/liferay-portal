@@ -17,8 +17,6 @@ package com.liferay.journal.internal.search.spi.model.index.contributor;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,9 +68,6 @@ public class JournalFolderModelDocumentContributor
 				title);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalFolderModelDocumentContributor.class);
 
 	@Reference
 	private TrashHelper _trashHelper;
