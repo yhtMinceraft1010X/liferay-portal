@@ -657,7 +657,7 @@ public class ObjectEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryDisplayContext.class);
 
-	private final HashMap<String, Integer> _ddmFormFieldsColumnsSizeMap =
+	private final Map<String, Integer> _ddmFormFieldsColumnsSizeMap =
 		new HashMap<>();
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
