@@ -41,6 +41,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -54,6 +55,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
 	@Test
 	public void testEnhance() {
 		Configuration configuration = new Configuration() {
