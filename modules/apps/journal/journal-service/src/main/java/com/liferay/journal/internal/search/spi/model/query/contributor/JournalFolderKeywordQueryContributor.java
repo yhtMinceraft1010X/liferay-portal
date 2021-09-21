@@ -43,14 +43,13 @@ public class JournalFolderKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
+		_queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, false);
 		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.DESCRIPTION, false);
-
-		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
-		_queryHelper.addSearchLocalizedTerm(
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.TITLE, false);
 	}
 

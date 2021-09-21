@@ -45,9 +45,10 @@ public class JournalFolderModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, JournalFolder journalFolder) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Contributing folder " + journalFolder);
-		}
+		document.addKeyword(Field.FOLDER_ID, journalFolder.getParentFolderId());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(journalFolder.getTreePath(), CharPool.SLASH));
 
 		String title = journalFolder.getName();
 
@@ -67,16 +68,6 @@ public class JournalFolderModelDocumentContributor
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				title);
-		}
-
-		document.addKeyword(Field.FOLDER_ID, journalFolder.getParentFolderId());
-		document.addKeyword(
-			Field.TREE_PATH,
-			StringUtil.split(journalFolder.getTreePath(), CharPool.SLASH));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Document " + journalFolder + " contributed successfully");
 		}
 	}
 
