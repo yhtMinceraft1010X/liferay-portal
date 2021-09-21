@@ -221,8 +221,9 @@ public class DTOOpenAPIParser {
 			}
 		}
 
-		if (StringUtil.equalsIgnoreCase(type, "object")
-			&& propertySchema.getAdditionalPropertySchema() == null) {
+		if (StringUtil.equalsIgnoreCase(type, "object") &&
+			(propertySchema.getAdditionalPropertySchema() == null)) {
+
 			String name = StringUtil.upperCaseFirstLetter(propertySchemaName);
 
 			if (items != null) {
