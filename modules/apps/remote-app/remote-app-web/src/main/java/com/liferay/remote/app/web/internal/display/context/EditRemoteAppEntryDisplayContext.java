@@ -50,10 +50,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EditRemoteAppEntryDisplayContext {
 
 	public EditRemoteAppEntryDisplayContext(
-		RemoteAppEntry remoteAppEntry, PortletRequest portletRequest) {
+		PortletRequest portletRequest, RemoteAppEntry remoteAppEntry) {
 
-		_remoteAppEntry = remoteAppEntry;
 		_portletRequest = portletRequest;
+		_remoteAppEntry = remoteAppEntry;
 	}
 
 	public String getCmd() {

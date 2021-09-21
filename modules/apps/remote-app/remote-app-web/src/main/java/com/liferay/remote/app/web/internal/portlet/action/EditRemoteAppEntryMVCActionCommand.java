@@ -81,7 +81,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest.setAttribute(
 				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditRemoteAppEntryDisplayContext(
-					_getRemoteAppEntry(actionRequest), actionRequest));
+					actionRequest, _getRemoteAppEntry(actionRequest)));
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/admin/edit_remote_app_entry.jsp");

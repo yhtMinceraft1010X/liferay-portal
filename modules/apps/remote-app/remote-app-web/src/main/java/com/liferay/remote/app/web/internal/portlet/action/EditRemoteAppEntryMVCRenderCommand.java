@@ -52,7 +52,7 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditRemoteAppEntryDisplayContext(
-					_getRemoteAppEntry(renderRequest), renderRequest));
+					renderRequest, _getRemoteAppEntry(renderRequest)));
 
 			return "/admin/edit_remote_app_entry.jsp";
 		}
