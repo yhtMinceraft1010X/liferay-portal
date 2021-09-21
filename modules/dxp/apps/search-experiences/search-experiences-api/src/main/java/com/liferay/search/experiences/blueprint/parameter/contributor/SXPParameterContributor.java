@@ -12,23 +12,21 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.blueprint.parameter.contributor;
+
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
+import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Petteri Karttunen
  */
-public interface SXPParameterData {
+public interface SXPParameterContributor {
 
-	public String getKeywords();
-
-	public Optional<SXPParameter> getSXPParameterOptionalByName(String name);
-
-	public Optional<SXPParameter> getSXPParameterOptionalByNameTemplateVariable(
-		String templateVariable);
-
-	public List<SXPParameter> getSXPParameters();
+	public void contribute(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
+		List<SXPParameter> sxpParameters);
 
 }

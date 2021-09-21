@@ -12,9 +12,11 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.List;
@@ -22,10 +24,12 @@ import java.util.List;
 /**
  * @author Petteri Karttunen
  */
-public interface SXPParameterContributor {
+public class UserSXPParameterContributor implements SXPParameterContributor {
 
+	@Override
 	public void contribute(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
-		List<SXPParameter> sxpParameters);
+		List<SXPParameter> sxpParameters) {
+	}
 
 }

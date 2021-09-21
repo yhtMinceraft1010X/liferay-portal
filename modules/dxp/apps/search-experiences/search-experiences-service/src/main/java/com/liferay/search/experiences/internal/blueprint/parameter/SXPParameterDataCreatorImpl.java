@@ -37,6 +37,12 @@ import com.liferay.search.experiences.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.blueprint.parameter.StringArraySXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
+import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.CommerceSXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.ContextSXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.SystemSXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
+import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.time.LocalDate;
@@ -52,6 +58,7 @@ import java.util.Objects;
 import java.util.TimeZone;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,9 +74,17 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 		String keywords = "";
 
+		List<SXPParameter> sxpParameters = new ArrayList<>();
+
+		for (SXPParameterContributor sxpParameterContributor :
+				_sxpParameterContributors) {
+
+			sxpParameterContributor.contribute(
+				searchRequestBuilder, sxpBlueprint, sxpParameters);
+		}
+
 		JSONObject jsonObject = JSONUtil.put("test", "test");
 		SearchContext searchContext = _getSearchContext(searchRequestBuilder);
-		List<SXPParameter> sxpParameters = new ArrayList<>();
 
 		_addCustomSXPParameters(
 			jsonObject.getJSONArray("custom"), searchContext, sxpParameters);
@@ -82,6 +97,16 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 		_addSortSXPParameter(searchContext, sxpBlueprint, sxpParameters);
 
 		return new SXPParameterDataImpl(keywords, sxpParameters);
+	}
+
+	@Activate
+	protected void activate() {
+		_sxpParameterContributors = new SXPParameterContributor[] {
+			new CommerceSXPParameterContributor(),
+			new ContextSXPParameterContributor(),
+			new SystemSXPParameterContributor(),
+			new TimeSXPParameterContributor(), new UserSXPParameterContributor()
+		};
 	}
 
 	private void _addCustomSXPParameters(
@@ -602,5 +627,7 @@ public class SXPParameterDataCreatorImpl implements SXPParameterDataCreator {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private SXPParameterContributor[] _sxpParameterContributors;
 
 }
