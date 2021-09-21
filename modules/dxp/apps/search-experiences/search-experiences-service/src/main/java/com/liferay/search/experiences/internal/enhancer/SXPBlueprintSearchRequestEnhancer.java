@@ -156,25 +156,25 @@ public class SXPBlueprintSearchRequestEnhancer {
 	}
 
 	private com.liferay.portal.search.aggregation.Aggregation
-		_toPortalSearchAggregation(String name, Aggregation aggregation1) {
+		_toPortalSearchAggregation(String name1, Aggregation aggregation1) {
 
 		if (aggregation1.getAvg() != null) {
 			Avg avg = aggregation1.getAvg();
 
-			com.liferay.portal.search.aggregation.Aggregation aggregation2 =
-				_aggregations.avg(name, avg.getField());
+			com.liferay.portal.search.aggregation.Aggregation portalSearchAggregation =
+				_aggregations.avg(name1, avg.getField());
 
 			_forEach(
 				aggregation1.getAggs(),
-				(name1, aggregation) -> aggregation2.addChildAggregation(
-					_toPortalSearchAggregation(name1, aggregation)),
+				(name2, aggregation2) -> portalSearchAggregation.addChildAggregation(
+					_toPortalSearchAggregation(name2, aggregation2)),
 				_runtimeException::addSuppressed);
 		}
 		else if (aggregation1.getCardinality() != null) {
 			Cardinality cardinality = aggregation1.getCardinality();
 
 			CardinalityAggregation cardinalityAggregation =
-				_aggregations.cardinality(name, cardinality.getField());
+				_aggregations.cardinality(name1, cardinality.getField());
 
 			cardinalityAggregation.setPrecisionThreshold(
 				cardinality.getPrecision_threshold());
