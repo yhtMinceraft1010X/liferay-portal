@@ -89,22 +89,22 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 
 		Properties properties = new Properties();
 
-		String propertiesString = _remoteAppEntry.getProperties();
-
-		properties.load(
-			new ByteArrayInputStream(
-				propertiesString.getBytes(StandardCharsets.UTF_8)));
+		_loadProperties(properties, _remoteAppEntry.getProperties());
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-		propertiesString = portletPreferences.getValue(
-			"properties", StringPool.BLANK);
-
-		properties.load(
-			new ByteArrayInputStream(
-				propertiesString.getBytes(StandardCharsets.UTF_8)));
+		_loadProperties(
+			properties,
+			portletPreferences.getValue("properties", StringPool.BLANK));
 
 		return properties;
+	}
+
+	private void _loadProperties(Properties properties, String string)
+		throws IOException {
+
+		properties.load(
+			new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8)));
 	}
 
 	private void _renderCustomElement(
