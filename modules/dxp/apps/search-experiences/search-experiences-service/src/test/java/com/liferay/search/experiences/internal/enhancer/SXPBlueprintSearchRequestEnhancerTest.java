@@ -58,7 +58,45 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 	@Ignore
 	@Test
 	public void testEnhance() {
-		Configuration configuration = new Configuration() {
+		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
+			new SXPBlueprintSearchRequestEnhancer(
+				new AggregationsImpl(),
+				new ComplexQueryPartBuilderFactoryImpl(), new QueriesImpl(),
+				_searchRequestBuilder,
+				new SXPBlueprint() {
+					{
+						configuration = _createConfiguration();
+					}
+				});
+
+		sxpBlueprintSearchRequestEnhancer.enhance();
+
+		SearchRequest searchRequest = _searchRequestBuilder.build();
+
+		Map<String, com.liferay.portal.search.aggregation.Aggregation>
+			aggregationsMap = searchRequest.getAggregationsMap();
+
+		Assert.assertEquals(
+			aggregationsMap.toString(), 2, aggregationsMap.size());
+
+		List<ComplexQueryPart> complexQueryParts =
+			searchRequest.getComplexQueryParts();
+
+		ComplexQueryPart complexQueryPart = complexQueryParts.get(0);
+
+		Assert.assertEquals("must_not", complexQueryPart.getOccur());
+
+		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"term", JSONUtil.put("status", 0)
+			).toString(),
+			new String(wrapperQuery.getSource()));
+	}
+
+	private Configuration _createConfiguration() {
+		return new Configuration() {
 			{
 				aggregations = HashMapBuilder.put(
 					RandomTestUtil.randomString(),
@@ -109,42 +147,6 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				};
 			}
 		};
-
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			new SXPBlueprintSearchRequestEnhancer(
-				new AggregationsImpl(),
-				new ComplexQueryPartBuilderFactoryImpl(), new QueriesImpl(),
-				_searchRequestBuilder,
-				new SXPBlueprint() {
-					{
-						setConfiguration(configuration);
-					}
-				});
-
-		sxpBlueprintSearchRequestEnhancer.enhance();
-
-		SearchRequest searchRequest = _searchRequestBuilder.build();
-
-		Map<String, com.liferay.portal.search.aggregation.Aggregation>
-			aggregationsMap = searchRequest.getAggregationsMap();
-
-		Assert.assertEquals(
-			aggregationsMap.toString(), 2, aggregationsMap.size());
-
-		List<ComplexQueryPart> complexQueryParts =
-			searchRequest.getComplexQueryParts();
-
-		ComplexQueryPart complexQueryPart = complexQueryParts.get(0);
-
-		Assert.assertEquals("must_not", complexQueryPart.getOccur());
-
-		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart.getQuery();
-
-		Assert.assertEquals(
-			JSONUtil.put(
-				"term", JSONUtil.put("status", 0)
-			).toString(),
-			new String(wrapperQuery.getSource()));
 	}
 
 	private final SearchRequestBuilder _searchRequestBuilder =
