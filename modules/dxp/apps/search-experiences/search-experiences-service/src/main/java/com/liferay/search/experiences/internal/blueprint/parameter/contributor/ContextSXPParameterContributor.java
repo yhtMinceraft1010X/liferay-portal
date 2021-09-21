@@ -117,6 +117,9 @@ public class ContextSXPParameterContributor implements SXPParameterContributor {
 				LongSXPParameter.class, "ct-collection-id",
 				"context.ct_collection_id"),
 			new SXPParameterContributorDefinition(
+				BooleanSXPParameter.class, "staging-group",
+				"context.is_staging_group"),
+			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "language", "context.language"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "language-id", "context.language_id"),
