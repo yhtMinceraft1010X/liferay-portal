@@ -40,21 +40,13 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public String accept(
-			ToStringVisitor toStringVisitor, Map<String, String> options)
-		throws Exception {
-
-		return toStringVisitor.visit(this, options);
+	public String evaluateTemplateVariable(Map<String, String> options) {
+		return Arrays.toString(_value);
 	}
 
 	@Override
 	public Long[] getValue() {
 		return _value;
-	}
-
-	@Override
-	public String toString() {
-		return toString(Arrays.toString(_value));
 	}
 
 	private final Long[] _value;

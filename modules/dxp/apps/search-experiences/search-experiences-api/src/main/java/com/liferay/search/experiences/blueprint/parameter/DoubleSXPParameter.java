@@ -16,8 +16,6 @@ package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
-import java.util.Map;
-
 /**
  * @author Petteri Karttunen
  */
@@ -36,14 +34,6 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 		throws SXPParameterException {
 
 		return evaluationVisitor.visit(this);
-	}
-
-	@Override
-	public String accept(
-			ToStringVisitor toStringVisitor, Map<String, String> options)
-		throws Exception {
-
-		return toStringVisitor.visit(this, options);
 	}
 
 	public boolean equalsTo(Double value) {

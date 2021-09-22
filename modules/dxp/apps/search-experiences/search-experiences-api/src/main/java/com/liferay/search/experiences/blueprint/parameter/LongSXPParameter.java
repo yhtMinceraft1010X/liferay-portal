@@ -36,20 +36,17 @@ public class LongSXPParameter extends BaseSXPParameter {
 		return evaluationVisitor.visit(this);
 	}
 
-	@Override
-	public String accept(
-			ToStringVisitor toStringVisitor, Map<String, String> options)
-		throws Exception {
-
-		return toStringVisitor.visit(this, options);
-	}
-
 	public boolean equalsTo(Long value) {
 		if (_value.longValue() == value.longValue()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public String evaluateTemplateVariable(Map<String, String> options) {
+		return null;
 	}
 
 	@Override

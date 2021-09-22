@@ -26,9 +26,7 @@ public interface SXPParameter {
 	public boolean accept(EvaluationVisitor evaluationVisitor)
 		throws SXPParameterException;
 
-	public String accept(
-			ToStringVisitor toStringVisitor, Map<String, String> options)
-		throws Exception;
+	public String evaluateTemplateVariable(Map<String, String> options);
 
 	public String getName();
 
@@ -69,57 +67,6 @@ public interface SXPParameter {
 
 		public boolean visit(StringSXPParameter stringSXPParameter)
 			throws SXPParameterException;
-
-	}
-
-	public interface ToStringVisitor {
-
-		public String visit(
-				BooleanSXPParameter booleanSXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				DateSXPParameter dateSXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				DoubleSXPParameter parameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				FloatSXPParameter floatSXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				IntegerArraySXPParameter integerArraySXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				IntegerSXPParameter integerSXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				LongArraySXPParameter longArraySXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				LongSXPParameter longSXPParameter, Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				StringArraySXPParameter stringArraySXPParameter,
-				Map<String, String> options)
-			throws Exception;
-
-		public String visit(
-				StringSXPParameter stringSXPParameter,
-				Map<String, String> options)
-			throws Exception;
 
 	}
 
