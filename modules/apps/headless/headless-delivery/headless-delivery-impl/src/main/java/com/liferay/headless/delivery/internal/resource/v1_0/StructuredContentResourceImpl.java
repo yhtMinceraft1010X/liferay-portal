@@ -879,16 +879,15 @@ public class StructuredContentResourceImpl
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
-		Stream<DDMFormFieldValue> ddmFormFieldValuesStream =
-			ddmFormFieldValues.stream();
+		Stream<DDMFormFieldValue> stream = ddmFormFieldValues.stream();
 
-		Map<String, DDMFormFieldValue> ddmFormFieldValueMap =
-			ddmFormFieldValuesStream.collect(
+		Map<String, DDMFormFieldValue> ddmFormFieldValuesMap =
+			stream.collect(
 				Collectors.toMap(
 					DDMFormFieldValue::getFieldReference, Function.identity()));
 
 		for (ContentField contentField : contentFields) {
-			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValueMap.get(
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValuesMap.get(
 				contentField.getName());
 
 			if (ddmFormFieldValue == null) {
