@@ -50,6 +50,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -96,6 +97,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -111,11 +114,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -274,6 +279,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addFragmentEntries(serviceContext);
 			_addJournalArticles(
 				documentsStringUtilReplaceValues, serviceContext);
+			_addLayoutPageTemplates(serviceContext);
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
@@ -796,6 +802,85 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/journal-articles", serviceContext);
 	}
 
+	private void _addLayoutPageTemplates(ServiceContext serviceContext)
+		throws Exception {
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/layout-page-templates", StringPool.STAR, true);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		List<String> layoutPageTemplateEntryKeys = new ArrayList<>();
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String urlPath = url.getPath();
+
+			if (StringUtil.endsWith(urlPath, ".json")) {
+				String json = StringUtil.read(url.openStream());
+
+				StringUtil.replace(
+					json, "[$SCOPE_GROUP_ID$]",
+					String.valueOf(serviceContext.getScopeGroupId()));
+
+				Group scopeGroup = serviceContext.getScopeGroup();
+
+				StringUtil.replace(
+					json, "[$GROUP_FRIENDLY_URL$]",
+					scopeGroup.getFriendlyURL());
+
+				if (urlPath.endsWith("display-page-template.json")) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+					if (jsonObject.getBoolean("defaultTemplate")) {
+						layoutPageTemplateEntryKeys.add(
+							StringUtil.toLowerCase(
+								jsonObject.getString("name")));
+
+						jsonObject.remove("defaultTemplate");
+
+						json = jsonObject.toString();
+					}
+				}
+
+				zipWriter.addEntry(
+					StringUtil.removeFirst(
+						urlPath, "/site-initializer/layout-page-templates/"),
+					json);
+			}
+			else {
+				zipWriter.addEntry(
+					StringUtil.removeFirst(
+						urlPath, "/site-initializer/layout-page-templates/"),
+					url.openStream());
+			}
+		}
+
+		_layoutPageTemplatesImporter.importFile(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			zipWriter.getFile(), false);
+
+		for (String layoutPageTemplateEntryKey : layoutPageTemplateEntryKeys) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						serviceContext.getScopeGroupId(),
+						layoutPageTemplateEntryKey);
+
+			if (layoutPageTemplateEntry == null) {
+				continue;
+			}
+
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), true);
+		}
+	}
+
 	private void _addModelResourcePermissions(
 			String className, String primKey, String resourcePath,
 			ServiceContext serviceContext)
@@ -1186,10 +1271,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private String _read(String fileName, URL url) throws Exception {
-		String path = url.getPath();
+		String urlPath = url.getPath();
 
 		URL entryURL = _bundle.getEntry(
-			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
+			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
 	}
