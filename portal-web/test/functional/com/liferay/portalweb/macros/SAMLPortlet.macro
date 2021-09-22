@@ -38,16 +38,18 @@ definition {
 		}
 		else if ("${userResolution}" == "attribute") {
 			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
+		}
 
-			if (isSet(idpAttributeMappingText)) {
-				SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
-					idpAttributeMapping = "${idpAttributeMapping}",
-					idpAttributeMappingText = "${idpAttributeMappingText}");
-			}
-			else {
-				SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
-			}
+		if (isSet(idpAttributeMappingText)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
+				idpAttributeMapping = "${idpAttributeMapping}",
+				idpAttributeMappingText = "${idpAttributeMappingText}");
+		}
+		else {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+		}
 
+		if ("${userResolution}" == "attribute") {
 			Click(
 				key_index = "${userMatchingAttributeIndex}",
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
@@ -232,6 +234,60 @@ definition {
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
+	}
+
+	@description = "Edit attribute mapping of SP, in Identity Provider Configurations"
+	macro editAttributeMappingOfSP {
+		AssertClick(
+			idpEntityID = "${idpEntityID}",
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
+			value1 = "${idpEntityID}");
+
+		var attributeRowID = "1";
+
+		for (var loop : list "${idpAttributeMappingOld}") {
+			Click(
+				key_rowIndexNumber = "${attributeRowID}",
+				locator1 = "Button#DELETE_ROW_N");
+
+			var attributeRowID = ${attributeRowID} + 1;
+		}
+
+		PortletEntry.save();
+
+		AssertClick(
+			idpEntityID = "${idpEntityID}",
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
+			value1 = "${idpEntityID}");
+
+		if (isSet(idpAttributeMappingText)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
+				idpAttributeMapping = "${idpAttributeMappingNew}",
+				idpAttributeMappingText = "${idpAttributeMappingText}");
+		}
+		else {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMappingNew}");
+		}
+
+		PortletEntry.save();
+	}
+
+	@description = "Edit the list of attributes sent by IdP, in Service Provider Configurations"
+	macro editAttributesSentByIdP {
+		AssertClick(
+			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME",
+			spEntityID = "${spEntityID}",
+			value1 = "${spEntityID}");
+
+		if (isSet(spAttributes)) {
+			Check(locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_ENABLE");
+
+			Type(
+				locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
+				value1 = "${spAttributes}");
+		}
+
+		PortletEntry.save();
 	}
 
 }
