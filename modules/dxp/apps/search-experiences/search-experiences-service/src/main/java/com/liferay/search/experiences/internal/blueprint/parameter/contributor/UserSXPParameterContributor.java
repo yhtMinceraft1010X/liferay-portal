@@ -113,7 +113,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				LongArraySXPParameter.class, "current-site-role-ids",
 				"user.current_site_role_ids"),
 			new SXPParameterContributorDefinition(
-				StringSXPParameter.class, "email-domain", "user.email_domain"),
+				StringSXPParameter.class, "email-address-domain",
+				"user.email_address_domain"),
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "first-name", "user.first_name"),
 			new SXPParameterContributorDefinition(
@@ -140,8 +141,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				LongArraySXPParameter.class, "regular-role-ids",
 				"user.regular_role_ids"),
 			new SXPParameterContributorDefinition(
-				LongArraySXPParameter.class, "usergroup-ids",
-				"user.usergroup_ids"));
+				LongArraySXPParameter.class, "user-group-ids",
+				"user.user_group_ids"));
 	}
 
 	private void _contribute(
@@ -201,7 +202,8 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				_getCurrentSiteRoleIds(scopeGroupId, user)));
 		sxpParameters.add(
 			new StringSXPParameter(
-				"user.email_domain", true, _getEmailDomain(user)));
+				"user.email_address_domain", true,
+				_getEmailAddressDomain(user)));
 		sxpParameters.add(
 			new StringSXPParameter(
 				"user.first_name", true, user.getFirstName()));
@@ -242,7 +244,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 
 			sxpParameters.add(
 				new LongArraySXPParameter(
-					"user.usergroup_ids", true,
+					"user.user_group_ids", true,
 					stream.map(
 						UserGroup::getUserGroupId
 					).toArray(
@@ -283,7 +285,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		return roleIds.toArray(new Long[0]);
 	}
 
-	private String _getEmailDomain(User user) {
+	private String _getEmailAddressDomain(User user) {
 		String emailAddress = user.getEmailAddress();
 
 		return emailAddress.substring(emailAddress.indexOf("@") + 1);
