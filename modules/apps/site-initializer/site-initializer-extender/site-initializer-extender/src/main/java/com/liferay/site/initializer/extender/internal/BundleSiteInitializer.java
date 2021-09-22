@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -276,6 +277,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addObjectDefinitions(serviceContext);
 			_addStyleBookEntries(serviceContext);
 			_addTaxonomyVocabularies(serviceContext);
+			_updateLayoutSets(serviceContext);
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -1190,6 +1192,60 @@ public class BundleSiteInitializer implements SiteInitializer {
 			path.substring(0, path.lastIndexOf("/") + 1) + fileName);
 
 		return StringUtil.read(entryURL.openStream());
+	}
+
+	private void _updateLayoutSet(
+			boolean privateLayout, ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			serviceContext.getScopeGroupId(), privateLayout);
+
+		String resourcePath = "/site-initializer/layout-set";
+
+		if (privateLayout) {
+			resourcePath += "/private";
+		}
+		else {
+			resourcePath += "/public";
+		}
+
+		String css = _read(resourcePath + "/css.css");
+
+		if (css != null) {
+			_layoutSetLocalService.updateLookAndFeel(
+				serviceContext.getScopeGroupId(), privateLayout,
+				layoutSet.getThemeId(), layoutSet.getColorSchemeId(), css);
+		}
+
+		URL url = _servletContext.getResource(resourcePath + "/logo.png");
+
+		if (url != null) {
+			_layoutSetLocalService.updateLogo(
+				serviceContext.getScopeGroupId(), privateLayout, true,
+				FileUtil.getBytes(url.openStream()));
+		}
+
+		String settingsPropertiesString = _read(
+			resourcePath + "/settings.properties");
+
+		if (settingsPropertiesString != null) {
+			UnicodeProperties unicodeProperties =
+				layoutSet.getSettingsProperties();
+
+			unicodeProperties.fastLoad(settingsPropertiesString);
+
+			_layoutSetLocalService.updateSettings(
+				serviceContext.getScopeGroupId(), privateLayout,
+				unicodeProperties.toString());
+		}
+	}
+
+	private void _updateLayoutSets(ServiceContext serviceContext)
+		throws Exception {
+
+		_updateLayoutSet(false, serviceContext);
+		_updateLayoutSet(true, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
