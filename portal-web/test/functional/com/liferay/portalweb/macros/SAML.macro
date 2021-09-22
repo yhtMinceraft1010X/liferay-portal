@@ -9,7 +9,9 @@ definition {
 			specificURL = "${newUserPortalURL}",
 			userEmailAddress = "${newUserEmailAddress}",
 			userFirstName = "${newUserFirstName}",
+			userJobTitle = "${newUserJobTitle}",
 			userLastName = "${newUserLastName}",
+			userMiddleName = "${newUserMiddleName}",
 			userScreenName = "${newUserScreenName}");
 
 		SAML.resetPasswordOfUserAtSpecificHost(
@@ -38,6 +40,37 @@ definition {
 			userScreenName = "${newUserScreenName}");
 	}
 
+	@description = "Creating new user on the IdP portal and syncing his data by logging in on the SP portal then do not verify user data"
+	macro addAndSyncNewUserWithoutValidation {
+		JSONUser.addUser(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${newUserPortalURL}",
+			userEmailAddress = "${newUserEmailAddress}",
+			userFirstName = "${newUserFirstName}",
+			userJobTitle = "${newUserJobTitle}",
+			userLastName = "${newUserLastName}",
+			userMiddleName = "${newUserMiddleName}",
+			userScreenName = "${newUserScreenName}");
+
+		SAML.resetPasswordOfUserAtSpecificHost(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			specificURL = "${newUserPortalURL}",
+			userEmailAddress = "${newUserEmailAddress}");
+
+		SAML.executeSPInitiatedSSO(
+			idpName = "${idpName}",
+			password = "test",
+			samlMultiIdPs = "${samlMultiIdPs}",
+			spURL = "${spURL}",
+			userEmailAddress = "${newUserEmailAddress}");
+
+		User.viewLoggedInPG();
+	}
+
 	@description = "Add Identity Provider Configurations to Service Provider"
 	macro addIDPConfigurationsToServiceProvider {
 		if (isSet(userEmailAddress)) {
@@ -64,6 +97,7 @@ definition {
 
 		SAMLPortlet.addIdentityProviderConnection(
 			idpAttributeMapping = "${idpAttributeMapping}",
+			idpAttributeMappingText = "${idpAttributeMappingText}",
 			idpEntityID = "${idpEntityID}",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
@@ -336,6 +370,50 @@ definition {
 		User.logoutPG(specificURL = "${specificURL}");
 
 		User.viewLoggedOutPG();
+	}
+
+	@description = "Edit Identity Provider Configurations of SP"
+	macro editIdentityProviderConnection {
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "${spURL}/?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin&saveLastPath=false",
+			userEmailAddress = "${userEmailAddress}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.editAttributeMappingOfSP(
+			idpAttributeMappingNew = "${idpAttributeMappingNew}",
+			idpAttributeMappingOld = "${idpAttributeMappingOld}",
+			idpAttributeMappingText = "${idpAttributeMappingText}",
+			idpEntityID = "${idpEntityID}");
+
+		User.logoutPG(specificURL = "${spURL}");
+	}
+
+	@description = "Edit Service Provider Configurations of IdP"
+	macro editServiceProviderConnection {
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "${idpURL}",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLNavigation.gotoServiceProviderConnection();
+
+		SAMLPortlet.editAttributesSentByIdP(
+			spAttributes = "${spAttributes}",
+			spEntityID = "${spEntityID}");
+
+		User.logoutPG(specificURL = "${idpURL}");
 	}
 
 	@description = "Enable encryption on Service Provider connection"
