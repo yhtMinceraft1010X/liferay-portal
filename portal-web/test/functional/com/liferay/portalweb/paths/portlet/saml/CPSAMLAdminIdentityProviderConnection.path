@@ -37,6 +37,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_NAME</td>
+	<td>//td[contains(@class,'first')]//a[contains(.,'${idpEntityID}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_NONE</td>
 	<td>//input[contains(@name,'userIdentifierExpression') and contains(@value,'none')]</td>
 	<td></td>
