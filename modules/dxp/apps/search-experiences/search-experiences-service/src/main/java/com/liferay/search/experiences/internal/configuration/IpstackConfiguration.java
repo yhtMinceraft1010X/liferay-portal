@@ -48,7 +48,4 @@ public interface IpstackConfiguration {
 	)
 	public int cacheTimeout();
 
-	@Meta.AD(deflt = "", name = "test-ip-address", required = false)
-	public String testIPAddress();
-
 }
