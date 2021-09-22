@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Map;
 
@@ -30,14 +30,10 @@ public class LongSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean accept(EvaluationVisitor evaluationVisitor)
-		throws SXPParameterException {
+	public boolean evaluateEquals(JSONObject jsonObject) {
+		long value = jsonObject.getLong("value");
 
-		return evaluationVisitor.visit(this);
-	}
-
-	public boolean equalsTo(Long value) {
-		if (_value.longValue() == value.longValue()) {
+		if (_value.longValue() == value) {
 			return true;
 		}
 

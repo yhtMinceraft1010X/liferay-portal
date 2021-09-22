@@ -14,7 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Petteri Karttunen
@@ -30,14 +30,10 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean accept(EvaluationVisitor evaluationVisitor)
-		throws SXPParameterException {
+	public boolean evaluateEquals(JSONObject jsonObject) {
+		double value = jsonObject.getDouble("value");
 
-		return evaluationVisitor.visit(this);
-	}
-
-	public boolean equalsTo(Double value) {
-		if (_value.doubleValue() == value.doubleValue()) {
+		if (_value.doubleValue() == value) {
 			return true;
 		}
 

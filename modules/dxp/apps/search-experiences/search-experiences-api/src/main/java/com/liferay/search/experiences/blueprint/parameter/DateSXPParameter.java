@@ -14,9 +14,9 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +28,7 @@ import java.time.ZonedDateTime;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Petteri Karttunen
@@ -41,10 +42,12 @@ public class DateSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean accept(EvaluationVisitor evaluationVisitor)
-		throws SXPParameterException {
+	public boolean evaluateEquals(JSONObject jsonObject) {
+		DateFormat dateFormat = new SimpleDateFormat(
+			jsonObject.getString("date_format"));
 
-		return evaluationVisitor.visit(this);
+		return Objects.equals(
+			dateFormat.format(_value), jsonObject.getString("value"));
 	}
 
 	@Override

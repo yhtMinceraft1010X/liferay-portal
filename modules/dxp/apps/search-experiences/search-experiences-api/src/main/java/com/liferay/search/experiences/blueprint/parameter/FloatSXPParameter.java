@@ -14,7 +14,8 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
-import com.liferay.search.experiences.blueprint.parameter.exception.SXPParameterException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Petteri Karttunen
@@ -30,14 +31,10 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean accept(EvaluationVisitor evaluationVisitor)
-		throws SXPParameterException {
+	public boolean evaluateEquals(JSONObject jsonObject) {
+		float value = GetterUtil.getFloat(jsonObject.get("value"));
 
-		return evaluationVisitor.visit(this);
-	}
-
-	public boolean equalsTo(Float value) {
-		if (_value.floatValue() == value.floatValue()) {
+		if (_value.floatValue() == value) {
 			return true;
 		}
 
