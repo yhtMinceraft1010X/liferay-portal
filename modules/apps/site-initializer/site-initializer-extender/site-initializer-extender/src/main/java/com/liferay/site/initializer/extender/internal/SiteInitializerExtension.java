@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -92,7 +93,7 @@ public class SiteInitializerExtension {
 			layoutPageTemplateStructureLocalService,
 		LayoutSetLocalService layoutSetLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		Portal portal,
+		Portal portal, RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, SettingsFactory settingsFactory,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
@@ -125,8 +126,9 @@ public class SiteInitializerExtension {
 				layoutPageTemplatesImporter,
 				layoutPageTemplateStructureLocalService, layoutSetLocalService,
 				objectDefinitionResourceFactory, portal,
-				resourcePermissionLocalService, roleLocalService,
-				settingsFactory, siteNavigationMenuItemLocalService,
+				remoteAppEntryLocalService, resourcePermissionLocalService,
+				roleLocalService, settingsFactory,
+				siteNavigationMenuItemLocalService,
 				siteNavigationMenuItemTypeRegistry,
 				siteNavigationMenuLocalService,
 				structuredContentFolderResourceFactory,

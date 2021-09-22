@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
@@ -102,7 +103,8 @@ public class SiteInitializerExtender
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
-				_portal, _resourcePermissionLocalService, _roleLocalService,
+				_portal, _remoteAppEntryLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
 				_settingsFactory, _siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -224,6 +226,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
