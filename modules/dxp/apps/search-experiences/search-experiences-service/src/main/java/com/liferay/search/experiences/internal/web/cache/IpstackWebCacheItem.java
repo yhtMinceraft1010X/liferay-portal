@@ -79,7 +79,11 @@ public class IpstackWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		return _ipstackConfiguration.cacheTimeout();
+		if (_ipstackConfiguration.enabled()) {
+			return _ipstackConfiguration.cacheTimeout();
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

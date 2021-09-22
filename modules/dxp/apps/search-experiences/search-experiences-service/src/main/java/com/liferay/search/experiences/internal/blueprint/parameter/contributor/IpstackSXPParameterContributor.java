@@ -15,15 +15,18 @@
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
 import com.liferay.search.experiences.internal.configuration.IpstackConfiguration;
+import com.liferay.search.experiences.internal.web.cache.IpstackWebCacheItem;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.Arrays;
@@ -53,6 +56,57 @@ public class IpstackSXPParameterContributor implements SXPParameterContributor {
 		if (!ipstackConfiguration.enabled()) {
 			return;
 		}
+
+		String ipAddress = (String)searchContext.getAttribute(
+			"search.experiences.ipaddress");
+
+		if (Validator.isBlank(ipAddress)) {
+			return;
+		}
+
+		JSONObject jsonObject = IpstackWebCacheItem.get(
+			ipAddress, ipstackConfiguration);
+
+		if (jsonObject.length() == 0) {
+			return;
+		}
+
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.city", true, jsonObject.getString("city")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.continent_code", true,
+				jsonObject.getString("continent_code")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.continent_name", true,
+				jsonObject.getString("continent_name")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.country_code", true,
+				jsonObject.getString("country_code")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.country_name", true,
+				jsonObject.getString("country_name")));
+		sxpParameters.add(
+			new DoubleSXPParameter(
+				"ipstack.latitude", true, jsonObject.getDouble("latitude")));
+		sxpParameters.add(
+			new DoubleSXPParameter(
+				"ipstack.longitude", true, jsonObject.getDouble("longitude")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.region_code", true,
+				jsonObject.getString("region_code")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.region_name", true,
+				jsonObject.getString("region_name")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"ipstack.zip", true, jsonObject.getString("zip")));
 	}
 
 	@Override

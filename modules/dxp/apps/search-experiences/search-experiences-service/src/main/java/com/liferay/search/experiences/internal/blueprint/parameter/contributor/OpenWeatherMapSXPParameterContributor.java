@@ -15,16 +15,21 @@
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.blueprint.parameter.DoubleSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.IntegerSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.StringSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributor;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
+import com.liferay.search.experiences.internal.configuration.IpstackConfiguration;
 import com.liferay.search.experiences.internal.configuration.OpenWeatherMapConfiguration;
+import com.liferay.search.experiences.internal.web.cache.IpstackWebCacheItem;
+import com.liferay.search.experiences.internal.web.cache.OpenWeatherMapWebCacheItem;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.Arrays;
@@ -55,6 +60,42 @@ public class OpenWeatherMapSXPParameterContributor
 		if (!openWeatherMapConfiguration.enabled()) {
 			return;
 		}
+
+		String ipAddress = (String)searchContext.getAttribute(
+			"search.experiences.ipaddress");
+
+		if (Validator.isBlank(ipAddress)) {
+			return;
+		}
+
+		JSONObject jsonObject = IpstackWebCacheItem.get(
+			ipAddress, _getIpstackConfiguration(searchContext.getCompanyId()));
+
+		if (jsonObject.length() == 0) {
+			return;
+		}
+
+		String latitude = jsonObject.getString("ipstack.latitude");
+		String longitude = jsonObject.getString("ipstack.longitude");
+
+		jsonObject = OpenWeatherMapWebCacheItem.get(
+			latitude, longitude, openWeatherMapConfiguration);
+
+		if (jsonObject.length() == 0) {
+			return;
+		}
+
+		sxpParameters.add(
+			new DoubleSXPParameter(
+				"openweathermap.temperature", true,
+				jsonObject.getDouble("temp")));
+		sxpParameters.add(
+			new IntegerSXPParameter(
+				"openweathermap.weather_id", true, jsonObject.getInt("id")));
+		sxpParameters.add(
+			new StringSXPParameter(
+				"openweathermap.weather_name", true,
+				jsonObject.getString("main")));
 	}
 
 	@Override
@@ -83,6 +124,16 @@ public class OpenWeatherMapSXPParameterContributor
 			new SXPParameterContributorDefinition(
 				StringSXPParameter.class, "weather-name}",
 				"openweathermap.weather_name"));
+	}
+
+	private IpstackConfiguration _getIpstackConfiguration(long companyId) {
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				IpstackConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
+		}
 	}
 
 	private OpenWeatherMapConfiguration _getOpenWeatherMapConfiguration(

@@ -80,7 +80,11 @@ public class OpenWeatherMapWebCacheItem implements WebCacheItem {
 
 	@Override
 	public long getRefreshTime() {
-		return _openWeatherMapConfiguration.cacheTimeout();
+		if (_openWeatherMapConfiguration.enabled()) {
+			return _openWeatherMapConfiguration.cacheTimeout();
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
