@@ -22,24 +22,23 @@ import java.util.Date;
 public class BatchPlannerLogDisplay {
 
 	public BatchPlannerLogDisplay(
-		long batchPlannerLogId, String action, String name,
-		String internalClassName, Date createDate, long userId, String status,
-		long batchEngineImportTaskId, long batchEngineExportTaskId,
-		int totalItemsCount, int processedItemsCount, boolean export) {
+		String action, long batchEngineExportTaskId,
+		long batchEngineImportTaskId, long batchPlannerLogId, Date createDate,
+		boolean export, String internalClassName, int processedItemsCount,
+		String status, String title, int totalItemsCount, long userId) {
 
-		_batchPlannerLogId = batchPlannerLogId;
 		_action = action;
-		_internalClassName = internalClassName;
-		_createDate = createDate;
-		_userId = userId;
-		_status = status;
-		_batchEngineImportTaskId = batchEngineImportTaskId;
 		_batchEngineExportTaskId = batchEngineExportTaskId;
-		_totalItemsCount = totalItemsCount;
-		_processedItemsCount = processedItemsCount;
+		_batchEngineImportTaskId = batchEngineImportTaskId;
+		_batchPlannerLogId = batchPlannerLogId;
+		_createDate = createDate;
 		_export = export;
-
-		_title = name;
+		_internalClassName = internalClassName;
+		_processedItemsCount = processedItemsCount;
+		_status = status;
+		_title = title;
+		_totalItemsCount = totalItemsCount;
+		_userId = userId;
 	}
 
 	public String getAction() {
@@ -118,10 +117,10 @@ public class BatchPlannerLogDisplay {
 
 		public BatchPlannerLogDisplay build() {
 			return new BatchPlannerLogDisplay(
-				_batchPlannerLogId, _action, _title, _internalClassName,
-				_createDate, _userId, _status, _batchEngineImportTaskId,
-				_batchEngineExportTaskId, _totalItemsCount,
-				_processedItemsCount, _export);
+				_action, _batchEngineExportTaskId, _batchEngineImportTaskId,
+				_batchPlannerLogId, _createDate, _export, _internalClassName,
+				_processedItemsCount, _status, _title, _totalItemsCount,
+				_userId);
 		}
 
 		public Builder createDate(Date createDate) {
