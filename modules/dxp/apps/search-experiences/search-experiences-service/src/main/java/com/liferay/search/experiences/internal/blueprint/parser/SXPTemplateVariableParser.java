@@ -152,25 +152,23 @@ public class SXPTemplateVariableParser {
 					index + parameterizedTemplateVariable.length(),
 					json.indexOf("}", index));
 
-				String evaluatedTemplateVariable =
-					sxpParameter.evaluateTemplateVariable(
-						_getOptions(optionsString));
+				String evaluatedToString = sxpParameter.evaluateToString(
+					_getOptions(optionsString));
 
 				json = _replace(
 					json,
 					StringBundler.concat(
 						parameterizedTemplateVariable, optionsString, "}"),
-					evaluatedTemplateVariable);
+					evaluatedToString);
 
 				index = json.indexOf(parameterizedTemplateVariable, index);
 			}
 		}
 
 		if (json.contains(templateVariable)) {
-			String evaluatedTemplateVariable =
-				sxpParameter.evaluateTemplateVariable(null);
+			String evaluatedToString = sxpParameter.evaluateToString(null);
 
-			json = _replace(json, templateVariable, evaluatedTemplateVariable);
+			json = _replace(json, templateVariable, evaluatedToString);
 		}
 
 		return json;
@@ -195,17 +193,15 @@ public class SXPTemplateVariableParser {
 	}
 
 	private static String _replace(
-		String json, String templateVariable,
-		String evaluatedTemplateVariable) {
+		String json, String templateVariable, String evaluatedToString) {
 
-		if (evaluatedTemplateVariable.startsWith("[")) {
+		if (evaluatedToString.startsWith("[")) {
 			return StringUtil.replace(
 				json, StringUtil.quote(templateVariable, CharPool.QUOTE),
-				evaluatedTemplateVariable);
+				evaluatedToString);
 		}
 
-		return StringUtil.replace(
-			json, templateVariable, evaluatedTemplateVariable);
+		return StringUtil.replace(json, templateVariable, evaluatedToString);
 	}
 
 }

@@ -34,7 +34,7 @@ public interface SXPParameter {
 
 	public boolean evaluateInRange(JSONObject jsonObject);
 
-	public String evaluateTemplateVariable(Map<String, String> options);
+	public String evaluateToString(Map<String, String> options);
 
 	public String getName();
 

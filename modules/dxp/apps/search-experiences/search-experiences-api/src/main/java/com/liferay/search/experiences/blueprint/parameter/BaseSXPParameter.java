@@ -66,7 +66,7 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
-	public String evaluateTemplateVariable(Map<String, String> options) {
+	public String evaluateToString(Map<String, String> options) {
 		return GetterUtil.getString(getValue());
 	}
 
@@ -101,7 +101,7 @@ public abstract class BaseSXPParameter implements SXPParameter {
 		return StringBundler.concat(
 			"{className=", clazz.getSimpleName(), ", name=", name,
 			", templateVariable=", templateVariable, ", value=",
-			evaluateTemplateVariable(null), "}");
+			evaluateToString(null), "}");
 	}
 
 	protected final String name;

@@ -92,7 +92,7 @@ public class DateSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public String evaluateTemplateVariable(Map<String, String> options) {
+	public String evaluateToString(Map<String, String> options) {
 		if ((options == null) || (options.get("date_format") == null)) {
 			return _value.toString();
 		}

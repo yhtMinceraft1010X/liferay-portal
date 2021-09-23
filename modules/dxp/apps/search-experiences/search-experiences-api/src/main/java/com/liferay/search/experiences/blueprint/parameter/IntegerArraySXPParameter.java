@@ -55,7 +55,7 @@ public class IntegerArraySXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public String evaluateTemplateVariable(Map<String, String> options) {
+	public String evaluateToString(Map<String, String> options) {
 		return Arrays.toString(_value);
 	}
 
