@@ -88,7 +88,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			long objectDefinitionId = ddmStorageAdapterDeleteRequest.getPrimaryKey();
+			long objectDefinitionId =
+				ddmStorageAdapterDeleteRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectDefinitionId);
@@ -118,7 +119,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
 
-			long objectDefinitionId = ddmStorageAdapterGetRequest.getPrimaryKey();
+			long objectDefinitionId =
+				ddmStorageAdapterGetRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectDefinitionId);
@@ -128,7 +130,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					ddmForm,
 					_objectEntryManager.getObjectEntry(
 						_getDTOConverterContext(
-							objectDefinitionId, null, ddmForm.getDefaultLocale()),
+							objectDefinitionId, null,
+							ddmForm.getDefaultLocale()),
 						objectDefinition, objectDefinitionId))
 			).build();
 		}
