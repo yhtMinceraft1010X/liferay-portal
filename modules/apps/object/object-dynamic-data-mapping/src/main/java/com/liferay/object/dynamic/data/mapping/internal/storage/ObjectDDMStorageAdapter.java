@@ -88,15 +88,15 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		throws StorageException {
 
 		try {
-			long primaryKey = ddmStorageAdapterDeleteRequest.getPrimaryKey();
+			long objectDefinitionId = ddmStorageAdapterDeleteRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
-				primaryKey);
+				objectDefinitionId);
 
 			ObjectEntry objectEntry = _objectEntryManager.fetchObjectEntry(
 				_getDTOConverterContext(
 					null, null, LocaleUtil.getSiteDefault()),
-				objectDefinition, primaryKey);
+				objectDefinition, objectDefinitionId);
 
 			if (objectEntry != null) {
 				_objectEntryManager.deleteObjectEntry(objectEntry.getId());
@@ -118,18 +118,18 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
 
-			long primaryKey = ddmStorageAdapterGetRequest.getPrimaryKey();
+			long objectDefinitionId = ddmStorageAdapterGetRequest.getPrimaryKey();
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
-				primaryKey);
+				objectDefinitionId);
 
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
 				_getDDMFormValues(
 					ddmForm,
 					_objectEntryManager.getObjectEntry(
 						_getDTOConverterContext(
-							primaryKey, null, ddmForm.getDefaultLocale()),
-						objectDefinition, primaryKey))
+							objectDefinitionId, null, ddmForm.getDefaultLocale()),
+						objectDefinition, objectDefinitionId))
 			).build();
 		}
 		catch (Exception exception) {
@@ -263,11 +263,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			null, null, objectEntryId, locale, null, user);
 	}
 
-	private ObjectDefinition _getObjectDefinition(long primaryKey)
+	private ObjectDefinition _getObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(primaryKey);
+			_objectEntryService.getObjectEntry(objectDefinitionId);
 
 		return _objectDefinitionLocalService.getObjectDefinition(
 			serviceBuilderObjectEntry.getObjectDefinitionId());
