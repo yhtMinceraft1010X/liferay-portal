@@ -131,16 +131,8 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			Group group = null;
-
-			try {
-				group = _groupLocalService.getGroup(objectEntry.getGroupId());
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-			}
+			Group group = _groupLocalService.fetchGroup(
+				objectEntry.getGroupId());
 
 			if (group == null) {
 				return null;
@@ -151,9 +143,6 @@ public class ObjectEntryDTOConverter
 
 		return null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryDTOConverter.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;
