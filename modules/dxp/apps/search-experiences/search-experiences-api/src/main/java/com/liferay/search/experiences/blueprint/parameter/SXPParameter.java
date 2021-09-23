@@ -23,6 +23,8 @@ import java.util.Map;
  */
 public interface SXPParameter {
 
+	public boolean evaluateContains(JSONObject jsonObject);
+
 	public boolean evaluateEquals(JSONObject jsonObject);
 
 	public String evaluateTemplateVariable(Map<String, String> options);

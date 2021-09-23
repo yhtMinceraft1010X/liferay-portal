@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
@@ -35,6 +36,16 @@ public abstract class BaseSXPParameter implements SXPParameter {
 		SXPParameter sxpParameter = (SXPParameter)object;
 
 		return Objects.equals(name, sxpParameter.getName());
+	}
+
+	@Override
+	public boolean evaluateContains(JSONObject jsonObject) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean evaluateEquals(JSONObject jsonObject) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
