@@ -29,6 +29,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeDDMStorageLinks();
+
 		_upgradeDDMFields();
 	}
 
