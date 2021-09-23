@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -55,6 +56,22 @@ public class FloatSXPParameter extends BaseSXPParameter {
 			return false;
 		}
 		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean evaluateInRange(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+		float lowerBound = GetterUtil.getFloat(jsonArray.getString(0));
+		float upperBound = GetterUtil.getFloat(jsonArray.getString(1));
+
+		if ((_value.compareTo(lowerBound) >= 0) &&
+			(_value.compareTo(upperBound) <= 0)) {
+
 			return true;
 		}
 

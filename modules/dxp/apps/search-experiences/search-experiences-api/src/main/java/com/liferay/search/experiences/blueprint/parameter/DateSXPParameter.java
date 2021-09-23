@@ -15,6 +15,7 @@
 package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,6 +63,28 @@ public class DateSXPParameter extends BaseSXPParameter {
 
 			return _value.after(
 				dateFormat.parse(jsonObject.getString("value")));
+		}
+		catch (ParseException parseException) {
+			return ReflectionUtil.throwException(parseException);
+		}
+	}
+
+	@Override
+	public boolean evaluateInRange(JSONObject jsonObject) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat(
+				jsonObject.getString("date_format"));
+
+			JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+			Date lowerBoundDate = dateFormat.parse(jsonArray.getString(0));
+			Date upperBoundDate = dateFormat.parse(jsonArray.getString(1));
+
+			if (_value.after(lowerBoundDate) && _value.before(upperBoundDate)) {
+				return true;
+			}
+
+			return false;
 		}
 		catch (ParseException parseException) {
 			return ReflectionUtil.throwException(parseException);

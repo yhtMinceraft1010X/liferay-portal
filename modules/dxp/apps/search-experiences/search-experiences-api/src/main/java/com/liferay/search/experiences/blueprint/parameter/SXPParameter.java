@@ -30,6 +30,8 @@ public interface SXPParameter {
 	public boolean evaluateGreaterThan(
 		boolean closedRange, JSONObject jsonObject);
 
+	public boolean evaluateInRange(JSONObject jsonObject);
+
 	public String evaluateTemplateVariable(Map<String, String> options);
 
 	public String getName();

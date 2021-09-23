@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 
 /**
@@ -54,6 +55,22 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 			return false;
 		}
 		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean evaluateInRange(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+		int lowerBound = jsonArray.getInt(0);
+		int upperBound = jsonArray.getInt(1);
+
+		if ((_value.compareTo(lowerBound) >= 0) &&
+			(_value.compareTo(upperBound) <= 0)) {
+
 			return true;
 		}
 
