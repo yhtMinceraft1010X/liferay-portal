@@ -62,6 +62,19 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
+	public boolean evaluateIn(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (_value.intValue() == jsonArray.getInt(i)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean evaluateInRange(JSONObject jsonObject) {
 		JSONArray jsonArray = jsonObject.getJSONArray("value");
 

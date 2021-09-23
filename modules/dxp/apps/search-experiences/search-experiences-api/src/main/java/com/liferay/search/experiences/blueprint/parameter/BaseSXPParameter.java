@@ -56,6 +56,11 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
+	public boolean evaluateIn(JSONObject jsonObject) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean evaluateInRange(JSONObject jsonObject) {
 		throw new UnsupportedOperationException();
 	}

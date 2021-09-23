@@ -63,6 +63,21 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
+	public boolean evaluateIn(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (_value.floatValue() == GetterUtil.getFloat(
+					jsonArray.getString(i))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean evaluateInRange(JSONObject jsonObject) {
 		JSONArray jsonArray = jsonObject.getJSONArray("value");
 

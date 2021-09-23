@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Objects;
@@ -36,6 +37,19 @@ public class StringSXPParameter extends BaseSXPParameter {
 		String value = jsonObject.getString("value");
 
 		return Objects.equals(_value, value);
+	}
+
+	@Override
+	public boolean evaluateIn(JSONObject jsonObject) {
+		JSONArray jsonArray = jsonObject.getJSONArray("value");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			if (Objects.equals(_value, jsonArray.getString(i))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
