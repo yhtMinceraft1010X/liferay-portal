@@ -41,6 +41,26 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		int value = jsonObject.getInt("value");
+
+		if (closedRange) {
+			if (_value.compareTo(value) >= 0) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public Integer getValue() {
 		return _value;
 	}

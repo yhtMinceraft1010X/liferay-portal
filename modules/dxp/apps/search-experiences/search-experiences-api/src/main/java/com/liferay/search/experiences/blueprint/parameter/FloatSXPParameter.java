@@ -42,6 +42,26 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		float value = GetterUtil.getFloat(jsonObject.get("value"));
+
+		if (closedRange) {
+			if (_value.compareTo(value) >= 0) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public Float getValue() {
 		return _value;
 	}

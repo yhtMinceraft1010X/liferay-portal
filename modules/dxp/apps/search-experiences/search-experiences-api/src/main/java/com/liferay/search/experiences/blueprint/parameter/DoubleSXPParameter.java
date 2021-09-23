@@ -41,6 +41,26 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		double value = jsonObject.getDouble("value");
+
+		if (closedRange) {
+			if (_value.compareTo(value) >= 0) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public Double getValue() {
 		return _value;
 	}

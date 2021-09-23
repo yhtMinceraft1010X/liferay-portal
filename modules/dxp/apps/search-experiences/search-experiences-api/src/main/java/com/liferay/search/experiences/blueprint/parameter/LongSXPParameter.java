@@ -16,8 +16,6 @@ package com.liferay.search.experiences.blueprint.parameter;
 
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.Map;
-
 /**
  * @author Petteri Karttunen
  */
@@ -41,8 +39,23 @@ public class LongSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public String evaluateTemplateVariable(Map<String, String> options) {
-		return null;
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		long value = jsonObject.getLong("value");
+
+		if (closedRange) {
+			if (_value.compareTo(value) >= 0) {
+				return true;
+			}
+
+			return false;
+		}
+		else if (_value.compareTo(value) > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

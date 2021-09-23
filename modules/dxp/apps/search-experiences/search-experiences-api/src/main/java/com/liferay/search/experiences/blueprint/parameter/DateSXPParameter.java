@@ -14,11 +14,13 @@
 
 package com.liferay.search.experiences.blueprint.parameter;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.time.Instant;
@@ -48,6 +50,22 @@ public class DateSXPParameter extends BaseSXPParameter {
 
 		return Objects.equals(
 			dateFormat.format(_value), jsonObject.getString("value"));
+	}
+
+	@Override
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		try {
+			DateFormat dateFormat = new SimpleDateFormat(
+				jsonObject.getString("date_format"));
+
+			return _value.after(
+				dateFormat.parse(jsonObject.getString("value")));
+		}
+		catch (ParseException parseException) {
+			return ReflectionUtil.throwException(parseException);
+		}
 	}
 
 	@Override

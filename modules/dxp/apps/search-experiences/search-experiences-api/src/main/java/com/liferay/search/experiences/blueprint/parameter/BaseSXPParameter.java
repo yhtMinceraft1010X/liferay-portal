@@ -49,6 +49,13 @@ public abstract class BaseSXPParameter implements SXPParameter {
 	}
 
 	@Override
+	public boolean evaluateGreaterThan(
+		boolean closedRange, JSONObject jsonObject) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String evaluateTemplateVariable(Map<String, String> options) {
 		return GetterUtil.getString(getValue());
 	}
