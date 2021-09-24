@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.learn.web.internal;
+package com.liferay.learn.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hai Yu
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class LearnTagRenderJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class LearnMessageJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -55,6 +55,6 @@ public class LearnTagRenderJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LearnTagRenderJSPDynamicInclude.class);
+		LearnMessageJSPDynamicInclude.class);
 
 }
