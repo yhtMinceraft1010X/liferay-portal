@@ -31,6 +31,7 @@ import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
+import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.QuerySXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
@@ -92,6 +93,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new HighlightSXPSearchRequestBodyContributor(
 				_fieldConfigBuilderFactory, _highlightBuilderFactory),
+			new QuerySXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
 				_geoBuilders, _queries, _scripts, _sorts));
 	}
