@@ -245,7 +245,7 @@
 							<div class="btn float-right" id="basicConfiguration">
 
 								<%
-								request.setAttribute("liferay-learn:message:key", "basic-configuration");
+								request.setAttribute("liferay-learn:message:key", "setup-wizard-basic-configuration");
 								request.setAttribute("liferay-learn:message:resource", "portal-web");
 								%>
 
@@ -255,7 +255,7 @@
 							<div class="btn float-right hide" id="databaseConfiguration">
 
 								<%
-								request.setAttribute("liferay-learn:message:key", "database-configuration");
+								request.setAttribute("liferay-learn:message:key", "setup-wizard-database-configuration");
 								request.setAttribute("liferay-learn:message:resource", "portal-web");
 								%>
 
