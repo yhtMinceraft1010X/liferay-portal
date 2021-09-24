@@ -41,7 +41,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_insertResourcePermissions();
+		_addResourcePermissions();
 	}
 
 	private long _getLayoutPageTemplateEntryId(long layoutPrototypeId) {
@@ -70,7 +70,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private void _insertResourcePermissions() {
+	private void _addResourcePermissions() {
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
 				LayoutPrototype.class.getName());
