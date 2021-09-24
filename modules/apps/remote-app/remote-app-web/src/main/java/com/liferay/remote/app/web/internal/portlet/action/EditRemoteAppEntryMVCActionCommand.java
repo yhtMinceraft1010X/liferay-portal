@@ -110,8 +110,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
-				instanceable, nameMap, portletCategoryName,
-				ParamUtil.getString(actionRequest, "properties"));
+				instanceable, nameMap, portletCategoryName, properties);
 		}
 		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			_remoteAppEntryService.addIFrameRemoteAppEntry(
@@ -160,8 +159,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getStringValues(
 						actionRequest, "customElementURLs"),
 					StringPool.NEW_LINE),
-				instanceable, nameMap, portletCategoryName,
-				ParamUtil.getString(actionRequest, "properties"));
+				instanceable, nameMap, portletCategoryName, properties);
 		}
 		else if (Objects.equals(
 					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
