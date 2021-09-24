@@ -14,10 +14,12 @@
 
 package com.liferay.object.internal.workflow;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
@@ -27,6 +29,7 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -51,6 +54,19 @@ public class ObjectEntryWorkflowHandler
 	@Override
 	public String getType(Locale locale) {
 		return _objectDefinition.getLabel(locale);
+	}
+
+	@Override
+	public boolean isVisible(Group group) {
+		if (group.isSite() &&
+			!Objects.equals(
+				ObjectDefinitionConstants.SCOPE_SITE,
+				_objectDefinition.getScope())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
