@@ -374,6 +374,37 @@ definition {
 		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
 	}
 
+	@description = "LPS-123218 TC-2 Assertion for: first name cannot be used for user matching even if LDAP import is enabled."
+	@priority = "4"
+	test AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled {
+		property apacheds.enabled = "true";
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#AssertFirstNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled";
+
+		LDAP.addLDAPServerAndTestConnection(LDAPServerName = "ApacheDS Server");
+
+		LDAP.enableLDAPSettings(enableSettingList = "enabled,ldapImportEnabled");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLRole.configure(
+			samlEntityID = "samlsp",
+			samlRoleType = "Service Provider");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.addIdentityProviderConnectionWithBasicSetup(idpEntityID = "samlidp");
+
+		SAMLPortlet.addAndSelectInvalidAttributeForUserMatching(idpAttributeMapping = "firstName");
+
+		AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
+
+		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
+	}
+
 	@description = "This is a use case for LPS-105165."
 	@priority = "5"
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
@@ -535,6 +566,37 @@ definition {
 		if ("${count}" != "2") {
 			fail("That response should contain two document.write commands");
 		}
+	}
+
+	@description = "LPS-123218 TC-3 Assertion for: last name cannot be used for user matching even if LDAP import is enabled."
+	@priority = "4"
+	test AssertLastNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled {
+		property apacheds.enabled = "true";
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#AssertLastNameCannotBeUsedForUserMatchingEvenWithLDAPEnabled";
+
+		LDAP.addLDAPServerAndTestConnection(LDAPServerName = "ApacheDS Server");
+
+		LDAP.enableLDAPSettings(enableSettingList = "enabled,ldapImportEnabled");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAMLRole.configure(
+			samlEntityID = "samlsp",
+			samlRoleType = "Service Provider");
+
+		SAMLNavigation.gotoIdentityProviderConnections();
+
+		SAMLPortlet.addIdentityProviderConnectionWithBasicSetup(idpEntityID = "samlidp");
+
+		SAMLPortlet.addAndSelectInvalidAttributeForUserMatching(idpAttributeMapping = "lastName");
+
+		AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
+
+		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
 	}
 
 	@description = "This is a use case for LPS-39013."
