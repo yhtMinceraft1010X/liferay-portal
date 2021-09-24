@@ -672,8 +672,10 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _deleteWorkflowInstanceLinks(ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		List<ObjectEntry> objectEntries = _getObjectEntriesNotApproved(
-			objectDefinition);
+		List<ObjectEntry> objectEntries =
+			_objectEntryPersistence.findByODI_NotS(
+				objectDefinition.getObjectDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED);
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
@@ -730,15 +732,6 @@ public class ObjectDefinitionLocalServiceImpl
 		return name;
 	}
 
-	private List<ObjectEntry> _getObjectEntriesNotApproved(
-			ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		return _objectEntryPersistence.findByODI_NotS(
-			objectDefinition.getObjectDefinitionId(),
-			WorkflowConstants.STATUS_APPROVED);
-	}
-
 	private String _getPKObjectFieldDBColumnName(
 		String pkObjectFieldDBColumnName, String pkObjectFieldName,
 		boolean system) {
@@ -788,8 +781,10 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _startWorkflowInstanceLinks(ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		List<ObjectEntry> objectEntries = _getObjectEntriesNotApproved(
-			objectDefinition);
+		List<ObjectEntry> objectEntries =
+			_objectEntryPersistence.findByODI_NotS(
+				objectDefinition.getObjectDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED);
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
