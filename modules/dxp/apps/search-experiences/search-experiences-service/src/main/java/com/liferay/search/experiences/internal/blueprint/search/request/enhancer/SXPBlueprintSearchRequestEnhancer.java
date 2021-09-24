@@ -30,10 +30,12 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.AggsSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.QuerySXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
+import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Aggregation;
 import com.liferay.search.experiences.rest.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
@@ -91,9 +93,11 @@ public class SXPBlueprintSearchRequestEnhancer {
 	@Activate
 	protected void activate() {
 		_sxpSearchRequestBodyContributors = Arrays.asList(
+			new AggsSXPSearchRequestBodyContributor(),
 			new HighlightSXPSearchRequestBodyContributor(
 				_fieldConfigBuilderFactory, _highlightBuilderFactory),
 			new QuerySXPSearchRequestBodyContributor(),
+			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
 				_geoBuilders, _queries, _scripts, _sorts));
 	}
