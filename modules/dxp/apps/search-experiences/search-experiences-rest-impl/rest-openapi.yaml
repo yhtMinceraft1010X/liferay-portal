@@ -72,7 +72,7 @@ components:
                             type: object
                         parameters:
                             additionalProperties:
-                                $ref: "#/components/schemas/SearchParameter"
+                                $ref: "#/components/schemas/Parameter"
                             type: object
                         queries:
                             items:
@@ -111,7 +111,7 @@ components:
                 title:
                     type: string
             type: object
-        SearchParameter:
+        Parameter:
             properties:
                 dateFormat:
                     type: string
