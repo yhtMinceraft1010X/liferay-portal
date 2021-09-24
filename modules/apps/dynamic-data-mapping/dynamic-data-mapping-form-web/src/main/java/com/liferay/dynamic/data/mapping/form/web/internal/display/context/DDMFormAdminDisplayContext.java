@@ -898,7 +898,8 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
-	public String getObjectLabel(DDMFormInstance ddmFormInstance, Locale locale)
+	public String getObjectDefinitionLabel(
+			DDMFormInstance ddmFormInstance, Locale locale)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
