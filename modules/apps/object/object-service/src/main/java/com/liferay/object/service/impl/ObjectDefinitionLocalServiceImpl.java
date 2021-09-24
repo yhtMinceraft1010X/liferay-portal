@@ -44,7 +44,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,8 +81,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -757,22 +754,12 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		List<ObjectEntry> objectEntries =
-			_objectEntryLocalService.getObjectEntries(
-				_getGroupId(
-					objectDefinition,
-					ServiceContextThreadLocal.getServiceContext()),
-				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Stream<ObjectEntry> stream = objectEntries.stream();
-
-		return stream.filter(
-			objectEntry ->
-				objectEntry.getStatus() != WorkflowConstants.STATUS_APPROVED
-		).collect(
-			Collectors.toList()
-		);
+		return _objectEntryPersistence.findByG_ODI_NotS(
+			_getGroupId(
+				objectDefinition,
+				ServiceContextThreadLocal.getServiceContext()),
+			objectDefinition.getObjectDefinitionId(),
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private String _getPKObjectFieldDBColumnName(
