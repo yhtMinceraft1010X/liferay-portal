@@ -131,34 +131,37 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, false, "Age of Death", "ageOfDeath", false,
+						true, false, null, "Age of Death", "ageOfDeath", false,
 						"Long"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Author of Gospel", "authorOfGospel",
+						true, false, null, "Author of Gospel", "authorOfGospel",
 						false, "Boolean"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Birthday", "birthday", false, "Date"),
+						true, false, null, "Birthday", "birthday", false,
+						"Date"),
 					ObjectFieldUtil.createObjectField(
-						true, true, "Email Address", "emailAddress", true,
+						true, true, null, "Email Address", "emailAddress", true,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, true, "Email Address Domain",
+						true, true, null, "Email Address Domain",
 						"emailAddressDomain", false, "String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "First Name", "firstName", false,
+						true, false, null, "First Name", "firstName", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Height", "height", false, "Double"),
+						true, false, null, "Height", "height", false, "Double"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Last Name", "lastName", false, "String"),
-					ObjectFieldUtil.createObjectField(
-						true, false, "Middle Name", "middleName", false,
+						true, false, null, "Last Name", "lastName", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Number of Books Written",
+						true, false, null, "Middle Name", "middleName", false,
+						"String"),
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
-						false, false, "Portrait", "portrait", false, "Blob")));
+						false, false, null, "Portrait", "portrait", false,
+						"Blob")));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -16,7 +16,6 @@ package com.liferay.object.util;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Guilherme Camacho
@@ -24,27 +23,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ObjectFieldUtil {
 
 	public static ObjectField createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String label, String type) {
-
-		return createObjectField(indexed, indexedAsKeyword, null, label, type);
-	}
-
-	public static ObjectField createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String label, String name,
-		boolean required, String type) {
+		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+		String label, String name, boolean required, String type) {
 
 		return createObjectField(
 			0, null, indexed, indexedAsKeyword, null, label, name, required,
 			type);
-	}
-
-	public static ObjectField createObjectField(
-		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-		String label, String type) {
-
-		return createObjectField(
-			0, null, indexed, indexedAsKeyword, indexedLanguageId, label,
-			StringUtil.toLowerCase(label), false, type);
 	}
 
 	public static ObjectField createObjectField(

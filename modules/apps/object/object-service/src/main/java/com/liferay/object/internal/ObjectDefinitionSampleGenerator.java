@@ -93,13 +93,13 @@ public class ObjectDefinitionSampleGenerator {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						true, false, "Able", "able", false, "Long"),
+						true, false, null, "Able", "able", false, "Long"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Baker", "baker", false, "Boolean"),
+						true, false, null, "Baker", "baker", false, "Boolean"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Charlie", "charlie", false, "Date"),
+						true, false, null, "Charlie", "charlie", false, "Date"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Dog", "dog", false, "String"),
+						true, false, null, "Dog", "dog", false, "String"),
 					ObjectFieldUtil.createObjectField(
 						0, null, true, true, null, "Easy", "easy", false,
 						"String"),
@@ -110,11 +110,11 @@ public class ObjectDefinitionSampleGenerator {
 						0, null, false, false, null, "George", "george", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "How", "how", false, "Double"),
+						true, false, null, "How", "how", false, "Double"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Item", "item", false, "Integer"),
+						true, false, null, "Item", "item", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
-						true, false, "Jig", "jig", false, "BigDecimal")));
+						true, false, null, "Jig", "jig", false, "BigDecimal")));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

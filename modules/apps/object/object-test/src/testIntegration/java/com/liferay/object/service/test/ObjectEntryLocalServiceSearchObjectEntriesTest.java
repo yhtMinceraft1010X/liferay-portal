@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.object.search.test;
+package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.exception.ObjectFieldTypeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -55,7 +54,7 @@ import org.junit.runner.RunWith;
  * @author Bryan Engler
  */
 @RunWith(Arquillian.class)
-public class ObjectEntrySearchTest {
+public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 	@ClassRule
 	@Rule
@@ -65,10 +64,10 @@ public class ObjectEntrySearchTest {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testSearchBigDecimal() throws Exception {
+	public void testBigDecimal() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "BigDecimal"));
+				true, false, null, "Alpha", "alpha", false, "BigDecimal"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -92,10 +91,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchBigDecimalKeyword() throws Exception {
+	public void testBigDecimalKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "BigDecimal"));
+				true, true, null, "Alpha", "alpha", false, "BigDecimal"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -119,10 +118,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchBoolean() throws Exception {
+	public void testBoolean() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "Boolean"));
+				true, false, null, "Alpha", "alpha", false, "Boolean"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -147,10 +146,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchBooleanKeyword() throws Exception {
+	public void testBooleanKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "Boolean"));
+				true, true, null, "Alpha", "alpha", false, "Boolean"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -175,10 +174,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchDate() throws Exception {
+	public void testDate() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "Date"));
+				true, false, null, "Alpha", "alpha", false, "Date"));
 
 		long date = 1632335654272L;
 
@@ -208,10 +207,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchDateKeyword() throws Exception {
+	public void testDateKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "Date"));
+				true, true, null, "Alpha", "alpha", false, "Date"));
 
 		long date = 1632335654272L;
 
@@ -241,10 +240,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchDouble() throws Exception {
+	public void testDouble() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "Double"));
+				true, false, null, "Alpha", "alpha", false, "Double"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -269,10 +268,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchDoubleKeyword() throws Exception {
+	public void testDoubleKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "Double"));
+				true, true, null, "Alpha", "alpha", false, "Double"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -297,10 +296,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchInteger() throws Exception {
+	public void testInteger() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "Integer"));
+				true, false, null, "Alpha", "alpha", false, "Integer"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -323,10 +322,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchIntegerKeyword() throws Exception {
+	public void testIntegerKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "Integer"));
+				true, true, null, "Alpha", "alpha", false, "Integer"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -349,10 +348,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchLong() throws Exception {
+	public void testLong() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "Long"));
+				true, false, null, "Alpha", "alpha", false, "Long"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -372,10 +371,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchLongKeyword() throws Exception {
+	public void testLongKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "Long"));
+				true, true, null, "Alpha", "alpha", false, "Long"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -395,10 +394,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchString() throws Exception {
+	public void testString() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "Alpha", "String"));
+				true, false, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -413,10 +412,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchStringAnalyzed() throws Exception {
+	public void testStringAnalyzed() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, false, "en_US", "Alpha", "String"));
+				true, false, "en_US", "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -431,10 +430,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchStringKeyword() throws Exception {
+	public void testStringKeyword() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				true, true, "Alpha", "String"));
+				true, true, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -452,10 +451,10 @@ public class ObjectEntrySearchTest {
 	}
 
 	@Test
-	public void testSearchStringNotIndexed() throws Exception {
+	public void testStringNotIndexed() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				false, false, "Alpha", "String"));
+				false, false, null, "Alpha", "alpha", false, "String"));
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
