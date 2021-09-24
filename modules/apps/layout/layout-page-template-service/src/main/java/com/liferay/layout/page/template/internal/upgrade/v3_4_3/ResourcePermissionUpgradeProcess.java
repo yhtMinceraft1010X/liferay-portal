@@ -44,32 +44,6 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 		_addResourcePermissions();
 	}
 
-	private long _getLayoutPageTemplateEntryId(long layoutPrototypeId) {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select layoutPageTemplateEntryId from ",
-					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
-					"order by name asc limit 1"))) {
-
-			preparedStatement.setLong(1, layoutPrototypeId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return 0;
-				}
-
-				return resultSet.getLong("layoutPageTemplateEntryId");
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return 0;
-	}
-
 	private void _addResourcePermissions() {
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -127,6 +101,32 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 			_resourcePermissionLocalService.addResourcePermission(
 				newResourcePermission);
 		}
+	}
+
+	private long _getLayoutPageTemplateEntryId(long layoutPrototypeId) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select layoutPageTemplateEntryId from ",
+					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
+					"order by name asc limit 1"))) {
+
+			preparedStatement.setLong(1, layoutPrototypeId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return 0;
+				}
+
+				return resultSet.getLong("layoutPageTemplateEntryId");
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
