@@ -84,20 +84,20 @@ public class SXPParameterDataCreator {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		Map<String, Parameter> parametersMap =
+		Map<String, Parameter> parameters =
 			configuration.getParameters();
 
-		if (!MapUtil.isEmpty(parametersMap)) {
+		if (!MapUtil.isEmpty(parameters)) {
 			_addSXPParameter(
-				parametersMap.get("page"), searchContext, "page",
+				parameters.get("page"), searchContext, "page",
 				sxpParameters);
 			_addSXPParameter(
-				parametersMap.get("size"), searchContext, "size",
+				parameters.get("size"), searchContext, "size",
 				sxpParameters);
 
 			_contribute(searchContext, sxpBlueprint, sxpParameters);
 
-			_addSXPParameters(parametersMap, searchContext, sxpParameters);
+			_addSXPParameters(parameters, searchContext, sxpParameters);
 		}
 
 		return new SXPParameterData(keywords, sxpParameters);
@@ -161,10 +161,10 @@ public class SXPParameterDataCreator {
 	}
 
 	private void _addSXPParameters(
-		Map<String, Parameter> parametersMap, SearchContext searchContext,
+		Map<String, Parameter> parameters, SearchContext searchContext,
 		Set<SXPParameter> sxpParameters) {
 
-		parametersMap.forEach(
+		parameters.forEach(
 			(name, parameter) -> _addSXPParameter(
 				parameter, searchContext, name, sxpParameters));
 	}
