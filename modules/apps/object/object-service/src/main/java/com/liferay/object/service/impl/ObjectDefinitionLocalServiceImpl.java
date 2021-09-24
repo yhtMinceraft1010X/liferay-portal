@@ -30,7 +30,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
-import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -679,10 +677,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				objectEntry.getCompanyId(),
-				_getGroupId(
-					objectDefinition,
-					ServiceContextThreadLocal.getServiceContext()),
+				objectEntry.getCompanyId(), objectEntry.getGroupId(),
 				objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId());
 		}
@@ -725,21 +720,6 @@ public class ObjectDefinitionLocalServiceImpl
 			"O_", companyId, StringPool.UNDERLINE, shortName);
 	}
 
-	private long _getGroupId(
-			ObjectDefinition objectDefinition, ServiceContext serviceContext)
-		throws PortalException {
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition.getScope());
-
-		if (!objectScopeProvider.isGroupAware()) {
-			return 0;
-		}
-
-		return objectScopeProvider.getGroupId(serviceContext.getRequest());
-	}
-
 	private String _getName(String name, boolean system) {
 		name = StringUtil.trim(name);
 
@@ -754,10 +734,7 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		return _objectEntryPersistence.findByG_ODI_NotS(
-			_getGroupId(
-				objectDefinition,
-				ServiceContextThreadLocal.getServiceContext()),
+		return _objectEntryPersistence.findByODI_NotS(
 			objectDefinition.getObjectDefinitionId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
@@ -816,10 +793,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				objectEntry.getCompanyId(),
-				_getGroupId(
-					objectDefinition,
-					ServiceContextThreadLocal.getServiceContext()),
+				objectEntry.getCompanyId(), objectEntry.getGroupId(),
 				objectEntry.getUserId(), objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId(), objectEntry,
 				ServiceContextThreadLocal.getServiceContext());
