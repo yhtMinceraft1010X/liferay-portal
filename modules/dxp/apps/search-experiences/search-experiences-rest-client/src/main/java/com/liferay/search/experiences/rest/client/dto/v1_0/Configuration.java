@@ -139,16 +139,16 @@ public class Configuration implements Cloneable, Serializable {
 
 	protected Highlight highlight;
 
-	public Map<String, SearchParameter> getParameters() {
+	public Map<String, Parameter> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(Map<String, SearchParameter> parameters) {
+	public void setParameters(Map<String, Parameter> parameters) {
 		this.parameters = parameters;
 	}
 
 	public void setParameters(
-		UnsafeSupplier<Map<String, SearchParameter>, Exception>
+		UnsafeSupplier<Map<String, Parameter>, Exception>
 			parametersUnsafeSupplier) {
 
 		try {
@@ -159,7 +159,7 @@ public class Configuration implements Cloneable, Serializable {
 		}
 	}
 
-	protected Map<String, SearchParameter> parameters;
+	protected Map<String, Parameter> parameters;
 
 	public Query[] getQueries() {
 		return queries;

@@ -199,17 +199,17 @@ public class Configuration implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, SearchParameter> getParameters() {
+	public Map<String, Parameter> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(Map<String, SearchParameter> parameters) {
+	public void setParameters(Map<String, Parameter> parameters) {
 		this.parameters = parameters;
 	}
 
 	@JsonIgnore
 	public void setParameters(
-		UnsafeSupplier<Map<String, SearchParameter>, Exception>
+		UnsafeSupplier<Map<String, Parameter>, Exception>
 			parametersUnsafeSupplier) {
 
 		try {
@@ -225,7 +225,7 @@ public class Configuration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, SearchParameter> parameters;
+	protected Map<String, Parameter> parameters;
 
 	@Schema
 	@Valid
