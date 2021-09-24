@@ -304,7 +304,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				documentsStringUtilReplaceValues, serviceContext);
 
-			_addLayouts(_journalArticleLocalService, serviceContext);
+			_addLayouts(_assetListEntryLocalService, serviceContext);
 			_addRemoteAppEntries(
 				documentsStringUtilReplaceValues, serviceContext);
 		}
