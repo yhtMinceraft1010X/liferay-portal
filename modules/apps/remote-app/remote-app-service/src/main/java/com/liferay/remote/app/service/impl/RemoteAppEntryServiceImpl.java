@@ -97,8 +97,8 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException {
 
 		_remoteAppEntryModelResourcePermission.check(
@@ -106,13 +106,13 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
 			remoteAppEntryId, customElementCSSURLs,
-			customElementHTMLElementName, customElementURLs, instanceable,
-			nameMap, portletCategoryName, properties);
+			customElementHTMLElementName, customElementURLs, nameMap,
+			portletCategoryName, properties);
 	}
 
 	@Override
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iFrameURL, boolean instanceable,
+			long remoteAppEntryId, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException {
@@ -121,8 +121,8 @@ public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 			getPermissionChecker(), remoteAppEntryId, ActionKeys.UPDATE);
 
 		return remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
-			remoteAppEntryId, iFrameURL, instanceable, nameMap,
-			portletCategoryName, properties);
+			remoteAppEntryId, iFrameURL, nameMap, portletCategoryName,
+			properties);
 	}
 
 	@Reference(

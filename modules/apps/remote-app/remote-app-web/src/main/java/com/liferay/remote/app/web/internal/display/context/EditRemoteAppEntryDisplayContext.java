@@ -203,6 +203,14 @@ public class EditRemoteAppEntryDisplayContext {
 			_remoteAppEntry, _getHttpServletRequest(), "instanceable");
 	}
 
+	public boolean isInstanceableDisabled() {
+		if (_remoteAppEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isTypeDisabled() {
 		if (_remoteAppEntry != null) {
 			return true;
