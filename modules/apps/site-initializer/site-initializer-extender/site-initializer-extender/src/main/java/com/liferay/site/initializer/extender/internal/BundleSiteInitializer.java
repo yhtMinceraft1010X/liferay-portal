@@ -16,6 +16,7 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
@@ -806,7 +807,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			ddmTemplateLocalService.getTemplate(
 				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(JournalArticle.class), ddmTemplateKey);
+				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
 
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
@@ -848,7 +849,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayout(
-			JournalArticleLocalService journalArticleLocalService,
+			AssetListEntryLocalService assetListEntryLocalService,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -874,14 +875,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.getBoolean("hidden"), jsonObject.getBoolean("system"),
 			_toMap(jsonObject.getString("friendlyURL_i18n")), serviceContext);
 
+		json = _read(resourcePath + "page-definition.json");
+
+		if (json == null) {
+			return;
+		}
+
 		Layout draftLayout = layout.fetchDraftLayout();
+
+		Map<String, String> assetListMap = new HashMap<>();
+
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			assetListMap.put(
+				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
+		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
+			StringUtil.replace(json, "\"[$", "$]\"", assetListMap));
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			JSONObject pageDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					resourcePath + "page-definition.json");
 
 			JSONObject pageElementJSONObject =
 				pageDefinitionJSONObject.getJSONObject("pageElement");
@@ -926,19 +944,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String value = typeSettingJSONObject.getString("value");
 
 				if (StringUtil.equals(key, "collectionPK") &&
-					value.startsWith("[$JOURNAL_ARTICLE_ID=")) {
+					value.startsWith("[$ASSET_LIST_ID=")) {
 
 					int x = value.indexOf("=");
 
 					int y = value.indexOf("$", x);
 
-					String journalArticleId = value.substring(x, y);
+					String journalArticleId = value.substring(x + 1, y);
 
-					JournalArticle journalArticle =
-						journalArticleLocalService.fetchArticle(
+					AssetListEntry assetListEntry =
+						assetListEntryLocalService.getAssetListEntry(
 							serviceContext.getScopeGroupId(), journalArticleId);
 
-					value = String.valueOf(journalArticle.getResourcePrimKey());
+					value = String.valueOf(
+						assetListEntry.getAssetListEntryId());
 				}
 
 				unicodeProperties.put(key, value);
@@ -951,10 +970,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			JSONObject pageDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					resourcePath + "page-definition.json");
 
 			JSONObject settingsJSONObject =
 				pageDefinitionJSONObject.getJSONObject("settings");
@@ -1022,7 +1037,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayouts(
-			JournalArticleLocalService journalArticleLocalService,
+			AssetListEntryLocalService assetListEntryLocalService,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -1039,7 +1054,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
 				_addLayout(
-					journalArticleLocalService, resourcePath, serviceContext);
+					assetListEntryLocalService, resourcePath, serviceContext);
 			}
 		}
 
