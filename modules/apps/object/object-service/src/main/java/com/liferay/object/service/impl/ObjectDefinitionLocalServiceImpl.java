@@ -768,8 +768,8 @@ public class ObjectDefinitionLocalServiceImpl
 		Stream<ObjectEntry> stream = objectEntries.stream();
 
 		return stream.filter(
-			listTypeEntry ->
-				listTypeEntry.getStatus() != WorkflowConstants.STATUS_APPROVED
+			objectEntry ->
+				objectEntry.getStatus() != WorkflowConstants.STATUS_APPROVED
 		).collect(
 			Collectors.toList()
 		);
