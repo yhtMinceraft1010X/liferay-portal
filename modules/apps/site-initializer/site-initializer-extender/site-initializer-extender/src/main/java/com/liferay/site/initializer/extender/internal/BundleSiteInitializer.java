@@ -1175,7 +1175,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							jsonObject.getJSONArray("elementURLs")),
 						StringPool.NEW_LINE),
 					"[$", "$]", documentsStringUtilReplaceValues),
-				true, _toMap(jsonObject.getString("name_i18n")),
+				jsonObject.getBoolean("instanceable"),
+				_toMap(jsonObject.getString("name_i18n")),
 				jsonObject.getString("portletCategoryName"), sb.toString());
 		}
 	}
