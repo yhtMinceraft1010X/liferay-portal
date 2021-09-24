@@ -96,16 +96,17 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
-			String[] customElementCSSURLs = ParamUtil.getStringValues(
-				actionRequest, "customElementCSSURLs");
-			String[] customElementURLs = ParamUtil.getStringValues(
-				actionRequest, "customElementURLs");
-
 			_remoteAppEntryService.addCustomElementRemoteAppEntry(
-				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementCSSURLs"),
+					StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
-				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementURLs"),
+					StringPool.NEW_LINE),
 				nameMap, portletCategoryName,
 				ParamUtil.getString(actionRequest, "properties"));
 		}
@@ -142,17 +143,18 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				remoteAppEntry.getType(),
 				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			String[] customElementCSSURLs = ParamUtil.getStringValues(
-				actionRequest, "customElementCSSURLs");
-			String[] customElementURLs = ParamUtil.getStringValues(
-				actionRequest, "customElementURLs");
-
 			_remoteAppEntryService.updateCustomElementRemoteAppEntry(
 				remoteAppEntry.getRemoteAppEntryId(),
-				StringUtil.merge(customElementCSSURLs, StringPool.NEW_LINE),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementCSSURLs"),
+					StringPool.NEW_LINE),
 				ParamUtil.getString(
 					actionRequest, "customElementHTMLElementName"),
-				StringUtil.merge(customElementURLs, StringPool.NEW_LINE),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementURLs"),
+					StringPool.NEW_LINE),
 				nameMap, portletCategoryName,
 				ParamUtil.getString(actionRequest, "properties"));
 		}
