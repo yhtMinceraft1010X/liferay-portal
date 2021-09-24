@@ -89,10 +89,10 @@ public class SXPParameterDataCreator {
 
 		if (!MapUtil.isEmpty(parameters)) {
 			_addSXPParameter(
-				parameters.get("page"), searchContext, "page",
+				"page", parameters.get("page"), searchContext,
 				sxpParameters);
 			_addSXPParameter(
-				parameters.get("size"), searchContext, "size",
+				"size", parameters.get("size"), searchContext,
 				sxpParameters);
 
 			_contribute(searchContext, sxpBlueprint, sxpParameters);
@@ -145,7 +145,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private void _addSXPParameter(
-		Parameter parameter, SearchContext searchContext, String name,
+		String name, Parameter parameter, SearchContext searchContext,
 		Set<SXPParameter> sxpParameters) {
 
 		Object object = searchContext.getAttribute(name);
@@ -166,7 +166,7 @@ public class SXPParameterDataCreator {
 
 		parameters.forEach(
 			(name, parameter) -> _addSXPParameter(
-				parameter, searchContext, name, sxpParameters));
+				name, parameter, searchContext, sxpParameters));
 	}
 
 	private void _contribute(
