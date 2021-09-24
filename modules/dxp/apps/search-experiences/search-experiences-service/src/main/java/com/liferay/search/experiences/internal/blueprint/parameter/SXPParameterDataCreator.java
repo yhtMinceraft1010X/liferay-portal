@@ -50,7 +50,7 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.T
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.SearchParameter;
+import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.segments.SegmentsEntryRetriever;
 
 import java.time.LocalDate;
@@ -84,7 +84,7 @@ public class SXPParameterDataCreator {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		Map<String, SearchParameter> parametersMap =
+		Map<String, Parameter> parametersMap =
 			configuration.getParameters();
 
 		if (!MapUtil.isEmpty(parametersMap)) {
@@ -145,7 +145,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private void _addSXPParameter(
-		SearchParameter parameter, SearchContext searchContext, String name,
+		Parameter parameter, SearchContext searchContext, String name,
 		Set<SXPParameter> sxpParameters) {
 
 		Object object = searchContext.getAttribute(name);
@@ -161,7 +161,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private void _addSXPParameters(
-		Map<String, SearchParameter> parametersMap, SearchContext searchContext,
+		Map<String, Parameter> parametersMap, SearchContext searchContext,
 		Set<SXPParameter> sxpParameters) {
 
 		parametersMap.forEach(
@@ -234,7 +234,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getDateSXPParameter(
-		Object object, SearchParameter parameter, String name,
+		Object object, Parameter parameter, String name,
 		SearchContext searchContext) {
 
 		String value = _getString(object, null);
@@ -273,7 +273,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getDoubleSXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Double value = _getDouble(object, parameter.getDefaultValueDouble());
 
@@ -301,7 +301,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getFloatSXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Float value = _getFloat(object, parameter.getDefaultValueFloat());
 
@@ -329,7 +329,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getIntegerArraySXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Integer[] values = _getIntegerValues(
 			object, parameter.getDefaultValuesIntegerArray());
@@ -342,7 +342,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getIntegerSXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Integer value = _getInteger(object, parameter.getDefaultValueInteger());
 
@@ -384,7 +384,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getLongArraySXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Long[] values = _getLongValues(
 			object, parameter.getDefaultValuesLongArray());
@@ -397,7 +397,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getLongSXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		Long value = _getLong(object, parameter.getDefaultValueLong());
 
@@ -437,7 +437,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getStringArraySXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		String[] values = _getStringValues(
 			object, parameter.getDefaultValuesStringArray());
@@ -450,7 +450,7 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getStringSXPParameter(
-		Object object, SearchParameter parameter, String name) {
+		Object object, Parameter parameter, String name) {
 
 		String value = _getString(object, parameter.getDefaultValueString());
 
@@ -474,47 +474,47 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getSXPParameter(
-		Object object, SearchParameter parameter, String name,
+		Object object, Parameter parameter, String name,
 		SearchContext searchContext) {
 
-		SearchParameter.ParameterType parameterType =
+		Parameter.ParameterType parameterType =
 			parameter.getParameterType();
 
-		if (parameterType.equals(SearchParameter.ParameterType.DATE)) {
+		if (parameterType.equals(Parameter.ParameterType.DATE)) {
 			return _getDateSXPParameter(object, parameter, name, searchContext);
 		}
-		else if (parameterType.equals(SearchParameter.ParameterType.DOUBLE)) {
+		else if (parameterType.equals(Parameter.ParameterType.DOUBLE)) {
 			return _getDoubleSXPParameter(object, parameter, name);
 		}
-		else if (parameterType.equals(SearchParameter.ParameterType.FLOAT)) {
+		else if (parameterType.equals(Parameter.ParameterType.FLOAT)) {
 			return _getFloatSXPParameter(object, parameter, name);
 		}
-		else if (parameterType.equals(SearchParameter.ParameterType.INTEGER)) {
+		else if (parameterType.equals(Parameter.ParameterType.INTEGER)) {
 			return _getIntegerSXPParameter(object, parameter, name);
 		}
 		else if (parameterType.equals(
-					SearchParameter.ParameterType.INTEGER_ARRAY)) {
+					Parameter.ParameterType.INTEGER_ARRAY)) {
 
 			return _getIntegerArraySXPParameter(object, parameter, name);
 		}
-		else if (parameterType.equals(SearchParameter.ParameterType.LONG)) {
+		else if (parameterType.equals(Parameter.ParameterType.LONG)) {
 			return _getLongSXPParameter(object, parameter, name);
 		}
 		else if (parameterType.equals(
-					SearchParameter.ParameterType.LONG_ARRAY)) {
+					Parameter.ParameterType.LONG_ARRAY)) {
 
 			return _getLongArraySXPParameter(object, parameter, name);
 		}
-		else if (parameterType.equals(SearchParameter.ParameterType.STRING)) {
+		else if (parameterType.equals(Parameter.ParameterType.STRING)) {
 			return _getStringSXPParameter(object, parameter, name);
 		}
 		else if (parameterType.equals(
-					SearchParameter.ParameterType.STRING_ARRAY)) {
+					Parameter.ParameterType.STRING_ARRAY)) {
 
 			return _getStringArraySXPParameter(object, parameter, name);
 		}
 		else if (parameterType.equals(
-					SearchParameter.ParameterType.TIME_RANGE)) {
+					Parameter.ParameterType.TIME_RANGE)) {
 
 			return _getTimeRangeSXPParameter(object, name);
 		}
