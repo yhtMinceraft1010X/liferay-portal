@@ -60,10 +60,6 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 </liferay-frontend:side-panel-content>
 
 <script>
-	function getNode(name) {
-		return document.querySelector('#<portlet:namespace />' + name);
-	}
-
 	function <portlet:namespace />saveObjectRelationship() {
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
