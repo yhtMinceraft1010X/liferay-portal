@@ -109,6 +109,8 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 			</liferay-frontend:fieldset>
 
+			<aui:input label="instanceable" name="instanceable" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isInstanceable() %>" />
+
 			<clay:select
 				label="portlet-category-name"
 				name="portletCategoryName"
@@ -116,8 +118,6 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					editRemoteAppEntryDisplayContext.getPortletCategoryNameSelectOptions()
 				%>"
 			/>
-
-			<aui:input label="instanceable" name="instanceable" type="checkbox" value="<%= editRemoteAppEntryDisplayContext.isInstanceable() %>" />
 
 			<aui:input label="properties" name="properties" type="textarea" />
 		</liferay-frontend:fieldset-group>
