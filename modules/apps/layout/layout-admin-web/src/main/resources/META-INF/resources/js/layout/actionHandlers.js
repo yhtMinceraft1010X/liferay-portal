@@ -30,20 +30,20 @@ const actionHandlers = {
 
 		if (hasChildren && hasScopeGroup) {
 			deleteMessage = Liferay.Language.get(
-				'this-page-is-being-used-as-a-scope-for-content-and-also-has-child-pages-any-content-that-is-scoped-to-this-page-will-also-be-removed-along-with-any-child-pages-are-you-sure-you-want-to-delete-this-page'
+				'this-page-is-being-used-as-a-scope-for-content-and-also-has-child-pages'
 			);
 		}
 		else if (hasChildren) {
 			deleteMessage = Liferay.Util.sub(
 				Liferay.Language.get(
-					'this-page-has-child-pages-that-will-also-be-removed-are-you-sure-you-want-to-delete-this-page'
+					'this-page-has-child-pages-that-will-also-be-removed'
 				),
 				hasChildren
 			);
 		}
 		else if (hasScopeGroup) {
 			deleteMessage = Liferay.Language.get(
-				'this-page-is-being-used-as-a-scope-for-content-any-content-that-is-scoped-to-this-page-will-also-be-removed-are-you-sure-you-want-to-delete-this-page'
+				'this-page-is-being-used-as-a-scope-for-content'
 			);
 		}
 
