@@ -323,13 +323,13 @@ public interface RemoteAppEntryLocalService
 	public RemoteAppEntry updateCustomElementRemoteAppEntry(
 			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
-			boolean instanceable, Map<Locale, String> nameMap,
-			String portletCategoryName, String properties)
+			Map<Locale, String> nameMap, String portletCategoryName,
+			String properties)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public RemoteAppEntry updateIFrameRemoteAppEntry(
-			long remoteAppEntryId, String iFrameURL, boolean instanceable,
+			long remoteAppEntryId, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties)
 		throws PortalException;

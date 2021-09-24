@@ -230,7 +230,6 @@ public class RemoteAppEntryServiceHttp {
 				HttpPrincipal httpPrincipal, long remoteAppEntryId,
 				String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
-				boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -243,8 +242,8 @@ public class RemoteAppEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, remoteAppEntryId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs, instanceable,
-				nameMap, portletCategoryName, properties);
+				customElementHTMLElementName, customElementURLs, nameMap,
+				portletCategoryName, properties);
 
 			Object returnObj = null;
 
@@ -277,7 +276,7 @@ public class RemoteAppEntryServiceHttp {
 	public static com.liferay.remote.app.model.RemoteAppEntry
 			updateIFrameRemoteAppEntry(
 				HttpPrincipal httpPrincipal, long remoteAppEntryId,
-				String iFrameURL, boolean instanceable,
+				String iFrameURL,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -288,7 +287,7 @@ public class RemoteAppEntryServiceHttp {
 				_updateIFrameRemoteAppEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteAppEntryId, iFrameURL, instanceable, nameMap,
+				methodKey, remoteAppEntryId, iFrameURL, nameMap,
 				portletCategoryName, properties);
 
 			Object returnObj = null;
@@ -338,13 +337,13 @@ public class RemoteAppEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_updateCustomElementRemoteAppEntryParameterTypes4 = new Class[] {
-			long.class, String.class, String.class, String.class, boolean.class,
+			long.class, String.class, String.class, String.class,
 			java.util.Map.class, String.class, String.class
 		};
 	private static final Class<?>[] _updateIFrameRemoteAppEntryParameterTypes5 =
 		new Class[] {
-			long.class, String.class, boolean.class, java.util.Map.class,
-			String.class, String.class
+			long.class, String.class, java.util.Map.class, String.class,
+			String.class
 		};
 
 }
