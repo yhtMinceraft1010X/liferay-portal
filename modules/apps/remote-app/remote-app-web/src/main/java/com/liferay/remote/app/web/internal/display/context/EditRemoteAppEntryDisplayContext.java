@@ -200,7 +200,7 @@ public class EditRemoteAppEntryDisplayContext {
 
 	public boolean isInstanceable() {
 		return BeanParamUtil.getBoolean(
-			_remoteAppEntry, _getHttpServletRequest(), "instanceable", true);
+			_remoteAppEntry, _getHttpServletRequest(), "instanceable");
 	}
 
 	public boolean isTypeDisabled() {
