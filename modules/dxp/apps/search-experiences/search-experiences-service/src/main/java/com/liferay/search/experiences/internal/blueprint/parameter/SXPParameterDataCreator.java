@@ -331,14 +331,14 @@ public class SXPParameterDataCreator {
 	private SXPParameter _getIntegerArraySXPParameter(
 		String name, Object object, Parameter parameter) {
 
-		Integer[] values = _getIntegerValues(
+		Integer[] value = _getIntegerArray(
 			parameter.getDefaultValuesIntegerArray(), object);
 
-		if (ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isEmpty(value)) {
 			return null;
 		}
 
-		return new IntegerArraySXPParameter(name, true, values);
+		return new IntegerArraySXPParameter(name, true, value);
 	}
 
 	private SXPParameter _getIntegerSXPParameter(
@@ -357,15 +357,15 @@ public class SXPParameterDataCreator {
 				value));
 	}
 
-	private Integer[] _getIntegerValues(
-		Integer[] defaultValues, Object object) {
+	private Integer[] _getIntegerArray(
+		Integer[] defaultValue, Object object) {
 
 		if (object != null) {
 			return ArrayUtil.toArray(GetterUtil.getIntegerValues(object));
 		}
 
-		if (defaultValues != null) {
-			return defaultValues;
+		if (defaultValue != null) {
+			return defaultValue;
 		}
 
 		return null;
@@ -386,14 +386,14 @@ public class SXPParameterDataCreator {
 	private SXPParameter _getLongArraySXPParameter(
 		String name, Object object, Parameter parameter) {
 
-		Long[] values = _getLongValues(
+		Long[] value = _getLongArray(
 			parameter.getDefaultValuesLongArray(), object);
 
-		if (ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isEmpty(value)) {
 			return null;
 		}
 
-		return new LongArraySXPParameter(name, true, values);
+		return new LongArraySXPParameter(name, true, value);
 	}
 
 	private SXPParameter _getLongSXPParameter(
@@ -412,13 +412,13 @@ public class SXPParameterDataCreator {
 				value));
 	}
 
-	private Long[] _getLongValues(Long[] defaultValues, Object object) {
+	private Long[] _getLongArray(Long[] defaultValue, Object object) {
 		if (object != null) {
 			return ArrayUtil.toArray(GetterUtil.getLongValues(object));
 		}
 
-		if (defaultValues != null) {
-			return defaultValues;
+		if (defaultValue != null) {
+			return defaultValue;
 		}
 
 		return null;
@@ -439,14 +439,14 @@ public class SXPParameterDataCreator {
 	private SXPParameter _getStringArraySXPParameter(
 		String name, Object object, Parameter parameter) {
 
-		String[] values = _getStringValues(
+		String[] value = _getStringArray(
 			parameter.getDefaultValuesStringArray(), object);
 
-		if (ArrayUtil.isEmpty(values)) {
+		if (ArrayUtil.isEmpty(value)) {
 			return null;
 		}
 
-		return new StringArraySXPParameter(name, true, values);
+		return new StringArraySXPParameter(name, true, value);
 	}
 
 	private SXPParameter _getStringSXPParameter(
@@ -461,13 +461,13 @@ public class SXPParameterDataCreator {
 		return new StringSXPParameter(name, true, value);
 	}
 
-	private String[] _getStringValues(String[] defaultValues, Object object) {
+	private String[] _getStringArray(String[] defaultValue, Object object) {
 		if (object != null) {
 			return GetterUtil.getStringValues(object);
 		}
 
-		if (defaultValues != null) {
-			return defaultValues;
+		if (defaultValue != null) {
+			return defaultValue;
 		}
 
 		return null;
