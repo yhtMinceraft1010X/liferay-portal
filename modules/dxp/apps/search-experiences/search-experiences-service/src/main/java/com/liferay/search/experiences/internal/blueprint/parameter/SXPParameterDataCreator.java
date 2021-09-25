@@ -150,14 +150,18 @@ public class SXPParameterDataCreator {
 
 		Object object = searchContext.getAttribute(name);
 
-		if (object != null) {
-			SXPParameter sxpParameter = _getSXPParameter(
-				object, parameter, name, searchContext);
-
-			if (sxpParameter != null) {
-				sxpParameters.add(sxpParameter);
-			}
+		if (object == null) {
+			return;
 		}
+
+		SXPParameter sxpParameter = _getSXPParameter(
+			object, parameter, name, searchContext);
+
+		if (sxpParameter == null) {
+			return;
+		}
+
+		sxpParameters.add(sxpParameter);
 	}
 
 	private void _addSXPParameters(
