@@ -328,6 +328,18 @@ public class SXPParameterDataCreator {
 		return null;
 	}
 
+	private Integer[] _getIntegerArray(Integer[] defaultValue, Object object) {
+		if (object != null) {
+			return ArrayUtil.toArray(GetterUtil.getIntegerValues(object));
+		}
+
+		if (defaultValue != null) {
+			return defaultValue;
+		}
+
+		return null;
+	}
+
 	private SXPParameter _getIntegerArraySXPParameter(
 		String name, Object object, Parameter parameter) {
 
@@ -357,11 +369,9 @@ public class SXPParameterDataCreator {
 				value));
 	}
 
-	private Integer[] _getIntegerArray(
-		Integer[] defaultValue, Object object) {
-
+	private Long _getLong(Long defaultValue, Object object) {
 		if (object != null) {
-			return ArrayUtil.toArray(GetterUtil.getIntegerValues(object));
+			return GetterUtil.getLong(object);
 		}
 
 		if (defaultValue != null) {
@@ -371,9 +381,9 @@ public class SXPParameterDataCreator {
 		return null;
 	}
 
-	private Long _getLong(Long defaultValue, Object object) {
+	private Long[] _getLongArray(Long[] defaultValue, Object object) {
 		if (object != null) {
-			return GetterUtil.getLong(object);
+			return ArrayUtil.toArray(GetterUtil.getLongValues(object));
 		}
 
 		if (defaultValue != null) {
@@ -412,9 +422,9 @@ public class SXPParameterDataCreator {
 				value));
 	}
 
-	private Long[] _getLongArray(Long[] defaultValue, Object object) {
+	private String _getString(String defaultValue, Object object) {
 		if (object != null) {
-			return ArrayUtil.toArray(GetterUtil.getLongValues(object));
+			return GetterUtil.getString(object);
 		}
 
 		if (defaultValue != null) {
@@ -424,9 +434,9 @@ public class SXPParameterDataCreator {
 		return null;
 	}
 
-	private String _getString(String defaultValue, Object object) {
+	private String[] _getStringArray(String[] defaultValue, Object object) {
 		if (object != null) {
-			return GetterUtil.getString(object);
+			return GetterUtil.getStringValues(object);
 		}
 
 		if (defaultValue != null) {
@@ -459,18 +469,6 @@ public class SXPParameterDataCreator {
 		}
 
 		return new StringSXPParameter(name, true, value);
-	}
-
-	private String[] _getStringArray(String[] defaultValue, Object object) {
-		if (object != null) {
-			return GetterUtil.getStringValues(object);
-		}
-
-		if (defaultValue != null) {
-			return defaultValue;
-		}
-
-		return null;
 	}
 
 	private SXPParameter _getSXPParameter(
