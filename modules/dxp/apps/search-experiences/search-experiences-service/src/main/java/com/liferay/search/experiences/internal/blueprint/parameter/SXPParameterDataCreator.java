@@ -189,7 +189,7 @@ public class SXPParameterDataCreator {
 		}
 	}
 
-	private Double _fit(Double value, Double minValue, Double maxValue) {
+	private Double _fit(Double maxValue, Double minValue, Double value) {
 		if ((minValue != null) && (value < minValue)) {
 			return minValue;
 		}
@@ -201,7 +201,7 @@ public class SXPParameterDataCreator {
 		return value;
 	}
 
-	private Float _fit(Float value, Float minValue, Float maxValue) {
+	private Float _fit(Float maxValue, Float minValue, Float value) {
 		if ((minValue != null) && (value < minValue)) {
 			return minValue;
 		}
@@ -213,7 +213,7 @@ public class SXPParameterDataCreator {
 		return value;
 	}
 
-	private Integer _fit(Integer value, Integer minValue, Integer maxValue) {
+	private Integer _fit(Integer maxValue, Integer minValue, Integer value) {
 		if ((minValue != null) && (value < minValue)) {
 			return minValue;
 		}
@@ -225,7 +225,7 @@ public class SXPParameterDataCreator {
 		return value;
 	}
 
-	private Long _fit(Long value, Long minValue, Long maxValue) {
+	private Long _fit(Long maxValue, Long minValue, Long value) {
 		if ((minValue != null) && (value < minValue)) {
 			return minValue;
 		}
@@ -288,8 +288,8 @@ public class SXPParameterDataCreator {
 		return new DoubleSXPParameter(
 			name, true,
 			_fit(
-				value, parameter.getMinValueDouble(),
-				parameter.getMaxValueDouble()));
+				parameter.getMaxValueDouble(), parameter.getMinValueDouble(),
+				value));
 	}
 
 	private Float _getFloat(Object object, Float defaultValue) {
@@ -316,8 +316,8 @@ public class SXPParameterDataCreator {
 		return new FloatSXPParameter(
 			name, true,
 			_fit(
-				value, parameter.getMinValueFloat(),
-				parameter.getMaxValueFloat()));
+				parameter.getMaxValueFloat(), parameter.getMinValueFloat(),
+				value));
 	}
 
 	private Integer _getInteger(Object object, Integer defaultValue) {
@@ -357,8 +357,8 @@ public class SXPParameterDataCreator {
 		return new IntegerSXPParameter(
 			name, true,
 			_fit(
-				value, parameter.getMinValueInteger(),
-				parameter.getMaxValueInteger()));
+				parameter.getMaxValueInteger(), parameter.getMinValueInteger(),
+				value));
 	}
 
 	private Integer[] _getIntegerValues(
@@ -412,8 +412,8 @@ public class SXPParameterDataCreator {
 		return new LongSXPParameter(
 			name, true,
 			_fit(
-				value, parameter.getMinValueLong(),
-				parameter.getMaxValueLong()));
+				parameter.getMaxValueLong(), parameter.getMinValueLong(),
+				value));
 	}
 
 	private Long[] _getLongValues(Object object, Long[] defaultValues) {
