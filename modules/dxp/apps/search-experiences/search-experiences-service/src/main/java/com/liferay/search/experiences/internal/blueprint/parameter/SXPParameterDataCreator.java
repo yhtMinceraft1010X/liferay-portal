@@ -49,8 +49,8 @@ import com.liferay.search.experiences.internal.blueprint.parameter.contributor.S
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.TimeSXPParameterContributor;
 import com.liferay.search.experiences.internal.blueprint.parameter.contributor.UserSXPParameterContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.segments.SegmentsEntryRetriever;
 
 import java.time.LocalDate;
@@ -84,16 +84,13 @@ public class SXPParameterDataCreator {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		Map<String, Parameter> parameters =
-			configuration.getParameters();
+		Map<String, Parameter> parameters = configuration.getParameters();
 
 		if (!MapUtil.isEmpty(parameters)) {
 			_addSXPParameter(
-				"page", parameters.get("page"), searchContext,
-				sxpParameters);
+				"page", parameters.get("page"), searchContext, sxpParameters);
 			_addSXPParameter(
-				"size", parameters.get("size"), searchContext,
-				sxpParameters);
+				"size", parameters.get("size"), searchContext, sxpParameters);
 
 			_contribute(searchContext, sxpBlueprint, sxpParameters);
 
@@ -481,8 +478,7 @@ public class SXPParameterDataCreator {
 		String name, Object object, Parameter parameter,
 		SearchContext searchContext) {
 
-		Parameter.ParameterType parameterType =
-			parameter.getParameterType();
+		Parameter.ParameterType parameterType = parameter.getParameterType();
 
 		if (parameterType.equals(Parameter.ParameterType.DATE)) {
 			return _getDateSXPParameter(name, object, parameter, searchContext);
@@ -496,30 +492,22 @@ public class SXPParameterDataCreator {
 		else if (parameterType.equals(Parameter.ParameterType.INTEGER)) {
 			return _getIntegerSXPParameter(name, object, parameter);
 		}
-		else if (parameterType.equals(
-					Parameter.ParameterType.INTEGER_ARRAY)) {
-
+		else if (parameterType.equals(Parameter.ParameterType.INTEGER_ARRAY)) {
 			return _getIntegerArraySXPParameter(name, object, parameter);
 		}
 		else if (parameterType.equals(Parameter.ParameterType.LONG)) {
 			return _getLongSXPParameter(name, object, parameter);
 		}
-		else if (parameterType.equals(
-					Parameter.ParameterType.LONG_ARRAY)) {
-
+		else if (parameterType.equals(Parameter.ParameterType.LONG_ARRAY)) {
 			return _getLongArraySXPParameter(name, object, parameter);
 		}
 		else if (parameterType.equals(Parameter.ParameterType.STRING)) {
 			return _getStringSXPParameter(name, object, parameter);
 		}
-		else if (parameterType.equals(
-					Parameter.ParameterType.STRING_ARRAY)) {
-
+		else if (parameterType.equals(Parameter.ParameterType.STRING_ARRAY)) {
 			return _getStringArraySXPParameter(name, object, parameter);
 		}
-		else if (parameterType.equals(
-					Parameter.ParameterType.TIME_RANGE)) {
-
+		else if (parameterType.equals(Parameter.ParameterType.TIME_RANGE)) {
 			return _getTimeRangeSXPParameter(name, object);
 		}
 
