@@ -34,9 +34,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.Avg;
 import com.liferay.search.experiences.rest.dto.v1_0.Cardinality;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.Parameter;
 import com.liferay.search.experiences.rest.dto.v1_0.Query;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.SearchParameter;
 
 import java.util.List;
 import java.util.Map;
@@ -121,12 +121,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			HashMapBuilder.put(
 				RandomTestUtil.randomString(),
 				() -> {
-					SearchParameter searchParameter = new SearchParameter();
+					Parameter parameter = new Parameter();
 
-					searchParameter.setDefaultValueString(
+					parameter.setDefaultValueString(
 						RandomTestUtil.randomString());
 
-					return searchParameter;
+					return parameter;
 				}
 			).build());
 
