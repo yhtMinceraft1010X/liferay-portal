@@ -246,7 +246,6 @@ public class SXPParameterDataCreator {
 
 		LocalDate localDate = LocalDate.parse(
 			value, DateTimeFormatter.ofPattern(parameter.getDateFormat()));
-
 		TimeZone timeZone = searchContext.getTimeZone();
 
 		Calendar calendar = GregorianCalendar.from(
