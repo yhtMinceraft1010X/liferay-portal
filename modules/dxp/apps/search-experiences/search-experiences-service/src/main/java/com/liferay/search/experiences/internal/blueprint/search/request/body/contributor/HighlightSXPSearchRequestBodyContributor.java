@@ -81,6 +81,8 @@ public class HighlightSXPSearchRequestBodyContributor
 
 		highlightBuilder.fragmentSize(
 			highlight.getFragment_size()
+		).highlighterType(
+			highlight.getType()
 		).numOfFragments(
 			highlight.getNumber_of_fragments()
 		).postTags(
@@ -89,8 +91,6 @@ public class HighlightSXPSearchRequestBodyContributor
 			highlight.getPre_tags()
 		).requireFieldMatch(
 			highlight.getRequire_field_match()
-		).highlighterType(
-			highlight.getType()
 		);
 
 		searchRequestBuilder.highlight(highlightBuilder.build());
