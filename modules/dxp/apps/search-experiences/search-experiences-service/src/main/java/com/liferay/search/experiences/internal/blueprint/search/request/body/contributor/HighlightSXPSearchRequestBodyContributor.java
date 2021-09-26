@@ -64,10 +64,10 @@ public class HighlightSXPSearchRequestBodyContributor
 
 		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
 
-		Map<String, HighlightField> fieldsMap = highlight.getFields();
+		Map<String, HighlightField> highlightFields = highlight.getFields();
 
 		MapUtil.isNotEmptyForEach(
-			fieldsMap,
+			highlightFields,
 			(name, highlightField) -> highlightBuilder.addFieldConfig(
 				_fieldConfigBuilderFactory.builder(
 					name
