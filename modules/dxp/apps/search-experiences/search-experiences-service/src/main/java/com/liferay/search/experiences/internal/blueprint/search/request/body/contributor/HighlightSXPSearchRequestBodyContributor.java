@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,7 +28,6 @@ import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterP
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.util.Map;
@@ -66,19 +66,18 @@ public class HighlightSXPSearchRequestBodyContributor
 
 		Map<String, HighlightField> fieldsMap = highlight.getFields();
 
-		if (!MapUtil.isEmpty(fieldsMap)) {
-			fieldsMap.forEach(
-				(name, highlightField) -> highlightBuilder.addFieldConfig(
-					_fieldConfigBuilderFactory.builder(
-						name
-					).fragmentOffset(
-						highlightField.getFragment_offset()
-					).fragmentSize(
-						highlightField.getFragment_size()
-					).numFragments(
-						highlightField.getNumber_of_fragments()
-					).build()));
-		}
+		MapUtil.isNotEmptyForEach(
+			fieldsMap,
+			(name, highlightField) -> highlightBuilder.addFieldConfig(
+				_fieldConfigBuilderFactory.builder(
+					name
+				).fragmentOffset(
+					highlightField.getFragment_offset()
+				).fragmentSize(
+					highlightField.getFragment_size()
+				).numFragments(
+					highlightField.getNumber_of_fragments()
+				).build()));
 
 		highlightBuilder.fragmentSize(
 			highlight.getFragment_size()
