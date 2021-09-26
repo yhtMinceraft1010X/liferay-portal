@@ -23,6 +23,4 @@ public class ObjectActionTriggerConstants {
 
 	public static final String TYPE_TRANSACTION = "transaction";
 
-	public static final String TYPE_USER = "user";
-
 }
