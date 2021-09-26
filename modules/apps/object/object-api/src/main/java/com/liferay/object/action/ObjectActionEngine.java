@@ -16,6 +16,8 @@ package com.liferay.object.action;
 
 import java.io.Serializable;
 
+import java.util.Map;
+
 /**
  * @author Marco Leo
  */
@@ -23,6 +25,6 @@ public interface ObjectActionEngine {
 
 	public void executeObjectActions(
 		long userId, String className, String objectActionTriggerKey,
-		Serializable payload);
+		Map<String, Serializable> parameters);
 
 }

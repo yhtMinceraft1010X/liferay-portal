@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 
-import java.io.Serializable;
-
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,17 +34,15 @@ public class WebhookObjectActionImpl implements ObjectAction {
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception {
 
-		Map<String, Serializable> properties =
-			objectActionRequest.getProperties();
-
 		Http.Options options = new Http.Options();
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.setBody(
-			String.valueOf(properties.get("payload")),
+			String.valueOf(objectActionRequest.getParameterValue("payload")),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-		options.setLocation((String)properties.get("url"));
+		options.setLocation(
+			(String)objectActionRequest.getParameterValue("url"));
 		options.setPost(true);
 
 		//TODO Secret and certificates?

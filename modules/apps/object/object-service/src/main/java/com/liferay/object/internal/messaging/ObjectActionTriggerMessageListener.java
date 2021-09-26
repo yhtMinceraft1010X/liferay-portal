@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.io.Serializable;
 
 /**
  * @author Marco Leo
@@ -39,7 +42,10 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 		if (payload instanceof JSONObject) {
 			_objectActionEngine.executeObjectActions(
-				userId, _className, _objectActionTriggerKey, payload.toString());
+				userId, _className, _objectActionTriggerKey,
+				HashMapBuilder.<String, Serializable>put(
+					"payload", (Serializable)payload
+				).build());
 		}
 	}
 

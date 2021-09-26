@@ -16,7 +16,6 @@ package com.liferay.object.action;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,28 +23,22 @@ import java.util.Map;
  */
 public class ObjectActionRequest {
 
-	public ObjectActionRequest(long userId) {
+	public ObjectActionRequest(
+		Map<String, Serializable> parameters, long userId) {
+
+		_parameters = parameters;
 		_userId = userId;
 	}
 
-	public Map<String, Serializable> getProperties() {
-		return _properties;
+	public Serializable getParameterValue(String parameterName) {
+		return _parameters.get(parameterName);
 	}
 
 	public long getUserId() {
 		return _userId;
 	}
 
-	public void setPayload(Serializable payload) {
-		_payload = payload;
-	}
-
-	public void setProperties(Map<String, Serializable> properties) {
-		_properties = properties;
-	}
-
-	private Serializable _payload;
-	private Map<String, Serializable> _properties;
+	private final Map<String, Serializable> _parameters;
 	private final long _userId;
 
 }

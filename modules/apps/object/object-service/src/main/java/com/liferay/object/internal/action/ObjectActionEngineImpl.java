@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -48,7 +49,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	@Override
 	public void executeObjectActions(
 		long userId, String className, String objectActionTriggerKey,
-		Serializable payload) {
+		Map<String, Serializable> parameters) {
 
 		try {
 			User user = _userLocalService.getUser(userId);
@@ -59,19 +60,21 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			List<ObjectActionEntry> objectActionEntries =
 				_objectActionEntryLocalService.getObjectActionEntries(
-					objectDefinition.getObjectDefinitionId(), objectActionTriggerKey);
+					objectDefinition.getObjectDefinitionId(),
+					objectActionTriggerKey);
 
 			for (ObjectActionEntry objectActionEntry : objectActionEntries) {
 				ObjectAction objectAction = _serviceTrackerMap.getService(
 					objectActionEntry.getName());
 
 				ObjectActionRequest objectActionRequest =
-					new ObjectActionRequest(userId);
-
-				objectActionRequest.setProperties(
-					HashMapBuilder.<String, Serializable>putAll(
-						objectActionEntry.getSettingsUnicodeProperties()
-					).build());
+					new ObjectActionRequest(
+						HashMapBuilder.<String, Serializable>putAll(
+							objectActionEntry.getSettingsUnicodeProperties()
+						).putAll(
+							parameters
+						).build(),
+						userId);
 
 				objectAction.execute(objectActionRequest);
 			}

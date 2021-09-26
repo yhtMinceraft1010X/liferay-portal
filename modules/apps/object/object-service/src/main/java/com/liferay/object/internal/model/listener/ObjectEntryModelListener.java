@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
@@ -70,7 +71,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				_objectActionEngine.executeObjectActions(
 					PrincipalThreadLocal.getUserId(),
 					objectEntry.getModelClassName(), objectActionTriggerKey,
-					_getPayload(objectActionTriggerKey, originalObjectEntry, objectEntry));
+					HashMapBuilder.<String, Serializable>put(
+						"payload",
+						_getPayload(
+							objectActionTriggerKey, originalObjectEntry,
+							objectEntry)
+					).build());
 
 				return null;
 			});

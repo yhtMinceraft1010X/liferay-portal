@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.io.Serializable;
-
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,16 +34,15 @@ public class UpdateObjectEntryObjectActionImpl implements ObjectAction {
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception {
 
-		Map<String, Serializable> properties =
-			objectActionRequest.getProperties();
-
-		long classPK = GetterUtil.getLong(properties.get("classPK"));
+		long classPK = GetterUtil.getLong(
+			objectActionRequest.getParameterValue("classPK"));
 
 		_objectEntryLocalService.updateObjectEntry(
 			objectActionRequest.getUserId(), classPK,
 			HashMapBuilder.put(
-				GetterUtil.getString(properties.get("fieldName")),
-				properties.get("fieldName")
+				GetterUtil.getString(
+					objectActionRequest.getParameterValue("fieldName")),
+				objectActionRequest.getParameterValue("fieldName")
 			).build(),
 			new ServiceContext() {
 				{

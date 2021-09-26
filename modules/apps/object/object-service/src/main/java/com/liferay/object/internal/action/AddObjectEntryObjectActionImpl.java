@@ -37,14 +37,14 @@ public class AddObjectEntryObjectActionImpl implements ObjectAction {
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception {
 
-		Map<String, Serializable> properties =
-			objectActionRequest.getProperties();
-
 		_objectEntryLocalService.addObjectEntry(
 			objectActionRequest.getUserId(),
-			GetterUtil.getLong(properties.get("groupId")),
-			GetterUtil.getLong(properties.get("objectDefinitionId")),
-			(Map<String, Serializable>)properties.get("values"),
+			GetterUtil.getLong(
+				objectActionRequest.getParameterValue("groupId")),
+			GetterUtil.getLong(
+				objectActionRequest.getParameterValue("objectDefinitionId")),
+			(Map<String, Serializable>)objectActionRequest.getParameterValue(
+				"values"),
 			new ServiceContext() {
 				{
 					setUserId(objectActionRequest.getUserId());
