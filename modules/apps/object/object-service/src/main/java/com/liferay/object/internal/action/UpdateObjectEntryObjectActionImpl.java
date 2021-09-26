@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
@@ -32,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(service = ObjectAction.class)
-public class CreateEntryObjectActionImpl implements ObjectAction {
+public class UpdateObjectEntryObjectActionImpl implements ObjectAction {
 
 	@Override
 	public void execute(ObjectActionRequest objectActionRequest)
@@ -41,11 +42,14 @@ public class CreateEntryObjectActionImpl implements ObjectAction {
 		Map<String, Serializable> properties =
 			objectActionRequest.getProperties();
 
-		_objectEntryLocalService.addObjectEntry(
-			objectActionRequest.getUserId(),
-			GetterUtil.getLong(properties.get("groupId")),
-			GetterUtil.getLong(properties.get("objectDefinitionId")),
-			(Map<String, Serializable>)properties.get("values"),
+		long classPK = GetterUtil.getLong(properties.get("classPK"));
+
+		_objectEntryLocalService.updateObjectEntry(
+			objectActionRequest.getUserId(), classPK,
+			HashMapBuilder.put(
+				GetterUtil.getString(properties.get("fieldName")),
+				properties.get("fieldName")
+			).build(),
 			new ServiceContext() {
 				{
 					setUserId(objectActionRequest.getUserId());
@@ -55,7 +59,7 @@ public class CreateEntryObjectActionImpl implements ObjectAction {
 
 	@Override
 	public String getName() {
-		return "create-entry";
+		return "update-entry";
 	}
 
 	@Reference
