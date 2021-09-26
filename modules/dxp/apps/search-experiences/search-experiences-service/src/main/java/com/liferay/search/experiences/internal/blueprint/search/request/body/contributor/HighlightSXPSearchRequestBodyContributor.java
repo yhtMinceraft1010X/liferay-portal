@@ -27,6 +27,7 @@ import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterP
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.HighlightField;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 import java.util.Map;
@@ -106,7 +107,7 @@ public class HighlightSXPSearchRequestBodyContributor
 			return _jsonFactory.createJSONObject(string);
 		}
 		catch (JSONException jsonException) {
-			throw new RuntimeException(jsonException);
+			return ReflectionUtil.throwException(jsonException);
 		}
 	}
 
