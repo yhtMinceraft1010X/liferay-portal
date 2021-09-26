@@ -53,8 +53,8 @@ public class AddObjectEntryObjectActionImpl implements ObjectAction {
 	}
 
 	@Override
-	public String getName() {
-		return "create-entry";
+	public String getType() {
+		return "addObjectEntry";
 	}
 
 	@Reference

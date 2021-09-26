@@ -65,12 +65,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			for (ObjectActionEntry objectActionEntry : objectActionEntries) {
 				ObjectAction objectAction = _serviceTrackerMap.getService(
-					objectActionEntry.getName());
+					objectActionEntry.getType());
 
 				ObjectActionRequest objectActionRequest =
 					new ObjectActionRequest(
 						HashMapBuilder.<String, Serializable>putAll(
-							objectActionEntry.getSettingsUnicodeProperties()
+							objectActionEntry.getParametersUnicodeProperties()
 						).putAll(
 							parameters
 						).build(),
@@ -92,7 +92,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				ObjectAction objectAction = bundleContext.getService(
 					serviceReference);
 
-				emitter.emit(objectAction.getName());
+				emitter.emit(objectAction.getType());
 			});
 	}
 

@@ -51,7 +51,7 @@ public class WebhookObjectActionImpl implements ObjectAction {
 	}
 
 	@Override
-	public String getName() {
+	public String getType() {
 		return "webhook";
 	}
 

@@ -22,15 +22,9 @@
 
 		<column name="objectDefinitionId" type="long" />
 		<column name="active" type="boolean" />
-		<column name="name" type="String" />
 		<column name="objectActionTriggerKey" type="String" />
-		<column name="settings" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="name" />
-		</order>
+		<column name="parameters" type="String" />
+		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 

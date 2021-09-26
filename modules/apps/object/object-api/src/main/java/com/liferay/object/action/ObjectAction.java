@@ -22,6 +22,6 @@ public interface ObjectAction {
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception;
 
-	public String getName();
+	public String getType();
 
 }

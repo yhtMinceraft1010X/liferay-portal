@@ -22,16 +22,16 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class ObjectActionEntryImpl extends ObjectActionEntryBaseImpl {
 
 	@Override
-	public UnicodeProperties getSettingsUnicodeProperties() {
-		if (_settingsUnicodeProperties == null) {
-			_settingsUnicodeProperties = new UnicodeProperties(true);
+	public UnicodeProperties getParametersUnicodeProperties() {
+		if (_parametersUnicodeProperties == null) {
+			_parametersUnicodeProperties = new UnicodeProperties(true);
 
-			_settingsUnicodeProperties.fastLoad(getSettings());
+			_parametersUnicodeProperties.fastLoad(getParameters());
 		}
 
-		return _settingsUnicodeProperties;
+		return _parametersUnicodeProperties;
 	}
 
-	private transient UnicodeProperties _settingsUnicodeProperties;
+	private transient UnicodeProperties _parametersUnicodeProperties;
 
 }

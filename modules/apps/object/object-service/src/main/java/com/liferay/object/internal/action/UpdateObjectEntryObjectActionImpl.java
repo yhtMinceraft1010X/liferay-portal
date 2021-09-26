@@ -52,8 +52,8 @@ public class UpdateObjectEntryObjectActionImpl implements ObjectAction {
 	}
 
 	@Override
-	public String getName() {
-		return "update-entry";
+	public String getType() {
+		return "updateObjectEntry";
 	}
 
 	@Reference
