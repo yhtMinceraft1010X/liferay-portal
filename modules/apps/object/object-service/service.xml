@@ -22,8 +22,8 @@
 
 		<column name="objectDefinitionId" type="long" />
 		<column name="active" type="boolean" />
-		<column name="objectActionTriggerKey" type="String" />
 		<column name="name" type="String" />
+		<column name="objectActionTriggerKey" type="String" />
 		<column name="settings" type="String" />
 
 		<!-- Order -->
@@ -34,7 +34,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="O_A_T" return-type="Collection">
+		<finder name="O_A_OATK" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
 			<finder-column name="objectActionTriggerKey" />

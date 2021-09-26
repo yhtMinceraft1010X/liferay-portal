@@ -36,7 +36,7 @@ public class ObjectActionEntryLocalServiceImpl
 	public List<ObjectActionEntry> getObjectActionEntries(
 		long objectDefinitionId, String objectActionTriggerKey) {
 
-		return objectActionEntryPersistence.findByO_A_T(
+		return objectActionEntryPersistence.findByO_A_OATK(
 			objectDefinitionId, true, objectActionTriggerKey);
 	}
 
