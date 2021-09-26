@@ -17,7 +17,7 @@ package com.liferay.object.internal.deployer;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.ObjectActionTrigger;
-import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
@@ -175,7 +175,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
 					objectDefinition.getClassName(), "onAfterCreate",
-					ObjectActionConstants.OBJECT_ACTION_TYPE_TRANSACTION),
+					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(
@@ -185,7 +185,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
 					objectDefinition.getClassName(), "onAfterRemove",
-					ObjectActionConstants.OBJECT_ACTION_TYPE_TRANSACTION),
+					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(
@@ -195,7 +195,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
 					objectDefinition.getClassName(), "onAfterUpdate",
-					ObjectActionConstants.OBJECT_ACTION_TYPE_TRANSACTION),
+					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(

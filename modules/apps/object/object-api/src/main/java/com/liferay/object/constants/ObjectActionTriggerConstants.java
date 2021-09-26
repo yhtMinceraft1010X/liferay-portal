@@ -17,12 +17,12 @@ package com.liferay.object.constants;
 /**
  * @author Marco Leo
  */
-public class ObjectActionConstants {
+public class ObjectActionTriggerConstants {
 
-	public static final String OBJECT_ACTION_TYPE_MESSAGE_BUS = "message-bus";
+	public static final String TYPE_MESSAGE_BUS = "message-bus";
 
-	public static final String OBJECT_ACTION_TYPE_TRANSACTION = "transaction";
+	public static final String TYPE_TRANSACTION = "transaction";
 
-	public static final String OBJECT_ACTION_TYPE_USER = "user";
+	public static final String TYPE_USER = "user";
 
 }

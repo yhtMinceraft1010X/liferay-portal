@@ -16,7 +16,7 @@ package com.liferay.object.internal.action;
 
 import com.liferay.object.action.ObjectActionTrigger;
 import com.liferay.object.action.ObjectActionTriggerRegistry;
-import com.liferay.object.constants.ObjectActionConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.internal.messaging.ObjectActionTriggerMessageListener;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -84,8 +84,8 @@ public class ObjectActionTriggerRegistryImpl
 							ObjectActionTrigger.class,
 							new ObjectActionTrigger(
 								className, destination.getName(),
-								ObjectActionConstants.
-									OBJECT_ACTION_TYPE_MESSAGE_BUS),
+								ObjectActionTriggerConstants.
+									TYPE_MESSAGE_BUS),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"model.class.name", className
 							).put(
