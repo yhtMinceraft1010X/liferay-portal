@@ -17,7 +17,6 @@ package com.liferay.object.internal.action;
 import com.liferay.object.action.ObjectAction;
 import com.liferay.object.action.ObjectActionRequest;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;

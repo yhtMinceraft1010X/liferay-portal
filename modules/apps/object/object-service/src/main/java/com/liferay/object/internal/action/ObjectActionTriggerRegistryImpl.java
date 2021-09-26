@@ -84,8 +84,7 @@ public class ObjectActionTriggerRegistryImpl
 							ObjectActionTrigger.class,
 							new ObjectActionTrigger(
 								className, destination.getName(),
-								ObjectActionTriggerConstants.
-									TYPE_MESSAGE_BUS),
+								ObjectActionTriggerConstants.TYPE_MESSAGE_BUS),
 							HashMapDictionaryBuilder.<String, Object>put(
 								"model.class.name", className
 							).put(

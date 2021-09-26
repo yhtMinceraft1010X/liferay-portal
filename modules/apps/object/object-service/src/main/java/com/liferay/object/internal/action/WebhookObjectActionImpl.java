@@ -17,7 +17,6 @@ package com.liferay.object.internal.action;
 import com.liferay.object.action.ObjectAction;
 import com.liferay.object.action.ObjectActionRequest;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
