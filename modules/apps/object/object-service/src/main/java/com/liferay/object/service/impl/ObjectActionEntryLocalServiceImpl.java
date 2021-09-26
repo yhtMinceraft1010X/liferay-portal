@@ -34,10 +34,10 @@ public class ObjectActionEntryLocalServiceImpl
 
 	@Override
 	public List<ObjectActionEntry> getObjectActionEntries(
-		long objectDefinitionId, String triggerName) {
+		long objectDefinitionId, String objectActionTriggerKey) {
 
 		return objectActionEntryPersistence.findByO_A_T(
-			objectDefinitionId, true, triggerName);
+			objectDefinitionId, true, objectActionTriggerKey);
 	}
 
 }

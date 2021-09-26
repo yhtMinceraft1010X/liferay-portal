@@ -61,7 +61,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _executeAction(
-			String triggerName, ObjectEntry originalObjectEntry,
+			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
 			ObjectEntry objectEntry)
 		throws ModelListenerException {
 
@@ -69,19 +69,20 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			() -> {
 				_objectActionEngine.executeObjectActions(
 					PrincipalThreadLocal.getUserId(),
-					objectEntry.getModelClassName(), triggerName,
-					_getPayload(triggerName, originalObjectEntry, objectEntry));
+					objectEntry.getModelClassName(), objectActionTriggerKey,
+					_getPayload(objectActionTriggerKey, originalObjectEntry, objectEntry));
 
 				return null;
 			});
 	}
 
 	private Serializable _getPayload(
-			String triggerName, ObjectEntry originalObjectEntry,
+			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
 			ObjectEntry objectEntry)
 		throws JSONException {
 
-		JSONObject payloadJSONObject = JSONUtil.put("trigger", triggerName);
+		JSONObject payloadJSONObject = JSONUtil.put(
+			"trigger", objectActionTriggerKey);
 
 		JSONObject objectEntryJSONObject = _jsonFactory.createJSONObject(
 			objectEntry.toString());

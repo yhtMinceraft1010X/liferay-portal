@@ -47,7 +47,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	@Override
 	public void executeObjectActions(
-		long userId, String className, String triggerName,
+		long userId, String className, String objectActionTriggerKey,
 		Serializable payload) {
 
 		try {
@@ -59,7 +59,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			List<ObjectActionEntry> objectActionEntries =
 				_objectActionEntryLocalService.getObjectActionEntries(
-					objectDefinition.getObjectDefinitionId(), triggerName);
+					objectDefinition.getObjectDefinitionId(), objectActionTriggerKey);
 
 			for (ObjectActionEntry objectActionEntry : objectActionEntries) {
 				ObjectAction objectAction = _serviceTrackerMap.getService(

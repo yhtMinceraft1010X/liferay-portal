@@ -22,7 +22,7 @@ import java.io.Serializable;
 public interface ObjectActionEngine {
 
 	public void executeObjectActions(
-		long userId, String className, String triggerName,
+		long userId, String className, String objectActionTriggerKey,
 		Serializable payload);
 
 }

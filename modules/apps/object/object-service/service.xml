@@ -22,7 +22,7 @@
 
 		<column name="objectDefinitionId" type="long" />
 		<column name="active" type="boolean" />
-		<column name="triggerName" type="String" />
+		<column name="objectActionTriggerKey" type="String" />
 		<column name="name" type="String" />
 		<column name="settings" type="String" />
 
@@ -37,7 +37,7 @@
 		<finder name="O_A_T" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
-			<finder-column name="triggerName" />
+			<finder-column name="objectActionTriggerKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectDefinition" remote-service="true" uuid="true">

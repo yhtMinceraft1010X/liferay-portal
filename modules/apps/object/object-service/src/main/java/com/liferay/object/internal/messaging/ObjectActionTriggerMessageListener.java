@@ -39,12 +39,12 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 		if (payload instanceof JSONObject) {
 			_objectActionEngine.executeObjectActions(
-				userId, _className, _triggerName, payload.toString());
+				userId, _className, _objectActionTriggerKey, payload.toString());
 		}
 	}
 
 	private String _className;
 	private ObjectActionEngine _objectActionEngine;
-	private String _triggerName;
+	private String _objectActionTriggerKey;
 
 }
