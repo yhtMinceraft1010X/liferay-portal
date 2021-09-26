@@ -29,7 +29,7 @@ public class ObjectActionRequest {
 	}
 
 	public Map<String, Serializable> getProperties() {
-		return null;
+		return _properties;
 	}
 
 	public long getUserId() {
@@ -45,7 +45,7 @@ public class ObjectActionRequest {
 	}
 
 	private Serializable _payload;
-	private Map<String, Serializable> _properties = new HashMap<>();
+	private Map<String, Serializable> _properties;
 	private final long _userId;
 
 }
