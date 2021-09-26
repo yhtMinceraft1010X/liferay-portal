@@ -153,15 +153,15 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		com.liferay.portal.search.highlight.Highlight highlight =
 			searchRequest.getHighlight();
 
-		Assert.assertArrayEquals(postTags, highlight.getPostTags());
-		Assert.assertArrayEquals(preTags, highlight.getPreTags());
-
 		List<FieldConfig> fieldConfigs = highlight.getFieldConfigs();
 
 		FieldConfig fieldConfig = fieldConfigs.get(0);
 
 		Assert.assertEquals(fragmentOffset, fieldConfig.getFragmentOffset());
 		Assert.assertNull(fieldConfig.getRequireFieldMatch());
+
+		Assert.assertArrayEquals(postTags, highlight.getPostTags());
+		Assert.assertArrayEquals(preTags, highlight.getPreTags());
 	}
 
 	@Test
