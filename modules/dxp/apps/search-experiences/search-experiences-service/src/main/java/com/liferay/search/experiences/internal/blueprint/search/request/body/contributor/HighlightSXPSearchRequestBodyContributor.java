@@ -54,7 +54,7 @@ public class HighlightSXPSearchRequestBodyContributor
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		Highlight highlight = _substituteParameterValues(
+		Highlight highlight = _parse(
 			configuration.getHighlight(), sxpParameterData);
 
 		if (highlight == null) {
@@ -110,7 +110,7 @@ public class HighlightSXPSearchRequestBodyContributor
 		}
 	}
 
-	private Highlight _substituteParameterValues(
+	private Highlight _parse(
 		Highlight highlight, SXPParameterData sxpParameterData) {
 
 		if (highlight == null) {
