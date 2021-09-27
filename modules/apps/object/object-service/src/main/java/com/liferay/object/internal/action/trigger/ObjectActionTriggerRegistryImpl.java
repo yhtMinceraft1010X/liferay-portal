@@ -111,10 +111,9 @@ public class ObjectActionTriggerRegistryImpl
 	private Destination _addingService(
 		ServiceReference<Destination> serviceReference) {
 
-		Destination destination = _bundleContext.getService(serviceReference);
-
 		String className = String.valueOf(
 			serviceReference.getProperty("object.action.trigger.class.name"));
+		Destination destination = _bundleContext.getService(serviceReference);
 
 		_bundleContext.registerService(
 			ObjectActionTrigger.class,
@@ -126,7 +125,6 @@ public class ObjectActionTriggerRegistryImpl
 			).put(
 				"object.action.trigger.key", destination.getName()
 			).build());
-
 		_bundleContext.registerService(
 			MessageListener.class, new ObjectActionTriggerMessageListener(),
 			HashMapDictionaryBuilder.<String, Object>put(
