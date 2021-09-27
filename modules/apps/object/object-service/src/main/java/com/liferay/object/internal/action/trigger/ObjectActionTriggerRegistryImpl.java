@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.object.internal.action;
+package com.liferay.object.internal.action.trigger;
 
-import com.liferay.object.action.ObjectActionTrigger;
-import com.liferay.object.action.ObjectActionTriggerRegistry;
+import com.liferay.object.action.trigger.ObjectActionTrigger;
+import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.internal.messaging.ObjectActionTriggerMessageListener;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

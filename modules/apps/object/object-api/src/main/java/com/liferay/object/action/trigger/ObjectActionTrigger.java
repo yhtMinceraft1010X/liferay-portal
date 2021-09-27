@@ -12,19 +12,33 @@
  * details.
  */
 
-package com.liferay.object.action;
-
-import java.io.Serializable;
-
-import java.util.Map;
+package com.liferay.object.action.trigger;
 
 /**
  * @author Marco Leo
  */
-public interface ObjectActionEngine {
+public class ObjectActionTrigger {
 
-	public void executeObjectActions(
-		long userId, String className, String objectActionTriggerKey,
-		Map<String, Serializable> parameters);
+	public ObjectActionTrigger(String className, String key, String type) {
+		_className = className;
+		_key = key;
+		_type = type;
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	private final String _className;
+	private final String _key;
+	private final String _type;
 
 }

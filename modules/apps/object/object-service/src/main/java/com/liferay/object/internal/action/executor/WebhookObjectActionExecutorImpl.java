@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.object.internal.action;
+package com.liferay.object.internal.action.executor;
 
-import com.liferay.object.action.ObjectAction;
-import com.liferay.object.action.ObjectActionRequest;
+import com.liferay.object.action.executor.ObjectActionExecutor;
+import com.liferay.object.action.request.ObjectActionRequest;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = ObjectAction.class)
-public class WebhookObjectActionImpl implements ObjectAction {
+@Component(service = ObjectActionExecutor.class)
+public class WebhookObjectActionExecutorImpl implements ObjectActionExecutor {
 
 	@Override
 	public void execute(ObjectActionRequest objectActionRequest)
@@ -45,7 +45,7 @@ public class WebhookObjectActionImpl implements ObjectAction {
 			(String)objectActionRequest.getParameterValue("url"));
 		options.setPost(true);
 
-		//TODO Secret and certificates?
+		// TODO Secret
 
 		_http.URLtoString(options);
 	}

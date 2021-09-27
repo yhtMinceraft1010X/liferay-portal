@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.object.internal.action;
+package com.liferay.object.internal.action.executor;
 
-import com.liferay.object.action.ObjectAction;
-import com.liferay.object.action.ObjectActionRequest;
+import com.liferay.object.action.executor.ObjectActionExecutor;
+import com.liferay.object.action.request.ObjectActionRequest;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,23 +30,22 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(service = ObjectAction.class)
-public class UpdateObjectEntryObjectActionImpl implements ObjectAction {
+@Component(service = ObjectActionExecutor.class)
+public class AddObjectEntryObjectActionExecutorImpl
+	implements ObjectActionExecutor {
 
 	@Override
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception {
 
-		long classPK = GetterUtil.getLong(
-			objectActionRequest.getParameterValue("classPK"));
-
-		_objectEntryLocalService.updateObjectEntry(
-			objectActionRequest.getUserId(), classPK,
-			HashMapBuilder.put(
-				GetterUtil.getString(
-					objectActionRequest.getParameterValue("fieldName")),
-				objectActionRequest.getParameterValue("fieldName")
-			).build(),
+		_objectEntryLocalService.addObjectEntry(
+			objectActionRequest.getUserId(),
+			GetterUtil.getLong(
+				objectActionRequest.getParameterValue("groupId")),
+			GetterUtil.getLong(
+				objectActionRequest.getParameterValue("objectDefinitionId")),
+			(Map<String, Serializable>)objectActionRequest.getParameterValue(
+				"values"),
 			new ServiceContext() {
 				{
 					setUserId(objectActionRequest.getUserId());
@@ -53,7 +55,7 @@ public class UpdateObjectEntryObjectActionImpl implements ObjectAction {
 
 	@Override
 	public String getType() {
-		return "updateObjectEntry";
+		return "addObjectEntry";
 	}
 
 	@Reference

@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.messaging;
 
-import com.liferay.object.action.ObjectActionEngine;
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.object.internal.action;
+package com.liferay.object.internal.action.engine;
 
-import com.liferay.object.action.ObjectAction;
-import com.liferay.object.action.ObjectActionEngine;
-import com.liferay.object.action.ObjectActionRequest;
+import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.action.executor.ObjectActionExecutor;
+import com.liferay.object.action.request.ObjectActionRequest;
 import com.liferay.object.model.ObjectActionEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionEntryLocalService;
@@ -64,8 +64,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					objectActionTriggerKey);
 
 			for (ObjectActionEntry objectActionEntry : objectActionEntries) {
-				ObjectAction objectAction = _serviceTrackerMap.getService(
-					objectActionEntry.getType());
+				ObjectActionExecutor objectActionExecutor =
+					_serviceTrackerMap.getService(objectActionEntry.getType());
 
 				ObjectActionRequest objectActionRequest =
 					new ObjectActionRequest(
@@ -76,7 +76,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 						).build(),
 						userId);
 
-				objectAction.execute(objectActionRequest);
+				objectActionExecutor.execute(objectActionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -87,12 +87,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ObjectAction.class, null,
+			bundleContext, ObjectActionExecutor.class, null,
 			(serviceReference, emitter) -> {
-				ObjectAction objectAction = bundleContext.getService(
-					serviceReference);
+				ObjectActionExecutor objectActionExecutor =
+					bundleContext.getService(serviceReference);
 
-				emitter.emit(objectAction.getType());
+				emitter.emit(objectActionExecutor.getType());
 			});
 	}
 
@@ -110,7 +110,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private ServiceTrackerMap<String, ObjectAction> _serviceTrackerMap;
+	private ServiceTrackerMap<String, ObjectActionExecutor> _serviceTrackerMap;
 
 	@Reference
 	private UserLocalService _userLocalService;

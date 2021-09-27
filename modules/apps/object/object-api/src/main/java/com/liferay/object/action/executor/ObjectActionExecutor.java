@@ -12,33 +12,18 @@
  * details.
  */
 
-package com.liferay.object.action;
+package com.liferay.object.action.executor;
+
+import com.liferay.object.action.request.ObjectActionRequest;
 
 /**
  * @author Marco Leo
  */
-public class ObjectActionTrigger {
+public interface ObjectActionExecutor {
 
-	public ObjectActionTrigger(String className, String key, String type) {
-		_className = className;
-		_key = key;
-		_type = type;
-	}
+	public void execute(ObjectActionRequest objectActionRequest)
+		throws Exception;
 
-	public String getClassName() {
-		return _className;
-	}
-
-	public String getKey() {
-		return _key;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	private final String _className;
-	private final String _key;
-	private final String _type;
+	public String getType();
 
 }

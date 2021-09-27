@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.object.action;
+package com.liferay.object.action.trigger;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
-public interface ObjectAction {
+public interface ObjectActionTriggerRegistry {
 
-	public void execute(ObjectActionRequest objectActionRequest)
-		throws Exception;
-
-	public String getType();
+	public List<ObjectActionTrigger> getObjectActionTriggers(String className);
 
 }

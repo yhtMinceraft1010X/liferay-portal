@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.object.action;
+package com.liferay.object.action.engine;
 
-import java.util.List;
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Marco Leo
  */
-public interface ObjectActionTriggerRegistry {
+public interface ObjectActionEngine {
 
-	public List<ObjectActionTrigger> getObjectActionTriggers(String className);
+	public void executeObjectActions(
+		long userId, String className, String objectActionTriggerKey,
+		Map<String, Serializable> parameters);
 
 }

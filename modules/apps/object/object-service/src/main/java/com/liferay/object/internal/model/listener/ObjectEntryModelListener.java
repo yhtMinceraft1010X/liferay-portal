@@ -14,7 +14,7 @@
 
 package com.liferay.object.internal.model.listener;
 
-import com.liferay.object.action.ObjectActionEngine;
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONException;

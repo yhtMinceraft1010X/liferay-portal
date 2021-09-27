@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.action;
+package com.liferay.object.action.request;
 
 import java.io.Serializable;
 
