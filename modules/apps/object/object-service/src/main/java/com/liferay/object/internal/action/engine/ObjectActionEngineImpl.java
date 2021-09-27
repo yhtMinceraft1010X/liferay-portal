@@ -17,9 +17,9 @@ package com.liferay.object.internal.action.engine;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.request.ObjectActionRequest;
-import com.liferay.object.model.ObjectActionEntry;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectActionEntryLocalService;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -58,19 +58,19 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				_objectDefinitionLocalService.getObjectDefinitionByClassName(
 					user.getCompanyId(), className);
 
-			List<ObjectActionEntry> objectActionEntries =
-				_objectActionEntryLocalService.getObjectActionEntries(
+			List<ObjectAction> objectActions =
+				_objectActionLocalService.getObjectActions(
 					objectDefinition.getObjectDefinitionId(),
 					objectActionTriggerKey);
 
-			for (ObjectActionEntry objectActionEntry : objectActionEntries) {
+			for (ObjectAction objectAction : objectActions) {
 				ObjectActionExecutor objectActionExecutor =
-					_serviceTrackerMap.getService(objectActionEntry.getType());
+					_serviceTrackerMap.getService(objectAction.getType());
 
 				ObjectActionRequest objectActionRequest =
 					new ObjectActionRequest(
 						HashMapBuilder.<String, Serializable>putAll(
-							objectActionEntry.getParametersUnicodeProperties()
+							objectAction.getParametersUnicodeProperties()
 						).putAll(
 							parameters
 						).build(),
@@ -105,7 +105,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		ObjectActionEngineImpl.class);
 
 	@Reference
-	private ObjectActionEntryLocalService _objectActionEntryLocalService;
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

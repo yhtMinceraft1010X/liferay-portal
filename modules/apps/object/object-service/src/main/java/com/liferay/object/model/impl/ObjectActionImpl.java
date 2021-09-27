@@ -12,23 +12,26 @@
  * details.
  */
 
-package com.liferay.object.service.impl;
+package com.liferay.object.model.impl;
 
-import com.liferay.object.service.base.ObjectActionEntryServiceBaseImpl;
-import com.liferay.portal.aop.AopService;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 /**
  * @author Marco Leo
  */
-@Component(
-	property = {
-		"json.web.service.context.name=object",
-		"json.web.service.context.path=ObjectActionEntry"
-	},
-	service = AopService.class
-)
-public class ObjectActionEntryServiceImpl
-	extends ObjectActionEntryServiceBaseImpl {
+public class ObjectActionImpl extends ObjectActionBaseImpl {
+
+	@Override
+	public UnicodeProperties getParametersUnicodeProperties() {
+		if (_parametersUnicodeProperties == null) {
+			_parametersUnicodeProperties = new UnicodeProperties(true);
+
+			_parametersUnicodeProperties.fastLoad(getParameters());
+		}
+
+		return _parametersUnicodeProperties;
+	}
+
+	private transient UnicodeProperties _parametersUnicodeProperties;
+
 }

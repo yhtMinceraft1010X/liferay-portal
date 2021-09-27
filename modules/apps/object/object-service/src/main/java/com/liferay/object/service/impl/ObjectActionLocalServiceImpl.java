@@ -14,8 +14,8 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.model.ObjectActionEntry;
-import com.liferay.object.service.base.ObjectActionEntryLocalServiceBaseImpl;
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
 import java.util.List;
@@ -26,17 +26,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Leo
  */
 @Component(
-	property = "model.class.name=com.liferay.object.model.ObjectActionEntry",
+	property = "model.class.name=com.liferay.object.model.ObjectAction",
 	service = AopService.class
 )
-public class ObjectActionEntryLocalServiceImpl
-	extends ObjectActionEntryLocalServiceBaseImpl {
+public class ObjectActionLocalServiceImpl
+	extends ObjectActionLocalServiceBaseImpl {
 
 	@Override
-	public List<ObjectActionEntry> getObjectActionEntries(
+	public List<ObjectAction> getObjectActions(
 		long objectDefinitionId, String objectActionTriggerKey) {
 
-		return objectActionEntryPersistence.findByO_A_OATK(
+		return objectActionPersistence.findByO_A_OATK(
 			objectDefinitionId, true, objectActionTriggerKey);
 	}
 
