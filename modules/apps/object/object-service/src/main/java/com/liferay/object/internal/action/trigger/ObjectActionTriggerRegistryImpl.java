@@ -49,7 +49,7 @@ public class ObjectActionTriggerRegistryImpl
 	@Override
 	public List<ObjectActionTrigger> getObjectActionTriggers(String className) {
 		List<ObjectActionTrigger> objectActionTriggers =
-			_serviceTrackerMap.getService(className);
+			_objectActionTriggerServiceTrackerMap.getService(className);
 
 		if (objectActionTriggers == null) {
 			return Collections.<ObjectActionTrigger>emptyList();
@@ -62,8 +62,9 @@ public class ObjectActionTriggerRegistryImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ObjectActionTrigger.class, "model.class.name");
+		_objectActionTriggerServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ObjectActionTrigger.class, "model.class.name");
 
 		_destinationServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
@@ -73,7 +74,7 @@ public class ObjectActionTriggerRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_objectActionTriggerServiceTrackerMap.close();
 		_destinationServiceTrackerMap.close();
 	}
 
@@ -84,7 +85,7 @@ public class ObjectActionTriggerRegistryImpl
 	private ServiceTrackerMap<String, List<Destination>>
 		_destinationServiceTrackerMap;
 	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
-		_serviceTrackerMap;
+		_objectActionTriggerServiceTrackerMap;
 
 	private class DestinationServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Destination, Destination> {
