@@ -15,6 +15,7 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -43,14 +44,18 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onAfterCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction("onAfterCreate", null, objectEntry);
+		_executeAction(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE, null,
+			objectEntry);
 	}
 
 	@Override
 	public void onAfterRemove(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction("onAfterRemove", null, objectEntry);
+		_executeAction(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE, null,
+			objectEntry);
 	}
 
 	@Override
@@ -58,7 +63,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction("onAfterUpdate", originalObjectEntry, objectEntry);
+		_executeAction(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			originalObjectEntry, objectEntry);
 	}
 
 	private void _executeAction(

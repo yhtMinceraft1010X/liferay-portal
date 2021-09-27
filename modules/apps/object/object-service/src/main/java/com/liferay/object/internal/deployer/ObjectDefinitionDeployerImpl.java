@@ -174,32 +174,38 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
-					objectDefinition.getClassName(), "onAfterCreate",
+					objectDefinition.getClassName(),
+					ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(
-					"object.action.trigger.name", "onAfterCreate"
+					"object.action.trigger.key",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE
 				).build()),
 			_bundleContext.registerService(
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
-					objectDefinition.getClassName(), "onAfterRemove",
+					objectDefinition.getClassName(),
+					ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(
-					"object.action.trigger.name", "onAfterRemove"
+					"object.action.trigger.key",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE
 				).build()),
 			_bundleContext.registerService(
 				ObjectActionTrigger.class,
 				new ObjectActionTrigger(
-					objectDefinition.getClassName(), "onAfterUpdate",
+					objectDefinition.getClassName(),
+					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).put(
-					"object.action.trigger.name", "onAfterUpdate"
+					"object.action.trigger.key",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE
 				).build()),
 			_bundleContext.registerService(
 				ObjectRelatedModelsProvider.class,

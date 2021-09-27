@@ -88,7 +88,7 @@ public class ObjectActionTriggerRegistryImpl
 							HashMapDictionaryBuilder.<String, Object>put(
 								"model.class.name", className
 							).put(
-								"object.action.trigger.name",
+								"object.action.trigger.key",
 								destination.getName()
 							).build());
 
@@ -98,7 +98,7 @@ public class ObjectActionTriggerRegistryImpl
 							HashMapDictionaryBuilder.<String, Object>put(
 								"destination.name", destination.getName()
 							).put(
-								"object.action.trigger.name",
+								"object.action.trigger.key",
 								destination.getName()
 							).build());
 
@@ -138,7 +138,7 @@ public class ObjectActionTriggerRegistryImpl
 								messageListenerServiceReferences =
 									_bundleContext.getServiceReferences(
 										MessageListener.class,
-										"(object.action.trigger.name=" +
+										"(object.action.trigger.key=" +
 											destination.getName() + ")");
 
 							messageListenerServiceReferences.forEach(
