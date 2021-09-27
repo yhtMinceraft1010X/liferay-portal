@@ -21,12 +21,12 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
  * @author Marco Leo
  */
 @DDMForm
-public interface WebhookObjectActionSettings{
-
-	@DDMFormField
-	public String getURL();
+public interface WebhookObjectActionSettings {
 
 	@DDMFormField
 	public String getSecret();
+
+	@DDMFormField
+	public String getURL();
 
 }
