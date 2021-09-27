@@ -52,7 +52,7 @@ public class ObjectActionTriggerRegistryImpl
 			_serviceTrackerMap.getService(className);
 
 		if (objectActionTriggers == null) {
-			return Collections.emptyList();
+			return Collections.<ObjectActionTrigger>emptyList();
 		}
 
 		return objectActionTriggers;
@@ -68,91 +68,7 @@ public class ObjectActionTriggerRegistryImpl
 		_destinationServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, Destination.class, "model.class.name",
-				new ServiceTrackerCustomizer<Destination, Destination>() {
-
-					@Override
-					public Destination addingService(
-						ServiceReference<Destination> serviceReference) {
-
-						Destination destination = _bundleContext.getService(
-							serviceReference);
-
-						String className = String.valueOf(
-							serviceReference.getProperty("model.class.name"));
-
-						_bundleContext.registerService(
-							ObjectActionTrigger.class,
-							new ObjectActionTrigger(
-								className, destination.getName(),
-								ObjectActionTriggerConstants.TYPE_MESSAGE_BUS),
-							HashMapDictionaryBuilder.<String, Object>put(
-								"model.class.name", className
-							).put(
-								"object.action.trigger.key",
-								destination.getName()
-							).build());
-
-						_bundleContext.registerService(
-							MessageListener.class,
-							new ObjectActionTriggerMessageListener(),
-							HashMapDictionaryBuilder.<String, Object>put(
-								"destination.name", destination.getName()
-							).put(
-								"object.action.trigger.key",
-								destination.getName()
-							).build());
-
-						return destination;
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<Destination> serviceReference,
-						Destination destination) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<Destination> serviceReference,
-						Destination destination) {
-
-						Collection<ServiceReference<ObjectActionTrigger>>
-							serviceReferences = null;
-
-						try {
-							serviceReferences =
-								_bundleContext.getServiceReferences(
-									ObjectActionTrigger.class,
-									StringBundler.concat(
-										"(model.class.name=",
-										serviceReference.getProperty(
-											"model.class.name"),
-										")"));
-
-							serviceReferences.forEach(
-								objectActionTriggerServiceReference ->
-									_bundleContext.ungetService(
-										objectActionTriggerServiceReference));
-
-							Collection<ServiceReference<MessageListener>>
-								messageListenerServiceReferences =
-									_bundleContext.getServiceReferences(
-										MessageListener.class,
-										"(object.action.trigger.key=" +
-											destination.getName() + ")");
-
-							messageListenerServiceReferences.forEach(
-								messageListenerServiceReference ->
-									_bundleContext.ungetService(
-										messageListenerServiceReference));
-						}
-						catch (InvalidSyntaxException invalidSyntaxException) {
-							_log.error(
-								invalidSyntaxException, invalidSyntaxException);
-						}
-					}
-
-				});
+				new DestinationServiceTrackerCustomizer());
 	}
 
 	@Deactivate
@@ -169,5 +85,85 @@ public class ObjectActionTriggerRegistryImpl
 		_destinationServiceTrackerMap;
 	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
 		_serviceTrackerMap;
+
+	private class DestinationServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Destination, Destination> {
+
+		@Override
+		public Destination addingService(
+			ServiceReference<Destination> serviceReference) {
+
+			Destination destination = _bundleContext.getService(
+				serviceReference);
+
+			String className = String.valueOf(
+				serviceReference.getProperty("model.class.name"));
+
+			_bundleContext.registerService(
+				ObjectActionTrigger.class,
+				new ObjectActionTrigger(
+					className, destination.getName(),
+					ObjectActionTriggerConstants.TYPE_MESSAGE_BUS),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", className
+				).put(
+					"object.action.trigger.key", destination.getName()
+				).build());
+
+			_bundleContext.registerService(
+				MessageListener.class, new ObjectActionTriggerMessageListener(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destination.getName()
+				).put(
+					"object.action.trigger.key", destination.getName()
+				).build());
+
+			return destination;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Destination> serviceReference,
+			Destination destination) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Destination> serviceReference,
+			Destination destination) {
+
+			Collection<ServiceReference<ObjectActionTrigger>>
+				serviceReferences = null;
+
+			try {
+				serviceReferences = _bundleContext.getServiceReferences(
+					ObjectActionTrigger.class,
+					StringBundler.concat(
+						"(model.class.name=",
+						serviceReference.getProperty("model.class.name"), ")"));
+
+				serviceReferences.forEach(
+					objectActionTriggerServiceReference ->
+						_bundleContext.ungetService(
+							objectActionTriggerServiceReference));
+
+				Collection<ServiceReference<MessageListener>>
+					messageListenerServiceReferences =
+						_bundleContext.getServiceReferences(
+							MessageListener.class,
+							"(object.action.trigger.key=" +
+								destination.getName() + ")");
+
+				messageListenerServiceReferences.forEach(
+					messageListenerServiceReference ->
+						_bundleContext.ungetService(
+							messageListenerServiceReference));
+			}
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				_log.error(invalidSyntaxException, invalidSyntaxException);
+			}
+		}
+
+	}
 
 }
