@@ -119,9 +119,8 @@ public class SXPConditionEvaluator {
 		else if (key.equals("not_in_range")) {
 			return !sxpParameter.evaluateInRange(valueJSONObject);
 		}
-		else {
-			throw new IllegalArgumentException("Uknown key " + key);
-		}
+
+		throw new IllegalArgumentException("Uknown condition " + key);
 	}
 
 }

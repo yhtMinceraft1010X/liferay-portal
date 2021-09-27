@@ -23,10 +23,6 @@ import com.liferay.portal.search.geolocation.DistanceUnit;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoDistanceType;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.script.Script;
-import com.liferay.portal.search.script.ScriptBuilder;
-import com.liferay.portal.search.script.ScriptType;
-import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.FieldSort;
@@ -39,6 +35,7 @@ import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
+import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
@@ -53,12 +50,12 @@ public class SortSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public SortSXPSearchRequestBodyContributor(
-		GeoBuilders geoBuilders, Queries queries, Scripts scripts,
-		Sorts sorts) {
+		GeoBuilders geoBuilders, Queries queries,
+		ScriptConverter scriptConverter, Sorts sorts) {
 
 		_geoBuilders = geoBuilders;
 		_queries = queries;
-		_scripts = scripts;
+		_scriptConverter = scriptConverter;
 		_sorts = sorts;
 	}
 
@@ -99,19 +96,6 @@ public class SortSXPSearchRequestBodyContributor
 		geoDistanceSort.addGeoLocationPoints(
 			_geoBuilders.geoLocationPoint(
 				jsonArray.getDouble(0), jsonArray.getDouble(1)));
-	}
-
-	private Script _getScript(JSONObject jsonObject) {
-		Object object = jsonObject.get("script");
-
-		if (object instanceof JSONObject) {
-			return _toScript((JSONObject)object);
-		}
-		else if (object instanceof String) {
-			return _toScript((String)object);
-		}
-
-		throw new IllegalArgumentException();
 	}
 
 	private boolean _hasSorts(SearchRequestBuilder searchRequestBuilder) {
@@ -199,26 +183,6 @@ public class SortSXPSearchRequestBodyContributor
 		}
 	}
 
-	private void _processScriptOptions(
-		JSONObject jsonObject, ScriptBuilder scriptBuilder) {
-
-		if (jsonObject != null) {
-			for (String key : jsonObject.keySet()) {
-				scriptBuilder.putOption(key, jsonObject.getString(key));
-			}
-		}
-	}
-
-	private void _processScriptParams(
-		JSONObject jsonObject, ScriptBuilder scriptBuilder) {
-
-		if (jsonObject != null) {
-			for (String key : jsonObject.keySet()) {
-				scriptBuilder.putParameter(key, jsonObject.get(key));
-			}
-		}
-	}
-
 	private void _processSortOrder(JSONObject jsonObject, Sort sort) {
 		if (jsonObject.has("order")) {
 			sort.setSortOrder(_toSortOrder(jsonObject.getString("order")));
@@ -297,49 +261,9 @@ public class SortSXPSearchRequestBodyContributor
 		return nestedSort;
 	}
 
-	private Script _toScript(JSONObject jsonObject) {
-		ScriptBuilder scriptBuilder = _scripts.builder();
-
-		if (jsonObject.has("id")) {
-			scriptBuilder.idOrCode(
-				jsonObject.getString("id")
-			).scriptType(
-				ScriptType.STORED
-			);
-		}
-		else if (jsonObject.has("source")) {
-			scriptBuilder.idOrCode(
-				jsonObject.getString("source")
-			).scriptType(
-				ScriptType.INLINE
-			);
-		}
-
-		if (jsonObject.has("lang")) {
-			scriptBuilder.language(jsonObject.getString("lang"));
-		}
-
-		_processScriptOptions(
-			jsonObject.getJSONObject("options"), scriptBuilder);
-		_processScriptParams(jsonObject.getJSONObject("params"), scriptBuilder);
-
-		return scriptBuilder.build();
-	}
-
-	private Script _toScript(String string) {
-		return _scripts.builder(
-		).idOrCode(
-			string
-		).language(
-			"painless"
-		).scriptType(
-			ScriptType.INLINE
-		).build();
-	}
-
 	private Sort _toScriptSort(JSONObject jsonObject) {
 		ScriptSort scriptSort = _sorts.script(
-			_getScript(jsonObject),
+			_scriptConverter.toScript(jsonObject),
 			ScriptSort.ScriptSortType.valueOf(
 				StringUtil.toUpperCase(jsonObject.getString("type"))));
 
@@ -389,7 +313,7 @@ public class SortSXPSearchRequestBodyContributor
 
 	private final GeoBuilders _geoBuilders;
 	private final Queries _queries;
-	private final Scripts _scripts;
+	private final ScriptConverter _scriptConverter;
 	private final Sorts _sorts;
 
 }
