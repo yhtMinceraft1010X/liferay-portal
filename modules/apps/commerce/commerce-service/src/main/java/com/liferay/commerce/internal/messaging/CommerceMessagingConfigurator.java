@@ -98,7 +98,7 @@ public class CommerceMessagingConfigurator {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
 			).put(
-				"model.class.name", className
+				"object.action.trigger.class.name", className
 			).build();
 
 		return bundleContext.registerService(

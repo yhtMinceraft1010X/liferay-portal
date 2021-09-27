@@ -64,11 +64,13 @@ public class ObjectActionTriggerRegistryImpl
 
 		_destinationServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, Destination.class, "model.class.name",
+				bundleContext, Destination.class,
+				"object.action.trigger.class.name",
 				new DestinationServiceTrackerCustomizer());
 		_objectActionTriggerServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ObjectActionTrigger.class, "model.class.name");
+				bundleContext, ObjectActionTrigger.class,
+				"object.action.trigger.class.name");
 	}
 
 	@Deactivate
@@ -97,7 +99,8 @@ public class ObjectActionTriggerRegistryImpl
 				serviceReference);
 
 			String className = String.valueOf(
-				serviceReference.getProperty("model.class.name"));
+				serviceReference.getProperty(
+					"object.action.trigger.class.name"));
 
 			_bundleContext.registerService(
 				ObjectActionTrigger.class,
@@ -105,7 +108,7 @@ public class ObjectActionTriggerRegistryImpl
 					className, destination.getName(),
 					ObjectActionTriggerConstants.TYPE_MESSAGE_BUS),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", className
+					"object.action.trigger.class.name", className
 				).put(
 					"object.action.trigger.key", destination.getName()
 				).build());
@@ -139,8 +142,10 @@ public class ObjectActionTriggerRegistryImpl
 				serviceReferences = _bundleContext.getServiceReferences(
 					ObjectActionTrigger.class,
 					StringBundler.concat(
-						"(model.class.name=",
-						serviceReference.getProperty("model.class.name"), ")"));
+						"(object.action.trigger.class.name=",
+						serviceReference.getProperty(
+							"object.action.trigger.class.name"),
+						")"));
 
 				serviceReferences.forEach(
 					objectActionTriggerServiceReference ->

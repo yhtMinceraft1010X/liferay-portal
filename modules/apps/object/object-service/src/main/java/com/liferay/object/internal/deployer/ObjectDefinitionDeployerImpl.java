@@ -178,7 +178,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
+					"object.action.trigger.class.name",
+					objectDefinition.getClassName()
 				).put(
 					"object.action.trigger.key",
 					ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE
@@ -190,7 +191,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
+					"object.action.trigger.class.name",
+					objectDefinition.getClassName()
 				).put(
 					"object.action.trigger.key",
 					ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE
@@ -202,7 +204,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 					ObjectActionTriggerConstants.TYPE_TRANSACTION),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"model.class.name", objectDefinition.getClassName()
+					"object.action.trigger.class.name",
+					objectDefinition.getClassName()
 				).put(
 					"object.action.trigger.key",
 					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE
