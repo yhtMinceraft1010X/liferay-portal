@@ -1253,7 +1253,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				serviceContext.getScopeGroupId(), privateLayout, friendlyURL);
 
-			if(layout == null) {
+			if (layout == null) {
 				continue;
 			}
 
