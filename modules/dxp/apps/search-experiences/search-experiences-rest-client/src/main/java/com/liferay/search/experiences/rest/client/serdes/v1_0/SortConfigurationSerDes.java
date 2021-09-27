@@ -55,16 +55,16 @@ public class SortConfigurationSerDes {
 
 		sb.append("{");
 
-		if (sortConfiguration.getSortsJSONArray() != null) {
+		if (sortConfiguration.getSorts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sortsJSONArray\": ");
+			sb.append("\"sorts\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sortConfiguration.getSortsJSONArray()));
+			sb.append(_escape(sortConfiguration.getSorts()));
 
 			sb.append("\"");
 		}
@@ -90,13 +90,11 @@ public class SortConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sortConfiguration.getSortsJSONArray() == null) {
-			map.put("sortsJSONArray", null);
+		if (sortConfiguration.getSorts() == null) {
+			map.put("sorts", null);
 		}
 		else {
-			map.put(
-				"sortsJSONArray",
-				String.valueOf(sortConfiguration.getSortsJSONArray()));
+			map.put("sorts", String.valueOf(sortConfiguration.getSorts()));
 		}
 
 		return map;
@@ -120,10 +118,9 @@ public class SortConfigurationSerDes {
 			SortConfiguration sortConfiguration, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "sortsJSONArray")) {
+			if (Objects.equals(jsonParserFieldName, "sorts")) {
 				if (jsonParserFieldValue != null) {
-					sortConfiguration.setSortsJSONArray(
-						(Object)jsonParserFieldValue);
+					sortConfiguration.setSorts((Object)jsonParserFieldValue);
 				}
 			}
 		}

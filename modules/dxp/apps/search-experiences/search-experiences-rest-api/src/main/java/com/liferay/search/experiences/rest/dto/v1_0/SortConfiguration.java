@@ -55,20 +55,20 @@ public class SortConfiguration implements Serializable {
 
 	@Schema
 	@Valid
-	public Object getSortsJSONArray() {
-		return sortsJSONArray;
+	public Object getSorts() {
+		return sorts;
 	}
 
-	public void setSortsJSONArray(Object sortsJSONArray) {
-		this.sortsJSONArray = sortsJSONArray;
+	public void setSorts(Object sorts) {
+		this.sorts = sorts;
 	}
 
 	@JsonIgnore
-	public void setSortsJSONArray(
-		UnsafeSupplier<Object, Exception> sortsJSONArrayUnsafeSupplier) {
+	public void setSorts(
+		UnsafeSupplier<Object, Exception> sortsUnsafeSupplier) {
 
 		try {
-			sortsJSONArray = sortsJSONArrayUnsafeSupplier.get();
+			sorts = sortsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -80,7 +80,7 @@ public class SortConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object sortsJSONArray;
+	protected Object sorts;
 
 	@Override
 	public boolean equals(Object object) {
@@ -109,14 +109,14 @@ public class SortConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (sortsJSONArray != null) {
+		if (sorts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sortsJSONArray\": ");
+			sb.append("\"sorts\": ");
 
-			sb.append(String.valueOf(sortsJSONArray));
+			sb.append(String.valueOf(sorts));
 		}
 
 		sb.append("}");

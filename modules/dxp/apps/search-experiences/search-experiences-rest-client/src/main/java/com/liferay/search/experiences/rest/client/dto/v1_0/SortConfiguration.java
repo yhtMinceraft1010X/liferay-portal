@@ -34,26 +34,26 @@ public class SortConfiguration implements Cloneable, Serializable {
 		return SortConfigurationSerDes.toDTO(json);
 	}
 
-	public Object getSortsJSONArray() {
-		return sortsJSONArray;
+	public Object getSorts() {
+		return sorts;
 	}
 
-	public void setSortsJSONArray(Object sortsJSONArray) {
-		this.sortsJSONArray = sortsJSONArray;
+	public void setSorts(Object sorts) {
+		this.sorts = sorts;
 	}
 
-	public void setSortsJSONArray(
-		UnsafeSupplier<Object, Exception> sortsJSONArrayUnsafeSupplier) {
+	public void setSorts(
+		UnsafeSupplier<Object, Exception> sortsUnsafeSupplier) {
 
 		try {
-			sortsJSONArray = sortsJSONArrayUnsafeSupplier.get();
+			sorts = sortsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object sortsJSONArray;
+	protected Object sorts;
 
 	@Override
 	public SortConfiguration clone() throws CloneNotSupportedException {
