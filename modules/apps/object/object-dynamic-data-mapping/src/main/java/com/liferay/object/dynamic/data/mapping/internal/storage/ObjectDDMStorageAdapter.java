@@ -181,6 +181,20 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		}
 	}
 
+	private ObjectDefinition _fetchObjectDefinition(long objectEntryId)
+		throws PortalException {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.fetchObjectEntry(objectEntryId);
+
+		if (serviceBuilderObjectEntry != null) {
+			return _objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+		}
+
+		return null;
+	}
+
 	private Value _getDDMFormFieldValue(
 		DDMFormField ddmFormField, Map<String, DDMFormField> ddmFormFieldsMap,
 		Locale locale, Map<String, Object> properties) {
@@ -261,20 +275,6 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			Collections.singletonMap(
 				"delete", Collections.singletonMap("delete", "")),
 			null, null, objectEntryId, locale, null, user);
-	}
-
-	private ObjectDefinition _fetchObjectDefinition(long objectEntryId)
-		throws PortalException {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.fetchObjectEntry(objectEntryId);
-
-		if (serviceBuilderObjectEntry != null) {
-			return _objectDefinitionLocalService.getObjectDefinition(
-				serviceBuilderObjectEntry.getObjectDefinitionId());
-		}
-
-		return null;
 	}
 
 	private long _getObjectDefinitionId(
