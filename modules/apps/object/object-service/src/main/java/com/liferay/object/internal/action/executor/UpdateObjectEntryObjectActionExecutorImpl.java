@@ -41,8 +41,8 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 				objectActionRequest.getParameterValue("classPK")),
 			HashMapBuilder.put(
 				String.valueOf(
-					objectActionRequest.getParameterValue("fieldName")),
-				objectActionRequest.getParameterValue("fieldName")
+					objectActionRequest.getParameterValue("objectFieldName")),
+				objectActionRequest.getParameterValue("objectFieldValue")
 			).build(),
 			new ServiceContext() {
 				{
