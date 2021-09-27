@@ -97,15 +97,14 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			ObjectActionExecutor objectActionExecutor =
 				_serviceTrackerMap.getService(objectAction.getType());
 
-			ObjectActionRequest objectActionRequest = new ObjectActionRequest(
-				HashMapBuilder.<String, Serializable>putAll(
-					objectAction.getParametersUnicodeProperties()
-				).putAll(
-					parameters
-				).build(),
-				userId);
-
-			objectActionExecutor.execute(objectActionRequest);
+			objectActionExecutor.execute(
+				new ObjectActionRequest(
+					HashMapBuilder.<String, Serializable>putAll(
+						objectAction.getParametersUnicodeProperties()
+					).putAll(
+						parameters
+					).build(),
+					userId));
 		}
 	}
 
