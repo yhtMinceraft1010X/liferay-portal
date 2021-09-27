@@ -484,11 +484,11 @@ public class CommerceAccountLocalServiceImpl
 			accountEntryLocalService.searchAccountEntries(
 				companyId, keywords,
 				LinkedHashMapBuilder.<String, Object>put(
-					"types",
-					new String[] {CommerceAccountImpl.toAccountEntryType(type)}
-				).put(
 					"status",
 					() -> CommerceAccountImpl.toAccountEntryStatus(active)
+				).put(
+					"types",
+					new String[] {CommerceAccountImpl.toAccountEntryType(type)}
 				).build(),
 				QueryUtil.ALL_POS, 0, null, false);
 
