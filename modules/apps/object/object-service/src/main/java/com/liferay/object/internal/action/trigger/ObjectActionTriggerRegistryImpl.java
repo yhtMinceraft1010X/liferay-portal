@@ -62,20 +62,19 @@ public class ObjectActionTriggerRegistryImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_objectActionTriggerServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ObjectActionTrigger.class, "model.class.name");
-
 		_destinationServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, Destination.class, "model.class.name",
 				new DestinationServiceTrackerCustomizer());
+		_objectActionTriggerServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ObjectActionTrigger.class, "model.class.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_objectActionTriggerServiceTrackerMap.close();
 		_destinationServiceTrackerMap.close();
+		_objectActionTriggerServiceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
