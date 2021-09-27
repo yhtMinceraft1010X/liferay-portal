@@ -44,7 +44,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onAfterCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction(
+		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE, null,
 			objectEntry);
 	}
@@ -53,7 +53,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	public void onAfterRemove(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction(
+		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE, null,
 			objectEntry);
 	}
@@ -63,12 +63,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_executeAction(
+		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 			originalObjectEntry, objectEntry);
 	}
 
-	private void _executeAction(
+	private void _executeObjectActions(
 			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
 			ObjectEntry objectEntry)
 		throws ModelListenerException {
