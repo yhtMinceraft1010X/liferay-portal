@@ -849,7 +849,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addLayout(
-			AssetListEntryLocalService assetListEntryLocalService,
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -881,22 +881,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Map<String, String> assetListMap = new HashMap<>();
-
-		List<AssetListEntry> assetListEntries =
-			_assetListEntryLocalService.getAssetListEntries(
-				serviceContext.getScopeGroupId());
-
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			assetListMap.put(
-				StringUtil.toUpperCase(assetListEntry.getAssetListEntryKey()),
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-		}
-
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
-			StringUtil.replace(json, "\"[$", "$]\"", assetListMap));
+			StringUtil.replace(
+				json, "\"[$", "$]\"",
+				assetListEntryIdsStringUtilReplaceValues));
+
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
@@ -943,24 +933,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String key = typeSettingJSONObject.getString("key");
 				String value = typeSettingJSONObject.getString("value");
 
-				if (StringUtil.equals(key, "collectionPK") &&
-					value.startsWith("[$ASSET_LIST_ID=")) {
-
-					int x = value.indexOf("=");
-
-					int y = value.indexOf("$", x);
-
-					String journalArticleId = value.substring(x + 1, y);
-
-					AssetListEntry assetListEntry =
-						assetListEntryLocalService.getAssetListEntry(
-							serviceContext.getScopeGroupId(), journalArticleId);
-
-					value = String.valueOf(
-						assetListEntry.getAssetListEntryId());
-				}
-
-				unicodeProperties.put(key, value);
+				unicodeProperties.put(
+					key,
+					StringUtil.replace(
+						value, "\"[$", "$]\"",
+						assetListEntryIdsStringUtilReplaceValues));
 			}
 
 			draftLayout = _layoutLocalService.updateLayout(
@@ -1051,10 +1028,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
+		Map<String, String> assetListEntryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
+		List<AssetListEntry> assetListEntries =
+			assetListEntryLocalService.getAssetListEntries(
+				serviceContext.getScopeGroupId());
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			String assetListEntryKeyUppercase = StringUtil.toUpperCase(
+				assetListEntry.getAssetListEntryKey());
+
+			assetListEntryIdsStringUtilReplaceValues.put(
+				"ASSET_LIST_ENTRY_ID:" + assetListEntryKeyUppercase,
+				String.valueOf(assetListEntry.getAssetListEntryId()));
+		}
+
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
 				_addLayout(
-					assetListEntryLocalService, resourcePath, serviceContext);
+					assetListEntryIdsStringUtilReplaceValues, resourcePath,
+					serviceContext);
 			}
 		}
 
