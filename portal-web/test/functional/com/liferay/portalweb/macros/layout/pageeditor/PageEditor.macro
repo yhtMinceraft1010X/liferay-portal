@@ -2178,7 +2178,9 @@ definition {
 			id = "${editableId}");
 
 		if (isSet(fileName)) {
-			var content = TestCase.getFileContent(fileName = "${fileName}");
+			var content = TestCase.getFileContent(
+				fileName = "${fileName}",
+				filePath = "${filePath}");
 		}
 
 		Type.typeAceEditorNoError(
