@@ -90,7 +90,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		try {
 			long objectEntryId = ddmStorageAdapterDeleteRequest.getPrimaryKey();
 
-			ObjectDefinition objectDefinition = _getObjectDefinition(
+			ObjectDefinition objectDefinition = _fetchObjectDefinition(
 				objectEntryId);
 
 			ObjectEntry objectEntry = _objectEntryManager.fetchObjectEntry(
@@ -120,7 +120,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 			long objectEntryId = ddmStorageAdapterGetRequest.getPrimaryKey();
 
-			ObjectDefinition objectDefinition = _getObjectDefinition(
+			ObjectDefinition objectDefinition = _fetchObjectDefinition(
 				objectEntryId);
 
 			return DDMStorageAdapterGetResponse.Builder.newBuilder(
@@ -263,7 +263,7 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			null, null, objectEntryId, locale, null, user);
 	}
 
-	private ObjectDefinition _getObjectDefinition(long objectEntryId)
+	private ObjectDefinition _fetchObjectDefinition(long objectEntryId)
 		throws PortalException {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
