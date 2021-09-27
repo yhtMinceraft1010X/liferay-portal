@@ -125,7 +125,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		Assert.assertEquals(
 			aggregationsMap.toString(), 2, aggregationsMap.size());
 
-		_assertDTOToStringAndBack(configuration);
+		_assert(configuration);
 	}
 
 	@Test
@@ -175,7 +175,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		Assert.assertArrayEquals(postTags, highlight.getPostTags());
 		Assert.assertArrayEquals(preTags, highlight.getPreTags());
 
-		_assertDTOToStringAndBack(configuration);
+		_assert(configuration);
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertNull(searchRequest.getQueryString());
 
-		_assertDTOToStringAndBack(configuration);
+		_assert(configuration);
 	}
 
 	@Test
@@ -258,7 +258,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 			).toString(),
 			new String(wrapperQuery.getSource()));
 
-		_assertDTOToStringAndBack(configuration);
+		_assert(configuration);
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		configuration.setSortConfiguration(
 			new SortConfiguration() {
 				{
-					sortsJSONArray = JSONFactoryUtil.createJSONArray(
+					sorts = JSONFactoryUtil.createJSONArray(
 						_read(
 							"SXPBlueprintSearchRequestEnhancerTest.testSort." +
 								"json"));
@@ -289,12 +289,10 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 		Assert.assertEquals(sorts.toString(), 9, sorts.size());
 
-		_assertDTOToStringAndBack(configuration);
+		_assert(configuration);
 	}
 
-	private void _assertDTOToStringAndBack(Configuration configuration1)
-		throws Exception {
-
+	private void _assert(Configuration configuration1) throws Exception {
 		Configuration configuration2 = ConfigurationUtil.toConfiguration(
 			configuration1.toString());
 

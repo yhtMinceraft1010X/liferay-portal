@@ -80,7 +80,7 @@ public class SortSXPSearchRequestBodyContributor
 			return;
 		}
 
-		JSONArray jsonArray = (JSONArray)sortConfiguration.getSortsJSONArray();
+		JSONArray jsonArray = (JSONArray)sortConfiguration.getSorts();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			searchRequestBuilder.addSort(

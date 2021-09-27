@@ -23,16 +23,16 @@ import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
  */
 public class ConfigurationUtil {
 
-	public static Configuration toConfiguration(String jsonString) {
-		Configuration configuration = Configuration.toDTO(jsonString);
+	public static Configuration toConfiguration(String json) {
+		Configuration configuration = Configuration.toDTO(json);
 
 		SortConfiguration sortConfiguration =
 			configuration.getSortConfiguration();
 
 		if (sortConfiguration != null) {
-			sortConfiguration.setSortsJSONArray(
+			sortConfiguration.setSorts(
 				JSONFactoryUtil.createJSONArray(
-					(Object[])sortConfiguration.getSortsJSONArray()));
+					(Object[])sortConfiguration.getSorts()));
 		}
 
 		return configuration;
