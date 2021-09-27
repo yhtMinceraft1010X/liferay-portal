@@ -52,32 +52,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 		Map<String, Serializable> parameters) {
 
 		try {
-			User user = _userLocalService.getUser(userId);
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinitionByClassName(
-					user.getCompanyId(), className);
-
-			List<ObjectAction> objectActions =
-				_objectActionLocalService.getObjectActions(
-					objectDefinition.getObjectDefinitionId(),
-					objectActionTriggerKey);
-
-			for (ObjectAction objectAction : objectActions) {
-				ObjectActionExecutor objectActionExecutor =
-					_serviceTrackerMap.getService(objectAction.getType());
-
-				ObjectActionRequest objectActionRequest =
-					new ObjectActionRequest(
-						HashMapBuilder.<String, Serializable>putAll(
-							objectAction.getParametersUnicodeProperties()
-						).putAll(
-							parameters
-						).build(),
-						userId);
-
-				objectActionExecutor.execute(objectActionRequest);
-			}
+			_executeObjectActions(
+				userId, className, objectActionTriggerKey, parameters);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -99,6 +75,38 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private void _executeObjectActions(
+			long userId, String className, String objectActionTriggerKey,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		User user = _userLocalService.getUser(userId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinitionByClassName(
+				user.getCompanyId(), className);
+
+		List<ObjectAction> objectActions =
+			_objectActionLocalService.getObjectActions(
+				objectDefinition.getObjectDefinitionId(),
+				objectActionTriggerKey);
+
+		for (ObjectAction objectAction : objectActions) {
+			ObjectActionExecutor objectActionExecutor =
+				_serviceTrackerMap.getService(objectAction.getType());
+
+			ObjectActionRequest objectActionRequest = new ObjectActionRequest(
+				HashMapBuilder.<String, Serializable>putAll(
+					objectAction.getParametersUnicodeProperties()
+				).putAll(
+					parameters
+				).build(),
+				userId);
+
+			objectActionExecutor.execute(objectActionRequest);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
