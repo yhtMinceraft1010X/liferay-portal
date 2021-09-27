@@ -16,6 +16,8 @@ package com.liferay.object.internal.messaging;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +38,8 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 			return;
 		}
 
+		// TODO Verify this is safe in a multitenant environment
+
 		long userId = GetterUtil.getLong(message.get("userId"));
 
 		Object payload = message.getPayload();
@@ -47,7 +51,13 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 					"payload", (Serializable)payload
 				).build());
 		}
+		else {
+			_log.error("Ignoring message: " + message);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectActionTriggerMessageListener.class);
 
 	private String _className;
 	private ObjectActionEngine _objectActionEngine;
