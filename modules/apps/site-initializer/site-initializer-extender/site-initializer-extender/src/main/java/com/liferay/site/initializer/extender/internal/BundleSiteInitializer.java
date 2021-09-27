@@ -935,7 +935,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				unicodeProperties.put(
 					key,
 					StringUtil.replace(
-						value, "\"[$", "$]\"",
+						value, "[$", "$]",
 						assetListEntryIdsStringUtilReplaceValues));
 			}
 
@@ -1252,6 +1252,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				serviceContext.getScopeGroupId(), privateLayout, friendlyURL);
+
+			if(layout == null) {
+				continue;
+			}
 
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
