@@ -9,7 +9,7 @@
 	"typeSettings": [
 		{
 			"key": "collectionPK",
-			"value": "[$ASSET_LIST_ID=OPEN-CLAIMS$]"
+			"value": "[$ASSET_LIST_ENTRY_ID:OPEN-CLAIMS$]"
 		},
 		{
 			"key": "collectionType",

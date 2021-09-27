@@ -9,7 +9,7 @@
 	"typeSettings": [
 		{
 			"key": "collectionPK",
-			"value": "[$ASSET_LIST_ID=POLICIES$]"
+			"value": "[$ASSET_LIST_ENTRY_ID:POLICIES$]"
 		},
 		{
 			"key": "collectionType",
