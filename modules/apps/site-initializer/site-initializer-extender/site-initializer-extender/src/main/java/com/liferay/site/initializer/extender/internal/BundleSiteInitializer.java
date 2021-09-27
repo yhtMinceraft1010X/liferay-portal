@@ -853,9 +853,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
-		String json = _read(resourcePath + "page.json");
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_read(resourcePath + "page.json"));
 
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
@@ -875,7 +874,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.getBoolean("hidden"), jsonObject.getBoolean("system"),
 			_toMap(jsonObject.getString("friendlyURL_i18n")), serviceContext);
 
-		json = _read(resourcePath + "page-definition.json");
+		String json = _read(resourcePath + "page-definition.json");
 
 		if (json == null) {
 			return;
