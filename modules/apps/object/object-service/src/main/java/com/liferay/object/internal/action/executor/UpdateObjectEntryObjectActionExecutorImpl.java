@@ -35,13 +35,12 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 	public void execute(ObjectActionRequest objectActionRequest)
 		throws Exception {
 
-		long classPK = GetterUtil.getLong(
-			objectActionRequest.getParameterValue("classPK"));
-
 		_objectEntryLocalService.updateObjectEntry(
-			objectActionRequest.getUserId(), classPK,
+			objectActionRequest.getUserId(),
+			GetterUtil.getLong(
+				objectActionRequest.getParameterValue("classPK")),
 			HashMapBuilder.put(
-				GetterUtil.getString(
+				String.valueOf(
 					objectActionRequest.getParameterValue("fieldName")),
 				objectActionRequest.getParameterValue("fieldName")
 			).build(),
