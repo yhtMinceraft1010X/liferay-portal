@@ -135,23 +135,7 @@ public class ObjectActionTriggerRegistryImpl
 			ServiceReference<Destination> serviceReference,
 			Destination destination) {
 
-			Collection<ServiceReference<ObjectActionTrigger>>
-				serviceReferences = null;
-
 			try {
-				serviceReferences = _bundleContext.getServiceReferences(
-					ObjectActionTrigger.class,
-					StringBundler.concat(
-						"(object.action.trigger.class.name=",
-						serviceReference.getProperty(
-							"object.action.trigger.class.name"),
-						")"));
-
-				serviceReferences.forEach(
-					objectActionTriggerServiceReference ->
-						_bundleContext.ungetService(
-							objectActionTriggerServiceReference));
-
 				Collection<ServiceReference<MessageListener>>
 					messageListenerServiceReferences =
 						_bundleContext.getServiceReferences(
@@ -163,6 +147,21 @@ public class ObjectActionTriggerRegistryImpl
 					messageListenerServiceReference ->
 						_bundleContext.ungetService(
 							messageListenerServiceReference));
+
+				Collection<ServiceReference<ObjectActionTrigger>>
+					objectActionTriggerServiceReferences =
+						_bundleContext.getServiceReferences(
+							ObjectActionTrigger.class,
+							StringBundler.concat(
+								"(object.action.trigger.class.name=",
+								serviceReference.getProperty(
+									"object.action.trigger.class.name"),
+								")"));
+
+				objectActionTriggerServiceReferences.forEach(
+					objectActionTriggerServiceReference ->
+						_bundleContext.ungetService(
+							objectActionTriggerServiceReference));
 			}
 			catch (InvalidSyntaxException invalidSyntaxException) {
 				_log.error(invalidSyntaxException, invalidSyntaxException);
