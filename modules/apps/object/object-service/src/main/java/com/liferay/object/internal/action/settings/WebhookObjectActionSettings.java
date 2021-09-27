@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.action.setting;
+package com.liferay.object.internal.action.settings;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;

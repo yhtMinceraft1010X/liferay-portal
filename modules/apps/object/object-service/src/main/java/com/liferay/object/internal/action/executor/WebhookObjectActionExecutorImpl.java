@@ -16,7 +16,7 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.request.ObjectActionRequest;
-import com.liferay.object.internal.action.setting.WebhookObjectActionSettings;
+import com.liferay.object.internal.action.settings.WebhookObjectActionSettings;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
