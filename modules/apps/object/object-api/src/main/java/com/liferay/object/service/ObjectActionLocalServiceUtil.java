@@ -44,6 +44,17 @@ public class ObjectActionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectActionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws PortalException {
+
+		return getService().addObjectAction(
+			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			parametersUnicodeProperties);
+	}
 
 	/**
 	 * Adds the object action to the database. Also notifies the appropriate model listeners.
@@ -319,6 +330,16 @@ public class ObjectActionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws PortalException {
+
+		return getService().updateObjectAction(
+			objectActionId, active, name, parametersUnicodeProperties);
 	}
 
 	/**

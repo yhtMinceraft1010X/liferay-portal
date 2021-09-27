@@ -30,6 +30,35 @@ public class ObjectActionServiceWrapper
 		_objectActionService = objectActionService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionService.addObjectAction(
+			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			parametersUnicodeProperties);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectAction deleteObjectAction(
+			long objectActionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionService.deleteObjectAction(objectActionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectAction getObjectAction(
+			long objectActionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionService.getObjectAction(objectActionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -38,6 +67,17 @@ public class ObjectActionServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectActionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionService.updateObjectAction(
+			objectActionId, active, name, parametersUnicodeProperties);
 	}
 
 	@Override

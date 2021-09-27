@@ -33,6 +33,19 @@ public class ObjectActionLocalServiceWrapper
 		_objectActionLocalService = objectActionLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectAction addObjectAction(
+			long userId, long objectDefinitionId, boolean active, String name,
+			String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionLocalService.addObjectAction(
+			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			parametersUnicodeProperties);
+	}
+
 	/**
 	 * Adds the object action to the database. Also notifies the appropriate model listeners.
 	 *
@@ -357,6 +370,17 @@ public class ObjectActionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectAction updateObjectAction(
+			long objectActionId, boolean active, String name,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				parametersUnicodeProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectActionLocalService.updateObjectAction(
+			objectActionId, active, name, parametersUnicodeProperties);
 	}
 
 	/**
