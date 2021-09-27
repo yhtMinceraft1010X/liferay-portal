@@ -18,6 +18,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
@@ -73,20 +73,25 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				_objectActionEngine.executeObjectActions(
-					PrincipalThreadLocal.getUserId(),
-					objectEntry.getModelClassName(), objectActionTriggerKey,
-					HashMapBuilder.<String, Serializable>put(
-						"payload",
-						_getPayload(
-							objectActionTriggerKey, originalObjectEntry,
-							objectEntry)
-					).build());
+		try {
+			long userId = PrincipalThreadLocal.getUserId();
 
-				return null;
-			});
+			if (userId == 0) {
+				userId = objectEntry.getUserId();
+			}
+
+			_objectActionEngine.executeObjectActions(
+				userId, objectEntry.getModelClassName(), objectActionTriggerKey,
+				HashMapBuilder.<String, Serializable>put(
+					"payload",
+					_getPayload(
+						objectActionTriggerKey, originalObjectEntry,
+						objectEntry)
+				).build());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private Serializable _getPayload(
