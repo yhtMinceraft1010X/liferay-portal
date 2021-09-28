@@ -737,7 +737,11 @@ public class AggregationWrapperConverter {
 	private SamplerAggregation _toSamplerAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		SamplerAggregation samplerAggregation = _aggregations.sampler(name);
+
+		_setInteger(samplerAggregation::setShardSize, jsonObject, "shard_size");
+
+		return samplerAggregation;
 	}
 
 	private ScriptedMetricAggregation _toScriptedMetricAggregation(
