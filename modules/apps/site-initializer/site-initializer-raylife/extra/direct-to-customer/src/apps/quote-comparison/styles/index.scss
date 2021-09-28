@@ -17,15 +17,15 @@ $font-family: var(
 }
 
 .quote-comparison {
-	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
 	font-family: $font-family !important;
+	padding: 20px;
 
 	#quote-comparison {
 		background-color: #fff;
-		border-radius: 8px;
 		border: 1px solid #a6c2ff;
+		border-radius: 8px;
 		box-shadow: 0px 10px 30px rgba(77, 133, 255, 0.09);
 		height: 576px;
 		margin-left: 20px;
@@ -108,8 +108,8 @@ $font-family: var(
 
 			#purchase {
 				background: none;
-				border-radius: 4px;
 				border: 1px solid #4c85ff;
+				border-radius: 4px;
 				color: #4c85ff;
 				cursor: pointer;
 				font-size: 16px;
@@ -122,8 +122,8 @@ $font-family: var(
 
 				&.most-popular {
 					background: #4c85ff;
-					border-radius: 4px;
 					border: 1px solid #4c85ff;
+					border-radius: 4px;
 					color: #fff;
 					cursor: pointer;
 					font-size: 16px;
@@ -189,8 +189,8 @@ $font-family: var(
 			.checkIcon {
 				div {
 					align-items: center;
-					border-radius: 50%;
 					border: 1.5px solid #4d85ff;
+					border-radius: 50%;
 					display: flex;
 					flex-shrink: 0;
 					height: 13px;
