@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.common.internal.category;
+package com.liferay.map.common.internal.configuration.admin.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 
