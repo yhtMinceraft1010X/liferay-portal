@@ -1,5 +1,18 @@
 definition {
 
+	@description = "Add a user attribute to attribute mapping that is invalid for user matching and then select it for user resolution"
+	macro addAndSelectInvalidAttributeForUserMatching {
+		Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
+
+		SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+
+		Click(
+			key_index = "0",
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
+
+		Button.clickSave();
+	}
+
 	macro addIdentityProviderConnection {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
@@ -108,6 +121,21 @@ definition {
 
 			var attributeRowID2 = ${attributeRowID2} + 1;
 		}
+	}
+
+	@description = "Add Identity Provider Connection with only the Name and Entity ID filled out"
+	macro addIdentityProviderConnectionWithBasicSetup {
+		AssertClick(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
+			value1 = "Add Identity Provider");
+
+		Type(
+			locator1 = "TextInput#SAML_NAME_FIELD",
+			value1 = "${idpEntityID}");
+
+		Type(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
+			value1 = "${idpEntityID}");
 	}
 
 	macro addServiceProviderConnection {
