@@ -653,6 +653,7 @@ public class AggregationWrapperConverter {
 			"missing");
 		weightedAvgAggregation.setValueScript(
 			_scriptConverter.toScript(valueJSONObject));
+
 		_setObject(
 			weightedAvgAggregation::setWeightMissing, weightJSONObject,
 			"missing");
