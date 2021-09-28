@@ -584,9 +584,16 @@ public class AggregationWrapperConverter {
 	private CardinalityAggregation _toCardinalityAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		CardinalityAggregation cardinalityAggregation =
+			_aggregations.cardinality(name, jsonObject.getString("field"));
 
-		return null;
+		_setString(cardinalityAggregation::setMissing, jsonObject, "missing");
+		_setInteger(
+			cardinalityAggregation::setPrecisionThreshold, jsonObject,
+			"precision_threshold");
+		_setScript(cardinalityAggregation::setScript, jsonObject);
+
+		return cardinalityAggregation;
 	}
 
 	private CumulativeSumPipelineAggregation
