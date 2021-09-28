@@ -817,10 +817,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		boolean originalActive = objectDefinition.isActive();
 
-		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
-		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
+		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 
 		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
