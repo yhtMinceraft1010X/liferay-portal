@@ -172,12 +172,11 @@ public class UpgradeOrganization extends UpgradeProcess {
 			_groupIds.put(String.valueOf(_organizationId), _groupId);
 		}
 
-		private static final Map<String, Long> _groupIds =
-			HashMapBuilder.put(
-				String.valueOf(
-					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID
-			).build();
+		private static final Map<String, Long> _groupIds = HashMapBuilder.put(
+			String.valueOf(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID
+		).build();
 
 		private final long _groupId;
 		private final long _organizationId;
