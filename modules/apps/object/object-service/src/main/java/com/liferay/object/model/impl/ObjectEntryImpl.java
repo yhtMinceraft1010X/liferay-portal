@@ -59,8 +59,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		long groupId = getGroupId();
 
 		if (groupId == 0) {
-			Company company = companyLocalService.getCompany(
-				objectEntry.getCompanyId());
+			Company company = companyLocalService.getCompany(getCompanyId());
 
 			groupId = company.getGroupId();
 		}
