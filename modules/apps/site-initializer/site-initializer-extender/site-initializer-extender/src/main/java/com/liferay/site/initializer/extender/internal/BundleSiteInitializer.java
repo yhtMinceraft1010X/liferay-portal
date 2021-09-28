@@ -888,7 +888,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		json = StringUtil.replace(
 			json, "\"[$", "$]\"", assetListEntryIdsStringUtilReplaceValues);
-
 		json = StringUtil.replace(
 			json, "[$", "$]", remoteAppEntryIdsStringUtilReplaceValues);
 
