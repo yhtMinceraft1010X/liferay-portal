@@ -245,6 +245,15 @@ public class ObjectEntryWrapper
 		return model.getMvccVersion();
 	}
 
+	@Override
+	public long getNonzeroGroupId(
+			com.liferay.portal.kernel.service.CompanyLocalService
+				companyLocalService)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getNonzeroGroupId(companyLocalService);
+	}
+
 	/**
 	 * Returns the object definition ID of this object entry.
 	 *
