@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -959,12 +960,10 @@ public class ObjectDefinitionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("Ables"),
 			objectDefinition.getPluralLabelMap());
 
-		// Object field id for description and title are invalid
-
 		try {
 			objectDefinition =
 				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					objectDefinition.getObjectDefinitionId(), 1, 2,
+					objectDefinition.getObjectDefinitionId(), RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 					objectDefinition.isActive(),
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
 					null, LocalizedMapUtil.getLocalizedMap("Ables"),
@@ -976,12 +975,10 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		// Object field id for description and title are valid
-
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), "able", true, "String");
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), StringUtil.randomId(), true, "String");
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
