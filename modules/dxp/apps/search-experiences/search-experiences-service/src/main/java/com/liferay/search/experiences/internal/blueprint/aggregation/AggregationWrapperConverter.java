@@ -600,9 +600,14 @@ public class AggregationWrapperConverter {
 		_toCumulativeSumPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		// TODO
+		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation =
+			_aggregations.cumulativeSum(
+				name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			cumulativeSumPipelineAggregation::setFormat, jsonObject, "format");
+
+		return cumulativeSumPipelineAggregation;
 	}
 
 	private DateHistogramAggregation _toDateHistogramAggregation(
