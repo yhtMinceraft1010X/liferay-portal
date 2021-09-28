@@ -691,7 +691,7 @@ public class AggregationWrapperConverter {
 	private NestedAggregation _toNestedAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		return _aggregations.nested(name, jsonObject.getString("path"));
 	}
 
 	private PercentileRanksAggregation _toPercentileRanksAggregation(
@@ -731,7 +731,7 @@ public class AggregationWrapperConverter {
 	private ReverseNestedAggregation _toReverseNestedAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		return _aggregations.reverseNested(name, jsonObject.getString("path"));
 	}
 
 	private SamplerAggregation _toSamplerAggregation(
