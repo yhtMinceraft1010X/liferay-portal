@@ -578,7 +578,23 @@ public class AggregationWrapperConverter {
 	private SerialDiffPipelineAggregation _toSerialDiffPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		SerialDiffPipelineAggregation serialDiffPipelineAggregation =
+			_aggregations.serialDiff(
+				name, jsonObject.getString("buckets_path"));
+
+		_setString(
+			serialDiffPipelineAggregation::setFormat, jsonObject, "format");
+
+		String gapPolicy = jsonObject.getString("gap_policy");
+
+		if (Validator.isNotNull(gapPolicy)) {
+			serialDiffPipelineAggregation.setGapPolicy(
+				GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
+		}
+
+		_setInteger(serialDiffPipelineAggregation::setLag, jsonObject, "lag");
+
+		return serialDiffPipelineAggregation;
 	}
 
 	private SignificantTermsAggregation _toSignificantTermsAggregation(
