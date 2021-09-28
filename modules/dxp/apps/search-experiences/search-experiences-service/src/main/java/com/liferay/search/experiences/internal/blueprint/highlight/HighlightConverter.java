@@ -38,15 +38,9 @@ public class HighlightConverter {
 	}
 
 	public com.liferay.portal.search.highlight.Highlight toHighlight(
-		JSONObject jsonObject) {
-
-		if (jsonObject == null) {
-			return null;
-		}
+		Highlight highlight) {
 
 		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
-
-		Highlight highlight = Highlight.toDTO(jsonObject.toString());
 
 		Map<String, HighlightField> highlightFields = highlight.getFields();
 
@@ -78,6 +72,18 @@ public class HighlightConverter {
 		);
 
 		return highlightBuilder.build();
+	}
+
+	public com.liferay.portal.search.highlight.Highlight toHighlight(
+		JSONObject jsonObject) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		Highlight highlight = Highlight.toDTO(jsonObject.toString());
+
+		return toHighlight(highlight);
 	}
 
 	private final FieldConfigBuilderFactory _fieldConfigBuilderFactory;

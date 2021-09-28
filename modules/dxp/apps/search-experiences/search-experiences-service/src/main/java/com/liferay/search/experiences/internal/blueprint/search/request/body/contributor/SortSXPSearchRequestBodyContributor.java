@@ -34,7 +34,6 @@ import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -80,8 +79,7 @@ public class SortSXPSearchRequestBodyContributor
 		JSONArray jsonArray = (JSONArray)sortConfiguration.getSorts();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			searchRequestBuilder.addSort(
-				_toSort(jsonArray.get(i), sxpParameterData));
+			searchRequestBuilder.addSort(_toSort(jsonArray.get(i)));
 		}
 	}
 
@@ -295,10 +293,9 @@ public class SortSXPSearchRequestBodyContributor
 		throw new IllegalArgumentException();
 	}
 
-	private Sort _toSort(Object object, SXPParameterData sxpParameterData) {
+	private Sort _toSort(Object object) {
 		if (object instanceof JSONObject) {
-			return _toSort(
-				SXPParameterParser.parse((JSONObject)object, sxpParameterData));
+			return _toSort((JSONObject)object);
 		}
 		else if (object instanceof String) {
 			return _toFieldSort((String)object);

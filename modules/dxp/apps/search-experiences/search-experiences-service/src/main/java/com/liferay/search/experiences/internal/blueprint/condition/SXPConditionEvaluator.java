@@ -17,7 +17,6 @@ package com.liferay.search.experiences.internal.blueprint.condition;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 
 /**
  * @author Petteri Karttunen
@@ -70,8 +69,7 @@ public class SXPConditionEvaluator {
 			return false;
 		}
 
-		JSONObject valueJSONObject = SXPParameterParser.parse(
-			jsonObject.getJSONObject("value"), sxpParameterData);
+		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
 
 		if (valueJSONObject == null) {
 			return false;

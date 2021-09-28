@@ -14,7 +14,10 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,6 +36,7 @@ import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
+import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.AggsSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
@@ -85,6 +89,12 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
+		configuration = Configuration.toDTO(
+			String.valueOf(
+				SXPParameterParser.parse(
+					_createJSONObject(configuration.toString()),
+					sxpParameterData)));
+
 		_processAggregations(
 			configuration.getAggregations(), searchRequestBuilder);
 		_processGeneral(configuration.getGeneral(), searchRequestBuilder);
@@ -103,8 +113,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(
 				_aggregations, highlightConverter, scriptConverter),
-			new HighlightSXPSearchRequestBodyContributor(
-				highlightConverter, _jsonFactory),
+			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
@@ -137,6 +146,15 @@ public class SXPBlueprintSearchRequestEnhancer {
 				sxpSearchRequestBodyContributor.contribute(
 					searchRequestBuilder, sxpBlueprint, sxpParameterData);
 			}
+		}
+	}
+
+	private JSONObject _createJSONObject(String string) {
+		try {
+			return _jsonFactory.createJSONObject(string);
+		}
+		catch (JSONException jsonException) {
+			return ReflectionUtil.throwException(jsonException);
 		}
 	}
 

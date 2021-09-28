@@ -23,7 +23,6 @@ import com.liferay.search.experiences.internal.blueprint.aggregation.Aggregation
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapperConverter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
@@ -151,12 +150,6 @@ public class AggsSXPSearchRequestBodyContributor
 		String type) {
 
 		if (!jsonObject.getBoolean("enabled", true)) {
-			return null;
-		}
-
-		jsonObject = SXPParameterParser.parse(jsonObject, sxpParameterData);
-
-		if (jsonObject == null) {
 			return null;
 		}
 

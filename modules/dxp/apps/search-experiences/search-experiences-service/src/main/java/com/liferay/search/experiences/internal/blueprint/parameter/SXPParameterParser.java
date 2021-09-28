@@ -17,7 +17,6 @@ package com.liferay.search.experiences.internal.blueprint.parameter;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,39 +33,6 @@ import java.util.Set;
  * @author Petteri Karttunen
  */
 public class SXPParameterParser {
-
-	public static JSONArray parse(
-		JSONArray jsonArray, SXPParameterData sxpParameterData) {
-
-		if (jsonArray == null) {
-			return null;
-		}
-
-		Set<SXPParameter> sxpParameters = sxpParameterData.getSXPParameters();
-
-		if (sxpParameters.isEmpty()) {
-			return jsonArray;
-		}
-
-		String json = jsonArray.toString();
-
-		if (!json.contains("${")) {
-			return jsonArray;
-		}
-
-		json = _parse(json, sxpParameterData);
-
-		if (Validator.isNotNull(json)) {
-			try {
-				return JSONFactoryUtil.createJSONArray(json);
-			}
-			catch (JSONException jsonException) {
-				return ReflectionUtil.throwException(jsonException);
-			}
-		}
-
-		return null;
-	}
 
 	public static JSONObject parse(
 		JSONObject jsonObject, SXPParameterData sxpParameterData) {
@@ -99,19 +65,6 @@ public class SXPParameterParser {
 		}
 
 		return null;
-	}
-
-	public static Object parse(
-		Object object, SXPParameterData sxpParameterData) {
-
-		if (object instanceof JSONArray) {
-			return parse((JSONArray)object, sxpParameterData);
-		}
-		else if (object instanceof JSONObject) {
-			return parse((JSONObject)object, sxpParameterData);
-		}
-
-		return object;
 	}
 
 	private static Map<String, String> _getOptions(String optionsString) {

@@ -14,16 +14,10 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.Highlight;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 /**
@@ -33,10 +27,9 @@ public class HighlightSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public HighlightSXPSearchRequestBodyContributor(
-		HighlightConverter highlightConverter, JSONFactory jsonFactory) {
+		HighlightConverter highlightConverter) {
 
 		_highlightConverter = highlightConverter;
-		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -47,8 +40,7 @@ public class HighlightSXPSearchRequestBodyContributor
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
 		searchRequestBuilder.highlight(
-			_highlightConverter.toHighlight(
-				_parse(configuration.getHighlight(), sxpParameterData)));
+			_highlightConverter.toHighlight(configuration.getHighlight()));
 	}
 
 	@Override
@@ -56,27 +48,6 @@ public class HighlightSXPSearchRequestBodyContributor
 		return "highlight";
 	}
 
-	private JSONObject _createJSONObject(String string) {
-		try {
-			return _jsonFactory.createJSONObject(string);
-		}
-		catch (JSONException jsonException) {
-			return ReflectionUtil.throwException(jsonException);
-		}
-	}
-
-	private JSONObject _parse(
-		Highlight highlight, SXPParameterData sxpParameterData) {
-
-		if (highlight == null) {
-			return null;
-		}
-
-		return SXPParameterParser.parse(
-			_createJSONObject(highlight.toString()), sxpParameterData);
-	}
-
 	private final HighlightConverter _highlightConverter;
-	private final JSONFactory _jsonFactory;
 
 }
