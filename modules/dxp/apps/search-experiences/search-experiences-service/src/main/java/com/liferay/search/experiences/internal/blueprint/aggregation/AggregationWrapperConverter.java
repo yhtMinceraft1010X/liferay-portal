@@ -452,17 +452,23 @@ public class AggregationWrapperConverter {
 	private AvgAggregation _toAvgAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private AvgBucketPipelineAggregation _toAvgBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private BucketScriptPipelineAggregation _toBucketScriptPipelineAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -471,11 +477,15 @@ public class AggregationWrapperConverter {
 		_toBucketSelectorPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private BucketSortPipelineAggregation _toBucketSortPipelineAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -483,12 +493,16 @@ public class AggregationWrapperConverter {
 	private CardinalityAggregation _toCardinalityAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private CumulativeSumPipelineAggregation
 		_toCumulativeSumPipelineAggregation(
 			JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -537,11 +551,15 @@ public class AggregationWrapperConverter {
 	private DateRangeAggregation _toDateRangeAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private DerivativePipelineAggregation _toDerivativePipelineAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -549,11 +567,15 @@ public class AggregationWrapperConverter {
 	private DiversifiedSamplerAggregation _toDiversifiedSamplerAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private ExtendedStatsAggregation _toExtendedStatsAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -562,11 +584,15 @@ public class AggregationWrapperConverter {
 		_toExtendedStatsBucketPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private FilterAggregation _toFilterAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -574,17 +600,23 @@ public class AggregationWrapperConverter {
 	private FiltersAggregation _toFiltersAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private GeoBoundsAggregation _toGeoBoundsAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private GeoCentroidAggregation _toGeoCentroidAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -648,11 +680,15 @@ public class AggregationWrapperConverter {
 	private HistogramAggregation _toHistogramAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private MaxAggregation _toMaxAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -660,17 +696,23 @@ public class AggregationWrapperConverter {
 	private MaxBucketPipelineAggregation _toMaxBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private MinAggregation _toMinAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private MinBucketPipelineAggregation _toMinBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -691,6 +733,8 @@ public class AggregationWrapperConverter {
 		_toMovingFunctionPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
@@ -703,11 +747,15 @@ public class AggregationWrapperConverter {
 	private PercentileRanksAggregation _toPercentileRanksAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private PercentilesAggregation _toPercentilesAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -715,6 +763,8 @@ public class AggregationWrapperConverter {
 	private PercentilesBucketPipelineAggregation
 		_toPercentilesBucketPipelineAggregation(
 			JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
@@ -753,6 +803,8 @@ public class AggregationWrapperConverter {
 	private ScriptedMetricAggregation _toScriptedMetricAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
@@ -774,17 +826,23 @@ public class AggregationWrapperConverter {
 	private SignificantTermsAggregation _toSignificantTermsAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private SignificantTextAggregation _toSignificantTextAggregation(
 		JSONObject jsonObject, String name) {
 
+		// TODO
+
 		return null;
 	}
 
 	private StatsAggregation _toStatsAggregation(
 		JSONObject jsonObject, String name) {
+
+		// TODO
 
 		return null;
 	}
