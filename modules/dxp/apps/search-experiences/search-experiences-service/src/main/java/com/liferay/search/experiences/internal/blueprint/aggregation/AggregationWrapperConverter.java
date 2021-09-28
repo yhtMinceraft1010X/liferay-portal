@@ -78,6 +78,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Petteri Karttunen
@@ -238,6 +239,36 @@ public class AggregationWrapperConverter {
 
 	}
 
+	private void _setBoolean(
+		Consumer<Boolean> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.getBoolean(key));
+	}
+
+	private void _setLong(
+		Consumer<Long> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.getLong(key));
+	}
+
+	private void _setString(
+		Consumer<String> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.getString(key));
+	}
+
 	private AvgAggregation _toAvgAggregation(
 		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
 
@@ -290,10 +321,9 @@ public class AggregationWrapperConverter {
 		DateHistogramAggregation dateHistogramAggregation =
 			_aggregations.dateHistogram(name, jsonObject.getString("field"));
 
-		if (jsonObject.has("date_histogram_interval")) {
-			dateHistogramAggregation.setDateHistogramInterval(
-				jsonObject.getString("date_histogram_interval"));
-		}
+		_setString(
+			dateHistogramAggregation::setDateHistogramInterval, jsonObject,
+			"date_histogram_interval");
 
 		JSONObject extendedBoundsJSONObject = jsonObject.getJSONObject(
 			"extended_bounds");
@@ -314,24 +344,12 @@ public class AggregationWrapperConverter {
 			}
 		}
 
-		if (jsonObject.has("keyed")) {
-			dateHistogramAggregation.setKeyed(jsonObject.getBoolean("keyed"));
-		}
-
-		if (jsonObject.has("min_doc_count")) {
-			dateHistogramAggregation.setMinDocCount(
-				jsonObject.getLong("min_doc_count"));
-		}
-
-		if (jsonObject.has("missing")) {
-			dateHistogramAggregation.setMissing(
-				jsonObject.getString("missing"));
-		}
-
-		if (jsonObject.has("offset")) {
-			dateHistogramAggregation.setMinDocCount(
-				jsonObject.getLong("offset"));
-		}
+		_setBoolean(dateHistogramAggregation::setKeyed, jsonObject, "keyed");
+		_setLong(
+			dateHistogramAggregation::setMinDocCount, jsonObject,
+			"min_doc_count");
+		_setString(dateHistogramAggregation::setMissing, jsonObject, "missing");
+		_setLong(dateHistogramAggregation::setOffset, jsonObject, "offset");
 
 		JSONObject orderJSONObject = jsonObject.getJSONObject("order");
 
@@ -581,10 +599,8 @@ public class AggregationWrapperConverter {
 		SumBucketPipelineAggregation sumBucketPipelineAggregation =
 			_aggregations.sumBucket(name, jsonObject.getString("buckets_path"));
 
-		if (jsonObject.has("format")) {
-			sumBucketPipelineAggregation.setFormat(
-				jsonObject.getString("format"));
-		}
+		_setString(
+			sumBucketPipelineAggregation::setFormat, jsonObject, "format");
 
 		String gapPolicy = jsonObject.getString("gap_policy");
 
