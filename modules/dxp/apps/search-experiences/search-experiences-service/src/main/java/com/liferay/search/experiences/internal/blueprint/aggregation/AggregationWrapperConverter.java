@@ -642,7 +642,7 @@ public class AggregationWrapperConverter {
 	private GlobalAggregation _toGlobalAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		return _aggregations.global(name);
 	}
 
 	private HistogramAggregation _toHistogramAggregation(
