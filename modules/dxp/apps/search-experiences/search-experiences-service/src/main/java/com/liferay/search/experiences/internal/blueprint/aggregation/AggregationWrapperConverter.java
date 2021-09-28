@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.aggregation.bucket.CollectionMode;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.DiversifiedSamplerAggregation;
@@ -33,6 +34,7 @@ import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
 import com.liferay.portal.search.aggregation.bucket.GeoHashGridAggregation;
 import com.liferay.portal.search.aggregation.bucket.GlobalAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
+import com.liferay.portal.search.aggregation.bucket.IncludeExcludeClause;
 import com.liferay.portal.search.aggregation.bucket.MissingAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.Order;
@@ -245,6 +247,39 @@ public class AggregationWrapperConverter {
 
 	}
 
+	private void _addOrders(Consumer<Order[]> consumer, JSONObject jsonObject) {
+		JSONObject orderJSONObject = jsonObject.getJSONObject("order");
+
+		if (orderJSONObject == null) {
+			return;
+		}
+
+		List<Order> orders = new ArrayList<>();
+
+		for (String key : orderJSONObject.keySet()) {
+			Order order = null;
+
+			boolean ascending = StringUtil.equalsIgnoreCase(
+				orderJSONObject.getString(key), "asc");
+
+			if (Order.COUNT_METRIC_NAME.equals(key)) {
+				order = Order.count(ascending);
+			}
+			else if (Order.KEY_METRIC_NAME.equals(key)) {
+				order = Order.key(ascending);
+			}
+			else {
+				order = new Order(key);
+
+				order.setAscending(ascending);
+			}
+
+			orders.add(order);
+		}
+
+		consumer.accept(orders.toArray(new Order[0]));
+	}
+
 	private void _setBoolean(
 		Consumer<Boolean> consumer, JSONObject jsonObject, String key) {
 
@@ -265,6 +300,72 @@ public class AggregationWrapperConverter {
 		}
 
 		consumer.accept(GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
+	}
+
+	private void _setIncludeExcludeClause(
+		Consumer<IncludeExcludeClause> consumer, JSONObject jsonObject) {
+
+		Object excludeObject = jsonObject.get("exclude");
+		Object includeObject = jsonObject.get("include");
+
+		if ((excludeObject == null) && (includeObject == null)) {
+			return;
+		}
+
+		String[] excludedValues = null;
+		String excludeRegex = null;
+		String[] includedValues = null;
+		String includeRegex = null;
+
+		if (excludeObject != null) {
+			if (excludeObject instanceof JSONArray) {
+				excludedValues = JSONUtil.toStringArray(
+					(JSONArray)excludeObject);
+			}
+			else {
+				excludeRegex = GetterUtil.getString(excludeObject);
+			}
+		}
+
+		if (includeObject != null) {
+			if (includeObject instanceof JSONArray) {
+				includedValues = JSONUtil.toStringArray(
+					(JSONArray)includeObject);
+			}
+			else {
+				includeRegex = GetterUtil.getString(includeObject);
+			}
+		}
+
+		final String[] finalExcludedValues = excludedValues;
+		final String finalExcludeRegex = excludeRegex;
+		final String[] finalIncludedValues = includedValues;
+		final String finalIncludeRegex = includeRegex;
+
+		consumer.accept(
+			new IncludeExcludeClause() {
+
+				@Override
+				public String[] getExcludedValues() {
+					return finalExcludedValues;
+				}
+
+				@Override
+				public String getExcludeRegex() {
+					return finalExcludeRegex;
+				}
+
+				@Override
+				public String[] getIncludedValues() {
+					return finalIncludedValues;
+				}
+
+				@Override
+				public String getIncludeRegex() {
+					return finalIncludeRegex;
+				}
+
+			});
 	}
 
 	private void _setInteger(
@@ -295,6 +396,10 @@ public class AggregationWrapperConverter {
 		}
 
 		consumer.accept(jsonObject.get(key));
+	}
+
+	private void _setScript(Consumer<Script> consumer, JSONObject jsonObject) {
+		consumer.accept(_scriptConverter.toScript(jsonObject.get("script")));
 	}
 
 	private void _setString(
@@ -357,35 +462,7 @@ public class AggregationWrapperConverter {
 		DateHistogramAggregation dateHistogramAggregation =
 			_aggregations.dateHistogram(name, jsonObject.getString("field"));
 
-		JSONObject orderJSONObject = jsonObject.getJSONObject("order");
-
-		if (orderJSONObject != null) {
-			List<Order> orders = new ArrayList<>();
-
-			for (String key : orderJSONObject.keySet()) {
-				Order order = null;
-
-				boolean ascending = StringUtil.equalsIgnoreCase(
-					orderJSONObject.getString(key), "asc");
-
-				if (Order.COUNT_METRIC_NAME.equals(key)) {
-					order = Order.count(ascending);
-				}
-				else if (Order.KEY_METRIC_NAME.equals(key)) {
-					order = Order.key(ascending);
-				}
-				else {
-					order = new Order(key);
-
-					order.setAscending(ascending);
-				}
-
-				orders.add(order);
-			}
-
-			dateHistogramAggregation.addOrders(orders.toArray(new Order[0]));
-		}
-
+		_addOrders(dateHistogramAggregation::addOrders, jsonObject);
 		_setString(
 			dateHistogramAggregation::setDateHistogramInterval, jsonObject,
 			"date_histogram_interval");
@@ -415,9 +492,7 @@ public class AggregationWrapperConverter {
 			"min_doc_count");
 		_setString(dateHistogramAggregation::setMissing, jsonObject, "missing");
 		_setLong(dateHistogramAggregation::setOffset, jsonObject, "offset");
-
-		dateHistogramAggregation.setScript(
-			_scriptConverter.toScript(jsonObject.get("script")));
+		_setScript(dateHistogramAggregation::setScript, jsonObject);
 
 		return dateHistogramAggregation;
 	}
@@ -657,8 +732,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(sumAggregation::setMissing, jsonObject, "missing");
-		sumAggregation.setScript(
-			_scriptConverter.toScript(jsonObject.get("script")));
+		_setScript(sumAggregation::setScript, jsonObject);
 
 		return sumAggregation;
 	}
@@ -679,7 +753,36 @@ public class AggregationWrapperConverter {
 	private TermsAggregation _toTermsAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		TermsAggregation termsAggregation = _aggregations.terms(
+			name, jsonObject.getString("field"));
+
+		_addOrders(termsAggregation::addOrders, jsonObject);
+
+		String collectMode = jsonObject.getString("collect_mode");
+
+		if (Validator.isNotNull(collectMode)) {
+			termsAggregation.setCollectionMode(
+				CollectionMode.valueOf(StringUtil.toUpperCase(collectMode)));
+		}
+
+		_setString(
+			termsAggregation::setExecutionHint, jsonObject, "execution_hint");
+		_setIncludeExcludeClause(
+			termsAggregation::setIncludeExcludeClause, jsonObject);
+		_setInteger(
+			termsAggregation::setMinDocCount, jsonObject, "min_doc_count");
+		_setString(termsAggregation::setMissing, jsonObject, "missing");
+		_setInteger(
+			termsAggregation::setShardMinDocCount, jsonObject,
+			"shard_min_doc_count");
+		_setInteger(termsAggregation::setShardSize, jsonObject, "shard_size");
+		_setBoolean(
+			termsAggregation::setShowTermDocCountError, jsonObject,
+			"show_term_doc_count_error");
+		_setScript(termsAggregation::setScript, jsonObject);
+		_setInteger(termsAggregation::setSize, jsonObject, "size");
+
+		return termsAggregation;
 	}
 
 	private TopHitsAggregation _toTopHitsAggregation(
@@ -756,8 +859,7 @@ public class AggregationWrapperConverter {
 		ValueCountAggregation valueCountAggregation = _aggregations.valueCount(
 			name, jsonObject.getString("field"));
 
-		valueCountAggregation.setScript(
-			_scriptConverter.toScript(jsonObject.get("script")));
+		_setScript(valueCountAggregation::setScript, jsonObject);
 
 		return valueCountAggregation;
 	}
