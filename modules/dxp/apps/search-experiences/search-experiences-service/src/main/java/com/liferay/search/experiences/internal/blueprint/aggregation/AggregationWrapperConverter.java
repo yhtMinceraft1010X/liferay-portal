@@ -452,17 +452,26 @@ public class AggregationWrapperConverter {
 	private AvgAggregation _toAvgAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		AvgAggregation avgAggregation = _aggregations.avg(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_setString(avgAggregation::setMissing, jsonObject, "missing");
+		_setScript(avgAggregation::setScript, jsonObject);
+
+		return avgAggregation;
 	}
 
 	private AvgBucketPipelineAggregation _toAvgBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		AvgBucketPipelineAggregation avgBucketPipelineAggregation =
+			_aggregations.avgBucket(name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			avgBucketPipelineAggregation::setFormat, jsonObject, "format");
+		_setGapPolicy(avgBucketPipelineAggregation::setGapPolicy, jsonObject);
+
+		return avgBucketPipelineAggregation;
 	}
 
 	private BucketScriptPipelineAggregation _toBucketScriptPipelineAggregation(
