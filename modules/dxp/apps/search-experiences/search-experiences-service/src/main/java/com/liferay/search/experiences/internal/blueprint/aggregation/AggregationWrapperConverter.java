@@ -678,7 +678,13 @@ public class AggregationWrapperConverter {
 	private MissingAggregation _toMissingAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		MissingAggregation missingAggregation = _aggregations.missing(
+			name, jsonObject.getString("field"));
+
+		_setString(missingAggregation::setMissing, jsonObject, "missing");
+		_setScript(missingAggregation::setScript, jsonObject);
+
+		return missingAggregation;
 	}
 
 	private MovingFunctionPipelineAggregation
