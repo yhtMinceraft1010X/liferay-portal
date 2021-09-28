@@ -546,8 +546,7 @@ public class StringUtilTest {
 				"Hello World", StringPool.BLANK, StringPool.BLANK, map));
 		Assert.assertEquals(
 			"AB Hi CD AB Liferay CD",
-			StringUtil.replace(
-				"AB Hi CD AB Liferay CD", "AB ", " CD", map));
+			StringUtil.replace("AB Hi CD AB Liferay CD", "AB ", " CD", map));
 	}
 
 	@Test
