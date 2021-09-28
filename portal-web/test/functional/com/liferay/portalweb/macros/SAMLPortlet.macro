@@ -45,7 +45,7 @@ definition {
 				idpAttributeMapping = "${idpAttributeMapping}",
 				idpAttributeMappingText = "${idpAttributeMappingText}");
 		}
-		else {
+		else if (isSet(idpAttributeMapping)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
 		}
 
