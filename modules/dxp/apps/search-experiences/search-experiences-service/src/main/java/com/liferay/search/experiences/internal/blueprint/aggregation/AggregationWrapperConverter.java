@@ -653,7 +653,14 @@ public class AggregationWrapperConverter {
 	private SumAggregation _toSumAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		SumAggregation sumAggregation = _aggregations.sum(
+			name, jsonObject.getString("field"));
+
+		_setString(sumAggregation::setMissing, jsonObject, "missing");
+		sumAggregation.setScript(
+			_scriptConverter.toScript(jsonObject.get("script")));
+
+		return sumAggregation;
 	}
 
 	private SumBucketPipelineAggregation _toSumBucketPipelineAggregation(
