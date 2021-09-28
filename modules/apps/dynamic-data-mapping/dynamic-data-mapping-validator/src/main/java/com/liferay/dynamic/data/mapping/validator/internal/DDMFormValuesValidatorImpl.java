@@ -195,7 +195,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 		catch (NullPointerException nullPointerException) {
 
-			// Catching NPE to investigate LRQA-66928. If resolved, remove it.
+			// LRQA-66928
 
 			String ddmExpressionString = StringPool.NULL;
 

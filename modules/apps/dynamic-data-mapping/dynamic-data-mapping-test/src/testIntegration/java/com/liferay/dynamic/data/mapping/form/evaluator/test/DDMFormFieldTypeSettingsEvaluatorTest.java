@@ -33,7 +33,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMDataProviderTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,8 +49,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -168,36 +164,33 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse;
 
-		// try-catch included to investigate LRQA-66927. If resolved, remove it.
+		// LRQA-66927
 
 		try {
 			ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
 				builder.build());
 		}
 		catch (NullPointerException nullPointerException) {
-			String ddmFormEvaluatorString = StringPool.NULL;
+			_log.error(nullPointerException.getMessage());
+
+			String ddmFormEvaluatorString = null;
 
 			if (_ddmFormEvaluator != null) {
 				ddmFormEvaluatorString = _ddmFormEvaluator.toString();
 			}
 
+			_log.error("DDM form evaluator: " + ddmFormEvaluatorString);
+
 			List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-			Stream<DDMFormRule> stream = ddmFormRules.stream();
+			for (DDMFormRule ddmFormRule : ddmFormRules) {
+				if (!ddmFormRule.isEnabled()) {
+					continue;
+				}
 
-			_log.error(
-				StringBundler.concat(
-					"DDMFormEvaluator: \"", ddmFormEvaluatorString, "\"; ",
-					stream.filter(
-						DDMFormRule::isEnabled
-					).map(
-						ddmFormRule ->
-							"DDMFormRule: {condition: \"" +
-								ddmFormRule.getCondition() + "\"}"
-					).collect(
-						Collectors.joining("; ")
-					)),
-				nullPointerException);
+				_log.error(
+					"DDM form rule condition: " + ddmFormRule.getCondition());
+			}
 
 			return;
 		}
