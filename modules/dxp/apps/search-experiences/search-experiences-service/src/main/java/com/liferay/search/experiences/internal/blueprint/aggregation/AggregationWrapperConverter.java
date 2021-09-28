@@ -83,6 +83,9 @@ import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.ScriptFieldBuilder;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 
@@ -101,12 +104,13 @@ public class AggregationWrapperConverter {
 
 	public AggregationWrapperConverter(
 		Aggregations aggregations, GeoBuilders geoBuilders,
-		HighlightConverter highlightConverter,
-		ScriptConverter scriptConverter) {
+		HighlightConverter highlightConverter, ScriptConverter scriptConverter,
+		Sorts sorts) {
 
 		_aggregations = aggregations;
 		_geoBuilders = geoBuilders;
 		_scriptConverter = scriptConverter;
+		_sorts = sorts;
 
 		// Bucket
 
@@ -535,9 +539,46 @@ public class AggregationWrapperConverter {
 	private BucketSortPipelineAggregation _toBucketSortPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		BucketSortPipelineAggregation bucketSortPipelineAggregation =
+			_aggregations.bucketSort(name);
 
-		return null;
+		if (jsonObject.has("sort")) {
+			JSONArray sortJSONArray = jsonObject.getJSONArray("sort");
+
+			List<FieldSort> fieldSorts = new ArrayList<>();
+
+			for (int i = 0; i < sortJSONArray.length(); i++) {
+				JSONObject sortJSONObject = sortJSONArray.getJSONObject(i);
+
+				Iterator<String> iterator = sortJSONObject.keys();
+
+				String field = iterator.next();
+
+				JSONObject fieldJSONObject = sortJSONObject.getJSONObject(
+					field);
+
+				if (fieldJSONObject.has("order")) {
+					fieldSorts.add(
+						_sorts.field(
+							field,
+							SortOrder.valueOf(
+								StringUtil.toUpperCase(
+									fieldJSONObject.getString("order")))));
+				}
+				else {
+					fieldSorts.add(_sorts.field(field));
+				}
+			}
+
+			bucketSortPipelineAggregation.addSortFields(
+				fieldSorts.toArray(new FieldSort[0]));
+		}
+
+		_setInteger(bucketSortPipelineAggregation::setFrom, jsonObject, "from");
+		_setGapPolicy(bucketSortPipelineAggregation::setGapPolicy, jsonObject);
+		_setInteger(bucketSortPipelineAggregation::setSize, jsonObject, "size");
+
+		return bucketSortPipelineAggregation;
 	}
 
 	private CardinalityAggregation _toCardinalityAggregation(
@@ -1100,5 +1141,6 @@ public class AggregationWrapperConverter {
 	private HighlightConverter _highlightConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Scripts _scripts;
+	private final Sorts _sorts;
 
 }
