@@ -49,9 +49,9 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
 			).put(
-				"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorJSONArray()
+				"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorsJSONArray()
 			).put(
-				"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggerJSONArray()
+				"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
 			).build()
 		%>'
 	/>

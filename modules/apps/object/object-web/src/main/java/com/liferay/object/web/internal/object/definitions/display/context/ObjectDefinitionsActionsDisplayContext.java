@@ -112,21 +112,21 @@ public class ObjectDefinitionsActionsDisplayContext {
 		return creationMenu;
 	}
 
-	public JSONArray getObjectActionExecutorJSONArray() {
+	public JSONArray getObjectActionExecutorsJSONArray() {
 		List<ObjectActionExecutor> objectActionExecutors =
 			_objectActionExecutorRegistry.getObjectActionExecutors();
 
-		JSONArray objectActionExecutorJSONArray =
+		JSONArray objectActionExecutorsJSONArray =
 			_jsonFactory.createJSONArray();
 
 		objectActionExecutors.forEach(
-			objectActionExecutor -> objectActionExecutorJSONArray.put(
+			objectActionExecutor -> objectActionExecutorsJSONArray.put(
 				JSONUtil.put("key", objectActionExecutor.getKey())));
 
-		return objectActionExecutorJSONArray;
+		return objectActionExecutorsJSONArray;
 	}
 
-	public JSONArray getObjectActionTriggerJSONArray() {
+	public JSONArray getObjectActionTriggersJSONArray() {
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		List<ObjectActionTrigger> objectActionTriggers =
