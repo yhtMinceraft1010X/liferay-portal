@@ -156,7 +156,7 @@ public class UpgradeOrganization extends UpgradeProcess {
 		}
 
 		public static long getGroupId(String organizationId) {
-			return _organizationToGroup.get(organizationId);
+			return _groupIds.get(organizationId);
 		}
 
 		public OrganizationGroup(
@@ -169,10 +169,10 @@ public class UpgradeOrganization extends UpgradeProcess {
 			_parentOrganizationId = parentOrganizationId;
 			_site = site;
 
-			_organizationToGroup.put(String.valueOf(_organizationId), _groupId);
+			_groupIds.put(String.valueOf(_organizationId), _groupId);
 		}
 
-		private static final Map<String, Long> _organizationToGroup =
+		private static final Map<String, Long> _groupIds =
 			HashMapBuilder.put(
 				String.valueOf(
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
