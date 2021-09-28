@@ -1028,18 +1028,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (SetUtil.isEmpty(
-				_servletContext.getResourcePaths(
-					"/site-initializer/layouts"))) {
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/layouts");
 
+		if (SetUtil.isEmpty(resourcePaths)) {
 			return;
 		}
 
-		Set<String> resourcePaths = new TreeSet<>(
+		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
-		resourcePaths.addAll(
-			_servletContext.getResourcePaths("/site-initializer/layouts"));
+		sortedResourcePaths.addAll(resourcePaths);
+
+		resourcePaths = sortedResourcePaths;
 
 		Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 			new HashMap<>();
@@ -1164,10 +1165,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return Collections.emptyMap();
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
 		Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 			new HashMap<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
