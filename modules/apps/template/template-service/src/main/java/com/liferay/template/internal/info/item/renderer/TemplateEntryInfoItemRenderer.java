@@ -81,6 +81,8 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 		HttpServletResponse httpServletResponse) {
 
 		try {
+			Writer writer = httpServletResponse.getWriter();
+
 			InfoItemFieldValues infoItemFieldValues =
 				InfoItemFieldValues.builder(
 				).build();
@@ -102,8 +104,6 @@ public class TemplateEntryInfoItemRenderer<T> implements InfoItemRenderer<T> {
 
 			String content = templateDisplayTemplateTransformer.transform(
 				LocaleThreadLocal.getThemeDisplayLocale());
-
-			Writer writer = httpServletResponse.getWriter();
 
 			writer.write(content);
 		}
