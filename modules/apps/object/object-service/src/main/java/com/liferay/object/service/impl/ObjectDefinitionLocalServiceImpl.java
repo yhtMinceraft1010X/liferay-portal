@@ -37,7 +37,6 @@ import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.system.SystemObjectDefinitionMetadata;
-import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -688,7 +687,7 @@ public class ObjectDefinitionLocalServiceImpl
 		for (ObjectEntry objectEntry : objectEntries) {
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 				objectEntry.getCompanyId(),
-				ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
+				objectEntry.getNonzeroGroupId(_companyLocalService),
 				objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId());
 		}

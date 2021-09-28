@@ -16,9 +16,12 @@ package com.liferay.object.model.impl;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.io.Serializable;
 
@@ -44,6 +47,25 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	public String getModelClassName() {
 		return "com.liferay.object.model.ObjectDefinition#" +
 			getObjectDefinitionId();
+	}
+
+	@Override
+	public long getNonzeroGroupId(CompanyLocalService companyLocalService)
+		throws PortalException {
+
+		// TODO If permission checking works with the group's company ID, then
+		// we should ensure it is always set and remove this workaround
+
+		long groupId = getGroupId();
+
+		if (groupId == 0) {
+			Company company = companyLocalService.getCompany(
+				objectEntry.getCompanyId());
+
+			groupId = company.getGroupId();
+		}
+
+		return groupId;
 	}
 
 	@Override

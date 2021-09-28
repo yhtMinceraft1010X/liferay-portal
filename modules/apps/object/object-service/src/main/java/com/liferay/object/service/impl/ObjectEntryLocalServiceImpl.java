@@ -38,7 +38,6 @@ import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
-import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -256,7 +255,7 @@ public class ObjectEntryLocalServiceImpl
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			objectEntry.getCompanyId(),
-			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
+			objectEntry.getNonzeroGroupId(_companyLocalService),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_deleteFromTable(
@@ -624,8 +623,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId,
-			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
+			userId, objectEntry.getNonzeroGroupId(_companyLocalService),
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
@@ -1340,9 +1338,9 @@ public class ObjectEntryLocalServiceImpl
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			objectEntry.getCompanyId(),
-			ObjectEntryUtil.getGroupId(objectEntry, _companyLocalService),
-			userId, objectDefinition.getClassName(),
-			objectEntry.getObjectEntryId(), objectEntry, serviceContext);
+			objectEntry.getNonzeroGroupId(_companyLocalService), userId,
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			objectEntry, serviceContext);
 	}
 
 	private void _updateTable(
