@@ -113,11 +113,11 @@ public class ObjectDefinitionsActionsDisplayContext {
 	}
 
 	public JSONArray getObjectActionExecutorsJSONArray() {
-		List<ObjectActionExecutor> objectActionExecutors =
-			_objectActionExecutorRegistry.getObjectActionExecutors();
-
 		JSONArray objectActionExecutorsJSONArray =
 			_jsonFactory.createJSONArray();
+
+		List<ObjectActionExecutor> objectActionExecutors =
+			_objectActionExecutorRegistry.getObjectActionExecutors();
 
 		objectActionExecutors.forEach(
 			objectActionExecutor -> objectActionExecutorsJSONArray.put(
@@ -127,14 +127,14 @@ public class ObjectDefinitionsActionsDisplayContext {
 	}
 
 	public JSONArray getObjectActionTriggersJSONArray() {
+		JSONArray objectActionTriggersJSONArray =
+			_jsonFactory.createJSONArray();
+
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		List<ObjectActionTrigger> objectActionTriggers =
 			_objectActionTriggerRegistry.getObjectActionTriggers(
 				objectDefinition.getClassName());
-
-		JSONArray objectActionTriggersJSONArray =
-			_jsonFactory.createJSONArray();
 
 		objectActionTriggers.forEach(
 			objectActionTrigger -> objectActionTriggersJSONArray.put(
