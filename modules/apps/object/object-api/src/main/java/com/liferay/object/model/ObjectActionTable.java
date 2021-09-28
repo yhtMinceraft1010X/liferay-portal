@@ -61,6 +61,10 @@ public class ObjectActionTable extends BaseTable<ObjectActionTable> {
 		createColumn(
 			"objectActionExecutorKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectActionTable, String> objectActionTriggerKey =
+		createColumn(
+			"objectActionTriggerKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectActionTable, Clob> parameters = createColumn(
 		"parameters", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 

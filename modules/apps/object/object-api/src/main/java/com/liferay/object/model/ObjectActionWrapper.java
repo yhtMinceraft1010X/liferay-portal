@@ -55,6 +55,7 @@ public class ObjectActionWrapper
 		attributes.put("active", isActive());
 		attributes.put("name", getName());
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
+		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
 		attributes.put("parameters", getParameters());
 
 		return attributes;
@@ -133,6 +134,13 @@ public class ObjectActionWrapper
 
 		if (objectActionExecutorKey != null) {
 			setObjectActionExecutorKey(objectActionExecutorKey);
+		}
+
+		String objectActionTriggerKey = (String)attributes.get(
+			"objectActionTriggerKey");
+
+		if (objectActionTriggerKey != null) {
+			setObjectActionTriggerKey(objectActionTriggerKey);
 		}
 
 		String parameters = (String)attributes.get("parameters");
@@ -225,6 +233,16 @@ public class ObjectActionWrapper
 	@Override
 	public long getObjectActionId() {
 		return model.getObjectActionId();
+	}
+
+	/**
+	 * Returns the object action trigger key of this object action.
+	 *
+	 * @return the object action trigger key of this object action
+	 */
+	@Override
+	public String getObjectActionTriggerKey() {
+		return model.getObjectActionTriggerKey();
 	}
 
 	/**
@@ -397,6 +415,16 @@ public class ObjectActionWrapper
 	@Override
 	public void setObjectActionId(long objectActionId) {
 		model.setObjectActionId(objectActionId);
+	}
+
+	/**
+	 * Sets the object action trigger key of this object action.
+	 *
+	 * @param objectActionTriggerKey the object action trigger key of this object action
+	 */
+	@Override
+	public void setObjectActionTriggerKey(String objectActionTriggerKey) {
+		model.setObjectActionTriggerKey(objectActionTriggerKey);
 	}
 
 	/**

@@ -11,6 +11,7 @@ create table ObjectAction (
 	active_ BOOLEAN,
 	name VARCHAR(75) null,
 	objectActionExecutorKey VARCHAR(75) null,
+	objectActionTriggerKey VARCHAR(75) null,
 	parameters TEXT null
 );
 

@@ -270,6 +270,21 @@ public interface ObjectActionModel
 	public void setObjectActionExecutorKey(String objectActionExecutorKey);
 
 	/**
+	 * Returns the object action trigger key of this object action.
+	 *
+	 * @return the object action trigger key of this object action
+	 */
+	@AutoEscape
+	public String getObjectActionTriggerKey();
+
+	/**
+	 * Sets the object action trigger key of this object action.
+	 *
+	 * @param objectActionTriggerKey the object action trigger key of this object action
+	 */
+	public void setObjectActionTriggerKey(String objectActionTriggerKey);
+
+	/**
 	 * Returns the parameters of this object action.
 	 *
 	 * @return the parameters of this object action
