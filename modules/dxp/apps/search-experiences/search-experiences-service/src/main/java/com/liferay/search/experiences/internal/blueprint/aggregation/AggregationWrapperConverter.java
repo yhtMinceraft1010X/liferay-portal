@@ -70,7 +70,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
-import com.liferay.portal.search.script.Script;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 
@@ -259,6 +258,16 @@ public class AggregationWrapperConverter {
 		consumer.accept(jsonObject.getLong(key));
 	}
 
+	private void _setObject(
+		Consumer<Object> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.get(key));
+	}
+
 	private void _setString(
 		Consumer<String> consumer, JSONObject jsonObject, String key) {
 
@@ -321,6 +330,35 @@ public class AggregationWrapperConverter {
 		DateHistogramAggregation dateHistogramAggregation =
 			_aggregations.dateHistogram(name, jsonObject.getString("field"));
 
+		JSONObject orderJSONObject = jsonObject.getJSONObject("order");
+
+		if (orderJSONObject != null) {
+			List<Order> orders = new ArrayList<>();
+
+			for (String key : orderJSONObject.keySet()) {
+				Order order = null;
+
+				boolean ascending = StringUtil.equalsIgnoreCase(
+					orderJSONObject.getString(key), "asc");
+
+				if (Order.COUNT_METRIC_NAME.equals(key)) {
+					order = Order.count(ascending);
+				}
+				else if (Order.KEY_METRIC_NAME.equals(key)) {
+					order = Order.key(ascending);
+				}
+				else {
+					order = new Order(key);
+
+					order.setAscending(ascending);
+				}
+
+				orders.add(order);
+			}
+
+			dateHistogramAggregation.addOrders(orders.toArray(new Order[0]));
+		}
+
 		_setString(
 			dateHistogramAggregation::setDateHistogramInterval, jsonObject,
 			"date_histogram_interval");
@@ -351,40 +389,8 @@ public class AggregationWrapperConverter {
 		_setString(dateHistogramAggregation::setMissing, jsonObject, "missing");
 		_setLong(dateHistogramAggregation::setOffset, jsonObject, "offset");
 
-		JSONObject orderJSONObject = jsonObject.getJSONObject("order");
-
-		if (orderJSONObject != null) {
-			List<Order> orders = new ArrayList<>();
-
-			for (String key : orderJSONObject.keySet()) {
-				Order order = null;
-
-				boolean ascending = StringUtil.equalsIgnoreCase(
-					orderJSONObject.getString(key), "asc");
-
-				if (Order.COUNT_METRIC_NAME.equals(key)) {
-					order = Order.count(ascending);
-				}
-				else if (Order.KEY_METRIC_NAME.equals(key)) {
-					order = Order.key(ascending);
-				}
-				else {
-					order = new Order(key);
-
-					order.setAscending(ascending);
-				}
-
-				orders.add(order);
-			}
-
-			dateHistogramAggregation.addOrders(orders.toArray(new Order[0]));
-		}
-
-		Script script = _scriptConverter.toScript(jsonObject);
-
-		if (script != null) {
-			dateHistogramAggregation.setScript(script);
-		}
+		dateHistogramAggregation.setScript(
+			_scriptConverter.toScript(jsonObject));
 
 		return dateHistogramAggregation;
 	}
@@ -633,7 +639,27 @@ public class AggregationWrapperConverter {
 	private WeightedAvgAggregation _toWeightedAvgAggregation(
 		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
 
-		return null;
+		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
+		JSONObject weightJSONObject = jsonObject.getJSONObject("weight");
+
+		WeightedAvgAggregation weightedAvgAggregation =
+			_aggregations.weightedAvg(
+				name, valueJSONObject.getString("field"),
+				weightJSONObject.getString("field"));
+
+		_setString(weightedAvgAggregation::setFormat, jsonObject, "format");
+		_setObject(
+			weightedAvgAggregation::setValueMissing, valueJSONObject,
+			"missing");
+		weightedAvgAggregation.setValueScript(
+			_scriptConverter.toScript(valueJSONObject));
+		_setObject(
+			weightedAvgAggregation::setWeightMissing, weightJSONObject,
+			"missing");
+		weightedAvgAggregation.setWeightScript(
+			_scriptConverter.toScript(weightJSONObject));
+
+		return weightedAvgAggregation;
 	}
 
 	private final Aggregations _aggregations;

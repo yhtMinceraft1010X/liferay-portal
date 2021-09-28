@@ -204,15 +204,15 @@ public class SortSXPSearchRequestBodyContributor
 			fieldSort.setMissing(jsonObject.getString("missing"));
 		}
 
+		if (jsonObject.has("nested")) {
+			fieldSort.setNestedSort(
+				_toNestedSort(jsonObject.getJSONObject("nested")));
+		}
+
 		if (jsonObject.has("mode")) {
 			fieldSort.setSortMode(
 				SortMode.valueOf(
 					StringUtil.toUpperCase(jsonObject.getString("mode"))));
-		}
-
-		if (jsonObject.has("nested")) {
-			fieldSort.setNestedSort(
-				_toNestedSort(jsonObject.getJSONObject("nested")));
 		}
 
 		_processSortOrder(jsonObject, fieldSort);
