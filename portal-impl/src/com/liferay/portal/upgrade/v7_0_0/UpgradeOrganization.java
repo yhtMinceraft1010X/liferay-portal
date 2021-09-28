@@ -49,7 +49,6 @@ public class UpgradeOrganization extends UpgradeProcess {
 		alter(OrganizationTable.class, new AlterColumnType("statusId", "LONG"));
 
 		upgradeOrganizationLogoId();
-
 		upgradeOrganizationSiteHierarchy();
 	}
 
