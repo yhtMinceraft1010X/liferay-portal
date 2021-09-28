@@ -676,9 +676,24 @@ public class AggregationWrapperConverter {
 	private DiversifiedSamplerAggregation _toDiversifiedSamplerAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		DiversifiedSamplerAggregation diversifiedSamplerAggregation =
+			_aggregations.diversifiedSampler(
+				name, jsonObject.getString("field"));
 
-		return null;
+		_setString(
+			diversifiedSamplerAggregation::setExecutionHint, jsonObject,
+			"execution_hint");
+		_setInteger(
+			diversifiedSamplerAggregation::setMaxDocsPerValue, jsonObject,
+			"max_docs_per_value");
+		_setString(
+			diversifiedSamplerAggregation::setMissing, jsonObject, "missing");
+		_setScript(diversifiedSamplerAggregation::setScript, jsonObject);
+		_setInteger(
+			diversifiedSamplerAggregation::setShardSize, jsonObject,
+			"shard_size");
+
+		return diversifiedSamplerAggregation;
 	}
 
 	private ExtendedStatsAggregation _toExtendedStatsAggregation(
