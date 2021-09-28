@@ -44,7 +44,6 @@ type TFormState = {
 	};
 };
 
-
 const headers = new Headers({
 	Accept: 'application/json',
 	'Content-Type': 'application/json',
@@ -53,13 +52,13 @@ const headers = new Headers({
 const ModalAddObjectAction: React.FC<IProps> = ({
 	apiURL,
 	objectActionExecutors,
-	objectActionTriggers
+	objectActionTriggers,
 }) => {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const [formState, setFormState] = useState<TFormState>({
 		name: '',
 		objectActionExecutor: {key: ''},
-		objectActionTrigger: {key: ''}
+		objectActionTrigger: {key: ''},
 	});
 	const [error, setError] = useState<string>('');
 
@@ -104,10 +103,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 		Liferay.on('addObjectAction', handleOpenObjectActionModal);
 
 		return () => {
-			Liferay.detach(
-				'addObjectAction',
-				handleOpenObjectActionModal
-			);
+			Liferay.detach('addObjectAction', handleOpenObjectActionModal);
 		};
 	}, []);
 
@@ -157,9 +153,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							{({key}) => (
 								<>
 									<div>{key}</div>
-									<span className="text-small">
-										{key}
-									</span>
+									<span className="text-small">{key}</span>
 								</>
 							)}
 						</CustomSelect>
@@ -181,9 +175,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							{({key}) => (
 								<>
 									<div>{key}</div>
-									<span className="text-small">
-										{key}
-									</span>
+									<span className="text-small">{key}</span>
 								</>
 							)}
 						</CustomSelect>
@@ -201,9 +193,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 
 								<ClayButton
 									displayType="primary"
-									onClick={() =>
-										handleSaveObjectAction()
-									}
+									onClick={() => handleSaveObjectAction()}
 								>
 									{Liferay.Language.get('save')}
 								</ClayButton>
@@ -216,7 +206,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 	);
 };
 
-const ModalWithProvider: React.FC<IProps> = ({apiURL,objectActionExecutors, objectActionTriggers}) => {
+const ModalWithProvider: React.FC<IProps> = ({
+	apiURL,
+	objectActionExecutors,
+	objectActionTriggers,
+}) => {
 	return (
 		<ClayModalProvider>
 			<ModalAddObjectAction
