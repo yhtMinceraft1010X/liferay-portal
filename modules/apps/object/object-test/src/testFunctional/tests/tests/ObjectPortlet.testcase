@@ -178,11 +178,6 @@ definition {
 		ObjectPortlet.sortField(sortFieldName = "Text");
 
 		ObjectPortlet.assertFilterResultsSpecificOrder(entry = "Test text 2,Test text 1");
-
-
-
-
-		
 	}
 
 	@description = "LPS-135393 - Verify that is possible to search for an entry on the auto-generated table on the Custom Object Portlet"
