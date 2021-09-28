@@ -12,6 +12,22 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro assertFilterResultsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var entry	: list "${entry}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertVisible(
+				key_entry = "${entry}",
+				locator1 = "ObjectPortlet#ENTRY_VALUE_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}");
+		}
+
+
+		
+	}
+
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
@@ -56,6 +72,16 @@ definition {
 		Click(
 			key_label = "${label}",
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
+	}
+
+	macro sortField {
+		Click(
+			key_sortFieldName = "${sortFieldName}",
+			locator1 = "ObjectPortlet#SORT_FIELD",
+			value1 = "${sortFieldName}");
+
+
+			
 	}
 
 	macro viewEntry {

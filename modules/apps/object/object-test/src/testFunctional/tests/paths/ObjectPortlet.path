@@ -36,6 +36,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENTRY_VALUE_SPECIFIC_ORDER</td>
+		<td>//div[${resultOrder}]//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_KEBAB_MENU</td>
 		<td>//div[contains(@class,'dnd-tbody')]//div[contains(text(),'${key_entry}')]/following-sibling::div//button</td>
 		<td></td>
@@ -60,6 +65,11 @@
 		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+	<td>SORT_FIELD</td>
+	<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

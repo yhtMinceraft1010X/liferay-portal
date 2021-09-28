@@ -146,12 +146,43 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify that is possible to order the auto-generated table by an entry on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOrderTable {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-138956 CanOrderTable pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Text",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		for (var number : list "1,2") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject",
+				value = "Test text ${number}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.sortField(sortFieldName = "Text");
+
+		ObjectPortlet.assertFilterResultsSpecificOrder(entry = "Test text 1,Test text 2");
+
+		ObjectPortlet.sortField(sortFieldName = "Text");
+
+		ObjectPortlet.assertFilterResultsSpecificOrder(entry = "Test text 2,Test text 1");
+
+
+
+
+		
 	}
 
 	@description = "LPS-135393 - Verify that is possible to search for an entry on the auto-generated table on the Custom Object Portlet"
