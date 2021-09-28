@@ -716,7 +716,16 @@ public class AggregationWrapperConverter {
 	private RangeAggregation _toRangeAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		RangeAggregation rangeAggregation = _aggregations.range(
+			name, jsonObject.getString("field"));
+
+		_addRange(rangeAggregation::addRange, jsonObject);
+		_setString(rangeAggregation::setFormat, jsonObject, "format");
+		_setBoolean(rangeAggregation::setKeyed, jsonObject, "keyed");
+		_setString(rangeAggregation::setMissing, jsonObject, "missing");
+		_setScript(rangeAggregation::setScript, jsonObject);
+
+		return rangeAggregation;
 	}
 
 	private ReverseNestedAggregation _toReverseNestedAggregation(
