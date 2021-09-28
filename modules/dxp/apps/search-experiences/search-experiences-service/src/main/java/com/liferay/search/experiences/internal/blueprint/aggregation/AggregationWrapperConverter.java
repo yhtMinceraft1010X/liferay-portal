@@ -662,9 +662,15 @@ public class AggregationWrapperConverter {
 	private DerivativePipelineAggregation _toDerivativePipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		DerivativePipelineAggregation derivativePipelineAggregation =
+			_aggregations.derivative(
+				name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			derivativePipelineAggregation::setFormat, jsonObject, "format");
+		_setGapPolicy(derivativePipelineAggregation::setGapPolicy, jsonObject);
+
+		return derivativePipelineAggregation;
 	}
 
 	private DiversifiedSamplerAggregation _toDiversifiedSamplerAggregation(
