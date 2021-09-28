@@ -633,7 +633,12 @@ public class AggregationWrapperConverter {
 	private ValueCountAggregation _toValueCountAggregation(
 		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
 
-		return null;
+		ValueCountAggregation valueCountAggregation = _aggregations.valueCount(
+			name, jsonObject.getString("field"));
+
+		valueCountAggregation.setScript(_scriptConverter.toScript(jsonObject));
+
+		return valueCountAggregation;
 	}
 
 	private WeightedAvgAggregation _toWeightedAvgAggregation(
