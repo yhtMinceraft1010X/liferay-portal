@@ -956,16 +956,18 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition objectDefinition, long objectFieldId)
 		throws PortalException {
 
-		if (objectFieldId > 0) {
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectFieldId);
+		if (objectFieldId <= 0) {
+			return;
+		}
 
-			if ((objectField == null) ||
-				(objectField.getObjectDefinitionId() !=
-					objectDefinition.getObjectDefinitionId())) {
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectFieldId);
 
-				throw new NoSuchObjectFieldException();
-			}
+		if ((objectField == null) ||
+			(objectField.getObjectDefinitionId() !=
+				objectDefinition.getObjectDefinitionId())) {
+
+			throw new NoSuchObjectFieldException();
 		}
 	}
 
