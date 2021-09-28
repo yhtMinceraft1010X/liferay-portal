@@ -211,9 +211,9 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 			throw new NullPointerException(
 				StringBundler.concat(
-					nullPointerException.getMessage(), "; DDMExpression: \"",
-					ddmExpressionString, "\"; DDMExpressionFactory: \"",
-					ddmExpressionFactoryString, "\""));
+					nullPointerException.getMessage(), ", DDM expression: ",
+					ddmExpressionString, ", DDM expression factory: ",
+					ddmExpressionFactoryString));
 		}
 	}
 
