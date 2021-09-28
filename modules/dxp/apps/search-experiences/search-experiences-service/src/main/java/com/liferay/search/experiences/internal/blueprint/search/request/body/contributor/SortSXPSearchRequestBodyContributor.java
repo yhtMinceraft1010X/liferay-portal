@@ -119,19 +119,9 @@ public class SortSXPSearchRequestBodyContributor
 	private void _processGeoDistanceUnit(
 		GeoDistanceSort geoDistanceSort, JSONObject jsonObject) {
 
-		if (!jsonObject.has("unit")) {
-			return;
-		}
-
-		String unit = StringUtil.toLowerCase(jsonObject.getString("unit"));
-
-		for (DistanceUnit distanceUnit : DistanceUnit.values()) {
-			if (Objects.equals(distanceUnit.getUnit(), unit)) {
-				geoDistanceSort.setDistanceUnit(distanceUnit);
-
-				return;
-			}
-		}
+		geoDistanceSort.setDistanceUnit(
+			DistanceUnit.create(
+				StringUtil.toLowerCase(jsonObject.getString("unit"))));
 	}
 
 	private void _processGeoLocationPoints(

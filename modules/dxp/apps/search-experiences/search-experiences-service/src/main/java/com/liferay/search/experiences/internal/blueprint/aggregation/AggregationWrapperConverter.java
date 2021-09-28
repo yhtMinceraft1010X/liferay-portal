@@ -38,6 +38,7 @@ import com.liferay.portal.search.aggregation.bucket.IncludeExcludeClause;
 import com.liferay.portal.search.aggregation.bucket.MissingAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.Order;
+import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.SamplerAggregation;
@@ -75,6 +76,9 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
+import com.liferay.portal.search.geolocation.DistanceUnit;
+import com.liferay.portal.search.geolocation.GeoBuilders;
+import com.liferay.portal.search.geolocation.GeoDistanceType;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.ScriptFieldBuilder;
@@ -95,10 +99,12 @@ import java.util.function.Consumer;
 public class AggregationWrapperConverter {
 
 	public AggregationWrapperConverter(
-		Aggregations aggregations, HighlightConverter highlightConverter,
+		Aggregations aggregations, GeoBuilders geoBuilders,
+		HighlightConverter highlightConverter,
 		ScriptConverter scriptConverter) {
 
 		_aggregations = aggregations;
+		_geoBuilders = geoBuilders;
 		_scriptConverter = scriptConverter;
 
 		// Bucket
@@ -225,6 +231,10 @@ public class AggregationWrapperConverter {
 		try {
 			Object object = convertFunction.apply(jsonObject, name);
 
+			if (object == null) {
+				return null;
+			}
+
 			if (object instanceof Aggregation) {
 				return new AggregationWrapper((Aggregation)object);
 			}
@@ -278,6 +288,33 @@ public class AggregationWrapperConverter {
 		}
 
 		consumer.accept(orders.toArray(new Order[0]));
+	}
+
+	private void _addRange(Consumer<Range> consumer, JSONObject jsonObject) {
+		JSONArray rangesJSONArray = jsonObject.getJSONArray("ranges");
+
+		if (rangesJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
+
+			String key = rangeJSONObject.getString("key");
+
+			if (Validator.isNotNull(key)) {
+				consumer.accept(
+					new Range(
+						key, rangeJSONObject.getString("from", null),
+						rangeJSONObject.getString("to", null)));
+			}
+			else {
+				consumer.accept(
+					new Range(
+						rangeJSONObject.getString("from", null),
+						rangeJSONObject.getString("to", null)));
+			}
+		}
 	}
 
 	private void _setBoolean(
@@ -555,7 +592,34 @@ public class AggregationWrapperConverter {
 	private GeoDistanceAggregation _toGeoDistanceAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		String[] coordinates = StringUtil.split(jsonObject.getString("origin"));
+
+		if (coordinates.length != 2) {
+			return null;
+		}
+
+		GeoDistanceAggregation geoDistanceAggregation =
+			_aggregations.geoDistance(
+				name, jsonObject.getString("field"),
+				_geoBuilders.geoLocationPoint(
+					GetterUtil.getDouble(coordinates[0]),
+					GetterUtil.getDouble(coordinates[1])));
+
+		_addRange(geoDistanceAggregation::addRange, jsonObject);
+		geoDistanceAggregation.setDistanceUnit(
+			DistanceUnit.create(jsonObject.getString("unit")));
+
+		String distanceType = jsonObject.getString("distance_type");
+
+		if (Validator.isNotNull(distanceType)) {
+			geoDistanceAggregation.setGeoDistanceType(
+				GeoDistanceType.valueOf(StringUtil.toUpperCase(distanceType)));
+		}
+
+		_setBoolean(geoDistanceAggregation::setKeyed, jsonObject, "keyed");
+		_setScript(geoDistanceAggregation::setScript, jsonObject);
+
+		return geoDistanceAggregation;
 	}
 
 	private GeoHashGridAggregation _toGeoHashGridAggregation(
@@ -905,6 +969,7 @@ public class AggregationWrapperConverter {
 	private final Aggregations _aggregations;
 	private final Map<String, ConvertFunction> _convertFunctions =
 		new HashMap<>();
+	private final GeoBuilders _geoBuilders;
 	private HighlightConverter _highlightConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Scripts _scripts;

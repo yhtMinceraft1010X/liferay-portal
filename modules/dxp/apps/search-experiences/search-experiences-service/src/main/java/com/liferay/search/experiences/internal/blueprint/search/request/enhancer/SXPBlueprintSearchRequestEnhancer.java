@@ -112,7 +112,8 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(
-				_aggregations, highlightConverter, scriptConverter),
+				_aggregations, _geoBuilders, highlightConverter,
+				scriptConverter),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),

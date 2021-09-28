@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapper;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapperConverter;
@@ -34,11 +35,12 @@ public class AggsSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public AggsSXPSearchRequestBodyContributor(
-		Aggregations aggregations, HighlightConverter highlightConverter,
+		Aggregations aggregations, GeoBuilders geoBuilders,
+		HighlightConverter highlightConverter,
 		ScriptConverter scriptConverter) {
 
 		_aggregationWrapperConverter = new AggregationWrapperConverter(
-			aggregations, highlightConverter, scriptConverter);
+			aggregations, geoBuilders, highlightConverter, scriptConverter);
 	}
 
 	@Override
