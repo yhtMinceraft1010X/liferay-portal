@@ -50,13 +50,13 @@ public class DestinationWorkerConfigurationModelListener
 				destination.getDestinationType(),
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL)) {
 
-			properties.put("workerCoreSize", _WORKERS_CORE_SIZE);
-			properties.put("workerMaxSize", _WORKERS_MAX_SIZE);
+			properties.put("workerCoreSize", _WORKER_CORE_SIZE);
+			properties.put("workerMaxSize", _WORKER_MAX_SIZE);
 		}
 	}
 
-	private static final int _WORKERS_CORE_SIZE = 1;
+	private static final int _WORKER_CORE_SIZE = 1;
 
-	private static final int _WORKERS_MAX_SIZE = 1;
+	private static final int _WORKER_MAX_SIZE = 1;
 
 }
