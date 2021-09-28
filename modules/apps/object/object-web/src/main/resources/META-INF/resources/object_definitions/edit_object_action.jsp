@@ -38,6 +38,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 					<aui:input name="name" required="<%= true %>" value="<%= objectAction.getName() %>" />
 
 					<aui:input disabled="<%= true %>" label="when" name="objectActionTriggerKey" value="<%= objectAction.getObjectActionTriggerKey() %>" />
+
 					<aui:input disabled="<%= true %>" label="then" name="objectActionExecutorKey" value="<%= objectAction.getObjectActionExecutorKey() %>" />
 
 					<%= objectDefinitionsActionsDisplayContext.renderDDMForm(pageContext) %>
@@ -58,6 +59,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
+
 		const localizedLabels = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {

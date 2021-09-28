@@ -178,6 +178,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
+
 		const localizedLabels = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {

@@ -64,6 +64,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 		const localizedInputs = document.querySelectorAll(
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
+
 		const localizedLabels = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
 				if (cur.value) {

@@ -208,7 +208,6 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		ddmFormRenderingContext.setContainerId(
 			"editObjectActionExecutorSettings");
-
 		ddmFormRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
