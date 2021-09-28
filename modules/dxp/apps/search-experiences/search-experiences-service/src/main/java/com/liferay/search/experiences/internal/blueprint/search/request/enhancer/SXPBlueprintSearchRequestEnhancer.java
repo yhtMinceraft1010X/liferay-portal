@@ -144,7 +144,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 					names, sxpSearchRequestBodyContributor.getName())) {
 
 				sxpSearchRequestBodyContributor.contribute(
-					searchRequestBuilder, sxpBlueprint, sxpParameterData);
+					searchRequestBuilder, sxpBlueprint);
 			}
 		}
 	}

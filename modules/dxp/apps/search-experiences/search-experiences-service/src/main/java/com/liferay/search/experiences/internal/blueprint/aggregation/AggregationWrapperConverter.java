@@ -78,7 +78,6 @@ import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.ScriptFieldBuilder;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 
 import java.util.ArrayList;
@@ -213,8 +212,7 @@ public class AggregationWrapperConverter {
 	}
 
 	public AggregationWrapper toAggregationWrapper(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData,
-		String type) {
+		JSONObject jsonObject, String name, String type) {
 
 		ConvertFunction convertFunction = _convertFunctions.get(type);
 
@@ -223,8 +221,7 @@ public class AggregationWrapperConverter {
 		}
 
 		try {
-			Object object = convertFunction.apply(
-				jsonObject, name, sxpParameterData);
+			Object object = convertFunction.apply(jsonObject, name);
 
 			if (object instanceof Aggregation) {
 				return new AggregationWrapper((Aggregation)object);
@@ -243,9 +240,7 @@ public class AggregationWrapperConverter {
 	@FunctionalInterface
 	public interface ConvertFunction {
 
-		public Object apply(
-				JSONObject jsonObject, String name,
-				SXPParameterData sxpParameterData)
+		public Object apply(JSONObject jsonObject, String name)
 			throws Exception;
 
 	}
@@ -301,53 +296,51 @@ public class AggregationWrapperConverter {
 	}
 
 	private AvgAggregation _toAvgAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private AvgBucketPipelineAggregation _toAvgBucketPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private BucketScriptPipelineAggregation _toBucketScriptPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private BucketSelectorPipelineAggregation
 		_toBucketSelectorPipelineAggregation(
-			JSONObject jsonObject, String name,
-			SXPParameterData sxpParameterData) {
+			JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private BucketSortPipelineAggregation _toBucketSortPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private CardinalityAggregation _toCardinalityAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private CumulativeSumPipelineAggregation
 		_toCumulativeSumPipelineAggregation(
-			JSONObject jsonObject, String name,
-			SXPParameterData sxpParameterData) {
+			JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private DateHistogramAggregation _toDateHistogramAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		DateHistogramAggregation dateHistogramAggregation =
 			_aggregations.dateHistogram(name, jsonObject.getString("field"));
@@ -418,199 +411,196 @@ public class AggregationWrapperConverter {
 	}
 
 	private DateRangeAggregation _toDateRangeAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private DerivativePipelineAggregation _toDerivativePipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private DiversifiedSamplerAggregation _toDiversifiedSamplerAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private ExtendedStatsAggregation _toExtendedStatsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private ExtendedStatsBucketPipelineAggregation
 		_toExtendedStatsBucketPipelineAggregation(
-			JSONObject jsonObject, String name,
-			SXPParameterData sxpParameterData) {
+			JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private FilterAggregation _toFilterAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private FiltersAggregation _toFiltersAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private GeoBoundsAggregation _toGeoBoundsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private GeoCentroidAggregation _toGeoCentroidAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private GeoDistanceAggregation _toGeoDistanceAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private GeoHashGridAggregation _toGeoHashGridAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private GlobalAggregation _toGlobalAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private HistogramAggregation _toHistogramAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MaxAggregation _toMaxAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MaxBucketPipelineAggregation _toMaxBucketPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MinAggregation _toMinAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MinBucketPipelineAggregation _toMinBucketPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MissingAggregation _toMissingAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private MovingFunctionPipelineAggregation
 		_toMovingFunctionPipelineAggregation(
-			JSONObject jsonObject, String name,
-			SXPParameterData sxpParameterData) {
+			JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private NestedAggregation _toNestedAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private PercentileRanksAggregation _toPercentileRanksAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private PercentilesAggregation _toPercentilesAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private PercentilesBucketPipelineAggregation
 		_toPercentilesBucketPipelineAggregation(
-			JSONObject jsonObject, String name,
-			SXPParameterData sxpParameterData) {
+			JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private RangeAggregation _toRangeAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private ReverseNestedAggregation _toReverseNestedAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private SamplerAggregation _toSamplerAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private ScriptedMetricAggregation _toScriptedMetricAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private SerialDiffPipelineAggregation _toSerialDiffPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private SignificantTermsAggregation _toSignificantTermsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private SignificantTextAggregation _toSignificantTextAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private StatsAggregation _toStatsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private StatsBucketPipelineAggregation _toStatsBucketPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
@@ -632,13 +622,13 @@ public class AggregationWrapperConverter {
 	}
 
 	private SumAggregation _toSumAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private SumBucketPipelineAggregation _toSumBucketPipelineAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		SumBucketPipelineAggregation sumBucketPipelineAggregation =
 			_aggregations.sumBucket(name, jsonObject.getString("buckets_path"));
@@ -657,13 +647,13 @@ public class AggregationWrapperConverter {
 	}
 
 	private TermsAggregation _toTermsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		return null;
 	}
 
 	private TopHitsAggregation _toTopHitsAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		TopHitsAggregation topHitsAggregation = _aggregations.topHits(name);
 
@@ -731,7 +721,7 @@ public class AggregationWrapperConverter {
 	}
 
 	private ValueCountAggregation _toValueCountAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		ValueCountAggregation valueCountAggregation = _aggregations.valueCount(
 			name, jsonObject.getString("field"));
@@ -743,7 +733,7 @@ public class AggregationWrapperConverter {
 	}
 
 	private WeightedAvgAggregation _toWeightedAvgAggregation(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
+		JSONObject jsonObject, String name) {
 
 		JSONObject valueJSONObject = jsonObject.getJSONObject("value");
 		JSONObject weightJSONObject = jsonObject.getJSONObject("weight");

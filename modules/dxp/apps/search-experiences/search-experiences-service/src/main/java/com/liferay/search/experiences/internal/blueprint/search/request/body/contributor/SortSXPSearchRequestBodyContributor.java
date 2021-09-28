@@ -33,7 +33,6 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -60,8 +59,7 @@ public class SortSXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
-		SXPParameterData sxpParameterData) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
 		if (_hasSorts(searchRequestBuilder)) {
 			return;

@@ -22,7 +22,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapper;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapperConverter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
-import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
@@ -44,8 +43,7 @@ public class AggsSXPSearchRequestBodyContributor
 
 	@Override
 	public void contribute(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint,
-		SXPParameterData sxpParameterData) {
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
 		// TODO Replace with real JSON
 
@@ -55,8 +53,7 @@ public class AggsSXPSearchRequestBodyContributor
 			return;
 		}
 
-		_processAggregations(
-			jsonObject, null, searchRequestBuilder, sxpParameterData);
+		_processAggregations(jsonObject, null, searchRequestBuilder);
 	}
 
 	@Override
@@ -101,15 +98,14 @@ public class AggsSXPSearchRequestBodyContributor
 	private void _processAggregation(
 		JSONObject jsonObject, String name,
 		AggregationWrapper parentAggregationWrapper,
-		SearchRequestBuilder searchRequestBuilder,
-		SXPParameterData sxpParameterData) {
+		SearchRequestBuilder searchRequestBuilder) {
 
 		Iterator<String> iterator = jsonObject.keys();
 
 		String type = iterator.next();
 
 		AggregationWrapper aggregationWrapper = _toAggregationWrapper(
-			jsonObject.getJSONObject(type), name, sxpParameterData, type);
+			jsonObject.getJSONObject(type), name, type);
 
 		if (aggregationWrapper == null) {
 			return;
@@ -120,8 +116,7 @@ public class AggsSXPSearchRequestBodyContributor
 
 			if (aggsJSONObject != null) {
 				_processAggregations(
-					aggsJSONObject, aggregationWrapper, searchRequestBuilder,
-					sxpParameterData);
+					aggsJSONObject, aggregationWrapper, searchRequestBuilder);
 			}
 		}
 
@@ -135,26 +130,24 @@ public class AggsSXPSearchRequestBodyContributor
 
 	private void _processAggregations(
 		JSONObject jsonObject, AggregationWrapper parentAggregationWrapper,
-		SearchRequestBuilder searchRequestBuilder,
-		SXPParameterData sxpParameterData) {
+		SearchRequestBuilder searchRequestBuilder) {
 
 		for (String name : jsonObject.keySet()) {
 			_processAggregation(
 				jsonObject.getJSONObject(name), name, parentAggregationWrapper,
-				searchRequestBuilder, sxpParameterData);
+				searchRequestBuilder);
 		}
 	}
 
 	private AggregationWrapper _toAggregationWrapper(
-		JSONObject jsonObject, String name, SXPParameterData sxpParameterData,
-		String type) {
+		JSONObject jsonObject, String name, String type) {
 
 		if (!jsonObject.getBoolean("enabled", true)) {
 			return null;
 		}
 
 		return _aggregationWrapperConverter.toAggregationWrapper(
-			jsonObject, name, sxpParameterData, type);
+			jsonObject, name, type);
 	}
 
 	private final AggregationWrapperConverter _aggregationWrapperConverter;
