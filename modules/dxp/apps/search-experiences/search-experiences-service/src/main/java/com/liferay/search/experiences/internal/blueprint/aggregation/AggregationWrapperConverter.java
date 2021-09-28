@@ -348,6 +348,16 @@ public class AggregationWrapperConverter {
 		consumer.accept(jsonObject.getBoolean(key));
 	}
 
+	private void _setDouble(
+		Consumer<Double> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.getDouble(key));
+	}
+
 	private void _setGapPolicy(
 		Consumer<GapPolicy> consumer, JSONObject jsonObject) {
 
@@ -699,18 +709,35 @@ public class AggregationWrapperConverter {
 	private ExtendedStatsAggregation _toExtendedStatsAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		ExtendedStatsAggregation extendedStatsAggregation =
+			_aggregations.extendedStats(name, jsonObject.getString("field"));
 
-		return null;
+		_setString(extendedStatsAggregation::setMissing, jsonObject, "missing");
+		_setScript(extendedStatsAggregation::setScript, jsonObject);
+		_setInteger(extendedStatsAggregation::setSigma, jsonObject, "sigma");
+
+		return extendedStatsAggregation;
 	}
 
 	private ExtendedStatsBucketPipelineAggregation
 		_toExtendedStatsBucketPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		// TODO
+		ExtendedStatsBucketPipelineAggregation
+			extendedStatsBucketPipelineAggregation =
+				_aggregations.extendedStatsBucket(
+					name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			extendedStatsBucketPipelineAggregation::setFormat, jsonObject,
+			"format");
+		_setGapPolicy(
+			extendedStatsBucketPipelineAggregation::setGapPolicy, jsonObject);
+		_setDouble(
+			extendedStatsBucketPipelineAggregation::setSigma, jsonObject,
+			"sigma");
+
+		return extendedStatsBucketPipelineAggregation;
 	}
 
 	private FilterAggregation _toFilterAggregation(
