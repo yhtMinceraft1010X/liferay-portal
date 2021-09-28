@@ -91,6 +91,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -255,6 +256,22 @@ public class AggregationWrapperConverter {
 		public Object apply(JSONObject jsonObject, String name)
 			throws Exception;
 
+	}
+
+	private void _addBucketsPaths(
+		BiConsumer<String, String> biConsumer, JSONObject jsonObject) {
+
+		Object object = jsonObject.get("buckets_path");
+
+		if ((object == null) || !(object instanceof JSONObject)) {
+			return;
+		}
+
+		JSONObject bucketsPathJSONObject = (JSONObject)object;
+
+		for (String key : bucketsPathJSONObject.keySet()) {
+			biConsumer.accept(key, bucketsPathJSONObject.getString(key));
+		}
 	}
 
 	private void _addOrders(Consumer<Order[]> consumer, JSONObject jsonObject) {
@@ -477,18 +494,42 @@ public class AggregationWrapperConverter {
 	private BucketScriptPipelineAggregation _toBucketScriptPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		Script script = _scriptConverter.toScript(jsonObject.get("script"));
 
-		return null;
+		if (script == null) {
+			return null;
+		}
+
+		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
+			_aggregations.bucketScript(name, script);
+
+		_addBucketsPaths(
+			bucketScriptPipelineAggregation::addBucketPath, jsonObject);
+		_setString(
+			bucketScriptPipelineAggregation::setFormat, jsonObject, "format");
+
+		return bucketScriptPipelineAggregation;
 	}
 
 	private BucketSelectorPipelineAggregation
 		_toBucketSelectorPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		// TODO
+		Script script = _scriptConverter.toScript(jsonObject.get("script"));
 
-		return null;
+		if (script == null) {
+			return null;
+		}
+
+		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
+			_aggregations.bucketSelector(name, script);
+
+		_addBucketsPaths(
+			bucketSelectorPipelineAggregation::addBucketPath, jsonObject);
+		_setGapPolicy(
+			bucketSelectorPipelineAggregation::setGapPolicy, jsonObject);
+
+		return bucketSelectorPipelineAggregation;
 	}
 
 	private BucketSortPipelineAggregation _toBucketSortPipelineAggregation(
