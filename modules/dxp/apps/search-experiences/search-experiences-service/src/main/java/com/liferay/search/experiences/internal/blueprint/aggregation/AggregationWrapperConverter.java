@@ -561,7 +561,18 @@ public class AggregationWrapperConverter {
 	private GeoHashGridAggregation _toGeoHashGridAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		GeoHashGridAggregation geoHashGridAggregation =
+			_aggregations.geoHashGrid(name, jsonObject.getString("field"));
+
+		_setString(geoHashGridAggregation::setMissing, jsonObject, "missing");
+		_setInteger(
+			geoHashGridAggregation::setPrecision, jsonObject, "precision");
+		_setScript(geoHashGridAggregation::setScript, jsonObject);
+		_setInteger(
+			geoHashGridAggregation::setShardSize, jsonObject, "shard_size");
+		_setInteger(geoHashGridAggregation::setSize, jsonObject, "size");
+
+		return geoHashGridAggregation;
 	}
 
 	private GlobalAggregation _toGlobalAggregation(
