@@ -48,50 +48,19 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 	public ObjectDefinitionsActionsDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission,
 		ObjectActionExecutorRegistry objectActionExecutorRegistry,
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
+		ModelResourcePermission<ObjectDefinition>
+			objectDefinitionModelResourcePermission,
 		JSONFactory jsonFactory) {
-
-		_objectDefinitionModelResourcePermission =			objectDefinitionModelResourcePermission;
 
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
+		_objectDefinitionModelResourcePermission =
+			objectDefinitionModelResourcePermission;
 		_jsonFactory = jsonFactory;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
-	}
-
-	public JSONArray getObjectActionTriggerJSONArray() {
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
-		List<ObjectActionTrigger> objectActionTriggers =
-			_objectActionTriggerRegistry.getObjectActionTriggers(
-				objectDefinition.getClassName());
-
-		JSONArray objectActionTriggersJSONArray =
-			_jsonFactory.createJSONArray();
-
-		objectActionTriggers.forEach(
-			objectActionTrigger -> objectActionTriggersJSONArray.put(
-				JSONUtil.put("key", objectActionTrigger.getKey())));
-
-		return objectActionTriggersJSONArray;
-	}
-
-	public JSONArray getObjectActionExecutorJSONArray() {
-		List<ObjectActionExecutor> objectActionExecutors =
-			_objectActionExecutorRegistry.getObjectActionExecutors();
-
-		JSONArray objectActionExecutorJSONArray =
-			_jsonFactory.createJSONArray();
-
-		objectActionExecutors.forEach(
-			objectActionExecutor -> objectActionExecutorJSONArray.put(
-				JSONUtil.put("key", objectActionExecutor.getKey())));
-
-		return objectActionExecutorJSONArray;
 	}
 
 	public String getAPIURL() {
@@ -143,6 +112,45 @@ public class ObjectDefinitionsActionsDisplayContext {
 		return creationMenu;
 	}
 
+	public JSONArray getObjectActionExecutorJSONArray() {
+		List<ObjectActionExecutor> objectActionExecutors =
+			_objectActionExecutorRegistry.getObjectActionExecutors();
+
+		JSONArray objectActionExecutorJSONArray =
+			_jsonFactory.createJSONArray();
+
+		objectActionExecutors.forEach(
+			objectActionExecutor -> objectActionExecutorJSONArray.put(
+				JSONUtil.put("key", objectActionExecutor.getKey())));
+
+		return objectActionExecutorJSONArray;
+	}
+
+	public JSONArray getObjectActionTriggerJSONArray() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		List<ObjectActionTrigger> objectActionTriggers =
+			_objectActionTriggerRegistry.getObjectActionTriggers(
+				objectDefinition.getClassName());
+
+		JSONArray objectActionTriggersJSONArray =
+			_jsonFactory.createJSONArray();
+
+		objectActionTriggers.forEach(
+			objectActionTrigger -> objectActionTriggersJSONArray.put(
+				JSONUtil.put("key", objectActionTrigger.getKey())));
+
+		return objectActionTriggersJSONArray;
+	}
+
+	public ObjectDefinition getObjectDefinition() {
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		return (ObjectDefinition)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
 	public long getObjectDefinitionId() {
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
@@ -152,14 +160,6 @@ public class ObjectDefinitionsActionsDisplayContext {
 				ObjectWebKeys.OBJECT_DEFINITION);
 
 		return objectDefinition.getObjectDefinitionId();
-	}
-
-	public ObjectDefinition getObjectDefinition() {
-		HttpServletRequest httpServletRequest =
-			_objectRequestHelper.getRequest();
-
-		return (ObjectDefinition)httpServletRequest.getAttribute(
-			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -176,11 +176,11 @@ public class ObjectDefinitionsActionsDisplayContext {
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
+	private final JSONFactory _jsonFactory;
+	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
+	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectRequestHelper _objectRequestHelper;
-	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
-	private final JSONFactory _jsonFactory;
-	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 
 }
