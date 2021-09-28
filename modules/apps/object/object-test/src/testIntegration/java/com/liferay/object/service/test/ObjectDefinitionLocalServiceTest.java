@@ -963,7 +963,8 @@ public class ObjectDefinitionLocalServiceTest {
 		try {
 			objectDefinition =
 				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					objectDefinition.getObjectDefinitionId(), RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+					objectDefinition.getObjectDefinitionId(),
+					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 					objectDefinition.isActive(),
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
 					null, LocalizedMapUtil.getLocalizedMap("Ables"),
@@ -978,7 +979,8 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()), StringUtil.randomId(), true, "String");
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), true, "String");
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
