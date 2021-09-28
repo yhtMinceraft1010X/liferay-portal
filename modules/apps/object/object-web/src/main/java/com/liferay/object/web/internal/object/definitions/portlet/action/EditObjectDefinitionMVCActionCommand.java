@@ -59,11 +59,11 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long objectDefinitionId = ParamUtil.getLong(
 			actionRequest, "objectDefinitionId");
 
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		long descriptionObjectFieldId = ParamUtil.getLong(
 			actionRequest, "descriptionObjectFieldId");
 		long titleObjectFieldId = ParamUtil.getLong(
 			actionRequest, "titleObjectFieldId");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		Map<Locale, String> labelMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "label");
 		String name = ParamUtil.getString(actionRequest, "shortName");
