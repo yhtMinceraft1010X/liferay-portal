@@ -263,7 +263,7 @@ public class SortSXPSearchRequestBodyContributor
 
 	private Sort _toScriptSort(JSONObject jsonObject) {
 		ScriptSort scriptSort = _sorts.script(
-			_scriptConverter.toScript(jsonObject),
+			_scriptConverter.toScript(jsonObject.get("script")),
 			ScriptSort.ScriptSortType.valueOf(
 				StringUtil.toUpperCase(jsonObject.getString("type"))));
 

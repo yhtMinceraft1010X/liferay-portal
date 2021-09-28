@@ -29,9 +29,11 @@ public class ScriptConverter {
 		_scripts = scripts;
 	}
 
-	public Script toScript(JSONObject jsonObject) {
-		Object object = jsonObject.get("script");
+	public Scripts getScripts() {
+		return _scripts;
+	}
 
+	public Script toScript(Object object) {
 		if (object instanceof JSONObject) {
 			return _toScript((JSONObject)object);
 		}

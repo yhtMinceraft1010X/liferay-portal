@@ -15,7 +15,10 @@
 package com.liferay.search.experiences.internal.blueprint.aggregation;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,11 +73,17 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
+import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.script.ScriptField;
+import com.liferay.portal.search.script.ScriptFieldBuilder;
+import com.liferay.portal.search.script.Scripts;
+import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -85,7 +94,8 @@ import java.util.function.Consumer;
 public class AggregationWrapperConverter {
 
 	public AggregationWrapperConverter(
-		Aggregations aggregations, ScriptConverter scriptConverter) {
+		Aggregations aggregations, HighlightConverter highlightConverter,
+		ScriptConverter scriptConverter) {
 
 		_aggregations = aggregations;
 		_scriptConverter = scriptConverter;
@@ -198,6 +208,8 @@ public class AggregationWrapperConverter {
 			).put(
 				"sum_bucket", this::_toSumBucketPipelineAggregation
 			).build());
+
+		_scripts = scriptConverter.getScripts();
 	}
 
 	public AggregationWrapper toAggregationWrapper(
@@ -246,6 +258,16 @@ public class AggregationWrapperConverter {
 		}
 
 		consumer.accept(jsonObject.getBoolean(key));
+	}
+
+	private void _setInteger(
+		Consumer<Integer> consumer, JSONObject jsonObject, String key) {
+
+		if (!jsonObject.has(key)) {
+			return;
+		}
+
+		consumer.accept(jsonObject.getInt(key));
 	}
 
 	private void _setLong(
@@ -390,7 +412,7 @@ public class AggregationWrapperConverter {
 		_setLong(dateHistogramAggregation::setOffset, jsonObject, "offset");
 
 		dateHistogramAggregation.setScript(
-			_scriptConverter.toScript(jsonObject));
+			_scriptConverter.toScript(jsonObject.get("script")));
 
 		return dateHistogramAggregation;
 	}
@@ -593,6 +615,22 @@ public class AggregationWrapperConverter {
 		return null;
 	}
 
+	private String[] _toStringArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return null;
+		}
+
+		return JSONUtil.toStringArray(jsonArray);
+	}
+
+	private List<String> _toStringList(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return null;
+		}
+
+		return JSONUtil.toStringList(jsonArray);
+	}
+
 	private SumAggregation _toSumAggregation(
 		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
 
@@ -627,7 +665,69 @@ public class AggregationWrapperConverter {
 	private TopHitsAggregation _toTopHitsAggregation(
 		JSONObject jsonObject, String name, SXPParameterData sxpParameterData) {
 
-		return null;
+		TopHitsAggregation topHitsAggregation = _aggregations.topHits(name);
+
+		_setBoolean(topHitsAggregation::setExplain, jsonObject, "explain");
+
+		Object object = jsonObject.get("_source");
+
+		if (object != null) {
+			if (object instanceof JSONObject) {
+				JSONObject sourceJSONObject = (JSONObject)object;
+
+				topHitsAggregation.setFetchSourceIncludeExclude(
+					_toStringArray(sourceJSONObject.getJSONArray("includes")),
+					_toStringArray(sourceJSONObject.getJSONArray("excludes")));
+			}
+			else {
+				topHitsAggregation.setFetchSource(
+					GetterUtil.getBoolean(object));
+			}
+		}
+
+		_setInteger(topHitsAggregation::setFrom, jsonObject, "from");
+		topHitsAggregation.setHighlight(
+			_highlightConverter.toHighlight(
+				jsonObject.getJSONObject("highlight")));
+
+		JSONArray scriptFieldsJSONArray = jsonObject.getJSONArray(
+			"script_fields");
+
+		if (scriptFieldsJSONArray != null) {
+			List<ScriptField> scriptFields = new ArrayList<>();
+
+			for (int i = 0; i < scriptFieldsJSONArray.length(); i++) {
+				JSONObject scriptFieldJSONObject =
+					scriptFieldsJSONArray.getJSONObject(i);
+
+				Iterator<String> iterator = scriptFieldJSONObject.keys();
+
+				Script script = _scriptConverter.toScript(
+					scriptFieldJSONObject.get(iterator.next()));
+
+				if (script == null) {
+					continue;
+				}
+
+				ScriptFieldBuilder scriptFieldBuilder = _scripts.fieldBuilder();
+
+				scriptFieldBuilder.script(script);
+
+				scriptFields.add(scriptFieldBuilder.build());
+			}
+
+			topHitsAggregation.setScriptFields(scriptFields);
+		}
+
+		topHitsAggregation.setSelectedFields(
+			_toStringList(jsonObject.getJSONArray("docvalue_fields")));
+
+		_setInteger(topHitsAggregation::setSize, jsonObject, "size");
+		_setBoolean(
+			topHitsAggregation::setTrackScores, jsonObject, "track_scores");
+		_setBoolean(topHitsAggregation::setVersion, jsonObject, "version");
+
+		return topHitsAggregation;
 	}
 
 	private ValueCountAggregation _toValueCountAggregation(
@@ -636,7 +736,8 @@ public class AggregationWrapperConverter {
 		ValueCountAggregation valueCountAggregation = _aggregations.valueCount(
 			name, jsonObject.getString("field"));
 
-		valueCountAggregation.setScript(_scriptConverter.toScript(jsonObject));
+		valueCountAggregation.setScript(
+			_scriptConverter.toScript(jsonObject.get("script")));
 
 		return valueCountAggregation;
 	}
@@ -657,13 +758,13 @@ public class AggregationWrapperConverter {
 			weightedAvgAggregation::setValueMissing, valueJSONObject,
 			"missing");
 		weightedAvgAggregation.setValueScript(
-			_scriptConverter.toScript(valueJSONObject));
+			_scriptConverter.toScript(valueJSONObject.get("script")));
 
 		_setObject(
 			weightedAvgAggregation::setWeightMissing, weightJSONObject,
 			"missing");
 		weightedAvgAggregation.setWeightScript(
-			_scriptConverter.toScript(weightJSONObject));
+			_scriptConverter.toScript(weightJSONObject.get("script")));
 
 		return weightedAvgAggregation;
 	}
@@ -671,6 +772,8 @@ public class AggregationWrapperConverter {
 	private final Aggregations _aggregations;
 	private final Map<String, ConvertFunction> _convertFunctions =
 		new HashMap<>();
+	private HighlightConverter _highlightConverter;
 	private final ScriptConverter _scriptConverter;
+	private final Scripts _scripts;
 
 }

@@ -30,6 +30,7 @@ import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
+import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
@@ -95,14 +96,15 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	@Activate
 	protected void activate() {
+		HighlightConverter highlightConverter = new HighlightConverter(
+			_fieldConfigBuilderFactory, _highlightBuilderFactory);
 		ScriptConverter scriptConverter = new ScriptConverter(_scripts);
 
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(
-				_aggregations, scriptConverter),
+				_aggregations, highlightConverter, scriptConverter),
 			new HighlightSXPSearchRequestBodyContributor(
-				_fieldConfigBuilderFactory, _highlightBuilderFactory,
-				_jsonFactory),
+				highlightConverter, _jsonFactory),
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
