@@ -255,6 +255,18 @@ public class AggregationWrapperConverter {
 		consumer.accept(jsonObject.getBoolean(key));
 	}
 
+	private void _setGapPolicy(
+		Consumer<GapPolicy> consumer, JSONObject jsonObject) {
+
+		String gapPolicy = jsonObject.getString("gap_policy");
+
+		if (Validator.isNull(gapPolicy)) {
+			return;
+		}
+
+		consumer.accept(GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
+	}
+
 	private void _setInteger(
 		Consumer<Integer> consumer, JSONObject jsonObject, String key) {
 
@@ -584,14 +596,7 @@ public class AggregationWrapperConverter {
 
 		_setString(
 			serialDiffPipelineAggregation::setFormat, jsonObject, "format");
-
-		String gapPolicy = jsonObject.getString("gap_policy");
-
-		if (Validator.isNotNull(gapPolicy)) {
-			serialDiffPipelineAggregation.setGapPolicy(
-				GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
-		}
-
+		_setGapPolicy(serialDiffPipelineAggregation::setGapPolicy, jsonObject);
 		_setInteger(serialDiffPipelineAggregation::setLag, jsonObject, "lag");
 
 		return serialDiffPipelineAggregation;
@@ -624,13 +629,7 @@ public class AggregationWrapperConverter {
 
 		_setString(
 			statsBucketPipelineAggregation::setFormat, jsonObject, "format");
-
-		String gapPolicy = jsonObject.getString("gap_policy");
-
-		if (Validator.isNotNull(gapPolicy)) {
-			statsBucketPipelineAggregation.setGapPolicy(
-				GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
-		}
+		_setGapPolicy(statsBucketPipelineAggregation::setGapPolicy, jsonObject);
 
 		return statsBucketPipelineAggregation;
 	}
@@ -665,13 +664,7 @@ public class AggregationWrapperConverter {
 
 		_setString(
 			sumBucketPipelineAggregation::setFormat, jsonObject, "format");
-
-		String gapPolicy = jsonObject.getString("gap_policy");
-
-		if (Validator.isNotNull(gapPolicy)) {
-			sumBucketPipelineAggregation.setGapPolicy(
-				GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
-		}
+		_setGapPolicy(sumBucketPipelineAggregation::setGapPolicy, jsonObject);
 
 		return sumBucketPipelineAggregation;
 	}
