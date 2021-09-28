@@ -602,7 +602,21 @@ public class AggregationWrapperConverter {
 	private StatsBucketPipelineAggregation _toStatsBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		return null;
+		StatsBucketPipelineAggregation statsBucketPipelineAggregation =
+			_aggregations.statsBucket(
+				name, jsonObject.getString("buckets_path"));
+
+		_setString(
+			statsBucketPipelineAggregation::setFormat, jsonObject, "format");
+
+		String gapPolicy = jsonObject.getString("gap_policy");
+
+		if (Validator.isNotNull(gapPolicy)) {
+			statsBucketPipelineAggregation.setGapPolicy(
+				GapPolicy.valueOf(StringUtil.toUpperCase(gapPolicy)));
+		}
+
+		return statsBucketPipelineAggregation;
 	}
 
 	private String[] _toStringArray(JSONArray jsonArray) {
