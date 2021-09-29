@@ -235,11 +235,9 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 		ObjectActionExecutor objectActionExecutor = getObjectActionExecutor();
 
-		if (Validator.isNull(objectActionExecutor.getSettings())) {
+		if (objectActionExecutor.getSettings() == null) {
 			return "";
 		}
-
-		ObjectAction objectAction = getObjectAction();
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			objectActionExecutor.getSettings());
@@ -247,14 +245,16 @@ public class ObjectDefinitionsActionsDisplayContext {
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
-		DDMFormValues ddmFormValues = _getDDMFormValues(ddmForm, objectAction);
+		ddmFormRenderingContext.setContainerId(
+			"editObjectActionExecutorSettings");
+
+		DDMFormValues ddmFormValues = _getDDMFormValues(
+			ddmForm, getObjectAction());
 
 		if (ddmFormValues != null) {
 			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 		}
 
-		ddmFormRenderingContext.setContainerId(
-			"editObjectActionExecutorSettings");
 		ddmFormRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -313,7 +313,6 @@ public class ObjectDefinitionsActionsDisplayContext {
 
 					return ddmFormFieldValue;
 				}));
-
 		ddmFormValues.setDefaultLocale(_objectRequestHelper.getLocale());
 
 		return ddmFormValues;

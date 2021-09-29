@@ -41,10 +41,10 @@ public class ObjectActionsTableClayDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
 		ClayTableSchemaField activeClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
