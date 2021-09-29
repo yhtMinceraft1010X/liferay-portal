@@ -971,9 +971,21 @@ public class AggregationWrapperConverter {
 		_toMovingFunctionPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		// TODO
+		Script script = _scriptConverter.toScript(jsonObject.get("script"));
 
-		return null;
+		if (script == null) {
+			return null;
+		}
+
+		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation =
+			_aggregations.movingFunction(
+				name, script, jsonObject.getString("buckets_path"),
+				jsonObject.getInt("window"));
+
+		_setGapPolicy(
+			movingFunctionPipelineAggregation::setGapPolicy, jsonObject);
+
+		return movingFunctionPipelineAggregation;
 	}
 
 	private NestedAggregation _toNestedAggregation(
