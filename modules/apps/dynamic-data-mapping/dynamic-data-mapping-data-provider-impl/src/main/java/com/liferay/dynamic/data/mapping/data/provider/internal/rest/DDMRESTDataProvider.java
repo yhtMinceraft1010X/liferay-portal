@@ -281,10 +281,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathInputParametersMap,
 		Map<String, Object> requestInputParametersMap) {
 
-		Set<Map.Entry<String, Object>> entrySet =
+		Set<Map.Entry<String, Object>> set =
 			requestInputParametersMap.entrySet();
 
-		Stream<Map.Entry<String, Object>> stream = entrySet.stream();
+		Stream<Map.Entry<String, Object>> stream = set.stream();
 
 		return stream.collect(
 			ArrayList::new,
