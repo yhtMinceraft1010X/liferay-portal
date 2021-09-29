@@ -835,17 +835,17 @@ This change was made to better match the current `aui:select` tag behavior, faci
 
 ---------------------------------------
 
-## Removed the Core Registry-API and Registry-Impl modules
+## Removed the Core Registry API and Registry Implementation modules
 - **Date:** 2021-Sep-28
 - **JIRA Ticket:** [LPS-138126](https://issues.liferay.com/browse/LPS-138126)
 
 ### What changed?
 
-The core Registry-API (`registry-api`) and Registry-Impl (`registry-impl`) modules have been removed.
+The core Registry API (`registry-api`) and Registry Implementation (`registry-impl`) modules have been removed.
 
 ### Who is affected?
 
-This affects anyone using the Registry-API.
+This affects anyone using the Registry API.
 
 ### How should I update my code?
 
