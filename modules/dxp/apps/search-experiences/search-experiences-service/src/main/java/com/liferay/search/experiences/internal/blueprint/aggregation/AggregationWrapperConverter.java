@@ -795,17 +795,20 @@ public class AggregationWrapperConverter {
 	private GeoBoundsAggregation _toGeoBoundsAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		GeoBoundsAggregation geoBoundsAggregation = _aggregations.geoBounds(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_setBoolean(
+			geoBoundsAggregation::setWrapLongitude, jsonObject,
+			"wrap_longitude");
+
+		return geoBoundsAggregation;
 	}
 
 	private GeoCentroidAggregation _toGeoCentroidAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
-
-		return null;
+		return _aggregations.geoCentroid(name, jsonObject.getString("field"));
 	}
 
 	private GeoDistanceAggregation _toGeoDistanceAggregation(
