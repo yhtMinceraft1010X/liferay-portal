@@ -329,14 +329,14 @@ public class AggregationWrapperConverter {
 			if (Validator.isNotNull(key)) {
 				consumer.accept(
 					new Range(
-						key, rangeJSONObject.getString("from", null),
-						rangeJSONObject.getString("to", null)));
+						key, rangeJSONObject.getString("from"),
+						rangeJSONObject.getString("to")));
 			}
 			else {
 				consumer.accept(
 					new Range(
-						rangeJSONObject.getString("from", null),
-						rangeJSONObject.getString("to", null)));
+						rangeJSONObject.getString("from"),
+						rangeJSONObject.getString("to")));
 			}
 		}
 	}
