@@ -14,10 +14,6 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -132,15 +128,6 @@ public class SXPBlueprintSearchRequestEnhancer {
 		}
 	}
 
-	private JSONObject _createJSONObject(String string) {
-		try {
-			return _jsonFactory.createJSONObject(string);
-		}
-		catch (JSONException jsonException) {
-			return ReflectionUtil.throwException(jsonException);
-		}
-	}
-
 	private SXPBlueprint _expand(
 		SXPBlueprint sxpBlueprint1, SXPParameterData sxpParameterData) {
 
@@ -149,11 +136,9 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 		sxpBlueprint2.setConfiguration(
 			ConfigurationUtil.toConfiguration(
-				String.valueOf(
-					SXPParameterParser.parse(
-						_createJSONObject(
-							String.valueOf(sxpBlueprint1.getConfiguration())),
-						sxpParameterData))));
+				SXPParameterParser.parse(
+					String.valueOf(sxpBlueprint1.getConfiguration()),
+					sxpParameterData)));
 
 		return sxpBlueprint2;
 	}
@@ -196,9 +181,6 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	@Reference
 	private HighlightBuilderFactory _highlightBuilderFactory;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Queries _queries;

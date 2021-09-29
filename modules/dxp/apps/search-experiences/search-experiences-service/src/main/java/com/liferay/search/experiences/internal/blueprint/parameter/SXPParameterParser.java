@@ -14,12 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
@@ -34,37 +30,30 @@ import java.util.Set;
  */
 public class SXPParameterParser {
 
-	public static JSONObject parse(
-		JSONObject jsonObject, SXPParameterData sxpParameterData) {
-
-		if (jsonObject == null) {
+	public static String parse(String json, SXPParameterData sxpParameterData) {
+		if (json == null) {
 			return null;
 		}
 
 		Set<SXPParameter> sxpParameters = sxpParameterData.getSXPParameters();
 
-		if (sxpParameters.isEmpty()) {
-			return jsonObject;
+		if (!json.contains("${") || sxpParameters.isEmpty()) {
+			return json;
 		}
 
-		String json = jsonObject.toString();
-
-		if (!json.contains("${")) {
-			return jsonObject;
-		}
-
-		json = _parse(json, sxpParameterData);
-
-		if (Validator.isNotNull(json)) {
-			try {
-				return JSONFactoryUtil.createJSONObject(json);
+		for (SXPParameter sxpParameter : sxpParameterData.getSXPParameters()) {
+			if (!sxpParameter.isTemplateVariable()) {
+				continue;
 			}
-			catch (JSONException jsonException) {
-				return ReflectionUtil.throwException(jsonException);
+
+			json = _parse(json, sxpParameter);
+
+			if (!json.contains("${")) {
+				break;
 			}
 		}
 
-		return null;
+		return json;
 	}
 
 	private static Map<String, String> _getOptions(String optionsString) {
@@ -121,24 +110,6 @@ public class SXPParameterParser {
 			String evaluatedToString = sxpParameter.evaluateToString(null);
 
 			json = _replace(json, templateVariable, evaluatedToString);
-		}
-
-		return json;
-	}
-
-	private static String _parse(
-		String json, SXPParameterData sxpParameterData) {
-
-		for (SXPParameter sxpParameter : sxpParameterData.getSXPParameters()) {
-			if (!sxpParameter.isTemplateVariable()) {
-				continue;
-			}
-
-			json = _parse(json, sxpParameter);
-
-			if (!json.contains("${")) {
-				break;
-			}
 		}
 
 		return json;
