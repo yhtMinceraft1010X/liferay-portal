@@ -38,6 +38,12 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 			return;
 		}
 
+		// TODO Throwing NPE on 54 on CI
+
+		if (_objectActionEngine == null) {
+			return;
+		}
+
 		// TODO Verify this is safe in a multitenant environment
 
 		long userId = GetterUtil.getLong(message.get("userId"));
