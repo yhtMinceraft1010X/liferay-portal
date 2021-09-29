@@ -329,7 +329,6 @@ public class DDMRESTDataProviderTest {
 		Assert.assertEquals(
 			DDMDataProviderResponseStatus.OK,
 			ddmDataProviderResponse.getStatus());
-
 		Assert.assertEquals(
 			ddmDataProviderResponse.toString(), 0,
 			ddmDataProviderResponse.size());
