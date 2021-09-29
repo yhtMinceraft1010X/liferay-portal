@@ -15,36 +15,44 @@ definition {
 		Navigator.openURL();
 	}
 
+	@description = "LRQA-62443 Assert MFA OTP configuration at instance level"
 	@priority = "5"
 	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-instance-level";
 		property portal.version = "7.3.10";
 
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://www.able.com:8080",
-			userEmailAddress = "test@www.able.com");
+		task ("Login at able.com and send otp email") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
 
-		MultiFactorAuthentication.sendOTPEmailPG();
+			MultiFactorAuthentication.sendOTPEmailPG();
+		}
 
-		MultiFactorAuthentication.verifyOTP(
-			portalURL = "http://www.able.com:8080",
-			recipient = "test test",
-			specificURL = "http://www.able.com:8080",
-			userEmailAddress = "test@www.able.com",
-			userPassword = "test");
+		task ("Check OTP information for test test") {
+			MultiFactorAuthentication.verifyOTP(
+				portalURL = "http://www.able.com:8080",
+				recipient = "test test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userPassword = "test");
+		}
 
-		PortalSettings.gotoConfiguration(
-			baseURL = "http://www.able.com:8080",
-			configurationCategory = "Multi-Factor Authentication",
-			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-			configurationScope = "Virtual Instance Scope");
+		task ("View OTP email sender") {
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://www.able.com:8080",
+				configurationCategory = "Multi-Factor Authentication",
+				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+				configurationScope = "Virtual Instance Scope");
 
-		MultiFactorAuthentication.viewOTPEmailSenderCP(
-			emailAddress = "test@www.able.com",
-			emailSenderName = "Joe Bloggs");
+			MultiFactorAuthentication.viewOTPEmailSenderCP(
+				emailAddress = "test@www.able.com",
+				emailSenderName = "Joe Bloggs");
+		}
 	}
 
+	@description = "LRQA-62443 Assert MFA OTP configuration at system level"
 	@priority = "5"
 	test ViewMFAConfigurationInSystemLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-system-level";
@@ -52,26 +60,32 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		task ("Login and send OTP email") {
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
 
-		MultiFactorAuthentication.sendOTPEmailPG();
+			MultiFactorAuthentication.sendOTPEmailPG();
+		}
 
-		MultiFactorAuthentication.verifyOTP(
-			portalURL = "${portalURL}",
-			recipient = "test test",
-			userEmailAddress = "test@liferay.com",
-			userPassword = "test");
+		task ("Check OTP information for test test") {
+			MultiFactorAuthentication.verifyOTP(
+				portalURL = "${portalURL}",
+				recipient = "test test",
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
+		}
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Multi-Factor Authentication",
-			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
-			configurationScope = "Virtual Instance Scope");
+		task ("View OTP email sender") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Multi-Factor Authentication",
+				configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+				configurationScope = "Virtual Instance Scope");
 
-		MultiFactorAuthentication.viewOTPEmailSenderCP(
-			emailAddress = "test@liferay.com",
-			emailSenderName = "Joe Bloggs");
+			MultiFactorAuthentication.viewOTPEmailSenderCP(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+		}
 	}
 
 }
