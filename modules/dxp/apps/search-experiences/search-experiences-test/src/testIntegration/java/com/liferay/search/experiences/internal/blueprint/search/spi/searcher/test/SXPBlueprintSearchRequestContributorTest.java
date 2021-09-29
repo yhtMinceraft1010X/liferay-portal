@@ -18,10 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -68,7 +66,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 	public void setUp() throws Exception {
 		WorkflowThreadLocal.setEnabled(false);
 
-		_group = GroupTestUtil.addGroup();
 		_sxpBlueprint = _addSXPBlueprint();
 	}
 
@@ -94,7 +91,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 	private void _addJournalArticles(String... titles) throws Exception {
 		for (String title : titles) {
 			JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
+				TestPropsValues.getGroupId(), 0,
 				PortalUtil.getClassNameId(JournalArticle.class),
 				HashMapBuilder.put(
 					LocaleUtil.US, title
@@ -104,8 +101,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 					LocaleUtil.US, ""
 				).build(),
 				LocaleUtil.getSiteDefault(), false, true,
-				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
+				ServiceContextTestUtil.getServiceContext());
 		}
 	}
 
@@ -124,8 +120,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 			"",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertSearch(
@@ -148,9 +143,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 			searchResponse.getRequestString(),
 			searchResponse.getDocumentsStream(), fieldName, expected);
 	}
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private Searcher _searcher;
