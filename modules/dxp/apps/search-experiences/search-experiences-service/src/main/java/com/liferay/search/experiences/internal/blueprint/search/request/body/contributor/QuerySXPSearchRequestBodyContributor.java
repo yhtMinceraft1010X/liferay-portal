@@ -27,8 +27,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
-import java.util.function.Consumer;
-
 /**
  * @author Petteri Karttunen
  */
@@ -56,7 +54,7 @@ public class QuerySXPSearchRequestBodyContributor
 			return;
 		}
 
-		_isNotEmptyForEach(
+		ArrayUtil.isNotEmptyForEach(
 			queryConfiguration.getQueryEntries(),
 			queryEntry -> _processQueryEntry(queryEntry, searchRequestBuilder));
 
@@ -71,14 +69,6 @@ public class QuerySXPSearchRequestBodyContributor
 	@Override
 	public String getName() {
 		return "query";
-	}
-
-	private <T> void _isNotEmptyForEach(T[] array, Consumer<T> consumer) {
-		if (ArrayUtil.isNotEmpty(array)) {
-			for (T t : array) {
-				consumer.accept(t);
-			}
-		}
 	}
 
 	private void _processClause(
@@ -101,7 +91,7 @@ public class QuerySXPSearchRequestBodyContributor
 			return;
 		}
 
-		_isNotEmptyForEach(
+		ArrayUtil.isNotEmptyForEach(
 			queryEntry.getClauses(),
 			clause -> _processClause(clause, searchRequestBuilder));
 	}
