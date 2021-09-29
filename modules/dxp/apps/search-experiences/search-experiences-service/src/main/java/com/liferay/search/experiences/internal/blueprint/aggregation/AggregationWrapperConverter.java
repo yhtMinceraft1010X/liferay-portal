@@ -870,9 +870,39 @@ public class AggregationWrapperConverter {
 	private HistogramAggregation _toHistogramAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		HistogramAggregation histogramAggregation = _aggregations.histogram(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_addOrders(histogramAggregation::addOrders, jsonObject);
+
+		JSONObject extendedBoundsJSONObject = jsonObject.getJSONObject(
+			"extended_bounds");
+
+		if (extendedBoundsJSONObject != null) {
+			histogramAggregation.setBounds(
+				extendedBoundsJSONObject.getDouble("min"),
+				extendedBoundsJSONObject.getDouble("max"));
+		}
+		else {
+			JSONObject hardBoundsJSONObject = jsonObject.getJSONObject(
+				"hard_bounds");
+
+			if (hardBoundsJSONObject != null) {
+				histogramAggregation.setBounds(
+					hardBoundsJSONObject.getDouble("min"),
+					hardBoundsJSONObject.getDouble("max"));
+			}
+		}
+
+		_setDouble(histogramAggregation::setInterval, jsonObject, "interval");
+		_setBoolean(histogramAggregation::setKeyed, jsonObject, "keyed");
+		_setLong(
+			histogramAggregation::setMinDocCount, jsonObject, "min_doc_count");
+		_setString(histogramAggregation::setMissing, jsonObject, "missing");
+		_setDouble(histogramAggregation::setOffset, jsonObject, "offset");
+		_setScript(histogramAggregation::setScript, jsonObject);
+
+		return histogramAggregation;
 	}
 
 	private MaxAggregation _toMaxAggregation(
