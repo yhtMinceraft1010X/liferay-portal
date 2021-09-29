@@ -244,14 +244,14 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 						ddmDataProviderRequest.getParameterOptional(
 							"paginationEnd", String.class);
 
-					int end = Integer.valueOf(
+					int end = GetterUtil.getInteger(
 						paginationEndOptional.orElse("10"));
 
 					Optional<String> paginationStartOptional =
 						ddmDataProviderRequest.getParameterOptional(
 							"paginationStart", String.class);
 
-					int start = Integer.valueOf(
+					int start = GetterUtil.getInteger(
 						paginationStartOptional.orElse("1"));
 
 					if (keyValuePairs.size() > (end - start)) {
@@ -543,7 +543,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 				proxySettingsMap.put("proxyHostName", proxyHost);
 				proxySettingsMap.put(
-					"proxyHostPort", Integer.valueOf(proxyPort));
+					"proxyHostPort", GetterUtil.getInteger(proxyPort));
 			}
 		}
 		catch (Exception exception) {
