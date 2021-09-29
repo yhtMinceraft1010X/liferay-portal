@@ -86,7 +86,11 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			return;
 		}
 
-		User user = _userLocalService.getUser(userId);
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return;
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
