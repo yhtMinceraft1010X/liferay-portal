@@ -614,7 +614,9 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${kbArticleTitleEdit}");
 
-		CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+		if (isSet(kbArticleContentEdit)) {
+			CKEditor.addContent(kbArticleContentEdit = "${kbArticleContentEdit}");
+		}
 
 		if (isSet(kbArticleAttachment)) {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
