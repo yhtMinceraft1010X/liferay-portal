@@ -429,11 +429,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		List<KeyValuePair> keyValuePairs = new ArrayList<>();
 
 		if (ddmRESTDataProviderSettings.filterable()) {
-			Optional<String> filterParameterValue =
+			Optional<String> filterParameterValueOptional =
 				ddmDataProviderRequest.getParameterOptional(
 					"filterParameterValue", String.class);
 
-			filterParameterValue.ifPresent(
+			filterParameterValueOptional.ifPresent(
 				filterParameterValueString -> keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.filterParameterName(),
@@ -441,22 +441,22 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 
 		if (ddmRESTDataProviderSettings.pagination()) {
-			Optional<String> paginationEnd =
+			Optional<String> paginationEndOptional =
 				ddmDataProviderRequest.getParameterOptional(
 					"paginationEnd", String.class);
 
-			paginationEnd.ifPresent(
+			paginationEndOptional.ifPresent(
 				paginationEndString -> keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.
 							paginationEndParameterName(),
 						paginationEndString)));
 
-			Optional<String> paginationStart =
+			Optional<String> paginationStartOptional =
 				ddmDataProviderRequest.getParameterOptional(
 					"paginationStart", String.class);
 
-			paginationStart.ifPresent(
+			paginationStartOptional.ifPresent(
 				paginationStartString -> keyValuePairs.add(
 					new KeyValuePair(
 						ddmRESTDataProviderSettings.
