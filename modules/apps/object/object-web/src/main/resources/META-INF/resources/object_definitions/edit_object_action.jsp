@@ -63,8 +63,6 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 
 		const name = document.getElementById('<portlet:namespace />name');
 
-		debugger;
-
 		var values = {};
 
 		const DDMFormInstance = Liferay.component(
