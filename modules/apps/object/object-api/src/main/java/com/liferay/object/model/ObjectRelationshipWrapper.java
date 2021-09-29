@@ -54,6 +54,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("objectDefinitionId1", getObjectDefinitionId1());
 		attributes.put("objectDefinitionId2", getObjectDefinitionId2());
 		attributes.put("objectFieldId2", getObjectFieldId2());
+		attributes.put("deletionType", getDeletionType());
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
@@ -131,6 +132,12 @@ public class ObjectRelationshipWrapper
 			setObjectFieldId2(objectFieldId2);
 		}
 
+		String deletionType = (String)attributes.get("deletionType");
+
+		if (deletionType != null) {
+			setDeletionType(deletionType);
+		}
+
 		String dbTableName = (String)attributes.get("dbTableName");
 
 		if (dbTableName != null) {
@@ -199,6 +206,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the deletion type of this object relationship.
+	 *
+	 * @return the deletion type of this object relationship
+	 */
+	@Override
+	public String getDeletionType() {
+		return model.getDeletionType();
 	}
 
 	/**
@@ -455,6 +472,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setDBTableName(String dbTableName) {
 		model.setDBTableName(dbTableName);
+	}
+
+	/**
+	 * Sets the deletion type of this object relationship.
+	 *
+	 * @param deletionType the deletion type of this object relationship
+	 */
+	@Override
+	public void setDeletionType(String deletionType) {
+		model.setDeletionType(deletionType);
 	}
 
 	/**

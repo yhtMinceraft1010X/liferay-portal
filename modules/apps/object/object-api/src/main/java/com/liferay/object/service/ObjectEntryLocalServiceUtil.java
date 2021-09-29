@@ -152,6 +152,14 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRelatedObjectEntries(
+			long groupId, long objectDefinitionId, long primaryKey)
+		throws PortalException {
+
+		getService().deleteRelatedObjectEntries(
+			groupId, objectDefinitionId, primaryKey);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

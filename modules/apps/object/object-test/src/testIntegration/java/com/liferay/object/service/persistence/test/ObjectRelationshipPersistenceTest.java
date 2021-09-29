@@ -145,6 +145,8 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setObjectFieldId2(RandomTestUtil.nextLong());
 
+		newObjectRelationship.setDeletionType(RandomTestUtil.randomString());
+
 		newObjectRelationship.setDBTableName(RandomTestUtil.randomString());
 
 		newObjectRelationship.setLabel(RandomTestUtil.randomString());
@@ -193,6 +195,9 @@ public class ObjectRelationshipPersistenceTest {
 		Assert.assertEquals(
 			existingObjectRelationship.getObjectFieldId2(),
 			newObjectRelationship.getObjectFieldId2());
+		Assert.assertEquals(
+			existingObjectRelationship.getDeletionType(),
+			newObjectRelationship.getDeletionType());
 		Assert.assertEquals(
 			existingObjectRelationship.getDBTableName(),
 			newObjectRelationship.getDBTableName());
@@ -295,8 +300,8 @@ public class ObjectRelationshipPersistenceTest {
 			"objectRelationshipId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
-			"objectFieldId2", true, "dbTableName", true, "label", true, "name",
-			true, "type", true);
+			"objectFieldId2", true, "deletionType", true, "dbTableName", true,
+			"label", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -617,6 +622,8 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setObjectDefinitionId2(RandomTestUtil.nextLong());
 
 		objectRelationship.setObjectFieldId2(RandomTestUtil.nextLong());
+
+		objectRelationship.setDeletionType(RandomTestUtil.randomString());
 
 		objectRelationship.setDBTableName(RandomTestUtil.randomString());
 

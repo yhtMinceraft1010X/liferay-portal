@@ -91,8 +91,9 @@ public class ObjectRelationshipModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId1", Types.BIGINT},
 		{"objectDefinitionId2", Types.BIGINT}, {"objectFieldId2", Types.BIGINT},
-		{"dbTableName", Types.VARCHAR}, {"label", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
+		{"deletionType", Types.VARCHAR}, {"dbTableName", Types.VARCHAR},
+		{"label", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,6 +111,7 @@ public class ObjectRelationshipModelImpl
 		TABLE_COLUMNS_MAP.put("objectDefinitionId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectFieldId2", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("deletionType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dbTableName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
@@ -117,7 +119,7 @@ public class ObjectRelationshipModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+		"create table ObjectRelationship (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectRelationshipId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId1 LONG,objectDefinitionId2 LONG,objectFieldId2 LONG,deletionType VARCHAR(75) null,dbTableName VARCHAR(75) null,label STRING null,name VARCHAR(75) null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectRelationship";
 
@@ -222,6 +224,7 @@ public class ObjectRelationshipModelImpl
 		model.setObjectDefinitionId1(soapModel.getObjectDefinitionId1());
 		model.setObjectDefinitionId2(soapModel.getObjectDefinitionId2());
 		model.setObjectFieldId2(soapModel.getObjectFieldId2());
+		model.setDeletionType(soapModel.getDeletionType());
 		model.setDBTableName(soapModel.getDBTableName());
 		model.setLabel(soapModel.getLabel());
 		model.setName(soapModel.getName());
@@ -447,6 +450,12 @@ public class ObjectRelationshipModelImpl
 			"objectFieldId2",
 			(BiConsumer<ObjectRelationship, Long>)
 				ObjectRelationship::setObjectFieldId2);
+		attributeGetterFunctions.put(
+			"deletionType", ObjectRelationship::getDeletionType);
+		attributeSetterBiConsumers.put(
+			"deletionType",
+			(BiConsumer<ObjectRelationship, String>)
+				ObjectRelationship::setDeletionType);
 		attributeGetterFunctions.put(
 			"dbTableName", ObjectRelationship::getDBTableName);
 		attributeSetterBiConsumers.put(
@@ -719,6 +728,26 @@ public class ObjectRelationshipModelImpl
 	public long getOriginalObjectFieldId2() {
 		return GetterUtil.getLong(
 			this.<Long>getColumnOriginalValue("objectFieldId2"));
+	}
+
+	@JSON
+	@Override
+	public String getDeletionType() {
+		if (_deletionType == null) {
+			return "";
+		}
+		else {
+			return _deletionType;
+		}
+	}
+
+	@Override
+	public void setDeletionType(String deletionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_deletionType = deletionType;
 	}
 
 	@JSON
@@ -1050,6 +1079,7 @@ public class ObjectRelationshipModelImpl
 		objectRelationshipImpl.setObjectDefinitionId1(getObjectDefinitionId1());
 		objectRelationshipImpl.setObjectDefinitionId2(getObjectDefinitionId2());
 		objectRelationshipImpl.setObjectFieldId2(getObjectFieldId2());
+		objectRelationshipImpl.setDeletionType(getDeletionType());
 		objectRelationshipImpl.setDBTableName(getDBTableName());
 		objectRelationshipImpl.setLabel(getLabel());
 		objectRelationshipImpl.setName(getName());
@@ -1087,6 +1117,8 @@ public class ObjectRelationshipModelImpl
 			this.<Long>getColumnOriginalValue("objectDefinitionId2"));
 		objectRelationshipImpl.setObjectFieldId2(
 			this.<Long>getColumnOriginalValue("objectFieldId2"));
+		objectRelationshipImpl.setDeletionType(
+			this.<String>getColumnOriginalValue("deletionType"));
 		objectRelationshipImpl.setDBTableName(
 			this.<String>getColumnOriginalValue("dbTableName"));
 		objectRelationshipImpl.setLabel(
@@ -1224,6 +1256,14 @@ public class ObjectRelationshipModelImpl
 
 		objectRelationshipCacheModel.objectFieldId2 = getObjectFieldId2();
 
+		objectRelationshipCacheModel.deletionType = getDeletionType();
+
+		String deletionType = objectRelationshipCacheModel.deletionType;
+
+		if ((deletionType != null) && (deletionType.length() == 0)) {
+			objectRelationshipCacheModel.deletionType = null;
+		}
+
 		objectRelationshipCacheModel.dbTableName = getDBTableName();
 
 		String dbTableName = objectRelationshipCacheModel.dbTableName;
@@ -1359,6 +1399,7 @@ public class ObjectRelationshipModelImpl
 	private long _objectDefinitionId1;
 	private long _objectDefinitionId2;
 	private long _objectFieldId2;
+	private String _deletionType;
 	private String _dbTableName;
 	private String _label;
 	private String _labelCurrentLanguageId;
@@ -1406,6 +1447,7 @@ public class ObjectRelationshipModelImpl
 		_columnOriginalValues.put("objectDefinitionId1", _objectDefinitionId1);
 		_columnOriginalValues.put("objectDefinitionId2", _objectDefinitionId2);
 		_columnOriginalValues.put("objectFieldId2", _objectFieldId2);
+		_columnOriginalValues.put("deletionType", _deletionType);
 		_columnOriginalValues.put("dbTableName", _dbTableName);
 		_columnOriginalValues.put("label", _label);
 		_columnOriginalValues.put("name", _name);
@@ -1456,13 +1498,15 @@ public class ObjectRelationshipModelImpl
 
 		columnBitmasks.put("objectFieldId2", 1024L);
 
-		columnBitmasks.put("dbTableName", 2048L);
+		columnBitmasks.put("deletionType", 2048L);
 
-		columnBitmasks.put("label", 4096L);
+		columnBitmasks.put("dbTableName", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("label", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("name", 16384L);
+
+		columnBitmasks.put("type_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

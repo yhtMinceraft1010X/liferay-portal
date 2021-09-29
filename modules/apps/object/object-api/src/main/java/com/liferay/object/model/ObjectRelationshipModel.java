@@ -251,6 +251,21 @@ public interface ObjectRelationshipModel
 	public void setObjectFieldId2(long objectFieldId2);
 
 	/**
+	 * Returns the deletion type of this object relationship.
+	 *
+	 * @return the deletion type of this object relationship
+	 */
+	@AutoEscape
+	public String getDeletionType();
+
+	/**
+	 * Sets the deletion type of this object relationship.
+	 *
+	 * @param deletionType the deletion type of this object relationship
+	 */
+	public void setDeletionType(String deletionType);
+
+	/**
 	 * Returns the db table name of this object relationship.
 	 *
 	 * @return the db table name of this object relationship

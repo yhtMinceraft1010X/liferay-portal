@@ -153,8 +153,8 @@ public class ObjectRelationshipServiceSoap {
 
 	public static com.liferay.object.model.ObjectRelationshipSoap
 			updateObjectRelationship(
-				long objectRelationshipId, String[] labelMapLanguageIds,
-				String[] labelMapValues)
+				long objectRelationshipId, String deletionType,
+				String[] labelMapLanguageIds, String[] labelMapValues)
 		throws RemoteException {
 
 		try {
@@ -163,7 +163,7 @@ public class ObjectRelationshipServiceSoap {
 
 			com.liferay.object.model.ObjectRelationship returnValue =
 				ObjectRelationshipServiceUtil.updateObjectRelationship(
-					objectRelationshipId, labelMap);
+					objectRelationshipId, deletionType, labelMap);
 
 			return com.liferay.object.model.ObjectRelationshipSoap.toSoapModel(
 				returnValue);

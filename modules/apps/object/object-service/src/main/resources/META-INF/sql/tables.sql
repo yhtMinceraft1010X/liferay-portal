@@ -168,6 +168,7 @@ create table ObjectRelationship (
 	objectDefinitionId1 LONG,
 	objectDefinitionId2 LONG,
 	objectFieldId2 LONG,
+	deletionType VARCHAR(75) null,
 	dbTableName VARCHAR(75) null,
 	label STRING null,
 	name VARCHAR(75) null,

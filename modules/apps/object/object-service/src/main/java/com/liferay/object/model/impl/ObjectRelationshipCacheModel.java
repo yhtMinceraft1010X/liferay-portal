@@ -78,7 +78,7 @@ public class ObjectRelationshipCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class ObjectRelationshipCacheModel
 		sb.append(objectDefinitionId2);
 		sb.append(", objectFieldId2=");
 		sb.append(objectFieldId2);
+		sb.append(", deletionType=");
+		sb.append(deletionType);
 		sb.append(", dbTableName=");
 		sb.append(dbTableName);
 		sb.append(", label=");
@@ -158,6 +160,13 @@ public class ObjectRelationshipCacheModel
 		objectRelationshipImpl.setObjectDefinitionId2(objectDefinitionId2);
 		objectRelationshipImpl.setObjectFieldId2(objectFieldId2);
 
+		if (deletionType == null) {
+			objectRelationshipImpl.setDeletionType("");
+		}
+		else {
+			objectRelationshipImpl.setDeletionType(deletionType);
+		}
+
 		if (dbTableName == null) {
 			objectRelationshipImpl.setDBTableName("");
 		}
@@ -210,6 +219,7 @@ public class ObjectRelationshipCacheModel
 		objectDefinitionId2 = objectInput.readLong();
 
 		objectFieldId2 = objectInput.readLong();
+		deletionType = objectInput.readUTF();
 		dbTableName = objectInput.readUTF();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -248,6 +258,13 @@ public class ObjectRelationshipCacheModel
 		objectOutput.writeLong(objectDefinitionId2);
 
 		objectOutput.writeLong(objectFieldId2);
+
+		if (deletionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(deletionType);
+		}
 
 		if (dbTableName == null) {
 			objectOutput.writeUTF("");
@@ -289,6 +306,7 @@ public class ObjectRelationshipCacheModel
 	public long objectDefinitionId1;
 	public long objectDefinitionId2;
 	public long objectFieldId2;
+	public String deletionType;
 	public String dbTableName;
 	public String label;
 	public String name;
