@@ -32,7 +32,6 @@ definition {
 	test LearningToRankSmoke {
 		property elastic.override.version = "7.13.4";
 		property elasticsearch.ltr.enabled = "true";
-		property osgi.app.includes = "portal-search-learning-to-rank";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
@@ -210,7 +209,6 @@ definition {
 	test XPackPkiAuthenticationSmokeTest {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationSmokeTest";
@@ -236,7 +234,6 @@ definition {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
 		property elasticsearch.jdk11.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.suite.search.engine = "";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
@@ -261,7 +258,6 @@ definition {
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
@@ -308,7 +304,6 @@ definition {
 	test XPackWithJDK11 {
 		property elastic.xpack.enabled = "true";
 		property elasticsearch.jdk11.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.suite.search.engine = "";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
