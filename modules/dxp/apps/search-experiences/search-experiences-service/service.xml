@@ -19,7 +19,7 @@
 
 		<!-- Other fields -->
 
-		<column name="configurationsJSON" type="String" />
+		<column name="configurationJSON" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="elementInstancesJSON" type="String" />
 		<column localized="true" name="title" type="String" />
@@ -71,7 +71,7 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>SXPBlueprintConfigurationsJSON</exception>
+		<exception>SXPBlueprintConfigurationJSON</exception>
 		<exception>SXPBlueprintTitle</exception>
 		<exception>SXPElementElementDefinitionJSON</exception>
 		<exception>SXPElementReadOnly</exception>

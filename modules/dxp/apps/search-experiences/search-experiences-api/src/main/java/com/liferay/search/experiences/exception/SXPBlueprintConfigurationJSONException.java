@@ -22,26 +22,26 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SXPBlueprintConfigurationsJSONException extends PortalException {
+public class SXPBlueprintConfigurationJSONException extends PortalException {
 
-	public SXPBlueprintConfigurationsJSONException() {
+	public SXPBlueprintConfigurationJSONException() {
 	}
 
-	public SXPBlueprintConfigurationsJSONException(List<Problem> problems) {
+	public SXPBlueprintConfigurationJSONException(List<Problem> problems) {
 		_problems = problems;
 	}
 
-	public SXPBlueprintConfigurationsJSONException(String msg) {
+	public SXPBlueprintConfigurationJSONException(String msg) {
 		super(msg);
 	}
 
-	public SXPBlueprintConfigurationsJSONException(
+	public SXPBlueprintConfigurationJSONException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public SXPBlueprintConfigurationsJSONException(Throwable throwable) {
+	public SXPBlueprintConfigurationJSONException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -27,7 +27,7 @@ public class SXPBlueprintUtil {
 		return new SXPBlueprint() {
 			{
 				configuration = ConfigurationUtil.toConfiguration(
-					sxpBlueprint.getConfigurationsJSON());
+					sxpBlueprint.getConfigurationJSON());
 				description = "";
 				id = sxpBlueprint.getSXPBlueprintId();
 				title = "";
