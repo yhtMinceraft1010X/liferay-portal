@@ -322,6 +322,300 @@ public class JSONUtil {
 		return list.toArray((T[])Array.newInstance(clazz, 0));
 	}
 
+	public static double[] toDoubleArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new double[0];
+		}
+
+		double[] values = new double[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values[i] = jsonArray.getDouble(i);
+		}
+
+		return values;
+	}
+
+	public static double[] toDoubleArray(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new double[0];
+		}
+
+		List<Double> values = toDoubleList(jsonArray, jsonObjectKey);
+
+		return ArrayUtil.toArray(values.toArray(new Double[0]));
+	}
+
+	public static List<Double> toDoubleList(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Double> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(jsonArray.getDouble(i));
+		}
+
+		return values;
+	}
+
+	public static List<Double> toDoubleList(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Double> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(jsonObject.getDouble(jsonObjectKey));
+			}
+		}
+
+		return values;
+	}
+
+	public static Set<Double> toDoubleSet(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Double> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(jsonArray.getDouble(i));
+		}
+
+		return values;
+	}
+
+	public static Set<Double> toDoubleSet(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Double> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(jsonObject.getDouble(jsonObjectKey));
+			}
+		}
+
+		return values;
+	}
+
+	public static float[] toFloatArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new float[0];
+		}
+
+		float[] values = new float[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values[i] = GetterUtil.getFloat(jsonArray.get(i));
+		}
+
+		return values;
+	}
+
+	public static float[] toFloatArray(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new float[0];
+		}
+
+		List<Float> values = toFloatList(jsonArray, jsonObjectKey);
+
+		return ArrayUtil.toArray(values.toArray(new Float[0]));
+	}
+
+	public static List<Float> toFloatList(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Float> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(GetterUtil.getFloat(jsonArray.get(i)));
+		}
+
+		return values;
+	}
+
+	public static List<Float> toFloatList(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Float> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(GetterUtil.getFloat(jsonObject.get(jsonObjectKey)));
+			}
+		}
+
+		return values;
+	}
+
+	public static Set<Float> toFloatSet(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Float> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(GetterUtil.getFloat(jsonArray.get(i)));
+		}
+
+		return values;
+	}
+
+	public static Set<Float> toFloatSet(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Float> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(GetterUtil.getFloat(jsonObject.get(jsonObjectKey)));
+			}
+		}
+
+		return values;
+	}
+
+	public static int[] toIntegerArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new int[0];
+		}
+
+		int[] values = new int[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values[i] = jsonArray.getInt(i);
+		}
+
+		return values;
+	}
+
+	public static int[] toIntegerArray(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new int[0];
+		}
+
+		List<Integer> values = toIntegerList(jsonArray, jsonObjectKey);
+
+		return ArrayUtil.toArray(values.toArray(new Integer[0]));
+	}
+
+	public static List<Integer> toIntegerList(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Integer> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(jsonArray.getInt(i));
+		}
+
+		return values;
+	}
+
+	public static List<Integer> toIntegerList(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new ArrayList<>();
+		}
+
+		List<Integer> values = new ArrayList<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(jsonObject.getInt(jsonObjectKey));
+			}
+		}
+
+		return values;
+	}
+
+	public static Set<Integer> toIntegerSet(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Integer> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			values.add(jsonArray.getInt(i));
+		}
+
+		return values;
+	}
+
+	public static Set<Integer> toIntegerSet(
+		JSONArray jsonArray, String jsonObjectKey) {
+
+		if (jsonArray == null) {
+			return new HashSet<>();
+		}
+
+		Set<Integer> values = new HashSet<>(jsonArray.length());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			Object value = jsonObject.opt(jsonObjectKey);
+
+			if (value != null) {
+				values.add(jsonObject.getInt(jsonObjectKey));
+			}
+		}
+
+		return values;
+	}
+
 	public static <T> JSONArray toJSONArray(
 			List<T> list, UnsafeFunction<T, Object, Exception> unsafeFunction)
 		throws Exception {
