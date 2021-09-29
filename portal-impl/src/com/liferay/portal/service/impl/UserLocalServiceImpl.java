@@ -1999,7 +1999,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		boolean adminEmailUserAddedEnabled = PrefsPropsUtil.getBoolean(
 			user.getCompanyId(), PropsKeys.ADMIN_EMAIL_USER_ADDED_ENABLED);
-
 		boolean sendEmail = ParamUtil.getBoolean(serviceContext, "sendEmail");
 
 		if (adminEmailUserAddedEnabled && autoPassword && sendEmail) {
