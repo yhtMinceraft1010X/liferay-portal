@@ -470,8 +470,10 @@ public class AggregationWrapperConverter {
 		consumer.accept(jsonObject.get(key));
 	}
 
-	private void _setScript(Consumer<Script> consumer, JSONObject jsonObject) {
-		consumer.accept(_scriptConverter.toScript(jsonObject.get("script")));
+	private void _setScript(
+		Consumer<Script> consumer, JSONObject jsonObject, String key) {
+
+		consumer.accept(_scriptConverter.toScript(jsonObject.get(key)));
 	}
 
 	private void _setString(
@@ -491,7 +493,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(avgAggregation::setMissing, jsonObject, "missing");
-		_setScript(avgAggregation::setScript, jsonObject);
+		_setScript(avgAggregation::setScript, jsonObject, "script");
 
 		return avgAggregation;
 	}
@@ -605,7 +607,7 @@ public class AggregationWrapperConverter {
 		_setInteger(
 			cardinalityAggregation::setPrecisionThreshold, jsonObject,
 			"precision_threshold");
-		_setScript(cardinalityAggregation::setScript, jsonObject);
+		_setScript(cardinalityAggregation::setScript, jsonObject, "script");
 
 		return cardinalityAggregation;
 	}
@@ -660,7 +662,7 @@ public class AggregationWrapperConverter {
 			"min_doc_count");
 		_setString(dateHistogramAggregation::setMissing, jsonObject, "missing");
 		_setLong(dateHistogramAggregation::setOffset, jsonObject, "offset");
-		_setScript(dateHistogramAggregation::setScript, jsonObject);
+		_setScript(dateHistogramAggregation::setScript, jsonObject, "script");
 
 		return dateHistogramAggregation;
 	}
@@ -675,7 +677,7 @@ public class AggregationWrapperConverter {
 		_setString(dateRangeAggregation::setFormat, jsonObject, "format");
 		_setBoolean(dateRangeAggregation::setKeyed, jsonObject, "keyed");
 		_setString(dateRangeAggregation::setMissing, jsonObject, "missing");
-		_setScript(dateRangeAggregation::setScript, jsonObject);
+		_setScript(dateRangeAggregation::setScript, jsonObject, "script");
 
 		return dateRangeAggregation;
 	}
@@ -709,7 +711,8 @@ public class AggregationWrapperConverter {
 			"max_docs_per_value");
 		_setString(
 			diversifiedSamplerAggregation::setMissing, jsonObject, "missing");
-		_setScript(diversifiedSamplerAggregation::setScript, jsonObject);
+		_setScript(
+			diversifiedSamplerAggregation::setScript, jsonObject, "script");
 		_setInteger(
 			diversifiedSamplerAggregation::setShardSize, jsonObject,
 			"shard_size");
@@ -732,7 +735,7 @@ public class AggregationWrapperConverter {
 			_aggregations.extendedStats(name, jsonObject.getString("field"));
 
 		_setString(extendedStatsAggregation::setMissing, jsonObject, "missing");
-		_setScript(extendedStatsAggregation::setScript, jsonObject);
+		_setScript(extendedStatsAggregation::setScript, jsonObject, "script");
 		_setInteger(extendedStatsAggregation::setSigma, jsonObject, "sigma");
 
 		return extendedStatsAggregation;
@@ -848,7 +851,7 @@ public class AggregationWrapperConverter {
 		}
 
 		_setBoolean(geoDistanceAggregation::setKeyed, jsonObject, "keyed");
-		_setScript(geoDistanceAggregation::setScript, jsonObject);
+		_setScript(geoDistanceAggregation::setScript, jsonObject, "script");
 
 		return geoDistanceAggregation;
 	}
@@ -862,7 +865,7 @@ public class AggregationWrapperConverter {
 		_setString(geoHashGridAggregation::setMissing, jsonObject, "missing");
 		_setInteger(
 			geoHashGridAggregation::setPrecision, jsonObject, "precision");
-		_setScript(geoHashGridAggregation::setScript, jsonObject);
+		_setScript(geoHashGridAggregation::setScript, jsonObject, "script");
 		_setInteger(
 			geoHashGridAggregation::setShardSize, jsonObject, "shard_size");
 		_setInteger(geoHashGridAggregation::setSize, jsonObject, "size");
@@ -909,7 +912,7 @@ public class AggregationWrapperConverter {
 			histogramAggregation::setMinDocCount, jsonObject, "min_doc_count");
 		_setString(histogramAggregation::setMissing, jsonObject, "missing");
 		_setDouble(histogramAggregation::setOffset, jsonObject, "offset");
-		_setScript(histogramAggregation::setScript, jsonObject);
+		_setScript(histogramAggregation::setScript, jsonObject, "script");
 
 		return histogramAggregation;
 	}
@@ -921,7 +924,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(maxAggregation::setMissing, jsonObject, "missing");
-		_setScript(maxAggregation::setScript, jsonObject);
+		_setScript(maxAggregation::setScript, jsonObject, "script");
 
 		return maxAggregation;
 	}
@@ -946,7 +949,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(minAggregation::setMissing, jsonObject, "missing");
-		_setScript(minAggregation::setScript, jsonObject);
+		_setScript(minAggregation::setScript, jsonObject, "script");
 
 		return minAggregation;
 	}
@@ -971,7 +974,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(missingAggregation::setMissing, jsonObject, "missing");
-		_setScript(missingAggregation::setScript, jsonObject);
+		_setScript(missingAggregation::setScript, jsonObject, "script");
 
 		return missingAggregation;
 	}
@@ -1014,7 +1017,7 @@ public class AggregationWrapperConverter {
 		_setBoolean(percentileRanksAggregation::setKeyed, jsonObject, "keyed");
 		_setString(
 			percentileRanksAggregation::setMissing, jsonObject, "missing");
-		_setScript(percentileRanksAggregation::setScript, jsonObject);
+		_setScript(percentileRanksAggregation::setScript, jsonObject, "script");
 
 		JSONObject hdrJSONObject = jsonObject.getJSONObject("hdr");
 		JSONObject tDigestJSONObject = jsonObject.getJSONObject("tdigest");
@@ -1046,7 +1049,7 @@ public class AggregationWrapperConverter {
 		percentilesAggregation.setPercents(
 			_toDoubleArray(jsonObject.getJSONArray("percents")));
 
-		_setScript(percentilesAggregation::setScript, jsonObject);
+		_setScript(percentilesAggregation::setScript, jsonObject, "script");
 
 		JSONObject hdrJSONObject = jsonObject.getJSONObject("hdr");
 		JSONObject tDigestJSONObject = jsonObject.getJSONObject("tdigest");
@@ -1096,7 +1099,7 @@ public class AggregationWrapperConverter {
 		_setString(rangeAggregation::setFormat, jsonObject, "format");
 		_setBoolean(rangeAggregation::setKeyed, jsonObject, "keyed");
 		_setString(rangeAggregation::setMissing, jsonObject, "missing");
-		_setScript(rangeAggregation::setScript, jsonObject);
+		_setScript(rangeAggregation::setScript, jsonObject, "script");
 
 		return rangeAggregation;
 	}
@@ -1120,9 +1123,44 @@ public class AggregationWrapperConverter {
 	private ScriptedMetricAggregation _toScriptedMetricAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		Script script = _scriptConverter.toScript(jsonObject.get("map_script"));
 
-		return null;
+		if (script == null) {
+			return null;
+		}
+
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric(name);
+
+		_setScript(
+			scriptedMetricAggregation::setCombineScript, jsonObject,
+			"combine_script");
+		_setScript(
+			scriptedMetricAggregation::setInitScript, jsonObject,
+			"init_script");
+		scriptedMetricAggregation.setMapScript(script);
+
+		JSONObject paramsJSONObject = jsonObject.getJSONObject("params");
+
+		if (paramsJSONObject != null) {
+			Map<String, Object> parameters = new HashMap<>();
+
+			Iterator<String> iterator = paramsJSONObject.keys();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				parameters.put(key, paramsJSONObject.get(key));
+			}
+
+			scriptedMetricAggregation.setParameters(parameters);
+		}
+
+		_setScript(
+			scriptedMetricAggregation::setReduceScript, jsonObject,
+			"reduce_script");
+
+		return scriptedMetricAggregation;
 	}
 
 	private SerialDiffPipelineAggregation _toSerialDiffPipelineAggregation(
@@ -1159,9 +1197,13 @@ public class AggregationWrapperConverter {
 	private StatsAggregation _toStatsAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		StatsAggregation statsAggregation = _aggregations.stats(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_setString(statsAggregation::setMissing, jsonObject, "missing");
+		_setScript(statsAggregation::setScript, jsonObject, "script");
+
+		return statsAggregation;
 	}
 
 	private StatsBucketPipelineAggregation _toStatsBucketPipelineAggregation(
@@ -1201,7 +1243,7 @@ public class AggregationWrapperConverter {
 			name, jsonObject.getString("field"));
 
 		_setString(sumAggregation::setMissing, jsonObject, "missing");
-		_setScript(sumAggregation::setScript, jsonObject);
+		_setScript(sumAggregation::setScript, jsonObject, "script");
 
 		return sumAggregation;
 	}
@@ -1248,7 +1290,7 @@ public class AggregationWrapperConverter {
 		_setBoolean(
 			termsAggregation::setShowTermDocCountError, jsonObject,
 			"show_term_doc_count_error");
-		_setScript(termsAggregation::setScript, jsonObject);
+		_setScript(termsAggregation::setScript, jsonObject, "script");
 		_setInteger(termsAggregation::setSize, jsonObject, "size");
 
 		return termsAggregation;
@@ -1328,7 +1370,7 @@ public class AggregationWrapperConverter {
 		ValueCountAggregation valueCountAggregation = _aggregations.valueCount(
 			name, jsonObject.getString("field"));
 
-		_setScript(valueCountAggregation::setScript, jsonObject);
+		_setScript(valueCountAggregation::setScript, jsonObject, "script");
 
 		return valueCountAggregation;
 	}
