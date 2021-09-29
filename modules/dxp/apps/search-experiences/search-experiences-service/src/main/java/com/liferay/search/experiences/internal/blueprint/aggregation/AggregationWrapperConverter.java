@@ -667,9 +667,16 @@ public class AggregationWrapperConverter {
 	private DateRangeAggregation _toDateRangeAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_addRange(dateRangeAggregation::addRange, jsonObject);
+		_setString(dateRangeAggregation::setFormat, jsonObject, "format");
+		_setBoolean(dateRangeAggregation::setKeyed, jsonObject, "keyed");
+		_setString(dateRangeAggregation::setMissing, jsonObject, "missing");
+		_setScript(dateRangeAggregation::setScript, jsonObject);
+
+		return dateRangeAggregation;
 	}
 
 	private DerivativePipelineAggregation _toDerivativePipelineAggregation(
