@@ -19,7 +19,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,10 +69,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 		WorkflowThreadLocal.setEnabled(false);
 
 		_group = GroupTestUtil.addGroup();
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
-
 		_sxpBlueprint = _addSXPBlueprint();
 	}
 
@@ -108,7 +103,9 @@ public class SXPBlueprintSearchRequestContributorTest {
 				HashMapBuilder.put(
 					LocaleUtil.US, ""
 				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+				LocaleUtil.getSiteDefault(), false, true,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 		}
 	}
 
@@ -127,7 +124,8 @@ public class SXPBlueprintSearchRequestContributorTest {
 			"",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
-			_serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 	}
 
 	private void _assertSearch(
@@ -159,8 +157,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private SXPBlueprint _sxpBlueprint;
