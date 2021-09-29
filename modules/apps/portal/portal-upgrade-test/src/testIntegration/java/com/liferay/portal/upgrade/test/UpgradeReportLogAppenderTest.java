@@ -151,6 +151,7 @@ public class UpgradeReportLogAppenderTest {
 	@Test
 	public void testDatabaseTablesIsSorted() throws Exception {
 		_appender.start();
+
 		_appender.stop();
 
 		if (_reportContent == null) {
