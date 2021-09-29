@@ -96,11 +96,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		throws DDMDataProviderException {
 
 		try {
-			Optional<DDMDataProviderInstance> ddmDataProviderInstance =
+			Optional<DDMDataProviderInstance> ddmDataProviderInstanceOptional =
 				_getDDMDataProviderInstanceOptional(
 					ddmDataProviderRequest.getDDMDataProviderId());
 
-			if (!ddmDataProviderInstance.isPresent()) {
+			if (!ddmDataProviderInstanceOptional.isPresent()) {
 				DDMDataProviderResponse.Builder builder =
 					DDMDataProviderResponse.Builder.newBuilder();
 
@@ -111,7 +111,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 				_ddmDataProviderInstanceSettings.getSettings(
-					ddmDataProviderInstance.get(),
+					ddmDataProviderInstanceOptional.get(),
 					DDMRESTDataProviderSettings.class);
 
 			try {
