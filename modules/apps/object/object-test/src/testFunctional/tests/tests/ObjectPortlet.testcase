@@ -245,9 +245,6 @@ definition {
 		ObjectPortlet.searchColumn(columnName = "Field");
 
 		ObjectPortlet.assertMenuItemColumn(dropdowntItem = "Field");
-
-
-		
 	}
 
 	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"

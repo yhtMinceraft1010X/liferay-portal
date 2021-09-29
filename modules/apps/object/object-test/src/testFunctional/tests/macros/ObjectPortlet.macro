@@ -29,9 +29,6 @@ definition {
 		AssertElementPresent(
 			key_dropdowntItem = "${dropdowntItem}",
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
-
-
-
 	}
 
 	macro changePagination {
@@ -72,9 +69,6 @@ definition {
 			value1 = "${columnName}");
 
 		Click(locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
-
-
-		
 	}
 
 	macro searchEntry {
