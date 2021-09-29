@@ -19,7 +19,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -72,16 +71,14 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_user = TestPropsValues.getUser();
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
+
+		_sxpBlueprint = _addSXPBlueprint();
 	}
 
 	@Test
 	public void testQueryConfiguration() throws Exception {
-		_addSXPBlueprint();
-
 		_addJournalArticles("alpha", "beta", "charlie");
 
 		_assertSearch("[beta]", "localized_title_en_US", "beta");
@@ -89,8 +86,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Test
 	public void testSortConfiguration() throws Exception {
-		_addSXPBlueprint();
-
 		_addJournalArticles("alpha delta", "beta delta", "charlie delta");
 
 		_assertSearch(
@@ -117,11 +112,11 @@ public class SXPBlueprintSearchRequestContributorTest {
 		}
 	}
 
-	private void _addSXPBlueprint() throws Exception {
+	private SXPBlueprint _addSXPBlueprint() throws Exception {
 		Class<?> clazz = getClass();
 
-		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			_user.getUserId(),
+		return _sxpBlueprintLocalService.addSXPBlueprint(
+			TestPropsValues.getUserId(),
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(
@@ -172,7 +167,5 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
-
-	private User _user;
 
 }
