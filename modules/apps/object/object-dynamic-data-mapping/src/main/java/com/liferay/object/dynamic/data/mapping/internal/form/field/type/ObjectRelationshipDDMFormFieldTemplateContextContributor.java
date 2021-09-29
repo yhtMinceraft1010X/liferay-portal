@@ -201,13 +201,11 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	}
 
 	private ObjectDefinition _getObjectDefinition(DDMFormField ddmFormField) {
-		long objectDefinitionId = GetterUtil.getLong(
-			getValue(
-				GetterUtil.getString(
-					ddmFormField.getProperty("objectDefinitionId"))));
-
 		return _objectDefinitionLocalService.fetchObjectDefinition(
-			objectDefinitionId);
+			GetterUtil.getLong(
+				getValue(
+					GetterUtil.getString(
+						ddmFormField.getProperty("objectDefinitionId")))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
