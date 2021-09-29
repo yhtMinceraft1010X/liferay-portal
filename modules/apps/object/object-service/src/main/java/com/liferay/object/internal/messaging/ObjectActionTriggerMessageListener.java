@@ -68,8 +68,8 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectActionTriggerMessageListener.class);
 
-	private String _className;
+	private final String _className;
 	private final ObjectActionEngine _objectActionEngine;
-	private String _objectActionTriggerKey;
+	private final String _objectActionTriggerKey;
 
 }
