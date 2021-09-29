@@ -24,6 +24,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapper;
 import com.liferay.search.experiences.internal.blueprint.aggregation.AggregationWrapperConverter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
+import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
@@ -37,12 +38,12 @@ public class AggsSXPSearchRequestBodyContributor
 
 	public AggsSXPSearchRequestBodyContributor(
 		Aggregations aggregations, GeoBuilders geoBuilders,
-		HighlightConverter highlightConverter, ScriptConverter scriptConverter,
-		Sorts sorts) {
+		HighlightConverter highlightConverter, QueryConverter queryConverter,
+		ScriptConverter scriptConverter, Sorts sorts) {
 
 		_aggregationWrapperConverter = new AggregationWrapperConverter(
-			aggregations, geoBuilders, highlightConverter, scriptConverter,
-			sorts);
+			aggregations, geoBuilders, highlightConverter, queryConverter,
+			scriptConverter, sorts);
 	}
 
 	@Override

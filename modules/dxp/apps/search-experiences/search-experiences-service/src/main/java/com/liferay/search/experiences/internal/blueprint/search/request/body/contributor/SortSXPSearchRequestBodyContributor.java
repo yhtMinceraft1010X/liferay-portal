@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.geolocation.DistanceUnit;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoDistanceType;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.sort.FieldSort;
@@ -33,6 +32,7 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
@@ -48,11 +48,11 @@ public class SortSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public SortSXPSearchRequestBodyContributor(
-		GeoBuilders geoBuilders, Queries queries,
+		GeoBuilders geoBuilders, QueryConverter queryConverter,
 		ScriptConverter scriptConverter, Sorts sorts) {
 
 		_geoBuilders = geoBuilders;
-		_queries = queries;
+		_queryConverter = queryConverter;
 		_scriptConverter = scriptConverter;
 		_sorts = sorts;
 	}
@@ -234,9 +234,7 @@ public class SortSXPSearchRequestBodyContributor
 		NestedSort nestedSort = _sorts.nested(jsonObject.getString("path"));
 
 		if (jsonObject.has("filter")) {
-			nestedSort.setFilterQuery(
-				_queries.wrapper(
-					String.valueOf(jsonObject.getJSONObject("filter"))));
+			nestedSort.setFilterQuery(_queryConverter.toQuery(jsonObject));
 		}
 
 		if (jsonObject.has("nested")) {
@@ -297,7 +295,7 @@ public class SortSXPSearchRequestBodyContributor
 	}
 
 	private final GeoBuilders _geoBuilders;
-	private final Queries _queries;
+	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Sorts _sorts;
 

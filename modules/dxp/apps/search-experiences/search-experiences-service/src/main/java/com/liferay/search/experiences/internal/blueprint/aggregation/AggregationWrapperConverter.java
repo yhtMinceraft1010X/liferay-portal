@@ -79,6 +79,7 @@ import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregati
 import com.liferay.portal.search.geolocation.DistanceUnit;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoDistanceType;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.ScriptFieldBuilder;
@@ -87,6 +88,7 @@ import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
+import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 
 import java.util.ArrayList;
@@ -104,11 +106,12 @@ public class AggregationWrapperConverter {
 
 	public AggregationWrapperConverter(
 		Aggregations aggregations, GeoBuilders geoBuilders,
-		HighlightConverter highlightConverter, ScriptConverter scriptConverter,
-		Sorts sorts) {
+		HighlightConverter highlightConverter, QueryConverter queryConverter,
+		ScriptConverter scriptConverter, Sorts sorts) {
 
 		_aggregations = aggregations;
 		_geoBuilders = geoBuilders;
+		_queryConverter = queryConverter;
 		_scriptConverter = scriptConverter;
 		_sorts = sorts;
 
@@ -230,7 +233,7 @@ public class AggregationWrapperConverter {
 		ConvertFunction convertFunction = _convertFunctions.get(type);
 
 		if (convertFunction == null) {
-			throw new IllegalArgumentException("Uknown aggregation " + type);
+			throw new IllegalArgumentException("Unknown aggregation " + type);
 		}
 
 		try {
@@ -743,17 +746,43 @@ public class AggregationWrapperConverter {
 	private FilterAggregation _toFilterAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		Query query = _queryConverter.toQuery(jsonObject);
 
-		return null;
+		if (query == null) {
+			return null;
+		}
+
+		return _aggregations.filter(name, query);
 	}
 
 	private FiltersAggregation _toFiltersAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		FiltersAggregation filtersAggregation = _aggregations.filters(
+			name, jsonObject.getString("field"));
 
-		return null;
+		JSONObject filtersJSONObject = jsonObject.getJSONObject("filters");
+
+		if (filtersJSONObject != null) {
+			for (String key : filtersJSONObject.keySet()) {
+				Query query = _queryConverter.toQuery(
+					filtersJSONObject.getJSONObject(key));
+
+				if (query == null) {
+					continue;
+				}
+
+				filtersAggregation.addKeyedQuery(key, query);
+			}
+		}
+
+		_setBoolean(
+			filtersAggregation::setOtherBucket, jsonObject, "other_bucket");
+		_setString(
+			filtersAggregation::setOtherBucketKey, jsonObject,
+			"other_bucket_key");
+
+		return filtersAggregation;
 	}
 
 	private GeoBoundsAggregation _toGeoBoundsAggregation(
@@ -1199,6 +1228,7 @@ public class AggregationWrapperConverter {
 		new HashMap<>();
 	private final GeoBuilders _geoBuilders;
 	private HighlightConverter _highlightConverter;
+	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Scripts _scripts;
 	private final Sorts _sorts;

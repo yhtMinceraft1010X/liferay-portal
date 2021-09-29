@@ -118,7 +118,7 @@ public class SXPConditionEvaluator {
 			return !sxpParameter.evaluateInRange(valueJSONObject);
 		}
 
-		throw new IllegalArgumentException("Uknown condition " + key);
+		throw new IllegalArgumentException("Unknown condition " + key);
 	}
 
 }

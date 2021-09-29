@@ -37,6 +37,7 @@ import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConv
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterParser;
+import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.internal.blueprint.script.ScriptConverter;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.AggsSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.HighlightSXPSearchRequestBodyContributor;
@@ -108,17 +109,18 @@ public class SXPBlueprintSearchRequestEnhancer {
 	protected void activate() {
 		HighlightConverter highlightConverter = new HighlightConverter(
 			_fieldConfigBuilderFactory, _highlightBuilderFactory);
+		QueryConverter queryConverter = new QueryConverter(_queries);
 		ScriptConverter scriptConverter = new ScriptConverter(_scripts);
 
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(
-				_aggregations, _geoBuilders, highlightConverter,
+				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _sorts),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(),
 			new SuggestSXPSearchRequestBodyContributor(),
 			new SortSXPSearchRequestBodyContributor(
-				_geoBuilders, _queries, scriptConverter, _sorts));
+				_geoBuilders, queryConverter, scriptConverter, _sorts));
 	}
 
 	private void _contributeSXPSearchRequestBodyContributors(
