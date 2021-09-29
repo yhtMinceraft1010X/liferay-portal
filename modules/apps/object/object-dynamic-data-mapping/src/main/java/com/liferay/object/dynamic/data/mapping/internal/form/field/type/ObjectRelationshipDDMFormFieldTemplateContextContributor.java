@@ -176,7 +176,14 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()));
 
 			if (objectEntry != null) {
-				return objectEntry.getTitleValue();
+				try {
+					return objectEntry.getTitleValue();
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException, portalException);
+					}
+				}
 			}
 		}
 

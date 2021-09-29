@@ -72,9 +72,9 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
-	public String getTitleValue() {
+	public String getTitleValue() throws PortalException {
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				getObjectDefinitionId());
 
 		if ((objectDefinition != null) &&

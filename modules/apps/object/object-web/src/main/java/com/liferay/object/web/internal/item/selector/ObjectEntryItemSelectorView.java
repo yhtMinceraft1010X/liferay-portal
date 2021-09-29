@@ -195,7 +195,12 @@ public class ObjectEntryItemSelectorView
 
 		@Override
 		public String getTitle(Locale locale) {
-			return _objectEntry.getTitleValue();
+			try {
+				return _objectEntry.getTitleValue();
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
 		}
 
 		@Override
