@@ -85,18 +85,9 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 					objectDefinition.getTitleObjectFieldId());
 
 			if (objectField != null) {
-				try {
-					Map<String, Serializable> values =
-						ObjectEntryLocalServiceUtil.getValues(
-							getObjectEntryId());
+				Map<String, Serializable> values = getValues();
 
-					return String.valueOf(values.get(objectField.getName()));
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException, portalException);
-					}
-				}
+				return String.valueOf(values.get(objectField.getName()));
 			}
 		}
 
