@@ -908,33 +908,51 @@ public class AggregationWrapperConverter {
 	private MaxAggregation _toMaxAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		MaxAggregation maxAggregation = _aggregations.max(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_setString(maxAggregation::setMissing, jsonObject, "missing");
+		_setScript(maxAggregation::setScript, jsonObject);
+
+		return maxAggregation;
 	}
 
 	private MaxBucketPipelineAggregation _toMaxBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		MaxBucketPipelineAggregation maxBucketPipelineAggregation =
+			_aggregations.maxBucket(name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			maxBucketPipelineAggregation::setFormat, jsonObject, "format");
+		_setGapPolicy(maxBucketPipelineAggregation::setGapPolicy, jsonObject);
+
+		return maxBucketPipelineAggregation;
 	}
 
 	private MinAggregation _toMinAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		MinAggregation minAggregation = _aggregations.min(
+			name, jsonObject.getString("field"));
 
-		return null;
+		_setString(minAggregation::setMissing, jsonObject, "missing");
+		_setScript(minAggregation::setScript, jsonObject);
+
+		return minAggregation;
 	}
 
 	private MinBucketPipelineAggregation _toMinBucketPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		MinBucketPipelineAggregation minBucketPipelineAggregation =
+			_aggregations.minBucket(name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			minBucketPipelineAggregation::setFormat, jsonObject, "format");
+		_setGapPolicy(minBucketPipelineAggregation::setGapPolicy, jsonObject);
+
+		return minBucketPipelineAggregation;
 	}
 
 	private MissingAggregation _toMissingAggregation(
