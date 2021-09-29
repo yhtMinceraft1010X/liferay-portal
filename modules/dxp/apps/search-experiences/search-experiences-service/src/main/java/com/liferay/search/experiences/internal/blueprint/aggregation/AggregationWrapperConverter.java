@@ -255,7 +255,8 @@ public class AggregationWrapperConverter {
 
 			throw new RuntimeException(
 				StringBundler.concat(
-					"Unexpected return ", jsonObject, " -> ", object));
+					"JSON ", jsonObject, " converted to unexpected class ",
+					object.getClass()));
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
