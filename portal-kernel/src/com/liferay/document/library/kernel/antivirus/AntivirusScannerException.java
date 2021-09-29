@@ -61,11 +61,11 @@ public class AntivirusScannerException extends PortalException {
 		if (_type == PROCESS_FAILURE) {
 			return "unable-to-scan-file-for-viruses";
 		}
-		else if (_type == VIRUS_DETECTED) {
-			return "a-virus-was-detected-in-the-file";
-		}
 		else if (_type == SIZE_LIMIT_EXCEEDED) {
 			return "unable-to-scan-file-for-viruses.-size-limit-exceeded";
+		}
+		else if (_type == VIRUS_DETECTED) {
+			return "a-virus-was-detected-in-the-file";
 		}
 
 		return "an-unexpected-error-occurred-while-scanning-for-viruses";
