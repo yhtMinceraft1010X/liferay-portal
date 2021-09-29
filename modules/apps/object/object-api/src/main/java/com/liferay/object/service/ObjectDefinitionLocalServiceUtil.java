@@ -275,6 +275,14 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().fetchObjectDefinition(companyId, name);
 	}
 
+	public static ObjectDefinition fetchObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException {
+
+		return getService().fetchObjectDefinitionByClassName(
+			companyId, className);
+	}
+
 	/**
 	 * Returns the object definition with the matching UUID and company.
 	 *
@@ -327,14 +335,6 @@ public class ObjectDefinitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getObjectDefinition(objectDefinitionId);
-	}
-
-	public static ObjectDefinition getObjectDefinitionByClassName(
-			long companyId, String className)
-		throws PortalException {
-
-		return getService().getObjectDefinitionByClassName(
-			companyId, className);
 	}
 
 	/**
