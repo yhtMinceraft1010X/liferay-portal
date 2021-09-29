@@ -25,6 +25,7 @@ import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
@@ -90,7 +91,7 @@ public class SXPBlueprintSearchRequestEnhancer {
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AggsSXPSearchRequestBodyContributor(
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
-				scriptConverter, _sorts),
+				scriptConverter, _significanceHeuristics, _sorts),
 			new HighlightSXPSearchRequestBodyContributor(highlightConverter),
 			new QuerySXPSearchRequestBodyContributor(
 				_complexQueryPartBuilderFactory, _queries),
@@ -187,6 +188,9 @@ public class SXPBlueprintSearchRequestEnhancer {
 
 	@Reference
 	private Scripts _scripts;
+
+	@Reference
+	private SignificanceHeuristics _significanceHeuristics;
 
 	@Reference
 	private Sorts _sorts;

@@ -86,6 +86,8 @@ import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.ScriptFieldBuilder;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.significance.SignificanceHeuristic;
+import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -109,13 +111,15 @@ public class AggregationWrapperConverter {
 	public AggregationWrapperConverter(
 		Aggregations aggregations, GeoBuilders geoBuilders,
 		HighlightConverter highlightConverter, QueryConverter queryConverter,
-		ScriptConverter scriptConverter, Sorts sorts) {
+		ScriptConverter scriptConverter,
+		SignificanceHeuristics significanceHeuristics, Sorts sorts) {
 
 		_aggregations = aggregations;
 		_geoBuilders = geoBuilders;
 		_highlightConverter = highlightConverter;
 		_queryConverter = queryConverter;
 		_scriptConverter = scriptConverter;
+		_significanceHeuristics = significanceHeuristics;
 		_sorts = sorts;
 
 		// Bucket
@@ -347,6 +351,75 @@ public class AggregationWrapperConverter {
 		}
 	}
 
+	private SignificanceHeuristic _getSignificanceHeuristics(
+		JSONObject jsonObject) {
+
+		JSONObject chiSquareJSONObject = jsonObject.getJSONObject("chi_square");
+
+		if (chiSquareJSONObject != null) {
+			return _significanceHeuristics.chiSquare(
+				chiSquareJSONObject.getBoolean("background_is_superset", true),
+				chiSquareJSONObject.getBoolean("include_negatives", true));
+		}
+
+		JSONObject gndJSONObject = jsonObject.getJSONObject("gnd");
+
+		if (gndJSONObject != null) {
+			return _significanceHeuristics.gnd(
+				gndJSONObject.getBoolean("background_is_superset", true));
+		}
+
+		if (jsonObject.has("jlh")) {
+			return _significanceHeuristics.jlhScore();
+		}
+
+		JSONObject mutualInformationJSONObject = jsonObject.getJSONObject(
+			"mutual_information");
+
+		if (mutualInformationJSONObject != null) {
+			return _significanceHeuristics.mutualInformation(
+				mutualInformationJSONObject.getBoolean(
+					"background_is_superset", true),
+				mutualInformationJSONObject.getBoolean(
+					"include_negatives", true));
+		}
+
+		if (jsonObject.has("percentage")) {
+			return _significanceHeuristics.percentageScore();
+		}
+
+		JSONObject scriptHeuristicJSONObject = jsonObject.getJSONObject(
+			"script_heuristic");
+
+		if (scriptHeuristicJSONObject != null) {
+			Script script = _scriptConverter.toScript(
+				scriptHeuristicJSONObject);
+
+			return _significanceHeuristics.script(script);
+		}
+
+		return null;
+	}
+
+	private void _setBackgroundFilterQuery(
+		Consumer<Query> consumer, JSONObject jsonObject) {
+
+		JSONObject backgroundFilterJSONObject = jsonObject.getJSONObject(
+			"background_filter");
+
+		if (backgroundFilterJSONObject == null) {
+			return;
+		}
+
+		Query query = _queryConverter.toQuery(backgroundFilterJSONObject);
+
+		if (query == null) {
+			return;
+		}
+
+		consumer.accept(query);
+	}
+
 	private void _setBoolean(
 		Consumer<Boolean> consumer, JSONObject jsonObject, String key) {
 
@@ -483,6 +556,19 @@ public class AggregationWrapperConverter {
 		}
 
 		consumer.accept(_scriptConverter.toScript(jsonObject.get(key)));
+	}
+
+	private void _setSignificanceHeuristics(
+		Consumer<SignificanceHeuristic> consumer, JSONObject jsonObject) {
+
+		SignificanceHeuristic significanceHeuristic =
+			_getSignificanceHeuristics(jsonObject);
+
+		if (significanceHeuristic == null) {
+			return;
+		}
+
+		consumer.accept(significanceHeuristic);
 	}
 
 	private void _setString(
@@ -1170,17 +1256,68 @@ public class AggregationWrapperConverter {
 	private SignificantTermsAggregation _toSignificantTermsAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		SignificantTermsAggregation significantTermsAggregation =
+			_aggregations.significantTerms(name, jsonObject.getString("field"));
 
-		return null;
+		_setBackgroundFilterQuery(
+			significantTermsAggregation::setBackgroundFilterQuery, jsonObject);
+		_setString(
+			significantTermsAggregation::setExecutionHint, jsonObject,
+			"execution_hint");
+		_setIncludeExcludeClause(
+			significantTermsAggregation::setIncludeExcludeClause, jsonObject);
+		_setLong(
+			significantTermsAggregation::setMinDocCount, jsonObject,
+			"min_doc_count");
+		_setString(
+			significantTermsAggregation::setMissing, jsonObject, "missing");
+		_setScript(
+			significantTermsAggregation::setScript, jsonObject, "script");
+		_setLong(
+			significantTermsAggregation::setShardMinDocCount, jsonObject,
+			"shard_min_doc_count");
+		_setInteger(
+			significantTermsAggregation::setShardSize, jsonObject,
+			"shard_size");
+		_setSignificanceHeuristics(
+			significantTermsAggregation::setSignificanceHeuristic, jsonObject);
+		_setInteger(significantTermsAggregation::setSize, jsonObject, "size");
+
+		return significantTermsAggregation;
 	}
 
 	private SignificantTextAggregation _toSignificantTextAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		SignificantTextAggregation significantTextAggregation =
+			_aggregations.significantText(name, jsonObject.getString("field"));
 
-		return null;
+		_setBackgroundFilterQuery(
+			significantTextAggregation::setBackgroundFilterQuery, jsonObject);
+		_setString(
+			significantTextAggregation::setExecutionHint, jsonObject,
+			"execution_hint");
+		_setBoolean(
+			significantTextAggregation::setFilterDuplicateText, jsonObject,
+			"filter_duplicate_text");
+		_setIncludeExcludeClause(
+			significantTextAggregation::setIncludeExcludeClause, jsonObject);
+		_setLong(
+			significantTextAggregation::setMinDocCount, jsonObject,
+			"min_doc_count");
+		_setString(
+			significantTextAggregation::setMissing, jsonObject, "missing");
+		_setScript(significantTextAggregation::setScript, jsonObject, "script");
+		_setLong(
+			significantTextAggregation::setShardMinDocCount, jsonObject,
+			"shard_min_doc_count");
+		_setInteger(
+			significantTextAggregation::setShardSize, jsonObject, "shard_size");
+		_setSignificanceHeuristics(
+			significantTextAggregation::setSignificanceHeuristic, jsonObject);
+		_setInteger(significantTextAggregation::setSize, jsonObject, "size");
+
+		return significantTextAggregation;
 	}
 
 	private StatsAggregation _toStatsAggregation(
@@ -1399,6 +1536,7 @@ public class AggregationWrapperConverter {
 	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Scripts _scripts;
+	private final SignificanceHeuristics _significanceHeuristics;
 	private final Sorts _sorts;
 
 }
