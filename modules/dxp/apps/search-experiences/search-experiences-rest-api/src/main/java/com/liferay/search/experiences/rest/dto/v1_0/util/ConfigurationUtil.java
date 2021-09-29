@@ -22,8 +22,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
 
-import java.lang.reflect.Field;
-
 import java.util.Map;
 
 /**
@@ -34,52 +32,38 @@ public class ConfigurationUtil {
 	public static Configuration toConfiguration(String json) {
 		Configuration configuration = Configuration.toDTO(json);
 
-		_processAggregationConfiguration(
-			configuration.getAggregationConfiguration());
-		_processQueryConfiguration(configuration.getQueryConfiguration());
-		_processSortConfiguration(configuration.getSortConfiguration());
+		AggregationConfiguration aggregationConfiguration =
+			configuration.getAggregationConfiguration();
 
-		return configuration;
-	}
-
-	private static void _processAggregationConfiguration(
-		AggregationConfiguration aggregationConfiguration) {
-
-		if (aggregationConfiguration == null) {
-			return;
+		if (aggregationConfiguration != null) {
+			aggregationConfiguration.setAggs(
+				JSONFactoryUtil.createJSONObject(
+					(Map<?, ?>)aggregationConfiguration.getAggs()));
 		}
 
-		aggregationConfiguration.setAggs(
-			JSONFactoryUtil.createJSONObject(
-				(Map<?, ?>)aggregationConfiguration.getAggs()));
-	}
+		QueryConfiguration queryConfiguration =
+			configuration.getQueryConfiguration();
 
-	private static void _processQueryConfiguration(
-		QueryConfiguration queryConfiguration) {
-
-		if (queryConfiguration == null) {
-			return;
-		}
-
-		for (QueryEntry queryEntry : queryConfiguration.getQueryEntries()) {
-			for (Clause clause : queryEntry.getClauses()) {
-				clause.setQuery(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)clause.getQuery()));
+		if (queryConfiguration != null) {
+			for (QueryEntry queryEntry : queryConfiguration.getQueryEntries()) {
+				for (Clause clause : queryEntry.getClauses()) {
+					clause.setQuery(
+						JSONFactoryUtil.createJSONObject(
+							(Map<?, ?>)clause.getQuery()));
+				}
 			}
 		}
-	}
 
-	private static void _processSortConfiguration(
-		SortConfiguration sortConfiguration) {
+		SortConfiguration sortConfiguration =
+			configuration.getSortConfiguration();
 
-		if (sortConfiguration == null) {
-			return;
+		if (sortConfiguration != null) {
+			sortConfiguration.setSorts(
+				JSONFactoryUtil.createJSONArray(
+					(Object[])sortConfiguration.getSorts()));
 		}
 
-		sortConfiguration.setSorts(
-			JSONFactoryUtil.createJSONArray(
-				(Object[])sortConfiguration.getSorts()));
+		return configuration;
 	}
 
 }
