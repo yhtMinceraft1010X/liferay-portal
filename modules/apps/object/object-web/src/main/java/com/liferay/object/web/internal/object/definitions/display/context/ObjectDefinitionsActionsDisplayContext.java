@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -245,9 +244,6 @@ public class ObjectDefinitionsActionsDisplayContext {
 		DDMForm ddmForm = DDMFormFactory.create(
 			objectActionExecutor.getSettings());
 
-		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
-			objectActionExecutor.getSettings());
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -277,7 +273,9 @@ public class ObjectDefinitionsActionsDisplayContext {
 		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
 
 		return _ddmFormRenderer.render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+			ddmForm,
+			DDMFormLayoutFactory.create(objectActionExecutor.getSettings()),
+			ddmFormRenderingContext);
 	}
 
 	private DDMFormValues _getDDMFormValues(
