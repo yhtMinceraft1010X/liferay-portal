@@ -522,14 +522,9 @@ public class AggregationWrapperConverter {
 	private BucketScriptPipelineAggregation _toBucketScriptPipelineAggregation(
 		JSONObject jsonObject, String name) {
 
-		Script script = _scriptConverter.toScript(jsonObject.get("script"));
-
-		if (script == null) {
-			return null;
-		}
-
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation =
-			_aggregations.bucketScript(name, script);
+			_aggregations.bucketScript(
+				name, _scriptConverter.toScript(jsonObject.get("script")));
 
 		_addBucketsPaths(
 			bucketScriptPipelineAggregation::addBucketPath, jsonObject);
@@ -543,14 +538,9 @@ public class AggregationWrapperConverter {
 		_toBucketSelectorPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		Script script = _scriptConverter.toScript(jsonObject.get("script"));
-
-		if (script == null) {
-			return null;
-		}
-
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
-			_aggregations.bucketSelector(name, script);
+			_aggregations.bucketSelector(
+				name, _scriptConverter.toScript(jsonObject.get("script")));
 
 		_addBucketsPaths(
 			bucketSelectorPipelineAggregation::addBucketPath, jsonObject);
@@ -991,15 +981,10 @@ public class AggregationWrapperConverter {
 		_toMovingFunctionPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		Script script = _scriptConverter.toScript(jsonObject.get("script"));
-
-		if (script == null) {
-			return null;
-		}
-
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation =
 			_aggregations.movingFunction(
-				name, script, jsonObject.getString("buckets_path"),
+				name, _scriptConverter.toScript(jsonObject.get("script")),
+				jsonObject.getString("buckets_path"),
 				jsonObject.getInt("window"));
 
 		_setGapPolicy(
@@ -1131,12 +1116,6 @@ public class AggregationWrapperConverter {
 	private ScriptedMetricAggregation _toScriptedMetricAggregation(
 		JSONObject jsonObject, String name) {
 
-		Script script = _scriptConverter.toScript(jsonObject.get("map_script"));
-
-		if (script == null) {
-			return null;
-		}
-
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric(name);
 
@@ -1146,7 +1125,8 @@ public class AggregationWrapperConverter {
 		_setScript(
 			scriptedMetricAggregation::setInitScript, jsonObject,
 			"init_script");
-		scriptedMetricAggregation.setMapScript(script);
+		scriptedMetricAggregation.setMapScript(
+			_scriptConverter.toScript(jsonObject.get("map_script")));
 
 		JSONObject paramsJSONObject = jsonObject.getJSONObject("params");
 
