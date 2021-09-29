@@ -1310,7 +1310,9 @@ public class AggregationWrapperConverter {
 
 		_setInteger(topHitsAggregation::setFrom, jsonObject, "from");
 
-		if (jsonObject.has("highlight")) {
+		// TODO Do we have to check if "higlight" exists?
+
+		if (true || jsonObject.has("highlight")) {
 			topHitsAggregation.setHighlight(
 				_highlightConverter.toHighlight(
 					jsonObject.getJSONObject("highlight")));
