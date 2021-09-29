@@ -58,7 +58,7 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 
 			if (!ClamAVClient.isCleanReply(reply)) {
 				throw new AntivirusVirusFoundException(
-					"Virus detected in byte array", _extractVirusName(reply));
+					"Virus detected in byte array", _getVirusName(reply));
 			}
 		}
 		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
@@ -80,7 +80,7 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 			if (!ClamAVClient.isCleanReply(reply)) {
 				throw new AntivirusVirusFoundException(
 					"Virus detected in " + file.getAbsolutePath(),
-					_extractVirusName(reply));
+					_getVirusName(reply));
 			}
 		}
 		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
@@ -101,7 +101,7 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 
 			if (!ClamAVClient.isCleanReply(reply)) {
 				throw new AntivirusVirusFoundException(
-					"Virus detected in stream", _extractVirusName(reply));
+					"Virus detected in stream", _getVirusName(reply));
 			}
 		}
 		catch (ClamAVSizeLimitException clamAVSizeLimitException) {
@@ -127,11 +127,11 @@ public class ClamdAntivirusScanner implements AntivirusScanner {
 			clamdAntivirusScannerConfiguration.timeout());
 	}
 
-	private String _extractVirusName(byte[] result) {
-		String reply = new String(result, StandardCharsets.US_ASCII);
+	private String _getVirusName(byte[] reply) {
+		String virusName = new String(reply, StandardCharsets.US_ASCII);
 
-		return reply.substring(
-			"stream: ".length(), reply.length() - (" FOUND".length() + 1));
+		return virusName.substring(
+			"stream: ".length(), virusName.length() - (" FOUND".length() + 1));
 	}
 
 	private ClamAVClient _clamdClient;
