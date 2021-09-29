@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -172,7 +171,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 	private String _getInitialLabel(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		if (!Objects.equals(ddmFormFieldRenderingContext.getValue(), "")) {
+		if (!Validator.isBlank(ddmFormFieldRenderingContext.getValue())) {
 			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 				Long.valueOf(ddmFormFieldRenderingContext.getValue()));
 
