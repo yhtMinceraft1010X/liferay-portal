@@ -7,7 +7,7 @@ create table SXPBlueprint (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	configurationsJSON TEXT null,
+	configurationJSON TEXT null,
 	description STRING null,
 	elementInstancesJSON TEXT null,
 	title STRING null,

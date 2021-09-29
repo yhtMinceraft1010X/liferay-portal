@@ -10,7 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="configurationsJSON" type="String">
+		<field name="configurationJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field localized="true" name="description" type="String">

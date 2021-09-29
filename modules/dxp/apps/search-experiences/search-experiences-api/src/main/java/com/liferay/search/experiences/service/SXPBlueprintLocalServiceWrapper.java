@@ -35,7 +35,7 @@ public class SXPBlueprintLocalServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint addSXPBlueprint(
-			long userId, String configurationsJSON,
+			long userId, String configurationJSON,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON,
 			java.util.Map<java.util.Locale, String> titleMap,
@@ -43,7 +43,7 @@ public class SXPBlueprintLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintLocalService.addSXPBlueprint(
-			userId, configurationsJSON, descriptionMap, elementInstancesJSON,
+			userId, configurationJSON, descriptionMap, elementInstancesJSON,
 			titleMap, serviceContext);
 	}
 
@@ -383,7 +383,7 @@ public class SXPBlueprintLocalServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint updateSXPBlueprint(
-			long userId, long sxpBlueprintId, String configurationsJSON,
+			long userId, long sxpBlueprintId, String configurationJSON,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON,
 			java.util.Map<java.util.Locale, String> titleMap,
@@ -391,7 +391,7 @@ public class SXPBlueprintLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintLocalService.updateSXPBlueprint(
-			userId, sxpBlueprintId, configurationsJSON, descriptionMap,
+			userId, sxpBlueprintId, configurationJSON, descriptionMap,
 			elementInstancesJSON, titleMap, serviceContext);
 	}
 

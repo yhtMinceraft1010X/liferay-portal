@@ -41,7 +41,7 @@ public class SXPBlueprintSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setConfigurationsJSON(model.getConfigurationsJSON());
+		soapModel.setConfigurationJSON(model.getConfigurationJSON());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setElementInstancesJSON(model.getElementInstancesJSON());
 		soapModel.setTitle(model.getTitle());
@@ -166,12 +166,12 @@ public class SXPBlueprintSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getConfigurationsJSON() {
-		return _configurationsJSON;
+	public String getConfigurationJSON() {
+		return _configurationJSON;
 	}
 
-	public void setConfigurationsJSON(String configurationsJSON) {
-		_configurationsJSON = configurationsJSON;
+	public void setConfigurationJSON(String configurationJSON) {
+		_configurationJSON = configurationJSON;
 	}
 
 	public String getDescription() {
@@ -238,7 +238,7 @@ public class SXPBlueprintSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _configurationsJSON;
+	private String _configurationJSON;
 	private String _description;
 	private String _elementInstancesJSON;
 	private String _title;

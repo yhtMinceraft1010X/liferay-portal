@@ -51,7 +51,7 @@ public class SXPBlueprintWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("configurationsJSON", getConfigurationsJSON());
+		attributes.put("configurationJSON", getConfigurationJSON());
 		attributes.put("description", getDescription());
 		attributes.put("elementInstancesJSON", getElementInstancesJSON());
 		attributes.put("title", getTitle());
@@ -113,11 +113,10 @@ public class SXPBlueprintWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String configurationsJSON = (String)attributes.get(
-			"configurationsJSON");
+		String configurationJSON = (String)attributes.get("configurationJSON");
 
-		if (configurationsJSON != null) {
-			setConfigurationsJSON(configurationsJSON);
+		if (configurationJSON != null) {
+			setConfigurationJSON(configurationJSON);
 		}
 
 		String description = (String)attributes.get("description");
@@ -185,13 +184,13 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
-	 * Returns the configurations json of this sxp blueprint.
+	 * Returns the configuration json of this sxp blueprint.
 	 *
-	 * @return the configurations json of this sxp blueprint
+	 * @return the configuration json of this sxp blueprint
 	 */
 	@Override
-	public String getConfigurationsJSON() {
-		return model.getConfigurationsJSON();
+	public String getConfigurationJSON() {
+		return model.getConfigurationJSON();
 	}
 
 	/**
@@ -612,13 +611,13 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
-	 * Sets the configurations json of this sxp blueprint.
+	 * Sets the configuration json of this sxp blueprint.
 	 *
-	 * @param configurationsJSON the configurations json of this sxp blueprint
+	 * @param configurationJSON the configuration json of this sxp blueprint
 	 */
 	@Override
-	public void setConfigurationsJSON(String configurationsJSON) {
-		model.setConfigurationsJSON(configurationsJSON);
+	public void setConfigurationJSON(String configurationJSON) {
+		model.setConfigurationJSON(configurationJSON);
 	}
 
 	/**

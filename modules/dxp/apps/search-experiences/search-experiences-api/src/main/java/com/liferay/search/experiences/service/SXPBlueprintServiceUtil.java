@@ -39,14 +39,14 @@ public class SXPBlueprintServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.search.experiences.service.impl.SXPBlueprintServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SXPBlueprint addSXPBlueprint(
-			String configurationsJSON,
+			String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSXPBlueprint(
-			configurationsJSON, descriptionMap, elementInstancesJSON, titleMap,
+			configurationJSON, descriptionMap, elementInstancesJSON, titleMap,
 			serviceContext);
 	}
 
@@ -72,14 +72,14 @@ public class SXPBlueprintServiceUtil {
 	}
 
 	public static SXPBlueprint updateSXPBlueprint(
-			long sxpBlueprintId, String configurationsJSON,
+			long sxpBlueprintId, String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON, Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPBlueprint(
-			sxpBlueprintId, configurationsJSON, descriptionMap,
+			sxpBlueprintId, configurationJSON, descriptionMap,
 			elementInstancesJSON, titleMap, serviceContext);
 	}
 

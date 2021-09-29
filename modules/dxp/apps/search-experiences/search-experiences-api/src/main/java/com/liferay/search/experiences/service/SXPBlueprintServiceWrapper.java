@@ -32,7 +32,7 @@ public class SXPBlueprintServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint addSXPBlueprint(
-			String configurationsJSON,
+			String configurationJSON,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON,
 			java.util.Map<java.util.Locale, String> titleMap,
@@ -40,7 +40,7 @@ public class SXPBlueprintServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintService.addSXPBlueprint(
-			configurationsJSON, descriptionMap, elementInstancesJSON, titleMap,
+			configurationJSON, descriptionMap, elementInstancesJSON, titleMap,
 			serviceContext);
 	}
 
@@ -72,7 +72,7 @@ public class SXPBlueprintServiceWrapper
 
 	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint updateSXPBlueprint(
-			long sxpBlueprintId, String configurationsJSON,
+			long sxpBlueprintId, String configurationJSON,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String elementInstancesJSON,
 			java.util.Map<java.util.Locale, String> titleMap,
@@ -80,7 +80,7 @@ public class SXPBlueprintServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sxpBlueprintService.updateSXPBlueprint(
-			sxpBlueprintId, configurationsJSON, descriptionMap,
+			sxpBlueprintId, configurationJSON, descriptionMap,
 			elementInstancesJSON, titleMap, serviceContext);
 	}
 

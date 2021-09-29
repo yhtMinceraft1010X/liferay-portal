@@ -210,19 +210,19 @@ public interface SXPBlueprintModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the configurations json of this sxp blueprint.
+	 * Returns the configuration json of this sxp blueprint.
 	 *
-	 * @return the configurations json of this sxp blueprint
+	 * @return the configuration json of this sxp blueprint
 	 */
 	@AutoEscape
-	public String getConfigurationsJSON();
+	public String getConfigurationJSON();
 
 	/**
-	 * Sets the configurations json of this sxp blueprint.
+	 * Sets the configuration json of this sxp blueprint.
 	 *
-	 * @param configurationsJSON the configurations json of this sxp blueprint
+	 * @param configurationJSON the configuration json of this sxp blueprint
 	 */
-	public void setConfigurationsJSON(String configurationsJSON);
+	public void setConfigurationJSON(String configurationJSON);
 
 	/**
 	 * Returns the description of this sxp blueprint.

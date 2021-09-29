@@ -137,7 +137,7 @@ public class SXPBlueprintPersistenceTest {
 
 		newSXPBlueprint.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSXPBlueprint.setConfigurationsJSON(RandomTestUtil.randomString());
+		newSXPBlueprint.setConfigurationJSON(RandomTestUtil.randomString());
 
 		newSXPBlueprint.setDescription(RandomTestUtil.randomString());
 
@@ -180,8 +180,8 @@ public class SXPBlueprintPersistenceTest {
 			Time.getShortTimestamp(existingSXPBlueprint.getModifiedDate()),
 			Time.getShortTimestamp(newSXPBlueprint.getModifiedDate()));
 		Assert.assertEquals(
-			existingSXPBlueprint.getConfigurationsJSON(),
-			newSXPBlueprint.getConfigurationsJSON());
+			existingSXPBlueprint.getConfigurationJSON(),
+			newSXPBlueprint.getConfigurationJSON());
 		Assert.assertEquals(
 			existingSXPBlueprint.getDescription(),
 			newSXPBlueprint.getDescription());
@@ -492,7 +492,7 @@ public class SXPBlueprintPersistenceTest {
 
 		sxpBlueprint.setModifiedDate(RandomTestUtil.nextDate());
 
-		sxpBlueprint.setConfigurationsJSON(RandomTestUtil.randomString());
+		sxpBlueprint.setConfigurationJSON(RandomTestUtil.randomString());
 
 		sxpBlueprint.setDescription(RandomTestUtil.randomString());
 

@@ -49,9 +49,9 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SXPBlueprintTable, Clob> configurationsJSON =
+	public final Column<SXPBlueprintTable, Clob> configurationJSON =
 		createColumn(
-			"configurationsJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+			"configurationJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, String> description = createColumn(
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Clob> elementInstancesJSON =
