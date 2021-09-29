@@ -157,7 +157,9 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							{({description, label}) => (
 								<>
 									<div>{label}</div>
-									<span className="text-small">{description}</span>
+									<span className="text-small">
+										{description}
+									</span>
 								</>
 							)}
 						</CustomSelect>
@@ -179,7 +181,9 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 							{({description, label}) => (
 								<>
 									<div>{label}</div>
-									<span className="text-small">{description}</span>
+									<span className="text-small">
+										{description}
+									</span>
 								</>
 							)}
 						</CustomSelect>
