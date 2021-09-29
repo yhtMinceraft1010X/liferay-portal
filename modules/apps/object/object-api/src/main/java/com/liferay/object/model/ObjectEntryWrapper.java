@@ -246,12 +246,10 @@ public class ObjectEntryWrapper
 	}
 
 	@Override
-	public long getNonzeroGroupId(
-			com.liferay.portal.kernel.service.CompanyLocalService
-				companyLocalService)
+	public long getNonzeroGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return model.getNonzeroGroupId(companyLocalService);
+		return model.getNonzeroGroupId();
 	}
 
 	/**
@@ -332,6 +330,13 @@ public class ObjectEntryWrapper
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
+	}
+
+	@Override
+	public String getTitleValue()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getTitleValue();
 	}
 
 	/**
