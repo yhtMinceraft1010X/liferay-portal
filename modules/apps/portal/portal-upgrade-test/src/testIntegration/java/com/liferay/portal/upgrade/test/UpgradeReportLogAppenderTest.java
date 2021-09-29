@@ -160,8 +160,8 @@ public class UpgradeReportLogAppenderTest {
 
 		Matcher matcher = _pattern.matcher(_reportContent);
 
-		String prevTableName = null;
 		int prevInitialCount = Integer.MAX_VALUE;
+		String prevTableName = null;
 
 		while (matcher.find()) {
 			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
@@ -175,8 +175,8 @@ public class UpgradeReportLogAppenderTest {
 				Assert.assertTrue(initialCount < prevInitialCount);
 			}
 
-			prevTableName = tableName;
 			prevInitialCount = initialCount;
+			prevTableName = tableName;
 		}
 	}
 
