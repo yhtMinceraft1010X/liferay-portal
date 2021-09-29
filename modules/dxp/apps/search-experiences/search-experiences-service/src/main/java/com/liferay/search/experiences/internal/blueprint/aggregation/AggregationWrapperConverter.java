@@ -54,6 +54,7 @@ import com.liferay.portal.search.aggregation.metrics.MaxAggregation;
 import com.liferay.portal.search.aggregation.metrics.MinAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregation;
 import com.liferay.portal.search.aggregation.metrics.PercentilesAggregation;
+import com.liferay.portal.search.aggregation.metrics.PercentilesMethod;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregation;
 import com.liferay.portal.search.aggregation.metrics.SumAggregation;
@@ -716,6 +717,14 @@ public class AggregationWrapperConverter {
 		return diversifiedSamplerAggregation;
 	}
 
+	private double[] _toDoubleArray(JSONArray jsonArray) {
+		if (jsonArray == null) {
+			return null;
+		}
+
+		return JSONUtil.toDoubleArray(jsonArray);
+	}
+
 	private ExtendedStatsAggregation _toExtendedStatsAggregation(
 		JSONObject jsonObject, String name) {
 
@@ -997,26 +1006,84 @@ public class AggregationWrapperConverter {
 	private PercentileRanksAggregation _toPercentileRanksAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		PercentileRanksAggregation percentileRanksAggregation =
+			_aggregations.percentileRanks(
+				name, jsonObject.getString("field"),
+				_toDoubleArray(jsonObject.getJSONArray("values")));
 
-		return null;
+		_setBoolean(percentileRanksAggregation::setKeyed, jsonObject, "keyed");
+		_setString(
+			percentileRanksAggregation::setMissing, jsonObject, "missing");
+		_setScript(percentileRanksAggregation::setScript, jsonObject);
+
+		JSONObject hdrJSONObject = jsonObject.getJSONObject("hdr");
+		JSONObject tDigestJSONObject = jsonObject.getJSONObject("tdigest");
+
+		if (hdrJSONObject != null) {
+			percentileRanksAggregation.setHdrSignificantValueDigits(
+				hdrJSONObject.getInt("number_of_significant_value_digits"));
+			percentileRanksAggregation.setPercentilesMethod(
+				PercentilesMethod.HDR);
+		}
+		else if (tDigestJSONObject != null) {
+			percentileRanksAggregation.setCompression(
+				jsonObject.getInt("compression"));
+			percentileRanksAggregation.setPercentilesMethod(
+				PercentilesMethod.TDIGEST);
+		}
+
+		return percentileRanksAggregation;
 	}
 
 	private PercentilesAggregation _toPercentilesAggregation(
 		JSONObject jsonObject, String name) {
 
-		// TODO
+		PercentilesAggregation percentilesAggregation =
+			_aggregations.percentiles(name, jsonObject.getString("field"));
 
-		return null;
+		_setBoolean(percentilesAggregation::setKeyed, jsonObject, "keyed");
+		_setString(percentilesAggregation::setMissing, jsonObject, "missing");
+		percentilesAggregation.setPercents(
+			_toDoubleArray(jsonObject.getJSONArray("percents")));
+
+		_setScript(percentilesAggregation::setScript, jsonObject);
+
+		JSONObject hdrJSONObject = jsonObject.getJSONObject("hdr");
+		JSONObject tDigestJSONObject = jsonObject.getJSONObject("tdigest");
+
+		if (hdrJSONObject != null) {
+			percentilesAggregation.setHdrSignificantValueDigits(
+				hdrJSONObject.getInt("number_of_significant_value_digits"));
+			percentilesAggregation.setPercentilesMethod(PercentilesMethod.HDR);
+		}
+		else if (tDigestJSONObject != null) {
+			percentilesAggregation.setCompression(
+				jsonObject.getInt("compression"));
+			percentilesAggregation.setPercentilesMethod(
+				PercentilesMethod.TDIGEST);
+		}
+
+		return percentilesAggregation;
 	}
 
 	private PercentilesBucketPipelineAggregation
 		_toPercentilesBucketPipelineAggregation(
 			JSONObject jsonObject, String name) {
 
-		// TODO
+		PercentilesBucketPipelineAggregation
+			percentilesBucketPipelineAggregation =
+				_aggregations.percentilesBucket(
+					name, jsonObject.getString("buckets_path"));
 
-		return null;
+		_setString(
+			percentilesBucketPipelineAggregation::setFormat, jsonObject,
+			"format");
+		_setGapPolicy(
+			percentilesBucketPipelineAggregation::setGapPolicy, jsonObject);
+		percentilesBucketPipelineAggregation.setPercents(
+			_toDoubleArray(jsonObject.getJSONArray("percents")));
+
+		return percentilesBucketPipelineAggregation;
 	}
 
 	private RangeAggregation _toRangeAggregation(
