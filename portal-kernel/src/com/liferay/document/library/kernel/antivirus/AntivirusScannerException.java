@@ -65,7 +65,7 @@ public class AntivirusScannerException extends PortalException {
 			return "a-virus-was-detected-in-the-file";
 		}
 		else if (_type == SIZE_LIMIT_EXCEEDED) {
-			return "unable-to-scan-file-for-viruses-size-limit-exceeded";
+			return "unable-to-scan-file-for-viruses.-size-limit-exceeded";
 		}
 
 		return "an-unexpected-error-occurred-while-scanning-for-viruses";
