@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -126,8 +127,11 @@ public class SXPBlueprintSearchRequestContributorTest {
 				StringBundler.concat(
 					clazz.getSimpleName(), StringPool.PERIOD,
 					testName.getMethodName(), ".json")),
-			Collections.singletonMap(LocaleUtil.US, "testDescription"), "",
-			Collections.singletonMap(LocaleUtil.US, "testTitle"),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			"",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
 	}
 
