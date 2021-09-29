@@ -346,6 +346,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition fetchObjectDefinitionByClassName(
+			long companyId, String className)
+		throws PortalException {
+
+		return objectDefinitionPersistence.fetchByC_C(companyId, className);
+	}
+
+	@Override
 	public List<ObjectDefinition> getCustomObjectDefinitions(int status) {
 		return objectDefinitionPersistence.findByS_S(false, status);
 	}
