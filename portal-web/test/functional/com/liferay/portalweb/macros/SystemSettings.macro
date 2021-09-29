@@ -213,6 +213,13 @@ definition {
 			locator1 = "SystemSettings#DROPDOWN_MENU_OPTION");
 	}
 
+	macro viewConfigurationNotAvailable {
+		AssertElementNotPresent(
+			key_configurationName = "${configurationName}",
+			key_configurationScope = "${configurationScope}",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+	}
+
 	macro viewSettingsText {
 		AssertTextEquals.assertPartialText(
 			key_settingsText = "${settingsText}",
