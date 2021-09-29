@@ -173,7 +173,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 
 		if (!Validator.isBlank(ddmFormFieldRenderingContext.getValue())) {
 			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				Long.valueOf(ddmFormFieldRenderingContext.getValue()));
+				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()));
 
 			if (objectEntry != null) {
 				return objectEntry.getTitleValue();
