@@ -160,23 +160,23 @@ public class UpgradeReportLogAppenderTest {
 
 		Matcher matcher = _pattern.matcher(_reportContent);
 
-		int prevInitialCount = Integer.MAX_VALUE;
-		String prevTableName = null;
+		int previousInitialCount = Integer.MAX_VALUE;
+		String previousTableName = null;
 
 		while (matcher.find()) {
 			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
 
 			String tableName = matcher.group(1);
 
-			if (initialCount == prevInitialCount) {
-				Assert.assertTrue(prevTableName.compareTo(tableName) < 0);
+			if (initialCount == previousInitialCount) {
+				Assert.assertTrue(previousTableName.compareTo(tableName) < 0);
 			}
 			else {
-				Assert.assertTrue(initialCount < prevInitialCount);
+				Assert.assertTrue(initialCount < previousInitialCount);
 			}
 
-			prevInitialCount = initialCount;
-			prevTableName = tableName;
+			previousInitialCount = initialCount;
+			previousTableName = tableName;
 		}
 	}
 
