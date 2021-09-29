@@ -36,6 +36,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -1162,6 +1163,14 @@ public class ArrayUtil {
 
 	public static boolean isNotEmpty(short[] array) {
 		return !isEmpty(array);
+	}
+
+	public static <T> void isNotEmptyForEach(T[] array, Consumer<T> consumer) {
+		if (isNotEmpty(array)) {
+			for (T t : array) {
+				consumer.accept(t);
+			}
+		}
 	}
 
 	public static boolean[] remove(boolean[] array, boolean value) {
