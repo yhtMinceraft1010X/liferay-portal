@@ -14,14 +14,18 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.cache.CacheField;
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -50,8 +54,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
-	public long getNonzeroGroupId(CompanyLocalService companyLocalService)
-		throws PortalException {
+	public long getNonzeroGroupId() throws PortalException {
 
 		// TODO If permission checking works with the group's company ID, then
 		// we should ensure it is always set and remove this workaround
@@ -59,12 +62,45 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 		long groupId = getGroupId();
 
 		if (groupId == 0) {
-			Company company = companyLocalService.getCompany(getCompanyId());
+			Company company = CompanyLocalServiceUtil.getCompany(
+				getCompanyId());
 
 			groupId = company.getGroupId();
 		}
 
 		return groupId;
+	}
+
+	@Override
+	public String getTitleValue() {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				getObjectDefinitionId());
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getTitleObjectFieldId() > 0)) {
+
+			ObjectField objectField =
+				ObjectFieldLocalServiceUtil.fetchObjectField(
+					objectDefinition.getTitleObjectFieldId());
+
+			if (objectField != null) {
+				try {
+					Map<String, Serializable> values =
+						ObjectEntryLocalServiceUtil.getValues(
+							getObjectEntryId());
+
+					return String.valueOf(values.get(objectField.getName()));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException, portalException);
+					}
+				}
+			}
+		}
+
+		return String.valueOf(getObjectEntryId());
 	}
 
 	@Override

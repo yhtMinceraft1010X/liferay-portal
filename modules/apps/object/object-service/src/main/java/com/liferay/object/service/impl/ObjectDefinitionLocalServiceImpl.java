@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -689,8 +688,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-				objectEntry.getCompanyId(),
-				objectEntry.getNonzeroGroupId(_companyLocalService),
+				objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 				objectDefinition.getClassName(),
 				objectEntry.getObjectEntryId());
 		}
@@ -1019,9 +1017,6 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinitionLocalServiceImpl.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

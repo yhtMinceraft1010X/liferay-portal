@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -254,8 +253,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			objectEntry.getCompanyId(),
-			objectEntry.getNonzeroGroupId(_companyLocalService),
+			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		_deleteFromTable(
@@ -623,7 +621,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
-			userId, objectEntry.getNonzeroGroupId(_companyLocalService),
+			userId, objectEntry.getNonzeroGroupId(),
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
@@ -1337,8 +1335,7 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getObjectDefinitionId());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			objectEntry.getCompanyId(),
-			objectEntry.getNonzeroGroupId(_companyLocalService), userId,
+			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry, serviceContext);
 	}
@@ -1591,9 +1588,6 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

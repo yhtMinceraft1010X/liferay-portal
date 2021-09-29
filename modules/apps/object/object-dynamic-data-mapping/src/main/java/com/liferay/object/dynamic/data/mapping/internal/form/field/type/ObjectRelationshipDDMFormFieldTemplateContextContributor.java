@@ -29,7 +29,6 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -178,11 +177,7 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				Long.valueOf(ddmFormFieldRenderingContext.getValue()));
 
 			if (objectEntry != null) {
-				return ObjectEntryUtil.getTitleValue(
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry, _objectEntryLocalService,
-					_objectFieldLocalService);
+				return objectEntry.getTitleValue();
 			}
 		}
 
