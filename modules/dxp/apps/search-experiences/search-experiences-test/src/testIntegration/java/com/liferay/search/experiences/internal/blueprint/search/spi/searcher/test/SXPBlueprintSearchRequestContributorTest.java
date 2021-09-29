@@ -79,7 +79,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Test
 	public void testQueryConfiguration() throws Exception {
-		_addSXPBlueprint(_readConfiguration());
+		_addSXPBlueprint();
 
 		_addJournalArticles("alpha", "beta", "charlie");
 
@@ -88,7 +88,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 
 	@Test
 	public void testSortConfiguration() throws Exception {
-		_addSXPBlueprint(_readConfiguration());
+		_addSXPBlueprint();
 
 		_addJournalArticles("alpha delta", "beta delta", "charlie delta");
 
@@ -116,18 +116,19 @@ public class SXPBlueprintSearchRequestContributorTest {
 		}
 	}
 
-	private SXPBlueprint _addSXPBlueprint(String configurationString)
-		throws Exception {
+	private void _addSXPBlueprint() throws Exception {
+		Class<?> clazz = getClass();
 
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			_user.getUserId(), configurationString,
+		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			_user.getUserId(),
+			StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".json")),
 			Collections.singletonMap(LocaleUtil.US, "testDescription"), "",
 			Collections.singletonMap(LocaleUtil.US, "testTitle"),
 			_serviceContext);
-
-		_sxpBlueprint = sxpBlueprint;
-
-		return sxpBlueprint;
 	}
 
 	private void _assertSearch(
@@ -149,16 +150,6 @@ public class SXPBlueprintSearchRequestContributorTest {
 		DocumentsAssert.assertValues(
 			searchResponse.getRequestString(),
 			searchResponse.getDocumentsStream(), fieldName, expected);
-	}
-
-	private String _readConfiguration() {
-		Class<?> clazz = getClass();
-
-		return StringUtil.read(
-			clazz,
-			StringBundler.concat(
-				clazz.getSimpleName(), StringPool.PERIOD,
-				testName.getMethodName(), ".json"));
 	}
 
 	@DeleteAfterTestRun
