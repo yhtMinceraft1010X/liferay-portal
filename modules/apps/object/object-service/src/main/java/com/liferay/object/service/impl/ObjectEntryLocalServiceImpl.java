@@ -1520,7 +1520,8 @@ public class ObjectEntryLocalServiceImpl
 
 			Stream<ListTypeEntry> stream = listTypeEntries.stream();
 
-			if (!stream.anyMatch(
+			if (objectField.isRequired() &&
+				!stream.anyMatch(
 					listTypeEntry -> Objects.equals(
 						listTypeEntry.getKey(),
 						_getValue(
