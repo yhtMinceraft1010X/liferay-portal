@@ -405,11 +405,11 @@
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldType</exception>
 		<exception>ObjectLayoutColumnSize</exception>
-		<exception>ObjectRelationshipDelete</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipType</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
+		<exception>RequiredObjectRelationship</exception>
 		<exception>ReservedObjectField</exception>
 	</exceptions>
 </service-builder>

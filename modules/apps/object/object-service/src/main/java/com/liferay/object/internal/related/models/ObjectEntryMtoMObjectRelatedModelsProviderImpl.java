@@ -15,7 +15,7 @@
 package com.liferay.object.internal.related.models;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.exception.ObjectRelationshipDeleteException;
+import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -70,7 +70,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 					objectRelationship.getDeletionType(),
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
-			throw new ObjectRelationshipDeleteException();
+			throw new RequiredObjectRelationshipException();
 		}
 	}
 

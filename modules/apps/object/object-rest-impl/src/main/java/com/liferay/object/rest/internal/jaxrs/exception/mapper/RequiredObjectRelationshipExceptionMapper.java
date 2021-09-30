@@ -14,7 +14,7 @@
 
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
-import com.liferay.object.exception.ObjectRelationshipDeleteException;
+import com.liferay.object.exception.RequiredObjectRelationshipException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -25,16 +25,17 @@ import javax.ws.rs.ext.Provider;
  * @author Marco Leo
  */
 @Provider
-public class ObjectRelationshipDeleteExceptionMapper
-	extends BaseExceptionMapper<ObjectRelationshipDeleteException> {
+public class RequiredObjectRelationshipExceptionMapper
+	extends BaseExceptionMapper<RequiredObjectRelationshipException> {
 
 	@Override
 	protected Problem getProblem(
-		ObjectRelationshipDeleteException objectRelationshipDeleteException) {
+		RequiredObjectRelationshipException
+			requiredObjectRelationshipException) {
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			objectRelationshipDeleteException.getMessage());
+			requiredObjectRelationshipException.getMessage());
 	}
 
 }

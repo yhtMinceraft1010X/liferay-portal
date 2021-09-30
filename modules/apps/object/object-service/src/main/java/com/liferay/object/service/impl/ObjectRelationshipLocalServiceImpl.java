@@ -79,10 +79,10 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setObjectDefinitionId1(objectDefinitionId1);
 		objectRelationship.setObjectDefinitionId2(objectDefinitionId2);
 		objectRelationship.setLabelMap(labelMap);
-		objectRelationship.setName(name);
-		objectRelationship.setType(type);
 		objectRelationship.setDeletionType(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+		objectRelationship.setName(name);
+		objectRelationship.setType(type);
 
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
 			Objects.equals(

@@ -265,7 +265,9 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName(), objectDefinition,
 			objectEntry);
 
-		deleteRelatedEntries(objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(), objectEntry.getPrimaryKey());
+		deleteRelatedEntries(
+			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
+			objectEntry.getPrimaryKey());
 
 		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
 			objectDefinition.getClassName());
@@ -276,7 +278,19 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRelatedEntries(long groupId, long objectDefinitionId, long primaryKey)
+	public ObjectEntry deleteObjectEntry(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryPersistence.findByG_C_ERC(
+			groupId, companyId, externalReferenceCode);
+
+		return objectEntryLocalService.deleteObjectEntry(objectEntry);
+	}
+
+	@Override
+	public void deleteRelatedEntries(
+			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -295,21 +309,8 @@ public class ObjectEntryLocalServiceImpl
 
 			objectRelatedModelsProvider.deleteRelatedModel(
 				PrincipalThreadLocal.getUserId(), groupId,
-				objectRelationship.getObjectRelationshipId(),
-				primaryKey);
+				objectRelationship.getObjectRelationshipId(), primaryKey);
 		}
-
-	}
-
-	@Override
-	public ObjectEntry deleteObjectEntry(
-			String externalReferenceCode, long companyId, long groupId)
-		throws PortalException {
-
-		ObjectEntry objectEntry = objectEntryPersistence.findByG_C_ERC(
-			groupId, companyId, externalReferenceCode);
-
-		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}
 
 	@Override

@@ -19,20 +19,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectRelationshipDeleteException extends PortalException {
+public class RequiredObjectRelationshipException extends PortalException {
 
-	public ObjectRelationshipDeleteException() {
+	public RequiredObjectRelationshipException() {
 	}
 
-	public ObjectRelationshipDeleteException(String msg) {
+	public RequiredObjectRelationshipException(String msg) {
 		super(msg);
 	}
 
-	public ObjectRelationshipDeleteException(String msg, Throwable throwable) {
+	public RequiredObjectRelationshipException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public ObjectRelationshipDeleteException(Throwable throwable) {
+	public RequiredObjectRelationshipException(Throwable throwable) {
 		super(throwable);
 	}
 
