@@ -178,7 +178,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 	<liferay-frontend:edit-form-footer>
 		<aui:button name="save" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(true);" %>' value="save" />
 
-		<aui:button disabled="<%= objectDefinition.isApproved() %>" name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />
+		<c:if test="<%= !objectDefinition.isApproved() %>">
+			<aui:button name="publish" onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectDefinition(false);" %>' type="submit" value="publish" />
+		</c:if>
 
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
