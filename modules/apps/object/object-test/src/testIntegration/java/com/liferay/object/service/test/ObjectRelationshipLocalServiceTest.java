@@ -140,8 +140,8 @@ public class ObjectRelationshipLocalServiceTest {
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
-				LocalizedMapUtil.getLocalizedMap("Baker"),
-				objectRelationship.getDeletionType());
+				objectRelationship.getDeletionType(),
+				LocalizedMapUtil.getLocalizedMap("Baker"));
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),

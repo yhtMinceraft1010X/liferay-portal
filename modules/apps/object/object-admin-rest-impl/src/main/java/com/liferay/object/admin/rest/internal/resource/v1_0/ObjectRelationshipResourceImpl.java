@@ -96,8 +96,9 @@ public class ObjectRelationshipResourceImpl
 		return _toObjectRelationship(
 			_objectRelationshipService.updateObjectRelationship(
 				objectRelationshipId,
-				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
-				objectRelationship.getDeleteTypeAsString()));
+				objectRelationship.getDeleteTypeAsString(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectRelationship.getLabel())));
 	}
 
 	private ObjectRelationship _toObjectRelationship(

@@ -78,9 +78,9 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectRelationship.setObjectDefinitionId1(objectDefinitionId1);
 		objectRelationship.setObjectDefinitionId2(objectDefinitionId2);
-		objectRelationship.setLabelMap(labelMap);
 		objectRelationship.setDeletionType(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+		objectRelationship.setLabelMap(labelMap);
 		objectRelationship.setName(name);
 		objectRelationship.setType(type);
 
@@ -265,21 +265,21 @@ public class ObjectRelationshipLocalServiceImpl
 
 	@Override
 	public ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, Map<Locale, String> labelMap,
-			String deletionType)
+			long objectRelationshipId, String deletionType,
+			Map<Locale, String> labelMap)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
 			objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
-		objectRelationship.setLabelMap(labelMap);
-
 		if (Validator.isNull(deletionType)) {
 			deletionType = ObjectRelationshipConstants.DELETION_TYPE_PREVENT;
 		}
 
 		objectRelationship.setDeletionType(deletionType);
+
+		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
 	}
