@@ -269,16 +269,15 @@ public class ObjectRelationshipLocalServiceImpl
 			Map<Locale, String> labelMap)
 		throws PortalException {
 
-		ObjectRelationship objectRelationship =
-			objectRelationshipPersistence.findByPrimaryKey(
-				objectRelationshipId);
-
 		if (Validator.isNull(deletionType)) {
 			deletionType = ObjectRelationshipConstants.DELETION_TYPE_PREVENT;
 		}
 
-		objectRelationship.setDeletionType(deletionType);
+		ObjectRelationship objectRelationship =
+			objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
 
+		objectRelationship.setDeletionType(deletionType);
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
