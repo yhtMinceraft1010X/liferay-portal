@@ -261,7 +261,7 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return _toTaxonomyVocabulary(
-			_addVocabulary(
+			_addAssetVocabulary(
 				taxonomyVocabulary.getExternalReferenceCode(), siteId,
 				taxonomyVocabulary));
 	}
@@ -283,7 +283,7 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		return _toTaxonomyVocabulary(
-			_addVocabulary(externalReferenceCode, siteId, taxonomyVocabulary));
+			_addAssetVocabulary(externalReferenceCode, siteId, taxonomyVocabulary));
 	}
 
 	@Override
@@ -316,7 +316,7 @@ public class TaxonomyVocabularyResourceImpl
 		return AssetVocabulary.class.getName();
 	}
 
-	private AssetVocabulary _addVocabulary(
+	private AssetVocabulary _addAssetVocabulary(
 			String externalReferenceCode, Long siteId,
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
