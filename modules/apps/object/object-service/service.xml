@@ -361,11 +361,11 @@
 		<column name="objectDefinitionId1" type="long" />
 		<column name="objectDefinitionId2" type="long" />
 		<column name="objectFieldId2" type="long" />
+		<column name="deletionType" type="String" />
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
 		<column name="type" type="String" />
-		<column name="deletionType" type="String" />
 
 		<!-- Finder methods -->
 
