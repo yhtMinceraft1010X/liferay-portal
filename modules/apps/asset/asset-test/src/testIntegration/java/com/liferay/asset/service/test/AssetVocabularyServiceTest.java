@@ -210,9 +210,7 @@ public class AssetVocabularyServiceTest {
 		throws Exception {
 
 		String externalReferenceCode = StringUtil.randomString();
-
 		String title = RandomTestUtil.randomString();
-
 		String description = RandomTestUtil.randomString();
 
 		AssetVocabularyLocalServiceUtil.addVocabulary(
