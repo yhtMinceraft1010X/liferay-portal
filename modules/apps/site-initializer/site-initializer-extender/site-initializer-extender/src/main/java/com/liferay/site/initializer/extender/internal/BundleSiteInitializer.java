@@ -1302,20 +1302,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_toMap(jsonObject.getString("title_i18n")), serviceContext);
 			}
 			else {
-				sapEntry.setAllowedServiceSignatures(
+				_sapEntryLocalService.updateSAPEntry(
+					sapEntry.getSapEntryId(),
 					StringUtil.merge(
 						JSONUtil.toStringArray(
 							jsonObject.getJSONArray(
 								"allowedServiceSignatures")),
-						StringPool.NEW_LINE));
-				sapEntry.setDefaultSAPEntry(
-					jsonObject.getBoolean("defaultSAPEntry", true));
-				sapEntry.setEnabled(jsonObject.getBoolean("enabled", true));
-				sapEntry.setName(jsonObject.getString("name"));
-				sapEntry.setTitleMap(
-					_toMap(jsonObject.getString("title_i18n")));
-
-				_sapEntryLocalService.updateSAPEntry(sapEntry);
+						StringPool.NEW_LINE),
+					jsonObject.getBoolean("defaultSAPEntry", true),
+					jsonObject.getBoolean("enabled", true),
+					jsonObject.getString("name"),
+					_toMap(jsonObject.getString("title_i18n")), serviceContext);
 			}
 		}
 	}
