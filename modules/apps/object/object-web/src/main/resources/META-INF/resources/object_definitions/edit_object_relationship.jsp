@@ -91,8 +91,8 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			'/o/object-admin/v1.0/object-relationships/<%= objectRelationship.getObjectRelationshipId() %>',
 			{
 				body: JSON.stringify({
-					label: localizedLabels,
 					deleteType: deleteType.value,
+					label: localizedLabels,
 				}),
 				headers: new Headers({
 					Accept: 'application/json',
