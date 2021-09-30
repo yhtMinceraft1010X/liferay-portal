@@ -54,7 +54,8 @@ public class DDMFormTemplateContextFactoryHelper {
 			ddmFormRules = ddmForm.getDDMFormRules();
 		}
 
-		expressionParameterNames.addAll(_getParameterNamesByDDMFormRules(ddmFormRules));
+		expressionParameterNames.addAll(
+			_getParameterNamesByDDMFormRules(ddmFormRules));
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			if (_isDDMFormFieldEvaluable(ddmFormField)) {
