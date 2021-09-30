@@ -293,7 +293,7 @@ public class ObjectEntryLocalServiceImpl
 						objectDefinition.getClassName(),
 						objectRelationship.getType());
 
-			objectRelatedModelsProvider.deleteModel(
+			objectRelatedModelsProvider.deleteRelatedModel(
 				PrincipalThreadLocal.getUserId(), groupId,
 				objectRelationship.getObjectRelationshipId(),
 				primaryKey);

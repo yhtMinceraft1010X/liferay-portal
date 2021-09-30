@@ -55,7 +55,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 	}
 
 	@Override
-	public void deleteModel(
+	public void deleteRelatedModel(
 			long userId, long groupId, long objectRelationshipId,
 			long primaryKey)
 		throws PortalException {
