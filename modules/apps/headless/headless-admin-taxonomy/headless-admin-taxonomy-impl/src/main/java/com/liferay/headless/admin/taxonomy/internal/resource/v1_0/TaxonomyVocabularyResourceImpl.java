@@ -283,7 +283,8 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		return _toTaxonomyVocabulary(
-			_addAssetVocabulary(externalReferenceCode, siteId, taxonomyVocabulary));
+			_addAssetVocabulary(
+				externalReferenceCode, siteId, taxonomyVocabulary));
 	}
 
 	@Override
