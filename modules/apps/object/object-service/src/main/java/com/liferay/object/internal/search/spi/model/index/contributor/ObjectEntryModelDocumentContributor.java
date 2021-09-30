@@ -107,18 +107,6 @@ public class ObjectEntryModelDocumentContributor
 			_log.debug("Object entry " + objectEntry);
 		}
 
-		document.addKeyword(
-			"objectDefinitionId", objectEntry.getObjectDefinitionId());
-		document.add(
-			new Field("objectEntryTitle", objectEntry.getTitleValue()));
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		document.addKeyword(
-			"objectDefinitionName", objectDefinition.getShortName());
-
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
 
@@ -127,6 +115,16 @@ public class ObjectEntryModelDocumentContributor
 
 			document.add(fieldArray);
 		}
+
+		document.addKeyword(
+			"objectDefinitionId", objectEntry.getObjectDefinitionId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		document.addKeyword(
+			"objectDefinitionName", objectDefinition.getShortName());
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
@@ -146,6 +144,9 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		document.add(new Field("objectEntryContent", sb.toString()));
+
+		document.add(
+			new Field("objectEntryTitle", objectEntry.getTitleValue()));
 
 		document.remove(Field.USER_NAME);
 	}
