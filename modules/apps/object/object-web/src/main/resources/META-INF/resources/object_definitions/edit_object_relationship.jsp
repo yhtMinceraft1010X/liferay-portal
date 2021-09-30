@@ -39,9 +39,9 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 					<aui:input disabled="<%= true %>" name="name" required="<%= true %>" value="<%= objectRelationship.getName() %>" />
 
 					<aui:select disabled="<%= true %>" name="type" required="<%= true %>">
-						<aui:option label="one-to-one" selected='<%= Objects.equals(objectRelationship.getType(), "one_to_one") %>' value="one_to_one" />
-						<aui:option label="one-to-many" selected='<%= Objects.equals(objectRelationship.getType(), "one_to_many") %>' value="one_to_many" />
-						<aui:option label="many-to-many" selected='<%= Objects.equals(objectRelationship.getType(), "many_to_many") %>' value="many_to_many" />
+						<aui:option label="one-to-one" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_ONE_TO_ONE) %>" value="<%= ObjectRelationshipConstants.TYPE_ONE_TO_ONE %>" />
+						<aui:option label="one-to-many" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_ONE_TO_MANY) %>" value="<%= ObjectRelationshipConstants.TYPE_ONE_TO_MANY %>" />
+						<aui:option label="many-to-many" selected="<%= Objects.equals(objectRelationship.getType(), ObjectRelationshipConstants.TYPE_MANY_TO_MANY) %>" value="<%= ObjectRelationshipConstants.TYPE_MANY_TO_MANY %>" />
 					</aui:select>
 
 					<aui:select disabled="<%= true %>" name="object" required="<%= true %>">
@@ -49,9 +49,9 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 					</aui:select>
 
 					<aui:select name="deleteType" required="<%= true %>">
-						<aui:option label="cascade" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "cascade") %>' value="cascade" />
-						<aui:option label="disassociate" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "disassociate") %>' value="disassociate" />
-						<aui:option label="prevent" selected='<%= Objects.equals(objectRelationship.getDeletionType(), "prevent") %>' value="prevent" />
+						<aui:option label="cascade" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_CASCADE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_CASCADE %>" />
+						<aui:option label="disassociate" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE %>" />
+						<aui:option label="prevent" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_PREVENT) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_PREVENT %>" />
 					</aui:select>
 				</div>
 			</div>
@@ -71,7 +71,9 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
 
-		const deleteType = document.getElementById("<portlet:namespace />deleteType");
+		const deleteType = document.getElementById(
+			'<portlet:namespace />deleteType'
+		);
 
 		const localizedLabels = Array(...localizedInputs).reduce(
 			(prev, cur, index) => {
@@ -90,7 +92,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			{
 				body: JSON.stringify({
 					label: localizedLabels,
-					deleteType: deleteType.value
+					deleteType: deleteType.value,
 				}),
 				headers: new Headers({
 					Accept: 'application/json',
