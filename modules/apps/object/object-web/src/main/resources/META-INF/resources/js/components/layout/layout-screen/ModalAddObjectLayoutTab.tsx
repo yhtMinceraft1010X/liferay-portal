@@ -87,7 +87,7 @@ const TabType: React.FC<ITabTypeProps> = ({
 		'data-tooltip-align': 'top',
 		onClick: () => {},
 		title: Liferay.Language.get(
-			'the-first-tab-in-the-layout-cannot-be-a-relationship-type'
+			'the-first-tab-in-the-layout-cannot-be-a-relationship-layout'
 		),
 	};
 
