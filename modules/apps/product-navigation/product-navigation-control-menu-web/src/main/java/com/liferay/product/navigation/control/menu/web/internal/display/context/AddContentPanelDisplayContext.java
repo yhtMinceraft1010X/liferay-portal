@@ -675,13 +675,12 @@ public class AddContentPanelDisplayContext {
 			return false;
 		}
 
+		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames();
 		LayoutTypePortlet layoutTypePortlet =
 			_themeDisplay.getLayoutTypePortlet();
 
-		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames();
-
-		if (layoutTypePortlet.hasPortletId(portlet.getPortletId()) ||
-			layoutDecodedPortletNames.contains(portlet.getPortletId())) {
+		if (layoutDecodedPortletNames.contains(portlet.getPortletId()) ||
+			layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
 
 			return true;
 		}
