@@ -89,7 +89,7 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		CreationMenu creationMenu = new CreationMenu();
 
 		if ((objectDefinition.isSystem() &&
-			 !_hasExtendSystemObjectPermission()) ||
+			 !_hasExtendSystemObjectDefinitionPermission()) ||
 			!_hasAddObjectFieldPermission()) {
 
 			return creationMenu;
@@ -132,14 +132,14 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
-	private boolean _hasExtendSystemObjectPermission() throws PortalException {
+	private boolean _hasExtendSystemObjectDefinitionPermission() throws PortalException {
 		PortletResourcePermission portletResourcePermission =
 			_objectDefinitionModelResourcePermission.
 				getPortletResourcePermission();
 
 		return portletResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(), null,
-			ObjectActionKeys.EXTEND_SYSTEM_OBJECT);
+			ObjectActionKeys.EXTEND_SYSTEM_OBJECT_DEFINITION);
 	}
 
 	private final ModelResourcePermission<ObjectDefinition>

@@ -58,7 +58,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		if (objectDefinition.isSystem()) {
 			_portletResourcePermission.check(
 				getPermissionChecker(), null,
-				ObjectActionKeys.EXTEND_SYSTEM_OBJECT);
+				ObjectActionKeys.EXTEND_SYSTEM_OBJECT_DEFINITION);
 		}
 		else {
 			_objectDefinitionModelResourcePermission.check(

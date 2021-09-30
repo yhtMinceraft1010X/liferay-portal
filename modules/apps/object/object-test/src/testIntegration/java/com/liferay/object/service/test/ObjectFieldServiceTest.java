@@ -123,7 +123,7 @@ public class ObjectFieldServiceTest {
 			Assert.assertTrue(
 				message.contains(
 					"User " + _defaultUser.getUserId() +
-						" must have EXTEND_SYSTEM_OBJECT permission for"));
+						" must have EXTEND_SYSTEM_OBJECT_DEFINITION permission for"));
 		}
 
 		_testAddCustomObjectField(
