@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -122,8 +123,10 @@ public class ObjectFieldServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
-						" must have EXTEND_SYSTEM_OBJECT_DEFINITION permission for"));
+					StringBundler.concat(
+						"User ", _defaultUser.getUserId(),
+						" must have EXTEND_SYSTEM_OBJECT_DEFINITION ",
+						"permission for")));
 		}
 
 		_testAddCustomObjectField(

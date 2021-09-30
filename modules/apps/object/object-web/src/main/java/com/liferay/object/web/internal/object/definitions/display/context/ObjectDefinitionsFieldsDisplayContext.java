@@ -132,7 +132,9 @@ public class ObjectDefinitionsFieldsDisplayContext {
 			getObjectDefinitionId(), ActionKeys.UPDATE);
 	}
 
-	private boolean _hasExtendSystemObjectDefinitionPermission() throws PortalException {
+	private boolean _hasExtendSystemObjectDefinitionPermission()
+		throws PortalException {
+
 		PortletResourcePermission portletResourcePermission =
 			_objectDefinitionModelResourcePermission.
 				getPortletResourcePermission();
