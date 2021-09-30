@@ -302,13 +302,13 @@ public class StyleBookEntryZipProcessorImpl
 			boolean overwrite)
 		throws Exception {
 
+		boolean defaultStyleBookEntry = false;
+
 		String styleBookEntryKey = _getKey(zipFile, groupId, fileName);
 
 		String name = styleBookEntryKey;
 
 		String frontendTokensValues = StringPool.BLANK;
-
-		boolean defaultStyleBookEntry = false;
 
 		String styleBookEntryContent = _getContent(zipFile, fileName);
 
@@ -316,14 +316,12 @@ public class StyleBookEntryZipProcessorImpl
 			JSONObject styleBookEntryJSONObject =
 				JSONFactoryUtil.createJSONObject(styleBookEntryContent);
 
-			name = styleBookEntryJSONObject.getString("name");
-
 			defaultStyleBookEntry = styleBookEntryJSONObject.getBoolean(
 				"defaultStyleBookEntry");
-
 			frontendTokensValues = _getStyleBookEntryContent(
 				zipFile, fileName,
 				styleBookEntryJSONObject.getString("frontendTokensValuesPath"));
+			name = styleBookEntryJSONObject.getString("name");
 		}
 
 		StyleBookEntry styleBookEntry = _addStyleBookEntry(
