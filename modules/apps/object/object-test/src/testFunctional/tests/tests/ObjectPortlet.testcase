@@ -312,11 +312,39 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateDisplayedForSearch {
 
-		// TODO LPS-138958 EmptyStateDisplayedForSearch pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "text",
+			objectName = "CustomObject",
+			value = "Test text");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.searchEntry(entryName = "Lorem ipsum");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
+
+			
+
 
 	}
 
