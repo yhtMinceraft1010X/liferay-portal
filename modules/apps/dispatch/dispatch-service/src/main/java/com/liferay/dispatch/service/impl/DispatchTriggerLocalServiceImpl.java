@@ -95,8 +95,9 @@ public class DispatchTriggerLocalServiceImpl
 			DispatchTrigger dispatchTrigger)
 		throws PortalException {
 
-		if (dispatchTrigger.isSystem() && !PortalRunMode.isTestMode() &&
-			!CompanyThreadLocal.isDeleteInProcess()) {
+		if (dispatchTrigger.isSystem() &&
+			!CompanyThreadLocal.isDeleteInProcess() &&
+			!PortalRunMode.isTestMode()) {
 
 			return dispatchTrigger;
 		}
