@@ -319,7 +319,7 @@ public class StyleBookEntryZipProcessorImpl
 			name = styleBookEntryJSONObject.getString("name");
 
 			defaultStyleBookEntry = styleBookEntryJSONObject.getBoolean(
-				"defaultStyleBookEntry", false);
+				"defaultStyleBookEntry");
 
 			frontendTokensValues = _getStyleBookEntryContent(
 				zipFile, fileName,
