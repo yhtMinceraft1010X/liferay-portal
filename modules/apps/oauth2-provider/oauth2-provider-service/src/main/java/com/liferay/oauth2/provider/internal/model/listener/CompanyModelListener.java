@@ -39,6 +39,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		try {
 			_oAuth2ApplicationLocalService.deleteOAuth2Applications(
 				company.getCompanyId());
+
 			_deleteOAuth2ScopeGrant(company);
 		}
 		catch (PortalException portalException) {
@@ -56,7 +57,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"companyId", company.getCompanyId())));
-
 		actionableDynamicQuery.setPerformActionMethod(
 			oAuth2ScopeGrant ->
 				_oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(

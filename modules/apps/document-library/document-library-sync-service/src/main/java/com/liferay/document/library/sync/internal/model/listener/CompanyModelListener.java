@@ -52,7 +52,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"companyId", company.getCompanyId())));
-
 		actionableDynamicQuery.setPerformActionMethod(
 			dlSyncEvent -> _dlSyncEventLocalService.deleteDLSyncEvent(
 				(DLSyncEvent)dlSyncEvent));

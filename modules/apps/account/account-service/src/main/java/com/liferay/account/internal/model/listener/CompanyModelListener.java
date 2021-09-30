@@ -62,7 +62,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"companyId", company.getCompanyId())));
-
 		actionableDynamicQuery.setPerformActionMethod(
 			accountGroup -> _accountGroupLocalService.deleteAccountGroup(
 				(AccountGroup)accountGroup));
