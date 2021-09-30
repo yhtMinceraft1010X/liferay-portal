@@ -28,7 +28,7 @@ const LayoutScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				title={`${Liferay.Language.get('info')}:`}
 			>
 				{Liferay.Language.get(
-					'only-the-first-tab-will-be-used-when-creating-a-new-entry-the-remaining-Tabs-can-be-accessed-while-updating-the-entry'
+					'only-the-first-tab-will-be-used-when-creating-a-new-entry'
 				)}
 			</ClayAlert>
 
