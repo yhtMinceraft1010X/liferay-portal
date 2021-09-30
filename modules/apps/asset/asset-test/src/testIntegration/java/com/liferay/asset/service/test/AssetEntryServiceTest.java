@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -228,7 +229,7 @@ public class AssetEntryServiceTest {
 
 		List<AssetEntry> topViewEntries =
 			AssetEntryLocalServiceUtil.getTopViewedEntries(
-				"testClass", false, -1, -1);
+				"testClass", false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			topViewEntries.toString(), 1, topViewEntries.size());
