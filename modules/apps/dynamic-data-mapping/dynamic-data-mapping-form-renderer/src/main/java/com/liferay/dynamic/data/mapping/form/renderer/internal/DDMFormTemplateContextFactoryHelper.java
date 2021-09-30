@@ -54,15 +54,15 @@ public class DDMFormTemplateContextFactoryHelper {
 			ddmFormRules = ddmForm.getDDMFormRules();
 		}
 
-		expressionParameters.addAll(getParametersByDDMFormRules(ddmFormRules));
+		expressionParameters.addAll(_getParametersByDDMFormRules(ddmFormRules));
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			if (isDDMFormFieldEvaluable(ddmFormField)) {
+			if (_isDDMFormFieldEvaluable(ddmFormField)) {
 				expressionParameters.add(ddmFormField.getName());
 			}
 
 			expressionParameters.addAll(
-				getParametersByExpression(
+				_getParametersByExpression(
 					ddmFormField.getVisibilityExpression()));
 		}
 
@@ -71,24 +71,24 @@ public class DDMFormTemplateContextFactoryHelper {
 		return ddmFormFieldNames;
 	}
 
-	protected Set<String> getParametersByDDMFormRules(
+	private Set<String> _getParametersByDDMFormRules(
 		List<DDMFormRule> ddmFormRules) {
 
 		Set<String> parameters = new HashSet<>();
 
 		for (DDMFormRule ddmFormRule : ddmFormRules) {
 			parameters.addAll(
-				getParametersByExpression(ddmFormRule.getCondition()));
+				_getParametersByExpression(ddmFormRule.getCondition()));
 
 			for (String action : ddmFormRule.getActions()) {
-				parameters.addAll(getParametersByExpression(action));
+				parameters.addAll(_getParametersByExpression(action));
 			}
 		}
 
 		return parameters;
 	}
 
-	protected Set<String> getParametersByExpression(String expression) {
+	private Set<String> _getParametersByExpression(String expression) {
 		if (Validator.isNull(expression)) {
 			return Collections.emptySet();
 		}
@@ -104,7 +104,7 @@ public class DDMFormTemplateContextFactoryHelper {
 		return parameters;
 	}
 
-	protected boolean isDDMFormFieldEvaluable(DDMFormField ddmFormField) {
+	private boolean _isDDMFormFieldEvaluable(DDMFormField ddmFormField) {
 		if (Objects.equals(ddmFormField.getType(), "object-relationship") ||
 			GetterUtil.getBoolean(ddmFormField.getProperty("inputMask")) ||
 			GetterUtil.getBoolean(
