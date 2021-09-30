@@ -19,6 +19,8 @@ import com.liferay.document.library.preview.audio.internal.configuration.DLAudio
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -145,6 +147,9 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 				return;
 			}
 			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException, interruptedException);
+				}
 			}
 		}
 	}
@@ -152,6 +157,9 @@ public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 	private static final int _AUDIO_BIT_RATE_DEFAULT = 64000;
 
 	private static final int _AUDIO_SAMPLE_RATE_DEFAULT = 44100;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLAudioFFMPEGAudioConverter.class);
 
 	private volatile DLAudioFFMPEGAudioConverterConfiguration
 		_dlAudioFFMPEGAudioConverterConfiguration;

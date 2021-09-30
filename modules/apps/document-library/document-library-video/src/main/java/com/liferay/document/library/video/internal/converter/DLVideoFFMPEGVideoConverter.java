@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -221,6 +223,9 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 				return;
 			}
 			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException, interruptedException);
+				}
 			}
 		}
 	}
@@ -228,6 +233,9 @@ public class DLVideoFFMPEGVideoConverter implements VideoConverter {
 	private static final int _VIDEO_BIT_RATE_DEFAULT = 250000;
 
 	private static final int _VIDEO_BIT_RATE_MAX = 1200000;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLVideoFFMPEGVideoConverter.class);
 
 	private volatile DLVideoFFMPEGVideoConverterConfiguration
 		_dlVideoFFMPEGVideoConverterConfiguration;
