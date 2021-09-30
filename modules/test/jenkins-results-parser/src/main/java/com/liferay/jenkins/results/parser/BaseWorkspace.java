@@ -257,7 +257,7 @@ public abstract class BaseWorkspace implements Workspace {
 	}
 
 	private static final String[] _REQUIRED_KEYS = {
-		"primary_repository_name", "primary_repository_dir_name",
+		"primary_repository_dir_name", "primary_repository_name",
 		"primary_upstream_branch_name", "workspace_repository_dir_names"
 	};
 
