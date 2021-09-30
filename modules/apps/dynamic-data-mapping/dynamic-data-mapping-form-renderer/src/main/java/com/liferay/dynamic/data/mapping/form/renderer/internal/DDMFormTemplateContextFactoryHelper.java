@@ -41,7 +41,7 @@ public class DDMFormTemplateContextFactoryHelper {
 	public Set<String> getEvaluableDDMFormFieldNames(
 		DDMForm ddmForm, DDMFormLayout ddmFormLayout) {
 
-		Set<String> expressionParameters = new HashSet<>();
+		Set<String> expressionParameterNames = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
@@ -54,54 +54,54 @@ public class DDMFormTemplateContextFactoryHelper {
 			ddmFormRules = ddmForm.getDDMFormRules();
 		}
 
-		expressionParameters.addAll(_getParametersByDDMFormRules(ddmFormRules));
+		expressionParameterNames.addAll(_getParameterNamesByDDMFormRules(ddmFormRules));
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			if (_isDDMFormFieldEvaluable(ddmFormField)) {
-				expressionParameters.add(ddmFormField.getName());
+				expressionParameterNames.add(ddmFormField.getName());
 			}
 
-			expressionParameters.addAll(
-				_getParametersByExpression(
+			expressionParameterNames.addAll(
+				_getParameterNamesByExpression(
 					ddmFormField.getVisibilityExpression()));
 		}
 
-		ddmFormFieldNames.retainAll(expressionParameters);
+		ddmFormFieldNames.retainAll(expressionParameterNames);
 
 		return ddmFormFieldNames;
 	}
 
-	private Set<String> _getParametersByDDMFormRules(
+	private Set<String> _getParameterNamesByDDMFormRules(
 		List<DDMFormRule> ddmFormRules) {
 
-		Set<String> parameters = new HashSet<>();
+		Set<String> parameterNames = new HashSet<>();
 
 		for (DDMFormRule ddmFormRule : ddmFormRules) {
-			parameters.addAll(
-				_getParametersByExpression(ddmFormRule.getCondition()));
+			parameterNames.addAll(
+				_getParameterNamesByExpression(ddmFormRule.getCondition()));
 
 			for (String action : ddmFormRule.getActions()) {
-				parameters.addAll(_getParametersByExpression(action));
+				parameterNames.addAll(_getParameterNamesByExpression(action));
 			}
 		}
 
-		return parameters;
+		return parameterNames;
 	}
 
-	private Set<String> _getParametersByExpression(String expression) {
+	private Set<String> _getParameterNamesByExpression(String expression) {
 		if (Validator.isNull(expression)) {
 			return Collections.emptySet();
 		}
 
-		Set<String> parameters = new HashSet<>();
+		Set<String> parameterNames = new HashSet<>();
 
 		Matcher matcher = _pattern.matcher(expression);
 
 		while (matcher.find()) {
-			parameters.add(matcher.group(1));
+			parameterNames.add(matcher.group(1));
 		}
 
-		return parameters;
+		return parameterNames;
 	}
 
 	private boolean _isDDMFormFieldEvaluable(DDMFormField ddmFormField) {
