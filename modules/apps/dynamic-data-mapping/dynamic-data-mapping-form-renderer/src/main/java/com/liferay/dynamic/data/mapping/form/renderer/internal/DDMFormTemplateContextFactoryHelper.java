@@ -95,7 +95,7 @@ public class DDMFormTemplateContextFactoryHelper {
 
 		Set<String> parameters = new HashSet<>();
 
-		Matcher matcher = _functionParametersPattern.matcher(expression);
+		Matcher matcher = _pattern.matcher(expression);
 
 		while (matcher.find()) {
 			parameters.add(matcher.group(1));
@@ -127,7 +127,7 @@ public class DDMFormTemplateContextFactoryHelper {
 		return false;
 	}
 
-	private static final Pattern _functionParametersPattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"'?([\\w]+)'?\\s*[,\\)]\\s*");
 
 }
