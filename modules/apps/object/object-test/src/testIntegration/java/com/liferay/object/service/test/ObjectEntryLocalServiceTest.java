@@ -704,10 +704,12 @@ public class ObjectEntryLocalServiceTest {
 
 		// Scope by depot
 
-		_testScope(0, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+		// TODO Turn on theses tests once depot is reenabled
+
+		/*_testScope(0, ObjectDefinitionConstants.SCOPE_DEPOT, false);
 		_testScope(
 			depotEntryGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, true);
-		_testScope(siteGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, false);
+		_testScope(siteGroupId, ObjectDefinitionConstants.SCOPE_DEPOT, false);*/
 
 		// Scope by site
 
