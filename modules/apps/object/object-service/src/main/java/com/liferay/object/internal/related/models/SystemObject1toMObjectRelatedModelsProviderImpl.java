@@ -104,7 +104,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 					getPersistedModelLocalService(
 						_systemObjectDefinitionMetadata.getClassName());
 
-			for (BaseModel baseModel : relatedModels) {
+			for (BaseModel<T> baseModel : relatedModels) {
 				persistedModelLocalService.deletePersistedModel(
 					(PersistedModel)baseModel);
 			}
@@ -116,7 +116,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectRelationship.getObjectFieldId2());
 
-			for (BaseModel baseModel : relatedModels) {
+			for (BaseModel<T> baseModel : relatedModels) {
 				_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 					objectRelationship.getObjectDefinitionId2(),
 					GetterUtil.getLong(baseModel.getPrimaryKeyObj()),
