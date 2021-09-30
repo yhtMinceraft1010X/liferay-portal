@@ -265,7 +265,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName(), objectDefinition,
 			objectEntry);
 
-		deleteRelatedEntries(
+		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
 
@@ -289,7 +289,7 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRelatedEntries(
+	public void deleteRelatedObjectEntries(
 			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException {
 

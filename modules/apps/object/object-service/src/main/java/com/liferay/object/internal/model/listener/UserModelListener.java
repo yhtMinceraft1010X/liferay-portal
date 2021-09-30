@@ -39,7 +39,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					user.getCompanyId(), User.class.getName());
 
-			_objectEntryLocalService.deleteRelatedEntries(
+			_objectEntryLocalService.deleteRelatedObjectEntries(
 				0, objectDefinition.getObjectDefinitionId(),
 				user.getPrimaryKey());
 		}
