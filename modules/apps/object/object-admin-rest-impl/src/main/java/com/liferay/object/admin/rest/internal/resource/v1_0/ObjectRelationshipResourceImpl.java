@@ -19,7 +19,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -105,7 +104,7 @@ public class ObjectRelationshipResourceImpl
 
 	private ObjectRelationship _toObjectRelationship(
 			com.liferay.object.model.ObjectRelationship objectRelationship)
-		throws PortalException {
+		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
