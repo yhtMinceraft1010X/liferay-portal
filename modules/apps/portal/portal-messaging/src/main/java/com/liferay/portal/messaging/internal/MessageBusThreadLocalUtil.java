@@ -151,6 +151,9 @@ public class MessageBusThreadLocalUtil {
 	}
 
 	private static PermissionChecker _getPermissionChecker(Object object) {
+
+		// LPS-139811
+
 		if (object instanceof PermissionChecker) {
 			return (PermissionChecker)object;
 		}
