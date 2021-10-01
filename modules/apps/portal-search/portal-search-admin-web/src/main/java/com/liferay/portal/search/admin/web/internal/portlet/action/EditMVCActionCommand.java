@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
@@ -115,8 +116,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		redirect = _http.setParameter(
-			redirect, namespace + "companyIds",
-			_getCompanyIdsString(companyIds));
+			redirect, namespace + "companyIds", StringUtil.merge(companyIds));
 		redirect = _http.setParameter(redirect, namespace + "scope", scope);
 
 		sendRedirect(actionRequest, actionResponse, redirect);
@@ -245,21 +245,6 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		Class<?> clazz = indexReindexer.getClass();
 
 		_indexReindexers.remove(clazz.getName());
-	}
-
-	private String _getCompanyIdsString(long[] companyIds) {
-		StringBundler sb = new StringBundler(companyIds.length * 2);
-
-		for (long companyId : companyIds) {
-			sb.append(companyId);
-			sb.append(StringPool.COMMA);
-		}
-
-		if (companyIds.length > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
 	}
 
 	@Reference
