@@ -997,10 +997,10 @@ public class ObjectEntryLocalServiceTest {
 		_assertKeywords("life", 0);
 		_assertKeywords("liferay", 0);
 		_assertKeywords("liferay.com", 0);
-		_assertKeywords("peter", 1);
 		_assertKeywords("listTypeEntryKey1", 1);
 		_assertKeywords("listTypeEntryKey2", 1);
 		_assertKeywords("listTypeEntryKey3", 1);
+		_assertKeywords("peter", 1);
 
 		// Irrelevant object definition
 
@@ -1127,11 +1127,11 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("João", values.get("firstName"));
 		Assert.assertEquals(0D, values.get("height"));
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
-		Assert.assertEquals(null, values.get("middleName"));
-		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(null, values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
+		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(null, values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
@@ -1186,11 +1186,11 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(180D, values.get("height"));
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
 		Assert.assertEquals(null, values.get("middleName"));
-		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
+		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertArrayEquals(
 			portrait.getBytes(), (byte[])values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
@@ -1219,12 +1219,12 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("João", values.get("firstName"));
 		Assert.assertEquals(180D, values.get("height"));
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
-		Assert.assertEquals(null, values.get("middleName"));
-		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertEquals(
 			"listTypeEntryKey1", values.get("listTypeEntryKey"));
 		Assert.assertEquals(
 			"listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
+		Assert.assertEquals(null, values.get("middleName"));
+		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
 		Assert.assertArrayEquals(
 			portrait.getBytes(), (byte[])values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
