@@ -63,7 +63,7 @@ else {
 					<c:choose>
 						<c:when test="<%= exception instanceof PrincipalException %>">
 							<liferay-ui:message key="you-do-not-have-permission-to-view-this-page" />
-						</c:when>x
+						</c:when>
 						<c:otherwise>
 							<liferay-ui:message key="an-unexpected-system-error-occurred" />
 						</c:otherwise>
