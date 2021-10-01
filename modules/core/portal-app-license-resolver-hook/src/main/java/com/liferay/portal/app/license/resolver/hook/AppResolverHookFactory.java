@@ -53,7 +53,7 @@ public class AppResolverHookFactory implements ResolverHookFactory {
 
 		String name = ReleaseInfo.getName();
 
-		if (true || name.contains("Community")) {
+		if (name.contains("Community")) {
 			_allowedSymbolicNames = Collections.emptySet();
 
 			return;
