@@ -174,12 +174,6 @@ public class ObjectEntryLocalServiceTest {
 						true, false, null, "Last Name", "lastName", false,
 						"String"),
 					ObjectFieldUtil.createObjectField(
-						true, false, null, "Middle Name", "middleName", false,
-						"String"),
-					ObjectFieldUtil.createObjectField(
-						true, false, null, "Number of Books Written",
-						"numberOfBooksWritten", false, "Integer"),
-					ObjectFieldUtil.createObjectField(
 						_listTypeDefinition.getListTypeDefinitionId(), null,
 						true, false, null, "List Type Entry Key",
 						"listTypeEntryKey", false, "String"),
@@ -187,6 +181,12 @@ public class ObjectEntryLocalServiceTest {
 						_listTypeDefinition.getListTypeDefinitionId(), null,
 						true, false, null, "List Type Entry Key Required",
 						"listTypeEntryKeyRequired", true, "String"),
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Middle Name", "middleName", false,
+						"String"),
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Number of Books Written",
+						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
 						false, false, null, "Portrait", "portrait", false,
 						"Blob")));
