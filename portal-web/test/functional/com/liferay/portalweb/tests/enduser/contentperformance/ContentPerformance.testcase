@@ -20,7 +20,7 @@ definition {
 
 			AnalyticsCloud.takeTokenFromAnalyticsCloud();
 		}
-		
+
 		task ("Go to DXP portal, login and create site") {
 			TestCase.setUpPortalInstance();
 
