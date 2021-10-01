@@ -349,7 +349,7 @@ public class ObjectEntryLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddress", "john@liferay.com"
 				).put(
-					"listTypeEntryKeyRequired", "wrongKey"
+					"listTypeEntryKeyRequired", RandomTestUtil.randomString()
 				).build());
 
 			Assert.fail();
