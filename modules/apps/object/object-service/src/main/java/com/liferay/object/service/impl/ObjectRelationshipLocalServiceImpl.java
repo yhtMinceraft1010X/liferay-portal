@@ -207,20 +207,8 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			ObjectField objectField =
-				_objectFieldLocalService.deleteObjectField(
-					objectRelationship.getObjectFieldId2());
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectField.getObjectDefinitionId());
-
-			if (objectDefinition.isApproved()) {
-				runSQL(
-					DynamicObjectDefinitionTable.getAlterTableDropColumnSQL(
-						objectField.getDBTableName(),
-						objectField.getDBColumnName()));
-			}
+			_objectFieldLocalService.deleteObjectField(
+				objectRelationship.getObjectFieldId2());
 		}
 		else if (Objects.equals(
 					objectRelationship.getType(),
