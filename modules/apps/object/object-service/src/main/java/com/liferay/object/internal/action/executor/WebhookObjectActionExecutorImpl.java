@@ -39,14 +39,15 @@ public class WebhookObjectActionExecutorImpl implements ObjectActionExecutor {
 
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"x-api-key",
+			(String)objectActionRequest.getParameterValue("secret"));
 		options.setBody(
 			String.valueOf(objectActionRequest.getParameterValue("payload")),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation(
 			(String)objectActionRequest.getParameterValue("url"));
 		options.setPost(true);
-
-		// TODO Secret
 
 		_http.URLtoString(options);
 	}
