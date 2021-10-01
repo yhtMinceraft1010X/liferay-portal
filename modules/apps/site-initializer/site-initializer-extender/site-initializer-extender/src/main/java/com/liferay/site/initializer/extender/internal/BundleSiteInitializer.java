@@ -683,7 +683,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		resourcePath = resourcePath.substring(0, resourcePath.length() - 1);
 
-		String json = _read(resourcePath + "._si.json");
+		String json = _read(resourcePath + ".metadata.json");
 
 		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
@@ -740,7 +740,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (resourcePath.endsWith("._si.json")) {
+			if (resourcePath.endsWith(".metadata.json")) {
 				continue;
 			}
 
@@ -752,7 +752,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Map<String, String> values = new HashMap<>();
 
-			String json = _read(resourcePath + "._si.json");
+			String json = _read(resourcePath + ".metadata.json");
 
 			if (json != null) {
 				values = Collections.singletonMap("document", json);
@@ -853,7 +853,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				0, resourcePath.length() - 1);
 
 			if (resourcePath.endsWith("/") &&
-				resourcePaths.contains(parentResourcePath + "._si.json")) {
+				resourcePaths.contains(parentResourcePath + ".metadata.json")) {
 
 				_addJournalArticles(
 					ddmStructureLocalService, ddmTemplateLocalService,
@@ -865,7 +865,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			if (resourcePath.endsWith("._si.json") ||
+			if (resourcePath.endsWith(".metadata.json") ||
 				resourcePath.endsWith(".xml") || resourcePath.endsWith("/")) {
 
 				continue;
@@ -1475,7 +1475,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		String json = _read(parentResourcePath + "._si.json");
+		String json = _read(parentResourcePath + ".metadata.json");
 
 		StructuredContentFolder structuredContentFolder =
 			StructuredContentFolder.toDTO(json);
