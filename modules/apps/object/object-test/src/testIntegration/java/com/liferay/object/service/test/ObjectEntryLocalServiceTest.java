@@ -131,13 +131,11 @@ public class ObjectEntryLocalServiceTest {
 			_listTypeDefinition.getListTypeDefinitionId(), "key1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
-
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "key2",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
-
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "key3",
