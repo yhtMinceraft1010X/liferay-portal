@@ -128,17 +128,17 @@ public class ObjectEntryLocalServiceTest {
 
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "key1",
+			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey1",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "key2",
+			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey2",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 		_listTypeEntryLocalService.addListTypeEntry(
 			TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(), "key3",
+			_listTypeDefinition.getListTypeDefinitionId(), "listTypeEntryKey3",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
@@ -181,12 +181,12 @@ public class ObjectEntryLocalServiceTest {
 						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
 						_listTypeDefinition.getListTypeDefinitionId(), null,
-						true, false, null, "Picklist",
-						"picklist", false, "String"),
+						true, false, null, "List Type Entry Key",
+						"listTypeEntryKey", false, "String"),
 					ObjectFieldUtil.createObjectField(
 						_listTypeDefinition.getListTypeDefinitionId(), null,
-						true, false, null, "Picklist Required",
-						"picklistRequired", true, "String"),
+						true, false, null, "List Type Entry Key Required",
+						"listTypeEntryKeyRequired", true, "String"),
 					ObjectFieldUtil.createObjectField(
 						false, false, null, "Portrait", "portrait", false,
 						"Blob")));
@@ -230,7 +230,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(1);
@@ -317,7 +317,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(2);
@@ -328,7 +328,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(3);
@@ -337,9 +337,9 @@ public class ObjectEntryLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", "john@liferay.com"
 			).put(
-				"picklist", "key1"
+				"listTypeEntryKey", "listTypeEntryKey1"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(4);
@@ -349,7 +349,7 @@ public class ObjectEntryLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "Judas"
 				).put(
-					"picklistRequired", "key1"
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build());
 
 			Assert.fail();
@@ -374,7 +374,7 @@ public class ObjectEntryLocalServiceTest {
 		catch (ObjectEntryValuesException objectEntryValuesException) {
 			Assert.assertEquals(
 				"No value was provided for required object field " +
-					"\"picklistRequired\"",
+					"\"listTypeEntryKeyRequired\"",
 				objectEntryValuesException.getMessage());
 		}
 
@@ -383,15 +383,15 @@ public class ObjectEntryLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddress", "john@liferay.com"
 				).put(
-					"picklistRequired", "wrongKey"
+					"listTypeEntryKeyRequired", "wrongKey"
 				).build());
 
 			Assert.fail();
 		}
 		catch (ObjectEntryValuesException objectEntryValuesException) {
 			Assert.assertEquals(
-				"Object field name picklistRequired is not mapped to a valid " +
-					"list type entry",
+				"Object field name listTypeEntryKeyRequired is not mapped " +
+					"to a valid list type entry",
 				objectEntryValuesException.getMessage());
 		}
 	}
@@ -407,7 +407,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(1);
@@ -417,7 +417,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 
 		_addOrUpdateObjectEntry(
 			"peter", 0,
@@ -426,7 +426,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Pedro"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build());
 
 		_assertCount(1);
@@ -436,7 +436,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("pedro@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Pedro", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 
 		_addOrUpdateObjectEntry(
 			"james", 0,
@@ -445,7 +445,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
 		_assertCount(2);
@@ -457,7 +457,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(3);
@@ -478,7 +478,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -486,7 +486,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build());
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -494,7 +494,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
 		_assertCount(3);
@@ -558,7 +558,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		objectEntries = _objectEntryLocalService.getObjectEntries(
@@ -574,7 +574,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -583,7 +583,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build());
 
 		objectEntries = _objectEntryLocalService.getObjectEntries(
@@ -598,14 +598,14 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -614,7 +614,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
 		objectEntries = _objectEntryLocalService.getObjectEntries(
@@ -629,21 +629,21 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals("key3", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		objectEntries = _objectEntryLocalService.getObjectEntries(
@@ -661,7 +661,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
@@ -676,8 +676,8 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(null, values.get("lastName"));
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
-		Assert.assertEquals(null, values.get("picklist"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals(null, values.get("listTypeEntryKey"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(null, values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
@@ -715,7 +715,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		valuesList = _objectEntryLocalService.getValuesList(
@@ -730,7 +730,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -739,7 +739,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build());
 
 		valuesList = _objectEntryLocalService.getValuesList(
@@ -754,14 +754,14 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = valuesList.get(1);
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -770,7 +770,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
 		valuesList = _objectEntryLocalService.getValuesList(
@@ -785,21 +785,21 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = valuesList.get(1);
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = valuesList.get(2);
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals("key3", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		valuesList = _objectEntryLocalService.getValuesList(
@@ -868,7 +868,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		baseModelSearchResult = _objectEntryLocalService.searchObjectEntries(
@@ -884,7 +884,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -895,7 +895,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "James"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build());
 
 		baseModelSearchResult = _objectEntryLocalService.searchObjectEntries(
@@ -910,7 +910,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(1));
@@ -918,7 +918,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		_addObjectEntry(
@@ -929,7 +929,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).build());
 
 		baseModelSearchResult = _objectEntryLocalService.searchObjectEntries(
@@ -944,7 +944,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals("key1", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(1));
@@ -952,7 +952,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		values = _getValuesFromCacheField(objectEntries.get(2));
@@ -960,7 +960,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals("key3", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(values.toString(), 16, values.size());
 
 		// With keywords
@@ -977,9 +977,9 @@ public class ObjectEntryLocalServiceTest {
 		_assertKeywords("liferay", 0);
 		_assertKeywords("liferay.com", 0);
 		_assertKeywords("peter", 1);
-		_assertKeywords("key1", 1);
-		_assertKeywords("key2", 1);
-		_assertKeywords("key3", 1);
+		_assertKeywords("listTypeEntryKey1", 1);
+		_assertKeywords("listTypeEntryKey2", 1);
+		_assertKeywords("listTypeEntryKey3", 1);
 
 		// Irrelevant object definition
 
@@ -1000,7 +1000,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "John"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		_assertCount(1);
@@ -1022,7 +1022,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"lastName", "o Discípulo Amado"
 			).put(
-				"picklistRequired", "key2"
+				"listTypeEntryKeyRequired", "listTypeEntryKey2"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -1108,8 +1108,8 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(0, values.get("numberOfBooksWritten"));
-		Assert.assertEquals(null, values.get("picklist"));
-		Assert.assertEquals("key2", values.get("picklistRequired"));
+		Assert.assertEquals(null, values.get("listTypeEntryKey"));
+		Assert.assertEquals("listTypeEntryKey2", values.get("listTypeEntryKeyRequired"));
 		Assert.assertEquals(null, values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(0L), values.get("speed"));
 		Assert.assertEquals(0D, values.get("weight"));
@@ -1139,9 +1139,9 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"numberOfBooksWritten", 5D
 			).put(
-				"picklist", "key1"
+				"listTypeEntryKey", "listTypeEntryKey1"
 			).put(
-				"picklistRequired", "key3"
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
 			).put(
 				"portrait", portrait.getBytes()
 			).put(
@@ -1165,8 +1165,8 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
-		Assert.assertEquals("key1", values.get("picklist"));
-		Assert.assertEquals("key3", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKey"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertArrayEquals(
 			portrait.getBytes(), (byte[])values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
@@ -1197,8 +1197,8 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals("o Discípulo Amado", values.get("lastName"));
 		Assert.assertEquals(null, values.get("middleName"));
 		Assert.assertEquals(5, values.get("numberOfBooksWritten"));
-		Assert.assertEquals("key1", values.get("picklist"));
-		Assert.assertEquals("key3", values.get("picklistRequired"));
+		Assert.assertEquals("listTypeEntryKey1", values.get("listTypeEntryKey"));
+		Assert.assertEquals("listTypeEntryKey3", values.get("listTypeEntryKeyRequired"));
 		Assert.assertArrayEquals(
 			portrait.getBytes(), (byte[])values.get("portrait"));
 		Assert.assertEquals(_getBigDecimal(45L), values.get("speed"));
@@ -1430,7 +1430,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"firstName", "Peter"
 			).put(
-				"picklistRequired", "key1"
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
 		Assert.assertEquals(
