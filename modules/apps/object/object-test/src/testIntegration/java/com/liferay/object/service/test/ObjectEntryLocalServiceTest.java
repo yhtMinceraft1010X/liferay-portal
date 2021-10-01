@@ -390,8 +390,8 @@ public class ObjectEntryLocalServiceTest {
 		}
 		catch (ObjectEntryValuesException objectEntryValuesException) {
 			Assert.assertEquals(
-				"Object field name listTypeEntryKeyRequired is not mapped " +
-					"to a valid list type entry",
+				"Object field name \"listTypeEntryKeyRequired\" is not " +
+					"mapped to a valid list type entry",
 				objectEntryValuesException.getMessage());
 		}
 	}

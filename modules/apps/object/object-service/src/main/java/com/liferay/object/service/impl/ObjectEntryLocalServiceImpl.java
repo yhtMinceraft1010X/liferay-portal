@@ -1529,8 +1529,8 @@ public class ObjectEntryLocalServiceImpl
 						listTypeEntry.getKey(), value))) {
 
 				throw new ObjectEntryValuesException(
-					"Object field name " + entry.getKey() +
-						" is not mapped to a valid list type entry");
+					"Object field name \"" + entry.getKey() +
+						"\" is not mapped to a valid list type entry");
 			}
 		}
 	}
