@@ -449,7 +449,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith("-products.json")) {
+			if (resourcePath.endsWith(".products.json")) {
 				continue;
 			}
 
@@ -468,7 +468,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_addCPDefinitions(
 				catalog, channel, commerceInventoryWarehouses,
-				StringUtil.replaceLast(resourcePath, ".json", "-products.json"),
+				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
 		}
 	}
