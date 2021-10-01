@@ -550,7 +550,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return _commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
-					_read("/site-initializer/commerce-warehouses.json")),
+					_read(
+						"/site-initializer" +
+							"/commerce-inventory-warehouses.json")),
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
