@@ -411,9 +411,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		Assert.assertTrue(Validator.isNotNull(titleValue));
 
-		int endIndex = RandomTestUtil.randomInt(0, titleValue.length());
+		int index = RandomTestUtil.randomInt(0, titleValue.length());
 
-		_assertKeywords(titleValue.substring(0, endIndex), 1);
+		_assertKeywords(titleValue.substring(0, index), 1);
 	}
 
 	@Test
