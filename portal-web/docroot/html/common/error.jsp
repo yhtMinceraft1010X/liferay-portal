@@ -19,36 +19,36 @@
 <%@ page isErrorPage="true" %>
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
-String userId = request.getRemoteUser();
 String message = null;
 
 if (exception instanceof PrincipalException) {
-	_log.warn("User ID " + userId);
-	_log.warn("Current URL " + currentURL);
+	_log.warn("User ID " + request.getRemoteUser());
+	_log.warn("Current URL " + PortalUtil.getCurrentURL(request));
 	_log.warn("Referer " + request.getHeader("Referer"));
 	_log.warn("Remote address " + request.getRemoteAddr());
 
 	if (exception != null) {
 		_log.warn(exception, exception);
+
 		message = exception.getMessage();
 	}
 	else {
-		_log.warn("Exception object not available");
+		_log.warn("Exception is null");
 	}
 }
 else {
-	_log.error("User ID " + userId);
-	_log.error("Current URL " + currentURL);
+	_log.error("User ID " + request.getRemoteUser());
+	_log.error("Current URL " + PortalUtil.getCurrentURL(request));
 	_log.error("Referer " + request.getHeader("Referer"));
 	_log.error("Remote address " + request.getRemoteAddr());
 
 	if (exception != null) {
 		_log.error(exception, exception);
+
 		message = exception.getMessage();
 	}
 	else {
-		_log.error("Exception object not available");
+		_log.error("Exception is null");
 	}
 }
 %>
