@@ -83,13 +83,13 @@ public class AppResolverHook implements ResolverHook {
 
 				iterator.remove();
 
-				_log.error("Filtered unknown bundle: " + bundle);
+				_log.error("Filtered unknown bundle : " + bundle);
 
 				try {
 					bundle.uninstall();
 				}
 				catch (BundleException bundleException) {
-					_log.error("Unabled to uninstall bundle: " + bundle);
+					_log.error("Unabled to uninstall bundle : " + bundle);
 				}
 
 				continue;
