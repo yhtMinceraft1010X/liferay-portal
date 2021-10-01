@@ -556,18 +556,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
-	private void _addCPDefinitions(ServiceContext serviceContext)
-		throws Exception {
-
-		Channel commerceChannel = _addCommerceChannel(serviceContext);
-
-		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
-			_addCommerceInventoryWarehouses(serviceContext);
-
-		_addCommerceCatalogs(
-			commerceChannel, commerceInventoryWarehouses, serviceContext);
-	}
-
 	private void _addCPDefinitions(
 			Catalog catalog, Channel commerceChannel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
@@ -587,8 +575,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-		Group catalogGroup = CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
-			catalog.getId());
+		Group catalogGroup =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+				catalog.getId());
 
 		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
 			_taxonomyVocabularyResourceFactory.create();
@@ -614,6 +603,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/commerce-catalogs/" +
 				StringUtil.replace(resourcePath, ".json", "/"),
 			serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addCPDefinitions(ServiceContext serviceContext)
+		throws Exception {
+
+		Channel commerceChannel = _addCommerceChannel(serviceContext);
+
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+			_addCommerceInventoryWarehouses(serviceContext);
+
+		_addCommerceCatalogs(
+			commerceChannel, commerceInventoryWarehouses, serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
