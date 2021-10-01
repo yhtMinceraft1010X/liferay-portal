@@ -109,7 +109,6 @@ public class ObjectRelationshipResourceImpl
 		com.liferay.object.model.ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId1());
-
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
