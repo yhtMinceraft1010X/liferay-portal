@@ -18,6 +18,7 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.messaging.ObjectActionTriggerMessageListener;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -54,7 +54,7 @@ public class ObjectActionTriggerRegistryImpl
 			_objectActionTriggerServiceTrackerMap.getService(className);
 
 		if (objectActionTriggers == null) {
-			return Collections.<ObjectActionTrigger>emptyList();
+			return ObjectActionTriggerUtil.getDefaultObjectActionTriggers();
 		}
 
 		return objectActionTriggers;
@@ -120,7 +120,7 @@ public class ObjectActionTriggerRegistryImpl
 		_bundleContext.registerService(
 			ObjectActionTrigger.class,
 			new ObjectActionTrigger(
-				className, destination.getName(),
+				destination.getName(),
 				ObjectActionTriggerConstants.TYPE_MESSAGE_BUS),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"object.action.trigger.class.name", className

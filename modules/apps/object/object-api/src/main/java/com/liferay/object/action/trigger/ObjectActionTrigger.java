@@ -19,14 +19,9 @@ package com.liferay.object.action.trigger;
  */
 public class ObjectActionTrigger {
 
-	public ObjectActionTrigger(String className, String key, String type) {
-		_className = className;
+	public ObjectActionTrigger(String key, String type) {
 		_key = key;
 		_type = type;
-	}
-
-	public String getClassName() {
-		return _className;
 	}
 
 	public String getKey() {
@@ -37,7 +32,6 @@ public class ObjectActionTrigger {
 		return _type;
 	}
 
-	private final String _className;
 	private final String _key;
 	private final String _type;
 
