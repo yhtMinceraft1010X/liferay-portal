@@ -182,12 +182,12 @@ public class ObjectEntryLocalServiceTest {
 						true, false, null, "Number of Books Written",
 						"numberOfBooksWritten", false, "Integer"),
 					ObjectFieldUtil.createObjectField(
+						_listTypeDefinition.getListTypeDefinitionId(), null,
 						true, false, null, "Picklist",
-						_listTypeDefinition.getListTypeDefinitionId(),
 						"picklist", false, "String"),
 					ObjectFieldUtil.createObjectField(
+						_listTypeDefinition.getListTypeDefinitionId(), null,
 						true, false, null, "Picklist Required",
-						_listTypeDefinition.getListTypeDefinitionId(),
 						"picklistRequired", true, "String"),
 					ObjectFieldUtil.createObjectField(
 						false, false, null, "Portrait", "portrait", false,
