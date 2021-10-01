@@ -8258,16 +8258,8 @@ public class PortalImpl implements Portal {
 		TreeMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
 
-		String virtualHostname = "";
-
-		if (virtualHostnames.isEmpty()) {
-			Company company = themeDisplay.getCompany();
-
-			virtualHostname = company.getVirtualHostname();
-		}
-		else {
-			virtualHostname = virtualHostnames.firstKey();
-		}
+		String virtualHostname = _getVirtualHostname(
+			virtualHostnames, themeDisplay);
 
 		String portalDomain = themeDisplay.getPortalDomain();
 
@@ -8771,6 +8763,18 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
+	}
+
+	private String _getVirtualHostname(
+		TreeMap<String, String> virtualHostNames, ThemeDisplay themeDisplay) {
+
+		if (virtualHostNames.isEmpty()) {
+			Company company = themeDisplay.getCompany();
+
+			return company.getVirtualHostname();
+		}
+
+		return virtualHostNames.firstKey();
 	}
 
 	private boolean _requiresLayoutFriendlyURL(
