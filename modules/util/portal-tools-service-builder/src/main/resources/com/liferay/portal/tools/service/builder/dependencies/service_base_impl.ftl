@@ -2132,7 +2132,6 @@ import org.osgi.service.component.annotations.Reference;
 					<#else>
 						@BeanReference(type = ${referenceEntity.name}Persistence.class)
 					</#if>
-
 					protected ${referenceEntity.name}Persistence ${referenceEntity.variableName}Persistence;
 				</#if>
 			</#if>
