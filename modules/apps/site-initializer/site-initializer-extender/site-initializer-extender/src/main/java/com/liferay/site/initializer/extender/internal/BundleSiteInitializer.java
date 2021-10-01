@@ -896,16 +896,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		HashMap<String, String> stringUtilReplaceValues = HashMapBuilder.putAll(
-			assetListEntryIdsStringUtilReplaceValues
-		).putAll(
-			documentsStringUtilReplaceValues
-		).putAll(
-			remoteAppEntryIdsStringUtilReplaceValues
-		).build();
-
 		json = StringUtil.replace(
-			json, "\"[$", "$]\"", stringUtilReplaceValues);
+			json, "\"[$", "$]\"",
+			HashMapBuilder.putAll(
+				assetListEntryIdsStringUtilReplaceValues
+			).putAll(
+				documentsStringUtilReplaceValues
+			).putAll(
+				remoteAppEntryIdsStringUtilReplaceValues
+			).build());
 
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 			json);
