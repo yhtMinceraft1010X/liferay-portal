@@ -347,6 +347,23 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
+					"emailAddress", "john@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "wrongKey"
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException objectEntryValuesException) {
+			Assert.assertEquals(
+				"Object field name \"listTypeEntryKeyRequired\" is not " +
+					"mapped to a valid list type entry",
+				objectEntryValuesException.getMessage());
+		}
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
 					"firstName", "Judas"
 				).put(
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
@@ -375,23 +392,6 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				"No value was provided for required object field " +
 					"\"listTypeEntryKeyRequired\"",
-				objectEntryValuesException.getMessage());
-		}
-
-		try {
-			_addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", "john@liferay.com"
-				).put(
-					"listTypeEntryKeyRequired", "wrongKey"
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
-			Assert.assertEquals(
-				"Object field name \"listTypeEntryKeyRequired\" is not " +
-					"mapped to a valid list type entry",
 				objectEntryValuesException.getMessage());
 		}
 	}
