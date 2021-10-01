@@ -716,14 +716,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 				document.getId());
 
+			documentsStringUtilReplaceValues.put(
+				"DOCUMENT_FILE_ENTRY_ID:" + key,
+				String.valueOf(fileEntry.getFileEntryId()));
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerialize(fileEntry));
 
 			jsonObject.put("alt", StringPool.BLANK);
-
-			documentsStringUtilReplaceValues.put(
-				"DOCUMENT_FILE_ENTRY_ID:" + key,
-				String.valueOf(fileEntry.getFileEntryId()));
 
 			documentsStringUtilReplaceValues.put(
 				"DOCUMENT_JSON:" + key, jsonObject.toString());
