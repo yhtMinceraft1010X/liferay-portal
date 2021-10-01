@@ -568,14 +568,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		long[] commerceInventoryWarehouseIds = ListUtil.toLongArray(
-			commerceInventoryWarehouses,
-			CommerceInventoryWarehouse.
-				COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		Group catalogGroup =
+		Group commerceCatalogGroup =
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 				catalog.getId());
 
@@ -587,18 +580,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
 		TaxonomyVocabulary taxonomyVocabulary =
 			taxonomyVocabularyResource.
 				getSiteTaxonomyVocabularyByExternalReferenceCode(
-					globalGroup.getGroupId(),
+					companyGroup.getGroupId(),
 					channel.getExternalReferenceCode());
 
 		_cpDefinitionsImporter.importCPDefinitions(
-			jsonArray, taxonomyVocabulary.getName(), catalogGroup.getGroupId(),
-			channel.getId(), commerceInventoryWarehouseIds,
+			JSONFactoryUtil.createJSONArray(json), taxonomyVocabulary.getName(),
+			commerceCatalogGroup.getGroupId(), channel.getId(),
+			ListUtil.toLongArray(
+				commerceInventoryWarehouses,
+				CommerceInventoryWarehouse.
+					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
 			BundleSiteInitializer.class.getClassLoader(),
 			"/site-initializer/commerce-catalogs/" +
 				StringUtil.replace(resourcePath, ".json", "/"),
@@ -608,13 +605,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
-		Channel channel = _addCommerceChannel(serviceContext);
-
-		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
-			_addCommerceInventoryWarehouses(serviceContext);
-
 		_addCommerceCatalogs(
-			channel, commerceInventoryWarehouses, serviceContext);
+			_addCommerceChannel(serviceContext),
+			_addCommerceInventoryWarehouses(serviceContext), serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
