@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.site.constants.SiteWebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,7 +174,8 @@ public class RecentGroupManager {
 				}
 			}
 
-			portletRequest.setAttribute("controlPanel", Boolean.TRUE);
+			portletRequest.setAttribute(
+				SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL, Boolean.TRUE);
 
 			String groupURL = _groupURLProvider.getGroupURL(
 				group, portletRequest);

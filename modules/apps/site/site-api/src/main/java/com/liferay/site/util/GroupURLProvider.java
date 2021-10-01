@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.constants.SiteWebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -117,7 +118,9 @@ public class GroupURLProvider {
 
 		String groupDisplayURL = group.getDisplayURL(
 			themeDisplay, false,
-			GetterUtil.getBoolean(portletRequest.getAttribute("controlPanel")));
+			GetterUtil.getBoolean(
+				portletRequest.getAttribute(
+					SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL)));
 
 		if (Validator.isNotNull(groupDisplayURL)) {
 			return _http.removeParameter(groupDisplayURL, "p_p_id");
