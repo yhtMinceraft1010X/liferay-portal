@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -107,17 +105,15 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			reindexIndexReindexer(actionRequest);
 		}
 
-		long[] companyIds = ParamUtil.getLongValues(
-			actionRequest, "companyIds");
-		String scope = ParamUtil.getString(actionRequest, "scope");
-
-		String namespace = actionResponse.getNamespace();
-
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		redirect = _http.setParameter(
-			redirect, namespace + "companyIds", StringUtil.merge(companyIds));
-		redirect = _http.setParameter(redirect, namespace + "scope", scope);
+			redirect, actionResponse.getNamespace() + "companyIds",
+			StringUtil.merge(
+				ParamUtil.getLongValues(actionRequest, "companyIds")));
+		redirect = _http.setParameter(
+			redirect, actionResponse.getNamespace() + "scope",
+			ParamUtil.getString(actionRequest, "scope"));
 
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
