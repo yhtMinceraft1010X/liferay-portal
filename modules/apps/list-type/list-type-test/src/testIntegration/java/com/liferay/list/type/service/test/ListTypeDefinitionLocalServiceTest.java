@@ -67,8 +67,6 @@ public class ListTypeDefinitionLocalServiceTest {
 			_listTypeDefinitionLocalService.fetchListTypeDefinition(
 				listTypeDefinition.getListTypeDefinitionId()));
 
-		// Name is null
-
 		try {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				TestPropsValues.getUserId(),
