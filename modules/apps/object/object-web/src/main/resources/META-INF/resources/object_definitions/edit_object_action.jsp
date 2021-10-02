@@ -37,8 +37,12 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 
 					<aui:input name="name" required="<%= true %>" value="<%= objectAction.getName() %>" />
 
-					<aui:input disabled="<%= true %>" label="when" name="" value="<%= LanguageUtil.get(request, objectAction.getObjectActionTriggerKey()) %>" />
-					<aui:input disabled="<%= true %>" label="then" name="" value="<%= LanguageUtil.get(request, objectAction.getObjectActionExecutorKey()) %>" />
+					<aui:model-context bean="<%= null %>" model="<%= null %>" />
+
+					<aui:input disabled="<%= true %>" label="when" name="objectActionTriggerKey" value="<%= LanguageUtil.get(request, objectAction.getObjectActionTriggerKey()) %>" />
+					<aui:input disabled="<%= true %>" label="then" name="objectActionExecutorKey" value="<%= LanguageUtil.get(request, objectAction.getObjectActionExecutorKey()) %>" />
+
+					<aui:model-context bean="<%= objectAction %>" model="<%= ObjectAction.class %>" />
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 						<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectAction.isActive() %>" />
