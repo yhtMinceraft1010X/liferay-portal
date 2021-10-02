@@ -100,7 +100,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws JSONException {
 
 		JSONObject payloadJSONObject = JSONUtil.put(
-			"trigger", objectActionTriggerKey);
+			"objectActionTriggerKey", objectActionTriggerKey);
 
 		JSONObject objectEntryJSONObject = _jsonFactory.createJSONObject(
 			objectEntry.toString());
