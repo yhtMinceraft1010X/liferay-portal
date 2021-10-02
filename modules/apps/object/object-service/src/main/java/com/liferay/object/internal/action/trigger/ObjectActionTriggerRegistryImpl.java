@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,7 +58,8 @@ public class ObjectActionTriggerRegistryImpl
 			return ObjectActionTriggerUtil.getDefaultObjectActionTriggers();
 		}
 
-		return objectActionTriggers;
+		return ObjectActionTriggerUtil.sort(
+			new ArrayList<>(objectActionTriggers));
 	}
 
 	@Activate

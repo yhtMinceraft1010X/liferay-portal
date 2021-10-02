@@ -30,17 +30,34 @@ public class ObjectActionTriggerUtil {
 		return _defaultObjectActionTriggers;
 	}
 
+	public static List<ObjectActionTrigger> sort(
+		List<ObjectActionTrigger> objectActionTriggers) {
+
+		objectActionTriggers.sort(
+			(ObjectActionTrigger objectActionTrigger1,
+			 ObjectActionTrigger objectActionTrigger2) -> {
+
+				String key1 = objectActionTrigger1.getKey();
+				String key2 = objectActionTrigger2.getKey();
+
+				return key1.compareTo(key2);
+			});
+
+		return objectActionTriggers;
+	}
+
 	private static final List<ObjectActionTrigger>
 		_defaultObjectActionTriggers = Collections.unmodifiableList(
-			Arrays.asList(
-				new ObjectActionTrigger(
-					ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE,
-					ObjectActionTriggerConstants.TYPE_TRANSACTION),
-				new ObjectActionTrigger(
-					ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE,
-					ObjectActionTriggerConstants.TYPE_TRANSACTION),
-				new ObjectActionTrigger(
-					ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-					ObjectActionTriggerConstants.TYPE_TRANSACTION)));
+			sort(
+				Arrays.asList(
+					new ObjectActionTrigger(
+						ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE,
+						ObjectActionTriggerConstants.TYPE_TRANSACTION),
+					new ObjectActionTrigger(
+						ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE,
+						ObjectActionTriggerConstants.TYPE_TRANSACTION),
+					new ObjectActionTrigger(
+						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+						ObjectActionTriggerConstants.TYPE_TRANSACTION))));
 
 }

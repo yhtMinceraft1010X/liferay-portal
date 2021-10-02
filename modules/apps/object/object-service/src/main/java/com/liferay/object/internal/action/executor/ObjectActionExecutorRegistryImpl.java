@@ -54,14 +54,27 @@ public class ObjectActionExecutorRegistryImpl
 
 	@Override
 	public List<ObjectActionExecutor> getObjectActionExecutors() {
-		Collection<ObjectActionExecutor> objectActionExecutors =
+		Collection<ObjectActionExecutor> objectActionExecutorsCollection =
 			_serviceTrackerMap.values();
 
-		if (objectActionExecutors == null) {
+		if (objectActionExecutorsCollection == null) {
 			return Collections.<ObjectActionExecutor>emptyList();
 		}
 
-		return new ArrayList<>(objectActionExecutors);
+		List<ObjectActionExecutor> objectActionExecutors = new ArrayList<>(
+			objectActionExecutorsCollection);
+
+		objectActionExecutors.sort(
+			(ObjectActionExecutor objectActionExecutor1,
+			 ObjectActionExecutor objectActionExecutor2) -> {
+
+				String key1 = objectActionExecutor1.getKey();
+				String key2 = objectActionExecutor2.getKey();
+
+				return key1.compareTo(key2);
+			});
+
+		return objectActionExecutors;
 	}
 
 	@Override
