@@ -148,10 +148,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
-	private File _getJSONLFile(long batchPlannerPlanId) throws Exception {
-		File jsonlFile = FileUtil.createTempFile(
-			String.valueOf(batchPlannerPlanId), "jsonl");
-
+	private void _writeJSONLFile(long batchPlannerPlanId, File jsonlFile) throws Exception {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
@@ -199,13 +196,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			}
 
 			bufferedWriter.flush();
-
-			return jsonlFile;
-		}
-		catch (Exception exception) {
-			FileUtil.delete(jsonlFile);
-
-			throw exception;
 		}
 	}
 
@@ -247,27 +237,31 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_importTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 
-		File file = _getJSONLFile(batchPlannerPlan.getBatchPlannerPlanId());
+		File jsonlFile = FileUtil.createTempFile(
+			String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()), "jsonl");
 
 		try {
+			_writeJSONLFile(
+				batchPlannerPlan.getBatchPlannerPlanId(), jsonlFile);
+
 			ImportTask importTask = _importTaskResource.postImportTask(
 				batchPlannerPlan.getInternalClassName(), null, null, null,
 				MultipartBody.of(
 					Collections.singletonMap(
 						"file",
 						new BinaryFile(
-							"application/json", file.getName(),
-							new FileInputStream(file), file.length())),
+							"application/json", jsonlFile.getName(),
+							new FileInputStream(jsonlFile), jsonlFile.length())),
 					null, Collections.emptyMap()));
 
 			_batchPlannerLogLocalService.addBatchPlannerLog(
 				batchPlannerPlan.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), null,
-				String.valueOf(importTask.getId()), null, (int)file.length(),
+				String.valueOf(importTask.getId()), null, (int)jsonlFile.length(),
 				1);
 		}
 		finally {
-			FileUtil.delete(file);
+			FileUtil.delete(jsonlFile);
 		}
 	}
 
