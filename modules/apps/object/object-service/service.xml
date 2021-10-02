@@ -394,6 +394,9 @@
 		<exception>DuplicateObjectDefinition</exception>
 		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>
+		<exception>ObjectActionExecutorKey</exception>
+		<exception>ObjectActionName</exception>
+		<exception>ObjectActionTriggerKey</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionName</exception>
 		<exception>ObjectDefinitionPluralLabel</exception>

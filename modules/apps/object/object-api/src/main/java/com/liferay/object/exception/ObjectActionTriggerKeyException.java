@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.object.action.executor;
+package com.liferay.object.exception;
 
-import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
  */
-@ProviderType
-public interface ObjectActionExecutorRegistry {
+public class ObjectActionTriggerKeyException extends PortalException {
 
-	public ObjectActionExecutor getObjectActionExecutor(
-		String objectActionExecutorKey);
+	public ObjectActionTriggerKeyException() {
+	}
 
-	public List<ObjectActionExecutor> getObjectActionExecutors();
+	public ObjectActionTriggerKeyException(String msg) {
+		super(msg);
+	}
 
-	public boolean hasObjectActionExecutor(String objectActionExecutorKey);
+	public ObjectActionTriggerKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public ObjectActionTriggerKeyException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

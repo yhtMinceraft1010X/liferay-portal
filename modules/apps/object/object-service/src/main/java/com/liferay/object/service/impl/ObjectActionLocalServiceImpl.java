@@ -14,12 +14,17 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.exception.ObjectActionNameException;
+import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -27,8 +32,10 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +57,28 @@ public class ObjectActionLocalServiceImpl
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
+
+		_validate(name);
+
+		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
+				objectActionExecutorKey)) {
+
+			throw new ObjectActionTriggerKeyException(objectActionExecutorKey);
+		}
+
+		if (!Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE) &&
+			!Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE) &&
+			!Objects.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE) &&
+			!_messageBus.hasDestination(objectActionTriggerKey)) {
+
+			throw new ObjectActionTriggerKeyException();
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
@@ -107,6 +136,8 @@ public class ObjectActionLocalServiceImpl
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
 
+		_validate(name);
+
 		ObjectAction objectAction = objectActionPersistence.findByPrimaryKey(
 			objectActionId);
 
@@ -116,6 +147,18 @@ public class ObjectActionLocalServiceImpl
 
 		return objectActionPersistence.update(objectAction);
 	}
+
+	private void _validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new ObjectActionNameException();
+		}
+	}
+
+	@Reference
+	private MessageBus _messageBus;
+
+	@Reference
+	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

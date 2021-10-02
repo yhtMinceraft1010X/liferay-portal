@@ -64,6 +64,11 @@ public class ObjectActionExecutorRegistryImpl
 		return new ArrayList<>(objectActionExecutors);
 	}
 
+	@Override
+	public boolean hasObjectActionExecutor(String objectActionExecutorKey) {
+		return _serviceTrackerMap.containsKey(objectActionExecutorKey);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
