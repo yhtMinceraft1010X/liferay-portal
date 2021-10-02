@@ -37,14 +37,14 @@ public class ObjectActionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectActionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectAction addObjectAction(
-			long userId, long objectDefinitionId, boolean active, String name,
+			long objectDefinitionId, boolean active, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws PortalException {
 
 		return getService().addObjectAction(
-			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			objectDefinitionId, active, name, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 

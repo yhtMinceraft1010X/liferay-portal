@@ -51,7 +51,7 @@ public interface ObjectActionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectActionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object action remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectActionServiceUtil} if injection and service tracking are not available.
 	 */
 	public ObjectAction addObjectAction(
-			long userId, long objectDefinitionId, boolean active, String name,
+			long objectDefinitionId, boolean active, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException;

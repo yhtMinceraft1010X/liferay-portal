@@ -32,14 +32,14 @@ public class ObjectActionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectAction addObjectAction(
-			long userId, long objectDefinitionId, boolean active, String name,
+			long objectDefinitionId, boolean active, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				parametersUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionService.addObjectAction(
-			userId, objectDefinitionId, active, name, objectActionExecutorKey,
+			objectDefinitionId, active, name, objectActionExecutorKey,
 			objectActionTriggerKey, parametersUnicodeProperties);
 	}
 

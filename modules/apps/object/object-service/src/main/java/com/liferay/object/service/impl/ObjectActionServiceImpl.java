@@ -40,7 +40,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 
 	@Override
 	public ObjectAction addObjectAction(
-			long userId, long objectDefinitionId, boolean active, String name,
+			long objectDefinitionId, boolean active, String name,
 			String objectActionExecutorKey, String objectActionTriggerKey,
 			UnicodeProperties parametersUnicodeProperties)
 		throws PortalException {
@@ -49,7 +49,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return objectActionLocalService.addObjectAction(
-			userId, objectDefinitionId, active, objectActionExecutorKey,
+			getUserId(), objectDefinitionId, active, objectActionExecutorKey,
 			objectActionExecutorKey, objectActionTriggerKey,
 			parametersUnicodeProperties);
 	}
