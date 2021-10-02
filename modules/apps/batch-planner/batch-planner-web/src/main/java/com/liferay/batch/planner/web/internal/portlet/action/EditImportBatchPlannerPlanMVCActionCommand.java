@@ -107,11 +107,9 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 				export, externalType, importFileURI.toString(),
 				internalClassName, name, false);
 
-		boolean containsHeaders = _isChecked(actionRequest, "containsHeaders");
-
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
-			String.valueOf(containsHeaders));
+			_getValue(actionRequest));
 
 		List<BatchPlannerMapping> batchPlannerMappings =
 			_getBatchPlannerMappings(actionRequest);
@@ -178,14 +176,14 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		return batchPlannerMappings;
 	}
 
-	private boolean _isChecked(ActionRequest actionRequest, String name) {
-		String value = actionRequest.getParameter(name);
+	private String _getValue(ActionRequest actionRequest) {
+		String value = actionRequest.getParameter("containsHeaders");
 
 		if (value == null) {
-			return false;
+			return Boolean.FALSE.toString();
 		}
 
-		return true;
+		return Boolean.TRUE.toString();
 	}
 
 	private File _toBatchPlannerFile(
