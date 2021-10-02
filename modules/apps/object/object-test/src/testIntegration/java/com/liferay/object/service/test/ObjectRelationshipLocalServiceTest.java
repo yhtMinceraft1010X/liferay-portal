@@ -90,6 +90,8 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testAddObjectRelationship() throws Exception {
+		//_testAddObjectRelationship(
+		//	ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 		_testAddObjectRelationship(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
