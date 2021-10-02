@@ -156,10 +156,8 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
 
-		File batchPlannerPlanFile = new File(
-			new URI(batchPlannerPlan.getExternalURL()));
-
-		try (FileReader fileReader = new FileReader(batchPlannerPlanFile);
+		try (FileReader fileReader = new FileReader(
+				new File(new URI(batchPlannerPlan.getExternalURL())));
 			FileWriter fileWriter = new FileWriter(jsonlFile)) {
 
 			List<BatchPlannerPolicy> batchPlannerPolicies =
@@ -208,9 +206,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			FileUtil.delete(jsonlFile);
 
 			throw exception;
-		}
-		finally {
-			FileUtil.delete(batchPlannerPlanFile);
 		}
 	}
 

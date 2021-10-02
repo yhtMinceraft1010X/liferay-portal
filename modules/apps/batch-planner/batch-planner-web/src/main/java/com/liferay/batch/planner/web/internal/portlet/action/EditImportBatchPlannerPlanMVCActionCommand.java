@@ -100,29 +100,36 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		File importFile = _toBatchPlannerFile(
 			externalType, uploadPortletRequest.getFileAsStream("importFile"));
 
-		URI importFileURI = importFile.toURI();
+		try {
+			URI importFileURI = importFile.toURI();
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanService.addBatchPlannerPlan(
-				export, externalType, importFileURI.toString(),
-				internalClassName, name, false);
+			BatchPlannerPlan batchPlannerPlan =
+				_batchPlannerPlanService.addBatchPlannerPlan(
+					export, externalType, importFileURI.toString(),
+					internalClassName, name, false);
 
-		_batchPlannerPolicyService.addBatchPlannerPolicy(
-			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
-			_getValue(actionRequest));
+			_batchPlannerPolicyService.addBatchPlannerPolicy(
+				batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
+				_getValue(actionRequest));
 
-		List<BatchPlannerMapping> batchPlannerMappings =
-			_getBatchPlannerMappings(actionRequest);
+			List<BatchPlannerMapping> batchPlannerMappings =
+				_getBatchPlannerMappings(actionRequest);
 
-		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			_batchPlannerMappingService.addBatchPlannerMapping(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				batchPlannerMapping.getExternalFieldName(), "String",
-				batchPlannerMapping.getInternalFieldName(), "String",
-				StringPool.BLANK);
+			for (BatchPlannerMapping batchPlannerMapping :
+					batchPlannerMappings) {
+
+				_batchPlannerMappingService.addBatchPlannerMapping(
+					batchPlannerPlan.getBatchPlannerPlanId(),
+					batchPlannerMapping.getExternalFieldName(), "String",
+					batchPlannerMapping.getInternalFieldName(), "String",
+					StringPool.BLANK);
+			}
+
+			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 		}
-
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+		finally {
+			FileUtil.delete(importFile);
+		}
 	}
 
 	private void _deleteBatchPlannerPlan(ActionRequest actionRequest)
