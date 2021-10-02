@@ -379,6 +379,14 @@ public interface Http {
 			return _fileParts;
 		}
 
+		public String getHeader(String name) {
+			if (_headers == null) {
+				return null;
+			}
+
+			return _headers.get(name);
+		}
+
 		public Map<String, String> getHeaders() {
 			return _headers;
 		}
