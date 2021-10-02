@@ -92,7 +92,8 @@ function raylifeFragmentInteractiveListener(templateId, structuredContents) {
 
 		if (data.hide) {
 			fragmentElement.querySelector(elementName).innerHTML = '';
-		} else if (
+		}
+		else if (
 			typeof data === 'object' &&
 			getStructuredContentIdByName(data.templateName)
 		) {
@@ -101,7 +102,8 @@ function raylifeFragmentInteractiveListener(templateId, structuredContents) {
 				templateId,
 				data.templateData
 			);
-		} else {
+		}
+		else {
 			console.warn(`Structure ${data.templateName} not found`);
 		}
 	});
@@ -119,6 +121,7 @@ function dismissButtonListener() {
 }
 
 async function workflow() {
+
 	/**
 	 * Get all Folders from Web Content and get his ID;
 	 */

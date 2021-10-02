@@ -13,7 +13,7 @@
  * details.
  */
 
- const fetchHeadless = async (url) => {
+const fetchHeadless = async (url) => {
 	const response = await fetch(`${window.location.origin}/${url}`, {
 		headers: {
 			'Content-Type': 'application/json',

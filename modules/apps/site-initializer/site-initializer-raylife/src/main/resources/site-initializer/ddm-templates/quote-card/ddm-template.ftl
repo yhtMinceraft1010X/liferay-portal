@@ -187,6 +187,7 @@
 	<#else>
 		<div class="no-most-popular"></div>
 	</#if>
+
 	<div class="quote-content">
 		<div class="quote-header">
 			<#if (title.getData())??>
@@ -210,11 +211,7 @@
 
 		<div class="quote-footer">
 			<div class="d-flex justify-content-center">
-				<button type="button" id="purchase"
-					<#if (mostPopular.getData())?? && mostPopular.getData() != "">
-						class="most-popular"
-					</#if>
-					onclick="event.preventDefault();">PURCHASE THIS POLICY</button>
+				<button <#if (mostPopular.getData())?? && mostPopular.getData() != "">class="most-popular"</#if> id="purchase" onclick="event.preventDefault();" type="button">PURCHASE THIS POLICY</button>
 			</div>
 
 			<div class="d-flex justify-content-center">
