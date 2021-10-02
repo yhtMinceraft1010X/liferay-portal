@@ -48,11 +48,7 @@ public interface Destination {
 
 	public String getName();
 
-	public Set<WebhookEvent> getWebhookEvents();
-
 	public boolean isRegistered();
-
-	public boolean isWebhookCapable(long companyId);
 
 	public void open();
 
@@ -71,31 +67,5 @@ public interface Destination {
 	public boolean unregister(MessageListener messageListener);
 
 	public void unregisterMessageListeners();
-
-	public class WebhookEvent {
-
-		public WebhookEvent(String description, String key, String name) {
-			_description = description;
-			_key = key;
-			_name = name;
-		}
-
-		public String getDescription() {
-			return _description;
-		}
-
-		public String getKey() {
-			return _key;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		private final String _description;
-		private final String _key;
-		private final String _name;
-
-	}
 
 }

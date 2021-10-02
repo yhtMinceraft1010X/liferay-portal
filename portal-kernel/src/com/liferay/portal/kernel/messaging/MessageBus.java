@@ -42,9 +42,6 @@ public interface MessageBus {
 
 	public Collection<Destination> getDestinations();
 
-	public Collection<Destination> getWebhookCapableDestinations(
-		long companyId);
-
 	public boolean hasDestination(String destinationName);
 
 	public boolean hasMessageListener(String destinationName);

@@ -120,21 +120,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	@Override
-	public Collection<Destination> getWebhookCapableDestinations(
-		long companyId) {
-
-		Collection<Destination> destinations = new ArrayList<>();
-
-		for (Destination destination : _destinations.values()) {
-			if (destination.isWebhookCapable(companyId)) {
-				destinations.add(destination);
-			}
-		}
-
-		return destinations;
-	}
-
-	@Override
 	public boolean hasDestination(String destinationName) {
 		return _destinations.containsKey(destinationName);
 	}
@@ -447,7 +432,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			BaseDestination baseDestination = (BaseDestination)destination;
 
 			baseDestination.setName(destinationName);
-			baseDestination.setProperties(properties);
 
 			baseDestination.afterPropertiesSet();
 		}
