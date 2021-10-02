@@ -102,8 +102,8 @@ public class ObjectActionResourceImpl
 
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
-				contextUser.getUserId(), objectDefinitionId,
-				objectAction.getActive(), objectAction.getName(),
+				objectDefinitionId, objectAction.getActive(),
+				objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
 				new UnicodeProperties(

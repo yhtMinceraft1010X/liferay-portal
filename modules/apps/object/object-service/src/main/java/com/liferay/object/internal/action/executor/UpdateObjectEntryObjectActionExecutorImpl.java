@@ -16,6 +16,7 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.request.ObjectActionRequest;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,7 +54,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 	@Override
 	public String getKey() {
-		return "update-object-entry";
+		return ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY;
 	}
 
 	@Reference
