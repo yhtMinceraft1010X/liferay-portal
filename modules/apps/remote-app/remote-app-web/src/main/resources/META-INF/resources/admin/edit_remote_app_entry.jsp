@@ -68,7 +68,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 				id='<%= liferayPortletResponse.getNamespace() + "_type_iframe" %>'
 			>
 				<aui:input label="url" name="iFrameURL">
-					<aui:validator name="url" />
+					<%--<aui:validator name="url" />--%>
 				</aui:input>
 			</liferay-frontend:fieldset>
 
@@ -87,7 +87,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 					<div class="repeatable">
 						<aui:input ignoreRequestValue="<%= true %>" label="url" name="customElementURLs" type="text" value="<%= customElementURL %>">
-							<aui:validator name="url" />
+							<%--<aui:validator name="url" />--%>
 						</aui:input>
 					</div>
 
@@ -99,7 +99,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 					<div class="repeatable">
 						<aui:input ignoreRequestValue="<%= true %>" label="css-url" name="customElementCSSURLs" type="text" value="<%= customElementCSSURL %>">
-							<aui:validator name="url" />
+							<%--<aui:validator name="url" />--%>
 						</aui:input>
 					</div>
 
