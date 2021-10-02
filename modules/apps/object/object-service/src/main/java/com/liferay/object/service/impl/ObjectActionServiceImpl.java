@@ -49,7 +49,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return objectActionLocalService.addObjectAction(
-			getUserId(), objectDefinitionId, active, objectActionExecutorKey,
+			getUserId(), objectDefinitionId, active, name,
 			objectActionExecutorKey, objectActionTriggerKey,
 			parametersUnicodeProperties);
 	}
