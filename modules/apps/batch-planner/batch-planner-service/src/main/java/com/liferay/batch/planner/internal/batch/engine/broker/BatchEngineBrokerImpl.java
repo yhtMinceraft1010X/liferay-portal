@@ -148,57 +148,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			batchPlannerMappings, unsafeFunction, String.class);
 	}
 
-	private void _writeJSONLFile(long batchPlannerPlanId, File jsonlFile) throws Exception {
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.getBatchPlannerPlan(
-				batchPlannerPlanId);
-
-		try (FileReader fileReader = new FileReader(
-				new File(new URI(batchPlannerPlan.getExternalURL())));
-			FileWriter fileWriter = new FileWriter(jsonlFile)) {
-
-			List<BatchPlannerPolicy> batchPlannerPolicies =
-				_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
-					batchPlannerPlanId);
-
-			String delimiter = GetterUtil.getString(
-				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"),
-				StringPool.SEMICOLON);
-
-			String line = null;
-
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-			if (GetterUtil.getBoolean(
-					_getBatchPlannerPolicyValue(
-						batchPlannerPolicies, "containsHeaders"))) {
-
-				line = bufferedReader.readLine();
-			}
-
-			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap =
-				_toBatchPlannerMappingsMap(
-					_batchPlannerMappingLocalService.getBatchPlannerMappings(
-						batchPlannerPlanId),
-					delimiter, line);
-
-			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-			line = bufferedReader.readLine();
-
-			while (line != null) {
-				bufferedWriter.append(
-					_toJSON(batchPlannerMappingsMap, line.split(delimiter)));
-
-				bufferedWriter.newLine();
-
-				line = bufferedReader.readLine();
-			}
-
-			bufferedWriter.flush();
-		}
-	}
-
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
@@ -251,14 +200,15 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 						"file",
 						new BinaryFile(
 							"application/json", jsonlFile.getName(),
-							new FileInputStream(jsonlFile), jsonlFile.length())),
+							new FileInputStream(jsonlFile),
+							jsonlFile.length())),
 					null, Collections.emptyMap()));
 
 			_batchPlannerLogLocalService.addBatchPlannerLog(
 				batchPlannerPlan.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), null,
-				String.valueOf(importTask.getId()), null, (int)jsonlFile.length(),
-				1);
+				String.valueOf(importTask.getId()), null,
+				(int)jsonlFile.length(), 1);
 		}
 		finally {
 			FileUtil.delete(jsonlFile);
@@ -333,6 +283,59 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		sb.append(CharPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
+	}
+
+	private void _writeJSONLFile(long batchPlannerPlanId, File jsonlFile)
+		throws Exception {
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.getBatchPlannerPlan(
+				batchPlannerPlanId);
+
+		try (FileReader fileReader = new FileReader(
+				new File(new URI(batchPlannerPlan.getExternalURL())));
+			FileWriter fileWriter = new FileWriter(jsonlFile)) {
+
+			List<BatchPlannerPolicy> batchPlannerPolicies =
+				_batchPlannerPolicyLocalService.getBatchPlannerPolicies(
+					batchPlannerPlanId);
+
+			String delimiter = GetterUtil.getString(
+				_getBatchPlannerPolicyValue(batchPlannerPolicies, "delimiter"),
+				StringPool.SEMICOLON);
+
+			String line = null;
+
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+			if (GetterUtil.getBoolean(
+					_getBatchPlannerPolicyValue(
+						batchPlannerPolicies, "containsHeaders"))) {
+
+				line = bufferedReader.readLine();
+			}
+
+			Map<Integer, BatchPlannerMapping> batchPlannerMappingsMap =
+				_toBatchPlannerMappingsMap(
+					_batchPlannerMappingLocalService.getBatchPlannerMappings(
+						batchPlannerPlanId),
+					delimiter, line);
+
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			line = bufferedReader.readLine();
+
+			while (line != null) {
+				bufferedWriter.append(
+					_toJSON(batchPlannerMappingsMap, line.split(delimiter)));
+
+				bufferedWriter.newLine();
+
+				line = bufferedReader.readLine();
+			}
+
+			bufferedWriter.flush();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
