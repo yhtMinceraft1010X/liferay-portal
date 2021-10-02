@@ -179,7 +179,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 	}
 
 	private boolean _isChecked(ActionRequest actionRequest, String name) {
-		String value = ParamUtil.getString(actionRequest, name);
+		String value = actionRequest.getParameter(name);
 
 		if (value == null) {
 			return false;
