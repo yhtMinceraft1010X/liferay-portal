@@ -69,7 +69,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		return _addObjectRelationship(
 			userId, objectDefinitionId1, objectDefinitionId2, labelMap, name,
-			type, false);
+			false, type);
 	}
 
 	@Override
@@ -215,11 +215,11 @@ public class ObjectRelationshipLocalServiceImpl
 	public ObjectRelationship fetchReverseObjectRelationship(
 		ObjectRelationship objectRelationship, boolean reverse) {
 
-		return objectRelationshipPersistence.fetchByODI1_ODI2_N_T_R(
+		return objectRelationshipPersistence.fetchByODI1_ODI2_N_R_T(
 			objectRelationship.getObjectDefinitionId2(),
 			objectRelationship.getObjectDefinitionId1(),
-			objectRelationship.getName(), objectRelationship.getType(),
-			reverse);
+			objectRelationship.getName(), reverse,
+			objectRelationship.getType());
 	}
 
 	@Override
@@ -311,8 +311,8 @@ public class ObjectRelationshipLocalServiceImpl
 
 	private ObjectRelationship _addObjectRelationship(
 			long userId, long objectDefinitionId1, long objectDefinitionId2,
-			Map<Locale, String> labelMap, String name, String type,
-			boolean reverse)
+			Map<Locale, String> labelMap, String name, boolean reverse,
+			String type)
 		throws PortalException {
 
 		_validate(objectDefinitionId1, objectDefinitionId2, name, type);
@@ -333,8 +333,8 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 		objectRelationship.setLabelMap(labelMap);
 		objectRelationship.setName(name);
-		objectRelationship.setType(type);
 		objectRelationship.setReverse(reverse);
+		objectRelationship.setType(type);
 
 		if (Objects.equals(type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE) ||
 			Objects.equals(
@@ -374,7 +374,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 			_addObjectRelationship(
 				userId, objectDefinitionId2, objectDefinitionId1, labelMap,
-				name, type, true);
+				name, true, type);
 		}
 
 		return objectRelationshipPersistence.update(objectRelationship);
