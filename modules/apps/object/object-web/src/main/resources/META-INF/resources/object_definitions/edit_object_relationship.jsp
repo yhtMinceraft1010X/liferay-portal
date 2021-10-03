@@ -34,7 +34,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 
 					<clay:alert
 						displayType="warning"
-						message="it-is-not-possible-to-update-inherited-relationships"
+						message="reverse-object-relationships-cannot-be-updated"
 					/>
 
 					<aui:model-context bean="<%= objectRelationship %>" model="<%= ObjectRelationship.class %>" />

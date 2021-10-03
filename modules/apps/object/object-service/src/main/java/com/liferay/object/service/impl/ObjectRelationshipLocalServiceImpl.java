@@ -146,7 +146,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectRelationship.isReverse()) {
 			throw new ObjectRelationshipReverseException(
-				"Is not possible to delete an inherited relationship");
+				"Reverse object relationships cannot be deleted");
 		}
 
 		objectRelationship = objectRelationshipPersistence.remove(
@@ -246,7 +246,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectRelationship.isReverse()) {
 			throw new ObjectRelationshipReverseException(
-				"Is not possible to update an inherited relationship");
+				"Reverse object relationships cannot be updated");
 		}
 
 		objectRelationship.setDeletionType(deletionType);
