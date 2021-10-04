@@ -24,6 +24,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -102,7 +103,10 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
 			throw new RequiredObjectRelationshipException(
-				"The object entry has a relationship that is preventing the delete");
+				StringBundler.concat(
+					"Object relationship ",
+					objectRelationship.getObjectRelationshipId(),
+					" does not allow deletes"));
 		}
 	}
 
