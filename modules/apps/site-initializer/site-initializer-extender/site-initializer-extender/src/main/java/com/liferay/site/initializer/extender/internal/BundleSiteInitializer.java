@@ -63,6 +63,8 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -103,7 +105,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -298,40 +299,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
-			try (LoggingTimer loggingTimer = new LoggingTimer(
-					"_addPermissions")) {
+			_invoke(() -> _addPermissions(serviceContext));
 
-				_addPermissions(serviceContext);
-			}
+			_invoke(() -> _addDDMStructures(serviceContext));
+			_invoke(() -> _addFragmentEntries(serviceContext));
+			_invoke(() -> _addLayoutPageTemplates(serviceContext));
+			_invoke(() -> _addObjectDefinitions(serviceContext));
+			_invoke(() -> _addSAPEntries(serviceContext));
+			_invoke(() -> _addStyleBookEntries(serviceContext));
+			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 
-			_addDDMStructures(serviceContext);
-			_addFragmentEntries(serviceContext);
-			_addLayoutPageTemplates(serviceContext);
-			_addObjectDefinitions(serviceContext);
-			_addSAPEntries(serviceContext);
-			_addStyleBookEntries(serviceContext);
-			_addTaxonomyVocabularies(serviceContext);
+			_invoke(() -> _addCPDefinitions(serviceContext));
 
-			_addCPDefinitions(serviceContext);
+			_invoke(() -> _updateLayoutSets(serviceContext));
 
-			_updateLayoutSets(serviceContext);
+			Map<String, String> documentsStringUtilReplaceValues = _invoke(
+				() -> _addDocuments(serviceContext));
 
-			Map<String, String> documentsStringUtilReplaceValues =
-				_addDocuments(serviceContext);
-
-			_addAssetListEntries(_ddmStructureLocalService, serviceContext);
-			_addDDMTemplates(_ddmStructureLocalService, serviceContext);
-			_addJournalArticles(
-				_ddmStructureLocalService, _ddmTemplateLocalService,
-				documentsStringUtilReplaceValues, serviceContext);
+			_invoke(
+				() -> _addAssetListEntries(
+					_ddmStructureLocalService, serviceContext));
+			_invoke(
+				() -> _addDDMTemplates(
+					_ddmStructureLocalService, serviceContext));
+			_invoke(
+				() -> _addJournalArticles(
+					_ddmStructureLocalService, _ddmTemplateLocalService,
+					documentsStringUtilReplaceValues, serviceContext));
 
 			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
-				_addRemoteAppEntries(
-					documentsStringUtilReplaceValues, serviceContext);
+				_invoke(
+					() -> _addRemoteAppEntries(
+						documentsStringUtilReplaceValues, serviceContext));
 
-			_addLayouts(
-				_assetListEntryLocalService, documentsStringUtilReplaceValues,
-				remoteAppEntryIdsStringUtilReplaceValues, serviceContext);
+			_invoke(
+				() -> _addLayouts(
+					_assetListEntryLocalService,
+					documentsStringUtilReplaceValues,
+					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
@@ -1712,6 +1717,54 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return taxonomyCategory;
+	}
+
+	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		Thread thread = Thread.currentThread();
+
+		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
+
+		long startTime = System.currentTimeMillis();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Invoking line " + stackTraceElement.getLineNumber());
+		}
+
+		unsafeRunnable.run();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Completed line ", stackTraceElement.getLineNumber(),
+					" in ", System.currentTimeMillis() - startTime, " ms"));
+		}
+	}
+
+	private <T> T _invoke(UnsafeSupplier<T, Exception> unsafeSupplier)
+		throws Exception {
+
+		Thread thread = Thread.currentThread();
+
+		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
+
+		long startTime = System.currentTimeMillis();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Invoking line " + stackTraceElement.getLineNumber());
+		}
+
+		T t = unsafeSupplier.get();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Completed line ", stackTraceElement.getLineNumber(),
+					" in ", System.currentTimeMillis() - startTime, " ms"));
+		}
+
+		return t;
 	}
 
 	private String _read(String resourcePath) throws Exception {
