@@ -27,7 +27,6 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.object.security.permission.resource.PortletResourcePermissionRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -42,8 +41,11 @@ import com.liferay.object.web.internal.object.entries.portlet.ObjectEntriesPortl
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,6 +59,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -110,9 +113,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition.getObjectDefinitionId(),
 					_objectDefinitionLocalService, _objectScopeProviderRegistry,
 					_portal,
-					_portletResourcePermissionRegistry.
-						getPortletResourcePermission(
-							objectDefinition.getResourceName())),
+					_getPortletResourcePermission(
+						objectDefinition.getResourceName())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
@@ -162,6 +164,29 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PortletResourcePermission.class, "resource.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private PortletResourcePermission _getPortletResourcePermission(
+		String resourceName) {
+
+		PortletResourcePermission portletResourcePermission =
+			_serviceTrackerMap.getService(resourceName);
+
+		if (portletResourcePermission == null) {
+			throw new IllegalArgumentException(
+				"No portlet resource permission found with resource name " +
+					resourceName);
+		}
+
+		return portletResourcePermission;
 	}
 
 	private BundleContext _bundleContext;
@@ -206,8 +231,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private PortletResourcePermissionRegistry
-		_portletResourcePermissionRegistry;
+	private ServiceTrackerMap<String, PortletResourcePermission>
+		_serviceTrackerMap;
 
 }
