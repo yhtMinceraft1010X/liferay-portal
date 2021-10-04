@@ -81,7 +81,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 					<aui:validator name="customElementName" />
 				</aui:input>
 
-				<div id="<%= liferayPortletResponse.getNamespace() + "_type_customElementURLs" %>">
+				<div id="<portlet:namespace />_type_customElementURLs">
 
 					<%
 					for (String customElementURL : editRemoteAppEntryDisplayContext.getCustomElementURLs()) {
@@ -99,7 +99,7 @@ renderResponse.setTitle(editRemoteAppEntryDisplayContext.getTitle());
 
 				</div>
 
-				<div id="<%= liferayPortletResponse.getNamespace() + "_type_customElementCSSURLs" %>">
+				<div id="<portlet:namespace />_type_customElementCSSURLs">
 
 					<%
 					for (String customElementCSSURL : editRemoteAppEntryDisplayContext.getCustomElementCSSURLs()) {
