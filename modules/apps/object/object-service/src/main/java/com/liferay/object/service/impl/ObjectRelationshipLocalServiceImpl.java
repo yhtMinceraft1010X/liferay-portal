@@ -372,11 +372,14 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition1.getPKObjectFieldDBColumnName(), ", ",
 					objectDefinition2.getPKObjectFieldDBColumnName(), "))"));
 
-			ObjectRelationship reverseObjectRelationship = _addObjectRelationship(
-				userId, objectDefinitionId2, objectDefinitionId1, labelMap,
-				name, true, type);
+			ObjectRelationship reverseObjectRelationship =
+				_addObjectRelationship(
+					userId, objectDefinitionId2, objectDefinitionId1, labelMap,
+					name, true, type);
 
-			reverseObjectRelationship.setDBTableName(objectRelationship.getDBTableName());
+			reverseObjectRelationship.setDBTableName(
+				objectRelationship.getDBTableName());
+
 			objectRelationshipPersistence.update(reverseObjectRelationship);
 		}
 

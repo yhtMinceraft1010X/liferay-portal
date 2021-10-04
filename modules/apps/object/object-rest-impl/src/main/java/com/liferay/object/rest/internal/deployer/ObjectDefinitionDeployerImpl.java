@@ -155,7 +155,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.name",
 						objectDefinition.getName() +
-						"RequiredObjectRelationshipExceptionMapper"
+							"RequiredObjectRelationshipExceptionMapper"
 					).build()));
 		}
 

@@ -101,7 +101,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 					objectRelationship.getDeletionType(),
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
-			throw new RequiredObjectRelationshipException("The entry as a relationship that is preventing the delete");
+			throw new RequiredObjectRelationshipException(
+				"The entry as a relationship that is preventing the delete");
 		}
 	}
 

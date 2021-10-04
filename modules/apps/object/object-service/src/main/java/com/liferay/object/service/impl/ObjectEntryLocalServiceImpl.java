@@ -794,24 +794,20 @@ public class ObjectEntryLocalServiceImpl
 		long objectDefinitionId1 = objectRelationship.getObjectDefinitionId1();
 		long objectDefinitionId2 = objectRelationship.getObjectDefinitionId2();
 
-		if(reverse) {
+		if (reverse) {
 			objectDefinitionId1 = objectRelationship.getObjectDefinitionId2();
 			objectDefinitionId2 = objectRelationship.getObjectDefinitionId1();
 		}
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			_getDynamicObjectDefinitionTable(
-				objectDefinitionId2);
+			_getDynamicObjectDefinitionTable(objectDefinitionId2);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			_getExtensionDynamicObjectDefinitionTable(
-				objectDefinitionId2);
+			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId2);
 
 		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectDefinitionId1);
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId1);
 		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectDefinitionId2);
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId2);
 
 		DynamicObjectRelationshipMappingTable
 			dynamicObjectRelationshipMappingTable =

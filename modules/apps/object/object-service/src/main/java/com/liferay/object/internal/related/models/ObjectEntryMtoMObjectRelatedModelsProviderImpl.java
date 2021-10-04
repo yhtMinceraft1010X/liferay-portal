@@ -51,9 +51,10 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			long primaryKey)
 		throws PortalException {
 
-		int count = getRelatedModelsCount(groupId, objectRelationshipId, primaryKey);
+		int count = getRelatedModelsCount(
+			groupId, objectRelationshipId, primaryKey);
 
-		if(count == 0) {
+		if (count == 0) {
 			return;
 		}
 
@@ -82,7 +83,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 					objectRelationship.getDeletionType(),
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
-			throw new RequiredObjectRelationshipException("The entry as a relationship that is preventing the delete");
+			throw new RequiredObjectRelationshipException(
+				"The entry as a relationship that is preventing the delete");
 		}
 	}
 
