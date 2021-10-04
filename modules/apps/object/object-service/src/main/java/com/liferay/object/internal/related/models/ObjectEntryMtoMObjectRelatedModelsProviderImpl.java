@@ -97,6 +97,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
+		boolean reverse = objectRelationship.isReverse();
+
 		if (objectRelationship.isReverse()) {
 			objectRelationship =
 				_objectRelationshipLocalService.fetchReverseObjectRelationship(
@@ -105,7 +107,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getManyToManyRelatedObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			objectRelationship.isReverse(), start, end);
+			reverse, start, end);
 	}
 
 	@Override
@@ -117,6 +119,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectRelationshipId);
 
+		boolean reverse = objectRelationship.isReverse();
+
 		if (objectRelationship.isReverse()) {
 			objectRelationship =
 				_objectRelationshipLocalService.fetchReverseObjectRelationship(
@@ -125,7 +129,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryLocalService.getManyToManyRelatedObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			objectRelationship.isReverse());
+			reverse);
 	}
 
 	private final String _className;
