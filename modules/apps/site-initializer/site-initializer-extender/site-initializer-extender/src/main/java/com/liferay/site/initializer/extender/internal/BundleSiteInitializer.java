@@ -347,6 +347,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					remoteAppEntryIdsStringUtilReplaceValues, serviceContext));
 		}
 		catch (Exception exception) {
+			_log.error(exception, exception);
+
 			throw new InitializationException(exception);
 		}
 
