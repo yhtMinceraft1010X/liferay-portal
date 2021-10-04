@@ -39,6 +39,10 @@ public class UserModelListener extends BaseModelListener<User> {
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					user.getCompanyId(), User.class.getName());
 
+			if (objectDefinition == null) {
+				return;
+			}
+
 			_objectEntryLocalService.deleteRelatedObjectEntries(
 				0, objectDefinition.getObjectDefinitionId(),
 				user.getPrimaryKey());
