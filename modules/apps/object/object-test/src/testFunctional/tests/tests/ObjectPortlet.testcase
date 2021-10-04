@@ -369,9 +369,6 @@ definition {
 		ObjectPortlet.searchColumn(columnName = "test");
 
 		ObjectPortlet.assertNoFieldsWereFound();
-
-
-		
 	}
 
 	@description = "LPS-135393 - Verify if the empty state is displayed when there is no entry on the Custom Object Portlet"
