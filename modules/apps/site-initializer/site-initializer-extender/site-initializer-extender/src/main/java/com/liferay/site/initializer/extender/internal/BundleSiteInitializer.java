@@ -284,6 +284,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public void initialize(long groupId) throws InitializationException {
+		long startTime = System.currentTimeMillis();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Initializing ", getKey(), " for group ", groupId));
+		}
+
 		try {
 			User user = _userLocalService.getUser(
 				PrincipalThreadLocal.getUserId());
@@ -340,6 +348,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 		catch (Exception exception) {
 			throw new InitializationException(exception);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Initialized ", getKey(), " for group ", groupId, " in ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
@@ -1722,46 +1737,38 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
 		long startTime = System.currentTimeMillis();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking line " + stackTraceElement.getLineNumber());
-		}
 
 		unsafeRunnable.run();
 
 		if (_log.isDebugEnabled()) {
+			Thread thread = Thread.currentThread();
+
+			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
+
 			_log.debug(
 				StringBundler.concat(
-					"Completed line ", stackTraceElement.getLineNumber(),
-					" in ", System.currentTimeMillis() - startTime, " ms"));
+					"Invoking line ", stackTraceElement.getLineNumber(),
+					" took ", System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
 	private <T> T _invoke(UnsafeSupplier<T, Exception> unsafeSupplier)
 		throws Exception {
 
-		Thread thread = Thread.currentThread();
-
-		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
-
 		long startTime = System.currentTimeMillis();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Invoking line " + stackTraceElement.getLineNumber());
-		}
 
 		T t = unsafeSupplier.get();
 
 		if (_log.isDebugEnabled()) {
+			Thread thread = Thread.currentThread();
+
+			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
+
 			_log.debug(
 				StringBundler.concat(
-					"Completed line ", stackTraceElement.getLineNumber(),
-					" in ", System.currentTimeMillis() - startTime, " ms"));
+					"Invoking line ", stackTraceElement.getLineNumber(), " in ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 
 		return t;
