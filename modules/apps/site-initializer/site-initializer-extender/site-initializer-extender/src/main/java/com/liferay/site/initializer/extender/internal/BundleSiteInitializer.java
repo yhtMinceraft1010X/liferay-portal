@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -297,7 +298,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			};
 
-			_addPermissions(serviceContext);
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					"_addPermissions")) {
+
+				_addPermissions(serviceContext);
+			}
 
 			_addDDMStructures(serviceContext);
 			_addFragmentEntries(serviceContext);
