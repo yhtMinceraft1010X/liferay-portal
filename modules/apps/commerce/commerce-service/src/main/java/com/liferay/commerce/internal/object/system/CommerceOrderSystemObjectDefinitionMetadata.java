@@ -70,6 +70,11 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	}
 
 	@Override
+	public String getRESTContextPath() {
+		return "headless-commerce-admin-order/v1.0/orders";
+	}
+
+	@Override
 	public String getScope() {
 		return ObjectDefinitionConstants.SCOPE_COMPANY;
 	}
