@@ -44,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "bundle.symbolic.name=com.liferay.translation.web",
 	service = ResourceBundleLoader.class
 )
-public class TranslationModelResourceResourceBundleLoader
-	implements ResourceBundleLoader {
+public class TranslationResourceBundleLoader implements ResourceBundleLoader {
 
 	@Override
 	public ResourceBundle loadResourceBundle(Locale locale) {
