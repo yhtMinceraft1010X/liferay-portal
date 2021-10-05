@@ -99,9 +99,11 @@ public class ObjectEntryInfoItemFormProvider
 
 		long objectDefinitionId = GetterUtil.getLong(formVariationKey);
 
-		return _getInfoForm(
-			(objectDefinitionId != 0) ? objectDefinitionId :
-				_objectDefinition.getObjectDefinitionId());
+		if (objectDefinitionId == 0) {
+			objectDefinitionId = _objectDefinition.getObjectDefinitionId();
+		}
+
+		return _getInfoForm(objectDefinitionId);
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {
