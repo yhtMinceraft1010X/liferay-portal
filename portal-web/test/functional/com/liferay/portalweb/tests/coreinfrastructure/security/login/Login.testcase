@@ -152,7 +152,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
-				configurationName = "OpenID Connect Provider",
+				configurationName = "OpenID Connect Provider Connection",
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
@@ -338,7 +338,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
-				configurationName = "OpenID Connect Provider",
+				configurationName = "OpenID Connect Provider Connection",
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
@@ -360,7 +360,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
-				configurationName = "OpenID Connect Provider",
+				configurationName = "OpenID Connect Provider Connection",
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
@@ -447,7 +447,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
-				configurationName = "OpenID Connect Provider",
+				configurationName = "OpenID Connect Provider Connection",
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
@@ -506,7 +506,7 @@ definition {
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "SSO",
-				configurationName = "OpenID Connect Provider",
+				configurationName = "OpenID Connect Provider Connection",
 				configurationScope = "Virtual Instance Scope");
 
 			OpenIDConnect.addProvider(
