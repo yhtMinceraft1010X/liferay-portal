@@ -827,9 +827,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		boolean originalActive = objectDefinition.isActive();
 
-		_validateActive(objectDefinition, active);
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
+		_validateActive(objectDefinition, active);
 		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
 		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
 
