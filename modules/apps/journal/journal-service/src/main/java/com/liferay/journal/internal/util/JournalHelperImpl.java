@@ -313,14 +313,14 @@ public class JournalHelperImpl implements JournalHelper {
 		for (Node mapNode : mapNodes) {
 			Element mapElement = (Element)mapNode;
 
-			Element diffSpanElement = mapElement.element("span");
+			Element spanElement = mapElement.element("span");
 
-			if (diffSpanElement == null) {
+			if (spanElement == null) {
 				continue;
 			}
 
 			String changes = HtmlUtil.stripHtml(
-				diffSpanElement.attributeValue("changes"));
+				spanElement.attributeValue("changes"));
 
 			if (changes == null) {
 				continue;
