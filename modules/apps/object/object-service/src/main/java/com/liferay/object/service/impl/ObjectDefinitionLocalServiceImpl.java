@@ -86,7 +86,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -906,26 +905,23 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Stream<ObjectRelationship> stream = objectRelationships.stream();
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition2 =
+				objectDefinitionPersistence.fetchByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
 
-		if (stream.anyMatch(
-				objectRelationship -> {
-					ObjectDefinition objectDefinition2 =
-						objectDefinitionPersistence.fetchByPrimaryKey(
-							objectRelationship.getObjectDefinitionId2());
+			if ((Objects.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
+				 Objects.equals(
+					 objectRelationship.getType(),
+					 ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) &&
+				objectDefinition2.isActive()) {
 
-					return (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY) ||
-							Objects.equals(
-								objectRelationship.getType(),
-								ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) &&
-						   objectDefinition2.isActive();
-				})) {
-
-			throw new ObjectDefinitionActiveException(
-				"This object definition has relationships with active object " +
-					"definitions");
+				throw new ObjectDefinitionActiveException(
+					"This object definition has a relationship with another " +
+						"active object definition");
+			}
 		}
 	}
 
