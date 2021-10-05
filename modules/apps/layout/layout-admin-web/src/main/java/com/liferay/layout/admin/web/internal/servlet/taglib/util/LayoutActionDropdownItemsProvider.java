@@ -299,7 +299,6 @@ public class LayoutActionDropdownItemsProvider {
 										return portletDisplay.getId();
 									}
 								).buildString());
-
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,
