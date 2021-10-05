@@ -19,8 +19,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.General;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
-import java.util.function.Consumer;
-
 /**
  * @author André de Oliveira
  */
@@ -39,26 +37,24 @@ public class GeneralSXPSearchRequestBodyContributor
 			return;
 		}
 
-		_contribute(
-			searchRequestBuilder::emptySearchEnabled,
-			general.getEmptySearchEnabled());
+		if (general.getEmptySearchEnabled() != null) {
+			searchRequestBuilder.emptySearchEnabled(
+				general.getEmptySearchEnabled());
+		}
 
-		_contribute(searchRequestBuilder::explain, general.getExplain());
+		if (general.getExplain() != null) {
+			searchRequestBuilder.explain(general.getExplain());
+		}
 
-		_contribute(
-			searchRequestBuilder::includeResponseString,
-			general.getIncludeResponseString());
+		if (general.getIncludeResponseString() != null) {
+			searchRequestBuilder.includeResponseString(
+				general.getIncludeResponseString());
+		}
 	}
 
 	@Override
 	public String getName() {
 		return "general";
-	}
-
-	private <T> void _contribute(Consumer<T> consumer, T value) {
-		if (value != null) {
-			consumer.accept(value);
-		}
 	}
 
 }
