@@ -315,53 +315,57 @@ public class JournalHelperImpl implements JournalHelper {
 
 			Element diffSpanElement = mapElement.element("span");
 
-			if (diffSpanElement != null) {
-				String changes = HtmlUtil.stripHtml(
-					diffSpanElement.attributeValue("changes"));
+			if (diffSpanElement == null) {
+				continue;
+			}
 
-				if (changes != null) {
-					List<String> latitudes = _getAttributeValues(
-						changes, _latitudePattern);
+			String changes = HtmlUtil.stripHtml(
+				diffSpanElement.attributeValue("changes"));
 
-					List<String> longitudes = _getAttributeValues(
-						changes, _longitudePattern);
+			if (changes == null) {
+				continue;
+			}
 
-					String oldLatitude = latitudes.get(0);
-					String oldLongitude = longitudes.get(0);
-					String newLatitude = latitudes.get(1);
-					String newLongitude = longitudes.get(1);
+			List<String> latitudes = _getAttributeValues(
+				changes, _latitudePattern);
 
-					if (!newLatitude.equals(oldLatitude) ||
-						!newLongitude.equals(oldLongitude)) {
+			List<String> longitudes = _getAttributeValues(
+				changes, _longitudePattern);
 
-						mapElement.addAttribute(
-							"style", "border: 2px solid #CFC;");
+			String oldLatitude = latitudes.get(0);
+			String oldLongitude = longitudes.get(0);
+			String newLatitude = latitudes.get(1);
+			String newLongitude = longitudes.get(1);
 
-						Element oldMapElement = mapElement.createCopy();
+			if (!newLatitude.equals(oldLatitude) ||
+				!newLongitude.equals(oldLongitude)) {
 
-						List<String> ids = _getAttributeValues(
-							changes, _idPattern);
+				mapElement.addAttribute(
+					"style", "border: 2px solid #CFC;");
 
-						String oldId = ids.get(0);
+				Element oldMapElement = mapElement.createCopy();
 
-						oldMapElement.addAttribute("id", oldId);
+				List<String> ids = _getAttributeValues(
+					changes, _idPattern);
 
-						oldMapElement.addAttribute(
-							"data-latitude", oldLatitude);
-						oldMapElement.addAttribute(
-							"data-longitude", oldLongitude);
+				String oldId = ids.get(0);
 
-						oldMapElement.addAttribute(
-							"style", "border: 2px solid #FDC6C6;");
+				oldMapElement.addAttribute("id", oldId);
 
-						Element parent = mapElement.getParent();
+				oldMapElement.addAttribute(
+					"data-latitude", oldLatitude);
+				oldMapElement.addAttribute(
+					"data-longitude", oldLongitude);
 
-						List<Element> elements = parent.elements();
+				oldMapElement.addAttribute(
+					"style", "border: 2px solid #FDC6C6;");
 
-						elements.add(
-							elements.indexOf(mapElement), oldMapElement);
-					}
-				}
+				Element parent = mapElement.getParent();
+
+				List<Element> elements = parent.elements();
+
+				elements.add(
+					elements.indexOf(mapElement), oldMapElement);
 			}
 		}
 
