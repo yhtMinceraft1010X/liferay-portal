@@ -33,7 +33,7 @@ public class ConfigurationUtil {
 		return unpack(Configuration.unsafeToDTO(json));
 	}
 
-	public static Configuration unpack(Configuration configuration) {
+	protected static Configuration unpack(Configuration configuration) {
 		AggregationConfiguration aggregationConfiguration =
 			configuration.getAggregationConfiguration();
 
