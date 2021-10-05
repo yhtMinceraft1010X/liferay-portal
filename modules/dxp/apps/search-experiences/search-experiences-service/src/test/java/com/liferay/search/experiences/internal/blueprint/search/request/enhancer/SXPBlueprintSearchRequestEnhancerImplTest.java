@@ -243,7 +243,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Assert.assertEquals(
 			_formatJSON(sxpBlueprint),
 			_formatJSON(
-				SXPBlueprintUtil.toSXPBlueprint(String.valueOf(sxpBlueprint))));
+				SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint.toString())));
 	}
 
 	private SXPBlueprint _createSXPBlueprint() {
