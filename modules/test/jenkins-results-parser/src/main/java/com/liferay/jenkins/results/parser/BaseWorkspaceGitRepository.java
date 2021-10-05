@@ -338,7 +338,6 @@ public abstract class BaseWorkspaceGitRepository
 		_setSenderBranchName(pullRequest.getSenderBranchName());
 		_setSenderUsername(pullRequest.getSenderUsername());
 		_setSenderBranchSHA(pullRequest.getSenderSHA());
-
 		_setUpstreamBranchSHA(pullRequest.getUpstreamBranchSHA());
 
 		validateKeys(_REQUIRED_KEYS);
