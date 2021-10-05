@@ -362,9 +362,9 @@ public class JournalHelperImpl implements JournalHelper {
 			oldMapElement.addAttribute(
 				"style", "border: 2px solid #FDC6C6;");
 
-			Element parent = mapElement.getParent();
+			Element parentElement = mapElement.getParent();
 
-			List<Element> elements = parent.elements();
+			List<Element> elements = parentElement.elements();
 
 			elements.add(elements.indexOf(mapElement), oldMapElement);
 		}
