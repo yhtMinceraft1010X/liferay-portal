@@ -12,15 +12,18 @@
  *
  */
 
-package com.liferay.search.experiences.rest.dto.v1_0.enhancer;
+package com.liferay.search.experiences.blueprint.search.request.enhancer;
 
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.model.SXPBlueprint;
 
 /**
  * @author André de Oliveira
  */
 public interface SXPBlueprintSearchRequestEnhancer {
+
+	public void enhance(
+		SearchRequestBuilder searchRequestBuilder, String sxpBlueprintJSON);
 
 	public void enhance(
 		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint);

@@ -20,12 +20,10 @@ import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.Document;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
-import com.liferay.search.experiences.rest.dto.v1_0.enhancer.SXPBlueprintSearchRequestEnhancer;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
 import java.util.ArrayList;
@@ -72,8 +70,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 					searchRequestBuilder -> {
 						if (sxpBlueprintJSON != null) {
 							_sxpBlueprintSearchRequestEnhancer.enhance(
-								searchRequestBuilder,
-								_toSXPBlueprint(sxpBlueprintJSON));
+								searchRequestBuilder, sxpBlueprintJSON);
 						}
 					}
 				).build()));
@@ -146,16 +143,6 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 				totalHits = searchResponse.getTotalHits();
 			}
 		};
-	}
-
-	private SXPBlueprint _toSXPBlueprint(String sxpBlueprintJSON) {
-		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(sxpBlueprintJSON);
-
-		sxpBlueprint.setConfiguration(
-			ConfigurationUtil.toConfiguration(
-				String.valueOf(sxpBlueprint.getConfiguration())));
-
-		return sxpBlueprint;
 	}
 
 	@Reference

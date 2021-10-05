@@ -28,6 +28,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
+import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.internal.blueprint.highlight.HighlightConverter;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterData;
 import com.liferay.search.experiences.internal.blueprint.parameter.SXPParameterDataCreator;
@@ -42,8 +43,8 @@ import com.liferay.search.experiences.internal.blueprint.search.request.body.con
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
-import com.liferay.search.experiences.rest.dto.v1_0.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
+import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,28 +62,25 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Override
 	public void enhance(
-		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+		SearchRequestBuilder searchRequestBuilder,
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
-		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
-			searchRequestBuilder.withSearchContextGet(
-				searchContext -> searchContext),
-			sxpBlueprint);
+		_enhance(
+			searchRequestBuilder,
+			SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint));
+	}
 
-		// TODO From and size
+	@Override
+	public void enhance(
+		SearchRequestBuilder searchRequestBuilder, String sxpBlueprintJSON) {
 
-		searchRequestBuilder.emptySearchEnabled(
-			true
-		).excludeContributors(
-			"com.liferay.search.experiences.blueprint"
-		).explain(
-			_isExplain(sxpParameterData)
-		).includeResponseString(
-			_isIncludeResponseString(sxpParameterData)
-		);
+		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(sxpBlueprintJSON);
 
-		_contributeSXPSearchRequestBodyContributors(
-			searchRequestBuilder, _expand(sxpBlueprint, sxpParameterData),
-			sxpParameterData);
+		sxpBlueprint.setConfiguration(
+			ConfigurationUtil.toConfiguration(
+				String.valueOf(sxpBlueprint.getConfiguration())));
+
+		_enhance(searchRequestBuilder, sxpBlueprint);
 	}
 
 	@Activate
@@ -132,6 +130,31 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 					searchRequestBuilder, sxpBlueprint);
 			}
 		}
+	}
+
+	private void _enhance(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
+
+		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
+			searchRequestBuilder.withSearchContextGet(
+				searchContext -> searchContext),
+			sxpBlueprint);
+
+		// TODO From and size
+
+		searchRequestBuilder.emptySearchEnabled(
+			true
+		).excludeContributors(
+			"com.liferay.search.experiences.blueprint"
+		).explain(
+			_isExplain(sxpParameterData)
+		).includeResponseString(
+			_isIncludeResponseString(sxpParameterData)
+		);
+
+		_contributeSXPSearchRequestBodyContributors(
+			searchRequestBuilder, _expand(sxpBlueprint, sxpParameterData),
+			sxpParameterData);
 	}
 
 	private SXPBlueprint _expand(
