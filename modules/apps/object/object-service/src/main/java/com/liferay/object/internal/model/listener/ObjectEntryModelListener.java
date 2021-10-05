@@ -81,7 +81,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			}
 
 			_objectActionEngine.executeObjectActions(
-				userId, objectEntry.getModelClassName(), objectActionTriggerKey,
+				objectEntry.getCompanyId(), userId,
+				objectEntry.getModelClassName(), objectActionTriggerKey,
 				HashMapBuilder.<String, Serializable>put(
 					"payload",
 					_getPayload(

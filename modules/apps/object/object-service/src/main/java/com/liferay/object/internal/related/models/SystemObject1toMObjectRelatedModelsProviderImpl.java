@@ -102,7 +102,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			PersistedModelLocalService persistedModelLocalService =
 				_persistedModelLocalServiceRegistry.
 					getPersistedModelLocalService(
-						_systemObjectDefinitionMetadata.getClassName());
+						_systemObjectDefinitionMetadata.getModelClassName());
 
 			for (BaseModel<T> baseModel : relatedModels) {
 				persistedModelLocalService.deletePersistedModel(
@@ -135,7 +135,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public String getClassName() {
-		return _systemObjectDefinitionMetadata.getClassName();
+		return _systemObjectDefinitionMetadata.getModelClassName();
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				_systemObjectDefinitionMetadata.getClassName());
+				_systemObjectDefinitionMetadata.getModelClassName());
 
 		DSLQuery dslQuery = _getGroupByStep(
 			groupId, objectRelationshipId, primaryKey,
@@ -170,7 +170,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				_systemObjectDefinitionMetadata.getClassName());
+				_systemObjectDefinitionMetadata.getModelClassName());
 
 		DSLQuery dslQuery = _getGroupByStep(
 			groupId, objectRelationshipId, primaryKey,

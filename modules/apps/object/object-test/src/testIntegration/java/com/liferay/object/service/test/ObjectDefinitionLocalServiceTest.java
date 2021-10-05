@@ -429,14 +429,14 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
-					public String getClassName() {
-						return UserNotificationEvent.class.getName();
-					}
-
-					@Override
 					public Map<Locale, String> getLabelMap() {
 						return LocalizedMapUtil.getLocalizedMap(
 							"User Notification Event");
+					}
+
+					@Override
+					public Class<?> getModelClass() {
+						return UserNotificationEvent.class;
 					}
 
 					@Override
@@ -519,14 +519,14 @@ public class ObjectDefinitionLocalServiceTest {
 				new BaseSystemObjectDefinitionMetadata() {
 
 					@Override
-					public String getClassName() {
-						return UserNotificationEvent.class.getName();
-					}
-
-					@Override
 					public Map<Locale, String> getLabelMap() {
 						return LocalizedMapUtil.getLocalizedMap(
 							"User Notification Event");
+					}
+
+					@Override
+					public Class<?> getModelClass() {
+						return UserNotificationEvent.class;
 					}
 
 					@Override

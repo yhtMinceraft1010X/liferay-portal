@@ -44,12 +44,13 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	@Override
 	public void executeObjectActions(
-		long userId, String className, String objectActionTriggerKey,
-		Map<String, Serializable> parameters) {
+		long companyId, long userId, String className,
+		String objectActionTriggerKey, Map<String, Serializable> parameters) {
 
 		try {
 			_executeObjectActions(
-				userId, className, objectActionTriggerKey, parameters);
+				companyId, userId, className, objectActionTriggerKey,
+				parameters);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -57,8 +58,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	}
 
 	private void _executeObjectActions(
-			long userId, String className, String objectActionTriggerKey,
-			Map<String, Serializable> parameters)
+			long companyId, long userId, String className,
+			String objectActionTriggerKey, Map<String, Serializable> parameters)
 		throws Exception {
 
 		if (userId == 0) {
@@ -67,7 +68,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 		User user = _userLocalService.fetchUser(userId);
 
-		if (user == null) {
+		if ((user == null) || (companyId != user.getCompanyId())) {
 			return;
 		}
 

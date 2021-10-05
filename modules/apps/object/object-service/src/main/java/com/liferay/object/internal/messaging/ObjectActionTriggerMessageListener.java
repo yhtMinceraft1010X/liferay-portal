@@ -55,7 +55,7 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 		if (payload instanceof JSONObject) {
 			_objectActionEngine.executeObjectActions(
-				userId, _className, _objectActionTriggerKey,
+				companyId, userId, _className, _objectActionTriggerKey,
 				HashMapBuilder.<String, Serializable>put(
 					"payload", (Serializable)payload
 				).build());

@@ -42,13 +42,13 @@ public class CommerceOrderSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
-	public String getClassName() {
-		return CommerceOrder.class.getName();
+	public Map<Locale, String> getLabelMap() {
+		return createLabelMap("commerce-order");
 	}
 
 	@Override
-	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("commerce-order");
+	public Class<?> getModelClass() {
+		return CommerceOrder.class;
 	}
 
 	@Override

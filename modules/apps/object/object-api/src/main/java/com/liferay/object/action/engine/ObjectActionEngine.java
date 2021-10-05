@@ -24,7 +24,7 @@ import java.util.Map;
 public interface ObjectActionEngine {
 
 	public void executeObjectActions(
-		long userId, String className, String objectActionTriggerKey,
-		Map<String, Serializable> parameters);
+		long companyId, long userId, String className,
+		String objectActionTriggerKey, Map<String, Serializable> parameters);
 
 }

@@ -149,7 +149,7 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionMetadata.getPrimaryKeyColumn();
 
 			return addSystemObjectDefinition(
-				userId, systemObjectDefinitionMetadata.getClassName(),
+				userId, systemObjectDefinitionMetadata.getModelClassName(),
 				table.getTableName(),
 				systemObjectDefinitionMetadata.getLabelMap(),
 				systemObjectDefinitionMetadata.getName(),
