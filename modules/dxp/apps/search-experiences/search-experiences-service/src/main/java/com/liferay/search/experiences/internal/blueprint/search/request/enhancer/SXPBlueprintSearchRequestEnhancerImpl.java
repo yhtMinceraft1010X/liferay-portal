@@ -75,7 +75,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	public void enhance(
 		SearchRequestBuilder searchRequestBuilder, String sxpBlueprintJSON) {
 
-		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(sxpBlueprintJSON);
+		SXPBlueprint sxpBlueprint = SXPBlueprint.unsafeToDTO(sxpBlueprintJSON);
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
