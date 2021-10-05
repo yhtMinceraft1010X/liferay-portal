@@ -37,11 +37,7 @@ public class SearchResponseTranslatorImpl implements SearchResponseTranslator {
 		return searchResponseTranslation.translate();
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
+	@Reference
 	private JSONFactory _jsonFactory;
 
 }

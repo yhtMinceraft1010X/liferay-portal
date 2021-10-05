@@ -17,6 +17,7 @@ package com.liferay.search.experiences.internal.search.searcher;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -104,7 +105,14 @@ public class SearchResponseTranslatorTest {
 			responseString
 		);
 
-		SearchResponse searchResponse = _searchResponseTranslator.translate(
+		SearchResponseTranslator searchResponseTranslator =
+			new SearchResponseTranslatorImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			searchResponseTranslator, "_jsonFactory",
+			JSONFactoryUtil.getJSONFactory());
+
+		SearchResponse searchResponse = searchResponseTranslator.translate(
 			searchResponseBuilder.build());
 
 		Assert.assertEquals(requestString, searchResponse.getRequestString());
@@ -133,12 +141,5 @@ public class SearchResponseTranslatorTest {
 
 		return searchHitsBuilderFactory.getSearchHitsBuilder();
 	}
-
-	private final SearchResponseTranslator _searchResponseTranslator =
-		new SearchResponseTranslatorImpl() {
-			{
-				setJSONFactory(JSONFactoryUtil.getJSONFactory());
-			}
-		};
 
 }
