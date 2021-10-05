@@ -49,7 +49,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SortConfiguration;
-import com.liferay.search.experiences.rest.dto.v1_0.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ConfigurationUtil;
 
 import java.io.InputStream;
@@ -65,7 +64,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class SXPBlueprintSearchRequestEnhancerTest {
+public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@ClassRule
 	@Rule
@@ -74,8 +73,9 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testAggregationConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			_createSXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				_createSXPBlueprintSearchRequestEnhancerImpl();
 
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -86,12 +86,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				{
 					aggs = JSONFactoryUtil.createJSONObject(
 						_read(
-							"SXPBlueprintSearchRequestEnhancerTest." +
+							"SXPBlueprintSearchRequestEnhancerImplTest." +
 								"testAggregationConfiguration.json"));
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancer.enhance(
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
@@ -107,8 +107,9 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testHighlight() throws Exception {
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			_createSXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				_createSXPBlueprintSearchRequestEnhancerImpl();
 
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -134,7 +135,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancer.enhance(
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
@@ -157,8 +158,9 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testParameters() throws Exception {
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			_createSXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				_createSXPBlueprintSearchRequestEnhancerImpl();
 
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -177,7 +179,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				}
 			).build());
 
-		sxpBlueprintSearchRequestEnhancer.enhance(
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
@@ -189,8 +191,9 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testQueryConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			_createSXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				_createSXPBlueprintSearchRequestEnhancerImpl();
 
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -219,7 +222,7 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancer.enhance(
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
@@ -245,8 +248,9 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 
 	@Test
 	public void testSortConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancer sxpBlueprintSearchRequestEnhancer =
-			_createSXPBlueprintSearchRequestEnhancer();
+		SXPBlueprintSearchRequestEnhancerImpl
+			sxpBlueprintSearchRequestEnhancerImpl =
+				_createSXPBlueprintSearchRequestEnhancerImpl();
 
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
@@ -257,12 +261,12 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 				{
 					sorts = JSONFactoryUtil.createJSONArray(
 						_read(
-							"SXPBlueprintSearchRequestEnhancerTest." +
+							"SXPBlueprintSearchRequestEnhancerImplTest." +
 								"testSortConfiguration.json"));
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancer.enhance(
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
@@ -291,8 +295,8 @@ public class SXPBlueprintSearchRequestEnhancerTest {
 		};
 	}
 
-	private SXPBlueprintSearchRequestEnhancer
-		_createSXPBlueprintSearchRequestEnhancer() {
+	private SXPBlueprintSearchRequestEnhancerImpl
+		_createSXPBlueprintSearchRequestEnhancerImpl() {
 
 		SXPBlueprintSearchRequestEnhancerImpl
 			sxpBlueprintSearchRequestEnhancerImpl =
