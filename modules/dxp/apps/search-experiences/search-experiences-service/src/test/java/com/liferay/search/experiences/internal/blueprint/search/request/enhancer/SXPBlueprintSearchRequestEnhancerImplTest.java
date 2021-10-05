@@ -307,6 +307,10 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		sxpBlueprintSearchRequestEnhancerImpl.activate();
 
+		// TODO Test the public method that takes in string
+
+		//sxpBlueprintSearchRequestEnhancerImpl.enhance(
+		//	searchRequestBuilder, sxpBlueprint.toString());
 		sxpBlueprintSearchRequestEnhancerImpl.enhance(
 			searchRequestBuilder, sxpBlueprint);
 	}
