@@ -51,17 +51,17 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 	public EditObjectEntryMVCActionCommand(
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryService objectEntryService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		Portal portal) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryService = objectEntryService;
-		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
 	}
 

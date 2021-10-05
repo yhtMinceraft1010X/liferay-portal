@@ -234,9 +234,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				MVCActionCommand.class,
 				new EditObjectEntryMVCActionCommand(
 					_objectDefinitionLocalService, _objectEntryService,
-					_objectScopeProviderRegistry,
 					_objectRelatedModelsProviderRegistry,
-					_objectRelationshipLocalService, _portal),
+					_objectRelationshipLocalService,
+					_objectScopeProviderRegistry, _portal),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"javax.portlet.name", objectDefinition.getPortletId()
 				).put(
