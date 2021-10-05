@@ -29,11 +29,10 @@ public class SearchResponseTranslatorImpl implements SearchResponseTranslator {
 
 	@Override
 	public SearchResponse translate(
-		com.liferay.portal.search.searcher.SearchResponse
-			portalSearchResponse) {
+		com.liferay.portal.search.searcher.SearchResponse searchResponse) {
 
 		SearchResponseTranslation searchResponseTranslation =
-			new SearchResponseTranslation(_jsonFactory, portalSearchResponse);
+			new SearchResponseTranslation(_jsonFactory, searchResponse);
 
 		return searchResponseTranslation.translate();
 	}

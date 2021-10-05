@@ -22,6 +22,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
 public interface SearchResponseTranslator {
 
 	public SearchResponse translate(
-		com.liferay.portal.search.searcher.SearchResponse portalSearchResponse);
+		com.liferay.portal.search.searcher.SearchResponse searchResponse);
 
 }
