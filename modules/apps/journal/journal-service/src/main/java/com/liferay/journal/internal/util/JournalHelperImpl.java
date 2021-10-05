@@ -337,36 +337,37 @@ public class JournalHelperImpl implements JournalHelper {
 			String newLatitude = latitudes.get(1);
 			String newLongitude = longitudes.get(1);
 
-			if (!newLatitude.equals(oldLatitude) ||
-				!newLongitude.equals(oldLongitude)) {
+			if (newLatitude.equals(oldLatitude) &&
+				newLongitude.equals(oldLongitude)) {
 
-				mapElement.addAttribute(
-					"style", "border: 2px solid #CFC;");
-
-				Element oldMapElement = mapElement.createCopy();
-
-				List<String> ids = _getAttributeValues(
-					changes, _idPattern);
-
-				String oldId = ids.get(0);
-
-				oldMapElement.addAttribute("id", oldId);
-
-				oldMapElement.addAttribute(
-					"data-latitude", oldLatitude);
-				oldMapElement.addAttribute(
-					"data-longitude", oldLongitude);
-
-				oldMapElement.addAttribute(
-					"style", "border: 2px solid #FDC6C6;");
-
-				Element parent = mapElement.getParent();
-
-				List<Element> elements = parent.elements();
-
-				elements.add(
-					elements.indexOf(mapElement), oldMapElement);
+				continue;
 			}
+
+			mapElement.addAttribute(
+				"style", "border: 2px solid #CFC;");
+
+			Element oldMapElement = mapElement.createCopy();
+
+			List<String> ids = _getAttributeValues(
+				changes, _idPattern);
+
+			String oldId = ids.get(0);
+
+			oldMapElement.addAttribute("id", oldId);
+
+			oldMapElement.addAttribute(
+				"data-latitude", oldLatitude);
+			oldMapElement.addAttribute(
+				"data-longitude", oldLongitude);
+
+			oldMapElement.addAttribute(
+				"style", "border: 2px solid #FDC6C6;");
+
+			Element parent = mapElement.getParent();
+
+			List<Element> elements = parent.elements();
+
+			elements.add(elements.indexOf(mapElement), oldMapElement);
 		}
 
 		return document.compactString();
