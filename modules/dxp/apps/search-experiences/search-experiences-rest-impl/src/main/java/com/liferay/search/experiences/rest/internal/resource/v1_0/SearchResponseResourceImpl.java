@@ -67,12 +67,9 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 				).size(
 					delta
 				).withSearchRequestBuilder(
-					searchRequestBuilder -> {
-						if (sxpBlueprintJSON != null) {
-							_sxpBlueprintSearchRequestEnhancer.enhance(
-								searchRequestBuilder, sxpBlueprintJSON);
-						}
-					}
+					searchRequestBuilder ->
+						_sxpBlueprintSearchRequestEnhancer.enhance(
+							searchRequestBuilder, sxpBlueprintJSON)
 				).build()));
 	}
 
