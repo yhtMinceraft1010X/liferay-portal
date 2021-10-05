@@ -118,7 +118,7 @@ public class JournalHelperImpl implements JournalHelper {
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 
-		return _postProcessDiff(diff);
+		return _processDiff(diff);
 	}
 
 	@Override
@@ -288,7 +288,7 @@ public class JournalHelperImpl implements JournalHelper {
 		return attributeValues;
 	}
 
-	private String _postProcessDiff(String diff) throws Exception {
+	private String _processDiff(String diff) throws Exception {
 		if (!diff.matches(_MAP_REGEX)) {
 			return diff;
 		}
