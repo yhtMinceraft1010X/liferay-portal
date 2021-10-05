@@ -302,8 +302,8 @@ public class JournalHelperImpl implements JournalHelper {
 	}
 
 	private String _processDiff(String diff) throws Exception {
-		com.liferay.portal.kernel.xml.Document document =
-			SAXReaderUtil.read(diff);
+		com.liferay.portal.kernel.xml.Document document = SAXReaderUtil.read(
+			diff);
 
 		XPath xPathSelector = SAXReaderUtil.createXPath(
 			"//div[@class='lfr-map']");
@@ -344,23 +344,18 @@ public class JournalHelperImpl implements JournalHelper {
 				continue;
 			}
 
-			mapElement.addAttribute(
-				"style", "border: 2px solid #CFC;");
+			mapElement.addAttribute("style", "border: 2px solid #CFC;");
 
 			Element oldMapElement = mapElement.createCopy();
 
-			oldMapElement.addAttribute(
-				"data-latitude", oldLatitude);
-			oldMapElement.addAttribute(
-				"data-longitude", oldLongitude);
+			oldMapElement.addAttribute("data-latitude", oldLatitude);
+			oldMapElement.addAttribute("data-longitude", oldLongitude);
 
-			List<String> ids = _getAttributeValues(
-				changes, _idPattern);
+			List<String> ids = _getAttributeValues(changes, _idPattern);
 
 			oldMapElement.addAttribute("id", ids.get(0));
 
-			oldMapElement.addAttribute(
-				"style", "border: 2px solid #FDC6C6;");
+			oldMapElement.addAttribute("style", "border: 2px solid #FDC6C6;");
 
 			Element parentElement = mapElement.getParent();
 
