@@ -329,12 +329,13 @@ public class JournalHelperImpl implements JournalHelper {
 			List<String> latitudes = _getAttributeValues(
 				changes, _latitudePattern);
 
+			String oldLatitude = latitudes.get(0);
+			String newLatitude = latitudes.get(1);
+
 			List<String> longitudes = _getAttributeValues(
 				changes, _longitudePattern);
 
-			String oldLatitude = latitudes.get(0);
 			String oldLongitude = longitudes.get(0);
-			String newLatitude = latitudes.get(1);
 			String newLongitude = longitudes.get(1);
 
 			if (newLatitude.equals(oldLatitude) &&
@@ -348,17 +349,15 @@ public class JournalHelperImpl implements JournalHelper {
 
 			Element oldMapElement = mapElement.createCopy();
 
-			List<String> ids = _getAttributeValues(
-				changes, _idPattern);
-
-			String oldId = ids.get(0);
-
-			oldMapElement.addAttribute("id", oldId);
-
 			oldMapElement.addAttribute(
 				"data-latitude", oldLatitude);
 			oldMapElement.addAttribute(
 				"data-longitude", oldLongitude);
+
+			List<String> ids = _getAttributeValues(
+				changes, _idPattern);
+
+			oldMapElement.addAttribute("id", ids.get(0));
 
 			oldMapElement.addAttribute(
 				"style", "border: 2px solid #FDC6C6;");
