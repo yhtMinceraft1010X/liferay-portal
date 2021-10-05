@@ -118,7 +118,20 @@ public class JournalHelperImpl implements JournalHelper {
 			new UnsyncStringReader(sourceArticleDisplay.getContent()),
 			new UnsyncStringReader(targetArticleDisplay.getContent()));
 
-		return _processDiff(diff);
+		if (!diff.matches(_MAP_REGEX)) {
+			return diff;
+		}
+
+		try {
+			return _processDiff(diff);
+		}
+		catch (DocumentException documentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid content:\n" + diff, documentException);
+			}
+
+			return diff;
+		}
 	}
 
 	@Override
@@ -289,83 +302,70 @@ public class JournalHelperImpl implements JournalHelper {
 	}
 
 	private String _processDiff(String diff) throws Exception {
-		if (!diff.matches(_MAP_REGEX)) {
-			return diff;
-		}
+		com.liferay.portal.kernel.xml.Document document =
+			SAXReaderUtil.read(diff);
 
-		try {
-			com.liferay.portal.kernel.xml.Document document =
-				SAXReaderUtil.read(diff);
+		XPath xPathSelector = SAXReaderUtil.createXPath(
+			"//div[@class='lfr-map']");
 
-			XPath xPathSelector = SAXReaderUtil.createXPath(
-				"//div[@class='lfr-map']");
+		List<Node> mapNodes = xPathSelector.selectNodes(document);
 
-			List<Node> mapNodes = xPathSelector.selectNodes(document);
+		for (Node mapNode : mapNodes) {
+			Element mapElement = (Element)mapNode;
 
-			for (Node mapNode : mapNodes) {
-				Element mapElement = (Element)mapNode;
+			Element diffSpanElement = mapElement.element("span");
 
-				Element diffSpanElement = mapElement.element("span");
+			if (diffSpanElement != null) {
+				String changes = HtmlUtil.stripHtml(
+					diffSpanElement.attributeValue("changes"));
 
-				if (diffSpanElement != null) {
-					String changes = HtmlUtil.stripHtml(
-						diffSpanElement.attributeValue("changes"));
+				if (changes != null) {
+					List<String> latitudes = _getAttributeValues(
+						changes, _latitudePattern);
 
-					if (changes != null) {
-						List<String> latitudes = _getAttributeValues(
-							changes, _latitudePattern);
+					List<String> longitudes = _getAttributeValues(
+						changes, _longitudePattern);
 
-						List<String> longitudes = _getAttributeValues(
-							changes, _longitudePattern);
+					String oldLatitude = latitudes.get(0);
+					String oldLongitude = longitudes.get(0);
+					String newLatitude = latitudes.get(1);
+					String newLongitude = longitudes.get(1);
 
-						String oldLatitude = latitudes.get(0);
-						String oldLongitude = longitudes.get(0);
-						String newLatitude = latitudes.get(1);
-						String newLongitude = longitudes.get(1);
+					if (!newLatitude.equals(oldLatitude) ||
+						!newLongitude.equals(oldLongitude)) {
 
-						if (!newLatitude.equals(oldLatitude) ||
-							!newLongitude.equals(oldLongitude)) {
+						mapElement.addAttribute(
+							"style", "border: 2px solid #CFC;");
 
-							mapElement.addAttribute(
-								"style", "border: 2px solid #CFC;");
+						Element oldMapElement = mapElement.createCopy();
 
-							Element oldMapElement = mapElement.createCopy();
+						List<String> ids = _getAttributeValues(
+							changes, _idPattern);
 
-							List<String> ids = _getAttributeValues(
-								changes, _idPattern);
+						String oldId = ids.get(0);
 
-							String oldId = ids.get(0);
+						oldMapElement.addAttribute("id", oldId);
 
-							oldMapElement.addAttribute("id", oldId);
+						oldMapElement.addAttribute(
+							"data-latitude", oldLatitude);
+						oldMapElement.addAttribute(
+							"data-longitude", oldLongitude);
 
-							oldMapElement.addAttribute(
-								"data-latitude", oldLatitude);
-							oldMapElement.addAttribute(
-								"data-longitude", oldLongitude);
+						oldMapElement.addAttribute(
+							"style", "border: 2px solid #FDC6C6;");
 
-							oldMapElement.addAttribute(
-								"style", "border: 2px solid #FDC6C6;");
+						Element parent = mapElement.getParent();
 
-							Element parent = mapElement.getParent();
+						List<Element> elements = parent.elements();
 
-							List<Element> elements = parent.elements();
-
-							elements.add(
-								elements.indexOf(mapElement), oldMapElement);
-						}
+						elements.add(
+							elements.indexOf(mapElement), oldMapElement);
 					}
 				}
 			}
-
-			return document.compactString();
 		}
-		catch (DocumentException documentException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid content:\n" + diff, documentException);
-			}
 
-			return diff;
-		}
+		return document.compactString();
 	}
 
 	private static final String _MAP_REGEX = ".*class=\"lfr-map\".*";
