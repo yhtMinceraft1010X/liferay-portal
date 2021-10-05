@@ -34,6 +34,7 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 			<div>
 				<aui:select label="export-file-format" name="exportMimeType" wrapperCssClass="w-50"></aui:select>
 				<aui:select label="original-language" name="sourceLanguageId"></aui:select>
+
 				<div class="form-group">
 					<label class="mb-2"><liferay-ui:message key="languages-to-translate-to" /></label>
 
