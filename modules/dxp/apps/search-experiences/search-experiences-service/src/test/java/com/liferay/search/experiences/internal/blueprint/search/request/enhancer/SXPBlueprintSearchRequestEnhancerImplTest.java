@@ -73,10 +73,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testAggregationConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancerImpl
-			sxpBlueprintSearchRequestEnhancerImpl =
-				_createSXPBlueprintSearchRequestEnhancerImpl();
-
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
@@ -91,8 +87,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			_searchRequestBuilder, sxpBlueprint);
+		_enhance(_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -107,10 +102,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testHighlight() throws Exception {
-		SXPBlueprintSearchRequestEnhancerImpl
-			sxpBlueprintSearchRequestEnhancerImpl =
-				_createSXPBlueprintSearchRequestEnhancerImpl();
-
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
@@ -135,8 +126,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			_searchRequestBuilder, sxpBlueprint);
+		_enhance(_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -158,10 +148,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testParameters() throws Exception {
-		SXPBlueprintSearchRequestEnhancerImpl
-			sxpBlueprintSearchRequestEnhancerImpl =
-				_createSXPBlueprintSearchRequestEnhancerImpl();
-
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
@@ -179,8 +165,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			).build());
 
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			_searchRequestBuilder, sxpBlueprint);
+		_enhance(_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -191,10 +176,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testQueryConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancerImpl
-			sxpBlueprintSearchRequestEnhancerImpl =
-				_createSXPBlueprintSearchRequestEnhancerImpl();
-
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
@@ -222,8 +203,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			_searchRequestBuilder, sxpBlueprint);
+		_enhance(_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -248,10 +228,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 	@Test
 	public void testSortConfiguration() throws Exception {
-		SXPBlueprintSearchRequestEnhancerImpl
-			sxpBlueprintSearchRequestEnhancerImpl =
-				_createSXPBlueprintSearchRequestEnhancerImpl();
-
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
@@ -266,8 +242,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 				}
 			});
 
-		sxpBlueprintSearchRequestEnhancerImpl.enhance(
-			_searchRequestBuilder, sxpBlueprint);
+		_enhance(_searchRequestBuilder, sxpBlueprint);
 
 		SearchRequest searchRequest = _searchRequestBuilder.build();
 
@@ -295,8 +270,8 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		};
 	}
 
-	private SXPBlueprintSearchRequestEnhancerImpl
-		_createSXPBlueprintSearchRequestEnhancerImpl() {
+	private void _enhance(
+		SearchRequestBuilder searchRequestBuilder, SXPBlueprint sxpBlueprint) {
 
 		SXPBlueprintSearchRequestEnhancerImpl
 			sxpBlueprintSearchRequestEnhancerImpl =
@@ -332,7 +307,8 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		sxpBlueprintSearchRequestEnhancerImpl.activate();
 
-		return sxpBlueprintSearchRequestEnhancerImpl;
+		sxpBlueprintSearchRequestEnhancerImpl.enhance(
+			searchRequestBuilder, sxpBlueprint);
 	}
 
 	private String _formatJSON(String string) throws Exception {
