@@ -53,6 +53,10 @@ public class SearchResponse implements Serializable {
 		return ObjectMapperUtil.readValue(SearchResponse.class, json);
 	}
 
+	public static SearchResponse unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(SearchResponse.class, json);
+	}
+
 	@Schema
 	@Valid
 	public Document[] getDocuments() {

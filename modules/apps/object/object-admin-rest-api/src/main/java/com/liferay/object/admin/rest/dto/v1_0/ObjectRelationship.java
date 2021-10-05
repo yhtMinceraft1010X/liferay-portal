@@ -55,6 +55,10 @@ public class ObjectRelationship implements Serializable {
 		return ObjectMapperUtil.readValue(ObjectRelationship.class, json);
 	}
 
+	public static ObjectRelationship unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ObjectRelationship.class, json);
+	}
+
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {

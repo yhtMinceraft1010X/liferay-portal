@@ -53,6 +53,10 @@ public class Document implements Serializable {
 		return ObjectMapperUtil.readValue(Document.class, json);
 	}
 
+	public static Document unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Document.class, json);
+	}
+
 	@Schema
 	@Valid
 	public Map<String, DocumentField> getDocumentFields() {

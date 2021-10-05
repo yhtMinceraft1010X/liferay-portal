@@ -51,6 +51,10 @@ public class General implements Serializable {
 		return ObjectMapperUtil.readValue(General.class, json);
 	}
 
+	public static General unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(General.class, json);
+	}
+
 	@Schema
 	public String[] getClauseContributorsExcludes() {
 		return clauseContributorsExcludes;
