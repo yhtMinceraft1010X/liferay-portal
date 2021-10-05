@@ -54,12 +54,12 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		return _toSearchResponse(
 			_searcher.search(
 				_searchRequestBuilderFactory.builder(
+				).companyId(
+					contextCompany.getCompanyId()
 				).emptySearchEnabled(
 					true
 				).includeResponseString(
 					true
-				).companyId(
-					contextCompany.getCompanyId()
 				).from(
 					_getFrom(delta, start)
 				).queryString(
