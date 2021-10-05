@@ -81,9 +81,6 @@ public class ExportTranslationDisplayContext {
 			translationInfoItemFieldValuesExporterTracker) {
 
 		_classNameId = classNameId;
-
-		_className = PortalUtil.getClassName(_classNameId);
-
 		_classPK = classPK;
 		_ffLayoutExperienceSelectorConfiguration =
 			ffLayoutExperienceSelectorConfiguration;
@@ -96,6 +93,7 @@ public class ExportTranslationDisplayContext {
 		_translationInfoItemFieldValuesExporterTracker =
 			translationInfoItemFieldValuesExporterTracker;
 
+		_className = PortalUtil.getClassName(_classNameId);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
