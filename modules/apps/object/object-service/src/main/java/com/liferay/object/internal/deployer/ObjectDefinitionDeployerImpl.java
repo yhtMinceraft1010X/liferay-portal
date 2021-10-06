@@ -16,9 +16,7 @@ package com.liferay.object.internal.deployer;
 
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.action.trigger.util.ObjectActionTriggerUtil;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
@@ -232,21 +230,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					modelSearchDefinition.setModelSummaryContributor(
 						objectEntryModelSummaryContributor);
 				}));
-
-		for (ObjectActionTrigger objectActionTrigger :
-				ObjectActionTriggerUtil.getDefaultObjectActionTriggers()) {
-
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					ObjectActionTrigger.class, objectActionTrigger,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"object.action.trigger.class.name",
-						objectDefinition.getClassName()
-					).put(
-						"object.action.trigger.key",
-						objectActionTrigger.getKey()
-					).build()));
-		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			serviceRegistrations.add(

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,7 +59,9 @@ public class ObjectActionTriggerRegistryImpl
 		}
 
 		return ObjectActionTriggerUtil.sort(
-			new ArrayList<>(objectActionTriggers));
+			ListUtil.concat(
+				ObjectActionTriggerUtil.getDefaultObjectActionTriggers(),
+				objectActionTriggers));
 	}
 
 	@Activate
