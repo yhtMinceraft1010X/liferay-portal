@@ -55,7 +55,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 						<aui:option label="<%= objectDefinition.getShortName() %>" selected="<%= true %>" value="<%= objectDefinition.getObjectDefinitionId() %>" />
 					</aui:select>
 
-					<aui:select disabled="<%= objectRelationship.isReverse() %>" name="deleteType" required="<%= true %>">
+					<aui:select disabled="<%= objectRelationship.isReverse() %>" name="deletionType" required="<%= true %>">
 						<aui:option label="cascade" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_CASCADE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_CASCADE %>" />
 						<aui:option label="disassociate" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE %>" />
 						<aui:option label="prevent" selected="<%= Objects.equals(objectRelationship.getDeletionType(), ObjectRelationshipConstants.DELETION_TYPE_PREVENT) %>" value="<%= ObjectRelationshipConstants.DELETION_TYPE_PREVENT %>" />
@@ -78,8 +78,8 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			"input[id^='<portlet:namespace />'][type='hidden']"
 		);
 
-		const deleteType = document.getElementById(
-			'<portlet:namespace />deleteType'
+		const deletionType = document.getElementById(
+			'<portlet:namespace />deletionType'
 		);
 
 		const localizedLabels = Array(...localizedInputs).reduce(
@@ -98,7 +98,7 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			'/o/object-admin/v1.0/object-relationships/<%= objectRelationship.getObjectRelationshipId() %>',
 			{
 				body: JSON.stringify({
-					deleteType: deleteType.value,
+					deletionType: deletionType.value,
 					label: localizedLabels,
 				}),
 				headers: new Headers({
