@@ -607,9 +607,9 @@ public class ObjectDefinitionLocalServiceImpl
 		pkObjectFieldDBColumnName = _getPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName, pkObjectFieldName, system);
 
-		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
+		_validateLabel(labelMap);
 		_validateName(0, user.getCompanyId(), name, system);
-		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
+		_validatePluralLabel(pluralLabelMap);
 		_validateScope(scope);
 		_validateVersion(system, version);
 
@@ -829,8 +829,8 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateObjectFieldId(objectDefinition, descriptionObjectFieldId);
 		_validateObjectFieldId(objectDefinition, titleObjectFieldId);
 		_validateActive(objectDefinition, active);
-		_validateLabel(labelMap, LocaleUtil.getSiteDefault());
-		_validatePluralLabel(pluralLabelMap, LocaleUtil.getSiteDefault());
+		_validateLabel(labelMap);
+		_validatePluralLabel(pluralLabelMap);
 
 		objectDefinition.setDescriptionObjectFieldId(descriptionObjectFieldId);
 		objectDefinition.setTitleObjectFieldId(titleObjectFieldId);
@@ -928,14 +928,16 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateLabel(
-			Map<Locale, String> labelMap, Locale defaultLocale)
+			Map<Locale, String> labelMap)
 		throws PortalException {
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		if ((labelMap == null) ||
-			Validator.isNull(labelMap.get(defaultLocale))) {
+			Validator.isNull(labelMap.get(locale))) {
 
 			throw new ObjectDefinitionLabelException(
-				"Label is null for locale " + defaultLocale.getDisplayName());
+				"Label is null for locale " + locale.getDisplayName());
 		}
 	}
 
@@ -1022,15 +1024,17 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validatePluralLabel(
-			Map<Locale, String> pluralLabelMap, Locale defaultLocale)
+			Map<Locale, String> pluralLabelMap)
 		throws PortalException {
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
 		if ((pluralLabelMap == null) ||
-			Validator.isNull(pluralLabelMap.get(defaultLocale))) {
+			Validator.isNull(pluralLabelMap.get(locale))) {
 
 			throw new ObjectDefinitionPluralLabelException(
 				"Plural label is null for locale " +
-					defaultLocale.getDisplayName());
+					locale.getDisplayName());
 		}
 	}
 

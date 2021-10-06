@@ -54,7 +54,7 @@ public class ListTypeEntryLocalServiceImpl
 		throws PortalException {
 
 		_validate(listTypeDefinitionId, key);
-		_validateName(nameMap, LocaleUtil.getSiteDefault());
+		_validateName(nameMap);
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.create(
 			counterLocalService.increment());
@@ -98,7 +98,7 @@ public class ListTypeEntryLocalServiceImpl
 			long listTypeEntryId, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validateName(nameMap, LocaleUtil.getSiteDefault());
+		_validateName(nameMap);
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.findByPrimaryKey(
 			listTypeEntryId);
@@ -134,13 +134,14 @@ public class ListTypeEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateName(
-			Map<Locale, String> nameMap, Locale defaultLocale)
+	private void _validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		if ((nameMap == null) || Validator.isNull(nameMap.get(defaultLocale))) {
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
 			throw new ListTypeEntryNameException(
-				"Name is null for locale " + defaultLocale.getDisplayName());
+				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 
