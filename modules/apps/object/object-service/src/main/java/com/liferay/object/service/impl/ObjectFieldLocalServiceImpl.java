@@ -311,15 +311,12 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateLabel(
-			Map<Locale, String> labelMap)
+	private void _validateLabel(Map<Locale, String> labelMap)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		if ((labelMap == null) ||
-			Validator.isNull(labelMap.get(locale))) {
-
+		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
 			throw new ObjectFieldLabelException(
 				"Label is null for locale " + locale.getDisplayName());
 		}

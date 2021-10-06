@@ -927,15 +927,12 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _validateLabel(
-			Map<Locale, String> labelMap)
+	private void _validateLabel(Map<Locale, String> labelMap)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		if ((labelMap == null) ||
-			Validator.isNull(labelMap.get(locale))) {
-
+		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
 			throw new ObjectDefinitionLabelException(
 				"Label is null for locale " + locale.getDisplayName());
 		}
@@ -1023,8 +1020,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _validatePluralLabel(
-			Map<Locale, String> pluralLabelMap)
+	private void _validatePluralLabel(Map<Locale, String> pluralLabelMap)
 		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
@@ -1033,8 +1029,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Validator.isNull(pluralLabelMap.get(locale))) {
 
 			throw new ObjectDefinitionPluralLabelException(
-				"Plural label is null for locale " +
-					locale.getDisplayName());
+				"Plural label is null for locale " + locale.getDisplayName());
 		}
 	}
 
