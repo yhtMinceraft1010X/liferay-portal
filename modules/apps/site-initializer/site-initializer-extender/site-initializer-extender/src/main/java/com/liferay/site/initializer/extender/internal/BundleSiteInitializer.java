@@ -1256,7 +1256,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith(".data.json")) {
+			if (resourcePath.endsWith(".object-entries.json")) {
 				continue;
 			}
 
@@ -1292,14 +1292,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 						existingObjectDefinition.getId(), objectDefinition);
 			}
 
-			String jsonData = _read(
-				StringUtil.replaceLast(resourcePath, ".json", ".data.json"));
+			String objectEntriesJSON = _read(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".object-entries.json"));
 
-			if (jsonData == null) {
+			if (objectEntriesJSON == null) {
 				continue;
 			}
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(jsonData);
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				objectEntriesJSON);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
