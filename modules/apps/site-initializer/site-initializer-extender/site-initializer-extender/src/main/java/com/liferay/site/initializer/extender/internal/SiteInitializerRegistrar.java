@@ -165,7 +165,7 @@ public class SiteInitializerRegistrar {
 		_themeLocalService = themeLocalService;
 		_userLocalService = userLocalService;
 
-		_obObjectEntryLocalService = objectEntryLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -190,7 +190,7 @@ public class SiteInitializerRegistrar {
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _objectDefinitionResourceFactory,
-				_obObjectEntryLocalService, _portal,
+				_objectEntryLocalService, _portal,
 				_remoteAppEntryLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sapEntryLocalService, _servletContext,
 				_settingsFactory, _siteNavigationMenuItemLocalService,
@@ -240,7 +240,7 @@ public class SiteInitializerRegistrar {
 	private final LayoutSetLocalService _layoutSetLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
-	private final ObjectEntryLocalService _obObjectEntryLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Portal _portal;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourcePermissionLocalService
