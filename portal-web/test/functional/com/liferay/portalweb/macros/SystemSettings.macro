@@ -1,5 +1,33 @@
 definition {
 
+	macro assertPortalBuildNumber {
+		var portalURL = PropsUtil.get("portal.url");
+
+		var buildNumberCurl = '''
+				${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
+			''';
+
+		var buildNumberOutput = JSONCurlUtil.post("${buildNumberCurl}");
+
+		if (!(contains("${buildNumberOutput}", "${portalBuild}"))) {
+			fail("JSON-WS call failed to return build number");
+		}
+	}
+
+	macro assertPortalVersion {
+		var portalURL = PropsUtil.get("portal.url");
+
+		var portalVersionCurl = '''
+			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
+		''';
+
+		var portalVersionOutput = JSONCurlUtil.post("${portalVersionCurl}");
+
+		if (!(contains("${portalVersionOutput}", "${portalVersion}"))) {
+			fail("JSON-WS call failed to return Portal version");
+		}
+	}
+
 	macro configureDisplayStyle {
 		Click(locator1 = "Dropdown#TRIGGER");
 
@@ -255,6 +283,10 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "SystemSettings#LABEL",
 			value1 = "${fieldLabel}");
+	}
+
+	macro viewUserAvatarImage {
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
 }
