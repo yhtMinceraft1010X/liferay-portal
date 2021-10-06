@@ -631,8 +631,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("deleteType", additionalAssertFieldName)) {
-				if (objectRelationship.getDeleteType() == null) {
+			if (Objects.equals("deletionType", additionalAssertFieldName)) {
+				if (objectRelationship.getDeletionType() == null) {
 					valid = false;
 				}
 
@@ -799,10 +799,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("deleteType", additionalAssertFieldName)) {
+			if (Objects.equals("deletionType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						objectRelationship1.getDeleteType(),
-						objectRelationship2.getDeleteType())) {
+						objectRelationship1.getDeletionType(),
+						objectRelationship2.getDeletionType())) {
 
 					return false;
 				}
@@ -996,7 +996,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("deleteType")) {
+		if (entityFieldName.equals("deletionType")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

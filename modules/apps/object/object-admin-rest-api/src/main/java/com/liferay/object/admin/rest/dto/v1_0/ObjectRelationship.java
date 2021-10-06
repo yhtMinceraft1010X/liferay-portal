@@ -91,29 +91,29 @@ public class ObjectRelationship implements Serializable {
 
 	@Schema
 	@Valid
-	public DeleteType getDeleteType() {
-		return deleteType;
+	public DeletionType getDeletionType() {
+		return deletionType;
 	}
 
 	@JsonIgnore
-	public String getDeleteTypeAsString() {
-		if (deleteType == null) {
+	public String getDeletionTypeAsString() {
+		if (deletionType == null) {
 			return null;
 		}
 
-		return deleteType.toString();
+		return deletionType.toString();
 	}
 
-	public void setDeleteType(DeleteType deleteType) {
-		this.deleteType = deleteType;
+	public void setDeletionType(DeletionType deletionType) {
+		this.deletionType = deletionType;
 	}
 
 	@JsonIgnore
-	public void setDeleteType(
-		UnsafeSupplier<DeleteType, Exception> deleteTypeUnsafeSupplier) {
+	public void setDeletionType(
+		UnsafeSupplier<DeletionType, Exception> deletionTypeUnsafeSupplier) {
 
 		try {
-			deleteType = deleteTypeUnsafeSupplier.get();
+			deletionType = deletionTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -125,7 +125,7 @@ public class ObjectRelationship implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected DeleteType deleteType;
+	protected DeletionType deletionType;
 
 	@Schema
 	public Long getId() {
@@ -365,16 +365,16 @@ public class ObjectRelationship implements Serializable {
 			sb.append(_toJSON(actions));
 		}
 
-		if (deleteType != null) {
+		if (deletionType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"deleteType\": ");
+			sb.append("\"deletionType\": ");
 
 			sb.append("\"");
 
-			sb.append(deleteType);
+			sb.append(deletionType);
 
 			sb.append("\"");
 		}
@@ -473,20 +473,20 @@ public class ObjectRelationship implements Serializable {
 	)
 	public String xClassName;
 
-	@GraphQLName("DeleteType")
-	public static enum DeleteType {
+	@GraphQLName("DeletionType")
+	public static enum DeletionType {
 
 		CASCADE("cascade"), DISASSOCIATE("disassociate"), PREVENT("prevent");
 
 		@JsonCreator
-		public static DeleteType create(String value) {
+		public static DeletionType create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (DeleteType deleteType : values()) {
-				if (Objects.equals(deleteType.getValue(), value)) {
-					return deleteType;
+			for (DeletionType deletionType : values()) {
+				if (Objects.equals(deletionType.getValue(), value)) {
+					return deletionType;
 				}
 			}
 
@@ -503,7 +503,7 @@ public class ObjectRelationship implements Serializable {
 			return _value;
 		}
 
-		private DeleteType(String value) {
+		private DeletionType(String value) {
 			_value = value;
 		}
 
