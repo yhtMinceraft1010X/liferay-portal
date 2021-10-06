@@ -16,6 +16,7 @@ package com.liferay.search.experiences.rest.client.resource.v1_0;
 
 import com.liferay.search.experiences.rest.client.dto.v1_0.SearchResponse;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
+import com.liferay.search.experiences.rest.client.pagination.Pagination;
 import com.liferay.search.experiences.rest.client.problem.Problem;
 import com.liferay.search.experiences.rest.client.serdes.v1_0.SearchResponseSerDes;
 
@@ -39,11 +40,11 @@ public interface SearchResponseResource {
 	}
 
 	public SearchResponse getSearch(
-			Integer delta, String q, Integer start, String sxpBlueprint)
+			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSearchHttpResponse(
-			Integer delta, String q, Integer start, String sxpBlueprint)
+			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -119,11 +120,11 @@ public interface SearchResponseResource {
 		implements SearchResponseResource {
 
 		public SearchResponse getSearch(
-				Integer delta, String q, Integer start, String sxpBlueprint)
+				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getSearchHttpResponse(
-				delta, q, start, sxpBlueprint);
+				query, sxpBlueprint, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -163,7 +164,7 @@ public interface SearchResponseResource {
 		}
 
 		public HttpInvoker.HttpResponse getSearchHttpResponse(
-				Integer delta, String q, Integer start, String sxpBlueprint)
+				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -187,21 +188,20 @@ public interface SearchResponseResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (delta != null) {
-				httpInvoker.parameter("delta", String.valueOf(delta));
-			}
-
-			if (q != null) {
-				httpInvoker.parameter("q", String.valueOf(q));
-			}
-
-			if (start != null) {
-				httpInvoker.parameter("start", String.valueOf(start));
+			if (query != null) {
+				httpInvoker.parameter("query", String.valueOf(query));
 			}
 
 			if (sxpBlueprint != null) {
 				httpInvoker.parameter(
 					"sxpBlueprint", String.valueOf(sxpBlueprint));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
 			}
 
 			httpInvoker.path(

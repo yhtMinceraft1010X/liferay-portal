@@ -151,20 +151,21 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(delta: ___, q: ___, start: ___, sxpBlueprint: ___){documents, maxScore, page, pageSize, request, requestString, response, responseString, searchRequest, totalHits}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(page: ___, pageSize: ___, query: ___, sxpBlueprint: ___){documents, maxScore, page, pageSize, request, requestString, response, responseString, searchRequest, totalHits}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SearchResponse search(
-			@GraphQLName("delta") Integer delta, @GraphQLName("q") String q,
-			@GraphQLName("start") Integer start,
-			@GraphQLName("sxpBlueprint") String sxpBlueprint)
+			@GraphQLName("query") String query,
+			@GraphQLName("sxpBlueprint") String sxpBlueprint,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			searchResponseResource -> searchResponseResource.getSearch(
-				delta, q, start, sxpBlueprint));
+				query, sxpBlueprint, Pagination.of(page, pageSize)));
 	}
 
 	@GraphQLName("SXPBlueprintPage")
