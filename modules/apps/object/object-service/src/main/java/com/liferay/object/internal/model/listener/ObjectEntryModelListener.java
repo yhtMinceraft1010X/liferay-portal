@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.io.Serializable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,21 +77,18 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			}
 
 			_objectActionEngine.executeObjectActions(
-				objectEntry.getCompanyId(), userId,
-				objectEntry.getModelClassName(), objectActionTriggerKey,
-				HashMapBuilder.<String, Serializable>put(
-					"payload",
-					_getPayload(
-						objectActionTriggerKey, originalObjectEntry,
-						objectEntry)
-				).build());
+				objectEntry.getModelClassName(), objectEntry.getCompanyId(),
+				objectActionTriggerKey,
+				_getPayloadJSONObject(
+					objectActionTriggerKey, originalObjectEntry, objectEntry),
+				userId);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
 	}
 
-	private Serializable _getPayload(
+	private JSONObject _getPayloadJSONObject(
 			String objectActionTriggerKey, ObjectEntry originalObjectEntry,
 			ObjectEntry objectEntry)
 		throws JSONException {
@@ -120,7 +114,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				"originalObjectEntry", originalObjectEntryJSONObject);
 		}
 
-		return payloadJSONObject.toString();
+		return payloadJSONObject;
 	}
 
 	@Reference

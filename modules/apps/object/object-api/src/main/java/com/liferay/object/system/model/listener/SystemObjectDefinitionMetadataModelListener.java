@@ -29,9 +29,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.io.Serializable;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -117,12 +114,11 @@ public class SystemObjectDefinitionMetadataModelListener
 			}
 
 			_objectActionEngine.executeObjectActions(
-				_getCompanyId(baseModel), userId, _modelClass.getName(),
+				_modelClass.getName(), _getCompanyId(baseModel),
 				objectActionTriggerKey,
-				HashMapBuilder.<String, Serializable>put(
-					"payload",
-					_getPayload(objectActionTriggerKey, originalModel, model)
-				).build());
+				_getPayloadJSONObject(
+					objectActionTriggerKey, originalModel, model),
+				userId);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -144,7 +140,7 @@ public class SystemObjectDefinitionMetadataModelListener
 		return (Long)function.apply(baseModel);
 	}
 
-	private Serializable _getPayload(
+	private JSONObject _getPayloadJSONObject(
 			String objectActionTriggerKey, Object originalModel, Object model)
 		throws JSONException {
 
@@ -166,7 +162,7 @@ public class SystemObjectDefinitionMetadataModelListener
 				originalModelJSONObject);
 		}
 
-		return payloadJSONObject.toString();
+		return payloadJSONObject;
 	}
 
 	private long _getUserId(BaseModel<?> baseModel) {

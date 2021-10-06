@@ -14,14 +14,22 @@
 
 package com.liferay.object.action.executor;
 
-import com.liferay.object.action.request.ObjectActionRequest;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
 public interface ObjectActionExecutor {
 
-	public void execute(ObjectActionRequest objectActionRequest)
+	public void execute(
+			long companyId, UnicodeProperties parametersUnicodeProperties,
+			JSONObject payloadJSONObject, long userId)
 		throws Exception;
 
 	public String getKey();

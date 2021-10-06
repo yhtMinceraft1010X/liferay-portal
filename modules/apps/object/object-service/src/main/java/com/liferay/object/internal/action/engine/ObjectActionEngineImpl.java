@@ -17,40 +17,37 @@ package com.liferay.object.internal.action.engine;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
-import com.liferay.object.action.request.ObjectActionRequest;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
 @Component(service = ObjectActionEngine.class)
 public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	@Override
 	public void executeObjectActions(
-		long companyId, long userId, String className,
-		String objectActionTriggerKey, Map<String, Serializable> parameters) {
+		String className, long companyId, String objectActionTriggerKey,
+		JSONObject payloadJSONObject, long userId) {
 
 		try {
 			_executeObjectActions(
-				companyId, userId, className, objectActionTriggerKey,
-				parameters);
+				className, companyId, objectActionTriggerKey, payloadJSONObject,
+				userId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -58,8 +55,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	}
 
 	private void _executeObjectActions(
-			long companyId, long userId, String className,
-			String objectActionTriggerKey, Map<String, Serializable> parameters)
+			String className, long companyId, String objectActionTriggerKey,
+			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
 		if (userId == 0) {
@@ -91,13 +88,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					objectAction.getObjectActionExecutorKey());
 
 			objectActionExecutor.execute(
-				new ObjectActionRequest(
-					HashMapBuilder.<String, Serializable>putAll(
-						objectAction.getParametersUnicodeProperties()
-					).putAll(
-						parameters
-					).build(),
-					userId));
+				companyId, objectAction.getParametersUnicodeProperties(),
+				payloadJSONObject, userId);
 		}
 	}
 

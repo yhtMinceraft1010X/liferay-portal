@@ -16,17 +16,13 @@ package com.liferay.object.internal.action.trigger.messaging;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.io.Serializable;
 
 /**
  * @author Marco Leo
+ * @author Brian Wing Shun Chan
  */
 public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
@@ -51,22 +47,12 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 		long userId = GetterUtil.getLong(message.get("userId"));
 
-		Object payload = message.getPayload();
+		JSONObject payloadJSONObject = (JSONObject)message.getPayload();
 
-		if (payload instanceof JSONObject) {
-			_objectActionEngine.executeObjectActions(
-				companyId, userId, _className, _objectActionTriggerKey,
-				HashMapBuilder.<String, Serializable>put(
-					"payload", (Serializable)payload
-				).build());
-		}
-		else {
-			_log.error("Ignoring message: " + message);
-		}
+		_objectActionEngine.executeObjectActions(
+			_className, companyId, _objectActionTriggerKey, payloadJSONObject,
+			userId);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectActionTriggerMessageListener.class);
 
 	private final String _className;
 	private final ObjectActionEngine _objectActionEngine;
