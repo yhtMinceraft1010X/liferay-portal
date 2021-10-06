@@ -146,6 +146,7 @@ public class SiteInitializerRegistrar {
 			layoutPageTemplateStructureLocalService;
 		_layoutSetLocalService = layoutSetLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
+		_objectEntryLocalService = objectEntryLocalService;
 		_portal = portal;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -164,8 +165,6 @@ public class SiteInitializerRegistrar {
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_themeLocalService = themeLocalService;
 		_userLocalService = userLocalService;
-
-		_objectEntryLocalService = objectEntryLocalService;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {

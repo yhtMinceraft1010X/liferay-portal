@@ -190,7 +190,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			layoutPageTemplateStructureLocalService,
 		LayoutSetLocalService layoutSetLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
-		ObjectEntryLocalService obObjectEntryLocalService, Portal portal,
+		ObjectEntryLocalService objectEntryLocalService, Portal portal,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -237,7 +237,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			layoutPageTemplateStructureLocalService;
 		_layoutSetLocalService = layoutSetLocalService;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
-		_obObjectEntryLocalService = obObjectEntryLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 		_portal = portal;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -1304,7 +1304,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-				_obObjectEntryLocalService.addObjectEntry(
+				_objectEntryLocalService.addObjectEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), objectDefinition.getId(),
 					ObjectMapperUtil.readValue(
@@ -2029,7 +2029,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final LayoutSetLocalService _layoutSetLocalService;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
-	private final ObjectEntryLocalService _obObjectEntryLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Portal _portal;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourcePermissionLocalService
