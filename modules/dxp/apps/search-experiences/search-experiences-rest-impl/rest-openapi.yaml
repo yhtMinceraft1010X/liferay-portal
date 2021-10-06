@@ -246,21 +246,21 @@ paths:
             operationId: getSearch
             parameters:
                 - in: query
-                  name: delta
-                  schema:
-                      type: integer
-                - in: query
-                  name: q
+                  name: query
                   schema:
                       type: string
-                - in: query
-                  name: start
-                  schema:
-                      type: integer
                 - in: query
                   name: sxpBlueprint
                   schema:
                       type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
             responses:
                 200:
                     content:

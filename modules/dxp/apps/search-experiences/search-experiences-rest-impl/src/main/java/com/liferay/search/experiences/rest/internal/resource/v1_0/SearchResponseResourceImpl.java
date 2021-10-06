@@ -20,6 +20,7 @@ import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBlueprintSearchRequestEnhancer;
 import com.liferay.search.experiences.rest.dto.v1_0.Document;
 import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
@@ -48,7 +49,7 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 
 	@Override
 	public SearchResponse getSearch(
-			Integer delta, String q, Integer start, String sxpBlueprintJSON)
+			String queryString, String sxpBlueprintJSON, Pagination pagination)
 		throws Exception {
 
 		return _toSearchResponse(
@@ -61,24 +62,16 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 				).includeResponseString(
 					true
 				).from(
-					_getFrom(delta, start)
+					pagination.getStartPosition()
 				).queryString(
-					q
+					queryString
 				).size(
-					delta
+					pagination.getPageSize()
 				).withSearchRequestBuilder(
 					searchRequestBuilder ->
 						_sxpBlueprintSearchRequestEnhancer.enhance(
 							searchRequestBuilder, sxpBlueprintJSON)
 				).build()));
-	}
-
-	private Integer _getFrom(Integer delta, Integer start) {
-		if ((delta == null) || (start == null)) {
-			return null;
-		}
-
-		return start * delta;
 	}
 
 	private Map<String, DocumentField> _toDocumentFields(
