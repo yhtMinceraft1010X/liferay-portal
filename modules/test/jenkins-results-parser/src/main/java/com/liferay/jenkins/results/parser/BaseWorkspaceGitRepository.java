@@ -151,7 +151,7 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public void setBaseBranchSHA(String branchSHA) {
 		if (!JenkinsResultsParserUtil.isSHA(branchSHA)) {
-			throw new RuntimeException("Invalid base branch sha " + branchSHA);
+			throw new RuntimeException("Invalid base branch SHA " + branchSHA);
 		}
 
 		put("base_branch_sha", branchSHA);
@@ -206,7 +206,7 @@ public abstract class BaseWorkspaceGitRepository
 	public void setSenderBranchSHA(String branchSHA) {
 		if (!JenkinsResultsParserUtil.isSHA(branchSHA)) {
 			throw new RuntimeException(
-				"Invalid sender branch sha " + branchSHA);
+				"Invalid sender branch SHA " + branchSHA);
 		}
 
 		put("sender_branch_sha", branchSHA);
@@ -642,7 +642,7 @@ public abstract class BaseWorkspaceGitRepository
 	private void _setBaseBranchHeadSHA(String branchSHA) {
 		if (!JenkinsResultsParserUtil.isSHA(branchSHA)) {
 			throw new RuntimeException(
-				"Invalid base branch head sha " + branchSHA);
+				"Invalid base branch head SHA " + branchSHA);
 		}
 
 		put("base_branch_head_sha", branchSHA);
@@ -663,7 +663,7 @@ public abstract class BaseWorkspaceGitRepository
 	private void _setSenderBranchHeadSHA(String branchSHA) {
 		if (!JenkinsResultsParserUtil.isSHA(branchSHA)) {
 			throw new RuntimeException(
-				"Invalid sender branch head sha " + branchSHA);
+				"Invalid sender branch head SHA " + branchSHA);
 		}
 
 		put("sender_branch_head_sha", branchSHA);
