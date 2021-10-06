@@ -257,7 +257,7 @@ public class OpenIdConnectMetadataFactoryImpl
 					_oidcClientMetadata.getIDTokenJWSAlg();
 
 				_log.warn(
-					"Using the default ID token signing algorithm: " +
+					"Using the default ID token signing algorithm " +
 						jwsAlgorithm.getName());
 			}
 		}
