@@ -53,7 +53,7 @@ public class ListTypeEntryLocalServiceImpl
 			Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validate(listTypeDefinitionId, key);
+		_validateKey(listTypeDefinitionId, key);
 		_validateName(nameMap);
 
 		ListTypeEntry listTypeEntry = listTypeEntryPersistence.create(
@@ -108,7 +108,7 @@ public class ListTypeEntryLocalServiceImpl
 		return listTypeEntryPersistence.update(listTypeEntry);
 	}
 
-	private void _validate(long listTypeDefinitionId, String key)
+	private void _validateKey(long listTypeDefinitionId, String key)
 		throws PortalException {
 
 		_listTypeDefinitionPersistence.findByPrimaryKey(listTypeDefinitionId);
