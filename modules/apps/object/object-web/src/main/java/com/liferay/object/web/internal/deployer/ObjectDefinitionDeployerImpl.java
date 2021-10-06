@@ -70,12 +70,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.Portlet;
@@ -100,7 +100,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		return Arrays.asList(
+		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
 				ClayDataSetDisplayView.class,
 				new ObjectEntriesTableClayDataSetDisplayView(
@@ -204,14 +204,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
-				PanelApp.class, new ObjectEntriesPanelApp(objectDefinition),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"panel.app.order:Integer",
-					objectDefinition.getPanelAppOrder()
-				).put(
-					"panel.category.key", objectDefinition.getPanelCategoryKey()
-				).build()),
-			_bundleContext.registerService(
 				Portlet.class,
 				new ObjectEntriesPortlet(
 					objectDefinition.getObjectDefinitionId(),
@@ -220,6 +212,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_getPortletResourcePermission(
 						objectDefinition.getResourceName())),
 				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company",
+					objectDefinition.getCompanyId()
+				).put(
 					"com.liferay.portlet.display-category", "category.hidden"
 				).put(
 					"javax.portlet.display-name",
@@ -265,6 +260,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).put(
 					"mvc.command.name", "/object_entries/edit_object_entry"
 				).build()));
+
+		// Ensure
+
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				PanelApp.class, new ObjectEntriesPanelApp(objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"panel.app.order:Integer",
+					objectDefinition.getPanelAppOrder()
+				).put(
+					"panel.category.key", objectDefinition.getPanelCategoryKey()
+				).build()));
+
+		return serviceRegistrations;
 	}
 
 	@Reference(
