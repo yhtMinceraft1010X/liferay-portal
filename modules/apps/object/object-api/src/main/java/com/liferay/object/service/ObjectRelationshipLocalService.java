@@ -141,12 +141,12 @@ public interface ObjectRelationshipLocalService
 			ObjectRelationship objectRelationship)
 		throws PortalException;
 
-	public void deleteObjectRelationshipMappingTableValue(
-			long objectRelationshipId, long primaryKey1, long primaryKey2)
+	public void deleteObjectRelationshipMappingTableValues(
+			long objectRelationshipId, long primaryKey1)
 		throws PortalException;
 
 	public void deleteObjectRelationshipMappingTableValues(
-			long objectRelationshipId, long primaryKey1)
+			long objectRelationshipId, long primaryKey1, long primaryKey2)
 		throws PortalException;
 
 	/**
