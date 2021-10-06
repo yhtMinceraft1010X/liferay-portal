@@ -76,12 +76,6 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			_addOrUpdateObjectEntry(actionRequest, actionResponse);
 		}
 		else if (cmd.equals("disassociateRelatedModels")) {
-			long relatedModelId = ParamUtil.getLong(
-				actionRequest, "relatedModelId");
-
-			long objectEntryId = ParamUtil.getLong(
-				actionRequest, "objectEntryId");
-
 			long objectRelationshipId = ParamUtil.getLong(
 				actionRequest, "objectRelationshipId");
 
@@ -101,7 +95,8 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			objectRelatedModelsProvider.disassociateRelatedModels(
 				PrincipalThreadLocal.getUserId(), objectRelationshipId,
-				objectEntryId, relatedModelId);
+				ParamUtil.getLong(actionRequest, "objectEntryId"),
+				ParamUtil.getLong(actionRequest, "relatedModelId"));
 		}
 	}
 
