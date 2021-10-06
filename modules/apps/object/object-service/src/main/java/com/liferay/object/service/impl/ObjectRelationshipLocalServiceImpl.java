@@ -227,7 +227,7 @@ public class ObjectRelationshipLocalServiceImpl
 				StringBundler.concat(
 					"delete from ", objectRelationship.getDBTableName(),
 					" where ", objectDefinition1.getPKObjectFieldDBColumnName(),
-					" = ", primaryKey1, " AND ",
+					" = ", primaryKey1, " and ",
 					objectDefinition2.getPKObjectFieldDBColumnName(), " = ",
 					primaryKey2));
 		}
