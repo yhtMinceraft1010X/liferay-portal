@@ -81,7 +81,7 @@ public class RelatedModelDataSetActionProvider
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, objectDefinition.getPortletId(),
 				PortletRequest.ACTION_PHASE)
@@ -89,22 +89,18 @@ public class RelatedModelDataSetActionProvider
 			"/object_entries/edit_object_entry"
 		).setCMD(
 			"DELETE_RELATION"
+		).setRedirect(
+			ParamUtil.getString(
+				httpServletRequest, "currentUrl",
+				_portal.getCurrentURL(httpServletRequest))
 		).setParameter(
 			"objectEntryId", objectEntryId
 		).setParameter(
 			"objectRelationshipId",
 			ParamUtil.getLong(httpServletRequest, "objectRelationshipId")
+		).setParameter(
+			"relatedModelId", id
 		).buildPortletURL();
-
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
-			_portal.getCurrentURL(httpServletRequest));
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter("relatedModelId", String.valueOf(id));
-
-		return portletURL;
 	}
 
 	@Reference
