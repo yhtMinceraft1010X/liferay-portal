@@ -77,6 +77,9 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			return;
 		}
 
+		payloadJSONObject.put("companyId", companyId);
+		payloadJSONObject.put("userId", userId);
+
 		List<ObjectAction> objectActions =
 			_objectActionLocalService.getObjectActions(
 				objectDefinition.getObjectDefinitionId(),
