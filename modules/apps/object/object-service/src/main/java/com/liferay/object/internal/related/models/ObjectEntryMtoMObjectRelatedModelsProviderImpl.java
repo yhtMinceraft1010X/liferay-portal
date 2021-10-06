@@ -99,7 +99,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		_objectRelationshipLocalService.
-			deleteObjectRelationshipMappingTableValue(
+			deleteObjectRelationshipMappingTableValues(
 				objectRelationshipId, primaryKey1, primaryKey2);
 	}
 

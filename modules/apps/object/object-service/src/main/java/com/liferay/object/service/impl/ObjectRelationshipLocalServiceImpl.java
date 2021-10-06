@@ -179,7 +179,7 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
-	public void deleteObjectRelationshipMappingTableValue(
+	public void deleteObjectRelationshipMappingTableValues(
 			long objectRelationshipId, long primaryKey1, long primaryKey2)
 		throws PortalException {
 
