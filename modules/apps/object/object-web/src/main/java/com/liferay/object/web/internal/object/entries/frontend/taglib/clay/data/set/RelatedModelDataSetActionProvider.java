@@ -88,7 +88,7 @@ public class RelatedModelDataSetActionProvider
 		).setActionName(
 			"/object_entries/edit_object_entry"
 		).setCMD(
-			"DELETE_RELATION"
+			"disassociateRelatedModels"
 		).setRedirect(
 			ParamUtil.getString(
 				httpServletRequest, "currentUrl",
