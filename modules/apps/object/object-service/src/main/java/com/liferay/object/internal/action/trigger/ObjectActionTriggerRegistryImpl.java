@@ -121,19 +121,19 @@ public class ObjectActionTriggerRegistryImpl
 		Destination destination = _bundleContext.getService(serviceReference);
 
 		_bundleContext.registerService(
-			ObjectActionTrigger.class,
-			new ObjectActionTrigger(destination.getName()),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"object.action.trigger.class.name", className
-			).put(
-				"object.action.trigger.key", destination.getName()
-			).build());
-		_bundleContext.registerService(
 			MessageListener.class,
 			new ObjectActionTriggerMessageListener(
 				className, _objectActionEngine, destination.getName()),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"destination.name", destination.getName()
+			).put(
+				"object.action.trigger.key", destination.getName()
+			).build());
+		_bundleContext.registerService(
+			ObjectActionTrigger.class,
+			new ObjectActionTrigger(destination.getName()),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"object.action.trigger.class.name", className
 			).put(
 				"object.action.trigger.key", destination.getName()
 			).build());
