@@ -51,13 +51,10 @@ public class ObjectActionTriggerUtil {
 			sort(
 				Arrays.asList(
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE,
-						ObjectActionTriggerConstants.TYPE_TRANSACTION),
+						ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE),
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE,
-						ObjectActionTriggerConstants.TYPE_TRANSACTION),
+						ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE),
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
-						ObjectActionTriggerConstants.TYPE_TRANSACTION))));
+						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE))));
 
 }

@@ -173,7 +173,6 @@ public class ObjectDefinitionsActionsDisplayContext {
 						_objectRequestHelper.getLocale(),
 						"object-action-executor[" +
 							objectActionExecutor.getKey() + "]")
-
 				)));
 
 		return objectActionExecutorsJSONArray;
