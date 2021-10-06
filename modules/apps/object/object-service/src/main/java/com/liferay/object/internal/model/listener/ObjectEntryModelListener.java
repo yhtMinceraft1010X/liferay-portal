@@ -45,7 +45,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE, null,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 			objectEntry);
 	}
 
@@ -54,7 +54,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE, null,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null,
 			objectEntry);
 	}
 

@@ -63,13 +63,13 @@ public class SystemObjectDefinitionMetadataModelListener
 	@Override
 	public void onAfterCreate(Object model) throws ModelListenerException {
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE, null, model);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, model);
 	}
 
 	@Override
 	public void onAfterRemove(Object model) throws ModelListenerException {
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE, null, model);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null, model);
 	}
 
 	@Override

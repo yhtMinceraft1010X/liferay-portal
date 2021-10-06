@@ -51,9 +51,9 @@ public class ObjectActionTriggerUtil {
 			sort(
 				Arrays.asList(
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_CREATE),
+						ObjectActionTriggerConstants.KEY_ON_AFTER_ADD),
 					new ObjectActionTrigger(
-						ObjectActionTriggerConstants.KEY_ON_AFTER_REMOVE),
+						ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE),
 					new ObjectActionTrigger(
 						ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE))));
 
