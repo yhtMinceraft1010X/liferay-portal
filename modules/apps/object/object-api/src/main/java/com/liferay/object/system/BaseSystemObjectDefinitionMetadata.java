@@ -16,6 +16,8 @@ package com.liferay.object.system;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.system.model.listener.SystemObjectDefinitionMetadataModelListener;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
@@ -66,7 +68,8 @@ public abstract class BaseSystemObjectDefinitionMetadata
 		_serviceRegistration = bundleContext.registerService(
 			ModelListener.class.getName(),
 			new SystemObjectDefinitionMetadataModelListener(
-				getModelClass(), jsonFactory, objectActionEngine),
+				jsonFactory, getModelClass(), objectActionEngine,
+				objectDefinitionLocalService, objectEntryLocalService),
 			null);
 	}
 
@@ -99,6 +102,12 @@ public abstract class BaseSystemObjectDefinitionMetadata
 
 	@Reference
 	protected ObjectActionEngine objectActionEngine;
+
+	@Reference
+	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	@Reference
+	protected ObjectEntryLocalService objectEntryLocalService;
 
 	private String _translate(String labelKey) {
 		return LanguageUtil.get(LocaleUtil.getDefault(), labelKey);

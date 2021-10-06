@@ -16,6 +16,9 @@ package com.liferay.object.system.model.listener;
 
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
@@ -39,12 +43,16 @@ public class SystemObjectDefinitionMetadataModelListener
 	extends BaseModelListener {
 
 	public SystemObjectDefinitionMetadataModelListener(
-		Class<?> modelClass, JSONFactory jsonFactory,
-		ObjectActionEngine objectActionEngine) {
+		JSONFactory jsonFactory, Class<?> modelClass,
+		ObjectActionEngine objectActionEngine,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService) {
 
-		_modelClass = modelClass;
 		_jsonFactory = jsonFactory;
+		_modelClass = modelClass;
 		_objectActionEngine = objectActionEngine;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 	}
 
 	@Override
@@ -73,6 +81,28 @@ public class SystemObjectDefinitionMetadataModelListener
 			model);
 	}
 
+	@Override
+	public void onBeforeRemove(Object model) throws ModelListenerException {
+		try {
+			BaseModel<?> baseModel = (BaseModel<?>)model;
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_getCompanyId(baseModel), _modelClass.getName());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
+			_objectEntryLocalService.deleteRelatedObjectEntries(
+				0, objectDefinition.getObjectDefinitionId(),
+				GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
 	private void _executeObjectActions(
 			String objectActionTriggerKey, Object originalModel, Object model)
 		throws ModelListenerException {
@@ -80,33 +110,14 @@ public class SystemObjectDefinitionMetadataModelListener
 		try {
 			BaseModel<?> baseModel = (BaseModel<?>)model;
 
-			Map<String, Function<Object, Object>> getterFunctions =
-				(Map<String, Function<Object, Object>>)
-					(Map<String, ?>)baseModel.getAttributeGetterFunctions();
-
-			Function<Object, Object> function = getterFunctions.get(
-				"companyId");
-
-			if (function == null) {
-				return;
-			}
-
-			long companyId = (Long)function.apply(model);
-
 			long userId = PrincipalThreadLocal.getUserId();
 
 			if (userId == 0) {
-				function = getterFunctions.get("userId");
-
-				if (function == null) {
-					return;
-				}
-
-				userId = (Long)function.apply(model);
+				userId = _getUserId(baseModel);
 			}
 
 			_objectActionEngine.executeObjectActions(
-				companyId, userId, _modelClass.getName(),
+				_getCompanyId(baseModel), userId, _modelClass.getName(),
 				objectActionTriggerKey,
 				HashMapBuilder.<String, Serializable>put(
 					"payload",
@@ -116,6 +127,21 @@ public class SystemObjectDefinitionMetadataModelListener
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
 		}
+	}
+
+	private long _getCompanyId(BaseModel<?> baseModel) {
+		Map<String, Function<Object, Object>> functions =
+			(Map<String, Function<Object, Object>>)
+				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
+
+		Function<Object, Object> function = functions.get("companyId");
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"Base model does not have a company ID column");
+		}
+
+		return (Long)function.apply(baseModel);
 	}
 
 	private Serializable _getPayload(
@@ -143,8 +169,25 @@ public class SystemObjectDefinitionMetadataModelListener
 		return payloadJSONObject.toString();
 	}
 
+	private long _getUserId(BaseModel<?> baseModel) {
+		Map<String, Function<Object, Object>> functions =
+			(Map<String, Function<Object, Object>>)
+				(Map<String, ?>)baseModel.getAttributeGetterFunctions();
+
+		Function<Object, Object> function = functions.get("userId");
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"Base model does not have a user ID column");
+		}
+
+		return (Long)function.apply(baseModel);
+	}
+
 	private final JSONFactory _jsonFactory;
 	private final Class<?> _modelClass;
 	private final ObjectActionEngine _objectActionEngine;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }
