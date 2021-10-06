@@ -261,7 +261,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"mvc.command.name", "/object_entries/edit_object_entry"
 				).build()));
 
-		// Ensure
+		// Register ObjectEntriesPanelApp after ObjectEntriesPortlet. See
+		// LPS-140379.
 
 		serviceRegistrations.add(
 			_bundleContext.registerService(
