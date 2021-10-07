@@ -170,9 +170,9 @@ public class FragmentEntryProcessorRegistryImpl
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
 
-		Set<String> validHtmls = _validHtmlsThreadLocal.get();
+		Set<String> validHTMLs = _validHTMLsThreadLocal.get();
 
-		if (validHtmls.contains(html)) {
+		if (validHTMLs.contains(html)) {
 			return;
 		}
 
@@ -183,7 +183,7 @@ public class FragmentEntryProcessorRegistryImpl
 				html, configuration);
 		}
 
-		validHtmls.add(html);
+		validHTMLs.add(html);
 	}
 
 	@Activate
@@ -200,10 +200,10 @@ public class FragmentEntryProcessorRegistryImpl
 		_serviceTrackerList.close();
 	}
 
-	private static final ThreadLocal<Set<String>> _validHtmlsThreadLocal =
+	private static final ThreadLocal<Set<String>> _validHTMLsThreadLocal =
 		new CentralizedThreadLocal(
 			FragmentEntryProcessorRegistryImpl.class.getName() +
-				"._validHtmlsThreadLocal",
+				"._validHTMLsThreadLocal",
 			HashSet::new);
 
 	@Reference
