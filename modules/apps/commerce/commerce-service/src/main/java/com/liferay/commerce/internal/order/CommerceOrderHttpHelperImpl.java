@@ -555,7 +555,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			_commerceChannelLocalService.fetchCommerceChannel(
 				commerceContext.getCommerceChannelId());
 
-		if ((commerceChannel == null) || (commerceAccount == null)) {
+		if ((commerceAccount == null) || (commerceChannel == null)) {
 			return null;
 		}
 
