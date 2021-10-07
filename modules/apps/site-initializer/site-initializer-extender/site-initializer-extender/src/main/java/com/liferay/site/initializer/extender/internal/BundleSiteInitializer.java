@@ -1790,7 +1790,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return taxonomyCategory;
 	}
 
-	private String _getThemeId(long companyId, String themeName) {
+	private String _getThemeId(
+		long companyId, String defaultThemeId, String themeName) {
+
 		List<Theme> themes = ListUtil.filter(
 			_themeLocalService.getThemes(companyId),
 			theme -> Objects.equals(theme.getName(), themeName));
@@ -1801,7 +1803,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return theme.getThemeId();
 		}
 
-		return null;
+		return defaultThemeId;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
@@ -1910,17 +1912,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			draftLayout.setTypeSettingsProperties(unicodeProperties);
 		}
 
-		String themeId = draftLayout.getThemeId();
-
-		String themeName = settingsJSONObject.getString("themeName");
-
-		if (Validator.isNotNull(themeName)) {
-			themeId = _getThemeId(draftLayout.getCompanyId(), themeName);
-		}
-
 		draftLayout = _layoutLocalService.updateLookAndFeel(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), themeId,
+			draftLayout.getLayoutId(),
+			_getThemeId(
+				draftLayout.getCompanyId(), draftLayout.getThemeId(),
+				settingsJSONObject.getString("themeName")),
 			settingsJSONObject.getString(
 				"colorSchemeName", draftLayout.getColorSchemeId()),
 			settingsJSONObject.getString("css", draftLayout.getCss()));
@@ -1962,23 +1959,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			resourcePath += "/public";
 		}
 
+		String metadataJSON = _read(resourcePath + "/metadata.json");
+
+		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
+			(metadataJSON == null) ? "{}" : metadataJSON);
+
 		String css = _read(resourcePath + "/css.css");
 
 		if (css != null) {
-			JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
-				_read(resourcePath + "/metadata.json"));
-
-			String themeId = StringPool.BLANK;
-
-			String themeName = metadataJSONObject.getString(
-				"themeName", "Classic");
-
-			if (Validator.isNotNull(themeName)) {
-				themeId = _getThemeId(serviceContext.getCompanyId(), themeName);
-			}
-
 			_layoutSetLocalService.updateLookAndFeel(
-				serviceContext.getScopeGroupId(), privateLayout, themeId,
+				serviceContext.getScopeGroupId(), privateLayout,
+				_getThemeId(
+					serviceContext.getCompanyId(), StringPool.BLANK,
+					metadataJSONObject.getString("themeName", "Classic")),
 				layoutSet.getColorSchemeId(), css);
 		}
 
@@ -1990,19 +1983,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileUtil.getBytes(url.openStream()));
 		}
 
-		String settingsPropertiesString = _read(
-			resourcePath + "/settings.properties");
+		JSONObject settingsJSONObject = metadataJSONObject.getJSONObject(
+			"settings");
 
-		if (settingsPropertiesString != null) {
-			UnicodeProperties unicodeProperties =
-				layoutSet.getSettingsProperties();
-
-			unicodeProperties.fastLoad(settingsPropertiesString);
-
-			_layoutSetLocalService.updateSettings(
-				serviceContext.getScopeGroupId(), privateLayout,
-				unicodeProperties.toString());
+		if (settingsJSONObject == null) {
+			return;
 		}
+
+		UnicodeProperties unicodeProperties = layoutSet.getSettingsProperties();
+
+		for (String key : settingsJSONObject.keySet()) {
+			unicodeProperties.put(key, settingsJSONObject.getString(key));
+		}
+
+		_layoutSetLocalService.updateSettings(
+			serviceContext.getScopeGroupId(), privateLayout,
+			unicodeProperties.toString());
 	}
 
 	private void _updateLayoutSets(ServiceContext serviceContext)
