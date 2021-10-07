@@ -139,7 +139,6 @@ public class ObjectActionTriggerRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
-
 		_serviceTrackerMap.close();
 	}
 
