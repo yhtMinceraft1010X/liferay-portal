@@ -37,21 +37,10 @@ public class ObjectActionTriggerMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) {
-		long companyId = GetterUtil.getLong(message.get("companyId"));
-
-		if (companyId < 0) {
-			return;
-		}
-
-		// TODO Verify this is safe in a multitenant environment
-
-		long userId = GetterUtil.getLong(message.get("userId"));
-
-		JSONObject payloadJSONObject = (JSONObject)message.getPayload();
-
 		_objectActionEngine.executeObjectActions(
-			_className, companyId, _objectActionTriggerKey, payloadJSONObject,
-			userId);
+			_className, GetterUtil.getLong(message.get("companyId")),
+			_objectActionTriggerKey, (JSONObject)message.getPayload(),
+			GetterUtil.getLong(message.get("principalName")));
 	}
 
 	private final String _className;

@@ -59,7 +59,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		if (userId == 0) {
+		if ((companyId == 0) || (userId == 0)) {
 			return;
 		}
 
