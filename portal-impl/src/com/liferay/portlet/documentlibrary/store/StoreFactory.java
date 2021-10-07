@@ -111,7 +111,7 @@ public class StoreFactory {
 		if (store == null) {
 			throw new IllegalStateException(
 				"Store is not available. Caller service needs to wait for " +
-					"StoreFactory with (dl.store.impl.enabled=true).");
+					"store factory with \"dl.store.impl.enabled=true\".");
 		}
 
 		return store;
