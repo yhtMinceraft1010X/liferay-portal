@@ -60,12 +60,4 @@ public interface CommerceOrderRuleEntry
 
 			};
 
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getSettingsProperties();
-
-	public String getSettingsProperty(String key);
-
-	public void setTypeSettingsProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties unicodeProperties);
-
 }
