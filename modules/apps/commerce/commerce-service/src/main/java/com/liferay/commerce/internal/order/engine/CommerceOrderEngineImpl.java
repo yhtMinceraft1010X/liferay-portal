@@ -460,6 +460,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 						CommerceOrderConstants.getNotificationKey(orderStatus),
 						commerceOrder);
 
+					Message message = new Message();
+
 					DTOConverter<?, ?> dtoConverter =
 						_dtoConverterRegistry.getDTOConverter(
 							CommerceOrder.class.getName());
@@ -469,8 +471,6 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 							_dtoConverterRegistry,
 							commerceOrder.getCommerceOrderId(),
 							LocaleUtil.getSiteDefault(), null, null));
-
-					Message message = new Message();
 
 					message.setPayload(
 						JSONUtil.put(

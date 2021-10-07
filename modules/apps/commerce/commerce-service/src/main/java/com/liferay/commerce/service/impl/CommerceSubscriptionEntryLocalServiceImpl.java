@@ -789,6 +789,8 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 				@Override
 				public Void call() throws Exception {
+					Message message = new Message();
+
 					DTOConverter<?, ?> dtoConverter =
 						_dtoConverterRegistry.getDTOConverter(
 							CommerceSubscriptionEntry.class.getName());
@@ -799,8 +801,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 							commerceSubscriptionEntry.
 								getCommerceSubscriptionEntryId(),
 							LocaleUtil.getSiteDefault(), null, null));
-
-					Message message = new Message();
 
 					message.setPayload(
 						JSONUtil.put(

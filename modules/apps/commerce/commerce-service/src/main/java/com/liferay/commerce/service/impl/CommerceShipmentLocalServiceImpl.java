@@ -710,6 +710,8 @@ public class CommerceShipmentLocalServiceImpl
 
 				@Override
 				public Void call() throws Exception {
+					Message message = new Message();
+
 					DTOConverter<?, ?> dtoConverter =
 						_dtoConverterRegistry.getDTOConverter(
 							CommerceShipment.class.getName());
@@ -719,8 +721,6 @@ public class CommerceShipmentLocalServiceImpl
 							_dtoConverterRegistry,
 							commerceShipment.getCommerceShipmentId(),
 							LocaleUtil.getSiteDefault(), null, null));
-
-					Message message = new Message();
 
 					message.setPayload(
 						JSONUtil.put(
