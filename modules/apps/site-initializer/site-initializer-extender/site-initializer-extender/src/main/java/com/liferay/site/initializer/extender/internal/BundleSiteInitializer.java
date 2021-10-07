@@ -1971,7 +1971,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), privateLayout,
 				_getThemeId(
 					serviceContext.getCompanyId(), StringPool.BLANK,
-					metadataJSONObject.getString("themeName", "Classic")),
+					metadataJSONObject.getString("themeName")),
 				layoutSet.getColorSchemeId(), css);
 		}
 
