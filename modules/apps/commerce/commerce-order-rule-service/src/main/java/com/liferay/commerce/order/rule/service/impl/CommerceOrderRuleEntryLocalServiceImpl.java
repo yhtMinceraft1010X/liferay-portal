@@ -49,10 +49,9 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 			String typeSettings)
 		throws PortalException {
 
-		long commerceOrderRuleEntryId = counterLocalService.increment();
-
 		CommerceOrderRuleEntry commerceOrderRuleEntry =
-			commerceOrderRuleEntryPersistence.create(commerceOrderRuleEntryId);
+			commerceOrderRuleEntryPersistence.create(
+				counterLocalService.increment());
 
 		commerceOrderRuleEntry.setExternalReferenceCode(externalReferenceCode);
 
