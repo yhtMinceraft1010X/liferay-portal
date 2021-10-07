@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Questions Web
 Bundle-SymbolicName: com.liferay.questions.web
-Bundle-Version: 2.0.26
+Bundle-Version: 2.0.27
 Web-ContextPath: /questions-web
