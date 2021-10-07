@@ -97,21 +97,21 @@ public class CopyTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		String name = RandomTestUtil.randomString();
-
-		String description = RandomTestUtil.randomString();
-
-		String languageId = LocaleUtil.toLanguageId(
-			_portal.getSiteDefaultLocale(_group.getGroupId()));
-
-		mockLiferayPortletActionRequest.addParameter(
-			"name_" + languageId, name);
-		mockLiferayPortletActionRequest.addParameter(
-			"description_" + languageId, description);
-
 		mockLiferayPortletActionRequest.addParameter(
 			"templateEntryId",
 			String.valueOf(_templateEntry.getTemplateEntryId()));
+
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group.getGroupId()));
+		String name = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"name_" + languageId, name);
+
+		String description = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"description_" + languageId, description);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",

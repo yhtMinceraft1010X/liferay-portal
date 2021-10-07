@@ -96,23 +96,25 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
+		mockLiferayPortletActionRequest.addParameter(
+			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
+
 		String name = RandomTestUtil.randomString();
-
-		String description = RandomTestUtil.randomString();
-
-		String script = "<#-- Modified script content -->";
-
 		String languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(_group.getGroupId()));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"name_" + languageId, name);
+
+		String description = RandomTestUtil.randomString();
+
 		mockLiferayPortletActionRequest.addParameter(
 			"description_" + languageId, description);
 
-		mockLiferayPortletActionRequest.addParameter(
-			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
+		String script = "<#-- Modified script content -->";
+
 		mockLiferayPortletActionRequest.addParameter("scriptContent", script);
+
 		mockLiferayPortletActionRequest.addParameter(
 			"templateEntryId",
 			String.valueOf(_templateEntry.getTemplateEntryId()));
@@ -138,7 +140,6 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 			_templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
-
 		Assert.assertEquals(name, ddmTemplate.getName(languageId));
 		Assert.assertEquals(
 			description, ddmTemplate.getDescription(languageId));

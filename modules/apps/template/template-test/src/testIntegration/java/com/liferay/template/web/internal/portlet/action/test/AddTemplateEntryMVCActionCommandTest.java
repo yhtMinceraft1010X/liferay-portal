@@ -99,8 +99,6 @@ public class AddTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		String name = RandomTestUtil.randomString();
-
 		InfoItemClassDetails infoItemClassDetails =
 			TemplateTestUtil.getFirstTemplateInfoItemClassDetails(
 				_infoItemServiceTracker, _group.getGroupId());
@@ -120,7 +118,8 @@ public class AddTemplateEntryMVCActionCommandTest {
 			"infoItemClassName", infoItemClassDetails.getClassName());
 		mockLiferayPortletActionRequest.addParameter(
 			"infoItemFormVariationKey", infoItemFormVariationKey);
-		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",

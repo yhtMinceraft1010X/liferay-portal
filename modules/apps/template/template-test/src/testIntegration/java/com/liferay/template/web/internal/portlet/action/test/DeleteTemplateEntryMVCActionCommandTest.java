@@ -131,22 +131,20 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	private void _assertTemplateExists(TemplateEntry templateEntry) {
 		Assert.assertNotNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				templateEntry.getTemplateEntryId()));
-
-		Assert.assertNotNull(
 			_ddmTemplateLocalService.fetchDDMTemplate(
 				templateEntry.getDDMTemplateId()));
+		Assert.assertNotNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				templateEntry.getTemplateEntryId()));
 	}
 
 	private void _assertTemplateNotExists(TemplateEntry templateEntry) {
 		Assert.assertNull(
-			_templateEntryLocalService.fetchTemplateEntry(
-				templateEntry.getTemplateEntryId()));
-
-		Assert.assertNull(
 			_ddmTemplateLocalService.fetchDDMTemplate(
 				templateEntry.getDDMTemplateId()));
+		Assert.assertNull(
+			_templateEntryLocalService.fetchTemplateEntry(
+				templateEntry.getTemplateEntryId()));
 	}
 
 	private Company _company;
