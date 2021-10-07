@@ -72,8 +72,6 @@ public class PortalInstanceLifecycleListenerImpl
 					company.getCompanyId(), true);
 
 			if (commerceCatalogs.isEmpty()) {
-				Message message = new Message();
-
 				CommerceCatalog commerceCatalog =
 					_commerceCatalogLocalService.addDefaultCommerceCatalog(
 						company.getCompanyId());
@@ -87,6 +85,8 @@ public class PortalInstanceLifecycleListenerImpl
 						_dtoConverterRegistry,
 						commerceCatalog.getCommerceCatalogId(),
 						LocaleUtil.getSiteDefault(), null, null));
+
+				Message message = new Message();
 
 				message.setPayload(
 					JSONUtil.put(
