@@ -8766,15 +8766,15 @@ public class PortalImpl implements Portal {
 	}
 
 	private String _getVirtualHostname(
-		TreeMap<String, String> virtualHostNames, ThemeDisplay themeDisplay) {
+		TreeMap<String, String> virtualHostnames, ThemeDisplay themeDisplay) {
 
-		if (virtualHostNames.isEmpty()) {
+		if (virtualHostnames.isEmpty()) {
 			Company company = themeDisplay.getCompany();
 
 			return company.getVirtualHostname();
 		}
 
-		return virtualHostNames.firstKey();
+		return virtualHostnames.firstKey();
 	}
 
 	private boolean _requiresLayoutFriendlyURL(
