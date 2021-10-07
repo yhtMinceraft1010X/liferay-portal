@@ -22,7 +22,6 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,15 +36,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.File;
 
@@ -76,26 +71,12 @@ public class PortalInstanceLifecycleListenerImpl
 					_commerceCatalogLocalService.addDefaultCommerceCatalog(
 						company.getCompanyId());
 
-				DTOConverter<?, ?> dtoConverter =
-					_dtoConverterRegistry.getDTOConverter(
-						CommerceCatalog.class.getName());
-
-				Object object = dtoConverter.toDTO(
-					new DefaultDTOConverterContext(
-						_dtoConverterRegistry,
-						commerceCatalog.getCommerceCatalogId(),
-						LocaleUtil.getSiteDefault(), null, null));
-
 				Message message = new Message();
 
 				message.setPayload(
 					JSONUtil.put(
-						"commerceCatalog",
-						JSONFactoryUtil.createJSONObject(object.toString())
-					).put(
 						"commerceCatalogId",
-						commerceCatalog.getCommerceCatalogId()
-					));
+						commerceCatalog.getCommerceCatalogId()));
 
 				MessageBusUtil.sendMessage(
 					DestinationNames.COMMERCE_BASE_PRICE_LIST, message);
@@ -154,9 +135,6 @@ public class PortalInstanceLifecycleListenerImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private Portal _portal;
