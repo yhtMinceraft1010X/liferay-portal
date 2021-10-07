@@ -531,14 +531,14 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		CommerceOrder commerceOrder = _commerceOrderThreadLocal.get();
 
 		if (commerceOrder != null) {
-			CommerceOrder persistenceCommerceOrder =
+			CommerceOrder persistedCommerceOrder =
 				_commerceOrderLocalService.fetchCommerceOrder(
 					commerceOrder.getCommerceOrderId());
 
-			if (persistenceCommerceOrder != null) {
-				commerceOrder = persistenceCommerceOrder;
+			if (persistedCommerceOrder != null) {
+				commerceOrder = persistedCommerceOrder;
 
-				_commerceOrderThreadLocal.set(persistenceCommerceOrder);
+				_commerceOrderThreadLocal.set(persistedCommerceOrder);
 			}
 
 			if ((commerceAccount == null) ||
