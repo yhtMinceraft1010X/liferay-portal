@@ -23,11 +23,91 @@ definition {
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDefineFixedFilterForBooleanType {
 
-		// TODO LPS-139039 CanDefineFixedFilterForBooleanType pending implementation
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.saveCustomObject();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field",
+			fieldType = "Boolean");
+
+		ObjectAdmin.openObjectAdmin();
+		
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		ObjectAdmin.addObjectBoleanFieldEntryViaUI();
+		
+		ApplicationsMenu.gotoSite(site = "Liferay DXP");
+		
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		VisualizeObjectCollectionDisplay.addFieldForCollectionDisplay(fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay(
+			fragmentName = "Heading",
+			label = "Expand Collection Display");
+
+		PageEditor.clickCollectionDisplay();
+
+		PageEditor.selectGerenicField(
+			fieldLabel = "List Style",
+			option = "Table"
+		);
+
+		PageEditor.filterColletion(
+			fieldLabel = "Field",
+			option = "True"
+		);
+
+		PageEditor.publishPage();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.assertTrueEntryIsPresent();
+		
+		PageEditor.assertFalseEntryIsNotPresent();
+
+		
+
+		
+
+
 
 	}
 

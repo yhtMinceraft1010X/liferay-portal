@@ -997,10 +997,26 @@ definition {
 		}
 	}
 
+	macro assertFalseEntryIsNotPresent {
+			AssertElementNotPresent(
+			locator1 = "PageEditor#COLLECTION_ITEM_FALSE_ENTRY"
+		);
+
+
+
+	}
+
 	macro assertFragmentSidebarLoaded {
 		WaitForPageLoad();
 
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
+	}
+
+	macro assertTrueEntryIsPresent {
+		AssertVisible(
+			locator1 = "PageEditor#COLLECTION_ITEM_TRUE_ENTRY"
+		);	
+
 	}
 
 	macro changeExperience {
@@ -1040,6 +1056,13 @@ definition {
 
 	macro clickBack {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+	}
+
+	macro clickCollectionDisplay {
+		Click(
+			locator1 = "PageEditor#CLICK_COLLECTION_DISPLAY");
+
+
 	}
 
 	macro clickConfigurableField {
@@ -2924,6 +2947,26 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
+	macro filterColletion {
+		Click(
+			locator1 = "PageEditor#COLLECTION_ITEM_VIEW_COLLECTION_OPTIONS"
+		);
+
+
+		Click(
+			locator1 = "PageEditor#COLLECTION_ITEM_FILTER_COLLECTION"
+		);
+
+		PageEditor.selectGerenicField(
+			fieldLabel = "${fieldLabel}",
+			option = "${option}"
+		);
+
+		Button.click(button = "Apply");
+
+
+	}
+
 	macro getFileSizeOfSelectedImageResolution {
 		var key_resolutionLabel = "File Size";
 
@@ -3197,6 +3240,14 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
 	}
 
+	macro publishPage {
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Publish");
+
+
+	}
+
 	macro removeFragment {
 		var key_fragmentName = "${fragmentName}";
 
@@ -3351,6 +3402,16 @@ definition {
 		AssertTextEquals(
 			locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 			value1 = "${filter}");
+	}
+
+	macro selectGerenicField {
+		Select(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${option}");
+
+
+
 	}
 
 	macro switchViewport {
