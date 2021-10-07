@@ -109,7 +109,7 @@ public class ProxyUtil {
 
 		_browserMobProxy.start(0);
 
-		System.out.println("Started Browser Mob proxy.");
+		System.out.println("Started BrowserMob Proxy.");
 
 		_browserMobProxy.enableHarCaptureTypes(
 			CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
@@ -119,7 +119,7 @@ public class ProxyUtil {
 		if (_browserMobProxy != null) {
 			_browserMobProxy.stop();
 
-			System.out.println("Stopped Browser Mob proxy.");
+			System.out.println("Stopped BrowserMob Proxy.");
 		}
 
 		_browserMobProxy = null;
