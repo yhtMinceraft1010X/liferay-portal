@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.InputStream;
 
@@ -95,8 +94,5 @@ public class DefaultGuestGroupLogoSwapper {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference(target = "(dl.store.impl.enabled=true)")
-	private StoreFactory _storeFactory;
 
 }
