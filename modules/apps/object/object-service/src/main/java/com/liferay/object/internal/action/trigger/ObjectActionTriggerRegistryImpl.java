@@ -71,8 +71,8 @@ public class ObjectActionTriggerRegistryImpl
 			bundleContext,
 			bundleContext.createFilter(
 				StringBundler.concat(
-					"(&(objectClass=", Destination.class.getName(),
-					")(object.action.trigger.class.name=*))")),
+					"(&(object.action.trigger.class.name=*)(objectClass=",
+					Destination.class.getName(), "))")),
 			new ServiceTrackerCustomizer
 				<Destination, List<ServiceRegistration<?>>>() {
 
