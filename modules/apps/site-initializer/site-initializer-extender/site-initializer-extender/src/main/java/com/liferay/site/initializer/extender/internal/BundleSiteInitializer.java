@@ -1965,12 +1965,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String css = _read(resourcePath + "/css.css");
 
 		if (css != null) {
-			JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
-				_read(resourcePath + "/settings.json"));
+			JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
+				_read(resourcePath + "/metadata.json"));
 
 			String themeId = StringPool.BLANK;
 
-			String themeName = settingsJSONObject.getString(
+			String themeName = metadataJSONObject.getString(
 				"themeName", "Classic");
 
 			if (Validator.isNotNull(themeName)) {
