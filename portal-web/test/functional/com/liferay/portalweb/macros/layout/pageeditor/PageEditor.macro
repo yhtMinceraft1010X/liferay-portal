@@ -998,12 +998,7 @@ definition {
 	}
 
 	macro assertFalseEntryIsNotPresent {
-			AssertElementNotPresent(
-			locator1 = "PageEditor#COLLECTION_ITEM_FALSE_ENTRY"
-		);
-
-
-
+		AssertElementNotPresent(locator1 = "PageEditor#COLLECTION_ITEM_FALSE_ENTRY");
 	}
 
 	macro assertFragmentSidebarLoaded {
@@ -1013,10 +1008,7 @@ definition {
 	}
 
 	macro assertTrueEntryIsPresent {
-		AssertVisible(
-			locator1 = "PageEditor#COLLECTION_ITEM_TRUE_ENTRY"
-		);	
-
+		AssertVisible(locator1 = "PageEditor#COLLECTION_ITEM_TRUE_ENTRY");
 	}
 
 	macro changeExperience {
@@ -1059,10 +1051,7 @@ definition {
 	}
 
 	macro clickCollectionDisplay {
-		Click(
-			locator1 = "PageEditor#CLICK_COLLECTION_DISPLAY");
-
-
+		Click(locator1 = "PageEditor#CLICK_COLLECTION_DISPLAY");
 	}
 
 	macro clickConfigurableField {
@@ -2948,23 +2937,15 @@ definition {
 	}
 
 	macro filterColletion {
-		Click(
-			locator1 = "PageEditor#COLLECTION_ITEM_VIEW_COLLECTION_OPTIONS"
-		);
+		Click(locator1 = "PageEditor#COLLECTION_ITEM_VIEW_COLLECTION_OPTIONS");
 
-
-		Click(
-			locator1 = "PageEditor#COLLECTION_ITEM_FILTER_COLLECTION"
-		);
+		Click(locator1 = "PageEditor#COLLECTION_ITEM_FILTER_COLLECTION");
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "${fieldLabel}",
-			option = "${option}"
-		);
+			option = "${option}");
 
 		Button.click(button = "Apply");
-
-
 	}
 
 	macro getFileSizeOfSelectedImageResolution {
@@ -3244,8 +3225,6 @@ definition {
 		AssertClick(
 			locator1 = "Button#SUBMIT",
 			value1 = "Publish");
-
-
 	}
 
 	macro removeFragment {
@@ -3409,9 +3388,6 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${option}");
-
-
-
 	}
 
 	macro switchViewport {

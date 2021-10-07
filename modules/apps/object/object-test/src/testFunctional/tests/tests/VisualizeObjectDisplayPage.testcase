@@ -25,7 +25,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Boolean type for table view on the Display Page"
 	@priority = "4"
 	test CanDefineFixedFilterForBooleanType {
-
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectAdmin.addNewObject(
@@ -43,7 +42,7 @@ definition {
 			fieldType = "Boolean");
 
 		ObjectAdmin.openObjectAdmin();
-		
+
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
@@ -58,9 +57,9 @@ definition {
 			portlet = "Custom Objects");
 
 		ObjectAdmin.addObjectBoleanFieldEntryViaUI();
-		
+
 		ApplicationsMenu.gotoSite(site = "Liferay DXP");
-		
+
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
 		PageEditor.addFragment(
@@ -85,13 +84,11 @@ definition {
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "List Style",
-			option = "Table"
-		);
+			option = "Table");
 
 		PageEditor.filterColletion(
 			fieldLabel = "Field",
-			option = "True"
-		);
+			option = "True");
 
 		PageEditor.publishPage();
 
@@ -100,15 +97,8 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.assertTrueEntryIsPresent();
-		
+
 		PageEditor.assertFalseEntryIsNotPresent();
-
-		
-
-		
-
-
-
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"

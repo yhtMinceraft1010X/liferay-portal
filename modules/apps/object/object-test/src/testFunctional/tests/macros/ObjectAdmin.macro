@@ -38,9 +38,6 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Button.clickSave();
-
-
-		
 	}
 
 	macro addObjectFieldViaAPI {
