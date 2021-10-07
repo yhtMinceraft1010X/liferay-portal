@@ -1969,7 +1969,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_read(resourcePath + "/settings.json"));
 
 			String themeId = StringPool.BLANK;
-			String themeName = settingsJSONObject.getString("themeName", "Classic");
+
+			String themeName = settingsJSONObject.getString(
+				"themeName", "Classic");
 
 			if (Validator.isNotNull(themeName)) {
 				themeId = _getThemeId(serviceContext.getCompanyId(), themeName);
