@@ -51,7 +51,7 @@ public class ObjectActionTriggerRegistryImpl
 	@Override
 	public List<ObjectActionTrigger> getObjectActionTriggers(String className) {
 		List<ObjectActionTrigger> objectActionTriggers =
-			_objectActionTriggerServiceTrackerMap.getService(className);
+			_serviceTrackerMap.getService(className);
 
 		if (objectActionTriggers == null) {
 			return ObjectActionTriggerUtil.getDefaultObjectActionTriggers();
@@ -131,7 +131,7 @@ public class ObjectActionTriggerRegistryImpl
 
 		_serviceTracker.open();
 
-		_objectActionTriggerServiceTrackerMap =
+		_serviceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ObjectActionTrigger.class,
 				"object.action.trigger.class.name");
@@ -141,14 +141,14 @@ public class ObjectActionTriggerRegistryImpl
 	protected void deactivate() {
 		_serviceTracker.close();
 
-		_objectActionTriggerServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	@Reference
 	private ObjectActionEngine _objectActionEngine;
 
 	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
-		_objectActionTriggerServiceTrackerMap;
+		_serviceTrackerMap;
 	private ServiceTracker<Destination, List<ServiceRegistration<?>>>
 		_serviceTracker;
 
