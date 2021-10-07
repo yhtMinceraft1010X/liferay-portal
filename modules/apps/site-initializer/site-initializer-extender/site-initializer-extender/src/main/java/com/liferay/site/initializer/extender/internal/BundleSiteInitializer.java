@@ -1962,19 +1962,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			resourcePath += "/public";
 		}
 
-		JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
-			_read(resourcePath + "/settings.json"));
-
-		String themeId = StringPool.BLANK;
-		String themeName = settingsJSONObject.getString("themeName", "Classic");
-
-		if (Validator.isNotNull(themeName)) {
-			themeId = _getThemeId(serviceContext.getCompanyId(), themeName);
-		}
-
 		String css = _read(resourcePath + "/css.css");
 
 		if (css != null) {
+			JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
+				_read(resourcePath + "/settings.json"));
+
+			String themeId = StringPool.BLANK;
+			String themeName = settingsJSONObject.getString("themeName", "Classic");
+
+			if (Validator.isNotNull(themeName)) {
+				themeId = _getThemeId(serviceContext.getCompanyId(), themeName);
+			}
+
 			_layoutSetLocalService.updateLookAndFeel(
 				serviceContext.getScopeGroupId(), privateLayout, themeId,
 				layoutSet.getColorSchemeId(), css);
