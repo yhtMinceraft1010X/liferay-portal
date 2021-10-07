@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.List;
 
@@ -66,14 +64,6 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 		commerceOrderRuleEntry.setName(name);
 		commerceOrderRuleEntry.setPriority(priority);
 		commerceOrderRuleEntry.setType(type);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				typeSettings
-			).build();
-
-		commerceOrderRuleEntry.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
 
 		return commerceOrderRuleEntryPersistence.update(commerceOrderRuleEntry);
 	}
@@ -128,14 +118,6 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 		commerceOrderRuleEntry.setDescription(description);
 		commerceOrderRuleEntry.setName(name);
 		commerceOrderRuleEntry.setPriority(priority);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				typeSettings
-			).build();
-
-		commerceOrderRuleEntry.setTypeSettingsProperties(
-			typeSettingsUnicodeProperties);
 
 		return commerceOrderRuleEntryPersistence.update(commerceOrderRuleEntry);
 	}
