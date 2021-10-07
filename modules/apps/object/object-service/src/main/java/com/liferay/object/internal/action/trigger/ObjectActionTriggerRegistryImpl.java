@@ -131,10 +131,9 @@ public class ObjectActionTriggerRegistryImpl
 
 		_serviceTracker.open();
 
-		_serviceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ObjectActionTrigger.class,
-				"object.action.trigger.class.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ObjectActionTrigger.class,
+			"object.action.trigger.class.name");
 	}
 
 	@Deactivate
@@ -147,9 +146,9 @@ public class ObjectActionTriggerRegistryImpl
 	@Reference
 	private ObjectActionEngine _objectActionEngine;
 
-	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
-		_serviceTrackerMap;
 	private ServiceTracker<Destination, List<ServiceRegistration<?>>>
 		_serviceTracker;
+	private ServiceTrackerMap<String, List<ObjectActionTrigger>>
+		_serviceTrackerMap;
 
 }
