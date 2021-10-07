@@ -19,7 +19,7 @@ package com.liferay.search.experiences.constants;
  */
 public class SXPPanelCategoryKeys {
 
-	public static final String CONTROL_PANEL_SXP =
+	public static final String CONTROL_PANEL_SEARCH_EXPERIENCES =
 		"control_panel.search_experiences";
 
 }
