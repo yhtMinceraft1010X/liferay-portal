@@ -580,52 +580,48 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 		Long accountEntryId, long[] accountGroupIds, Long companyId,
 		Long commerceChannelId, Long commerceOrderTypeId, FromStep fromStep) {
 
+		CommerceOrderRuleEntryRelTable accountEntryCommerceOrderRuleEntryRel =
+			CommerceOrderRuleEntryRelTable.INSTANCE.as(
+				"accountEntryCommerceOrderRuleEntryRel");
+		CommerceOrderRuleEntryRelTable accountGroupCommerceOrderRuleEntryRel =
+			CommerceOrderRuleEntryRelTable.INSTANCE.as(
+				"accountGroupCommerceOrderRuleEntryRel");
 		CommerceOrderRuleEntryRelTable
-			aliasAccountEntryCommerceOrderRuleEntryRel =
+			commerceChannelCommerceOrderRuleEntryRel =
 				CommerceOrderRuleEntryRelTable.INSTANCE.as(
-					"aliasAccountEntryCommerceOrderRuleEntryRel");
+					"commerceChannelCommerceOrderRuleEntryRel");
 		CommerceOrderRuleEntryRelTable
-			aliasAccountGroupCommerceOrderRuleEntryRel =
+			commerceOrderTypeCommerceOrderRuleEntryRel =
 				CommerceOrderRuleEntryRelTable.INSTANCE.as(
-					"aliasAccountGroupCommerceOrderRuleEntryRel");
-		CommerceOrderRuleEntryRelTable
-			aliasCommerceChannelCommerceOrderRuleEntryRel =
-				CommerceOrderRuleEntryRelTable.INSTANCE.as(
-					"aliasCommerceChannelCommerceOrderRuleEntryRel");
-		CommerceOrderRuleEntryRelTable
-			aliasCommerceOrderTypeCommerceOrderRuleEntryRel =
-				CommerceOrderRuleEntryRelTable.INSTANCE.as(
-					"aliasCommerceOrderTypeCommerceOrderRuleEntryRel");
+					"commerceOrderTypeCommerceOrderRuleEntryRel");
 
 		JoinStep joinStep = fromStep.from(
 			CommerceOrderRuleEntryTable.INSTANCE
 		).leftJoinOn(
-			aliasAccountEntryCommerceOrderRuleEntryRel,
+			accountEntryCommerceOrderRuleEntryRel,
 			_getPredicate(
 				AccountEntry.class.getName(),
-				aliasAccountEntryCommerceOrderRuleEntryRel.classNameId,
-				aliasAccountEntryCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryId)
+				accountEntryCommerceOrderRuleEntryRel.classNameId,
+				accountEntryCommerceOrderRuleEntryRel.commerceOrderRuleEntryId)
 		).leftJoinOn(
-			aliasAccountGroupCommerceOrderRuleEntryRel,
+			accountGroupCommerceOrderRuleEntryRel,
 			_getPredicate(
 				AccountGroup.class.getName(),
-				aliasAccountGroupCommerceOrderRuleEntryRel.classNameId,
-				aliasAccountGroupCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryId)
+				accountGroupCommerceOrderRuleEntryRel.classNameId,
+				accountGroupCommerceOrderRuleEntryRel.commerceOrderRuleEntryId)
 		).leftJoinOn(
-			aliasCommerceChannelCommerceOrderRuleEntryRel,
+			commerceChannelCommerceOrderRuleEntryRel,
 			_getPredicate(
 				CommerceChannel.class.getName(),
-				aliasCommerceChannelCommerceOrderRuleEntryRel.classNameId,
-				aliasCommerceChannelCommerceOrderRuleEntryRel.
+				commerceChannelCommerceOrderRuleEntryRel.classNameId,
+				commerceChannelCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryId)
 		).leftJoinOn(
-			aliasCommerceOrderTypeCommerceOrderRuleEntryRel,
+			commerceOrderTypeCommerceOrderRuleEntryRel,
 			_getPredicate(
 				CommerceOrderType.class.getName(),
-				aliasCommerceOrderTypeCommerceOrderRuleEntryRel.classNameId,
-				aliasCommerceOrderTypeCommerceOrderRuleEntryRel.
+				commerceOrderTypeCommerceOrderRuleEntryRel.classNameId,
+				commerceOrderTypeCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryId)
 		);
 
@@ -639,12 +635,12 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 		if (accountEntryId != null) {
 			predicate = predicate.and(
-				aliasAccountEntryCommerceOrderRuleEntryRel.classPK.eq(
+				accountEntryCommerceOrderRuleEntryRel.classPK.eq(
 					accountEntryId));
 		}
 		else {
 			predicate = predicate.and(
-				aliasAccountEntryCommerceOrderRuleEntryRel.
+				accountEntryCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryRelId.isNull());
 		}
 
@@ -656,7 +652,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 			LongStream longStream = Arrays.stream(accountGroupIds);
 
 			predicate = predicate.and(
-				aliasAccountGroupCommerceOrderRuleEntryRel.classPK.in(
+				accountGroupCommerceOrderRuleEntryRel.classPK.in(
 					longStream.boxed(
 					).toArray(
 						Long[]::new
@@ -664,29 +660,29 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 		}
 		else {
 			predicate = predicate.and(
-				aliasAccountGroupCommerceOrderRuleEntryRel.
+				accountGroupCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryRelId.isNull());
 		}
 
 		if (commerceChannelId != null) {
 			predicate = predicate.and(
-				aliasCommerceChannelCommerceOrderRuleEntryRel.classPK.eq(
+				commerceChannelCommerceOrderRuleEntryRel.classPK.eq(
 					commerceChannelId));
 		}
 		else {
 			predicate = predicate.and(
-				aliasCommerceChannelCommerceOrderRuleEntryRel.
+				commerceChannelCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryRelId.isNull());
 		}
 
 		if (commerceOrderTypeId != null) {
 			predicate = predicate.and(
-				aliasCommerceOrderTypeCommerceOrderRuleEntryRel.classPK.eq(
+				commerceOrderTypeCommerceOrderRuleEntryRel.classPK.eq(
 					commerceOrderTypeId));
 		}
 		else {
 			predicate = predicate.and(
-				aliasCommerceOrderTypeCommerceOrderRuleEntryRel.
+				commerceOrderTypeCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryRelId.isNull());
 		}
 
