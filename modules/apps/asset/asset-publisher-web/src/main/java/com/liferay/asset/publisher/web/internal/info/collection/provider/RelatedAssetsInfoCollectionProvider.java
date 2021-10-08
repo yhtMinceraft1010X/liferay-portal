@@ -123,24 +123,20 @@ public class RelatedAssetsInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long[] availableClassNameIds =
-			AssetRendererFactoryRegistryUtil.getClassNameIds(
-				serviceContext.getCompanyId(), true);
+		assetEntryQuery.setClassNameIds(
+			ArrayUtil.filter(
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					serviceContext.getCompanyId(), true),
+				availableClassNameId -> {
+					Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+						_portal.getClassName(availableClassNameId));
 
-		availableClassNameIds = ArrayUtil.filter(
-			availableClassNameIds,
-			availableClassNameId -> {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					_portal.getClassName(availableClassNameId));
+					if (indexer == null) {
+						return false;
+					}
 
-				if (indexer == null) {
-					return false;
-				}
-
-				return true;
-			});
-
-		assetEntryQuery.setClassNameIds(availableClassNameIds);
+					return true;
+				}));
 
 		assetEntryQuery.setEnablePermissions(true);
 
