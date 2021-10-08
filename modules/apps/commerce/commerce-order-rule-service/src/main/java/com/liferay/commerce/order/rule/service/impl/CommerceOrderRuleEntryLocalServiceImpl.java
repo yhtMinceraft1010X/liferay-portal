@@ -631,38 +631,35 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 			CommerceOrderRuleEntryTable.INSTANCE.companyId.eq(companyId)
 		).and(
 			CommerceOrderRuleEntryTable.INSTANCE.active.eq(true)
-		);
+		).and(
+			() -> {
+				if (accountEntryId != null) {
+					return accountEntryCommerceOrderRuleEntryRel.classPK.eq(
+						accountEntryId);
+				}
 
-		if (accountEntryId != null) {
-			predicate = predicate.and(
-				accountEntryCommerceOrderRuleEntryRel.classPK.eq(
-					accountEntryId));
-		}
-		else {
-			predicate = predicate.and(
-				accountEntryCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull());
-		}
-
-		if (accountGroupIds != null) {
-			if (accountGroupIds.length == 0) {
-				accountGroupIds = new long[] {0};
+				return accountEntryCommerceOrderRuleEntryRel.
+					commerceOrderRuleEntryRelId.isNull();
 			}
+		).and(
+			() -> {
+				if (accountGroupIds != null) {
+					if (accountGroupIds.length == 0) {
+						accountGroupIds = new long[] {0};
+					}
 
-			LongStream longStream = Arrays.stream(accountGroupIds);
+					LongStream longStream = Arrays.stream(accountGroupIds);
 
-			predicate = predicate.and(
-				accountGroupCommerceOrderRuleEntryRel.classPK.in(
-					longStream.boxed(
-					).toArray(
-						Long[]::new
-					)));
-		}
-		else {
-			predicate = predicate.and(
-				accountGroupCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull());
-		}
+					return accountGroupCommerceOrderRuleEntryRel.classPK.in(
+						longStream.boxed(
+						).toArray(
+							Long[]::new
+						));
+				}
+
+				return accountGroupCommerceOrderRuleEntryRel.commerceOrderRuleEntryRelId.isNull();
+			}
+		);
 
 		if (commerceChannelId != null) {
 			predicate = predicate.and(
