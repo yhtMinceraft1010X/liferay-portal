@@ -1017,10 +1017,6 @@ definition {
 		}
 
 		AssertElementPresent(locator1 = "PageEditor#COLLECTION_ITEM_PAGINATION_PREVIOUS_BUTTON_NUMERIC");
-
-
-
-		
 	}
 
 	macro assertTrueEntryIsPresent {

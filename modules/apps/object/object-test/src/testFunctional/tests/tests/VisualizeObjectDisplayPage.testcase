@@ -114,7 +114,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSetPaginationNumeric {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -168,8 +167,7 @@ definition {
 
 		PageEditor.selectGerenicField(
 			fieldLabel = "Pagination",
-			option = "Numeric"
-		);
+			option = "Numeric");
 
 		PageEditor.publishPage();
 
@@ -178,11 +176,6 @@ definition {
 			siteName = "Guest");
 
 		PageEditor.assertPaginationNumericTypeIsDisplayed(pageNumberList = "1");
-
-
-
-
-
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to set the pagination as Simple"
