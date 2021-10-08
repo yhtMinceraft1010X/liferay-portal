@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @generated
  */
 @Component(immediate = true, service = {})
-public class CommercePersistenceConstants {
+public class CORPersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.commerce.order.rule.service";

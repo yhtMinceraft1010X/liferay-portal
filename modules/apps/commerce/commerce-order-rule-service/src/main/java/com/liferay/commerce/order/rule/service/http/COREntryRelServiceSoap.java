@@ -244,6 +244,45 @@ public class COREntryRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.order.rule.model.COREntryRelSoap[]
+			getCommerceOrderTypeCOREntryRels(
+				long corEntryId, String keywords, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.order.rule.model.COREntryRel>
+				returnValue =
+					COREntryRelServiceUtil.getCommerceOrderTypeCOREntryRels(
+						corEntryId, keywords, start, end);
+
+			return com.liferay.commerce.order.rule.model.COREntryRelSoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderTypeCOREntryRelsCount(
+			long corEntryId, String keywords)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				COREntryRelServiceUtil.getCommerceOrderTypeCOREntryRelsCount(
+					corEntryId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.order.rule.model.COREntryRelSoap
 			getCOREntryRel(long corEntryRelId)
 		throws RemoteException {
@@ -310,45 +349,6 @@ public class COREntryRelServiceSoap {
 		try {
 			int returnValue = COREntryRelServiceUtil.getCOREntryRelsCount(
 				corEntryId);
-
-			return returnValue;
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.order.rule.model.COREntryRelSoap[]
-			getCommerceOrderTypeCOREntryRels(
-				long corEntryId, String keywords, int start, int end)
-		throws RemoteException {
-
-		try {
-			java.util.List<com.liferay.commerce.order.rule.model.COREntryRel>
-				returnValue =
-					COREntryRelServiceUtil.getCommerceOrderTypeCOREntryRels(
-						corEntryId, keywords, start, end);
-
-			return com.liferay.commerce.order.rule.model.COREntryRelSoap.
-				toSoapModels(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static int getCommerceOrderTypeCOREntryRelsCount(
-			long corEntryId, String keywords)
-		throws RemoteException {
-
-		try {
-			int returnValue =
-				COREntryRelServiceUtil.getCommerceOrderTypeCOREntryRelsCount(
-					corEntryId, keywords);
 
 			return returnValue;
 		}

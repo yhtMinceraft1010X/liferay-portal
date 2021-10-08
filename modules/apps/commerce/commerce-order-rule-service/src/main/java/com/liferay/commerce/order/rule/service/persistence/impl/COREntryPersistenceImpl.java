@@ -20,7 +20,7 @@ import com.liferay.commerce.order.rule.model.COREntryTable;
 import com.liferay.commerce.order.rule.model.impl.COREntryImpl;
 import com.liferay.commerce.order.rule.model.impl.COREntryModelImpl;
 import com.liferay.commerce.order.rule.service.persistence.COREntryPersistence;
-import com.liferay.commerce.order.rule.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.commerce.order.rule.service.persistence.impl.constants.CORPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -6005,7 +6005,7 @@ public class COREntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = CORPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -6013,7 +6013,7 @@ public class COREntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = CORPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -6022,7 +6022,7 @@ public class COREntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = CORPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {
