@@ -655,29 +655,27 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				return accountGroupCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryRelId.isNull();
 			}
+		).and(
+			() -> {
+				if (commerceChannelId != null) {
+					return commerceChannelCommerceOrderRuleEntryRel.classPK.eq(
+						commerceChannelId);
+				}
+
+				return commerceChannelCommerceOrderRuleEntryRel.
+					commerceOrderRuleEntryRelId.isNull();
+			}
+		).and(
+			() -> {
+				if (commerceOrderTypeId != null) {
+					return commerceOrderTypeCommerceOrderRuleEntryRel.classPK.
+						eq(commerceOrderTypeId);
+				}
+
+				return commerceOrderTypeCommerceOrderRuleEntryRel.
+					commerceOrderRuleEntryRelId.isNull();
+			}
 		);
-
-		if (commerceChannelId != null) {
-			predicate = predicate.and(
-				commerceChannelCommerceOrderRuleEntryRel.classPK.eq(
-					commerceChannelId));
-		}
-		else {
-			predicate = predicate.and(
-				commerceChannelCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull());
-		}
-
-		if (commerceOrderTypeId != null) {
-			predicate = predicate.and(
-				commerceOrderTypeCommerceOrderRuleEntryRel.classPK.eq(
-					commerceOrderTypeId));
-		}
-		else {
-			predicate = predicate.and(
-				commerceOrderTypeCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull());
-		}
 
 		return joinStep.where(predicate);
 	}
