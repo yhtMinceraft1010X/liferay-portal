@@ -143,19 +143,21 @@ public class RelatedAssetsInfoCollectionProvider
 		assetEntryQuery.setClassNameIds(availableClassNameIds);
 
 		assetEntryQuery.setEnablePermissions(true);
-		assetEntryQuery.setGroupIds(
-			new long[] {serviceContext.getScopeGroupId()});
 
 		if (pagination != null) {
-			assetEntryQuery.setStart(pagination.getStart());
 			assetEntryQuery.setEnd(pagination.getEnd());
 		}
 
+		assetEntryQuery.setGroupIds(
+			new long[] {serviceContext.getScopeGroupId()});
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
-		assetEntryQuery.setOrderByType1("DESC");
-
 		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
+		assetEntryQuery.setOrderByType1("DESC");
 		assetEntryQuery.setOrderByType2("DESC");
+
+		if (pagination != null) {
+			assetEntryQuery.setStart(pagination.getStart());
+		}
 
 		return assetEntryQuery;
 	}
