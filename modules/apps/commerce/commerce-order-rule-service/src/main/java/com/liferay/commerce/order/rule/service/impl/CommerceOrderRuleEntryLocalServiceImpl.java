@@ -679,10 +679,10 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 
 	private Predicate _getPredicate(
 		String className,
-		Column<CommerceOrderRuleEntryRelTable, Long> classNameId,
+		Column<CommerceOrderRuleEntryRelTable, Long> classNameIdColumn,
 		Column<CommerceOrderRuleEntryRelTable, Long> commerceOrderRuleEntryId) {
 
-		return classNameId.eq(
+		return classNameIdColumn.eq(
 			classNameLocalService.getClassNameId(className)
 		).and(
 			commerceOrderRuleEntryId.eq(
