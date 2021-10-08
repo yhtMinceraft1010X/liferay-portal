@@ -88,8 +88,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
 
+		_assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), _assetVocabulary.getVocabularyId());
+
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -101,15 +108,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_getMockHttpServletRequest(_getThemeDisplay()));
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
-		_journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		_assetVocabulary = AssetTestUtil.addVocabulary(_group.getGroupId());
-
-		_assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), _assetVocabulary.getVocabularyId());
 	}
 
 	@Test
