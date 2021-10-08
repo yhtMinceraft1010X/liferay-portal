@@ -45,19 +45,18 @@ public class EditBatchPlannerPlanDisplayContext {
 
 		Stream<Map.Entry<String, String>> stream = entries.stream();
 
-		List<SelectOption> options = new ArrayList<>();
+		List<SelectOption> selectOptions = new ArrayList<>();
 
-		options.add(new SelectOption(StringPool.BLANK, StringPool.BLANK));
+		selectOptions.add(new SelectOption(StringPool.BLANK, StringPool.BLANK));
 
-		options.addAll(
+		selectOptions.addAll(
 			stream.map(
-				stringStringEntry -> new SelectOption(
-					stringStringEntry.getKey(), stringStringEntry.getValue())
+				entry -> new SelectOption(entry.getKey(), entry.getValue())
 			).collect(
 				Collectors.toList()
 			));
 
-		return options;
+		return selectOptions;
 	}
 
 	private final Map<String, String> _headlessEndpoints;
