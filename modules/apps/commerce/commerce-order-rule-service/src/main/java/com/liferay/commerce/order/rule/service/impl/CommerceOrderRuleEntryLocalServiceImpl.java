@@ -30,7 +30,6 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -594,7 +593,7 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				CommerceOrderRuleEntryRelTable.INSTANCE.as(
 					"commerceOrderTypeCommerceOrderRuleEntryRel");
 
-		JoinStep joinStep = fromStep.from(
+		return fromStep.from(
 			CommerceOrderRuleEntryTable.INSTANCE
 		).leftJoinOn(
 			accountEntryCommerceOrderRuleEntryRel,
@@ -622,62 +621,60 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 				commerceOrderTypeCommerceOrderRuleEntryRel.classNameId,
 				commerceOrderTypeCommerceOrderRuleEntryRel.
 					commerceOrderRuleEntryId)
-		);
-
-		Predicate predicate = CommerceOrderRuleEntryTable.INSTANCE.status.eq(
-			WorkflowConstants.STATUS_APPROVED
-		).and(
-			CommerceOrderRuleEntryTable.INSTANCE.companyId.eq(companyId)
-		).and(
-			CommerceOrderRuleEntryTable.INSTANCE.active.eq(true)
-		).and(
-			() -> {
-				if (accountEntryId != null) {
-					return accountEntryCommerceOrderRuleEntryRel.classPK.eq(
-						accountEntryId);
-				}
-
-				return accountEntryCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull();
-			}
-		).and(
-			() -> {
-				if (accountGroupIds != null) {
-					if (accountGroupIds.length == 0) {
-						return accountGroupCommerceOrderRuleEntryRel.classPK.in(
-							new Long[] {0L});
+		).where(
+			CommerceOrderRuleEntryTable.INSTANCE.status.eq(
+				WorkflowConstants.STATUS_APPROVED
+			).and(
+				CommerceOrderRuleEntryTable.INSTANCE.companyId.eq(companyId)
+			).and(
+				CommerceOrderRuleEntryTable.INSTANCE.active.eq(true)
+			).and(
+				() -> {
+					if (accountEntryId != null) {
+						return accountEntryCommerceOrderRuleEntryRel.classPK.eq(
+							accountEntryId);
 					}
 
-					return accountGroupCommerceOrderRuleEntryRel.classPK.in(
-						ArrayUtil.toLongArray(accountGroupIds));
+					return accountEntryCommerceOrderRuleEntryRel.
+						commerceOrderRuleEntryRelId.isNull();
 				}
+			).and(
+				() -> {
+					if (accountGroupIds != null) {
+						if (accountGroupIds.length == 0) {
+							return accountGroupCommerceOrderRuleEntryRel.
+								classPK.in(new Long[] {0L});
+						}
 
-				return accountGroupCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull();
-			}
-		).and(
-			() -> {
-				if (commerceChannelId != null) {
-					return commerceChannelCommerceOrderRuleEntryRel.classPK.eq(
-						commerceChannelId);
+						return accountGroupCommerceOrderRuleEntryRel.classPK.in(
+							ArrayUtil.toLongArray(accountGroupIds));
+					}
+
+					return accountGroupCommerceOrderRuleEntryRel.
+						commerceOrderRuleEntryRelId.isNull();
 				}
+			).and(
+				() -> {
+					if (commerceChannelId != null) {
+						return commerceChannelCommerceOrderRuleEntryRel.classPK.
+							eq(commerceChannelId);
+					}
 
-				return commerceChannelCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull();
-			}
-		).and(
-			() -> {
-				if (commerceOrderTypeId != null) {
-					return commerceOrderTypeCommerceOrderRuleEntryRel.classPK.
-						eq(commerceOrderTypeId);
+					return commerceChannelCommerceOrderRuleEntryRel.
+						commerceOrderRuleEntryRelId.isNull();
 				}
+			).and(
+				() -> {
+					if (commerceOrderTypeId != null) {
+						return commerceOrderTypeCommerceOrderRuleEntryRel.
+							classPK.eq(commerceOrderTypeId);
+					}
 
-				return commerceOrderTypeCommerceOrderRuleEntryRel.
-					commerceOrderRuleEntryRelId.isNull();
-			}
+					return commerceOrderTypeCommerceOrderRuleEntryRel.
+						commerceOrderRuleEntryRelId.isNull();
+				}
+			)
 		);
-
-		return joinStep.where(predicate);
 	}
 
 	private Predicate _getPredicate(
