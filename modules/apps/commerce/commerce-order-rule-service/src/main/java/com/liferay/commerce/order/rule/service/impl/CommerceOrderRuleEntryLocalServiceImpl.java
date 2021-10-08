@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -52,12 +53,10 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -645,19 +644,16 @@ public class CommerceOrderRuleEntryLocalServiceImpl
 			() -> {
 				if (accountGroupIds != null) {
 					if (accountGroupIds.length == 0) {
-						accountGroupIds = new long[] {0};
+						return accountGroupCommerceOrderRuleEntryRel.classPK.in(
+							new Long[] {0L});
 					}
 
-					LongStream longStream = Arrays.stream(accountGroupIds);
-
 					return accountGroupCommerceOrderRuleEntryRel.classPK.in(
-						longStream.boxed(
-						).toArray(
-							Long[]::new
-						));
+						ArrayUtil.toLongArray(accountGroupIds));
 				}
 
-				return accountGroupCommerceOrderRuleEntryRel.commerceOrderRuleEntryRelId.isNull();
+				return accountGroupCommerceOrderRuleEntryRel.
+					commerceOrderRuleEntryRelId.isNull();
 			}
 		);
 
