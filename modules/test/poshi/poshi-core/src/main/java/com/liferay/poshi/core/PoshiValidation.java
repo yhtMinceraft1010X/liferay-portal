@@ -985,9 +985,9 @@ public class PoshiValidation {
 			}
 
 			if (childElementName.equals("command")) {
-				validateMacroCommandName(childElement, filePath);
 				validateCommandElement(childElement, filePath);
 				validateHasChildElements(childElement, filePath);
+				validateMacroCommandName(childElement, filePath);
 
 				parseElements(childElement, filePath);
 			}
