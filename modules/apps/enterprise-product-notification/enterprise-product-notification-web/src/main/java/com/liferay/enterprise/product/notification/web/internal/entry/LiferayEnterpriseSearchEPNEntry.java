@@ -30,11 +30,11 @@ public class LiferayEnterpriseSearchEPNEntry implements EPNEntry {
 			new String[] {
 				String.format(
 					"<a href=\"%s\" target=\"_blank\">",
-					_LIFERAY_ENTERPRISE_SEARCH_ACTIVATION_DOCUMENTATION_URL),
+					_URL),
 				"</a>",
 				String.format(
 					"<a href=\"mailto:%s\"}>%s</a>",
-					_LIFERAY_SALES_EMAIL_ADDRESS, _LIFERAY_SALES_EMAIL_ADDRESS)
+					_EMAIL_ADDRESS, _EMAIL_ADDRESS)
 			});
 	}
 
@@ -44,11 +44,11 @@ public class LiferayEnterpriseSearchEPNEntry implements EPNEntry {
 	}
 
 	private static final String
-		_LIFERAY_ENTERPRISE_SEARCH_ACTIVATION_DOCUMENTATION_URL =
+		_URL =
 			"https://learn.liferay.com/dxp/latest/en/using-search/liferay-" +
 				"enterprise-search/activating-liferay-enterprise-search.html";
 
-	private static final String _LIFERAY_SALES_EMAIL_ADDRESS =
+	private static final String _EMAIL_ADDRESS =
 		"sales@liferay.com";
 
 }

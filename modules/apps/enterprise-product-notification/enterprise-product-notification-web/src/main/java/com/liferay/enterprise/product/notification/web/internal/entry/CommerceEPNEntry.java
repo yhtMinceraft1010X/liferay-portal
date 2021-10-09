@@ -30,11 +30,11 @@ public class CommerceEPNEntry implements EPNEntry {
 			new String[] {
 				String.format(
 					"<a href=\"%s\" target=\"_blank\">",
-					_COMMERCE_ACTIVATION_DOCUMENTATION_URL),
+					_URL),
 				"</a>",
 				String.format(
 					"<a href=\"mailto:%s\"}>%s</a>",
-					_LIFERAY_SALES_EMAIL_ADDRESS, _LIFERAY_SALES_EMAIL_ADDRESS)
+					_EMAIL_ADDRESS, _EMAIL_ADDRESS)
 			});
 	}
 
@@ -43,11 +43,11 @@ public class CommerceEPNEntry implements EPNEntry {
 		return "commerce";
 	}
 
-	private static final String _COMMERCE_ACTIVATION_DOCUMENTATION_URL =
+	private static final String _URL =
 		"https://learn.liferay.com/commerce/latest/en/installation-and-" +
 			"upgrades/activating-liferay-commerce-enterprise.html";
 
-	private static final String _LIFERAY_SALES_EMAIL_ADDRESS =
+	private static final String _EMAIL_ADDRESS =
 		"sales@liferay.com";
 
 }
