@@ -40,7 +40,7 @@ public class LiferayEnterpriseSearchEPNEntry implements EPNEntry {
 
 	@Override
 	public String getKey() {
-		return "enterprise.search";
+		return "enterpriseSearch";
 	}
 
 	private static final String
