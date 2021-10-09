@@ -285,6 +285,10 @@ public class WorkflowTaskManagerUtil {
 			andOperator, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static WorkflowModelSearchResult<WorkflowTask> searchWorkflowTasks(
 			long companyId, long userId, String assetTitle, String[] taskNames,
 			String[] assetTypes, Long[] assetPrimaryKeys,

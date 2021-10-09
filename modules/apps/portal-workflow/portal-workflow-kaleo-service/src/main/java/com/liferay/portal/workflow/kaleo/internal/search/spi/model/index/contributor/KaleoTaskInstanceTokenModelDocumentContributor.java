@@ -182,8 +182,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 						KaleoTaskInstanceTokenField.ASSET_TITLE,
 						availableLocale.getLanguage()),
 					workflowHandler.getTitle(
-						kaleoTaskInstanceToken.getClassPK(),
-						availableLocale));
+						kaleoTaskInstanceToken.getClassPK(), availableLocale));
 			}
 		}
 	}

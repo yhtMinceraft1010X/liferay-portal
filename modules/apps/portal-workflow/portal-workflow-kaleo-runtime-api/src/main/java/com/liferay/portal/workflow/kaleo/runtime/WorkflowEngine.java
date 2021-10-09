@@ -136,6 +136,10 @@ public interface WorkflowEngine {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public default WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
 				Long userId, String assetClassName, String assetTitle,

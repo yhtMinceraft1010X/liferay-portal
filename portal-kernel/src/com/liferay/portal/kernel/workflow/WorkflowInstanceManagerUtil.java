@@ -167,6 +167,10 @@ public class WorkflowInstanceManagerUtil {
 			searchByActiveWorkflowHandlers, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
 				long companyId, Long userId, String assetClassName,

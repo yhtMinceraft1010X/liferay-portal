@@ -191,6 +191,10 @@ public interface WorkflowTaskManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public default WorkflowModelSearchResult<WorkflowTask> searchWorkflowTasks(
 			long companyId, long userId, String assetTitle, String[] taskNames,
 			String[] assetTypes, Long[] assetPrimaryKeys,

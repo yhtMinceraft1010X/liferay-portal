@@ -400,6 +400,10 @@ public class KaleoInstanceLocalServiceImpl
 		return new BaseModelSearchResult<>(kaleoInstances, hits.getLength());
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<KaleoInstance> searchKaleoInstances(
 			Long userId, String assetClassName, String assetTitle,

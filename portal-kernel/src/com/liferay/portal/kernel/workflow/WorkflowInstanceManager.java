@@ -115,6 +115,10 @@ public interface WorkflowInstanceManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public default WorkflowModelSearchResult<WorkflowInstance>
 			searchWorkflowInstances(
 				long companyId, Long userId, String assetClassName,
