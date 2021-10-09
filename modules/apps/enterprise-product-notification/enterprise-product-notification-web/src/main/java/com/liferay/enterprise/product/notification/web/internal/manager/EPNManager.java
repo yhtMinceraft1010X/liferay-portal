@@ -92,14 +92,12 @@ public class EPNManager {
 				continue;
 			}
 
-			sb.append("<div>");
-			sb.append("<h4>");
+			sb.append("<div><h4>");
 			sb.append(
 				LanguageUtil.get(
 					locale,
 					"enterprise-product-notification-title[" + key + "]"));
-			sb.append("</h4>");
-			sb.append("<div>");
+			sb.append("</h4><div>");
 			sb.append(
 				LanguageUtil.format(
 					locale, "enterprise-product-notification-body[" + key + "]",
@@ -111,9 +109,7 @@ public class EPNManager {
 						"<a href=\"mailto:sales@liferay.com\"}>" +
 							"sales@liferay.com</a>"
 					}));
-			sb.append("</div>");
-			sb.append("</div>");
-			sb.append("</br>");
+			sb.append("</div></div></br>");
 		}
 
 		return sb.toString();
