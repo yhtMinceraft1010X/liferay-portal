@@ -1002,7 +1002,7 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
-	public void testSearchWorkflowInstancesWhenThereIsAUnregisteredHandler()
+	public void testSearchWorkflowInstancesWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
 		ServiceRegistration<WorkflowHandler<?>>
@@ -1248,7 +1248,7 @@ public class WorkflowTaskManagerImplTest {
 	}
 
 	@Test
-	public void testSearchWorkflowTasksWhenThereIsAUnregisteredHandler()
+	public void testSearchWorkflowTasksWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
 		ServiceRegistration<WorkflowHandler<?>>
