@@ -109,7 +109,7 @@ public class EPNManager {
 						"<a href=\"mailto:sales@liferay.com\"}>" +
 							"sales@liferay.com</a>"
 					}));
-			sb.append("</div></div></br>");
+			sb.append("</div></div><br />");
 		}
 
 		return sb.toString();
