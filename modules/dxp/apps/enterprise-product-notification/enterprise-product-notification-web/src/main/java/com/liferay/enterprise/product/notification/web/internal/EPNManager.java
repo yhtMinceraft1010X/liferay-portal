@@ -129,7 +129,7 @@ public class EPNManager {
 			"/commerce/latest/en/installation-and-upgrades" +
 				"/activating-liferay-commerce-enterprise.html"),
 		new KeyValuePair(
-			"enterpriseSearch",
+			"enterprise.search",
 			"/dxp/latest/en/using-search/liferay-enterprise-search" +
 				"/activating-liferay-enterprise-search.html")
 	};
