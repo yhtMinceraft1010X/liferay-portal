@@ -130,9 +130,10 @@ public class EPNManager {
 		portalPreferences.setValues(_NAMESPACE, _KEY, epnKeys);
 	}
 
-	private static final String _KEY = "CONFIRMED";
+	private static final String _KEY = "confirmedEPNKeys";
 
-	private static final String _NAMESPACE = "ENTERPRISE_PRODUCT_NOTIFICATION";
+	private static final String _NAMESPACE =
+		"com.liferay.enterprise.product.notification.web";
 
 	private final EPNEntry[] _epnEntries = {
 		new CommerceEPNEntry(), new LiferayEnterpriseSearchEPNEntry()
