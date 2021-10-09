@@ -14,7 +14,7 @@
 
 package com.liferay.enterprise.product.notification.web.internal.jaxrs.application;
 
-import com.liferay.enterprise.product.notification.web.internal.manager.EPNManager;
+import com.liferay.enterprise.product.notification.web.internal.EPNManager;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collections;

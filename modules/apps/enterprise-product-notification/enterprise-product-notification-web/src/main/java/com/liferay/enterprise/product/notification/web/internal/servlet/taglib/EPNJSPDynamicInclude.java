@@ -14,8 +14,8 @@
 
 package com.liferay.enterprise.product.notification.web.internal.servlet.taglib;
 
+import com.liferay.enterprise.product.notification.web.internal.EPNManager;
 import com.liferay.enterprise.product.notification.web.internal.constants.EPNWebKeys;
-import com.liferay.enterprise.product.notification.web.internal.manager.EPNManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;

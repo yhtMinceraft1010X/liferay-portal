@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.enterprise.product.notification.web.internal.manager;
+package com.liferay.enterprise.product.notification.web.internal;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
