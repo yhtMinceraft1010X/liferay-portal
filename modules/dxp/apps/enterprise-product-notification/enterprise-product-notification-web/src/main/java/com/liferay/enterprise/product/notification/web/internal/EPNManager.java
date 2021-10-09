@@ -106,7 +106,7 @@ public class EPNManager {
 							"<a href=\"%s\" target=\"_blank\">",
 							keyValuePair.getValue()),
 						"</a>",
-						"<a href=\"mailto:sales@liferay.com\"}>" +
+						"<a href=\"mailto:sales@liferay.com\">" +
 							"sales@liferay.com</a>"
 					}));
 			sb.append("</div></div><br />");
