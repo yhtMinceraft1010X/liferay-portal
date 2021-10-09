@@ -482,6 +482,10 @@ public interface KaleoTaskInstanceTokenLocalService
 				ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<KaleoTaskInstanceToken>
 			searchKaleoTaskInstanceTokens(

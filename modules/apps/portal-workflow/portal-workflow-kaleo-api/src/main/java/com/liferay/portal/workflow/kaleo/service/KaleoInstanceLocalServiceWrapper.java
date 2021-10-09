@@ -498,6 +498,10 @@ public class KaleoInstanceLocalServiceWrapper
 			start, end, orderByComparator, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.portal.workflow.kaleo.model.KaleoInstance>

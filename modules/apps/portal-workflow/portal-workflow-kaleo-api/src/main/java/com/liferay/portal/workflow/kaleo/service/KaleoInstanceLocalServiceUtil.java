@@ -429,6 +429,10 @@ public class KaleoInstanceLocalServiceUtil {
 			start, end, orderByComparator, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<KaleoInstance> searchKaleoInstances(
 				Long userId, String assetClassName, String assetTitle,

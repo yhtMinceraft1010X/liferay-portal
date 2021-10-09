@@ -327,6 +327,10 @@ public interface KaleoInstanceTokenLocalService
 		boolean searchByActiveWorkflowHandlers, int start, int end,
 		Sort[] sorts, ServiceContext serviceContext);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(
 		Long userId, String assetClassName, String assetTitle,
@@ -341,6 +345,10 @@ public interface KaleoInstanceTokenLocalService
 		String kaleoDefinitionName, Boolean completed,
 		boolean searchByActiveWorkflowHandlers, ServiceContext serviceContext);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,

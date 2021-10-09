@@ -656,6 +656,10 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 			start, end, orderByComparator, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<KaleoTaskInstanceToken> searchKaleoTaskInstanceTokens(
 				String assetTitle, String[] taskNames, String[] assetTypes,

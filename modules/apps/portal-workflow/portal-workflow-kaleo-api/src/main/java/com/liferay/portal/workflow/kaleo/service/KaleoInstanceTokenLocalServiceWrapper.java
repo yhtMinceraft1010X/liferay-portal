@@ -460,6 +460,10 @@ public class KaleoInstanceTokenLocalServiceWrapper
 			searchByActiveWorkflowHandlers, start, end, sorts, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(
 		Long userId, String assetClassName, String assetTitle,
@@ -488,6 +492,10 @@ public class KaleoInstanceTokenLocalServiceWrapper
 			searchByActiveWorkflowHandlers, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		Long userId, String assetClassName, String assetTitle,
