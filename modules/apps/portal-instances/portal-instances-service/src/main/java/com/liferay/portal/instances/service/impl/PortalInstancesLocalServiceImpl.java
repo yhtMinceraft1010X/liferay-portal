@@ -118,7 +118,7 @@ public class PortalInstancesLocalServiceImpl
 				"Invalid site initializer key " + siteInitializerKey);
 		}
 
-		long curCompanyId = CompanyThreadLocal.getCompanyId();
+		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
 
 		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
 
@@ -146,7 +146,7 @@ public class PortalInstancesLocalServiceImpl
 			siteInitializer.initialize(group.getGroupId());
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(curCompanyId);
+			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}
