@@ -57,8 +57,7 @@ public class EPNManager {
 	}
 
 	public String getBodyHTML(Locale locale, long userId) {
-		if ((System.getenv("JENKINS_HOME") != null) ||
-			PortalRunMode.isTestMode() ||
+		if (PortalRunMode.isTestMode() ||
 			!PropsValues.ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED ||
 			(userId == 0L)) {
 
