@@ -62,13 +62,13 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		Iterator<COREntry> iterator = _corEntries.iterator();
 
 		while (iterator.hasNext()) {
-			COREntry corEntry1 = iterator.next();
+			COREntry corEntry = iterator.next();
 
-			COREntry corEntry2 = _corEntryLocalService.fetchCOREntry(
-				corEntry1.getCOREntryId());
+			corEntry = _corEntryLocalService.fetchCOREntry(
+				corEntry.getCOREntryId());
 
-			if (corEntry2 != null) {
-				_corEntryLocalService.deleteCOREntry(corEntry2.getCOREntryId());
+			if (corEntry != null) {
+				_corEntryLocalService.deleteCOREntry(corEntry.getCOREntryId());
 			}
 
 			iterator.remove();
