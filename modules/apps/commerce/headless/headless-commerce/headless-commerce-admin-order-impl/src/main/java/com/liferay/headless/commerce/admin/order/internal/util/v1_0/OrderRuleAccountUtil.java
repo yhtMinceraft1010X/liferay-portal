@@ -36,7 +36,7 @@ public class OrderRuleAccountUtil {
 			OrderRuleAccount orderRuleAccount)
 		throws PortalException {
 
-		CommerceAccount commerceAccount;
+		CommerceAccount commerceAccount = null;
 
 		if (Validator.isNull(
 				orderRuleAccount.getAccountExternalReferenceCode())) {

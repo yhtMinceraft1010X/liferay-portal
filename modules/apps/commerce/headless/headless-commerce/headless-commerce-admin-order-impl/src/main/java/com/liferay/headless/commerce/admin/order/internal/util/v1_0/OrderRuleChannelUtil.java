@@ -35,7 +35,7 @@ public class OrderRuleChannelUtil {
 			OrderRuleChannel orderRuleChannel)
 		throws PortalException {
 
-		CommerceChannel commerceChannel;
+		CommerceChannel commerceChannel = null;
 
 		if (Validator.isNull(
 				orderRuleChannel.getChannelExternalReferenceCode())) {

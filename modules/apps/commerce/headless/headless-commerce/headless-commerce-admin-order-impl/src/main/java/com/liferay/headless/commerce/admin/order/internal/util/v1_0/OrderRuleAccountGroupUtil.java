@@ -36,7 +36,7 @@ public class OrderRuleAccountGroupUtil {
 			OrderRuleAccountGroup orderRuleAccountGroup)
 		throws PortalException {
 
-		CommerceAccountGroup commerceAccountGroup;
+		CommerceAccountGroup commerceAccountGroup = null;
 
 		if (Validator.isNull(
 				orderRuleAccountGroup.getAccountGroupExternalReferenceCode())) {
