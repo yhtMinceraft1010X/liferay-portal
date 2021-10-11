@@ -18,7 +18,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.rule.constants.COREntryTypeConstants;
+import com.liferay.commerce.order.rule.constants.COREntryConstants;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.entry.type.COREntryType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"commerce.order.rule.entry.type.key=" + COREntryTypeConstants.TYPE_MINIMUM_ORDER_AMOUNT,
+		"commerce.order.rule.entry.type.key=" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT,
 		"commerce.order.rule.entry.type.order:Integer=1"
 	},
 	service = COREntryType.class
@@ -63,7 +63,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commerceOrder.getCompanyId(),
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryTypeConstants.
+					COREntryConstants.
 						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE));
 
 		CommerceCurrency orderCommerceCurrency =
@@ -72,7 +72,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		BigDecimal minimumAmount = BigDecimal.valueOf(
 			GetterUtil.getDouble(
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryTypeConstants.
+					COREntryConstants.
 						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
 		BigDecimal orderTotal = commerceOrder.getTotal();
 
@@ -104,7 +104,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				corEntry.getCompanyId(),
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryTypeConstants.
+					COREntryConstants.
 						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE));
 
 		CommerceCurrency orderCommerceCurrency =
@@ -113,7 +113,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		BigDecimal minimumAmount = BigDecimal.valueOf(
 			GetterUtil.getDouble(
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryTypeConstants.
+					COREntryConstants.
 						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
 
 		BigDecimal baseCurrencyAmount = minimumAmount.multiply(
@@ -142,7 +142,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 
 	@Override
 	public String getKey() {
-		return COREntryTypeConstants.TYPE_MINIMUM_ORDER_AMOUNT;
+		return COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT;
 	}
 
 	@Override
