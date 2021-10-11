@@ -21,7 +21,7 @@ task buildRemoteApps
 task forceDeploy
 task zipRemoteApps(type: Zip)
 
-Version remoteAppsVersion = Version.parseVersion("00000000.0000")
+Version remoteAppsVersion = Version.parseVersion("20211011.1503")
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
