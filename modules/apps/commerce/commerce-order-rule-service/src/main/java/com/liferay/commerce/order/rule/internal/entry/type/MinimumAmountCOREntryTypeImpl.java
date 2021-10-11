@@ -19,8 +19,8 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.rule.constants.COREntryConstants;
-import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.entry.type.COREntryType;
+import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -72,8 +72,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		BigDecimal minimumAmount = BigDecimal.valueOf(
 			GetterUtil.getDouble(
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryConstants.
-						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
+					COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
 		BigDecimal orderTotal = commerceOrder.getTotal();
 
 		if (!Objects.equals(
@@ -113,8 +112,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		BigDecimal minimumAmount = BigDecimal.valueOf(
 			GetterUtil.getDouble(
 				typeSettingsUnicodeProperties.getProperty(
-					COREntryConstants.
-						TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
+					COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_AMOUNT)));
 
 		BigDecimal baseCurrencyAmount = minimumAmount.multiply(
 			commerceCurrency.getRate());

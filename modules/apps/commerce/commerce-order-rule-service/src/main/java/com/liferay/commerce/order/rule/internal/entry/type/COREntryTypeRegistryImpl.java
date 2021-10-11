@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.order.rule.internal.entry.type;
 
-import com.liferay.commerce.order.rule.internal.entry.type.comparator.COREntryTypeOrderComparator;
 import com.liferay.commerce.order.rule.entry.type.COREntryType;
 import com.liferay.commerce.order.rule.entry.type.COREntryTypeRegistry;
+import com.liferay.commerce.order.rule.internal.entry.type.comparator.COREntryTypeOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
