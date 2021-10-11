@@ -96,7 +96,7 @@ public class PriceListDTOConverter
 					commercePriceList.getParentCommercePriceListId();
 				priority = commercePriceList.getPriority();
 				type = Type.create(commercePriceList.getType());
-				workflowStatusInfo = _getWorkflowStatusInfo(
+				workflowStatusInfo = _toStatus(
 					commercePriceList.getStatus(), priceListStatusLabel,
 					priceListStatusLabelI18n);
 			}
@@ -131,7 +131,7 @@ public class PriceListDTOConverter
 		return commerceCatalog.getName();
 	}
 
-	private Status _getWorkflowStatusInfo(
+	private Status _toStatus(
 		int statusCode, String priceListStatusLabel,
 		String priceListStatusLabelI18n) {
 

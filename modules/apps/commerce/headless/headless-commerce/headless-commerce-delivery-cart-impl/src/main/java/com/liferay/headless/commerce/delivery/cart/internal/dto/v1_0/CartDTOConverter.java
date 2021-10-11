@@ -134,7 +134,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				shippingAddressId = commerceOrder.getShippingAddressId();
 				status = commerceOrderWorkflowStatusLabel;
 				summary = _getSummary(commerceOrder, locale);
-				workflowStatusInfo = _getWorkflowStatusInfo(
+				workflowStatusInfo = _toStatus(
 					commerceOrder.getStatus(), commerceOrderWorkflowStatusLabel,
 					commerceOrderWorkflowStatusLabelI18n);
 			}
@@ -318,7 +318,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		return summary;
 	}
 
-	private Status _getWorkflowStatusInfo(
+	private Status _toStatus(
 		int orderStatus, String commerceOrderWorkflowStatusLabel,
 		String commerceOrderWorkflowStatusLabelI18n) {
 

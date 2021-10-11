@@ -150,7 +150,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 					commerceShippingMethod);
 				shippingOption = commerceOrder.getShippingOptionName();
 				transactionId = commerceOrder.getTransactionId();
-				workflowStatusInfo = _getWorkflowStatusInfo(
+				workflowStatusInfo = _toStatus(
 					commerceOrder.getStatus(), commerceOrderWorkflowStatusLabel,
 					commerceOrderWorkflowStatusLabelI18n);
 			}
@@ -276,7 +276,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 		return commerceShippingMethod.getEngineKey();
 	}
 
-	private Status _getWorkflowStatusInfo(
+	private Status _toStatus(
 		int orderStatus, String commerceOrderWorkflowStatusLabel,
 		String commerceOrderWorkflowStatusLabelI18n) {
 

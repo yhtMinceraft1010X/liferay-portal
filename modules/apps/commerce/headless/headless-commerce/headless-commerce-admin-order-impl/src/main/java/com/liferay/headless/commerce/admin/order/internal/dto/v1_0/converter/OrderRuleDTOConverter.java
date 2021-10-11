@@ -62,7 +62,7 @@ public class OrderRuleDTOConverter
 				name = corEntry.getName();
 				type = corEntry.getType();
 				typeSettings = corEntry.getTypeSettings();
-				workflowStatusInfo = _getWorkflowStatusInfo(
+				workflowStatusInfo = _toStatus(
 					WorkflowConstants.getStatusLabel(corEntry.getStatus()),
 					LanguageUtil.get(
 						LanguageResources.getResourceBundle(
@@ -73,7 +73,7 @@ public class OrderRuleDTOConverter
 		};
 	}
 
-	private Status _getWorkflowStatusInfo(
+	private Status _toStatus(
 		String orderTypeStatusLabel, String orderTypeStatusLabelI18n,
 		int statusCode) {
 

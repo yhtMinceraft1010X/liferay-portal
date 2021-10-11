@@ -143,7 +143,7 @@ public class ProductDTOConverter
 				urls = _getUrlTitleMap(
 					_cpDefinitionService.getUrlTitleMap(
 						cpDefinition.getCPDefinitionId()));
-				workflowStatusInfo = _getWorkflowStatusInfo(
+				workflowStatusInfo = _toStatus(
 					cpDefinition.getStatus(), productStatusLabel,
 					productStatusLabelI18n);
 			}
@@ -210,7 +210,7 @@ public class ProductDTOConverter
 				Map.Entry::getValue));
 	}
 
-	private Status _getWorkflowStatusInfo(
+	private Status _toStatus(
 		int statusCode, String productStatusLabel,
 		String productStatusLabelI18n) {
 
