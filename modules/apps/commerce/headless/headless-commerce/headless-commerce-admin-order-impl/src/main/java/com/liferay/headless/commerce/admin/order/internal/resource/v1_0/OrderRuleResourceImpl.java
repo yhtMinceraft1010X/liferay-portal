@@ -207,9 +207,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 			orderRule.getName(), GetterUtil.getInteger(orderRule.getPriority()),
 			orderRule.getType(), orderRule.getTypeSettings(), serviceContext);
 
-		// Update nested resources
-
-		return _updateNestedResources(orderRule, corEntry);
+		return _updateNestedResources(corEntry, orderRule);
 	}
 
 	private Map<String, Map<String, String>> _getActions(COREntry corEntry)
@@ -254,7 +252,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 	}
 
 	private COREntry _updateNestedResources(
-			OrderRule orderRule, COREntry corEntry)
+			COREntry corEntry, OrderRule orderRule)
 		throws Exception {
 
 		// Order rule account groups
@@ -375,9 +373,7 @@ public class OrderRuleResourceImpl extends BaseOrderRuleResourceImpl {
 				orderRule.getTypeSettings(), corEntry.getTypeSettings()),
 			serviceContext);
 
-		// Update nested resources
-
-		return _updateNestedResources(orderRule, corEntry);
+		return _updateNestedResources(corEntry, orderRule);
 	}
 
 	private static final EntityModel _entityModel = new OrderRuleEntityModel();
