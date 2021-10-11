@@ -210,19 +210,6 @@ public class ProductDTOConverter
 				Map.Entry::getValue));
 	}
 
-	private Status _toStatus(
-		int statusCode, String productStatusLabel,
-		String productStatusLabelI18n) {
-
-		return new Status() {
-			{
-				code = statusCode;
-				label = productStatusLabel;
-				label_i18n = productStatusLabelI18n;
-			}
-		};
-	}
-
 	private Category _toCategory(AssetCategory assetCategory) {
 		return new Category() {
 			{
@@ -243,6 +230,19 @@ public class ProductDTOConverter
 
 						return assetVocabulary.getName();
 					});
+			}
+		};
+	}
+
+	private Status _toStatus(
+		int statusCode, String productStatusLabel,
+		String productStatusLabelI18n) {
+
+		return new Status() {
+			{
+				code = statusCode;
+				label = productStatusLabel;
+				label_i18n = productStatusLabelI18n;
 			}
 		};
 	}
