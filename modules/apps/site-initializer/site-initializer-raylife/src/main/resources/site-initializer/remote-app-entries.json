@@ -6,7 +6,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-direct-to-customer",
+		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
 			"en_US": "Direct to Customer"
 		},
@@ -25,7 +25,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-direct-to-customer",
+		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
 			"en_US": "Direct to Customer - Quote Comparison"
 		},
@@ -44,7 +44,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-apps/direct-to-customer/js/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-direct-to-customer",
+		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
 			"en_US": "Direct to Customer - Selected Quote"
 		},

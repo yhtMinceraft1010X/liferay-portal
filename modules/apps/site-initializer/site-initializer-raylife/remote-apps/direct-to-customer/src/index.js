@@ -48,7 +48,7 @@ class DirectToCustomerWebComponent extends WebComponent {
 	}
 }
 
-const ELEMENT_ID = 'liferay-direct-to-customer';
+const ELEMENT_ID = 'liferay-raylife-d2c';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, DirectToCustomerWebComponent);
