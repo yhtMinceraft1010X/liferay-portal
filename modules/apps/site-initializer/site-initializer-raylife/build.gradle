@@ -30,7 +30,7 @@ artifacts {
 }
 
 dependencies {
-	remoteApps ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "20211011.1503"
+	remoteApps ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: "20211011.1724"
 }
 
 forceDeploy {
