@@ -14,14 +14,14 @@ import org.gradle.util.GUtil
 apply plugin: "com.liferay.node"
 
 configurations {
-	extra
+	remoteApps
 }
 
-task buildExtra
+task buildRemoteApps
 task forceDeploy
-task zipExtra(type: Zip)
+task zipRemoteApps(type: Zip)
 
-Version extraVersion = Version.parseVersion("00000000.0000")
+Version remoteAppsVersion = Version.parseVersion("00000000.0000")
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -30,11 +30,11 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 artifacts {
-	extra zipExtra
+	remoteApps zipRemoteApps
 }
 
 dependencies {
-	extra ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra", version: extraVersion
+	remoteApps ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.apps", version: remoteAppsVersion
 }
 
 forceDeploy {
@@ -48,29 +48,29 @@ node {
 }
 
 processResources {
-	ResolvedConfiguration extraResolvedConfiguration = configurations.extra.getResolvedConfiguration()
+	ResolvedConfiguration remoteAppsResolvedConfiguration = configurations.remoteApps.getResolvedConfiguration()
 
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || extraResolvedConfiguration.hasError()) {
-		dependsOn buildExtra
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || remoteAppsResolvedConfiguration.hasError()) {
+		dependsOn buildRemoteApps
 
-		into("site-initializer/documents/extra") {
-			from new File(buildDir, "extra")
+		into("site-initializer/documents/remote-apps") {
+			from new File(buildDir, "remote-apps")
 		}
 	}
 	else {
-		into("site-initializer/documents/extra") {
-			from zipTree(configurations.extra.singleFile)
+		into("site-initializer/documents/remote-apps") {
+			from zipTree(configurations.remoteApps.singleFile)
 		}
 	}
 }
 
-uploadExtra {
+uploadRemoteApps {
 	doLast {
 		File buildGradleFile = file("build.gradle")
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/Version extraVersion = Version.parseVersion\("(\w+\.\w+)"\)/) {
+		content = content.replaceFirst(~/Version remoteAppsVersion = Version.parseVersion\("(\w+\.\w+)"\)/) {
 			String all, String versionString ->
 
 			all.replace versionString, dateString
@@ -82,7 +82,7 @@ uploadExtra {
 	repositories {
 		mavenDeployer {
 			pom {
-				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra"
+				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".remote.apps"
 				groupId = "com.liferay"
 				version = dateString
 			}
@@ -90,20 +90,20 @@ uploadExtra {
 	}
 }
 
-zipExtra {
-	dependsOn buildExtra
+zipRemoteApps {
+	dependsOn buildRemoteApps
 
-	archiveName "extra.zip"
+	archiveName "remote-apps.zip"
 	destinationDir new File(buildDir, "dist")
-	from new File(buildDir, "extra")
+	from new File(buildDir, "remote-apps")
 }
 
-_createExtraTasks()
+_createRemoteAppsTasks()
 
-private void _createExtraTasks() {
-	File extraDir = new File(projectDir, "extra")
+private void _createRemoteAppsTasks() {
+	File remoteAppsDir = new File(projectDir, "remote-apps")
 
-	extraDir.eachDir {
+	remoteAppsDir.eachDir {
 		File dir ->
 
 		String suffix = dir.name.replaceAll(/[\.-](\w)/) {
@@ -151,11 +151,11 @@ private void _createExtraTasks() {
 				copy {
 					from new File(dir, "build/static")
 					include "js/*.js"
-					into new File(buildDir, "extra/" + dir.name)
+					into new File(buildDir, "remote-apps/" + dir.name)
 				}
 			}
 		}
 
-		buildExtra.finalizedBy yarnBuildTask
+		buildRemoteApps.finalizedBy yarnBuildTask
 	}
 }

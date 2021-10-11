@@ -719,7 +719,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		if (json != null) {
 			documentFolder = DocumentFolder.toDTO(json);
 		}
-		else if (resourcePath.contains("/site-initializer/documents/extra")) {
+		else if (resourcePath.contains(
+					"/site-initializer/documents/remote-apps")) {
+
 			documentFolder = DocumentFolder.toDTO(
 				JSONUtil.put(
 					"name", FileUtil.getShortFileName(resourcePath)
@@ -797,7 +799,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				values = Collections.singletonMap("document", json);
 			}
 			else if (resourcePath.contains(
-						"/site-initializer/documents/extra")) {
+						"/site-initializer/documents/remote-apps")) {
 
 				values = Collections.singletonMap(
 					"document",
