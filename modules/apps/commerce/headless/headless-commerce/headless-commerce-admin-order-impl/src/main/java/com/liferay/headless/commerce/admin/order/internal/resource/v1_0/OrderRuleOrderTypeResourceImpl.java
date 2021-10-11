@@ -69,7 +69,7 @@ public class OrderRuleOrderTypeResourceImpl
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
-				"Unable to find rule entry with external reference code " +
+				"Unable to find order rule with external reference code " +
 					externalReferenceCode);
 		}
 
@@ -94,7 +94,7 @@ public class OrderRuleOrderTypeResourceImpl
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
-				"Unable to find rule entry with id: " + id);
+				"Unable to find order rule with ID " + id);
 		}
 
 		return Page.of(
@@ -120,7 +120,7 @@ public class OrderRuleOrderTypeResourceImpl
 
 		if (corEntry == null) {
 			throw new NoSuchCOREntryException(
-				"Unable to find rule entry with external reference code " +
+				"Unable to find order rule with external reference code " +
 					externalReferenceCode);
 		}
 

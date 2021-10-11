@@ -35,7 +35,7 @@ public class OrderRuleOrderTypeUtil {
 			OrderRuleOrderType orderRuleOrderType)
 		throws PortalException {
 
-		CommerceOrderType commerceOrderType;
+		CommerceOrderType commerceOrderType = null;
 
 		if (Validator.isNull(
 				orderRuleOrderType.getOrderTypeExternalReferenceCode())) {
