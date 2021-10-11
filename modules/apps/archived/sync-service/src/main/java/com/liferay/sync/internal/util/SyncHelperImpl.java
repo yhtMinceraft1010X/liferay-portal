@@ -178,14 +178,12 @@ public class SyncHelperImpl implements SyncHelper {
 		sb.append(StringPool.QUOTE);
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append("\"error\": ");
-
 		sb.append(
 			JSONUtil.put(
 				"message", throwableMessage
 			).put(
 				"type", ClassUtil.getClassName(throwable)
 			).toString());
-
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append("\"throwable\": \"");
 		sb.append(throwable.toString());
