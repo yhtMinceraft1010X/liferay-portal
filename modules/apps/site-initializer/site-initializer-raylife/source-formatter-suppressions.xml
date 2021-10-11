@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="GradleDependencyArtifactsCheck" files="build.gradle" />
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files="remote-apps/d2c/package\.json" />
 	</source-check>
 </suppressions>
