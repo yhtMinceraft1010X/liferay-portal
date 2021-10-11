@@ -68,7 +68,7 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 				corEntry.getCOREntryId());
 
 			if (corEntry != null) {
-				_corEntryLocalService.deleteCOREntry(corEntry.getCOREntryId());
+				_corEntryLocalService.deleteCOREntry(corEntry);
 			}
 
 			iterator.remove();
