@@ -207,7 +207,6 @@ definition {
 			picklistOption = "View");
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
-
 	}
 
 	@description = "LPS-136595 - Verify it is possible to view a Picklist item"
