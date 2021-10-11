@@ -46,8 +46,6 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	totalOrderCommerceMoney = commerceOrderPrice.getTotalWithTaxAmount();
 }
 
-List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
-
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
 
 if (commerceOrder != null) {
@@ -84,6 +82,8 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 	<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
 		<%
+		List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
+
 		CommerceOrderValidatorException commerceOrderValidatorException = (CommerceOrderValidatorException)errorException;
 
 		if (commerceOrderValidatorException != null) {
