@@ -21,6 +21,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -52,27 +53,6 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		Iterator<COREntry> iterator = _corEntries.iterator();
-
-		while (iterator.hasNext()) {
-			COREntry corEntry = iterator.next();
-
-			corEntry = _corEntryLocalService.fetchCOREntry(
-				corEntry.getCOREntryId());
-
-			if (corEntry != null) {
-				_corEntryLocalService.deleteCOREntry(corEntry);
-			}
-
-			iterator.remove();
-		}
 	}
 
 	@Override
@@ -199,6 +179,7 @@ public class OrderRuleResourceTest extends BaseOrderRuleResourceTestCase {
 		};
 	}
 
+	@DeleteAfterTestRun
 	private final List<COREntry> _corEntries = new ArrayList<>();
 
 	@Inject
