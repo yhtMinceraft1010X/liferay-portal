@@ -28,7 +28,6 @@
 		"react-number-format": "^4.6.3",
 		"react-scripts": "4.0.3"
 	},
-	"description": "D2C React",
 	"devDependencies": {
 		"babel-plugin-root-import": "^6.6.0",
 		"eslint": "^7.32.0",
@@ -41,7 +40,7 @@
 			"react-app/jest"
 		]
 	},
-	"name": "@liferay/d2c-react",
+	"name": "@liferay/site-initializer-raylife-d2c",
 	"private": true,
 	"scripts": {
 		"build": "craco build",
