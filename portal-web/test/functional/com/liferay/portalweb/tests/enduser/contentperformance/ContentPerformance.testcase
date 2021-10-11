@@ -110,9 +110,12 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test GraphicLineNoViewsReads {
-
-		// TODO LPS-139236 GraphicLineNoViewsReads pending implementation
-
+		task ("Assert line equal 0") {
+			AssertElementPresent(
+				key_number = "2",
+				locator1 = "ContentPerformance#NUMBER_VIEWS",
+				value1 = "0");
+		}
 	}
 
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"

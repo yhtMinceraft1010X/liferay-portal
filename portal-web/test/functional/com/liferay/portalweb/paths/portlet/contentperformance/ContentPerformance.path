@@ -16,11 +16,15 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMBER_VIEWS</td>
+	<td>xpath=(//span[contains(@class, 'font-weight-bold') and contains(text(),'0')])[${key_number}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_DATE_RANGE</td>
 	<td>//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>
