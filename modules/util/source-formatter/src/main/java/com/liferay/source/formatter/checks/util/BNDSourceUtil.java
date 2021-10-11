@@ -262,6 +262,7 @@ public class BNDSourceUtil {
 		"Liferay-Releng-Module-Group-Description",
 		"Liferay-Releng-Module-Group-Title", "Liferay-Require-SchemaVersion",
 		"Liferay-RTL-Support-Required", "Liferay-Service",
+		"Liferay-Site-Initializer-Description", "Liferay-Site-Initializer-Name",
 		"Liferay-Theme-Contributor-Type", "Liferay-Theme-Contributor-Weight",
 		"Liferay-Versions", "Main-Class", "Premain-Class", "Web-ContextPath"
 	};

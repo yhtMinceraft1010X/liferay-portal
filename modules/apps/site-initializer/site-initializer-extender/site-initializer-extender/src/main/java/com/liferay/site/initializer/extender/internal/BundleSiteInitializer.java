@@ -265,7 +265,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return StringPool.BLANK;
+		Dictionary<String, String> headers = _bundle.getHeaders(
+			StringPool.BLANK);
+
+		return GetterUtil.getString(
+			headers.get("Liferay-Site-Initializer-Description"));
 	}
 
 	@Override
@@ -278,7 +282,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Dictionary<String, String> headers = _bundle.getHeaders(
 			StringPool.BLANK);
 
-		return GetterUtil.getString(headers.get("Bundle-Name"));
+		return GetterUtil.getString(
+			headers.get("Liferay-Site-Initializer-Name"),
+			headers.get("Bundle-Name"));
 	}
 
 	@Override
