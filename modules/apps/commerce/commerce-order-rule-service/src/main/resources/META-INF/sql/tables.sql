@@ -13,7 +13,7 @@ create table COREntry (
 	name VARCHAR(75) null,
 	priority INTEGER,
 	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null,
+	typeSettings TEXT null,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

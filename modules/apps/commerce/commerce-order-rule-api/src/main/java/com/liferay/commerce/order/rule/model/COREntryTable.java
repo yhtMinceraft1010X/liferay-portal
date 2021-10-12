@@ -17,6 +17,7 @@ package com.liferay.commerce.order.rule.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -62,8 +63,8 @@ public class COREntryTable extends BaseTable<COREntryTable> {
 		"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<COREntryTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<COREntryTable, String> typeSettings = createColumn(
-		"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<COREntryTable, Clob> typeSettings = createColumn(
+		"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<COREntryTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<COREntryTable, Integer> status = createColumn(

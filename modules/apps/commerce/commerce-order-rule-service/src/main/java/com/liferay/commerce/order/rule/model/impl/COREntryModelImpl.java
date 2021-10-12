@@ -83,7 +83,7 @@ public class COREntryModelImpl
 		{"description", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
 		{"expirationDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"priority", Types.INTEGER}, {"type_", Types.VARCHAR},
-		{"typeSettings", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
+		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -106,7 +106,7 @@ public class COREntryModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -115,7 +115,7 @@ public class COREntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table COREntry (externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table COREntry (externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table COREntry";
 
