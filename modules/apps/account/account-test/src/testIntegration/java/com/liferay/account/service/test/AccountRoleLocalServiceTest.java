@@ -363,14 +363,16 @@ public class AccountRoleLocalServiceTest {
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			AccountRoleLocalServiceUtil.searchAccountRoles(
 				_accountEntry1.getCompanyId(),
-				_accountEntry1.getAccountEntryId(), StringPool.BLANK,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				new long[] {_accountEntry1.getAccountEntryId()},
+				StringPool.BLANK, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		Assert.assertEquals(2, baseModelSearchResult.getLength());
 
 		baseModelSearchResult = AccountRoleLocalServiceUtil.searchAccountRoles(
-			_accountEntry1.getCompanyId(), _accountEntry1.getAccountEntryId(),
-			keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			_accountEntry1.getCompanyId(),
+			new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 
@@ -392,8 +394,8 @@ public class AccountRoleLocalServiceTest {
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			_accountRoleLocalService.searchAccountRoles(
 				accountRole.getCompanyId(),
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT}, keyword,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 
@@ -415,8 +417,8 @@ public class AccountRoleLocalServiceTest {
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			_accountRoleLocalService.searchAccountRoles(
 				accountRole.getCompanyId(),
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT}, keyword,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 
@@ -447,8 +449,8 @@ public class AccountRoleLocalServiceTest {
 			BaseModelSearchResult<AccountRole> baseModelSearchResult =
 				_accountRoleLocalService.searchAccountRoles(
 					accountRole.getCompanyId(),
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					new long[] {AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT},
+					keyword, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(1, baseModelSearchResult.getLength());
 
@@ -474,7 +476,8 @@ public class AccountRoleLocalServiceTest {
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			AccountRoleLocalServiceUtil.searchAccountRoles(
 				_accountEntry1.getCompanyId(),
-				_accountEntry1.getAccountEntryId(), keywords, 0, 2, null);
+				new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
+				0, 2, null);
 
 		Assert.assertEquals(
 			expectedAccountRoles.toString(), 5,
@@ -486,8 +489,9 @@ public class AccountRoleLocalServiceTest {
 		Assert.assertEquals(expectedAccountRoles.subList(0, 2), accountRoles);
 
 		baseModelSearchResult = AccountRoleLocalServiceUtil.searchAccountRoles(
-			_accountEntry1.getCompanyId(), _accountEntry1.getAccountEntryId(),
-			keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			_accountEntry1.getCompanyId(),
+			new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new RoleNameComparator(false));
 
 		expectedAccountRoles = ListUtil.sort(

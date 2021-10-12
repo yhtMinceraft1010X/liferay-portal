@@ -262,16 +262,6 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long companyId, long accountEntryId, String keywords, int start,
-		int end, OrderByComparator<?> orderByComparator) {
-
-		return searchAccountRoles(
-			companyId, new long[] {accountEntryId}, keywords, null, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public BaseModelSearchResult<AccountRole> searchAccountRoles(
 		long companyId, long[] accountEntryIds, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<?> orderByComparator) {
@@ -297,34 +287,6 @@ public class AccountRoleLocalServiceImpl
 					DSLQueryFactoryUtil.countDistinct(
 						AccountRoleTable.INSTANCE.roleId),
 					keywords, params)));
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long accountEntryId, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
-
-		return searchAccountRoles(
-			CompanyThreadLocal.getCompanyId(), new long[] {accountEntryId},
-			keywords, null, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long[] accountEntryIds, String keywords, int start, int end,
-		OrderByComparator<?> orderByComparator) {
-
-		return searchAccountRoles(
-			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, null,
-			start, end, orderByComparator);
 	}
 
 	@Override
