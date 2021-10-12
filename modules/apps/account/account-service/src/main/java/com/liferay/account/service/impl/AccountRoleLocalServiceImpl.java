@@ -338,32 +338,45 @@ public class AccountRoleLocalServiceImpl
 			RoleTable.INSTANCE,
 			RoleTable.INSTANCE.roleId.eq(AccountRoleTable.INSTANCE.roleId)
 		).where(
-			() -> {
-				Predicate predicate = AccountRoleTable.INSTANCE.companyId.eq(
-					companyId);
+			AccountRoleTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (ArrayUtil.isEmpty(accountEntryIds)) {
+						return null;
+					}
 
-				if (ArrayUtil.isNotEmpty(accountEntryIds)) {
-					predicate = predicate.and(
-						AccountRoleTable.INSTANCE.accountEntryId.in(
-							ArrayUtil.toLongArray(accountEntryIds)));
+					return AccountRoleTable.INSTANCE.accountEntryId.in(
+						ArrayUtil.toLongArray(accountEntryIds));
 				}
+			).and(
+				() -> {
+					String[] excludedRoleNames = (String[])params.get(
+						"excludedRoleNames");
 
-				String[] excludedRoleNames = (String[])params.get(
-					"excludedRoleNames");
+					if (ArrayUtil.isEmpty(excludedRoleNames)) {
+						return null;
+					}
 
-				if (ArrayUtil.isNotEmpty(excludedRoleNames)) {
-					predicate = predicate.and(
-						RoleTable.INSTANCE.name.notIn(excludedRoleNames));
+					return RoleTable.INSTANCE.name.notIn(excludedRoleNames);
 				}
+			).and(
+				() -> {
+					Long[] excludedRoleIds = (Long[])params.get(
+						"excludedRoleIds");
 
-				Long[] excludedRoleIds = (Long[])params.get("excludedRoleIds");
+					if (ArrayUtil.isEmpty(excludedRoleIds)) {
+						return null;
+					}
 
-				if (ArrayUtil.isNotEmpty(excludedRoleIds)) {
-					predicate = predicate.and(
-						RoleTable.INSTANCE.roleId.notIn(excludedRoleIds));
+					return RoleTable.INSTANCE.roleId.notIn(excludedRoleIds);
 				}
+			).and(
+				() -> {
+					if (Validator.isNull(keywords)) {
+						return null;
+					}
 
-				if (Validator.isNotNull(keywords)) {
 					Predicate keywordsPredicate =
 						_customSQL.getKeywordsPredicate(
 							DSLFunctionFactoryUtil.lower(
@@ -384,12 +397,9 @@ public class AccountRoleLocalServiceImpl
 							_customSQL.keywords(keywords)),
 						keywordsPredicate);
 
-					predicate = predicate.and(
-						Predicate.withParentheses(keywordsPredicate));
+					return Predicate.withParentheses(keywordsPredicate);
 				}
-
-				return predicate;
-			}
+			)
 		);
 	}
 
