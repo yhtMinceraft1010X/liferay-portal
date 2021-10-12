@@ -547,21 +547,6 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryId(), actionKey));
 	}
 
-	private void _testSearchAccountRolesWithParams(
-		long companyId, long[] accountEntryIds,
-		LinkedHashMap<String, Object> params,
-		List<AccountRole> expectedAccountRoles) {
-
-		BaseModelSearchResult<AccountRole> accountRoleBaseModelSearchResult =
-			_accountRoleLocalService.searchAccountRoles(
-				companyId, accountEntryIds, null, params, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(
-			expectedAccountRoles,
-			accountRoleBaseModelSearchResult.getBaseModels());
-	}
-
 	private long[] _getRoleIds(User user) throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -606,6 +591,21 @@ public class AccountRoleLocalServiceTest {
 		Assert.assertFalse(
 			ArrayUtil.contains(
 				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
+	}
+
+	private void _testSearchAccountRolesWithParams(
+		long companyId, long[] accountEntryIds,
+		LinkedHashMap<String, Object> params,
+		List<AccountRole> expectedAccountRoles) {
+
+		BaseModelSearchResult<AccountRole> accountRoleBaseModelSearchResult =
+			_accountRoleLocalService.searchAccountRoles(
+				companyId, accountEntryIds, null, params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(
+			expectedAccountRoles,
+			accountRoleBaseModelSearchResult.getBaseModels());
 	}
 
 	private static Company _company;
