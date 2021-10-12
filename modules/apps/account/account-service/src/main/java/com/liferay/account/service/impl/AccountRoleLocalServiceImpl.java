@@ -377,27 +377,22 @@ public class AccountRoleLocalServiceImpl
 						return null;
 					}
 
-					Predicate keywordsPredicate =
+					return Predicate.withParentheses(
 						_customSQL.getKeywordsPredicate(
 							DSLFunctionFactoryUtil.lower(
 								RoleTable.INSTANCE.name),
-							_customSQL.keywords(keywords, true));
-
-					keywordsPredicate = Predicate.or(
-						_customSQL.getKeywordsPredicate(
-							DSLFunctionFactoryUtil.lower(
-								RoleTable.INSTANCE.title),
-							_customSQL.keywords(keywords)),
-						keywordsPredicate);
-
-					keywordsPredicate = Predicate.or(
-						_customSQL.getKeywordsPredicate(
-							DSLFunctionFactoryUtil.lower(
-								RoleTable.INSTANCE.description),
-							_customSQL.keywords(keywords)),
-						keywordsPredicate);
-
-					return Predicate.withParentheses(keywordsPredicate);
+							_customSQL.keywords(keywords, true)
+						).or(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									RoleTable.INSTANCE.title),
+								_customSQL.keywords(keywords))
+						).or(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									RoleTable.INSTANCE.description),
+								_customSQL.keywords(keywords))
+						));
 				}
 			)
 		);
