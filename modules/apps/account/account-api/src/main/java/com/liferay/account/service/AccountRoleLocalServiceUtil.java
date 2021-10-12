@@ -348,15 +348,6 @@ public class AccountRoleLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<AccountRole> searchAccountRoles(
-			long companyId, long accountEntryId, String keywords, int start,
-			int end, OrderByComparator<?> orderByComparator) {
-
-		return getService().searchAccountRoles(
-			companyId, accountEntryId, keywords, start, end, orderByComparator);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AccountRole> searchAccountRoles(
 			long companyId, long[] accountEntryIds, String keywords,
 			java.util.LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator<?> orderByComparator) {
@@ -364,32 +355,6 @@ public class AccountRoleLocalServiceUtil {
 		return getService().searchAccountRoles(
 			companyId, accountEntryIds, keywords, params, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AccountRole> searchAccountRoles(
-			long accountEntryId, String keywords, int start, int end,
-			OrderByComparator<?> orderByComparator) {
-
-		return getService().searchAccountRoles(
-			accountEntryId, keywords, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AccountRole> searchAccountRoles(
-			long[] accountEntryIds, String keywords, int start, int end,
-			OrderByComparator<?> orderByComparator) {
-
-		return getService().searchAccountRoles(
-			accountEntryIds, keywords, start, end, orderByComparator);
 	}
 
 	public static void unassociateUser(
