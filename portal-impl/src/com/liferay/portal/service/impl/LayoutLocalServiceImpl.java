@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
@@ -777,7 +778,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
+		_assetEntryLocalService.deleteEntry(
 			Layout.class.getName(), layout.getPlid());
 
 		// Ratings
@@ -2455,7 +2456,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String[] assetTagNames)
 		throws PortalException {
 
-		assetEntryLocalService.updateEntry(
+		_assetEntryLocalService.updateEntry(
 			userId, layout.getGroupId(), layout.getCreateDate(),
 			layout.getModifiedDate(), Layout.class.getName(), layout.getPlid(),
 			layout.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
@@ -3289,7 +3290,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Asset
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			assetEntryLocalService.updateEntry(
+			_assetEntryLocalService.updateEntry(
 				Layout.class.getName(), layout.getPlid(),
 				layout.getStatusDate(), null, true, false);
 		}
@@ -3879,6 +3880,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		new CentralizedThreadLocal<>(
 			LayoutLocalServiceImpl.class + "._virtualLayoutTargetGroupId",
 			() -> GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+	@BeanReference(type = AssetEntryLocalService.class)
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
