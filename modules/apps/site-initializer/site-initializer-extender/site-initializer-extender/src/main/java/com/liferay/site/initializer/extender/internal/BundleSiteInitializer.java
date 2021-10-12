@@ -1343,9 +1343,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 			new HashMap<>();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
 		Group group = serviceContext.getScopeGroup();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1569,9 +1569,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		String json = _read(parentResourcePath + ".metadata.json");
 
 		if (json == null) {
-			json = String.valueOf(
-				JSONUtil.put(
-					"name", FileUtil.getShortFileName(parentResourcePath)));
+			json = JSONUtil.put(
+				"name", FileUtil.getShortFileName(parentResourcePath)
+			).toString();
 		}
 
 		StructuredContentFolder structuredContentFolder =
