@@ -510,14 +510,14 @@ public class AccountRoleLocalServiceTest {
 			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
-		_assertSearchAccountRolesWithParams(
+		_testSearchAccountRolesWithParams(
 			accountRole1.getCompanyId(),
 			new long[] {accountRole1.getAccountEntryId()},
 			LinkedHashMapBuilder.<String, Object>put(
 				"excludedRoleNames", new String[] {accountRole1.getRoleName()}
 			).build(),
 			Collections.singletonList(accountRole2));
-		_assertSearchAccountRolesWithParams(
+		_testSearchAccountRolesWithParams(
 			accountRole1.getCompanyId(),
 			new long[] {accountRole1.getAccountEntryId()},
 			LinkedHashMapBuilder.<String, Object>put(
@@ -547,7 +547,7 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryId(), actionKey));
 	}
 
-	private void _assertSearchAccountRolesWithParams(
+	private void _testSearchAccountRolesWithParams(
 		long companyId, long[] accountEntryIds,
 		LinkedHashMap<String, Object> params,
 		List<AccountRole> expectedAccountRoles) {
