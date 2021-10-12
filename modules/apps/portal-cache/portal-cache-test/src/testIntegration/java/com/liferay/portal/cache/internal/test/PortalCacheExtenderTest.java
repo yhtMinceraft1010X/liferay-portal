@@ -66,7 +66,6 @@ public class PortalCacheExtenderTest {
 	@Before
 	public void setUp() throws Exception {
 		_multiVmXML = _generateXMLContent(_TEST_CACHE_MULTI, 1001, 51);
-
 		_singleVmXML = _generateXMLContent(_TEST_CACHE_SINGLE, 1001, 51);
 
 		_bundle = _installBundle(
