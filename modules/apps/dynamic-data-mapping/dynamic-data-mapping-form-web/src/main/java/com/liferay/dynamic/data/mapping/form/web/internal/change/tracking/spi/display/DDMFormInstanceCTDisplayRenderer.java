@@ -127,8 +127,8 @@ public class DDMFormInstanceCTDisplayRenderer
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			portletResponse.getNamespace());
 
-		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
 		ddmFormFieldRenderingContext.setReturnFullContext(true);
+		ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
 		ddmFormFieldRenderingContext.setViewMode(true);
 
 		DDMFormInstance ddmFormInstance = displayContext.getModel();
