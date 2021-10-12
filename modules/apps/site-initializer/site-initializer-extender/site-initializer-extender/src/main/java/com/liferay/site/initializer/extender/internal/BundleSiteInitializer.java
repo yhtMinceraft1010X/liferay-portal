@@ -1381,7 +1381,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						"[$", "$]", documentsStringUtilReplaceValues),
 					jsonObject.getBoolean("instanceable"),
 					_toMap(
-						group.getName(LocaleUtil.getSiteDefault()) + " - ",
+						group.getName(LocaleUtil.getSiteDefault()) + ": ",
 						jsonObject.getString("name_i18n")),
 					jsonObject.getString("portletCategoryName"), sb.toString());
 

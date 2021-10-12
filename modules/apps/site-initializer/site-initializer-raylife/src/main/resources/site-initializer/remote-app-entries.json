@@ -8,7 +8,7 @@
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
-			"en_US": "Direct to Customer - Get a Quote"
+			"en_US": "Raylife (Get a Quote)"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
@@ -27,7 +27,7 @@
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
-			"en_US": "Direct to Customer - Quote Comparison"
+			"en_US": "Raylife (Quote Comparison)"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
@@ -45,7 +45,7 @@
 		],
 		"htmlElementName": "liferay-raylife-d2c",
 		"name_i18n": {
-			"en_US": "Direct to Customer - Selected Quote"
+			"en_US": "Raylife (Selected Quote)"
 		},
 		"portletCategoryName": "category.remote-apps",
 		"properties": {
