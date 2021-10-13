@@ -42,7 +42,7 @@ public class JSONBatchEngineImportTaskItemReaderImpl
 
 		if (jsonToken != JsonToken.START_ARRAY) {
 			throw new IllegalArgumentException(
-				"Provided stream does not encode JSON array");
+				"Provided stream is not a JSON array");
 		}
 	}
 
