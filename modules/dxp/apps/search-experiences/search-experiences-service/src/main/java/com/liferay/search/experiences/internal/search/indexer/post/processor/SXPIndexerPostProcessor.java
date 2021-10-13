@@ -67,13 +67,10 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 
 		for (Locale locale : _language.getAvailableLocales(groupId)) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(Field.CONTENT);
-			sb.append(StringPool.UNDERLINE);
-			sb.append(_language.getLanguageId(locale));
-
-			String localizedContent = document.get(sb.toString());
+			String localizedContent = document.get(
+				StringBundler.concat(
+					Field.CONTENT, StringPool.UNDERLINE,
+					_language.getLanguageId(locale)));
 
 			if (Validator.isBlank(localizedContent)) {
 				continue;
