@@ -74,7 +74,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		IdempotentRetryAssert.retryAssert(
 			1, TimeUnit.SECONDS, 3, TimeUnit.SECONDS,
 			() -> {
-				_assertResultEquals(expectedSkus);
+				_testGetSkuForecastsByMonthlyRevenuePage(expectedSkus);
 
 				return null;
 			});
@@ -94,7 +94,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 			});
 	}
 
-	private void _assertResultEquals(List<String> expectedSkus)
+	private void _testGetSkuForecastsByMonthlyRevenuePage(List<String> expectedSkus)
 		throws Exception {
 
 		int expectedTotalCount =
