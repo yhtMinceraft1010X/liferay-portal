@@ -6,7 +6,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-raylife-d2c",
+		"htmlElementName": "liferay-remote-app-raylife",
 		"name_i18n": {
 			"en_US": "Raylife (Get a Quote)"
 		},
@@ -25,7 +25,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-raylife-d2c",
+		"htmlElementName": "liferay-remote-app-raylife",
 		"name_i18n": {
 			"en_US": "Raylife (Quote Comparison)"
 		},
@@ -43,7 +43,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/main.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/remote-app/runtime-main.js$]"
 		],
-		"htmlElementName": "liferay-raylife-d2c",
+		"htmlElementName": "liferay-remote-app-raylife",
 		"name_i18n": {
 			"en_US": "Raylife (Selected Quote)"
 		},
