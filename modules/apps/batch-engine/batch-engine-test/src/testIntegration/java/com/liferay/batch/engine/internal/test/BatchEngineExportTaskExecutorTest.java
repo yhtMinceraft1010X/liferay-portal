@@ -390,13 +390,11 @@ public class BatchEngineExportTaskExecutorTest
 
 			Assert.assertEquals(
 				0, batchEngineExportTask.getProcessedItemsCount());
-
 			Assert.assertEquals(0, batchEngineExportTask.getTotalItemsCount());
 		}
 		else {
 			Assert.assertEquals(
 				ROWS_COUNT, batchEngineExportTask.getProcessedItemsCount());
-
 			Assert.assertEquals(
 				ROWS_COUNT, batchEngineExportTask.getTotalItemsCount());
 		}
