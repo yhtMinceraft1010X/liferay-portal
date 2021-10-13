@@ -53,7 +53,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 				<aui:input name="deleteCommerceOrderIds" type="hidden" />
 
 				<clay:button
-					cssClass="btn-fixed btn-primary"
+					cssClass="btn-fixed btn-lg btn-primary"
 					disabled="<%= commerceAccount == null %>"
 					displayType="primary"
 					id="add-order"
