@@ -204,7 +204,8 @@ public abstract class BaseWorkspace implements Workspace {
 	@Override
 	public void waitForSynchronizeToGitHubDev() {
 		if (_parallelExecutor == null) {
-			throw new RuntimeException("Synchronizing had not started");
+			throw new RuntimeException(
+				"Synchronize to GitHub dev did not start");
 		}
 
 		_parallelExecutor.waitFor();
