@@ -61,7 +61,35 @@ public class AccountCategoryForecastResourceImpl
 		for (AccountCategoryForecast accountCategoryForecast :
 				accountCategoryForecasts) {
 
-			_createItem(accountCategoryForecast);
+			AssetCategoryCommerceMLForecast assetCategoryCommerceMLForecast =
+				_assetCategoryCommerceMLForecastManager.create();
+
+			if (accountCategoryForecast.getActual() != null) {
+				assetCategoryCommerceMLForecast.setActual(
+					accountCategoryForecast.getActual());
+			}
+
+			assetCategoryCommerceMLForecast.setAssetCategoryId(
+				accountCategoryForecast.getCategory());
+			assetCategoryCommerceMLForecast.setCommerceAccountId(
+				accountCategoryForecast.getAccount());
+			assetCategoryCommerceMLForecast.setCompanyId(
+				contextCompany.getCompanyId());
+			assetCategoryCommerceMLForecast.setForecast(
+				accountCategoryForecast.getForecast());
+			assetCategoryCommerceMLForecast.setForecastLowerBound(
+				accountCategoryForecast.getForecastLowerBound());
+			assetCategoryCommerceMLForecast.setForecastUpperBound(
+				accountCategoryForecast.getForecastUpperBound());
+			assetCategoryCommerceMLForecast.setPeriod("month");
+			assetCategoryCommerceMLForecast.setScope("asset-category");
+			assetCategoryCommerceMLForecast.setTarget("revenue");
+			assetCategoryCommerceMLForecast.setTimestamp(
+				accountCategoryForecast.getTimestamp());
+
+			_assetCategoryCommerceMLForecastManager.
+				addAssetCategoryCommerceMLForecast(
+					assetCategoryCommerceMLForecast);
 		}
 	}
 
@@ -121,39 +149,6 @@ public class AccountCategoryForecastResourceImpl
 					ArrayUtil.toArray(categoryIds),
 					ArrayUtil.toLongArray(commerceAccountIds), startDate,
 					historyLength, forecastLength));
-	}
-
-	private void _createItem(AccountCategoryForecast accountCategoryForecast)
-		throws Exception {
-
-		AssetCategoryCommerceMLForecast assetCategoryCommerceMLForecast =
-			_assetCategoryCommerceMLForecastManager.create();
-
-		if (accountCategoryForecast.getActual() != null) {
-			assetCategoryCommerceMLForecast.setActual(
-				accountCategoryForecast.getActual());
-		}
-
-		assetCategoryCommerceMLForecast.setAssetCategoryId(
-			accountCategoryForecast.getCategory());
-		assetCategoryCommerceMLForecast.setCommerceAccountId(
-			accountCategoryForecast.getAccount());
-		assetCategoryCommerceMLForecast.setCompanyId(
-			contextCompany.getCompanyId());
-		assetCategoryCommerceMLForecast.setForecast(
-			accountCategoryForecast.getForecast());
-		assetCategoryCommerceMLForecast.setForecastLowerBound(
-			accountCategoryForecast.getForecastLowerBound());
-		assetCategoryCommerceMLForecast.setForecastUpperBound(
-			accountCategoryForecast.getForecastUpperBound());
-		assetCategoryCommerceMLForecast.setPeriod("month");
-		assetCategoryCommerceMLForecast.setScope("asset-category");
-		assetCategoryCommerceMLForecast.setTarget("revenue");
-		assetCategoryCommerceMLForecast.setTimestamp(
-			accountCategoryForecast.getTimestamp());
-
-		_assetCategoryCommerceMLForecastManager.
-			addAssetCategoryCommerceMLForecast(assetCategoryCommerceMLForecast);
 	}
 
 	@Reference
