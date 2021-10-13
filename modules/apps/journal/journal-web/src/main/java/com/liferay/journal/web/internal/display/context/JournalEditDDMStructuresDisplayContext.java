@@ -60,7 +60,6 @@ public class JournalEditDDMStructuresDisplayContext {
 		_ffTranslationManagerAdminMode =
 			(FFTranslationManagerAdminMode)httpServletRequest.getAttribute(
 				FFTranslationManagerAdminMode.class.getName());
-
 		_journalWebConfiguration =
 			(JournalWebConfiguration)httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
