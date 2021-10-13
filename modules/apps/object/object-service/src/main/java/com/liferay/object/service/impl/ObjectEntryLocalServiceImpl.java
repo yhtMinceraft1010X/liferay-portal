@@ -1528,10 +1528,10 @@ public class ObjectEntryLocalServiceImpl
 
 		String value = (String)entry.getValue();
 
-		if (value.length() > 1000) {
+		if (value.length() > 280) {
 			throw new ObjectEntryValuesException(
 				"Object field \"" + entry.getKey() +
-					"\" value exceeds 1000 characters.");
+					"\" value exceeds 280 characters.");
 		}
 	}
 

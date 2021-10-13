@@ -79,12 +79,12 @@ portletDisplay.setURLBack(backURL);
 				let shouldSubmitForm = true;
 
 				fields.forEach((field) => {
-					if (field.type === 'text' && field.value.length > 1000) {
+					if (field.type === 'text' && field.value.length > 280) {
 						shouldSubmitForm = false;
 
 						Liferay.Util.openToast({
 							message:
-								'<liferay-ui:message key="the-maximum-length-is-1000-characters-for-text-fields" />',
+								'<liferay-ui:message key="the-maximum-length-is-280-characters-for-text-fields" />',
 							type: 'warning',
 						});
 

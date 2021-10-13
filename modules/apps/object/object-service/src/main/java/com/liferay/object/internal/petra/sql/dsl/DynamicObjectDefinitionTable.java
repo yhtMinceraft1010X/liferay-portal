@@ -199,7 +199,7 @@ public class DynamicObjectDefinitionTable
 	).put(
 		"Long", "LONG"
 	).put(
-		"String", "VARCHAR(1000)"
+		"String", "VARCHAR(280)"
 	).build();
 	private static final Map<String, Class<?>> _javaClasses =
 		HashMapBuilder.<String, Class<?>>put(
