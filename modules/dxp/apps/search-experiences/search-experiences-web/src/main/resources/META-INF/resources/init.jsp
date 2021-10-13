@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.search.experiences.web.internal.blueprint.constants.SXPBlueprintMVCCommandNames" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.constants.SXPBlueprintTabNames" %><%@
 page import="com.liferay.search.experiences.web.internal.blueprint.constants.SXPBlueprintWebKeys" %>
 

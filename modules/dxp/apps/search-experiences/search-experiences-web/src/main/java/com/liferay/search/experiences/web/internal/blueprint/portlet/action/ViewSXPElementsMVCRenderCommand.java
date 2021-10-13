@@ -16,7 +16,6 @@ package com.liferay.search.experiences.web.internal.blueprint.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
-import com.liferay.search.experiences.web.internal.blueprint.constants.SXPBlueprintMVCCommandNames;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -31,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT,
-		"mvc.command.name=" + SXPBlueprintMVCCommandNames.VIEW_SXP_ELEMENTS
+		"mvc.command.name=/blueprint/sxp_elements"
 	},
 	service = MVCRenderCommand.class
 )

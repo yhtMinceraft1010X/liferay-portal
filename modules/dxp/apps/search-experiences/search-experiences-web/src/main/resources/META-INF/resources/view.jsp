@@ -34,13 +34,13 @@ PortletURL renderURL = renderResponse.createRenderURL();
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tab.equals(SXPBlueprintTabNames.SXP_BLUEPRINTS));
-						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, SXPBlueprintTabNames.SXP_BLUEPRINTS, "mvcRenderCommandName", SXPBlueprintMVCCommandNames.VIEW_SXP_BLUEPRINTS);
+						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, SXPBlueprintTabNames.SXP_BLUEPRINTS, "mvcRenderCommandName", "/blueprint/sxp_blueprints");
 						navigationItem.setLabel(LanguageUtil.get(request, "blueprints"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tab.equals(SXPBlueprintTabNames.SXP_ELEMENTS));
-						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, SXPBlueprintTabNames.SXP_ELEMENTS, "mvcRenderCommandName", SXPBlueprintMVCCommandNames.VIEW_SXP_ELEMENTS, SXPBlueprintWebKeys.HIDDEN, Boolean.FALSE);
+						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, SXPBlueprintTabNames.SXP_ELEMENTS, "mvcRenderCommandName", "/blueprint/sxp_elements", SXPBlueprintWebKeys.HIDDEN, Boolean.FALSE);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}
