@@ -91,26 +91,15 @@ public class AccountForecastResourceImpl
 				CommerceMLForecastConstants.FORECAST_LENGTH_DEFAULT;
 		}
 
-		List<CommerceAccountCommerceMLForecast>
-			commerceAccountCommerceMLForecasts =
+		return Page.of(
+			transform(
 				_commerceAccountCommerceMLForecastManager.
 					getMonthlyRevenueCommerceAccountCommerceMLForecasts(
 						contextCompany.getCompanyId(),
 						ArrayUtil.toLongArray(commerceAccountIds), startDate,
 						historyLength, forecastLength,
 						pagination.getStartPosition(),
-						pagination.getEndPosition());
-
-		long totalItems =
-			_commerceAccountCommerceMLForecastManager.
-				getMonthlyRevenueCommerceAccountCommerceMLForecastsCount(
-					contextCompany.getCompanyId(),
-					ArrayUtil.toLongArray(commerceAccountIds), startDate,
-					historyLength, forecastLength);
-
-		return Page.of(
-			transform(
-				commerceAccountCommerceMLForecasts,
+						pagination.getEndPosition()),
 				commerceAccountCommerceMLForecast ->
 					_accountForecastDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
@@ -120,7 +109,12 @@ public class AccountForecastResourceImpl
 								commerceAccountCommerceMLForecast.
 									getForecastId()),
 							contextAcceptLanguage.getPreferredLocale()))),
-			pagination, totalItems);
+			pagination,
+			_commerceAccountCommerceMLForecastManager.
+				getMonthlyRevenueCommerceAccountCommerceMLForecastsCount(
+					contextCompany.getCompanyId(),
+					ArrayUtil.toLongArray(commerceAccountIds), startDate,
+					historyLength, forecastLength));
 	}
 
 	private void _createItem(AccountForecast accountForecast) throws Exception {

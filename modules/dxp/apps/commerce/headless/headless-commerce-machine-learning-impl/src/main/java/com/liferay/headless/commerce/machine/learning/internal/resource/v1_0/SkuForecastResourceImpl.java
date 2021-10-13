@@ -14,7 +14,6 @@
 
 package com.liferay.headless.commerce.machine.learning.internal.resource.v1_0;
 
-import com.liferay.commerce.machine.learning.forecast.SkuCommerceMLForecast;
 import com.liferay.commerce.machine.learning.forecast.SkuCommerceMLForecastManager;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.SkuForecast;
 import com.liferay.headless.commerce.machine.learning.internal.constants.CommerceMLForecastConstants;
@@ -24,7 +23,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,25 +59,21 @@ public class SkuForecastResourceImpl extends BaseSkuForecastResourceImpl {
 				CommerceMLForecastConstants.FORECAST_LENGTH_DEFAULT;
 		}
 
-		List<SkuCommerceMLForecast> skuCommerceMLForecasts =
-			_skuCommerceMLForecastManager.
-				getMonthlyQuantitySkuCommerceMLForecasts(
-					contextCompany.getCompanyId(), skus, startDate,
-					historyLength, forecastLength,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-		long totalItems =
+		return Page.of(
+			transform(
+				_skuCommerceMLForecastManager.
+					getMonthlyQuantitySkuCommerceMLForecasts(
+						contextCompany.getCompanyId(), skus, startDate,
+						historyLength, forecastLength,
+						pagination.getStartPosition(),
+						pagination.getEndPosition()),
+				skuCommerceMLForecast -> _skuForecastDTOConverter.toDTO(
+					skuCommerceMLForecast)),
+			pagination,
 			_skuCommerceMLForecastManager.
 				getMonthlyQuantitySkuCommerceMLForecastsCount(
 					contextCompany.getCompanyId(), skus, startDate,
-					historyLength, forecastLength);
-
-		return Page.of(
-			transform(
-				skuCommerceMLForecasts,
-				skuCommerceMLForecast -> _skuForecastDTOConverter.toDTO(
-					skuCommerceMLForecast)),
-			pagination, totalItems);
+					historyLength, forecastLength));
 	}
 
 	@Reference

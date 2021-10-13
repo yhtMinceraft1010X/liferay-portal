@@ -96,26 +96,16 @@ public class AccountCategoryForecastResourceImpl
 				CommerceMLForecastConstants.FORECAST_LENGTH_DEFAULT;
 		}
 
-		long[] assetCategoryIds = ArrayUtil.toArray(categoryIds);
-
-		List<AssetCategoryCommerceMLForecast> assetCategoryCommerceMLForecasts =
-			_assetCategoryCommerceMLForecastManager.
-				getMonthlyRevenueAssetCategoryCommerceMLForecasts(
-					contextCompany.getCompanyId(), assetCategoryIds,
-					ArrayUtil.toLongArray(commerceAccountIds), startDate,
-					historyLength, forecastLength,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-		long totalItems =
-			_assetCategoryCommerceMLForecastManager.
-				getMonthlyRevenueAssetCategoryCommerceMLForecastsCount(
-					contextCompany.getCompanyId(), assetCategoryIds,
-					ArrayUtil.toLongArray(commerceAccountIds), startDate,
-					historyLength, forecastLength);
-
 		return Page.of(
 			transform(
-				assetCategoryCommerceMLForecasts,
+				_assetCategoryCommerceMLForecastManager.
+					getMonthlyRevenueAssetCategoryCommerceMLForecasts(
+						contextCompany.getCompanyId(),
+						ArrayUtil.toArray(categoryIds),
+						ArrayUtil.toLongArray(commerceAccountIds), startDate,
+						historyLength, forecastLength,
+						pagination.getStartPosition(),
+						pagination.getEndPosition()),
 				assetCategoryCommerceMLForecast ->
 					_accountCategoryForecastDTOConverter.toDTO(
 						new DefaultDTOConverterContext(
@@ -124,7 +114,13 @@ public class AccountCategoryForecastResourceImpl
 								assetCategoryCommerceMLForecast.
 									getForecastId()),
 							contextAcceptLanguage.getPreferredLocale()))),
-			pagination, totalItems);
+			pagination,
+			_assetCategoryCommerceMLForecastManager.
+				getMonthlyRevenueAssetCategoryCommerceMLForecastsCount(
+					contextCompany.getCompanyId(),
+					ArrayUtil.toArray(categoryIds),
+					ArrayUtil.toLongArray(commerceAccountIds), startDate,
+					historyLength, forecastLength));
 	}
 
 	private void _createItem(AccountCategoryForecast accountCategoryForecast)
