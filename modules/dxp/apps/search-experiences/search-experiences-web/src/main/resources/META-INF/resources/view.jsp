@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:error key="<%= SXPBlueprintWebKeys.ERROR %>">
-	<liferay-ui:message arguments="<%= SessionErrors.get(liferayPortletRequest, SXPBlueprintWebKeys.ERROR) %>" key="error-x" />
-</liferay-ui:error>
-
 <%
 final String tab = ParamUtil.getString(request, SXPBlueprintWebKeys.TAB, "sxpBlueprints");
 
