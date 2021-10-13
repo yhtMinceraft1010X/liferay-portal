@@ -53,7 +53,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_skuCommerceMLForecasts = _populateEntries(
+		_skuCommerceMLForecasts = _addSkuCommerceMLForecasts(
 			4, _FORECAST_LENGTH + _HISTORY_LENGTH);
 
 		Stream<SkuCommerceMLForecast> stream = _skuCommerceMLForecasts.stream();
@@ -148,7 +148,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		return skuCommerceMLForecast;
 	}
 
-	private List<SkuCommerceMLForecast> _populateEntries(
+	private List<SkuCommerceMLForecast> _addSkuCommerceMLForecasts(
 			int forecastCount, int seriesLength)
 		throws Exception {
 
