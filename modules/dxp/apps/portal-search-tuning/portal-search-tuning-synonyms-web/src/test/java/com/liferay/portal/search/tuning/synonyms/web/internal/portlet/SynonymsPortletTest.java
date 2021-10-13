@@ -71,15 +71,14 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_synonymsPortlet, "_queries", _queries);
 		ReflectionTestUtil.setFieldValue(
+			_synonymsPortlet, "_renderMVCCommandCache",
+			Mockito.mock(MVCCommandCache.class));
+		ReflectionTestUtil.setFieldValue(
 			_synonymsPortlet, "_searchEngineAdapter", searchEngineAdapter);
 		ReflectionTestUtil.setFieldValue(_synonymsPortlet, "_sorts", _sorts);
 		ReflectionTestUtil.setFieldValue(
 			_synonymsPortlet, "_synonymSetIndexNameBuilder",
 			synonymSetIndexNameBuilder);
-
-		ReflectionTestUtil.setFieldValue(
-			_synonymsPortlet, "_renderMVCCommandCache",
-			Mockito.mock(MVCCommandCache.class));
 	}
 
 	@Test
