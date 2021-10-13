@@ -94,12 +94,12 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		if (DLFileEntry.class.isAssignableFrom(clazz)) {
 			DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-			versionCount = _doubleStringToInt(dlFileEntry.getVersion());
+			versionCount = _toInteger(dlFileEntry.getVersion());
 		}
 		else if (JournalArticle.class.isAssignableFrom(clazz)) {
 			JournalArticle journalArticle = (JournalArticle)object;
 
-			versionCount = _doubleToInt(journalArticle.getVersion());
+			versionCount = _toInteger(journalArticle.getVersion());
 		}
 		else if (KBArticle.class.isAssignableFrom(clazz)) {
 			KBArticle kbArticle = (KBArticle)object;
@@ -109,7 +109,7 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		else if (WikiPage.class.isAssignableFrom(clazz)) {
 			WikiPage wikiPage = (WikiPage)object;
 
-			versionCount = _doubleToInt(wikiPage.getVersion());
+			versionCount = _toInteger(wikiPage.getVersion());
 		}
 
 		if (versionCount != null) {
@@ -117,18 +117,18 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		}
 	}
 
-	private int _doubleStringToInt(String s) {
-		String[] arr = s.split("\\.");
+	private int _toInteger(double version) {
+		return _toInteger(String.valueOf(version));
+	}
+
+	private int _toInteger(String version) {
+		String[] arr = version.split("\\.");
 
 		int major = GetterUtil.getInteger(arr[0]);
 
 		int minor = GetterUtil.getInteger(arr[1]);
 
 		return major + minor;
-	}
-
-	private int _doubleToInt(double d) {
-		return _doubleStringToInt(String.valueOf(d));
 	}
 
 	@Reference
