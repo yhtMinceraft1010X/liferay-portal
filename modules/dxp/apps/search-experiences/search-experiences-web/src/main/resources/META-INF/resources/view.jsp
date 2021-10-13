@@ -36,7 +36,7 @@ PortletURL renderURL = renderResponse.createRenderURL();
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tab.equals("sxpElements"));
-						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", SXPBlueprintWebKeys.HIDDEN, Boolean.FALSE);
+						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", "hidden", Boolean.FALSE);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}
