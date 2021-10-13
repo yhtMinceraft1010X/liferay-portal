@@ -81,7 +81,8 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 			}
 
 			document.addNumber(
-				_getLengthFieldName(locale), localizedContent.length());
+				"contentLength_" + _language.getLanguageId(locale),
+				localizedContent.length());
 		}
 	}
 
@@ -128,16 +129,6 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 
 	private int _doubleToInt(double d) {
 		return _doubleStringToInt(String.valueOf(d));
-	}
-
-	private String _getLengthFieldName(Locale locale) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("contentLength");
-		sb.append(StringPool.UNDERLINE);
-		sb.append(_language.getLanguageId(locale));
-
-		return sb.toString();
 	}
 
 	@Reference
