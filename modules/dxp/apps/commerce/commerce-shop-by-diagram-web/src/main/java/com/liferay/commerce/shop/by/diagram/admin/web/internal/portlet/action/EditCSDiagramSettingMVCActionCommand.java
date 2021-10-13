@@ -163,17 +163,18 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws Exception {
 
-		String type = ParamUtil.getString(actionRequest, "type");
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-		double radius = ParamUtil.getDouble(actionRequest, "radius");
 		CSDiagramSetting csDiagramSetting =
 			_csDiagramSettingService.fetchCSDiagramSettingByCPDefinitionId(
 				cpDefinitionId);
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_addOrUpdateCPAttachmentFileEntry(
 				actionRequest, csDiagramSetting, cpDefinitionId);
+
+		double radius = ParamUtil.getDouble(actionRequest, "radius");
+		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (csDiagramSetting == null) {
 			return _csDiagramSettingService.addCSDiagramSetting(
