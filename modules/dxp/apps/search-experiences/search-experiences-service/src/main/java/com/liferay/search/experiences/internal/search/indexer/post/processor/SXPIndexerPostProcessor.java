@@ -122,6 +122,9 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 	}
 
 	private int _toInteger(String version) {
+
+		// TODO 2.5 and 5.2 return the same value
+
 		String[] versionParts = version.split("\\.");
 
 		int major = GetterUtil.getInteger(versionParts[0]);
