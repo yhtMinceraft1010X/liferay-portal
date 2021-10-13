@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.search.indexer.post.processor;
+package com.liferay.search.experiences.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
