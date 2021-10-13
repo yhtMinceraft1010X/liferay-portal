@@ -56,10 +56,9 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		_skuCommerceMLForecasts = _populateEntries(
 			4, _FORECAST_LENGTH + _HISTORY_LENGTH);
 
-		Stream<SkuCommerceMLForecast> skuCommerceMLForecastStream =
-			_skuCommerceMLForecasts.stream();
+		Stream<SkuCommerceMLForecast> stream = _skuCommerceMLForecasts.stream();
 
-		_skus = skuCommerceMLForecastStream.map(
+		_skus = stream.map(
 			SkuCommerceMLForecast::getSku
 		).distinct(
 		).collect(
@@ -234,7 +233,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 
 	private static final int _HISTORY_LENGTH = 9;
 
-	private Date _actualDate = RandomTestUtil.nextDate();
+	private final Date _actualDate = RandomTestUtil.nextDate();
 
 	@Inject
 	private SkuCommerceMLForecastManager _skuCommerceMLForecastManager;
