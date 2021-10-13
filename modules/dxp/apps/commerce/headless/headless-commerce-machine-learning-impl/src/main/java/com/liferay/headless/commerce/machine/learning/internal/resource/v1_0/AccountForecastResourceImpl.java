@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -110,8 +109,18 @@ public class AccountForecastResourceImpl
 					historyLength, forecastLength);
 
 		return Page.of(
-			_toAccountForecasts(commerceAccountCommerceMLForecasts), pagination,
-			totalItems);
+			transform(
+				commerceAccountCommerceMLForecasts,
+				commerceAccountCommerceMLForecast ->
+					_accountForecastDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							new CommerceMLForecastCompositeResourcePrimaryKey(
+								commerceAccountCommerceMLForecast.
+									getCompanyId(),
+								commerceAccountCommerceMLForecast.
+									getForecastId()),
+							contextAcceptLanguage.getPreferredLocale()))),
+			pagination, totalItems);
 	}
 
 	private void _createItem(AccountForecast accountForecast) throws Exception {
@@ -142,33 +151,6 @@ public class AccountForecastResourceImpl
 		_commerceAccountCommerceMLForecastManager.
 			addCommerceAccountCommerceMLForecast(
 				commerceAccountCommerceMLForecast);
-	}
-
-	private List<AccountForecast> _toAccountForecasts(
-			List<CommerceAccountCommerceMLForecast>
-				commerceAccountCommerceMLForecasts)
-		throws Exception {
-
-		List<AccountForecast> accountForecasts = new ArrayList<>();
-
-		for (CommerceAccountCommerceMLForecast
-				commerceAccountCommerceMLForecast :
-					commerceAccountCommerceMLForecasts) {
-
-			CommerceMLForecastCompositeResourcePrimaryKey
-				commerceMLForecastCompositeResourcePrimaryKey =
-					new CommerceMLForecastCompositeResourcePrimaryKey(
-						commerceAccountCommerceMLForecast.getCompanyId(),
-						commerceAccountCommerceMLForecast.getForecastId());
-
-			accountForecasts.add(
-				_accountForecastDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceMLForecastCompositeResourcePrimaryKey,
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return accountForecasts;
 	}
 
 	@Reference

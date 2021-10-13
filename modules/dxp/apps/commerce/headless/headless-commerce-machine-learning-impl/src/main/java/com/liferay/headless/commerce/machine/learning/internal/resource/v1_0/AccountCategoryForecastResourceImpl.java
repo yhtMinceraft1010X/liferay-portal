@@ -29,7 +29,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -115,7 +114,16 @@ public class AccountCategoryForecastResourceImpl
 					historyLength, forecastLength);
 
 		return Page.of(
-			_toAccountCategoryForecasts(assetCategoryCommerceMLForecasts),
+			transform(
+				assetCategoryCommerceMLForecasts,
+				assetCategoryCommerceMLForecast ->
+					_accountCategoryForecastDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							new CommerceMLForecastCompositeResourcePrimaryKey(
+								assetCategoryCommerceMLForecast.getCompanyId(),
+								assetCategoryCommerceMLForecast.
+									getForecastId()),
+							contextAcceptLanguage.getPreferredLocale()))),
 			pagination, totalItems);
 	}
 
@@ -150,32 +158,6 @@ public class AccountCategoryForecastResourceImpl
 
 		_assetCategoryCommerceMLForecastManager.
 			addAssetCategoryCommerceMLForecast(assetCategoryCommerceMLForecast);
-	}
-
-	private List<AccountCategoryForecast> _toAccountCategoryForecasts(
-			List<AssetCategoryCommerceMLForecast>
-				commerceAccountCommerceMLForecasts)
-		throws Exception {
-
-		List<AccountCategoryForecast> accountForecasts = new ArrayList<>();
-
-		for (AssetCategoryCommerceMLForecast assetCategoryCommerceMLForecast :
-				commerceAccountCommerceMLForecasts) {
-
-			CommerceMLForecastCompositeResourcePrimaryKey
-				commerceMLForecastCompositeResourcePrimaryKey =
-					new CommerceMLForecastCompositeResourcePrimaryKey(
-						assetCategoryCommerceMLForecast.getCompanyId(),
-						assetCategoryCommerceMLForecast.getForecastId());
-
-			accountForecasts.add(
-				_accountCategoryForecastDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
-						commerceMLForecastCompositeResourcePrimaryKey,
-						contextAcceptLanguage.getPreferredLocale())));
-		}
-
-		return accountForecasts;
 	}
 
 	@Reference

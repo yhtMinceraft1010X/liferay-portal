@@ -23,7 +23,6 @@ import com.liferay.headless.commerce.machine.learning.resource.v1_0.SkuForecastR
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -76,23 +75,11 @@ public class SkuForecastResourceImpl extends BaseSkuForecastResourceImpl {
 					historyLength, forecastLength);
 
 		return Page.of(
-			_toSkuForecast(skuCommerceMLForecasts), pagination, totalItems);
-	}
-
-	private List<SkuForecast> _toSkuForecast(
-			List<SkuCommerceMLForecast> skuCommerceMLForecasts)
-		throws Exception {
-
-		List<SkuForecast> skuForecasts = new ArrayList<>();
-
-		for (SkuCommerceMLForecast skuCommerceMLForecast :
-				skuCommerceMLForecasts) {
-
-			skuForecasts.add(
-				_skuForecastDTOConverter.toDTO(skuCommerceMLForecast));
-		}
-
-		return skuForecasts;
+			transform(
+				skuCommerceMLForecasts,
+				skuCommerceMLForecast -> _skuForecastDTOConverter.toDTO(
+					skuCommerceMLForecast)),
+			pagination, totalItems);
 	}
 
 	@Reference
