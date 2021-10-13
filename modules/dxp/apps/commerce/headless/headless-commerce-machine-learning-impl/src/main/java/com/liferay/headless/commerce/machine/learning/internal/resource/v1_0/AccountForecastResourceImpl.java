@@ -58,7 +58,34 @@ public class AccountForecastResourceImpl
 		throws Exception {
 
 		for (AccountForecast accountForecast : accountForecasts) {
-			_createItem(accountForecast);
+			CommerceAccountCommerceMLForecast
+				commerceAccountCommerceMLForecast =
+					_commerceAccountCommerceMLForecastManager.create();
+
+			if (accountForecast.getActual() != null) {
+				commerceAccountCommerceMLForecast.setActual(
+					accountForecast.getActual());
+			}
+
+			commerceAccountCommerceMLForecast.setCommerceAccountId(
+				accountForecast.getAccount());
+			commerceAccountCommerceMLForecast.setCompanyId(
+				contextCompany.getCompanyId());
+			commerceAccountCommerceMLForecast.setForecast(
+				accountForecast.getForecast());
+			commerceAccountCommerceMLForecast.setForecastLowerBound(
+				accountForecast.getForecastLowerBound());
+			commerceAccountCommerceMLForecast.setForecastUpperBound(
+				accountForecast.getForecastUpperBound());
+			commerceAccountCommerceMLForecast.setPeriod("month");
+			commerceAccountCommerceMLForecast.setScope("commerce-account");
+			commerceAccountCommerceMLForecast.setTarget("revenue");
+			commerceAccountCommerceMLForecast.setTimestamp(
+				accountForecast.getTimestamp());
+
+			_commerceAccountCommerceMLForecastManager.
+				addCommerceAccountCommerceMLForecast(
+					commerceAccountCommerceMLForecast);
 		}
 	}
 
@@ -115,36 +142,6 @@ public class AccountForecastResourceImpl
 					contextCompany.getCompanyId(),
 					ArrayUtil.toLongArray(commerceAccountIds), startDate,
 					historyLength, forecastLength));
-	}
-
-	private void _createItem(AccountForecast accountForecast) throws Exception {
-		CommerceAccountCommerceMLForecast commerceAccountCommerceMLForecast =
-			_commerceAccountCommerceMLForecastManager.create();
-
-		if (accountForecast.getActual() != null) {
-			commerceAccountCommerceMLForecast.setActual(
-				accountForecast.getActual());
-		}
-
-		commerceAccountCommerceMLForecast.setCommerceAccountId(
-			accountForecast.getAccount());
-		commerceAccountCommerceMLForecast.setCompanyId(
-			contextCompany.getCompanyId());
-		commerceAccountCommerceMLForecast.setForecast(
-			accountForecast.getForecast());
-		commerceAccountCommerceMLForecast.setForecastLowerBound(
-			accountForecast.getForecastLowerBound());
-		commerceAccountCommerceMLForecast.setForecastUpperBound(
-			accountForecast.getForecastUpperBound());
-		commerceAccountCommerceMLForecast.setPeriod("month");
-		commerceAccountCommerceMLForecast.setScope("commerce-account");
-		commerceAccountCommerceMLForecast.setTarget("revenue");
-		commerceAccountCommerceMLForecast.setTimestamp(
-			accountForecast.getTimestamp());
-
-		_commerceAccountCommerceMLForecastManager.
-			addCommerceAccountCommerceMLForecast(
-				commerceAccountCommerceMLForecast);
 	}
 
 	@Reference
