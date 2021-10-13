@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.machine.learning.client.pagination.Paginati
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -198,13 +199,10 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 			skuForecasts.addAll(skuForecastPage.getItems());
 		}
 
-		List<SkuForecast> expectedSkuForecasts = new ArrayList<>();
-
-		for (SkuCommerceMLForecast skuCommerceMLForecast :
-				_skuCommerceMLForecasts) {
-
-			expectedSkuForecasts.add(
-				new SkuForecast() {
+		assertEqualsIgnoringOrder(
+			TransformUtil.transform(
+				_skuCommerceMLForecasts,
+				skuCommerceMLForecast -> new SkuForecast() {
 					{
 						actual = skuCommerceMLForecast.getActual();
 						forecast = skuCommerceMLForecast.getForecast();
@@ -216,10 +214,8 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 						timestamp = skuCommerceMLForecast.getTimestamp();
 						unit = skuCommerceMLForecast.getTarget();
 					}
-				});
-		}
-
-		assertEqualsIgnoringOrder(expectedSkuForecasts, skuForecasts);
+				}),
+			skuForecasts);
 	}
 
 	private Date _toDate(LocalDateTime localDateTime) {
