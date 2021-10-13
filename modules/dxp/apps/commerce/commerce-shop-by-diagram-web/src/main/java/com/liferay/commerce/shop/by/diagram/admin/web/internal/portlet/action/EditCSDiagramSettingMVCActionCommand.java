@@ -163,11 +163,12 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws Exception {
 
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
 		CSDiagramSetting csDiagramSetting =
 			_csDiagramSettingService.fetchCSDiagramSettingByCPDefinitionId(
 				cpDefinitionId);
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_addOrUpdateCPAttachmentFileEntry(
