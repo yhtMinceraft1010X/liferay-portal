@@ -53,8 +53,6 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_actualDate = RandomTestUtil.nextDate();
-
 		_skuCommerceMLForecasts = _populateEntries(
 			4, _FORECAST_LENGTH + _HISTORY_LENGTH);
 
@@ -236,7 +234,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 
 	private static final int _HISTORY_LENGTH = 9;
 
-	private Date _actualDate;
+	private Date _actualDate = RandomTestUtil.nextDate();
 
 	@Inject
 	private SkuCommerceMLForecastManager _skuCommerceMLForecastManager;
