@@ -55,7 +55,7 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 
 		_addContentLengths(document);
 
-		_addVersionCount(object, document);
+		_addVersionCount(document, object);
 	}
 
 	private void _addContentLengths(Document document) {
@@ -85,7 +85,7 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		}
 	}
 
-	private void _addVersionCount(Object object, Document document) {
+	private void _addVersionCount(Document document, Object object) {
 		Class<?> clazz = object.getClass();
 
 		Integer versionCount = null;
