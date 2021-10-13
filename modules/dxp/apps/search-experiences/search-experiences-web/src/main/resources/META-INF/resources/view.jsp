@@ -18,8 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "sxpBlueprints");
-
-PortletURL renderURL = renderResponse.createRenderURL();
 %>
 
 <clay:navigation-bar
@@ -30,13 +28,13 @@ PortletURL renderURL = renderResponse.createRenderURL();
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("sxpBlueprints"));
-						navigationItem.setHref(renderURL, "tabs1", "sxpBlueprints", "mvcRenderCommandName", "/blueprint/sxp_blueprints");
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpBlueprints", "mvcRenderCommandName", "/blueprint/sxp_blueprints");
 						navigationItem.setLabel(LanguageUtil.get(request, "blueprints"));
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(tabs1.equals("sxpElements"));
-						navigationItem.setHref(renderURL, "tabs1", "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", "hidden", Boolean.FALSE);
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", "hidden", Boolean.FALSE);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}
