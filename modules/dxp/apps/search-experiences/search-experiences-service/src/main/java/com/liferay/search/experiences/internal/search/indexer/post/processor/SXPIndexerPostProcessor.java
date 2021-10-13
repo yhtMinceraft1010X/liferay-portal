@@ -54,7 +54,6 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		throws Exception {
 
 		_addContentLengths(document);
-
 		_addVersionCount(document, object);
 	}
 
