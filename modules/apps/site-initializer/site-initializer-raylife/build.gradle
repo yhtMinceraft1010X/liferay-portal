@@ -12,12 +12,12 @@ import org.gradle.util.GUtil
 apply plugin: "com.liferay.node"
 
 configurations {
-	remoteApp
+	extraRemoteApp
 }
 
-task buildRemoteApp
+task buildExtraRemoteApp
 task forceDeploy
-task zipRemoteApp(type: Zip)
+task zipExtraRemoteApp(type: Zip)
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -26,11 +26,11 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 artifacts {
-	remoteApp zipRemoteApp
+	extraRemoteApp zipExtraRemoteApp
 }
 
 dependencies {
-	remoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.app", version: "20211011.1724"
+	extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: "20211011.1724"
 }
 
 forceDeploy {
@@ -44,29 +44,28 @@ node {
 }
 
 processResources {
-	ResolvedConfiguration remoteAppResolvedConfiguration = configurations.remoteApp.getResolvedConfiguration()
-
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || remoteAppResolvedConfiguration.hasError()) {
-		dependsOn buildRemoteApp
+	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
+		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/remote-app") {
-			from new File(buildDir, "remote-app")
+			from new File(projectDir, "extra/remote-app/build/static/js")
+			include "*.js"
 		}
 	}
 	else {
 		into("site-initializer/documents/remote-app") {
-			from zipTree(configurations.remoteApp.singleFile)
+			from zipTree(configurations.extraRemoteApp.singleFile)
 		}
 	}
 }
 
-uploadRemoteApp {
+uploadExtraRemoteApp {
 	doLast {
 		File buildGradleFile = file("build.gradle")
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/remoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.remote.app", version: "(\w+\.\w+)"/) {
+		content = content.replaceFirst(~/extraRemoteApp ext: "zip", group: "com.liferay", name: "com.liferay.site.initializer.raylife.extra.remote.app", version: "(\w+\.\w+)"/) {
 			String all, String versionString ->
 
 			all.replace versionString, dateString
@@ -78,7 +77,7 @@ uploadRemoteApp {
 	repositories {
 		mavenDeployer {
 			pom {
-				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".remote.app"
+				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra.remote.app"
 				groupId = "com.liferay"
 				version = dateString
 			}
@@ -86,24 +85,21 @@ uploadRemoteApp {
 	}
 }
 
-zipRemoteApp {
-	dependsOn buildRemoteApp
+zipExtraRemoteApp {
+	dependsOn buildExtraRemoteApp
 
-	archiveName "remote-app.zip"
+	archiveName "extra-remote-app.zip"
 	destinationDir new File(buildDir, "dist")
-	from new File(buildDir, "remote-app")
+	from new File(projectDir, "extra/remote-app/build/static/js")
+	include "*.js"
 }
 
-_createRemoteAppTasks()
+_createExtraRemoteAppTasks()
 
-private void _createRemoteAppTasks() {
-	File dir = new File(projectDir, "remote-app")
+private void _createExtraRemoteAppTasks() {
+	File dir = new File(projectDir, "extra/remote-app")
 
-	String suffix = dir.name.replaceAll(/[\.-](\w)/) {
-		return it[1].toUpperCase()
-	}
-
-	Task yarnInstallTask = tasks.create(name: "yarnInstall" + StringUtil.capitalize(suffix), type: Exec) {
+	Task yarnInstallExtraRemoteAppTask = tasks.create(name: "yarnInstallExtraRemoteApp", type: Exec) {
 		if (OSDetector.windows) {
 			executable "cmd.exe"
 
@@ -122,7 +118,7 @@ private void _createRemoteAppTasks() {
 		workingDir dir
 	}
 
-	Task yarnBuildTask = tasks.create(name: "yarnBuild" + StringUtil.capitalize(suffix), type: Exec) {
+	Task yarnBuildExtraRemoteAppTask = tasks.create(name: "yarnBuildExtraRemoteApp", type: Exec) {
 		if (OSDetector.windows) {
 			executable "cmd.exe"
 
@@ -137,17 +133,9 @@ private void _createRemoteAppTasks() {
 		}
 
 		args "build"
-		dependsOn yarnInstallTask
+		dependsOn yarnInstallExtraRemoteAppTask
 		workingDir dir
-
-		doLast {
-			copy {
-				from new File(dir, "build/static")
-				include "js/*.js"
-				into new File(buildDir, "remote-app")
-			}
-		}
 	}
 
-	buildRemoteApp.finalizedBy yarnBuildTask
+	buildExtraRemoteApp.finalizedBy yarnBuildExtraRemoteAppTask
 }
