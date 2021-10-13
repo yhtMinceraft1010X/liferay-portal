@@ -106,15 +106,15 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 				expectedSkus.toArray(new String[0]), Pagination.of(1, 10));
 
 		Assert.assertEquals(
-			"Total count", expectedTotalCount,
+			expectedTotalCount,
 			skuForecastsByMonthlyRevenuePage.getTotalCount());
 
-		Collection<SkuForecast> items =
+		Collection<SkuForecast> skuForecasts =
 			skuForecastsByMonthlyRevenuePage.getItems();
 
-		Stream<SkuForecast> itemsStream = items.stream();
+		Stream<SkuForecast> stream = skuForecasts.stream();
 
-		List<String> actualSkus = itemsStream.map(
+		List<String> actualSkus = stream.map(
 			SkuForecast::getSku
 		).distinct(
 		).collect(
@@ -185,7 +185,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 	private void _testGetSkuForecastsByMonthlyRevenuePageWithPagination()
 		throws Exception {
 
-		List<SkuForecast> items = new ArrayList<>();
+		List<SkuForecast> skuForecasts = new ArrayList<>();
 
 		int pageSize = _HISTORY_LENGTH + _FORECAST_LENGTH;
 
@@ -195,7 +195,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 					_FORECAST_LENGTH, _actualDate, _HISTORY_LENGTH,
 					_skus.toArray(new String[0]), Pagination.of(i, pageSize));
 
-			items.addAll(skuForecastPage.getItems());
+			skuForecasts.addAll(skuForecastPage.getItems());
 		}
 
 		List<SkuForecast> expectedSkuForecasts = new ArrayList<>();
@@ -219,7 +219,7 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 				});
 		}
 
-		assertEqualsIgnoringOrder(expectedSkuForecasts, items);
+		assertEqualsIgnoringOrder(expectedSkuForecasts, skuForecasts);
 	}
 
 	private Date _toDate(LocalDateTime localDateTime) {
