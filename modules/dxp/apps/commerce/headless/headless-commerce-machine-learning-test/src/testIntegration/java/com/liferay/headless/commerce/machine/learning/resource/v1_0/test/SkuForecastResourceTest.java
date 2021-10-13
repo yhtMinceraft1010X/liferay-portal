@@ -95,60 +95,6 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 			});
 	}
 
-	private void _testGetSkuForecastsByMonthlyRevenuePage(List<String> expectedSkus)
-		throws Exception {
-
-		int expectedTotalCount =
-			expectedSkus.size() * (_FORECAST_LENGTH + _HISTORY_LENGTH);
-
-		Page<SkuForecast> skuForecastsByMonthlyRevenuePage =
-			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				_FORECAST_LENGTH, _actualDate, _HISTORY_LENGTH,
-				expectedSkus.toArray(new String[0]), Pagination.of(1, 10));
-
-		Assert.assertEquals(
-			expectedTotalCount,
-			skuForecastsByMonthlyRevenuePage.getTotalCount());
-
-		Collection<SkuForecast> skuForecasts =
-			skuForecastsByMonthlyRevenuePage.getItems();
-
-		Stream<SkuForecast> stream = skuForecasts.stream();
-
-		List<String> actualSkus = stream.map(
-			SkuForecast::getSku
-		).distinct(
-		).collect(
-			Collectors.toList()
-		);
-
-		Assert.assertTrue(
-			expectedSkus.containsAll(actualSkus) &&
-			actualSkus.containsAll(expectedSkus));
-	}
-
-	private SkuCommerceMLForecast _createSkuCommerceMLForecast(
-		String sku, Date timestamp) {
-
-		SkuCommerceMLForecast skuCommerceMLForecast =
-			_skuCommerceMLForecastManager.create();
-
-		skuCommerceMLForecast.setActual((float)RandomTestUtil.nextDouble());
-		skuCommerceMLForecast.setCompanyId(testCompany.getCompanyId());
-		skuCommerceMLForecast.setForecast((float)RandomTestUtil.nextDouble());
-		skuCommerceMLForecast.setForecastLowerBound(
-			(float)RandomTestUtil.nextDouble());
-		skuCommerceMLForecast.setForecastUpperBound(
-			(float)RandomTestUtil.nextDouble());
-		skuCommerceMLForecast.setSku(sku);
-		skuCommerceMLForecast.setJobId(RandomTestUtil.randomString());
-		skuCommerceMLForecast.setPeriod("month");
-		skuCommerceMLForecast.setTarget("quantity");
-		skuCommerceMLForecast.setTimestamp(timestamp);
-
-		return skuCommerceMLForecast;
-	}
-
 	private List<SkuCommerceMLForecast> _addSkuCommerceMLForecasts(
 			int forecastCount, int seriesLength)
 		throws Exception {
@@ -181,6 +127,61 @@ public class SkuForecastResourceTest extends BaseSkuForecastResourceTestCase {
 		}
 
 		return skuCommerceMLForecasts;
+	}
+
+	private SkuCommerceMLForecast _createSkuCommerceMLForecast(
+		String sku, Date timestamp) {
+
+		SkuCommerceMLForecast skuCommerceMLForecast =
+			_skuCommerceMLForecastManager.create();
+
+		skuCommerceMLForecast.setActual((float)RandomTestUtil.nextDouble());
+		skuCommerceMLForecast.setCompanyId(testCompany.getCompanyId());
+		skuCommerceMLForecast.setForecast((float)RandomTestUtil.nextDouble());
+		skuCommerceMLForecast.setForecastLowerBound(
+			(float)RandomTestUtil.nextDouble());
+		skuCommerceMLForecast.setForecastUpperBound(
+			(float)RandomTestUtil.nextDouble());
+		skuCommerceMLForecast.setSku(sku);
+		skuCommerceMLForecast.setJobId(RandomTestUtil.randomString());
+		skuCommerceMLForecast.setPeriod("month");
+		skuCommerceMLForecast.setTarget("quantity");
+		skuCommerceMLForecast.setTimestamp(timestamp);
+
+		return skuCommerceMLForecast;
+	}
+
+	private void _testGetSkuForecastsByMonthlyRevenuePage(
+			List<String> expectedSkus)
+		throws Exception {
+
+		int expectedTotalCount =
+			expectedSkus.size() * (_FORECAST_LENGTH + _HISTORY_LENGTH);
+
+		Page<SkuForecast> skuForecastsByMonthlyRevenuePage =
+			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
+				_FORECAST_LENGTH, _actualDate, _HISTORY_LENGTH,
+				expectedSkus.toArray(new String[0]), Pagination.of(1, 10));
+
+		Assert.assertEquals(
+			expectedTotalCount,
+			skuForecastsByMonthlyRevenuePage.getTotalCount());
+
+		Collection<SkuForecast> skuForecasts =
+			skuForecastsByMonthlyRevenuePage.getItems();
+
+		Stream<SkuForecast> stream = skuForecasts.stream();
+
+		List<String> actualSkus = stream.map(
+			SkuForecast::getSku
+		).distinct(
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertTrue(
+			expectedSkus.containsAll(actualSkus) &&
+			actualSkus.containsAll(expectedSkus));
 	}
 
 	private void _testGetSkuForecastsByMonthlyRevenuePageWithPagination()
