@@ -27,8 +27,6 @@ definition {
 	@description = "This is a use case for LRQA-4988."
 	@priority = "4"
 	test AssertNoWikiJavascript {
-		property portal.upstream = "quarantine";
-
 		task ("Add PG") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -133,8 +131,6 @@ definition {
 	@description = "This is a use case for LRQA-42763."
 	@priority = "4"
 	test AssertWebContentJavascript {
-		property portal.upstream = "quarantine";
-
 		task ("Add public page") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
