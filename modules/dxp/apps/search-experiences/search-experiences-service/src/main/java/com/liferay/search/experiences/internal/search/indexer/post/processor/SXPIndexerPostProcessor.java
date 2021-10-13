@@ -122,11 +122,10 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 	}
 
 	private int _toInteger(String version) {
-		String[] arr = version.split("\\.");
+		String[] versionParts = version.split("\\.");
 
-		int major = GetterUtil.getInteger(arr[0]);
-
-		int minor = GetterUtil.getInteger(arr[1]);
+		int major = GetterUtil.getInteger(versionParts[0]);
+		int minor = GetterUtil.getInteger(versionParts[1]);
 
 		return major + minor;
 	}
