@@ -18,11 +18,4 @@ package com.liferay.search.experiences.web.internal.blueprint.constants;
  * @author Petteri Karttunen
  */
 public class SXPBlueprintWebKeys {
-
-	public static final String ERROR = "error";
-
-	public static final String HIDDEN = "hidden";
-
-	public static final String TAB = "tab";
-
 }

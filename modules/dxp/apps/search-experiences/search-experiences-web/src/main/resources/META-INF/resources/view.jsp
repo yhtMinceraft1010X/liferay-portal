@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-final String tab = ParamUtil.getString(request, SXPBlueprintWebKeys.TAB, "sxpBlueprints");
+String tabs1 = ParamUtil.getString(request, "tabs1", "sxpBlueprints");
 
 PortletURL renderURL = renderResponse.createRenderURL();
 %>
@@ -29,14 +29,14 @@ PortletURL renderURL = renderResponse.createRenderURL();
 			{
 				add(
 					navigationItem -> {
-						navigationItem.setActive(tab.equals("sxpBlueprints"));
-						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, "sxpBlueprints", "mvcRenderCommandName", "/blueprint/sxp_blueprints");
+						navigationItem.setActive(tabs1.equals("sxpBlueprints"));
+						navigationItem.setHref(renderURL, "tabs1", "sxpBlueprints", "mvcRenderCommandName", "/blueprint/sxp_blueprints");
 						navigationItem.setLabel(LanguageUtil.get(request, "blueprints"));
 					});
 				add(
 					navigationItem -> {
-						navigationItem.setActive(tab.equals("sxpElements"));
-						navigationItem.setHref(renderURL, SXPBlueprintWebKeys.TAB, "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", "hidden", Boolean.FALSE);
+						navigationItem.setActive(tabs1.equals("sxpElements"));
+						navigationItem.setHref(renderURL, "tabs1", "sxpElements", "mvcRenderCommandName", "/blueprint/sxp_elements", "hidden", Boolean.FALSE);
 						navigationItem.setLabel(LanguageUtil.get(request, "elements"));
 					});
 			}
@@ -45,7 +45,7 @@ PortletURL renderURL = renderResponse.createRenderURL();
 />
 
 <c:choose>
-	<c:when test="<%= tab.equals("sxpElements") %>">
+	<c:when test="<%= tabs1.equals("sxpElements") %>">
 		<liferay-util:include page="/view_sxp_elements.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
