@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT,
-		"mvc.command.name=/blueprint/sxp_blueprints",
-		"mvc.command.name=/"
+		"mvc.command.name=/", "mvc.command.name=/blueprint/sxp_blueprints"
 	},
 	service = MVCRenderCommand.class
 )

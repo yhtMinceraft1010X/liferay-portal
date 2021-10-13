@@ -43,7 +43,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "sxpBlueprints");
 />
 
 <c:choose>
-	<c:when test="<%= tabs1.equals("sxpElements") %>">
+	<c:when test='<%= tabs1.equals("sxpElements") %>'>
 		<liferay-util:include page="/view_sxp_elements.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
