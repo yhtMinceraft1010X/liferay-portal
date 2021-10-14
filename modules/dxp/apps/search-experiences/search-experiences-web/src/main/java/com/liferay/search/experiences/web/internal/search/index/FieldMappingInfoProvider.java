@@ -109,7 +109,7 @@ public class FieldMappingInfoProvider {
 
 	private void _addFields(
 		List<FieldMappingInfo> fieldMappingInfos, List<String> fieldNames,
-		JSONObject jsonObject, String parentPath) {
+		JSONObject jsonObject, String path) {
 
 		Set<String> keySet = jsonObject.keySet();
 
@@ -121,7 +121,7 @@ public class FieldMappingInfoProvider {
 				String type = fieldJSONObject.getString("type");
 
 				String fieldNameWithPath = _getFieldNameWithPath(
-					fieldName, parentPath);
+					fieldName, path);
 
 				if (type.equals("nested")) {
 					_addFields(
