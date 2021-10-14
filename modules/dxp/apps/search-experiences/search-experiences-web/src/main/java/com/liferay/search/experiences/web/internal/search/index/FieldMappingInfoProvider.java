@@ -120,21 +120,21 @@ public class FieldMappingInfoProvider {
 
 				String type = fieldJSONObject.getString("type");
 
-				String fieldNameWithPath = fieldName;
+				String fieldNamePath = fieldName;
 
 				if (!Validator.isBlank(path)) {
-					fieldNameWithPath = path + "." + fieldName;
+					fieldNamePath = path + "." + fieldName;
 				}
 
 				if (type.equals("nested")) {
 					_addFields(
 						fieldMappingInfos, fieldNames,
 						fieldJSONObject.getJSONObject("properties"),
-						fieldNameWithPath);
+						fieldNamePath);
 				}
 				else {
 					_addField(
-						fieldMappingInfos, fieldNameWithPath, fieldNames,
+						fieldMappingInfos, fieldNamePath, fieldNames,
 						fieldJSONObject);
 				}
 			});
