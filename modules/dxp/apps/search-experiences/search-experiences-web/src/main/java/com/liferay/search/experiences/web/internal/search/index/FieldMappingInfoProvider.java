@@ -29,6 +29,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -75,7 +76,7 @@ public class FieldMappingInfoProvider {
 		List<FieldMappingInfo> fieldMappingInfos = new ArrayList<>();
 
 		_addFieldMappingInfos(
-			fieldMappingInfos, new ArrayList<String>(), jsonObject,
+			fieldMappingInfos, new HashSet<String>(), jsonObject,
 			StringPool.BLANK);
 
 		return fieldMappingInfos;
@@ -83,7 +84,7 @@ public class FieldMappingInfoProvider {
 
 	private void _addFieldMappingInfo(
 		List<FieldMappingInfo> fieldMappingInfos, String fieldName,
-		List<String> fieldNames, JSONObject jsonObject) {
+		Set<String> fieldNames, JSONObject jsonObject) {
 
 		String languageId = _getLanguageId(fieldName);
 
@@ -107,7 +108,7 @@ public class FieldMappingInfoProvider {
 	}
 
 	private void _addFieldMappingInfos(
-		List<FieldMappingInfo> fieldMappingInfos, List<String> fieldNames,
+		List<FieldMappingInfo> fieldMappingInfos, Set<String> fieldNames,
 		JSONObject jsonObject, String path) {
 
 		for (String fieldName : jsonObject.keySet()) {
