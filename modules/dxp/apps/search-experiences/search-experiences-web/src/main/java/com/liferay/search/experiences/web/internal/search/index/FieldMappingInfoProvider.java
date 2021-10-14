@@ -28,8 +28,8 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,6 +44,22 @@ public class FieldMappingInfoProvider {
 		_indexInformation = indexInformation;
 		_indexNameBuilder = indexNameBuilder;
 		_jsonFactory = jsonFactory;
+	}
+
+	public List<FieldMappingInfo> getFieldMappings(long companyId) {
+		JSONObject jsonObject = _getFieldMappingsJSONObject(companyId);
+
+		if (jsonObject == null) {
+			return Collections.<FieldMappingInfo>emptyList();
+		}
+
+		List<FieldMappingInfo> fieldMappingInfos = new ArrayList<>();
+
+		_addFieldMappingInfos(
+			fieldMappingInfos, new HashSet<String>(), jsonObject,
+			StringPool.BLANK);
+
+		return fieldMappingInfos;
 	}
 
 	public List<FieldMappingInfo> getLocalizedFieldMappings(long companyId) {
@@ -66,22 +82,6 @@ public class FieldMappingInfoProvider {
 		return fieldMappingInfos;
 	}
 
-	public List<FieldMappingInfo> getFieldMappings(long companyId) {
-		JSONObject jsonObject = _getFieldMappingsJSONObject(companyId);
-
-		if (jsonObject == null) {
-			return Collections.<FieldMappingInfo>emptyList();
-		}
-
-		List<FieldMappingInfo> fieldMappingInfos = new ArrayList<>();
-
-		_addFieldMappingInfos(
-			fieldMappingInfos, new HashSet<String>(), jsonObject,
-			StringPool.BLANK);
-
-		return fieldMappingInfos;
-	}
-
 	private void _addFieldMappingInfo(
 		List<FieldMappingInfo> fieldMappingInfos, String fieldName,
 		Set<String> fieldNames, JSONObject jsonObject) {
@@ -100,7 +100,8 @@ public class FieldMappingInfoProvider {
 		if (!fieldNames.contains(fieldNameWithPosition)) {
 			fieldMappingInfos.add(
 				new FieldMappingInfo(
-					languageIdPosition, fieldName, jsonObject.getString("type")));
+					languageIdPosition, fieldName,
+					jsonObject.getString("type")));
 
 			fieldNames.add(fieldNameWithPosition);
 		}
@@ -111,8 +112,7 @@ public class FieldMappingInfoProvider {
 		JSONObject jsonObject, String path) {
 
 		for (String fieldName : jsonObject.keySet()) {
-			JSONObject fieldJSONObject = jsonObject.getJSONObject(
-				fieldName);
+			JSONObject fieldJSONObject = jsonObject.getJSONObject(fieldName);
 
 			String type = fieldJSONObject.getString("type");
 
@@ -125,13 +125,11 @@ public class FieldMappingInfoProvider {
 			if (type.equals("nested")) {
 				_addFieldMappingInfos(
 					fieldMappingInfos, fieldNames,
-					fieldJSONObject.getJSONObject("properties"),
-					fieldPath);
+					fieldJSONObject.getJSONObject("properties"), fieldPath);
 			}
 			else {
 				_addFieldMappingInfo(
-					fieldMappingInfos, fieldPath, fieldNames,
-					fieldJSONObject);
+					fieldMappingInfos, fieldPath, fieldNames, fieldJSONObject);
 			}
 		}
 	}
