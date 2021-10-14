@@ -27,7 +27,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.order.rule.exception.NoSuchCOREntryException" %><%@
 page import="com.liferay.commerce.order.rule.model.COREntry" %><%@
 page import="com.liferay.commerce.order.rule.web.internal.display.context.COREntryDisplayContext" %><%@
-page import="com.liferay.commerce.order.rule.web.internal.frontend.constants.COREntryDataSetConstants" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
