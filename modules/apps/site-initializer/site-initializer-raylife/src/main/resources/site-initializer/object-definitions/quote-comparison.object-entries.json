@@ -7,7 +7,7 @@
 		"mostPopular": false,
 		"perOccuranceLimit": "1000000",
 		"price": "482",
-		"productRecallOrReplacement": "false",
+		"productRecallOrReplacement": false,
 		"promo": "241"
 	},
 	{
@@ -18,7 +18,7 @@
 		"mostPopular": true,
 		"perOccuranceLimit": "1000000",
 		"price": "719",
-		"productRecallOrReplacement": "true",
+		"productRecallOrReplacement": true,
 		"promo": "359"
 	},
 	{
@@ -29,7 +29,7 @@
 		"mostPopular": false,
 		"perOccuranceLimit": "1000000",
 		"price": "1225",
-		"productRecallOrReplacement": "true",
+		"productRecallOrReplacement": true,
 		"promo": "862.5"
 	}
 ]
