@@ -86,13 +86,12 @@ public class FieldMappingInfoProvider {
 		List<FieldMappingInfo> fieldMappingInfos, String fieldName,
 		Set<String> fieldNames, JSONObject jsonObject) {
 
-		String languageId = _getLanguageId(fieldName);
-
 		int languageIdPosition = -1;
+
+		String languageId = _getLanguageId(fieldName);
 
 		if (!Validator.isBlank(languageId)) {
 			languageIdPosition = fieldName.lastIndexOf(languageId);
-
 			fieldName = StringUtil.removeSubstring(fieldName, languageId);
 		}
 
