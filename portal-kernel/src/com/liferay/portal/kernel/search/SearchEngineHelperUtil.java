@@ -91,6 +91,10 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.removeCompany(companyId);
 	}
 
+	public static void removeCompany(long companyId, boolean checkInitialized) {
+		_searchEngineHelper.removeCompany(companyId, checkInitialized);
+	}
+
 	public static SearchEngine removeSearchEngine(String searchEngineId) {
 		return _searchEngineHelper.removeSearchEngine(searchEngineId);
 	}
