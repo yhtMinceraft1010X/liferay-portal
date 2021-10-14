@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -126,14 +127,14 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		Set<Integer> companyIds = new HashSet<>();
 
 		for (String indexName : indexNames) {
-			try {
-				companyIds.add(
-					Integer.valueOf(
-						StringUtil.removeSubstring(
-							indexName, indexNamePrefix)));
+			int companyId = GetterUtil.getInteger(
+				StringUtil.removeSubstring(indexName, indexNamePrefix));
+
+			if (companyId == 0) {
+				continue;
 			}
-			catch (Exception exception) {
-			}
+
+			companyIds.add(companyId);
 		}
 
 		return companyIds;
