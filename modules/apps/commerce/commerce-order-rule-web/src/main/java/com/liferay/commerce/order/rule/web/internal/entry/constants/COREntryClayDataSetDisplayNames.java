@@ -17,7 +17,7 @@ package com.liferay.commerce.order.rule.web.internal.entry.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames {
+public class COREntryClayDataSetDisplayNames {
 
 	public static final String COR_ENTRIES = "corEntries";
 
