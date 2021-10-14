@@ -74,14 +74,14 @@ public class FieldMappingInfoProvider {
 
 		List<FieldMappingInfo> fieldMappingInfos = new ArrayList<>();
 
-		_addFields(
+		_addFieldMappingInfos(
 			fieldMappingInfos, new ArrayList<String>(), jsonObject,
 			StringPool.BLANK);
 
 		return fieldMappingInfos;
 	}
 
-	private void _addField(
+	private void _addFieldMappingInfo(
 		List<FieldMappingInfo> fieldMappingInfos, String fieldName,
 		List<String> fieldNames, JSONObject jsonObject) {
 
@@ -107,7 +107,7 @@ public class FieldMappingInfoProvider {
 		}
 	}
 
-	private void _addFields(
+	private void _addFieldMappingInfos(
 		List<FieldMappingInfo> fieldMappingInfos, List<String> fieldNames,
 		JSONObject jsonObject, String path) {
 
@@ -124,13 +124,13 @@ public class FieldMappingInfoProvider {
 			}
 
 			if (type.equals("nested")) {
-				_addFields(
+				_addFieldMappingInfos(
 					fieldMappingInfos, fieldNames,
 					fieldJSONObject.getJSONObject("properties"),
 					fieldNamePath);
 			}
 			else {
-				_addField(
+				_addFieldMappingInfo(
 					fieldMappingInfos, fieldNamePath, fieldNames,
 					fieldJSONObject);
 			}
