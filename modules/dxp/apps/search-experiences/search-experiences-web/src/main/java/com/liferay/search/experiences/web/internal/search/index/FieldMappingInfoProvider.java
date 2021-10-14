@@ -111,33 +111,30 @@ public class FieldMappingInfoProvider {
 		List<FieldMappingInfo> fieldMappingInfos, List<String> fieldNames,
 		JSONObject jsonObject, String path) {
 
-		Set<String> keySet = jsonObject.keySet();
+		for (String fieldName : jsonObject.keySet()) {
+			JSONObject fieldJSONObject = jsonObject.getJSONObject(
+				fieldName);
 
-		keySet.forEach(
-			fieldName -> {
-				JSONObject fieldJSONObject = jsonObject.getJSONObject(
-					fieldName);
+			String type = fieldJSONObject.getString("type");
 
-				String type = fieldJSONObject.getString("type");
+			String fieldNamePath = fieldName;
 
-				String fieldNamePath = fieldName;
+			if (!Validator.isBlank(path)) {
+				fieldNamePath = path + "." + fieldName;
+			}
 
-				if (!Validator.isBlank(path)) {
-					fieldNamePath = path + "." + fieldName;
-				}
-
-				if (type.equals("nested")) {
-					_addFields(
-						fieldMappingInfos, fieldNames,
-						fieldJSONObject.getJSONObject("properties"),
-						fieldNamePath);
-				}
-				else {
-					_addField(
-						fieldMappingInfos, fieldNamePath, fieldNames,
-						fieldJSONObject);
-				}
-			});
+			if (type.equals("nested")) {
+				_addFields(
+					fieldMappingInfos, fieldNames,
+					fieldJSONObject.getJSONObject("properties"),
+					fieldNamePath);
+			}
+			else {
+				_addField(
+					fieldMappingInfos, fieldNamePath, fieldNames,
+					fieldJSONObject);
+			}
+		}
 	}
 
 	private JSONObject _getFieldMappingsJSONObject(long companyId) {
