@@ -154,6 +154,9 @@ public class FieldMappingInfoProvider {
 	}
 
 	private String _getLanguageId(String fieldName) {
+
+		// TODO Use java.util.regex.Matcher as this call is expensive
+
 		String pattern = "(.*)(_[a-z]{2}_[A-Z]{2})(_.*)?";
 
 		if (fieldName.matches(pattern)) {
