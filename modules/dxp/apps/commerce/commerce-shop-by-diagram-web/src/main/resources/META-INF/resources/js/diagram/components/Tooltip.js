@@ -208,7 +208,11 @@ function Tooltip({
 	const disabled = !mappedProduct || !sequence || loading;
 
 	return (
-		<div className="diagram-tooltip" ref={tooltipRef} style={tooltipStyle}>
+		<div
+			className="diagram-tooltip p-4"
+			ref={tooltipRef}
+			style={tooltipStyle}
+		>
 			<ClayForm onSubmit={_handleSubmit}>
 				<ClayForm.Group>
 					<label htmlFor="sequenceInput">
@@ -294,7 +298,7 @@ function Tooltip({
 					)}
 
 					<ClayButton
-						className="mr-1"
+						className="mr-3"
 						displayType="secondary"
 						onClick={() => closeTooltip()}
 						type="button"
