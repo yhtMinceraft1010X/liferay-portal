@@ -31,11 +31,13 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.search.configuration.SearchEngineHelperConfiguration;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -86,13 +88,13 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Override
 	public Collection<Long> getIndexedCompanyIds() {
-		Set<Integer> companyIds = new HashSet<>();
+		Collection<Long> companyIds = new ArrayList<>();
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
 			companyIds.addAll(searchEngine.getIndexedCompanyIds());
 		}
 
-		return ArrayUtil.toArray(companyIds.toArray(new Integer[0]));
+		return companyIds;
 	}
 
 	@Override
