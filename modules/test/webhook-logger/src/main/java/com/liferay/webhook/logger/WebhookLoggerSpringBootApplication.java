@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.webhook.logger.rest.controller;
+package com.liferay.webhook.logger;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Inácio Nery
  */
-@RequestMapping("/")
-@RestController
-public class MainRestController {
+@SpringBootApplication
+public class WebhookLoggerSpringBootApplication {
 
-	@GetMapping("{value}")
-	public String getValue(@PathVariable(required = false) String value) {
-		return value;
+	public static void main(String[] args) {
+		SpringApplication.run(WebhookLoggerSpringBootApplication.class, args);
 	}
 
 }
