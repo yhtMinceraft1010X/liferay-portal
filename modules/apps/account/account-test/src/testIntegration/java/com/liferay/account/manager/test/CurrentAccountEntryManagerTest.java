@@ -165,7 +165,9 @@ public class CurrentAccountEntryManagerTest {
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_LOG_NAME, LoggerTestUtil.WARN)) {
+				"com.liferay.account.internal.manager." +
+					"CurrentAccountEntryManagerImpl",
+				LoggerTestUtil.WARN)) {
 
 			Group group = GroupTestUtil.addGroup();
 
@@ -211,9 +213,6 @@ public class CurrentAccountEntryManagerTest {
 		ConfigurationTestUtil.saveConfiguration(
 			RandomTestUtil.randomString(), null);
 	}
-
-	private static final String _LOG_NAME =
-		"com.liferay.account.internal.manager.CurrentAccountEntryManagerImpl";
 
 	@Inject
 	private AccountEntryGroupSettings _accountEntryGroupSettings;
