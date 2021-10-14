@@ -303,7 +303,7 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		if (!(workspaceGitRepository instanceof PortalWorkspaceGitRepository)) {
 			throw new RuntimeException(
-				"The portal workspace git repository is not set");
+				"The portal workspace Git repository is not set");
 		}
 
 		return (PortalWorkspaceGitRepository)workspaceGitRepository;
