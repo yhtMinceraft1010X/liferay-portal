@@ -112,6 +112,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	@Override
 	public Collection<Long> getIndexedCompanyIds() {
+		Set<Long> companyIds = new HashSet<>();
+
 		String firstIndexName = _indexNameBuilder.getIndexName(0);
 
 		String prefix = firstIndexName.substring(
@@ -124,8 +126,6 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			_searchEngineAdapter.execute(getIndexIndexRequest);
 
 		String[] indexNames = getIndexIndexResponse.getIndexNames();
-
-		Set<Long> companyIds = new HashSet<>();
 
 		for (String indexName : indexNames) {
 			long companyId = GetterUtil.getLong(
