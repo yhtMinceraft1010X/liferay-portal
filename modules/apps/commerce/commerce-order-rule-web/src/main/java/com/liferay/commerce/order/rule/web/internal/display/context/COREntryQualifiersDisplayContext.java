@@ -113,11 +113,11 @@ public class COREntryQualifiersDisplayContext extends COREntryDisplayContext {
 	}
 
 	public String getActiveChannelEligibility() throws PortalException {
-		long commerceChannelRelsCount =
+		long commerceChannelCOREntryRelsCount =
 			_corEntryRelService.getCommerceChannelCOREntryRelsCount(
 				getCOREntryId(), null);
 
-		if (commerceChannelRelsCount > 0) {
+		if (commerceChannelCOREntryRelsCount > 0) {
 			return "channels";
 		}
 
