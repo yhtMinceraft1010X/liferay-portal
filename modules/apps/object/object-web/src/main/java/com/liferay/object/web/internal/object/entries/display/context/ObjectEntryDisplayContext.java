@@ -434,7 +434,7 @@ public class ObjectEntryDisplayContext {
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
-				if (!_isObjectFieldActive(objectField)) {
+				if (!_isActive(objectField)) {
 					continue;
 				}
 
@@ -593,7 +593,7 @@ public class ObjectEntryDisplayContext {
 				if (objectFieldOptional.isPresent()) {
 					ObjectField objectField = objectFieldOptional.get();
 
-					if (!_isObjectFieldActive(objectField)) {
+					if (!_isActive(objectField)) {
 						continue;
 					}
 
@@ -653,7 +653,7 @@ public class ObjectEntryDisplayContext {
 		return rowsJSONArray.toString();
 	}
 
-	private boolean _isObjectFieldActive(ObjectField objectField)
+	private boolean _isActive(ObjectField objectField)
 		throws PortalException {
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
