@@ -26,9 +26,11 @@ definition {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.3.10";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12"
@@ -37,9 +39,11 @@ definition {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.4.12";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
 	@description = "View SAML configuration after upgrade 7.1.10.3"
@@ -48,9 +52,11 @@ definition {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.1.10.3";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.2.10.1"
@@ -59,9 +65,11 @@ definition {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
 	@description = "This is a use case for LPS-136367. View SAML configuration after upgrade 7.3.10.1"
@@ -71,9 +79,11 @@ definition {
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
 	@description = "This is a use case for LPS-132679. View SAML configuration after upgrade 7.0.10.10"
@@ -82,21 +92,25 @@ definition {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.0.10.16";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration();
+			Upgrade.viewSAMLSPConnectionConfiguration();
+		}
 	}
 
-	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10"
+	@description = "This is a use case for LRQA-64613. View SAML with encryption configuration after upgrade 7.3.10"
 	@priority = "5"
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection with encryption configuration ") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+		}
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12"
@@ -105,9 +119,11 @@ definition {
 		property data.archive.type = "data-archive-saml-encryption";
 		property portal.version = "7.4.12";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection with encryption configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+		}
 	}
 
 	@description = "View SAML configuration after upgrade 7.2.10.1"
@@ -116,9 +132,11 @@ definition {
 		property data.archive.type = "data-archive-saml-encryption";
 		property portal.version = "7.2.10.1";
 
-		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+		task ("View SAML general IdP and connection with encryption configuration") {
+			Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
-		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+			Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
+		}
 	}
 
 }
