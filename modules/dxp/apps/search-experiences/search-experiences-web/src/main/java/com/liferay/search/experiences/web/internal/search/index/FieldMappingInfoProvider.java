@@ -85,37 +85,6 @@ public class FieldMappingInfoProvider {
 		return fieldMappingInfos;
 	}
 
-	public class FieldMappingInfo {
-
-		public FieldMappingInfo(int languageIdIndex, String name, String type) {
-			_languageIdIndex = languageIdIndex;
-			_name = name;
-			_type = type;
-		}
-
-		public FieldMappingInfo(String name, String type) {
-			_name = name;
-			_type = type;
-		}
-
-		public int getLanguageIdIndex() {
-			return _languageIdIndex;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		private int _languageIdIndex;
-		private final String _name;
-		private final String _type;
-
-	}
-
 	private void _addField(
 		List<FieldMappingInfo> fieldInfos, String fieldName,
 		List<String> fieldNames, JSONObject jsonObject) {
