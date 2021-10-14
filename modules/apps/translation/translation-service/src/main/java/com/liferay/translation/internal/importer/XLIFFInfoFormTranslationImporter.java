@@ -190,14 +190,14 @@ public class XLIFFInfoFormTranslationImporter
 			return infoItemReference.getClassPK();
 		}
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
+		Layout layout = _layoutLocalService.fetchLayout(
 			infoItemReference.getClassPK());
 
-		if ((draftLayout == null) || !draftLayout.isDraftLayout()) {
+		if ((layout == null) || !layout.isDraftLayout()) {
 			return infoItemReference.getClassPK();
 		}
 
-		return draftLayout.getClassPK();
+		return layout.getClassPK();
 	}
 
 	private Locale _getSourceLocale(StartSubDocument startSubDocument) {
