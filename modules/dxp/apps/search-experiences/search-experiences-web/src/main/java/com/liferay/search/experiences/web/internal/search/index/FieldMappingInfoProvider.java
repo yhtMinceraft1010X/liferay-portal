@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.web.internal.index;
+package com.liferay.search.experiences.web.internal.search.index;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
