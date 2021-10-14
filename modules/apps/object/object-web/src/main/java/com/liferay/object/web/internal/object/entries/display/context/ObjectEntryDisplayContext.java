@@ -434,7 +434,7 @@ public class ObjectEntryDisplayContext {
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
-				if (_isObjectFieldUnavailable(objectField)) {
+				if (!_isObjectFieldActive(objectField)) {
 					continue;
 				}
 
@@ -593,7 +593,7 @@ public class ObjectEntryDisplayContext {
 				if (objectFieldOptional.isPresent()) {
 					ObjectField objectField = objectFieldOptional.get();
 
-					if (_isObjectFieldUnavailable(objectField)) {
+					if (!_isObjectFieldActive(objectField)) {
 						continue;
 					}
 
@@ -653,7 +653,7 @@ public class ObjectEntryDisplayContext {
 		return rowsJSONArray.toString();
 	}
 
-	private boolean _isObjectFieldUnavailable(ObjectField objectField)
+	private boolean _isObjectFieldActive(ObjectField objectField)
 		throws PortalException {
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
@@ -666,10 +666,10 @@ public class ObjectEntryDisplayContext {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			return !relatedObjectDefinition.isActive();
+			return relatedObjectDefinition.isActive();
 		}
 
-		return false;
+		return true;
 	}
 
 	private void _setDDMFormFieldProperties(
