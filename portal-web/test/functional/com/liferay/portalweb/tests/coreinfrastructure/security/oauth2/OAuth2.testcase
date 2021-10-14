@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40687. Add and Edit an OAuth2 application"
+	@description = "This is a use case for LRQA-40687. Add and Edit an OAuth2 application."
 	test AddAndEditApplication {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -125,7 +125,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48782. Add and Edit OAuth SAP entries"
+	@description = "This is a use case for LRQA-48782. Add and Edit OAuth SAP entries."
 	test AddAndEditOAuthSAPEntries {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.name.skip.portal.instance = "OAuth2#AddAndEditOAuthSAPEntries";
@@ -249,7 +249,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-242. Assert authorization code works in cluster"
+	@description = "This is a use case for OAUTH2-242. Assert authorization code works in cluster."
 	@priority = "5"
 	test AssertAuthorizationCodeWorksInCluster {
 		property app.server.bundles.size = "1";
@@ -325,7 +325,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-259. Assert client credential is user scoped"
+	@description = "This is a use case for OAUTH2-259. Assert client credential is user scoped."
 	@priority = "4"
 	test AssertClientCredentialsIsUserScoped {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
@@ -442,7 +442,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-110393. Assert expand panels on global scopes"
+	@description = "This is a use case for LPS-110393. Assert expand panels on global scopes."
 	@priority = "4"
 	test AssertExpandPanelsOnGlobalScopes {
 		property portal.upstream = "quarantine";
@@ -477,7 +477,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-47381. Authorize exernal application"
+	@description = "This is a use case for LRQA-47381. Authorize exernal application."
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalApplication";
@@ -502,7 +502,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126597. Authorize external application with remember device enabled"
+	@description = "This is a use case for LPS-126597. Authorize external application with remember device enabled."
 	@priority = "4"
 	test AuthorizeExternalApplicationWithRememberDeviceEnabled {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalApplicationWithRememberDeviceEnabled";
@@ -540,7 +540,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126596. Authorize external trusted application"
+	@description = "This is a use case for LPS-126596. Authorize external trusted application."
 	@priority = "4"
 	test AuthorizeExternalTrustedApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
@@ -566,7 +566,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105158. Configure on system level will apply to instance level"
+	@description = "This is a use case for LPS-105158. Configure on system level will apply to instance level."
 	@priority = "4"
 	test ConfigureOnSystemLevelWillApplyToInstanceLevel {
 		property test.name.skip.portal.instance = "OAuth2#ConfigureOnSystemLevelWillApplyToInstanceLevel";
@@ -652,7 +652,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48777. Edit application scopes and view language keys"
+	@description = "This is a use case for LRQA-48777. Edit application scopes and view language keys."
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
@@ -751,7 +751,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-57134. Refresh token time"
+	@description = "This is a use case for LRQA-57134. Refresh token time."
 	@priority = "4"
 	test RefreshTokenTime {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
@@ -786,7 +786,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. Remember device with multiple auth"
+	@description = "This is a use case for LPS-129398. Remember device with multiple auth."
 	@priority = "4"
 	test RememberDeviceWithMultipleAuth {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceWithMultipleAuth";
@@ -858,7 +858,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. Remember device with multiple auth without session"
+	@description = "This is a use case for LPS-129398. Remember device with multiple auth without session."
 	@priority = "4"
 	test RememberDeviceWithMultipleAuthWithoutSession {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceWithMultipleAuthWithoutSession";
@@ -932,7 +932,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105156. Remove expired authorization"
+	@description = "This is a use case for LPS-105156. Remove expired authorization."
 	@priority = "5"
 	test RemoveExpiredAuthorization {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
@@ -1211,7 +1211,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105158. Scopes display as list o instance level"
+	@description = "This is a use case for LPS-105158. Scopes display as list o instance level."
 	@priority = "4"
 	test ScopesDisplayAsListOnInstanceLevel {
 		property test.name.skip.portal.instance = "OAuth2#ScopesDisplayAsListOnInstanceLevel";
@@ -1262,7 +1262,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48773. Update scope bundle prefixes"
+	@description = "This is a use case for LRQA-48773. Update scope bundle prefixes."
 	test UpdateScopeBundlePrefixes {
 		property test.name.skip.portal.instance = "OAuth2#UpdateScopeBundlePrefixes";
 
@@ -1338,7 +1338,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40999. Update scope mappings"
+	@description = "This is a use case for LRQA-40999. Update scope mappings."
 	test UpdateScopeMappings {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
@@ -1372,7 +1372,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-41000. View and Revoke granted authorizations"
+	@description = "This is a use case for LRQA-41000. View and Revoke granted authorizations."
 	test ViewAndRevokeGrantedAuthorizations {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1468,7 +1468,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-216. View auth prompt requested scopes"
+	@description = "This is a use case for OAUTH2-216. View auth prompt requested scopes."
 	test ViewAuthPromptRequestedScopes {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";
@@ -1554,7 +1554,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129395."
+	@description = "This is a use case for LPS-129395. View external option remember device."
 	@priority = "4"
 	test ViewExternalOptionsRememberDevice {
 		task ("Add remember device application") {
@@ -1580,7 +1580,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129395."
+	@description = "This is a use case for LPS-129395. View external options trusted."
 	@priority = "4"
 	test ViewExternalOptionsTrusted {
 		task ("Add trusted application") {
