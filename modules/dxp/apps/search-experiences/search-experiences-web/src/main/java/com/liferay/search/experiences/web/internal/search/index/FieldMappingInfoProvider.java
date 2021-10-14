@@ -95,8 +95,7 @@ public class FieldMappingInfoProvider {
 			fieldName = StringUtil.removeSubstring(fieldName, languageId);
 		}
 
-		String fieldNameWithPosition = fieldName.concat(
-			String.valueOf(languageIdPosition));
+		String fieldNameWithPosition = fieldName + languageIdPosition;
 
 		if (!fieldNames.contains(fieldNameWithPosition)) {
 			fieldMappingInfos.add(
