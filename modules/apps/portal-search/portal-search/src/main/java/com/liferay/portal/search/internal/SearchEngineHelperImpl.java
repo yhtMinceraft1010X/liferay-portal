@@ -224,7 +224,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public synchronized void removeCompany(long companyId) {
+	public void removeCompany(long companyId) {
 		removeCompany(companyId, false);
 	}
 
