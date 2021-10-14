@@ -1187,10 +1187,10 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	public void testSearchWorkflowTasksWhenThereIsAnUnregisteredHandler()
 		throws Exception {
 
-		Class<?> clazz = getClass();
-
 		ServiceRegistration<WorkflowHandler<?>>
 			workflowHandlerServiceRegistration = registryWorkflowHandler();
+
+		Class<?> clazz = getClass();
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
