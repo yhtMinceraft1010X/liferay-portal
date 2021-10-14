@@ -33,16 +33,16 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.flushQueuedSearchEngine(searchEngineId);
 	}
 
-	public static Collection<Long> getIndexedCompanyIds() {
-		return _searchEngineHelper.getIndexedCompanyIds();
-	}
-
 	public static String getDefaultSearchEngineId() {
 		return _searchEngineHelper.getDefaultSearchEngineId();
 	}
 
 	public static String[] getEntryClassNames() {
 		return _searchEngineHelper.getEntryClassNames();
+	}
+
+	public static Collection<Long> getIndexedCompanyIds() {
+		return _searchEngineHelper.getIndexedCompanyIds();
 	}
 
 	public static SearchEngine getSearchEngine(String searchEngineId) {

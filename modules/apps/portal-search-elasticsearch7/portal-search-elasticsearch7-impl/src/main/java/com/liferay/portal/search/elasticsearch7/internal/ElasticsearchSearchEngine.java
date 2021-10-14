@@ -54,10 +54,8 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
@@ -122,8 +120,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		GetIndexIndexResponse getIndexIndexResponse =
 			_searchEngineAdapter.execute(
-				new GetIndexIndexRequest(
-					prefix + StringPool.STAR));
+				new GetIndexIndexRequest(prefix + StringPool.STAR));
 
 		for (String indexName : getIndexIndexResponse.getIndexNames()) {
 			long companyId = GetterUtil.getLong(

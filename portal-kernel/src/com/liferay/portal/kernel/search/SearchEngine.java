@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Bruno Farache

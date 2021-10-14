@@ -30,13 +30,13 @@ public interface SearchEngineHelper {
 
 	public void flushQueuedSearchEngine(String searchEngineId);
 
-	public Collection<Long> getIndexedCompanyIds();
-
 	public Collection<Long> getCompanyIds();
 
 	public String getDefaultSearchEngineId();
 
 	public String[] getEntryClassNames();
+
+	public Collection<Long> getIndexedCompanyIds();
 
 	public SearchEngine getSearchEngine(String searchEngineId);
 

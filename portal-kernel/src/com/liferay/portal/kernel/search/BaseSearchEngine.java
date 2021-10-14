@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 /**
  * @author Bruno Farache
