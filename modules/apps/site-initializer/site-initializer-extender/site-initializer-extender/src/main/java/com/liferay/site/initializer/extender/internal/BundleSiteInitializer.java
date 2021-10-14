@@ -1137,7 +1137,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				json = StringUtil.replace(
 					json, "\"[$", "$]\"",
-					documentsStringUtilReplaceValues));
+					documentsStringUtilReplaceValues);
 
 				Group scopeGroup = serviceContext.getScopeGroup();
 
