@@ -58,31 +58,35 @@ public class SystemObjectDefinitionMetadataModelListener
 	}
 
 	@Override
-	public void onAfterCreate(Object model) throws ModelListenerException {
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, model);
-	}
-
-	@Override
-	public void onAfterRemove(Object model) throws ModelListenerException {
-		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null, model);
-	}
-
-	@Override
-	public void onAfterUpdate(Object originalModel, Object model)
+	public void onAfterCreate(BaseModel baseModel)
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalModel,
-			model);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, baseModel);
 	}
 
 	@Override
-	public void onBeforeRemove(Object model) throws ModelListenerException {
-		try {
-			BaseModel<?> baseModel = (BaseModel<?>)model;
+	public void onAfterRemove(BaseModel baseModel)
+		throws ModelListenerException {
 
+		_executeObjectActions(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE, null, baseModel);
+	}
+
+	@Override
+	public void onAfterUpdate(BaseModel originalBaseModel, BaseModel baseModel)
+		throws ModelListenerException {
+
+		_executeObjectActions(
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
+			baseModel);
+	}
+
+	@Override
+	public void onBeforeRemove(BaseModel baseModel)
+		throws ModelListenerException {
+
+		try {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					_getCompanyId(baseModel), _modelClass.getName());
@@ -101,12 +105,11 @@ public class SystemObjectDefinitionMetadataModelListener
 	}
 
 	private void _executeObjectActions(
-			String objectActionTriggerKey, Object originalModel, Object model)
+			String objectActionTriggerKey, BaseModel originalBaseModel,
+			BaseModel baseModel)
 		throws ModelListenerException {
 
 		try {
-			BaseModel<?> baseModel = (BaseModel<?>)model;
-
 			long userId = PrincipalThreadLocal.getUserId();
 
 			if (userId == 0) {
@@ -117,7 +120,7 @@ public class SystemObjectDefinitionMetadataModelListener
 				_modelClass.getName(), _getCompanyId(baseModel),
 				objectActionTriggerKey,
 				_getPayloadJSONObject(
-					objectActionTriggerKey, originalModel, model),
+					objectActionTriggerKey, originalBaseModel, baseModel),
 				userId);
 		}
 		catch (PortalException portalException) {
@@ -141,21 +144,22 @@ public class SystemObjectDefinitionMetadataModelListener
 	}
 
 	private JSONObject _getPayloadJSONObject(
-			String objectActionTriggerKey, Object originalModel, Object model)
+			String objectActionTriggerKey, BaseModel originalBaseModel,
+			BaseModel baseModel)
 		throws JSONException {
 
 		JSONObject payloadJSONObject = JSONUtil.put(
 			"objectActionTriggerKey", objectActionTriggerKey);
 
 		JSONObject modelJSONObject = _jsonFactory.createJSONObject(
-			model.toString());
+			baseModel.toString());
 
 		payloadJSONObject.put(
 			"model" + _modelClass.getSimpleName(), modelJSONObject);
 
-		if (originalModel != null) {
+		if (originalBaseModel != null) {
 			JSONObject originalModelJSONObject = _jsonFactory.createJSONObject(
-				originalModel.toString());
+				originalBaseModel.toString());
 
 			payloadJSONObject.put(
 				"original" + _modelClass.getSimpleName(),
