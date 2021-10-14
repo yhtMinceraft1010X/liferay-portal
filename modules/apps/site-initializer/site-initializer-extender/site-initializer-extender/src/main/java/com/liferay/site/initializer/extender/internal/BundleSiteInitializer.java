@@ -1135,11 +1135,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(urlPath, ".json")) {
 				String json = StringUtil.read(url.openStream());
 
-				Group scopeGroup = serviceContext.getScopeGroup();
-
 				json = StringUtil.replace(
 					json, "\"[$", "$]\"",
 					documentsStringUtilReplaceValues));
+
+				Group scopeGroup = serviceContext.getScopeGroup();
+
 				json = StringUtil.replace(
 					json,
 					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
