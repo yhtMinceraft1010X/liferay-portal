@@ -82,7 +82,7 @@ public class FieldMappingInfoProvider {
 	}
 
 	private void _addField(
-		List<FieldMappingInfo> fieldInfos, String fieldName,
+		List<FieldMappingInfo> fieldMappingInfos, String fieldName,
 		List<String> fieldNames, JSONObject jsonObject) {
 
 		String languageId = _getLanguageId(fieldName);
@@ -99,7 +99,7 @@ public class FieldMappingInfoProvider {
 			String.valueOf(languageIdIndex));
 
 		if (!fieldNames.contains(fieldNameWithPos)) {
-			fieldInfos.add(
+			fieldMappingInfos.add(
 				new FieldMappingInfo(
 					languageIdIndex, fieldName, jsonObject.getString("type")));
 
@@ -108,7 +108,7 @@ public class FieldMappingInfoProvider {
 	}
 
 	private void _addFields(
-		List<FieldMappingInfo> fieldInfos, List<String> fieldNames,
+		List<FieldMappingInfo> fieldMappingInfos, List<String> fieldNames,
 		JSONObject jsonObject, String parentPath) {
 
 		Set<String> keySet = jsonObject.keySet();
@@ -125,13 +125,13 @@ public class FieldMappingInfoProvider {
 
 				if (type.equals("nested")) {
 					_addFields(
-						fieldInfos, fieldNames,
+						fieldMappingInfos, fieldNames,
 						fieldJSONObject.getJSONObject("properties"),
 						fieldNameWithPath);
 				}
 				else {
 					_addField(
-						fieldInfos, fieldNameWithPath, fieldNames,
+						fieldMappingInfos, fieldNameWithPath, fieldNames,
 						fieldJSONObject);
 				}
 			});
