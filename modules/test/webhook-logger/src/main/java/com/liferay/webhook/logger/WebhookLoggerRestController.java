@@ -14,6 +14,9 @@
 
 package com.liferay.webhook.logger;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Inácio Nery
+ * @author Brian Wing Shun Chan
  */
 @RequestMapping("/")
 @RestController
@@ -35,7 +39,12 @@ public class WebhookLoggerRestController {
 
 	@PostMapping
 	public String getValuePost(@RequestBody String value) {
+		_log.info("Value " + value);
+
 		return value;
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		WebhookLoggerRestController.class);
 
 }

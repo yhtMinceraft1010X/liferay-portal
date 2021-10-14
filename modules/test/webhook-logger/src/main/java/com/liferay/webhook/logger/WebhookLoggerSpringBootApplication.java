@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Inácio Nery
+ * @author Brian Wing Shun Chan
  */
 @SpringBootApplication
 public class WebhookLoggerSpringBootApplication {
