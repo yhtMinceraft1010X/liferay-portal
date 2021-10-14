@@ -120,8 +120,11 @@ public class FieldMappingInfoProvider {
 
 				String type = fieldJSONObject.getString("type");
 
-				String fieldNameWithPath = _getFieldNameWithPath(
-					fieldName, path);
+				String fieldNameWithPath = fieldName;
+
+				if (!Validator.isBlank(path)) {
+					fieldNameWithPath = path + "." + fieldName;
+				}
 
 				if (type.equals("nested")) {
 					_addFields(
@@ -152,14 +155,6 @@ public class FieldMappingInfoProvider {
 		}
 
 		return null;
-	}
-
-	private String _getFieldNameWithPath(String fieldName, String path) {
-		if (Validator.isBlank(path)) {
-			return fieldName;
-		}
-
-		return path + "." + fieldName;
 	}
 
 	private String _getLanguageId(String fieldName) {
