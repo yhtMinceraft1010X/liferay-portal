@@ -19,8 +19,8 @@ package com.liferay.search.experiences.web.internal.search.index;
  */
 public class FieldMappingInfo {
 
-	public FieldMappingInfo(int languageIdIndex, String name, String type) {
-		_languageIdIndex = languageIdIndex;
+	public FieldMappingInfo(int languageIdPosition, String name, String type) {
+		_languageIdPosition = languageIdPosition;
 		_name = name;
 		_type = type;
 	}
@@ -30,8 +30,8 @@ public class FieldMappingInfo {
 		_type = type;
 	}
 
-	public int getLanguageIdIndex() {
-		return _languageIdIndex;
+	public int getLanguageIdPosition() {
+		return _languageIdPosition;
 	}
 
 	public String getName() {
@@ -42,7 +42,7 @@ public class FieldMappingInfo {
 		return _type;
 	}
 
-	private int _languageIdIndex;
+	private int _languageIdPosition;
 	private final String _name;
 	private final String _type;
 

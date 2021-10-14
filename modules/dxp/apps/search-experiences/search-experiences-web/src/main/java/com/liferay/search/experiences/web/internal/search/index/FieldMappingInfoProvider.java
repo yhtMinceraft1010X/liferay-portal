@@ -87,23 +87,23 @@ public class FieldMappingInfoProvider {
 
 		String languageId = _getLanguageId(fieldName);
 
-		int languageIdIndex = -1;
+		int languageIdPosition = -1;
 
 		if (!Validator.isBlank(languageId)) {
-			languageIdIndex = fieldName.lastIndexOf(languageId);
+			languageIdPosition = fieldName.lastIndexOf(languageId);
 
 			fieldName = StringUtil.removeSubstring(fieldName, languageId);
 		}
 
-		String fieldNameWithPos = fieldName.concat(
-			String.valueOf(languageIdIndex));
+		String fieldNameWithPosition = fieldName.concat(
+			String.valueOf(languageIdPosition));
 
-		if (!fieldNames.contains(fieldNameWithPos)) {
+		if (!fieldNames.contains(fieldNameWithPosition)) {
 			fieldMappingInfos.add(
 				new FieldMappingInfo(
-					languageIdIndex, fieldName, jsonObject.getString("type")));
+					languageIdPosition, fieldName, jsonObject.getString("type")));
 
-			fieldNames.add(fieldNameWithPos);
+			fieldNames.add(fieldNameWithPosition);
 		}
 	}
 
