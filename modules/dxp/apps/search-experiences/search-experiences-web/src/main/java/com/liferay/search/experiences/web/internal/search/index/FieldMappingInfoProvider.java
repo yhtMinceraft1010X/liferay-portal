@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -114,15 +115,13 @@ public class FieldMappingInfoProvider {
 		for (String fieldName : jsonObject.keySet()) {
 			JSONObject fieldJSONObject = jsonObject.getJSONObject(fieldName);
 
-			String type = fieldJSONObject.getString("type");
-
 			String fieldPath = fieldName;
 
 			if (!Validator.isBlank(path)) {
 				fieldPath = path + "." + fieldName;
 			}
 
-			if (type.equals("nested")) {
+			if (Objects.equals(fieldJSONObject.getString("type"), "nested")) {
 				_addFieldMappingInfos(
 					fieldMappingInfos, fieldNames,
 					fieldJSONObject.getJSONObject("properties"), fieldPath);
