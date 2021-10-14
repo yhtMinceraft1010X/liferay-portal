@@ -110,7 +110,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
-	public Set<Integer> getCompaniesWithIndexes() {
+	public Set<Long> getCompaniesWithIndexes() {
 		String dummyIndexName = _indexNameBuilder.getIndexName(0);
 
 		String indexNamePrefix = dummyIndexName.substring(
@@ -124,10 +124,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		String[] indexNames = getIndexIndexResponse.getIndexNames();
 
-		Set<Integer> companyIds = new HashSet<>();
+		Set<Long> companyIds = new HashSet<>();
 
 		for (String indexName : indexNames) {
-			int companyId = GetterUtil.getInteger(
+			long companyId = GetterUtil.getLong(
 				StringUtil.removeSubstring(indexName, indexNamePrefix));
 
 			if (companyId == 0) {

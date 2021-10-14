@@ -38,7 +38,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	@Override
-	public Set<Integer> getCompaniesWithIndexes() {
+	public Set<Long> getCompaniesWithIndexes() {
 		return _searchEngine.getCompaniesWithIndexes();
 	}
 
