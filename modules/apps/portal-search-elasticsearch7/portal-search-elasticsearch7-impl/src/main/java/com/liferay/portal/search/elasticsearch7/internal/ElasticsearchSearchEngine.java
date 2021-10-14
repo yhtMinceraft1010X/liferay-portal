@@ -124,9 +124,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				new GetIndexIndexRequest(
 					prefix + StringPool.STAR));
 
-		String[] indexNames = getIndexIndexResponse.getIndexNames();
-
-		for (String indexName : indexNames) {
+		for (String indexName : getIndexIndexResponse.getIndexNames()) {
 			long companyId = GetterUtil.getLong(
 				StringUtil.removeSubstring(indexName, prefix));
 
