@@ -25,4 +25,7 @@ public class COREntryActionKeys {
 	public static final String VIEW_COMMERCE_ORDER_RULES =
 		"VIEW_COMMERCE_ORDER_RULES";
 
+	public static final String ADD_COR_ENTRY =
+		"ADD_COR_ENTRY";
+
 }
