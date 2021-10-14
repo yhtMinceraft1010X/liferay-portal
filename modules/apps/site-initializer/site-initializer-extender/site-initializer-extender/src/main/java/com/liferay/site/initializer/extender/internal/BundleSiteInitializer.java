@@ -343,7 +343,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addJournalArticles(
 					_ddmStructureLocalService, _ddmTemplateLocalService,
 					documentsStringUtilReplaceValues, serviceContext));
-
 			_invoke(
 				() -> _addLayoutPageTemplates(
 					documentsStringUtilReplaceValues, serviceContext));
