@@ -20,3 +20,4 @@ JavaEmptyLineAfterSuperCallCheck | .java | Finds missing emptly line after a `su
 [JavaUnusedSourceFormatterChecksCheck](checks/java_unused_source_formatter_checks_check.markdown#javaunusedsourceformattercheckscheck) | .java | Finds `*Check` classes that are not configured. |
 [MapBuilderCheck](checks/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible. |
 [PortletURLBuilderCheck](checks/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `PortletURLBuilder` is used when possible. |
+[UnicodePropertiesBuilderCheck](checks/builder_check.markdown#buildercheck) | .java | Checks that `UnicodePropertiesBuilder` is used when possible. |
