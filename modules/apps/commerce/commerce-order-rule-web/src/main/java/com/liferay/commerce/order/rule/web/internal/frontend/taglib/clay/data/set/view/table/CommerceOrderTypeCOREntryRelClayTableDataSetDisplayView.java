@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_ACCOUNT_GROUPS,
+	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES,
 	service = ClayDataSetDisplayView.class
 )
-public class AccountGroupCOREntryRelClayTableDataSetDisplayView
+public class CommerceOrderTypeCOREntryRelClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -40,8 +41,11 @@ public class AccountGroupCOREntryRelClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addClayTableSchemaField(
-			"accountGroup.name", "name");
+		ClayTableSchemaField nameClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"orderType.name.LANG", "name");
+
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
 		return clayTableSchemaBuilder.build();
 	}

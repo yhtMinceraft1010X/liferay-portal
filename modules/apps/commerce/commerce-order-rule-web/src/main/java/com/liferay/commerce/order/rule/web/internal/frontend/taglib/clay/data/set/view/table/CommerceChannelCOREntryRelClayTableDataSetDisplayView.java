@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
+package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES,
+	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COR_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
-public class CommerceOrderTypeCOREntryRelClayTableDataSetDisplayView
+public class COREntryClayTableDataSetDisplayView
 	extends BaseTableClayDataSetDisplayView {
 
 	@Override
@@ -42,10 +42,34 @@ public class CommerceOrderTypeCOREntryRelClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField(
-				"orderType.name.LANG", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
+
+		ClayTableSchemaField activeClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");
+
+		activeClayTableSchemaField.setContentRenderer("boolean");
+
+		ClayTableSchemaField startDateClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"displayDate", "start-date");
+
+		startDateClayTableSchemaField.setContentRenderer("date");
+		startDateClayTableSchemaField.setSortable(true);
+
+		ClayTableSchemaField endDateClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"expirationDate", "end-date");
+
+		endDateClayTableSchemaField.setContentRenderer("date");
+		endDateClayTableSchemaField.setSortable(true);
+
+		ClayTableSchemaField statusClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"workflowStatusInfo", "status");
+
+		statusClayTableSchemaField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}
