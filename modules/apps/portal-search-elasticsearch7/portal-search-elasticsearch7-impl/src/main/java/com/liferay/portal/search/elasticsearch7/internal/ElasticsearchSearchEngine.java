@@ -119,11 +119,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		String prefix = firstIndexName.substring(
 			0, firstIndexName.length() - 1);
 
-		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
-			prefix + StringPool.STAR);
-
 		GetIndexIndexResponse getIndexIndexResponse =
-			_searchEngineAdapter.execute(getIndexIndexRequest);
+			_searchEngineAdapter.execute(
+				new GetIndexIndexRequest(
+					prefix + StringPool.STAR));
 
 		String[] indexNames = getIndexIndexResponse.getIndexNames();
 
