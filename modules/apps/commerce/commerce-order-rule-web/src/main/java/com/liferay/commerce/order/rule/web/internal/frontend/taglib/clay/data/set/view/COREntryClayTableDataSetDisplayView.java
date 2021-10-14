@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.rule.web.internal.frontend.taglib.clay.data.set.view;
 
-import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryDataSetDisplayNames;
+import com.liferay.commerce.order.rule.web.internal.entry.constants.COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + COREntryDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES,
+	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
 public class COREntryClayTableDataSetDisplayView

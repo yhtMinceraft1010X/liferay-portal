@@ -20,7 +20,7 @@
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"datasetId", COREntryDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
+				"datasetId", COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES
 			).put(
 				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
 			).put(
@@ -42,7 +42,7 @@
 			apiURL="<%= corEntryQualifiersDisplayContext.getCOREntryOrderTypesAPIURL() %>"
 			clayDataSetActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceOrderTypeClayDataSetActionDropdownItems() %>"
 			formId="fm"
-			id="<%= COREntryDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"
+			id="<%= COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"
 			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
