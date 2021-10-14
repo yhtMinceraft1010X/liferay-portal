@@ -67,6 +67,36 @@ public class EditCOREntryQualifiersMVCActionCommand
 		}
 	}
 
+	private void _deleteAccountEntryCOREntryRels(long corEntryId)
+		throws Exception {
+
+		int accountEntryCOREntryRelsCount =
+			_corEntryRelService.getAccountEntryCOREntryRelsCount(
+				corEntryId, null);
+
+		if (accountEntryCOREntryRelsCount == 0) {
+			return;
+		}
+
+		_corEntryRelService.deleteCOREntryRels(
+			AccountEntry.class.getName(), corEntryId);
+	}
+
+	private void _deleteAccountGroupCOREntryRels(long corEntryId)
+		throws Exception {
+
+		int accountGroupCOREntryRelsCount =
+			_corEntryRelService.getAccountGroupCOREntryRelsCount(
+				corEntryId, null);
+
+		if (accountGroupCOREntryRelsCount == 0) {
+			return;
+		}
+
+		_corEntryRelService.deleteCOREntryRels(
+			AccountGroup.class.getName(), corEntryId);
+	}
+
 	private void _updateCOREntryQualifiers(ActionRequest actionRequest)
 		throws Exception {
 
@@ -101,34 +131,6 @@ public class EditCOREntryQualifiersMVCActionCommand
 			_corEntryRelService.deleteCOREntryRels(
 				CommerceOrderType.class.getName(), corEntryId);
 		}
-	}
-
-	private void _deleteAccountGroupCOREntryRels(long corEntryId)
-		throws Exception {
-
-		int accountGroupCOREntryRelsCount =
-			_corEntryRelService.getAccountGroupCOREntryRelsCount(
-				corEntryId, null);
-
-		if (accountGroupCOREntryRelsCount == 0) {
-			return;
-		}
-
-		_corEntryRelService.deleteCOREntryRels(
-			AccountGroup.class.getName(), corEntryId);
-	}
-
-	private void _deleteAccountEntryCOREntryRels(long corEntryId) throws Exception {
-		int accountEntryCOREntryRelsCount =
-			_corEntryRelService.getAccountEntryCOREntryRelsCount(
-				corEntryId, null);
-
-		if (accountEntryCOREntryRelsCount == 0) {
-			return;
-		}
-
-		_corEntryRelService.deleteCOREntryRels(
-			AccountEntry.class.getName(), corEntryId);
 	}
 
 	@Reference
