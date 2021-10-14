@@ -81,29 +81,28 @@ public class SXPIndexerPostProcessor extends BaseIndexerPostProcessor {
 		}
 	}
 
+	private void _addVersionCount(Document document, double versionCount) {
+		document.addNumber("versionCount", versionCount);
+	}
+
 	private void _addVersionCount(Document document, Object object) {
 		Class<?> clazz = object.getClass();
-
-		Double versionCount = null;
 
 		if (DLFileEntry.class.isAssignableFrom(clazz)) {
 			DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-			versionCount = GetterUtil.getDouble(dlFileEntry.getVersion());
+			_addVersionCount(
+				document, GetterUtil.getDouble(dlFileEntry.getVersion()));
 		}
 		else if (JournalArticle.class.isAssignableFrom(clazz)) {
 			JournalArticle journalArticle = (JournalArticle)object;
 
-			versionCount = journalArticle.getVersion();
+			_addVersionCount(document, journalArticle.getVersion());
 		}
 		else if (WikiPage.class.isAssignableFrom(clazz)) {
 			WikiPage wikiPage = (WikiPage)object;
 
-			versionCount = wikiPage.getVersion();
-		}
-
-		if (versionCount != null) {
-			document.addNumber("versionCount", versionCount);
+			_addVersionCount(document, wikiPage.getVersion());
 		}
 	}
 
