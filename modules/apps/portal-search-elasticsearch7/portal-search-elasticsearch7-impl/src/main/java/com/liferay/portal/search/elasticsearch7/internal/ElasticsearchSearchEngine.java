@@ -110,7 +110,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
-	public Set<Long> getCompaniesWithIndexes() {
+	public Set<Long> getIndexedCompanyIds() {
 		String dummyIndexName = _indexNameBuilder.getIndexName(0);
 
 		String indexNamePrefix = dummyIndexName.substring(

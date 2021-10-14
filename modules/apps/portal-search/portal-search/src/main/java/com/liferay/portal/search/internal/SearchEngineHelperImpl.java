@@ -85,11 +85,11 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public int[] getCompaniesWithIndexes() {
+	public int[] getIndexedCompanyIds() {
 		Set<Integer> companyIds = new HashSet<>();
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {
-			companyIds.addAll(searchEngine.getCompaniesWithIndexes());
+			companyIds.addAll(searchEngine.getIndexedCompanyIds());
 		}
 
 		return ArrayUtil.toArray(companyIds.toArray(new Integer[0]));

@@ -25,7 +25,7 @@ public interface SearchEngine {
 	public String backup(long companyId, String backupName)
 		throws SearchException;
 
-	public Set<Long> getCompaniesWithIndexes();
+	public Set<Long> getIndexedCompanyIds();
 
 	public IndexSearcher getIndexSearcher();
 

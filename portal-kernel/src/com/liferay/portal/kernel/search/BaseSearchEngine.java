@@ -38,7 +38,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	@Override
-	public Set<Long> getCompaniesWithIndexes() {
+	public Set<Long> getIndexedCompanyIds() {
 		return Collections.emptySet();
 	}
 
