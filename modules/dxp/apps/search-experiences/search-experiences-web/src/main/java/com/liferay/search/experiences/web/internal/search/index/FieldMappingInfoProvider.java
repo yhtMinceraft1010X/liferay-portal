@@ -45,7 +45,7 @@ public class FieldMappingInfoProvider {
 		_jsonFactory = jsonFactory;
 	}
 
-	public List<FieldMappingInfo> getMappings(long companyId) {
+	public List<FieldMappingInfo> getLocalizedFieldMappings(long companyId) {
 		JSONObject jsonObject = _getFieldMappingsJSONObject(companyId);
 
 		if (jsonObject == null) {
@@ -69,7 +69,7 @@ public class FieldMappingInfoProvider {
 		return fieldMappingInfos;
 	}
 
-	public List<FieldMappingInfo> getMappingsWithoutLanguageID(long companyId) {
+	public List<FieldMappingInfo> getFieldMappings(long companyId) {
 		JSONObject jsonObject = _getFieldMappingsJSONObject(companyId);
 
 		if (jsonObject == null) {
