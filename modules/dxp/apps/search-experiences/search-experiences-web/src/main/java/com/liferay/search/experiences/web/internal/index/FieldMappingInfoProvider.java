@@ -88,9 +88,9 @@ public class FieldMappingInfoProvider {
 	public class FieldMappingInfo {
 
 		public FieldMappingInfo(
-			int languageIdPosition, String name, String type) {
+			int languageIdIndex, String name, String type) {
 
-			_languageIdPosition = languageIdPosition;
+			_languageIdIndex = languageIdIndex;
 			_name = name;
 			_type = type;
 		}
@@ -100,8 +100,8 @@ public class FieldMappingInfoProvider {
 			_type = type;
 		}
 
-		public int getLanguageIdPosition() {
-			return _languageIdPosition;
+		public int getLanguageIdIndex() {
+			return _languageIdIndex;
 		}
 
 		public String getName() {
@@ -112,7 +112,7 @@ public class FieldMappingInfoProvider {
 			return _type;
 		}
 
-		private int _languageIdPosition;
+		private int _languageIdIndex;
 		private final String _name;
 		private final String _type;
 
@@ -124,21 +124,21 @@ public class FieldMappingInfoProvider {
 
 		String languageId = _getLanguageId(fieldName);
 
-		int languageIdPosition = -1;
+		int languageIdIndex = -1;
 
 		if (!Validator.isBlank(languageId)) {
-			languageIdPosition = fieldName.lastIndexOf(languageId);
+			languageIdIndex = fieldName.lastIndexOf(languageId);
 
 			fieldName = StringUtil.removeSubstring(fieldName, languageId);
 		}
 
 		String fieldNameWithPos = fieldName.concat(
-			String.valueOf(languageIdPosition));
+			String.valueOf(languageIdIndex));
 
 		if (!fieldNames.contains(fieldNameWithPos)) {
 			fieldInfos.add(
 				new FieldMappingInfo(
-					languageIdPosition, fieldName,
+					languageIdIndex, fieldName,
 					jsonObject.getString("type")));
 
 			fieldNames.add(fieldNameWithPos);
