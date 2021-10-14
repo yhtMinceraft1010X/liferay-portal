@@ -54,17 +54,13 @@ public class FieldMappingInfoProvider {
 
 		List<FieldMappingInfo> fieldMappingInfos = new ArrayList<>();
 
-		Set<String> keySet = jsonObject.keySet();
+		for (String fieldName : jsonObject.keySet()) {
+			JSONObject fieldJSONObject = jsonObject.getJSONObject(fieldName);
 
-		keySet.forEach(
-			fieldName -> {
-				JSONObject fieldJSONObject = jsonObject.getJSONObject(
-					fieldName);
-
-				fieldMappingInfos.add(
-					new FieldMappingInfo(
-						fieldName, fieldJSONObject.getString("type")));
-			});
+			fieldMappingInfos.add(
+				new FieldMappingInfo(
+					fieldName, fieldJSONObject.getString("type")));
+		}
 
 		return fieldMappingInfos;
 	}
