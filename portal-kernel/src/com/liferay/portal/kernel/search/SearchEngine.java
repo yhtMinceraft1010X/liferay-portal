@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ public interface SearchEngine {
 	public String backup(long companyId, String backupName)
 		throws SearchException;
 
-	public Set<Long> getIndexedCompanyIds();
+	public Collection<Long> getIndexedCompanyIds();
 
 	public IndexSearcher getIndexSearcher();
 

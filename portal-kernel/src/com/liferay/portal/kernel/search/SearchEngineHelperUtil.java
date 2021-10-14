@@ -33,7 +33,7 @@ public class SearchEngineHelperUtil {
 		_searchEngineHelper.flushQueuedSearchEngine(searchEngineId);
 	}
 
-	public static int[] getIndexedCompanyIds() {
+	public static Collection<Long> getIndexedCompanyIds() {
 		return _searchEngineHelper.getIndexedCompanyIds();
 	}
 

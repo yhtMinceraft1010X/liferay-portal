@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * @author Michael C. Han
@@ -38,7 +38,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	@Override
-	public Set<Long> getIndexedCompanyIds() {
+	public Collection<Long> getIndexedCompanyIds() {
 		return _searchEngine.getIndexedCompanyIds();
 	}
 

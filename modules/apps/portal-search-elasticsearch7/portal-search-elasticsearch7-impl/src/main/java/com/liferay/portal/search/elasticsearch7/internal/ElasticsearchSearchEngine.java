@@ -52,6 +52,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetai
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +111,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Override
-	public Set<Long> getIndexedCompanyIds() {
+	public Collection<Long> getIndexedCompanyIds() {
 		String dummyIndexName = _indexNameBuilder.getIndexName(0);
 
 		String indexNamePrefix = dummyIndexName.substring(

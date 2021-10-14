@@ -85,7 +85,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	}
 
 	@Override
-	public int[] getIndexedCompanyIds() {
+	public Collection<Long> getIndexedCompanyIds() {
 		Set<Integer> companyIds = new HashSet<>();
 
 		for (SearchEngine searchEngine : _searchEngines.values()) {

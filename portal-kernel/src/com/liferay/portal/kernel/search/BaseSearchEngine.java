@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	@Override
-	public Set<Long> getIndexedCompanyIds() {
+	public Collection<Long> getIndexedCompanyIds() {
 		return Collections.emptySet();
 	}
 
