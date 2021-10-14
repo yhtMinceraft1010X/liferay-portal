@@ -112,13 +112,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 	@Override
 	public Collection<Long> getIndexedCompanyIds() {
-		String dummyIndexName = _indexNameBuilder.getIndexName(0);
+		String firstIndexName = _indexNameBuilder.getIndexName(0);
 
-		String indexNamePrefix = dummyIndexName.substring(
-			0, dummyIndexName.length() - 1);
+		String prefix = firstIndexName.substring(
+			0, firstIndexName.length() - 1);
 
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
-			indexNamePrefix + StringPool.STAR);
+			prefix + StringPool.STAR);
 
 		GetIndexIndexResponse getIndexIndexResponse =
 			_searchEngineAdapter.execute(getIndexIndexRequest);
@@ -129,7 +129,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		for (String indexName : indexNames) {
 			long companyId = GetterUtil.getLong(
-				StringUtil.removeSubstring(indexName, indexNamePrefix));
+				StringUtil.removeSubstring(indexName, prefix));
 
 			if (companyId == 0) {
 				continue;
