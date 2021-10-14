@@ -87,9 +87,7 @@ public class FieldMappingInfoProvider {
 
 	public class FieldMappingInfo {
 
-		public FieldMappingInfo(
-			int languageIdIndex, String name, String type) {
-
+		public FieldMappingInfo(int languageIdIndex, String name, String type) {
 			_languageIdIndex = languageIdIndex;
 			_name = name;
 			_type = type;
@@ -138,8 +136,7 @@ public class FieldMappingInfoProvider {
 		if (!fieldNames.contains(fieldNameWithPos)) {
 			fieldInfos.add(
 				new FieldMappingInfo(
-					languageIdIndex, fieldName,
-					jsonObject.getString("type")));
+					languageIdIndex, fieldName, jsonObject.getString("type")));
 
 			fieldNames.add(fieldNameWithPos);
 		}
