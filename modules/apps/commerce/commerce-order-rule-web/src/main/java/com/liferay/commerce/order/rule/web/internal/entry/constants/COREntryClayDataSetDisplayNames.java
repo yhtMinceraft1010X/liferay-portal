@@ -19,23 +19,23 @@ package com.liferay.commerce.order.rule.web.internal.entry.constants;
  */
 public class COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames {
 
-	public static final String COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRIES =
+	public static final String COR_ENTRIES =
 		"corEntries";
 
 	public static final String
-		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_ENTRIES =
+		COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES =
 			"corEntryQualifierAccountEntries";
 
 	public static final String
-		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_ACCOUNT_GROUPS =
+		COR_ENTRY_QUALIFIER_ACCOUNT_GROUPS =
 			"corEntryQualifierAccountGroups";
 
 	public static final String
-		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_CHANNELS =
+		COR_ENTRY_QUALIFIER_COMMERCE_CHANNELS =
 			"corEntryQualifierCommerceChannels";
 
 	public static final String
-		COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
+		COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES =
 			"corEntryQualifierCommerceOrderTypes";
 
 }

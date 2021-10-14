@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COMMERCE_DATA_SET_KEY_ORDER_RULE_ENTRY_QUALIFIER_COMMERCE_CHANNELS,
+	property = "clay.data.set.display.name=" + COREntryClayDataSetDisplayNameCOREntryClayDataSetDisplayNames.COR_ENTRY_QUALIFIER_COMMERCE_CHANNELS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceChannelCOREntryRelClayTableDataSetDisplayView
