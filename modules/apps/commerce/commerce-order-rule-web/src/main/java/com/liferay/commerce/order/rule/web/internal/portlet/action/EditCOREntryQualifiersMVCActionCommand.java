@@ -76,14 +76,14 @@ public class EditCOREntryQualifiersMVCActionCommand
 			actionRequest, "accountQualifiers");
 
 		if (Objects.equals(accountQualifiers, "all")) {
-			_deleteCOREntryAccountRels(corEntryId);
-			_deleteCOREntryAccountGroupRels(corEntryId);
+			_deleteAccountEntryCOREntryRels(corEntryId);
+			_deleteAccountGroupCOREntryRels(corEntryId);
 		}
 		else if (Objects.equals(accountQualifiers, "accounts")) {
-			_deleteCOREntryAccountGroupRels(corEntryId);
+			_deleteAccountGroupCOREntryRels(corEntryId);
 		}
 		else {
-			_deleteCOREntryAccountRels(corEntryId);
+			_deleteAccountEntryCOREntryRels(corEntryId);
 		}
 
 		String channelQualifiers = ParamUtil.getString(
@@ -103,7 +103,7 @@ public class EditCOREntryQualifiersMVCActionCommand
 		}
 	}
 
-	private void _deleteCOREntryAccountGroupRels(long corEntryId)
+	private void _deleteAccountGroupCOREntryRels(long corEntryId)
 		throws Exception {
 
 		int accountGroupCOREntryRelsCount =
@@ -118,7 +118,7 @@ public class EditCOREntryQualifiersMVCActionCommand
 			AccountGroup.class.getName(), corEntryId);
 	}
 
-	private void _deleteCOREntryAccountRels(long corEntryId) throws Exception {
+	private void _deleteAccountEntryCOREntryRels(long corEntryId) throws Exception {
 		int accountEntryCOREntryRelsCount =
 			_corEntryRelService.getAccountEntryCOREntryRelsCount(
 				corEntryId, null);
