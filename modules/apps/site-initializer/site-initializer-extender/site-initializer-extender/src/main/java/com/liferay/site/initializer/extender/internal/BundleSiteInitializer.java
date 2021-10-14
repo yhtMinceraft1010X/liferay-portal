@@ -1128,14 +1128,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		Group scopeGroup = serviceContext.getScopeGroup();
-
-		documentsStringUtilReplaceValues.put(
-			"GROUP_FRIENDLY_URL", scopeGroup.getFriendlyURL());
-
-		documentsStringUtilReplaceValues.put(
-			"GROUP_ID", String.valueOf(serviceContext.getScopeGroupId()));
-
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
@@ -1144,12 +1136,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (StringUtil.endsWith(urlPath, ".json")) {
 				String json = StringUtil.read(url.openStream());
 
+				Group scopeGroup = serviceContext.getScopeGroup();
+
+				json = StringUtil.replace(
+					json, "\"[$", "$]\"",
+					documentsStringUtilReplaceValues));
+				json = StringUtil.replace(
+					json,
+					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
+					new String[] {
+						scopeGroup.getFriendlyURL(),
+						String.valueOf(serviceContext.getScopeGroupId())
+					});
+
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
 						urlPath, "/site-initializer/layout-page-templates/"),
-					StringUtil.replace(
-						json, "\"[$", "$]\"",
-						documentsStringUtilReplaceValues));
+					json);
 			}
 			else {
 				zipWriter.addEntry(
