@@ -57,7 +57,7 @@ public class EditCOREntryQualifiersMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCOREntryQualifiers(actionRequest);
+				_updateCOREntryQualifiers(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -67,7 +67,7 @@ public class EditCOREntryQualifiersMVCActionCommand
 		}
 	}
 
-	protected void updateCOREntryQualifiers(ActionRequest actionRequest)
+	private void _updateCOREntryQualifiers(ActionRequest actionRequest)
 		throws Exception {
 
 		long corEntryId = ParamUtil.getLong(actionRequest, "corEntryId");
