@@ -637,7 +637,6 @@ definition {
 
 		Navigator.openURL();
 
-
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
@@ -649,21 +648,13 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-
 		VisualizeObjectCollectionDisplay.openHeading();
-
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Field");
 
 		PageEditor.selectItemToPreviewWith();
 
 		PageEditor.assertEntryIsRendered(selectedEntry = "Test Entry");
-
-		
-		
-
-
-
 	}
 
 	@description = "LPS-137106 - Verify if it is possible to link a Mapped URL with the Objects Page Template"

@@ -40,20 +40,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addObjectStringFieldEntryViaUI {
-
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-			value1 = "${entryValue}");
-
-		Button.clickSave();	
-
-		WaitForPageLoad();
-
-	}
-
 	macro addObjectFieldViaAPI {
 		JSONObject.addObjectField(
 			fieldLabelName = "${fieldLabelName}",
@@ -141,6 +127,18 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",
 			value = "${value}");
+	}
+
+	macro addObjectStringFieldEntryViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+			value1 = "${entryValue}");
+
+		Button.clickSave();
+
+		WaitForPageLoad();
 	}
 
 	macro addObjectViaAPI {
