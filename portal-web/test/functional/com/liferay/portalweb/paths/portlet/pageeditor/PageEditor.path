@@ -838,6 +838,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_WITH_DROPDOWN_MENU</td>
+	<td>//span[(text())='-- None --']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_WITH_CUSTOM_OBJECT_ITEM</td>
+	<td>//li[contains(@class,'list-group-item list-group-item-flex  item-selector-list-row   ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_WITH_OTHER_ITEM</td>
+	<td>//button[contains(text(), 'Select Other Item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_WITH_SELECTED_ENTRY</td>
+	<td>//h1[contains(@class,'component-heading mb-0 text-break page-editor__editable page-editor__editable--mapped')][contains(text(),'${key_selectedEntry}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNDO_HISTORY</td>
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>

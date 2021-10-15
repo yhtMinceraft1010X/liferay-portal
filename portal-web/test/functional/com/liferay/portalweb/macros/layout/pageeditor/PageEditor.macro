@@ -1003,6 +1003,18 @@ definition {
 		}
 	}
 
+	macro assertEntryIsRendered {
+		AssertElementPresent(
+			locator1 = "PageEditor#PREVIEW_WITH_SELECTED_ENTRY",
+			key_selectedEntry = "${selectedEntry}"
+			
+		);
+
+
+
+
+	}
+
 	macro assertFalseEntryIsNotPresent {
 		AssertElementNotPresent(locator1 = "PageEditor#COLLECTION_ITEM_FALSE_ENTRY");
 	}
@@ -3268,6 +3280,25 @@ definition {
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "${option}");
+	}
+
+	macro selectItemToPreviewWith {
+		
+		Click(locator1 = "PageEditor#PREVIEW_WITH_DROPDOWN_MENU");
+
+		Click(locator1 = "PageEditor#PREVIEW_WITH_OTHER_ITEM");
+
+		SelectFrame(
+			key_title = "Select",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Portlet.expandTree();
+
+		Click(locator1 = "PageEditor#PREVIEW_WITH_CUSTOM_OBJECT_ITEM");
+
+
+
+		
 	}
 
 	macro switchViewport {
