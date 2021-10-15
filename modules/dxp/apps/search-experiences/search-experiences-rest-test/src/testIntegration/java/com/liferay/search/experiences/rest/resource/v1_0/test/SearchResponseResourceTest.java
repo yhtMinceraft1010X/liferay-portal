@@ -143,6 +143,12 @@ public class SearchResponseResourceTest
 	}
 
 	private void _testPostSearchWithSearchEngineIssue() throws Exception {
+		String message = StringBundler.concat(
+			"org.elasticsearch.ElasticsearchStatusException: ",
+			"ElasticsearchStatusException[Elasticsearch exception ",
+			"[type=parsing_exception, reason=[deliberately mistyped] query ",
+			"malformed, no start_object after query name]]");
+
 		try {
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
@@ -166,7 +172,7 @@ public class SearchResponseResourceTest
 		catch (Problem.ProblemException problemException) {
 			Assert.assertThat(
 				problemException.getMessage(),
-				CoreMatchers.containsString(_SEARCH_ENGINE_ISSUE));
+				CoreMatchers.containsString(message));
 		}
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -187,7 +193,7 @@ public class SearchResponseResourceTest
 
 				Assert.assertThat(
 					searchResponse.getResponseString(),
-					CoreMatchers.containsString(_SEARCH_ENGINE_ISSUE));
+					CoreMatchers.containsString(message));
 			}
 		}
 	}
@@ -205,11 +211,5 @@ public class SearchResponseResourceTest
 			"ElasticsearchConfiguration";
 
 	private static final Pagination _PAGINATION = Pagination.of(1, 1);
-
-	private static final String _SEARCH_ENGINE_ISSUE = StringBundler.concat(
-		"org.elasticsearch.ElasticsearchStatusException: ",
-		"ElasticsearchStatusException[Elasticsearch exception ",
-		"[type=parsing_exception, reason=[deliberately mistyped] query ",
-		"malformed, no start_object after query name]]");
 
 }
