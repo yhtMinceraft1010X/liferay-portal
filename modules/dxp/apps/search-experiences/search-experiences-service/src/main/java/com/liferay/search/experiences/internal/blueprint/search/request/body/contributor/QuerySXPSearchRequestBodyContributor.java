@@ -58,8 +58,8 @@ public class QuerySXPSearchRequestBodyContributor
 		RuntimeException runtimeException = new RuntimeException();
 
 		_processQueryEntries(
-			queryConfiguration.getQueryEntries(), searchRequestBuilder,
-			runtimeException::addSuppressed);
+			runtimeException::addSuppressed,
+			queryConfiguration.getQueryEntries(), searchRequestBuilder);
 
 		if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
 			throw runtimeException;
@@ -91,8 +91,8 @@ public class QuerySXPSearchRequestBodyContributor
 	}
 
 	private void _processQueryEntries(
-		QueryEntry[] queryEntries, SearchRequestBuilder searchRequestBuilder,
-		ExceptionListener exceptionListener) {
+		ExceptionListener exceptionListener, QueryEntry[] queryEntries,
+		SearchRequestBuilder searchRequestBuilder) {
 
 		if (ArrayUtil.isEmpty(queryEntries)) {
 			return;
