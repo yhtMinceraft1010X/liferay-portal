@@ -48,10 +48,10 @@ public class SearchResponseResourceTest
 		super.testPostSearch();
 
 		_testPostSearch();
-		_testPostSearchThrowsJsonParseException();
-		_testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException();
-		_testPostSearchThrowsUnrecognizedPropertyException();
 		_testPostSearchThrowsElasticsearchStatusException();
+		_testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException();
+		_testPostSearchThrowsJsonParseException();
+		_testPostSearchThrowsUnrecognizedPropertyException();
 	}
 
 	@Override
@@ -81,64 +81,9 @@ public class SearchResponseResourceTest
 		searchResponseResource.postSearch(null, _read(), _PAGINATION);
 	}
 
-	private void _testPostSearchThrowsJsonParseException() throws Exception {
-		try {
-			searchResponseResource.postSearch(
-				null, "{ ... }", _PAGINATION);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Assert.assertThat(
-				problemException.getMessage(),
-				CoreMatchers.containsString("Input is invalid JSON"));
-		}
-	}
-
-	private void _testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException() throws Exception {
-		try {
-			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
-
-				searchResponseResource.postSearch(null, _read(), _PAGINATION);
-
-				Assert.fail();
-			}
-		}
-		catch (Problem.ProblemException problemException) {
-			Assert.assertThat(
-				problemException.getMessage(),
-				CoreMatchers.allOf(
-					CoreMatchers.containsString("Invalid query entry at: 0"),
-					CoreMatchers.containsString("Invalid query entry at: 1"),
-					CoreMatchers.containsString("The key \"value\" is not set"),
-					CoreMatchers.containsString(
-						"Unresolved template variables: [ipstack.latitude, " +
-							"ipstack.longitude]")));
-		}
-	}
-
-	private void _testPostSearchThrowsUnrecognizedPropertyException()
+	private void _testPostSearchThrowsElasticsearchStatusException()
 		throws Exception {
 
-		try {
-			searchResponseResource.postSearch(null, _read(), _PAGINATION);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Assert.assertThat(
-				problemException.getMessage(),
-				CoreMatchers.containsString(
-					StringBundler.concat(
-						"Property \"configuration\" is not defined in ",
-						"SXPBlueprint. Property \"general\" is not defined in ",
-						"Configuration. Property \"incorrectFirst\" is not ",
-						"defined in General.")));
-		}
-	}
-
-	private void _testPostSearchThrowsElasticsearchStatusException() throws Exception {
 		String message = StringBundler.concat(
 			"org.elasticsearch.ElasticsearchStatusException: ",
 			"ElasticsearchStatusException[Elasticsearch exception ",
@@ -191,6 +136,64 @@ public class SearchResponseResourceTest
 					searchResponse.getResponseString(),
 					CoreMatchers.containsString(message));
 			}
+		}
+	}
+
+	private void _testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException()
+		throws Exception {
+
+		try {
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
+
+				searchResponseResource.postSearch(null, _read(), _PAGINATION);
+
+				Assert.fail();
+			}
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.allOf(
+					CoreMatchers.containsString("Invalid query entry at: 0"),
+					CoreMatchers.containsString("Invalid query entry at: 1"),
+					CoreMatchers.containsString("The key \"value\" is not set"),
+					CoreMatchers.containsString(
+						"Unresolved template variables: [ipstack.latitude, " +
+							"ipstack.longitude]")));
+		}
+	}
+
+	private void _testPostSearchThrowsJsonParseException() throws Exception {
+		try {
+			searchResponseResource.postSearch(null, "{ ... }", _PAGINATION);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.containsString("Input is invalid JSON"));
+		}
+	}
+
+	private void _testPostSearchThrowsUnrecognizedPropertyException()
+		throws Exception {
+
+		try {
+			searchResponseResource.postSearch(null, _read(), _PAGINATION);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Assert.assertThat(
+				problemException.getMessage(),
+				CoreMatchers.containsString(
+					StringBundler.concat(
+						"Property \"configuration\" is not defined in ",
+						"SXPBlueprint. Property \"general\" is not defined in ",
+						"Configuration. Property \"incorrectFirst\" is not ",
+						"defined in General.")));
 		}
 	}
 
