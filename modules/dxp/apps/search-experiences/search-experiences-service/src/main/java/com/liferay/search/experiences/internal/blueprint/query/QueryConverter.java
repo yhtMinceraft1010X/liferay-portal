@@ -76,12 +76,12 @@ public class QueryConverter {
 	}
 
 	private <T> T _validate(T object) {
-		String[] variables = StringUtils.substringsBetween(
+		String[] templateVariables = StringUtils.substringsBetween(
 			object.toString(), StringPool.DOLLAR_AND_OPEN_CURLY_BRACE,
 			StringPool.CLOSE_CURLY_BRACE);
 
-		if (ArrayUtil.isNotEmpty(variables)) {
-			throw UnresolvedTemplateVariableException.with(variables);
+		if (ArrayUtil.isNotEmpty(templateVariables)) {
+			throw UnresolvedTemplateVariableException.with(templateVariables);
 		}
 
 		return object;
