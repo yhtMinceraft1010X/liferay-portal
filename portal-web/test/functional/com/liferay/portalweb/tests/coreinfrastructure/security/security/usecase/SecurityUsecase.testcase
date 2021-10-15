@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-107017."
+	@description = "This is a use case for LPS-107017. Creater user via JSONWSAPUI"
 	@priority = "4"
 	test CreateUserViaJSONWSAPIUI {
 		var portalURL = PropsUtil.get("portal.url");
@@ -55,7 +55,7 @@ definition {
 			value1 = "testfUI testlUI");
 	}
 
-	@description = "This is a use case for LPS-83566."
+	@description = "This is a use case for LPS-83566. Escape url redirect with groovy script"
 	@priority = "5"
 	test EscapeUrlRedirectWithGroovyScript {
 		property test.name.skip.portal.instance = "SecurityUsecase#EscapeUrlRedirectWithGroovyScript";
@@ -78,7 +78,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			value1 = "/");
 	}
 
-	@description = "This is a use case for LPS-87768."
+	@description = "This is a use case for LPS-87768. No permission from unauthorized url as power user"
 	@priority = "5"
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
@@ -133,7 +133,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Portlet#BODY");
 	}
 
-	@description = "This is a use case for LPS-80905."
+	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin"
 	@priority = "5"
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
@@ -202,7 +202,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		PermissionsInline.gotoConfigurationPG(portletName = "Calendar");
 	}
 
-	@description = "This is a use case for LPS-68070."
+	@description = "This is a use case for LPS-68070. Validate cannot overwrite OSGi service identifier"
 	@priority = "5"
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
@@ -256,7 +256,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			value1 = "Forbidden");
 	}
 
-	@description = "This is a use case for LPS-114470."
+	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors"
 	@priority = "5"
 	test ValidateCraftedOrCorruptedFilesCannotCauseOutOfMemoryErrors {
 		ProductMenu.gotoPortlet(
@@ -276,7 +276,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
 	}
 
-	@description = "This is a use case for LRQA-14382."
+	@description = "This is a use case for LRQA-14382. Validate forward url PG"
 	@priority = "5"
 	test ValidateForwardURLPG {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}";
@@ -307,7 +307,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 			locator1 = "Home#PAGE");
 	}
 
-	@description = "This is a use case for LPS-57776."
+	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution"
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
 		ProductMenu.gotoPortlet(
@@ -326,7 +326,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		AssertConsoleTextNotPresent(value1 = "Remote_Code_Execution_vulnerability_is_present");
 	}
 
-	@description = "This is a use case for LPS-85112."
+	@description = "This is a use case for LPS-85112. Validate view permission cannot update other users password"
 	@priority = "5"
 	test ValidateViewPermissionCanNotUpdateOtherUsersPassword {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateViewPermissionCanNotUpdateOtherUsersPassword";
@@ -372,7 +372,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		Alert.viewInfoMessageSpecific(infoMessage = "You do not belong to an organization and are not allowed to view other organizations.");
 	}
 
-	@description = "This is a use case for LPS-73595."
+	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki"
 	@priority = "5"
 	test ViewJSLoaderModulesURLNoWiki {
 		var portalURL = PropsUtil.get("portal.url");
@@ -388,7 +388,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		AssertTextNotPresent(value1 = "com.liferay.wiki.engine.text");
 	}
 
-	@description = "This is a use case for LPS-55622."
+	@description = "This is a use case for LPS-55622. View no invoked portlet via URL"
 	@priority = "5"
 	test ViewNoInvokedPortletViaURL {
 		property portal.acceptance = "true";
