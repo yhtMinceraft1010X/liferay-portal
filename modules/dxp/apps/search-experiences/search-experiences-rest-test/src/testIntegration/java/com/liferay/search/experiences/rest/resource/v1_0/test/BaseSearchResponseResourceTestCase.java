@@ -192,17 +192,17 @@ public abstract class BaseSearchResponseResourceTestCase {
 	}
 
 	@Test
-	public void testSearch() throws Exception {
+	public void testPostSearch() throws Exception {
 		SearchResponse randomSearchResponse = randomSearchResponse();
 
-		SearchResponse postSearchResponse = testSearch_addSearchResponse(
+		SearchResponse postSearchResponse = testPostSearch_addSearchResponse(
 			randomSearchResponse);
 
 		assertEquals(randomSearchResponse, postSearchResponse);
 		assertValid(postSearchResponse);
 	}
 
-	protected SearchResponse testSearch_addSearchResponse(
+	protected SearchResponse testPostSearch_addSearchResponse(
 			SearchResponse searchResponse)
 		throws Exception {
 

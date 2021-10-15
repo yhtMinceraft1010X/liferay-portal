@@ -100,7 +100,7 @@ public abstract class BaseSearchResponseResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SearchResponse search(
+	public SearchResponse postSearch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("query")
 			String query,

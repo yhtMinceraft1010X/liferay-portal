@@ -243,7 +243,7 @@ openapi: "3.0.1"
 paths:
     "/search":
         post:
-            operationId: search
+            operationId: postSearch
             parameters:
                 - in: query
                   name: query

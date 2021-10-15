@@ -39,11 +39,11 @@ public interface SearchResponseResource {
 		return new Builder();
 	}
 
-	public SearchResponse search(
+	public SearchResponse postSearch(
 			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse searchHttpResponse(
+	public HttpInvoker.HttpResponse postSearchHttpResponse(
 			String query, String sxpBlueprint, Pagination pagination)
 		throws Exception;
 
@@ -119,11 +119,11 @@ public interface SearchResponseResource {
 	public static class SearchResponseResourceImpl
 		implements SearchResponseResource {
 
-		public SearchResponse search(
+		public SearchResponse postSearch(
 				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = searchHttpResponse(
+			HttpInvoker.HttpResponse httpResponse = postSearchHttpResponse(
 				query, sxpBlueprint, pagination);
 
 			String content = httpResponse.getContent();
@@ -163,7 +163,7 @@ public interface SearchResponseResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse searchHttpResponse(
+		public HttpInvoker.HttpResponse postSearchHttpResponse(
 				String query, String sxpBlueprint, Pagination pagination)
 			throws Exception {
 

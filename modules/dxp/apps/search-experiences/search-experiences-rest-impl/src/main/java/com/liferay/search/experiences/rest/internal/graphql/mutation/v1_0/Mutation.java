@@ -209,7 +209,7 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public SearchResponse search(
+	public SearchResponse createSearch(
 			@GraphQLName("query") String query,
 			@GraphQLName("sxpBlueprint") String sxpBlueprint,
 			@GraphQLName("pageSize") int pageSize,
@@ -219,7 +219,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_searchResponseResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			searchResponseResource -> searchResponseResource.search(
+			searchResponseResource -> searchResponseResource.postSearch(
 				query, sxpBlueprint, Pagination.of(page, pageSize)));
 	}
 
