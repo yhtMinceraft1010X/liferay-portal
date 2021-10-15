@@ -136,9 +136,9 @@ public class SearchResponseResourceTest
 				CoreMatchers.containsString(
 					StringBundler.concat(
 						"Property \"configuration\" is not defined in ",
-						"SXPBlueprint.Property \"general\" is not defined in ",
-						"Configuration.Property \"incorrectFirst\" is not ",
-						"defined in General")));
+						"SXPBlueprint. Property \"general\" is not defined in ",
+						"Configuration. Property \"incorrectFirst\" is not ",
+						"defined in General.")));
 		}
 	}
 
