@@ -111,13 +111,10 @@ public class SearchResponseResourceImplTest {
 
 		Document document = searchResponse.getDocuments()[0];
 
-		Map<String, DocumentField> documentFields =
-			document.getDocumentFields();
-
 		Assert.assertEquals(
 			"{field1st={\"values\": [\"Lone Value\"]}, field2nd={\"values\": " +
 				"[\"4\", \"8\", \"15\", \"16\", \"23\", \"42\"]}}",
-			String.valueOf(documentFields));
+			String.valueOf(document.getDocumentFields()));
 
 		Assert.assertEquals(requestString, searchResponse.getRequestString());
 		Assert.assertEquals(responseString, searchResponse.getResponseString());
