@@ -40,9 +40,9 @@ definition {
 		task ("Assert message present in HTLM source") {
 			Pause(locator1 = "3000");
 
-			AssertHTMLSourceTextPresent(
-				locator1 = "JSONWS#SECURITY_RESULT",
-				value1 = "Welcome testfUI testlUI!");
+			User.viewWelcomeMEssageHTML(
+				userfn = "testfUI",
+				userln = "testfUI");
 		}
 
 		task ("Assert user created in users page") {
@@ -55,9 +55,12 @@ definition {
 
 			var key_userScreenName = "testui";
 
+			User.viewUserTableName(
+				userfn = "testfUI",
+				userln = "testfUI");
 			AssertTextEquals(
 				locator1 = "UsersAndOrganizations#USER_TABLE_NAME",
-				value1 = "testfUI testlUI");
+				value1 = "${userfn} ${userln}");
 		}
 	}
 
@@ -82,9 +85,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assert / as output") {
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "/");
+			ServerAdministration.viewOutputField(valueName = "/");
 		}
 	}
 
@@ -138,20 +139,19 @@ out.println(PortalUtil.escapeRedirect("/"));
 			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 		}
 
-		task ("")
-		WaitForSPARefresh();
+		task ("Assert no permission for unauthorized url") {
+			WaitForSPARefresh();
 
-		var authToken = Page.getAuthTokenFromHtmlSource();
-		var plid = Page.getPlidFromHtmlSource();
-		var portalURL = PropsUtil.get("portal.url");
+			var authToken = Page.getAuthTokenFromHtmlSource();
+			var plid = Page.getPlidFromHtmlSource();
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
+			Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
-		AssertElementNotPresent(
-			key_portletName = "Purchased",
-			locator1 = "Portlet#BODY");
+			Portlet.viewPortletBodyNotPresent(portletName = "Purchased");
+		}
 	}
 
 	@description = "This is a use case for LPS-80905. User can access permissions window with permission from admin"
@@ -248,7 +248,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Assert JSONWS empty page") {
 			Api.gotoPAuthURL(url = "${url}");
 
-			AssertElementPresent(locator1 = "JSONWS#SECURITY_EMPTY_PAGE");
+			ServerAdministration.viewJSONWSSecurityEmptyPage();
 		}
 	}
 
@@ -280,7 +280,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
-		
+
 			User.editPasswordCP(
 				userEmailAddress = "userea@liferay.com",
 				userScreenName = "usersn");
@@ -293,9 +293,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Forbidden");
+			ServerAdministration.viewForbiddenErrorMessageAlert();
 		}
 	}
 
@@ -336,9 +334,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			Pause(locator1 = "3000");
 
-			AssertElementPresent(
-				key_pageName = "Home",
-				locator1 = "Home#PAGE");
+			Portlet.viewHomePage(pageName = "Home");
 		}
 
 		task ("View welcome content page") {
@@ -356,16 +352,13 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Assert test present in home page") {
 			Navigator.openSpecificURL(url = '''${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test''');
 
-			AssertElementPresent(
-				key_pageName = "Test",
-				locator1 = "Home#PAGE");
+			Portlet.viewHomePage(pageName = "Test");
 		}
 	}
 
 	@description = "This is a use case for LPS-57776. Validate no LAR remote code execution"
 	@priority = "5"
 	test ValidateNoLARRemoteCodeExecution {
-
 		task ("Assert remote-code-execution.lar dependency is forbidden") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
@@ -443,7 +436,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@description = "This is a use case for LPS-73595. View JS loader modules URL no wiki"
 	@priority = "5"
 	test ViewJSLoaderModulesURLNoWiki {
-		
 		task ("View JS loader modules") {
 			var portalURL = PropsUtil.get("portal.url");
 
@@ -490,12 +482,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/guest/test-widget-page/?p_p_id=asdf&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 
-			AssertTextEquals(
-				locator1 = "Message#INFO_MAIN_CONTENT",
-				value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
+			Portlet.viewPortletCouldNotBeFoundInfo();
 		}
 
-		task("Delete test widget page") {
+		task ("Delete test widget page") {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Test Widget Page");
