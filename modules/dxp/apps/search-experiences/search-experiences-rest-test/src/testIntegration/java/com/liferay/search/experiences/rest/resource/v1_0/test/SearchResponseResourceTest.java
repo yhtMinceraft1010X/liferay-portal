@@ -48,10 +48,10 @@ public class SearchResponseResourceTest
 		super.testPostSearch();
 
 		_testPostSearch();
-		_testPostSearchWithJSONIssue();
-		_testPostSearchWithMultipleQueryIssues();
-		_testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
-		_testPostSearchWithSearchEngineIssue();
+		_testPostSearchThrowsJsonParseException();
+		_testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException();
+		_testPostSearchThrowsUnrecognizedPropertyException();
+		_testPostSearchThrowsElasticsearchStatusException();
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class SearchResponseResourceTest
 		searchResponseResource.postSearch(null, _read(), _PAGINATION);
 	}
 
-	private void _testPostSearchWithJSONIssue() throws Exception {
+	private void _testPostSearchThrowsJsonParseException() throws Exception {
 		try {
 			searchResponseResource.postSearch(
 				null, "{ ... }", _PAGINATION);
@@ -95,7 +95,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testPostSearchWithMultipleQueryIssues() throws Exception {
+	private void _testPostSearchThrowsInvalidQueryEntryExceptionAndUnresolvedTemplateVariableException() throws Exception {
 		try {
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
@@ -118,7 +118,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
+	private void _testPostSearchThrowsUnrecognizedPropertyException()
 		throws Exception {
 
 		try {
@@ -138,7 +138,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testPostSearchWithSearchEngineIssue() throws Exception {
+	private void _testPostSearchThrowsElasticsearchStatusException() throws Exception {
 		String message = StringBundler.concat(
 			"org.elasticsearch.ElasticsearchStatusException: ",
 			"ElasticsearchStatusException[Elasticsearch exception ",
