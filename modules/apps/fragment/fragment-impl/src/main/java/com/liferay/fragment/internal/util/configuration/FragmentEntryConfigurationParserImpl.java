@@ -543,7 +543,7 @@ public class FragmentEntryConfigurationParserImpl
 					continue;
 				}
 
-				ArrayList<FrontendTokenMapping> frontendTokenMappings =
+				List<FrontendTokenMapping> frontendTokenMappings =
 					new ArrayList<>(
 						frontendToken.getFrontendTokenMappings(
 							FrontendTokenMapping.TYPE_CSS_VARIABLE));
