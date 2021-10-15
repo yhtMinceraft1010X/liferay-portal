@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.naming.AuthenticationException;
@@ -250,11 +251,10 @@ public class LDAPAuth implements Authenticator {
 				String encryptedPassword = password;
 				String ldapPassword = new String((byte[])userPassword.get());
 
-				String passwordEncryptionAlgorithm =
-					ldapAuthConfiguration.passwordEncryptionAlgorithm();
-
-				if (Validator.isNotNull(passwordEncryptionAlgorithm) &&
-					!passwordEncryptionAlgorithm.equals(
+				if (Validator.isNotNull(
+						ldapAuthConfiguration.passwordEncryptionAlgorithm()) &&
+					!Objects.equals(
+						ldapAuthConfiguration.passwordEncryptionAlgorithm(),
 						PasswordEncryptorUtil.TYPE_NONE)) {
 
 					ldapPassword = removeEncryptionAlgorithm(ldapPassword);
