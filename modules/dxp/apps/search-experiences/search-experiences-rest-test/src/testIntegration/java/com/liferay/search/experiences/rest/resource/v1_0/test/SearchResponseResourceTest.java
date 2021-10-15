@@ -44,20 +44,20 @@ public class SearchResponseResourceTest
 
 	@Override
 	@Test
-	public void testSearch() throws Exception {
-		super.testSearch();
+	public void testPostSearch() throws Exception {
+		super.testPostSearch();
 
-		_testSearch();
-		_testSearchWithBlueprint();
-		_testSearchWithJSONIssue();
-		_testSearchWithMultipleQueryIssues();
-		_testSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
-		_testSearchWithSearchEngineIssue();
-		_testSearchWithSearchEngineIssueInSearchResponseString();
+		_testPostSearch();
+		_testPostSearchWithBlueprint();
+		_testPostSearchWithJSONIssue();
+		_testPostSearchWithMultipleQueryIssues();
+		_testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
+		_testPostSearchWithSearchEngineIssue();
+		_testPostSearchWithSearchEngineIssueInSearchResponseString();
 	}
 
 	@Override
-	protected SearchResponse testSearch_addSearchResponse(
+	protected SearchResponse testPostSearch_addSearchResponse(
 			SearchResponse searchResponse)
 		throws Exception {
 
@@ -73,18 +73,18 @@ public class SearchResponseResourceTest
 					clazz.getSimpleName(), StringPool.PERIOD, name, ".json")));
 	}
 
-	private void _testSearch() throws Exception {
-		searchResponseResource.search(null, null, _PAGINATION);
+	private void _testPostSearch() throws Exception {
+		searchResponseResource.postSearch(null, null, _PAGINATION);
 	}
 
-	private void _testSearchWithBlueprint() throws Exception {
-		searchResponseResource.search(
-			null, _read("testSearchWithBlueprint"), _PAGINATION);
+	private void _testPostSearchWithBlueprint() throws Exception {
+		searchResponseResource.postSearch(
+			null, _read("testPostSearchWithBlueprint"), _PAGINATION);
 	}
 
-	private void _testSearchWithJSONIssue() throws Exception {
+	private void _testPostSearchWithJSONIssue() throws Exception {
 		try {
-			searchResponseResource.search(
+			searchResponseResource.postSearch(
 				null, "{ broken JSON syntax }", _PAGINATION);
 
 			Assert.fail();
@@ -96,13 +96,13 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testSearchWithMultipleQueryIssues() throws Exception {
+	private void _testPostSearchWithMultipleQueryIssues() throws Exception {
 		try {
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
-				searchResponseResource.search(
-					null, _read("testSearchWithMultipleQueryIssues"),
+				searchResponseResource.postSearch(
+					null, _read("testPostSearchWithMultipleQueryIssues"),
 					_PAGINATION);
 
 				Assert.fail();
@@ -121,13 +121,13 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
+	private void _testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported()
 		throws Exception {
 
 		try {
-			searchResponseResource.search(
+			searchResponseResource.postSearch(
 				null,
-				_read("testSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
+				_read("testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
 				_PAGINATION);
 
 			Assert.fail();
@@ -144,7 +144,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testSearchWithSearchEngineIssue() throws Exception {
+	private void _testPostSearchWithSearchEngineIssue() throws Exception {
 		try {
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
@@ -158,8 +158,8 @@ public class SearchResponseResourceTest
 							_CLASS_NAME_EXCEPTION_MAPPER,
 							LoggerTestUtil.ERROR)) {
 
-					searchResponseResource.search(
-						null, _read("testSearchWithSearchEngineIssue"),
+					searchResponseResource.postSearch(
+						null, _read("testPostSearchWithSearchEngineIssue"),
 						_PAGINATION);
 				}
 			}
@@ -173,7 +173,7 @@ public class SearchResponseResourceTest
 		}
 	}
 
-	private void _testSearchWithSearchEngineIssueInSearchResponseString()
+	private void _testPostSearchWithSearchEngineIssueInSearchResponseString()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -186,8 +186,8 @@ public class SearchResponseResourceTest
 					_CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER,
 					LoggerTestUtil.ERROR)) {
 
-				SearchResponse searchResponse = searchResponseResource.search(
-					null, _read("testSearchWithSearchEngineIssue"),
+				SearchResponse searchResponse = searchResponseResource.postSearch(
+					null, _read("testPostSearchWithSearchEngineIssue"),
 					_PAGINATION);
 
 				Assert.assertNull(searchResponse.getResponse());
