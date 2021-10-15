@@ -127,7 +127,8 @@ public class SearchResponseResourceTest
 		try {
 			searchResponseResource.postSearch(
 				null,
-				_read("testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
+				_read(
+					"testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
 				_PAGINATION);
 
 			Assert.fail();
@@ -186,9 +187,10 @@ public class SearchResponseResourceTest
 					_CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER,
 					LoggerTestUtil.ERROR)) {
 
-				SearchResponse searchResponse = searchResponseResource.postSearch(
-					null, _read("testPostSearchWithSearchEngineIssue"),
-					_PAGINATION);
+				SearchResponse searchResponse =
+					searchResponseResource.postSearch(
+						null, _read("testPostSearchWithSearchEngineIssue"),
+						_PAGINATION);
 
 				Assert.assertNull(searchResponse.getResponse());
 

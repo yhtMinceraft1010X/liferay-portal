@@ -31,10 +31,7 @@ import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.rest.dto.v1_0.Document;
-import com.liferay.search.experiences.rest.dto.v1_0.DocumentField;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
-
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
