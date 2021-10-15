@@ -128,7 +128,8 @@ public class SearchResponseResourceTest
 			searchResponseResource.postSearch(
 				null,
 				_read(
-					"testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported"),
+					"testPostSearchWithMultipleSchemaIssuesOnlyFirstIs" +
+						"Reported"),
 				_PAGINATION);
 
 			Assert.fail();
