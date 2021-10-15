@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.request.enhancer;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -75,13 +77,12 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
+		String json = _read();
+
 		configuration.setAggregationConfiguration(
 			new AggregationConfiguration() {
 				{
-					aggs = JSONFactoryUtil.createJSONObject(
-						_read(
-							"SXPBlueprintSearchRequestEnhancerImplTest." +
-								"testAggregationConfiguration.json"));
+					aggs = JSONFactoryUtil.createJSONObject(json);
 				}
 			});
 
@@ -171,10 +172,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		SXPBlueprint sxpBlueprint = _createSXPBlueprint();
 
 		sxpBlueprint.setConfiguration(
-			ConfigurationUtil.toConfiguration(
-				_read(
-					"SXPBlueprintSearchRequestEnhancerImplTest." +
-						"testQueryConfiguration.json")));
+			ConfigurationUtil.toConfiguration(_read()));
 
 		SearchRequest searchRequest = _toSearchRequest(sxpBlueprint);
 
@@ -219,13 +217,12 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		Configuration configuration = sxpBlueprint.getConfiguration();
 
+		String json = _read();
+
 		configuration.setSortConfiguration(
 			new SortConfiguration() {
 				{
-					sorts = JSONFactoryUtil.createJSONArray(
-						_read(
-							"SXPBlueprintSearchRequestEnhancerImplTest." +
-								"testSortConfiguration.json"));
+					sorts = JSONFactoryUtil.createJSONArray(json);
 				}
 			});
 
@@ -258,17 +255,19 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 			JSONFactoryUtil.createJSONObject(String.valueOf(object)));
 	}
 
-	private String _read(String resourceName) {
+	private String _read() throws Exception {
 		Class<?> clazz = getClass();
 
+		Thread currentThread = Thread.currentThread();
+
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
+
 		try (InputStream inputStream = clazz.getResourceAsStream(
-				"dependencies/" + resourceName)) {
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					stackTraceElements[2].getMethodName(), ".json"))) {
 
 			return StringUtil.read(inputStream);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to load resource: " + resourceName, exception);
 		}
 	}
 
