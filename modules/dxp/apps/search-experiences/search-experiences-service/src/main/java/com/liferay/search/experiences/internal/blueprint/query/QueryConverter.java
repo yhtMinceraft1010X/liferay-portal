@@ -63,7 +63,7 @@ public class QueryConverter {
 				_validate(
 					Objects.requireNonNull(
 						jsonObject2.getString("value", null),
-						"value parameter is required")));
+						"The key \"value\" is not set")));
 
 			if (jsonObject2.get("boost") != null) {
 				query.setBoost((float)jsonObject2.getDouble("boost"));

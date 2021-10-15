@@ -113,7 +113,7 @@ public class SearchResponseResourceTest
 				problemException.getMessage(),
 				CoreMatchers.allOf(
 					CoreMatchers.containsString("Invalid query entry at: 0"),
-					CoreMatchers.containsString("value parameter is required"),
+					CoreMatchers.containsString("The key \"value\" is not set"),
 					CoreMatchers.containsString("Invalid query entry at: 1"),
 					CoreMatchers.containsString(
 						"Unresolved template variables: [ipstack.latitude, " +
