@@ -93,9 +93,9 @@ function main {
 }
 
 function overlay_react_app {
-	if [ ! -e "${CUSTOM_ELEMENT_NAME}" ]
+	if [ ! -e "remote-app" ]
 	then
-		mv ${temp_dir} ${CUSTOM_ELEMENT_NAME}
+		mv ${temp_dir} remote-app
 
 		return
 	fi
