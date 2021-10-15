@@ -21,6 +21,8 @@ export const loadPins = (productId) => {
 		themeDisplay.getPortalURL()
 	);
 
+	url.searchParams.set('pageSize', 100);
+
 	return fetch(url, {
 		headers: HEADERS,
 	})
@@ -95,4 +97,25 @@ export const updateGlobalPinsRadius = (diagramId, radius, namespace) => {
 			}
 		}
 	});
+};
+
+export const getMappedProducts = (productId, query, page, pageSize) => {
+	const url = new URL(
+		`${PINS_ENDPOINT}/products/${productId}/mapped-products`,
+		themeDisplay.getPortalURL()
+	);
+
+	if (query) {
+		url.searchParams.set('search', query);
+	}
+
+	if (page) {
+		url.searchParams.set('page', page);
+	}
+
+	url.searchParams.set('pageSize', pageSize);
+
+	return fetch(url, {
+		headers: HEADERS,
+	}).then((response) => response.json());
 };

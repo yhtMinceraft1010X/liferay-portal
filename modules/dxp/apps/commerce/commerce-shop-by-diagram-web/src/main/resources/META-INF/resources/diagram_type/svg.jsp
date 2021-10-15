@@ -20,7 +20,7 @@
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		module="js/diagram/DiagramWithAutomapping"
+		module="js/DiagramWithAutomapping/Diagram"
 		props="<%= (Map<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
 	/>
 </div>

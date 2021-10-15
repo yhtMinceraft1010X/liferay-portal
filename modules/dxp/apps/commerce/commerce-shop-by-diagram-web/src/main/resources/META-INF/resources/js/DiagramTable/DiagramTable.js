@@ -20,6 +20,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {DIAGRAM_EVENTS, DIAGRAM_TABLE_EVENTS} from '../utilities/constants';
 import {getMappedProducts} from '../utilities/data';
+import {formatLabel} from '../utilities/index';
 import ManagementBar from './ManagementBar';
 
 const PAGE_SIZE = 15;
@@ -124,7 +125,7 @@ function DiagramTable({isAdmin, productId}) {
 						<ClayTable.Head>
 							<ClayTable.Row>
 								{!isAdmin && (
-									<ClayTable.Cell>
+									<ClayTable.Cell headingCell>
 										<ClayCheckbox
 											checked={
 												!!selectableProduct &&
@@ -155,16 +156,17 @@ function DiagramTable({isAdmin, productId}) {
 									</ClayTable.Cell>
 								)}
 
-								<ClayTable.Cell headingCell>
-									{Liferay.Language.get('pos')}
-								</ClayTable.Cell>
+								<ClayTable.Cell headingCell>#</ClayTable.Cell>
 
-								<ClayTable.Cell expanded headingCell>
+								<ClayTable.Cell
+									className="table-cell-expand-small"
+									headingCell
+								>
 									{Liferay.Language.get('sku-or-diagram')}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell headingCell>
-									{Liferay.Language.get('qty')}
+									{Liferay.Language.get('quantity')}
 								</ClayTable.Cell>
 							</ClayTable.Row>
 						</ClayTable.Head>
@@ -222,7 +224,7 @@ function DiagramTable({isAdmin, productId}) {
 										)}
 
 										<ClayTable.Cell>
-											{product.sequence}
+											{formatLabel(product.sequence)}
 										</ClayTable.Cell>
 
 										<ClayTable.Cell>

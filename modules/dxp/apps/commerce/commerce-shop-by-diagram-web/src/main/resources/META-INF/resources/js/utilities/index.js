@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {DRAG_AND_DROP_THRESHOLD} from './constants';
+import {DIAGRAM_LABELS_MAX_LENGTH, DRAG_AND_DROP_THRESHOLD} from './constants';
 
 export function calculateTooltipStyleFromTarget(target, containerRef) {
 	const {
@@ -112,4 +112,12 @@ export function isPinMoving(startX, startY, currentX, currentY) {
 	}
 
 	return false;
+}
+
+export function formatLabel(label) {
+	if (label.length > DIAGRAM_LABELS_MAX_LENGTH) {
+		return label.slice(0, 6) + '…';
+	}
+
+	return label;
 }

@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import {event as d3event, select as d3select, zoom as d3zoom} from 'd3';
+import {select as d3select} from 'd3';
 import {fetch} from 'frontend-js-web';
 
-import {ZOOM_VALUES} from './utilities/constants';
+import DiagramZoomHandler from '../utilities/DiagramZoomHandler';
 
-class AutomappingHandler {
+class D3Handler extends DiagramZoomHandler {
 	constructor(
 		diagramWrapper,
 		zoomWrapper,
@@ -23,6 +23,8 @@ class AutomappingHandler {
 		updateLabels,
 		updateZoomState
 	) {
+		super();
+
 		this._currentScale = 1;
 		this._diagramWrapper = diagramWrapper;
 		this._d3diagramWrapper = d3select(diagramWrapper);
@@ -37,8 +39,10 @@ class AutomappingHandler {
 
 		this._printSVGImage().then(() => {
 			this.rendered = true;
-			this._texts = this._diagramWrapper.querySelectorAll(
-				pinsCSSSelectors.join(',')
+			this._texts = Array.from(
+				this._diagramWrapper.querySelectorAll(
+					pinsCSSSelectors.join(',')
+				)
 			);
 
 			this._updatePinsState();
@@ -47,49 +51,14 @@ class AutomappingHandler {
 		});
 	}
 
-	_addZoom() {
-		this._zoom = d3zoom()
-			.scaleExtent([ZOOM_VALUES[0], ZOOM_VALUES[ZOOM_VALUES.length - 1]])
-			.on('zoom', this._handleZoom);
-
-		this._svg = this._d3diagramWrapper.call(this._zoom);
-	}
-
-	_handleZoom() {
-		this._currentScale = d3event.transform.k;
-
-		if (d3event.sourceEvent) {
-			this._updateZoomState(
-				this._currentScale,
-				d3event.transform,
-				d3event
-			);
-		}
-
-		this._d3zoomWrapper.attr('transform', d3event.transform);
-	}
-
-	_animateZoom() {
-		const transition = this._d3diagramWrapper
-			.transition()
-			.duration(800)
-			.tween(
-				'resize',
-				window.ResizeObserver
-					? null
-					: () => this._d3diagramWrapper.dispatch('toggle')
-			);
-
-		this._d3diagramWrapper
-			.transition(transition)
-			.call(this._zoom.scaleTo, this._currentScale);
-	}
-
 	_printSVGImage() {
 		return fetch(this._imageURL)
 			.then((response) => response.text())
 			.then((svgContent) => {
 				this._d3zoomWrapper.html(svgContent);
+
+				this._image = this._d3zoomWrapper.select('svg');
+
 				this._diagramWrapper.classList.add('rendered');
 			});
 	}
@@ -126,6 +95,32 @@ class AutomappingHandler {
 
 		this._animateZoom();
 	}
+
+	recenterOnPin(node) {
+		const {
+			height: imageHeight,
+			width: imageWidth,
+			x: imageX,
+			y: imageY,
+		} = this._image.node().getBoundingClientRect();
+
+		const k = this._currentScale;
+
+		const {
+			height: nodeHeight,
+			width: nodeWidth,
+			x: nodeX,
+			y: nodeY,
+		} = node.getBoundingClientRect();
+
+		const positionX = nodeX - imageX + nodeWidth / 2;
+		const positionY = nodeY - imageY + nodeHeight / 2;
+
+		const x = -positionX * k + imageWidth / 2;
+		const y = -positionY * k + imageHeight / 2;
+
+		return super._recenterViewport(x, y, 1000);
+	}
 }
 
-export default AutomappingHandler;
+export default D3Handler;

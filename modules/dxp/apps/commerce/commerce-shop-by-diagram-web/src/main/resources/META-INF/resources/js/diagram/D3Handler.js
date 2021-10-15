@@ -9,34 +9,30 @@
  * distribution rights of the Software.
  */
 
-import {
-	drag as d3drag,
-	event as d3event,
-	select as d3select,
-	zoom as d3zoom,
-} from 'd3';
+import {drag as d3drag, event as d3event, select as d3select} from 'd3';
 import {openToast} from 'frontend-js-web';
 
-import {
-	PINS_CIRCLE_RADIUS,
-	PINS_RADIUS,
-	ZOOM_VALUES,
-} from './utilities/constants';
-import {savePin} from './utilities/data';
+import DiagramZoomHandler from '../utilities/DiagramZoomHandler';
+import {PINS_CIRCLE_RADIUS, PINS_RADIUS} from '../utilities/constants';
+import {savePin} from '../utilities/data';
 import {
 	getAbsolutePositions,
 	getPercentagePositions,
 	isPinMoving,
-} from './utilities/index';
+} from '../utilities/index';
 
-class DiagramHandler {
+class D3Handler extends DiagramZoomHandler {
 	constructor(
 		diagramWrapper,
 		zoomWrapper,
 		imageURL,
 		updateZoomState,
-		setTooltipData
+		setTooltipData,
+		closeDropdowns
 	) {
+		super();
+
+		this._closeDropdowns = closeDropdowns;
 		this._currentScale = 1;
 		this._d3diagramWrapper = d3select(diagramWrapper);
 		this._d3zoomWrapper = d3select(zoomWrapper);
@@ -63,69 +59,12 @@ class DiagramHandler {
 		this._addZoom();
 	}
 
-	_handleClickOutside(event) {
-		if (
-			!this._diagramWrapper.parentNode.contains(event.target) &&
-			!event.target.closest('.autocomplete-dropdown-menu')
-		) {
-			this._resetActivePinsState();
-		}
-	}
-
 	_addListeners() {
 		window.addEventListener('click', this._handleClickOutside);
-	}
 
-	_addZoom() {
-		this._zoom = d3zoom()
-			.scaleExtent([ZOOM_VALUES[0], ZOOM_VALUES[ZOOM_VALUES.length - 1]])
-			.on('zoom', this._handleZoom);
-
-		this._svg = this._d3diagramWrapper.call(this._zoom);
-	}
-
-	_handleZoom() {
-		this._resetActivePinsState();
-
-		this._currentScale = d3event.transform.k;
-
-		this._setTooltipData(null);
-
-		if (d3event.sourceEvent) {
-			this._updateZoomState(
-				this._currentScale,
-				d3event.transform,
-				d3event
-			);
-		}
-
-		this._d3zoomWrapper.attr('transform', d3event.transform);
-	}
-
-	cleanUp() {
-		window.removeEventListener('click', this._handleClickOutside);
-	}
-
-	updateZoom(scale) {
-		this._currentScale = scale;
-
-		this._animateZoom();
-	}
-
-	_animateZoom() {
-		const transition = this._d3diagramWrapper
-			.transition()
-			.duration(800)
-			.tween(
-				'resize',
-				window.ResizeObserver
-					? null
-					: () => this._d3diagramWrapper.dispatch('toggle')
-			);
-
-		this._d3diagramWrapper
-			.transition(transition)
-			.call(this._zoom.scaleTo, this._currentScale);
+		this._diagramWrapper.addEventListener('click', () => {
+			this._closeDropdowns();
+		});
 	}
 
 	_printImage() {
@@ -153,6 +92,31 @@ class DiagramHandler {
 				this._diagramWrapper.classList.add('rendered');
 			})
 			.on('click', this._handleImageClick);
+	}
+
+	_handleZoom() {
+		this._resetActivePinsState();
+		this._setTooltipData(null);
+
+		super._handleZoom();
+	}
+
+	_recenterViewport(node, duration) {
+		const {height, width} = this._diagramWrapper.getBoundingClientRect();
+		const k = this._currentScale;
+		const d = node.__data__;
+
+		const [pinPositionX, pinPositionY] = getAbsolutePositions(
+			d.positionX,
+			d.positionY,
+			this._image.node(),
+			this._currentScale
+		);
+
+		const x = -pinPositionX * k + width / 2;
+		const y = -pinPositionY * k + height / 2;
+
+		return super._recenterViewport(x, y, duration);
 	}
 
 	_resetActivePinsState() {
@@ -199,6 +163,20 @@ class DiagramHandler {
 		this._setTooltipData({target, x, y});
 	}
 
+	highlight(sequence) {
+		this._d3zoomWrapper
+			.selectAll('.pin-node')
+			.filter((d) => d.sequence === sequence)
+			.classed('highlighted', true);
+	}
+
+	removeHighlight(sequence) {
+		this._d3zoomWrapper
+			.selectAll('.pin-node')
+			.filter((d) => d.sequence === sequence)
+			.classed('highlighted', false);
+	}
+
 	updatePins(pins) {
 		this._pins = pins;
 		this._resetActivePinsState();
@@ -217,6 +195,33 @@ class DiagramHandler {
 				.select('.pin-radius-handler')
 				.attr('transform', `scale(${this._pinsRadius})`);
 		}
+	}
+
+	selectPinByProduct(product) {
+		const found = this._d3zoomWrapper
+			.selectAll('.pin-node')
+			.filter((d) => d.mappedProduct.id === product.id);
+
+		const foundNodes = found.nodes();
+
+		if (foundNodes.length) {
+			this._recenterViewport(foundNodes[0], 500).then(() => {
+				this._selectPinNode(foundNodes[0]);
+			});
+		}
+	}
+
+	_selectPinNode(target) {
+		this._resetActivePinsState();
+
+		target.classList.add('active');
+
+		this._activePin = target;
+
+		this._setTooltipData({
+			selectedPin: target.__data__,
+			target,
+		});
 	}
 
 	_updatePrintedPins() {
@@ -246,18 +251,8 @@ class DiagramHandler {
 					.on('drag', this._handleDragging)
 					.on('end', this._handleDragEnded)
 			)
-			.on('click', (d, index, nodes) => {
-				this._resetActivePinsState();
-
-				const target = nodes[index];
-
-				target.classList.add('active');
-				this._activePin = target;
-
-				this._setTooltipData({
-					selectedPin: d,
-					target,
-				});
+			.on('click', (_d, index, nodes) => {
+				this._selectPinNode(nodes[index]);
 			});
 
 		const radiusHandlers = pinsWrapper
@@ -369,4 +364,4 @@ class DiagramHandler {
 	}
 }
 
-export default DiagramHandler;
+export default D3Handler;

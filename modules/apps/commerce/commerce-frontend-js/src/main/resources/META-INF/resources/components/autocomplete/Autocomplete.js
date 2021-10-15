@@ -77,7 +77,11 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 				props.itemsLabel
 			)
 		);
+
+		setInitialised(Boolean(props.customViewModuleUrl || props.customView));
 	}, [
+		props.customView,
+		props.customViewModuleUrl,
 		props.initialLabel,
 		props.initialValue,
 		props.itemsKey,

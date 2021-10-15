@@ -15,12 +15,13 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 
-import DiagramHandler from './DiagramHandler';
-import DiagramFooter from './components/DiagramFooter';
-import DiagramHeader from './components/DiagramHeader';
-import Tooltip from './components/Tooltip';
-import {PINS_RADIUS} from './utilities/constants';
-import {loadPins, updateGlobalPinsRadius} from './utilities/data';
+import DiagramFooter from '../components/DiagramFooter';
+import DiagramHeader from '../components/DiagramHeader';
+import Tooltip from '../components/Tooltip';
+import {PINS_RADIUS} from '../utilities/constants';
+import {loadPins, updateGlobalPinsRadius} from '../utilities/data';
+import D3Handler from './D3Handler';
+import useTableHandlers from './useTableHandlers';
 
 import '../../css/diagram.scss';
 
@@ -30,6 +31,7 @@ function Diagram({
 	datasetDisplayId,
 	diagramId,
 	imageURL,
+	isAdmin,
 	namespace,
 	pinsRadius: initialPinsRadius,
 	productId,
@@ -42,8 +44,13 @@ function Diagram({
 	const [currentZoom, updateCurrentZoom] = useState(1);
 	const [expanded, updateExpanded] = useState(false);
 	const [pins, updatePins] = useState(null);
+	const [dropdownActive, setDropdownActive] = useState(false);
 	const [pinsRadius, updatePinsRadius] = useState(initialPinsRadius);
 	const [tooltipData, setTooltipData] = useState(false);
+
+	useTableHandlers(chartInstance, productId, () =>
+		loadPins(productId).then(updatePins)
+	);
 
 	useEffect(() => {
 		if (pinsRadiusInitialized.current) {
@@ -69,12 +76,13 @@ function Diagram({
 	}, [pinsRadius]);
 
 	useLayoutEffect(() => {
-		chartInstance.current = new DiagramHandler(
+		chartInstance.current = new D3Handler(
 			svgRef.current,
 			zoomHandlerRef.current,
 			imageURL,
 			updateCurrentZoom,
-			setTooltipData
+			setTooltipData,
+			() => setDropdownActive(false)
 		);
 
 		return () => {
@@ -85,7 +93,9 @@ function Diagram({
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
 			<DiagramHeader
+				dropdownActive={dropdownActive}
 				pinsRadius={pinsRadius}
+				setDropdownActive={setDropdownActive}
 				updatePinsRadius={updatePinsRadius}
 			/>
 
@@ -99,7 +109,7 @@ function Diagram({
 					<g className="zoom-handler" ref={zoomHandlerRef} />
 				</svg>
 
-				{tooltipData && (
+				{isAdmin && tooltipData && (
 					<Tooltip
 						closeTooltip={() => setTooltipData(null)}
 						containerRef={wrapperRef}

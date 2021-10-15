@@ -11,33 +11,50 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 
-import Diagram from '../src/main/resources/META-INF/resources/js/diagram/Diagram';
-import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/diagram/DiagramWithAutomapping';
+import Diagram from '../src/main/resources/META-INF/resources/js/Diagram/Diagram';
+import DiagramTable from '../src/main/resources/META-INF/resources/js/DiagramTable/DiagramTable';
+import DiagramWithAutomapping from '../src/main/resources/META-INF/resources/js/DiagramWithAutomapping/Diagram';
 
 render(
 	Diagram,
 	{
-		datasetDisplayId: 'test_id',
-		diagramId: '42908',
+		diagramId: '46375',
 		imageURL:
-			'/documents/20118/0/download.png/22b2e42d-9b2c-ae98-0f44-de5b79dc7cca?version=1.0&t=1633353975448&download=true',
+			'/documents/20118/0/login_portlet_splash.jpg/31c61626-ae8c-6a29-8ab6-22a10249be49?version=1.0&t=1634051992174&download=true',
 		isAdmin: true,
 		pinsRadius: 1.0,
-		productId: '42900',
+		productId: '46355',
 	},
 	document.getElementById('shop-by-diagram')
 );
 
 render(
+	DiagramTable,
+	{
+		isAdmin: false,
+		productId: '46355',
+	},
+	document.getElementById('shop-by-diagram-table')
+);
+
+render(
 	DiagramWithAutomapping,
 	{
-		datasetDisplayId: 'test_id',
-		diagramId: '44896',
+		diagramId: '46522',
 		imageURL:
-			'/documents/42923/0/308056.svg/fa9dcbf5-a06f-b3ba-d11b-e4cd28402758?version=1.0&t=1633361640529&download=true',
-		isAdmin: true,
+			'/documents/20123/0/308056.svg/b77d6493-ab31-d7e5-cb6a-616c9d37ab9b?version=1.0&t=1634286500938&download=true',
+		isAdmin: false,
 		pinsCSSSelectors: ['#Livello_Testi > text', '[id*=MTEXT] > text'],
-		productId: '44878',
+		productId: '46505',
 	},
 	document.getElementById('shop-by-diagram-automapping')
+);
+
+render(
+	DiagramTable,
+	{
+		isAdmin: false,
+		productId: '46505',
+	},
+	document.getElementById('shop-by-diagram-automapping-table')
 );

@@ -15,6 +15,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import {UPDATE_DATASET_DISPLAY} from 'frontend-taglib-clay/data_set_display/utils/eventsDefinitions';
+import PropTypes from 'prop-types';
 import React, {
 	useEffect,
 	useLayoutEffect,
@@ -23,7 +24,11 @@ import React, {
 	useState,
 } from 'react';
 
-import {DEFAULT_LINK_OPTION, LINKING_OPTIONS} from '../utilities/constants';
+import {
+	DEFAULT_LINK_OPTION,
+	DIAGRAM_EVENTS,
+	LINKING_OPTIONS,
+} from '../utilities/constants';
 import {deletePin, savePin} from '../utilities/data';
 import {
 	calculateTooltipStyleFromTarget,
@@ -122,11 +127,23 @@ function Tooltip({
 				}
 
 				updatePins((pins) => {
+					const updatedPins = pins.map((pin) =>
+						pin.sequence === newPin.sequence
+							? {
+									...pin,
+									mappedProduct: newPin.mappedProduct,
+									quantity: newPin.quantity,
+							  }
+							: pin
+					);
+
 					return update
-						? pins.map((pin) =>
-								pin.id === selectedPin.id ? newPin : pin
+						? updatedPins.map((updatedPin) =>
+								updatedPin.id === newPin.id
+									? newPin
+									: updatedPin
 						  )
-						: [...pins, newPin];
+						: [...updatedPins, newPin];
 				});
 
 				updateSaving(false);
@@ -146,6 +163,10 @@ function Tooltip({
 						id: datasetDisplayId,
 					});
 				}
+
+				Liferay.fire(DIAGRAM_EVENTS.DIAGRAM_UPDATED, {
+					diagramProductId: productId,
+				});
 			})
 			.catch((error) => {
 				openToast({
@@ -185,6 +206,10 @@ function Tooltip({
 						id: datasetDisplayId,
 					});
 				}
+
+				Liferay.fire(DIAGRAM_EVENTS.DIAGRAM_UPDATED, {
+					diagramProductId: productId,
+				});
 			})
 			.catch((error) => {
 				openToast({
@@ -314,5 +339,31 @@ function Tooltip({
 		</div>
 	);
 }
+
+Tooltip.propTypes = {
+	closeTooltip: PropTypes.func.isRequired,
+	containerRef: PropTypes.shape({
+		current: PropTypes.any,
+	}).isRequired,
+	datasetDisplayId: PropTypes.string,
+	productId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+		.isRequired,
+	readOnlySequence: PropTypes.bool,
+	selectedPin: PropTypes.shape({
+		id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+			.isRequired,
+		mappedProduct: PropTypes.shape({
+			quantity: PropTypes.number.isRequired,
+			sequence: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired,
+		}),
+		sequence: PropTypes.string,
+	}),
+	sequence: PropTypes.string,
+	target: PropTypes.any,
+	updatePins: PropTypes.func.isRequired,
+	x: PropTypes.number,
+	y: PropTypes.number,
+};
 
 export default Tooltip;

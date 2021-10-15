@@ -20,11 +20,13 @@ const DIAGRAMS_ENDPOINT = '/o/headless-commerce-admin-catalog/v1.0/diagrams/';
 
 export default function ({diagramId, namespace}) {
 	const type = document.getElementById(`${namespace}type`);
+
 	const handleSelectChange = () => {
 		const url = new URL(
 			DIAGRAMS_ENDPOINT + diagramId,
 			themeDisplay.getPortalURL()
 		);
+
 		fetch(url, {
 			body: JSON.stringify({
 				type: type.value,
@@ -48,6 +50,7 @@ export function updateDiagramColor(diagramId, color) {
 		DIAGRAMS_ENDPOINT + diagramId,
 		themeDisplay.getPortalURL()
 	);
+
 	fetch(url, {
 		body: JSON.stringify({
 			color,
@@ -62,6 +65,7 @@ export function updateDiagramRadius(diagramId, radius) {
 		DIAGRAMS_ENDPOINT + diagramId,
 		themeDisplay.getPortalURL()
 	);
+
 	fetch(url, {
 		body: JSON.stringify({
 			radius,

@@ -15,6 +15,17 @@ import {
 	LinkedToExternalProductFormGroup,
 } from '../components/Form';
 
+export const DIAGRAM_EVENTS = {
+	DIAGRAM_UPDATED: 'diagram-updated',
+};
+
+export const DIAGRAM_TABLE_EVENTS = {
+	HIGHLIGHT_PIN: 'diagram-highlight-pin',
+	PINS_UPDATED: 'diagram-table-updated',
+	REMOVE_PIN_HIGHLIGHT: 'diagram-remove-pin-highlight',
+	SELECT_PIN: 'diagram-select-pin',
+};
+
 export const RADIUS_SIZES = [
 	{
 		label: Liferay.Language.get('small'),
@@ -91,3 +102,5 @@ export const LINKING_OPTIONS = {
 		value: 'sku',
 	},
 };
+
+export const DIAGRAM_LABELS_MAX_LENGTH = 6;

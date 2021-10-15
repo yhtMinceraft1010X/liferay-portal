@@ -35,8 +35,12 @@ function updateLabel(pinsRadius, updateButtonLabel) {
 
 const debouncedUpdateLabel = debounce(updateLabel, 500);
 
-function DiagramHeader({pinsRadius, updatePinsRadius}) {
-	const [active, setActive] = useState(false);
+function DiagramHeader({
+	dropdownActive,
+	pinsRadius,
+	setDropdownActive,
+	updatePinsRadius,
+}) {
 	const [buttonLabel, updateButtonLabel] = useState(getLabel(pinsRadius));
 
 	const smallActive = pinsRadius === PINS_RADIUS.OPTIONS.small.value;
@@ -56,9 +60,9 @@ function DiagramHeader({pinsRadius, updatePinsRadius}) {
 					</label>
 
 					<ClayDropDown
-						active={active}
+						active={dropdownActive}
 						className="my-auto"
-						onActiveChange={setActive}
+						onActiveChange={setDropdownActive}
 						trigger={
 							<ClayButton displayType="secondary">
 								{buttonLabel}

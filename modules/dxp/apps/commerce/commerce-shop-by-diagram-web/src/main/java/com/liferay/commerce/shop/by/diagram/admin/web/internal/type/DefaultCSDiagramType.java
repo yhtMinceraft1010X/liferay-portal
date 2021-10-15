@@ -132,6 +132,8 @@ public class DefaultCSDiagramType implements CSDiagramType {
 			).put(
 				"isAdmin", admin
 			).put(
+				"pinsRadius", csDiagramSetting.getRadius()
+			).put(
 				"productId",
 				() -> {
 					CPDefinition cpDefinition =

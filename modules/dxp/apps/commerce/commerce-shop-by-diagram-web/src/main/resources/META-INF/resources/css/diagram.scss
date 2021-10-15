@@ -1,24 +1,39 @@
 @import 'atlas-variables';
 
+$diagram-height: 700px;
+
 .shop-by-diagram {
+	display: flex;
+	flex-direction: column;
+	height: $diagram-height;
+
+	.svg-wrapper {
+		background-color: $white;
+		height: 100%;
+		opacity: 0;
+		transition: opacity 0.1s ease;
+		width: 100%;
+
+		&.rendered {
+			opacity: 1;
+		}
+	}
+
+	.view-wrapper {
+		flex-grow: 1;
+		height: auto;
+		position: relative;
+		z-index: 1;
+	}
+
 	&.expanded {
 		bottom: 0;
-		display: flex;
-		flex-direction: column;
+		height: auto;
 		left: 0;
 		position: fixed;
 		right: 0;
 		top: 0;
 		z-index: 990;
-
-		.svg-wrapper {
-			height: 100%;
-		}
-
-		.view-wrapper {
-			flex-grow: 1;
-			height: auto;
-		}
 	}
 
 	svg .pin {
@@ -37,6 +52,7 @@
 		padding: $spacer;
 		position: absolute;
 		width: 400px;
+		z-index: 4;
 	}
 
 	.empty-pin-node {
@@ -48,16 +64,26 @@
 		}
 	}
 
+	.sequences-wrapper {
+		height: 100%;
+		left: 0;
+		overflow: hidden;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
 	.pin-foreground {
 		align-items: center;
 		color: $gray-600;
 		display: flex;
 		font-weight: 600;
+		height: 0;
 		justify-content: center;
-		left: 0;
 		pointer-events: none;
 		position: absolute;
-		top: 0;
+		width: 0;
 		z-index: 2;
 
 		&.highlighted {
@@ -67,16 +93,12 @@
 		&::before {
 			animation: 0.1s ease-out 0s 1 pinZoomIn forwards;
 			background-color: $white;
-			border-color: $warning;
+			border: var(--border-width) solid $warning;
 			border-radius: 50%;
-			border-style: solid;
-			border-width: var(--border-width);
-			bottom: -15%;
 			content: '';
-			left: -15%;
+			height: var(--size);
 			position: absolute;
-			right: -15%;
-			top: -15%;
+			width: var(--size);
 			z-index: -1;
 		}
 
@@ -96,7 +118,9 @@
 	.pin-node {
 		cursor: pointer;
 
-		&.active {
+		&:hover,
+		&.active,
+		&.highlighted {
 			.pin-node-text {
 				fill: $warning;
 			}
@@ -122,7 +146,7 @@
 			stroke: $white;
 			stroke-linecap: round;
 			stroke-linejoin: round;
-			stroke-width: 1.5;
+			stroke-width: 2;
 		}
 
 		.pin-node-background {
@@ -143,23 +167,6 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		z-index: -1;
-	}
-
-	.svg-wrapper {
-		background-color: $white;
-		height: 600px;
-		opacity: 0;
-		transition: opacity 0.1s ease;
-		width: 100%;
-
-		&.rendered {
-			opacity: 1;
-		}
-	}
-
-	.view-wrapper {
-		position: relative;
-		z-index: 1;
 	}
 }
 
@@ -184,5 +191,18 @@
 	}
 	to {
 		transform: scale(1);
+	}
+}
+
+.shop-by-diagram-table {
+	background: $white;
+	display: flex;
+	flex-direction: column;
+	height: $diagram-height;
+	max-height: $diagram-height;
+
+	.inline-scroller {
+		flex-grow: 1;
+		max-height: none;
 	}
 }
