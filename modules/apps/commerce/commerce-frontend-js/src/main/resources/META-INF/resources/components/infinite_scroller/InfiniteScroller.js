@@ -96,7 +96,10 @@ function InfiniteScroller({
 
 InfiniteScroller.propTypes = {
 	customLoader: PropTypes.element,
-	maxHeight: PropTypes.number,
+	maxHeight: PropTypes.oneOfType([
+		PropTypes.number,
+		PropTypes.string,
+	]),
 	onBottomTouched: PropTypes.func.isRequired,
 	scrollCompleted: PropTypes.bool.isRequired,
 };
