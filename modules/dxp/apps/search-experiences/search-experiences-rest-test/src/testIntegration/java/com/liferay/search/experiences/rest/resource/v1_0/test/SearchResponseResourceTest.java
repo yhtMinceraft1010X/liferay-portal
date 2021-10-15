@@ -48,7 +48,6 @@ public class SearchResponseResourceTest
 		super.testPostSearch();
 
 		_testPostSearch();
-		_testPostSearchWithBlueprint();
 		_testPostSearchWithJSONIssue();
 		_testPostSearchWithMultipleQueryIssues();
 		_testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
@@ -79,9 +78,6 @@ public class SearchResponseResourceTest
 
 	private void _testPostSearch() throws Exception {
 		searchResponseResource.postSearch(null, null, _PAGINATION);
-	}
-
-	private void _testPostSearchWithBlueprint() throws Exception {
 		searchResponseResource.postSearch(null, _read(), _PAGINATION);
 	}
 
