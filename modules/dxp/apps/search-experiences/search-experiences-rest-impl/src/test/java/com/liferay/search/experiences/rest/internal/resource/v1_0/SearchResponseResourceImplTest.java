@@ -117,7 +117,7 @@ public class SearchResponseResourceImplTest {
 		Assert.assertEquals(
 			"{field1st={\"values\": [\"Lone Value\"]}, field2nd={\"values\": " +
 				"[\"4\", \"8\", \"15\", \"16\", \"23\", \"42\"]}}",
-			documentFields.toString());
+			String.valueOf(documentFields));
 
 		Assert.assertEquals(requestString, searchResponse.getRequestString());
 		Assert.assertEquals(responseString, searchResponse.getResponseString());
