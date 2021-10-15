@@ -8,7 +8,7 @@
 							"context": "query",
 							"occur": "filter",
 							"query": {
-								"deliberately mistyped": "search engine fails"
+								"INVALID": ""
 							}
 						}
 					],

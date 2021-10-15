@@ -86,9 +86,9 @@ public class SearchResponseResourceTest
 
 		String message = StringBundler.concat(
 			"org.elasticsearch.ElasticsearchStatusException: ",
-			"ElasticsearchStatusException[Elasticsearch exception ",
-			"[type=parsing_exception, reason=[deliberately mistyped] query ",
-			"malformed, no start_object after query name]]");
+			"ElasticsearchStatusException[Elasticsearch exception [type=",
+			"parsing_exception, reason=[INVALID] query malformed, no ",
+			"start_object after query name]]");
 
 		try {
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -186,13 +186,16 @@ public class SearchResponseResourceTest
 			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {
+
+			// TODO The property "INVALID_2" should be in the message
+
 			Assert.assertThat(
 				problemException.getMessage(),
 				CoreMatchers.containsString(
 					StringBundler.concat(
 						"Property \"configuration\" is not defined in ",
 						"SXPBlueprint. Property \"general\" is not defined in ",
-						"Configuration. Property \"incorrectFirst\" is not ",
+						"Configuration. Property \"INVALID_1\" is not ",
 						"defined in General.")));
 		}
 	}
