@@ -88,7 +88,7 @@ public class SearchResponseResourceTest
 	private void _testPostSearchWithJSONIssue() throws Exception {
 		try {
 			searchResponseResource.postSearch(
-				null, "{ broken JSON syntax }", _PAGINATION);
+				null, "{ ... }", _PAGINATION);
 
 			Assert.fail();
 		}
