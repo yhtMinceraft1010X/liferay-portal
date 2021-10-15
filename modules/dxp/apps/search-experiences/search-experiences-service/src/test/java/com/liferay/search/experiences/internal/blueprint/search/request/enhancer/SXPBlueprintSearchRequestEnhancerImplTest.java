@@ -262,7 +262,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		Class<?> clazz = getClass();
 
 		try (InputStream inputStream = clazz.getResourceAsStream(
-				resourceName)) {
+				"dependencies/" + resourceName)) {
 
 			return StringUtil.read(inputStream);
 		}

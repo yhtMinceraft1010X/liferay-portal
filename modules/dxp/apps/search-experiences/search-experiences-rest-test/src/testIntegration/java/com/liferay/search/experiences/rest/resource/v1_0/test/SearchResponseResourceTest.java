@@ -72,7 +72,7 @@ public class SearchResponseResourceTest
 		return StringUtil.read(
 			clazz.getResourceAsStream(
 				StringBundler.concat(
-					clazz.getSimpleName(), StringPool.PERIOD,
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
 					stackTraceElements[2].getMethodName(), ".json")));
 	}
 

@@ -116,7 +116,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(
-					clazz.getSimpleName(), StringPool.PERIOD,
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
 					testName.getMethodName(), ".json")),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
