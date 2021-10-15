@@ -53,7 +53,6 @@ public class SearchResponseResourceTest
 		_testPostSearchWithMultipleQueryIssues();
 		_testPostSearchWithMultipleSchemaIssuesOnlyFirstIsReported();
 		_testPostSearchWithSearchEngineIssue();
-		_testPostSearchWithSearchEngineIssueInSearchResponseString();
 	}
 
 	@Override
@@ -64,13 +63,18 @@ public class SearchResponseResourceTest
 		return searchResponse;
 	}
 
-	private String _read(String name) throws Exception {
+	private String _read() throws Exception {
 		Class<?> clazz = getClass();
+
+		Thread currentThread = Thread.currentThread();
+
+		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
 
 		return StringUtil.read(
 			clazz.getResourceAsStream(
 				StringBundler.concat(
-					clazz.getSimpleName(), StringPool.PERIOD, name, ".json")));
+					clazz.getSimpleName(), StringPool.PERIOD,
+					stackTraceElements[2].getMethodName(), ".json")));
 	}
 
 	private void _testPostSearch() throws Exception {
@@ -78,8 +82,7 @@ public class SearchResponseResourceTest
 	}
 
 	private void _testPostSearchWithBlueprint() throws Exception {
-		searchResponseResource.postSearch(
-			null, _read("testPostSearchWithBlueprint"), _PAGINATION);
+		searchResponseResource.postSearch(null, _read(), _PAGINATION);
 	}
 
 	private void _testPostSearchWithJSONIssue() throws Exception {
@@ -101,9 +104,7 @@ public class SearchResponseResourceTest
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_EXCEPTION_MAPPER, LoggerTestUtil.ERROR)) {
 
-				searchResponseResource.postSearch(
-					null, _read("testPostSearchWithMultipleQueryIssues"),
-					_PAGINATION);
+				searchResponseResource.postSearch(null, _read(), _PAGINATION);
 
 				Assert.fail();
 			}
@@ -125,12 +126,7 @@ public class SearchResponseResourceTest
 		throws Exception {
 
 		try {
-			searchResponseResource.postSearch(
-				null,
-				_read(
-					"testPostSearchWithMultipleSchemaIssuesOnlyFirstIs" +
-						"Reported"),
-				_PAGINATION);
+			searchResponseResource.postSearch(null, _read(), _PAGINATION);
 
 			Assert.fail();
 		}
@@ -161,8 +157,7 @@ public class SearchResponseResourceTest
 							LoggerTestUtil.ERROR)) {
 
 					searchResponseResource.postSearch(
-						null, _read("testPostSearchWithSearchEngineIssue"),
-						_PAGINATION);
+						null, _read(), _PAGINATION);
 				}
 			}
 
@@ -173,10 +168,6 @@ public class SearchResponseResourceTest
 				problemException.getMessage(),
 				CoreMatchers.containsString(_SEARCH_ENGINE_ISSUE));
 		}
-	}
-
-	private void _testPostSearchWithSearchEngineIssueInSearchResponseString()
-		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -190,8 +181,7 @@ public class SearchResponseResourceTest
 
 				SearchResponse searchResponse =
 					searchResponseResource.postSearch(
-						null, _read("testPostSearchWithSearchEngineIssue"),
-						_PAGINATION);
+						null, _read(), _PAGINATION);
 
 				Assert.assertNull(searchResponse.getResponse());
 
