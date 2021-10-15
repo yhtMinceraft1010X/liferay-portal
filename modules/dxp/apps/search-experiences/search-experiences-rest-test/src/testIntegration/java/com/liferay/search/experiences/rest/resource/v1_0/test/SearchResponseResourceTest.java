@@ -193,10 +193,10 @@ public class SearchResponseResourceTest
 				problemException.getMessage(),
 				CoreMatchers.containsString(
 					StringBundler.concat(
-						"Property \"configuration\" is not defined in ",
-						"SXPBlueprint. Property \"general\" is not defined in ",
-						"Configuration. Property \"INVALID_1\" is not ",
-						"defined in General.")));
+						"The property \"configuration\" is not defined in ",
+						"SXPBlueprint. The property \"general\" is not ",
+						"defined in Configuration. The property \"INVALID_1\" ",
+						"is not defined in General.")));
 		}
 	}
 
