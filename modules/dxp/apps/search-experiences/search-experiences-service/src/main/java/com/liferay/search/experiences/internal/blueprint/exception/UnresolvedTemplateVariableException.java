@@ -22,21 +22,22 @@ import java.util.Arrays;
 public class UnresolvedTemplateVariableException extends RuntimeException {
 
 	public static UnresolvedTemplateVariableException with(
-		String... variables) {
+		String... templateVariables) {
 
 		UnresolvedTemplateVariableException
 			unresolvedTemplateVariableException =
 				new UnresolvedTemplateVariableException(
 					"Unresolved template variables: " +
-						Arrays.asList(variables));
+						Arrays.asList(templateVariables));
 
-		unresolvedTemplateVariableException._variables = variables;
+		unresolvedTemplateVariableException._templateVariables =
+			templateVariables;
 
 		return unresolvedTemplateVariableException;
 	}
 
-	public String[] getVariables() {
-		return _variables;
+	public String[] getTemplateVariables() {
+		return _templateVariables;
 	}
 
 	/**
@@ -46,6 +47,6 @@ public class UnresolvedTemplateVariableException extends RuntimeException {
 		super(message);
 	}
 
-	private String[] _variables;
+	private String[] _templateVariables;
 
 }
