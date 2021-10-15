@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.search.experiences.internal.blueprint.exception.InvalidQueryEntryException;
 import com.liferay.search.experiences.internal.blueprint.query.QueryConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;

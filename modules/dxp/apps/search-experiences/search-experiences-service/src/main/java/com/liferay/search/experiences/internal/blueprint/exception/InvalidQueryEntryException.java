@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.internal.blueprint.search.request.body.contributor;
+package com.liferay.search.experiences.internal.blueprint.exception;
 
 /**
  * @author André de Oliveira

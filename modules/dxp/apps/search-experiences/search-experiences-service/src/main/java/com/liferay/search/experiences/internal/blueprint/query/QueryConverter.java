@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
+import com.liferay.search.experiences.internal.blueprint.exception.UnresolvedTemplateVariableException;
 
 import java.util.Iterator;
 import java.util.Objects;
