@@ -121,16 +121,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		for (SXPSearchRequestBodyContributor sxpSearchRequestBodyContributor :
 				_sxpSearchRequestBodyContributors) {
 
-			if (!ArrayUtil.contains(
+			if (ArrayUtil.contains(
 					names, sxpSearchRequestBodyContributor.getName())) {
 
-				try {
-					sxpSearchRequestBodyContributor.contribute(
-						searchRequestBuilder, sxpBlueprint);
-				}
-				catch (Exception exception) {
-					runtimeException.addSuppressed(exception);
-				}
+				continue;
+			}
+
+			try {
+				sxpSearchRequestBodyContributor.contribute(
+					searchRequestBuilder, sxpBlueprint);
+			}
+			catch (Exception exception) {
+				runtimeException.addSuppressed(exception);
 			}
 		}
 
