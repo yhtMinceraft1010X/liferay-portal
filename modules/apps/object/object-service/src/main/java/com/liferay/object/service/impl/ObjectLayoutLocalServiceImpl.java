@@ -481,7 +481,7 @@ public class ObjectLayoutLocalServiceImpl
 		Stream<ObjectLayoutTab> objectLayoutTabsStream =
 			objectLayoutTabs.stream();
 
-		Optional<ObjectLayoutColumn> objectLayoutTabsOptional =
+		Optional<ObjectLayoutColumn> objectLayoutColumnOptional =
 			objectLayoutTabsStream.flatMap(
 				objectLayoutTab -> {
 					if (objectLayoutTab.getObjectLayoutBoxes() == null) {
@@ -511,7 +511,7 @@ public class ObjectLayoutLocalServiceImpl
 				}
 			).findAny();
 
-		if (!objectLayoutTabsOptional.isPresent()) {
+		if (!objectLayoutColumnOptional.isPresent()) {
 			throw new DefaultObjectLayoutException(
 				"The default object layout must have at least one field");
 		}
