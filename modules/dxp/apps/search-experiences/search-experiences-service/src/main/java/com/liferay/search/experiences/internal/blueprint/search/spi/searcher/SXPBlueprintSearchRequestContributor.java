@@ -62,26 +62,21 @@ public class SXPBlueprintSearchRequestContributor
 		}
 
 		if (object == null) {
-			return;
 		}
-
-		if (object instanceof Number) {
+		else if (object instanceof Number) {
 			_enhance(searchRequestBuilder, GetterUtil.getLong(object));
-
-			return;
 		}
-
-		if (object instanceof String) {
+		else if (object instanceof String) {
 			if (Validator.isNotNull((String)object)) {
 				_enhance(
 					searchRequestBuilder,
 					GetterUtil.getLongValues(StringUtil.split((String)object)));
 			}
-
-			return;
 		}
-
-		throw new IllegalArgumentException("Invalid blueprint ID " + object);
+		else {
+			throw new IllegalArgumentException(
+				"Invalid blueprint ID " + object);
+		}
 	}
 
 	private void _contributeJSON(SearchRequestBuilder searchRequestBuilder) {
@@ -104,18 +99,20 @@ public class SXPBlueprintSearchRequestContributor
 		SearchRequestBuilder searchRequestBuilder, long... sxpBlueprintIds) {
 
 		for (long sxpBlueprintId : sxpBlueprintIds) {
-			if (sxpBlueprintId != 0) {
-				SXPBlueprint sxpBlueprint =
-					_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId);
+			if (sxpBlueprintId == 0) {
+				continue;
+			}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Search experiences blueprint " + sxpBlueprint);
-				}
+			SXPBlueprint sxpBlueprint =
+				_sxpBlueprintLocalService.fetchSXPBlueprint(sxpBlueprintId);
 
-				if (sxpBlueprint != null) {
-					_sxpBlueprintSearchRequestEnhancer.enhance(
-						searchRequestBuilder, sxpBlueprint);
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search experiences blueprint " + sxpBlueprint);
+			}
+
+			if (sxpBlueprint != null) {
+				_sxpBlueprintSearchRequestEnhancer.enhance(
+					searchRequestBuilder, sxpBlueprint);
 			}
 		}
 	}
