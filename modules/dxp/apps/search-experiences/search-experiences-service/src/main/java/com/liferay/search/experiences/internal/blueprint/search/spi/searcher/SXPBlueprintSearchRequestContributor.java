@@ -46,13 +46,15 @@ public class SXPBlueprintSearchRequestContributor
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(searchRequest);
 
-		_contributeId(searchRequestBuilder);
-		_contributeJSON(searchRequestBuilder);
+		_contributeSXPBlueprintId(searchRequestBuilder);
+		_contributeSXPBlueprintJSON(searchRequestBuilder);
 
 		return searchRequestBuilder.build();
 	}
 
-	private void _contributeId(SearchRequestBuilder searchRequestBuilder) {
+	private void _contributeSXPBlueprintId(
+		SearchRequestBuilder searchRequestBuilder) {
+
 		Object object = searchRequestBuilder.withSearchContextGet(
 			searchContext -> searchContext.getAttribute(
 				"search.experiences.blueprint.id"));
@@ -75,11 +77,13 @@ public class SXPBlueprintSearchRequestContributor
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid blueprint ID " + object);
+				"Invalid search experiences blueprint ID " + object);
 		}
 	}
 
-	private void _contributeJSON(SearchRequestBuilder searchRequestBuilder) {
+	private void _contributeSXPBlueprintJSON(
+		SearchRequestBuilder searchRequestBuilder) {
+
 		String sxpBlueprintJSON = searchRequestBuilder.withSearchContextGet(
 			searchContext -> GetterUtil.getString(
 				searchContext.getAttribute(
