@@ -85,7 +85,7 @@ public class ObjectLayoutServiceTest {
 	@Test
 	public void testAddObjectLayout() throws Exception {
 		try {
-			_testAddObjectLayout(_defaultUser, false);
+			_testAddObjectLayout(_defaultUser);
 
 			Assert.fail();
 		}
@@ -98,7 +98,7 @@ public class ObjectLayoutServiceTest {
 						" must have UPDATE permission for"));
 		}
 
-		_testAddObjectLayout(_user, false);
+		_testAddObjectLayout(_user);
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class ObjectLayoutServiceTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
-	private void _testAddObjectLayout(User user, boolean defaultObjectLayout)
+	private void _testAddObjectLayout(User user)
 		throws Exception {
 
 		ObjectLayout objectLayout = null;
@@ -160,7 +160,7 @@ public class ObjectLayoutServiceTest {
 			_setUser(user);
 
 			objectLayout = _objectLayoutService.addObjectLayout(
-				_objectDefinition.getObjectDefinitionId(), defaultObjectLayout,
+				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList());
 		}
