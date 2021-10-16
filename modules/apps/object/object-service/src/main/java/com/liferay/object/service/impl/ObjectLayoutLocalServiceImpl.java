@@ -483,30 +483,36 @@ public class ObjectLayoutLocalServiceImpl
 		Optional<ObjectLayoutColumn> objectLayoutColumnOptional =
 			stream.flatMap(
 				objectLayoutTab -> {
-					if (objectLayoutTab.getObjectLayoutBoxes() == null) {
+					List<ObjectLayoutBox> objectLayoutBoxes =
+						objectLayoutTab.getObjectLayoutBoxes();
+
+					if (objectLayoutBoxes == null) {
 						return Stream.empty();
 					}
 
-					return objectLayoutTab.getObjectLayoutBoxes(
-					).stream();
+					return objectLayoutBoxes.stream();
 				}
 			).flatMap(
 				objectLayoutBox -> {
-					if (objectLayoutBox.getObjectLayoutRows() == null) {
+					List<ObjectLayoutRow> objectLayoutRows =
+						objectLayoutBox.getObjectLayoutRows();
+
+					if (objectLayoutRows == null) {
 						return Stream.empty();
 					}
 
-					return objectLayoutBox.getObjectLayoutRows(
-					).stream();
+					return objectLayoutRows.stream();
 				}
 			).flatMap(
 				objectLayoutRow -> {
-					if (objectLayoutRow.getObjectLayoutColumns() == null) {
+					List<ObjectLayoutColumn> objectLayoutColumns =
+						objectLayoutRow.getObjectLayoutColumns();
+
+					if (objectLayoutColumns == null) {
 						return Stream.empty();
 					}
 
-					return objectLayoutRow.getObjectLayoutColumns(
-					).stream();
+					return objectLayoutColumns.stream();
 				}
 			).findAny();
 
