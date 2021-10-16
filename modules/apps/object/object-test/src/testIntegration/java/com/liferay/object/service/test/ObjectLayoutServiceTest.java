@@ -151,9 +151,7 @@ public class ObjectLayoutServiceTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 	}
 
-	private void _testAddObjectLayout(User user)
-		throws Exception {
-
+	private void _testAddObjectLayout(User user) throws Exception {
 		ObjectLayout objectLayout = null;
 
 		try {

@@ -223,7 +223,7 @@ public class ObjectLayoutLocalServiceTest {
 						"than 12"));
 		}
 
-		ObjectLayout objectLayout = _addObjectLayout(false);
+		ObjectLayout objectLayout = _addObjectLayout();
 
 		_assertObjectLayout(objectLayout);
 
@@ -233,7 +233,7 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Test
 	public void testGetObjectLayout() throws Exception {
-		_addObjectLayout(false);
+		_addObjectLayout();
 
 		List<ObjectLayout> objectLayouts =
 			_objectLayoutLocalService.getObjectLayouts(
@@ -265,9 +265,7 @@ public class ObjectLayoutLocalServiceTest {
 		return objectField.getObjectFieldId();
 	}
 
-	private ObjectLayout _addObjectLayout(boolean defaultObjectLayout)
-		throws Exception {
-
+	private ObjectLayout _addObjectLayout() throws Exception {
 		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(0);
 
 		objectLayoutTab.setNameMap(
@@ -278,7 +276,7 @@ public class ObjectLayoutLocalServiceTest {
 
 		return _objectLayoutLocalService.addObjectLayout(
 			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), defaultObjectLayout,
+			_objectDefinition.getObjectDefinitionId(), false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(objectLayoutTab));
 	}
