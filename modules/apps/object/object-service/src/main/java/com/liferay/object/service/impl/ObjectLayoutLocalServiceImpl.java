@@ -478,11 +478,10 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		Stream<ObjectLayoutTab> objectLayoutTabsStream =
-			objectLayoutTabs.stream();
+		Stream<ObjectLayoutTab> stream = objectLayoutTabs.stream();
 
 		Optional<ObjectLayoutColumn> objectLayoutColumnOptional =
-			objectLayoutTabsStream.flatMap(
+			stream.flatMap(
 				objectLayoutTab -> {
 					if (objectLayoutTab.getObjectLayoutBoxes() == null) {
 						return Stream.empty();
