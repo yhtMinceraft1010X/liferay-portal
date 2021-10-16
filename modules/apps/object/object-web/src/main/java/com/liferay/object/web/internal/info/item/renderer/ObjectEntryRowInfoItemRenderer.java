@@ -131,31 +131,27 @@ public class ObjectEntryRowInfoItemRenderer
 					ObjectField objectField = objectFieldsMap.get(
 						entry.getKey());
 
-					if (Validator.isNotNull(
-							objectField.getRelationshipType())) {
-
-						ObjectEntry relatedObjectEntry =
-							_objectEntryLocalService.fetchObjectEntry(
-								(Long)values.get(objectField.getName()));
-
-						if (relatedObjectEntry != null) {
-							try {
-								return relatedObjectEntry.getTitleValue();
-							}
-							catch (PortalException portalException) {
-								throw new RuntimeException(portalException);
-							}
-						}
-						else {
-							return StringPool.BLANK;
-						}
-					}
-					else {
+					if (Validator.isNull(objectField.getRelationshipType())) {
 						return Optional.ofNullable(
 							entry.getValue()
 						).orElse(
 							StringPool.BLANK
 						);
+					}
+
+					ObjectEntry relatedObjectEntry =
+						_objectEntryLocalService.fetchObjectEntry(
+							(Long)values.get(objectField.getName()));
+
+					if (relatedObjectEntry == null) {
+						return StringPool.BLANK;
+					}
+
+					try {
+						return relatedObjectEntry.getTitleValue();
+					}
+					catch (PortalException portalException) {
+						throw new RuntimeException(portalException);
 					}
 				},
 				(oldValue, newValue) -> oldValue, LinkedHashMap::new)
