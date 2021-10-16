@@ -69,10 +69,12 @@ public class SXPBlueprintSearchRequestContributor
 			_enhance(searchRequestBuilder, GetterUtil.getLong(object));
 		}
 		else if (object instanceof String) {
-			if (Validator.isNotNull((String)object)) {
+			String string = (String)object;
+
+			if (Validator.isNotNull(string)) {
 				_enhance(
 					searchRequestBuilder,
-					GetterUtil.getLongValues(StringUtil.split((String)object)));
+					GetterUtil.getLongValues(StringUtil.split(string)));
 			}
 		}
 		else {
