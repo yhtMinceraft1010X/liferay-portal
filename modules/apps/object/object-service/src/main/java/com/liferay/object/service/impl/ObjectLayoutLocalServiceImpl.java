@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
@@ -48,7 +49,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -478,48 +478,34 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		Stream<ObjectLayoutTab> stream = objectLayoutTabs.stream();
+		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			List<ObjectLayoutBox> objectLayoutBoxes =
+				objectLayoutTab.getObjectLayoutBoxes();
 
-		Optional<ObjectLayoutColumn> objectLayoutColumnOptional =
-			stream.flatMap(
-				objectLayoutTab -> {
-					List<ObjectLayoutBox> objectLayoutBoxes =
-						objectLayoutTab.getObjectLayoutBoxes();
+			if (objectLayoutBoxes == null) {
+				continue;
+			}
 
-					if (objectLayoutBoxes == null) {
-						return Stream.empty();
-					}
+			for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+				List<ObjectLayoutRow> objectLayoutRows =
+					objectLayoutBox.getObjectLayoutRows();
 
-					return objectLayoutBoxes.stream();
+				if (objectLayoutRows == null) {
+					continue;
 				}
-			).flatMap(
-				objectLayoutBox -> {
-					List<ObjectLayoutRow> objectLayoutRows =
-						objectLayoutBox.getObjectLayoutRows();
 
-					if (objectLayoutRows == null) {
-						return Stream.empty();
+				for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
+					if (ListUtil.isNotEmpty(
+							objectLayoutRow.getObjectLayoutColumns())) {
+
+						return;
 					}
-
-					return objectLayoutRows.stream();
 				}
-			).flatMap(
-				objectLayoutRow -> {
-					List<ObjectLayoutColumn> objectLayoutColumns =
-						objectLayoutRow.getObjectLayoutColumns();
-
-					if (objectLayoutColumns == null) {
-						return Stream.empty();
-					}
-
-					return objectLayoutColumns.stream();
-				}
-			).findAny();
-
-		if (!objectLayoutColumnOptional.isPresent()) {
-			throw new DefaultObjectLayoutException(
-				"The default object layout must have at least one field");
+			}
 		}
+
+		throw new DefaultObjectLayoutException(
+			"The default object layout must have at least one field");
 	}
 
 	private void _validateRequiredFields(
