@@ -95,14 +95,11 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutTab2.setObjectLayoutBoxes(
 				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
 
-			List<ObjectLayoutTab> objectLayoutTabs = Arrays.asList(
-				objectLayoutTab1, objectLayoutTab2);
-
 			_objectLayoutLocalService.addObjectLayout(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				objectLayoutTabs);
+				Arrays.asList(objectLayoutTab1, objectLayoutTab2));
 
 			Assert.fail();
 		}
