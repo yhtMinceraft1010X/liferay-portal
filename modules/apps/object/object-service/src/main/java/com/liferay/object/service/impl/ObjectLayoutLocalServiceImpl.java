@@ -83,10 +83,8 @@ public class ObjectLayoutLocalServiceImpl
 		}
 
 		if (defaultObjectLayout) {
-			_validateDefaultObjectLayoutFields(objectLayoutTabs);
-			_validateRequiredFields(objectDefinitionId, objectLayoutTabs);
-			_validateSingleDefaultObjectLayout(
-				0, objectDefinitionId, defaultObjectLayout);
+			_validate(
+				0, objectDefinitionId, defaultObjectLayout, objectLayoutTabs);
 		}
 
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
@@ -186,12 +184,9 @@ public class ObjectLayoutLocalServiceImpl
 			objectLayoutId);
 
 		if (defaultObjectLayout) {
-			_validateDefaultObjectLayoutFields(objectLayoutTabs);
-			_validateRequiredFields(
-				objectLayout.getObjectDefinitionId(), objectLayoutTabs);
-			_validateSingleDefaultObjectLayout(
+			_validate(
 				objectLayoutId, objectLayout.getObjectDefinitionId(),
-				defaultObjectLayout);
+				defaultObjectLayout, objectLayoutTabs);
 		}
 
 		_deleteObjectLayoutTabs(objectLayoutId);
@@ -473,9 +468,12 @@ public class ObjectLayoutLocalServiceImpl
 		return objectLayoutTabs;
 	}
 
-	private void _validateDefaultObjectLayoutFields(
-			List<ObjectLayoutTab> objectLayoutTabs)
+	private void _validate(
+			long objectLayoutId, long objectDefinitionId,
+			boolean defaultObjectLayout, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
+
+		boolean hasRequiredObjectField = false;
 
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
 			List<ObjectLayoutBox> objectLayoutBoxes =
@@ -497,20 +495,17 @@ public class ObjectLayoutLocalServiceImpl
 					if (ListUtil.isNotEmpty(
 							objectLayoutRow.getObjectLayoutColumns())) {
 
-						return;
+						hasRequiredObjectField = true;
 					}
 				}
 			}
 		}
 
-		throw new DefaultObjectLayoutException(
-			"The default object layout must have at least one required " +
-				"object field");
-	}
-
-	private void _validateRequiredFields(
-			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs)
-		throws PortalException {
+		if (!hasRequiredObjectField) {
+			throw new DefaultObjectLayoutException(
+				"The default object layout must have at least one required " +
+					"object field");
+		}
 
 		Set<Long> objectFieldIds = new HashSet<>();
 
@@ -542,12 +537,6 @@ public class ObjectLayoutLocalServiceImpl
 						"first tab of a default object layout");
 			}
 		}
-	}
-
-	private void _validateSingleDefaultObjectLayout(
-			long objectLayoutId, long objectDefinitionId,
-			boolean defaultObjectLayout)
-		throws PortalException {
 
 		ObjectLayout objectLayout =
 			objectLayoutPersistence.fetchByODI_DOL_First(
