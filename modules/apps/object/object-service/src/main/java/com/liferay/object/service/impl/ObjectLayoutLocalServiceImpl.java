@@ -19,7 +19,6 @@ import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectLayoutBox;
 import com.liferay.object.model.ObjectLayoutColumn;
@@ -45,11 +44,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -512,41 +511,35 @@ public class ObjectLayoutLocalServiceImpl
 			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs)
 		throws PortalException {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(objectDefinitionId);
+		Set<Long> objectFieldIds = new HashSet<>();
 
 		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
 
-		List<ObjectLayoutBox> objectLayoutBoxes =
-			objectLayoutTab.getObjectLayoutBoxes();
+		for (ObjectLayoutBox objectLayoutBox :
+				objectLayoutTab.getObjectLayoutBoxes()) {
 
-		Stream<ObjectField> objectFieldsStream = objectFields.stream();
+			for (ObjectLayoutRow objectLayoutRow :
+					objectLayoutBox.getObjectLayoutRows()) {
 
-		boolean containsAllRequiredFields = objectFieldsStream.filter(
-			ObjectFieldModel::isRequired
-		).allMatch(
-			objectField -> {
-				Stream<ObjectLayoutBox> objectLayoutBoxesStream =
-					objectLayoutBoxes.stream();
+				for (ObjectLayoutColumn objectLayoutColumn :
+						objectLayoutRow.getObjectLayoutColumns()) {
 
-				return objectLayoutBoxesStream.flatMap(
-					objectLayoutBox -> objectLayoutBox.getObjectLayoutRows(
-					).stream()
-				).flatMap(
-					objectLayoutRow -> objectLayoutRow.getObjectLayoutColumns(
-					).stream()
-				).anyMatch(
-					objectLayoutColumn -> Objects.equals(
-						objectLayoutColumn.getObjectFieldId(),
-						objectField.getObjectFieldId())
-				);
+					objectFieldIds.add(objectLayoutColumn.getObjectFieldId());
+				}
 			}
-		);
+		}
 
-		if (!containsAllRequiredFields) {
-			throw new DefaultObjectLayoutException(
-				"All mandatory fields must be mapped to the first" +
-					" tab of a default object layout");
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(objectDefinitionId);
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.isRequired() &&
+				!objectFieldIds.contains(objectField.getObjectFieldId())) {
+
+				throw new DefaultObjectLayoutException(
+					"All mandatory fields must be mapped to the first" +
+						" tab of a default object layout");
+			}
 		}
 	}
 
