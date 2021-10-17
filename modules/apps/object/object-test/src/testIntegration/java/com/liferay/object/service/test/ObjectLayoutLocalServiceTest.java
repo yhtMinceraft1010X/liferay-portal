@@ -75,9 +75,7 @@ public class ObjectLayoutLocalServiceTest {
 	}
 
 	@Test
-	public void testAddDefaultObjectLayoutWithMandatoryFieldsInManyTabs()
-		throws Exception {
-
+	public void testAddObjectLayout() throws Exception {
 		try {
 			ObjectLayoutTab objectLayoutTab1 =
 				_objectLayoutTabPersistence.create(0);
@@ -116,10 +114,15 @@ public class ObjectLayoutLocalServiceTest {
 					"All required object fields must be associated to the " +
 						"first tab of a default object layout"));
 		}
-	}
 
-	@Test
-	public void testAddDefaultObjectLayoutWithNoFields() throws Exception {
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			_objectFieldLocalService.deleteObjectField(objectField);
+		}
+
 		try {
 			ObjectLayoutTab objectLayoutTab =
 				_objectLayoutTabPersistence.create(0);
@@ -142,10 +145,9 @@ public class ObjectLayoutLocalServiceTest {
 					"The default object layout must have at least one " +
 						"required object field"));
 		}
-	}
 
-	@Test
-	public void testAddMoreThanOneDefaultObjectLayout() throws Exception {
+		ObjectLayout objectLayout = null;
+
 		try {
 			ObjectLayoutTab objectLayoutTab =
 				_objectLayoutTabPersistence.create(0);
@@ -156,7 +158,7 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutTab.setObjectLayoutBoxes(
 				Arrays.asList(_addObjectLayoutBox(), _addObjectLayoutBox()));
 
-			_objectLayoutLocalService.addObjectLayout(
+			objectLayout = _objectLayoutLocalService.addObjectLayout(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -170,15 +172,15 @@ public class ObjectLayoutLocalServiceTest {
 		}
 		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
 			String message = defaultObjectLayoutException.getMessage();
- 
+
 			Assert.assertTrue(
 				message.contains(
 					"There can only be one default object layout"));
 		}
-	}
 
-	@Test
-	public void testAddObjectLayout() throws Exception {
+		_objectLayoutLocalService.deleteObjectLayout(
+			objectLayout.getObjectLayoutId());
+
 		try {
 			ObjectLayoutTab objectLayoutTab =
 				_objectLayoutTabPersistence.create(0);
@@ -224,7 +226,7 @@ public class ObjectLayoutLocalServiceTest {
 						"than 12"));
 		}
 
-		ObjectLayout objectLayout = _addObjectLayout();
+		objectLayout = _addObjectLayout();
 
 		_assertObjectLayout(objectLayout);
 
