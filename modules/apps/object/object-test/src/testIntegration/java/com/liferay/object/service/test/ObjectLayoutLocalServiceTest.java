@@ -115,13 +115,7 @@ public class ObjectLayoutLocalServiceTest {
 						"first tab of a default object layout"));
 		}
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
-
-		for (ObjectField objectField : objectFields) {
-			_objectFieldLocalService.deleteObjectField(objectField);
-		}
+		_deleteObjectFields();
 
 		try {
 			ObjectLayoutTab objectLayoutTab =
@@ -178,6 +172,7 @@ public class ObjectLayoutLocalServiceTest {
 					"There can only be one default object layout"));
 		}
 
+		_deleteObjectFields();
 		_objectLayoutLocalService.deleteObjectLayout(
 			objectLayout.getObjectLayoutId());
 
@@ -230,6 +225,7 @@ public class ObjectLayoutLocalServiceTest {
 
 		_assertObjectLayout(objectLayout);
 
+		_deleteObjectFields();
 		_objectLayoutLocalService.deleteObjectLayout(
 			objectLayout.getObjectLayoutId());
 	}
@@ -351,6 +347,16 @@ public class ObjectLayoutLocalServiceTest {
 
 		Assert.assertEquals(
 			objectLayoutColumns.toString(), 4, objectLayoutColumns.size());
+	}
+
+	private void _deleteObjectFields() throws Exception {
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			_objectFieldLocalService.deleteObjectField(objectField);
+		}
 	}
 
 	@DeleteAfterTestRun
