@@ -170,7 +170,7 @@ public class ObjectLayoutLocalServiceTest {
 		}
 		catch (DefaultObjectLayoutException defaultObjectLayoutException) {
 			String message = defaultObjectLayoutException.getMessage();
-
+ 
 			Assert.assertTrue(
 				message.contains(
 					"There can only be one default object layout"));

@@ -40,10 +40,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -475,50 +475,35 @@ public class ObjectLayoutLocalServiceImpl
 
 		boolean hasRequiredObjectField = false;
 
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			List<ObjectLayoutBox> objectLayoutBoxes =
-				objectLayoutTab.getObjectLayoutBoxes();
-
-			if (objectLayoutBoxes == null) {
-				continue;
-			}
-
-			for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
-				List<ObjectLayoutRow> objectLayoutRows =
-					objectLayoutBox.getObjectLayoutRows();
-
-				if (objectLayoutRows == null) {
-					continue;
-				}
-
-				for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
-					if (ListUtil.isNotEmpty(
-							objectLayoutRow.getObjectLayoutColumns())) {
-
-						hasRequiredObjectField = true;
-					}
-				}
-			}
-		}
-
-		if (!hasRequiredObjectField) {
-			throw new DefaultObjectLayoutException(
-				"The default object layout must have at least one required " +
-					"object field");
-		}
-
 		Set<Long> objectFieldIds = new HashSet<>();
 
 		ObjectLayoutTab objectLayoutTab = objectLayoutTabs.get(0);
 
-		for (ObjectLayoutBox objectLayoutBox :
-				objectLayoutTab.getObjectLayoutBoxes()) {
+		List<ObjectLayoutBox> objectLayoutBoxes =
+			objectLayoutTab.getObjectLayoutBoxes();
 
-			for (ObjectLayoutRow objectLayoutRow :
-					objectLayoutBox.getObjectLayoutRows()) {
+		if (objectLayoutBoxes == null) {
+			objectLayoutBoxes = Collections.<ObjectLayoutBox>emptyList();
+		}
+
+		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			List<ObjectLayoutRow> objectLayoutRows =
+				objectLayoutBox.getObjectLayoutRows();
+
+			if (objectLayoutRows == null) {
+				continue;
+			}
+
+			for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
+				List<ObjectLayoutColumn> objectLayoutColumns =
+					objectLayoutRow.getObjectLayoutColumns();
+
+				if (objectLayoutColumns == null) {
+					continue;
+				}
 
 				for (ObjectLayoutColumn objectLayoutColumn :
-						objectLayoutRow.getObjectLayoutColumns()) {
+						objectLayoutColumns) {
 
 					objectFieldIds.add(objectLayoutColumn.getObjectFieldId());
 				}
@@ -529,13 +514,23 @@ public class ObjectLayoutLocalServiceImpl
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.isRequired() &&
-				!objectFieldIds.contains(objectField.getObjectFieldId())) {
+			if (!objectField.isRequired()) {
+				continue;
+			}
 
+			if (!objectFieldIds.contains(objectField.getObjectFieldId())) {
 				throw new DefaultObjectLayoutException(
 					"All required object fields must be associated to the " +
 						"first tab of a default object layout");
 			}
+
+			hasRequiredObjectField = true;
+		}
+
+		if (!hasRequiredObjectField) {
+			throw new DefaultObjectLayoutException(
+				"The default object layout must have at least one required " +
+					"object field");
 		}
 
 		ObjectLayout objectLayout =
