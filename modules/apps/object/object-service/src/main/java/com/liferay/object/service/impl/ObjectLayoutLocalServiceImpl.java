@@ -504,7 +504,8 @@ public class ObjectLayoutLocalServiceImpl
 		}
 
 		throw new DefaultObjectLayoutException(
-			"The default object layout must have at least one field");
+			"The default object layout must have at least one required " +
+				"object field");
 	}
 
 	private void _validateRequiredFields(
@@ -537,8 +538,8 @@ public class ObjectLayoutLocalServiceImpl
 				!objectFieldIds.contains(objectField.getObjectFieldId())) {
 
 				throw new DefaultObjectLayoutException(
-					"All mandatory fields must be mapped to the first" +
-						" tab of a default object layout");
+					"All required object fields must be associated to the " +
+						"first tab of a default object layout");
 			}
 		}
 	}

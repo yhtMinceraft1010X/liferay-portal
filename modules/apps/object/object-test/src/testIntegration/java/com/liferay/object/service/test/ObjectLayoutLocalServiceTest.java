@@ -113,8 +113,8 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"All mandatory fields must be mapped to the" +
-						" first tab of a default object layout"));
+					"All required object fields must be associated to the " +
+						"first tab of a default object layout"));
 		}
 	}
 
@@ -139,7 +139,8 @@ public class ObjectLayoutLocalServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"The default object layout must have at least one field"));
+					"The default object layout must have at least one " +
+						"required object field"));
 		}
 	}
 
