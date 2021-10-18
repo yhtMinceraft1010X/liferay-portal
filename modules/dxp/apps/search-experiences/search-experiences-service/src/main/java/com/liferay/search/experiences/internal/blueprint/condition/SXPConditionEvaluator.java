@@ -31,10 +31,10 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		return _evaluate(StringPool.BLANK, jsonObject, sxpParameterData);
+		return _evaluateConditions(StringPool.BLANK, jsonObject, sxpParameterData);
 	}
 
-	private static boolean _evaluate(
+	private static boolean _evaluateCondition(
 		JSONObject jsonObject, String key, SXPParameterData sxpParameterData) {
 
 		SXPParameter sxpParameter =
@@ -106,7 +106,7 @@ public class SXPConditionEvaluator {
 		throw new IllegalArgumentException("Unknown condition " + key);
 	}
 
-	private static boolean _evaluate(
+	private static boolean _evaluateConditions(
 		String groupCondition, JSONObject jsonObject,
 		SXPParameterData sxpParameterData) {
 
@@ -114,11 +114,11 @@ public class SXPConditionEvaluator {
 
 		for (String key : jsonObject.keySet()) {
 			if (key.equals("any_of") || key.equals("all_of")) {
-				valid = _evaluate(
+				valid = _evaluateConditions(
 					key, jsonObject.getJSONObject(key), sxpParameterData);
 			}
 			else {
-				valid = _evaluate(
+				valid = _evaluateCondition(
 					jsonObject.getJSONObject(key), key, sxpParameterData);
 			}
 
