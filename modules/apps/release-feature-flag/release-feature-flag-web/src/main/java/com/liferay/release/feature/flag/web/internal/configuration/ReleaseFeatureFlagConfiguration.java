@@ -27,7 +27,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface ReleaseFeatureFlagConfiguration {
 
 	@Meta.AD(
-		deflt = "", name = "disabled-release-feature-flag", required = false
+		deflt = "", name = "disabled-features", required = false
 	)
 	public String[] disabledReleaseFeatureFlags();
 
