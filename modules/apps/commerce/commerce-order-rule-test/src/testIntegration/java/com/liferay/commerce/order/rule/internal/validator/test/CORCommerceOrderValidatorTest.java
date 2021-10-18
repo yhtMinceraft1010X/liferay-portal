@@ -128,6 +128,62 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
+	public void testAccountEntry() throws Exception {
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testAccountEntryAndCommerceChannel() throws Exception {
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountEntry.class.getName(),
+			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
+
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
 	public void testAccountEntryAndCommerceChannelAndCommerceOrderType()
 		throws Exception {
 
@@ -171,41 +227,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntryAndCommerceChannel()
-		throws Exception {
-
-		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), AccountEntry.class.getName(),
-			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
-
-		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), CommerceChannel.class.getName(),
-			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
-
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
-			_group.getGroupId(), _user.getUserId(),
-			_commerceAccount.getCommerceAccountId(),
-			_commerceCurrency.getCommerceCurrencyId());
-
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
-			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
-
-		try {
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _user.getUserId());
-		}
-		catch (PortalException portalException) {
-			Throwable throwable = portalException.getCause();
-
-			Assert.assertSame(
-				CommerceOrderValidatorException.class, throwable.getClass());
-		}
-	}
-
-	@Test
-	public void testAccountEntryAndCommerceOrderType()
-		throws Exception {
-
+	public void testAccountEntryAndCommerceOrderType() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), AccountEntry.class.getName(),
 			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
@@ -242,10 +264,42 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntry() throws Exception {
+	public void testAccountGroups() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), AccountEntry.class.getName(),
-			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_corEntry.getCOREntryId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
+			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
+
+		try {
+			_commerceOrderEngine.checkoutCommerceOrder(
+				commerceOrder, _user.getUserId());
+		}
+		catch (PortalException portalException) {
+			Throwable throwable = portalException.getCause();
+
+			Assert.assertSame(
+				CommerceOrderValidatorException.class, throwable.getClass());
+		}
+	}
+
+	@Test
+	public void testAccountGroupsAndCommerceChannel() throws Exception {
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), AccountGroup.class.getName(),
+			_commerceAccountGroup.getCommerceAccountGroupId(),
+			_corEntry.getCOREntryId());
+
+		_corEntryRelLocalService.addCOREntryRel(
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
@@ -312,42 +366,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroupsAndCommerceChannel()
-		throws Exception {
-
-		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), AccountGroup.class.getName(),
-			_commerceAccountGroup.getCommerceAccountGroupId(),
-			_corEntry.getCOREntryId());
-
-		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), CommerceChannel.class.getName(),
-			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
-
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
-			_group.getGroupId(), _user.getUserId(),
-			_commerceAccount.getCommerceAccountId(),
-			_commerceCurrency.getCommerceCurrencyId());
-
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
-			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
-
-		try {
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _user.getUserId());
-		}
-		catch (PortalException portalException) {
-			Throwable throwable = portalException.getCause();
-
-			Assert.assertSame(
-				CommerceOrderValidatorException.class, throwable.getClass());
-		}
-	}
-
-	@Test
-	public void testAccountGroupsAndCommerceOrderType()
-		throws Exception {
-
+	public void testAccountGroupsAndCommerceOrderType() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), AccountGroup.class.getName(),
 			_commerceAccountGroup.getCommerceAccountGroupId(),
@@ -385,11 +404,10 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroups() throws Exception {
+	public void testCommerceChannel() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), AccountGroup.class.getName(),
-			_commerceAccountGroup.getCommerceAccountGroupId(),
-			_corEntry.getCOREntryId());
+			_user.getUserId(), CommerceChannel.class.getName(),
+			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
@@ -412,9 +430,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testCommerceChannelAndCommerceOrderType()
-		throws Exception {
-
+	public void testCommerceChannelAndCommerceOrderType() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), CommerceChannel.class.getName(),
 			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
@@ -451,37 +467,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testCommerceChannel()
-		throws Exception {
-
-		_corEntryRelLocalService.addCOREntryRel(
-			_user.getUserId(), CommerceChannel.class.getName(),
-			_commerceChannel.getCommerceChannelId(), _corEntry.getCOREntryId());
-
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
-			_group.getGroupId(), _user.getUserId(),
-			_commerceAccount.getCommerceAccountId(),
-			_commerceCurrency.getCommerceCurrencyId());
-
-		CommerceTestUtil.addCheckoutDetailsToCommerceOrder(
-			commerceOrder, commerceOrder.getUserId(), false, false, 5.00);
-
-		try {
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _user.getUserId());
-		}
-		catch (PortalException portalException) {
-			Throwable throwable = portalException.getCause();
-
-			Assert.assertSame(
-				CommerceOrderValidatorException.class, throwable.getClass());
-		}
-	}
-
-	@Test
-	public void testCommerceOrderType()
-		throws Exception {
-
+	public void testCommerceOrderType() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), CommerceOrderType.class.getName(),
 			_commerceOrderType.getCommerceOrderTypeId(),
