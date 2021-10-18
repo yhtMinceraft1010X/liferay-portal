@@ -52,8 +52,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry addObjectEntry(
-			HttpPrincipal httpPrincipal, long userId, long groupId,
-			long objectDefinitionId,
+			HttpPrincipal httpPrincipal, long groupId, long objectDefinitionId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,94 +63,7 @@ public class ObjectEntryServiceHttp {
 				_addObjectEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, groupId, objectDefinitionId, values,
-				serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.object.model.ObjectEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.object.model.ObjectEntry addObjectEntry(
-			HttpPrincipal httpPrincipal, long groupId, long objectDefinitionId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectEntryServiceUtil.class, "addObjectEntry",
-				_addObjectEntryParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectDefinitionId, values, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.object.model.ObjectEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.object.model.ObjectEntry addOrUpdateObjectEntry(
-			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long userId, long groupId, long objectDefinitionId,
-			java.util.Map<String, java.io.Serializable> values,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectEntryServiceUtil.class, "addOrUpdateObjectEntry",
-				_addOrUpdateObjectEntryParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, groupId,
-				objectDefinitionId, values, serviceContext);
 
 			Object returnObj = null;
 
@@ -191,7 +103,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "addOrUpdateObjectEntry",
-				_addOrUpdateObjectEntryParameterTypes3);
+				_addOrUpdateObjectEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId, objectDefinitionId,
@@ -232,7 +144,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "deleteObjectEntry",
-				_deleteObjectEntryParameterTypes4);
+				_deleteObjectEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId);
@@ -272,7 +184,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "fetchObjectEntry",
-				_fetchObjectEntryParameterTypes5);
+				_fetchObjectEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId);
@@ -312,53 +224,10 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "getObjectEntry",
-				_getObjectEntryParameterTypes6);
+				_getObjectEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.object.model.ObjectEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.object.model.ObjectEntry
-			getObjectEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId, long groupId,
-				String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectEntryServiceUtil.class,
-				"getObjectEntryByExternalReferenceCode",
-				_getObjectEntryByExternalReferenceCodeParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 
@@ -397,7 +266,7 @@ public class ObjectEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryServiceUtil.class, "updateObjectEntry",
-				_updateObjectEntryParameterTypes8);
+				_updateObjectEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, values, serviceContext);
@@ -435,36 +304,21 @@ public class ObjectEntryServiceHttp {
 
 	private static final Class<?>[] _addObjectEntryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addObjectEntryParameterTypes1 =
-		new Class[] {
 			long.class, long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addOrUpdateObjectEntryParameterTypes2 =
-		new Class[] {
-			String.class, long.class, long.class, long.class,
-			java.util.Map.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addOrUpdateObjectEntryParameterTypes3 =
+	private static final Class<?>[] _addOrUpdateObjectEntryParameterTypes1 =
 		new Class[] {
 			String.class, long.class, long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteObjectEntryParameterTypes4 =
+	private static final Class<?>[] _deleteObjectEntryParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchObjectEntryParameterTypes5 =
+	private static final Class<?>[] _fetchObjectEntryParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getObjectEntryParameterTypes6 =
+	private static final Class<?>[] _getObjectEntryParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[]
-		_getObjectEntryByExternalReferenceCodeParameterTypes7 = new Class[] {
-			long.class, long.class, String.class
-		};
-	private static final Class<?>[] _updateObjectEntryParameterTypes8 =
+	private static final Class<?>[] _updateObjectEntryParameterTypes5 =
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
