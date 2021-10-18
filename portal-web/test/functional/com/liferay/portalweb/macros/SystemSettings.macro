@@ -167,6 +167,50 @@ definition {
 		return "${fileContent}";
 	}
 
+	macro getCurrentUserEmailResquestDenied {
+		var output = JSONCurlUtil.post("${curl}");
+
+		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser")) {
+			echo("Access denied to com.liferay.portal.kernel.service.UserService#getCurrentUser");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
+	}
+
+	macro getUserEmailAddressRequestDenied {
+		var output = JSONCurlUtil.post("${curl}");
+
+		if (contains("${output}", "Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress")) {
+			echo("Access denied to com.liferay.portal.kernel.service.UserService#getUserByEmailAddress");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
+	}
+
+	macro getUserEmailSuccessfully {
+		var output = JSONCurlUtil.post("${curl}");
+
+		if ((contains("${output}", ""agreedToTermsOfUse":true")) && (contains("${output}", ""companyId":"${companyId}""))) {
+			echo("Get current user successful.");
+		}
+		else {
+			fail("FAIL! Cannot find the currrent user.");
+		}
+	}
+
+	macro getViewUserEmailPermissionDenied {
+		var output = JSONCurlUtil.post("${curl}");
+
+		if (contains("${output}", "must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}")) {
+			echo("Default user must have VIEW permission for com.liferay.portal.kernel.model.User ${userId}");
+		}
+		else {
+			fail("FAIL! Cannot find the user info message.");
+		}
+	}
+
 	macro gotoConfiguration {
 		Click(
 			key_itemName = "${configurationCategory}",
