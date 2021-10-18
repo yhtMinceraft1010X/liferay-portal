@@ -535,8 +535,6 @@ definition {
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
 	@priority = "4"
 	test CannotLeaveRelationshipNameBlank {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -565,8 +563,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "Name is null");
-
-
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
