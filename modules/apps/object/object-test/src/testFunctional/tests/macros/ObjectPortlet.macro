@@ -16,9 +16,6 @@ definition {
 		AssertElementPresent(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "ObjectPortlet#FIELD_ENTRY_COLUMN");
-
-
-
 	}
 
 	macro assertFieldLabelName {
@@ -42,14 +39,9 @@ definition {
 	}
 
 	macro assertGenericEntryColumnIsDisplayed {
-		
 		AssertElementPresent(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
-
-
-
-
 	}
 
 	macro assertMenuItemColumn {

@@ -663,11 +663,6 @@ definition {
 		ObjectPortlet.assertFieldEntryColumnIsDisplayed(fieldLabelName = "Field");
 
 		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "Status");
-
-
-
-
-
 	}
 
 	@description = "LPS-135393 - Verify that a Date entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
