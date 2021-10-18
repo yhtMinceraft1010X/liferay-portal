@@ -54,12 +54,12 @@ definition {
 	}
 
 	@description = "Create Virtual instance using the Virtual Instance Initializer not works with the curl command."
-    @ignore = "Test Stub"
-    @priority = "4"
-    test UserCanCreateVirtualInstance {
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UserCanCreateVirtualInstance {
 
-        // TODO Create the automation about the the bug LPS-140302.
+		// TODO Create the automation about the the bug LPS-140302.
 
-    }
+	}
 
 }
