@@ -128,7 +128,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntryAndCommerceChannelAndCommerceOrderTypeCORCommerceOrderValidator()
+	public void testAccountEntryAndCommerceChannelAndCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -171,7 +171,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntryAndCommerceChannelCORCommerceOrderValidator()
+	public void testAccountEntryAndCommerceChannel()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -203,7 +203,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntryAndCommerceOrderTypeCORCommerceOrderValidator()
+	public void testAccountEntryAndCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -242,7 +242,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountEntryCORCommerceOrderValidator() throws Exception {
+	public void testAccountEntry() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), AccountEntry.class.getName(),
 			_commerceAccount.getCommerceAccountId(), _corEntry.getCOREntryId());
@@ -268,7 +268,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroupsAndCommerceChannelAndCommerceOrderTypeCORCommerceOrderValidator()
+	public void testAccountGroupsAndCommerceChannelAndCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -312,7 +312,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroupsAndCommerceChannelCORCommerceOrderValidator()
+	public void testAccountGroupsAndCommerceChannel()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -345,7 +345,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroupsAndCommerceOrderTypeCORCommerceOrderValidator()
+	public void testAccountGroupsAndCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -385,7 +385,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testAccountGroupsCORCommerceOrderValidator() throws Exception {
+	public void testAccountGroups() throws Exception {
 		_corEntryRelLocalService.addCOREntryRel(
 			_user.getUserId(), AccountGroup.class.getName(),
 			_commerceAccountGroup.getCommerceAccountGroupId(),
@@ -412,7 +412,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testCommerceChannelAndCommerceOrderTypeCORCommerceOrderValidator()
+	public void testCommerceChannelAndCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -451,7 +451,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testCommerceChannelCORCommerceOrderValidator()
+	public void testCommerceChannel()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
@@ -479,7 +479,7 @@ public class CORCommerceOrderValidatorTest {
 	}
 
 	@Test
-	public void testCommerceOrderTypeCORCommerceOrderValidator()
+	public void testCommerceOrderType()
 		throws Exception {
 
 		_corEntryRelLocalService.addCOREntryRel(
