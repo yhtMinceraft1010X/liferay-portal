@@ -52,19 +52,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkPortletResourcePermission(
-			groupId, objectDefinitionId, ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-		return objectEntryLocalService.addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
-	}
-
-	@Override
-	public ObjectEntry addObjectEntry(
 			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
@@ -78,9 +65,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
-			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long groupId, long objectDefinitionId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.fetchByG_C_ERC(
@@ -97,18 +83,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
-			externalReferenceCode, userId, groupId, objectDefinitionId, values,
-			serviceContext);
-	}
-
-	@Override
-	public ObjectEntry addOrUpdateObjectEntry(
-			String externalReferenceCode, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addOrUpdateObjectEntry(
-			externalReferenceCode, groupId, getUserId(), objectDefinitionId,
+			externalReferenceCode, getUserId(), groupId, objectDefinitionId,
 			values, serviceContext);
 	}
 
@@ -148,21 +123,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
 			objectEntryId);
-
-		_checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
-			ActionKeys.VIEW);
-
-		return objectEntry;
-	}
-
-	@Override
-	public ObjectEntry getObjectEntryByExternalReferenceCode(
-			long companyId, long groupId, String externalReferenceCode)
-		throws PortalException {
-
-		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
-			externalReferenceCode, companyId, groupId);
 
 		_checkModelResourcePermission(
 			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
