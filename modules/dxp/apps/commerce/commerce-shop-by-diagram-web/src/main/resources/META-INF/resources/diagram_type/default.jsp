@@ -21,6 +21,6 @@
 
 	<react:component
 		module="js/diagram/Diagram"
-		props="<%= (HashMap<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
+		props="<%= (Map<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
 	/>
 </div>

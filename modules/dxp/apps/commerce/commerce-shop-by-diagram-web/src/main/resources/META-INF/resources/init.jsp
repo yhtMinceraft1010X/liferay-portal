@@ -48,7 +48,8 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
