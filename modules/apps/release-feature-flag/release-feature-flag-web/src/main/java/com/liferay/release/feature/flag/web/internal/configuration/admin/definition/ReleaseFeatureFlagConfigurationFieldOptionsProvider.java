@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ConfigurationFieldOptionsProvider.class
 )
-public class ReleaseFeatureFlagFieldOptionsProvider
+public class ReleaseFeatureFlagConfigurationFieldOptionsProvider
 	implements ConfigurationFieldOptionsProvider {
 
 	@Override
