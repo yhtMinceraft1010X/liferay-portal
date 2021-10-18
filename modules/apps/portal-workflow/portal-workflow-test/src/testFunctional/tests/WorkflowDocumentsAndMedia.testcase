@@ -386,7 +386,7 @@ definition {
 
 	@description = "This is a test for LRQA-69303. Verify created file can be shared. "
 	@priority = "3"
-	test CanShareAFile {		
+	test CanShareAFile {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 		var user = "DXP";
 
@@ -442,8 +442,6 @@ definition {
 		AssertElementPresent(
 			key_status = "Not Visible",
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_STATUS");
-
-			
 	}
 
 	@priority = "4"
