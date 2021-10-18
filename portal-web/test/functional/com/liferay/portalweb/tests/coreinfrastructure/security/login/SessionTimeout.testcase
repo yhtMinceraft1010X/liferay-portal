@@ -42,9 +42,7 @@ definition {
 		task ("Assert expired session error message and user sign in not present ") {
 			Navigator.gotoPage(pageName = "Session Page");
 
-			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
-
-			AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSessionNotExpired();
 		}
 
 		task ("Wait for expiration time") {
@@ -52,15 +50,13 @@ definition {
 		}
 
 		task ("Assert expired session error message") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Due to inactivity, your session will expire");
+			User.viewExpiredSessionErrorMessage(message = "Due to inactivity, your session will expire");
 		}
 
 		task ("Wait and sign in") {
 			Pause(locator1 = "60000");
 
-			AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSignInPresent();
 		}
 
 		task ("Assert welcome page") {
@@ -77,9 +73,7 @@ definition {
 		task ("Assert session not expired and user sign in not present") {
 			Navigator.openURL();
 
-			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
-
-			AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSessionNotExpired();
 		}
 
 		task ("Wait for expiration time") {
@@ -87,15 +81,13 @@ definition {
 		}
 
 		task ("Assert session expired message") {
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			User.viewExpiredSessionErrorMessage(message = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 		}
 
 		task ("Refresh and sign in") {
 			Refresh();
 
-			AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSignIn();
 
 			User.firstLoginUI(
 				password = "test",
@@ -107,8 +99,10 @@ definition {
 			Navigator.openURL();
 
 			Pause(locator1 = "120000");
+			User.viewSessionNotExpired(sigin = "False");
 
-			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
+			//AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
+
 		}
 
 		task ("Refresh and assert welcome message") {
@@ -126,23 +120,19 @@ definition {
 		task ("Open portal, assert session expired message and user sign in not present") {
 			Navigator.openURL();
 
-			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION");
-
-			AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSessionNotExpired();
 		}
 
 		task ("Wait for session expired") {
 			Pause(locator1 = "120000");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
-				value1 = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
+			User.viewExpiredSessionErrorMessage(message = "Danger:Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 		}
 
 		task ("Refresh and assert user sign in present") {
 			Refresh();
 
-			AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+			User.viewSignIn();
 		}
 	}
 
