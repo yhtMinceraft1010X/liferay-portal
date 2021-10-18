@@ -107,25 +107,25 @@ public class SXPConditionEvaluator {
 	}
 
 	private static boolean _evaluateConditions(
-		String groupCondition, JSONObject jsonObject,
+		String key, JSONObject jsonObject,
 		SXPParameterData sxpParameterData) {
 
 		boolean valid = false;
 
-		for (String key : jsonObject.keySet()) {
-			if (key.equals("any_of") || key.equals("all_of")) {
+		for (String jsonObjectKey : jsonObject.keySet()) {
+			if (jsonObjectKey.equals("any_of") || jsonObjectKey.equals("all_of")) {
 				valid = _evaluateConditions(
-					key, jsonObject.getJSONObject(key), sxpParameterData);
+					jsonObjectKey, jsonObject.getJSONObject(jsonObjectKey), sxpParameterData);
 			}
 			else {
 				valid = _evaluateCondition(
-					jsonObject.getJSONObject(key), key, sxpParameterData);
+					jsonObject.getJSONObject(jsonObjectKey), jsonObjectKey, sxpParameterData);
 			}
 
-			if (!valid && !groupCondition.equals("any_of")) {
+			if (!valid && !key.equals("any_of")) {
 				return false;
 			}
-			else if (valid && groupCondition.equals("any_of")) {
+			else if (valid && key.equals("any_of")) {
 				return true;
 			}
 		}
