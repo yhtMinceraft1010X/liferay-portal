@@ -633,12 +633,40 @@ definition {
 	}
 
 	@description = "LPS-135393 - Verify that the columns ID, Field(s) and Workflow Status are displayed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ColumnsAreDisplayed {
 		property portal.acceptance = "true";
 
-		// TODO LPS-138947 ColumnsAreDisplayed pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "String");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "ID");
+
+		ObjectPortlet.assertFieldEntryColumnIsDisplayed(fieldLabelName = "Field");
+
+		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "Status");
+
+
+
+
 
 	}
 

@@ -56,8 +56,18 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELD_ENTRY_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th')]//button[contains(@class,'btn-sortin')][contains(text(),'${key_fieldLabelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELD_LABEL_NAME</td>
 		<td>//label[contains(text(),'${key_fieldLabelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>GENERIC_ENTRY_COLUMN</td>
+		<td>//div[contains(@class,'dnd-th')][contains(text(),'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -12,6 +12,15 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
+	macro assertFieldEntryColumnIsDisplayed {
+		AssertElementPresent(
+			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "ObjectPortlet#FIELD_ENTRY_COLUMN");
+
+
+
+	}
+
 	macro assertFieldLabelName {
 		AssertTextEquals(
 			key_fieldLabelName = "${fieldLabelName}",
@@ -30,6 +39,17 @@ definition {
 				locator1 = "ObjectPortlet#ENTRY_VALUE_SPECIFIC_ORDER",
 				resultOrder = "${resultOrder}");
 		}
+	}
+
+	macro assertGenericEntryColumnIsDisplayed {
+		
+		AssertElementPresent(
+			key_fieldLabelName = "${fieldLabelName}",
+			locator1 = "ObjectPortlet#GENERIC_ENTRY_COLUMN");
+
+
+
+
 	}
 
 	macro assertMenuItemColumn {
