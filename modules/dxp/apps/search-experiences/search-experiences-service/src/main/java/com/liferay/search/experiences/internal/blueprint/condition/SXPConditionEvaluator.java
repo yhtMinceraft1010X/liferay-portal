@@ -113,8 +113,8 @@ public class SXPConditionEvaluator {
 		boolean valid = false;
 
 		for (String jsonObjectKey : jsonObject.keySet()) {
-			if (jsonObjectKey.equals("any_of") ||
-				jsonObjectKey.equals("all_of")) {
+			if (jsonObjectKey.equals("all_of") ||
+				jsonObjectKey.equals("any_of")) {
 
 				valid = _evaluateConditions(
 					jsonObject.getJSONObject(jsonObjectKey), jsonObjectKey,
