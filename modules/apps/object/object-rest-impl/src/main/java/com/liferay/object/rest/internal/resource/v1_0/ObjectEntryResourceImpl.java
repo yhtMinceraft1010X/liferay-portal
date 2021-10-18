@@ -165,7 +165,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(),
+			_getDTOConverterContext(null),
 			_objectDefinition, objectEntry, null);
 	}
 
@@ -175,7 +175,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(),
+			_getDTOConverterContext(null),
 			_objectDefinition, objectEntry, scopeKey);
 	}
 
@@ -186,7 +186,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextUser.getUserId(), _objectDefinition, objectEntry, null);
+			_objectDefinition, objectEntry, null);
 	}
 
 	@Override
@@ -195,7 +195,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throws Exception {
 
 		return _objectEntryManager.updateObjectEntry(
-			_getDTOConverterContext(objectEntryId), contextUser.getUserId(),
+			_getDTOConverterContext(objectEntryId),
 			_objectDefinition, objectEntryId, objectEntry);
 	}
 
@@ -207,7 +207,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return _objectEntryManager.addOrUpdateObjectEntry(
 			_getDTOConverterContext(null), externalReferenceCode,
-			contextUser.getUserId(), _objectDefinition, objectEntry, scopeKey);
+			_objectDefinition, objectEntry, scopeKey);
 	}
 
 	@Override

@@ -29,14 +29,14 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 public interface ObjectEntryManager {
 
 	public ObjectEntry addObjectEntry(
-			DTOConverterContext dtoConverterContext, long userId,
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			String scopeKey)
 		throws Exception;
 
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, long userId,
+			String externalReferenceCode,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			String scopeKey)
 		throws Exception;
@@ -71,7 +71,7 @@ public interface ObjectEntryManager {
 		throws Exception;
 
 	public ObjectEntry updateObjectEntry(
-			DTOConverterContext dtoConverterContext, long userId,
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId,
 			ObjectEntry objectEntry)
 		throws Exception;
