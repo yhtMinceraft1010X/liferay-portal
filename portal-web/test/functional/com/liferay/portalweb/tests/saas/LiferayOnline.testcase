@@ -29,6 +29,33 @@ definition {
 		}
 	}
 
+	@description = "I can create a Virtual Instance with Default Initializer"
+    @ignore = "Test Stub"
+    @priority = "4"
+    test AddVirtualInstanceWithDefaultInitializer {
+
+        // TODO Create the automation about the LPS-135077.
+
+    }
+
+    @description = "I can create a New Virtual Instance with the initializer"
+    @ignore = "Test Stub"
+    @priority = "5"
+    test AddVirtualInstanceWithInitializer {
+
+        // TODO Create the automation about the LPS-135077.
+
+    }
+
+    @description = "Raylife initializer is not deployed and is not shown on inicializer list"
+    @ignore = "Test Stub"
+    @priority = "4"
+    test CannotSelectInitializerWithoutDeploy {
+
+        // TODO Create the automation about the LPS-135077.
+
+    }
+
 	@priority = "5"
 	test Smoke {
 		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle");
