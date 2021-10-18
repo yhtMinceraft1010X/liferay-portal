@@ -1534,12 +1534,10 @@ definition {
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
 	@priority = "3"
 	test EmptyStateWhenNoRelationship {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");	
+			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -1550,8 +1548,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No items were found.");
-
-
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
