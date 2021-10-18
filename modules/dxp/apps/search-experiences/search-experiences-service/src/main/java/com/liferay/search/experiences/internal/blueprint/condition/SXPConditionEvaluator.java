@@ -31,7 +31,7 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		return _evaluateConditions(StringPool.BLANK, jsonObject, sxpParameterData);
+		return _evaluateConditions(jsonObject, StringPool.BLANK, sxpParameterData);
 	}
 
 	private static boolean _evaluateCondition(
@@ -107,7 +107,7 @@ public class SXPConditionEvaluator {
 	}
 
 	private static boolean _evaluateConditions(
-		String key, JSONObject jsonObject,
+		JSONObject jsonObject, String key,
 		SXPParameterData sxpParameterData) {
 
 		boolean valid = false;
@@ -115,7 +115,7 @@ public class SXPConditionEvaluator {
 		for (String jsonObjectKey : jsonObject.keySet()) {
 			if (jsonObjectKey.equals("any_of") || jsonObjectKey.equals("all_of")) {
 				valid = _evaluateConditions(
-					jsonObjectKey, jsonObject.getJSONObject(jsonObjectKey), sxpParameterData);
+					jsonObject.getJSONObject(jsonObjectKey), jsonObjectKey, sxpParameterData);
 			}
 			else {
 				valid = _evaluateCondition(
