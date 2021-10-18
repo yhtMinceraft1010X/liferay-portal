@@ -25,6 +25,7 @@ import com.liferay.release.feature.flag.ReleaseFeatureFlag;
 import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
 import com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -44,8 +45,14 @@ public class ReleaseFeatureFlagManagerImpl
 
 	@Override
 	public boolean isEnabled(ReleaseFeatureFlag releaseFeatureFlag) {
-		return !ArrayUtil.contains(
+		int value = Arrays.binarySearch(
 			_disabledReleaseFeatureFlags, releaseFeatureFlag.toString());
+
+		if (value == -1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -84,6 +91,8 @@ public class ReleaseFeatureFlagManagerImpl
 
 		_disabledReleaseFeatureFlags =
 			releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags();
+
+		Arrays.sort(_disabledReleaseFeatureFlags);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
