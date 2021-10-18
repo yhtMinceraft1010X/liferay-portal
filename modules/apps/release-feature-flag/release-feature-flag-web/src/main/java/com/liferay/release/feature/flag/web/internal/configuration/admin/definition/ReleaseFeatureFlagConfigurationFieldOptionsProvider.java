@@ -50,8 +50,7 @@ public class ReleaseFeatureFlagConfigurationFieldOptionsProvider
 				public String getLabel(Locale locale) {
 					return LanguageUtil.get(
 						locale,
-						"com.liferay.release.feature.flag." +
-							releaseFeatureFlag.toString());
+						"release-feature-flag[" + releaseFeatureFlag + "]");
 				}
 
 				@Override
