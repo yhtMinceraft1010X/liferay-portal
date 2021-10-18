@@ -44,6 +44,15 @@ definition {
 
 	}
 
+	@description = "Delete Virtual Instance in Liferay Online"
+    @ignore = "Test Stub"
+    @priority = "4"
+    test DeleteVirtualInstance {
+
+        // TODO Create the automation about the bug LPS-140833.
+
+    }
+
 	@description = "Verify if a friendly error appears when the user is not able to create the virtual host"
 	@ignore = "Test Stub"
 	@priority = "3"
