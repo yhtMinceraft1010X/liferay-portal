@@ -36,9 +36,8 @@ public interface ObjectEntryManager {
 
 	public ObjectEntry addOrUpdateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			String scopeKey)
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String scopeKey)
 		throws Exception;
 
 	public void deleteObjectEntry(long objectEntryId) throws Exception;
