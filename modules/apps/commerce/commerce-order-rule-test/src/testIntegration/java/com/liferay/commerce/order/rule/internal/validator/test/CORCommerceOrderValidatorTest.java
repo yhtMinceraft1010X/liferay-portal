@@ -74,30 +74,28 @@ public class CORCommerceOrderValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 
 		_commerceAccount =
 			_commerceAccountLocalService.getPersonalCommerceAccount(
 				_user.getUserId());
-
 		_commerceAccountGroup =
 			_commerceAccountGroupLocalService.addCommerceAccountGroup(
 				_user.getCompanyId(), RandomTestUtil.randomString(), 0, false,
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
+		_group = GroupTestUtil.addGroup();
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
 
 		Calendar calendar = Calendar.getInstance();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceOrderType =
 			_commerceOrderTypeLocalService.addCommerceOrderType(
@@ -111,7 +109,6 @@ public class CORCommerceOrderValidatorTest {
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, _serviceContext);
-
 		_corEntry = _corEntryLocalService.addCOREntry(
 			RandomTestUtil.randomString(), _user.getUserId(), true,
 			RandomTestUtil.randomString(), calendar.get(Calendar.MONTH),
