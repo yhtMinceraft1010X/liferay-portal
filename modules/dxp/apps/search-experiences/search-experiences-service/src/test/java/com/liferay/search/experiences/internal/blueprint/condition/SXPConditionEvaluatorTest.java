@@ -57,12 +57,10 @@ public class SXPConditionEvaluatorTest {
 			SXPConditionEvaluator.evaluate(
 				_toJSONObject("contains", "integer_array", 1),
 				_sxpParameterData));
-
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
 				_toJSONObject("contains", "long_array", 1L),
 				_sxpParameterData));
-
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
 				_toJSONObject("contains", "string_array", "one"),
@@ -76,18 +74,6 @@ public class SXPConditionEvaluatorTest {
 				_toJSONObject("equals", "boolean", true),
 				_sxpParameterData));
 
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				JSONUtil.put(
-					"equals",
-					JSONUtil.put(
-						"date_format", "yyyyMMdd"
-					).put(
-						"parameter_name", "${date}"
-					).put(
-						"value", _toDateString("yyyyMMdd")
-					)),
-				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
@@ -112,6 +98,19 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
 				_toJSONObject("equals", "string", "one"),
+				_sxpParameterData));
+
+		Assert.assertTrue(
+			SXPConditionEvaluator.evaluate(
+				JSONUtil.put(
+					"equals",
+					JSONUtil.put(
+						"date_format", "yyyyMMdd"
+					).put(
+						"parameter_name", "${date}"
+					).put(
+						"value", _toDateString("yyyyMMdd")
+					)),
 				_sxpParameterData));
 	}
 
