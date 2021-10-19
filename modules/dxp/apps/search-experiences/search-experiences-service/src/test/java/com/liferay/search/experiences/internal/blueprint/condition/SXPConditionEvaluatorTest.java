@@ -85,7 +85,7 @@ public class SXPConditionEvaluatorTest {
 					).put(
 						"parameter_name", "${date}"
 					).put(
-						"value", _getNowAsString("yyyyMMdd")
+						"value", _toDateString("yyyyMMdd")
 					)),
 				_sxpParameterData));
 
@@ -150,7 +150,7 @@ public class SXPConditionEvaluatorTest {
 					).put(
 						"parameter_name", "${date}"
 					).put(
-						"value", _getNowAsString("yyyyMMddmmss")
+						"value", _toDateString("yyyyMMddmmss")
 					)),
 				_sxpParameterData));
 
@@ -192,7 +192,7 @@ public class SXPConditionEvaluatorTest {
 			));
 	}
 
-	private String _getNowAsString(String pattern) {
+	private String _toDateString(String pattern) {
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 
 		return dateFormat.format(new Date());
