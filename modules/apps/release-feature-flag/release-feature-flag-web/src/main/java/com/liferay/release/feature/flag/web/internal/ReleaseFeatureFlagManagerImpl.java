@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.release.feature.flag.web.internal.registry;
+package com.liferay.release.feature.flag.web.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
