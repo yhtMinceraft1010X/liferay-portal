@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.release.feature.flag.ReleaseFeatureFlag;
 import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
 import com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,8 +46,7 @@ public class ReleaseFeatureFlagManagerImpl
 
 	@Override
 	public boolean isEnabled(ReleaseFeatureFlag releaseFeatureFlag) {
-		return !_disabledReleaseFeatureFlags.contains(
-			releaseFeatureFlag.toString());
+		return !_disabledReleaseFeatureFlags.contains(releaseFeatureFlag);
 	}
 
 	@Override
@@ -54,10 +54,10 @@ public class ReleaseFeatureFlagManagerImpl
 		ReleaseFeatureFlag releaseFeatureFlag, boolean enabled) {
 
 		if (enabled && !isEnabled(releaseFeatureFlag)) {
-			_disabledReleaseFeatureFlags.remove(releaseFeatureFlag.toString());
+			_disabledReleaseFeatureFlags.remove(releaseFeatureFlag);
 		}
 		else if (!enabled) {
-			_disabledReleaseFeatureFlags.add(releaseFeatureFlag.toString());
+			_disabledReleaseFeatureFlags.add(releaseFeatureFlag);
 		}
 
 		try {
@@ -65,7 +65,7 @@ public class ReleaseFeatureFlagManagerImpl
 				ReleaseFeatureFlagConfiguration.class,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"disabledReleaseFeatureFlags",
-					_disabledReleaseFeatureFlags.toArray(new String[0])
+					ArrayUtil.toStringArray(_disabledReleaseFeatureFlags)
 				).build());
 		}
 		catch (ConfigurationException configurationException) {
@@ -80,8 +80,14 @@ public class ReleaseFeatureFlagManagerImpl
 			ConfigurableUtil.createConfigurable(
 				ReleaseFeatureFlagConfiguration.class, properties);
 
-		_disabledReleaseFeatureFlags = SetUtil.fromArray(
-			releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags());
+		_disabledReleaseFeatureFlags.clear();
+
+		for (String disabledReleaseFeatureFlag :
+				releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags()) {
+
+			_disabledReleaseFeatureFlags.add(
+				ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -90,6 +96,7 @@ public class ReleaseFeatureFlagManagerImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private volatile Set<String> _disabledReleaseFeatureFlags;
+	private volatile Set<ReleaseFeatureFlag> _disabledReleaseFeatureFlags =
+		new HashSet<>();
 
 }
