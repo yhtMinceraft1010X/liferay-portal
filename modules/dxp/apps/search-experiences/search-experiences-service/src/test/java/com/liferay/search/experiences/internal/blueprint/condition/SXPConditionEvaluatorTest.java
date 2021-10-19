@@ -236,8 +236,8 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"less_than_equals",
-				_toDateString(0, "yyyyMMddhhmmssS"),
-				"yyyyMMddhhmmssS"));
+				"yyyyMMddhhmmssS",
+				_toDateString(0, "yyyyMMddhhmmssS")));
 		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("less_than_equals", "integer", 1));
@@ -389,10 +389,10 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private boolean _evaluateDate(String key, Object value) {
-		return _evaluateDate(key, value, _DATE_FORMAT);
+		return _evaluateDate(key, _DATE_FORMAT, value);
 	}
 
-	private boolean _evaluateDate(String key, Object value, String pattern) {
+	private boolean _evaluateDate(String key, String pattern, Object value) {
 		return _evaluate(
 			JSONUtil.put(
 				key,
