@@ -122,11 +122,30 @@ definition {
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddDoubleEntryOnLayout {
 
-		// TODO LPS-140546 CanAddDoubleEntryOnLayout pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "Double",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectDoubleFieldEntryViaUI(entryValue = "12345");
+
+		ObjectPortlet.viewEntry(entry = "12345");
+
+
 
 	}
 

@@ -31,6 +31,20 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addObjectDoubleFieldEntryViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ENTRY_DOUBLE_VALUE_FIELD",
+			value1 = "${entryValue}");
+
+		Button.clickSave();
+
+		WaitForPageLoad();
+
+		
+	}
+
 	macro addObjectFieldViaAPI {
 		JSONObject.addObjectField(
 			fieldLabelName = "${fieldLabelName}",
