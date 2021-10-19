@@ -389,7 +389,7 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private boolean _evaluateDate(String key, Object value) {
-		return _evaluateDate(key, _DATE_FORMAT, value);
+		return _evaluateDate(key, "yyyyMMdd", value);
 	}
 
 	private boolean _evaluateDate(String key, String pattern, Object value) {
@@ -406,7 +406,7 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private String _toDateString(int offset) {
-		return _toDateString(offset, _DATE_FORMAT);
+		return _toDateString(offset, "yyyyMMdd");
 	}
 
 	private String _toDateString(long offset, String pattern) {
@@ -421,8 +421,6 @@ public class SXPConditionEvaluatorTest {
 		return dateFormat.format(
 			Date.from(instant.plus(Duration.ofDays(offset))));
 	}
-
-	private static final String _DATE_FORMAT = "yyyyMMdd";
 
 	private static final Date _date = new Date();
 
