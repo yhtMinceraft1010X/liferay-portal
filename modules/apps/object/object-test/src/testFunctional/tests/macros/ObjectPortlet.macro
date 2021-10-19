@@ -1,19 +1,15 @@
 definition {
 
-	macro assertEntryColumnNotPresent {
-		AssertElementNotPresent(
-			key_column = "${column}",
-			locator1 = "ObjectPortlet#ENTRY_COLUMN");
-	}
-
 	macro assertDuplicatedEntryNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",
 			locator1 = "ObjectPortlet#DUPLICATED_ENTRY_VALUE");
+	}
 
-
-
-			
+	macro assertEntryColumnNotPresent {
+		AssertElementNotPresent(
+			key_column = "${column}",
+			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
 	macro assertEntryNotPresent {
