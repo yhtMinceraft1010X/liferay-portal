@@ -15,7 +15,6 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
-import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
 import launcher from '../../src/main/resources/META-INF/resources/utilities/launcher';
@@ -43,15 +42,11 @@ function Menu({spritemap}) {
 							.map((component) => (
 								<ClayList.Item flex key={component.entry}>
 									<ClayList.ItemField>
-										<ClaySticker
-											displayType="dark"
-											size="sm"
-										>
-											<ClayIcon
-												spritemap={spritemap}
-												symbol="caret-right"
-											/>
-										</ClaySticker>
+										<ClayIcon
+											className="mt-1"
+											spritemap={spritemap}
+											symbol="caret-right"
+										/>
 									</ClayList.ItemField>
 									<ClayList.ItemField>
 										<ClayLink

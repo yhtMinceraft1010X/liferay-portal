@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
@@ -55,6 +56,8 @@ function CartItem({item: cartItem}) {
 		updateCartModel,
 	} = useContext(MiniCartContext);
 
+	const isMounted = useIsMounted();
+
 	const {id: orderId} = cartState;
 	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
 
@@ -66,7 +69,9 @@ function CartItem({item: cartItem}) {
 			...INITIAL_ITEM_STATE,
 			isShowingErrors: true,
 			removalTimeoutRef: setTimeout(() => {
-				setItemState(INITIAL_ITEM_STATE);
+				if (isMounted()) {
+					setItemState(INITIAL_ITEM_STATE);
+				}
 			}, REMOVAL_ERRORS_TIMEOUT),
 		});
 	};
@@ -78,9 +83,11 @@ function CartItem({item: cartItem}) {
 			...INITIAL_ITEM_STATE,
 			isRemovalCanceled: true,
 			removalTimeoutRef: setTimeout(() => {
-				setIsUpdating(false);
+				if (isMounted()) {
+					setIsUpdating(false);
 
-				setItemState(INITIAL_ITEM_STATE);
+					setItemState(INITIAL_ITEM_STATE);
+				}
 			}, REMOVAL_CANCELING_TIMEOUT),
 		});
 	};
@@ -98,14 +105,23 @@ function CartItem({item: cartItem}) {
 					isRemoved: true,
 					removalTimeoutRef: setTimeout(() => {
 						CartResource.deleteItemById(cartItemId)
-							.then(() => updateCartModel({id: orderId}))
 							.then(() => {
+								if (!isMounted()) {
+									return;
+								}
+
+								updateCartModel({id: orderId});
+
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
 								});
 							})
 							.catch(showErrors)
-							.finally(() => setIsUpdating(false));
+							.finally(() => {
+								if (isMounted()) {
+									setIsUpdating(false);
+								}
+							});
 					}, REMOVAL_CANCELING_TIMEOUT),
 				});
 			}, REMOVAL_TIMEOUT),
@@ -159,9 +175,17 @@ function CartItem({item: cartItem}) {
 								...cartItem,
 								quantity: freshQuantity,
 							})
-								.then(() => updateCartModel({id: orderId}))
+								.then(() => {
+									if (isMounted()) {
+										updateCartModel({id: orderId});
+									}
+								})
 								.catch(showErrors)
-								.finally(() => setIsUpdating(false));
+								.finally(() => {
+									if (isMounted()) {
+										setIsUpdating(false);
+									}
+								});
 						}
 					}}
 					quantity={quantity}

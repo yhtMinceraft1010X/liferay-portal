@@ -31,7 +31,6 @@ const entry = [...components, {entry: 'Menu'}].reduce((comp, current) => {
 	return comp;
 }, {});
 
-// eslint-disable-next-line no-undef
 module.exports = {
 	devServer: {
 		before(app) {
@@ -41,7 +40,7 @@ module.exports = {
 		contentBase: './dev/public',
 		open: true,
 		openPage: 'index.html',
-		port: 9000,
+		port: 8888,
 		proxy: {
 			'/image': {
 				target: 'http://localhost:8080/',
@@ -119,6 +118,18 @@ module.exports = {
 			'frontend-js-web': path.resolve(
 				__dirname,
 				'../../../node_modules/frontend-js-web/src/main/resources/META-INF/resources/index.es.js'
+			),
+			'frontend-taglib-clay/data_set_display/data_renderers/DateRenderer': path.resolve(
+				__dirname,
+				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/DateRenderer.js'
+			),
+			'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer': path.resolve(
+				__dirname,
+				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/StatusRenderer.js'
+			),
+			'frontend-taglib-clay/data_set_display/data_renderers/index': path.resolve(
+				__dirname,
+				'../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/data_renderers/index.js'
 			),
 		},
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
