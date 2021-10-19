@@ -113,6 +113,9 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testAnyOf() throws Exception {
+
+		// TODO Assert.assertFalse
+
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
@@ -246,6 +249,9 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testNestedAllOf() throws Exception {
+
+		// TODO Assert.assertFalse
+
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
@@ -286,6 +292,9 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testNestedAnyOf() throws Exception {
+
+		// TODO Assert.assertFalse
+
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
