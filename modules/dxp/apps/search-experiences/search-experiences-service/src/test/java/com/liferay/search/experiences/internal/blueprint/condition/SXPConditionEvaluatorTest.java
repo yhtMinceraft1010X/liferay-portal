@@ -162,7 +162,7 @@ public class SXPConditionEvaluatorTest {
 	public void testEquals() throws Exception {
 		Assert.assertTrue(_evaluate("equals", "boolean", true));
 		Assert.assertTrue(
-			_evaluateDate("equals", _toDateString(new Date(_now.getTime()))));
+			_evaluateDate("equals", _toDateString(new Date(_date.getTime()))));
 		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("equals", "integer", 1));
@@ -185,7 +185,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"greater_than_equals",
-				_toDateString(new Date(_now.getTime()))));
+				_toDateString(new Date(_date.getTime()))));
 		Assert.assertTrue(_evaluate("greater_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("greater_than_equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("greater_than_equals", "integer", 1));
@@ -206,7 +206,7 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testInRange() throws Exception {
-		Date date = new Date(_now.getTime());
+		Date date = new Date(_date.getTime());
 
 		Assert.assertTrue(
 			_evaluateDate(
@@ -228,7 +228,7 @@ public class SXPConditionEvaluatorTest {
 	public void testLessThan() throws Exception {
 		Assert.assertTrue(
 			_evaluateDate(
-				"less_than", _toDateString(new Date(_now.getTime()), 1L)));
+				"less_than", _toDateString(new Date(_date.getTime()), 1L)));
 		Assert.assertTrue(_evaluate("less_than", "double", 2.0D));
 		Assert.assertTrue(_evaluate("less_than", "float", 2.0F));
 		Assert.assertTrue(_evaluate("less_than", "integer", 2));
@@ -240,7 +240,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"less_than_equals",
-				_toDateString(new Date(_now.getTime()), 0L, "yyyyMMddhhmmssS"),
+				_toDateString(new Date(_date.getTime()), 0L, "yyyyMMddhhmmssS"),
 				"yyyyMMddhhmmssS"));
 		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
@@ -435,14 +435,14 @@ public class SXPConditionEvaluatorTest {
 
 	private static final String _DATE_FORMAT = "yyyyMMdd";
 
-	private static final Date _now = new Date();
+	private static final Date _date = new Date();
 
 	private final SXPParameterData _sxpParameterData = new SXPParameterData(
 		"test",
 		SetUtil.fromArray(
 			new SXPParameter[] {
 				new BooleanSXPParameter("boolean", true, true),
-				new DateSXPParameter("date", true, _now),
+				new DateSXPParameter("date", true, _date),
 				new DoubleSXPParameter("double", true, 1.0D),
 				new FloatSXPParameter("float", true, 1.0F),
 				new IntegerSXPParameter("integer", true, 1),
