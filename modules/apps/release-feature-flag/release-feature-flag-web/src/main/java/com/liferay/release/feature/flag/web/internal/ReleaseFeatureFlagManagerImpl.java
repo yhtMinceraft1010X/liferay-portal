@@ -53,10 +53,10 @@ public class ReleaseFeatureFlagManagerImpl
 	public void setEnabled(
 		ReleaseFeatureFlag releaseFeatureFlag, boolean enabled) {
 
-		if (enabled && !isEnabled(releaseFeatureFlag)) {
+		if (enabled) {
 			_disabledReleaseFeatureFlags.remove(releaseFeatureFlag);
 		}
-		else if (!enabled) {
+		else {
 			_disabledReleaseFeatureFlags.add(releaseFeatureFlag);
 		}
 
