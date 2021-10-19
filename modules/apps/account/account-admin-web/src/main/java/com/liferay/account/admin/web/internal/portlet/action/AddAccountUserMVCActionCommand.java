@@ -82,7 +82,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 
 		try {
-			AccountEntryUserRel accountEntryUserRel;
+			AccountEntryUserRel accountEntryUserRel = null;
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
