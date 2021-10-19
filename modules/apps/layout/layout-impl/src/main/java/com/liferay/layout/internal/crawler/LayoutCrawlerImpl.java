@@ -64,9 +64,9 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 			return StringPool.BLANK;
 		}
 
-		int portalServerPort = _portal.getPortalServerPort(_isHttpsEnabled());
-
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		int portalServerPort = _portal.getPortalServerPort(_isHttpsEnabled());
 
 		HttpClient httpClient = httpClientBuilder.setSchemePortResolver(
 			httpHost -> portalServerPort
