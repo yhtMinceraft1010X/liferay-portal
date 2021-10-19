@@ -124,7 +124,6 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to add a Double field on layout"
 	@priority = "4"
 	test CanAddDoubleEntryOnLayout {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -144,9 +143,6 @@ definition {
 		ObjectAdmin.addObjectDoubleFieldEntryViaUI(entryValue = "12345");
 
 		ObjectPortlet.viewEntry(entry = "12345");
-
-
-
 	}
 
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"

@@ -41,8 +41,6 @@ definition {
 		Button.clickSave();
 
 		WaitForPageLoad();
-
-		
 	}
 
 	macro addObjectFieldViaAPI {
