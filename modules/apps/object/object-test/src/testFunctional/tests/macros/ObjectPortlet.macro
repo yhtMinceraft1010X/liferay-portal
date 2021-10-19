@@ -15,25 +15,14 @@ definition {
 	macro assertEntryDetailsLabelPresent {
 		AssertElementPresent(
 			key_entryLabel = "${entryLabel}",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL"
-		);
-
-
-
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
 	}
-
 
 	macro assertEntryDetailsValuePresent {
 		AssertElementPresent(
 			key_entryValue = "${entryValue}",
-			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE"
-		);
-
-
-
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
 	}
-
-
 
 	macro assertEntryNotPresent {
 		AssertElementNotPresent(
@@ -162,10 +151,6 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
 
 		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_BUTTON");
-
-
-
-
 	}
 
 }
