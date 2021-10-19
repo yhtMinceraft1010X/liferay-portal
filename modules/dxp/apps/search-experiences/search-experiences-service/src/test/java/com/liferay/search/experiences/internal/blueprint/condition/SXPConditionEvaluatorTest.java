@@ -83,7 +83,6 @@ public class SXPConditionEvaluatorTest {
 							"value", 1.0F
 						)
 					))));
-
 		Assert.assertFalse(
 			_evaluate(
 				JSONUtil.put(
