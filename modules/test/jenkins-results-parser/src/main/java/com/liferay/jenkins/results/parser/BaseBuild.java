@@ -447,72 +447,46 @@ public abstract class BaseBuild implements Build {
 			JSONArray buildResultsJSONArray = new JSONArray();
 
 			for (Build downstreamBuild : getDownstreamBuilds(null)) {
-				buildResultsJSONArray.put(
-					() -> {
-						JSONObject buildResultJSONObject = new JSONObject();
+				JSONObject buildResultJSONObject = new JSONObject();
 
-						return buildResultJSONObject.put(
-							"axisName",
-							() -> {
-								if (downstreamBuild instanceof AxisBuild) {
-									AxisBuild downstreamAxisBuild =
-										(AxisBuild)downstreamBuild;
+				if (downstreamBuild instanceof AxisBuild) {
+					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
 
-									return downstreamAxisBuild.getAxisName();
-								}
+					buildResultJSONObject.put(
+						"axisName", downstreamAxisBuild.getAxisName());
+				}
 
-								return null;
-							}
-						).put(
-							"buildURL",
-							() -> {
-								if (dataTypesList.contains("buildURL")) {
-									return downstreamBuild.getBuildURL();
-								}
+				if (dataTypesList.contains("buildURL")) {
+					buildResultJSONObject.put(
+						"buildURL", downstreamBuild.getBuildURL());
+				}
 
-								return null;
-							}
-						).put(
-							"duration",
-							() -> {
-								if (dataTypesList.contains("duration")) {
-									return downstreamBuild.getDuration();
-								}
+				if (dataTypesList.contains("duration")) {
+					buildResultJSONObject.put(
+						"duration", downstreamBuild.getDuration());
+				}
 
-								return null;
-							}
-						).put(
-							"result", downstreamBuild.getResult()
-						).put(
-							"stopWatchRecords",
-							() -> {
-								if ((downstreamBuild instanceof AxisBuild) &&
-									dataTypesList.contains(
-										"stopWatchRecords")) {
+				buildResultJSONObject.put(
+					"result", downstreamBuild.getResult());
 
-									AxisBuild downstreamAxisBuild =
-										(AxisBuild)downstreamBuild;
+				if ((downstreamBuild instanceof AxisBuild) &&
+					dataTypesList.contains("stopWatchRecords")) {
 
-									StopWatchRecordsGroup
-										stopWatchRecordsGroup =
-											downstreamAxisBuild.
-												getStopWatchRecordsGroup();
+					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
 
-									JSONArray stopWatchRecordsGroupJSONArray =
-										stopWatchRecordsGroup.getJSONArray();
+					StopWatchRecordsGroup stopWatchRecordsGroup =
+						downstreamAxisBuild.getStopWatchRecordsGroup();
 
-									int size =
-										stopWatchRecordsGroupJSONArray.length();
+					JSONArray stopWatchRecordsGroupJSONArray =
+						stopWatchRecordsGroup.getJSONArray();
 
-									if (size > 0) {
-										return stopWatchRecordsGroupJSONArray;
-									}
-								}
+					if (stopWatchRecordsGroupJSONArray.length() > 0) {
+						buildResultJSONObject.put(
+							"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+					}
+				}
 
-								return null;
-							}
-						);
-					});
+				buildResultsJSONArray.put(buildResultJSONObject);
 			}
 
 			buildResultsJSONObject.put("buildResults", buildResultsJSONArray);
@@ -522,78 +496,47 @@ public abstract class BaseBuild implements Build {
 			JSONArray testResultsJSONArray = new JSONArray();
 
 			for (TestResult testResult : testResults) {
-				testResultsJSONArray.put(
-					() -> {
-						JSONObject testResultJSONObject = new JSONObject();
+				JSONObject testResultJSONObject = new JSONObject();
 
-						return testResultJSONObject.put(
-							"buildURL",
-							() -> {
-								if (dataTypesList.contains("buildURL")) {
-									Build build = testResult.getBuild();
+				if (dataTypesList.contains("buildURL")) {
+					Build build = testResult.getBuild();
 
-									return build.getBuildURL();
-								}
+					testResultJSONObject.put("buildURL", build.getBuildURL());
+				}
 
-								return null;
-							}
-						).put(
-							"duration",
-							() -> {
-								if (dataTypesList.contains("duration")) {
-									return testResult.getDuration();
-								}
+				if (dataTypesList.contains("duration")) {
+					testResultJSONObject.put(
+						"duration", testResult.getDuration());
+				}
 
-								return null;
-							}
-						).put(
-							"errorDetails",
-							() -> {
-								if (dataTypesList.contains("errorDetails")) {
-									String errorDetails =
-										testResult.getErrorDetails();
+				if (dataTypesList.contains("errorDetails")) {
+					String errorDetails = testResult.getErrorDetails();
 
-									if (errorDetails != null) {
-										if (errorDetails.contains("\n")) {
-											int index = errorDetails.indexOf(
-												"\n");
+					if (errorDetails != null) {
+						if (errorDetails.contains("\n")) {
+							int index = errorDetails.indexOf("\n");
 
-											errorDetails =
-												errorDetails.substring(
-													0, index);
-										}
+							errorDetails = errorDetails.substring(0, index);
+						}
 
-										if (errorDetails.length() > 200) {
-											errorDetails =
-												errorDetails.substring(0, 200);
-										}
-									}
+						if (errorDetails.length() > 200) {
+							errorDetails = errorDetails.substring(0, 200);
+						}
+					}
 
-									return errorDetails;
-								}
+					testResultJSONObject.put("errorDetails", errorDetails);
+				}
 
-								return null;
-							}
-						).put(
-							"name",
-							() -> {
-								if (dataTypesList.contains("name")) {
-									return testResult.getDisplayName();
-								}
+				if (dataTypesList.contains("name")) {
+					testResultJSONObject.put(
+						"name", testResult.getDisplayName());
+				}
 
-								return null;
-							}
-						).put(
-							"status",
-							() -> {
-								if (dataTypesList.contains("status")) {
-									return testResult.getStatus();
-								}
+				if (dataTypesList.contains("status")) {
+					testResultJSONObject.put("status", testResult.getStatus());
+				}
 
-								return null;
-							}
-						);
-					});
+				testResultsJSONArray.put(testResultJSONObject);
 			}
 
 			buildResultsJSONObject.put("testResults", testResultsJSONArray);
