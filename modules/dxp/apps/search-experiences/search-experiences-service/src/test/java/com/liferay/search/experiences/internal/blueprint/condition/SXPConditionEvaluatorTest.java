@@ -57,32 +57,6 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testAllOf() throws Exception {
-		Assert.assertTrue(
-			_evaluate(
-				JSONUtil.put(
-					"all_of",
-					JSONUtil.put(
-						"equals",
-						JSONUtil.put(
-							"parameter_name", "${integer}"
-						).put(
-							"value", 1
-						)
-					).put(
-						"greater_than",
-						JSONUtil.put(
-							"parameter_name", "${double}"
-						).put(
-							"value", 0.0D
-						)
-					).put(
-						"less_than_equals",
-						JSONUtil.put(
-							"parameter_name", "${float}"
-						).put(
-							"value", 1.0F
-						)
-					))));
 		Assert.assertFalse(
 			_evaluate(
 				JSONUtil.put(
@@ -100,6 +74,32 @@ public class SXPConditionEvaluatorTest {
 							"parameter_name", "${double}"
 						).put(
 							"value", 2.0D
+						)
+					).put(
+						"less_than_equals",
+						JSONUtil.put(
+							"parameter_name", "${float}"
+						).put(
+							"value", 1.0F
+						)
+					))));
+		Assert.assertTrue(
+			_evaluate(
+				JSONUtil.put(
+					"all_of",
+					JSONUtil.put(
+						"equals",
+						JSONUtil.put(
+							"parameter_name", "${integer}"
+						).put(
+							"value", 1
+						)
+					).put(
+						"greater_than",
+						JSONUtil.put(
+							"parameter_name", "${double}"
+						).put(
+							"value", 0.0D
 						)
 					).put(
 						"less_than_equals",
@@ -277,7 +277,6 @@ public class SXPConditionEvaluatorTest {
 							"value", 1
 						)
 					))));
-
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
@@ -354,7 +353,6 @@ public class SXPConditionEvaluatorTest {
 							"value", 0L
 						)
 					))));
-
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
