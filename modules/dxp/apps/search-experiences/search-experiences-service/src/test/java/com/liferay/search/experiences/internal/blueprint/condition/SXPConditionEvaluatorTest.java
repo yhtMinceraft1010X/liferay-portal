@@ -53,55 +53,21 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testContains() throws Exception {
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("contains", "integer_array", 1),
-				_sxpParameterData));
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("contains", "long_array", 1L),
-				_sxpParameterData));
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("contains", "string_array", "one"),
-				_sxpParameterData));
+		Assert.assertTrue(_evaluate("contains", "integer_array", 1));
+		Assert.assertTrue(_evaluate("contains", "long_array", 1L));
+		Assert.assertTrue(_evaluate("contains", "string_array", "one"));
 	}
 
 	@Test
 	public void testEquals() throws Exception {
+		Assert.assertTrue(_evaluate("equals", "boolean", true));
+		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
+		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
+		Assert.assertTrue(_evaluate("equals", "integer", 1));
+		Assert.assertTrue(_evaluate("equals", "long", 1L));
+		Assert.assertTrue(_evaluate("equals", "string", "one"));
 		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "boolean", true),
-				_sxpParameterData));
-
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "double", 1.0D),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "float", 1.0F),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "integer", 1),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "long", 1L),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("equals", "string", "one"),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
+			_evaluate(
 				JSONUtil.put(
 					"equals",
 					JSONUtil.put(
@@ -110,38 +76,21 @@ public class SXPConditionEvaluatorTest {
 						"parameter_name", "${date}"
 					).put(
 						"value", _toDateString("yyyyMMdd")
-					)),
-				_sxpParameterData));
+					))));
 	}
 
 	@Test
 	public void testNotContains() throws Exception {
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_contains", "integer_array", 4),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_contains", "long_array", 4L),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject(
-					"not_contains", "string_array", "four"),
-				_sxpParameterData));
+		Assert.assertTrue(_evaluate("not_contains", "integer_array", 4));
+		Assert.assertTrue(_evaluate("not_contains", "long_array", 4L));
+		Assert.assertTrue(_evaluate("not_contains", "string_array", "four"));
 	}
 
 	@Test
 	public void testNotEquals() throws Exception {
+		Assert.assertTrue(_evaluate("not_equals", "boolean", false));
 		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "boolean", false),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
+			_evaluate(
 				JSONUtil.put(
 					"not_equals",
 					JSONUtil.put(
@@ -150,45 +99,27 @@ public class SXPConditionEvaluatorTest {
 						"parameter_name", "${date}"
 					).put(
 						"value", _toDateString("yyyyMMddmmss")
-					)),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "double", 2.0D),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "float", 2.0F),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "integer", 2),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "long", 2L),
-				_sxpParameterData));
-
-		Assert.assertTrue(
-			SXPConditionEvaluator.evaluate(
-				_toJSONObject("not_equals", "string", "two"),
-				_sxpParameterData));
+					))));
+		Assert.assertTrue(_evaluate("not_equals", "double", 2.0D));
+		Assert.assertTrue(_evaluate("not_equals", "float", 2.0F));
+		Assert.assertTrue(_evaluate("not_equals", "integer", 2));
+		Assert.assertTrue(_evaluate("not_equals", "long", 2L));
+		Assert.assertTrue(_evaluate("not_equals", "string", "two"));
 	}
 
-	private JSONObject _toJSONObject(
-		String evaluationType, String parameterName, Object value) {
+	private boolean _evaluate(JSONObject jsonObject) {
+		return SXPConditionEvaluator.evaluate(jsonObject, _sxpParameterData);
+	}
 
-		return JSONUtil.put(
-			evaluationType,
+	private boolean _evaluate(String key, String parameterName, Object value) {
+		return _evaluate(
 			JSONUtil.put(
-				"parameter_name", "${" + parameterName + "}"
-			).put(
-				"value", value
-			));
+				key,
+				JSONUtil.put(
+					"parameter_name", "${" + parameterName + "}"
+				).put(
+					"value", value
+				)));
 	}
 
 	private String _toDateString(String pattern) {
