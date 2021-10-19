@@ -14,7 +14,13 @@
 
 package com.liferay.release.feature.flag.web.internal.upgrade;
 
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,6 +32,31 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		if (ReleaseInfo.isDXP() || StartupHelperUtil.isDBNew()) {
+			//return;
+		}
+
+		/*registry.register(
+			"0.0.0", "1.0.0",
+			new ReleaseFeatureFlagUpgradeStep(ReleaseFeatureFlag.XYZ));*/
+	}
+
+	public class ReleaseFeatureFlagUpgradeStep implements UpgradeStep {
+
+		public ReleaseFeatureFlagUpgradeStep(
+			ReleaseFeatureFlag releaseFeatureFlag) {
+
+			_releaseFeatureFlag = releaseFeatureFlag;
+		}
+
+		@Override
+		public void upgrade(DBProcessContext dbProcessContext) {
+			ReleaseFeatureFlagManagerUtil.setEnabled(
+				_releaseFeatureFlag, false);
+		}
+
+		private final ReleaseFeatureFlag _releaseFeatureFlag;
+
 	}
 
 }
