@@ -61,11 +61,6 @@ public class SXPConditionEvaluatorTest {
 	@Test
 	public void testEquals() throws Exception {
 		Assert.assertTrue(_evaluate("equals", "boolean", true));
-		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
-		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
-		Assert.assertTrue(_evaluate("equals", "integer", 1));
-		Assert.assertTrue(_evaluate("equals", "long", 1L));
-		Assert.assertTrue(_evaluate("equals", "string", "one"));
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
@@ -77,6 +72,11 @@ public class SXPConditionEvaluatorTest {
 					).put(
 						"value", _toDateString("yyyyMMdd")
 					))));
+		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
+		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
+		Assert.assertTrue(_evaluate("equals", "integer", 1));
+		Assert.assertTrue(_evaluate("equals", "long", 1L));
+		Assert.assertTrue(_evaluate("equals", "string", "one"));
 	}
 
 	@Test
