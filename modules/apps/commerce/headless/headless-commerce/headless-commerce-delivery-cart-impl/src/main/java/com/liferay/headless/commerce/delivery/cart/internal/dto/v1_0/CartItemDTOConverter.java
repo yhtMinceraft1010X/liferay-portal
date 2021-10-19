@@ -24,7 +24,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
@@ -94,7 +94,7 @@ public class CartItemDTOConverter
 				price = _getPrice(commerceOrderItem, locale);
 				productId = commerceOrderItem.getCProductId();
 				productURLs = LanguageUtils.getLanguageIdMap(
-					_cpDefinitionService.getUrlTitleMap(
+					_cpDefinitionLocalService.getUrlTitleMap(
 						commerceOrderItem.getCPDefinitionId()));
 				quantity = commerceOrderItem.getQuantity();
 				settings = _getSettings(commerceOrderItem.getCPInstanceId());
@@ -270,7 +270,7 @@ public class CartItemDTOConverter
 		_cpDefinitionInventoryLocalService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
