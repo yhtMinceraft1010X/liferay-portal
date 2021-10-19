@@ -46,11 +46,11 @@ public class WorkspaceFactory {
 			return workspace;
 		}
 
-		if (primaryRepositoryName.matches("liferay-portal(-ee)?")) {
-			workspace = new PortalWorkspace(workspaceJSONObject);
-		}
-		else if (primaryRepositoryName.matches("com-liferay-.*")) {
+		if (primaryRepositoryName.matches("com-liferay-.*")) {
 			workspace = new SubrepositoryWorkspace(workspaceJSONObject);
+		}
+		else if (primaryRepositoryName.matches("liferay-portal(-ee)?")) {
+			workspace = new PortalWorkspace(workspaceJSONObject);
 		}
 		else {
 			workspace = new DefaultWorkspace(workspaceJSONObject);
@@ -91,12 +91,12 @@ public class WorkspaceFactory {
 			return workspace;
 		}
 
-		if (repositoryName.matches("liferay-portal(-ee)?")) {
-			workspace = new PortalWorkspace(
+		if (repositoryName.matches("com-liferay-.*")) {
+			workspace = new SubrepositoryWorkspace(
 				repositoryName, upstreamBranchName, jobName);
 		}
-		else if (repositoryName.matches("com-liferay-.*")) {
-			workspace = new SubrepositoryWorkspace(
+		else if (repositoryName.matches("liferay-portal(-ee)?")) {
+			workspace = new PortalWorkspace(
 				repositoryName, upstreamBranchName, jobName);
 		}
 		else {
