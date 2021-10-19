@@ -16,6 +16,7 @@ package com.liferay.search.experiences.internal.blueprint.condition;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.blueprint.parameter.BooleanSXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.DateSXPParameter;
@@ -34,8 +35,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -206,26 +205,25 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private void _setUpParameterData() {
-		Set<SXPParameter> sxpParameters = new HashSet<>();
-
-		sxpParameters.add(new BooleanSXPParameter("boolean", true, true));
-		sxpParameters.add(new DateSXPParameter("date", true, new Date()));
-		sxpParameters.add(new DoubleSXPParameter("double", true, 1.0D));
-		sxpParameters.add(new FloatSXPParameter("float", true, 1.0F));
-		sxpParameters.add(new IntegerSXPParameter("integer", true, 1));
-		sxpParameters.add(
-			new IntegerArraySXPParameter(
-				"integer_array", true, new Integer[] {1, 2, 3}));
-		sxpParameters.add(
-			new LongArraySXPParameter(
-				"long_array", true, new Long[] {1L, 2L, 3L}));
-		sxpParameters.add(new LongSXPParameter("long", true, 1L));
-		sxpParameters.add(
-			new StringArraySXPParameter(
-				"string_array", true, new String[] {"one", "two", "three"}));
-		sxpParameters.add(new StringSXPParameter("string", true, "one"));
-
-		_sxpParameterData = new SXPParameterData("test", sxpParameters);
+		_sxpParameterData = new SXPParameterData(
+			"test",
+			SetUtil.fromArray(
+				new SXPParameter[] {
+					new BooleanSXPParameter("boolean", true, true),
+					new DateSXPParameter("date", true, new Date()),
+					new DoubleSXPParameter("double", true, 1.0D),
+					new FloatSXPParameter("float", true, 1.0F),
+					new IntegerSXPParameter("integer", true, 1),
+					new IntegerArraySXPParameter(
+						"integer_array", true, new Integer[] {1, 2, 3}),
+					new LongArraySXPParameter(
+						"long_array", true, new Long[] {1L, 2L, 3L}),
+					new LongSXPParameter("long", true, 1L),
+					new StringArraySXPParameter(
+						"string_array", true,
+						new String[] {"one", "two", "three"}),
+					new StringSXPParameter("string", true, "one")
+				}));
 	}
 
 	private SXPParameterData _sxpParameterData;
