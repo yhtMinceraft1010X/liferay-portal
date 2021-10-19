@@ -161,7 +161,7 @@ public class SXPConditionEvaluatorTest {
 	public void testEquals() throws Exception {
 		Assert.assertTrue(_evaluate("equals", "boolean", true));
 		Assert.assertTrue(
-			_evaluateDate("equals", _toDateString(new Date(_date.getTime()))));
+			_evaluateDate("equals", _toDateString(0)));
 		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("equals", "integer", 1));
@@ -172,7 +172,7 @@ public class SXPConditionEvaluatorTest {
 	@Test
 	public void testGreaterThan() throws Exception {
 		Assert.assertTrue(
-			_evaluateDate("greater_than", _toDateString(new Date(), -1L)));
+			_evaluateDate("greater_than", _toDateString(-1)));
 		Assert.assertTrue(_evaluate("greater_than", "double", 0.0D));
 		Assert.assertTrue(_evaluate("greater_than", "float", 0.0F));
 		Assert.assertTrue(_evaluate("greater_than", "integer", 0));
@@ -184,7 +184,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"greater_than_equals",
-				_toDateString(new Date(_date.getTime()))));
+				_toDateString(0)));
 		Assert.assertTrue(_evaluate("greater_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("greater_than_equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("greater_than_equals", "integer", 1));
@@ -205,14 +205,11 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testInRange() throws Exception {
-		Date date = new Date(_date.getTime());
-
 		Assert.assertTrue(
 			_evaluateDate(
 				"in_range",
 				JSONUtil.putAll(
-					_toDateString(date, -1L), _toDateString(date, 1L))));
-
+					_toDateString(-1), _toDateString(1))));
 		Assert.assertTrue(
 			_evaluate("in_range", "double", JSONUtil.putAll(0.0D, 2.0D)));
 		Assert.assertTrue(
@@ -227,7 +224,7 @@ public class SXPConditionEvaluatorTest {
 	public void testLessThan() throws Exception {
 		Assert.assertTrue(
 			_evaluateDate(
-				"less_than", _toDateString(new Date(_date.getTime()), 1L)));
+				"less_than", _toDateString(1)));
 		Assert.assertTrue(_evaluate("less_than", "double", 2.0D));
 		Assert.assertTrue(_evaluate("less_than", "float", 2.0F));
 		Assert.assertTrue(_evaluate("less_than", "integer", 2));
@@ -239,7 +236,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"less_than_equals",
-				_toDateString(new Date(_date.getTime()), 0L, "yyyyMMddhhmmssS"),
+				_toDateString(0, "yyyyMMddhhmmssS"),
 				"yyyyMMddhhmmssS"));
 		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
@@ -338,7 +335,7 @@ public class SXPConditionEvaluatorTest {
 	public void testNotEquals() throws Exception {
 		Assert.assertTrue(_evaluate("not_equals", "boolean", false));
 		Assert.assertTrue(
-			_evaluateDate("not_equals", _toDateString(new Date(), -1L)));
+			_evaluateDate("not_equals", _toDateString(-1)));
 		Assert.assertTrue(_evaluate("not_equals", "double", 2.0D));
 		Assert.assertTrue(_evaluate("not_equals", "float", 2.0F));
 		Assert.assertTrue(_evaluate("not_equals", "integer", 2));
@@ -361,14 +358,11 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testNotInRange() throws Exception {
-		Date date = new Date();
-
 		Assert.assertTrue(
 			_evaluateDate(
 				"not_in_range",
 				JSONUtil.putAll(
-					_toDateString(date, 1L), _toDateString(date, 2L))));
-
+					_toDateString(1), _toDateString(2))));
 		Assert.assertTrue(
 			_evaluate("not_in_range", "double", JSONUtil.putAll(2.0D, 3.0D)));
 		Assert.assertTrue(
@@ -411,25 +405,21 @@ public class SXPConditionEvaluatorTest {
 				)));
 	}
 
-	private String _toDateString(Date date) {
-		return _toDateString(date, 0L);
+	private String _toDateString(int offset) {
+		return _toDateString(offset, _DATE_FORMAT);
 	}
 
-	private String _toDateString(Date date, long offsetInDays) {
-		return _toDateString(date, offsetInDays, _DATE_FORMAT);
-	}
-
-	private String _toDateString(Date date, long offsetInDays, String pattern) {
+	private String _toDateString(long offset, String pattern) {
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 
-		if (offsetInDays == 0L) {
-			return dateFormat.format(date);
+		if (offset == 0) {
+			return dateFormat.format(_date);
 		}
 
-		Instant instant = date.toInstant();
+		Instant instant = _date.toInstant();
 
 		return dateFormat.format(
-			Date.from(instant.plus(Duration.ofDays(offsetInDays))));
+			Date.from(instant.plus(Duration.ofDays(offset))));
 	}
 
 	private static final String _DATE_FORMAT = "yyyyMMdd";
