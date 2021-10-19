@@ -106,7 +106,6 @@ definition {
 	@description = "LPS-135396 - Verify it is possible to add a Boolean field on layout"
 	@priority = "4"
 	test CanAddBooleanEntryOnLayout {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -125,13 +124,7 @@ definition {
 			objectName = "CustomObject",
 			value = "true");
 
-
 		ObjectPortlet.viewEntry(entry = "Yes");
-
-
-		
-
-		
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a Date field on layout"
