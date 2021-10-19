@@ -163,8 +163,7 @@ public class SXPConditionEvaluatorTest {
 	@Test
 	public void testEquals() throws Exception {
 		Assert.assertTrue(_evaluate("equals", "boolean", true));
-		Assert.assertTrue(
-			_evaluateDate("equals", _toDateString(0)));
+		Assert.assertTrue(_evaluateDate("equals", _toDateString(0)));
 		Assert.assertTrue(_evaluate("equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("equals", "integer", 1));
@@ -174,8 +173,7 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testGreaterThan() throws Exception {
-		Assert.assertTrue(
-			_evaluateDate("greater_than", _toDateString(-1)));
+		Assert.assertTrue(_evaluateDate("greater_than", _toDateString(-1)));
 		Assert.assertTrue(_evaluate("greater_than", "double", 0.0D));
 		Assert.assertTrue(_evaluate("greater_than", "float", 0.0F));
 		Assert.assertTrue(_evaluate("greater_than", "integer", 0));
@@ -185,9 +183,7 @@ public class SXPConditionEvaluatorTest {
 	@Test
 	public void testGreaterThanEquals() throws Exception {
 		Assert.assertTrue(
-			_evaluateDate(
-				"greater_than_equals",
-				_toDateString(0)));
+			_evaluateDate("greater_than_equals", _toDateString(0)));
 		Assert.assertTrue(_evaluate("greater_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("greater_than_equals", "float", 1.0F));
 		Assert.assertTrue(_evaluate("greater_than_equals", "integer", 1));
@@ -211,8 +207,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"in_range",
-				JSONUtil.putAll(
-					_toDateString(-1), _toDateString(1))));
+				JSONUtil.putAll(_toDateString(-1), _toDateString(1))));
 		Assert.assertTrue(
 			_evaluate("in_range", "double", JSONUtil.putAll(0.0D, 2.0D)));
 		Assert.assertTrue(
@@ -225,9 +220,7 @@ public class SXPConditionEvaluatorTest {
 
 	@Test
 	public void testLessThan() throws Exception {
-		Assert.assertTrue(
-			_evaluateDate(
-				"less_than", _toDateString(1)));
+		Assert.assertTrue(_evaluateDate("less_than", _toDateString(1)));
 		Assert.assertTrue(_evaluate("less_than", "double", 2.0D));
 		Assert.assertTrue(_evaluate("less_than", "float", 2.0F));
 		Assert.assertTrue(_evaluate("less_than", "integer", 2));
@@ -238,8 +231,7 @@ public class SXPConditionEvaluatorTest {
 	public void testLessThanEquals() throws Exception {
 		Assert.assertTrue(
 			_evaluateDate(
-				"less_than_equals",
-				"yyyyMMddhhmmssS",
+				"less_than_equals", "yyyyMMddhhmmssS",
 				_toDateString(0, "yyyyMMddhhmmssS")));
 		Assert.assertTrue(_evaluate("less_than_equals", "double", 1.0D));
 		Assert.assertTrue(_evaluate("less_than_equals", "float", 1.0F));
@@ -343,8 +335,7 @@ public class SXPConditionEvaluatorTest {
 	@Test
 	public void testNotEquals() throws Exception {
 		Assert.assertTrue(_evaluate("not_equals", "boolean", false));
-		Assert.assertTrue(
-			_evaluateDate("not_equals", _toDateString(-1)));
+		Assert.assertTrue(_evaluateDate("not_equals", _toDateString(-1)));
 		Assert.assertTrue(_evaluate("not_equals", "double", 2.0D));
 		Assert.assertTrue(_evaluate("not_equals", "float", 2.0F));
 		Assert.assertTrue(_evaluate("not_equals", "integer", 2));
@@ -370,8 +361,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluateDate(
 				"not_in_range",
-				JSONUtil.putAll(
-					_toDateString(1), _toDateString(2))));
+				JSONUtil.putAll(_toDateString(1), _toDateString(2))));
 		Assert.assertTrue(
 			_evaluate("not_in_range", "double", JSONUtil.putAll(2.0D, 3.0D)));
 		Assert.assertTrue(
