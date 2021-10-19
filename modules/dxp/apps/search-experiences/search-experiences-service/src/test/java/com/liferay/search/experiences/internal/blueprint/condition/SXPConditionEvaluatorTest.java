@@ -55,17 +55,17 @@ public class SXPConditionEvaluatorTest {
 	public void testContains() throws Exception {
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("contains", "integer_array", 1),
+				_toJSONObject("contains", "integer_array", 1),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("contains", "long_array", 1L),
+				_toJSONObject("contains", "long_array", 1L),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("contains", "string_array", "one"),
+				_toJSONObject("contains", "string_array", "one"),
 				_sxpParameterData));
 	}
 
@@ -73,7 +73,7 @@ public class SXPConditionEvaluatorTest {
 	public void testEquals() throws Exception {
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "boolean", true),
+				_toJSONObject("equals", "boolean", true),
 				_sxpParameterData));
 
 		Assert.assertTrue(
@@ -91,27 +91,27 @@ public class SXPConditionEvaluatorTest {
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "double", 1.0D),
+				_toJSONObject("equals", "double", 1.0D),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "float", 1.0F),
+				_toJSONObject("equals", "float", 1.0F),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "integer", 1),
+				_toJSONObject("equals", "integer", 1),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "long", 1L),
+				_toJSONObject("equals", "long", 1L),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("equals", "string", "one"),
+				_toJSONObject("equals", "string", "one"),
 				_sxpParameterData));
 	}
 
@@ -119,17 +119,17 @@ public class SXPConditionEvaluatorTest {
 	public void testNotContains() throws Exception {
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_contains", "integer_array", 4),
+				_toJSONObject("not_contains", "integer_array", 4),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_contains", "long_array", 4L),
+				_toJSONObject("not_contains", "long_array", 4L),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject(
+				_toJSONObject(
 					"not_contains", "string_array", "four"),
 				_sxpParameterData));
 	}
@@ -138,7 +138,7 @@ public class SXPConditionEvaluatorTest {
 	public void testNotEquals() throws Exception {
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "boolean", false),
+				_toJSONObject("not_equals", "boolean", false),
 				_sxpParameterData));
 
 		Assert.assertTrue(
@@ -156,31 +156,31 @@ public class SXPConditionEvaluatorTest {
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "double", 2.0D),
+				_toJSONObject("not_equals", "double", 2.0D),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "float", 2.0F),
+				_toJSONObject("not_equals", "float", 2.0F),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "integer", 2),
+				_toJSONObject("not_equals", "integer", 2),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "long", 2L),
+				_toJSONObject("not_equals", "long", 2L),
 				_sxpParameterData));
 
 		Assert.assertTrue(
 			SXPConditionEvaluator.evaluate(
-				_createConditionJSONObject("not_equals", "string", "two"),
+				_toJSONObject("not_equals", "string", "two"),
 				_sxpParameterData));
 	}
 
-	private JSONObject _createConditionJSONObject(
+	private JSONObject _toJSONObject(
 		String evaluationType, String parameterName, Object value) {
 
 		return JSONUtil.put(
