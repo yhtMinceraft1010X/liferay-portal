@@ -6,6 +6,16 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
+	macro assertDuplicatedEntryNotPresent {
+		AssertElementNotPresent(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#DUPLICATED_ENTRY_VALUE");
+
+
+
+			
+	}
+
 	macro assertEntryNotPresent {
 		AssertElementNotPresent(
 			key_entry = "${entry}",

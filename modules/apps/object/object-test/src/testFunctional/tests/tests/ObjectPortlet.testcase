@@ -750,13 +750,39 @@ definition {
 	}
 
 	@description = "LPS-138745 - Verify that duplicated entry is not submitted when refreshing the Object portlet"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedEntryNotSubmittedWhenRefreshingPage {
 
-		// TODO LPS-140566 DuplicatedEntryNotSubmittedWhenRefreshingPage pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-	}
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test Entry");
+		
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		Refresh();
+
+		ObjectPortlet.assertDuplicatedEntryNotPresent(entry = "Test Entry");
+
+		
+
+		
+
+	}	
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
