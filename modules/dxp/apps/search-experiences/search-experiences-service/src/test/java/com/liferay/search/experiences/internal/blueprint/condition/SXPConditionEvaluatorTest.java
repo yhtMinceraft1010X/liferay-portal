@@ -177,7 +177,7 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getConditionJSONObject(
 					"equals", "date", _consumeValue(_toDateString(0)),
-					_consumeDateFormat())));
+					_consumFormat())));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
@@ -229,7 +229,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "gt", _toDateString(-1), _consumeDateFormat())));
+					"date", "gt", _toDateString(-1), _consumFormat())));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("double", "gt", 0.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "gt", 0.0F)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("integer", "gt", 0)));
@@ -241,7 +241,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "gte", _toDateString(0), _consumeDateFormat())));
+					"date", "gte", _toDateString(0), _consumFormat())));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "gte", 1.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "gte", 1.0F)));
@@ -277,7 +277,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "lt", _toDateString(1), _consumeDateFormat())));
+					"date", "lt", _toDateString(1), _consumFormat())));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("double", "lt", 2.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "lt", 2.0F)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("integer", "lt", 2)));
@@ -481,7 +481,7 @@ public class SXPConditionEvaluatorTest {
 				_getNotJSONObject(
 					_getConditionJSONObject(
 						"equals", "date", _consumeValue(_toDateString(-1)),
-						_consumeDateFormat()))));
+						_consumFormat()))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
@@ -545,7 +545,7 @@ public class SXPConditionEvaluatorTest {
 				_getNotJSONObject(
 					_getRangeJSONObject(
 						"date", "gte", _toDateString(1), "lt", _toDateString(2),
-						_consumeDateFormat()))));
+						_consumFormat()))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
@@ -570,7 +570,7 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getRangeJSONObject(
 					"date", "gte", _toDateString(-1), "lt", _toDateString(1),
-					_consumeDateFormat())));
+					_consumFormat())));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "gte", 0.0D, "lt", 2.0D)));
 		Assert.assertTrue(
@@ -587,7 +587,7 @@ public class SXPConditionEvaluatorTest {
 		return jsonObject -> jsonObject.put(operator, value);
 	}
 
-	private Consumer<JSONObject> _consumeDateFormat() {
+	private Consumer<JSONObject> _consumFormat() {
 		return _consumeFormat("yyyyMMdd");
 	}
 
