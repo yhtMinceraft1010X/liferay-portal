@@ -259,13 +259,11 @@ definition {
 	@description = "LPS-140084 - Verify it is possible to add special characters on a field that with the Field Name as 'Name'"
 	@priority = "4"
 	test CanAddSpecialCharactersOnFieldNamedName {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
 
-	
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Field",
 			fieldName = "customObjectField",
@@ -280,12 +278,6 @@ definition {
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "whitespaces,@,");
 
 		ObjectPortlet.viewEntry(entry = "whitespaces,@,");
-
-
-
-
-
-
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a String field on layout"
