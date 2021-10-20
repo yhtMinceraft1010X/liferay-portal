@@ -134,9 +134,6 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 		}
 	}
 
-	private static final String _LOAD_EXTERNAL_DTD =
-		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
-
 	private static final DocumentBuilderFactory _documentBuilderFactory;
 	private static final Map<String, String> _publicIds =
 		new HashMap<String, String>() {
@@ -169,7 +166,10 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 		_documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
 		try {
-			_documentBuilderFactory.setFeature(_LOAD_EXTERNAL_DTD, false);
+			_documentBuilderFactory.setFeature(
+				"http://apache.org/xml/features/nonvalidating" +
+					"/load-external-dtd",
+				false);
 		}
 		catch (ParserConfigurationException parserConfigurationException) {
 			throw new ExceptionInInitializerError(parserConfigurationException);
