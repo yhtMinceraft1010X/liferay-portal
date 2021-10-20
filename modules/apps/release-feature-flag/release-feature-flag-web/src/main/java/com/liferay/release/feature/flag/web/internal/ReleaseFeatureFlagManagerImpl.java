@@ -86,15 +86,16 @@ public class ReleaseFeatureFlagManagerImpl
 		for (String disabledReleaseFeatureFlag :
 				releaseFeatureFlagConfiguration.disabledReleaseFeatureFlags()) {
 
-			if (Validator.isNotNull(disabledReleaseFeatureFlag)) {
-				try {
-					_disabledReleaseFeatureFlags.add(
-						ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
-				}
-				catch (IllegalArgumentException illegalArgumentException) {
-					_log.error(
-						illegalArgumentException, illegalArgumentException);
-				}
+			if (Validator.isNull(disabledReleaseFeatureFlag)) {
+				continue;
+			}
+
+			try {
+				_disabledReleaseFeatureFlags.add(
+					ReleaseFeatureFlag.valueOf(disabledReleaseFeatureFlag));
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				_log.error(illegalArgumentException, illegalArgumentException);
 			}
 		}
 	}
