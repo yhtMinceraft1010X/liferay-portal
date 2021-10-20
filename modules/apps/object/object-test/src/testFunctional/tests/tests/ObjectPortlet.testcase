@@ -256,7 +256,7 @@ definition {
 		ObjectPortlet.viewEntry(entry = "itemTest1");
 	}
 
-	@description = "LPS-140084 - Verify it is possible to add special characters on a field that with the Field Name as 'Name'"
+	@description = "LPS-140084 - Verify it is possible to add special characters on a field with the Field Name as 'Name'"
 	@priority = "4"
 	test CanAddSpecialCharactersOnFieldNamedName {
 		ObjectAdmin.addObjectViaAPI(
@@ -265,8 +265,8 @@ definition {
 			pluralLabelName = "Custom Objects");
 
 		ObjectAdmin.addObjectFieldViaAPI(
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
+			fieldLabelName = "Name",
+			fieldName = "name",
 			fieldType = "String",
 			isRequired = "false",
 			objectName = "CustomObject");
@@ -275,9 +275,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "whitespaces,@,");
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = " @.~!&ˆ%$&_-");
 
-		ObjectPortlet.viewEntry(entry = "whitespaces,@,");
+		ObjectPortlet.viewEntry(entry = " @.~!&ˆ%$&_-");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to add a String field on layout"
