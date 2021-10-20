@@ -79,7 +79,6 @@ public class SXPConditionEvaluatorTest {
 							).put(
 								"value", 1
 							))))));
-
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
@@ -120,7 +119,6 @@ public class SXPConditionEvaluatorTest {
 							).put(
 								"value", 3
 							))))));
-
 		Assert.assertTrue(
 			_evaluate(
 				JSONUtil.put(
