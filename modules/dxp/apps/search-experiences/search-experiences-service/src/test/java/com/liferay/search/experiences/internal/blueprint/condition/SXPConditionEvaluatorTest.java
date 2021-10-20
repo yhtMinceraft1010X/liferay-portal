@@ -632,16 +632,16 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private JSONObject _getRangeJSONObject(
-		String parameterName, String operator, Object value,
+		String parameterName, String key, Object value,
 		Consumer<JSONObject>... consumers) {
 
 		return _getConditionJSONObject(
 			"range", parameterName,
-			ArrayUtil.append(consumers, _consume(operator, value)));
+			ArrayUtil.append(consumers, _consume(key, value)));
 	}
 
 	private JSONObject _getRangeJSONObject(
-		String parameterName, String operator1, Object value1, String operator2,
+		String parameterName, String key1, Object value1, String key2,
 		Object value2, Consumer<JSONObject>... consumers) {
 
 		return _getConditionJSONObject(
@@ -649,7 +649,7 @@ public class SXPConditionEvaluatorTest {
 			ArrayUtil.append(
 				consumers,
 				new Consumer[] {
-					_consume(operator1, value1), _consume(operator2, value2)
+					_consume(key1, value1), _consume(key2, value2)
 				}));
 	}
 
