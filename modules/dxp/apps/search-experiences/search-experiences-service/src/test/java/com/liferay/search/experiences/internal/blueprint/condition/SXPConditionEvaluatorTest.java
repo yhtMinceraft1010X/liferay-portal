@@ -180,13 +180,16 @@ public class SXPConditionEvaluatorTest {
 					_consumeDateFormat())));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "double", _consumeValue(1.0D))));
+				_getConditionJSONObject(
+					"equals", "double", _consumeValue(1.0D))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "float", _consumeValue(1.0F))));
+				_getConditionJSONObject(
+					"equals", "float", _consumeValue(1.0F))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "integer", _consumeValue(1))));
+				_getConditionJSONObject(
+					"equals", "integer", _consumeValue(1))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject("equals", "long", _consumeValue(1L))));
@@ -258,7 +261,8 @@ public class SXPConditionEvaluatorTest {
 					"in", "float", _consumeValues(1.0F, 2.0F))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("in", "integer", _consumeValues(1, 2))));
+				_getConditionJSONObject(
+					"in", "integer", _consumeValues(1, 2))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject("in", "long", _consumeValues(1L, 2L))));
@@ -577,6 +581,28 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(_getRangeJSONObject("long", "gte", 0L, "lt", 2L)));
 	}
 
+	private Consumer<JSONObject> _consumeAttribute(
+		String operator, Object value) {
+
+		return jsonObject -> jsonObject.put(operator, value);
+	}
+
+	private Consumer<JSONObject> _consumeDateFormat() {
+		return _consumeFormat("yyyyMMdd");
+	}
+
+	private Consumer<JSONObject> _consumeFormat(String format) {
+		return jsonObject -> jsonObject.put("format", format);
+	}
+
+	private Consumer<JSONObject> _consumeValue(Object value) {
+		return _consumeAttribute("value", value);
+	}
+
+	private Consumer<JSONObject> _consumeValues(Object... values) {
+		return _consumeAttribute("values", JSONUtil.putAll(values));
+	}
+
 	private boolean _evaluate() {
 		SXPConditionEvaluator sxpConditionEvaluator = new SXPConditionEvaluator(
 			_sxpParameterData);
@@ -655,26 +681,6 @@ public class SXPConditionEvaluatorTest {
 	private String _toTemplateVariable(String name) {
 		return StringPool.DOLLAR_AND_OPEN_CURLY_BRACE + name +
 			StringPool.CLOSE_CURLY_BRACE;
-	}
-
-	private Consumer<JSONObject> _consumeAttribute(String operator, Object value) {
-		return jsonObject -> jsonObject.put(operator, value);
-	}
-
-	private Consumer<JSONObject> _consumeDateFormat() {
-		return _consumeFormat("yyyyMMdd");
-	}
-
-	private Consumer<JSONObject> _consumeFormat(String format) {
-		return jsonObject -> jsonObject.put("format", format);
-	}
-
-	private Consumer<JSONObject> _consumeValue(Object value) {
-		return _consumeAttribute("value", value);
-	}
-
-	private Consumer<JSONObject> _consumeValues(Object... values) {
-		return _consumeAttribute("values", JSONUtil.putAll(values));
 	}
 
 	private static final Date _date = new Date();
