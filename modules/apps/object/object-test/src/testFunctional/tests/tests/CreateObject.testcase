@@ -1954,7 +1954,6 @@ definition {
 	test ObjectPorletDisapperasOpenMenuWhenInactivated {
 		property portal.acceptance = "true";
 
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -1978,8 +1977,6 @@ definition {
 			key_category = "Object",
 			key_portlet = "Custom Objects",
 			locator1 = "ApplicationsMenu#PORTLET");
-
-
 	}
 
 	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Site Menu when inactivated"
