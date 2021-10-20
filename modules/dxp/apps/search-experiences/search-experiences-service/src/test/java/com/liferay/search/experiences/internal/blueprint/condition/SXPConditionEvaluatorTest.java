@@ -582,9 +582,9 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private Consumer<JSONObject> _consumeAttribute(
-		String operator, Object value) {
+		String key, Object value) {
 
-		return jsonObject -> jsonObject.put(operator, value);
+		return jsonObject -> jsonObject.put(key, value);
 	}
 
 	private Consumer<JSONObject> _consumFormat() {
