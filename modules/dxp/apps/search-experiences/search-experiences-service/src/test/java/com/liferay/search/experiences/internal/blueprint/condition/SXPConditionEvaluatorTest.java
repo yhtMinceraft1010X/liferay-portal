@@ -581,7 +581,7 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(_getRangeJSONObject("long", "gte", 0L, "lt", 2L)));
 	}
 
-	private Consumer<JSONObject> _consumeAttribute(
+	private Consumer<JSONObject> _consume(
 		String key, Object value) {
 
 		return jsonObject -> jsonObject.put(key, value);
@@ -596,11 +596,11 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private Consumer<JSONObject> _consumeValue(Object value) {
-		return _consumeAttribute("value", value);
+		return _consume("value", value);
 	}
 
 	private Consumer<JSONObject> _consumeValues(Object... values) {
-		return _consumeAttribute("values", JSONUtil.putAll(values));
+		return _consume("values", JSONUtil.putAll(values));
 	}
 
 	private boolean _evaluate() {
@@ -639,7 +639,7 @@ public class SXPConditionEvaluatorTest {
 
 		return _getConditionJSONObject(
 			"range", parameterName,
-			ArrayUtil.append(consumers, _consumeAttribute(operator, value)));
+			ArrayUtil.append(consumers, _consume(operator, value)));
 	}
 
 	private JSONObject _getRangeJSONObject(
@@ -651,8 +651,8 @@ public class SXPConditionEvaluatorTest {
 			ArrayUtil.append(
 				consumers,
 				new Consumer[] {
-					_consumeAttribute(operator1, value1),
-					_consumeAttribute(operator2, value2)
+					_consume(operator1, value1),
+					_consume(operator2, value2)
 				}));
 	}
 
