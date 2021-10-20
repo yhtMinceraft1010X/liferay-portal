@@ -592,7 +592,7 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private Consumer<JSONObject> _consumeFormat(String format) {
-		return jsonObject -> jsonObject.put("format", format);
+		return _consume("format", format);
 	}
 
 	private Consumer<JSONObject> _consumeValue(Object value) {
