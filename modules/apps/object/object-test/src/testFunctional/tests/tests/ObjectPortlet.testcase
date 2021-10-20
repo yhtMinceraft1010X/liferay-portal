@@ -257,11 +257,34 @@ definition {
 	}
 
 	@description = "LPS-140084 - Verify it is possible to add special characters on a field that with the Field Name as 'Name'"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddSpecialCharactersOnFieldNamedName {
 
-		// TODO LPS-140564 CanAddSpecialCharactersOnFieldNamedName pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+	
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "whitespaces,@,");
+
+		ObjectPortlet.viewEntry(entry = "whitespaces,@,");
+
+
+
+
+
 
 	}
 
