@@ -285,7 +285,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "lte", _toDateString(0, "yyyyMMddHHmmssS"),
+					"date", "lte", _toDateString("yyyyMMddHHmmssS", 0),
 					_withFormat("yyyyMMddHHmmssS"))));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "lte", 1.0D)));
@@ -636,11 +636,11 @@ public class SXPConditionEvaluatorTest {
 	}
 
 	private String _toDateString(int offset) {
-		return _toDateString(offset, "yyyyMMdd");
+		return _toDateString("yyyyMMdd", offset);
 	}
 
-	private String _toDateString(long offset, String pattern) {
-		DateFormat dateFormat = new SimpleDateFormat(pattern);
+	private String _toDateString(String format, long offset) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
 
 		if (offset == 0) {
 			return dateFormat.format(_date);
@@ -665,8 +665,8 @@ public class SXPConditionEvaluatorTest {
 		return _withFormat("yyyyMMdd");
 	}
 
-	private Consumer<JSONObject> _withFormat(String pattern) {
-		return jsonObject -> jsonObject.put("format", pattern);
+	private Consumer<JSONObject> _withFormat(String format) {
+		return jsonObject -> jsonObject.put("format", format);
 	}
 
 	private Consumer<JSONObject> _withValue(Object value) {
