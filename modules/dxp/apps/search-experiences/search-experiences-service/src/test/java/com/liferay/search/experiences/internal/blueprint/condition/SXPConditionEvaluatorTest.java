@@ -145,15 +145,15 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"contains", "integer_array", _withValue(1))));
+					"contains", "integer_array", _consumeValue(1))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"contains", "long_array", _withValue(1L))));
+					"contains", "long_array", _consumeValue(1L))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"contains", "string_array", _withValue("one"))));
+					"contains", "string_array", _consumeValue("one"))));
 	}
 
 	@Test
@@ -172,28 +172,28 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"equals", "boolean", _withValue(true))));
+					"equals", "boolean", _consumeValue(true))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"equals", "date", _withValue(_toDateString(0)),
-					_withDateFormat())));
+					"equals", "date", _consumeValue(_toDateString(0)),
+					_consumeDateFormat())));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "double", _withValue(1.0D))));
+				_getConditionJSONObject("equals", "double", _consumeValue(1.0D))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "float", _withValue(1.0F))));
+				_getConditionJSONObject("equals", "float", _consumeValue(1.0F))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "integer", _withValue(1))));
+				_getConditionJSONObject("equals", "integer", _consumeValue(1))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("equals", "long", _withValue(1L))));
+				_getConditionJSONObject("equals", "long", _consumeValue(1L))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"equals", "string", _withValue("one"))));
+					"equals", "string", _consumeValue("one"))));
 	}
 
 	@Test
@@ -226,7 +226,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "gt", _toDateString(-1), _withDateFormat())));
+					"date", "gt", _toDateString(-1), _consumeDateFormat())));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("double", "gt", 0.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "gt", 0.0F)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("integer", "gt", 0)));
@@ -238,7 +238,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "gte", _toDateString(0), _withDateFormat())));
+					"date", "gte", _toDateString(0), _consumeDateFormat())));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "gte", 1.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "gte", 1.0F)));
@@ -251,21 +251,21 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"in", "double", _withValues(1.0D, 2.0D))));
+					"in", "double", _consumeValues(1.0D, 2.0D))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"in", "float", _withValues(1.0F, 2.0F))));
+					"in", "float", _consumeValues(1.0F, 2.0F))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("in", "integer", _withValues(1, 2))));
+				_getConditionJSONObject("in", "integer", _consumeValues(1, 2))));
 		Assert.assertTrue(
 			_evaluate(
-				_getConditionJSONObject("in", "long", _withValues(1L, 2L))));
+				_getConditionJSONObject("in", "long", _consumeValues(1L, 2L))));
 		Assert.assertTrue(
 			_evaluate(
 				_getConditionJSONObject(
-					"in", "string", _withValues("one", "two"))));
+					"in", "string", _consumeValues("one", "two"))));
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class SXPConditionEvaluatorTest {
 		Assert.assertTrue(
 			_evaluate(
 				_getRangeJSONObject(
-					"date", "lt", _toDateString(1), _withDateFormat())));
+					"date", "lt", _toDateString(1), _consumeDateFormat())));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("double", "lt", 2.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "lt", 2.0F)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("integer", "lt", 2)));
@@ -286,7 +286,7 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getRangeJSONObject(
 					"date", "lte", _toDateString("yyyyMMddHHmmssS", 0),
-					_withFormat("yyyyMMddHHmmssS"))));
+					_consumeFormat("yyyyMMddHHmmssS"))));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "lte", 1.0D)));
 		Assert.assertTrue(_evaluate(_getRangeJSONObject("float", "lte", 1.0F)));
@@ -452,17 +452,17 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"contains", "integer_array", _withValue(4)))));
+						"contains", "integer_array", _consumeValue(4)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"contains", "long_array", _withValue(4L)))));
+						"contains", "long_array", _consumeValue(4L)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"contains", "string_array", _withValue("four")))));
+						"contains", "string_array", _consumeValue("four")))));
 	}
 
 	@Test
@@ -471,38 +471,38 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "boolean", _withValue(false)))));
+						"equals", "boolean", _consumeValue(false)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "date", _withValue(_toDateString(-1)),
-						_withDateFormat()))));
+						"equals", "date", _consumeValue(_toDateString(-1)),
+						_consumeDateFormat()))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "double", _withValue(2.0D)))));
+						"equals", "double", _consumeValue(2.0D)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "float", _withValue(2.0F)))));
+						"equals", "float", _consumeValue(2.0F)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "integer", _withValue(2)))));
+						"equals", "integer", _consumeValue(2)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "long", _withValue(2L)))));
+						"equals", "long", _consumeValue(2L)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"equals", "string", _withValue("two")))));
+						"equals", "string", _consumeValue("two")))));
 	}
 
 	@Test
@@ -511,27 +511,27 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"in", "double", _withValues(2.0D, 3.0D)))));
+						"in", "double", _consumeValues(2.0D, 3.0D)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"in", "float", _withValues(2.0F, 3.0F)))));
+						"in", "float", _consumeValues(2.0F, 3.0F)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"in", "integer", _withValues(2, 3)))));
+						"in", "integer", _consumeValues(2, 3)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"in", "long", _withValues(2L, 3L)))));
+						"in", "long", _consumeValues(2L, 3L)))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
 					_getConditionJSONObject(
-						"in", "string", _withValues("two", "three")))));
+						"in", "string", _consumeValues("two", "three")))));
 	}
 
 	@Test
@@ -541,7 +541,7 @@ public class SXPConditionEvaluatorTest {
 				_getNotJSONObject(
 					_getRangeJSONObject(
 						"date", "gte", _toDateString(1), "lt", _toDateString(2),
-						_withDateFormat()))));
+						_consumeDateFormat()))));
 		Assert.assertTrue(
 			_evaluate(
 				_getNotJSONObject(
@@ -566,7 +566,7 @@ public class SXPConditionEvaluatorTest {
 			_evaluate(
 				_getRangeJSONObject(
 					"date", "gte", _toDateString(-1), "lt", _toDateString(1),
-					_withDateFormat())));
+					_consumeDateFormat())));
 		Assert.assertTrue(
 			_evaluate(_getRangeJSONObject("double", "gte", 0.0D, "lt", 2.0D)));
 		Assert.assertTrue(
@@ -613,7 +613,7 @@ public class SXPConditionEvaluatorTest {
 
 		return _getConditionJSONObject(
 			"range", parameterName,
-			ArrayUtil.append(consumers, _withAttribute(operator, value)));
+			ArrayUtil.append(consumers, _consumeAttribute(operator, value)));
 	}
 
 	private JSONObject _getRangeJSONObject(
@@ -625,8 +625,8 @@ public class SXPConditionEvaluatorTest {
 			ArrayUtil.append(
 				consumers,
 				new Consumer[] {
-					_withAttribute(operator1, value1),
-					_withAttribute(operator2, value2)
+					_consumeAttribute(operator1, value1),
+					_consumeAttribute(operator2, value2)
 				}));
 	}
 
@@ -657,24 +657,24 @@ public class SXPConditionEvaluatorTest {
 			StringPool.CLOSE_CURLY_BRACE;
 	}
 
-	private Consumer<JSONObject> _withAttribute(String operator, Object value) {
+	private Consumer<JSONObject> _consumeAttribute(String operator, Object value) {
 		return jsonObject -> jsonObject.put(operator, value);
 	}
 
-	private Consumer<JSONObject> _withDateFormat() {
-		return _withFormat("yyyyMMdd");
+	private Consumer<JSONObject> _consumeDateFormat() {
+		return _consumeFormat("yyyyMMdd");
 	}
 
-	private Consumer<JSONObject> _withFormat(String format) {
+	private Consumer<JSONObject> _consumeFormat(String format) {
 		return jsonObject -> jsonObject.put("format", format);
 	}
 
-	private Consumer<JSONObject> _withValue(Object value) {
-		return _withAttribute("value", value);
+	private Consumer<JSONObject> _consumeValue(Object value) {
+		return _consumeAttribute("value", value);
 	}
 
-	private Consumer<JSONObject> _withValues(Object... values) {
-		return _withAttribute("values", JSONUtil.putAll(values));
+	private Consumer<JSONObject> _consumeValues(Object... values) {
+		return _consumeAttribute("values", JSONUtil.putAll(values));
 	}
 
 	private static final Date _date = new Date();
