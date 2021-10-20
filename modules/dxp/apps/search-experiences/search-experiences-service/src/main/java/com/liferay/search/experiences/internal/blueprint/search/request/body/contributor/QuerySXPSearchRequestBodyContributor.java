@@ -94,11 +94,7 @@ public class QuerySXPSearchRequestBodyContributor
 		SXPConditionEvaluator sxpConditionEvaluator = new SXPConditionEvaluator(
 			sxpParameterData);
 
-		if (sxpConditionEvaluator.evaluate(condition)) {
-			return true;
-		}
-
-		return false;
+		return sxpConditionEvaluator.evaluate(condition);
 	}
 
 	private void _processClause(
