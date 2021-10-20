@@ -8,10 +8,10 @@ $secondary-default: var(--secondary-raylife, #f69d37);
 
 $color-action-primary-default: var(--color-action-primary-default, #4c85ff);
 
-$neutral-black: var(--black, #09101d);
-$neutral-darker: var(--dark, #2f313d);
+$neutral-black: var(--color-neutral-0, #09101d);
+$neutral-darker: var(--color-neutral-1, #2f313d);
 $neutral-dark: var(--gray-600, #606167);
-$neutral-default: var(--gray-500, #7d7e85);
+$neutral-default: var(--color-action-neutral-default, #7d7e85);
 $neutral-light: var(--gray-400, #98999b);
 
 $background: var(--body-bg, #fff);
