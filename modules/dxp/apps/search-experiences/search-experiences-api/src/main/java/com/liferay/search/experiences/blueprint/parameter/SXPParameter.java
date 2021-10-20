@@ -25,14 +25,14 @@ public interface SXPParameter {
 
 	public boolean evaluateEquals(Object object);
 
-	public boolean evaluateEquals(Object object, String format);
+	public boolean evaluateEquals(String format, Object object);
 
 	public boolean evaluateIn(Object[] values);
 
 	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte);
 
 	public boolean evaluateRange(
-		Object gt, Object gte, Object lt, Object lte, String format);
+		String format, Object gt, Object gte, Object lt, Object lte);
 
 	public String evaluateToString(Map<String, String> options);
 

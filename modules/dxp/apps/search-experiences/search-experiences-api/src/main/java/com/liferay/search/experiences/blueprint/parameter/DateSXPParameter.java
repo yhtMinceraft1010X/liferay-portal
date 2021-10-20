@@ -44,7 +44,7 @@ public class DateSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public boolean evaluateEquals(Object object, String format) {
+	public boolean evaluateEquals(String format, Object object) {
 		DateFormat dateFormat = new SimpleDateFormat(format);
 
 		return Objects.equals(
@@ -53,7 +53,7 @@ public class DateSXPParameter extends BaseSXPParameter {
 
 	@Override
 	public boolean evaluateRange(
-		Object gt, Object gte, Object lt, Object lte, String format) {
+		String format, Object gt, Object gte, Object lt, Object lte) {
 
 		DateFormat dateFormat = new SimpleDateFormat(format);
 

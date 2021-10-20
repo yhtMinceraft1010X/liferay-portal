@@ -101,7 +101,7 @@ public class SXPConditionEvaluator {
 
 		if (equals.getFormat() != null) {
 			return sxpParameter.evaluateEquals(
-				equals.getValue(), equals.getFormat());
+				equals.getFormat(), equals.getValue());
 		}
 
 		return sxpParameter.evaluateEquals(equals.getValue());
@@ -152,8 +152,8 @@ public class SXPConditionEvaluator {
 
 		if (range.getFormat() != null) {
 			return sxpParameter.evaluateRange(
-				range.getGt(), range.getGte(), range.getLt(), range.getLte(),
-				range.getFormat());
+				range.getFormat(), range.getGt(), range.getGte(), range.getLt(),
+				range.getLte());
 		}
 
 		return sxpParameter.evaluateRange(
