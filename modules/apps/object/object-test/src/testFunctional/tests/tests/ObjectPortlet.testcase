@@ -254,10 +254,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectPortlet.viewEntry(entry = "itemTest1");
-
-
-
-		
 	}
 
 	@description = "LPS-140084 - Verify it is possible to add special characters on a field that with the Field Name as 'Name'"

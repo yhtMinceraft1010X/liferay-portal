@@ -97,9 +97,6 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
 		Button.clickSave();
-
-
-		
 	}
 
 	macro addObjectRelationshipViaAPI {
