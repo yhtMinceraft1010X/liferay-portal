@@ -30,5 +30,6 @@ definition {
 
 		// TODO LPS-111468 TermRelatedAndTermNonRelated pending implementation
 
-		}
+	}
+
 }

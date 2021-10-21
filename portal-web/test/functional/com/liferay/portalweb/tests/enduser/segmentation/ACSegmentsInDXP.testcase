@@ -28,6 +28,18 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments
+	and I have connected my DXP instance with AC
+	when I create an Individual Segment in AC and it shows in the DXP Segments administration
+	then I don't see the edit action"
+
+	@ignore = "true"
+	@priority = "3"
+	test CheckNotEditableSegmentFromACAtDXP {
+
+		// TODO LPS-96574 CheckNotEditableSegmentFromACAtDXP pending implementation
+
+	}
 
 	@description = "LPS-111465 When a non-default virtual instance/company is synced to AC, all the segments created on AC with more than one member are listed in People > Segments"
 	@ignore = "true"
@@ -75,20 +87,6 @@ definition {
 	test SegmentsWithoutEditingAndDeletingFromTheSite {
 
 		// TODO LPS-94940 SegmentsWithoutEditingAndDeletingFromTheSite pending implementation
-
-	}
-
-
-	@description = "LPS-96574 Given I have edit, delete and permission permissions for segments
-	and I have connected my DXP instance with AC
-	when I create an Individual Segment in AC and it shows in the DXP Segments administration
-	then I don't see the edit action"
-
-	@ignore = "true"
-	@priority = "3"
-	test CheckNotEditableSegmentFromACAtDXP {
-
-		// TODO LPS-96574 CheckNotEditableSegmentFromACAtDXP pending implementation
 
 	}
 
