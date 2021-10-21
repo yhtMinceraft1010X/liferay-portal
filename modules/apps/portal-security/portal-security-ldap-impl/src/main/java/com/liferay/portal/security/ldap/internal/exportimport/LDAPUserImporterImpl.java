@@ -900,13 +900,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	protected void importFromLDAPByUser(LDAPImportContext ldapImportContext)
 		throws Exception {
 
-		byte[] cookie = new byte[0];
-
 		SafeLdapContext safeLdapContext = _safePortalLDAP.getSafeLdapContext(
 			ldapImportContext.getLdapServerId(),
 			ldapImportContext.getCompanyId());
 
 		try {
+			byte[] cookie = new byte[0];
+
 			while (cookie != null) {
 				List<SearchResult> searchResults = new ArrayList<>();
 
