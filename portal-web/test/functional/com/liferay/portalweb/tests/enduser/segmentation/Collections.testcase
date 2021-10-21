@@ -13,7 +13,7 @@ definition {
 	}
 
 	tearDown {
-	    var testPortalInstance = PropsUtil.get("test.portal.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -21,13 +21,14 @@ definition {
 		else {
 			Site.tearDownCP();
 		}
+	}
 
-    @description = "LPS-111468 Having the Content recommendation not enabled in Collection, when a visitor that has viewed a content in its display page visits the home page, the asset publisher shows all content (term-related and term-non-related)"
+	@description = "LPS-111468 Having the Content recommendation not enabled in Collection, when a visitor that has viewed a content in its display page visits the home page, the asset publisher shows all content (term-related and term-non-related)"
 	@ignore = "true"
 	@priority = "3"
 	test TermRelatedAndTermNonRelated {
 
 		// TODO LPS-111468 TermRelatedAndTermNonRelated pending implementation
 
-	}    
+		}
 }
