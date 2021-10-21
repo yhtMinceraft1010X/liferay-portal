@@ -161,11 +161,69 @@ definition {
 	}
 
 	@description = "LPS-140081 - Verify it is possible to add an entry without selecting a value for a Picklist field that is not required"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddEntryWithoutSelectingPicklist {
+		Picklist.gotoPicklists();
 
-		// TODO LPS-140565 CanAddEntryWithoutSelectingPicklist pending implementation
+		Picklist.addPicklistViaUI(picklistName = "Custom Picklist");
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
+
+		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 1");
+
+		Picklist.clickSaveButton();
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Custom Picklist");
+
+		Picklist.addPicklistItemViaUI(picklistItemName = "Item Test 2");
+
+		Picklist.clickSaveButton();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.saveCustomObject();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Custom Picklist",
+			fieldType = "Picklist");
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field String",
+			fieldType = "String");
+
+		ObjectAdmin.goToDetailsTab();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "String Entry");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntry(entry = "String Entry");
+
+
 
 	}
 
