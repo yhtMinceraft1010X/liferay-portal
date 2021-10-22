@@ -68,6 +68,17 @@ definition {
 
 	}
 
+	@description = "LPS-132406: Given the Content Performance Panel
+	When the users leave the page because the session expires or s/he does log out
+	Then they find the panel closed"
+	@ignore = "true"
+	@priority = "3"
+	test ContentPerformanceClosed {
+
+		// TODO LPS-132406 ContentPerformanceClosed pending implementation
+
+	}
+
 	@description = "LPS-105215: Validate the Content Performance panel default time range is by week"
 	@ignore = "true"
 	@priority = "5"
@@ -250,17 +261,6 @@ definition {
 	test PublicationDatePreviousSet0 {
 
 		// TODO LPS-139242 PublicationDatePreviousSet0 pending implementation
-
-	}
-
-	@description = "LPS-132406 Given the Content Performance Panel
-	When the users leave the page because the session expires or s/he does log out
-	Then they find the panel closed"
-	@ignore = "true"
-	@priority = "3"
-	test ContentPerformanceClosed {
-
-		// TODO LPS-132406 ContentPerformanceClosed pending implementation
 
 	}
 
