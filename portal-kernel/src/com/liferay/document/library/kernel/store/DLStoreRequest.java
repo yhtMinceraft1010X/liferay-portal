@@ -119,8 +119,7 @@ public final class DLStoreRequest implements Serializable {
 
 			if ((_classPK > -1) && Validator.isNull(_className)) {
 				throw new IllegalArgumentException(
-					"setClassName must be called with a non-null value if " +
-						"setClassPK was called with a positive value");
+					"Class name is null and class PK is greater than -1");
 			}
 
 			return new DLStoreRequest(
@@ -130,7 +129,7 @@ public final class DLStoreRequest implements Serializable {
 		}
 
 		public Builder className(Object object) {
-			Objects.requireNonNull(object, "object must not be null");
+			Objects.requireNonNull(object, "Object is null");
 
 			_className = ClassUtil.getClassName(object);
 
@@ -138,7 +137,7 @@ public final class DLStoreRequest implements Serializable {
 		}
 
 		public Builder className(String className) {
-			Objects.requireNonNull(className, "className must not be null");
+			Objects.requireNonNull(className, "Class name is null");
 
 			_className = className;
 
@@ -147,8 +146,7 @@ public final class DLStoreRequest implements Serializable {
 
 		public Builder classPK(long classPK) {
 			if (classPK < 0) {
-				throw new IllegalArgumentException(
-					"setClassPK must be called with a positive value");
+				throw new IllegalArgumentException("Class PK is less than 0");
 			}
 
 			_classPK = classPK;
