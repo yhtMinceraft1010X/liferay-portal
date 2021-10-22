@@ -96,6 +96,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SEARCH_PARTIAL_RELATIONSHIP_ENTRY</td>
+		<td>//input[contains(@placeholder,'Search')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SEARCH_RESULT_RELATIONSHIP_ENTRY</td>
+		<td>//button[contains(@class,'dropdown-item')]//strong[contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_CUSTOM_OBJECT</td>
 		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
 		<td></td>

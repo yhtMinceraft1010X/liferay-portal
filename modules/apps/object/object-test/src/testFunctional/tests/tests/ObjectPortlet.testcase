@@ -753,11 +753,53 @@ definition {
 	}
 
 	@description = "LPS-140082 - Verify it is possible to search for a partial Object entry on the Relationship field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchPartialOnRelationshipField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-140563 CanSearchPartialOnRelationshipField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject",
+			objectName_2 = "CustomObject",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		CreateObject.selectTitleField(titleFieldKey = "Custom Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test 1");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Test 2");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.viewEntryDetails(entry = "Test 1");
+
+		ObjectPortlet.searchPartialEntryRelationshipField();
+
+		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "0");
+
+
+
 
 	}
 

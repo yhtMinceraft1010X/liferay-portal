@@ -84,6 +84,15 @@ definition {
 			value1 = "No fields were found.");
 	}
 
+	macro assertRelationshipEntrySearchResultsPresent {
+		AssertElementPresent(
+			key_entry = "${entry}",
+			locator1 = "ObjectPortlet#SEARCH_RESULT_RELATIONSHIP_ENTRY");
+
+
+			
+	}
+
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
@@ -136,6 +145,13 @@ definition {
 		KeyPress(
 			locator1 = "ObjectPortlet#SEARCH_FIELD",
 			value1 = "\RETURN");
+	}
+
+	macro searchPartialEntryRelationshipField {
+		Click(locator1 = "ObjectPortlet#SEARCH_PARTIAL_RELATIONSHIP_ENTRY");
+
+
+
 	}
 
 	macro selectCustomObject {
