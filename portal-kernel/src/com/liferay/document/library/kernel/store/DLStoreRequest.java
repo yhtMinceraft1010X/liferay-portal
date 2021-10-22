@@ -105,21 +105,21 @@ public final class DLStoreRequest implements Serializable {
 	public static class Builder {
 
 		public DLStoreRequest build() {
-			if (_sourceFileName == null) {
-				_sourceFileName = _fileName;
+			if ((_classPK > 0) && Validator.isNull(_className)) {
+				throw new IllegalArgumentException(
+					"Class name is null and class PK is greater than 0");
 			}
 
 			if (_fileExtension == null) {
 				_fileExtension = StringPool.BLANK;
 			}
 
-			if (_versionLabel == null) {
-				_versionLabel = Store.VERSION_DEFAULT;
+			if (_sourceFileName == null) {
+				_sourceFileName = _fileName;
 			}
 
-			if ((_classPK > 0) && Validator.isNull(_className)) {
-				throw new IllegalArgumentException(
-					"Class name is null and class PK is greater than 0");
+			if (_versionLabel == null) {
+				_versionLabel = Store.VERSION_DEFAULT;
 			}
 
 			return new DLStoreRequest(
