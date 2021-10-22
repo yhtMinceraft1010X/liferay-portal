@@ -347,7 +347,7 @@ public class LanguageResources {
 		LanguageResources.class);
 
 	private static final Locale _blankLocale = new Locale(StringPool.BLANK);
-	private static String[] _configNames;
+	private static String[] _configNames = new String[0];
 	private static final Map<Locale, Map<String, String>> _languageMaps =
 		new ConcurrentHashMap<>(64);
 	private static final Locale _nullLocale = new Locale(StringPool.BLANK);
