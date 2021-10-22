@@ -27,17 +27,6 @@ import java.util.Objects;
  */
 public final class DLStoreRequest implements Serializable {
 
-	/**
-	 * The details about a file being added or updated in the {@link DLStore}.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @return a builder for {@link DLStoreRequest}
-	 * @throws IllegalArgumentException if either companyId or repositoryId
-	 *                                  are negative
-	 */
 	public static Builder builder(
 		long companyId, long repositoryId, String fileName) {
 
