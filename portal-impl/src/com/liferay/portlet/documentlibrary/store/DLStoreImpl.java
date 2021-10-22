@@ -564,12 +564,12 @@ public class DLStoreImpl implements DLStore {
 				companyId, repositoryId, fileName
 			).fileExtension(
 				fileExtension
+			).sourceFileName(
+				sourceFileName
 			).validateFileExtension(
 				validateFileExtension
 			).versionLabel(
 				versionLabel
-			).sourceFileName(
-				sourceFileName
 			).build(),
 			file);
 	}
@@ -587,12 +587,12 @@ public class DLStoreImpl implements DLStore {
 				companyId, repositoryId, fileName
 			).fileExtension(
 				fileExtension
+			).sourceFileName(
+				sourceFileName
 			).validateFileExtension(
 				validateFileExtension
 			).versionLabel(
 				versionLabel
-			).sourceFileName(
-				sourceFileName
 			).build(),
 			inputStream1);
 	}
