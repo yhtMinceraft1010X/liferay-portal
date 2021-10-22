@@ -117,9 +117,9 @@ public final class DLStoreRequest implements Serializable {
 				_versionLabel = Store.VERSION_DEFAULT;
 			}
 
-			if ((_classPK > -1) && Validator.isNull(_className)) {
+			if ((_classPK > 0) && Validator.isNull(_className)) {
 				throw new IllegalArgumentException(
-					"Class name is null and class PK is greater than -1");
+					"Class name is null and class PK is greater than 0");
 			}
 
 			return new DLStoreRequest(
