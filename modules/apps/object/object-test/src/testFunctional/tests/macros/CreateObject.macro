@@ -116,9 +116,6 @@ definition {
 		Select(
 			locator1 = "CreateObject#TITLE_FIELD",
 			value1 = "${titleFieldKey}");
-
-
-			
 	}
 
 	macro toggleMandatory {

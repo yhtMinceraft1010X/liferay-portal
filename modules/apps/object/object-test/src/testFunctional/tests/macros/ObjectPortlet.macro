@@ -88,9 +88,6 @@ definition {
 		AssertElementPresent(
 			key_entry = "${entry}",
 			locator1 = "ObjectPortlet#SEARCH_RESULT_RELATIONSHIP_ENTRY");
-
-
-			
 	}
 
 	macro changePagination {
@@ -149,9 +146,6 @@ definition {
 
 	macro searchPartialEntryRelationshipField {
 		Click(locator1 = "ObjectPortlet#SEARCH_PARTIAL_RELATIONSHIP_ENTRY");
-
-
-
 	}
 
 	macro selectCustomObject {

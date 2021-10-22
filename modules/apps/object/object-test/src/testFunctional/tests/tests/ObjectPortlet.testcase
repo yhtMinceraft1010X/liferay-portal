@@ -797,10 +797,6 @@ definition {
 		ObjectPortlet.searchPartialEntryRelationshipField();
 
 		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "0");
-
-
-
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
