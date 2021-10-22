@@ -69,6 +69,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -159,30 +161,55 @@ public class SiteInitializerExtender
 	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
 
-	@Reference
-	private CatalogResource.Factory _catalogResourceFactory;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CatalogResource.Factory _catalogResourceFactory;
 
-	@Reference
-	private ChannelResource.Factory _channelResourceFactory;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ChannelResource.Factory _channelResourceFactory;
 
-	@Reference
-	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceAccountRoleHelper _commerceAccountRoleHelper;
 
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
-	@Reference
-	private CommerceInventoryWarehousesImporter
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceInventoryWarehousesImporter
 		_commerceInventoryWarehousesImporter;
 
-	@Reference
-	private CPDefinitionsImporter _cpDefinitionsImporter;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CPDefinitionsImporter _cpDefinitionsImporter;
 
-	@Reference
-	private CPFileImporter _cpFileImporter;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CPFileImporter _cpFileImporter;
 
-	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CPMeasurementUnitLocalService
+		_cpMeasurementUnitLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -109,6 +109,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -644,9 +645,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
-		_addCommerceCatalogs(
-			_addCommerceChannel(serviceContext),
-			_addCommerceInventoryWarehouses(serviceContext), serviceContext);
+		if (GetterUtil.getBoolean(
+				PropsUtil.get("enterprise.product.commerce.enabled"))) {
+
+			_addCommerceCatalogs(
+				_addCommerceChannel(serviceContext),
+				_addCommerceInventoryWarehouses(serviceContext),
+				serviceContext);
+		}
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
