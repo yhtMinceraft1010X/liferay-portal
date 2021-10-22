@@ -16,6 +16,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ADD_ENTRY_CANCEL_BUTTON</td>
+		<td>//span[contains(text(),'Cancel')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_ENTRY_SAVE_BUTTON</td>
+		<td>//span[contains(text(),'Save')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SAVE_CUSTOM_OBJECT</td>
 		<td>//button[contains(text(),'Save')]</td>
 		<td></td>
