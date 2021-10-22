@@ -62,39 +62,18 @@ import java.io.InputStream;
  */
 public class DLStoreUtil {
 
-	/**
-	 * Adds a file based on a byte array. Enforces validation of file's
-	 * extension.
-	 *
-	 * @param DLStoreRequest the files details
-	 * @param bytes the files's data
-	 */
 	public static void addFile(DLStoreRequest dlStoreRequest, byte[] bytes)
 		throws PortalException {
 
 		_store.addFile(dlStoreRequest, bytes);
 	}
 
-	/**
-	 * Adds a file based on a {@link File} object. Enforces validation of file's
-	 * extension.
-	 *
-	 * @param DLStoreRequest the files details
-	 * @param file Name the file name
-	 */
 	public static void addFile(DLStoreRequest dlStoreRequest, File file)
 		throws PortalException {
 
 		_store.addFile(dlStoreRequest, file);
 	}
 
-	/**
-	 * Adds a file based on an {@link InputStream} object. Enforces validation
-	 * of file's extension.
-	 *
-	 * @param DLStoreRequest the files details
-	 * @param inputStream the files's data
-	 */
 	public static void addFile(
 			DLStoreRequest dlStoreRequest, InputStream inputStream)
 		throws PortalException {
@@ -439,24 +418,12 @@ public class DLStoreUtil {
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	/**
-	 * Updates a file based on a {@link File} object.
-	 *
-	 * @param DLStoreRequest the files details
-	 * @param file Name the file name
-	 */
 	public static void updateFile(DLStoreRequest dlStoreRequest, File file)
 		throws PortalException {
 
 		_store.updateFile(dlStoreRequest, file);
 	}
 
-	/**
-	 * Updates a file based on a {@link InputStream} object.
-	 *
-	 * @param DLStoreRequest the files details
-	 * @param inputStream the new file's data
-	 */
 	public static void updateFile(
 			DLStoreRequest dlStoreRequest, InputStream inputStream)
 		throws PortalException {
