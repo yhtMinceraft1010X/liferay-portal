@@ -756,7 +756,7 @@ definition {
 	test RefreshTokenTime {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
-		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
+		property osgi.module.configurations = "access.token.expires.in=&quot;8&quot;";
 
 		task ("Add and edit external application") {
 			OAuth2.addAndEditExternalApplication(
