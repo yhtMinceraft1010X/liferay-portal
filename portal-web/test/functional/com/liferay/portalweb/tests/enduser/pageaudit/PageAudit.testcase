@@ -2706,9 +2706,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab won't be visible in the 'SITE SCOPE' section"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeedInvisible {
+	test GooglePagespeedInvisible {
 
-		// TODO LPS-128383 GooglePageSpeedInvisible pending implementation
+		// TODO LPS-128383 GooglePagespeedInvisible pending implementation
 
 	}
 
@@ -2717,9 +2717,9 @@ definition {
 	Then the tab Google PageSpeed Insights is not visible from Instance settings"
 	@ignore = "true"
 	@priority = "4"
-	test GooglePageSpeedInvisibleInInstanceSettings {
+	test TabGoogleSpeedInvisibleInSites {
 
-		// TODO LPS-128383 GooglePageSpeedInvisibleInInstanceSettings pending implementation
+		// TODO LPS-128383 TabGoogleSpeedInvisibleInSites pending implementation
 
 	}
 
@@ -2728,9 +2728,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab won't be visible from the Site settings of any of the sites in the instance"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeedInvisibleInSites {
+	test PageSpeedInvisibleInSites {
 
-		// TODO LPS-128383 GooglePageSpeedInvisibleInSites pending implementation
+		// TODO LPS-128383 PageSpeedInvisibleInSites pending implementation
 
 	}
 
@@ -2739,9 +2739,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeedVisibleInSites {
+	test APIVisibleInSites {
 
-		// TODO LPS-128383 GooglePageSpeedVisibleInSites pending implementation
+		// TODO LPS-128383 APIVisibleInSites pending implementation
 
 	}
 
@@ -2750,9 +2750,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the Site settings of any of the sites of the current Instance."
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeed​​​​InsightsInvisibleInSites {
+	test TabInsightsInvisibleInSites {
 
-		// TODO LPS-125851 GooglePageSpeed​​​​InsightsInvisibleInSites pending implementation
+		// TODO LPS-125851 TabInsightsInvisibleInSites pending implementation
 
 	}
 
@@ -2761,9 +2761,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the 'SITE SCOPE' section "
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeed​​​​InsightsInvisibleInSiteScope {
+	test TabSpeed​​​​InsightsInvisibleInSiteScope {
 
-		// TODO LPS-125851 GooglePageSpeed​​​​InsightsInvisibleInSiteScope pending implementation
+		// TODO LPS-125851 TabSpeed​​​​InsightsInvisibleInSiteScope pending implementation
 
 	}
 
@@ -2772,9 +2772,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab isn't visible in the 'VIRTUAL INSTANCE SCOPE' section"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeed​​​​InsightsInvisibleInVirtualInstanceScope {
+	test TabGoogleInvisibleInVirtualInstanceScope {
 
-		// TODO LPS-125851 GooglePageSpeed​​​​InsightsInvisibleInVirtualInstanceScope pending implementation
+		// TODO LPS-125851 TabGoogleInvisibleInVirtualInstanceScope pending implementation
 
 	}
 
@@ -2783,9 +2783,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible in the 'SITE SCOPE' section "
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeed​​​​InsightsVisibleInSiteScope {
+	test TABGoogleVisibleInSiteScope {
 
-		// TODO LPS-125851 GooglePageSpeed​​​​InsightsVisibleInSiteScope pending implementation
+		// TODO LPS-125851 TABGoogleVisibleInSiteScope pending implementation
 
 	}
 
@@ -2794,9 +2794,9 @@ definition {
 	Then the 'Google PageSpeed Insights' tab is visible from the Site settings of any of the sites in the instance, and it is unchecked for all those sites"
 	@ignore = "true"
 	@priority = "3"
-	test GooglePageSpeed​​​​InsightsVisibleInSiteSettingsAndSites {
+	test InsightsVisibleInSiteSettingsAndSites {
 
-		// TODO LPS-125851 GooglePageSpeed​​​​InsightsVisibleInSiteSettingsAndSites pending implementation
+		// TODO LPS-125851 InsightsVisibleInSiteSettingsAndSites pending implementation
 
 	}
 
@@ -3199,6 +3199,16 @@ definition {
 		}
 	}
 
+	@description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
+	When the Enable Google PageSpeed Insights check is unchecked
+	Then the Page Audit icon won't be visible from the view mode of the pages in the site"
+	@ignore = "true"
+	@priority = "3"
+	test PageAuditIconInvisible {
+
+		// TODO LPS-128385 PageAuditIconInvisible pending implementation
+
+	}
 
 	@description = "LPS-128383: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
 	When the Enable Google PageSpeed Insights check is unchecked
@@ -3211,17 +3221,6 @@ definition {
 
 	}
 
-	@description = "LPS-128385: Given the Google PageSpeed settings tab in the Virtual Instance Scope section
-	When the Enable Google PageSpeed Insights check is unchecked
-	Then the Page Audit icon won't be visible from the view mode of the pages in the site"
-	@ignore = "true"
-	@priority = "3"
-	test PageAuditIconInvisible {
-
-		// TODO LPS-128385 PageAuditIconInvisible pending implementation
-
-	}
-
 	@description = "LPS-132406: Given the Page Audit Panel
 	When the users leave the page using any of the internal links in the panel (to navigate to System, instance, site or page settings) and return to the page using the 'back' button
 	Then they find the panel open"
@@ -3230,83 +3229,6 @@ definition {
 	test PageAuditOpen {
 
 		// TODO LPS-132406 PageAuditOpen pending implementation
-
-	}
-
-		@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Desktop
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
-	@ignore = "true"
-	@priority = "4"
-	test PreferredStrategyForDesktopValue {
-
-		// TODO LPS-128385 PreferredStrategyForDesktopValue pending implementation
-
-	}
-
-	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
-	When the value is Mobile
-	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
-	@ignore = "true"
-	@priority = "4"
-	test PreferredStrategyForMobileValue {
-
-		// TODO LPS-128385 PreferredStrategyForMobileValue pending implementation
-
-	}
-
-	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
-	When the page is blocked from indexing
-	Then the users will see a text: Change the robots.txt setting from the Configuration section of this page"
-	@ignore = "true"
-	@priority = "4"
-	test RobotsSetting {
-
-		// TODO LPS-132234 RobotsSetting pending implementation
-
-	}
-
-	@description = "LPS-132234: Given the detail view of the page audit panel
-	Then the checks related to Incorrect image-aspect-ratio, Missing meta-description, Invalid Hreflang, Invalid canonical URL, Illegible font sizes,
-	Small tap targets, Missing <title> element and Crawlable-anchors will appear under the SEO section"
-	@ignore = "true"
-	@priority = "3"
-	test SEOMistakes {
-
-		// TODO LPS-132234 SEOMistakes pending implementation
-
-	}
-
-	@description = "LPS-125851: Given any value in the Site Scope section
-	When that value has been overwritten in any of the sites
-	Then the value in the site prevails over any changes in the System Settings Site Scope section"
-	@ignore = "true"
-	@priority = "5"
-	test SiteHierarchy {
-
-		// TODO LPS-125851 SiteHierarchy pending implementation
-
-	}
-
-	@description = "LPS-128383: Given any value in the Instance settings Site scope section
-	When the same value has been overwritten in any of the sites
-	Then the value in the site prevails over any changes in the Instance settings"
-	@ignore = "true"
-	@priority = "5"
-	test ValuesOverWrittenInSites {
-
-		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
-
-	}
-
-	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
-	When the value is void ('Choose an option')
-	Then the call is made for Google Page Speed default value - desktop"
-	@ignore = "true"
-	@priority = "3"
-	test VoidEqualsDesktop {
-
-		// TODO LPS-125851 VoidEqualsDesktop pending implementation
 
 	}
 
@@ -3400,6 +3322,83 @@ definition {
 				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
 				value1 = "Your page has no issues.");
 		}
+	}
+
+	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Desktop
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are NOT retrieved"
+	@ignore = "true"
+	@priority = "4"
+	test PreferredStrategyForDesktopValue {
+
+		// TODO LPS-128385 PreferredStrategyForDesktopValue pending implementation
+
+	}
+
+	@description = "LPS-128385: Given the preferred strategy dropdown in the Site Scope section
+	When the value is Mobile
+	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
+	@ignore = "true"
+	@priority = "4"
+	test PreferredStrategyForMobileValue {
+
+		// TODO LPS-128385 PreferredStrategyForMobileValue pending implementation
+
+	}
+
+	@description = "LPS-132234: Given the page audit panel detail view and a user with NO permissions for editing the page
+	When the page is blocked from indexing
+	Then the users will see a text: Change the robots.txt setting from the Configuration section of this page"
+	@ignore = "true"
+	@priority = "4"
+	test RobotsSetting {
+
+		// TODO LPS-132234 RobotsSetting pending implementation
+
+	}
+
+	@description = "LPS-132234: Given the detail view of the page audit panel
+	Then the checks related to Incorrect image-aspect-ratio, Missing meta-description, Invalid Hreflang, Invalid canonical URL, Illegible font sizes,
+	Small tap targets, Missing <title> element and Crawlable-anchors will appear under the SEO section"
+	@ignore = "true"
+	@priority = "3"
+	test SEOMistakes {
+
+		// TODO LPS-132234 SEOMistakes pending implementation
+
+	}
+
+	@description = "LPS-125851: Given any value in the Site Scope section
+	When that value has been overwritten in any of the sites
+	Then the value in the site prevails over any changes in the System Settings Site Scope section"
+	@ignore = "true"
+	@priority = "5"
+	test SiteHierarchy {
+
+		// TODO LPS-125851 SiteHierarchy pending implementation
+
+	}
+
+	@description = "LPS-128383: Given any value in the Instance settings Site scope section
+	When the same value has been overwritten in any of the sites
+	Then the value in the site prevails over any changes in the Instance settings"
+	@ignore = "true"
+	@priority = "5"
+	test ValuesOverWrittenInSites {
+
+		// TODO LPS-128383 ValuesOverWrittenInSites pending implementation
+
+	}
+
+	@description = "LPS-125851: Given the preferred strategy dropdown in the Site Scope section
+	When the value is void ('Choose an option')
+	Then the call is made for Google Page Speed default value - desktop"
+	@ignore = "true"
+	@priority = "3"
+	test VoidEqualsDesktop {
+
+		// TODO LPS-125851 VoidEqualsDesktop pending implementation
+
 	}
 
 }
