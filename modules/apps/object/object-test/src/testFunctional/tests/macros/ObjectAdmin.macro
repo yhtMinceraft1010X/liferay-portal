@@ -173,10 +173,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_SAVE_BUTTON");
 
 		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_CANCEL_BUTTON");
-
-		
-
-
 	}
 
 	macro assertFieldsTableColumnsAreDisplayed {
@@ -285,8 +281,6 @@ definition {
 			value1 = "${entryValue}");
 
 		Button.clickCancel();
-
-
 	}
 
 	macro changeLabelLanguage {
