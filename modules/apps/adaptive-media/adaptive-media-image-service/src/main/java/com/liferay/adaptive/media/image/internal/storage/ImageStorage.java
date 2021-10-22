@@ -71,11 +71,11 @@ public class ImageStorage {
 				DLStoreRequest.builder(
 					fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 					fileVersionPath
-				).setClassName(
+				).className(
 					this
-				).setSize(
+				).size(
 					fileVersion.getSize()
-				).setSourceFileName(
+				).sourceFileName(
 					fileVersion.getFileName()
 				).build(),
 				inputStream);

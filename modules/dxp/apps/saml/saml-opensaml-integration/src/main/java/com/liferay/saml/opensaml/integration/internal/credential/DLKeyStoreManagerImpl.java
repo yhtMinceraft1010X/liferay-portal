@@ -116,9 +116,9 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 			DLStoreUtil.addFile(
 				DLStoreRequest.builder(
 					getCompanyId(), CompanyConstants.SYSTEM, _SAML_KEYSTORE_PATH
-				).setClassName(
+				).className(
 					this
-				).setSize(
+				).size(
 					Files.size(tempFile.toPath())
 				).build(),
 				new FileInputStream(tempFile));

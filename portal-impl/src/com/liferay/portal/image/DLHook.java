@@ -89,13 +89,13 @@ public class DLHook extends BaseHook {
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(
 				image.getCompanyId(), _REPOSITORY_ID, fileName
-			).setClassName(
+			).className(
 				image.getModelClassName()
-			).setClassPK(
+			).classPK(
 				image.getImageId()
-			).setSize(
+			).size(
 				image.getSize()
-			).setValidateFileExtension(
+			).validateFileExtension(
 				true
 			).build(),
 			bytes);

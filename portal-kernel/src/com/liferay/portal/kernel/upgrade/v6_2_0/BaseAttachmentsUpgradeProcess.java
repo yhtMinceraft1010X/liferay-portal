@@ -574,9 +574,9 @@ public abstract class BaseAttachmentsUpgradeProcess extends UpgradeProcess {
 				DLStoreUtil.addFile(
 					DLStoreRequest.builder(
 						companyId, containerModelFolderId, name
-					).setClassName(
+					).className(
 						this
-					).setSize(
+					).size(
 						bytes.length
 					).build(),
 					bytes);

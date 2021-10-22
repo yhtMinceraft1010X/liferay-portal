@@ -403,9 +403,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					DLStoreRequest.builder(
 						app.getCompanyId(), CompanyConstants.SYSTEM,
 						app.getFilePath()
-					).setClassName(
+					).className(
 						this
-					).setSize(
+					).size(
 						Files.size(file.toPath())
 					).build(),
 					file);

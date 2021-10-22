@@ -76,9 +76,9 @@ public class KBArticleAttachmentsUtil {
 					DLStoreRequest.builder(
 						kbArticle.getCompanyId(), CompanyConstants.SYSTEM,
 						newDirName + StringPool.SLASH + shortFileName
-					).setClassName(
+					).className(
 						KBArticleAttachmentsUtil.class.getName()
-					).setSize(
+					).size(
 						bytes.length
 					).build(),
 					bytes);

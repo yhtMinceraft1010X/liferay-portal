@@ -167,7 +167,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				validateFileExtension
 			).build(),
 			bytes);
@@ -182,7 +182,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				validateFileExtension
 			).build(),
 			file);
@@ -197,7 +197,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				validateFileExtension
 			).build(),
 			inputStream);
@@ -211,7 +211,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				true
 			).build(),
 			bytes);
@@ -225,7 +225,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				true
 			).build(),
 			file);
@@ -240,7 +240,7 @@ public class DLStoreImpl implements DLStore {
 		addFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setValidateFileExtension(
+			).validateFileExtension(
 				true
 			).build(),
 			inputStream);
@@ -562,13 +562,13 @@ public class DLStoreImpl implements DLStore {
 		updateFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setFileExtension(
+			).fileExtension(
 				fileExtension
-			).setValidateFileExtension(
+			).validateFileExtension(
 				validateFileExtension
-			).setVersionLabel(
+			).versionLabel(
 				versionLabel
-			).setSourceFileName(
+			).sourceFileName(
 				sourceFileName
 			).build(),
 			file);
@@ -585,13 +585,13 @@ public class DLStoreImpl implements DLStore {
 		updateFile(
 			DLStoreRequest.builder(
 				companyId, repositoryId, fileName
-			).setFileExtension(
+			).fileExtension(
 				fileExtension
-			).setValidateFileExtension(
+			).validateFileExtension(
 				validateFileExtension
-			).setVersionLabel(
+			).versionLabel(
 				versionLabel
-			).setSourceFileName(
+			).sourceFileName(
 				sourceFileName
 			).build(),
 			inputStream1);

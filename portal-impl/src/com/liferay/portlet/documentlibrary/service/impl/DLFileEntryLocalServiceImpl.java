@@ -356,13 +356,13 @@ public class DLFileEntryLocalServiceImpl
 
 		DLStoreRequest dlStoreRequest = DLStoreRequest.builder(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name
-		).setClassName(
+		).className(
 			dlFileEntry.getModelClassName()
-		).setClassPK(
+		).classPK(
 			dlFileEntry.getFileEntryId()
-		).setSize(
+		).size(
 			dlFileEntry.getSize()
-		).setSourceFileName(
+		).sourceFileName(
 			dlFileEntry.getFileName()
 		).build();
 

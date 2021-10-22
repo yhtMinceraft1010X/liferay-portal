@@ -116,9 +116,9 @@ public class TensorFlowDownloadUtil {
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(
 				_COMPANY_ID, CompanyConstants.SYSTEM, fileName
-			).setClassName(
+			).className(
 				TensorFlowDownloadUtil.class.getName()
-			).setSize(
+			).size(
 				Files.size(tempFile.toPath())
 			).build(),
 			tempFile);

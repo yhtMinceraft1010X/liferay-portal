@@ -268,7 +268,7 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(
 				companyId, CompanyConstants.SYSTEM, fileLocation
-			).setClassName(
+			).className(
 				this
 			).build(),
 			inputStream);

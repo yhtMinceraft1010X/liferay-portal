@@ -239,9 +239,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			DLStoreUtil.addFile(
 				DLStoreRequest.builder(
 					companyId, REPOSITORY_ID, filePath
-				).setClassName(
+				).className(
 					this
-				).setSize(
+				).size(
 					size
 				).build(),
 				srcFile);
@@ -259,7 +259,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(
 				companyId, REPOSITORY_ID, filePath
-			).setClassName(
+			).className(
 				this
 			).build(),
 			inputStream);

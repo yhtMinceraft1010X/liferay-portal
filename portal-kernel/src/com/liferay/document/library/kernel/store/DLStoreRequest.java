@@ -129,7 +129,7 @@ public final class DLStoreRequest implements Serializable {
 				_sourceFileName, _validateFileExtension, _versionLabel);
 		}
 
-		public Builder setClassName(Object object) {
+		public Builder className(Object object) {
 			Objects.requireNonNull(object, "object must not be null");
 
 			_className = ClassUtil.getClassName(object);
@@ -137,7 +137,7 @@ public final class DLStoreRequest implements Serializable {
 			return this;
 		}
 
-		public Builder setClassName(String className) {
+		public Builder className(String className) {
 			Objects.requireNonNull(className, "className must not be null");
 
 			_className = className;
@@ -145,7 +145,7 @@ public final class DLStoreRequest implements Serializable {
 			return this;
 		}
 
-		public Builder setClassPK(long classPK) {
+		public Builder classPK(long classPK) {
 			if (classPK < 0) {
 				throw new IllegalArgumentException(
 					"setClassPK must be called with a positive value");
@@ -156,43 +156,43 @@ public final class DLStoreRequest implements Serializable {
 			return this;
 		}
 
-		public Builder setEntryURL(String entryURL) {
+		public Builder entryURL(String entryURL) {
 			_entryURL = entryURL;
 
 			return this;
 		}
 
-		public Builder setFileExtension(String fileExtension) {
+		public Builder fileExtension(String fileExtension) {
 			_fileExtension = fileExtension;
 
 			return this;
 		}
 
-		public Builder setNewRepositoryId(long newRepositoryId) {
+		public Builder newRepositoryId(long newRepositoryId) {
 			_newRepositoryId = newRepositoryId;
 
 			return this;
 		}
 
-		public Builder setSize(long size) {
+		public Builder size(long size) {
 			_size = size;
 
 			return this;
 		}
 
-		public Builder setSourceFileName(String sourceFileName) {
+		public Builder sourceFileName(String sourceFileName) {
 			_sourceFileName = sourceFileName;
 
 			return this;
 		}
 
-		public Builder setValidateFileExtension(boolean validateFileExtension) {
+		public Builder validateFileExtension(boolean validateFileExtension) {
 			_validateFileExtension = validateFileExtension;
 
 			return this;
 		}
 
-		public Builder setVersionLabel(String versionLabel) {
+		public Builder versionLabel(String versionLabel) {
 			_versionLabel = versionLabel;
 
 			return this;

@@ -397,9 +397,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		DLStoreUtil.addFile(
 			DLStoreRequest.builder(
 				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName
-			).setClassName(
+			).className(
 				this
-			).setSize(
+			).size(
 				reportResults.length
 			).build(),
 			reportResults);
