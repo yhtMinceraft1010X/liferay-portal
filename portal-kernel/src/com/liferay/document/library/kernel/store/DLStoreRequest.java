@@ -31,11 +31,11 @@ public final class DLStoreRequest implements Serializable {
 		long companyId, long repositoryId, String fileName) {
 
 		if (companyId < 0) {
-			throw new IllegalArgumentException("companyId must be positive");
+			throw new IllegalArgumentException("Company ID is less than 0");
 		}
 
 		if (repositoryId < 0) {
-			throw new IllegalArgumentException("repositoryId must be positive");
+			throw new IllegalArgumentException("Repository ID is less than 0");
 		}
 
 		Objects.requireNonNull(fileName);
