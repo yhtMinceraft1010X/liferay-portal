@@ -18,7 +18,6 @@ import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
-import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
@@ -58,10 +57,6 @@ public class CommerceReferencesHolder {
 		return _cpDefinitionsImporter;
 	}
 
-	public CPFileImporter getCpFileImporter() {
-		return _cpFileImporter;
-	}
-
 	public CPMeasurementUnitLocalService getCpMeasurementUnitLocalService() {
 		return _cpMeasurementUnitLocalService;
 	}
@@ -84,9 +79,6 @@ public class CommerceReferencesHolder {
 
 	@Reference
 	private CPDefinitionsImporter _cpDefinitionsImporter;
-
-	@Reference
-	private CPFileImporter _cpFileImporter;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

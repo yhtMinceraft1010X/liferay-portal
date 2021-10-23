@@ -24,7 +24,6 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
@@ -68,6 +67,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1461,6 +1461,44 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	protected void updateActions(
+			Role role, JSONObject jsonObject, int scope,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String resource = jsonObject.getString("resource");
+		JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
+
+		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
+			String actionId = actionIdsJSONArray.getString(i);
+
+			if (scope == ResourceConstants.SCOPE_COMPANY) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource, scope,
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+					role.getRoleId(), actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP) {
+				_resourcePermissionLocalService.removeResourcePermissions(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
+
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(serviceContext.getScopeGroupId()),
+					role.getRoleId(), actionId);
+			}
+		}
+	}
+
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
 		if (_commerceReferencesHolder == null) {
 			return;
@@ -1472,11 +1510,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		CPFileImporter cpFileImporter =
-			_commerceReferencesHolder.getCpFileImporter();
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
-		cpFileImporter.createRoles(
-			_jsonFactory.createJSONArray(json), serviceContext);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+			String name = jsonObject.getString("name");
+			int scope = jsonObject.getInt("scope");
+			int type = jsonObject.getInt("type");
+
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(), name);
+
+			if (role == null) {
+				role = _roleLocalService.addRole(
+					serviceContext.getUserId(), null, 0, name,
+					HashMapBuilder.put(
+						serviceContext.getLocale(), name
+					).build(),
+					null, type, null, serviceContext);
+			}
+
+			if (actionsJSONObject != null) {
+				updateActions(role, actionsJSONObject, scope, serviceContext);
+			}
+			else {
+				JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+				for (int j = 0; j < actionsJSONArray.length(); j++) {
+					updateActions(
+						role, actionsJSONArray.getJSONObject(j), scope,
+						serviceContext);
+				}
+			}
+		}
 	}
 
 	private void _addSAPEntries(ServiceContext serviceContext)
