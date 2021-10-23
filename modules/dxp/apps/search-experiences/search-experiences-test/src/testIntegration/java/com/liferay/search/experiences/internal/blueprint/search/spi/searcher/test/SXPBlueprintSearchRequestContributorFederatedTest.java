@@ -97,7 +97,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 			CoreMatchers.containsString(name));
 	}
 
-	private String _getSXPBlueprintJSON(String string) {
+	private String _getSXPBlueprintJSON(String clauseValue) {
 		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
 			{
 				configuration = new Configuration() {
@@ -112,7 +112,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 													{
 														field = "friend";
 														type = "match";
-														value = string;
+														value = clauseValue;
 													}
 												}
 											};
