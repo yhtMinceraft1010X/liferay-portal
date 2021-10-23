@@ -1477,14 +1477,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				null, jsonObject.getInt("type"), null, serviceContext);
 		}
 
-		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+		JSONArray jsonArray = jsonObject.getJSONArray("actions");
 
-		String[] actionIds = JSONUtil.toStringArray(
-			actionsJSONObject.getJSONArray("actionIds"));
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject actionsJSONObject = jsonArray.getJSONObject(i);
 
-		for (String actionId : actionIds) {
 			String resource = actionsJSONObject.getString("resource");
-			int scope = jsonObject.getInt("scope");
+			int scope = actionsJSONObject.getInt("scope");
+			String actionId = actionsJSONObject.getString("actionId");
 
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
 				_resourcePermissionLocalService.addResourcePermission(
