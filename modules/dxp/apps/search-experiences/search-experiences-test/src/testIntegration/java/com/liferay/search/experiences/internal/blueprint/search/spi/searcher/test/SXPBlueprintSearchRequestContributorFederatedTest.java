@@ -30,8 +30,6 @@ import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
-import java.io.Serializable;
-
 import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
@@ -54,7 +52,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testFederatedSearch() throws Exception {
+	public void test() throws Exception {
 		SearchRequestBuilder searchRequestBuilder1 = _getSearchRequestBuilder();
 		SearchRequestBuilder searchRequestBuilder2 = _getSearchRequestBuilder();
 		SearchRequestBuilder searchRequestBuilder3 = _getSearchRequestBuilder();
@@ -82,22 +80,36 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 				).build()
 			).build());
 
-		_assertRequestStringContains(searchResponse, "R2D2");
-		_assertRequestStringContains(
-			searchResponse.getFederatedSearchResponse("jedi"), "Yoda");
-		_assertRequestStringContains(
-			searchResponse.getFederatedSearchResponse("sith"), "Vader");
+		_assert(searchResponse, "R2D2");
+		_assert(searchResponse.getFederatedSearchResponse("jedi"), "Yoda");
+		_assert(searchResponse.getFederatedSearchResponse("sith"), "Vader");
 	}
 
-	private void _assertRequestStringContains(
-		SearchResponse searchResponse, String name) {
-
+	private void _assert(SearchResponse searchResponse, String value) {
 		Assert.assertThat(
 			searchResponse.getRequestString(),
-			CoreMatchers.containsString(name));
+			CoreMatchers.containsString(value));
 	}
 
-	private String _getSXPBlueprintJSON(String clauseValue) {
+	private SearchRequestBuilder _getSearchRequestBuilder() throws Exception {
+		return _searchRequestBuilderFactory.builder(
+		).companyId(
+			TestPropsValues.getCompanyId()
+		).emptySearchEnabled(
+			true
+		);
+	}
+
+	private String _getSXPBlueprintJSON(String value) {
+		Clause clause = new Clause() {
+			{
+				field = "friend";
+				type = "match";
+			}
+		};
+
+		clause.setValue(value);
+
 		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
 			{
 				configuration = new Configuration() {
@@ -107,15 +119,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 								queryEntries = new QueryEntry[] {
 									new QueryEntry() {
 										{
-											clauses = new Clause[] {
-												new Clause() {
-													{
-														field = "friend";
-														type = "match";
-														value = clauseValue;
-													}
-												}
-											};
+											clauses = new Clause[] {clause};
 										}
 									}
 								};
@@ -127,15 +131,6 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 		};
 
 		return sxpBlueprint.toString();
-	}
-
-	private SearchRequestBuilder _getSearchRequestBuilder() throws Exception {
-		return _searchRequestBuilderFactory.builder(
-		).companyId(
-			TestPropsValues.getCompanyId()
-		).emptySearchEnabled(
-			true
-		);
 	}
 
 	@Inject
