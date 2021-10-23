@@ -67,7 +67,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -80,6 +79,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
@@ -591,7 +591,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		CommerceInventoryWarehousesImporter
 			commerceInventoryWarehousesImporter =
-				_commerceReferencesHolder.getCommerceInventoryWarehousesImporter();
+				_commerceReferencesHolder.
+					getCommerceInventoryWarehousesImporter();
 
 		return commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
@@ -1461,11 +1462,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addRole(JSONObject jsonObject, ServiceContext serviceContext) throws Exception {
-		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+	private void _addRole(JSONObject jsonObject, ServiceContext serviceContext)
+		throws Exception {
+
 		String name = jsonObject.getString("name");
-		int scope = jsonObject.getInt("scope");
-		int type = jsonObject.getInt("type");
 
 		Role role = _roleLocalService.fetchRole(
 			serviceContext.getCompanyId(), name);
@@ -1476,14 +1476,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				HashMapBuilder.put(
 					serviceContext.getLocale(), name
 				).build(),
-				null, type, null, serviceContext);
+				null, jsonObject.getInt("type"), null, serviceContext);
 		}
 
-		String resource = actionsJSONObject.getString("resource");
-		JSONArray actionIdsJSONArray = actionsJSONObject.getJSONArray("actionIds");
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
-		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
-			String actionId = actionIdsJSONArray.getString(i);
+		String[] actionIds = JSONUtil.toStringArray(
+			actionsJSONObject.getJSONArray("actionIds"));
+
+		for (String actionId : actionIds) {
+			String resource = actionsJSONObject.getString("resource");
+			int scope = jsonObject.getInt("scope");
 
 			if (scope == ResourceConstants.SCOPE_COMPANY) {
 				_resourcePermissionLocalService.addResourcePermission(
@@ -1526,9 +1529,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			_addRole(jsonObject, serviceContext);
+			_addRole(jsonArray.getJSONObject(i), serviceContext);
 		}
 	}
 
