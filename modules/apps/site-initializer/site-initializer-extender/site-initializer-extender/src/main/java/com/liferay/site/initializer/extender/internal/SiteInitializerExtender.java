@@ -89,7 +89,7 @@ public class SiteInitializerExtender
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
 				_assetListEntryLocalService, bundle, _bundleContext,
-				_commerceServiceHolder, _ddmStructureLocalService,
+				_commerceReferencesHolder, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
 				_dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
@@ -154,7 +154,7 @@ public class SiteInitializerExtender
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile CommerceServiceHolder _commerceServiceHolder;
+	private volatile CommerceReferencesHolder _commerceReferencesHolder;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

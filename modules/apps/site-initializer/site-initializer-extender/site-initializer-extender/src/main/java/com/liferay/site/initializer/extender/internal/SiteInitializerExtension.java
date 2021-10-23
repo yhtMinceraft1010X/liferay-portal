@@ -66,7 +66,7 @@ public class SiteInitializerExtension {
 	public SiteInitializerExtension(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
-		CommerceServiceHolder commerceServiceHolder,
+		CommerceReferencesHolder commerceReferencesHolder,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -108,7 +108,7 @@ public class SiteInitializerExtension {
 		_component.setImplementation(
 			new SiteInitializerRegistrar(
 				assetListEntryLocalService, bundle, bundleContext,
-				commerceServiceHolder, ddmStructureLocalService,
+				commerceReferencesHolder, ddmStructureLocalService,
 				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,

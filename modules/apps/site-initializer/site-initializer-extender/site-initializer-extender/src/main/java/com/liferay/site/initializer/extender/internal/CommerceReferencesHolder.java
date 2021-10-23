@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(service = CommerceServiceHolder.class)
-public class CommerceServiceHolder {
+@Component(service = CommerceReferencesHolder.class)
+public class CommerceReferencesHolder {
 
 	public CatalogResource.Factory getCatalogResourceFactory() {
 		return _catalogResourceFactory;

@@ -166,7 +166,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		CommerceServiceHolder commerceServiceHolder,
+		CommerceReferencesHolder commerceReferencesHolder,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -203,7 +203,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
-		_commerceServiceHolder = commerceServiceHolder;
+		_commerceReferencesHolder = commerceReferencesHolder;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -467,7 +467,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		CatalogResource.Factory catalogResourceFactory =
-			_commerceServiceHolder.getCatalogResourceFactory();
+			_commerceReferencesHolder.getCatalogResourceFactory();
 
 		CatalogResource.Builder catalogResourceBuilder =
 			catalogResourceFactory.create();
@@ -513,7 +513,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		ChannelResource.Factory channelResourceFactory =
-			_commerceServiceHolder.getChannelResourceFactory();
+			_commerceReferencesHolder.getChannelResourceFactory();
 
 		ChannelResource.Builder channelResourceBuilder =
 			channelResourceFactory.create();
@@ -568,17 +568,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 		modifiableSettings.store();
 
 		CommerceAccountRoleHelper commerceAccountRoleHelper =
-			_commerceServiceHolder.getCommerceAccountRoleHelper();
+			_commerceReferencesHolder.getCommerceAccountRoleHelper();
 
 		commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 
 		CommerceCurrencyLocalService commerceCurrencyLocalService =
-			_commerceServiceHolder.getCommerceCurrencyLocalService();
+			_commerceReferencesHolder.getCommerceCurrencyLocalService();
 
 		commerceCurrencyLocalService.importDefaultValues(serviceContext);
 
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService =
-			_commerceServiceHolder.getCpMeasurementUnitLocalService();
+			_commerceReferencesHolder.getCpMeasurementUnitLocalService();
 
 		cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
@@ -591,7 +591,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		CommerceInventoryWarehousesImporter
 			commerceInventoryWarehousesImporter =
-				_commerceServiceHolder.getCommerceInventoryWarehousesImporter();
+				_commerceReferencesHolder.getCommerceInventoryWarehousesImporter();
 
 		return commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
@@ -636,7 +636,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					channel.getExternalReferenceCode());
 
 		CPDefinitionsImporter cpDefinitionsImporter =
-			_commerceServiceHolder.getCpDefinitionsImporter();
+			_commerceReferencesHolder.getCpDefinitionsImporter();
 
 		cpDefinitionsImporter.importCPDefinitions(
 			JSONFactoryUtil.createJSONArray(json), taxonomyVocabulary.getName(),
@@ -654,7 +654,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceServiceHolder == null) {
+		if (_commerceReferencesHolder == null) {
 			return;
 		}
 
@@ -1462,7 +1462,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
-		if (_commerceServiceHolder == null) {
+		if (_commerceReferencesHolder == null) {
 			return;
 		}
 
@@ -1473,7 +1473,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		CPFileImporter cpFileImporter =
-			_commerceServiceHolder.getCpFileImporter();
+			_commerceReferencesHolder.getCpFileImporter();
 
 		cpFileImporter.createRoles(
 			_jsonFactory.createJSONArray(json), serviceContext);
@@ -2066,7 +2066,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private CommerceServiceHolder _commerceServiceHolder;
+	private CommerceReferencesHolder _commerceReferencesHolder;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

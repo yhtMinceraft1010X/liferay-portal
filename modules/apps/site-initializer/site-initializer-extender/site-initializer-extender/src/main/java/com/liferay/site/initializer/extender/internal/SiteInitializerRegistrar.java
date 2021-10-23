@@ -65,7 +65,7 @@ public class SiteInitializerRegistrar {
 	public SiteInitializerRegistrar(
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		BundleContext bundleContext,
-		CommerceServiceHolder commerceServiceHolder,
+		CommerceReferencesHolder commerceReferencesHolder,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -103,7 +103,7 @@ public class SiteInitializerRegistrar {
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_bundleContext = bundleContext;
-		_commerceServiceHolder = commerceServiceHolder;
+		_commerceReferencesHolder = commerceReferencesHolder;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -152,7 +152,7 @@ public class SiteInitializerRegistrar {
 		_serviceRegistration = _bundleContext.registerService(
 			SiteInitializer.class,
 			new BundleSiteInitializer(
-				_assetListEntryLocalService, _bundle, _commerceServiceHolder,
+				_assetListEntryLocalService, _bundle, _commerceReferencesHolder,
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dlURLHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
@@ -183,7 +183,7 @@ public class SiteInitializerRegistrar {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
-	private final CommerceServiceHolder _commerceServiceHolder;
+	private final CommerceReferencesHolder _commerceReferencesHolder;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
