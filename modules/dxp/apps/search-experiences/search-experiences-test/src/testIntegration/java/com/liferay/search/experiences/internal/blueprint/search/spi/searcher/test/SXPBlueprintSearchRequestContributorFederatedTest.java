@@ -63,14 +63,14 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 			searchRequestBuilder1.withSearchContext(
 				searchContext -> searchContext.setAttribute(
 					"search.experiences.blueprint.json",
-					_getBlueprintJSON("R2D2"))
+					_getSXPBlueprintJSON("R2D2"))
 			).addFederatedSearchRequest(
 				searchRequestBuilder2.federatedSearchKey(
 					"jedi"
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
 						"search.experiences.blueprint.json",
-						_getBlueprintJSON("Yoda"))
+						_getSXPBlueprintJSON("Yoda"))
 				).build()
 			).addFederatedSearchRequest(
 				searchRequestBuilder3.federatedSearchKey(
@@ -78,7 +78,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
 						"search.experiences.blueprint.json",
-						_getBlueprintJSON("Vader"))
+						_getSXPBlueprintJSON("Vader"))
 				).build()
 			).build());
 
@@ -97,7 +97,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 			CoreMatchers.containsString(name));
 	}
 
-	private Serializable _getBlueprintJSON(String string) {
+	private Serializable _getSXPBlueprintJSON(String string) {
 		return String.valueOf(
 			new SXPBlueprint() {
 				{
