@@ -97,7 +97,7 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 			CoreMatchers.containsString(name));
 	}
 
-	private Serializable _getSXPBlueprintJSON(String string) {
+	private String _getSXPBlueprintJSON(String string) {
 		return String.valueOf(
 			new SXPBlueprint() {
 				{
