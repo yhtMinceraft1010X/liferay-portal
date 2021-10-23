@@ -1461,6 +1461,57 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addRole(JSONObject jsonObject, ServiceContext serviceContext) throws Exception {
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+		String name = jsonObject.getString("name");
+		int scope = jsonObject.getInt("scope");
+		int type = jsonObject.getInt("type");
+
+		Role role = _roleLocalService.fetchRole(
+			serviceContext.getCompanyId(), name);
+
+		if (role == null) {
+			role = _roleLocalService.addRole(
+				serviceContext.getUserId(), null, 0, name,
+				HashMapBuilder.put(
+					serviceContext.getLocale(), name
+				).build(),
+				null, type, null, serviceContext);
+		}
+
+		String resource = actionsJSONObject.getString("resource");
+		JSONArray actionIdsJSONArray = actionsJSONObject.getJSONArray("actionIds");
+
+		for (int i = 0; i < actionIdsJSONArray.length(); i++) {
+			String actionId = actionIdsJSONArray.getString(i);
+
+			if (scope == ResourceConstants.SCOPE_COMPANY) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource, scope,
+					String.valueOf(role.getCompanyId()), role.getRoleId(),
+					actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+					role.getRoleId(), actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP) {
+				_resourcePermissionLocalService.removeResourcePermissions(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
+
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP,
+					String.valueOf(serviceContext.getScopeGroupId()),
+					role.getRoleId(), actionId);
+			}
+		}
+	}
+
 	private void _addRoles(ServiceContext serviceContext) throws Exception {
 		if (_commerceReferencesHolder == null) {
 			return;
@@ -1477,54 +1528,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
-			String name = jsonObject.getString("name");
-			int scope = jsonObject.getInt("scope");
-			int type = jsonObject.getInt("type");
-
-			Role role = _roleLocalService.fetchRole(
-				serviceContext.getCompanyId(), name);
-
-			if (role == null) {
-				role = _roleLocalService.addRole(
-					serviceContext.getUserId(), null, 0, name,
-					HashMapBuilder.put(
-						serviceContext.getLocale(), name
-					).build(),
-					null, type, null, serviceContext);
-			}
-
-			String resource = actionsJSONObject.getString("resource");
-			JSONArray actionIdsJSONArray = actionsJSONObject.getJSONArray("actionIds");
-
-			for (int i = 0; i < actionIdsJSONArray.length(); i++) {
-				String actionId = actionIdsJSONArray.getString(i);
-
-				if (scope == ResourceConstants.SCOPE_COMPANY) {
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource, scope,
-						String.valueOf(role.getCompanyId()), role.getRoleId(),
-						actionId);
-				}
-				else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP_TEMPLATE,
-						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-						role.getRoleId(), actionId);
-				}
-				else if (scope == ResourceConstants.SCOPE_GROUP) {
-					_resourcePermissionLocalService.removeResourcePermissions(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP, role.getRoleId(), actionId);
-
-					_resourcePermissionLocalService.addResourcePermission(
-						serviceContext.getCompanyId(), resource,
-						ResourceConstants.SCOPE_GROUP,
-						String.valueOf(serviceContext.getScopeGroupId()),
-						role.getRoleId(), actionId);
-				}
-			}
+			_addRole(jsonObject, serviceContext);
 		}
 	}
 
