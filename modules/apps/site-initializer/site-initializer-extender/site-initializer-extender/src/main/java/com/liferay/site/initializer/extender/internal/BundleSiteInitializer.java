@@ -1494,13 +1494,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					String.valueOf(role.getCompanyId()), role.getRoleId(),
 					actionId);
 			}
-			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-				_resourcePermissionLocalService.addResourcePermission(
-					serviceContext.getCompanyId(), resource,
-					ResourceConstants.SCOPE_GROUP_TEMPLATE,
-					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					role.getRoleId(), actionId);
-			}
 			else if (scope == ResourceConstants.SCOPE_GROUP) {
 				_resourcePermissionLocalService.removeResourcePermissions(
 					serviceContext.getCompanyId(), resource,
@@ -1510,6 +1503,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getCompanyId(), resource,
 					ResourceConstants.SCOPE_GROUP,
 					String.valueOf(serviceContext.getScopeGroupId()),
+					role.getRoleId(), actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+				_resourcePermissionLocalService.addResourcePermission(
+					serviceContext.getCompanyId(), resource,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 					role.getRoleId(), actionId);
 			}
 		}
