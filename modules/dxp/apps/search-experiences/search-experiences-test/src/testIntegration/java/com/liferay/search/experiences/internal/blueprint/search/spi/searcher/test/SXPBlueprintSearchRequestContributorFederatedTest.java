@@ -98,34 +98,35 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 	}
 
 	private String _getSXPBlueprintJSON(String string) {
-		return String.valueOf(
-			new SXPBlueprint() {
-				{
-					configuration = new Configuration() {
-						{
-							queryConfiguration = new QueryConfiguration() {
-								{
-									queryEntries = new QueryEntry[] {
-										new QueryEntry() {
-											{
-												clauses = new Clause[] {
-													new Clause() {
-														{
-															field = "friend";
-															type = "match";
-															value = string;
-														}
+		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
+			{
+				configuration = new Configuration() {
+					{
+						queryConfiguration = new QueryConfiguration() {
+							{
+								queryEntries = new QueryEntry[] {
+									new QueryEntry() {
+										{
+											clauses = new Clause[] {
+												new Clause() {
+													{
+														field = "friend";
+														type = "match";
+														value = string;
 													}
-												};
-											}
+												}
+											};
 										}
-									};
-								}
-							};
-						}
-					};
-				}
-			});
+									}
+								};
+							}
+						};
+					}
+				};
+			}
+		};
+
+		return sxpBlueprint.toString();
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder() throws Exception {
