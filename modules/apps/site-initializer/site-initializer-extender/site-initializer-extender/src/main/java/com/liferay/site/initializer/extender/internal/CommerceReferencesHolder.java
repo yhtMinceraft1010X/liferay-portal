@@ -31,56 +31,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceReferencesHolder.class)
 public class CommerceReferencesHolder {
 
-	public CatalogResource.Factory getCatalogResourceFactory() {
-		return _catalogResourceFactory;
-	}
+	@Reference
+	public CatalogResource.Factory catalogResourceFactory;
 
-	public ChannelResource.Factory getChannelResourceFactory() {
-		return _channelResourceFactory;
-	}
+	@Reference
+	public ChannelResource.Factory channelResourceFactory;
 
-	public CommerceAccountRoleHelper getCommerceAccountRoleHelper() {
-		return _commerceAccountRoleHelper;
-	}
+	@Reference
+	public CommerceAccountRoleHelper commerceAccountRoleHelper;
 
-	public CommerceCurrencyLocalService getCommerceCurrencyLocalService() {
-		return _commerceCurrencyLocalService;
-	}
+	@Reference
+	public CommerceCurrencyLocalService commerceCurrencyLocalService;
 
+	@Reference
 	public CommerceInventoryWarehousesImporter
-		getCommerceInventoryWarehousesImporter() {
-
-		return _commerceInventoryWarehousesImporter;
-	}
-
-	public CPDefinitionsImporter getCpDefinitionsImporter() {
-		return _cpDefinitionsImporter;
-	}
-
-	public CPMeasurementUnitLocalService getCpMeasurementUnitLocalService() {
-		return _cpMeasurementUnitLocalService;
-	}
+		commerceInventoryWarehousesImporter;
 
 	@Reference
-	private CatalogResource.Factory _catalogResourceFactory;
+	public CPDefinitionsImporter cpDefinitionsImporter;
 
 	@Reference
-	private ChannelResource.Factory _channelResourceFactory;
-
-	@Reference
-	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
-
-	@Reference
-	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommerceInventoryWarehousesImporter
-		_commerceInventoryWarehousesImporter;
-
-	@Reference
-	private CPDefinitionsImporter _cpDefinitionsImporter;
-
-	@Reference
-	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+	public CPMeasurementUnitLocalService cpMeasurementUnitLocalService;
 
 }

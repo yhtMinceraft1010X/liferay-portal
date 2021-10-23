@@ -19,13 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
-import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
-import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
@@ -466,11 +461,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		CatalogResource.Factory catalogResourceFactory =
-			_commerceReferencesHolder.getCatalogResourceFactory();
-
 		CatalogResource.Builder catalogResourceBuilder =
-			catalogResourceFactory.create();
+			_commerceReferencesHolder.catalogResourceFactory.create();
 
 		CatalogResource catalogResource = catalogResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -512,11 +504,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return null;
 		}
 
-		ChannelResource.Factory channelResourceFactory =
-			_commerceReferencesHolder.getChannelResourceFactory();
-
 		ChannelResource.Builder channelResourceBuilder =
-			channelResourceFactory.create();
+			_commerceReferencesHolder.channelResourceFactory.create();
 
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -567,20 +556,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		modifiableSettings.store();
 
-		CommerceAccountRoleHelper commerceAccountRoleHelper =
-			_commerceReferencesHolder.getCommerceAccountRoleHelper();
+		_commerceReferencesHolder.commerceAccountRoleHelper.
+			checkCommerceAccountRoles(serviceContext);
 
-		commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
+		_commerceReferencesHolder.commerceCurrencyLocalService.
+			importDefaultValues(serviceContext);
 
-		CommerceCurrencyLocalService commerceCurrencyLocalService =
-			_commerceReferencesHolder.getCommerceCurrencyLocalService();
-
-		commerceCurrencyLocalService.importDefaultValues(serviceContext);
-
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService =
-			_commerceReferencesHolder.getCpMeasurementUnitLocalService();
-
-		cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
+		_commerceReferencesHolder.cpMeasurementUnitLocalService.
+			importDefaultValues(serviceContext);
 
 		return channel;
 	}
@@ -589,12 +572,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceInventoryWarehousesImporter
-			commerceInventoryWarehousesImporter =
-				_commerceReferencesHolder.
-					getCommerceInventoryWarehousesImporter();
-
-		return commerceInventoryWarehousesImporter.
+		return _commerceReferencesHolder.commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
 					_read(
@@ -636,10 +614,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					companyGroup.getGroupId(),
 					channel.getExternalReferenceCode());
 
-		CPDefinitionsImporter cpDefinitionsImporter =
-			_commerceReferencesHolder.getCpDefinitionsImporter();
-
-		cpDefinitionsImporter.importCPDefinitions(
+		_commerceReferencesHolder.cpDefinitionsImporter.importCPDefinitions(
 			JSONFactoryUtil.createJSONArray(json), taxonomyVocabulary.getName(),
 			commerceCatalogGroup.getGroupId(), channel.getId(),
 			ListUtil.toLongArray(
