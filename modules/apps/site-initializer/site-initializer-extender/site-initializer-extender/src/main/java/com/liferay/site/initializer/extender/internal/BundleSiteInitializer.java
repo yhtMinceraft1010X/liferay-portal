@@ -1532,18 +1532,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					null, type, null, serviceContext);
 			}
 
-			if (actionsJSONObject != null) {
-				updateActions(role, actionsJSONObject, scope, serviceContext);
-			}
-			else {
-				JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
-
-				for (int j = 0; j < actionsJSONArray.length(); j++) {
-					updateActions(
-						role, actionsJSONArray.getJSONObject(j), scope,
-						serviceContext);
-				}
-			}
+			updateActions(role, actionsJSONObject, scope, serviceContext);
 		}
 	}
 
