@@ -282,8 +282,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		long startTime = System.currentTimeMillis();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_log.isInfoEnabled()) {
+			_log.info(
 				StringBundler.concat(
 					"Initializing ", getKey(), " for group ", groupId));
 		}
@@ -350,8 +350,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			throw new InitializationException(exception);
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
+		if (_log.isInfoEnabled()) {
+			_log.info(
 				StringBundler.concat(
 					"Initialized ", getKey(), " for group ", groupId, " in ",
 					System.currentTimeMillis() - startTime, " ms"));
@@ -1890,12 +1890,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		unsafeRunnable.run();
 
-		if (_log.isDebugEnabled()) {
+		if (_log.isInfoEnabled()) {
 			Thread thread = Thread.currentThread();
 
 			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
 
-			_log.debug(
+			_log.info(
 				StringBundler.concat(
 					"Invoking line ", stackTraceElement.getLineNumber(),
 					" took ", System.currentTimeMillis() - startTime, " ms"));
@@ -1909,12 +1909,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		T t = unsafeSupplier.get();
 
-		if (_log.isDebugEnabled()) {
+		if (_log.isInfoEnabled()) {
 			Thread thread = Thread.currentThread();
 
 			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
 
-			_log.debug(
+			_log.info(
 				StringBundler.concat(
 					"Invoking line ", stackTraceElement.getLineNumber(), " in ",
 					System.currentTimeMillis() - startTime, " ms"));
