@@ -126,9 +126,7 @@ public class PortalInstancesLocalServiceImpl
 
 		PermissionChecker currentThreadPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-
 		String currentThreadPrincipalName = PrincipalThreadLocal.getName();
-
 		ServiceContext currentThreadServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -243,18 +241,18 @@ public class PortalInstancesLocalServiceImpl
 
 	private ServiceContext _getServiceContext(
 			Company company, Group group, PermissionChecker permissionChecker,
-			ServiceContext currentServiceContext, User user)
+			ServiceContext currentThreadServiceContext, User user)
 		throws PortalException {
 
 		ServiceContext serviceContext =
-			(ServiceContext)currentServiceContext.clone();
+			(ServiceContext)currentThreadServiceContext.clone();
 
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(user.getUserId());
 
 		HttpServletRequest httpServletRequest =
-			currentServiceContext.getRequest();
+			currentThreadServiceContext.getRequest();
 
 		if (httpServletRequest != null) {
 			long controlPanelPlid = _portal.getControlPanelPlid(
