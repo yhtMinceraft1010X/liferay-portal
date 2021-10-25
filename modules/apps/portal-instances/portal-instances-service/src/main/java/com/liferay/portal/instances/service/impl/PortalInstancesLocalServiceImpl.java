@@ -151,7 +151,7 @@ public class PortalInstancesLocalServiceImpl
 				company.getCompanyId(), GroupConstants.GUEST);
 
 			ServiceContextThreadLocal.pushServiceContext(
-				_getServiceContext(
+				_populateServiceContext(
 					company, group, currentThreadServiceContext.getRequest(),
 					permissionChecker,
 					(ServiceContext)currentThreadServiceContext.clone(), user));
@@ -240,7 +240,7 @@ public class PortalInstancesLocalServiceImpl
 		}
 	}
 
-	private ServiceContext _getServiceContext(
+	private ServiceContext _populateServiceContext(
 			Company company, Group group, HttpServletRequest httpServletRequest,
 			PermissionChecker permissionChecker, ServiceContext serviceContext,
 			User user)
