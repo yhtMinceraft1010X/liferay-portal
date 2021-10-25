@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/sxp_blueprints_admin/view.jsp",
-		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINTS_ADMIN,
+		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
+		"javax.portlet.name=" + SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class SXPBlueprintsAdminPortlet extends MVCPortlet {
+public class SXPBlueprintAdminPortlet extends MVCPortlet {
 }
