@@ -154,7 +154,7 @@ AUI.add(
 			'<strong class="lead">{[ this.strings.warningTitle ]}</strong>{[ this.strings.pendingFileText ]}',
 			'</div>',
 
-			'<div class="hide manage-upload-target clearfix" id="{$ns}manageUploadTarget">',
+			'<div class="clearfix hide manage-upload-target" id="{$ns}manageUploadTarget">',
 			'<tpl if="multipleFiles">',
 			'<div class="form-check select-files">',
 			'<input class="form-check-input select-all-files" id="{$ns}allRowIds" name="{$ns}allRowIds" type="checkbox" />',
