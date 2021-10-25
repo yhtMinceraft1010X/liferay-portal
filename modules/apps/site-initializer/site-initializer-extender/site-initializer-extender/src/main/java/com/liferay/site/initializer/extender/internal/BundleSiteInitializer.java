@@ -198,7 +198,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Commerce references holder " + _commerceReferencesHolder);
+				"Commerce references holder " + commerceReferencesHolder);
 		}
 
 		_assetListEntryLocalService = assetListEntryLocalService;
