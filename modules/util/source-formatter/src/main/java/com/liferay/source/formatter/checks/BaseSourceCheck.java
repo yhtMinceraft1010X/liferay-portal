@@ -45,8 +45,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -545,16 +543,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		if (file != null) {
 			return new FileInputStream(file);
-		}
-
-		String portalBranchName = getAttributeValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
-
-		URL url = SourceFormatterUtil.getPortalGitURL(
-			fileName, portalBranchName);
-
-		if (url != null) {
-			return url.openStream();
 		}
 
 		return null;
