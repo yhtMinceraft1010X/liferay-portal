@@ -117,8 +117,7 @@ getQuoteForm.onsubmit = function (event) {
 		if (!formProps.product) {
 			productContainer.classList.add('has-error');
 		}
-	}
-	else {
+	} else {
 		localStorage.setItem(
 			'raylife-product',
 			JSON.stringify({
@@ -137,6 +136,10 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 	var charCode = event.which ? event.which : event.keyCode;
 
 	return !(charCode > 31 && (charCode < 48 || charCode > 57));
+};
+
+window.onload = function () {
+	document.getElementById('zip').focus();
 };
 
 (async () => {
@@ -158,8 +161,7 @@ fragmentElement.querySelector('#zip').onkeypress = (event) => {
 				new Option(taxonomyVocabulary.name, taxonomyVocabulary.id)
 			);
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		console.error(error.message);
 	}
 })();
