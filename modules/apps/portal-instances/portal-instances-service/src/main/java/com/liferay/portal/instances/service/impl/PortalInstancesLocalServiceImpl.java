@@ -247,6 +247,7 @@ public class PortalInstancesLocalServiceImpl
 		throws PortalException {
 
 		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setRequest(httpServletRequest);
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(user.getUserId());
 
@@ -262,8 +263,6 @@ public class PortalInstancesLocalServiceImpl
 			ThemeDisplay currentThemeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
-
-			serviceContext.setRequest(httpServletRequest);
 
 			try {
 				ThemeDisplay themeDisplay =
