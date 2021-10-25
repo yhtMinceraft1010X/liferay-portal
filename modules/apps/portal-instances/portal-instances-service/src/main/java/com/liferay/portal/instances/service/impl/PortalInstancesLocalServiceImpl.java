@@ -152,8 +152,9 @@ public class PortalInstancesLocalServiceImpl
 
 			ServiceContextThreadLocal.pushServiceContext(
 				_getServiceContext(
-					company, group, permissionChecker,
-					currentThreadServiceContext, user));
+					company, group, currentThreadServiceContext.getRequest(),
+					permissionChecker,
+					(ServiceContext)currentThreadServiceContext.clone(), user));
 
 			_layoutLocalService.deleteLayouts(
 				group.getGroupId(), false, new ServiceContext());
@@ -240,19 +241,14 @@ public class PortalInstancesLocalServiceImpl
 	}
 
 	private ServiceContext _getServiceContext(
-			Company company, Group group, PermissionChecker permissionChecker,
-			ServiceContext currentThreadServiceContext, User user)
+			Company company, Group group, HttpServletRequest httpServletRequest,
+			PermissionChecker permissionChecker, ServiceContext serviceContext,
+			User user)
 		throws PortalException {
-
-		ServiceContext serviceContext =
-			(ServiceContext)currentThreadServiceContext.clone();
 
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(user.getUserId());
-
-		HttpServletRequest httpServletRequest =
-			currentThreadServiceContext.getRequest();
 
 		if (httpServletRequest != null) {
 			long controlPanelPlid = _portal.getControlPanelPlid(
