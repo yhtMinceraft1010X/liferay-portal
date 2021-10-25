@@ -154,7 +154,7 @@ public class SiteInitializerExtender
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile CommerceReferencesHolder _commerceReferencesHolder;
+	private CommerceReferencesHolder _commerceReferencesHolder;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

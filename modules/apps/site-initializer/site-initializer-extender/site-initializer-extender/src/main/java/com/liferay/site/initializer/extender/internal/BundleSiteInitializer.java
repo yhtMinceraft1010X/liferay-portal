@@ -196,6 +196,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ThemeLocalService themeLocalService,
 		UserLocalService userLocalService) {
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Commerce references holder " + _commerceReferencesHolder);
+		}
+
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_commerceReferencesHolder = commerceReferencesHolder;
@@ -630,18 +635,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addCPDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
-		if (_commerceReferencesHolder == null) {
+		if ((_commerceReferencesHolder == null) ||
+			!GetterUtil.getBoolean(
+				PropsUtil.get("enterprise.product.commerce.enabled"))) {
+
 			return;
 		}
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get("enterprise.product.commerce.enabled"))) {
-
-			_addCommerceCatalogs(
-				_addCommerceChannel(serviceContext),
-				_addCommerceInventoryWarehouses(serviceContext),
-				serviceContext);
-		}
+		_addCommerceCatalogs(
+			_addCommerceChannel(serviceContext),
+			_addCommerceInventoryWarehouses(serviceContext), serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
