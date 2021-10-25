@@ -537,7 +537,7 @@ definition {
 	}
 
 	macro launchRequestNotAuthorized {
-		Pause(locator1 = "5000");
+		Pause(locator1 = "8000");
 
 		Button.click(button = "Launch Request");
 
