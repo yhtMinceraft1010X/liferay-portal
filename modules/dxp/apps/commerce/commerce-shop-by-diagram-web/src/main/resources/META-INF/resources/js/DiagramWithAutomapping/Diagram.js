@@ -187,7 +187,6 @@ function Diagram({
 	useLayoutEffect(() => {
 		chartInstance.current = new D3Handler(
 			svgRef.current,
-			zoomHandlerRef.current,
 			imageURL,
 			pinsCSSSelectors,
 			updateLabels,
@@ -195,7 +194,8 @@ function Diagram({
 				setTooltipData(null);
 
 				updateCurrentZoom(scale);
-			}
+			},
+			zoomHandlerRef.current
 		);
 	}, [imageURL, pinsCSSSelectors]);
 

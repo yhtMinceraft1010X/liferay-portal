@@ -23,13 +23,13 @@ import {
 
 class D3Handler extends DiagramZoomHandler {
 	constructor(
-		diagramWrapper,
-		zoomWrapper,
-		imageURL,
-		updateZoomState,
-		setTooltipData,
+		allowPinsUpdate,
 		closeDropdowns,
-		allowPinsUpdate
+		diagramWrapper,
+		imageURL,
+		setTooltipData,
+		updateZoomState,
+		zoomWrapper
 	) {
 		super();
 

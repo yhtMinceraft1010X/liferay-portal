@@ -77,13 +77,13 @@ function Diagram({
 
 	useLayoutEffect(() => {
 		chartInstance.current = new D3Handler(
-			svgRef.current,
-			zoomHandlerRef.current,
-			imageURL,
-			updateCurrentZoom,
-			setTooltipData,
+			isAdmin,
 			() => setDropdownActive(false),
-			isAdmin
+			svgRef.current,
+			imageURL,
+			setTooltipData,
+			updateCurrentZoom,
+			zoomHandlerRef.current
 		);
 
 		return () => {
