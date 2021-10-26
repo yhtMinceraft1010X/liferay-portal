@@ -84,7 +84,6 @@ public class ViewSXPElementsDisplayContext
 			getSearchContainer("no-elements-were-found");
 
 		populateSXPBlueprintSearchContainer(
-			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
 			liferayPortletRequest, searchContainer,
 			WorkflowConstants.STATUS_APPROVED);
 

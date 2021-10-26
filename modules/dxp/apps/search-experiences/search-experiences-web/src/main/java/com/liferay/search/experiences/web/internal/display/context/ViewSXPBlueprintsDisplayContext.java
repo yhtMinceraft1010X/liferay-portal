@@ -81,7 +81,6 @@ public class ViewSXPBlueprintsDisplayContext
 			getSearchContainer("no-blueprints-were-found");
 
 		populateSXPBlueprintSearchContainer(
-			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
 			liferayPortletRequest, searchContainer,
 			WorkflowConstants.STATUS_APPROVED);
 

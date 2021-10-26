@@ -142,12 +142,12 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract String getMVCRenderCommandName();
 
-	protected String getOrderByCol() {
+	private String _getOrderByCol() {
 		return ParamUtil.getString(
 			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
 	}
 
-	protected String getOrderByType() {
+	private String _getOrderByType() {
 		String orderByType = ParamUtil.getString(
 			liferayPortletRequest, "orderByType");
 
@@ -155,7 +155,7 @@ public abstract class BaseDisplayContext<R> {
 			return orderByType;
 		}
 
-		if (Objects.equals(getOrderByCol(), Field.TITLE)) {
+		if (Objects.equals(_getOrderByCol(), Field.TITLE)) {
 			return "asc";
 		}
 
@@ -169,8 +169,8 @@ public abstract class BaseDisplayContext<R> {
 			liferayPortletRequest, getIteratorURL(), null,
 			emptyResultsMessage);
 
-		searchContainer.setOrderByCol(getOrderByCol());
-		searchContainer.setOrderByType(getOrderByType());
+		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
@@ -189,7 +189,6 @@ public abstract class BaseDisplayContext<R> {
 	private final Sorts _sorts;
 
 	protected void populateSXPBlueprintSearchContainer(
-		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest,
 		SearchContainer<R> searchContainer,
 		int status) {
@@ -200,7 +199,7 @@ public abstract class BaseDisplayContext<R> {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.GROUP_ID, groupId));
+			_queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(
@@ -228,9 +227,11 @@ public abstract class BaseDisplayContext<R> {
 
 		SortOrder sortOrder = SortOrder.ASC;
 
-		if (orderByType.equals("desc")) {
+		if (Objects.equals(_getOrderByType(), "desc")) {
 			sortOrder = SortOrder.DESC;
 		}
+
+		String orderByCol = _getOrderByCol();
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
 			sort = _sorts.field(
