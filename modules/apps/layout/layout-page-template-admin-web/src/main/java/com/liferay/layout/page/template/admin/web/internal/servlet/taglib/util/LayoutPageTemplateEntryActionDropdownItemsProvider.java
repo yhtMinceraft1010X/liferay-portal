@@ -423,7 +423,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "moveLayoutPageTemplateEntry");
-
 			dropdownItem.putData("itemSelectorURL", itemSelectorURL.toString());
 			dropdownItem.putData(
 				"moveLayoutPageTemplateEntryURL",
@@ -438,7 +437,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				).buildString());
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move-to"));
 		};
