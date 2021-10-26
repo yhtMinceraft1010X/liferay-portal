@@ -228,10 +228,26 @@ public abstract class BaseDisplayContext<R> {
 
 		processBooleanQuery(booleanQuery, portletRequest, queries);
 
+		Sort sort = null;
+
+		SortOrder sortOrder = SortOrder.ASC;
+
+		if (orderByType.equals("desc")) {
+			sortOrder = SortOrder.DESC;
+		}
+
+		if (Objects.equals(orderByCol, Field.TITLE)) {
+			sort = sorts.field(
+				_getTitleField(themeDisplay.getLanguageId()) + "_String_sortable", sortOrder);
+		}
+		else {
+			sort = sorts.field(orderByCol, sortOrder);
+		}
+
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilderFactory.builder(
 			).addSort(
-				_getSort(orderByCol, orderByType, themeDisplay.getLanguageId(), sorts)
+				sort
 			).companyId(
 				themeDisplay.getCompanyId()
 			).from(
@@ -262,23 +278,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
-
-	private Sort _getSort(
-		String orderByCol, String orderByType, String languageId, Sorts sorts) {
-
-		SortOrder sortOrder = SortOrder.ASC;
-
-		if (orderByType.equals("desc")) {
-			sortOrder = SortOrder.DESC;
-		}
-
-		if (Objects.equals(orderByCol, Field.TITLE)) {
-			return sorts.field(
-				_getTitleField(languageId) + "_String_sortable", sortOrder);
-		}
-
-		return sorts.field(orderByCol, sortOrder);
-	}
 
 	private String _getTitleField(String languageId) {
 		return LocalizationUtil.getLocalizedName(
