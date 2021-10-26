@@ -189,9 +189,6 @@ public abstract class BaseDisplayContext<R> {
 		SearchContainer<R> searchContainer,
 		int status) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
