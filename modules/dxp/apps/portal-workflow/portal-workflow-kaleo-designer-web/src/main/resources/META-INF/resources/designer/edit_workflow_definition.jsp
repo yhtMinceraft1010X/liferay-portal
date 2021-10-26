@@ -20,7 +20,6 @@
 KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
 portletDisplay.setShowBackIcon(true);
-
 portletDisplay.setURLBack(
 	PortletURLBuilder.create(
 		PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE)
