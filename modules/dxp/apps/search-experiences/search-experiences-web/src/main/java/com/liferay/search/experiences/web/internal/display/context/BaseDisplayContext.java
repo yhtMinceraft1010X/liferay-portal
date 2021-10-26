@@ -124,9 +124,7 @@ public abstract class BaseDisplayContext<R> {
 			"no-entries-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());
-
 		searchContainer.setOrderByType(getOrderByType());
-
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
