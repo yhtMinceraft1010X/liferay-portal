@@ -16,28 +16,22 @@ package com.liferay.search.experiences.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -59,8 +53,6 @@ public class ViewSXPBlueprintsDisplayContext
 		_sxpBlueprintService = sxpBlueprintService;
 	}
 
-	private SXPBlueprintService _sxpBlueprintService;
-
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
 		throws PortalException {
 
@@ -77,7 +69,8 @@ public class ViewSXPBlueprintsDisplayContext
 	public SearchContainer<SXPBlueprint> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer("no-blueprints-were-found", SXPBlueprint.class);
+		return getSearchContainer(
+			"no-blueprints-were-found", SXPBlueprint.class);
 	}
 
 	@Override
@@ -91,8 +84,7 @@ public class ViewSXPBlueprintsDisplayContext
 	}
 
 	@Override
-	protected void processBooleanQuery(
-		BooleanQuery booleanQuery) {
+	protected void processBooleanQuery(BooleanQuery booleanQuery) {
 	}
 
 	@Override
@@ -113,5 +105,7 @@ public class ViewSXPBlueprintsDisplayContext
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewSXPBlueprintsDisplayContext.class);
+
+	private final SXPBlueprintService _sxpBlueprintService;
 
 }

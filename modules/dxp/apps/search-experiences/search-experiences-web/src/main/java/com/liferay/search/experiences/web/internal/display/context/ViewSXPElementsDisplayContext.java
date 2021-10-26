@@ -16,31 +16,25 @@ package com.liferay.search.experiences.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.search.Field;;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -61,8 +55,6 @@ public class ViewSXPElementsDisplayContext
 
 		_sxpElementService = sxpElementService;
 	}
-
-	private SXPElementService _sxpElementService;
 
 	public List<String> getAvailableActions(SXPElement sxpElement)
 		throws PortalException {
@@ -94,10 +86,9 @@ public class ViewSXPElementsDisplayContext
 	}
 
 	@Override
-	protected void processBooleanQuery(
-		BooleanQuery booleanQuery) {
-
-		int type = ParamUtil.getInteger(liferayPortletRequest, "sxpElementType");
+	protected void processBooleanQuery(BooleanQuery booleanQuery) {
+		int type = ParamUtil.getInteger(
+			liferayPortletRequest, "sxpElementType");
 
 		if (type > 0) {
 			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
@@ -106,7 +97,8 @@ public class ViewSXPElementsDisplayContext
 		if (ParamUtil.getString(liferayPortletRequest, "hidden") != null) {
 			booleanQuery.addFilterQueryClauses(
 				queries.term(
-					"hidden", ParamUtil.getBoolean(liferayPortletRequest, "hidden")));
+					"hidden",
+					ParamUtil.getBoolean(liferayPortletRequest, "hidden")));
 		}
 
 		if (!Validator.isBlank(
@@ -128,7 +120,6 @@ public class ViewSXPElementsDisplayContext
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get search experiences element " + entryClassPK);
-
 			}
 		}
 
@@ -137,5 +128,7 @@ public class ViewSXPElementsDisplayContext
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewSXPElementsDisplayContext.class);
+
+	private final SXPElementService _sxpElementService;
 
 }

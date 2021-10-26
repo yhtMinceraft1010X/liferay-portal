@@ -22,61 +22,31 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.search.experiences.constants.SXPPortletKeys;
-
-import java.util.Objects;
-
-import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.TermQuery;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.model.SXPElement;
-import com.liferay.search.experiences.service.SXPBlueprintService;
-import com.liferay.search.experiences.service.SXPElementService;
+import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.search.experiences.constants.SXPPortletKeys;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -130,17 +100,8 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract String getMVCRenderCommandName();
 
-	protected final HttpServletRequest httpServletRequest;
-	protected final LiferayPortletRequest liferayPortletRequest;
-	protected final LiferayPortletResponse liferayPortletResponse;
-	protected final PortalPreferences portalPreferences;
-	protected final ThemeDisplay themeDisplay;
-	protected final Queries queries;
-	private final Searcher _searcher;
-	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private final Sorts _sorts;
-
-	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage, Class<?> modelIndexerClass)
+	protected SearchContainer<R> getSearchContainer(
+			String emptyResultsMessage, Class<?> modelIndexerClass)
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
@@ -153,8 +114,7 @@ public abstract class BaseDisplayContext<R> {
 				ParamUtil.getString(
 					liferayPortletRequest, "tabs1", "sxpBlueprints")
 			).build(),
-			null,
-			emptyResultsMessage);
+			null, emptyResultsMessage);
 
 		String orderByCol = ParamUtil.getString(
 			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
@@ -179,14 +139,16 @@ public abstract class BaseDisplayContext<R> {
 		booleanQuery.addFilterQueryClauses(
 			queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
 
-		int status = ParamUtil.getInteger(liferayPortletRequest, "status", WorkflowConstants.STATUS_APPROVED);
+		int status = ParamUtil.getInteger(
+			liferayPortletRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(
 				queries.term(Field.STATUS, status));
 		}
 
-		String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
+		String keywords = ParamUtil.getString(
+			liferayPortletRequest, "keywords");
 
 		String titleField = LocalizationUtil.getLocalizedName(
 			"localized_" + Field.TITLE, themeDisplay.getLanguageId());
@@ -198,7 +160,10 @@ public abstract class BaseDisplayContext<R> {
 			booleanQuery.addMustQueryClauses(
 				queries.multiMatch(
 					keywords,
-					SetUtil.fromArray(titleField, LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
+					SetUtil.fromArray(
+						titleField,
+						LocalizationUtil.getLocalizedName(
+							Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
 		processBooleanQuery(booleanQuery);
@@ -212,8 +177,7 @@ public abstract class BaseDisplayContext<R> {
 		}
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
-			sort = _sorts.field(
-				titleField + "_String_sortable", sortOrder);
+			sort = _sorts.field(titleField + "_String_sortable", sortOrder);
 		}
 		else {
 			sort = _sorts.field(orderByCol, sortOrder);
@@ -254,12 +218,19 @@ public abstract class BaseDisplayContext<R> {
 		return searchContainer;
 	}
 
-	protected abstract void processBooleanQuery(
-		BooleanQuery booleanQuery);
+	protected abstract void processBooleanQuery(BooleanQuery booleanQuery);
 
 	protected abstract R toBaseModel(long entryClassPK);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDisplayContext.class);
+	protected final HttpServletRequest httpServletRequest;
+	protected final LiferayPortletRequest liferayPortletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
+	protected final PortalPreferences portalPreferences;
+	protected final Queries queries;
+	protected final ThemeDisplay themeDisplay;
+
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final Sorts _sorts;
 
 }
