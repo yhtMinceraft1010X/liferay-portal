@@ -63,7 +63,7 @@ public class ViewSXPElementsDisplayContext
 				themeDisplay.getPermissionChecker(), sxpElement,
 				ActionKeys.DELETE)) {
 
-			return Collections.singletonList("deleteEntries");
+			return Collections.singletonList("deleteSXPElements");
 		}
 
 		return Collections.emptyList();

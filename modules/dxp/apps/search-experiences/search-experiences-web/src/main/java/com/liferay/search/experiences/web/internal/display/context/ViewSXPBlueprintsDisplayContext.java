@@ -63,7 +63,7 @@ public class ViewSXPBlueprintsDisplayContext
 				themeDisplay.getPermissionChecker(), sxpBlueprint,
 				ActionKeys.DELETE)) {
 
-			return Collections.singletonList("deleteEntries");
+			return Collections.singletonList("deleteSXPBlueprints");
 		}
 
 		return Collections.emptyList();
