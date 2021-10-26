@@ -215,7 +215,8 @@ public abstract class BaseDisplayContext<R> {
 			languageId, queries);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, queries, status);
+			booleanQuery.addFilterQueryClauses(
+				queries.term(Field.STATUS, status));
 		}
 
 		processBooleanQuery(booleanQuery, portletRequest, queries);
@@ -259,12 +260,6 @@ public abstract class BaseDisplayContext<R> {
 			booleanQuery.addMustQueryClauses(
 				queries.multiMatch(keywords, _getSearchFields(languageId)));
 		}
-	}
-
-	private void _addStatusFilterClause(
-		BooleanQuery booleanQuery, Queries queries, int status) {
-
-		booleanQuery.addFilterQueryClauses(queries.term(Field.STATUS, status));
 	}
 
 	protected abstract Class<?> getModelIndexerClass();
