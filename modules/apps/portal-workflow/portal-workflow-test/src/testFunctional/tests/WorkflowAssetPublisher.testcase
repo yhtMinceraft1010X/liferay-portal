@@ -422,8 +422,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
-		WorkflowAsset.createNewBasicWebContent(
-			wcTitle = "Web Content Title");
+		WorkflowAsset.createNewBasicWebContent(wcTitle = "Web Content Title");
 
 		Button.clickSubmitForPublication();
 
@@ -456,8 +455,6 @@ definition {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		AssetPublisherPortlet.viewManualNoAssetsMessagePG();
-
-		
 	}
 
 }
