@@ -246,7 +246,11 @@ public abstract class BaseDisplayContext<R> {
 		searchContainer.setResults(
 			TransformUtil.transform(
 				searchHits.getSearchHits(),
-				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
+				searchHit -> {
+					Document document = searchHit.getDocument();
+
+					return toBaseModel(document.getLong(Field.ENTRY_CLASS_PK));
+				}));
 	}
 
 	private void _addSearchClauses(
@@ -266,12 +270,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
-
-	private long _getEntryClassPK(SearchHit searchHit) {
-		Document document = searchHit.getDocument();
-
-		return document.getLong(Field.ENTRY_CLASS_PK);
-	}
 
 	private Set<String> _getSearchFields(String languageId) {
 		Set<String> fields = new HashSet<>();
