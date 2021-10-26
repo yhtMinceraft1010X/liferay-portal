@@ -1208,6 +1208,7 @@ public class ObjectDefinitionLocalServiceTest {
 		finally {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
+
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition2);
 		}
