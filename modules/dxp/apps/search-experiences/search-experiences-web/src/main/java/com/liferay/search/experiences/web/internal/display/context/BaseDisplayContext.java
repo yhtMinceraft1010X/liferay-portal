@@ -230,22 +230,21 @@ public abstract class BaseDisplayContext<R> {
 
 		processBooleanQuery(booleanQuery, portletRequest, queries);
 
-		SearchRequest searchRequest = searchRequestBuilderFactory.builder(
-		).companyId(
-			themeDisplay.getCompanyId()
-		).from(
-			searchContainer.getStart()
-		).modelIndexerClasses(
-			getModelIndexerClass()
-		).query(
-			booleanQuery
-		).size(
-			searchContainer.getDelta()
-		).addSort(
-			_getSort(orderByCol, orderByType, languageId, sorts)
-		).build();
-
-		SearchResponse searchResponse = searcher.search(searchRequest);
+		SearchResponse searchResponse = searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				themeDisplay.getCompanyId()
+			).from(
+				searchContainer.getStart()
+			).modelIndexerClasses(
+				getModelIndexerClass()
+			).query(
+				booleanQuery
+			).size(
+				searchContainer.getDelta()
+			).addSort(
+				_getSort(orderByCol, orderByType, languageId, sorts)
+			).build());
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
