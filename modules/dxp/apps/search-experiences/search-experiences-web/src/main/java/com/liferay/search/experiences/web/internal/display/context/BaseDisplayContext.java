@@ -82,10 +82,18 @@ public abstract class BaseDisplayContext<R> {
 
 	public BaseDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse, Queries queries,
+		Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		SXPBlueprintService sxpBlueprintService) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
+		_queries = queries;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+		_sorts = sorts;
+		_sxpElementService = sxpElementService;
 
 		httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -174,6 +182,11 @@ public abstract class BaseDisplayContext<R> {
 	protected final PortalPreferences portalPreferences;
 	protected final String tabs1;
 	protected final ThemeDisplay themeDisplay;
+	private final Queries _queries;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final Sorts _sorts;
+	private final SXPBlueprintService _sxpBlueprintService;
 
 	public void populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,

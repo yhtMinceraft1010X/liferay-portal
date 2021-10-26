@@ -47,13 +47,9 @@ public class ViewSXPBlueprintsDisplayContext
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		SXPBlueprintService sxpBlueprintService) {
 
-		super(liferayPortletRequest, liferayPortletResponse);
-
-		_queries = queries;
-		_searcher = searcher;
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-		_sorts = sorts;
-		_sxpBlueprintService = sxpBlueprintService;
+		super(
+			liferayPortletRequest, liferayPortletResponse, queries, searcher,
+			searchRequestBuilderFactory, sorts, sxpBlueprintService);
 	}
 
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
@@ -91,11 +87,5 @@ public class ViewSXPBlueprintsDisplayContext
 	protected String getMVCRenderCommandName() {
 		return "/sxp_blueprint_admin/view_sxp_blueprints";
 	}
-
-	private final Queries _queries;
-	private final Searcher _searcher;
-	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private final Sorts _sorts;
-	private final SXPBlueprintService _sxpBlueprintService;
 
 }
