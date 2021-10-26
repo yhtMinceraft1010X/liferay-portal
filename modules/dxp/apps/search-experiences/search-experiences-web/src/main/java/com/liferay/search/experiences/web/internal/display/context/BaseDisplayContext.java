@@ -61,22 +61,23 @@ public abstract class BaseDisplayContext<R> {
 		String displayStyle = ParamUtil.getString(
 			liferayPortletRequest, "displayStyle");
 
-		String preferenceName = "entries-display-style-" + tabs1;
-
 		if (Validator.isNull(displayStyle)) {
 			return portalPreferences.getValue(
-				SXPPortletKeys.SXP_BLUEPRINT_ADMIN, preferenceName,
-				"descriptive");
+				SXPPortletKeys.SXP_BLUEPRINT_ADMIN,
+				getDisplayStylePreferenceName(), "descriptive");
 		}
 
 		portalPreferences.setValue(
-			SXPPortletKeys.SXP_BLUEPRINT_ADMIN, preferenceName, displayStyle);
+			SXPPortletKeys.SXP_BLUEPRINT_ADMIN, getDisplayStylePreferenceName(),
+			displayStyle);
 
 		httpServletRequest.setAttribute(
 			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 
 		return displayStyle;
 	}
+
+	protected abstract String getDisplayStylePreferenceName();
 
 	protected PortletURL getIteratorURL() {
 		return PortletURLBuilder.createRenderURL(

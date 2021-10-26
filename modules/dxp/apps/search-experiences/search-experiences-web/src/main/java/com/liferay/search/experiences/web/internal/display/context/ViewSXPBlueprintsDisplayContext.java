@@ -84,6 +84,10 @@ public class ViewSXPBlueprintsDisplayContext
 		return searchContainer;
 	}
 
+	protected String getDisplayStylePreferenceName() {
+		return "sxp-blueprints-display-style";
+	}
+
 	private final Queries _queries;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
