@@ -333,7 +333,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 			_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
-
 			_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 		}
