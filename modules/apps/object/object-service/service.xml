@@ -402,7 +402,6 @@
 		<exception>DuplicateObjectDefinition</exception>
 		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>
-		<exception>InvalidObjectField</exception>
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionTriggerKey</exception>
@@ -416,6 +415,7 @@
 		<exception>ObjectEntryValues</exception>
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldName</exception>
+		<exception>ObjectFieldRelationshipType</exception>
 		<exception>ObjectFieldType</exception>
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>

@@ -17,7 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
-import com.liferay.object.exception.InvalidObjectFieldException;
+import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -971,7 +971,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			throw new InvalidObjectFieldException(
+			throw new ObjectFieldRelationshipTypeException(
 				"Relationship field cannot be set as object title field");
 		}
 	}

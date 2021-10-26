@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
-import com.liferay.object.exception.InvalidObjectFieldException;
+import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -1196,7 +1196,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (InvalidObjectFieldException invalidObjectFieldException) {
+		catch (ObjectFieldRelationshipTypeException invalidObjectFieldException) {
 			Assert.assertNotNull(invalidObjectFieldException);
 		}
 		finally {
