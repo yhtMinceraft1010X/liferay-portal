@@ -101,7 +101,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	</c:if>
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.DELETE) && !sxpElement.getReadOnly() %>">
-		<portlet:actionURL name="/sxp_blueprint_admin/element_sxp_element" var="deleteSXPElementURL">
+		<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_element" var="deleteSXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
 		</portlet:actionURL>
