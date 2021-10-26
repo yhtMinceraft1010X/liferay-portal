@@ -95,7 +95,7 @@ public class ViewSXPElementsDisplayContext
 
 	@Override
 	protected void processBooleanQuery(
-		BooleanQuery booleanQuery, Queries queries) {
+		BooleanQuery booleanQuery) {
 
 		int type = ParamUtil.getInteger(liferayPortletRequest, "sxpElementType");
 

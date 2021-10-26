@@ -91,7 +91,7 @@ public abstract class BaseDisplayContext<R> {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
-		_queries = queries;
+		this.queries = queries;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_sorts = sorts;
@@ -135,7 +135,7 @@ public abstract class BaseDisplayContext<R> {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
 	protected final ThemeDisplay themeDisplay;
-	private final Queries _queries;
+	protected final Queries queries;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sorts _sorts;
@@ -174,16 +174,16 @@ public abstract class BaseDisplayContext<R> {
 
 		searchContainer.setOrderByType(orderByType);
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery booleanQuery = queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
+			queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
 
 		int status = ParamUtil.getInteger(liferayPortletRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(
-				_queries.term(Field.STATUS, status));
+				queries.term(Field.STATUS, status));
 		}
 
 		String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
@@ -192,16 +192,16 @@ public abstract class BaseDisplayContext<R> {
 			"localized_" + Field.TITLE, themeDisplay.getLanguageId());
 
 		if (Validator.isBlank(keywords)) {
-			booleanQuery.addMustQueryClauses(_queries.matchAll());
+			booleanQuery.addMustQueryClauses(queries.matchAll());
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				_queries.multiMatch(
+				queries.multiMatch(
 					keywords,
 					SetUtil.fromArray(titleField, LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
-		processBooleanQuery(booleanQuery, _queries);
+		processBooleanQuery(booleanQuery);
 
 		Sort sort = null;
 
@@ -255,7 +255,7 @@ public abstract class BaseDisplayContext<R> {
 	}
 
 	protected abstract void processBooleanQuery(
-		BooleanQuery booleanQuery, Queries queries);
+		BooleanQuery booleanQuery);
 
 	protected abstract R toBaseModel(long entryClassPK);
 

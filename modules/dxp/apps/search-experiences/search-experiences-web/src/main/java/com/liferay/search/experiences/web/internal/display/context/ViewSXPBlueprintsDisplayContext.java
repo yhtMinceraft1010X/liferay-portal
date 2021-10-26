@@ -92,7 +92,7 @@ public class ViewSXPBlueprintsDisplayContext
 
 	@Override
 	protected void processBooleanQuery(
-		BooleanQuery booleanQuery, Queries queries) {
+		BooleanQuery booleanQuery) {
 	}
 
 	@Override
