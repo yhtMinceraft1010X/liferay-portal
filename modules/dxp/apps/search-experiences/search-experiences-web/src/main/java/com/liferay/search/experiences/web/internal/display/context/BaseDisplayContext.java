@@ -232,6 +232,8 @@ public abstract class BaseDisplayContext<R> {
 
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilderFactory.builder(
+			).addSort(
+				_getSort(orderByCol, orderByType, languageId, sorts)
 			).companyId(
 				themeDisplay.getCompanyId()
 			).from(
@@ -242,8 +244,6 @@ public abstract class BaseDisplayContext<R> {
 				booleanQuery
 			).size(
 				searchContainer.getDelta()
-			).addSort(
-				_getSort(orderByCol, orderByType, languageId, sorts)
 			).build());
 
 		SearchHits searchHits = searchResponse.getSearchHits();
