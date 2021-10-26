@@ -216,6 +216,9 @@ public abstract class BaseDisplayContext<R> {
 
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
+		String titleField = LocalizationUtil.getLocalizedName(
+			"localized_" + Field.TITLE, themeDisplay.getLanguageId());
+
 		if (Validator.isBlank(keywords)) {
 			booleanQuery.addMustQueryClauses(queries.matchAll());
 		}
@@ -223,7 +226,7 @@ public abstract class BaseDisplayContext<R> {
 			booleanQuery.addMustQueryClauses(
 				queries.multiMatch(
 					keywords,
-					SetUtil.fromArray(_getTitleField(themeDisplay.getLanguageId()), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
+					SetUtil.fromArray(titleField, LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
 		processBooleanQuery(booleanQuery, portletRequest, queries);
@@ -238,7 +241,7 @@ public abstract class BaseDisplayContext<R> {
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
 			sort = sorts.field(
-				_getTitleField(themeDisplay.getLanguageId()) + "_String_sortable", sortOrder);
+				titleField + "_String_sortable", sortOrder);
 		}
 		else {
 			sort = sorts.field(orderByCol, sortOrder);
@@ -278,11 +281,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
-
-	private String _getTitleField(String languageId) {
-		return LocalizationUtil.getLocalizedName(
-			"localized_" + Field.TITLE, languageId);
-	}
 
 	protected abstract BaseModel<?> toBaseModel(long entryClassPK);
 
