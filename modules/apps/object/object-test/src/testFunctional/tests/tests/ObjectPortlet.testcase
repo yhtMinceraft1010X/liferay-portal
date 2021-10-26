@@ -521,10 +521,6 @@ definition {
 		ObjectPortlet.assertEntryNotPresent(entry = "Test Entry 2");
 
 		ObjectPortlet.viewEntry(entry = "Test Entry");
-
-
-
-		
 	}
 
 	@description = "LPS-135393 - Verify that is possible to change what columns to be displayed on the auto-generated table on the Custom Object Portlet"
