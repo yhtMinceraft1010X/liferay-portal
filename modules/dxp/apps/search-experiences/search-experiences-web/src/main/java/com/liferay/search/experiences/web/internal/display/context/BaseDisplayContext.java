@@ -176,8 +176,13 @@ public abstract class BaseDisplayContext<R> {
 			null,
 			emptyResultsMessage);
 
+		String orderByCol = _getOrderByCol();
+
 		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
+
+		String orderByType = _getOrderByType();
+
+		searchContainer.setOrderByType(orderByType);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -210,11 +215,9 @@ public abstract class BaseDisplayContext<R> {
 
 		SortOrder sortOrder = SortOrder.ASC;
 
-		if (Objects.equals(_getOrderByType(), "desc")) {
+		if (Objects.equals(orderByType, "desc")) {
 			sortOrder = SortOrder.DESC;
 		}
-
-		String orderByCol = _getOrderByCol();
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
 			sort = _sorts.field(
