@@ -79,10 +79,17 @@ public class ViewSXPElementsDisplayContext
 		return searchContainer;
 	}
 
+	@Override
 	protected String getDisplayStylePreferenceName() {
 		return "sxp-elements-display-style";
 	}
 
+	@Override
+	protected Class<?> getModelIndexerClass() {
+		return SXPElement.class;
+	}
+
+	@Override
 	protected String getMVCRenderCommandName() {
 		return "/sxp_blueprint_admin/view_sxp_elements";
 	}

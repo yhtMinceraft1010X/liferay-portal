@@ -269,6 +269,8 @@ public abstract class BaseDisplayContext<R> {
 		}
 	}
 
+	protected abstract Class<?> getModelIndexerClass();
+
 	private SearchRequest _createElementSearchRequest(
 		PortletRequest portletRequest, long groupId, Queries queries,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
@@ -286,7 +288,7 @@ public abstract class BaseDisplayContext<R> {
 		).from(
 			start
 		).modelIndexerClasses(
-			SXPElement.class
+			getModelIndexerClass()
 		).query(
 			_getSXPElementSearchQuery(
 				portletRequest, type, groupId, queries, status, languageId)
@@ -314,7 +316,7 @@ public abstract class BaseDisplayContext<R> {
 		).from(
 			start
 		).modelIndexerClasses(
-			SXPBlueprint.class
+			getModelIndexerClass()
 		).query(
 			_getSXPBlueprintSearchQuery(
 				ParamUtil.getString(portletRequest, "keywords"), groupId,

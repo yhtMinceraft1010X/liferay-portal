@@ -79,10 +79,17 @@ public class ViewSXPBlueprintsDisplayContext
 		return searchContainer;
 	}
 
+	@Override
 	protected String getDisplayStylePreferenceName() {
 		return "sxp-blueprints-display-style";
 	}
 
+	@Override
+	protected Class<?> getModelIndexerClass() {
+		return SXPBlueprint.class;
+	}
+
+	@Override
 	protected String getMVCRenderCommandName() {
 		return "/sxp_blueprint_admin/view_sxp_blueprints";
 	}
