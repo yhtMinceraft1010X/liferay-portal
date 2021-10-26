@@ -249,9 +249,6 @@ public abstract class BaseDisplayContext<R> {
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		searchContainer.setTotal(
-			GetterUtil.getInteger(searchHits.getTotalHits()));
-
 		searchContainer.setResults(
 			TransformUtil.transform(
 				searchHits.getSearchHits(),
@@ -260,6 +257,8 @@ public abstract class BaseDisplayContext<R> {
 
 					return toBaseModel(document.getLong(Field.ENTRY_CLASS_PK));
 				}));
+		searchContainer.setTotal(
+			GetterUtil.getInteger(searchHits.getTotalHits()));
 	}
 
 	protected abstract Class<?> getModelIndexerClass();
