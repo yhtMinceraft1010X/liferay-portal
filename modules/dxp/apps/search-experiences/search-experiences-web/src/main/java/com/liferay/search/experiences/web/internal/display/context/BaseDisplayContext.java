@@ -207,7 +207,8 @@ public abstract class BaseDisplayContext<R> {
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		_addGroupFilterClause(booleanQuery, groupId, queries);
+		booleanQuery.addFilterQueryClauses(
+			queries.term(Field.GROUP_ID, groupId));
 
 		_addSearchClauses(
 			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
@@ -245,14 +246,6 @@ public abstract class BaseDisplayContext<R> {
 			TransformUtil.transform(
 				searchHits.getSearchHits(),
 				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
-	}
-
-	private void _addGroupFilterClause(
-		BooleanQuery booleanQuery, long groupId, Queries queries) {
-
-		TermQuery groupQuery = queries.term(Field.GROUP_ID, groupId);
-
-		booleanQuery.addFilterQueryClauses(groupQuery);
 	}
 
 	private void _addSearchClauses(
