@@ -49,7 +49,7 @@ public class ViewSXPElementsDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
-			searchRequestBuilderFactory, sorts, sxpBlueprintService);
+			searchRequestBuilderFactory, sorts, null, sxpElementService);
 	}
 
 	public List<String> getAvailableActions(SXPElement sxpElement)
@@ -71,11 +71,11 @@ public class ViewSXPElementsDisplayContext
 		SearchContainer<SXPElement> searchContainer =
 			getSearchContainer("no-elements-were-found");
 
-		SXPBlueprintUtil.populateSXPElementSearchContainer(
+		/*SXPBlueprintUtil.populateSXPElementSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
 			liferayPortletRequest, _queries, _searcher, searchContainer,
 			_searchRequestBuilderFactory, _sorts,
-			WorkflowConstants.STATUS_APPROVED, _sxpElementService);
+			WorkflowConstants.STATUS_APPROVED, _sxpElementService);*/
 
 		return searchContainer;
 	}

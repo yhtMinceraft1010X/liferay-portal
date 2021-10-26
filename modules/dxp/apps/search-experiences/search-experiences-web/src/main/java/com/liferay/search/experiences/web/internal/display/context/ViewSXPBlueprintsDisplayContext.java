@@ -49,7 +49,7 @@ public class ViewSXPBlueprintsDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
-			searchRequestBuilderFactory, sorts, sxpBlueprintService);
+			searchRequestBuilderFactory, sorts, sxpBlueprintService, null);
 	}
 
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
@@ -71,11 +71,11 @@ public class ViewSXPBlueprintsDisplayContext
 		SearchContainer<SXPBlueprint> searchContainer =
 			getSearchContainer("no-blueprints-were-found");
 
-		SXPBlueprintUtil.populateSXPBlueprintSearchContainer(
+		/*SXPBlueprintUtil.populateSXPBlueprintSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
 			liferayPortletRequest, _queries, _searcher, searchContainer,
 			_searchRequestBuilderFactory, _sorts,
-			WorkflowConstants.STATUS_APPROVED, _sxpBlueprintService);
+			WorkflowConstants.STATUS_APPROVED, _sxpBlueprintService);*/
 
 		return searchContainer;
 	}

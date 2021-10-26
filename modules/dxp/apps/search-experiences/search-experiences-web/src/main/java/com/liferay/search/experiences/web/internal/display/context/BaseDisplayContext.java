@@ -85,7 +85,8 @@ public abstract class BaseDisplayContext<R> {
 		LiferayPortletResponse liferayPortletResponse, Queries queries,
 		Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		SXPBlueprintService sxpBlueprintService) {
+		SXPBlueprintService sxpBlueprintService,
+		SXPElementService sxpElementService) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
@@ -93,6 +94,7 @@ public abstract class BaseDisplayContext<R> {
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_sorts = sorts;
+		_sxpBlueprintService = sxpBlueprintService;
 		_sxpElementService = sxpElementService;
 
 		httpServletRequest = liferayPortletRequest.getHttpServletRequest();
@@ -187,6 +189,7 @@ public abstract class BaseDisplayContext<R> {
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sorts _sorts;
 	private final SXPBlueprintService _sxpBlueprintService;
+	private final SXPElementService _sxpElementService;
 
 	public void populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
@@ -514,5 +517,8 @@ public abstract class BaseDisplayContext<R> {
 
 		return Optional.empty();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseDisplayContext.class);
 
 }
