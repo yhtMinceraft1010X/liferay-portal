@@ -366,6 +366,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 
 			boolean orderByAsc = true;
 
+			String orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
+
 			if (orderByType.equals("desc")) {
 				orderByAsc = false;
 			}
@@ -377,9 +380,6 @@ public class LayoutPageTemplateEntryItemSelectorView
 				_httpServletRequest, "orderByCol", "name");
 
 			searchContainer.setOrderByCol(orderByCol);
-
-			String orderByType = ParamUtil.getString(
-				_httpServletRequest, "orderByType", "asc");
 
 			searchContainer.setOrderByType(orderByType);
 

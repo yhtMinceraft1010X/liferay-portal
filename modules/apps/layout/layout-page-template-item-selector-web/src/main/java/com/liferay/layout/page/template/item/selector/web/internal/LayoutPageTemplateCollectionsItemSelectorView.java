@@ -235,6 +235,9 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 
 			boolean orderByAsc = true;
 
+			String orderByType = ParamUtil.getString(
+				_httpServletRequest, "orderByType", "asc");
+
 			if (orderByType.equals("desc")) {
 				orderByAsc = false;
 			}
@@ -246,9 +249,6 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 				_httpServletRequest, "orderByCol", "name");
 
 			searchContainer.setOrderByCol(orderByCol);
-
-			String orderByType = ParamUtil.getString(
-				_httpServletRequest, "orderByType", "asc");
 
 			searchContainer.setOrderByType(orderByType);
 
