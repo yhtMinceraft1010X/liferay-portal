@@ -319,8 +319,7 @@ public abstract class BaseDisplayContext<R> {
 			getModelIndexerClass()
 		).query(
 			_getSXPBlueprintSearchQuery(
-				ParamUtil.getString(portletRequest, "keywords"), groupId,
-				queries, status, languageId)
+				portletRequest, groupId, queries, status, languageId)
 		).size(
 			size
 		).addSort(
@@ -362,7 +361,7 @@ public abstract class BaseDisplayContext<R> {
 	}
 
 	private Query _getSXPBlueprintSearchQuery(
-		String keywords, long groupId, Queries queries, int status,
+		PortletRequest portletRequest, long groupId, Queries queries, int status,
 		String languageId) {
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
@@ -373,7 +372,9 @@ public abstract class BaseDisplayContext<R> {
 			_addStatusFilterClause(booleanQuery, queries, status);
 		}
 
-		_addSearchClauses(booleanQuery, keywords, languageId, queries);
+		_addSearchClauses(
+			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
+			languageId, queries);
 
 		return booleanQuery;
 	}
