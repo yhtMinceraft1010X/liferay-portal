@@ -105,6 +105,7 @@ definition {
 
 	@description = "This is a use case for LRQA-42763."
 	@priority = "4"
+	@uitest
 	test ScriptInWebContentDisplayPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			ProductMenu.gotoPortlet(
@@ -141,6 +142,7 @@ definition {
 
 	@description = "This is a use case for LRQA-4988."
 	@priority = "4"
+	@uitest
 	test ScriptInWikiPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			ProductMenu.gotoPortlet(
