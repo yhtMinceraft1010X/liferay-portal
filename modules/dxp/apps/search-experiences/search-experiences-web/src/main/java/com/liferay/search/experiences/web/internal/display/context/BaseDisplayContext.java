@@ -175,7 +175,7 @@ public abstract class BaseDisplayContext<R> {
 	protected final String tabs1;
 	protected final ThemeDisplay themeDisplay;
 
-	public static void populateSXPBlueprintSearchContainer(
+	public void populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
 		SearchContainer<SXPBlueprint> searchContainer,
@@ -188,7 +188,7 @@ public abstract class BaseDisplayContext<R> {
 			sxpBlueprintService);
 	}
 
-	public static void populateSXPElementSearchContainer(
+	public void populateSXPElementSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
 		SearchContainer<SXPElement> searchContainer,
@@ -201,7 +201,7 @@ public abstract class BaseDisplayContext<R> {
 			sxpElementService);
 	}
 
-	private static void _addGroupFilterClause(
+	private void _addGroupFilterClause(
 		BooleanQuery booleanQuery, long groupId, Queries queries) {
 
 		TermQuery groupQuery = queries.term(Field.GROUP_ID, groupId);
@@ -209,7 +209,7 @@ public abstract class BaseDisplayContext<R> {
 		booleanQuery.addFilterQueryClauses(groupQuery);
 	}
 
-	private static void _addReadOnlyFilterClause(
+	private void _addReadOnlyFilterClause(
 		BooleanQuery booleanQuery, PortletRequest portletRequest,
 		Queries queries) {
 
@@ -223,7 +223,7 @@ public abstract class BaseDisplayContext<R> {
 		}
 	}
 
-	private static void _addSearchClauses(
+	private void _addSearchClauses(
 		BooleanQuery booleanQuery, String keywords, String languageId,
 		Queries queries) {
 
@@ -236,13 +236,13 @@ public abstract class BaseDisplayContext<R> {
 		}
 	}
 
-	private static void _addStatusFilterClause(
+	private void _addStatusFilterClause(
 		BooleanQuery booleanQuery, Queries queries, int status) {
 
 		booleanQuery.addFilterQueryClauses(queries.term(Field.STATUS, status));
 	}
 
-	private static void _addVisibilityFilterClause(
+	private void _addVisibilityFilterClause(
 		BooleanQuery booleanQuery, PortletRequest portletRequest,
 		Queries queries) {
 
@@ -253,7 +253,7 @@ public abstract class BaseDisplayContext<R> {
 		}
 	}
 
-	private static SearchRequest _createElementSearchRequest(
+	private SearchRequest _createElementSearchRequest(
 		PortletRequest portletRequest, long groupId, Queries queries,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, int type, int start, int size, String orderByCol,
@@ -281,7 +281,7 @@ public abstract class BaseDisplayContext<R> {
 		).build();
 	}
 
-	private static SearchRequest _createSXPBlueprintSearchRequest(
+	private SearchRequest _createSXPBlueprintSearchRequest(
 		PortletRequest portletRequest, long groupId, Queries queries,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, int start, int size, String orderByCol,
@@ -310,13 +310,13 @@ public abstract class BaseDisplayContext<R> {
 		).build();
 	}
 
-	private static long _getEntryClassPK(SearchHit searchHit) {
+	private long _getEntryClassPK(SearchHit searchHit) {
 		Document document = searchHit.getDocument();
 
 		return document.getLong(Field.ENTRY_CLASS_PK);
 	}
 
-	private static Set<String> _getSearchFields(String languageId) {
+	private Set<String> _getSearchFields(String languageId) {
 		Set<String> fields = new HashSet<>();
 
 		fields.add(_getTitleField(languageId));
@@ -326,7 +326,7 @@ public abstract class BaseDisplayContext<R> {
 		return fields;
 	}
 
-	private static Sort _getSort(
+	private Sort _getSort(
 		String orderByCol, String orderByType, String languageId, Sorts sorts) {
 
 		SortOrder sortOrder = SortOrder.ASC;
@@ -343,7 +343,7 @@ public abstract class BaseDisplayContext<R> {
 		return sorts.field(orderByCol, sortOrder);
 	}
 
-	private static Query _getSXPBlueprintSearchQuery(
+	private Query _getSXPBlueprintSearchQuery(
 		String keywords, long groupId, Queries queries, int status,
 		String languageId) {
 
@@ -358,7 +358,7 @@ public abstract class BaseDisplayContext<R> {
 		return booleanQuery;
 	}
 
-	private static Query _getSXPElementSearchQuery(
+	private Query _getSXPElementSearchQuery(
 		PortletRequest portletRequest, long type, long groupId, Queries queries,
 		int status, String languageId) {
 
@@ -385,12 +385,12 @@ public abstract class BaseDisplayContext<R> {
 		return booleanQuery;
 	}
 
-	private static String _getTitleField(String languageId) {
+	private String _getTitleField(String languageId) {
 		return LocalizationUtil.getLocalizedName(
 			"localized_" + Field.TITLE, languageId);
 	}
 
-	private static void _populateSXPBlueprintSearchContainer(
+	private void _populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
 		SearchContainer<SXPBlueprint> searchContainer,
@@ -426,7 +426,7 @@ public abstract class BaseDisplayContext<R> {
 			));
 	}
 
-	private static void _populateSXPElementSearchContainer(
+	private void _populateSXPElementSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
 		SearchContainer<SXPElement> searchContainer,
@@ -463,7 +463,7 @@ public abstract class BaseDisplayContext<R> {
 			));
 	}
 
-	private static Optional<SXPBlueprint> _toSXPBlueprintOptional(
+	private Optional<SXPBlueprint> _toSXPBlueprintOptional(
 		SearchHit searchHit, SXPBlueprintService sxpBlueprintService) {
 
 		long entryClassPK = _getEntryClassPK(searchHit);
@@ -483,7 +483,7 @@ public abstract class BaseDisplayContext<R> {
 		return Optional.empty();
 	}
 
-	private static Optional<SXPElement> _toSXPElementOptional(
+	private Optional<SXPElement> _toSXPElementOptional(
 		SearchHit searchHit, SXPElementService sxpElementService) {
 
 		long entryClassPK = _getEntryClassPK(searchHit);
