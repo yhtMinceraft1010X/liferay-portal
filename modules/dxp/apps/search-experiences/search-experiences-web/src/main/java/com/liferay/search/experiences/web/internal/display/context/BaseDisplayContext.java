@@ -130,11 +130,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract String getMVCRenderCommandName();
 
-	private String _getOrderByCol() {
-		return ParamUtil.getString(
-			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
-	}
-
 	private String _getOrderByType() {
 		String orderByType = ParamUtil.getString(
 			liferayPortletRequest, "orderByType");
@@ -176,7 +171,8 @@ public abstract class BaseDisplayContext<R> {
 			null,
 			emptyResultsMessage);
 
-		String orderByCol = _getOrderByCol();
+		String orderByCol = ParamUtil.getString(
+			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
 
 		searchContainer.setOrderByCol(_getOrderByCol());
 
