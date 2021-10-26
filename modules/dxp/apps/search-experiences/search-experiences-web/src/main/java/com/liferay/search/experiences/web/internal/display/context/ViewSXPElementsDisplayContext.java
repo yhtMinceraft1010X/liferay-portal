@@ -133,8 +133,8 @@ public class ViewSXPElementsDisplayContext
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Search index is stale and contains a non-existent " +
-						"SXPElement entry " + entryClassPK);
+					"Unable to get search experiences element " + entryClassPK);
+
 			}
 		}
 

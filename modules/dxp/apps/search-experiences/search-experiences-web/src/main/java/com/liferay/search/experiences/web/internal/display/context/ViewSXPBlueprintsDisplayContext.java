@@ -109,8 +109,8 @@ public class ViewSXPBlueprintsDisplayContext
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Search index is stale and contains a non-existent " +
-						"SXPBlueprint entry " + entryClassPK);
+					"Unable to get search experiences blueprint " +
+						entryClassPK);
 			}
 		}
 
