@@ -88,6 +88,10 @@ public class ViewSXPBlueprintsDisplayContext
 		return "sxp-blueprints-display-style";
 	}
 
+	protected String getMVCRenderCommandName() {
+		return "/sxp_blueprint_admin/view_sxp_blueprints";
+	}
+
 	private final Queries _queries;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;

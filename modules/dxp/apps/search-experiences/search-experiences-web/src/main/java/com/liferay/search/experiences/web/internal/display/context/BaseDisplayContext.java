@@ -92,13 +92,7 @@ public abstract class BaseDisplayContext<R> {
 		).build();
 	}
 
-	protected String getMVCRenderCommandName() {
-		if (tabs1.equals("sxpElements")) {
-			return "/sxp_blueprint_admin/view_sxp_elements";
-		}
-
-		return "/sxp_blueprint_admin/view_sxp_blueprints";
-	}
+	protected abstract String getMVCRenderCommandName();
 
 	protected String getOrderByCol() {
 		return ParamUtil.getString(

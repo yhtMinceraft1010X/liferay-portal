@@ -88,6 +88,10 @@ public class ViewSXPElementsDisplayContext
 		return "sxp-elements-display-style";
 	}
 
+	protected String getMVCRenderCommandName() {
+		return "/sxp_blueprint_admin/view_sxp_elements";
+	}
+
 	private final Queries _queries;
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
