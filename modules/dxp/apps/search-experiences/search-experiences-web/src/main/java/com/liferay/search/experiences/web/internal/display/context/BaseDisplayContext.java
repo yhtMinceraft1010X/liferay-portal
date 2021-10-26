@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
@@ -262,7 +263,9 @@ public abstract class BaseDisplayContext<R> {
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.multiMatch(keywords, _getSearchFields(languageId)));
+				queries.multiMatch(
+					keywords,
+					SetUtil.fromArray(_getTitleField(languageId), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId))));
 		}
 	}
 
@@ -270,16 +273,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
-
-	private Set<String> _getSearchFields(String languageId) {
-		Set<String> fields = new HashSet<>();
-
-		fields.add(_getTitleField(languageId));
-		fields.add(
-			LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId));
-
-		return fields;
-	}
 
 	private Sort _getSort(
 		String orderByCol, String orderByType, String languageId, Sorts sorts) {
