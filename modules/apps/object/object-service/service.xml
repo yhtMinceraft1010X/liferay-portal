@@ -403,7 +403,6 @@
 		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>InvalidObjectField</exception>
-		<exception>NoSuchObjectField</exception>
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionTriggerKey</exception>
