@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
@@ -70,17 +67,13 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				new ClassResourceBundleLoader(
-					"content.Language", getClassLoader()),
-				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
-
 		Map<Locale, String> descriptionMap =
 			ResourceBundleUtil.getLocalizationMap(
-				resourceBundleLoader, "layout-prototype-blog-description");
+				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
+				"layout-prototype-blog-description");
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
-			resourceBundleLoader, "layout-prototype-blog-title");
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
+			"layout-prototype-blog-title");
 
 		Layout layout = LayoutPrototypeHelperUtil.addLayoutPrototype(
 			_layoutPrototypeLocalService, companyId, defaultUserId, nameMap,

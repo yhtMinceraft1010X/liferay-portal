@@ -41,9 +41,6 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyService;
@@ -217,14 +214,6 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 	}
 
 	private void _addSAPEntries(long companyId, long userId) throws Exception {
-		Class<?> clazz = getClass();
-
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				new ClassResourceBundleLoader(
-					"content.Language", clazz.getClassLoader()),
-				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
-
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
 			String sapEntryName = sapEntryObjectArray[0];
 
@@ -237,7 +226,8 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 			Map<Locale, String> titleMap =
 				ResourceBundleUtil.getLocalizationMap(
-					resourceBundleLoader, sapEntryName);
+					LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
+					sapEntryName);
 
 			_sapEntryLocalService.addSAPEntry(
 				userId, sapEntryObjectArray[1], false, true, sapEntryName,

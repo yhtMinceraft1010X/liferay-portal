@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -69,15 +66,8 @@ public class CalendarSAPEntryActivator {
 			StringPool.NEW_LINE, CalendarBookingService.class.getName(),
 			"#searchCount");
 
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				new ClassResourceBundleLoader(
-					"content.Language",
-					CalendarSAPEntryActivator.class.getClassLoader()),
-				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
-
 		Map<Locale, String> titleMap = ResourceBundleUtil.getLocalizationMap(
-			resourceBundleLoader,
+			LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER,
 			"service-access-policy-entry-default-calendar-title");
 
 		_sapEntryLocalService.addSAPEntry(
