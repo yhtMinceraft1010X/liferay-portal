@@ -972,7 +972,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			throw new ObjectFieldRelationshipTypeException(
-				"Relationship field cannot be set as object title field");
+				"Description and title object fields cannot have a " +
+					"relationship type");
 		}
 	}
 

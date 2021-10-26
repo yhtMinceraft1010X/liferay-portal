@@ -1196,8 +1196,11 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldRelationshipTypeException invalidObjectFieldException) {
-			Assert.assertNotNull(invalidObjectFieldException);
+		catch (ObjectFieldRelationshipTypeException objectFieldRelationshipTypeException) {
+			Assert.assertEquals(
+				"Description and title object fields cannot have a " +
+					"relationship type",
+				objectFieldRelationshipTypeException.getMessage());
 		}
 		finally {
 			_objectRelationshipLocalService.deleteObjectRelationship(
