@@ -2083,6 +2083,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		UnicodeProperties unicodeProperties = layoutSet.getSettingsProperties();
 
+		String js = GetterUtil.getString(_read(resourcePath + "/js.js"));
+
+		unicodeProperties.put("javascript", js);
+
 		for (String key : settingsJSONObject.keySet()) {
 			unicodeProperties.put(key, settingsJSONObject.getString(key));
 		}
