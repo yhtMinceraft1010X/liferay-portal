@@ -1161,11 +1161,9 @@ public class DataLayoutTaglibUtil {
 				Map<String, DDMFormField> ddmFormFieldsMap =
 					ddmForm.getDDMFormFieldsMap(true);
 
-				List<DDMFormField> ddmFormFields =
-					ddmForm.getDDMFormFields();
+				List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
-				ddmFormFields.remove(
-					ddmFormFieldsMap.get(disabledProperty));
+				ddmFormFields.remove(ddmFormFieldsMap.get(disabledProperty));
 
 				for (DDMFormLayoutPage ddmFormLayoutPage :
 						ddmFormLayout.getDDMFormLayoutPages()) {
@@ -1174,18 +1172,16 @@ public class DataLayoutTaglibUtil {
 							ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
 						for (DDMFormLayoutColumn ddmFormLayoutColumn :
-								ddmFormLayoutRow.
-									getDDMFormLayoutColumns()) {
+								ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
 							List<String> ddmFormFieldNames =
-								ddmFormLayoutColumn.
-									getDDMFormFieldNames();
+								ddmFormLayoutColumn.getDDMFormFieldNames();
 
 							ddmFormFieldNames.remove(disabledProperty);
 						}
 					}
 				}
-			)
+			}
 		}
 
 		private final Set<Locale> _availableLocales;
