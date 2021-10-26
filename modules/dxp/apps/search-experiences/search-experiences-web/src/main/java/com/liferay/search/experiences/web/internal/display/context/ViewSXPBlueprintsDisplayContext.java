@@ -77,14 +77,8 @@ public class ViewSXPBlueprintsDisplayContext
 	public SearchContainer<SXPBlueprint> getSearchContainer()
 		throws PortalException {
 
-		SearchContainer<SXPBlueprint> searchContainer =
-			getSearchContainer("no-blueprints-were-found");
-
-		populateSXPBlueprintSearchContainer(
-			liferayPortletRequest, searchContainer,
-			WorkflowConstants.STATUS_APPROVED);
-
-		return searchContainer;
+		return getSearchContainer(
+			"no-blueprints-were-found", WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -104,7 +98,7 @@ public class ViewSXPBlueprintsDisplayContext
 
 	@Override
 	protected void processBooleanQuery(
-		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries) {
+		BooleanQuery booleanQuery, Queries queries) {
 	}
 
 	@Override

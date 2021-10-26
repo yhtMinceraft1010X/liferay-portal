@@ -150,7 +150,17 @@ public abstract class BaseDisplayContext<R> {
 		return "desc";
 	}
 
-	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage)
+	protected final HttpServletRequest httpServletRequest;
+	protected final LiferayPortletRequest liferayPortletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
+	protected final PortalPreferences portalPreferences;
+	protected final ThemeDisplay themeDisplay;
+	private final Queries _queries;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final Sorts _sorts;
+
+	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage, int status)
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
@@ -171,24 +181,6 @@ public abstract class BaseDisplayContext<R> {
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
-		return searchContainer;
-	}
-
-	protected final HttpServletRequest httpServletRequest;
-	protected final LiferayPortletRequest liferayPortletRequest;
-	protected final LiferayPortletResponse liferayPortletResponse;
-	protected final PortalPreferences portalPreferences;
-	protected final ThemeDisplay themeDisplay;
-	private final Queries _queries;
-	private final Searcher _searcher;
-	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private final Sorts _sorts;
-
-	protected void populateSXPBlueprintSearchContainer(
-		PortletRequest portletRequest,
-		SearchContainer<R> searchContainer,
-		int status) {
-
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
@@ -199,7 +191,7 @@ public abstract class BaseDisplayContext<R> {
 				_queries.term(Field.STATUS, status));
 		}
 
-		String keywords = ParamUtil.getString(portletRequest, "keywords");
+		String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
 
 		String titleField = LocalizationUtil.getLocalizedName(
 			"localized_" + Field.TITLE, themeDisplay.getLanguageId());
@@ -214,7 +206,7 @@ public abstract class BaseDisplayContext<R> {
 					SetUtil.fromArray(titleField, LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
-		processBooleanQuery(booleanQuery, portletRequest, _queries);
+		processBooleanQuery(booleanQuery, _queries);
 
 		Sort sort = null;
 
@@ -262,12 +254,14 @@ public abstract class BaseDisplayContext<R> {
 				}));
 		searchContainer.setTotal(
 			GetterUtil.getInteger(searchHits.getTotalHits()));
+
+		return searchContainer;
 	}
 
 	protected abstract Class<?> getModelIndexerClass();
 
 	protected abstract void processBooleanQuery(
-		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
+		BooleanQuery booleanQuery, Queries queries);
 
 	protected abstract R toBaseModel(long entryClassPK);
 

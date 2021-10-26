@@ -80,14 +80,8 @@ public class ViewSXPElementsDisplayContext
 	public SearchContainer<SXPElement> getSearchContainer()
 		throws PortalException {
 
-		SearchContainer<SXPElement> searchContainer =
-			getSearchContainer("no-elements-were-found");
-
-		populateSXPBlueprintSearchContainer(
-			liferayPortletRequest, searchContainer,
-			WorkflowConstants.STATUS_APPROVED);
-
-		return searchContainer;
+		return getSearchContainer(
+			"no-elements-were-found", WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -107,27 +101,27 @@ public class ViewSXPElementsDisplayContext
 
 	@Override
 	protected void processBooleanQuery(
-		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries) {
+		BooleanQuery booleanQuery, Queries queries) {
 
-		int type = ParamUtil.getInteger(portletRequest, "sxpElementType");
+		int type = ParamUtil.getInteger(liferayPortletRequest, "sxpElementType");
 
 		if (type > 0) {
 			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
 		}
 
-		if (ParamUtil.getString(portletRequest, "hidden") != null) {
+		if (ParamUtil.getString(liferayPortletRequest, "hidden") != null) {
 			booleanQuery.addFilterQueryClauses(
 				queries.term(
-					"hidden", ParamUtil.getBoolean(portletRequest, "hidden")));
+					"hidden", ParamUtil.getBoolean(liferayPortletRequest, "hidden")));
 		}
 
 		if (!Validator.isBlank(
-				ParamUtil.getString(portletRequest, "readOnly"))) {
+				ParamUtil.getString(liferayPortletRequest, "readOnly"))) {
 
 			booleanQuery.addFilterQueryClauses(
 				queries.term(
 					"readOnly",
-					ParamUtil.getBoolean(portletRequest, "readOnly")));
+					ParamUtil.getBoolean(liferayPortletRequest, "readOnly")));
 		}
 	}
 
