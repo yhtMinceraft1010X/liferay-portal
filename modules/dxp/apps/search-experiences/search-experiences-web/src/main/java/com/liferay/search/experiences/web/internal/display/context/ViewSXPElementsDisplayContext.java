@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.search.Field;;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -27,11 +30,13 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission;
-
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
 import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -92,6 +97,32 @@ public class ViewSXPElementsDisplayContext
 	@Override
 	protected String getMVCRenderCommandName() {
 		return "/sxp_blueprint_admin/view_sxp_elements";
+	}
+
+	@Override
+	protected void processBooleanQuery(
+		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries) {
+
+		int type = ParamUtil.getInteger(portletRequest, "sxpElementType");
+
+		if (type > 0) {
+			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
+		}
+
+		if (ParamUtil.getString(portletRequest, "hidden") != null) {
+			booleanQuery.addFilterQueryClauses(
+				queries.term(
+					"hidden", ParamUtil.getBoolean(portletRequest, "hidden")));
+		}
+
+		if (!Validator.isBlank(
+				ParamUtil.getString(portletRequest, "readOnly"))) {
+
+			booleanQuery.addFilterQueryClauses(
+				queries.term(
+					"readOnly",
+					ParamUtil.getBoolean(portletRequest, "readOnly")));
+		}
 	}
 
 }

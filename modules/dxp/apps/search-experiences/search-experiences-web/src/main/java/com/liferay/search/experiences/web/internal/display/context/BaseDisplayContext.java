@@ -225,20 +225,6 @@ public abstract class BaseDisplayContext<R> {
 		booleanQuery.addFilterQueryClauses(groupQuery);
 	}
 
-	private void _addReadOnlyFilterClause(
-		BooleanQuery booleanQuery, PortletRequest portletRequest,
-		Queries queries) {
-
-		if (!Validator.isBlank(
-				ParamUtil.getString(portletRequest, "readOnly"))) {
-
-			booleanQuery.addFilterQueryClauses(
-				queries.term(
-					"readOnly",
-					ParamUtil.getBoolean(portletRequest, "readOnly")));
-		}
-	}
-
 	private void _addSearchClauses(
 		BooleanQuery booleanQuery, String keywords, String languageId,
 		Queries queries) {
@@ -256,17 +242,6 @@ public abstract class BaseDisplayContext<R> {
 		BooleanQuery booleanQuery, Queries queries, int status) {
 
 		booleanQuery.addFilterQueryClauses(queries.term(Field.STATUS, status));
-	}
-
-	private void _addVisibilityFilterClause(
-		BooleanQuery booleanQuery, PortletRequest portletRequest,
-		Queries queries) {
-
-		if (ParamUtil.getString(portletRequest, "hidden") != null) {
-			booleanQuery.addFilterQueryClauses(
-				queries.term(
-					"hidden", ParamUtil.getBoolean(portletRequest, "hidden")));
-		}
 	}
 
 	protected abstract Class<?> getModelIndexerClass();
@@ -294,13 +269,7 @@ public abstract class BaseDisplayContext<R> {
 			_addStatusFilterClause(booleanQuery, queries, status);
 		}
 
-		if (type > 0) {
-			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
-		}
-
-		_addVisibilityFilterClause(booleanQuery, portletRequest, queries);
-
-		_addReadOnlyFilterClause(booleanQuery, portletRequest, queries);
+		processBooleanQuery(booleanQuery, portletRequest, queries);
 
 		return searchRequestBuilderFactory.builder(
 		).companyId(
@@ -317,6 +286,9 @@ public abstract class BaseDisplayContext<R> {
 			_getSort(orderByCol, orderByType, languageId, sorts)
 		).build();
 	}
+
+	protected abstract void processBooleanQuery(
+		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
 
 	private SearchRequest _createSXPBlueprintSearchRequest(
 		PortletRequest portletRequest, long groupId, Queries queries,
@@ -340,6 +312,8 @@ public abstract class BaseDisplayContext<R> {
 		_addSearchClauses(
 			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
 			languageId, queries);
+
+		processBooleanQuery(booleanQuery, portletRequest, queries);
 
 		return searchRequestBuilderFactory.builder(
 		).companyId(

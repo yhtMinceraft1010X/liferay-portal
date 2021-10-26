@@ -27,11 +27,13 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission;
-
+import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.Queries;
 import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Petteri Karttunen
@@ -92,6 +94,11 @@ public class ViewSXPBlueprintsDisplayContext
 	@Override
 	protected String getMVCRenderCommandName() {
 		return "/sxp_blueprint_admin/view_sxp_blueprints";
+	}
+
+	@Override
+	protected void processBooleanQuery(
+		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries) {
 	}
 
 }
