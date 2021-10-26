@@ -27,7 +27,6 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementService;
 import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission;
-import com.liferay.search.experiences.web.internal.util.SXPBlueprintUtil;
 
 import java.util.Collections;
 import java.util.List;
