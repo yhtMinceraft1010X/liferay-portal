@@ -367,7 +367,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_updateCommercePriceEntry(
 			cpInstance, CommercePriceListConstants.TYPE_PRICE_LIST, price,
 			serviceContext);
-
 		_updateCommercePriceEntry(
 			cpInstance, CommercePriceListConstants.TYPE_PROMOTION, promoPrice,
 			serviceContext);
