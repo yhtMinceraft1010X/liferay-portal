@@ -204,8 +204,6 @@ public abstract class BaseDisplayContext<R> {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String languageId = themeDisplay.getLanguageId();
-
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
@@ -220,7 +218,7 @@ public abstract class BaseDisplayContext<R> {
 			booleanQuery.addMustQueryClauses(
 				queries.multiMatch(
 					keywords,
-					SetUtil.fromArray(_getTitleField(languageId), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId))));
+					SetUtil.fromArray(_getTitleField(themeDisplay.getLanguageId()), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
@@ -233,7 +231,7 @@ public abstract class BaseDisplayContext<R> {
 		SearchResponse searchResponse = searcher.search(
 			searchRequestBuilderFactory.builder(
 			).addSort(
-				_getSort(orderByCol, orderByType, languageId, sorts)
+				_getSort(orderByCol, orderByType, themeDisplay.getLanguageId(), sorts)
 			).companyId(
 				themeDisplay.getCompanyId()
 			).from(
