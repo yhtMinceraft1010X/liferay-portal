@@ -458,7 +458,7 @@ paths:
             tags: ["SearchResponse"]
     /keyword-query-contributors:
         get:
-            operationId: getKeywordQueryContributors
+            operationId: getKeywordQueryContributorsPage
             responses:
                 200:
                     content:
@@ -475,7 +475,7 @@ paths:
             tags: ["KeywordQueryContributor"]
     /model-prefilter-contributors:
         get:
-            operationId: getModelPrefilterContributors
+            operationId: getModelPrefilterContributorsPage
             responses:
                 200:
                     content:
@@ -492,7 +492,7 @@ paths:
             tags: ["ModelPrefilterContributor"]
     /query-prefilter-contributors:
         get:
-            operationId: getQueryPrefilterContributors
+            operationId: getQueryPrefilterContributorsPage
             responses:
                 200:
                     content:
@@ -509,7 +509,7 @@ paths:
             tags: ["QueryPrefilterContributor"]
     /searchable-asset-names:
         get:
-            operationId: getSearchableAssetNames
+            operationId: getSearchableAssetNamesPage
             responses:
                 200:
                     content:
@@ -526,7 +526,7 @@ paths:
             tags: ["SearchableAssetName"]
     /searchable-asset-names/{languageId}:
         get:
-            operationId: getSearchableAssetNameLanguage
+            operationId: getSearchableAssetNameLanguagePage
             parameters:
                 - in: path
                   name: languageId
