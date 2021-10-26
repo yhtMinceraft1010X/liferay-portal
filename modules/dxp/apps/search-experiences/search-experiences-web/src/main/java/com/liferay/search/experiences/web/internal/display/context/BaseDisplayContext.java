@@ -99,8 +99,6 @@ public abstract class BaseDisplayContext<R> {
 		httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
-		tabs1 = ParamUtil.getString(
-			liferayPortletRequest, "tabs1", "sxpBlueprints");
 		themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -162,7 +160,8 @@ public abstract class BaseDisplayContext<R> {
 			).setMVCRenderCommandName(
 				getMVCRenderCommandName()
 			).setTabs1(
-				tabs1
+				ParamUtil.getString(
+					liferayPortletRequest, "tabs1", "sxpBlueprints")
 			).build(),
 			null,
 			emptyResultsMessage);
@@ -179,7 +178,6 @@ public abstract class BaseDisplayContext<R> {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
-	protected final String tabs1;
 	protected final ThemeDisplay themeDisplay;
 	private final Queries _queries;
 	private final Searcher _searcher;
