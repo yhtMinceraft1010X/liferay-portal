@@ -317,13 +317,13 @@ public abstract class BaseDisplayContext<R> {
 		).companyId(
 			themeDisplay.getCompanyId()
 		).from(
-			start
+			searchContainer.getStart()
 		).modelIndexerClasses(
 			getModelIndexerClass()
 		).query(
 			booleanQuery
 		).size(
-			size
+			searchContainer.getDelta()
 		).addSort(
 			_getSort(orderByCol, orderByType, languageId, sorts)
 		).build();
@@ -382,13 +382,13 @@ public abstract class BaseDisplayContext<R> {
 		).companyId(
 			themeDisplay.getCompanyId()
 		).from(
-			start
+			searchContainer.getStart()
 		).modelIndexerClasses(
 			getModelIndexerClass()
 		).query(
 			booleanQuery
 		).size(
-			size
+			searchContainer.getDelta()
 		).addSort(
 			_getSort(orderByCol, orderByType, languageId, sorts)
 		).build();
