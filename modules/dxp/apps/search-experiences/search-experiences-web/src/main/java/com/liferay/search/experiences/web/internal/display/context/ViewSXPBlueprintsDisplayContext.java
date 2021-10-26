@@ -73,7 +73,7 @@ public class ViewSXPBlueprintsDisplayContext
 		throws PortalException {
 
 		SearchContainer<SXPBlueprint> searchContainer =
-			super.getSearchContainer();
+			getSearchContainer("no-blueprints-were-found");
 
 		SXPBlueprintUtil.populateSXPBlueprintSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),

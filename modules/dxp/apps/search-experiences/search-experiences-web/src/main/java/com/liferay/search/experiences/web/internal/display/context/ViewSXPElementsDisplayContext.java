@@ -73,7 +73,7 @@ public class ViewSXPElementsDisplayContext
 		throws PortalException {
 
 		SearchContainer<SXPElement> searchContainer =
-			super.getSearchContainer();
+			getSearchContainer("no-elements-were-found");
 
 		SXPBlueprintUtil.populateSXPElementSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),

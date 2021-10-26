@@ -116,12 +116,12 @@ public abstract class BaseDisplayContext<R> {
 		return "desc";
 	}
 
-	protected SearchContainer<R> getSearchContainer()
+	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage)
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getIteratorURL(), null,
-			"no-entries-were-found");
+			emptyResultsMessage);
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
