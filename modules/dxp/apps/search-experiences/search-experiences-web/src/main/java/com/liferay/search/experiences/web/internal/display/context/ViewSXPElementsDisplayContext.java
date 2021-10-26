@@ -80,17 +80,12 @@ public class ViewSXPElementsDisplayContext
 	public SearchContainer<SXPElement> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer("no-elements-were-found");
+		return getSearchContainer("no-elements-were-found", SXPElement.class);
 	}
 
 	@Override
 	protected String getDisplayStylePreferenceName() {
 		return "sxp-elements-display-style";
-	}
-
-	@Override
-	protected Class<?> getModelIndexerClass() {
-		return SXPElement.class;
 	}
 
 	@Override

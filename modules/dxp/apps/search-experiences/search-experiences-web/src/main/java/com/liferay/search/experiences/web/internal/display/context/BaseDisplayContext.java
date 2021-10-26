@@ -140,7 +140,7 @@ public abstract class BaseDisplayContext<R> {
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sorts _sorts;
 
-	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage)
+	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage, Class<?> modelIndexerClass)
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
@@ -228,7 +228,7 @@ public abstract class BaseDisplayContext<R> {
 			).from(
 				searchContainer.getStart()
 			).modelIndexerClasses(
-				getModelIndexerClass()
+				modelIndexerClass
 			).query(
 				booleanQuery
 			).size(
@@ -253,8 +253,6 @@ public abstract class BaseDisplayContext<R> {
 
 		return searchContainer;
 	}
-
-	protected abstract Class<?> getModelIndexerClass();
 
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, Queries queries);

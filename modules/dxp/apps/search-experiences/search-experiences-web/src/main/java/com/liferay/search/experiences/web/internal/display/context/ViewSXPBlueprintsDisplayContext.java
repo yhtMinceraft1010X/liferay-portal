@@ -77,17 +77,12 @@ public class ViewSXPBlueprintsDisplayContext
 	public SearchContainer<SXPBlueprint> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer("no-blueprints-were-found");
+		return getSearchContainer("no-blueprints-were-found", SXPBlueprint.class);
 	}
 
 	@Override
 	protected String getDisplayStylePreferenceName() {
 		return "sxp-blueprints-display-style";
-	}
-
-	@Override
-	protected Class<?> getModelIndexerClass() {
-		return SXPBlueprint.class;
 	}
 
 	@Override
