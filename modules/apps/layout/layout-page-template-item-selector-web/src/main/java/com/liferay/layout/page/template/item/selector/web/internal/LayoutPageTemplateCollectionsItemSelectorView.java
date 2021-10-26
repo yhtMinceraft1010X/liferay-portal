@@ -233,6 +233,15 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
+			boolean orderByAsc = true;
+
+			if (orderByType.equals("desc")) {
+				orderByAsc = false;
+			}
+
+			searchContainer.setOrderByComparator(
+				new LayoutPageTemplateCollectionNameComparator(orderByAsc));
+
 			String orderByCol = ParamUtil.getString(
 				_httpServletRequest, "orderByCol", "name");
 
@@ -242,15 +251,6 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 				_httpServletRequest, "orderByType", "asc");
 
 			searchContainer.setOrderByType(orderByType);
-
-			boolean orderByAsc = true;
-
-			if (orderByType.equals("desc")) {
-				orderByAsc = false;
-			}
-
-			searchContainer.setOrderByComparator(
-				new LayoutPageTemplateCollectionNameComparator(orderByAsc));
 
 			String keywords = ParamUtil.getString(
 				_httpServletRequest, "keywords");
