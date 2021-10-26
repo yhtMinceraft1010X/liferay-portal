@@ -88,9 +88,9 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 
 	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="hideSXPElementURL">
+			<portlet:param name="<%= Constants.CMD %>" value="hide" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
-			<portlet:param name="<%= Constants.CMD %>" value="hide" />
 			<portlet:param name="hidden" value="<%= String.valueOf(!sxpElement.getHidden()) %>" />
 		</portlet:actionURL>
 
