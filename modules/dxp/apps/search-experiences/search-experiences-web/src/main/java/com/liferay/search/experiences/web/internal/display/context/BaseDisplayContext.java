@@ -209,6 +209,11 @@ public abstract class BaseDisplayContext<R> {
 		booleanQuery.addFilterQueryClauses(
 			queries.term(Field.GROUP_ID, groupId));
 
+		if (status != WorkflowConstants.STATUS_ANY) {
+			booleanQuery.addFilterQueryClauses(
+				queries.term(Field.STATUS, status));
+		}
+
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 		if (Validator.isBlank(keywords)) {
@@ -219,11 +224,6 @@ public abstract class BaseDisplayContext<R> {
 				queries.multiMatch(
 					keywords,
 					SetUtil.fromArray(_getTitleField(themeDisplay.getLanguageId()), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
-		}
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			booleanQuery.addFilterQueryClauses(
-				queries.term(Field.STATUS, status));
 		}
 
 		processBooleanQuery(booleanQuery, portletRequest, queries);
