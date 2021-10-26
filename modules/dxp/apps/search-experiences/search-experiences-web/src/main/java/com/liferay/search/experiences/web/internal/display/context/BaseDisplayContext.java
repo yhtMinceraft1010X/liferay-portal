@@ -130,16 +130,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract String getDisplayStylePreferenceName();
 
-	protected PortletURL getIteratorURL() {
-		return PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
-		).setMVCRenderCommandName(
-			getMVCRenderCommandName()
-		).setTabs1(
-			tabs1
-		).build();
-	}
-
 	protected abstract String getMVCRenderCommandName();
 
 	private String _getOrderByCol() {
@@ -166,7 +156,15 @@ public abstract class BaseDisplayContext<R> {
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getIteratorURL(), null,
+			liferayPortletRequest,
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				getMVCRenderCommandName()
+			).setTabs1(
+				tabs1
+			).build(),
+			null,
 			emptyResultsMessage);
 
 		searchContainer.setOrderByCol(_getOrderByCol());
