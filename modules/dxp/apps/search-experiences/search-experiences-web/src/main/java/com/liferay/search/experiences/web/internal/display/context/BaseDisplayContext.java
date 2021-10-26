@@ -387,21 +387,21 @@ public abstract class BaseDisplayContext<R> {
 
 		_addGroupFilterClause(booleanQuery, groupId, queries);
 
-		if (type > 0) {
-			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
-		}
+		_addSearchClauses(
+			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
+			languageId, queries);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			_addStatusFilterClause(booleanQuery, queries, status);
 		}
 
+		if (type > 0) {
+			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
+		}
+
 		_addVisibilityFilterClause(booleanQuery, portletRequest, queries);
 
 		_addReadOnlyFilterClause(booleanQuery, portletRequest, queries);
-
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
 
 		return booleanQuery;
 	}
