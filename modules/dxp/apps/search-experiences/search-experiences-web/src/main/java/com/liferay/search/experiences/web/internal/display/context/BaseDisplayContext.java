@@ -130,21 +130,6 @@ public abstract class BaseDisplayContext<R> {
 
 	protected abstract String getMVCRenderCommandName();
 
-	private String _getOrderByType() {
-		String orderByType = ParamUtil.getString(
-			liferayPortletRequest, "orderByType");
-
-		if (Validator.isNotNull(orderByType)) {
-			return orderByType;
-		}
-
-		if (Objects.equals(_getOrderByCol(), Field.TITLE)) {
-			return "asc";
-		}
-
-		return "desc";
-	}
-
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
@@ -174,9 +159,18 @@ public abstract class BaseDisplayContext<R> {
 		String orderByCol = ParamUtil.getString(
 			liferayPortletRequest, "orderByCol", Field.MODIFIED_DATE);
 
-		searchContainer.setOrderByCol(_getOrderByCol());
+		searchContainer.setOrderByCol(orderByCol);
 
-		String orderByType = _getOrderByType();
+		String orderByType = ParamUtil.getString(
+			liferayPortletRequest, "orderByType");
+
+		if (Validator.isNull(orderByType)) {
+			if (Objects.equals(orderByCol, Field.TITLE)) {
+				orderByType = "asc";
+			}
+
+			orderByType = "desc";
+		}
 
 		searchContainer.setOrderByType(orderByType);
 
