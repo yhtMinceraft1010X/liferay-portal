@@ -140,7 +140,7 @@ public abstract class BaseDisplayContext<R> {
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sorts _sorts;
 
-	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage, int status)
+	protected SearchContainer<R> getSearchContainer(String emptyResultsMessage)
 		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
@@ -178,6 +178,8 @@ public abstract class BaseDisplayContext<R> {
 
 		booleanQuery.addFilterQueryClauses(
 			_queries.term(Field.GROUP_ID, themeDisplay.getCompanyGroupId()));
+
+		int status = ParamUtil.getInteger(liferayPortletRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(

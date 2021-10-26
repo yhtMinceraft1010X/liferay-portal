@@ -80,8 +80,7 @@ public class ViewSXPElementsDisplayContext
 	public SearchContainer<SXPElement> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer(
-			"no-elements-were-found", WorkflowConstants.STATUS_APPROVED);
+		return getSearchContainer("no-elements-were-found");
 	}
 
 	@Override

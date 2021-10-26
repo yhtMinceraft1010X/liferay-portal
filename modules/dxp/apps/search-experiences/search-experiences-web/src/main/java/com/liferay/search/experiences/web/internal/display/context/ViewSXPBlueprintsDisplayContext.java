@@ -77,8 +77,7 @@ public class ViewSXPBlueprintsDisplayContext
 	public SearchContainer<SXPBlueprint> getSearchContainer()
 		throws PortalException {
 
-		return getSearchContainer(
-			"no-blueprints-were-found", WorkflowConstants.STATUS_APPROVED);
+		return getSearchContainer("no-blueprints-were-found");
 	}
 
 	@Override
