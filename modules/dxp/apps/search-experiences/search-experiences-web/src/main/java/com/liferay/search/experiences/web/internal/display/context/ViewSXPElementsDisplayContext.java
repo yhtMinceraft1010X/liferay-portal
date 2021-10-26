@@ -57,7 +57,7 @@ public class ViewSXPElementsDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
-			searchRequestBuilderFactory, sorts, null, sxpElementService);
+			searchRequestBuilderFactory, sorts);
 
 		_sxpElementService = sxpElementService;
 	}
@@ -83,11 +83,10 @@ public class ViewSXPElementsDisplayContext
 		SearchContainer<SXPElement> searchContainer =
 			getSearchContainer("no-elements-were-found");
 
-		/*SXPBlueprintUtil.populateSXPElementSearchContainer(
+		populateSXPBlueprintSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
-			liferayPortletRequest, _queries, _searcher, searchContainer,
-			_searchRequestBuilderFactory, _sorts,
-			WorkflowConstants.STATUS_APPROVED, _sxpElementService);*/
+			liferayPortletRequest, searchContainer,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return searchContainer;
 	}
@@ -134,7 +133,7 @@ public class ViewSXPElementsDisplayContext
 	}
 
 	@Override
-	protected BaseModel<?> toBaseModel(long entryClassPK) {
+	protected SXPElement toBaseModel(long entryClassPK) {
 		try {
 			return _sxpElementService.getSXPElement(entryClassPK);
 		}

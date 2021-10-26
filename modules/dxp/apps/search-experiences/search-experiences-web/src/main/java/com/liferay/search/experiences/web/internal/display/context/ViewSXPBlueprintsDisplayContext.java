@@ -54,7 +54,7 @@ public class ViewSXPBlueprintsDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
-			searchRequestBuilderFactory, sorts, sxpBlueprintService, null);
+			searchRequestBuilderFactory, sorts);
 
 		_sxpBlueprintService = sxpBlueprintService;
 	}
@@ -80,11 +80,10 @@ public class ViewSXPBlueprintsDisplayContext
 		SearchContainer<SXPBlueprint> searchContainer =
 			getSearchContainer("no-blueprints-were-found");
 
-		/*SXPBlueprintUtil.populateSXPBlueprintSearchContainer(
+		populateSXPBlueprintSearchContainer(
 			themeDisplay.getCompanyGroupId(), getOrderByCol(), getOrderByType(),
-			liferayPortletRequest, _queries, _searcher, searchContainer,
-			_searchRequestBuilderFactory, _sorts,
-			WorkflowConstants.STATUS_APPROVED, _sxpBlueprintService);*/
+			liferayPortletRequest, searchContainer,
+			WorkflowConstants.STATUS_APPROVED);
 
 		return searchContainer;
 	}
@@ -110,7 +109,7 @@ public class ViewSXPBlueprintsDisplayContext
 	}
 
 	@Override
-	protected BaseModel<?> toBaseModel(long entryClassPK) {
+	protected SXPBlueprint toBaseModel(long entryClassPK) {
 		try {
 			return _sxpBlueprintService.getSXPBlueprint(entryClassPK);
 		}

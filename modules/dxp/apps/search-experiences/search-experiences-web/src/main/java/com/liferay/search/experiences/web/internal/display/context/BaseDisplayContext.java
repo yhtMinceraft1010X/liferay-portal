@@ -87,9 +87,7 @@ public abstract class BaseDisplayContext<R> {
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Queries queries,
 		Searcher searcher,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		SXPBlueprintService sxpBlueprintService,
-		SXPElementService sxpElementService) {
+		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
@@ -97,8 +95,6 @@ public abstract class BaseDisplayContext<R> {
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_sorts = sorts;
-		_sxpBlueprintService = sxpBlueprintService;
-		_sxpElementService = sxpElementService;
 
 		httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
@@ -191,27 +187,24 @@ public abstract class BaseDisplayContext<R> {
 	private final Searcher _searcher;
 	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 	private final Sorts _sorts;
-	private final SXPBlueprintService _sxpBlueprintService;
-	private final SXPElementService _sxpElementService;
 
-	public void populateSXPBlueprintSearchContainer(
+	protected void populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
-		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<BaseModel<?>> searchContainer,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
+		PortletRequest portletRequest,
+		SearchContainer<R> searchContainer,
 		int status) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BooleanQuery booleanQuery = queries.booleanQuery();
+		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			queries.term(Field.GROUP_ID, groupId));
+			_queries.term(Field.GROUP_ID, groupId));
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(
-				queries.term(Field.STATUS, status));
+				_queries.term(Field.STATUS, status));
 		}
 
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
@@ -220,16 +213,16 @@ public abstract class BaseDisplayContext<R> {
 			"localized_" + Field.TITLE, themeDisplay.getLanguageId());
 
 		if (Validator.isBlank(keywords)) {
-			booleanQuery.addMustQueryClauses(queries.matchAll());
+			booleanQuery.addMustQueryClauses(_queries.matchAll());
 		}
 		else {
 			booleanQuery.addMustQueryClauses(
-				queries.multiMatch(
+				_queries.multiMatch(
 					keywords,
 					SetUtil.fromArray(titleField, LocalizationUtil.getLocalizedName(Field.DESCRIPTION, themeDisplay.getLanguageId()))));
 		}
 
-		processBooleanQuery(booleanQuery, portletRequest, queries);
+		processBooleanQuery(booleanQuery, portletRequest, _queries);
 
 		Sort sort = null;
 
@@ -240,15 +233,15 @@ public abstract class BaseDisplayContext<R> {
 		}
 
 		if (Objects.equals(orderByCol, Field.TITLE)) {
-			sort = sorts.field(
+			sort = _sorts.field(
 				titleField + "_String_sortable", sortOrder);
 		}
 		else {
-			sort = sorts.field(orderByCol, sortOrder);
+			sort = _sorts.field(orderByCol, sortOrder);
 		}
 
-		SearchResponse searchResponse = searcher.search(
-			searchRequestBuilderFactory.builder(
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
 			).addSort(
 				sort
 			).companyId(
@@ -282,7 +275,7 @@ public abstract class BaseDisplayContext<R> {
 	protected abstract void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries);
 
-	protected abstract BaseModel<?> toBaseModel(long entryClassPK);
+	protected abstract R toBaseModel(long entryClassPK);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseDisplayContext.class);
