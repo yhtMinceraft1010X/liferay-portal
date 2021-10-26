@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
@@ -31,6 +32,9 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -51,7 +55,11 @@ public class ViewSXPBlueprintsDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
 			searchRequestBuilderFactory, sorts, sxpBlueprintService, null);
+
+		_sxpBlueprintService = sxpBlueprintService;
 	}
+
+	private SXPBlueprintService _sxpBlueprintService;
 
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
 		throws PortalException {
@@ -100,5 +108,24 @@ public class ViewSXPBlueprintsDisplayContext
 	protected void processBooleanQuery(
 		BooleanQuery booleanQuery, PortletRequest portletRequest, Queries queries) {
 	}
+
+	@Override
+	protected BaseModel<?> toBaseModel(long entryClassPK) {
+		try {
+			return _sxpBlueprintService.getSXPBlueprint(entryClassPK);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Search index is stale and contains a non-existent " +
+						"SXPBlueprint entry " + entryClassPK);
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSXPBlueprintsDisplayContext.class);
 
 }

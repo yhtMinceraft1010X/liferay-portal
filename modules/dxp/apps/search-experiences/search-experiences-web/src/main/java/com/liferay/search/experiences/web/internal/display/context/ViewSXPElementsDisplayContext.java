@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.search.Field;;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
@@ -34,6 +35,9 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -54,7 +58,11 @@ public class ViewSXPElementsDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, queries, searcher,
 			searchRequestBuilderFactory, sorts, null, sxpElementService);
+
+		_sxpElementService = sxpElementService;
 	}
+
+	private SXPElementService _sxpElementService;
 
 	public List<String> getAvailableActions(SXPElement sxpElement)
 		throws PortalException {
@@ -124,5 +132,24 @@ public class ViewSXPElementsDisplayContext
 					ParamUtil.getBoolean(portletRequest, "readOnly")));
 		}
 	}
+
+	@Override
+	protected BaseModel<?> toBaseModel(long entryClassPK) {
+		try {
+			return _sxpElementService.getSXPElement(entryClassPK);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Search index is stale and contains a non-existent " +
+						"SXPElement entry " + entryClassPK);
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewSXPElementsDisplayContext.class);
 
 }

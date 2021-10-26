@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.search.experiences.constants.SXPPortletKeys;
 
 import java.util.Objects;
@@ -194,7 +196,7 @@ public abstract class BaseDisplayContext<R> {
 	public void populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<SXPBlueprint> searchContainer,
+		SearchContainer<BaseModel<?>> searchContainer,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, SXPBlueprintService sxpBlueprintService) {
 
@@ -207,7 +209,7 @@ public abstract class BaseDisplayContext<R> {
 	public void populateSXPElementSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<SXPElement> searchContainer,
+		SearchContainer<BaseModel<?>> searchContainer,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, SXPElementService sxpElementService) {
 
@@ -290,7 +292,7 @@ public abstract class BaseDisplayContext<R> {
 	private void _populateSXPBlueprintSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<SXPBlueprint> searchContainer,
+		SearchContainer<BaseModel<?>> searchContainer,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, SXPBlueprintService sxpBlueprintService) {
 
@@ -335,27 +337,16 @@ public abstract class BaseDisplayContext<R> {
 		searchContainer.setTotal(
 			GetterUtil.getInteger(searchHits.getTotalHits()));
 
-		List<SearchHit> hits = searchHits.getSearchHits();
-
-		Stream<SearchHit> stream = hits.stream();
-
 		searchContainer.setResults(
-			stream.map(
-				searchHit -> _toSXPBlueprintOptional(
-					searchHit, sxpBlueprintService)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
 	}
 
 	private void _populateSXPElementSearchContainer(
 		long groupId, String orderByCol, String orderByType,
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<SXPElement> searchContainer,
+		SearchContainer<BaseModel<?>> searchContainer,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
 		int status, SXPElementService sxpElementService) {
 
@@ -400,60 +391,13 @@ public abstract class BaseDisplayContext<R> {
 		searchContainer.setTotal(
 			GetterUtil.getInteger(searchHits.getTotalHits()));
 
-		List<SearchHit> hits = searchHits.getSearchHits();
-
-		Stream<SearchHit> stream = hits.stream();
-
 		searchContainer.setResults(
-			stream.map(
-				searchHit -> _toSXPElementOptional(searchHit, sxpElementService)
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			));
+			TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
 	}
 
-	private Optional<SXPBlueprint> _toSXPBlueprintOptional(
-		SearchHit searchHit, SXPBlueprintService sxpBlueprintService) {
-
-		long entryClassPK = _getEntryClassPK(searchHit);
-
-		try {
-			return Optional.of(
-				sxpBlueprintService.getSXPBlueprint(entryClassPK));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Search index is stale and contains a non-existent " +
-						"SXPBlueprint entry " + entryClassPK);
-			}
-		}
-
-		return Optional.empty();
-	}
-
-	private Optional<SXPElement> _toSXPElementOptional(
-		SearchHit searchHit, SXPElementService sxpElementService) {
-
-		long entryClassPK = _getEntryClassPK(searchHit);
-
-		try {
-			return Optional.of(sxpElementService.getSXPElement(entryClassPK));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Search index is stale and contains a non-existent " +
-						"SXPElement entry " + entryClassPK);
-			}
-		}
-
-		return Optional.empty();
-	}
+	protected abstract BaseModel<?> toBaseModel(long entryClassPK);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseDisplayContext.class);
