@@ -211,9 +211,17 @@ public abstract class BaseDisplayContext<R> {
 		booleanQuery.addFilterQueryClauses(
 			queries.term(Field.GROUP_ID, groupId));
 
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
+		String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+		if (Validator.isBlank(keywords)) {
+			booleanQuery.addMustQueryClauses(queries.matchAll());
+		}
+		else {
+			booleanQuery.addMustQueryClauses(
+				queries.multiMatch(
+					keywords,
+					SetUtil.fromArray(_getTitleField(languageId), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId))));
+		}
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanQuery.addFilterQueryClauses(
@@ -252,21 +260,6 @@ public abstract class BaseDisplayContext<R> {
 
 					return toBaseModel(document.getLong(Field.ENTRY_CLASS_PK));
 				}));
-	}
-
-	private void _addSearchClauses(
-		BooleanQuery booleanQuery, String keywords, String languageId,
-		Queries queries) {
-
-		if (Validator.isBlank(keywords)) {
-			booleanQuery.addMustQueryClauses(queries.matchAll());
-		}
-		else {
-			booleanQuery.addMustQueryClauses(
-				queries.multiMatch(
-					keywords,
-					SetUtil.fromArray(_getTitleField(languageId), LocalizationUtil.getLocalizedName(Field.DESCRIPTION, languageId))));
-		}
 	}
 
 	protected abstract Class<?> getModelIndexerClass();
