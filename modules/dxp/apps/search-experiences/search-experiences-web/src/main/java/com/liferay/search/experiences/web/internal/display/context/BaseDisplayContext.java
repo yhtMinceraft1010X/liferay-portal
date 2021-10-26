@@ -71,6 +71,9 @@ public abstract class BaseDisplayContext<R> {
 			SXPPortletKeys.SXP_BLUEPRINT_ADMIN, getDisplayStylePreferenceName(),
 			displayStyle);
 
+		// TODO Verify that clearing the SPA cache is needed only after calling
+		// portalPreferences#setValue
+
 		httpServletRequest.setAttribute(
 			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 
