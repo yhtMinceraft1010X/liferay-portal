@@ -533,7 +533,8 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
 		if (objectDefinition.isSystem()) {
-			throw new ObjectDefinitionStatusException();
+			throw new ObjectDefinitionStatusException(
+				"Object definition " + objectDefinition);
 		}
 
 		return _updateObjectDefinition(
