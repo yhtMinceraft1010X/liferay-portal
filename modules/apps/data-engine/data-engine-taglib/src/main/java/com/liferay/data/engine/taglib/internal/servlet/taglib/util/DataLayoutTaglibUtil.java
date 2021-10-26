@@ -1153,41 +1153,43 @@ public class DataLayoutTaglibUtil {
 			String[] disabledProperties =
 				dataLayoutBuilderDefinition.getDisabledProperties();
 
-			if (ArrayUtil.isNotEmpty(disabledProperties)) {
-				Stream.of(
-					disabledProperties
-				).forEach(
-					disabledProperty -> {
-						Map<String, DDMFormField> ddmFormFieldsMap =
-							ddmForm.getDDMFormFieldsMap(true);
+			if (ArrayUtil.isEmpty(disabledProperties)) {
+				return;
+			}
 
-						List<DDMFormField> ddmFormFields =
-							ddmForm.getDDMFormFields();
+			Stream.of(
+				disabledProperties
+			).forEach(
+				disabledProperty -> {
+					Map<String, DDMFormField> ddmFormFieldsMap =
+						ddmForm.getDDMFormFieldsMap(true);
 
-						ddmFormFields.remove(
-							ddmFormFieldsMap.get(disabledProperty));
+					List<DDMFormField> ddmFormFields =
+						ddmForm.getDDMFormFields();
 
-						for (DDMFormLayoutPage ddmFormLayoutPage :
-								ddmFormLayout.getDDMFormLayoutPages()) {
+					ddmFormFields.remove(
+						ddmFormFieldsMap.get(disabledProperty));
 
-							for (DDMFormLayoutRow ddmFormLayoutRow :
-									ddmFormLayoutPage.getDDMFormLayoutRows()) {
+					for (DDMFormLayoutPage ddmFormLayoutPage :
+							ddmFormLayout.getDDMFormLayoutPages()) {
 
-								for (DDMFormLayoutColumn ddmFormLayoutColumn :
-										ddmFormLayoutRow.
-											getDDMFormLayoutColumns()) {
+						for (DDMFormLayoutRow ddmFormLayoutRow :
+								ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
-									List<String> ddmFormFieldNames =
-										ddmFormLayoutColumn.
-											getDDMFormFieldNames();
+							for (DDMFormLayoutColumn ddmFormLayoutColumn :
+									ddmFormLayoutRow.
+										getDDMFormLayoutColumns()) {
 
-									ddmFormFieldNames.remove(disabledProperty);
-								}
+								List<String> ddmFormFieldNames =
+									ddmFormLayoutColumn.
+										getDDMFormFieldNames();
+
+								ddmFormFieldNames.remove(disabledProperty);
 							}
 						}
 					}
-				);
-			}
+				}
+			);
 		}
 
 		private final Set<Locale> _availableLocales;
