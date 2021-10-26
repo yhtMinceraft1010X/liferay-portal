@@ -1157,39 +1157,35 @@ public class DataLayoutTaglibUtil {
 				return;
 			}
 
-			Stream.of(
-				disabledProperties
-			).forEach(
-				disabledProperty -> {
-					Map<String, DDMFormField> ddmFormFieldsMap =
-						ddmForm.getDDMFormFieldsMap(true);
+			for (String disabledProperty : disabledProperties) {
+				Map<String, DDMFormField> ddmFormFieldsMap =
+					ddmForm.getDDMFormFieldsMap(true);
 
-					List<DDMFormField> ddmFormFields =
-						ddmForm.getDDMFormFields();
+				List<DDMFormField> ddmFormFields =
+					ddmForm.getDDMFormFields();
 
-					ddmFormFields.remove(
-						ddmFormFieldsMap.get(disabledProperty));
+				ddmFormFields.remove(
+					ddmFormFieldsMap.get(disabledProperty));
 
-					for (DDMFormLayoutPage ddmFormLayoutPage :
-							ddmFormLayout.getDDMFormLayoutPages()) {
+				for (DDMFormLayoutPage ddmFormLayoutPage :
+						ddmFormLayout.getDDMFormLayoutPages()) {
 
-						for (DDMFormLayoutRow ddmFormLayoutRow :
-								ddmFormLayoutPage.getDDMFormLayoutRows()) {
+					for (DDMFormLayoutRow ddmFormLayoutRow :
+							ddmFormLayoutPage.getDDMFormLayoutRows()) {
 
-							for (DDMFormLayoutColumn ddmFormLayoutColumn :
-									ddmFormLayoutRow.
-										getDDMFormLayoutColumns()) {
+						for (DDMFormLayoutColumn ddmFormLayoutColumn :
+								ddmFormLayoutRow.
+									getDDMFormLayoutColumns()) {
 
-								List<String> ddmFormFieldNames =
-									ddmFormLayoutColumn.
-										getDDMFormFieldNames();
+							List<String> ddmFormFieldNames =
+								ddmFormLayoutColumn.
+									getDDMFormFieldNames();
 
-								ddmFormFieldNames.remove(disabledProperty);
-							}
+							ddmFormFieldNames.remove(disabledProperty);
 						}
 					}
 				}
-			);
+			)
 		}
 
 		private final Set<Locale> _availableLocales;
