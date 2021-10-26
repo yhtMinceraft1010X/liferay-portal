@@ -70,7 +70,7 @@ public class ViewSXPBlueprintsDisplayContext
 	}
 
 	public SearchContainer<SXPBlueprint> getSearchContainer()
-		throws PortalException, PortletException {
+		throws PortalException {
 
 		SearchContainer<SXPBlueprint> searchContainer =
 			super.getSearchContainer();

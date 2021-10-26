@@ -117,7 +117,7 @@ public abstract class BaseDisplayContext<R> {
 	}
 
 	protected SearchContainer<R> getSearchContainer()
-		throws PortalException, PortletException {
+		throws PortalException {
 
 		SearchContainer<R> searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getIteratorURL(), null,

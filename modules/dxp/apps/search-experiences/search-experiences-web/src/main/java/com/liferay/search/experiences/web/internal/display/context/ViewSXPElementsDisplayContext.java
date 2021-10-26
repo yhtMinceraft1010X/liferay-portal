@@ -70,7 +70,7 @@ public class ViewSXPElementsDisplayContext
 	}
 
 	public SearchContainer<SXPElement> getSearchContainer()
-		throws PortalException, PortletException {
+		throws PortalException {
 
 		SearchContainer<SXPElement> searchContainer =
 			super.getSearchContainer();
