@@ -369,7 +369,9 @@ public abstract class BaseDisplayContext<R> {
 
 		_addGroupFilterClause(booleanQuery, groupId, queries);
 
-		_addStatusFilterClause(booleanQuery, queries, status);
+		if (status != WorkflowConstants.STATUS_ANY) {
+			_addStatusFilterClause(booleanQuery, queries, status);
+		}
 
 		_addSearchClauses(booleanQuery, keywords, languageId, queries);
 
