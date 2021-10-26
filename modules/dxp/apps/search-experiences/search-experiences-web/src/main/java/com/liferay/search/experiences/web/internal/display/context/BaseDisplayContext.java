@@ -178,8 +178,6 @@ public abstract class BaseDisplayContext<R> {
 
 		searchContainer.setOrderByCol(_getOrderByCol());
 		searchContainer.setOrderByType(_getOrderByType());
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -252,6 +250,9 @@ public abstract class BaseDisplayContext<R> {
 
 					return toBaseModel(document.getLong(Field.ENTRY_CLASS_PK));
 				}));
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 		searchContainer.setTotal(
 			GetterUtil.getInteger(searchHits.getTotalHits()));
 
