@@ -282,6 +282,26 @@ public abstract class BaseDisplayContext<R> {
 
 		String languageId = themeDisplay.getLanguageId();
 
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		_addGroupFilterClause(booleanQuery, groupId, queries);
+
+		_addSearchClauses(
+			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
+			languageId, queries);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			_addStatusFilterClause(booleanQuery, queries, status);
+		}
+
+		if (type > 0) {
+			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
+		}
+
+		_addVisibilityFilterClause(booleanQuery, portletRequest, queries);
+
+		_addReadOnlyFilterClause(booleanQuery, portletRequest, queries);
+
 		return searchRequestBuilderFactory.builder(
 		).companyId(
 			themeDisplay.getCompanyId()
@@ -290,8 +310,7 @@ public abstract class BaseDisplayContext<R> {
 		).modelIndexerClasses(
 			getModelIndexerClass()
 		).query(
-			_getSXPElementSearchQuery(
-				portletRequest, type, groupId, queries, status, languageId)
+			booleanQuery
 		).size(
 			size
 		).addSort(
@@ -310,6 +329,18 @@ public abstract class BaseDisplayContext<R> {
 
 		String languageId = themeDisplay.getLanguageId();
 
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		_addGroupFilterClause(booleanQuery, groupId, queries);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			_addStatusFilterClause(booleanQuery, queries, status);
+		}
+
+		_addSearchClauses(
+			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
+			languageId, queries);
+
 		return searchRequestBuilderFactory.builder(
 		).companyId(
 			themeDisplay.getCompanyId()
@@ -318,8 +349,7 @@ public abstract class BaseDisplayContext<R> {
 		).modelIndexerClasses(
 			getModelIndexerClass()
 		).query(
-			_getSXPBlueprintSearchQuery(
-				portletRequest, groupId, queries, status, languageId)
+			booleanQuery
 		).size(
 			size
 		).addSort(
@@ -358,52 +388,6 @@ public abstract class BaseDisplayContext<R> {
 		}
 
 		return sorts.field(orderByCol, sortOrder);
-	}
-
-	private Query _getSXPBlueprintSearchQuery(
-		PortletRequest portletRequest, long groupId, Queries queries, int status,
-		String languageId) {
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_addGroupFilterClause(booleanQuery, groupId, queries);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, queries, status);
-		}
-
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
-
-		return booleanQuery;
-	}
-
-	private Query _getSXPElementSearchQuery(
-		PortletRequest portletRequest, long type, long groupId, Queries queries,
-		int status, String languageId) {
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_addGroupFilterClause(booleanQuery, groupId, queries);
-
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, queries, status);
-		}
-
-		if (type > 0) {
-			booleanQuery.addFilterQueryClauses(queries.term(Field.TYPE, type));
-		}
-
-		_addVisibilityFilterClause(booleanQuery, portletRequest, queries);
-
-		_addReadOnlyFilterClause(booleanQuery, portletRequest, queries);
-
-		return booleanQuery;
 	}
 
 	private String _getTitleField(String languageId) {
