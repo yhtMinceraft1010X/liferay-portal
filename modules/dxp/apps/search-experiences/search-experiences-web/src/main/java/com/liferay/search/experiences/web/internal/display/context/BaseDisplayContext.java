@@ -198,25 +198,53 @@ public abstract class BaseDisplayContext<R> {
 		PortletRequest portletRequest, Queries queries, Searcher searcher,
 		SearchContainer<BaseModel<?>> searchContainer,
 		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		int status, SXPBlueprintService sxpBlueprintService) {
+		int status) {
 
-		_populateSXPBlueprintSearchContainer(
-			groupId, orderByCol, orderByType, portletRequest, queries, searcher,
-			searchContainer, searchRequestBuilderFactory, sorts, status,
-			sxpBlueprintService);
-	}
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-	public void populateSXPElementSearchContainer(
-		long groupId, String orderByCol, String orderByType,
-		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<BaseModel<?>> searchContainer,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		int status, SXPElementService sxpElementService) {
+		String languageId = themeDisplay.getLanguageId();
 
-		_populateSXPElementSearchContainer(
-			groupId, orderByCol, orderByType, portletRequest, queries, searcher,
-			searchContainer, searchRequestBuilderFactory, sorts, status,
-			sxpElementService);
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		_addGroupFilterClause(booleanQuery, groupId, queries);
+
+		_addSearchClauses(
+			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
+			languageId, queries);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			_addStatusFilterClause(booleanQuery, queries, status);
+		}
+
+		processBooleanQuery(booleanQuery, portletRequest, queries);
+
+		SearchRequest searchRequest = searchRequestBuilderFactory.builder(
+		).companyId(
+			themeDisplay.getCompanyId()
+		).from(
+			searchContainer.getStart()
+		).modelIndexerClasses(
+			getModelIndexerClass()
+		).query(
+			booleanQuery
+		).size(
+			searchContainer.getDelta()
+		).addSort(
+			_getSort(orderByCol, orderByType, languageId, sorts)
+		).build();
+
+		SearchResponse searchResponse = searcher.search(searchRequest);
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		searchContainer.setTotal(
+			GetterUtil.getInteger(searchHits.getTotalHits()));
+
+		searchContainer.setResults(
+			TransformUtil.transform(
+				searchHits.getSearchHits(),
+				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
 	}
 
 	private void _addGroupFilterClause(
@@ -287,114 +315,6 @@ public abstract class BaseDisplayContext<R> {
 	private String _getTitleField(String languageId) {
 		return LocalizationUtil.getLocalizedName(
 			"localized_" + Field.TITLE, languageId);
-	}
-
-	private void _populateSXPBlueprintSearchContainer(
-		long groupId, String orderByCol, String orderByType,
-		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<BaseModel<?>> searchContainer,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		int status, SXPBlueprintService sxpBlueprintService) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_addGroupFilterClause(booleanQuery, groupId, queries);
-
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, queries, status);
-		}
-
-		processBooleanQuery(booleanQuery, portletRequest, queries);
-
-		SearchRequest searchRequest = searchRequestBuilderFactory.builder(
-		).companyId(
-			themeDisplay.getCompanyId()
-		).from(
-			searchContainer.getStart()
-		).modelIndexerClasses(
-			getModelIndexerClass()
-		).query(
-			booleanQuery
-		).size(
-			searchContainer.getDelta()
-		).addSort(
-			_getSort(orderByCol, orderByType, languageId, sorts)
-		).build();
-
-		SearchResponse searchResponse = searcher.search(searchRequest);
-
-		SearchHits searchHits = searchResponse.getSearchHits();
-
-		searchContainer.setTotal(
-			GetterUtil.getInteger(searchHits.getTotalHits()));
-
-		searchContainer.setResults(
-			TransformUtil.transform(
-				searchHits.getSearchHits(),
-				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
-	}
-
-	private void _populateSXPElementSearchContainer(
-		long groupId, String orderByCol, String orderByType,
-		PortletRequest portletRequest, Queries queries, Searcher searcher,
-		SearchContainer<BaseModel<?>> searchContainer,
-		SearchRequestBuilderFactory searchRequestBuilderFactory, Sorts sorts,
-		int status, SXPElementService sxpElementService) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_addGroupFilterClause(booleanQuery, groupId, queries);
-
-		_addSearchClauses(
-			booleanQuery, ParamUtil.getString(portletRequest, "keywords"),
-			languageId, queries);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			_addStatusFilterClause(booleanQuery, queries, status);
-		}
-
-		processBooleanQuery(booleanQuery, portletRequest, queries);
-
-		SearchRequest searchRequest = searchRequestBuilderFactory.builder(
-		).companyId(
-			themeDisplay.getCompanyId()
-		).from(
-			searchContainer.getStart()
-		).modelIndexerClasses(
-			getModelIndexerClass()
-		).query(
-			booleanQuery
-		).size(
-			searchContainer.getDelta()
-		).addSort(
-			_getSort(orderByCol, orderByType, languageId, sorts)
-		).build();
-
-		SearchResponse searchResponse = searcher.search(searchRequest);
-
-		SearchHits searchHits = searchResponse.getSearchHits();
-
-		searchContainer.setTotal(
-			GetterUtil.getInteger(searchHits.getTotalHits()));
-
-		searchContainer.setResults(
-			TransformUtil.transform(
-				searchHits.getSearchHits(),
-				searchHit -> toBaseModel(_getEntryClassPK(searchHit))));
 	}
 
 	protected abstract BaseModel<?> toBaseModel(long entryClassPK);
