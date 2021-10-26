@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectDefinitionException;
-import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
 import com.liferay.object.exception.ObjectDefinitionNameException;
@@ -26,6 +25,7 @@ import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
+import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -980,9 +980,6 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		_testUpdateObjectDefinitionWithRelationshipFieldAsTitleField(
-			objectDefinition);
-
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), false, false, null,
@@ -1060,6 +1057,9 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Charlies"),
 			objectDefinition.getPluralLabelMap());
+
+		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
+			objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -1157,8 +1157,9 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateObjectDefinitionWithRelationshipFieldAsTitleField(
-			ObjectDefinition objectDefinition1)
+	private void
+			_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
+				ObjectDefinition objectDefinition1)
 		throws Exception {
 
 		ObjectDefinition objectDefinition2 =
@@ -1196,7 +1197,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectFieldRelationshipTypeException objectFieldRelationshipTypeException) {
+		catch (ObjectFieldRelationshipTypeException
+					objectFieldRelationshipTypeException) {
+
 			Assert.assertEquals(
 				"Description and title object fields cannot have a " +
 					"relationship type",
