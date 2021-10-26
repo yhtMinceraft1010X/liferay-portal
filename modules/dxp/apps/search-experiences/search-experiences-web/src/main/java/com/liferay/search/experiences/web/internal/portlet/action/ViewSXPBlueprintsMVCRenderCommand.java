@@ -61,35 +61,6 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 		return "/sxp_blueprint_admin/view.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueries(Queries queries) {
-		_queries = queries;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearcher(Searcher searcher) {
-		_searcher = searcher;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSearchRequestBuilderFactory(
-		SearchRequestBuilderFactory searchRequestBuilderFactory) {
-
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSorts(Sorts sorts) {
-		_sorts = sorts;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSXPBlueprintService(
-		SXPBlueprintService sxpBlueprintService) {
-
-		_sxpBlueprintService = sxpBlueprintService;
-	}
-
 	private ViewSXPBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -103,10 +74,19 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private Queries _queries;
+
+	@Reference
 	private Searcher _searcher;
+
+	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
 	private Sorts _sorts;
+
+	@Reference
 	private SXPBlueprintService _sxpBlueprintService;
 
 }
