@@ -283,17 +283,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
-		// Before publish, messaging
-
-		/*Assert.assertFalse(
-			_messageBus.hasDestination(objectDefinition.getDestinationName()));
-
-		Collection<Destination> webhookCapableDestinations =
-			_messageBus.getWebhookCapableDestinations(
-				objectDefinition.getCompanyId());
-
-		int webhookCapableDestinationsCount = webhookCapableDestinations.size();*/
-
 		// Before publish, resources
 
 		Assert.assertEquals(
@@ -354,46 +343,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
 		Assert.assertTrue(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
-
-		// After publish, messaging
-
-		/*Destination destination = _messageBus.getDestination(
-			objectDefinition.getDestinationName());
-
-		Set<Destination.WebhookEvent> webhookEvents =
-			destination.getWebhookEvents();
-
-		Assert.assertEquals(webhookEvents.toString(), 6, webhookEvents.size());
-
-		Iterator<Destination.WebhookEvent> iterator = webhookEvents.iterator();
-
-		for (String key : _DESTINATION_WEBHOOK_EVENT_KEYS) {
-			Destination.WebhookEvent webhookEvent = iterator.next();
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"destination-webhook-event-description[",
-					"liferay-object-event][", key, "]"),
-				webhookEvent.getDescription());
-			Assert.assertEquals(key, webhookEvent.getKey());
-			Assert.assertEquals(
-				"destination-webhook-event-name[liferay-object-event][" + key +
-					"]",
-				webhookEvent.getName());
-		}
-
-		Assert.assertFalse(
-			destination.isWebhookCapable(RandomTestUtil.randomLong()));
-		Assert.assertTrue(
-			destination.isWebhookCapable(objectDefinition.getCompanyId()));
-
-		webhookCapableDestinations = _messageBus.getWebhookCapableDestinations(
-			objectDefinition.getCompanyId());
-
-		Assert.assertEquals(
-			webhookCapableDestinations.toString(),
-			webhookCapableDestinationsCount + 1,
-			webhookCapableDestinations.size());*/
 
 		// After publish, resources
 
@@ -1217,11 +1166,6 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition2);
 		}
 	}
-
-	/*private static final String[] _DESTINATION_WEBHOOK_EVENT_KEYS = {
-		"onAfterCreate", "onAfterRemove", "onAfterUpdate", "onBeforeCreate",
-		"onBeforeRemove", "onBeforeUpdate"
-	};*/
 
 	@Inject
 	private MessageBus _messageBus;
