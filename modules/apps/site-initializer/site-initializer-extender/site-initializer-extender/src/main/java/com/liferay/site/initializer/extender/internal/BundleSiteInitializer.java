@@ -704,8 +704,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				StringUtil.read(url.openStream()));
 
-			String resourceClassName = jsonObject.getString(
-				"resourceClassName", JournalArticle.class.getName());
+			long resourceClassNameId = _portal.getClassNameId(
+				jsonObject.getString(
+					"resourceClassName", JournalArticle.class.getName()));
 
 			long ddmStructureId = 0;
 
@@ -714,20 +715,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (Validator.isNotNull(ddmStructureKey)) {
 				DDMStructure ddmStructure =
 					ddmStructureLocalService.fetchStructure(
-						serviceContext.getScopeGroupId(),
-						_portal.getClassNameId(resourceClassName),
-						jsonObject.getString("ddmStructureKey"));
+						serviceContext.getScopeGroupId(), resourceClassNameId,
+						ddmStructureKey);
 
 				ddmStructureId = ddmStructure.getStructureId();
 			}
 
-			String className = jsonObject.getString(
-				"className", DDMStructure.class.getName());
-
 			_ddmTemplateLocalService.addTemplate(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(className), ddmStructureId,
-				_portal.getClassNameId(resourceClassName),
+				_portal.getClassNameId(
+					jsonObject.getString(
+						"className", DDMStructure.class.getName())),
+				ddmStructureId, resourceClassNameId,
 				jsonObject.getString("ddmTemplateKey"),
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), jsonObject.getString("name")
