@@ -787,12 +787,54 @@ definition {
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view and access the Custom Object portlet without the Access in Control Panel permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotAccessCustomObjectWithoutAccessPermission {
 		property portal.acceptance = "true";
 
-		// TODO LPS-140524 CannotAccessCustomObjectWithoutAccessPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+	
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		Navigator.openURL();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");	
+
+
+		ApplicationsMenu.assertMenuButtonIsNotPresent();
+
+
+
+
+		
 
 	}
 

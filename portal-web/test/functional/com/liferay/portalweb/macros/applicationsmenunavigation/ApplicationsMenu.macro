@@ -1,6 +1,13 @@
 definition {
 
 	@summary = "Navigate to Applications Menu > ${site}"
+	macro assertMenuButtonIsNotPresent {
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#MENU_BUTTON");
+
+
+		
+	}
+
 	macro gotoLocalizedSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
