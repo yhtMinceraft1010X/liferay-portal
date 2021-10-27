@@ -61,6 +61,12 @@ portletDisplay.setURLBack(backURL);
 </liferay-frontend:edit-form>
 
 <aui:script>
+	function <portlet:namespace />getObjectEntryId() {
+		return Number(
+			'<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>'
+		);
+	}
+
 	function <portlet:namespace />getPath(objectEntryId) {
 		const scope = '<%= objectDefinition.getScope() %>';
 		const contextPath = '/o<%= objectDefinition.getRESTContextPath() %>';
@@ -72,12 +78,6 @@ portletDisplay.setURLBack(backURL);
 		const putPath = contextPath.concat('/', `\${objectEntryId}`);
 
 		return objectEntryId ? putPath : postPath;
-	}
-
-	function <portlet:namespace />getObjectEntryId() {
-		return Number(
-			'<%= (objectEntry == null) ? 0 : objectEntry.getObjectEntryId() %>'
-		);
 	}
 
 	function <portlet:namespace />getValues(fields) {
