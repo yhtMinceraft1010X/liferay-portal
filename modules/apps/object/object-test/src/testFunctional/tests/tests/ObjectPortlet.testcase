@@ -795,7 +795,7 @@ definition {
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-	
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
 		JSONUser.addUser(
@@ -808,7 +808,6 @@ definition {
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
-
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -826,16 +825,9 @@ definition {
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");	
-
+			userLoginFullName = "userfn userln");
 
 		ApplicationsMenu.assertMenuButtonIsNotPresent();
-
-
-
-
-		
-
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to add an Object entry without the Add Object Entry permission"
