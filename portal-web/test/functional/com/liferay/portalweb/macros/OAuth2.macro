@@ -556,6 +556,22 @@ definition {
 		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
+	@description = "Get ClientId and ClientSecret from the page then post client credential token via curl."
+	macro postClientCredentialTokenViaCurl {
+		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		var portalURL = PropsUtil.get("portal.url");
+
+		var curl = '''
+				${portalURL}/o/oauth2/token \
+					-d client_id=${generatedClientId} \
+					-d client_secret=${generatedClientSecret} \
+					-d grant_type=client_credentials
+				''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro revokeApplicationAuthorization {
 		LexiconEntry.viewEntryMenuItem(
 			menuItem = "Revoke Authorizations",
