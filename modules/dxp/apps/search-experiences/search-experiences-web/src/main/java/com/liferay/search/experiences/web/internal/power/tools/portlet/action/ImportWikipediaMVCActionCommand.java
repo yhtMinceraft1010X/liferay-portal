@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  * @author André de Oliveira
+ * @author Brian Wing Shun Chan
  */
 @Component(
 	immediate = true,
