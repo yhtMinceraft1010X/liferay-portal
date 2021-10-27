@@ -98,9 +98,7 @@ public abstract class BaseMVCActionCommand
 		sb.append("type=\"text_area\"><dynamic-content language-id=\"");
 		sb.append(languageId);
 		sb.append("\"><![CDATA[");
-		sb.append(
-			StringUtil.shorten(
-				content, _ELASTICSEARCH_FIELD_SIZE_LIMIT, "</html>"));
+		sb.append(StringUtil.shorten(content, _ELASTICSEARCH_FIELD_SIZE_LIMIT));
 		sb.append("]]></dynamic-content></dynamic-element></root>");
 
 		return sb.toString();
