@@ -166,10 +166,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectEntry objectEntry, String actionId)
 		throws PortalException {
 
-		if (objectEntry == null) {
-			return true;
-		}
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
