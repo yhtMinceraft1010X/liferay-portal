@@ -128,7 +128,7 @@ public class ImportGooglePlacesMVCActionCommand extends BaseMVCActionCommand {
 			String type)
 		throws Exception {
 
-		JSONObject jsonObject = _read(cityCode + "-" + type);
+		JSONObject jsonObject = _read(cityCode + "_" + type);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("results");
 
