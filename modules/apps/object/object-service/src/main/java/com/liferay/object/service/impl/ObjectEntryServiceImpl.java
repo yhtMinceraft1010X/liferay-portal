@@ -17,7 +17,6 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.security.permission.resource.ObjectEntryModelResourcePermissionTracker;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -79,9 +78,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 		else {
 			_checkModelResourcePermission(
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId),
-				objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
+				objectDefinitionId, objectEntry.getObjectEntryId(),
+				ActionKeys.UPDATE);
 		}
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
@@ -97,9 +95,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId()),
-			objectEntry.getObjectEntryId(), ActionKeys.DELETE);
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
@@ -113,9 +110,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			externalReferenceCode, companyId, groupId);
 
 		_checkModelResourcePermission(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId()),
-			objectEntry.getObjectEntryId(), ActionKeys.DELETE);
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.DELETE);
 
 		return objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}
@@ -129,8 +125,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		if (objectEntry != null) {
 			_checkModelResourcePermission(
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId()),
+				objectEntry.getObjectDefinitionId(),
 				objectEntry.getObjectEntryId(), ActionKeys.VIEW);
 		}
 
@@ -145,9 +140,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId()),
-			objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.VIEW);
 
 		return objectEntry;
 	}
@@ -161,9 +155,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			externalReferenceCode, companyId, groupId);
 
 		_checkModelResourcePermission(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId()),
-			objectEntry.getObjectEntryId(), ActionKeys.VIEW);
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.VIEW);
 
 		return objectEntry;
 	}
@@ -178,12 +171,26 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntryId);
 
 		_checkModelResourcePermission(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId()),
-			objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.UPDATE);
 
 		return objectEntryLocalService.updateObjectEntry(
 			getUserId(), objectEntryId, values, serviceContext);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(com.liferay.object=true)(model.class.name=*))"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<ObjectEntry> modelResourcePermission,
+		Map<String, Object> properties) {
+
+		String className = (String)properties.get("model.class.name");
+
+		_modelResourcePermissions.put(className, modelResourcePermission);
 	}
 
 	@Reference(
@@ -202,6 +209,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			resourceName, portletResourcePermission);
 	}
 
+	protected void unsetModelResourcePermission(
+		ModelResourcePermission<ObjectEntry> modelResourcePermission,
+		Map<String, Object> properties) {
+
+		String className = (String)properties.get("model.class.name");
+
+		_modelResourcePermissions.remove(className);
+	}
+
 	protected void unsetPortletResourcePermission(
 		PortletResourcePermission portletResourcePermission,
 		Map<String, Object> properties) {
@@ -212,14 +228,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	private void _checkModelResourcePermission(
-			ObjectDefinition objectDefinition, long objectEntryId,
-			String actionId)
+			long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinitionId);
+
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			_objectEntryModelResourcePermissionTracker.
-				getObjectEntryModelResourcePermission(
-					objectDefinition.getClassName());
+			_modelResourcePermissions.get(objectDefinition.getClassName());
 
 		modelResourcePermission.check(
 			getPermissionChecker(), objectEntryId, actionId);
@@ -240,12 +257,11 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			getPermissionChecker(), groupId, actionId);
 	}
 
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final Map<String, ModelResourcePermission<ObjectEntry>>
+		_modelResourcePermissions = new ConcurrentHashMap<>();
 
 	@Reference
-	private ObjectEntryModelResourcePermissionTracker
-		_objectEntryModelResourcePermissionTracker;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private final Map<String, PortletResourcePermission>
 		_portletResourcePermissions = new ConcurrentHashMap<>();
