@@ -165,3 +165,5 @@ window.onload = function () {
 		console.error(error.message);
 	}
 })();
+
+document.getElementById('zip').focus();
