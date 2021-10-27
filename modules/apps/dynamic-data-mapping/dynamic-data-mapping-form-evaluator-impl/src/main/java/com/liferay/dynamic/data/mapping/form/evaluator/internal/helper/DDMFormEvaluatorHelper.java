@@ -49,13 +49,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,7 +64,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -90,8 +85,6 @@ public class DDMFormEvaluatorHelper {
 		_ddmFormEvaluatorEvaluateRequest = ddmFormEvaluatorEvaluateRequest;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormPageChangeTracker = ddmFormPageChangeTracker;
-
-		createResourceBundle(_ddmFormEvaluatorEvaluateRequest.getLocale());
 
 		_ddmForm = ddmFormEvaluatorEvaluateRequest.getDDMForm();
 
@@ -189,20 +182,6 @@ public class DDMFormEvaluatorHelper {
 			).withDDMExpressionParameterAccessor(
 				ddmFormEvaluatorExpressionParameterAccessor
 			).build());
-	}
-
-	protected void createResourceBundle(Locale locale) {
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
-
-		ResourceBundle portalResourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(locale);
-
-		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		_resourceBundle = new AggregateResourceBundle(
-			portletResourceBundle, portalResourceBundle);
 	}
 
 	protected void evaluateDDMFormPageChange() {
@@ -639,7 +618,7 @@ public class DDMFormEvaluatorHelper {
 
 			if (parameterLocalizedValue != null) {
 				localizedValueString = parameterLocalizedValue.getString(
-					_resourceBundle.getLocale());
+					_ddmFormEvaluatorEvaluateRequest.getLocale());
 
 				if (Validator.isNull(localizedValueString)) {
 					localizedValueString = parameterLocalizedValue.getString(
@@ -691,12 +670,13 @@ public class DDMFormEvaluatorHelper {
 
 			if (errorMessageLocalizedValue != null) {
 				errorMessage = errorMessageLocalizedValue.getString(
-					_resourceBundle.getLocale());
+					_ddmFormEvaluatorEvaluateRequest.getLocale());
 			}
 
 			if (Validator.isNull(errorMessage)) {
 				errorMessage = LanguageUtil.get(
-					_resourceBundle, "this-field-is-invalid");
+					_ddmFormEvaluatorEvaluateRequest.getLocale(),
+					"this-field-is-invalid");
 			}
 
 			builder.withParameter("errorMessage", errorMessage);
@@ -988,7 +968,8 @@ public class DDMFormEvaluatorHelper {
 		).forEach(
 			ddmFormEvaluatorFieldContextKey -> {
 				String requiredErrorMessage = LanguageUtil.get(
-					_resourceBundle, "this-field-is-required");
+					_ddmFormEvaluatorEvaluateRequest.getLocale(),
+					"this-field-is-required");
 
 				DDMFormField ddmFormField = _ddmFormFieldsMap.get(
 					ddmFormEvaluatorFieldContextKey.getName());
@@ -1070,7 +1051,8 @@ public class DDMFormEvaluatorHelper {
 			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
 				ddmFormEvaluatorFieldContextKey,
 				LanguageUtil.get(
-					_resourceBundle, "input-format-is-not-satisfied"))
+					_ddmFormEvaluatorEvaluateRequest.getLocale(),
+					"input-format-is-not-satisfied"))
 		);
 	}
 
@@ -1090,7 +1072,9 @@ public class DDMFormEvaluatorHelper {
 		).forEach(
 			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
 				ddmFormEvaluatorFieldContextKey,
-				LanguageUtil.get(_resourceBundle, "the-field-value-is-invalid"))
+				LanguageUtil.get(
+					_ddmFormEvaluatorEvaluateRequest.getLocale(),
+					"the-field-value-is-invalid"))
 		);
 	}
 
@@ -1113,6 +1097,5 @@ public class DDMFormEvaluatorHelper {
 	private final DDMFormPageChangeTracker _ddmFormPageChangeTracker;
 	private List<String> _evaluatedActions;
 	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
-	private ResourceBundle _resourceBundle;
 
 }

@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -86,7 +84,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -105,19 +102,13 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@PrepareForTest(ResourceBundleLoaderUtil.class)
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil"
-)
 public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 	@Before
@@ -125,7 +116,6 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpPortalUtil();
-		setUpResourceBundleLoaderUtil();
 
 		_ddmExpressionFactory = new DDMExpressionFactoryImpl();
 	}
@@ -2022,7 +2012,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(ResourceBundle.class),
+				Matchers.any(Locale.class),
 				Matchers.eq("input-format-is-not-satisfied"))
 		).thenReturn(
 			"Input format is not satisfied."
@@ -2030,7 +2020,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(ResourceBundle.class),
+				Matchers.any(Locale.class),
 				Matchers.eq("this-field-is-invalid"))
 		).thenReturn(
 			"This field is invalid."
@@ -2038,7 +2028,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(ResourceBundle.class),
+				Matchers.any(Locale.class),
 				Matchers.eq("this-field-is-required"))
 		).thenReturn(
 			"This field is required."
@@ -2065,19 +2055,6 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		);
 
 		portalUtil.setPortal(portal);
-	}
-
-	protected void setUpResourceBundleLoaderUtil() {
-		PowerMockito.mockStatic(ResourceBundleLoaderUtil.class);
-
-		ResourceBundleLoader portalResourceBundleLoader = Mockito.mock(
-			ResourceBundleLoader.class);
-
-		Mockito.when(
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader()
-		).thenReturn(
-			portalResourceBundleLoader
-		);
 	}
 
 	private DDMFormValues _createDDMFormFieldValuesWithValue(
