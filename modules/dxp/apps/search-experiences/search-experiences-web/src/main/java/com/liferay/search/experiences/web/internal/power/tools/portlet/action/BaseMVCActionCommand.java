@@ -73,27 +73,21 @@ public abstract class BaseMVCActionCommand
 	@Reference
 	protected JSONFactory jsonFactory;
 
-	private String _generateInstanceId() {
-		StringBuilder instanceId = new StringBuilder(8);
+	private String _toXML(String content, String languageId) {
+		StringBundler sb = new StringBundler(18);
+
+		sb.append("<root available-locales=\"en_US\" default-locale=\"");
+		sb.append(languageId);
+		sb.append("\"><dynamic-element instance-id=\"");
 
 		String key = PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3;
 
 		for (int i = 0; i < 8; i++) {
 			int pos = (int)Math.floor(Math.random() * key.length());
 
-			instanceId.append(key.charAt(pos));
+			sb.append(key.charAt(pos));
 		}
 
-		return instanceId.toString();
-	}
-
-	private String _toXML(String content, String languageId) {
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("<root available-locales=\"en_US\" default-locale=\"");
-		sb.append(languageId);
-		sb.append("\"><dynamic-element instance-id=\"");
-		sb.append(_generateInstanceId());
 		sb.append("\" index-type=\"text\" name=\"content\" ");
 		sb.append("type=\"text_area\"><dynamic-content language-id=\"");
 		sb.append(languageId);
