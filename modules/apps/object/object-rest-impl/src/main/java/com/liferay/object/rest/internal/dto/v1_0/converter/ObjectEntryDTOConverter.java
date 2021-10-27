@@ -71,8 +71,6 @@ public class ObjectEntryDTOConverter
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			dtoConverterContext, objectEntry);
 
-		Locale locale = dtoConverterContext.getLocale();
-
 		return new ObjectEntry() {
 			{
 				actions = dtoConverterContext.getActions();
@@ -84,8 +82,9 @@ public class ObjectEntryDTOConverter
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
 				properties = _toProperties(
-					dtoConverterContext.isAcceptAllLanguages(), locale,
-					objectDefinition, objectEntry);
+					dtoConverterContext.isAcceptAllLanguages(),
+					dtoConverterContext.getLocale(), objectDefinition,
+					objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
 				status = new Status() {
 					{
@@ -93,7 +92,8 @@ public class ObjectEntryDTOConverter
 						label = WorkflowConstants.getStatusLabel(
 							objectEntry.getStatus());
 						label_i18n = LanguageUtil.get(
-							LanguageResources.getResourceBundle(locale),
+							LanguageResources.getResourceBundle(
+								dtoConverterContext.getLocale()),
 							WorkflowConstants.getStatusLabel(
 								objectEntry.getStatus()));
 					}
@@ -147,13 +147,13 @@ public class ObjectEntryDTOConverter
 		ObjectDefinition objectDefinition,
 		com.liferay.object.model.ObjectEntry objectEntry) {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
 		Map<String, Object> map = new HashMap<>();
 
 		Map<String, Serializable> values = objectEntry.getValues();
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
 			long listTypeDefinitionId = objectField.getListTypeDefinitionId();
