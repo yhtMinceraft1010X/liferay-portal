@@ -414,11 +414,13 @@ public class ObjectEntryDisplayContext {
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
 		boolean readOnly = _objectEntryService.hasModelResourcePermission(
-			_objectEntry, ActionKeys.UPDATE);
+			getObjectEntry(), ActionKeys.UPDATE);
+
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				_objectEntry.getObjectDefinitionId());
+				objectDefinition.getObjectDefinitionId());
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
