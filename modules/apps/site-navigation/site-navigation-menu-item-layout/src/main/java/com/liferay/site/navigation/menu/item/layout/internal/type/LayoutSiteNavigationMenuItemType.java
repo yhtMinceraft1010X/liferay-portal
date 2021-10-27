@@ -324,9 +324,9 @@ public class LayoutSiteNavigationMenuItemType
 			UnicodePropertiesBuilder.fastLoad(
 				siteNavigationMenuItem.getTypeSettings()
 			).put(
-				"layoutUuid", layout.getUuid()
-			).put(
 				"groupId", String.valueOf(layout.getGroupId())
+			).put(
+				"layoutUuid", layout.getUuid()
 			).put(
 				"privateLayout", String.valueOf(layout.isPrivateLayout())
 			).buildString());
