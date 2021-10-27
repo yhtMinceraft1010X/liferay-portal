@@ -109,7 +109,7 @@
 																"classPKReferences": {
 																	"en_US": {
 																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/bootcamp_logo.svg$]"
+																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/masterclass_logo.svg$]"
 																	}
 																},
 																"fragmentImageConfiguration": {
@@ -129,7 +129,7 @@
 											"fragmentStyle": {
 												"marginBottom": "7",
 												"maxWidth": "100%",
-												"width": "148px"
+												"width": "162px"
 											}
 										},
 										"type": "Fragment"

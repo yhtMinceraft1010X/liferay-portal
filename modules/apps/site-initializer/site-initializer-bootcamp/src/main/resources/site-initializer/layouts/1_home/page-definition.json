@@ -471,7 +471,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Employment Rate"
+																"en_US": "Student Nationalities"
 															}
 														}
 													}
@@ -505,7 +505,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "91%"
+																"en_US": "+70"
 															}
 														}
 													}
@@ -623,7 +623,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Median Salary"
+																"en_US": "Hired Within"
 															}
 														}
 													}
@@ -657,7 +657,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "$66k"
+																"en_US": "24m."
 															}
 														}
 													}
@@ -775,7 +775,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Hired Within"
+																"en_US": "Employment Rate"
 															}
 														}
 													}
@@ -809,7 +809,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "24m."
+																"en_US": "91%"
 															}
 														}
 													}
