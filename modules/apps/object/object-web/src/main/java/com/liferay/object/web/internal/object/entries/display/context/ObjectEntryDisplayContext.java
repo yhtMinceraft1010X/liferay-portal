@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -345,14 +346,14 @@ public class ObjectEntryDisplayContext {
 
 	private void _addDDMFormFields(
 			DDMForm ddmForm, List<ObjectField> objectFields,
-			ObjectLayoutTab objectLayoutTab)
+			ObjectLayoutTab objectLayoutTab, boolean readOnly)
 		throws PortalException {
 
 		for (ObjectLayoutBox objectLayoutBox :
 				objectLayoutTab.getObjectLayoutBoxes()) {
 
 			List<DDMFormField> nestedDDMFormFields = _getNestedDDMFormFields(
-				objectFields, objectLayoutBox);
+				objectFields, objectLayoutBox, readOnly);
 
 			if (nestedDDMFormFields.isEmpty()) {
 				continue;
@@ -408,15 +409,16 @@ public class ObjectEntryDisplayContext {
 	private DDMForm _getDDMForm(ObjectLayoutTab objectLayoutTab)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.addAvailableLocale(_objectRequestHelper.getLocale());
 
+		boolean readOnly = _objectEntryService.hasModelResourcePermission(
+			_objectEntry, ActionKeys.UPDATE);
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
+				_objectEntry.getObjectDefinitionId());
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
@@ -424,11 +426,12 @@ public class ObjectEntryDisplayContext {
 					continue;
 				}
 
-				ddmForm.addDDMFormField(_getDDMFormField(objectField));
+				ddmForm.addDDMFormField(
+					_getDDMFormField(objectField, readOnly));
 			}
 		}
 		else {
-			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab);
+			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab, readOnly);
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());
@@ -436,7 +439,8 @@ public class ObjectEntryDisplayContext {
 		return ddmForm;
 	}
 
-	private DDMFormField _getDDMFormField(ObjectField objectField) {
+	private DDMFormField _getDDMFormField(
+		ObjectField objectField, boolean readOnly) {
 
 		// TODO Store the type and the object field type in the database
 
@@ -457,6 +461,7 @@ public class ObjectEntryDisplayContext {
 
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
+		ddmFormField.setReadOnly(readOnly);
 		ddmFormField.setRequired(objectField.isRequired());
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
@@ -557,7 +562,8 @@ public class ObjectEntryDisplayContext {
 	}
 
 	private List<DDMFormField> _getNestedDDMFormFields(
-			List<ObjectField> objectFields, ObjectLayoutBox objectLayoutBox)
+			List<ObjectField> objectFields, ObjectLayoutBox objectLayoutBox,
+			boolean readOnly)
 		throws PortalException {
 
 		List<DDMFormField> nestedDDMFormFields = new ArrayList<>();
@@ -586,7 +592,8 @@ public class ObjectEntryDisplayContext {
 					_objectFieldNames.put(
 						objectLayoutColumn.getObjectFieldId(),
 						objectField.getName());
-					nestedDDMFormFields.add(_getDDMFormField(objectField));
+					nestedDDMFormFields.add(
+						_getDDMFormField(objectField, readOnly));
 				}
 			}
 		}
