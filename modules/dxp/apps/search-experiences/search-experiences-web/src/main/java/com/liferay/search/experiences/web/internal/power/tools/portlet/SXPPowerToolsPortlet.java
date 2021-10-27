@@ -23,12 +23,14 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Petteri Karttunen
+ * @author André de Oliveira
+ * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-sxp-power-toys",
-		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.display-category=category.search",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/sxp_blueprint_admin/view.jsp",
 		"javax.portlet.name=" + SXPPortletKeys.SXP_POWER_TOOLS,
