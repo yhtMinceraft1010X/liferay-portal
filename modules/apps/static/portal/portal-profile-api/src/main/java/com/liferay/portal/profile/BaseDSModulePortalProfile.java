@@ -41,7 +41,8 @@ public class BaseDSModulePortalProfile implements PortalProfile {
 
 	protected void init(
 		ComponentContext componentContext,
-		Collection<String> supportedPortalProfileNames, String... componentNames) {
+		Collection<String> supportedPortalProfileNames,
+		String... componentNames) {
 
 		_componentContext = componentContext;
 
