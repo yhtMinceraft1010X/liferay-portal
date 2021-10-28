@@ -84,7 +84,6 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 			actionRequest, "name", "Plan " + System.currentTimeMillis());
 		String taskItemDelegateName = ParamUtil.getString(
 			actionRequest, "taskItemDelegateName");
-
 		boolean template = ParamUtil.getBoolean(actionRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =

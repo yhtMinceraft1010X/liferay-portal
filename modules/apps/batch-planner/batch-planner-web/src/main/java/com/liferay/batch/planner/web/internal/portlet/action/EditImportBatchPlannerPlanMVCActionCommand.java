@@ -73,11 +73,11 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.IMPORT)) {
-			_addBatchPlannerPlan(actionRequest);
-		}
-		else if (cmd.equals(Constants.DELETE)) {
+		if (cmd.equals(Constants.DELETE)) {
 			_deleteBatchPlannerPlan(actionRequest);
+		}
+		else if (cmd.equals(Constants.IMPORT)) {
+			_addBatchPlannerPlan(actionRequest);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			_updateBatchPlannerPlan(actionRequest);
