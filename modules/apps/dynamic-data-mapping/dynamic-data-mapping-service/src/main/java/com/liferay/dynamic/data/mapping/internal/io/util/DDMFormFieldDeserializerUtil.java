@@ -116,16 +116,16 @@ public class DDMFormFieldDeserializerUtil {
 			DDMForm ddmForm = ddmFormFieldTypeSetting.getDDMForm();
 
 			return _deserializeDDMFormFieldValidation(
-				jsonFactory, serializedDDMFormFieldProperty,
-				ddmForm.getAvailableLocales());
+				ddmForm.getAvailableLocales(), jsonFactory,
+				serializedDDMFormFieldProperty);
 		}
 
 		return serializedDDMFormFieldProperty;
 	}
 
 	private static DDMFormFieldValidation _deserializeDDMFormFieldValidation(
-			JSONFactory jsonFactory, String serializedDDMFormFieldProperty,
-			Set<Locale> availableLocales)
+			Set<Locale> availableLocales, JSONFactory jsonFactory,
+			String serializedDDMFormFieldProperty)
 		throws PortalException {
 
 		DDMFormFieldValidation ddmFormFieldValidation =
