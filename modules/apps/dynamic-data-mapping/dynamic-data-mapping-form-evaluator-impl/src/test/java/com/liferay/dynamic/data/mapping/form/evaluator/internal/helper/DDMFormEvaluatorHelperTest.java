@@ -315,7 +315,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		ddmForm.addDDMFormField(
 			createDDMFormField("field1", "numeric", FieldConstants.DOUBLE));
 
-		BigDecimal expectedResponseFirstCalculateDDMFormRule = new BigDecimal(
+		BigDecimal expectedValue1 = new BigDecimal(
 			1);
 
 		ddmForm.addDDMFormRule(
@@ -323,10 +323,10 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 				Arrays.asList(
 					String.format(
 						"calculate(\"field1\", %s)",
-						expectedResponseFirstCalculateDDMFormRule.toString())),
+						expectedValue1.toString())),
 				"equals(getValue(\"field0\"), \"field0_value\")"));
 
-		BigDecimal expectedResponseSecondCalculateDDMFormRule = new BigDecimal(
+		BigDecimal expectedValue2 = new BigDecimal(
 			2);
 
 		ddmForm.addDDMFormRule(
@@ -334,7 +334,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 				Arrays.asList(
 					String.format(
 						"calculate(\"field1\", %s)",
-						expectedResponseSecondCalculateDDMFormRule.toString())),
+						expectedValue2.toString())),
 				"equals(getValue(\"field0\"), \"field0_value2\")"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
@@ -363,7 +363,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormFieldsPropertyChanges.get(ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedResponseFirstCalculateDDMFormRule,
+			expectedValue1,
 			ddmFormFieldPropertyChanges.get("value"));
 
 		ddmFormValues.addDDMFormFieldValue(
@@ -380,7 +380,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedResponseSecondCalculateDDMFormRule,
+			expectedValue2,
 			ddmFormFieldPropertyChanges.get("value"));
 
 		ddmFormValues.addDDMFormFieldValue(
@@ -397,7 +397,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedResponseFirstCalculateDDMFormRule,
+			expectedValue1,
 			ddmFormFieldPropertyChanges.get("value"));
 	}
 
