@@ -66,6 +66,7 @@ export const FormBasicBusinessInformation = ({form}) => {
 					<ControlledInput
 						control={control}
 						inputProps={{
+							autoFocus: true,
 							maxLength: 256,
 							onBlur: onFirstNameSettled,
 						}}
