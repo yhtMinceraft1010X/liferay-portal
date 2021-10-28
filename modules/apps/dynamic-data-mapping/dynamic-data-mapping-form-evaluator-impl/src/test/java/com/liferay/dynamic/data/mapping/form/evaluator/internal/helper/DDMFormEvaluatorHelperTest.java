@@ -315,8 +315,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		ddmForm.addDDMFormField(
 			createDDMFormField("field1", "numeric", FieldConstants.DOUBLE));
 
-		BigDecimal expectedValue1 = new BigDecimal(
-			1);
+		BigDecimal expectedValue1 = new BigDecimal(1);
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
@@ -326,8 +325,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 						expectedValue1.toString())),
 				"equals(getValue(\"field0\"), \"field0_value\")"));
 
-		BigDecimal expectedValue2 = new BigDecimal(
-			2);
+		BigDecimal expectedValue2 = new BigDecimal(2);
 
 		ddmForm.addDDMFormRule(
 			new DDMFormRule(
@@ -363,8 +361,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormFieldsPropertyChanges.get(ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedValue1,
-			ddmFormFieldPropertyChanges.get("value"));
+			expectedValue1, ddmFormFieldPropertyChanges.get("value"));
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
@@ -380,8 +377,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedValue2,
-			ddmFormFieldPropertyChanges.get("value"));
+			expectedValue2, ddmFormFieldPropertyChanges.get("value"));
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
@@ -397,8 +393,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 			ddmFormEvaluatorFieldContextKey);
 
 		Assert.assertEquals(
-			expectedValue1,
-			ddmFormFieldPropertyChanges.get("value"));
+			expectedValue1, ddmFormFieldPropertyChanges.get("value"));
 	}
 
 	@Test
