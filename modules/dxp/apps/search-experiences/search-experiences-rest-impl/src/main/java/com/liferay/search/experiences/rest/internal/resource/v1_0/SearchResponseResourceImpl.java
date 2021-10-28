@@ -151,22 +151,21 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		}
 
 		documentFields.put(
-			"assetTitle",
-			new DocumentField() {
-				{
-					values = new String[] {
-						assetRenderer.getTitle(
-							contextAcceptLanguage.getPreferredLocale())
-					};
-				}
-			});
-
-		documentFields.put(
 			"assetSearchSummary",
 			new DocumentField() {
 				{
 					values = new String[] {
 						assetRenderer.getSearchSummary(
+							contextAcceptLanguage.getPreferredLocale())
+					};
+				}
+			});
+		documentFields.put(
+			"assetTitle",
+			new DocumentField() {
+				{
+					values = new String[] {
+						assetRenderer.getTitle(
 							contextAcceptLanguage.getPreferredLocale())
 					};
 				}
