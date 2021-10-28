@@ -324,7 +324,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 					String.format(
 						"calculate(\"field1\", %s)",
 						expectedResponseFirstCalculateDDMFormRule.toString())),
-				"equals(getValue(\"field0\"),\"field0_value\")"));
+				"equals(getValue(\"field0\"), \"field0_value\")"));
 
 		BigDecimal expectedResponseSecondCalculateDDMFormRule = new BigDecimal(
 			2);
@@ -335,7 +335,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 					String.format(
 						"calculate(\"field1\", %s)",
 						expectedResponseSecondCalculateDDMFormRule.toString())),
-				"equals(getValue(\"field0\"),\"field0_value2\")"));
+				"equals(getValue(\"field0\"), \"field0_value2\")"));
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
