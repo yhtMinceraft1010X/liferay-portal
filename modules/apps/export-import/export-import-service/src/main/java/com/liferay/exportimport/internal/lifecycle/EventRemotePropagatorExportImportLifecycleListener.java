@@ -146,11 +146,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 				StringPool.BLANK
 			));
 
-		if (remoteAddress.equals("localhost")) {
-			return false;
-		}
-
-		return true;
+		return !remoteAddress.equals("localhost");
 	}
 
 	private Optional<ExportImportConfiguration> _getExportImportConfiguration(
