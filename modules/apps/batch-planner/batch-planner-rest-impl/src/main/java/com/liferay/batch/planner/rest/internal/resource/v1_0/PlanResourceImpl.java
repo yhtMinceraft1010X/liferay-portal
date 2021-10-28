@@ -28,8 +28,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -127,28 +125,6 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		return _toPlan(batchPlannerPlan);
 	}
 
-	private Mapping[] _getMappings(BatchPlannerPlan batchPlannerPlan)
-		throws Exception {
-
-		List<BatchPlannerMapping> batchPlannerMappings =
-			_batchPlannerMappingService.getBatchPlannerMappings(
-				batchPlannerPlan.getBatchPlannerPlanId());
-
-		return TransformUtil.transformToArray(
-			batchPlannerMappings, this::_toMapping, Mapping.class);
-	}
-
-	private Policy[] _getPolicies(BatchPlannerPlan batchPlannerPlan)
-		throws Exception {
-
-		List<BatchPlannerPolicy> batchPlannerPolicies =
-			_batchPlannerPolicyService.getBatchPlannerPolicies(
-				batchPlannerPlan.getBatchPlannerPlanId());
-
-		return TransformUtil.transformToArray(
-			batchPlannerPolicies, this::_toPolicy, Policy.class);
-	}
-
 	private Mapping _toMapping(BatchPlannerMapping batchPlannerMapping) {
 		return new Mapping() {
 			{
@@ -172,9 +148,17 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				externalURL = batchPlannerPlan.getExternalURL();
 				id = batchPlannerPlan.getBatchPlannerPlanId();
 				internalClassName = batchPlannerPlan.getInternalClassName();
-				mappings = _getMappings(batchPlannerPlan);
+				mappings = TransformUtil.transformToArray(
+					_batchPlannerMappingService.getBatchPlannerMappings(
+						batchPlannerPlan.getBatchPlannerPlanId()),
+					batchPlannerMapping -> _toMapping(batchPlannerMapping),
+					Mapping.class);
 				name = batchPlannerPlan.getName();
-				policies = _getPolicies(batchPlannerPlan);
+				policies = TransformUtil.transformToArray(
+					_batchPlannerPolicyService.getBatchPlannerPolicies(
+						batchPlannerPlan.getBatchPlannerPlanId()),
+					batchPlannerPolicy -> _toPolicy(batchPlannerPolicy),
+					Policy.class);
 				taskItemDelegateName =
 					batchPlannerPlan.getTaskItemDelegateName();
 			}
