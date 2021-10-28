@@ -738,13 +738,13 @@ public class DDMFormEvaluatorHelper {
 
 				Stream<String> stream = actions.stream();
 
-				List<String> actionsNotEvaluated = stream.filter(
+				List<String> unevaluatedActions = stream.filter(
 					action -> !_evaluatedActions.contains(action)
 				).collect(
 					Collectors.toList()
 				);
 
-				copyDDMFormRule.setActions(actionsNotEvaluated);
+				copyDDMFormRule.setActions(unevaluatedActions);
 			}
 
 			_ddmFormEvaluatorRuleHelper.checkFieldAffectedByAction(
