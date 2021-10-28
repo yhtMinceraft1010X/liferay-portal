@@ -141,37 +141,6 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 		};
 	}
 
-	private void _addAssetEntryFields(
-		Map<String, DocumentField> documentFields, Map<String, Field> fields) {
-
-		AssetRenderer<?> assetRenderer = _getAssetRenderer(fields);
-
-		if (assetRenderer == null) {
-			return;
-		}
-
-		documentFields.put(
-			"assetSearchSummary",
-			new DocumentField() {
-				{
-					values = new String[] {
-						assetRenderer.getSearchSummary(
-							contextAcceptLanguage.getPreferredLocale())
-					};
-				}
-			});
-		documentFields.put(
-			"assetTitle",
-			new DocumentField() {
-				{
-					values = new String[] {
-						assetRenderer.getTitle(
-							contextAcceptLanguage.getPreferredLocale())
-					};
-				}
-			});
-	}
-
 	private AssetRenderer<?> _getAssetRenderer(Map<String, Field> fields) {
 		try {
 			Field entryClassNameField = fields.get(
@@ -214,9 +183,36 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 					});
 			});
 
-		if (MapUtil.isNotEmpty(fields)) {
-			_addAssetEntryFields(documentFields, fields);
+		if (MapUtil.isEmpty(fields)) {
+			return documentFields;
 		}
+
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(fields);
+
+		if (assetRenderer == null) {
+			return documentFields;
+		}
+
+		documentFields.put(
+			"assetSearchSummary",
+			new DocumentField() {
+				{
+					values = new String[] {
+						assetRenderer.getSearchSummary(
+							contextAcceptLanguage.getPreferredLocale())
+					};
+				}
+			});
+		documentFields.put(
+			"assetTitle",
+			new DocumentField() {
+				{
+					values = new String[] {
+						assetRenderer.getTitle(
+							contextAcceptLanguage.getPreferredLocale())
+					};
+				}
+			});
 
 		return documentFields;
 	}
