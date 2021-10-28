@@ -47,8 +47,8 @@ public class DiscardArticleDraftMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String articleId = ParamUtil.getString(actionRequest, "articleId");
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		JournalArticle article = _journalArticleService.getLatestArticle(
 			groupId, articleId, WorkflowConstants.STATUS_DRAFT);
