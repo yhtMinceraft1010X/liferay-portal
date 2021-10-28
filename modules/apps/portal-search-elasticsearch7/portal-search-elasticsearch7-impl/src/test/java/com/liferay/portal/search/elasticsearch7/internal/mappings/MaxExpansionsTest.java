@@ -94,6 +94,7 @@ public class MaxExpansionsTest extends BaseMaxExpansionsTestCase {
 					"sidecarJVMOptions", "-Xms512m|-Xmx512m");
 
 				setElasticsearchFixture(elasticsearchFixture);
+
 				setLiferayMappingsAddedToIndex(true);
 			}
 		};
