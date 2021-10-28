@@ -22,6 +22,8 @@ import com.liferay.search.experiences.web.internal.power.tools.portlet.action.Im
 import com.liferay.search.experiences.web.internal.power.tools.portlet.action.ImportWikipediaMVCActionCommand;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -35,15 +37,16 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		if (!PropsValues.SEARCH_EXPERIENCES_POWER_TOOLS_ENABLED) {
-			return;
+		List<String> supportedPortalProfileNames = Collections.emptyList();
+
+		if (PropsValues.SEARCH_EXPERIENCES_POWER_TOOLS_ENABLED) {
+			supportedPortalProfileNames = Arrays.asList(
+				PortalProfile.PORTAL_PROFILE_NAME_CE,
+				PortalProfile.PORTAL_PROFILE_NAME_DXP);
 		}
 
 		init(
-			componentContext,
-			Arrays.asList(
-				PortalProfile.PORTAL_PROFILE_NAME_CE,
-				PortalProfile.PORTAL_PROFILE_NAME_DXP),
+			componentContext, supportedPortalProfileNames,
 			ImportGooglePlacesMVCActionCommand.class.getName(),
 			ImportWikipediaMVCActionCommand.class.getName(),
 			SXPPowerToolsPortlet.class.getName());
