@@ -148,7 +148,7 @@ public class AttachmentResourceImpl
 					WorkflowConstants.STATUS_APPROVED,
 					pagination.getStartPosition(), pagination.getEndPosition()),
 				cpAttachmentFileEntry -> _toAttachment(
-					cpAttachmentFileEntry, accountId)),
+					accountId, cpAttachmentFileEntry)),
 			pagination,
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(
 				_classNameLocalService.getClassNameId(
@@ -158,7 +158,7 @@ public class AttachmentResourceImpl
 	}
 
 	private Attachment _toAttachment(
-			CPAttachmentFileEntry cpAttachmentFileEntry, long accountId)
+			long accountId, CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws Exception {
 
 		return _attachmentDTOConverter.toDTO(
