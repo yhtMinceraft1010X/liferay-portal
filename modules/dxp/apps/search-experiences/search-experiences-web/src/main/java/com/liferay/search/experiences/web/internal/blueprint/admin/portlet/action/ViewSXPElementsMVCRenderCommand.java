@@ -96,7 +96,7 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 				viewSXPElementEntriesManagementToolbarDisplayContext);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException, portalException);
 
 			SessionErrors.add(renderRequest, portalException.getClass());
 		}

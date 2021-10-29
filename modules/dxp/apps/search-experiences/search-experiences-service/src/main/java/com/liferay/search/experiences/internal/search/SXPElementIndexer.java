@@ -201,8 +201,7 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							portalException.getMessage(), portalException);
+						_log.warn(portalException, portalException);
 					}
 				}
 			});

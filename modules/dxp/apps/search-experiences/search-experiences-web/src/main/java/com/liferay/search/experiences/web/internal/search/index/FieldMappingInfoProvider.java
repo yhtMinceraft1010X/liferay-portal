@@ -146,7 +146,7 @@ public class FieldMappingInfoProvider {
 				"JSONObject/properties");
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException.getMessage(), jsonException);
+			_log.error(jsonException, jsonException);
 		}
 
 		return null;
