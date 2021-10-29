@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.model.SXPBlueprint;
-import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintPermission;
+import com.liferay.search.experiences.web.internal.security.permission.resource.SXPPermission;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class ViewSXPBlueprintsManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!SXPBlueprintPermission.contains(
+		if (!SXPPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				SXPActionKeys.ADD_SXP_BLUEPRINT)) {
