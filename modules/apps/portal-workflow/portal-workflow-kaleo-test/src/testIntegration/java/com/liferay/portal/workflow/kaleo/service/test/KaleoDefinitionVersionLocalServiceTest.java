@@ -72,18 +72,18 @@ public class KaleoDefinitionVersionLocalServiceTest
 		KaleoDefinitionVersion kaleoDefinitionVersion1 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					"Description 1", "Name 1", "First definition"));
+					"Name 1", "First definition", "Description 1"));
 
 		KaleoDefinitionVersion kaleoDefinitionVersion2 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					RandomTestUtil.randomString(), "Name 2", "My title 2"));
+					"Name 2", "My title 2", RandomTestUtil.randomString()));
 
 		KaleoDefinitionVersion kaleoDefinitionVersion3 =
 			getLatestKaleoDefinitionVersion(
 				addKaleoDefinition(
-					"Description 3", RandomTestUtil.randomString(),
-					"My title 3"));
+					RandomTestUtil.randomString(), "My title 3",
+					"Description 3"));
 
 		Assert.assertEquals(
 			Arrays.asList(kaleoDefinitionVersion1, kaleoDefinitionVersion3),

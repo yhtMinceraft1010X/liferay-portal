@@ -106,7 +106,7 @@ public abstract class BaseKaleoLocalServiceTestCase {
 	}
 
 	protected KaleoDefinition addKaleoDefinition(
-			String description, String name, String title)
+			String name, String title, String description)
 		throws IOException, PortalException {
 
 		KaleoDefinition kaleoDefinition =
