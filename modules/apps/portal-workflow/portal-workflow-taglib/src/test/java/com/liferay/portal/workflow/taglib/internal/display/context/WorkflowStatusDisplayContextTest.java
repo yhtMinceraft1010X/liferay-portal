@@ -61,7 +61,6 @@ public class WorkflowStatusDisplayContextTest {
 
 		_setAttribute(
 			"bean", mockHttpServletRequest, Mockito.mock(Object.class));
-
 		_setAttribute("status", mockHttpServletRequest, 1);
 
 		Assert.assertEquals(
@@ -80,10 +79,9 @@ public class WorkflowStatusDisplayContextTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
+		_setAttribute("status", mockHttpServletRequest, 2);
 		_setAttribute(
 			"statusMessage", mockHttpServletRequest, "Status Message");
-
-		_setAttribute("status", mockHttpServletRequest, 2);
 
 		Assert.assertEquals(
 			"Status Message",
