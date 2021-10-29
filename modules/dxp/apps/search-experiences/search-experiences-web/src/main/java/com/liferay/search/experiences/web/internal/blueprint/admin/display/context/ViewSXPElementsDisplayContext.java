@@ -31,7 +31,7 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementService;
-import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission;
+import com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +59,7 @@ public class ViewSXPElementsDisplayContext
 	public List<String> getAvailableActions(SXPElement sxpElement)
 		throws PortalException {
 
-		if (SXPElementEntryPermission.contains(
+		if (SXPElementPermission.contains(
 				themeDisplay.getPermissionChecker(), sxpElement,
 				ActionKeys.DELETE)) {
 

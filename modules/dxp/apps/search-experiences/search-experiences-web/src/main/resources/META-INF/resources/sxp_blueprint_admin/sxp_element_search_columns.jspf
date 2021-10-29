@@ -39,7 +39,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 		>
 			<h4>
 				<c:choose>
-					<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
+					<c:when test="<%= SXPElementPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 						<aui:a href="<%= editSXPElementURL %>">
 							<%= HtmlUtil.escape(title) %>
 						</aui:a>
@@ -78,7 +78,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 			name="title"
 		>
 			<c:choose>
-				<c:when test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
+				<c:when test="<%= SXPElementPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 					<aui:a href="<%= editSXPElementURL %>">
 						<%= HtmlUtil.escape(title) %>
 

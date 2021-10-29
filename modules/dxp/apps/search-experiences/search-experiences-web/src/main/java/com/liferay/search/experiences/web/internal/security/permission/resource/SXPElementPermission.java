@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SXPElementEntryPermission.class)
-public class SXPElementEntryPermission {
+@Component(immediate = true, service = SXPElementPermission.class)
+public class SXPElementPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long entryId, String actionKey)

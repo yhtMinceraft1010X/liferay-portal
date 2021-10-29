@@ -48,7 +48,7 @@ page import="com.liferay.search.experiences.web.internal.blueprint.admin.display
 page import="com.liferay.search.experiences.web.internal.blueprint.admin.display.context.ViewSXPElementsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.search.experiences.web.internal.constants.SXPWebKeys" %><%@
 page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission" %><%@
-page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementEntryPermission" %>
+page import="com.liferay.search.experiences.web.internal.security.permission.resource.SXPElementPermission" %>
 
 <%@ page import="java.util.Date" %>
 

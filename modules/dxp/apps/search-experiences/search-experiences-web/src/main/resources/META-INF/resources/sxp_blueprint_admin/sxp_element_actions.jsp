@@ -33,7 +33,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SXPElementPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editSXPElementURL">
 			<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_element" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -46,7 +46,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, companyGroupId, SXPActionKeys.ADD_SXP_ELEMENT) %>">
+	<c:if test="<%= SXPElementPermission.contains(permissionChecker, companyGroupId, SXPActionKeys.ADD_SXP_ELEMENT) %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_element" var="copySXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
@@ -68,7 +68,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		url="<%= exportSXPElementURL %>"
 	/>
 
-	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= SXPElementPermission.contains(permissionChecker, companyGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= SXPElement.class.getName() %>"
 			modelResourceDescription="<%= sxpElement.getTitle(locale) %>"
@@ -86,7 +86,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SXPElementPermission.contains(permissionChecker, sxpElement, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="hideSXPElementURL">
 			<portlet:param name="<%= Constants.CMD %>" value="hide" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -100,7 +100,7 @@ long companyGroupId = themeDisplay.getCompanyGroupId();
 		/>
 	</c:if>
 
-	<c:if test="<%= SXPElementEntryPermission.contains(permissionChecker, sxpElement, ActionKeys.DELETE) && !sxpElement.getReadOnly() %>">
+	<c:if test="<%= SXPElementPermission.contains(permissionChecker, sxpElement, ActionKeys.DELETE) && !sxpElement.getReadOnly() %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_element" var="deleteSXPElementURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpElementId" value="<%= String.valueOf(sxpElementId) %>" />
