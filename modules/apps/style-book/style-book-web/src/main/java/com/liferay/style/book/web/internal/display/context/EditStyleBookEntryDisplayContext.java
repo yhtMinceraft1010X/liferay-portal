@@ -83,11 +83,11 @@ public class EditStyleBookEntryDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_itemSelector = (ItemSelector)_renderRequest.getAttribute(
-			ItemSelector.class.getName());
 		_frontendTokenDefinitionRegistry =
 			(FrontendTokenDefinitionRegistry)_renderRequest.getAttribute(
 				FrontendTokenDefinitionRegistry.class.getName());
+		_itemSelector = (ItemSelector)_renderRequest.getAttribute(
+			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -374,7 +374,6 @@ public class EditStyleBookEntryDisplayContext {
 					layout, PortletRequest.RESOURCE_PHASE);
 
 				resourceURL.setDoAsUserId(_themeDisplay.getDefaultUserId());
-
 				resourceURL.setResourceID(
 					"/layout_content_page_editor/get_page_preview");
 
