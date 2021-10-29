@@ -87,10 +87,10 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			ViewSXPBlueprintsManagementToolbarDisplayContext
 				viewSXPBlueprintsManagementToolbarDisplayContext =
 					new ViewSXPBlueprintsManagementToolbarDisplayContext(
+						viewSXPBlueprintsDisplayContext.getDisplayStyle(),
 						_portal.getLiferayPortletRequest(renderRequest),
 						_portal.getLiferayPortletResponse(renderResponse),
-						viewSXPBlueprintsDisplayContext.getSearchContainer(),
-						viewSXPBlueprintsDisplayContext.getDisplayStyle());
+						viewSXPBlueprintsDisplayContext.getSearchContainer());
 
 			renderRequest.setAttribute(
 				SXPWebKeys.

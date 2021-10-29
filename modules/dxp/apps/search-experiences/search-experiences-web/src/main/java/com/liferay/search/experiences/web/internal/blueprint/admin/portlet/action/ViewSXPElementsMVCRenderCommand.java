@@ -86,10 +86,10 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 			ViewSXPElementsManagementToolbarDisplayContext
 				viewSXPElementEntriesManagementToolbarDisplayContext =
 					new ViewSXPElementsManagementToolbarDisplayContext(
+						viewSXPElementsDisplayContext.getDisplayStyle(),
 						_portal.getLiferayPortletRequest(renderRequest),
 						_portal.getLiferayPortletResponse(renderResponse),
-						viewSXPElementsDisplayContext.getSearchContainer(),
-						viewSXPElementsDisplayContext.getDisplayStyle());
+						viewSXPElementsDisplayContext.getSearchContainer());
 
 			renderRequest.setAttribute(
 				SXPWebKeys.VIEW_SXP_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,

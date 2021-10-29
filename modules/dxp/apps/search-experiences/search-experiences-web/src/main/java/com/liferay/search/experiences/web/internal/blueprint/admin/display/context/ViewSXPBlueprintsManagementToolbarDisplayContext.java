@@ -37,14 +37,13 @@ public class ViewSXPBlueprintsManagementToolbarDisplayContext
 	extends BaseBlueprintManagementToolbarDisplayContext {
 
 	public ViewSXPBlueprintsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
+		String displayStyle, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<SXPBlueprint> searchContainer, String displayStyle) {
+		SearchContainer<SXPBlueprint> searchContainer) {
 
 		super(
-			liferayPortletRequest.getHttpServletRequest(),
-			liferayPortletRequest, liferayPortletResponse, searchContainer,
-			displayStyle);
+			displayStyle, liferayPortletRequest.getHttpServletRequest(),
+			liferayPortletRequest, liferayPortletResponse, searchContainer);
 	}
 
 	@Override

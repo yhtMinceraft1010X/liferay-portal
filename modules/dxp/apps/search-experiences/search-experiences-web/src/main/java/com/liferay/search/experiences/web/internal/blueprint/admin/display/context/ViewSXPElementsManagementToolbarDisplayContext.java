@@ -42,14 +42,13 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 	extends BaseBlueprintManagementToolbarDisplayContext {
 
 	public ViewSXPElementsManagementToolbarDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
+		String displayStyle, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<SXPElement> searchContainer, String displayStyle) {
+		SearchContainer<SXPElement> searchContainer) {
 
 		super(
-			liferayPortletRequest.getHttpServletRequest(),
-			liferayPortletRequest, liferayPortletResponse, searchContainer,
-			displayStyle);
+			displayStyle, liferayPortletRequest.getHttpServletRequest(),
+			liferayPortletRequest, liferayPortletResponse, searchContainer);
 	}
 
 	@Override

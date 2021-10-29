@@ -46,10 +46,10 @@ public abstract class BaseBlueprintManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public BaseBlueprintManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
+		String displayStyle, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer<?> searchContainer, String displayStyle) {
+		SearchContainer<?> searchContainer) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
