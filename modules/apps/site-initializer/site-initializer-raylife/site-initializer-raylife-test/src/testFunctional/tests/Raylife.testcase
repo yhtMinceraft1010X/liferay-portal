@@ -25,12 +25,12 @@ definition {
 	}
 
 	@description = "Verify if Raylife can be created"
-    @priority = "5"
-    test CanRaylifeBeCreated {
-        ApplicationsMenu.gotoPortlet(
-            category = "Sites",
-            panel = "Control Panel",
-            portlet = "Sites");
+	@priority = "5"
+	test CanRaylifeBeCreated {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
 
 		LexiconEntry.gotoAdd();
 
@@ -40,16 +40,23 @@ definition {
 
 		Modal.save();
 
-		while (IsElementNotPresent(locator1 = "Raylife#SITE_TITLE", siteTitle = "Raylife")) {
-			Pause(locator1 = "3000");
+		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
+			AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
 		}
+
+		WaitForElementPresent(
+			locator1 = "Raylife#SITE_TITLE",
+			siteTitle = "Raylife");
+
+		AssertElementPresent(
+			locator1 = "Raylife#SITE_TITLE",
+			siteTitle = "Raylife");
 
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
 		AssertElementPresent(
 			locator1 = "Raylife#SITE_TITLE",
 			siteTitle = "Raylife");
-
-    }
+	}
 
 }

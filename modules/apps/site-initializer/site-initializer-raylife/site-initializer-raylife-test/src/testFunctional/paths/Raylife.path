@@ -15,6 +15,11 @@
 	<td>//div[contains(@title, '${siteTitle}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SAVE_LOADING_ANIMATION</td>
+	<td>//span[contains(@class, 'loading-animation')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
