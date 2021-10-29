@@ -19,9 +19,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchableAssetNameResource;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -40,20 +37,15 @@ public class SearchableAssetNameResourceImpl
 	public Page<SearchableAssetName> getSearchableAssetNamesPage()
 		throws Exception {
 
-		List<SearchableAssetName> searchableAssetNames = new ArrayList<>();
-
-		String[] classNames = _searchableAssetClassNamesProvider.getClassNames(
-			contextCompany.getCompanyId());
-
-		for (String className : classNames) {
-			SearchableAssetName searchableAssetName = new SearchableAssetName();
-
-			searchableAssetName.setClassName(className);
-
-			searchableAssetNames.add(searchableAssetName);
-		}
-
-		return Page.of(searchableAssetNames);
+		return Page.of(
+			transformToList(
+				_searchableAssetClassNamesProvider.getClassNames(
+					contextCompany.getCompanyId()),
+				className1 -> new SearchableAssetName() {
+					{
+						className = className1;
+					}
+				}));
 	}
 
 	@Reference
