@@ -66,8 +66,8 @@ export function regenerateOrderDetailURL(orderUUID, siteDefaultURL) {
 
 export function generateProductPageURL(
 	baseURL,
-	productURLSeparator,
-	productRelativeURLs
+	productRelativeURLs,
+	productURLSeparator
 ) {
 	const actualLang = themeDisplay.getLanguageId();
 	let productLocalizedURL = productRelativeURLs[actualLang];

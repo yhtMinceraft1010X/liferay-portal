@@ -59,8 +59,8 @@ function CartItem({item: cartItem}) {
 
 	const productPageUrl = generateProductPageURL(
 		actionURLs.siteDefaultURL,
-		actionURLs.productURLSeparator,
-		productURLs
+		productURLs,
+		actionURLs.productURLSeparator
 	);
 
 	const isMounted = useIsMounted();
