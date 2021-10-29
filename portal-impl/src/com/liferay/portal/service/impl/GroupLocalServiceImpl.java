@@ -5184,7 +5184,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				RemoteExportException remoteExportException =
 					new RemoteExportException(
 						RemoteExportException.INVALID_STATE,
-						"Local staging already enabled in remote group");
+						"Local staging is already enabled in remote group");
 
 				remoteExportException.setGroupId(remoteGroupId);
 
