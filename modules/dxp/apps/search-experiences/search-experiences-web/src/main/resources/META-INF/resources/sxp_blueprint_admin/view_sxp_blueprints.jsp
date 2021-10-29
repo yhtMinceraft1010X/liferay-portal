@@ -20,14 +20,17 @@
 ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext = (ViewSXPBlueprintsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT);
 %>
 
-<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_blueprint" var="deleteSXPBlueprintURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
 <clay:management-toolbar
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
-			"deleteSXPBlueprintURL", deleteSXPBlueprintURL
+			"deleteSXPBlueprintURL",
+			PortletURLBuilder.createActionURL(
+				renderResponse
+			).setActionName(
+				"/sxp_blueprint_admin/delete_sxp_blueprint"
+			).setRedirect(
+				currentURL
+			).buildString()
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= (ViewSXPBlueprintsManagementToolbarDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_BLUEPRINTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"

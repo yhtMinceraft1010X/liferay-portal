@@ -20,30 +20,43 @@
 ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT);
 %>
 
-<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_element" var="deleteSXPElementURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="hideSXPElementURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="hide" />
-	<portlet:param name="hidden" value="<%= Boolean.TRUE.toString() %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/sxp_blueprint_admin/edit_sxp_element" var="showSXPElementURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="hide" />
-	<portlet:param name="hidden" value="<%= Boolean.FALSE.toString() %>" />
-</portlet:actionURL>
-
 <clay:management-toolbar
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
-			"deleteSXPElementURL", deleteSXPElementURL
+			"deleteSXPElementURL",
+			PortletURLBuilder.createActionURL(
+				renderResponse
+			).setActionName(
+				"/sxp_blueprint_admin/delete_sxp_element"
+			).setRedirect(
+				currentURL
+			).buildString()
 		).put(
-			"hideSXPElementURL", hideSXPElementURL
+			"hideSXPElementURL",
+			PortletURLBuilder.createActionURL(
+				renderResponse
+			).setActionName(
+				"/sxp_blueprint_admin/edit_sxp_element"
+			).setCMD(
+				"hide"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"hidden", true
+			).buildString()
 		).put(
-			"showSXPElementURL", showSXPElementURL
+			"showSXPElementURL",
+			PortletURLBuilder.createActionURL(
+				renderResponse
+			).setActionName(
+				"/sxp_blueprint_admin/edit_sxp_element"
+			).setCMD(
+				"hide"
+			).setRedirect(
+				currentURL
+			).setParameter(
+				"hidden", false
+			).buildString()
 		).build()
 	%>'
 	managementToolbarDisplayContext="<%= (ViewSXPElementsManagementToolbarDisplayContext)request.getAttribute(SXPWebKeys.VIEW_SXP_ELEMENTS_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
