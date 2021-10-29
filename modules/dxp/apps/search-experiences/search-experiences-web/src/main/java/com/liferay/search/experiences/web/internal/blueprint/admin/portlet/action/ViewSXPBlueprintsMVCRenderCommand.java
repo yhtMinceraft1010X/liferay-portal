@@ -63,26 +63,6 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 			SXPWebKeys.VIEW_SXP_BLUEPRINTS_DISPLAY_CONTEXT,
 			viewSXPBlueprintsDisplayContext);
 
-		_setSXPBlueprintsManagementToolbar(
-			renderRequest, renderResponse, viewSXPBlueprintsDisplayContext);
-
-		return "/sxp_blueprint_admin/view.jsp";
-	}
-
-	private ViewSXPBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new ViewSXPBlueprintsDisplayContext(
-			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse), _queries,
-			_searcher, _searchRequestBuilderFactory, _sorts,
-			_sxpBlueprintService);
-	}
-
-	private void _setSXPBlueprintsManagementToolbar(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		ViewSXPBlueprintsDisplayContext viewSXPBlueprintsDisplayContext) {
-
 		try {
 			ViewSXPBlueprintsManagementToolbarDisplayContext
 				viewSXPBlueprintsManagementToolbarDisplayContext =
@@ -102,6 +82,18 @@ public class ViewSXPBlueprintsMVCRenderCommand implements MVCRenderCommand {
 
 			SessionErrors.add(renderRequest, portalException.getClass());
 		}
+
+		return "/sxp_blueprint_admin/view.jsp";
+	}
+
+	private ViewSXPBlueprintsDisplayContext _getViewBlueprintsDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new ViewSXPBlueprintsDisplayContext(
+			_portal.getLiferayPortletRequest(renderRequest),
+			_portal.getLiferayPortletResponse(renderResponse), _queries,
+			_searcher, _searchRequestBuilderFactory, _sorts,
+			_sxpBlueprintService);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

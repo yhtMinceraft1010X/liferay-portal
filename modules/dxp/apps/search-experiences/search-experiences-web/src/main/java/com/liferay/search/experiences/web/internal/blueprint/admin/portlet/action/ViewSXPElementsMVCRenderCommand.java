@@ -62,26 +62,6 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 			SXPWebKeys.VIEW_SXP_ELEMENTS_DISPLAY_CONTEXT,
 			viewSXPElementsDisplayContext);
 
-		_setSXPElementsManagementToolbar(
-			renderRequest, renderResponse, viewSXPElementsDisplayContext);
-
-		return "/sxp_blueprint_admin/view.jsp";
-	}
-
-	private ViewSXPElementsDisplayContext _getViewElementsDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new ViewSXPElementsDisplayContext(
-			_portal.getLiferayPortletRequest(renderRequest),
-			_portal.getLiferayPortletResponse(renderResponse), _queries,
-			_searcher, _searchRequestBuilderFactory, _sorts,
-			_sxpElementService);
-	}
-
-	private void _setSXPElementsManagementToolbar(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		ViewSXPElementsDisplayContext viewSXPElementsDisplayContext) {
-
 		try {
 			ViewSXPElementsManagementToolbarDisplayContext
 				viewSXPElementEntriesManagementToolbarDisplayContext =
@@ -100,6 +80,18 @@ public class ViewSXPElementsMVCRenderCommand implements MVCRenderCommand {
 
 			SessionErrors.add(renderRequest, portalException.getClass());
 		}
+
+		return "/sxp_blueprint_admin/view.jsp";
+	}
+
+	private ViewSXPElementsDisplayContext _getViewElementsDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return new ViewSXPElementsDisplayContext(
+			_portal.getLiferayPortletRequest(renderRequest),
+			_portal.getLiferayPortletResponse(renderResponse), _queries,
+			_searcher, _searchRequestBuilderFactory, _sorts,
+			_sxpElementService);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
