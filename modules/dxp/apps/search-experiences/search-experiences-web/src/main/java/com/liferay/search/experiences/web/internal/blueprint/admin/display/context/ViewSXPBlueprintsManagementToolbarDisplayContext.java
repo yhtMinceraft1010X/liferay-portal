@@ -34,7 +34,7 @@ import java.util.List;
  * @author Petteri Karttunen
  */
 public class ViewSXPBlueprintsManagementToolbarDisplayContext
-	extends BaseBlueprintManagementToolbarDisplayContext {
+	extends BaseManagementToolbarDisplayContext {
 
 	public ViewSXPBlueprintsManagementToolbarDisplayContext(
 		String displayStyle, LiferayPortletRequest liferayPortletRequest,

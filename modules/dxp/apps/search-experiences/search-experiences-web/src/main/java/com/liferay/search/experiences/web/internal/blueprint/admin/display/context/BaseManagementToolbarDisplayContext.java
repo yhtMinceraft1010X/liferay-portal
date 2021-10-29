@@ -42,10 +42,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Petteri Karttunen
  */
-public abstract class BaseBlueprintManagementToolbarDisplayContext
+public abstract class BaseManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public BaseBlueprintManagementToolbarDisplayContext(
+	public BaseManagementToolbarDisplayContext(
 		String displayStyle, HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,

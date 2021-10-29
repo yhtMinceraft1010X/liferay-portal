@@ -39,7 +39,7 @@ import javax.portlet.PortletURL;
  * @author Petteri Karttunen
  */
 public class ViewSXPElementsManagementToolbarDisplayContext
-	extends BaseBlueprintManagementToolbarDisplayContext {
+	extends BaseManagementToolbarDisplayContext {
 
 	public ViewSXPElementsManagementToolbarDisplayContext(
 		String displayStyle, LiferayPortletRequest liferayPortletRequest,
