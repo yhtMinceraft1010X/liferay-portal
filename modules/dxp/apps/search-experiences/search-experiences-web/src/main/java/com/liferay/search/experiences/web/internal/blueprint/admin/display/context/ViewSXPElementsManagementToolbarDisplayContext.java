@@ -16,10 +16,10 @@ package com.liferay.search.experiences.web.internal.blueprint.admin.display.cont
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -109,28 +109,22 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterVisibilityDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "filter-by-visibility"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					_getFilterReadOnlyDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "filter-by-type"));
-			}
-		).addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "order-by"));
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownGroupItemBuilder.setDropdownItems(
+				_getFilterVisibilityDropdownItems()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "filter-by-visibility")
+			).build(),
+			DropdownGroupItemBuilder.setDropdownItems(
+				_getFilterReadOnlyDropdownItems()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "filter-by-type")
+			).build(),
+			DropdownGroupItemBuilder.setDropdownItems(
+				getOrderByDropdownItems()
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "order-by")
+			).build());
 	}
 
 	@Override
