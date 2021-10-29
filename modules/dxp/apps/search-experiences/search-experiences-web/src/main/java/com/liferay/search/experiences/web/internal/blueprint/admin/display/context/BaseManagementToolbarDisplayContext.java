@@ -113,9 +113,6 @@ public abstract class BaseManagementToolbarDisplayContext
 		).build();
 
 		return new ViewTypeItemList(portletURL, displayStyle) {
-
-			private static final long serialVersionUID = 1L;
-
 			{
 				addListViewTypeItem();
 
