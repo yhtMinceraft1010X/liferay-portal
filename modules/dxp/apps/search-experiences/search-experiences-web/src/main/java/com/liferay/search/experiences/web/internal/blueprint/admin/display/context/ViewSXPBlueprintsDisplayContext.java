@@ -28,7 +28,7 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintService;
-import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintEntryPermission;
+import com.liferay.search.experiences.web.internal.security.permission.resource.SXPBlueprintPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ViewSXPBlueprintsDisplayContext
 	public List<String> getAvailableActions(SXPBlueprint sxpBlueprint)
 		throws PortalException {
 
-		if (SXPBlueprintEntryPermission.contains(
+		if (SXPBlueprintPermission.contains(
 				themeDisplay.getPermissionChecker(), sxpBlueprint,
 				ActionKeys.DELETE)) {
 

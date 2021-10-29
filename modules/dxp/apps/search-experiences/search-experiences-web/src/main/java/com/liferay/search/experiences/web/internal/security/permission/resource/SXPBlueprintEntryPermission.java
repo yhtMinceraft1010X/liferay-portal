@@ -25,14 +25,14 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Petteri Karttunen
  */
-@Component(immediate = true, service = SXPBlueprintEntryPermission.class)
-public class SXPBlueprintEntryPermission {
+@Component(immediate = true, service = SXPBlueprintPermission.class)
+public class SXPBlueprintPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long entryId, String actionKey)
 		throws PortalException {
 
-		return _sxpBlueprintEntryModelResourcePermission.contains(
+		return _sxpBlueprintModelResourcePermission.contains(
 			permissionChecker, entryId, actionKey);
 	}
 
@@ -41,7 +41,7 @@ public class SXPBlueprintEntryPermission {
 			String actionKey)
 		throws PortalException {
 
-		return _sxpBlueprintEntryModelResourcePermission.contains(
+		return _sxpBlueprintModelResourcePermission.contains(
 			permissionChecker, entry, actionKey);
 	}
 
@@ -52,10 +52,10 @@ public class SXPBlueprintEntryPermission {
 	protected void setEntryModelPermission(
 		ModelResourcePermission<SXPBlueprint> modelResourcePermission) {
 
-		_sxpBlueprintEntryModelResourcePermission = modelResourcePermission;
+		_sxpBlueprintModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<SXPBlueprint>
-		_sxpBlueprintEntryModelResourcePermission;
+		_sxpBlueprintModelResourcePermission;
 
 }

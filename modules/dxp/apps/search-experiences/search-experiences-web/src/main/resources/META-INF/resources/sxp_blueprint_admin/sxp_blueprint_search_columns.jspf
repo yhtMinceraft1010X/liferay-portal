@@ -43,7 +43,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 			colspan="<%= 2 %>"
 		>
 			<c:choose>
-				<c:when test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
+				<c:when test="<%= SXPBlueprintPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
 					<h4>
 						<aui:a href="<%= editSXPBlueprintURL %>">
 							<%= HtmlUtil.escape(title) %>
@@ -84,7 +84,7 @@ for (int i = 0; Validator.isNull(title) && (i < languageIds.length); i++) {
 	</c:when>
 	<c:otherwise>
 		<c:choose>
-			<c:when test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
+			<c:when test="<%= SXPBlueprintPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					href="<%= editSXPBlueprintURL %>"

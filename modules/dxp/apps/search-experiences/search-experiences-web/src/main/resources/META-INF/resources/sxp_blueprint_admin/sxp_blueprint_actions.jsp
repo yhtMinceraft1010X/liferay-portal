@@ -31,7 +31,7 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
+	<c:if test="<%= SXPBlueprintPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editSXPBlueprintURL">
 			<portlet:param name="mvcRenderCommandName" value="/sxp_blueprint_admin/edit_sxp_blueprint" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -44,7 +44,7 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 		/>
 	</c:if>
 
-	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), SXPActionKeys.ADD_SXP_BLUEPRINT) %>">
+	<c:if test="<%= SXPBlueprintPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), SXPActionKeys.ADD_SXP_BLUEPRINT) %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/copy_sxp_blueprint" var="copySXPBlueprintURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />
@@ -66,7 +66,7 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 		url="<%= exportSXPBlueprintURL %>"
 	/>
 
-	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= SXPBlueprintPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= SXPBlueprint.class.getName() %>"
 			modelResourceDescription="<%= sxpBlueprint.getTitle(locale) %>"
@@ -84,7 +84,7 @@ long sxpBlueprintId = sxpBlueprint.getSXPBlueprintId();
 		/>
 	</c:if>
 
-	<c:if test="<%= SXPBlueprintEntryPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.DELETE) %>">
+	<c:if test="<%= SXPBlueprintPermission.contains(permissionChecker, sxpBlueprint, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/sxp_blueprint_admin/delete_sxp_blueprint" var="deleteSXPBlueprintURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="sxpBlueprintId" value="<%= String.valueOf(sxpBlueprintId) %>" />

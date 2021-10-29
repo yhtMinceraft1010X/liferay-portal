@@ -32,7 +32,7 @@ public class SXPElementPermission {
 			PermissionChecker permissionChecker, long entryId, String actionKey)
 		throws PortalException {
 
-		return _sxpElementEntryModelResourcePermission.contains(
+		return _sxpElementModelResourcePermission.contains(
 			permissionChecker, entryId, actionKey);
 	}
 
@@ -41,7 +41,7 @@ public class SXPElementPermission {
 			String actionKey)
 		throws PortalException {
 
-		return _sxpElementEntryModelResourcePermission.contains(
+		return _sxpElementModelResourcePermission.contains(
 			permissionChecker, entry, actionKey);
 	}
 
@@ -52,10 +52,10 @@ public class SXPElementPermission {
 	protected void setEntryModelPermission(
 		ModelResourcePermission<SXPElement> modelResourcePermission) {
 
-		_sxpElementEntryModelResourcePermission = modelResourcePermission;
+		_sxpElementModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<SXPElement>
-		_sxpElementEntryModelResourcePermission;
+		_sxpElementModelResourcePermission;
 
 }
