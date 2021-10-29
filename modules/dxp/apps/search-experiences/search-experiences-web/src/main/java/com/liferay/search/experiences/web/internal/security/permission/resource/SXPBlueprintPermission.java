@@ -49,7 +49,7 @@ public class SXPBlueprintPermission {
 		target = "(model.class.name=com.liferay.search.experiences.model.SXPBlueprint)",
 		unbind = "-"
 	)
-	protected void setEntryModelPermission(
+	protected void setModelResourcePermission(
 		ModelResourcePermission<SXPBlueprint> modelResourcePermission) {
 
 		_sxpBlueprintModelResourcePermission = modelResourcePermission;

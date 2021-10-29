@@ -49,7 +49,7 @@ public class SXPElementPermission {
 		target = "(model.class.name=com.liferay.search.experiences.model.SXPElement)",
 		unbind = "-"
 	)
-	protected void setEntryModelPermission(
+	protected void setModelResourcePermission(
 		ModelResourcePermission<SXPElement> modelResourcePermission) {
 
 		_sxpElementModelResourcePermission = modelResourcePermission;
