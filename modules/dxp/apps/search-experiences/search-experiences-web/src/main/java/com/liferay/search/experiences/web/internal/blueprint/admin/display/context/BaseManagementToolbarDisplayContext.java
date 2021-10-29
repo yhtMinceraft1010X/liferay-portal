@@ -80,7 +80,7 @@ public abstract class BaseManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "BASE_BLUEPRINT_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+		return "BASE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override
