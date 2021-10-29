@@ -112,16 +112,6 @@ public abstract class BaseManagementToolbarDisplayContext
 			"orderByCol", searchContainer.getOrderByCol()
 		).build();
 
-		if (searchContainer.getDelta() > 0) {
-			portletURL.setProperty(
-				"delta", String.valueOf(searchContainer.getDelta()));
-		}
-
-		if (searchContainer.getCur() > 0) {
-			portletURL.setProperty(
-				"cur", String.valueOf(searchContainer.getCur()));
-		}
-
 		return new ViewTypeItemList(portletURL, displayStyle) {
 
 			private static final long serialVersionUID = 1L;
@@ -155,7 +145,7 @@ public abstract class BaseManagementToolbarDisplayContext
 	}
 
 	protected PortletURL getCurrentSortingURL() {
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setMVCRenderCommandName(
 			getMVCRenderCommandName()
@@ -164,15 +154,6 @@ public abstract class BaseManagementToolbarDisplayContext
 		).setParameter(
 			SearchContainer.DEFAULT_CUR_PARAM, "0"
 		).build();
-
-		String keywords = ParamUtil.getString(
-			liferayPortletRequest, "keywords");
-
-		if (!Validator.isBlank(keywords)) {
-			portletURL.setProperty("keywords", keywords);
-		}
-
-		return portletURL;
 	}
 
 	protected abstract String getMVCRenderCommandName();
