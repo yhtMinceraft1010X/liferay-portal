@@ -17,7 +17,8 @@ package com.liferay.search.experiences.web.internal.blueprint.admin.display.cont
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -48,16 +49,14 @@ public class ViewSXPBlueprintsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteSXPBlueprints");
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-
-				dropdownItem.setQuickAction(true);
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownItemBuilder.putData(
+				"action", "deleteSXPBlueprints"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "delete")
+			).setQuickAction(
+				true
+			).build());
 	}
 
 	@Override
@@ -71,22 +70,20 @@ public class ViewSXPBlueprintsManagementToolbarDisplayContext
 		}
 
 		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.putData("action", "addSXPBlueprint");
-				dropdownItem.putData(
-					"contextPath", liferayPortletRequest.getContextPath());
-				dropdownItem.putData(
-					"defaultLocale",
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-				dropdownItem.putData(
-					"editSXPBlueprintURL",
-					createActionURL(
-						"/sxp_blueprint_admin/edit_sxp_blueprint",
-						Constants.ADD));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "add-blueprint"));
-			}
+			DropdownItemBuilder.putData(
+				"action", "addSXPBlueprint"
+			).putData(
+				"contextPath", liferayPortletRequest.getContextPath()
+			).putData(
+				"defaultLocale",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+			).putData(
+				"editSXPBlueprintURL",
+				createActionURL(
+					"/sxp_blueprint_admin/edit_sxp_blueprint", Constants.ADD)
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "add-blueprint")
+			).build()
 		).build();
 	}
 

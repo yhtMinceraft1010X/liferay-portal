@@ -17,6 +17,8 @@ package com.liferay.search.experiences.web.internal.blueprint.admin.display.cont
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -53,34 +55,28 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "hideSXPElements");
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "hide"));
-
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "showSXPElements");
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "show"));
-
-				dropdownItem.setQuickAction(true);
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.putData("action", "deleteSXPElements");
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
-
-				dropdownItem.setQuickAction(true);
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownItemBuilder.putData(
+				"action", "hideSXPElements"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "hide")
+			).setQuickAction(
+				true
+			).build(),
+			DropdownItemBuilder.putData(
+				"action", "showSXPElements"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "show")
+			).setQuickAction(
+				true
+			).build(),
+			DropdownItemBuilder.putData(
+				"action", "deleteSXPElements"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "delete")
+			).setQuickAction(
+				true
+			).build());
 	}
 
 	@Override
@@ -94,23 +90,20 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 		}
 
 		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.putData("action", "addSXPElement");
-				dropdownItem.putData(
-					"defaultLocale",
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
-
-				dropdownItem.putData(
-					"editElementURL",
-					createActionURL(
-						"/sxp_blueprint_admin/edit_sxp_element",
-						Constants.ADD));
-
-				dropdownItem.putData(
-					"type", String.valueOf(SXPElementConstants.TYPE_QUERY));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "add-element"));
-			}
+			DropdownItemBuilder.putData(
+				"action", "addSXPElement"
+			).putData(
+				"defaultLocale",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault())
+			).putData(
+				"editElementURL",
+				createActionURL(
+					"/sxp_blueprint_admin/edit_sxp_element", Constants.ADD)
+			).putData(
+				"type", String.valueOf(SXPElementConstants.TYPE_QUERY)
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "add-element")
+			).build()
 		).build();
 	}
 
@@ -152,34 +145,30 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 
 	private List<DropdownItem> _getFilterReadOnlyDropdownItems() {
 		String readOnly = ParamUtil.getString(
-			liferayPortletRequest, "readOnly", "");
+			liferayPortletRequest, "readOnly");
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(readOnly.equals(""));
-				dropdownItem.setHref(_getFilterReadOnlyURL(""));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "all"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					readOnly.equals(Boolean.TRUE.toString()));
-				dropdownItem.setHref(
-					_getFilterReadOnlyURL(Boolean.TRUE.toString()));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "default"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					readOnly.equals(Boolean.FALSE.toString()));
-				dropdownItem.setHref(
-					_getFilterReadOnlyURL(Boolean.FALSE.toString()));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "custom"));
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownItemBuilder.setActive(
+				readOnly.equals("")
+			).setHref(
+				_getFilterReadOnlyURL("")
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "all")
+			).build(),
+			DropdownItemBuilder.setActive(
+				readOnly.equals(Boolean.TRUE.toString())
+			).setHref(
+				_getFilterReadOnlyURL(Boolean.TRUE.toString())
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "default")
+			).build(),
+			DropdownItemBuilder.setActive(
+				readOnly.equals(Boolean.FALSE.toString())
+			).setHref(
+				_getFilterReadOnlyURL(Boolean.FALSE.toString())
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "custom")
+			).build());
 	}
 
 	private PortletURL _getFilterReadOnlyURL(String readOnly) {
@@ -191,27 +180,26 @@ public class ViewSXPElementsManagementToolbarDisplayContext
 	}
 
 	private List<DropdownItem> _getFilterVisibilityDropdownItems() {
-		boolean hidden = ParamUtil.getBoolean(
-			liferayPortletRequest, "hidden", Boolean.FALSE);
+		boolean hidden = ParamUtil.getBoolean(liferayPortletRequest, "hidden");
 
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(!hidden);
-				dropdownItem.setHref(_getFilterVisibilityURL(Boolean.FALSE));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "visible"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(hidden);
-				dropdownItem.setHref(_getFilterVisibilityURL(Boolean.TRUE));
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "hidden"));
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownItemBuilder.setActive(
+				!hidden
+			).setHref(
+				_getFilterVisibilityURL(false)
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "visible")
+			).build(),
+			DropdownItemBuilder.setActive(
+				hidden
+			).setHref(
+				_getFilterVisibilityURL(true)
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "hidden")
+			).build());
 	}
 
-	private PortletURL _getFilterVisibilityURL(Boolean hidden) {
+	private PortletURL _getFilterVisibilityURL(boolean hidden) {
 		return PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(

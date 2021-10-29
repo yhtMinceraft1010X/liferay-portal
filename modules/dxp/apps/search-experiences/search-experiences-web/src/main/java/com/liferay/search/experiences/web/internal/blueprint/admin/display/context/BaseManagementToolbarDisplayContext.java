@@ -16,7 +16,8 @@ package com.liferay.search.experiences.web.internal.blueprint.admin.display.cont
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -157,34 +158,28 @@ public abstract class BaseManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getOrderByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), Field.TITLE));
-				dropdownItem.setHref(
-					getCurrentSortingURL(), "orderByCol", Field.TITLE);
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "title"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), Field.CREATE_DATE));
-				dropdownItem.setHref(
-					getCurrentSortingURL(), "orderByCol", Field.CREATE_DATE);
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "created"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(getOrderByCol(), Field.MODIFIED_DATE));
-				dropdownItem.setHref(
-					getCurrentSortingURL(), "orderByCol", Field.MODIFIED_DATE);
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "modified"));
-			}
-		).build();
+		return DropdownItemList.of(
+			DropdownItemBuilder.setActive(
+				Objects.equals(getOrderByCol(), Field.TITLE)
+			).setHref(
+				getCurrentSortingURL(), "orderByCol", Field.TITLE
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "title")
+			).build(),
+			DropdownItemBuilder.setActive(
+				Objects.equals(getOrderByCol(), Field.CREATE_DATE)
+			).setHref(
+				getCurrentSortingURL(), "orderByCol", Field.CREATE_DATE
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "created")
+			).build(),
+			DropdownItemBuilder.setActive(
+				Objects.equals(getOrderByCol(), Field.MODIFIED_DATE)
+			).setHref(
+				getCurrentSortingURL(), "orderByCol", Field.MODIFIED_DATE
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "modified")
+			).build());
 	}
 
 	protected final String displayStyle;
