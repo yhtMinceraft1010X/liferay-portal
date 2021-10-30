@@ -202,3 +202,8 @@ ce9a760403a9d5875948d7bbf8fd7caac042a44d^..3e7f78092c5800113ebbb4c848a899a492d9f
 # Bundle Version 2.0.11
 #
 a7bfaba9fb9f9caa5eb71d2be6de79bfd77bfa7b^..e9ca5aa04cc1f4f41cf5a48c504dab4749aaefe8=COMMERCE-7630
+
+#
+# Bundle Version 2.0.12
+#
+e9ca5aa04cc1f4f41cf5a48c504dab4749aaefe8^..2454f7656cb0692d4988e46961c035f5bedc0aa9=LPS-138611 LPS-138616 LPS-141088
