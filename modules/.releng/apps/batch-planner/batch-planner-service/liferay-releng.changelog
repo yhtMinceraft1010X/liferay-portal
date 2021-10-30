@@ -12,3 +12,8 @@
 # Bundle Version 1.0.4
 #
 fea8a5aab141a64a8e490fecae64d863e9b9e1aa^..0323d3de32da7e0a7dffb0fc591b0dfea2ec2bcf=COMMERCE-7283
+
+#
+# Bundle Version 1.0.5
+#
+0323d3de32da7e0a7dffb0fc591b0dfea2ec2bcf^..e403bc989a34e3d79a9782e6be6d8ee1d68eedac=COMMERCE-7145 COMMERCE-7566 LPS-141055 LPS-141826
