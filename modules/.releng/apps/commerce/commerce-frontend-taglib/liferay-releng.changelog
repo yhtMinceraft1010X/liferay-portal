@@ -102,3 +102,8 @@ f0fe6f61e9ffc3cebc34a2e6b2ffc97191f45167^..2ec08c3b9ba21fe4b827efe780e3ea4cedfad
 # Bundle Version 13.0.2
 #
 2ec08c3b9ba21fe4b827efe780e3ea4cedfad772^..5807edb85607ffa24ab4824ab0601f907e534651=COMMERCE-7498
+
+#
+# Bundle Version 13.0.3
+#
+5807edb85607ffa24ab4824ab0601f907e534651^..0c16de7b1d7ffe235ad3a3da426edecf98803ece=COMMERCE-7522 COMMERCE-7620
