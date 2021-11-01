@@ -47,7 +47,7 @@ public class EditBatchPlannerPlanMVCResourceCommandWrapper
 		throws Exception {
 
 		BatchPlannerPlan batchPlannerPlan =
-			_baseBatchPlannerPlanMVCCommand.addBatchPlannerPlan(
+			_editExportBatchPlannerPlanMVCActionCommand.addBatchPlannerPlan(
 				resourceRequest);
 
 		JSONPortletResponseUtil.writeJSON(
@@ -62,6 +62,7 @@ public class EditBatchPlannerPlanMVCResourceCommandWrapper
 	}
 
 	@Reference
-	private BaseBatchPlannerPlanMVCCommand _baseBatchPlannerPlanMVCCommand;
+	private EditExportBatchPlannerPlanMVCActionCommand
+		_editExportBatchPlannerPlanMVCActionCommand;
 
 }
