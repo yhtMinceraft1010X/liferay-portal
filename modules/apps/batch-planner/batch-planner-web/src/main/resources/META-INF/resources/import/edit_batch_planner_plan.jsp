@@ -177,11 +177,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	module="js/edit_batch_planner_plan"
 />
 
-<portlet:actionURL name="/batch_planner/edit_export_batch_planner_plan" var="saveBatchPlannerPlanURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
-	<portlet:param name="template" value="<%= String.valueOf(Boolean.TRUE) %>" />
-</portlet:actionURL>
-
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
@@ -189,7 +184,16 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 		).put(
 			"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
 		).put(
-			"formSaveAsTemplateURL", saveBatchPlannerPlanURL
+			"formSaveAsTemplateURL",
+			ResourceURLBuilder.createResourceURL(
+				renderResponse
+			).setCMD(
+				Constants.SAVE
+			).setParameter(
+				"template", true
+			).setResourceID(
+				"/batch_planner/edit_export_batch_planner_plan"
+			).buildString()
 		).put(
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).build()
