@@ -1,0 +1,1 @@
+curl -s https://github.com/liferay/liferay-portal/raw/master/tools/create_remote_app.sh | bash -s
