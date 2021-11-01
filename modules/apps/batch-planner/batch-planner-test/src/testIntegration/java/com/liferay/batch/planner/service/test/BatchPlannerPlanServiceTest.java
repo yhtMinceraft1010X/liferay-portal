@@ -17,6 +17,7 @@ package com.liferay.batch.planner.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
+import com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -84,6 +85,19 @@ public class BatchPlannerPlanServiceTest {
 				"Batch planner plan external type must be one of following: " +
 					externalTypesString,
 				batchPlannerPlanExternalTypeException.getMessage());
+		}
+
+		try {
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				"/" + RandomTestUtil.randomString(), null, name, null, false);
+
+			Assert.fail();
+		}
+		catch (BatchPlannerPlanInternalClassNameException
+					batchPlannerPlanInternalClassNameException) {
+
+			Assert.assertNotNull(batchPlannerPlanInternalClassNameException);
 		}
 
 		try {
