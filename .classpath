@@ -70,7 +70,6 @@
 	<classpathentry kind="lib" path="lib/development/jacocoreport.jar"/>
 	<classpathentry kind="lib" path="lib/development/jalopy.jar"/>
 	<classpathentry kind="lib" path="lib/development/jargs.jar"/>
-	<classpathentry kind="lib" path="lib/development/jarjar.jar"/>
 	<classpathentry kind="lib" path="lib/development/jasper.jar"/>
 	<classpathentry kind="lib" path="lib/development/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/jbi_rt.jar"/>
@@ -313,6 +312,5 @@
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
-	<classpathentry kind="lib" path="lib/portal/yui-compressor.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

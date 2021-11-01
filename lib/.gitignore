@@ -28,7 +28,6 @@
 /development/jacocoreport.jar
 /development/jalopy.jar
 /development/jargs.jar
-/development/jarjar.jar
 /development/jasper.jar
 /development/jaxb-api.jar
 /development/jbi_rt.jar
@@ -279,4 +278,3 @@
 /portal/xstream.jar
 /portal/xuggle-xuggler-noarch.jar
 /portal/xz.jar
-/portal/yui-compressor.jar
