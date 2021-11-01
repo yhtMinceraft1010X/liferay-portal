@@ -26,12 +26,23 @@ BatchPlannerPlan batchPlannerPlan = BatchPlannerPlanServiceUtil.fetchBatchPlanne
 renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "add") : LanguageUtil.get(request, "edit"));
 %>
 
-<portlet:actionURL name="/batch_planner/edit_import_batch_planner_plan" var="editBatchPlannerPlanURL" />
-
 <div class="container pt-4">
-	<form action="<%= editBatchPlannerPlanURL %>" id="<portlet:namespace />fm" method="POST" name="<portlet:namespace />fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
+	<form
+		action="<%=
+			PortletURLBuilder.createActionURL(
+				renderResponse
+			).setActionName(
+				"/batch_planner/edit_import_batch_planner_plan"
+			).setCMD(
+				(batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE
+			).setRedirect(
+				backURL
+			).buildString()
+		%>"
+		id="<portlet:namespace />fm"
+		method="POST"
+		name="<portlet:namespace />fm"
+	>
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
 

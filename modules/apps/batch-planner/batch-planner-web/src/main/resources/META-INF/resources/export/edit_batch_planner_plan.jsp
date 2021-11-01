@@ -33,13 +33,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 				"/batch_planner/edit_export_batch_planner_plan"
 			).setCMD(
 				Constants.EXPORT
+			).setRedirect(
+				backURL
 			).buildString()
 		%>"
 		id="<portlet:namespace />fm"
 		method="POST"
 		name="<portlet:namespace />fm"
 	>
-		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="export" type="hidden" value="<%= true %>" />
 		<aui:input name="name" type="hidden" />
