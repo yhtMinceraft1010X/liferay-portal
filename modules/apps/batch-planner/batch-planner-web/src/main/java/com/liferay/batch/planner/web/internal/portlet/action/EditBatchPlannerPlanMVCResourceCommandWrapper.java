@@ -18,6 +18,7 @@ import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
 import javax.portlet.ResourceRequest;
