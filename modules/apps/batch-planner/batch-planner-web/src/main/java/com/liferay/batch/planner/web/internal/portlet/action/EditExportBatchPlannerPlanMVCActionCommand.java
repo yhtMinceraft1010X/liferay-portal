@@ -116,9 +116,9 @@ public class EditExportBatchPlannerPlanMVCActionCommand
 	}
 
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(
-		PortletRequest actionRequest) {
+		PortletRequest portletRequest) {
 
-		String[] fieldNames = actionRequest.getParameterValues("fieldName");
+		String[] fieldNames = portletRequest.getParameterValues("fieldName");
 
 		if (fieldNames == null) {
 			return Collections.emptyList();
