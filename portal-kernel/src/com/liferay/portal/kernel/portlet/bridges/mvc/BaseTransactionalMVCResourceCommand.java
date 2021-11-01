@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -21,19 +22,19 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
 import java.util.concurrent.Callable;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Bruno Basto
+ * @author Igor Beslic
  */
-public abstract class BaseTransactionalMVCActionCommand
-	implements MVCActionCommand {
+public abstract class BaseTransactionalMVCResourceCommand
+	implements MVCResourceCommand {
 
 	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
 		try {
@@ -41,9 +42,9 @@ public abstract class BaseTransactionalMVCActionCommand
 
 				@Override
 				public Boolean call() throws Exception {
-					doTransactionalCommand(actionRequest, actionResponse);
+					doTransactionalCommand(resourceRequest, resourceResponse);
 
-					return SessionErrors.isEmpty(actionRequest);
+					return SessionErrors.isEmpty(resourceRequest);
 				}
 
 			};
@@ -60,7 +61,7 @@ public abstract class BaseTransactionalMVCActionCommand
 	}
 
 	protected abstract void doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
 
 	private static final TransactionConfig _transactionConfig;
