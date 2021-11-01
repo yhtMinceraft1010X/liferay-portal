@@ -19,6 +19,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
 import javax.portlet.ResourceRequest;
@@ -46,8 +47,12 @@ public class EditExportBatchPlannerPlanMVResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		EditExportBatchPlannerPlanMVCActionCommand
+			editExportBatchPlannerPlanMVCActionCommand =
+				(EditExportBatchPlannerPlanMVCActionCommand)_mvcActionCommand;
+
 		BatchPlannerPlan batchPlannerPlan =
-			_editExportBatchPlannerPlanMVCActionCommand.addBatchPlannerPlan(
+			editExportBatchPlannerPlanMVCActionCommand.addBatchPlannerPlan(
 				resourceRequest);
 
 		JSONPortletResponseUtil.writeJSON(
@@ -61,8 +66,9 @@ public class EditExportBatchPlannerPlanMVResourceCommand
 			));
 	}
 
-	@Reference
-	private EditExportBatchPlannerPlanMVCActionCommand
-		_editExportBatchPlannerPlanMVCActionCommand;
+	@Reference(
+		target = "(component.name=com.liferay.batch.planner.web.internal.portlet.action.EditExportBatchPlannerPlanMVCActionCommand)"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 }
