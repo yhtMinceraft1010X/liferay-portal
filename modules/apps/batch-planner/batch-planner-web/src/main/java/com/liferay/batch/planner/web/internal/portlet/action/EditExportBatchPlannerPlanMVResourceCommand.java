@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
-		"mvc.command.name=/batch_planner/edit_batch_planner_plan"
+		"mvc.command.name=/batch_planner/edit_export_batch_planner_plan"
 	},
 	service = MVCResourceCommand.class
 )
-public class EditBatchPlannerPlanMVCResourceCommandWrapper
+public class EditExportBatchPlannerPlanMVResourceCommand
 	extends BaseTransactionalMVCResourceCommand {
 
 	@Override

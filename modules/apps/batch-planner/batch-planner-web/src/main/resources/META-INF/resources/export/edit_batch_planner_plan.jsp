@@ -176,7 +176,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "export"));
 	module="js/edit_batch_planner_plan"
 />
 
-<portlet:resourceURL id="/batch_planner/edit_batch_planner_plan" var="saveBatchPlannerPlanURL">
+<portlet:resourceURL id="/batch_planner/edit_export_batch_planner_plan" var="saveBatchPlannerPlanURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
 	<portlet:param name="template" value="<%= String.valueOf(Boolean.TRUE) %>" />
 </portlet:resourceURL>
