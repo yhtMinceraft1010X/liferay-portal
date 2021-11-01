@@ -7841,18 +7841,6 @@
 					</license>
 				</licenses>
 			</library>
-			<library>
-				<file-name>lib/portal/yui-compressor.jar</file-name>
-				<version>2.4.8</version>
-				<project-name>Yui Compressor</project-name>
-				<project-url>http://developer.yahoo.com/yui/compressor/</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://developer.yahoo.com/yui/license.html</license-url>
-					</license>
-				</licenses>
-			</library>
 		</libraries>
 	</version>
 </versions>
