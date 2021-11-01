@@ -197,6 +197,7 @@
 		<exception>BatchPlannerMappingInternalFieldName</exception>
 		<exception>BatchPlannerMappingInternalFieldType</exception>
 		<exception>BatchPlannerPlanExternalType</exception>
+		<exception>BatchPlannerPlanInternalClassName</exception>
 		<exception>BatchPlannerPlanName</exception>
 		<exception>BatchPlannerPolicyName</exception>
 		<exception>DuplicateBatchPlannerPlan</exception>

@@ -16,6 +16,7 @@ package com.liferay.batch.planner.service.impl;
 
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
+import com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerLog;
@@ -53,7 +54,6 @@ public class BatchPlannerPlanLocalServiceImpl
 		throws PortalException {
 
 		_validateExternalType(externalType);
-
 		_validateInternalClassName(internalClassName);
 
 		if (Validator.isNull(name)) {
@@ -172,8 +172,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(internalClassName)) {
-			throw new BatchPlannerPlanNameException(
-				"Internal class name is required");
+			throw new BatchPlannerPlanInternalClassNameException();
 		}
 	}
 
