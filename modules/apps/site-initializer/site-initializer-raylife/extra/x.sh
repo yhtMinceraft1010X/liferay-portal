@@ -35,6 +35,12 @@ function create_react_app {
 }
 
 function create_vue_2_app {
+	npm i -g @vue/cli
+
+	vue create ${1} --default
+
+	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" ${1}/public/index.html
+	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${1}/src/main.js
 }
 
 function create_vue_3_app {
