@@ -1,11 +1,7 @@
 definition {
 
 	macro tearDownCP {
-		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
-
-		CommerceJSONCatalogsAPI._deleteAllNoSystemCommerceCatalogs();
-
-		CommerceJSONProductsAPI._deleteAllCommerceProducts();
+		CommerceConfiguration.commerceAdminTearDown();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",

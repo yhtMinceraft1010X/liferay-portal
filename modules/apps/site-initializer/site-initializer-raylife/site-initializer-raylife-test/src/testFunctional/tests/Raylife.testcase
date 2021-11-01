@@ -40,19 +40,15 @@ definition {
 
 		Modal.save();
 
-		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
+		while (IsElementNotPresent(locator1 = "Raylife#SITE_TITLE", siteTitle = "Raylife")) {
+			WaitForPageLoad();
 		}
+
+		Click(locator1 = "ProductMenu#TOGGLE");
 
 		WaitForElementPresent(
 			locator1 = "Raylife#SITE_TITLE",
 			siteTitle = "Raylife");
-
-		AssertElementPresent(
-			locator1 = "Raylife#SITE_TITLE",
-			siteTitle = "Raylife");
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
 
 		AssertElementPresent(
 			locator1 = "Raylife#SITE_TITLE",
