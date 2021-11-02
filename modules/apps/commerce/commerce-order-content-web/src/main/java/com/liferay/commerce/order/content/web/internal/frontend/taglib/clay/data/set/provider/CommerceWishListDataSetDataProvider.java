@@ -16,7 +16,6 @@ package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.dat
 
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.model.WishList;
-import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.frontend.taglib.clay.data.Filter;
@@ -27,11 +26,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +55,6 @@ public class CommerceWishListDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		List<WishList> wishLists = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -66,24 +63,18 @@ public class CommerceWishListDataSetDataProvider
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		List<CommerceWishList> commerceWishLists =
+		return TransformUtil.transform(
 			_commerceWishListService.getCommerceWishLists(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
-
-		for (CommerceWishList commerceWishList : commerceWishLists) {
-			wishLists.add(
-				new WishList(
-					commerceWishList.getUserName(),
-					dateFormat.format(commerceWishList.getCreateDate()),
-					_commerceWishListItemService.getCommerceWishListItemsCount(
-						commerceWishList.getCommerceWishListId()),
-					commerceWishList.getName(),
-					commerceWishList.getCommerceWishListId()));
-		}
-
-		return wishLists;
+				null),
+			commerceWishList -> new WishList(
+				commerceWishList.getUserName(),
+				dateFormat.format(commerceWishList.getCreateDate()),
+				_commerceWishListItemService.getCommerceWishListItemsCount(
+					commerceWishList.getCommerceWishListId()),
+				commerceWishList.getName(),
+				commerceWishList.getCommerceWishListId()));
 	}
 
 	@Override

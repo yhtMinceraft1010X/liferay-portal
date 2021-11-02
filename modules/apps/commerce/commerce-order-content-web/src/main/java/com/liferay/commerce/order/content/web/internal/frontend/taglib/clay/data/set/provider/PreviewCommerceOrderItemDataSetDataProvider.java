@@ -36,11 +36,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -75,33 +76,29 @@ public class PreviewCommerceOrderItemDataSetDataProvider
 			return Collections.emptyList();
 		}
 
-		List<PreviewOrderItem> previewOrderItems = new ArrayList<>();
-
+		IntegerWrapper integerWrapper = new IntegerWrapper();
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		for (int i = 0; i < _commerceOrderImporterItems.size(); i++) {
-			CommerceOrderImporterItem commerceOrderImporterItem =
-				_commerceOrderImporterItems.get(i);
+		return TransformUtil.transform(
+			_commerceOrderImporterItems,
+			commerceOrderImporterItem -> {
+				CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+					commerceOrderImporterItem.getCPInstanceId());
 
-			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-				commerceOrderImporterItem.getCPInstanceId());
+				CommerceOrderItemPrice commerceOrderItemPrice =
+					commerceOrderImporterItem.getCommerceOrderItemPrice();
 
-			CommerceOrderItemPrice commerceOrderItemPrice =
-				commerceOrderImporterItem.getCommerceOrderItemPrice();
-
-			previewOrderItems.add(
-				new PreviewOrderItem(
+				return new PreviewOrderItem(
 					cpInstance.getExternalReferenceCode(),
 					_getImportStatus(commerceOrderImporterItem, locale),
 					_getCommerceOrderOptions(commerceOrderImporterItem, locale),
 					commerceOrderImporterItem.getName(locale),
-					commerceOrderImporterItem.getQuantity(), i + 1,
+					commerceOrderImporterItem.getQuantity(),
+					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),
 					_formatFinalPrice(commerceOrderItemPrice, locale),
-					_formatUnitPrice(commerceOrderItemPrice, locale)));
-		}
-
-		return previewOrderItems;
+					_formatUnitPrice(commerceOrderItemPrice, locale));
+			});
 	}
 
 	@Override
