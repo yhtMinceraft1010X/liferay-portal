@@ -47,12 +47,9 @@ public class CommerceWishListClayTableDataSetDisplayView
 		clayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"itemsNumber", "number-of-items");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
