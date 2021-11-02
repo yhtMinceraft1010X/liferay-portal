@@ -1463,7 +1463,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TaxonomyCategory"
             tags: ["TaxonomyCategory"]
-    "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-externalReferenceCode/{externalReferenceCode}":
+    "/taxonomy-vocabularies/{taxonomyVocabularyId}/taxonomy-categories/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
             description:
