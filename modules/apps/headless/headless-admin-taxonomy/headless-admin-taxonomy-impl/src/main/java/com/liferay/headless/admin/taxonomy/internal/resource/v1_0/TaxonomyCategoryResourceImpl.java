@@ -142,7 +142,7 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+	public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 		Long siteId, Pagination pagination) {
 
 		DynamicQuery dynamicQuery = _assetCategoryLocalService.dynamicQuery();
