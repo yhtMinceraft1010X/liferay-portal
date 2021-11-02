@@ -128,20 +128,6 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	@Override
-	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
-		throws Exception {
-
-		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
-
-		ContentLanguageUtil.addContentLanguageHeader(
-			assetCategory.getAvailableLanguageIds(),
-			assetCategory.getDefaultLanguageId(), contextHttpServletResponse,
-			contextAcceptLanguage.getPreferredLocale());
-
-		return _toTaxonomyCategory(assetCategory);
-	}
-
-	@Override
 	public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 		Long siteId, Pagination pagination) {
 
@@ -167,6 +153,20 @@ public class TaxonomyCategoryResourceImpl
 					this::_toAssetCategory),
 				this::_toTaxonomyCategory),
 			pagination, _getTotalCount(siteId));
+	}
+
+	@Override
+	public TaxonomyCategory getTaxonomyCategory(String taxonomyCategoryId)
+		throws Exception {
+
+		AssetCategory assetCategory = _getAssetCategory(taxonomyCategoryId);
+
+		ContentLanguageUtil.addContentLanguageHeader(
+			assetCategory.getAvailableLanguageIds(),
+			assetCategory.getDefaultLanguageId(), contextHttpServletResponse,
+			contextAcceptLanguage.getPreferredLocale());
+
+		return _toTaxonomyCategory(assetCategory);
 	}
 
 	@Override
@@ -368,7 +368,7 @@ public class TaxonomyCategoryResourceImpl
 		throws Exception {
 
 		return _toTaxonomyCategory(
-			_updateCategory(
+			_updateAssetCategory(
 				_getAssetCategory(taxonomyCategoryId), taxonomyCategory));
 	}
 
@@ -389,7 +389,7 @@ public class TaxonomyCategoryResourceImpl
 
 		if (assetCategory != null) {
 			return _toTaxonomyCategory(
-				_updateCategory(assetCategory, taxonomyCategory));
+				_updateAssetCategory(assetCategory, taxonomyCategory));
 		}
 
 		return _addTaxonomyCategory(
@@ -616,7 +616,7 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory);
 	}
 
-	private AssetCategory _updateCategory(
+	private AssetCategory _updateAssetCategory(
 			AssetCategory assetCategory, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
