@@ -429,6 +429,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection messageBoardSection =
 			testPutMessageBoardSectionPermission_addMessageBoardSection();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1336,6 +1337,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection messageBoardSection =
 			testPutSiteMessageBoardSectionPermission_addMessageBoardSection();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

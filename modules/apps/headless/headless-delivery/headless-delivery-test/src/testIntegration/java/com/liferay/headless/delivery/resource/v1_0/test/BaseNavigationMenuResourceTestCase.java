@@ -375,6 +375,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu =
 			testPutNavigationMenuPermission_addNavigationMenu();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -623,6 +624,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		NavigationMenu navigationMenu =
 			testPutSiteNavigationMenuPermission_addNavigationMenu();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

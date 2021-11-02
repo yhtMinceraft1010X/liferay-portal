@@ -615,6 +615,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary =
 			testPutAssetLibraryTaxonomyVocabularyPermissionsPage_addTaxonomyVocabulary();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1265,6 +1266,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary =
 			testPutSiteTaxonomyVocabularyPermissionsPage_addTaxonomyVocabulary();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1513,6 +1515,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary taxonomyVocabulary =
 			testPutTaxonomyVocabularyPermissionsPage_addTaxonomyVocabulary();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

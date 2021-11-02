@@ -1082,6 +1082,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread =
 			testPutMessageBoardThreadPermission_addMessageBoardThread();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1689,6 +1690,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		MessageBoardThread messageBoardThread =
 			testPutSiteMessageBoardThreadPermission_addMessageBoardThread();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

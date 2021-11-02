@@ -632,6 +632,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection dataRecordCollection =
 			testPutDataRecordCollectionPermission_addDataRecordCollection();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

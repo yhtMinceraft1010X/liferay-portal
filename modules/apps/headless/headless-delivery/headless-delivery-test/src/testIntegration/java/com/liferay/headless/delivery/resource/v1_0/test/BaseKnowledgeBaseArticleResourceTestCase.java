@@ -476,6 +476,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testPutKnowledgeBaseArticlePermission_addKnowledgeBaseArticle();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1978,6 +1979,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testPutSiteKnowledgeBaseArticlePermission_addKnowledgeBaseArticle();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

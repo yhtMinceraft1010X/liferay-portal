@@ -924,6 +924,7 @@ public abstract class BaseWikiPageResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage = testPutWikiPagePermission_addWikiPage();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

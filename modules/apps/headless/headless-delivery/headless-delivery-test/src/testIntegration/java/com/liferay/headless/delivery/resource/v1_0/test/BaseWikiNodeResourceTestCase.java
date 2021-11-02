@@ -736,6 +736,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode = testPutSiteWikiNodePermission_addWikiNode();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -926,6 +927,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode = testPutWikiNodePermission_addWikiNode();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

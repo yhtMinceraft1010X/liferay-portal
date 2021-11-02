@@ -898,6 +898,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory taxonomyCategory =
 			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

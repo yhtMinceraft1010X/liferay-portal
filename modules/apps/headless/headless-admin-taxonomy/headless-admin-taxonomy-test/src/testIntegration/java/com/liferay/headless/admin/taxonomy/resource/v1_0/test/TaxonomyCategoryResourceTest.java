@@ -78,14 +78,6 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@Override
-	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
-			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
-	}
-
-	@Override
 	protected TaxonomyCategory
 			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				TaxonomyCategory taxonomyCategory)
@@ -104,6 +96,14 @@ public class TaxonomyCategoryResourceTest
 				GetterUtil.getLong(taxonomyCategory.getId()));
 
 		return taxonomyCategory;
+	}
+
+	@Override
+	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
+			_assetVocabulary.getVocabularyId(), randomTaxonomyCategory());
 	}
 
 	@Override

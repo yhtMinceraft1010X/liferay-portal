@@ -617,6 +617,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testPutAssetLibraryStructuredContentPermission_addStructuredContent();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1775,6 +1776,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testPutSiteStructuredContentPermission_addStructuredContent();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -2447,6 +2449,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent structuredContent =
 			testPutStructuredContentPermission_addStructuredContent();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

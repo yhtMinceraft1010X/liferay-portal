@@ -470,6 +470,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage =
 			testPutMessageBoardMessagePermission_addMessageBoardMessage();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -2008,6 +2009,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessage messageBoardMessage =
 			testPutSiteMessageBoardMessagePermission_addMessageBoardMessage();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

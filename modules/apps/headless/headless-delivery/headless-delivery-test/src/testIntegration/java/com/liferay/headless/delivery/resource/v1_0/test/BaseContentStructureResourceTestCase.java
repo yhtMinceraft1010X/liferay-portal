@@ -572,6 +572,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructure contentStructure =
 			testPutAssetLibraryContentStructurePermission_addContentStructure();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -704,6 +705,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructure contentStructure =
 			testPutContentStructurePermission_addContentStructure();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1124,6 +1126,7 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructure contentStructure =
 			testPutSiteContentStructurePermission_addContentStructure();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

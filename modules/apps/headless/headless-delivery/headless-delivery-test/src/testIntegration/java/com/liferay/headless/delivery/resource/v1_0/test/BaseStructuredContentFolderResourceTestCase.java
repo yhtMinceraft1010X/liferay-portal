@@ -645,6 +645,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder structuredContentFolder =
 			testPutAssetLibraryStructuredContentFolderPermission_addStructuredContentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1141,6 +1142,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder structuredContentFolder =
 			testPutSiteStructuredContentFolderPermission_addStructuredContentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1210,6 +1212,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder structuredContentFolder =
 			testPutStructuredContentFolderPermission_addStructuredContentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

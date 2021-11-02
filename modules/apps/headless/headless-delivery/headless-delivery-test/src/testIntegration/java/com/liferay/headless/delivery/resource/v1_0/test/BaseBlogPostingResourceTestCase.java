@@ -432,6 +432,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting = testPutBlogPostingPermission_addBlogPosting();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1037,6 +1038,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting =
 			testPutSiteBlogPostingPermission_addBlogPosting();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

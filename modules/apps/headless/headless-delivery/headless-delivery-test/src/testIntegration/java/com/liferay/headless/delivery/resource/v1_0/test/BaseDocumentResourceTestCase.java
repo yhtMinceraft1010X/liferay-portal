@@ -579,6 +579,7 @@ public abstract class BaseDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testPutAssetLibraryDocumentPermission_addDocument();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1165,6 +1166,7 @@ public abstract class BaseDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testPutDocumentPermission_addDocument();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1745,6 +1747,7 @@ public abstract class BaseDocumentResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testPutSiteDocumentPermission_addDocument();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

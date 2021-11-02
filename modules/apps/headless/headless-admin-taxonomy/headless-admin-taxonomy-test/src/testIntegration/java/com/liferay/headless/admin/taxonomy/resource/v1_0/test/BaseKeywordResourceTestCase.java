@@ -555,6 +555,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword =
 			testPutAssetLibraryKeywordPermissionsPage_addKeyword();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1174,6 +1175,7 @@ public abstract class BaseKeywordResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword = testPutSiteKeywordPermissionsPage_addKeyword();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

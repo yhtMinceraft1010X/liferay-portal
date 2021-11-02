@@ -598,6 +598,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testPutAssetLibraryDocumentFolderPermission_addDocumentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -849,6 +850,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testPutDocumentFolderPermission_addDocumentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1699,6 +1701,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder documentFolder =
 			testPutSiteDocumentFolderPermission_addDocumentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 

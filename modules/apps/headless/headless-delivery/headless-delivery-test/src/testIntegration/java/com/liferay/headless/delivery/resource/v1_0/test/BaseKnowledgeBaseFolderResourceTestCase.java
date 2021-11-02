@@ -427,6 +427,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testPutKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1064,6 +1065,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testPutSiteKnowledgeBaseFolderPermission_addKnowledgeBaseFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
