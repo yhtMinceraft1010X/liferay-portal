@@ -112,12 +112,12 @@ public class TaxonomyCategoryResourceImpl
 			Long taxonomyVocabularyId, String externalReferenceCode)
 		throws Exception {
 
-		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			taxonomyVocabularyId);
 
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
-				vocabulary.getGroupId(), externalReferenceCode);
+				assetVocabulary.getGroupId(), externalReferenceCode);
 
 		_assetCategoryService.deleteCategory(assetCategory.getCategoryId());
 	}
@@ -263,12 +263,12 @@ public class TaxonomyCategoryResourceImpl
 				Long taxonomyVocabularyId, String externalReferenceCode)
 		throws Exception {
 
-		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			taxonomyVocabularyId);
 
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
-				vocabulary.getGroupId(), externalReferenceCode);
+				assetVocabulary.getGroupId(), externalReferenceCode);
 
 		PermissionUtil.checkPermission(
 			ActionKeys.VIEW, groupLocalService,
