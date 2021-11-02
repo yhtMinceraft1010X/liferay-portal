@@ -67,7 +67,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		int failureRowsCount = 0;
+		int notImportedRowsCount = 0;
 		int importedRowsCount = 0;
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -110,7 +110,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					catch (CommerceOrderValidatorException
 								commerceOrderValidatorException) {
 
-						failureRowsCount++;
+						notImportedRowsCount++;
 					}
 				}
 			}
@@ -140,7 +140,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 
 		SessionMessages.add(
-			actionRequest, "failureRowsCount", failureRowsCount);
+			actionRequest, "notImportedRowsCount", notImportedRowsCount);
 		SessionMessages.add(
 			actionRequest, "importedRowsCount", importedRowsCount);
 

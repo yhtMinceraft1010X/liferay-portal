@@ -112,8 +112,8 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 
 	</liferay-ui:error>
 
-	<liferay-ui:success key="failureRowsCount">
-		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "failureRowsCount") %>' key="x-rows-were-not-imported" translateArguments="<%= false %>" />
+	<liferay-ui:success key="notImportedRowsCount">
+		<liferay-ui:message arguments='<%= (int)SessionMessages.get(renderRequest, "notImportedRowsCount") %>' key="x-rows-were-not-imported" translateArguments="<%= false %>" />
 	</liferay-ui:success>
 
 	<liferay-ui:success key="importedRowsCount">
