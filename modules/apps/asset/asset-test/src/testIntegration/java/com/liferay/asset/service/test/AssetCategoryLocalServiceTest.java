@@ -91,7 +91,6 @@ public class AssetCategoryLocalServiceTest {
 			_group.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-
 		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
 
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
@@ -305,7 +304,6 @@ public class AssetCategoryLocalServiceTest {
 			_group.getGroupId());
 
 		String externalReferenceCode = StringUtil.randomString();
-
 		Locale locale = PortalUtil.getSiteDefaultLocale(_group.getGroupId());
 
 		AssetCategoryLocalServiceUtil.addCategory(
