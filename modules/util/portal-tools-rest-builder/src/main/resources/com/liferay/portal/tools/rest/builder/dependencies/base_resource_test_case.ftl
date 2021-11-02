@@ -1163,6 +1163,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				@SuppressWarnings("PMD.UnusedLocalVariable")
 				${schemaName} ${schemaVarName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
+				@SuppressWarnings("PMD.UnusedLocalVariable")
 				com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 				assertHttpResponseStatusCode(
@@ -1344,6 +1345,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				${schemaName} ${schemaVarName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 				<#if javaMethodSignature.methodName?contains("Permission")>
+					@SuppressWarnings("PMD.UnusedLocalVariable")
 					com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 				</#if>
 
