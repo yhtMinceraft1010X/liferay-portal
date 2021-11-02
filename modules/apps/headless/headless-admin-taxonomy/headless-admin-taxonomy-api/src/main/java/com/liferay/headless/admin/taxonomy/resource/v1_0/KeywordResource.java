@@ -76,9 +76,7 @@ public interface KeywordResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryKeywordPermission(
-				Long assetLibraryId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
+			putAssetLibraryKeywordPermissionsPage(Long assetLibraryId)
 		throws Exception;
 
 	public Page<Keyword> getKeywordsRankedPage(
@@ -118,9 +116,7 @@ public interface KeywordResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putSiteKeywordPermission(
-				Long siteId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
+			putSiteKeywordPermissionsPage(Long siteId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

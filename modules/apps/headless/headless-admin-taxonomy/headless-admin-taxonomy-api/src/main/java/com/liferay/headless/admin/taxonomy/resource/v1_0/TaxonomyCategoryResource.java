@@ -58,7 +58,7 @@ public interface TaxonomyCategoryResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+	public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 			Long siteId, Pagination pagination)
 		throws Exception;
 
@@ -98,9 +98,7 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putTaxonomyCategoryPermission(
-				String taxonomyCategoryId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
+			putTaxonomyCategoryPermissionsPage(String taxonomyCategoryId)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(

@@ -463,7 +463,7 @@ paths:
                         application/xml: {}
             tags: ["Keyword"]
         put:
-            operationId: putAssetLibraryKeywordPermission
+            operationId: putAssetLibraryKeywordPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -569,7 +569,7 @@ paths:
                         application/xml: {}
             tags: ["TaxonomyVocabulary"]
         put:
-            operationId: putAssetLibraryTaxonomyVocabularyPermission
+            operationId: putAssetLibraryTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: assetLibraryId
@@ -815,7 +815,7 @@ paths:
                         application/xml: {}
             tags: ["Keyword"]
         put:
-            operationId: putSiteKeywordPermission
+            operationId: putSiteKeywordPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -909,6 +909,7 @@ paths:
             # @review
             description:
                 Deletes the site's taxonomy vocabulary by external reference code.
+            operationId: deleteSiteTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -931,6 +932,7 @@ paths:
             # @review
             description:
                 Retrieves the site's taxonomy vocabulary by external reference code.
+            operationId: getSiteTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -958,6 +960,7 @@ paths:
             description:
                 Updates the site's taxonomy vocabulary with the given external reference code, or creates it if it not
                 exists.
+            operationId: putSiteTaxonomyVocabularyByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -1009,7 +1012,7 @@ paths:
                         application/xml: {}
             tags: ["TaxonomyVocabulary"]
         put:
-            operationId: putSiteTaxonomyVocabularyPermission
+            operationId: putSiteTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: siteId
@@ -1025,7 +1028,7 @@ paths:
             tags: ["TaxonomyVocabulary"]
     "/taxonomy-categories/ranked":
         get:
-            operationId: getTaxonomyCategoryRankedPage
+            operationId: getTaxonomyCategoriesRankedPage
             parameters:
                 - in: query
                   name: siteId
@@ -1242,7 +1245,7 @@ paths:
                         application/xml: {}
             tags: ["TaxonomyCategory"]
         put:
-            operationId: putTaxonomyCategoryPermission
+            operationId: putTaxonomyCategoryPermissionsPage
             parameters:
                 - in: path
                   name: taxonomyCategoryId
@@ -1374,7 +1377,7 @@ paths:
                         application/xml: {}
             tags: ["TaxonomyVocabulary"]
         put:
-            operationId: putTaxonomyVocabularyPermission
+            operationId: putTaxonomyVocabularyPermissionsPage
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1468,6 +1471,7 @@ paths:
             # @review
             description:
                 Deletes the site's taxonomy category by external reference code.
+            operationId: deleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1490,6 +1494,7 @@ paths:
             # @review
             description:
                 Retrieves the site's taxonomy category by external reference code.
+            operationId: getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode
             parameters:
                 - in: path
                   name: taxonomyVocabularyId
@@ -1517,6 +1522,7 @@ paths:
             description:
                 Updates the site's taxonomy category with the given external reference code, or creates it if it not
                 exists.
+            operationId: putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode
             parameters:
                 - in: path
                   name: taxonomyVocabularyId

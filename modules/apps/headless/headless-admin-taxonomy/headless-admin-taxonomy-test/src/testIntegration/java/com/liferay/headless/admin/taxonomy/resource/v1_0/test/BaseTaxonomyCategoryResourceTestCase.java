@@ -208,22 +208,22 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetTaxonomyCategoryRankedPage() throws Exception {
+	public void testGetTaxonomyCategoriesRankedPage() throws Exception {
 		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 				null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
 		TaxonomyCategory taxonomyCategory1 =
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory2 =
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
-		page = taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+		page = taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 			null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
@@ -242,28 +242,29 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testGetTaxonomyCategoryRankedPageWithPagination()
+	public void testGetTaxonomyCategoriesRankedPageWithPagination()
 		throws Exception {
 
 		Page<TaxonomyCategory> totalPage =
-			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(null, null);
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
+				null, null);
 
 		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
 		TaxonomyCategory taxonomyCategory1 =
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory2 =
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
 		TaxonomyCategory taxonomyCategory3 =
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				randomTaxonomyCategory());
 
 		Page<TaxonomyCategory> page1 =
-			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 				null, Pagination.of(1, totalCount + 2));
 
 		List<TaxonomyCategory> taxonomyCategories1 =
@@ -274,7 +275,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			taxonomyCategories1.size());
 
 		Page<TaxonomyCategory> page2 =
-			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 				null, Pagination.of(2, totalCount + 2));
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -286,7 +287,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			taxonomyCategories2.toString(), 1, taxonomyCategories2.size());
 
 		Page<TaxonomyCategory> page3 =
-			taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+			taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 				null, Pagination.of(1, totalCount + 3));
 
 		assertContains(
@@ -298,7 +299,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	protected TaxonomyCategory
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -892,43 +893,28 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
-	public void testPutTaxonomyCategoryPermission() throws Exception {
+	public void testPutTaxonomyCategoryPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory =
-			testPutTaxonomyCategoryPermission_addTaxonomyCategory();
+			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory();
 
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
 			200,
-			taxonomyCategoryResource.putTaxonomyCategoryPermissionHttpResponse(
-				taxonomyCategory.getId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"VIEW"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
+			taxonomyCategoryResource.
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					taxonomyCategory.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			taxonomyCategoryResource.putTaxonomyCategoryPermissionHttpResponse(
-				"-",
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
+			taxonomyCategoryResource.
+				putTaxonomyCategoryPermissionsPageHttpResponse("-"));
 	}
 
 	protected TaxonomyCategory
-			testPutTaxonomyCategoryPermission_addTaxonomyCategory()
+			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

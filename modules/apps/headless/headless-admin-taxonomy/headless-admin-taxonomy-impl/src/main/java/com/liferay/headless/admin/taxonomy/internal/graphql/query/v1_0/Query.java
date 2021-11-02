@@ -210,10 +210,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategoryRanked(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxonomyCategoriesRanked(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public TaxonomyCategoryPage taxonomyCategoryRanked(
+	public TaxonomyCategoryPage taxonomyCategoriesRanked(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -223,7 +223,7 @@ public class Query {
 			_taxonomyCategoryResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			taxonomyCategoryResource -> new TaxonomyCategoryPage(
-				taxonomyCategoryResource.getTaxonomyCategoryRankedPage(
+				taxonomyCategoryResource.getTaxonomyCategoriesRankedPage(
 					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
 	}
 

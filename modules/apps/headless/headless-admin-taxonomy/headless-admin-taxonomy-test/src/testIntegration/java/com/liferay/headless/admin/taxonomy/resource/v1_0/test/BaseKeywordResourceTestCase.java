@@ -550,41 +550,26 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPutAssetLibraryKeywordPermission() throws Exception {
+	public void testPutAssetLibraryKeywordPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword = testPutAssetLibraryKeywordPermission_addKeyword();
+		Keyword keyword =
+			testPutAssetLibraryKeywordPermissionsPage_addKeyword();
 
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
 			200,
-			keywordResource.putAssetLibraryKeywordPermissionHttpResponse(
-				testDepotEntry.getDepotEntryId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"PERMISSIONS"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
+			keywordResource.putAssetLibraryKeywordPermissionsPageHttpResponse(
+				testDepotEntry.getDepotEntryId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			keywordResource.putAssetLibraryKeywordPermissionHttpResponse(
-				testDepotEntry.getDepotEntryId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
+			keywordResource.putAssetLibraryKeywordPermissionsPageHttpResponse(
+				testDepotEntry.getDepotEntryId()));
 	}
 
-	protected Keyword testPutAssetLibraryKeywordPermission_addKeyword()
+	protected Keyword testPutAssetLibraryKeywordPermissionsPage_addKeyword()
 		throws Exception {
 
 		return keywordResource.postAssetLibraryKeyword(
@@ -1185,41 +1170,25 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteKeywordPermission() throws Exception {
+	public void testPutSiteKeywordPermissionsPage() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword = testPutSiteKeywordPermission_addKeyword();
+		Keyword keyword = testPutSiteKeywordPermissionsPage_addKeyword();
 
 		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
 			200,
-			keywordResource.putSiteKeywordPermissionHttpResponse(
-				keyword.getSiteId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"PERMISSIONS"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
+			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
+				keyword.getSiteId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			keywordResource.putSiteKeywordPermissionHttpResponse(
-				keyword.getSiteId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
+			keywordResource.putSiteKeywordPermissionsPageHttpResponse(
+				keyword.getSiteId()));
 	}
 
-	protected Keyword testPutSiteKeywordPermission_addKeyword()
+	protected Keyword testPutSiteKeywordPermissionsPage_addKeyword()
 		throws Exception {
 
 		return keywordResource.postSiteKeyword(

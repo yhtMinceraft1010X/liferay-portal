@@ -27,8 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -81,13 +79,13 @@ public interface TaxonomyVocabularyResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putAssetLibraryTaxonomyVocabularyPermission(
-			Long assetLibraryId, Permission[] permissions)
+	public Page<Permission> putAssetLibraryTaxonomyVocabularyPermissionsPage(
+			Long assetLibraryId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryTaxonomyVocabularyPermissionHttpResponse(
-				Long assetLibraryId, Permission[] permissions)
+			putAssetLibraryTaxonomyVocabularyPermissionsPageHttpResponse(
+				Long assetLibraryId)
 		throws Exception;
 
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
@@ -154,13 +152,12 @@ public interface TaxonomyVocabularyResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putSiteTaxonomyVocabularyPermission(
-			Long siteId, Permission[] permissions)
+	public Page<Permission> putSiteTaxonomyVocabularyPermissionsPage(
+			Long siteId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteTaxonomyVocabularyPermissionHttpResponse(
-				Long siteId, Permission[] permissions)
+			putSiteTaxonomyVocabularyPermissionsPageHttpResponse(Long siteId)
 		throws Exception;
 
 	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
@@ -216,12 +213,13 @@ public interface TaxonomyVocabularyResource {
 				Long taxonomyVocabularyId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putTaxonomyVocabularyPermission(
-			Long taxonomyVocabularyId, Permission[] permissions)
+	public Page<Permission> putTaxonomyVocabularyPermissionsPage(
+			Long taxonomyVocabularyId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putTaxonomyVocabularyPermissionHttpResponse(
-			Long taxonomyVocabularyId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putTaxonomyVocabularyPermissionsPageHttpResponse(
+				Long taxonomyVocabularyId)
 		throws Exception;
 
 	public static class Builder {
@@ -657,13 +655,14 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putAssetLibraryTaxonomyVocabularyPermission(
-				Long assetLibraryId, Permission[] permissions)
+		public Page<Permission>
+				putAssetLibraryTaxonomyVocabularyPermissionsPage(
+					Long assetLibraryId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryTaxonomyVocabularyPermissionHttpResponse(
-					assetLibraryId, permissions);
+				putAssetLibraryTaxonomyVocabularyPermissionsPageHttpResponse(
+					assetLibraryId);
 
 			String content = httpResponse.getContent();
 
@@ -703,21 +702,11 @@ public interface TaxonomyVocabularyResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryTaxonomyVocabularyPermissionHttpResponse(
-					Long assetLibraryId, Permission[] permissions)
+				putAssetLibraryTaxonomyVocabularyPermissionsPageHttpResponse(
+					Long assetLibraryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1370,13 +1359,12 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putSiteTaxonomyVocabularyPermission(
-				Long siteId, Permission[] permissions)
+		public Page<Permission> putSiteTaxonomyVocabularyPermissionsPage(
+				Long siteId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteTaxonomyVocabularyPermissionHttpResponse(
-					siteId, permissions);
+				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(siteId);
 
 			String content = httpResponse.getContent();
 
@@ -1416,21 +1404,11 @@ public interface TaxonomyVocabularyResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteTaxonomyVocabularyPermissionHttpResponse(
-					Long siteId, Permission[] permissions)
+				putSiteTaxonomyVocabularyPermissionsPageHttpResponse(
+					Long siteId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2042,13 +2020,13 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putTaxonomyVocabularyPermission(
-				Long taxonomyVocabularyId, Permission[] permissions)
+		public Page<Permission> putTaxonomyVocabularyPermissionsPage(
+				Long taxonomyVocabularyId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putTaxonomyVocabularyPermissionHttpResponse(
-					taxonomyVocabularyId, permissions);
+				putTaxonomyVocabularyPermissionsPageHttpResponse(
+					taxonomyVocabularyId);
 
 			String content = httpResponse.getContent();
 
@@ -2088,21 +2066,11 @@ public interface TaxonomyVocabularyResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putTaxonomyVocabularyPermissionHttpResponse(
-					Long taxonomyVocabularyId, Permission[] permissions)
+				putTaxonomyVocabularyPermissionsPageHttpResponse(
+					Long taxonomyVocabularyId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

@@ -27,8 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -43,11 +41,11 @@ public interface TaxonomyCategoryResource {
 		return new Builder();
 	}
 
-	public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+	public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTaxonomyCategoryRankedPageHttpResponse(
+	public HttpInvoker.HttpResponse getTaxonomyCategoriesRankedPageHttpResponse(
 			Long siteId, Pagination pagination)
 		throws Exception;
 
@@ -125,12 +123,13 @@ public interface TaxonomyCategoryResource {
 				String taxonomyCategoryId, String roleNames)
 		throws Exception;
 
-	public Page<Permission> putTaxonomyCategoryPermission(
-			String taxonomyCategoryId, Permission[] permissions)
+	public Page<Permission> putTaxonomyCategoryPermissionsPage(
+			String taxonomyCategoryId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putTaxonomyCategoryPermissionHttpResponse(
-			String taxonomyCategoryId, Permission[] permissions)
+	public HttpInvoker.HttpResponse
+			putTaxonomyCategoryPermissionsPageHttpResponse(
+				String taxonomyCategoryId)
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
@@ -265,12 +264,12 @@ public interface TaxonomyCategoryResource {
 	public static class TaxonomyCategoryResourceImpl
 		implements TaxonomyCategoryResource {
 
-		public Page<TaxonomyCategory> getTaxonomyCategoryRankedPage(
+		public Page<TaxonomyCategory> getTaxonomyCategoriesRankedPage(
 				Long siteId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTaxonomyCategoryRankedPageHttpResponse(siteId, pagination);
+				getTaxonomyCategoriesRankedPageHttpResponse(siteId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -310,7 +309,7 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getTaxonomyCategoryRankedPageHttpResponse(
+				getTaxonomyCategoriesRankedPageHttpResponse(
 					Long siteId, Pagination pagination)
 			throws Exception {
 
@@ -1125,13 +1124,13 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Permission> putTaxonomyCategoryPermission(
-				String taxonomyCategoryId, Permission[] permissions)
+		public Page<Permission> putTaxonomyCategoryPermissionsPage(
+				String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putTaxonomyCategoryPermissionHttpResponse(
-					taxonomyCategoryId, permissions);
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					taxonomyCategoryId);
 
 			String content = httpResponse.getContent();
 
@@ -1171,21 +1170,11 @@ public interface TaxonomyCategoryResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putTaxonomyCategoryPermissionHttpResponse(
-					String taxonomyCategoryId, Permission[] permissions)
+				putTaxonomyCategoryPermissionsPageHttpResponse(
+					String taxonomyCategoryId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
