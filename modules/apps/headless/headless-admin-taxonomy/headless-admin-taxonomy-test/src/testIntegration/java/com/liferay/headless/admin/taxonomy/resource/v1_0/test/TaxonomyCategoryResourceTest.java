@@ -87,7 +87,7 @@ public class TaxonomyCategoryResourceTest
 
 	@Override
 	protected TaxonomyCategory
-			testGetTaxonomyCategoryRankedPage_addTaxonomyCategory(
+			testGetTaxonomyCategoriesRankedPage_addTaxonomyCategory(
 				TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
@@ -177,7 +177,7 @@ public class TaxonomyCategoryResourceTest
 
 	@Override
 	protected TaxonomyCategory
-			testPutTaxonomyCategoryPermission_addTaxonomyCategory()
+			testPutTaxonomyCategoryPermissionsPage_addTaxonomyCategory()
 		throws Exception {
 
 		return testGetTaxonomyCategory_addTaxonomyCategory();
