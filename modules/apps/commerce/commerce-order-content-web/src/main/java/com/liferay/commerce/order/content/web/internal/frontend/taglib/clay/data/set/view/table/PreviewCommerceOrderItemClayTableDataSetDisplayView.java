@@ -41,23 +41,16 @@ public class PreviewCommerceOrderItemClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		clayTableSchemaBuilder.addClayTableSchemaField("rowNumber");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"productName", "product-name");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"externalReferenceCode", "erc");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"unitPrice", "unit-price");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"totalPrice", "total-price");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"importStatus", "import-status");
 
