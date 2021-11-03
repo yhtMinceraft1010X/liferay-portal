@@ -131,6 +131,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>VIEW_ENTRY_EYE_BUTTON</td>
+		<td>//a[contains(@class,'btn btn-secondary btn-sm link-monospaced')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_OBJECT_ENTRY</td>
 		<td>//input[@type = 'text']</td>
 		<td></td>

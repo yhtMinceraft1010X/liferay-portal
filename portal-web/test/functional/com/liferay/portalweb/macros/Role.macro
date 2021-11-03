@@ -233,6 +233,10 @@ definition {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION";
 				var permissionNavigationValue = "Categories Navigation";
 			}
+			else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS")) {
+				var permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS";
+				var permissionNavigationValue = "Custom Objects";
+			}
 			else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA")) {
 				var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA";
 				var permissionNavigationValue = "Documents and Media";
@@ -567,6 +571,10 @@ definition {
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_CALENDAR")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_CALENDAR";
 			var permissionNavigationValue = "Calendar";
+		}
+		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS")) {
+				var permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS";
+				var permissionNavigationValue = "Custom Objects";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA";

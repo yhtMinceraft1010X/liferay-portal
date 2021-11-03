@@ -98,6 +98,21 @@ definition {
 			locator1 = "ObjectPortlet#SEARCH_RESULT_RELATIONSHIP_ENTRY");
 	}
 
+	macro assertUserCanNotUpdateEntryWithoutPermission {
+
+		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
+
+		AssertNotEditable(locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY");
+
+		Button.clickSave();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_1",
+			value1 = "must have UPDATE permission for com.liferay.object.model.ObjectDefinition#");
+
+			
+	}
+
 	macro changePagination {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
