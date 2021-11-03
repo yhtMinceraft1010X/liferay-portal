@@ -130,7 +130,9 @@ export function getValueDetailsFromItem(item, fieldName) {
 
 			valuePath.push(formattedProperty);
 
-			navigatedValue = navigatedValue[formattedProperty];
+			if (navigatedValue) {
+				navigatedValue = navigatedValue[formattedProperty];
+			}
 		});
 	}
 	else {
