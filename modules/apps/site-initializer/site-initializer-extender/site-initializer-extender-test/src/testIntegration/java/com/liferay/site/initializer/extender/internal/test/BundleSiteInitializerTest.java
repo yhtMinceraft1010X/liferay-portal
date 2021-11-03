@@ -115,7 +115,12 @@ public class BundleSiteInitializerTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		siteInitializer.initialize(group.getGroupId());
+		try {
+			siteInitializer.initialize(group.getGroupId());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		_assertCommerceCatalogs(group);
 		_assertCommerceChannel(group);
@@ -139,8 +144,6 @@ public class BundleSiteInitializerTest {
 			objectDefinition.getObjectDefinitionId());
 
 		bundle.uninstall();
-
-		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
