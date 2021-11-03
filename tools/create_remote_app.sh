@@ -5,26 +5,10 @@ function check_usage {
 	then
 		echo "Usage: ${0} <custom-element-name> <js-framework>"
 		echo ""
-		echo "The script requires the following parameters:"
-		echo ""
 		echo "  custom-element-name: liferay-hello-world"
-		echo "	js-framework: react, vue2, vue3"
+		echo "  js-framework: react, vue2, vue3"
 		echo ""
 		echo "Example: ${0} liferay-hello-world react"
-
-		exit 1
-	fi
-
-	if [[ ${1} != [a-z]* ]]
-	then
-		echo "Custom element names must start with a lower case letter."
-
-		exit 1
-	fi
-
-	if [[ ${1} != *-* ]]
-	then
-		echo "Custom element names must contain a dash."
 
 		exit 1
 	fi
@@ -36,13 +20,6 @@ function check_usage {
 		exit 1
 	fi
 
-	if [[ ${1} != *[a-z0-9] ]]
-	then
-		echo "Custom element names must end with a lower case letter or number."
-
-		exit 1
-	fi
-
 	if [[ ${1} == *[A-Z]* ]]
 	then
 		echo "Custom element name must not contain upper case letters."
@@ -50,7 +27,35 @@ function check_usage {
 		exit 1
 	fi
 
-	if ! [[ ${1} =~ ^[a-z0-9]+-[a-z0-9]+$ ]]
+	if [[ ${1} != *-* ]]
+	then
+		echo "Custom element names must contain a dash."
+
+		exit 1
+	fi
+
+	if [[ ${1} != *[a-z0-9] ]]
+	then
+		echo "Custom element names must end with a lower case letter or number."
+
+		exit 1
+	fi
+
+	if [[ ${1} == *--* ]]
+	then
+		echo "Custom element names must not contain 2 dashes in a row."
+
+		exit 1
+	fi
+
+	if [[ ${1} != [a-z]* ]]
+	then
+		echo "Custom element names must start with a lower case letter."
+
+		exit 1
+	fi
+
+	if ! [[ ${1} =~ ^[a-z0-9-]+$ ]]
 	then
 		echo "Custom element name is not valid."
 
@@ -100,47 +105,17 @@ function create_vue_3_app {
 	echo ""
 }
 
-function date {
-	export LC_ALL=en_US.UTF-8
-	export TZ=America/Los_Angeles
-
-	if [ -z ${1+x} ] || [ -z ${2+x} ]
-	then
-		if [ "$(uname)" == "Darwin" ]
-		then
-			/bin/date
-		elif [ -e /bin/date ]
-		then
-			/bin/date --iso-8601=seconds
-		else
-			/usr/bin/date --iso-8601=seconds
-		fi
-	else
-		if [ "$(uname)" == "Darwin" ]
-		then
-			/bin/date -jf "%a %b %e %H:%M:%S %Z %Y" "${1}" "${2}"
-		elif [ -e /bin/date ]
-		then
-			/bin/date -d "${1}" "${2}"
-		else
-			/usr/bin/date -d "${1}" "${2}"
-		fi
-	fi
-}
-
-function get_remote_app_dir {
-	local current_date=$(date)
-
-	local timestamp=$(date "${current_date}" "+%Y%m%d%H%M%S")
-
-	echo "remote-app-${timestamp}"
-}
-
 function main {
 	check_usage "${@}"
 
 	CUSTOM_ELEMENT_NAME="${1}"
-	REMOTE_APP_DIR=$(get_remote_app_dir)
+
+	REMOTE_APP_DIR="${1}"
+
+	if [ -e ${REMOTE_APP_DIR} ]
+	then
+		REMOTE_APP_DIR=${REMOTE_APP_DIR}-$(random_letter)$(random_digit)$(random_letter)$(random_digit)
+	fi
 
 	if [ "${2}" == "react" ]
 	then
@@ -156,6 +131,14 @@ function main {
 
 		exit 1
 	fi
+}
+
+function random_digit {
+	echo $(((RANDOM % 10)  + 1))
+}
+
+function random_letter {
+	echo cat /dev/urandom | tr -cd 'a-z' | head -c 1
 }
 
 function write_gitignore {
