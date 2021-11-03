@@ -83,12 +83,11 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		Writer writer = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("<li class=\"");
 		sb.append(_getCssClass(httpServletRequest));
-		sb.append("\">");
-		sb.append("<span class=\"control-menu-level-1-heading ");
+		sb.append("\"><span class=\"control-menu-level-1-heading ");
 		sb.append("text-truncate\" data-qa-id=\"headerTitle\">");
 		sb.append(_getHeaderTitle(httpServletRequest));
 
@@ -103,8 +102,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			sb.append("label-inverse-secondary ml-2 mr-0\">");
 			sb.append("<span class=\"label-item label-item-expand\">");
 			sb.append(LanguageUtil.get(httpServletRequest, "draft"));
-			sb.append("</span>");
-			sb.append("</span>");
+			sb.append("</span></span>");
 		}
 
 		writer.write(sb.toString());
