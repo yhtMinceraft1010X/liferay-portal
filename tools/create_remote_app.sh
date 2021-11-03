@@ -11,8 +11,8 @@ function create_react_app {
 
 	cd ${temp_dir}
 
-	yarn remove @testing-library/jest-dom @testing-library/react @testing-library/user-event web-vitals
 	yarn add sass
+	yarn remove @testing-library/jest-dom @testing-library/react @testing-library/user-event web-vitals
 
 	echo "SKIP_PREFLIGHT_CHECK=true" > ".env"
 
@@ -90,7 +90,8 @@ function main {
 	check_usage
 
 	create_react_app
-	# create_vue_2_app
+	#create_vue_2_app
+	#create_vue_3_app
 }
 
 function write_gitignore {
@@ -186,15 +187,15 @@ import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
 
 const App = ({ route }) => {
-  if (route === "hello-bar") {
-    return <HelloBar />;
-  }
+	if (route === "hello-bar") {
+		return <HelloBar />;
+	}
 
-  if (route === "hello-foo") {
-    return <HelloFoo />;
-  }
+	if (route === "hello-foo") {
+		return <HelloFoo />;
+	}
 
-  return <HelloWorld />;
+	return <HelloWorld />;
 };
 
 class WebComponent extends HTMLElement {
