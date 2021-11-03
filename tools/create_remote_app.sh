@@ -1,6 +1,20 @@
 #!/bin/bash
 
 function check_usage {
+	if [ ! "${#}" -eq 2 ]
+	then
+		echo "Usage: ${0} <custom-element-name> <js-framework>"
+		echo ""
+		echo "The script can be configured with the following parameters:"
+		echo ""
+		echo "  custom-element-name: Custom element name"
+		echo "	js-framework: react, vue2, vue3"
+		echo ""
+		echo "Example: ${0} liferay-hello-world react"
+
+		exit 1
+	fi
+
 	export CUSTOM_ELEMENT_NAME="hello-world"
 }
 
@@ -87,9 +101,9 @@ function get_temp_dir {
 }
 
 function main {
-	check_usage
+	check_usage "${@}"
 
-	create_react_app
+	#create_react_app
 	#create_vue_2_app
 	#create_vue_3_app
 }
@@ -263,4 +277,4 @@ export default HelloWorld;
 EOF
 }
 
-main
+main "${@}"
