@@ -117,12 +117,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
 			if (stockQuantity > 0) {
 				availability.setLabel_i18n(
-					_getLocalizedMessage(locale, "available"));
+					LanguageUtil.get(locale, "available"));
 				availability.setLabel("available");
 			}
 			else {
 				availability.setLabel_i18n(
-					_getLocalizedMessage(locale, "unavailable"));
+					LanguageUtil.get(locale, "unavailable"));
 				availability.setLabel("unavailable");
 			}
 		}
@@ -146,13 +146,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		}
 
 		return formattedDiscountPercentages.toArray(new String[0]);
-	}
-
-	private String _getLocalizedMessage(Locale locale, String key) {
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			locale);
-
-		return LanguageUtil.get(resourceBundle, key);
 	}
 
 	private Map<String, String> _getOptions(CPInstance cpInstance)
