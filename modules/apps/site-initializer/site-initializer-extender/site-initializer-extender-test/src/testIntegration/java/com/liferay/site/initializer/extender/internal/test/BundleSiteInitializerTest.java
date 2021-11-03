@@ -132,6 +132,12 @@ public class BundleSiteInitializerTest {
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
+		// TODO We should not need to delete the object definition manually
+		// because of DataGuardTestRule. However,
+		// ObjectDefinitionLocalServiceImpl#deleteObjectDefinition checks for
+		// PortalRunMode#isTestMode which is not returning true when the
+		// DataGuardTestRule runs.
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
