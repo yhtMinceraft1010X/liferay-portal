@@ -169,14 +169,14 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
-		CommerceChannel channel =
+		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
 				group.getGroupId());
 
-		Assert.assertNotNull(channel);
-		Assert.assertEquals("Test Commerce Channel", channel.getName());
-		Assert.assertEquals("site", channel.getType());
-		Assert.assertEquals("TESTVOC0001", channel.getExternalReferenceCode());
+		Assert.assertNotNull(commerceChannel);
+		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
+		Assert.assertEquals("site", commerceChannel.getType());
+		Assert.assertEquals("TESTVOC0001", commerceChannel.getExternalReferenceCode());
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
