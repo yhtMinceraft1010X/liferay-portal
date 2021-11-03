@@ -174,9 +174,9 @@ public class BundleSiteInitializerTest {
 				group.getGroupId());
 
 		Assert.assertNotNull(commerceChannel);
+		Assert.assertEquals("TESTVOC0001", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
-		Assert.assertEquals("TESTVOC0001", commerceChannel.getExternalReferenceCode());
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
