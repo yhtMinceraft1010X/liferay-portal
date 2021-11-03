@@ -149,23 +149,23 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
-		CommerceCatalog commerceCatalog =
+		CommerceCatalog commerceCatalog1 =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					group.getCompanyId(), "TESTCATG0001");
 
-		Assert.assertNotNull(commerceCatalog);
+		Assert.assertNotNull(commerceCatalog1);
 		Assert.assertEquals(
-			"Test Commerce Catalog 1", commerceCatalog.getName());
+			"Test Commerce Catalog 1", commerceCatalog1.getName());
 
-		commerceCatalog =
+		CommerceCatalog commerceCatalog2 =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					group.getCompanyId(), "TESTCATG0002");
 
-		Assert.assertNotNull(commerceCatalog);
+		Assert.assertNotNull(commerceCatalog2);
 		Assert.assertEquals(
-			"Test Commerce Catalog 2", commerceCatalog.getName());
+			"Test Commerce Catalog 2", commerceCatalog2.getName());
 	}
 
 	private void _assertCommerceChannel(Group group) throws Exception {
@@ -230,13 +230,15 @@ public class BundleSiteInitializerTest {
 		FragmentEntry testFragmentEntry1 =
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				group.getGroupId(), "test-fragment-entry-1");
-		FragmentEntry testFragmentEntry2 =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				group.getGroupId(), "test-fragment-entry-2");
 
 		Assert.assertNotNull(testFragmentEntry1);
 		Assert.assertEquals(
 			"Test Fragment Entry 1", testFragmentEntry1.getName());
+
+		FragmentEntry testFragmentEntry2 =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				group.getGroupId(), "test-fragment-entry-2");
+
 		Assert.assertNotNull(testFragmentEntry2);
 		Assert.assertEquals(
 			"Test Fragment Entry 2", testFragmentEntry2.getName());
