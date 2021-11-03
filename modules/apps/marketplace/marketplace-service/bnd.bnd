@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Marketplace Service
 Bundle-SymbolicName: com.liferay.marketplace.service
-Bundle-Version: 7.0.12
+Bundle-Version: 7.0.13
 Liferay-Require-SchemaVersion: 2.0.3
 Liferay-Service: true
 -dsannotations-options: inherit
