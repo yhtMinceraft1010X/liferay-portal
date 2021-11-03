@@ -256,28 +256,28 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertLayouts(Group group) throws Exception {
-		List<Layout> layouts = _layoutLocalService.getLayouts(
+		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), true);
 
-		Assert.assertTrue(layouts.size() == 1);
+		Assert.assertTrue(privateLayouts.size() == 1);
 
-		Layout layout = layouts.get(0);
+		Layout privateLayout = privateLayouts.get(0);
 
-		Assert.assertTrue(layout.isHidden());
+		Assert.assertTrue(privateLayout.isHidden());
 		Assert.assertEquals(
-			"Test Private Layout", layout.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("content", layout.getType());
+			"Test Private Layout", privateLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", privateLayout.getType());
 
-		layouts = _layoutLocalService.getLayouts(group.getGroupId(), false);
+		List<Layout> publicLayouts = _layoutLocalService.getLayouts(group.getGroupId(), false);
 
-		Assert.assertTrue(layouts.size() == 1);
+		Assert.assertTrue(publicLayouts.size() == 1);
 
-		layout = layouts.get(0);
+		Layout publicLayout = publicLayouts.get(0);
 
-		Assert.assertFalse(layout.isHidden());
+		Assert.assertFalse(publicLayout.isHidden());
 		Assert.assertEquals(
-			"Test Public Layout", layout.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("content", layout.getType());
+			"Test Public Layout", publicLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", publicLayout.getType());
 	}
 
 	private void _assertObjectDefinition(Group group) throws Exception {
