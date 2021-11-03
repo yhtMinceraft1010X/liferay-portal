@@ -97,12 +97,6 @@ public class BundleSiteInitializerTest {
 
 	@After
 	public void tearDown() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -143,6 +137,13 @@ public class BundleSiteInitializerTest {
 		_assertStyleBookEntry(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 
 		bundle.uninstall();
 
