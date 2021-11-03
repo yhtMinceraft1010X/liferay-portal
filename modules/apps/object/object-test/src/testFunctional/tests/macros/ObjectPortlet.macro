@@ -99,7 +99,6 @@ definition {
 	}
 
 	macro assertUserCanNotUpdateEntryWithoutPermission {
-
 		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
 
 		AssertNotEditable(locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY");
@@ -109,8 +108,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_1",
 			value1 = "must have UPDATE permission for com.liferay.object.model.ObjectDefinition#");
-
-			
 	}
 
 	macro changePagination {

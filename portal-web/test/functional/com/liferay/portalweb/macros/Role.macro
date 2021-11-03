@@ -573,8 +573,8 @@ definition {
 			var permissionNavigationValue = "Calendar";
 		}
 		else if (contains("${permissionDefinitionKey}", "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS")) {
-				var permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS";
-				var permissionNavigationValue = "Custom Objects";
+			var permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS";
+			var permissionNavigationValue = "Custom Objects";
 		}
 		else if (contains("${permissionDefinitionKey}", "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA")) {
 			var permissionNavigationKey = "SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA";
