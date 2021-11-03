@@ -5,9 +5,9 @@ function check_usage {
 	then
 		echo "Usage: ${0} <custom-element-name> <js-framework>"
 		echo ""
-		echo "The script can be configured with the following parameters:"
+		echo "The script requires the following parameters:"
 		echo ""
-		echo "  custom-element-name: Custom element name"
+		echo "  custom-element-name: liferay-hello-world"
 		echo "	js-framework: react, vue2, vue3"
 		echo ""
 		echo "Example: ${0} liferay-hello-world react"
@@ -15,15 +15,53 @@ function check_usage {
 		exit 1
 	fi
 
-	export CUSTOM_ELEMENT_NAME="hello-world"
+	if [[ ${1} != [a-z]* ]]
+	then
+		echo "Custom element names must start with a lower case letter."
+
+		exit 1
+	fi
+
+	if [[ ${1} != *-* ]]
+	then
+		echo "Custom element names must contain a dash."
+
+		exit 1
+	fi
+
+	if [[ ${#1} -le 2 ]]
+	then
+		echo "Custom element name is too short."
+
+		exit 1
+	fi
+
+	if [[ ${1} != *[a-z0-9] ]]
+	then
+		echo "Custom element names must end with a lower case letter or number."
+
+		exit 1
+	fi
+
+	if [[ ${1} == *[A-Z]* ]]
+	then
+		echo "Custom element name must not contain upper case letters."
+
+		exit 1
+	fi
+
+	if ! [[ ${1} =~ ^[a-z0-9]+-[a-z0-9]+$ ]]
+	then
+		echo "Custom element name is not valid."
+
+		exit 1
+	fi
 }
 
 function create_react_app {
-	local temp_dir=$(get_temp_dir)
+	yarn create react-app ${REMOTE_APP_DIR}
 
-	yarn create react-app ${temp_dir}
-
-	cd ${temp_dir}
+	cd ${REMOTE_APP_DIR}
 
 	yarn add sass
 	yarn remove @testing-library/jest-dom @testing-library/react @testing-library/user-event web-vitals
@@ -52,12 +90,10 @@ function create_react_app {
 function create_vue_2_app {
 	npm i -g @vue/cli
 
-	local temp_dir=$(get_temp_dir)
+	vue create ${REMOTE_APP_DIR} --default
 
-	vue create ${temp_dir} --default
-
-	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" ${temp_dir}/public/index.html
-	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${temp_dir}/src/main.js
+	sed -i -e "s|<div id=\"app\"></div>|<${CUSTOM_ELEMENT_NAME}></${CUSTOM_ELEMENT_NAME}>|g" ${REMOTE_APP_DIR}/public/index.html
+	sed -i -e "s|#app|${CUSTOM_ELEMENT_NAME}|g" ${REMOTE_APP_DIR}/src/main.js
 }
 
 function create_vue_3_app {
@@ -92,20 +128,34 @@ function date {
 	fi
 }
 
-function get_temp_dir {
+function get_remote_app_dir {
 	local current_date=$(date)
 
 	local timestamp=$(date "${current_date}" "+%Y%m%d%H%M%S")
 
-	echo "temp-${timestamp}"
+	echo "remote-app-${timestamp}"
 }
 
 function main {
 	check_usage "${@}"
 
-	#create_react_app
-	#create_vue_2_app
-	#create_vue_3_app
+	CUSTOM_ELEMENT_NAME="${1}"
+	REMOTE_APP_DIR=$(get_remote_app_dir)
+
+	if [ "${2}" == "react" ]
+	then
+		create_react_app
+	elif [ "${2}" == "vue2" ]
+	then
+		create_vue_2_app
+	elif [ "${2}" == "vue3" ]
+	then
+		create_vue_3_app
+	else
+		echo "Unknown JavaScript framework: ${2}."
+
+		exit 1
+	fi
 }
 
 function write_gitignore {
