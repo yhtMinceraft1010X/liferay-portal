@@ -480,7 +480,6 @@ public class PortalImpl implements Portal {
 		_reservedParams.add("p_l_id");
 		_reservedParams.add("p_l_mode");
 		_reservedParams.add("p_l_reset");
-		_reservedParams.add("p_l_segments_experience_id");
 
 		// Portal portlet
 
@@ -520,6 +519,10 @@ public class PortalImpl implements Portal {
 		// Portal journal article
 
 		_reservedParams.add("p_j_a_id"); // LPS-16418
+
+		// Portal segments
+
+		_reservedParams.add("p_s_e_id"); // LPS-141850
 
 		// Miscellaneous
 
