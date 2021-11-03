@@ -92,21 +92,10 @@ public class BundleSiteInitializerTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
-	public void setUp() throws Exception {
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				user.getGroupId(), user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-	}
+	public void setUp() throws Exception {	}
 
 	@After
 	public void tearDown() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.popServiceContext();
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				serviceContext.getCompanyId(), "C_TestBundleSiteInitializer");
@@ -132,6 +121,14 @@ public class BundleSiteInitializerTest {
 
 		Group group = GroupTestUtil.addGroup();
 
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				user.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		siteInitializer.initialize(group.getGroupId());
 
 		_assertCommerceCatalogs(group);
@@ -149,6 +146,9 @@ public class BundleSiteInitializerTest {
 		GroupLocalServiceUtil.deleteGroup(group);
 
 		bundle.uninstall();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.popServiceContext();
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
