@@ -174,7 +174,8 @@ public class BundleSiteInitializerTest {
 				group.getGroupId());
 
 		Assert.assertNotNull(commerceChannel);
-		Assert.assertEquals("TESTVOC0001", commerceChannel.getExternalReferenceCode());
+		Assert.assertEquals(
+			"TESTVOC0001", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
 	}
@@ -265,10 +266,12 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertTrue(privateLayout.isHidden());
 		Assert.assertEquals(
-			"Test Private Layout", privateLayout.getName(LocaleUtil.getSiteDefault()));
+			"Test Private Layout",
+			privateLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", privateLayout.getType());
 
-		List<Layout> publicLayouts = _layoutLocalService.getLayouts(group.getGroupId(), false);
+		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), false);
 
 		Assert.assertTrue(publicLayouts.size() == 1);
 
@@ -276,7 +279,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertFalse(publicLayout.isHidden());
 		Assert.assertEquals(
-			"Test Public Layout", publicLayout.getName(LocaleUtil.getSiteDefault()));
+			"Test Public Layout",
+			publicLayout.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("content", publicLayout.getType());
 	}
 
