@@ -88,8 +88,8 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		sb.append("<li class=\"");
 		sb.append(_getCssClass(httpServletRequest));
 		sb.append("\">");
-		sb.append("<span class=\"control-menu-level-1-heading text-truncate\" ");
-		sb.append("data-qa-id=\"headerTitle\">");
+		sb.append("<span class=\"control-menu-level-1-heading ");
+		sb.append("text-truncate\" data-qa-id=\"headerTitle\">");
 		sb.append(_getHeaderTitle(httpServletRequest));
 
 		if (_hasDraftLayout(httpServletRequest)) {
