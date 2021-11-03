@@ -125,7 +125,7 @@ public class BundleSiteInitializerTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				user.getGroupId(), user.getUserId());
+				group.getGroupId(), user.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -147,8 +147,7 @@ public class BundleSiteInitializerTest {
 
 		bundle.uninstall();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.popServiceContext();
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
