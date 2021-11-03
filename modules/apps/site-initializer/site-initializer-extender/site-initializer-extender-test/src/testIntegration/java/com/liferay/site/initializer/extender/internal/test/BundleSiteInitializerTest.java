@@ -92,13 +92,6 @@ public class BundleSiteInitializerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void testInitialize() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
