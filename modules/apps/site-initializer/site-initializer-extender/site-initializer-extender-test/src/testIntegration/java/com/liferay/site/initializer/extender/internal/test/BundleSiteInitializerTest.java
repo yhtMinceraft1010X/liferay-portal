@@ -123,7 +123,7 @@ public class BundleSiteInitializerTest {
 		_assertCommerceInventoryWarehouse(group);
 		_assertDDMStructure(group);
 		_assertDDMTemplate(group);
-		_assertDocuments(group);
+		_assertDLFileEntry(group);
 		_assertFragments(group);
 		_assertLayoutPageTemplates(group);
 		_assertLayouts(group);
@@ -210,7 +210,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
-	private void _assertDocuments(Group group) throws Exception {
+	private void _assertDLFileEntry(Group group) throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Table of Contents.markdown");
