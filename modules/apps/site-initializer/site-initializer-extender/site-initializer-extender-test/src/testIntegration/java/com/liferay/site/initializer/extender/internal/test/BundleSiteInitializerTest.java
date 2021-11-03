@@ -124,10 +124,10 @@ public class BundleSiteInitializerTest {
 		_assertDDMStructure(group);
 		_assertDDMTemplate(group);
 		_assertDLFileEntry(group);
-		_assertFragments(group);
-		_assertLayoutPageTemplates(group);
+		_assertFragmentEntries(group);
+		_assertLayoutPageTemplateEntry(group);
 		_assertLayouts(group);
-		_assertObjectDefinitions(group);
+		_assertObjectDefinition(group);
 		_assertStyleBookEntry(group);
 
 		GroupLocalServiceUtil.deleteGroup(group);
@@ -226,7 +226,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Revelation"));
 	}
 
-	private void _assertFragments(Group group) {
+	private void _assertFragmentEntries(Group group) {
 		FragmentEntry testFragmentEntry1 =
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				group.getGroupId(), "test-fragment-entry-1");
@@ -242,7 +242,7 @@ public class BundleSiteInitializerTest {
 			"Test Fragment Entry 2", testFragmentEntry2.getName());
 	}
 
-	private void _assertLayoutPageTemplates(Group group) throws Exception {
+	private void _assertLayoutPageTemplateEntry(Group group) throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				group.getGroupId(), "Test Master Page",
@@ -278,7 +278,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("content", layout.getType());
 	}
 
-	private void _assertObjectDefinitions(Group group) throws Exception {
+	private void _assertObjectDefinition(Group group) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				group.getCompanyId(), "C_TestBundleSiteInitializer");
