@@ -36,6 +36,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -292,6 +293,18 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 		Assert.assertEquals(objectDefinition.isSystem(), false);
+
+		_assertObjectEntries(group, objectDefinition);
+	}
+
+	private void _assertObjectEntries(
+			Group group, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		Assert.assertEquals(
+			0,
+			_objectEntryLocalService.getObjectEntriesCount(
+				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
 	}
 
 	private void _assertStyleBookEntry(Group group) {
@@ -348,6 +361,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private Portal _portal;
