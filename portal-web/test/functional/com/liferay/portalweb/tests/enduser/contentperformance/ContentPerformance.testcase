@@ -60,13 +60,36 @@ definition {
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is connected and synced, the Content Performance panel display all its functionalities"
-	@ignore = "true"
 	@priority = "5"
 	test CheckAllInfoDisplayed {
-
-		// TODO LPS-139239 CheckAllInfoDisplayed pending implementation
-
-	}
+        task ("Open Content Performance") {
+            ContentPerformance.openContentPerformance();
+            if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
+                Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+            }
+            Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+        }
+        task ("Assert Title is present") {
+            AssertElementPresent(
+                locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
+                value1 = "content page");
+        }
+        task ("Assert URL is present") {
+            AssertElementPresent(
+                locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
+                value1 = "http://");
+        }
+        task ("Assert View Graph is present") {
+            AssertElementPresent(
+                locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TOTAL_VIEWS",
+                value1 = "Total Views");
+        }
+        task ("Assert View Graph is present") {
+            AssertElementPresent(
+                locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TRAFFIC",
+                value1 = "Traffic Channels");
+        }
+    }
 
 	@description = "LPS-132406: Given the Content Performance Panel
 	When the users leave the page because the session expires or s/he does log out
