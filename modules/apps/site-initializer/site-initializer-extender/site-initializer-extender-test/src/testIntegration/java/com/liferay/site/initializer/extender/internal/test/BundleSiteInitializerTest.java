@@ -93,11 +93,11 @@ public class BundleSiteInitializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_user.getGroupId(), _user.getUserId());
+				user.getGroupId(), user.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
@@ -357,8 +357,6 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
-
-	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;
