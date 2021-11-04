@@ -18,10 +18,7 @@
 
 <%
 ListTypeEntry listTypeEntry = (ListTypeEntry)request.getAttribute(ObjectWebKeys.LIST_TYPE_ENTRY);
-
 ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListTypeEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-boolean isViewOnly = !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinitionPermission();
 %>
 
 <form action="javascript:;" onSubmit="<%= liferayPortletResponse.getNamespace() + "editListTypeEntry();" %>">
@@ -40,7 +37,7 @@ boolean isViewOnly = !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinit
 	<div class="modal-body">
 		<aui:model-context bean="<%= listTypeEntry %>" model="<%= ListTypeEntry.class %>" />
 
-		<aui:input disabled="<%= isViewOnly %>" name="name" required="<%= true %>" value="<%= listTypeEntry.getName(themeDisplay.getLocale()) %>" />
+		<aui:input disabled="<%= !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= listTypeEntry.getName(themeDisplay.getLocale()) %>" />
 
 		<aui:input disabled="<%= true %>" name="key" required="<%= true %>" value="<%= listTypeEntry.getKey() %>" />
 	</div>
@@ -55,7 +52,7 @@ boolean isViewOnly = !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinit
 				</div>
 
 				<div class="btn-group-item">
-					<aui:button disabled="<%= isViewOnly %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+					<aui:button disabled="<%= !viewListTypeEntriesDisplayContext.hasUpdateListTypeDefinitionPermission() %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 				</div>
 			</div>
 		</div>

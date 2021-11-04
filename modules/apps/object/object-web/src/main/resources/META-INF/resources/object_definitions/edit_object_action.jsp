@@ -19,8 +19,6 @@
 <%
 ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-boolean isViewOnly = !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission();
-
 ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectAction();
 %>
 
@@ -37,7 +35,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 
 					<aui:model-context bean="<%= objectAction %>" model="<%= ObjectAction.class %>" />
 
-					<aui:input disabled="<%= isViewOnly %>" name="name" required="<%= true %>" value="<%= objectAction.getName() %>" />
+					<aui:input disabled="<%= !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= objectAction.getName() %>" />
 
 					<aui:model-context bean="<%= null %>" model="<%= null %>" />
 
@@ -47,7 +45,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 					<aui:model-context bean="<%= objectAction %>" model="<%= ObjectAction.class %>" />
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= isViewOnly %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectAction.isActive() %>" />
+						<aui:input disabled="<%= !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= objectAction.isActive() %>" />
 					</aui:field-wrapper>
 
 					<%= objectDefinitionsActionsDisplayContext.renderDDMForm(pageContext) %>
@@ -57,7 +55,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 			<div class="side-panel-content__footer">
 				<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
 
-				<aui:button disabled="<%= isViewOnly %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+				<aui:button disabled="<%= !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 			</div>
 		</div>
 	</form>

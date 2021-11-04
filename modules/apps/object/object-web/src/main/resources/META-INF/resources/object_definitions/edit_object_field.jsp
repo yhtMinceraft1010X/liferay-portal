@@ -18,11 +18,8 @@
 
 <%
 ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
-ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
-
 ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (ObjectDefinitionsFieldsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission();
+ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
 %>
 
 <liferay-frontend:side-panel-content
@@ -38,11 +35,11 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 
 					<aui:model-context bean="<%= objectField %>" model="<%= ObjectField.class %>" />
 
-					<aui:input disabled="<%= isViewOnly %>" name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
+					<aui:input disabled="<%= !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="label" required="<%= true %>" value="<%= objectField.getLabel(themeDisplay.getLocale()) %>" />
 
-					<aui:input disabled="<%= isViewOnly || objectDefinition.isApproved() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
+					<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="name" required="<%= true %>" value="<%= objectField.getName() %>" />
 
-					<aui:select disabled="<%= isViewOnly || objectDefinition.isApproved() %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
+					<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="type" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeFieldType(event);" %>' required="<%= true %>">
 						<aui:option label="BigDecimal" selected='<%= Objects.equals(objectField.getType(), "BigDecimal") %>' value="BigDecimal" />
 						<aui:option label="Boolean" selected='<%= Objects.equals(objectField.getType(), "Boolean") %>' value="Boolean" />
 						<aui:option label="Date" selected='<%= Objects.equals(objectField.getType(), "Date") %>' value="Date" />
@@ -53,7 +50,7 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 					</aui:select>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= isViewOnly || objectDefinition.isApproved() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "mandatory") %>' labelCssClass="simple-toggle-switch" name="required" type="toggle-switch" value="<%= objectField.getRequired() %>" />
+						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "mandatory") %>' labelCssClass="simple-toggle-switch" name="required" type="toggle-switch" value="<%= objectField.getRequired() %>" />
 					</aui:field-wrapper>
 				</div>
 
@@ -63,14 +60,14 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 					</h2>
 
 					<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-						<aui:input disabled="<%= isViewOnly || objectDefinition.isApproved() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
+						<aui:input disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" inlineLabel="right" label='<%= LanguageUtil.get(request, "searchable") %>' labelCssClass="simple-toggle-switch" name="indexed" onChange='<%= liferayPortletResponse.getNamespace() + "onChangeSeachableSwitch(event);" %>' type="toggle-switch" value="<%= objectField.getIndexed() %>" />
 					</aui:field-wrapper>
 
 					<div id="<portlet:namespace />indexedGroup" style="display: <%= (Objects.equals(objectField.getType(), "String") && objectField.getIndexed()) ? "block;" : "none;" %>">
 						<div class="form-group">
 							<clay:radio
 								checked="<%= objectField.getIndexed() && objectField.getIndexedAsKeyword() %>"
-								disabled="<%= isViewOnly || objectDefinition.isApproved() %>"
+								disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeKeyword" %>'
 								label='<%= LanguageUtil.get(request, "keyword") %>'
 								name="indexedType"
@@ -79,7 +76,7 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 
 							<clay:radio
 								checked="<%= objectField.getIndexed() && !objectField.getIndexedAsKeyword() %>"
-								disabled="<%= isViewOnly || objectDefinition.isApproved() %>"
+								disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "inputIndexedTypeText" %>'
 								label='<%= LanguageUtil.get(request, "text") %>'
 								name="indexedType"
@@ -88,7 +85,7 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 						</div>
 
 						<div id="<portlet:namespace />indexedLanguageIdGroup" style="display: <%= (!objectField.getIndexed() || objectField.getIndexedAsKeyword()) ? "none;" : "block;" %>">
-							<aui:select disabled="<%= isViewOnly || objectDefinition.isApproved() %>" label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
+							<aui:select disabled="<%= objectDefinition.isApproved() || !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label='<%= LanguageUtil.get(request, "language") %>' name="indexedLanguageId">
 
 								<%
 								for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
@@ -109,7 +106,7 @@ boolean isViewOnly = !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefin
 			<div class="side-panel-content__footer">
 				<aui:button cssClass="btn-cancel mr-1" name="cancel" value='<%= LanguageUtil.get(request, "cancel") %>' />
 
-				<aui:button disabled="<%= isViewOnly %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
+				<aui:button disabled="<%= !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission() %>" name="save" type="submit" value='<%= LanguageUtil.get(request, "save") %>' />
 			</div>
 		</div>
 	</form>
