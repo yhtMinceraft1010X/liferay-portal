@@ -1187,16 +1187,6 @@ public class JournalArticleLocalServiceImpl
 			userId, newArticle, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds, oldAssetEntry.getPriority());
 
-		// Dynamic data mapping
-
-		updateDDMFields(newArticle, copyArticleImages(oldArticle, newArticle));
-
-		updateDDMLinks(
-			id, groupId, oldArticle.getDDMStructureKey(),
-			oldArticle.getDDMTemplateKey(), true);
-
-		// Asset display page
-
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 				groupId, _portal.getClassNameId(JournalArticle.class.getName()),
@@ -1210,6 +1200,14 @@ public class JournalArticleLocalServiceImpl
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId(),
 				assetDisplayPageEntry.getType(), serviceContext);
 		}
+
+		// Dynamic data mapping
+
+		updateDDMFields(newArticle, copyArticleImages(oldArticle, newArticle));
+
+		updateDDMLinks(
+			id, groupId, oldArticle.getDDMStructureKey(),
+			oldArticle.getDDMTemplateKey(), true);
 
 		return newArticle;
 	}
