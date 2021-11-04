@@ -1086,7 +1086,6 @@ public class ContentDashboardAdminPortletTest {
 				ReflectionTestUtil.invoke(
 					results.get(0), "getTitle", new Class<?>[] {Locale.class},
 					LocaleUtil.US));
-
 			Assert.assertEquals(
 				gifFileEntry.getFileName(),
 				ReflectionTestUtil.invoke(
