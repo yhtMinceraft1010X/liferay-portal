@@ -3582,6 +3582,7 @@ public class DataFactory {
 
 		dlFileEntryModel.setRepositoryId(dlFolderModel.getRepositoryId());
 		dlFileEntryModel.setFolderId(dlFolderModel.getFolderId());
+		dlFileEntryModel.setTreePath(dlFolderModel.getTreePath());
 		dlFileEntryModel.setName(String.valueOf(_dLFileEntryIdCounter.get()));
 		dlFileEntryModel.setFileName(name + "." + extension);
 		dlFileEntryModel.setExtension(extension);
