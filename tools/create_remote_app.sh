@@ -134,7 +134,7 @@ function main {
 }
 
 function random_digit {
-	echo $(((RANDOM % 10)  + 1))
+	echo $(((RANDOM % 10) + 1))
 }
 
 function random_letter {
