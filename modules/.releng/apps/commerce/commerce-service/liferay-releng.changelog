@@ -222,3 +222,8 @@ bfddf3beb82384530e3971cda82c64507540c9ce^..6d09cadf5ecaefd669e60dfd163f8635a0faf
 # Bundle Version 11.0.29
 #
 6d09cadf5ecaefd669e60dfd163f8635a0fafd9a^..735cd3c7de7f2cf25be1dc24fe7242bf22c31587=LPS-105380
+
+#
+# Bundle Version 11.0.30
+#
+735cd3c7de7f2cf25be1dc24fe7242bf22c31587^..64cbc6813b67bbb1db8dedfa6646e88f43ea664d=COMMERCE-7685
