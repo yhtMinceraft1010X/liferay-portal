@@ -48,8 +48,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	@Override
 	public SXPBlueprint getSXPBlueprint(Long sxpBlueprintId) throws Exception {
 		return SXPBlueprintUtil.toSXPBlueprint(
-			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(),
+			_sxpBlueprintService.getSXPBlueprint(sxpBlueprintId));
 	}
 
 	@Override
@@ -75,9 +75,9 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 			},
 			null,
 			document -> SXPBlueprintUtil.toSXPBlueprint(
+				contextAcceptLanguage.getPreferredLocale(),
 				_sxpBlueprintService.getSXPBlueprint(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				contextAcceptLanguage.getPreferredLocale()));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -85,6 +85,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 		throws Exception {
 
 		return SXPBlueprintUtil.toSXPBlueprint(
+			contextAcceptLanguage.getPreferredLocale(),
 			_sxpBlueprintService.addSXPBlueprint(
 				String.valueOf(sxpBlueprint.getConfiguration()),
 				Collections.singletonMap(
@@ -94,8 +95,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle()),
-				ServiceContextFactory.getInstance(contextHttpServletRequest)),
-			contextAcceptLanguage.getPreferredLocale());
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Reference

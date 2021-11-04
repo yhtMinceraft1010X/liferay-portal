@@ -25,8 +25,8 @@ import java.util.Locale;
 public class SXPBlueprintUtil {
 
 	public static SXPBlueprint toSXPBlueprint(
-		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint,
-		Locale locale) {
+		Locale locale,
+		com.liferay.search.experiences.model.SXPBlueprint sxpBlueprint) {
 
 		return new SXPBlueprint() {
 			{

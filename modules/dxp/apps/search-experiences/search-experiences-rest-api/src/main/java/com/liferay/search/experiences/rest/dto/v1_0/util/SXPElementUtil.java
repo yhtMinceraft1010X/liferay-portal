@@ -25,8 +25,8 @@ import java.util.Locale;
 public class SXPElementUtil {
 
 	public static SXPElement toSXPElement(
-		com.liferay.search.experiences.model.SXPElement sxpElement,
-		Locale locale) {
+		Locale locale,
+		com.liferay.search.experiences.model.SXPElement sxpElement) {
 
 		return new SXPElement() {
 			{

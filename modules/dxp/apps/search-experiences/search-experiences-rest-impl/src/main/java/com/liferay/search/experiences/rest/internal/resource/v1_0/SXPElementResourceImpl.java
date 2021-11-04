@@ -48,8 +48,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	@Override
 	public SXPElement getSXPElement(Long sxpElementId) throws Exception {
 		return SXPElementUtil.toSXPElement(
-			_sxpElementService.getSXPElement(sxpElementId),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(),
+			_sxpElementService.getSXPElement(sxpElementId));
 	}
 
 	@Override
@@ -75,14 +75,15 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			},
 			null,
 			document -> SXPElementUtil.toSXPElement(
+				contextAcceptLanguage.getPreferredLocale(),
 				_sxpElementService.getSXPElement(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				contextAcceptLanguage.getPreferredLocale()));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
 	public SXPElement postSXPElement(SXPElement sxpElement) throws Exception {
 		return SXPElementUtil.toSXPElement(
+			contextAcceptLanguage.getPreferredLocale(),
 			_sxpElementService.addSXPElement(
 				Collections.singletonMap(
 					contextAcceptLanguage.getPreferredLocale(),
@@ -92,8 +93,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle()),
 				0,
-				ServiceContextFactory.getInstance(contextHttpServletRequest)),
-			contextAcceptLanguage.getPreferredLocale());
+				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
 
 	@Reference

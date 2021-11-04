@@ -68,7 +68,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 		_enhance(
 			searchRequestBuilder,
-			SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint, null));
+			SXPBlueprintUtil.toSXPBlueprint(null, sxpBlueprint));
 	}
 
 	@Override
