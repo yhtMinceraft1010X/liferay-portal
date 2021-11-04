@@ -180,27 +180,24 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try (LogCapture backgroundTaskMessageListenerLogCapture =
-				LoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					LoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
 			long targetGroupId = RandomTestUtil.nextLong();
 
-			try (LogCapture loggerExportImportLifecycleListenerLogCapture =
-					LoggerTestUtil.configureLog4JLogger(
-						"com.liferay.exportimport.internal.lifecycle." +
-							"LoggerExportImportLifecycleListener",
-						LoggerTestUtil.ERROR)) {
+			try (LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.internal.lifecycle." +
+						"LoggerExportImportLifecycleListener",
+					LoggerTestUtil.ERROR)) {
 
 				StagingUtil.publishLayouts(
 					TestPropsValues.getUserId(), _group.getGroupId(),
 					targetGroupId, false, new long[0], _parameterMap);
 			}
 
-			List<LogEntry> logEntries =
-				backgroundTaskMessageListenerLogCapture.getLogEntries();
+			List<LogEntry> logEntries = logCapture1.getLogEntries();
 
 			LogEntry logEntry = logEntries.get(0);
 
@@ -290,17 +287,15 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try (LogCapture backgroundTaskMessageListenerLogCapture =
-				LoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.background.task.internal.messaging." +
-						"BackgroundTaskMessageListener",
-					LoggerTestUtil.ERROR)) {
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
-			try (LogCapture loggerExportImportLifecycleListenerLogCapture =
-					LoggerTestUtil.configureLog4JLogger(
-						"com.liferay.exportimport.internal.lifecycle." +
-							"LoggerExportImportLifecycleListener",
-						LoggerTestUtil.ERROR)) {
+			try (LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.internal.lifecycle." +
+						"LoggerExportImportLifecycleListener",
+					LoggerTestUtil.ERROR)) {
 
 				StagingUtil.publishPortlet(
 					user.getUserId(), _group.getGroupId(),
@@ -308,8 +303,7 @@ public class ExportImportLifecycleEventTest {
 					_parameterMap);
 			}
 
-			List<LogEntry> logEntries =
-				backgroundTaskMessageListenerLogCapture.getLogEntries();
+			List<LogEntry> logEntries = logCapture1.getLogEntries();
 
 			LogEntry logEntry = logEntries.get(0);
 
