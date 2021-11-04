@@ -58,7 +58,7 @@ public class SearchResponseResourceTest
 
 			_testPostSearchThrowsJsonParseException();
 
-			// TODO SXPBlueprint.toDTO with bad JSON returns a half-empty DTO
+			// TODO SXPBlueprint.toDTO with bad JSON returns a half empty DTO
 
 			_testPostSearchThrowsUnrecognizedPropertyException();
 		}
