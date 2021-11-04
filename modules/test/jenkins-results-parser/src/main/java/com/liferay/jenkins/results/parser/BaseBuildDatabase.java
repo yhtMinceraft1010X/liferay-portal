@@ -322,9 +322,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			sb.append("export ");
 			sb.append(propertyName);
 			sb.append("=");
-
 			sb.append(JenkinsResultsParserUtil.escapeForBash(propertyValue));
-
 			sb.append("\n");
 		}
 
