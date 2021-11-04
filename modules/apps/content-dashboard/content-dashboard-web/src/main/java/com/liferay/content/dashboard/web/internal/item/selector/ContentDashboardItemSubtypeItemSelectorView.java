@@ -265,29 +265,31 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				String fileEntryTypeIdString = String.valueOf(
 					googleDocsDLFileEntryType.getFileEntryTypeId());
 
-				if (!StringUtil.equalsIgnoreCase(
+				if (StringUtil.equalsIgnoreCase(
 						fileEntryTypeIdString,
 						infoItemFormVariation.getKey())) {
 
-					InfoItemReference infoItemReference =
-						contentDashboardItemSubtype.getInfoItemReference();
-
-					itemSubtypesJSONArray.put(
-						JSONUtil.put(
-							"className", infoItemReference.getClassName()
-						).put(
-							"classPK",
-							String.valueOf(infoItemFormVariation.getKey())
-						).put(
-							"label",
-							_getInfoItemFormVariationLabel(
-								infoItemFormVariation, themeDisplay.getLocale())
-						).put(
-							"selected",
-							checkedContentDashboardItemSubtypes.contains(
-								infoItemFormVariation.getKey())
-						));
+					continue;
 				}
+
+				InfoItemReference infoItemReference =
+					contentDashboardItemSubtype.getInfoItemReference();
+
+				itemSubtypesJSONArray.put(
+					JSONUtil.put(
+						"className", infoItemReference.getClassName()
+					).put(
+						"classPK",
+						String.valueOf(infoItemFormVariation.getKey())
+					).put(
+						"label",
+						_getInfoItemFormVariationLabel(
+							infoItemFormVariation, themeDisplay.getLocale())
+					).put(
+						"selected",
+						checkedContentDashboardItemSubtypes.contains(
+							infoItemFormVariation.getKey())
+					));
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);
