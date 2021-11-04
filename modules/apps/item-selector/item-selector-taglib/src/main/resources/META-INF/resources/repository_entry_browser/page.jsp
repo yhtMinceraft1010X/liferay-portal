@@ -365,8 +365,6 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 									<%
 									FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
-									boolean editable = repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion);
-
 									String title = fileEntry.getTitle();
 
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
@@ -397,10 +395,10 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
-													actionJsp='<%= editable ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
+													actionJsp='<%= repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
 													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
-													cssClass='<%= (editable ? "item-preview" : StringPool.BLANK) + " file-card form-check form-check-card" %>'
+													cssClass='<%= (repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "item-preview" : StringPool.BLANK) + " file-card form-check form-check-card" %>'
 													data="<%= data %>"
 													icon="documents-and-media"
 													title="<%= title %>"
@@ -427,10 +425,10 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
-													actionJsp='<%= editable ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
+													actionJsp='<%= repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "/repository_entry_browser/action_button_preview.jsp" : StringPool.BLANK %>'
 													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
-													cssClass='<%= (editable ? "item-preview" : StringPool.BLANK) + " form-check form-check-card image-card" %>'
+													cssClass='<%= (repositoryEntryBrowserDisplayContext.isEditable(latestFileVersion) ? "item-preview" : StringPool.BLANK) + " form-check form-check-card image-card" %>'
 													data="<%= data %>"
 													imageUrl="<%= thumbnailSrc %>"
 													title="<%= title %>"
