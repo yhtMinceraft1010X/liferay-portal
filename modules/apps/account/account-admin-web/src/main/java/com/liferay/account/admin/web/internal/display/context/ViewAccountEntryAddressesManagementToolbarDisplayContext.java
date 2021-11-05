@@ -192,11 +192,11 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			if (AccountEntryPermission.contains(
 					themeDisplay.getPermissionChecker(),
 					ParamUtil.getLong(liferayPortletRequest, "accountEntryId"),
