@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -40,7 +39,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
@@ -112,15 +110,15 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		return serviceContext;
 	}
 
-	private boolean _exists(SXPElement sxpElement) {
+	private boolean _exists(long companyId, SXPElement sxpElement) {
 		if (_sxpElementLookup != null) {
 			return _sxpElementLookup.exists(sxpElement);
 		}
 
-		// TODO reliably check whether system element has been added before
+		// TODO Fix performance issue
 
 		return ListUtil.exists(
-			_sxpElementLocalService.getSXPElements(0, 100),
+			_sxpElementLocalService.getSXPElements(companyId),
 			modelSXPElement -> Objects.equals(
 				MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
 				modelSXPElement.getTitle(LocaleUtil.US)));
@@ -153,7 +151,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
-		if (_exists(sxpElement)) {
+		if (_exists(companyId, sxpElement)) {
 			return;
 		}
 
