@@ -67,24 +67,13 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 			return;
 		}
 
-		RuntimeException runtimeException = new RuntimeException();
-
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
 			String json = StringUtil.read(
 				getClass(), StringPool.SLASH + url.getPath());
 
-			try {
-				_addSXPElement(company, json);
-			}
-			catch (Exception exception) {
-				runtimeException.addSuppressed(exception);
-			}
-		}
-
-		if (!ArrayUtil.isEmpty(runtimeException.getSuppressed())) {
-			throw runtimeException;
+			_addSXPElement(company, json);
 		}
 	}
 
