@@ -128,7 +128,8 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 	}
 
 	private void _importSXPElement(
-		long companyId, long groupId, String json, long userId) {
+			long companyId, long groupId, String json, long userId)
+		throws Exception {
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
@@ -136,18 +137,13 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 			return;
 		}
 
-		try {
-			_sxpElementLocalService.addSXPElement(
-				userId,
-				LocalizedMapUtil.getLocalizedMap(
-					sxpElement.getDescription_i18n()),
-				String.valueOf(sxpElement.getElementDefinition()), true,
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
-				_createServiceContext(companyId, groupId, userId));
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
+		_sxpElementLocalService.addSXPElement(
+			userId,
+			LocalizedMapUtil.getLocalizedMap(
+				sxpElement.getDescription_i18n()),
+			String.valueOf(sxpElement.getElementDefinition()), true,
+			LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
+			_createServiceContext(companyId, groupId, userId));
 	}
 
 	@Reference
