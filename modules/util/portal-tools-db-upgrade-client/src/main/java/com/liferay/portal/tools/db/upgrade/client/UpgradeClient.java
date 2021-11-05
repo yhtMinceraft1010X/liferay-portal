@@ -368,14 +368,14 @@ public class UpgradeClient {
 	}
 
 	private GogoShellClient _initGogoShellClient() throws IOException {
-		String property = _portalUpgradeExtProperties.getProperty(
+		String value = _portalUpgradeExtProperties.getProperty(
 			"module.framework.properties.osgi.console");
 
-		if (property == null) {
+		if (value == null) {
 			return new GogoShellClient();
 		}
 
-		Matcher matcher = _gogoShellAddressPattern.matcher(property);
+		Matcher matcher = _gogoShellAddressPattern.matcher(value);
 
 		if (!matcher.find()) {
 			return new GogoShellClient();
