@@ -94,9 +94,9 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 
 		return ListUtil.exists(
 			_sxpElementLocalService.getSXPElements(companyId),
-			modelSXPElement -> Objects.equals(
+			serviceBuilderSXPElement -> Objects.equals(
 				MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-				modelSXPElement.getTitle(LocaleUtil.US)));
+				serviceBuilderSXPElement.getTitle(LocaleUtil.US)));
 	}
 
 	private void _addSXPElement(Company company, String json)
