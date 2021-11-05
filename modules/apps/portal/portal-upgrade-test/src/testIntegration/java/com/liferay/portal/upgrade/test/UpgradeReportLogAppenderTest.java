@@ -69,17 +69,15 @@ public class UpgradeReportLogAppenderTest {
 		_db = DBManagerUtil.getDB();
 
 		_db.runSQL(
-			"create table " + _TABLE_NAME_1 +
-				" (id_ LONG not null primary key)");
+			"create table UpgradeReportTable1 (id_ LONG not null primary key)");
 		_db.runSQL(
-			"create table " + _TABLE_NAME_2 +
-				" (id_ LONG not null primary key)");
+			"create table UpgradeReportTable2 (id_ LONG not null primary key)");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("drop table if exists " + _TABLE_NAME_1);
-		_db.runSQL("drop table if exists " + _TABLE_NAME_2);
+		_db.runSQL("drop table if exists UpgradeReportTable1");
+		_db.runSQL("drop table if exists UpgradeReportTable2");
 	}
 
 	@After
@@ -103,12 +101,13 @@ public class UpgradeReportLogAppenderTest {
 
 	@Test
 	public void testDatabaseTablesCounts() throws Exception {
-		_db.runSQL("insert into " + _TABLE_NAME_2 + " (id_) values (1)");
+		_db.runSQL("insert into UpgradeReportTable2 (id_) values (1)");
 
 		_appender.start();
 
-		_db.runSQL("insert into " + _TABLE_NAME_1 + " (id_) values (1)");
-		_db.runSQL("delete from " + _TABLE_NAME_2 + " where id_ = 1");
+		_db.runSQL("insert into UpgradeReportTable1 (id_) values (1)");
+
+		_db.runSQL("delete from UpgradeReportTable2 where id_ = 1");
 
 		_appender.stop();
 
@@ -127,13 +126,15 @@ public class UpgradeReportLogAppenderTest {
 			int initialCount = GetterUtil.getInteger(matcher.group(2), -1);
 			int finalCount = GetterUtil.getInteger(matcher.group(3), -1);
 
-			if (StringUtil.equalsIgnoreCase(tableName, _TABLE_NAME_1)) {
+			if (StringUtil.equalsIgnoreCase(tableName, "UpgradeReportTable1")) {
 				table1Exists = true;
 
 				Assert.assertEquals(0, initialCount);
 				Assert.assertEquals(1, finalCount);
 			}
-			else if (StringUtil.equalsIgnoreCase(tableName, _TABLE_NAME_2)) {
+			else if (StringUtil.equalsIgnoreCase(
+						tableName, "UpgradeReportTable2")) {
+
 				table2Exists = true;
 
 				Assert.assertEquals(1, initialCount);
@@ -347,10 +348,6 @@ public class UpgradeReportLogAppenderTest {
 
 		return FileUtil.read(reportFile);
 	}
-
-	private static final String _TABLE_NAME_1 = "UpgradeReportTable1";
-
-	private static final String _TABLE_NAME_2 = "UpgradeReportTable2";
 
 	private static DB _db;
 	private static final Pattern _pattern = Pattern.compile(
