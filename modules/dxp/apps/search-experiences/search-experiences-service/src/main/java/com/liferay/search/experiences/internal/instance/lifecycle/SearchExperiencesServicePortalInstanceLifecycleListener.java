@@ -84,20 +84,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 
 	protected static final String ELEMENTS_PATH = "/META-INF/elements";
 
-	private ServiceContext _createServiceContext(
-		long companyId, long groupId, long userId) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(userId);
-
-		return serviceContext;
-	}
-
 	private boolean _exists(long companyId, SXPElement sxpElement) {
 
 		// TODO Fix performance issue
@@ -143,7 +129,15 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 				sxpElement.getDescription_i18n()),
 			String.valueOf(sxpElement.getElementDefinition()), true,
 			LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
-			_createServiceContext(companyId, groupId, userId));
+			new ServiceContext() {
+				{
+					setAddGroupPermissions(true);
+					setAddGuestPermissions(true);
+					setCompanyId(companyId);
+					setScopeGroupId(groupId);
+					setUserId(userId);
+				}
+			});
 	}
 
 	@Reference
