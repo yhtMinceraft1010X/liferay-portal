@@ -88,23 +88,19 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		}
 	}
 
-	private boolean _exists(long companyId, SXPElement sxpElement) {
-
-		// TODO Fix performance issue
-
-		return ListUtil.exists(
-			_sxpElementLocalService.getSXPElements(companyId),
-			serviceBuilderSXPElement -> Objects.equals(
-				MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
-				serviceBuilderSXPElement.getTitle(LocaleUtil.US)));
-	}
-
 	private void _addSXPElement(Company company, String json)
 		throws Exception {
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
-		if (_exists(company.getCompanyId(), sxpElement)) {
+		if (ListUtil.exists(
+				_sxpElementLocalService.getSXPElements(company.getCompanyId()),
+				serviceBuilderSXPElement -> Objects.equals(
+					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
+					serviceBuilderSXPElement.getTitle(LocaleUtil.US)))) {
+
+			// TODO Fix performance issue with getting every SXP element
+
 			return;
 		}
 
