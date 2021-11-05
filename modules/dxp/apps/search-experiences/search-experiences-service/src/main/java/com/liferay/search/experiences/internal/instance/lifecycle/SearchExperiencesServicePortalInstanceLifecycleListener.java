@@ -68,17 +68,15 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		}
 
 		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			String json = StringUtil.read(
-				getClass(), StringPool.SLASH + url.getPath());
-
-			_addSXPElement(company, json);
+			_addSXPElement(company, enumeration.nextElement());
 		}
 	}
 
-	private void _addSXPElement(Company company, String json)
+	private void _addSXPElement(Company company, URL url)
 		throws Exception {
+
+		String json = StringUtil.read(
+			getClass(), StringPool.SLASH + url.getPath());
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
