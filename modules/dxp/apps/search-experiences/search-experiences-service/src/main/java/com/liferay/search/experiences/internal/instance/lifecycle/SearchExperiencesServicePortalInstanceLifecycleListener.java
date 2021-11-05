@@ -111,9 +111,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 	}
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
 
 }
