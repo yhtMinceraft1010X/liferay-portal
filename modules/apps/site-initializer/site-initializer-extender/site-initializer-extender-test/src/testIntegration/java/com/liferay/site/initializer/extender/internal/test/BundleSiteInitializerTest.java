@@ -156,13 +156,13 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertAssetCategories(Group group) throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
 		AssetCategory testAssetCategory1 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
-					globalGroup.getGroupId(), "TESTCAT0001");
+					companyGroup.getGroupId(), "TESTCAT0001");
 
 		Assert.assertNotNull(testAssetCategory1);
 		Assert.assertEquals(
@@ -170,9 +170,8 @@ public class BundleSiteInitializerTest {
 
 		AssetCategory testAssetCategory2 =
 			_assetCategoryLocalService.fetchCategory(
-				globalGroup.getGroupId(), testAssetCategory1.getCategoryId(),
-				"Test Asset Category 2",
-				testAssetCategory1.getVocabularyId());
+				companyGroup.getGroupId(), testAssetCategory1.getCategoryId(),
+				"Test Asset Category 2", testAssetCategory1.getVocabularyId());
 
 		Assert.assertNotNull(testAssetCategory2);
 		Assert.assertEquals(
@@ -198,12 +197,12 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertAssetVocabularies(Group group) throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			group.getCompanyId());
 
 		AssetVocabulary testAssetVocabulary1 =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				globalGroup.getGroupId(), "Test Asset Vocabulary 1");
+				companyGroup.getGroupId(), "Test Asset Vocabulary 1");
 
 		Assert.assertNotNull(testAssetVocabulary1);
 		Assert.assertEquals(
