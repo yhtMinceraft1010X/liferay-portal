@@ -82,18 +82,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		}
 	}
 
-	public interface SXPElementJSONStringsLookup {
-
-		public Stream<String> getSXPElementJSONStrings();
-
-	}
-
-	public interface SXPElementLookup {
-
-		public boolean exists(SXPElement sxpElement);
-
-	}
-
 	protected static final String ELEMENTS_PATH = "/META-INF/elements";
 
 	private ServiceContext _createServiceContext(
@@ -111,9 +99,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 	}
 
 	private boolean _exists(long companyId, SXPElement sxpElement) {
-		if (_sxpElementLookup != null) {
-			return _sxpElementLookup.exists(sxpElement);
-		}
 
 		// TODO Fix performance issue
 
@@ -125,10 +110,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 	}
 
 	private Stream<String> _getSXPElementJSONStringsStream() {
-		if (_sxpElementJSONStringsLookup != null) {
-			return _sxpElementJSONStringsLookup.getSXPElementJSONStrings();
-		}
-
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		Enumeration<URL> enumeration = bundle.findEntries(
@@ -172,11 +153,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private SXPElementJSONStringsLookup _sxpElementJSONStringsLookup;
-
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
-
-	private SXPElementLookup _sxpElementLookup;
 
 }
