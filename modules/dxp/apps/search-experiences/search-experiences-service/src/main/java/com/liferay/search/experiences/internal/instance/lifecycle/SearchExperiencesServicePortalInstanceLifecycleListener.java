@@ -68,7 +68,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		stream.forEach(
 			json -> {
 				try {
-					_importSXPElement(
+					_addSXPElement(
 						company.getCompanyId(), groupId, json,
 						user.getUserId());
 				}
@@ -127,7 +127,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		);
 	}
 
-	private void _importSXPElement(
+	private void _addSXPElement(
 			long companyId, long groupId, String json, long userId)
 		throws Exception {
 
