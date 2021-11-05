@@ -82,8 +82,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		}
 	}
 
-	protected static final String ELEMENTS_PATH = "/META-INF/elements";
-
 	private boolean _exists(long companyId, SXPElement sxpElement) {
 
 		// TODO Fix performance issue
@@ -99,7 +97,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			ELEMENTS_PATH, "*.json", false);
+			"/META-INF/elements", "*.json", false);
 
 		if (enumeration == null) {
 			return Stream.empty();
