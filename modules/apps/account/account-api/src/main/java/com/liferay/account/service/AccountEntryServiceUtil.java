@@ -51,39 +51,6 @@ public class AccountEntryServiceUtil {
 		return getService().activateAccountEntry(accountEntryId);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public static AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status)
-		throws PortalException {
-
-		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			status);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public static AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			status, serviceContext);
-	}
-
 	public static AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, String email,
@@ -167,7 +134,7 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntry updateAccountEntry(
-			Long accountEntryId, long parentAccountEntryId, String name,
+			long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
 			String emailAddress, byte[] logoBytes, String taxIdNumber,
 			int status,

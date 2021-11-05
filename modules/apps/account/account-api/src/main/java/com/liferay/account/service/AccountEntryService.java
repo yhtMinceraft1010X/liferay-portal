@@ -61,29 +61,6 @@ public interface AccountEntryService extends BaseService {
 	public AccountEntry activateAccountEntry(long accountEntryId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, String email,
@@ -133,7 +110,7 @@ public interface AccountEntryService extends BaseService {
 		throws PortalException;
 
 	public AccountEntry updateAccountEntry(
-			Long accountEntryId, long parentAccountEntryId, String name,
+			long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
 			String emailAddress, byte[] logoBytes, String taxIdNumber,
 			int status, ServiceContext serviceContext)

@@ -94,61 +94,6 @@ public class AccountEntryServiceSoap {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status)
-		throws RemoteException {
-
-		try {
-			com.liferay.account.model.AccountEntry returnValue =
-				AccountEntryServiceUtil.addAccountEntry(
-					userId, parentAccountEntryId, name, description, domains,
-					logoBytes, status);
-
-			return com.liferay.account.model.AccountEntrySoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
-	 */
-	@Deprecated
-	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes, int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.account.model.AccountEntry returnValue =
-				AccountEntryServiceUtil.addAccountEntry(
-					userId, parentAccountEntryId, name, description, domains,
-					logoBytes, status, serviceContext);
-
-			return com.liferay.account.model.AccountEntrySoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, String email,
@@ -309,7 +254,7 @@ public class AccountEntryServiceSoap {
 	}
 
 	public static com.liferay.account.model.AccountEntrySoap updateAccountEntry(
-			Long accountEntryId, long parentAccountEntryId, String name,
+			long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
 			String emailAddress, byte[] logoBytes, String taxIdNumber,
 			int status,
