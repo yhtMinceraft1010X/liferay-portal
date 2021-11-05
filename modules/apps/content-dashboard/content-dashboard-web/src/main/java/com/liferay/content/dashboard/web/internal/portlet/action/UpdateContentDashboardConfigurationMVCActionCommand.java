@@ -51,11 +51,8 @@ public class UpdateContentDashboardConfigurationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String assetVocabularyIdsFromParams = ParamUtil.getString(
-			actionRequest, "assetVocabularyIds");
-
 		String[] assetVocabularyIds = StringUtil.split(
-			assetVocabularyIdsFromParams);
+			ParamUtil.getString(actionRequest, "assetVocabularyIds"));
 
 		if (assetVocabularyIds.length == 0) {
 			hideDefaultSuccessMessage(actionRequest);
