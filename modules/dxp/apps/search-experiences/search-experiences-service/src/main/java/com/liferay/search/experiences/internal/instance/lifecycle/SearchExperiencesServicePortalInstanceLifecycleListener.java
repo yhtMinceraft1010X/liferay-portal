@@ -58,24 +58,34 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		long groupId = company.getGroupId();
-		User user = company.getDefaultUser();
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		Stream<String> stream = _getSXPElementJSONStringsStream();
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"/META-INF/elements", "*.json", false);
+
+		if (enumeration == null) {
+			return;
+		}
+
+		User user = company.getDefaultUser();
 
 		RuntimeException runtimeException = new RuntimeException();
 
-		stream.forEach(
-			json -> {
-				try {
-					_addSXPElement(
-						company.getCompanyId(), groupId, json,
-						user.getUserId());
-				}
-				catch (Exception exception) {
-					runtimeException.addSuppressed(exception);
-				}
-			});
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String json = StringUtil.read(
+				getClass(), StringPool.SLASH + url.getPath());
+
+			try {
+				_addSXPElement(
+					company.getCompanyId(), company.getGroupId(), json,
+					user.getUserId());
+			}
+			catch (Exception exception) {
+				runtimeException.addSuppressed(exception);
+			}
+		}
 
 		if (!ArrayUtil.isEmpty(runtimeException.getSuppressed())) {
 			throw runtimeException;
@@ -91,24 +101,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 			modelSXPElement -> Objects.equals(
 				MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"),
 				modelSXPElement.getTitle(LocaleUtil.US)));
-	}
-
-	private Stream<String> _getSXPElementJSONStringsStream() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"/META-INF/elements", "*.json", false);
-
-		if (enumeration == null) {
-			return Stream.empty();
-		}
-
-		List<URL> urls = Collections.list(enumeration);
-
-		return urls.stream(
-		).map(
-			url -> StringUtil.read(getClass(), StringPool.SLASH + url.getPath())
-		);
 	}
 
 	private void _addSXPElement(
