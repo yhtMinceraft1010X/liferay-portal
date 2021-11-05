@@ -51,23 +51,14 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"/META-INF/elements", "*.json", false);
-
-		if (enumeration == null) {
-			return;
-		}
-
-		while (enumeration.hasMoreElements()) {
-			_addSXPElement(company, enumeration.nextElement());
-		}
+		_addSXPElement(company, "paste_any_elasticsearch_query");
 	}
 
-	private void _addSXPElement(Company company, URL url) throws Exception {
+	private void _addSXPElement(Company company, String fileName)
+		throws Exception {
+
 		String json = StringUtil.read(
-			getClass(), StringPool.SLASH + url.getPath());
+			getClass(), "dependencies/" + fileName + ".json");
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
