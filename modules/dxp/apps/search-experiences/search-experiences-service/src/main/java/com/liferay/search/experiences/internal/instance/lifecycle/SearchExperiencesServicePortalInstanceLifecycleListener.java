@@ -108,16 +108,8 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
-		serviceContext.setUuid(_createUUID());
 
 		return serviceContext;
-	}
-
-	private String _createUUID() {
-		UUID uuid = new UUID(
-			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
-
-		return uuid.toString();
 	}
 
 	private boolean _exists(SXPElement sxpElement) {
