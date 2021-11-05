@@ -83,7 +83,7 @@ public class SXPBlueprintLocalServiceImpl
 
 		_resourceLocalService.addModelResources(sxpBlueprint, serviceContext);
 
-		_startWorkflowInstance(serviceContext, sxpBlueprint, userId);
+		_startWorkflowInstance(userId, sxpBlueprint, serviceContext);
 
 		return sxpBlueprint;
 	}
@@ -171,8 +171,8 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	private void _startWorkflowInstance(
-			ServiceContext serviceContext, SXPBlueprint sxpBlueprint,
-			long userId)
+			long userId, SXPBlueprint sxpBlueprint,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
