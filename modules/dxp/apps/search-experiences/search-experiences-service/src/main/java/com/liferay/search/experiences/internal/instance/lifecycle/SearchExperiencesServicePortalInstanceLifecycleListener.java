@@ -67,8 +67,6 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 			return;
 		}
 
-		User user = company.getDefaultUser();
-
 		RuntimeException runtimeException = new RuntimeException();
 
 		while (enumeration.hasMoreElements()) {
@@ -78,9 +76,7 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 				getClass(), StringPool.SLASH + url.getPath());
 
 			try {
-				_addSXPElement(
-					company.getCompanyId(), company.getGroupId(), json,
-					user.getUserId());
+				_addSXPElement(company, json);
 			}
 			catch (Exception exception) {
 				runtimeException.addSuppressed(exception);
@@ -103,18 +99,19 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 				modelSXPElement.getTitle(LocaleUtil.US)));
 	}
 
-	private void _addSXPElement(
-			long companyId, long groupId, String json, long userId)
+	private void _addSXPElement(Company company, String json)
 		throws Exception {
 
 		SXPElement sxpElement = SXPElementUtil.toSXPElement(json);
 
-		if (_exists(companyId, sxpElement)) {
+		if (_exists(company.getCompanyId(), sxpElement)) {
 			return;
 		}
 
+		User defaultUser = company.getDefaultUser();
+
 		_sxpElementLocalService.addSXPElement(
-			userId,
+			defaultUser.getUserId(),
 			LocalizedMapUtil.getLocalizedMap(
 				sxpElement.getDescription_i18n()),
 			String.valueOf(sxpElement.getElementDefinition()), true,
@@ -123,9 +120,9 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 				{
 					setAddGroupPermissions(true);
 					setAddGuestPermissions(true);
-					setCompanyId(companyId);
-					setScopeGroupId(groupId);
-					setUserId(userId);
+					setCompanyId(company.getCompanyId());
+					setScopeGroupId(company.getGroupId());
+					setUserId(defaultUser.getUserId());
 				}
 			});
 	}
