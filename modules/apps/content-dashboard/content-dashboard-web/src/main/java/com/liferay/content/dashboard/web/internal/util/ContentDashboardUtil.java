@@ -48,15 +48,17 @@ public class ContentDashboardUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetVocabulary audience =
+		AssetVocabulary audienceAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
 				themeDisplay.getCompanyGroupId(), "audience");
-
-		AssetVocabulary stage =
+		AssetVocabulary stageAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
 				themeDisplay.getCompanyGroupId(), "stage");
 
-		return new long[] {audience.getVocabularyId(), stage.getVocabularyId()};
+		return new long[] {
+			audienceAssetVocabulary.getVocabularyId(),
+			stageAssetVocabulary.getVocabularyId()
+		};
 	}
 
 }
