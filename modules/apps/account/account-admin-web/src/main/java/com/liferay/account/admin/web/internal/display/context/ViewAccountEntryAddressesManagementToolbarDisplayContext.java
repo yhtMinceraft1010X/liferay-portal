@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,8 +95,6 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 			AccountEntryDisplay accountEntryDisplay)
 		throws PortalException {
 
-		List<String> availableActions = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -105,10 +103,10 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 				themeDisplay.getPermissionChecker(),
 				accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
 
-			availableActions.add("deleteAccountEntryAddresses");
+			Collections.<String>singletonList("deleteAccountEntryAddresses");
 		}
 
-		return availableActions;
+		return Collections.<String>emptyList();
 	}
 
 	@Override
