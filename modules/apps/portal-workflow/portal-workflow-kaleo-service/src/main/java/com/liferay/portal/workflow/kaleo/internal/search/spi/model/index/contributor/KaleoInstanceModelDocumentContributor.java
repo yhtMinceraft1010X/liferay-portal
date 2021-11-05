@@ -79,7 +79,6 @@ public class KaleoInstanceModelDocumentContributor
 			).toArray(
 				String[]::new
 			));
-
 		document.addKeyword(
 			"kaleoDefinitionName", kaleoInstance.getKaleoDefinitionName());
 		document.addKeyword(

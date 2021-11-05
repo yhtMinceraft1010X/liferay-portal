@@ -104,15 +104,13 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		String assetDescriptionLocalizedName =
-			LocalizationUtil.getLocalizedName(
-				"assetDescription", searchContext.getLanguageId());
-
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		try {
 			booleanQuery.addTerm(
-				assetDescriptionLocalizedName, assetDescription);
+				LocalizationUtil.getLocalizedName(
+					"assetDescription", searchContext.getLanguageId()),
+				assetDescription);
 		}
 		catch (ParseException parseException) {
 			throw new RuntimeException(parseException);
@@ -131,13 +129,13 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		String assetTitleLocalizedName = LocalizationUtil.getLocalizedName(
-			"assetTitle", searchContext.getLanguageId());
-
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		try {
-			booleanQuery.addTerm(assetTitleLocalizedName, assetTitle);
+			booleanQuery.addTerm(
+				LocalizationUtil.getLocalizedName(
+					"assetTitle", searchContext.getLanguageId()),
+				assetTitle);
 		}
 		catch (ParseException parseException) {
 			throw new RuntimeException(parseException);
