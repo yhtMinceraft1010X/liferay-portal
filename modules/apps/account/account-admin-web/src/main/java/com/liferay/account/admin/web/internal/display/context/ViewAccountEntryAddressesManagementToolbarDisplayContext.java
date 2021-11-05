@@ -103,7 +103,8 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 				themeDisplay.getPermissionChecker(),
 				accountEntryDisplay.getAccountEntryId(), ActionKeys.UPDATE)) {
 
-			Collections.<String>singletonList("deleteAccountEntryAddresses");
+			return Collections.<String>singletonList(
+				"deleteAccountEntryAddresses");
 		}
 
 		return Collections.<String>emptyList();
