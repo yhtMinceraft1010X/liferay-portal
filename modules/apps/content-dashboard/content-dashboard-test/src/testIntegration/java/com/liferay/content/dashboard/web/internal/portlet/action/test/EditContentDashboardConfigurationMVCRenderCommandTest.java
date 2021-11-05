@@ -71,11 +71,9 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 		_audienceAssetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				_company.getGroupId(), "audience");
-
 		_stageAssetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				_company.getGroupId(), "stage");
-
 		_topicAssetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				_company.getGroupId(), "topic");
