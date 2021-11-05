@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -37,10 +38,7 @@ import java.net.URL;
 
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -169,28 +167,16 @@ public class SearchExperiencesServicePortalInstanceLifecycleListener
 
 		try {
 			_sxpElementLocalService.addSXPElement(
-				userId, _toLocalizationMap(sxpElement.getDescription_i18n()),
+				userId,
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getDescription_i18n()),
 				String.valueOf(sxpElement.getElementDefinition()), true,
-				_toLocalizationMap(sxpElement.getTitle_i18n()), 0,
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				_createServiceContext(companyId, groupId, userId));
 		}
 		catch (PortalException portalException) {
 			ReflectionUtil.throwException(portalException);
 		}
-	}
-
-	private Map<Locale, String> _toLocalizationMap(Map<String, String> map1) {
-		if (map1 == null) {
-			return null;
-		}
-
-		Map<Locale, String> map2 = new HashMap<>();
-
-		map1.forEach(
-			(languageId, translation) -> map2.put(
-				LocaleUtil.fromLanguageId(languageId), translation));
-
-		return map2;
 	}
 
 	@Reference
