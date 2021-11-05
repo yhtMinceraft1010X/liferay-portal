@@ -45,6 +45,11 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+
+		// TODO Remove the method _addSXPElement and inline the logic if
+		// paste_any_elasticsearch_query is the only search experiences
+		// element that needs to be added per company
+
 		_addSXPElement(company, "paste_any_elasticsearch_query");
 	}
 
