@@ -108,10 +108,9 @@ public class UserODataRetrieverTest {
 
 			_company = CompanyTestUtil.addCompany();
 
-			_companyUser = UserTestUtil.getAdminUser(_company.getCompanyId());
-
 			_companyGuestGroup = _groupLocalService.getGroup(
 				_company.getCompanyId(), GroupConstants.GUEST);
+			_companyUser = UserTestUtil.getAdminUser(_company.getCompanyId());
 		}
 
 		_safeCloseable = PropsValuesTestUtil.swapWithSafeCloseable(

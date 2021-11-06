@@ -237,7 +237,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		if (!lastDocument.hasField(sortField)) {
 			throw new IllegalArgumentException(
-				"Missing " + sortField + " in last document");
+				"Missing " + sortField + " in the last document");
 		}
 
 		BooleanQuery lastDocumentBooleanQuery = new BooleanQueryImpl();
