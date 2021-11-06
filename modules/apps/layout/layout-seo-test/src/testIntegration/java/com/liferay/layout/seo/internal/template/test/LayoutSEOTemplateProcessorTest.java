@@ -63,7 +63,7 @@ public class LayoutSEOTemplateProcessorTest {
 	@Test
 	public void testProcessTemplateEmptyLabelReference() {
 		Assert.assertEquals(
-			"This is the text",
+			"This is the text.",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"${Text45966564:}", _getInfoItemFieldValues(), LocaleUtil.US));
 	}
@@ -80,7 +80,7 @@ public class LayoutSEOTemplateProcessorTest {
 	@Test
 	public void testProcessTemplateIncorrectLabeledReference() {
 		Assert.assertEquals(
-			"This is the text",
+			"This is the text.",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"${Text45966564:ThisIsNotTheLabel}", _getInfoItemFieldValues(),
 				LocaleUtil.US));
@@ -89,7 +89,7 @@ public class LayoutSEOTemplateProcessorTest {
 	@Test
 	public void testProcessTemplateIncorrectReference() {
 		Assert.assertEquals(
-			"This is the text }",
+			"This is the text. }",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"${Text45966564:This is a bad label ${title} }",
 				_getInfoItemFieldValues(), LocaleUtil.US));
@@ -106,7 +106,7 @@ public class LayoutSEOTemplateProcessorTest {
 	@Test
 	public void testProcessTemplateLabeledReference() {
 		Assert.assertEquals(
-			"This is the text",
+			"This is the text.",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"${Text45966564:Text Label}", _getInfoItemFieldValues(),
 				LocaleUtil.US));
@@ -125,7 +125,7 @@ public class LayoutSEOTemplateProcessorTest {
 	public void testProcessTemplateReferencesWithMessageBreakLines() {
 		Assert.assertEquals(
 			"This is the title: defaultMappedTitle\n" +
-				"<p>defaultMappedDescription</p>\nThis is the text",
+				"<p>defaultMappedDescription</p>\nThis is the text.",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"This is the title: ${title}\n${description}\n${Text45966564}",
 				_getInfoItemFieldValues(), LocaleUtil.US));
@@ -135,7 +135,7 @@ public class LayoutSEOTemplateProcessorTest {
 	public void testProcessTemplateSeveralReferences() {
 		Assert.assertEquals(
 			"defaultMappedTitle <p>defaultMappedDescription</p> This is the " +
-				"text",
+				"text.",
 			_layoutSEOTemplateProcessor.processTemplate(
 				"${title} ${description} ${Text45966564}",
 				_getInfoItemFieldValues(), LocaleUtil.US));
@@ -164,7 +164,7 @@ public class LayoutSEOTemplateProcessorTest {
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.localize(getClass(), "Text Label")
 				).build(),
-				"This is the text")
+				"This is the text.")
 		).infoFieldValue(
 			new InfoFieldValue<>(
 				InfoField.builder(
