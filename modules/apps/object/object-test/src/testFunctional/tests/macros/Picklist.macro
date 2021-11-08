@@ -50,6 +50,16 @@ definition {
 		AssertElementPresent(locator1 = "Picklist#DISABLE_PICKLIST_KEY");
 	}
 
+	macro assertEmptyStateMessageDisplayed {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No items were found.");
+
+
+
+
+	}
+
 	macro assertPicklist {
 		var key_picklistName = "${picklistName}";
 

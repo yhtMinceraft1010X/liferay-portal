@@ -281,11 +281,17 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklist {
 
-		// TODO LPS-139751 EmptyStateMessageDisplayedWhenNoPicklist pending implementation
+		Picklist.gotoPicklists();
+
+		Picklist.assertEmptyStateMessageDisplayed();
+
+
+
+		
+
 
 	}
 
