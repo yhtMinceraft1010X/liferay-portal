@@ -198,7 +198,7 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentKey, layout.getGroupId(), layout.getCompanyId());
+			layout.getCompanyId(), layout.getGroupId(), fragmentKey);
 
 		FragmentRenderer fragmentRenderer =
 			_fragmentRendererTracker.getFragmentRenderer(fragmentKey);
@@ -627,7 +627,7 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntry _getFragmentEntry(
-			String fragmentKey, long groupId, long companyId)
+			long companyId, long groupId, String fragmentKey)
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
