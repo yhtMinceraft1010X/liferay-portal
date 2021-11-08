@@ -296,11 +296,23 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklistItem {
 
-		// TODO LPS-139759 EmptyStateMessageDisplayedWhenNoPicklistItem pending implementation
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.selectPickilistModalFrame();
+
+		Picklist.assertEmptyStateMessageDisplayed();
+
+
+
+
+
 
 	}
 
