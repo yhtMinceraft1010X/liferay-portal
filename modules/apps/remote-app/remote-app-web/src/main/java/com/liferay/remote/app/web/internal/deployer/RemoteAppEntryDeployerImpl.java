@@ -98,13 +98,11 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	private ServiceRegistration<FriendlyURLMapper> _registerFriendlyURLMapper(
 		RemoteAppEntry remoteAppEntry) {
 
-		String portletName = _getPortletId(remoteAppEntry);
-
 		return _bundleContext.registerService(
 			FriendlyURLMapper.class,
 			new RemoteAppEntryFriendlyURLMapper(remoteAppEntry),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"javax.portlet.name", portletName
+				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).build());
 	}
 
