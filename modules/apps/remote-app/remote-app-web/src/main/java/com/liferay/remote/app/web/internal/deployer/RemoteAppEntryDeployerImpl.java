@@ -51,8 +51,6 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry) {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
-
 		serviceRegistrations.add(_registerConfigurationAction(remoteAppEntry));
 
 		if (!remoteAppEntry.isInstanceable() &&
@@ -61,6 +59,8 @@ public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 			serviceRegistrations.add(
 				_registerFriendlyURLMapper(remoteAppEntry));
 		}
+
+		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
 
 		return serviceRegistrations;
 	}
