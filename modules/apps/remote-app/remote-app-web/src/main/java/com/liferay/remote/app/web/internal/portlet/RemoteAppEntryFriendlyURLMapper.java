@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.web.internal.route;
+package com.liferay.remote.app.web.internal.portlet;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.remote.app.constants.RemoteAppConstants;
 import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
 import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
 import com.liferay.remote.app.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.remote.app.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
-import com.liferay.remote.app.web.internal.route.RemoteAppEntryFriendlyURLMapper;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
