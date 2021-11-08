@@ -283,16 +283,9 @@ definition {
 	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklist {
-
 		Picklist.gotoPicklists();
 
 		Picklist.assertEmptyStateMessageDisplayed();
-
-
-
-		
-
-
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
