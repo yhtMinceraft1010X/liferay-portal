@@ -298,7 +298,6 @@ definition {
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklistItem {
-
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.gotoPicklists();
@@ -308,12 +307,6 @@ definition {
 		Picklist.selectPickilistModalFrame();
 
 		Picklist.assertEmptyStateMessageDisplayed();
-
-
-
-
-
-
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object layout"
