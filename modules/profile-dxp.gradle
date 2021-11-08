@@ -7,8 +7,6 @@ buildscript {
 
 task checkoutDXPScript
 
-String gitCommitId = System.getProperty("profile.dxp.commit.id", "")
-
 String gitBranchName = "master-private"
 String gitRepositoryURL = "git@github.com:liferay/liferay-portal-ee.git"
 
@@ -66,17 +64,9 @@ checkoutDXPScript {
 			}
 		}
 
-		if (gitCommitId) {
-			exec {
-				commandLine "git", "checkout", gitCommitId, "--", "working.dir.properties"
-				workingDir = gitRepositoryDir
-			}
-		}
-		else {
-			exec {
-				commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "working.dir.properties"
-				workingDir = gitRepositoryDir
-			}
+		exec {
+			commandLine "git", "checkout", "refs/heads/" + gitBranchName, "--", "working.dir.properties"
+			workingDir = gitRepositoryDir
 		}
 
 		ant.move(file: new File(gitRepositoryDir, "working.dir.properties"), todir: projectDir.parentFile)
