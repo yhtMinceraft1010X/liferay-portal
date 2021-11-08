@@ -118,11 +118,9 @@ public class CommerceAccountRoleHelperImpl
 					ActionKeys.VIEW, CommerceAccountActionKeys.VIEW_ADDRESSES,
 					CommerceAccountActionKeys.VIEW_MEMBERS
 				});
-
 			resourceActionIds.put(
 				"com.liferay.commerce.model.CommerceOrderType",
 				new String[] {ActionKeys.VIEW});
-
 			resourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
