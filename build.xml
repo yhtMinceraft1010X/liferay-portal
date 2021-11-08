@@ -914,11 +914,28 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 	<target name="setup-profile-dxp">
 		<delete dir="git-clone-profile-dxp" />
-		<delete file="working.dir.properties" />
 
-		<gradle-execute setupbinariescache="false" task="checkoutDXPScript">
-			<arg value="--build-file=${project.dir}/modules/profile-dxp.gradle" />
-		</gradle-execute>
+		<local name="setup.profile.dxp.git.url" />
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<property name="setup.profile.dxp.git.url" value="git@github-dev.liferay.com:liferay/liferay-portal-ee.git" />
+			</then>
+			<else>
+				<property name="setup.profile.dxp.git.url" value="git@github.com:liferay/liferay-portal-ee.git" />
+			</else>
+		</if>
+
+		<exec executable="git" failonerror="true">
+			<arg line="clone --branch=master-private --depth=1 --no-checkout --single-branch ${setup.profile.dxp.git.url} git-clone-profile-dxp" />
+		</exec>
+
+		<exec dir="git-clone-profile-dxp" executable="git" failonerror="true">
+			<arg line="checkout refs/heads/master-private -- working.dir.properties" />
+		</exec>
+
+		<move file="git-clone-profile-dxp/working.dir.properties" todir="." />
 
 		<setup-profile-dxp
 			to.branch.name="${git.working.branch.name}-private"
