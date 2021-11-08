@@ -191,9 +191,6 @@ definition {
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
 			value1 = "\RETURN");
-
-
-
 	}
 
 	macro selectPickilistModalFrame {
