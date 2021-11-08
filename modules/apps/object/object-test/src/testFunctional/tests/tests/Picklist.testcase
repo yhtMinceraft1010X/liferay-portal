@@ -208,11 +208,29 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify it is possible to search for a Picklist"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchPicklist {
 
-		// TODO LPS-139754 CanSearchPicklist pending implementation
+		Picklist.addPicklistViaAPI(picklistName = "Picklist 1");
+
+		Picklist.addPicklistViaAPI(picklistName = "Test 2");
+
+		Picklist.gotoPicklists();
+
+	    Picklist.searchPicklist(picklistName = "Test 2");
+
+
+		Picklist.assertPicklist(picklistName = "Test 2");
+
+		
+		Picklist.assertPicklistNotPresent(picklistName = "Picklist 1");
+
+
+
+
+
+
+
 
 	}
 

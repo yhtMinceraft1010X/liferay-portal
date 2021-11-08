@@ -183,6 +183,19 @@ definition {
 		Click.javaScriptClick(locator1 = "Picklist#PICKLIST_ITEM_KEBAB_MENU_OPTION");
 	}
 
+	macro searchPicklist {
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${picklistName}");
+
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
+
+
+
+	}
+
 	macro selectPickilistModalFrame {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 	}
