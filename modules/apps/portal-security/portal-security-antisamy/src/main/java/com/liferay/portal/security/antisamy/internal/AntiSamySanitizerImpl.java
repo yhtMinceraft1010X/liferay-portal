@@ -114,8 +114,6 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			return content;
 		}
 
-		AntiSamy antiSamy = new AntiSamy();
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -124,6 +122,8 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 			AntiSamySanitizerImpl.class.getClassLoader());
 
 		try {
+			AntiSamy antiSamy = new AntiSamy();
+
 			if (isConfigured(className, classPK)) {
 				Policy policy = _policies.get(className);
 
