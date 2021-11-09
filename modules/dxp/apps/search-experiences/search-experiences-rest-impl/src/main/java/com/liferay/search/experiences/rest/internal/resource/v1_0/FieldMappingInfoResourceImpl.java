@@ -103,10 +103,8 @@ public class FieldMappingInfoResourceImpl
 
 			String fieldPath = fieldName;
 
-			String fieldPathLowerCase = StringUtil.toLowerCase(fieldPath);
-
 			if (!Validator.isBlank(query) &&
-				!fieldPathLowerCase.contains(StringUtil.toLowerCase(query))) {
+				!StringUtil.containsIgnoreCase(fieldPath, query)) {
 
 				continue;
 			}
