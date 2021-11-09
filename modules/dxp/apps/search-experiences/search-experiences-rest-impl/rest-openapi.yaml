@@ -334,11 +334,11 @@ components:
         SXPParameterContributorDefinition:
             properties:
                 className:
-                  type: string
+                    type: string
                 description:
-                  type: string
+                    type: string
                 templateVariable:
-                  type: string
+                    type: string
             type: object
         SearchRequest:
             properties:
