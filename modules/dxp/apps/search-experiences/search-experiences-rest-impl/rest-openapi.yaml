@@ -859,4 +859,3 @@ paths:
                                     $ref: "#/components/schemas/SXPParameterContributorDefinition"
                                 type: array
             tags: ["SXPParameterContributorDefinition"]
-            
