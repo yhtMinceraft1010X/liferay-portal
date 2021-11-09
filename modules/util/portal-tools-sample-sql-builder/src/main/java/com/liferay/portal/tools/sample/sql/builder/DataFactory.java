@@ -3708,7 +3708,7 @@ public class DataFactory {
 		List<DLFolderModel> dlFolderModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DL_FOLDER_COUNT);
 
-		Map<Long, String> treePathMap = _treePathMaps.computeIfAbsent(
+		Map<Long, String> treePaths = _treePathsMap.computeIfAbsent(
 			depth, HashMap::new);
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DL_FOLDER_COUNT; i++) {
@@ -3722,16 +3722,16 @@ public class DataFactory {
 				sb.append(StringPool.FORWARD_SLASH);
 			}
 			else {
-				Map<Long, String> parentTreePathMap = _treePathMaps.get(
+				Map<Long, String> parentTreePaths = _treePathsMap.get(
 					depth - 1);
 
-				sb.append(parentTreePathMap.get(parentFolderId));
+				sb.append(parentTreePaths.get(parentFolderId));
 
 				sb.append(folderId);
 				sb.append(StringPool.FORWARD_SLASH);
 			}
 
-			treePathMap.put(folderId, sb.toString());
+			treePaths.put(folderId, sb.toString());
 
 			dlFolderModels.add(
 				newDLFolderModel(
@@ -7011,7 +7011,7 @@ public class DataFactory {
 	private RoleModel _siteMemberRoleModel;
 	private final SimpleCounter _socialActivityIdCounter;
 	private final SimpleCounter _timeCounter;
-	private final Map<Integer, Map<Long, String>> _treePathMaps =
+	private final Map<Integer, Map<Long, String>> _treePathsMap =
 		new HashMap<>();
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;
