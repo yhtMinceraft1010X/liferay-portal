@@ -45,9 +45,9 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_addSXPElement(company, "boost_asset_type");
-		_addSXPElement(company, "limit_search_to_the_current_site");
-		_addSXPElement(company, "paste_any_elasticsearch_query");
+		for (String fileName : FILE_NAMES) {
+			_addSXPElement(company, fileName);
+		}
 	}
 
 	protected SXPElement readSXPElement(String fileName) {
@@ -56,6 +56,11 @@ public class SXPPortalInstanceLifecycleListener
 
 		return SXPElementUtil.toSXPElement(json);
 	}
+
+	protected static final String[] FILE_NAMES = {
+		"boost_asset_type", "limit_search_to_the_current_site",
+		"paste_any_elasticsearch_query"
+	};
 
 	private void _addSXPElement(Company company, String fileName)
 		throws Exception {

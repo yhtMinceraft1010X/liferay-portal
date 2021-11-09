@@ -34,13 +34,13 @@ public class SXPPortalInstanceLifecycleListenerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testSXPElements() {
-		_assertSXPElement("boost_asset_type");
-		_assertSXPElement("limit_search_to_the_current_site");
-		_assertSXPElement("paste_any_elasticsearch_query");
+	public void testReadSXPElement() {
+		for (String fileName : SXPPortalInstanceLifecycleListener.FILE_NAMES) {
+			_testReadSXPElement(fileName);
+		}
 	}
 
-	private void _assertSXPElement(String fileName) {
+	private void _testReadSXPElement(String fileName) {
 		SXPPortalInstanceLifecycleListener sxpPortalInstanceLifecycleListener =
 			new SXPPortalInstanceLifecycleListener();
 
