@@ -127,7 +127,7 @@ public class CommerceCheckoutStepHttpHelperTest {
 				commerceAccount.getCommerceAccountId(),
 				_commerceCurrency.getCommerceCurrencyId(), 0);
 
-		CommerceAddress commerceAddress = _addAddressToAccount(
+		CommerceAddress commerceAddress = _addCommerceAddress(
 			commerceAccount.getCommerceAccountId());
 
 		Assert.assertTrue(
@@ -154,7 +154,7 @@ public class CommerceCheckoutStepHttpHelperTest {
 					null, commerceOrder));
 	}
 
-	private CommerceAddress _addAddressToAccount(long commerceAccountId)
+	private CommerceAddress _addCommerceAddress(long commerceAccountId)
 		throws Exception {
 
 		_country = _countryLocalService.fetchCountryByNumber(
