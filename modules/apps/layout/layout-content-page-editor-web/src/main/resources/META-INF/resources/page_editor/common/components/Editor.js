@@ -122,6 +122,7 @@ export default function Editor({
 				name={id}
 				ref={wrapperRef}
 			/>
+
 			<div className="alloy-editor-placeholder">{placeholder}</div>
 		</div>
 	);
