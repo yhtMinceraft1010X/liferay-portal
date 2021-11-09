@@ -1599,6 +1599,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (jsonArray == null) {
+			return;
+		}
+
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				SiteNavigationMenuItemTypeConstants.LAYOUT);
@@ -1649,15 +1653,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationLayoutMenuItems(
 				jsonObject.getJSONArray("pages"), siteNavigationMenu,
 				serviceContext);
-
-			JSONArray urlsJSONArray = jsonObject.getJSONArray("urls");
-
-			if (urlsJSONArray == null) {
-				continue;
-			}
-
 			_addSiteNavigationURLMenuItems(
-				urlsJSONArray, siteNavigationMenu, serviceContext);
+				jsonObject.getJSONArray("urls"), siteNavigationMenu,
+				serviceContext);
 		}
 	}
 
@@ -1665,6 +1663,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray jsonArray, SiteNavigationMenu siteNavigationMenu,
 			ServiceContext serviceContext)
 		throws Exception {
+
+		if (jsonArray == null) {
+			return;
+		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
