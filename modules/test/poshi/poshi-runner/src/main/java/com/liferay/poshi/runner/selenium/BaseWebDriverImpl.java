@@ -2199,12 +2199,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void ocularAssertElementImage(String locator, String filePath)
+	public void ocularAssertElementImage(String locator, String fileName)
 		throws Exception {
 
 		File snapFile = new File(
 			PropsValues.TEST_BASE_DIR_NAME + getOcularSnapImageDirName() + "/" +
-				filePath);
+				fileName);
 
 		if (!snapFile.exists()) {
 			snapFile.mkdirs();
@@ -2212,7 +2212,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		File resultFile = new File(
 			PropsValues.TEST_BASE_DIR_NAME + getOcularResultImageDirName() +
-				"/" + filePath);
+				"/" + fileName);
 
 		resultFile.mkdirs();
 
@@ -2224,7 +2224,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		SnapshotBuilder snapshotBuilder = Ocular.snapshot();
 
-		snapshotBuilder = snapshotBuilder.from(Paths.get(filePath));
+		snapshotBuilder = snapshotBuilder.from(Paths.get(fileName));
 
 		SampleBuilder sampleBuilder = snapshotBuilder.sample();
 
@@ -2874,13 +2874,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		Keyboard keyboard = new DesktopKeyboard();
 
-		String filePath =
+		String fileName =
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
-		filePath = LiferaySeleniumUtil.getSourceDirFilePath(filePath);
+		fileName = LiferaySeleniumUtil.getSourceDirFilePath(fileName);
 
-		filePath = StringUtil.replace(filePath, "/", FileUtil.getSeparator());
+		fileName = StringUtil.replace(fileName, "/", FileUtil.getSeparator());
 
 		if (OSDetector.isApple()) {
 			keyboard.keyDown(Key.CMD);
@@ -2891,7 +2891,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			keyboard.keyUp(Key.CMD);
 			keyboard.keyUp(Key.SHIFT);
 
-			sikuliType(image, filePath);
+			sikuliType(image, fileName);
 
 			keyboard.type(Key.ENTER);
 		}
@@ -2902,7 +2902,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			keyboard.keyUp(Key.CTRL);
 
-			sikuliType(image, filePath);
+			sikuliType(image, fileName);
 		}
 
 		pause("1000");
@@ -3259,16 +3259,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void uploadCommonFile(String location, String value)
 		throws Exception {
 
-		String filePath =
+		String fileName =
 			FileUtil.getSeparator() + getTestDependenciesDirName() +
 				FileUtil.getSeparator() + value;
 
-		filePath = LiferaySeleniumUtil.getSourceDirFilePath(filePath);
+		fileName = LiferaySeleniumUtil.getSourceDirFilePath(fileName);
 
 		if (value.endsWith(".jar") || value.endsWith(".lar") ||
 			value.endsWith(".war") || value.endsWith(".zip")) {
 
-			File file = new File(filePath);
+			File file = new File(fileName);
 
 			if (file.isDirectory()) {
 				String archiveFilePath =
@@ -3277,15 +3277,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 				archiveFilePath = FileUtil.getCanonicalPath(archiveFilePath);
 
-				ArchiveUtil.archive(filePath, archiveFilePath);
+				ArchiveUtil.archive(fileName, archiveFilePath);
 
-				filePath = archiveFilePath;
+				fileName = archiveFilePath;
 			}
 		}
 
-		filePath = FileUtil.fixFilePath(filePath);
+		fileName = FileUtil.fixFilePath(fileName);
 
-		uploadFile(location, filePath);
+		uploadFile(location, fileName);
 	}
 
 	@Override
@@ -3299,11 +3299,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void uploadTempFile(String location, String value) {
-		String filePath = getOutputDirName() + FileUtil.getSeparator() + value;
+		String fileName = getOutputDirName() + FileUtil.getSeparator() + value;
 
-		filePath = FileUtil.fixFilePath(filePath);
+		fileName = FileUtil.fixFilePath(fileName);
 
-		uploadFile(location, filePath);
+		uploadFile(location, fileName);
 	}
 
 	@Override
@@ -3934,11 +3934,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	protected ImageTarget getImageTarget(String image) throws Exception {
-		String filePath =
+		String fileName =
 			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
 
 		File file = new File(
-			LiferaySeleniumUtil.getSourceDirFilePath(filePath));
+			LiferaySeleniumUtil.getSourceDirFilePath(fileName));
 
 		return new ImageTarget(file);
 	}
