@@ -29,8 +29,6 @@ portletDisplay.setURLBack(
 
 String title = (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale);
 
-Map<Locale, String> translations = (kaleoDefinitionVersion == null) ? new HashMap<>() : kaleoDefinitionVersion.getTitleMap();
-
 renderResponse.setTitle(title);
 %>
 
@@ -44,7 +42,7 @@ renderResponse.setTitle(title);
 		).put(
 			"title", title
 		).put(
-			"translations", translations
+			"translations", (kaleoDefinitionVersion == null) ? new HashMap<>() : kaleoDefinitionVersion.getTitleMap()
 		).put(
 			"version", (kaleoDefinitionVersion == null) ? "0" : kaleoDefinitionVersion.getVersion()
 		).build()
