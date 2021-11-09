@@ -144,7 +144,7 @@ public class SXPParameterDataCreator {
 		}
 
 		SXPParameter sxpParameter = _getSXPParameter(
-			name, object, parameter.getValueDefinition(), searchContext);
+			name, object, searchContext, parameter.getValueDefinition());
 
 		if (sxpParameter == null) {
 			return;
@@ -227,8 +227,8 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getDateSXPParameter(
-		String name, Object object, ValueDefinition valueDefinition,
-		TimeZone timeZone) {
+		String name, Object object, TimeZone timeZone,
+		ValueDefinition valueDefinition) {
 
 		String value = _getString(null, object);
 
@@ -466,14 +466,14 @@ public class SXPParameterDataCreator {
 	}
 
 	private SXPParameter _getSXPParameter(
-		String name, Object object, ValueDefinition valueDefinition,
-		SearchContext searchContext) {
+		String name, Object object, SearchContext searchContext,
+		ValueDefinition valueDefinition) {
 
 		ValueDefinition.Type type = valueDefinition.getType();
 
 		if (type.equals(ValueDefinition.Type.DATE)) {
 			return _getDateSXPParameter(
-				name, object, valueDefinition, searchContext.getTimeZone());
+				name, object, searchContext.getTimeZone(), valueDefinition);
 		}
 		else if (type.equals(ValueDefinition.Type.DOUBLE)) {
 			return _getDoubleSXPParameter(name, object, valueDefinition);
