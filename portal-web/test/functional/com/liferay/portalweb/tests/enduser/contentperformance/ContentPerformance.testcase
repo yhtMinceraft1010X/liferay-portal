@@ -141,7 +141,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
 				value1 = "Do not show me this again.");
 		}
-}
+	}
 
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
 	@ignore = "true"
