@@ -751,12 +751,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Channel channel = _addCommerceChannel(serviceContext);
 
-		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
-
 		_addCommerceCatalogs(
 			channel, _addCommerceInventoryWarehouses(serviceContext),
 			serviceContext);
+		_addCommerceNotificationTemplates(
+			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
