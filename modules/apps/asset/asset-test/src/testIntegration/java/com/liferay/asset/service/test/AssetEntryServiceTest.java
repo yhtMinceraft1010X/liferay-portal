@@ -243,7 +243,7 @@ public class AssetEntryServiceTest {
 	}
 
 	@Test(expected = AssetCategoryException.class)
-	public void testValidateGroupRequiredCategory() throws Exception {
+	public void testValidate() throws Exception {
 		AssetTestUtil.addVocabulary(
 			_group.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(Group.class),
