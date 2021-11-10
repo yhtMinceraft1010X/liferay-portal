@@ -90,7 +90,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetPortletMapFromRemotePortlet() throws Exception {
+	public void testLoadGetPortletsByCompany() throws Exception {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
@@ -137,7 +137,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 	}
 
 	@Test
-	public void testPortletsMapOnlyCopiesGlobalPortletsForNewCompanies()
+	public void testLoadGetPortletsByCompanyWithReload()
 		throws Exception {
 
 		List<Company> companies = new ArrayList<>();
