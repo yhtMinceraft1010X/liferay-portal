@@ -316,18 +316,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
-			Map<String, String> documentsStringUtilReplaceValues = _invoke(
-				() -> _addDocuments(serviceContext));
-
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addAssetListEntries(
 						_ddmStructureLocalService, serviceContext));
 
+			Map<String, String> documentsStringUtilReplaceValues = _invoke(
+				() -> _addDocuments(serviceContext));
+
 			_invoke(
 				() -> _addCPDefinitions(
 					documentsStringUtilReplaceValues, serviceContext));
-
 			_invoke(
 				() -> _addDDMTemplates(
 					_ddmStructureLocalService, serviceContext));
