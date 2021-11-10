@@ -5,12 +5,12 @@
 	"description": "",
 	"enabled": true,
 	"from": "solutions@liferay.com",
-	"fromNameMap": {
+	"fromName": {
 		"en-US": "Raylife"
 	},
 	"name": "Quote retrieve notification template",
 	"objectDefinitionName": "C_QuoteRetrieve",
-	"subjectMap": {
+	"subject": {
 		"en-US": "Continue your Raylife [%PRODUCT%] quote"
 	},
 	"to": "[%RETRIEVEEMAIL%]"

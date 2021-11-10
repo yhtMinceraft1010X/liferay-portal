@@ -649,24 +649,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 				return;
 			}
 
+			JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
+
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				resourcePath, "*.html", false);
-
-			JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
 			if (enumeration != null) {
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
-					String fileName = FileUtil.getShortFileName(
-						FileUtil.stripExtension(url.getPath()));
-
-					String content = StringUtil.read(url.openStream());
-
-					content = StringUtil.replace(
-						content, "[$", "$]", documentsStringUtilReplaceValues);
-
-					bodyJSONObject.put(fileName, content);
+					bodyJSONObject.put(
+						FileUtil.getShortFileName(
+							FileUtil.stripExtension(url.getPath())),
+						StringUtil.replace(
+							StringUtil.read(url.openStream()),
+							"[$", "$]", documentsStringUtilReplaceValues));
 				}
 			}
 
@@ -679,7 +676,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					commerceNotificationTemplateJSONObject.getString("from"),
 					_toMap(
 						commerceNotificationTemplateJSONObject.getString(
-							"fromNameMap")),
+							"fromName")),
 					commerceNotificationTemplateJSONObject.getString("to"),
 					commerceNotificationTemplateJSONObject.getString("cc"),
 					commerceNotificationTemplateJSONObject.getString("bcc"),
@@ -691,7 +688,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						"enabled"),
 					_toMap(
 						commerceNotificationTemplateJSONObject.getString(
-							"subjectMap")),
+							"subject")),
 					_toMap(bodyJSONObject.toString()), serviceContext);
 		}
 	}
