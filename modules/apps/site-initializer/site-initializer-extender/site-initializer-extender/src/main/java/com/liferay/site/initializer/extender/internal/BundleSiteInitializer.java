@@ -611,6 +611,76 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
+	private void _addCommerceNotificationTemplate(
+			long commerceChannelId,
+			Map<String, String> documentsStringUtilReplaceValues,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(
+			resourcePath + "commerce-notification-template.json");
+
+		if (Validator.isNull(json)) {
+			return;
+		}
+
+		JSONObject commerceNotificationTemplateJSONObject =
+			JSONFactoryUtil.createJSONObject(json);
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				serviceContext.getCompanyId(),
+				commerceNotificationTemplateJSONObject.getString(
+					"objectDefinitionName"));
+
+		if (objectDefinition == null) {
+			return;
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceReferencesHolder.commerceChannelLocalService.
+				getCommerceChannel(commerceChannelId);
+
+		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			resourcePath, "*.html", false);
+
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				bodyJSONObject.put(
+					FileUtil.getShortFileName(
+						FileUtil.stripExtension(url.getPath())),
+					StringUtil.replace(
+						StringUtil.read(url.openStream()), "[$", "$]",
+						documentsStringUtilReplaceValues));
+			}
+		}
+
+		_commerceReferencesHolder.commerceNotificationTemplateLocalService.
+			addCommerceNotificationTemplate(
+				serviceContext.getUserId(), commerceChannel.getGroupId(),
+				commerceNotificationTemplateJSONObject.getString("name"),
+				commerceNotificationTemplateJSONObject.getString("description"),
+				commerceNotificationTemplateJSONObject.getString("from"),
+				_toMap(
+					commerceNotificationTemplateJSONObject.getString(
+						"fromName")),
+				commerceNotificationTemplateJSONObject.getString("to"),
+				commerceNotificationTemplateJSONObject.getString("cc"),
+				commerceNotificationTemplateJSONObject.getString("bcc"),
+				StringBundler.concat(
+					objectDefinition.getClassName(), "#",
+					commerceNotificationTemplateJSONObject.getString("action")),
+				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
+				_toMap(
+					commerceNotificationTemplateJSONObject.getString(
+						"subject")),
+				_toMap(bodyJSONObject.toString()), serviceContext);
+	}
+
 	private void _addCommerceNotificationTemplates(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
@@ -624,72 +694,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceReferencesHolder.commerceChannelLocalService.
-				getCommerceChannel(commerceChannelId);
-
 		for (String resourcePath : resourcePaths) {
-			String json = _read(
-				resourcePath + "commerce-notification-template.json");
-
-			if (Validator.isNull(json)) {
-				return;
-			}
-
-			JSONObject commerceNotificationTemplateJSONObject =
-				JSONFactoryUtil.createJSONObject(json);
-
-			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(),
-					commerceNotificationTemplateJSONObject.getString(
-						"objectDefinitionName"));
-
-			if (objectDefinition == null) {
-				return;
-			}
-
-			JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
-
-			Enumeration<URL> enumeration = _bundle.findEntries(
-				resourcePath, "*.html", false);
-
-			if (enumeration != null) {
-				while (enumeration.hasMoreElements()) {
-					URL url = enumeration.nextElement();
-
-					bodyJSONObject.put(
-						FileUtil.getShortFileName(
-							FileUtil.stripExtension(url.getPath())),
-						StringUtil.replace(
-							StringUtil.read(url.openStream()),
-							"[$", "$]", documentsStringUtilReplaceValues));
-				}
-			}
-
-			_commerceReferencesHolder.commerceNotificationTemplateLocalService.
-				addCommerceNotificationTemplate(
-					serviceContext.getUserId(), commerceChannel.getGroupId(),
-					commerceNotificationTemplateJSONObject.getString("name"),
-					commerceNotificationTemplateJSONObject.getString(
-						"description"),
-					commerceNotificationTemplateJSONObject.getString("from"),
-					_toMap(
-						commerceNotificationTemplateJSONObject.getString(
-							"fromName")),
-					commerceNotificationTemplateJSONObject.getString("to"),
-					commerceNotificationTemplateJSONObject.getString("cc"),
-					commerceNotificationTemplateJSONObject.getString("bcc"),
-					StringBundler.concat(
-						objectDefinition.getClassName(), "#",
-						commerceNotificationTemplateJSONObject.getString(
-							"action")),
-					commerceNotificationTemplateJSONObject.getBoolean(
-						"enabled"),
-					_toMap(
-						commerceNotificationTemplateJSONObject.getString(
-							"subject")),
-					_toMap(bodyJSONObject.toString()), serviceContext);
+			_addCommerceNotificationTemplate(
+				commerceChannelId, documentsStringUtilReplaceValues,
+				resourcePath, serviceContext);
 		}
 	}
 
