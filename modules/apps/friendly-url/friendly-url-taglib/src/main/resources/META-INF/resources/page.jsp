@@ -23,7 +23,7 @@ String friendlyURLEntryURL = (String)request.getAttribute("liferay-friendly-url:
 %>
 
 <liferay-util:html-top
-	outputKey="com.liferay.friendly.url.taglib.servlet.taglib.FriendlyURLHistoryTag#/page.jsp"
+	outputKey="com.liferay.friendly.url.taglib.servlet.taglib.HistoryTag#/page.jsp"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

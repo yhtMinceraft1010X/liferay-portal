@@ -12,7 +12,7 @@
 	<uri>http://liferay.com/tld/friendly-url</uri>
 	<tag>
 		<name>history</name>
-		<tag-class>com.liferay.friendly.url.taglib.servlet.taglib.FriendlyURLHistoryTag</tag-class>
+		<tag-class>com.liferay.friendly.url.taglib.servlet.taglib.HistoryTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>className</name>

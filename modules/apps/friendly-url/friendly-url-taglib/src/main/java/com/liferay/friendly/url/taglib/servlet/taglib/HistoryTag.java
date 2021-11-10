@@ -31,7 +31,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Adolfo Pérez
  */
-public class FriendlyURLHistoryTag extends IncludeTag {
+public class HistoryTag extends IncludeTag {
 
 	public String getClassName() {
 		return _className;
