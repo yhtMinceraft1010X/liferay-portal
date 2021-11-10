@@ -611,7 +611,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
-	private void _addCommerceNotificationTemplate(
+	private void _addCommerceNotificationTemplates(
 			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -751,7 +751,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Channel channel = _addCommerceChannel(serviceContext);
 
-		_addCommerceNotificationTemplate(
+		_addCommerceNotificationTemplates(
 			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
 
 		_addCommerceCatalogs(
