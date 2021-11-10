@@ -31,13 +31,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -106,18 +105,17 @@ public class CommerceNotificationHelperImpl
 		}
 
 		List<CommerceDefinitionTermContributor> definitionTermContributors =
-			Collections.emptyList();
+			new ArrayList<>();
 
 		if (fieldType == _TOFIELD) {
-			definitionTermContributors =
+			definitionTermContributors.addAll(
 				_commerceDefinitionTermContributorRegistry.
 					getDefinitionTermContributorsByContributorKey(
 						CommerceDefinitionTermConstants.
-							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR);
+							RECIPIENT_DEFINITION_TERMS_CONTRIBUTOR));
 		}
 
-		definitionTermContributors = ListUtil.concat(
-			definitionTermContributors,
+		definitionTermContributors.addAll(
 			_commerceDefinitionTermContributorRegistry.
 				getDefinitionTermContributorsByNotificationTypeKey(
 					commerceNotificationType.getKey()));
