@@ -668,7 +668,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Channel channel = _addCommerceChannel(serviceContext);
 
-		_addNotificationTemplate(
+		_addCommerceNotificationTemplate(
 			channel.getId(), documentsStringUtilReplaceValues, serviceContext);
 
 		_addCommerceCatalogs(
@@ -1290,8 +1290,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addNotificationTemplate(
-			long channelId,
+	private void _addCommerceNotificationTemplate(
+			long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -1305,7 +1305,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		CommerceChannel commerceChannel =
 			_commerceReferencesHolder.commerceChannelLocalService.
-				getCommerceChannel(channelId);
+				getCommerceChannel(commerceChannelId);
 
 		for (String resourcePath : resourcePaths) {
 			String json = _read(
