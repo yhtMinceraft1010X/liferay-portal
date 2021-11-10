@@ -314,7 +314,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
 			_invoke(() -> _addTaxonomyVocabularies(serviceContext));
-
 			_invoke(() -> _updateLayoutSets(serviceContext));
 
 			Map<String, String> documentsStringUtilReplaceValues = _invoke(
