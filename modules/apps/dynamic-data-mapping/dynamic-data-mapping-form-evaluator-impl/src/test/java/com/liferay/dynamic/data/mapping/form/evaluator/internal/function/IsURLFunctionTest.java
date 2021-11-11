@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -39,7 +40,7 @@ public class IsURLFunctionTest {
 		Assert.assertFalse(isURLFunction.apply(null));
 		Assert.assertFalse(isURLFunction.apply(Http.HTTP_WITH_SLASH));
 		Assert.assertFalse(isURLFunction.apply(Http.HTTPS_WITH_SLASH));
-		Assert.assertFalse(isURLFunction.apply("invalid URL"));
+		Assert.assertFalse(isURLFunction.apply(RandomTestUtil.randomString()));
 	}
 
 	@Test
