@@ -216,9 +216,17 @@ definition {
 	}
 
 	macro setSEOcanonicalURL {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		if (!(isSet(urlAppend))) {
+			urlAppend = "web/test-site-name/content-page";
+		}
 
-		Navigator.gotoEditPageViaControlMenu(pageName = "Content Page");
+		if (!(isSet(pageName))) {
+			pageName = "Content Page";
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "${urlAppend}");
+
+		Navigator.gotoEditPageViaControlMenu(pageName = "${pageName}");
 
 		Navigator.gotoNavTab(navTab = "SEO");
 
@@ -226,6 +234,10 @@ definition {
 
 		if (IsNotChecked(locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click(locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(canonicalLocale)) {
+			PortletEntry.changeLocale(locale = "${canonicalLocale}");
 		}
 
 		Type(

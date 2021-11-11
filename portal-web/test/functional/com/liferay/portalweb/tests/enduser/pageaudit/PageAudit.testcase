@@ -171,67 +171,215 @@ definition {
 	@description = "LPS-129375: Given the Page Audit panel of a content page
 	When the localized canonical URLs options is not enabled and the user changes the language
 	Then the URL for that language shows and is consulted"
-	@ignore = "true"
 	@priority = "4"
-	test CanonicalURLsNotEnabledForContent {
+	test AssertPageAuditLocaleInContentPage {
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		// TODO LPS-129375 CanonicalURLsNotEnabledForContent pending implementation
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
 
+		task ("Open Page Audit panel and change locale/language") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.changeLocale(locale = "Finnish");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/fi/");
+		}
 	}
 
 	@description = "LPS-129375: Given the Page Audit panel of a display page
 	When the localized canonical URLs options is not enabled and the user changes the language
 	Then the URL for that language shows and is consulted"
-	@ignore = "true"
 	@priority = "4"
-	test CanonicalURLsNotEnabledForDisplayPage {
+	test AssertPageAuditLocaleInDisplayPage {
+		task ("Create a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2");
+		}
 
-		// TODO LPS-129375 CanonicalURLsNotEnabledForDisplayPage pending implementation
+		task ("Add an Asset Publisher widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				widgetName = "Asset Publisher");
+		}
 
+		task ("Add a Web Content vis JSONWS") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Go to display page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
+		}
+
+		task ("Open Page Audit panel and change locale/language") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.changeLocale(locale = "Portuguese");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/pt/");
+		}
 	}
 
 	@description = "LPS-129375: Given the Page Audit panel of a widget page
 	When the localized canonical URLs options is not enabled and the user changes the language
 	Then the URL for that language shows and is consulted"
-	@ignore = "true"
 	@priority = "4"
-	test CanonicalURLsNotEnabledForWidget {
+	test AssertPageAuditLocaleInWidgetPage {
+		task ("Create Widget Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
-		// TODO LPS-129375 CanonicalURLsNotEnabledForWidget pending implementation
+			SitePages.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit panel and change locale/language") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.changeLocale(locale = "Hungarian");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/hu/");
+		}
 	}
 
 	@description = "LPS-129375: Given the Page Audit panel of a content page
 	When the localized canonical URLs options is enabled and the user changes the language
 	Then the matching canonical URL shows and is consulted"
-	@ignore = "true"
 	@priority = "4"
-	test ChangeOfLanguageInContent {
+	test CanonicalUrlLocaleInContentPage  {
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		// TODO LPS-129375 ChangeOfLanguageInContent pending implementation
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
 
-	}
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(
+				canonicalLocale = "fr-FR",
+				URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
 
-	@description = "LPS-129375: Given the Page Audit panel of a display page
-	When the localized canonical URLs options is enabled and the user changes the language
-	Then the matching canonical URL shows and is consulted"
-	@ignore = "true"
-	@priority = "4"
-	test ChangeOfLanguageInDisplayPage {
+		task ("Open Page Audit panel and change locale/language") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		// TODO LPS-129375 ChangeOfLanguageInDisplayPage pending implementation
+			PageAudit.openPanelBeforeConfiguration();
 
+			PageAudit.changeLocale(locale = "French");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/page-audit-test");
+		}
+
+		task ("Run Page Audit") {
+			PageAudit.openPanelAfterConfiguration();
+		}
+
+		task ("Check if Page Audit returned expected failures") {
+			AssertElementPresent(
+				failingCheckCategory = "Accessibility",
+				failingCheckName = "Low Contrast Ratio",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+		}
 	}
 
 	@description = "LPS-129375: Given the Page Audit panel of a widget page
 	When the localized canonical URLs options is enabled and the user changes the language
 	Then the matching canonical URL shows and is consulted"
-	@ignore = "true"
 	@priority = "4"
-	test ChangeOfLanguageInWidget {
+	test CanonicalUrlLocaleInWidgetPage  {
+		task ("Create Widget Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
-		// TODO LPS-129375 ChangeOfLanguageInWidget pending implementation
+			SitePages.addPublicPage(
+				pageName = "Widget Page Name",
+				sitePageType = "Widget Page");
+		}
 
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(
+				canonicalLocale = "nl-NL",
+				pageName = "Widget Page Name",
+				URL = "https://liferay-tango.github.io/liferay-portal/page-audit-test",
+				urlAppend = "web/test-site-name/3");
+		}
+
+		task ("Open Page Audit panel and change locale/language") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/3");
+
+			PageAudit.openPanelBeforeConfiguration();
+
+			PageAudit.changeLocale(locale = "Dutch");
+
+			AssertElementPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				partialUrl = "/page-audit-test");
+		}
+
+		task ("Run Page Audit") {
+			PageAudit.openPanelAfterConfiguration();
+		}
+
+		task ("Check if Page Audit returned expected failures") {
+			AssertElementPresent(
+				failingCheckCategory = "Accessibility",
+				failingCheckName = "Low Contrast Ratio",
+				locator1 = "PageAudit#FAILING_CHECK_CATEGORY_NAME");
+		}
 	}
 
 	@description = "LPS-134760: Given the Page Audit panel
