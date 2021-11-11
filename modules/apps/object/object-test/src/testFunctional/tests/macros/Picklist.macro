@@ -193,6 +193,21 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	macro searchPicklistItem {
+		Picklist.selectPickilistModalFrame();
+
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "${picklistItemName}");
+
+		KeyPress(
+			locator1 = "TextInput#SEARCH",
+			value1 = "\RETURN");
+
+			
+
+	}
+
 	macro selectPickilistModalFrame {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 	}
