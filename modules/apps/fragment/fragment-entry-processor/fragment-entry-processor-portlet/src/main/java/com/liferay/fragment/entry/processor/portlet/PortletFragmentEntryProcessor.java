@@ -198,11 +198,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 							"on-the-same-page"));
 			}
 
-			String defaultPreferences = StringPool.BLANK;
-
 			long plid = ParamUtil.getLong(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				"p_l_id");
+
+			String defaultPreferences = StringPool.BLANK;
 
 			if (originalFragmentEntryLink != null) {
 				defaultPreferences = _getPreferences(
