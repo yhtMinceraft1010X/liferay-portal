@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.shop.by.diagram.internal.upgrade;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -32,11 +30,6 @@ public class CommerceShopByDiagramUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Commerce Shop By Diagram upgrade step registrator started");
-		}
-
 		registry.register(
 			"1.0.0", "1.1.0",
 			new MVCCVersionUpgradeProcess() {
@@ -49,14 +42,6 @@ public class CommerceShopByDiagramUpgradeStepRegistrator
 				}
 
 			});
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Commerce Shop By Diagram upgrade step registrator finished");
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceShopByDiagramUpgradeStepRegistrator.class);
 
 }

@@ -17,8 +17,6 @@ package com.liferay.commerce.pricing.internal.upgrade;
 import com.liferay.commerce.pricing.internal.upgrade.v1_1_0.CommercePricingClassUpgradeProcess;
 import com.liferay.commerce.pricing.internal.upgrade.v2_0_1.CommercePriceModifierUpgradeProcess;
 import com.liferay.commerce.pricing.internal.upgrade.v2_1_0.CommercePricingConfigurationUpgradeProcess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -39,10 +37,6 @@ public class CommercePricingUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		if (_log.isInfoEnabled()) {
-			_log.info("Commerce pricing upgrade step registrator started");
-		}
-
 		registry.register(
 			"1.0.0", "1.1.0", new CommercePricingClassUpgradeProcess());
 
@@ -73,14 +67,7 @@ public class CommercePricingUpgradeStepRegistrator
 				}
 
 			});
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Commerce pricing upgrade step registrator finished");
-		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommercePricingUpgradeStepRegistrator.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
