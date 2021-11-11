@@ -600,8 +600,8 @@ definition {
 			}
 
 			WebContent.viewTitle(
-     			webContentTitle = '''The worst advice we've ever heard about marketing''',
-     			webContentTitleEscapeCharacter = '''The worst advice we&#39;ve ever heard about marketing''');
+				webContentTitle = '''The worst advice we've ever heard about marketing''',
+				webContentTitleEscapeCharacter = '''The worst advice we&#39;ve ever heard about marketing''');
 
 			WebContent.viewTitle(
 				webContentTitle = '''Think you're cut out for doing management?''',
