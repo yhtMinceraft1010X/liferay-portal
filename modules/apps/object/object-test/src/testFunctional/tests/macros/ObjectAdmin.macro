@@ -99,6 +99,22 @@ definition {
 			userPassword = "${userPassword}");
 	}
 
+	macro addObjectLayoutViaUI {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ADD_LAYOUT_NAME_FIELD",
+			value1 = "${layoutName}");
+
+		Button.clickSave();
+
+		WaitForPageLoad();
+
+
+
+		
+	}
+
 	macro addObjectPicklistFieldEntryViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -279,6 +295,14 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LABEL_FIELD_REQUIRED");
 	}
 
+	macro assertObjectLayout {
+		var key_layoutLabel = "${layoutLabel}";
+
+		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
+
+		
+	}
+
 	macro assertObjectNameFieldRequired {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_NAME_FIELD_REQUIRED");
 	}
@@ -428,6 +452,13 @@ definition {
 
 	macro goToFieldsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TAB");
+	}
+
+	macro goToLayoutsTab {
+		Click(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_TAB");
+
+
+		
 	}
 
 	macro gotoRelationshipsTab {

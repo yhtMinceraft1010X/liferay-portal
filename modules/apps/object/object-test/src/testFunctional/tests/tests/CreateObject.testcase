@@ -400,12 +400,28 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to create a Layout for an Object"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanCreateLayout {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141500 CanCreateLayout pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.addObjectLayoutViaUI(layoutName = "Layout Name");
+
+		ObjectAdmin.assertObjectLayout(layoutLabel = "Layout Name");
+
+
+
+		
 
 	}
 
