@@ -15,11 +15,14 @@
 package com.liferay.message.boards.moderation.internal.upgrade.v1_0_0;
 
 import com.liferay.message.boards.moderation.internal.constants.MBModerationConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 
 /**
  * @author Eduardo García
@@ -60,12 +63,25 @@ public class MBModerationWorkflowDefinitionUpgradeProcess
 			MBModerationWorkflowDefinitionUpgradeProcess.class,
 			"dependencies/message-boards-moderation-workflow-definition.xml");
 
-		_workflowDefinitionManager.deployWorkflowDefinition(
-			companyId, latestWorkflowDefinition.getUserId(),
-			latestWorkflowDefinition.getTitle(),
-			latestWorkflowDefinition.getName(),
-			latestWorkflowDefinition.getScope(), content.getBytes());
+		try {
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				companyId, latestWorkflowDefinition.getUserId(),
+				latestWorkflowDefinition.getTitle(),
+				latestWorkflowDefinition.getName(),
+				latestWorkflowDefinition.getScope(), content.getBytes());
+		}
+		catch (WorkflowException workflowException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to upgrade workflow definition with name " +
+						latestWorkflowDefinition.getName(),
+					workflowException);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBModerationWorkflowDefinitionUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
 	private final WorkflowDefinitionManager _workflowDefinitionManager;
