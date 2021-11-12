@@ -157,8 +157,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testAutosaveWithNondefaultUser1() throws Exception {
-		RenderRequest renderRequest =
-			_mockRenderRequestAutosaveWithNondefaultUser();
+		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
@@ -177,8 +176,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testAutosaveWithNondefaultUser2() throws Exception {
-		RenderRequest renderRequest =
-			_mockRenderRequestAutosaveWithNondefaultUser();
+		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
@@ -203,8 +201,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Test
 	public void testAutosaveWithNondefaultUser3() throws Exception {
-		RenderRequest renderRequest =
-			_mockRenderRequestAutosaveWithNondefaultUser();
+		RenderRequest renderRequest = _mockRenderRequestWithDefaultUser(false);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			_mockDDMFormInstanceSettingsAutosaveWithNondefaultUser();
@@ -724,7 +721,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		return mockRenderRequest;
 	}
 
-	private RenderRequest _mockRenderRequestAutosaveWithNondefaultUser()
+	private RenderRequest _mockRenderRequestWithDefaultUser(boolean defaultUser)
 		throws Exception {
 
 		MockRenderRequest mockRenderRequest = _mockRenderRequest();
@@ -738,7 +735,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		when(
 			user.isDefaultUser()
 		).thenReturn(
-			Boolean.FALSE
+			defaultUser
 		);
 
 		when(
