@@ -109,10 +109,6 @@ definition {
 		Button.clickSave();
 
 		WaitForPageLoad();
-
-
-
-		
 	}
 
 	macro addObjectPicklistFieldEntryViaUI {
@@ -299,8 +295,6 @@ definition {
 		var key_layoutLabel = "${layoutLabel}";
 
 		AssertElementPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
-
-		
 	}
 
 	macro assertObjectNameFieldRequired {
@@ -456,9 +450,6 @@ definition {
 
 	macro goToLayoutsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_TAB");
-
-
-		
 	}
 
 	macro gotoRelationshipsTab {
