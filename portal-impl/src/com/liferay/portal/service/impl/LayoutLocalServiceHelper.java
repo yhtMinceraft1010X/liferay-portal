@@ -515,9 +515,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 		LayoutFriendlyURLsException layoutFriendlyURLsException = null;
 
-		Set<String> friendlyURLSet = new HashSet<>(friendlyURLMap.values());
+		Set<String> friendlyURLs = new HashSet<>(friendlyURLMap.values());
 
-		if (friendlyURLSet.size() != friendlyURLMap.size()) {
+		if (friendlyURLs.size() != friendlyURLMap.size()) {
 			LayoutFriendlyURLException layoutFriendlyURLException =
 				new LayoutFriendlyURLException(
 					LayoutFriendlyURLException.DUPLICATE);
