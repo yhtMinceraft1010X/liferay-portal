@@ -202,7 +202,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					JSONObject jsonObject2 = jsonArray.getJSONObject(0);
 
 					Assert.assertEquals("organic", jsonObject2.get("name"));
-
 					Assert.assertEquals(
 						String.format("%.1f", 89.20D),
 						jsonObject2.getString("share"));
