@@ -53,7 +53,8 @@ public class SXPBlueprintUtilTest {
 
 	private void _testToSXPBlueprint(String fileName) throws Exception {
 		String json = StringUtil.read(
-			getClass(), "dependencies/" + fileName + ".json");
+			getClass(),
+			"dependencies/SXPBlueprintUtilTest." + fileName + ".json");
 
 		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(json);
 
