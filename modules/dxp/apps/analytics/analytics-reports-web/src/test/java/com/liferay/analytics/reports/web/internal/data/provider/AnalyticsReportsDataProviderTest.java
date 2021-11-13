@@ -98,11 +98,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		Map<String, AcquisitionChannel> acquisitionChannels =
 			analyticsReportsDataProvider.getAcquisitionChannels(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -141,11 +141,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		List<ReferringURL> referringURLS =
 			analyticsReportsDataProvider.getDomainReferringURLs(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
@@ -229,11 +229,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		List<ReferringURL> referringURLS =
 			analyticsReportsDataProvider.getPageReferringURLs(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
@@ -272,11 +272,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		List<ReferringSocialMedia> referringSocialMediaList =
 			analyticsReportsDataProvider.getReferringSocialMediaList(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -421,11 +421,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		Map<String, TrafficChannel> trafficChannels =
 			analyticsReportsDataProvider.getTrafficChannels(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -450,10 +450,10 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		analyticsReportsDataProvider.getTrafficChannels(
-			RandomTestUtil.randomLong(), range, RandomTestUtil.randomString());
+			RandomTestUtil.randomLong(), timeRange, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -547,11 +547,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		Map<String, TrafficChannel> trafficChannels =
 			analyticsReportsDataProvider.getTrafficChannels(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
@@ -628,11 +628,11 @@ public class AnalyticsReportsDataProviderTest {
 
 		TimeSpan timeSpan = TimeSpan.of("last-7-days");
 
-		TimeRange range = timeSpan.toTimeRange(0);
+		TimeRange timeRange = timeSpan.toTimeRange(0);
 
 		Map<String, TrafficChannel> trafficChannels =
 			analyticsReportsDataProvider.getTrafficChannels(
-				RandomTestUtil.randomLong(), range,
+				RandomTestUtil.randomLong(), timeRange,
 				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
