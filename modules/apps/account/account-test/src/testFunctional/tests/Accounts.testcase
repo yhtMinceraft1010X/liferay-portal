@@ -300,6 +300,8 @@ definition {
 	@description = "This test asserts that an Account Manager can view all accounts that are added by other users in the Accounts Admin portlet, not just the ones he created"
 	@priority = "5"
 	test AllAccountsEntriesDisplay {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add several accounts") {
 			for (var accountNum : list "1,2,3") {
 				JSONAccountEntry.addAccountEntry(
