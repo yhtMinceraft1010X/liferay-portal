@@ -36,12 +36,7 @@ public class SXPPortalInstanceLifecycleListenerTest {
 	@Test
 	public void testReadSXPElement() {
 		for (String fileName : SXPPortalInstanceLifecycleListener.FILE_NAMES) {
-			try {
-				_testReadSXPElement(fileName);
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(fileName, exception);
-			}
+			_testReadSXPElement(fileName);
 		}
 	}
 
@@ -53,6 +48,7 @@ public class SXPPortalInstanceLifecycleListenerTest {
 			sxpPortalInstanceLifecycleListener.readSXPElement(fileName);
 
 		Assert.assertEquals(
+			fileName,
 			sxpElement.toString(),
 			String.valueOf(SXPElementUtil.toSXPElement(sxpElement.toString())));
 	}

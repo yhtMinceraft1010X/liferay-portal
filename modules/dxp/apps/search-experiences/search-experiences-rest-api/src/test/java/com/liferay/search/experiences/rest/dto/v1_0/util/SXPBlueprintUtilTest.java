@@ -47,12 +47,7 @@ public class SXPBlueprintUtilTest {
 		};
 
 		for (String fileName : fileNames) {
-			try {
-				_testToSXPBlueprint(fileName);
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(fileName, exception);
-			}
+			_testToSXPBlueprint(fileName);
 		}
 	}
 
@@ -63,6 +58,7 @@ public class SXPBlueprintUtilTest {
 		SXPBlueprint sxpBlueprint = SXPBlueprintUtil.toSXPBlueprint(json);
 
 		Assert.assertEquals(
+			fileName,
 			sxpBlueprint.toString(),
 			String.valueOf(
 				SXPBlueprintUtil.toSXPBlueprint(sxpBlueprint.toString())));
