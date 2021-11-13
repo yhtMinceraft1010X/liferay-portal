@@ -27,17 +27,9 @@
 			"clauseContributorsExcludes": [
 			],
 			"clauseContributorsIncludes": [
-				"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.FolderIdQueryPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesQueryPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryIdsQueryPreFilterContributor",
-				"com.liferay.asset.internal.search.spi.model.query.contributor.AssetEntryModelPreFilterContributor",
-				"com.liferay.segments.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
-				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
 				"com.liferay.account.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
 				"com.liferay.analytics.settings.web.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.asset.internal.search.spi.model.query.contributor.AssetEntryModelPreFilterContributor",
 				"com.liferay.blogs.internal.search.spi.model.query.contributor.BlogsEntryModelPreFilterContributor",
 				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksEntryModelPreFilterContributor",
 				"com.liferay.bookmarks.internal.search.spi.model.query.contributor.BookmarksFolderModelPreFilterContributor",
@@ -46,11 +38,19 @@
 				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFileEntryModelPreFilterContributor",
 				"com.liferay.document.library.internal.search.spi.model.query.contributor.DLFolderModelPreFilterContributor",
 				"com.liferay.dynamic.data.lists.internal.search.spi.model.query.contributor.DDLRecordModelPreFilterContributor",
-				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutModelPreFilterContributor",
 				"com.liferay.dynamic.data.mapping.internal.search.spi.model.query.contributor.DDMFormInstanceRecordModelPreFilterContributor",
+				"com.liferay.layout.internal.search.spi.model.query.contributor.LayoutModelPreFilterContributor",
 				"com.liferay.message.boards.internal.search.spi.model.query.contributor.MBMessageModelPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetCategoryIdsQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.AssetTagNamesQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.FolderIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
 				"com.liferay.portal.search.internal.spi.model.query.contributor.StagingModelPreFilterContributor",
-				"com.liferay.portal.search.internal.spi.model.query.contributor.WorkflowStatusModelPreFilterContributor"
+				"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor",
+				"com.liferay.portal.search.internal.spi.model.query.contributor.WorkflowStatusModelPreFilterContributor",
+				"com.liferay.segments.internal.search.spi.model.query.contributor.UserModelPreFilterContributor",
+				"com.liferay.users.admin.internal.search.spi.model.query.contributor.UserModelPreFilterContributor"
 			]
 		},
 		"highlight": {
