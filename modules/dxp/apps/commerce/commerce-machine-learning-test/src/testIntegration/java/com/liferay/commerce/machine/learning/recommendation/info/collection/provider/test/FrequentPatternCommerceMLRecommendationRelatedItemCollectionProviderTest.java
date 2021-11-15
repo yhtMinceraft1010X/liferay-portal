@@ -138,11 +138,11 @@ public class
 		List<FrequentPatternCommerceMLRecommendation>
 			frequentPatternCommerceMLRecommendations = new ArrayList<>();
 
-		for (int i = 0; i < _DEFAULT_PRODUCT_COUNT; i++) {
+		for (int i = 0; i < _PRODUCT_COUNT; i++) {
 			CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 				_commerceCatalog.getGroupId());
 
-			for (int j = 0; j < _DEFAULT_RECOMMENDATION_COUNT; j++) {
+			for (int j = 0; j < _RECOMMENDATION_COUNT; j++) {
 				CPDefinition recommendedCPDefinition =
 					CPTestUtil.addCPDefinition(_commerceCatalog.getGroupId());
 
@@ -189,13 +189,13 @@ public class
 			relatedItemsInfoPage.getPageItems();
 
 		Assert.assertEquals(
-			pageItems.toString(), _DEFAULT_RECOMMENDATION_COUNT,
+			pageItems.toString(), _RECOMMENDATION_COUNT,
 			pageItems.size());
 	}
 
-	private static final int _DEFAULT_PRODUCT_COUNT = 2;
+	private static final int _PRODUCT_COUNT = 2;
 
-	private static final int _DEFAULT_RECOMMENDATION_COUNT = 3;
+	private static final int _RECOMMENDATION_COUNT = 3;
 
 	private CommerceCatalog _commerceCatalog;
 
