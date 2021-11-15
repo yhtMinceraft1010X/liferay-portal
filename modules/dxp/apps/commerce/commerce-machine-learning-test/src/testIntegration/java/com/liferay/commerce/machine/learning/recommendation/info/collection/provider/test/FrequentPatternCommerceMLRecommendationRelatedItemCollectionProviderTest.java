@@ -189,8 +189,7 @@ public class
 			relatedItemsInfoPage.getPageItems();
 
 		Assert.assertEquals(
-			pageItems.toString(), _RECOMMENDATION_COUNT,
-			pageItems.size());
+			pageItems.toString(), _RECOMMENDATION_COUNT, pageItems.size());
 	}
 
 	private static final int _PRODUCT_COUNT = 2;
