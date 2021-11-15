@@ -440,7 +440,7 @@ public class CommerceOrderContentDisplayContext {
 	public String getCSVTemplateDownloadURL() throws Exception {
 		FileEntry fileEntry =
 			_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
-				_cpRequestHelper.getScopeGroupId(), _CSV_TEMPLATE_ERC);
+				_cpRequestHelper.getScopeGroupId(), "CSV_TEMPLATE_ERC");
 
 		if (fileEntry == null) {
 			Class<?> clazz = getClass();
@@ -451,7 +451,7 @@ public class CommerceOrderContentDisplayContext {
 			File file = FileUtil.createTempFile(inputStream);
 
 			fileEntry = _dlAppLocalService.addFileEntry(
-				_CSV_TEMPLATE_ERC, _cpRequestHelper.getUserId(),
+				"CSV_TEMPLATE_ERC", _cpRequestHelper.getUserId(),
 				_cpRequestHelper.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "csv_template.csv",
 				MimeTypesUtil.getContentType(file), "csv_template",
@@ -697,8 +697,6 @@ public class CommerceOrderContentDisplayContext {
 
 		return true;
 	}
-
-	private static final String _CSV_TEMPLATE_ERC = "CSV_TEMPLATE_ERC";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderContentDisplayContext.class);
