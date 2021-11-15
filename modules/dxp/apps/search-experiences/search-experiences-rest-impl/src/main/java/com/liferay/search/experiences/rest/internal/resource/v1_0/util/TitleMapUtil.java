@@ -24,11 +24,9 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class CopyUtil {
+public class TitleMapUtil {
 
-	public static Map<Locale, String> createTitleMapCopy(
-		Map<Locale, String> sourceTitleMap) {
-
+	public static Map<Locale, String> copy(Map<Locale, String> sourceTitleMap) {
 		Map<Locale, String> targetTitleMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : sourceTitleMap.entrySet()) {
