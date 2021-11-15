@@ -1031,6 +1031,8 @@ ${runtimeInstance}
 		IFrame.closeFrame();
 
 		AssertTextPresent(value1 = "An error occurred while processing the template.");
+
+		AssertTextNotPresent(value1 = "java.lang.Runtime");
 	}
 
 	@priority = "4"
