@@ -180,10 +180,10 @@ public class CommerceOrderImporterTypeTest {
 			commerceOrderImporterItems.toString(), 2,
 			commerceOrderImporterItems.size());
 
-		Stream<CommerceOrderImporterItem> commerceOrderImporterItemsStream =
+		Stream<CommerceOrderImporterItem> stream =
 			commerceOrderImporterItems.stream();
 
-		commerceOrderImporterItemsStream.map(
+		stream.map(
 			CommerceOrderImporterItem::getErrorMessages
 		).forEach(
 			errorMessages -> Assert.assertNotNull(errorMessages)
