@@ -139,7 +139,7 @@ public class CommerceOrderImporterTypeTest {
 	}
 
 	@Test
-	public void testFailCSVImport() throws Exception {
+	public void testFailedCSVImport() throws Exception {
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
@@ -154,7 +154,7 @@ public class CommerceOrderImporterTypeTest {
 			_commerceOrderImporterTypeRegistry.getCommerceOrderImporterType(
 				"csv");
 
-		String fileName = "test_fail_csv_import.csv";
+		String fileName = "test_failed_csv_import.csv";
 
 		String fileContent = StringBundler.concat(
 			"skuId,skuExternalReferenceCode,quantity", StringPool.NEW_LINE,
