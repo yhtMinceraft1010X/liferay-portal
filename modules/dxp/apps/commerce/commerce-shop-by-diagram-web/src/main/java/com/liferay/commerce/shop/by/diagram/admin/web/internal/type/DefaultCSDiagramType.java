@@ -168,15 +168,6 @@ public class DefaultCSDiagramType implements CSDiagramType {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			CommerceAccount commerceAccount =
-				commerceContext.getCommerceAccount();
-
-			if (commerceAccount != null) {
-				hashMapWrapper.put(
-					"commerceAccountId",
-					commerceAccount.getCommerceAccountId());
-			}
-
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 			if (commerceOrder != null) {
@@ -191,6 +182,15 @@ public class DefaultCSDiagramType implements CSDiagramType {
 
 			hashMapWrapper.put(
 				"channelId", commerceContext.getCommerceChannelId());
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			if (commerceAccount != null) {
+				hashMapWrapper.put(
+					"commerceAccountId",
+					commerceAccount.getCommerceAccountId());
+			}
 
 			CommerceCurrency commerceCurrency =
 				commerceContext.getCommerceCurrency();
