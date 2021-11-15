@@ -443,12 +443,10 @@ public class CommerceOrderContentDisplayContext {
 				_cpRequestHelper.getScopeGroupId(), _CSV_TEMPLATE_ERC);
 
 		if (fileEntry == null) {
-			ClassLoader classLoader =
-				CommerceOrderContentDisplayContext.class.getClassLoader();
+			Class<?> clazz = getClass();
 
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/commerce/order/content/web/internal/dependencies" +
-					"/documents/csv_template.csv");
+			InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/csv_template.csv");
 
 			File file = FileUtil.createTempFile(inputStream);
 
