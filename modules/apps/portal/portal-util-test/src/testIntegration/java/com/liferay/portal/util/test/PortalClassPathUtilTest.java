@@ -49,7 +49,7 @@ public class PortalClassPathUtilTest {
 		ProcessConfig processConfig =
 			PortalClassPathUtil.getPortalProcessConfig();
 
-		// bootstrap class path
+		// Bootstrap class path
 
 		List<String> boostrapClassPathEntries = StringUtil.split(
 			processConfig.getBootstrapClassPath(), File.pathSeparatorChar);
@@ -64,10 +64,10 @@ public class PortalClassPathUtilTest {
 
 		Assert.assertTrue(
 			"Portal process config bootstrap class path should only contain " +
-				"petra jars, but non petra jars found: " + nonpetraEntries,
+				"petra jars, but nonpetra jars found: " + nonpetraEntries,
 			nonpetraEntries.isEmpty());
 
-		// runtime class path
+		// Runtime class path
 
 		List<String> runtimeClassPathEntries = StringUtil.split(
 			processConfig.getRuntimeClassPath(), File.pathSeparatorChar);
