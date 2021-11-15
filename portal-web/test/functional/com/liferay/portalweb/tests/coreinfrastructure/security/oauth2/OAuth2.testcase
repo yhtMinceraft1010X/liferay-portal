@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. Remember device with multiple auth without session."
+	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
 	@priority = "4"
 	test ApplicationCanBeAuthorizedWithoutUserSession {
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithoutUserSession";
@@ -96,7 +96,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126597. Authorize external application with remember device enabled."
+	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
 	@priority = "5"
 	@uitest
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
@@ -135,7 +135,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-242. Assert authorization code should work in clustered environment."
+	@description = "This is a use case for OAUTH2-242. Verify that 2 portals and an external application authorization works in a clustered environment."
 	@priority = "5"
 	test AuthCodeShouldWorkWithClusteredPortals {
 		property app.server.bundles.size = "1";
@@ -211,7 +211,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-1: Revoke multiple authorization via new kebab menu option in OAuth2 application's row."
+	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page."
 	@priority = "5"
 	test AuthorizationCanBeRevokedViaKebabMenu {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
@@ -276,7 +276,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-2: Revoke multiple authorization via new kebab menu option in OAuth2 application's row when application is trusted."
+	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
 	@priority = "3"
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice";
@@ -343,7 +343,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-216. View auth prompt requested scopes."
+	@description = "This is a use case for OAUTH2-216. Authorization prompt should not include the application name when authorizing and no scopes should be stored from the application in the authorization request page."
 	test AuthPromptInRequestScopeShouldNotBeVisible {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";
@@ -427,7 +427,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-259. Assert client credential is user scoped."
+	@description = "This is a use case for OAUTH2-259. Verify that client credential is in the user scope and can be added to an external application."
 	@priority = "4"
 	test ClientCredentialsShouldBeConfigurableInUserScope {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
@@ -544,7 +544,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105158. Configure on system level will apply to instance level."
+	@description = "This is a use case for LPS-105158. Configuring the settings on system level will set the same settings on the Instance level."
 	@priority = "5"
 	test ConfigureOnSystemLevelShouldApplyToInstanceLevel {
 		property test.name.skip.portal.instance = "OAuth2#ConfigureOnSystemLevelShouldApplyToInstanceLevel";
@@ -630,7 +630,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48777. Edit application scopes and view language keys. Blocked by LPS-142520."
+	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes. Blocked by LPS-142520."
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
@@ -731,7 +731,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105156. Remove expired authorization."
+	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired."
 	@priority = "4"
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
@@ -811,7 +811,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40687. Add and Edit an OAuth2 application."
+	@description = "This is a use case for LRQA-40687. User can add and edit external application on the OAuth 2 administration page."
 	@priority = "5"
 	test ExternalApplicationCanBeAddedAndEdited {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -916,7 +916,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-47381. Authorize exernal application."
+	@description = "This is a use case for LRQA-47381. User can authorize external applications."
 	@uitest
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
@@ -942,7 +942,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-126596. Authorize external trusted application."
+	@description = "This is a use case for LPS-126596. User can authorize trusted external applications."
 	@priority = "3"
 	@uitest
 	test ExternalApplicationCanBeTrustedAndAuthorized {
@@ -969,7 +969,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-41000. View and Revoke granted authorizations."
+	@description = "This is a use case for LRQA-41000. User can view and revoke granted authorizations."
 	test GrantedAuthorizationsCanBeRevoked {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1186,7 +1186,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-110393. Assert expand panels on global scopes."
+	@description = "This is a use case for LPS-110393. Verify that panels under global scopes can be expanded."
 	@priority = "4"
 	test PanelsShouldBeExpandableOnGlobalScopes {
 		property portal.upstream = "quarantine";
@@ -1221,7 +1221,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-57134. Refresh token time."
+	@description = "This is a use case for LRQA-57134. Refresh token can expire and can be renewed."
 	@priority = "4"
 	@uitest
 	test RefreshTokenTimeCanBeSetExpiredAndRenewed {
@@ -1258,7 +1258,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129395. View external option remember device."
+	@description = "This is a use case for LPS-129395. Remember device option should be visible in OAuth 2 admin page if it was set in the application settings."
 	@priority = "5"
 	@uitest
 	test RememberDeviceExternalPropertyShouldBeVisible {
@@ -1286,7 +1286,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129398. Remember device with multiple auth."
+	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
 	@priority = "4"
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceShouldWorkWithMultipleAuthorizations";
@@ -1358,7 +1358,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129397 TC-3: Revoke multiple authorization via new kebab menu option in OAuth2 application's row when the device is remembered."
+	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
 	@priority = "3"
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
 		property test.name.skip.portal.instance = "OAuth2#RevokeAuthorizationViaKebabMenuWithRememberDevice";
@@ -1423,7 +1423,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48773. Update scope bundle prefixes."
+	@description = "This is a use case for LRQA-48773. User can update scope bundle prefixes."
 	test ScopeBundlePrefixesCanBeUpdated {
 		property test.name.skip.portal.instance = "OAuth2#ScopeBundlePrefixesCanBeUpdated";
 
@@ -1497,7 +1497,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-40999. Update scope mappings."
+	@description = "This is a use case for LRQA-40999. User can add and remove configurations in the scope mappings."
 	test ScopeMappingsCanBeUpdated {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
@@ -1529,7 +1529,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105158. Scopes display as list on instance level."
+	@description = "This is a use case for LPS-105158. Scopes of external applications are displayed in lists on Instance Level."
 	@priority = "4"
 	test ScopesShouldBeDisplayedAsListOnInstanceLevel {
 		property test.name.skip.portal.instance = "OAuth2#ScopesShouldBeDisplayedAsListOnInstanceLevel";
@@ -1580,7 +1580,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-129395. View external options trusted."
+	@description = "This is a use case for LPS-129395. External applications have trusted label in OAuth 2 admin page when they are created with the trusted device option."
 	@priority = "5"
 	test TrustedExternalPropertyShouldBeVisible {
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
