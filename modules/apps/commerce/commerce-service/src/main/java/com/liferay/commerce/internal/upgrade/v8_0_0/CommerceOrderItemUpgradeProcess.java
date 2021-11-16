@@ -83,13 +83,12 @@ public class CommerceOrderItemUpgradeProcess
 
 				CPMeasurementUnit cpMeasurementUnit = cpMeasurementUnits.get(0);
 
-				String updateCommerceOrderItem = StringBundler.concat(
-					"update CommerceOrderItem set CPMeasurementUnitId = ",
-					cpMeasurementUnit.getCPMeasurementUnitId(),
-					" where CPMeasurementUnitId is NULL and companyId = ",
-					companyId);
-
-				runSQL(updateCommerceOrderItem);
+				runSQL(
+					StringBundler.concat(
+						"update CommerceOrderItem set CPMeasurementUnitId = ",
+						cpMeasurementUnit.getCPMeasurementUnitId(),
+						" where CPMeasurementUnitId is NULL and companyId = ",
+						companyId));
 			}
 		}
 	}
