@@ -75,6 +75,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsEntryConstants.ID_DEFAULT);
+		Layout sourceLayout = _layoutLocalService.getLayout(
+			themeDisplay.getPlid());
 		String name = ParamUtil.getString(actionRequest, "name");
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
@@ -88,9 +90,8 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.
 					createLayoutPageTemplateEntryFromLayout(
-						segmentsExperienceId,
-						_layoutLocalService.getLayout(themeDisplay.getPlid()),
-						name, layoutPageTemplateCollectionId, serviceContext);
+						segmentsExperienceId, sourceLayout, name,
+						layoutPageTemplateCollectionId, serviceContext);
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
