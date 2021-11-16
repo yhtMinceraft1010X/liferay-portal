@@ -11,6 +11,11 @@
 
 <tbody>
 	<tr>
+		<td>ADD_BLOCK_BUTTON</td>
+		<td>//button[contains(@class,'btn btn-sm btn-secondary')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_CUSTOM_OBJECT</td>
 		<td>//li[@class='nav-item navbar-breakpoint-d-none']/../li[(@class='nav-item')]</td>
 		<td></td>
@@ -26,10 +31,18 @@
 		<td></td>
 	</tr>
 	<tr>
+<<<<<<< HEAD
 		<td>ADD_LAYOUT_NAME_FIELD</td>
 		<td>//input[contains(@id,'listObjectLayoutName')]</td>
 		<td></td>
 	</tr>
+=======
+		<td>ADD_FIELD_ON_BLOCK</td>
+		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
+		<td></td>
+	</tr>
+	<tr>
+>>>>>>> f963351 (LPS-141502 Add CanAddFieldTab Test)
 		<td>OBJECT_LAYOUTS_TAB</td>
 		<td>//a[contains(text(), 'Layouts')]</td>
 		<td></td>
@@ -95,6 +108,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FIELD_TAB_NAME</td>
+		<td>//div[contains(@class,"object-admin-panel__header object-admin-panel__header--expanded")]//h3[contains(text(),'${key_fieldTabName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>NAME_CUSTOM_OBJECT</td>
 		<td>//input[@id='objectDefinitionName']</td>
 		<td></td>
@@ -107,6 +125,26 @@
 	<tr>
 		<td>LABEL_OBJECT_RELATIONSHIP</td>
 		<td>//input[@id ='objectRelationshipLabel']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LAYOUT_ENTRY_CHOOSE_OPTION</td>
+		<td>//span[contains(text(),'Choose an Option')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LAYOUT_ADD_FIELD_COLUMN_NUMBER</td>
+		<td>//button[contains(@class,'box-btn-columns__btn') and  contains(@value,'${key_columnsNumber}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LAYOUT_ADD_FIELD_OPTION</td>
+		<td>//button[(@class='dropdown-item') and contains(.,'${key_optionName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LAYOUT_LAYOUT_TAB</td>
+		<td>//button[contains(text(), 'Layout')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -282,6 +320,16 @@
 	<tr>
 		<td>SELECT_OBJECT_RELATIONSHIP_REQUIRED</td>
 		<td>//select[@class = 'form-control']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TAB_LABEL_NAME</td>
+		<td>//input[@id = 'inputName']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TAB_TYPE</td>
+		<td>//div[@class = 'form-group']//h4[@class = 'layout-tab__tab-types__title' and contains(text(),'${key_type}')]</td>
 		<td></td>
 	</tr>
 	<tr>

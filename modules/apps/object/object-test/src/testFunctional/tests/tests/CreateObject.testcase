@@ -88,12 +88,38 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddFieldTab {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141502 CanAddFieldTab pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			tabName = "Field Tab"
+		);
+
+		ObjectAdmin.assertFieldTabIsPresent(fieldTabName = "Field Tab");
+
+		
 
 	}
 
