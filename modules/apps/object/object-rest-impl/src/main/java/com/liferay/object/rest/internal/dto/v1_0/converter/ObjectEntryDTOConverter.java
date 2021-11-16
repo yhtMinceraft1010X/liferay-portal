@@ -106,7 +106,7 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private DTOConverterContext _getDTOConverter(
+	private DTOConverterContext _getDTOConverterContext(
 		DTOConverterContext dtoConverterContext, long objectEntryId) {
 
 		Optional<UriInfo> uriInfoOptional =
@@ -235,7 +235,7 @@ public class ObjectEntryDTOConverter
 					map.put(
 						relationshipName,
 						toDTO(
-							_getDTOConverter(
+							_getDTOConverterContext(
 								dtoConverterContext, objectEntryId),
 							_objectEntryLocalService.getObjectEntry(
 								objectEntryId)));
