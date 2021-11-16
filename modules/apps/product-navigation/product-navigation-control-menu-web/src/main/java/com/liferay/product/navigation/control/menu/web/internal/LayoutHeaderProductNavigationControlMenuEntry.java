@@ -205,15 +205,15 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		try {
-			if (_layoutPermission.contains(
+			if (_layoutContentModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), layout.getPlid(),
+					ActionKeys.UPDATE) ||
+				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE) ||
 				_layoutPermission.contains(
 					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE_LAYOUT_CONTENT) ||
-				_layoutContentModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(), layout.getPlid(),
-					ActionKeys.UPDATE)) {
+					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
 				return true;
 			}
