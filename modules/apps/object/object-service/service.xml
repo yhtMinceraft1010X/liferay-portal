@@ -399,8 +399,6 @@
 	</entity>
 	<exceptions>
 		<exception>DefaultObjectLayout</exception>
-		<exception>DuplicateObjectDefinition</exception>
-		<exception>DuplicateObjectField</exception>
 		<exception>DuplicateObjectRelationship</exception>
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionName</exception>
@@ -424,6 +422,5 @@
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>
-		<exception>ReservedObjectField</exception>
 	</exceptions>
 </service-builder>
