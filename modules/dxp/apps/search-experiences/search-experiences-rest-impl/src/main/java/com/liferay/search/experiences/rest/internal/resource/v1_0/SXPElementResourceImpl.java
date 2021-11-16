@@ -32,8 +32,6 @@ import com.liferay.search.experiences.service.SXPElementService;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,12 +108,14 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				contextUriInfo, contextUser),
 			_sxpElementService.updateSXPElement(
 				sxpElementId,
-				_getLocalizedMap(
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
 				_getElementDefinitionJSON(sxpElement),
 				GetterUtil.getBoolean(sxpElement.getHidden()),
-				_getLocalizedMap(
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
 	}
@@ -129,11 +129,13 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			_sxpElementService.addSXPElement(
-				_getLocalizedMap(
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
 				_getElementDefinitionJSON(sxpElement), false,
-				_getLocalizedMap(
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getTitle(), sxpElement.getTitle_i18n()),
 				GetterUtil.getInteger(sxpElement.getType()),
 				ServiceContextFactory.getInstance(contextHttpServletRequest)));
@@ -166,13 +168,6 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 		return String.valueOf(
 			ElementDefinitionUtil.unpack(sxpElement.getElementDefinition()));
-	}
-
-	private Map<Locale, String> _getLocalizedMap(
-		String defaultValue, Map<String, String> i18nMap) {
-
-		return LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(), defaultValue, i18nMap);
 	}
 
 	@Reference
