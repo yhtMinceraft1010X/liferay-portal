@@ -636,9 +636,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);
 		commerceOrderItem.setPrintedNote(printedNote);
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
