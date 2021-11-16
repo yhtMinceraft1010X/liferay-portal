@@ -53,8 +53,8 @@ public class CommerceOrderItemUpgradeProcess
 		String commerceOrderItemCompanyIdSQL =
 			"select distinct companyId from CommerceOrderItem";
 
-		try (Statement s = connection.createStatement();
-			ResultSet resultSet = s.executeQuery(
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
 				commerceOrderItemCompanyIdSQL)) {
 
 			while (resultSet.next()) {
