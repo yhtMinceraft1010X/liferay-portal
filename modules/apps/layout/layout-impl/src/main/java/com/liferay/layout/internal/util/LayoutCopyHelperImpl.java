@@ -290,7 +290,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinkMap = stream.collect(
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
 			Collectors.toMap(
 				FragmentEntryLink::getFragmentEntryLinkId,
 				fragmentEntryLink -> fragmentEntryLink));
@@ -317,14 +317,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		for (Map.Entry<Long, Long> entry : segmentsExperienceIds.entrySet()) {
 			_copyLayoutPageTemplateStructureExperience(
 				layoutPageTemplateStructure, entry.getKey(), targetLayout,
-				fragmentEntryLinkMap, entry.getValue(), serviceContext);
+				fragmentEntryLinksMap, entry.getValue(), serviceContext);
 		}
 	}
 
 	private void _copyLayoutPageTemplateStructureExperience(
 			LayoutPageTemplateStructure layoutPageTemplateStructure,
 			long segmentsExperienceId, Layout targetLayout,
-			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
+			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
 			long targetSegmentsExperienceId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -335,7 +335,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			data, targetLayout, fragmentEntryLinkMap,
+			data, targetLayout, fragmentEntryLinksMap,
 			targetSegmentsExperienceId, serviceContext);
 
 		_layoutPageTemplateStructureLocalService.
@@ -371,7 +371,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinkMap = stream.collect(
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = stream.collect(
 			Collectors.toMap(
 				FragmentEntryLink::getFragmentEntryLinkId,
 				fragmentEntryLink -> fragmentEntryLink));
@@ -392,7 +392,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		);
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			layoutStructure.toString(), targetLayout, fragmentEntryLinkMap,
+			layoutStructure.toString(), targetLayout, fragmentEntryLinksMap,
 			SegmentsExperienceConstants.ID_DEFAULT, serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
@@ -742,7 +742,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	private JSONObject _processDataJSONObject(
 			String data, Layout targetLayout,
-			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
+			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
 			long targetSegmentsExperienceId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -761,7 +761,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinkMap.get(
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
 			if (fragmentEntryLink == null) {
