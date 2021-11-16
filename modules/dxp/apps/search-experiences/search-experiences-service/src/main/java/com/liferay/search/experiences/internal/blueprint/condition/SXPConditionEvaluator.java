@@ -160,9 +160,8 @@ public class SXPConditionEvaluator {
 			range.getGt(), range.getGte(), range.getLt(), range.getLte());
 	}
 
-	private SXPParameter _getSXPParameter(String templateVariable) {
-		return _sxpParameterData.getSXPParameterByTemplateVariable(
-			templateVariable);
+	private SXPParameter _getSXPParameter(String name) {
+		return _sxpParameterData.getSXPParameterByName(name);
 	}
 
 	private final SXPParameterData _sxpParameterData;
