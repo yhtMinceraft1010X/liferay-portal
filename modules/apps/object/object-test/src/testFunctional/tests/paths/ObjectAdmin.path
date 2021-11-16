@@ -134,7 +134,7 @@
 	</tr>
 	<tr>
 		<td>LAYOUT_ADD_FIELD_COLUMN_NUMBER</td>
-		<td>//button[contains(@class,'box-btn-columns__btn') and  contains(@value,'${key_columnsNumber}')]</td>
+		<td>//button[contains(@class,'box-btn-columns__btn') and contains(@value,'${key_columnsNumber}')]</td>
 		<td></td>
 	</tr>
 	<tr>

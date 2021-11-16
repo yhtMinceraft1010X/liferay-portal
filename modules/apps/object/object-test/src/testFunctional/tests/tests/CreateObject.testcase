@@ -113,14 +113,9 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
 
-		ObjectAdmin.addTabFieldsOnLayout(
-			tabName = "Field Tab"
-		);
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
 
 		ObjectAdmin.assertFieldTabIsPresent(fieldTabName = "Field Tab");
-
-		
-
 	}
 
 	@description = "LPS-139803 - Verify it is possible to add a Object Entry Title Field"
