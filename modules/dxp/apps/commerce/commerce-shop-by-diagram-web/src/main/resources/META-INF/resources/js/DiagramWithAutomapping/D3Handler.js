@@ -18,6 +18,7 @@ class D3Handler extends DiagramZoomHandler {
 	constructor(
 		diagramWrapper,
 		imageURL,
+		isAdmin,
 		pinsCSSSelectors,
 		updateLabels,
 		updateZoomState,
@@ -30,6 +31,7 @@ class D3Handler extends DiagramZoomHandler {
 		this._d3diagramWrapper = d3select(diagramWrapper);
 		this._d3zoomWrapper = d3select(zoomWrapper);
 		this._imageURL = imageURL;
+		this._isAdmin = isAdmin;
 		this._updateLabels = updateLabels;
 		this._pinBackground = null;
 		this._updateZoomState = updateZoomState;
@@ -39,11 +41,13 @@ class D3Handler extends DiagramZoomHandler {
 
 		this._printSVGImage().then(() => {
 			this.rendered = true;
+			const sequences = this._pins.map((pin) => pin.sequence);
+
 			this._texts = Array.from(
 				this._diagramWrapper.querySelectorAll(
 					pinsCSSSelectors.join(',')
 				)
-			);
+			).filter((text) => isAdmin || sequences.includes(text.textContent));
 
 			this._updatePinsState();
 			this._addZoom();

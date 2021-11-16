@@ -201,6 +201,7 @@ function Diagram({
 		chartInstance.current = new D3Handler(
 			svgRef.current,
 			imageURL,
+			isAdmin,
 			pinsCSSSelectors,
 			updateLabels,
 			(scale) => {
@@ -210,7 +211,7 @@ function Diagram({
 			},
 			zoomHandlerRef.current
 		);
-	}, [imageURL, pinsCSSSelectors]);
+	}, [imageURL, isAdmin, pinsCSSSelectors]);
 
 	return (
 		<div className={classNames('shop-by-diagram', {expanded})}>
