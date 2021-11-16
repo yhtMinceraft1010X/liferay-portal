@@ -78,12 +78,12 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsEntryConstants.ID_DEFAULT);
-		long sourcePlid = themeDisplay.getPlid();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPageTemplateEntry.class.getName(), actionRequest);
 
-		Layout sourceLayout = _layoutLocalService.getLayout(sourcePlid);
+		Layout sourceLayout = _layoutLocalService.getLayout(
+			themeDisplay.getPlid());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
