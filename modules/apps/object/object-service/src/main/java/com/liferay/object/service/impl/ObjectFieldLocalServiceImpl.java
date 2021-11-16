@@ -234,10 +234,7 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateRelationshipType(objectField, name, type);
-		_validateName(
-			objectFieldId,
-			Validator.isNotNull(objectField.getRelationshipType()),
-			objectDefinition, name);
+		_validateName(objectFieldId, objectDefinition, name);
 		validateType(type);
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
@@ -271,7 +268,7 @@ public class ObjectFieldLocalServiceImpl
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 		_validateLabel(labelMap);
-		_validateName(0, false, objectDefinition, name);
+		_validateName(0, objectDefinition, name);
 		validateType(type);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -329,8 +326,7 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateName(
-			long objectFieldId, boolean relationshipField,
-			ObjectDefinition objectDefinition, String name)
+			long objectFieldId, ObjectDefinition objectDefinition, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -340,9 +336,7 @@ public class ObjectFieldLocalServiceImpl
 		char[] nameCharArray = name.toCharArray();
 
 		for (char c : nameCharArray) {
-			if (!Validator.isChar(c) && !Validator.isDigit(c) &&
-				!(relationshipField && (c == '_'))) {
-
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
 				throw new ObjectFieldNameException.
 					MustOnlyContainLettersAndDigits();
 			}
