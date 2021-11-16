@@ -87,7 +87,7 @@ public class CommerceOrderItemUpgradeProcess
 					StringBundler.concat(
 						"update CommerceOrderItem set CPMeasurementUnitId = ",
 						cpMeasurementUnit.getCPMeasurementUnitId(),
-						" where CPMeasurementUnitId is NULL and companyId = ",
+						" where CPMeasurementUnitId is null and companyId = ",
 						companyId));
 			}
 		}
