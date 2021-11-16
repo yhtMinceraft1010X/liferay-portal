@@ -582,25 +582,17 @@ definition {
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject"
-
-		);
+			objectName = "CustomObject");
 
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectAdmin.goToLayoutsTab();
-		
+
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
 
 		ObjectAdmin.assertObjectLayoutNotPresent(layoutLabel = "Layout Name");
-
-
-
-
-
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to delete an Object with the Delete permission"
