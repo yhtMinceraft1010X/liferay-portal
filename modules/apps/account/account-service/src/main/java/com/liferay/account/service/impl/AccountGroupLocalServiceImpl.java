@@ -81,8 +81,6 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setName(name);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 
-		// Resources
-
 		_resourceLocalService.addResources(
 			user.getCompanyId(), 0, user.getUserId(),
 			AccountGroup.class.getName(), accountGroupId, false, false, false);
@@ -114,8 +112,6 @@ public class AccountGroupLocalServiceImpl
 			"This account group is used for guest users.");
 		accountGroup.setName(AccountConstants.ACCOUNT_GROUP_NAME_GUEST);
 
-		// Resources
-
 		_resourceLocalService.addResources(
 			user.getCompanyId(), 0, user.getUserId(),
 			AccountGroup.class.getName(), accountGroup.getAccountGroupId(),
@@ -139,8 +135,6 @@ public class AccountGroupLocalServiceImpl
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			_accountGroupRelPersistence.remove(accountGroupRel);
 		}
-
-		// Resources
 
 		_resourceLocalService.deleteResource(
 			accountGroup.getCompanyId(), AccountGroup.class.getName(),
