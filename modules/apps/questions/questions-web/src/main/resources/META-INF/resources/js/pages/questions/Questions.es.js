@@ -303,11 +303,15 @@ export default withRouter(
 		);
 
 		useEffect(() => {
-			if (!page || !pageSize || search == null) {
+			if (!page || !pageSize || search === null || search === undefined) {
 				return;
 			}
 
-			if (!section || (section.id == null && !currentTag)) {
+			if (
+				!section ||
+				((section.id === null || section.id === undefined) &&
+					!currentTag)
+			) {
 				return;
 			}
 
@@ -466,7 +470,9 @@ export default withRouter(
 
 		function isVotedFilter(filter) {
 			return (
-				filter == 'month' || filter == 'most-voted' || filter == 'week'
+				filter === 'month' ||
+				filter === 'most-voted' ||
+				filter === 'week'
 			);
 		}
 

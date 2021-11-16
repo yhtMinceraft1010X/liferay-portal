@@ -24,7 +24,7 @@ const items = [
 const ContainerMock = ({children}) => {
 	const [selectedItems, setSelectedItems] = useState([]);
 
-	return cloneElement(children, {setSelectedItems, selectedItems});
+	return cloneElement(children, {onChange: setSelectedItems, selectedItems});
 };
 
 describe('The AutocompleteMultiSelect component should', () => {

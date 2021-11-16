@@ -69,10 +69,10 @@ interface ITabTypeProps extends React.HTMLAttributes<HTMLElement> {
 	description: string;
 	disabled?: boolean;
 	disabledMessage?: string;
-	type: string;
 	label: string;
 	onChangeType: (type: string) => void;
 	selected: string;
+	type: string;
 }
 
 const TabType: React.FC<ITabTypeProps> = ({

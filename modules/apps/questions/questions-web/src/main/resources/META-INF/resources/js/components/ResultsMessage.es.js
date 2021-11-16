@@ -17,11 +17,11 @@ import React from 'react';
 import lang from '../utils/lang.es';
 import {slugToText} from '../utils/utils.es';
 
-export default ({
+export default function ResultsMessage({
 	maxNumberOfSearchResults = 0,
 	searchCriteria,
 	totalCount = 0,
-}) => {
+}) {
 	return (
 		<>
 			{!!totalCount && (
@@ -69,4 +69,4 @@ export default ({
 			)}
 		</>
 	);
-};
+}

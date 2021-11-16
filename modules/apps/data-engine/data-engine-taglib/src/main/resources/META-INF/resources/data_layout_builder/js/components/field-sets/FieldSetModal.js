@@ -161,7 +161,7 @@ const ModalContent = ({
 	};
 
 	const isFieldSetInvalid = () =>
-		Object.keys(name).length == 0 ||
+		Object.keys(name).length === 0 ||
 		!dataLayout?.dataLayoutPages ||
 		isDataLayoutEmpty(dataLayout.dataLayoutPages);
 

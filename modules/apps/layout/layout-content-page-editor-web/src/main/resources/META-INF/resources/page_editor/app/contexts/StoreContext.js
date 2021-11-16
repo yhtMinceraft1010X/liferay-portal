@@ -41,11 +41,11 @@ const DEFAULT_GET_STATE = () => ({});
  * that calls dispatch and getState methods instead of using a real
  * reducer internally.
  */
-export const StoreAPIContextProvider = ({
+export function StoreAPIContextProvider({
 	children,
 	dispatch = DEFAULT_DISPATCH,
 	getState = DEFAULT_GET_STATE,
-}) => {
+}) {
 	const state = getState();
 
 	const subscribersRef = useRef([]);
@@ -77,7 +77,7 @@ export const StoreAPIContextProvider = ({
 			</StoreDispatchContext.Provider>
 		</StoreSubscriptionContext.Provider>
 	);
-};
+}
 
 /**
  * StoreContext is a black box for components: they should
@@ -87,7 +87,7 @@ export const StoreAPIContextProvider = ({
  * That's why we only provide a custom StoreContextProvider instead
  * of the raw React context.
  */
-export const StoreContextProvider = ({children, initialState, reducer}) => {
+export function StoreContextProvider({children, initialState, reducer}) {
 	const [state, dispatch] = useThunk(
 		useUndo(useReducer(reducer, initialState))
 	);
@@ -102,22 +102,24 @@ export const StoreContextProvider = ({children, initialState, reducer}) => {
 			{children}
 		</StoreAPIContextProvider>
 	);
-};
+}
 
 /**
  * @see https://react-redux.js.org/api/hooks#usedispatch
  */
-export const useDispatch = () => useContext(StoreDispatchContext);
+export function useDispatch() {
+	return useContext(StoreDispatchContext);
+}
 
-export const useGetState = () => {
+export function useGetState() {
 	return useContext(StoreGetStateContext);
-};
+}
 
-export const useSelectorCallback = (
+export function useSelectorCallback(
 	selector,
 	dependencies,
 	compareEqual = DEFAULT_COMPARE_EQUAL
-) => {
+) {
 	const getState = useContext(StoreGetStateContext);
 	const [subscribe, unsubscribe] = useContext(StoreSubscriptionContext);
 
@@ -154,13 +156,14 @@ export const useSelectorCallback = (
 	}, [getState, selectorCallback, subscribe, unsubscribe]);
 
 	return selectorState;
-};
+}
 
 /**
  * @see https://react-redux.js.org/api/hooks#useselector
  */
-export const useSelector = (selector, compareEqual = DEFAULT_COMPARE_EQUAL) =>
-	useSelectorCallback(selector, [], compareEqual);
+export function useSelector(selector, compareEqual = DEFAULT_COMPARE_EQUAL) {
+	return useSelectorCallback(selector, [], compareEqual);
+}
 
 function useThunk([state, dispatch]) {
 	const isMounted = useIsMounted();

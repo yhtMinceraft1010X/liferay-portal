@@ -25,7 +25,7 @@ import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
 
-export const ColorPickerField = ({field, onValueSelect, value}) => {
+export function ColorPickerField({field, onValueSelect, value}) {
 	const {tokenValues} = useStyleBook();
 	const [color, setColor] = useControlledState(tokenValues[value]?.value);
 	const colors = {};
@@ -114,7 +114,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 			</ClayInput.Group>
 		</ClayForm.Group>
 	);
-};
+}
 
 ColorPickerField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,

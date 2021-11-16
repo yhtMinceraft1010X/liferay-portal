@@ -23,7 +23,7 @@ const _isEmailValid = (email) => {
 	return regex.test(email);
 };
 
-export const CreateAnAccount = () => {
+export function CreateAnAccount() {
 	const [, dispatch] = useContext(SelectedQuoteContext);
 	const [alert, setAlert] = useState(NATURAL_VALUE);
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -168,4 +168,4 @@ export const CreateAnAccount = () => {
 			)}
 		</div>
 	);
-};
+}

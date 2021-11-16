@@ -36,9 +36,12 @@ function addLinks(nodes, parentId = null) {
 		return {
 			...node,
 			children,
-			nextSiblingId: next != null ? next.id : null,
+			nextSiblingId: next !== null && next !== undefined ? next.id : null,
 			parentId,
-			previousSiblingId: previous != null ? previous.id : null,
+			previousSiblingId:
+				previous !== null && previous !== undefined
+					? previous.id
+					: null,
 		};
 	});
 }

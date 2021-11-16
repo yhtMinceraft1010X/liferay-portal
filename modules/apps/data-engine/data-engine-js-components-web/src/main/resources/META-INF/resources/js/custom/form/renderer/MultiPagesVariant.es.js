@@ -23,7 +23,7 @@ import {usePage} from '../../../core/hooks/usePage.es';
 import {sub} from '../../../utils/strings';
 import {EVENT_TYPES} from '../eventTypes.es';
 
-export const Container = ({children, empty, pageIndex, pages}) => {
+export function Container({children, empty, pageIndex, pages}) {
 	const {editingLanguageId, successPageSettings} = useFormState();
 	const dispatch = useForm();
 
@@ -196,11 +196,11 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 			</div>
 		</>
 	);
-};
+}
 
 Container.displayName = 'MultiPagesVariant.Container';
 
-export const PageHeader = ({localizedDescription, localizedTitle}) => {
+export function PageHeader({localizedDescription, localizedTitle}) {
 	const {defaultLanguageId, editingLanguageId} = useFormState();
 	const {pageIndex} = usePage();
 
@@ -243,6 +243,6 @@ export const PageHeader = ({localizedDescription, localizedTitle}) => {
 			/>
 		</div>
 	);
-};
+}
 
 PageHeader.displayName = 'MultiPagesVariant.PageHeader';

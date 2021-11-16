@@ -68,7 +68,7 @@ function LayoutFinder(props) {
 				`#${props.namespace}layoutsTree`
 			);
 
-			if (newKeywords.length == 0) {
+			if (newKeywords.length === 0) {
 				setLoading(false);
 				setLayouts([]);
 				setTotalCount(0);

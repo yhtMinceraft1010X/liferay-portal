@@ -357,7 +357,7 @@ const Options = ({
 				generateOptionValueUsingOptionLabel
 			);
 		}
-		else if (property == 'reference') {
+		else if (property === 'reference') {
 			setFieldError(
 				checkValidReference(fields, value, fields[index].value)
 			);

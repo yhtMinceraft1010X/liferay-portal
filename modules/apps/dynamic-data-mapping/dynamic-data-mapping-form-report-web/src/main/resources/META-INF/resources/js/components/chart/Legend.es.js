@@ -82,7 +82,7 @@ const ShowAll = ({expand, expanded, labelsLength}) => {
 	);
 };
 
-export default ({activeIndex, labels, onMouseOut, onMouseOver}) => {
+export default function Legend({activeIndex, labels, onMouseOut, onMouseOver}) {
 	const [isShowAllExpanded, setIsShowAllExpanded] = useState(false);
 
 	const handleOnMouseOver = ({currentTarget}) => {
@@ -123,4 +123,4 @@ export default ({activeIndex, labels, onMouseOut, onMouseOver}) => {
 			</div>
 		</div>
 	);
-};
+}

@@ -195,7 +195,8 @@ const TreeFilter = ({
 				>
 					<div className="container p-0">
 						<p className="m-0">
-							{selectedItemsCount}{' '}
+							{selectedItemsCount + ' '}
+
 							{selectedItemsCount > 1
 								? Liferay.Language.get('items-selected')
 								: Liferay.Language.get('item-selected')}

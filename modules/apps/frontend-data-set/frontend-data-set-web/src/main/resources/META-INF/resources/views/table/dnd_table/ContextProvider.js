@@ -110,9 +110,9 @@ function ContextProvider({children, columnNames}) {
 				registerColumn,
 				resizeColumn,
 				tableWidth,
-				setDraggingAllowed,
-				setDraggingColumnName,
-				setTableWidth,
+				updateDraggingAllowed: setDraggingAllowed,
+				updateDraggingColumnName: setDraggingColumnName,
+				updateTableWidth: setTableWidth,
 			}}
 		>
 			{children}

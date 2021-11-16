@@ -25,7 +25,7 @@ import {CollapsableButtonList} from './CollapsableButtonList';
 
 const SEARCH_INPUT_ID = 'ddm_template_editor_Sidebar-SearchInputId';
 
-export const ElementsSidebarPanel = ({className}) => {
+export function ElementsSidebarPanel({className}) {
 	const {
 		inputChannel,
 		templateVariableGroups: initialTemplateVariableGroups,
@@ -123,7 +123,7 @@ export const ElementsSidebarPanel = ({className}) => {
 			)}
 		</div>
 	);
-};
+}
 
 ElementsSidebarPanel.propTypes = {
 	className: PropTypes.string,

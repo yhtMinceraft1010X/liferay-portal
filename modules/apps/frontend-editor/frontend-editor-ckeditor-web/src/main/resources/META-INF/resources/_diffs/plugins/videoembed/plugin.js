@@ -12,6 +12,8 @@
  * details.
  */
 
+/* eslint-disable @liferay/no-get-data-attribute */
+
 if (!CKEDITOR.plugins.get('videoembed')) {
 	const REGEX_HTTP = /^https?/;
 

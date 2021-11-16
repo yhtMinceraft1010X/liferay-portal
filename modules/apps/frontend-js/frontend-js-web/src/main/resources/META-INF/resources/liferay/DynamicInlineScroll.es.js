@@ -156,12 +156,12 @@ class DynamicInlineScroll extends PortletBase {
 		const {cur, initialPages, pages} = this;
 		const {target} = event;
 
-		let pageIndex = this.getNumber_(target.dataset['page-index']);
-		let pageIndexMax = this.getNumber_(target.dataset['max-index']);
+		let pageIndex = this.getNumber_(target.dataset.pageIndex);
+		let pageIndexMax = this.getNumber_(target.dataset.maxIndex);
 
 		if (pageIndex === 0) {
 			const pageIndexCurrent = this.getNumber_(
-				target.dataset['current-index']
+				target.dataset.currentIndex
 			);
 
 			if (pageIndexCurrent === 0) {

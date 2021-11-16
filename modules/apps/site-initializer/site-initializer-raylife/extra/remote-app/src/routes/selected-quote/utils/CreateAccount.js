@@ -12,7 +12,7 @@ import {createAccount} from '../services/Account';
 const getValueFromValidation = (condition) =>
 	condition ? CHECK_VALUE : UNCHECKED_VALUE;
 
-export const SendAccountRequest = async () => {
+export async function SendAccountRequest() {
 	const {
 		basics: {businessInformation},
 	} = JSON.parse(getItem('raylife-application-form'));
@@ -22,7 +22,7 @@ export const SendAccountRequest = async () => {
 	);
 
 	return data;
-};
+}
 
 export function validadePassword(confirmPassword, password) {
 	const rules = {...INITIAL_VALIDATION};

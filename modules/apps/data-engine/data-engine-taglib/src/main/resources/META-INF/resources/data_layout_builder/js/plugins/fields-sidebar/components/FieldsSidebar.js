@@ -20,7 +20,7 @@ import Sidebar from '../../../components/sidebar/Sidebar.es';
 import FieldsSidebarBody from './FieldsSidebarBody';
 import SidebarFieldSettings from './SidebarFieldSettings';
 
-export const FieldsSidebar = ({title}) => {
+export function FieldsSidebar({title}) {
 	const {focusedField} = useFormState();
 
 	return Object.keys(focusedField).length ? (
@@ -28,7 +28,7 @@ export const FieldsSidebar = ({title}) => {
 	) : (
 		<FieldListSidebar title={title} />
 	);
-};
+}
 
 const FieldListSidebar = ({title}) => {
 	const [searchTerm, setSearchTerm] = useState('');

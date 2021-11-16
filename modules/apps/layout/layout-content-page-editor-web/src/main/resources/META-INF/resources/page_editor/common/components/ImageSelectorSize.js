@@ -36,12 +36,12 @@ const DEFAULT_IMAGE_SIZE = {
 	width: null,
 };
 
-export const ImageSelectorSize = ({
+export function ImageSelectorSize({
 	fieldValue,
 	getEditableElement = DEFAULT_GET_EDITABLE_ELEMENT,
 	imageSizeId,
 	onImageSizeIdChanged = null,
-}) => {
+}) {
 	const [fileEntryId, setFileEntryId] = useState(
 		fieldValue.fileEntryId || ''
 	);
@@ -201,7 +201,7 @@ export const ImageSelectorSize = ({
 			)}
 		</ClayForm.Group>
 	);
-};
+}
 
 ImageSelectorSize.propTypes = {
 	fieldValue: PropTypes.oneOfType([

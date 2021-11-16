@@ -23,13 +23,13 @@ import {createSubTopicQuery, createTopicQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import {deleteCache} from '../utils/utils.es';
 
-export default ({
+export default function NewTopicModal({
 	currentSectionId,
 	onClose,
 	onCreateNavigateTo,
 	setError,
 	visible,
-}) => {
+}) {
 	const context = useContext(AppContext);
 	const topicNameRef = useRef(null);
 	const topicDescriptionRef = useRef(null);
@@ -170,4 +170,4 @@ export default ({
 			)}
 		</>
 	);
-};
+}

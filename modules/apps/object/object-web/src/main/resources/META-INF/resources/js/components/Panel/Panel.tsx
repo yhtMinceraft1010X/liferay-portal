@@ -59,9 +59,9 @@ const PanelBody: React.FC<IPanelBodyProps> = ({children, className}) => {
 };
 
 interface IPanelHeaderProps extends React.HTMLAttributes<HTMLElement> {
-	title: string;
 	contentLeft?: React.ReactNode;
 	contentRight?: React.ReactNode;
+	title: string;
 }
 
 const PanelHeader: React.FC<IPanelHeaderProps> = ({
@@ -112,8 +112,8 @@ const PanelHeader: React.FC<IPanelHeaderProps> = ({
 };
 
 interface IPanelSimpleBodyProps extends React.HTMLAttributes<HTMLElement> {
-	title: string;
 	contentRight?: React.ReactNode;
+	title: string;
 }
 
 const PanelSimpleBody: React.FC<IPanelSimpleBodyProps> = ({

@@ -16,7 +16,7 @@ import React from 'react';
 
 import '../css/main.scss';
 
-export default () => {
+export default function App() {
 	return (
 		<div>
 			<h2>A11y Test Portlet</h2>
@@ -66,4 +66,4 @@ export default () => {
 			<hr />
 		</div>
 	);
-};
+}

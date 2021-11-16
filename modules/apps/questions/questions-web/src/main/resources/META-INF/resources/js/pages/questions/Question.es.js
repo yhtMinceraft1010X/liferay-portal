@@ -292,24 +292,20 @@ export default withRouter(
 										</h1>
 
 										<p className="c-mb-0 small text-secondary">
-											{Liferay.Language.get('asked')}{' '}
-											{dateToBriefInternationalHuman(
+											{`${Liferay.Language.get(
+												'asked'
+											)} ${dateToBriefInternationalHuman(
 												question.dateCreated
-											)}
-											{' - '}
-											{Liferay.Language.get(
+											)} - ${Liferay.Language.get(
 												'active'
-											)}{' '}
-											{dateToBriefInternationalHuman(
+											)} ${dateToBriefInternationalHuman(
 												question.dateModified
-											)}
-											{' - '}
-											{lang.sub(
+											)} - ${lang.sub(
 												Liferay.Language.get(
 													'viewed-x-times'
 												),
 												[question.viewCount]
-											)}
+											)}`}
 										</p>
 									</div>
 
@@ -405,7 +401,8 @@ export default withRouter(
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
-									{answers.totalCount}{' '}
+									{answers.totalCount + ' '}
+
 									{Liferay.Language.get('answers')}
 								</h3>
 

@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/empty-line-between-elements */
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';

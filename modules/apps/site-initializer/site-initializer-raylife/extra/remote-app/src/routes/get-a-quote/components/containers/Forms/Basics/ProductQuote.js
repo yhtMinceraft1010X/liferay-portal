@@ -20,7 +20,7 @@ const getSelectedProductName = () => {
 	}
 };
 
-export const FormBasicProductQuote = ({form}) => {
+export function FormBasicProductQuote({form}) {
 	const {control, setValue} = useFormContext();
 	const {selectedStep} = useStepWizard();
 	const {productQuotes} = useProductQuotes();
@@ -104,4 +104,4 @@ export const FormBasicProductQuote = ({form}) => {
 			/>
 		</div>
 	);
-};
+}

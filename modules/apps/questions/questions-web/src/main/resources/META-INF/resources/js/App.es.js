@@ -24,7 +24,7 @@ import NavigationBar from './pages/NavigationBar.es';
 import {client} from './utils/client.es';
 import {getFullPath} from './utils/utils.es';
 
-export default (props) => {
+export default function App(props) {
 	redirectForNotifications(props);
 
 	const Component = useLazy();
@@ -239,4 +239,4 @@ export default (props) => {
 			}
 		}
 	}
-};
+}

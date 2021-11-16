@@ -35,7 +35,7 @@ const Experiences = ({
 				<ClayList className="translation-experiences-wrapper">
 					{experiences.map(({label, segment, value}) => {
 						const checked =
-							selectedExperiencesIds.indexOf(value) != -1;
+							selectedExperiencesIds.indexOf(value) !== -1;
 						const inputId = `experience_${value}`;
 
 						return (
@@ -93,7 +93,7 @@ const ExportFileFormats = ({
 	portletNamespace,
 	setExportMimeType,
 }) => {
-	if (availableExportFileFormats.length == 1) {
+	if (availableExportFileFormats.length === 1) {
 		return (
 			<ClayInput
 				readOnly
@@ -129,7 +129,7 @@ const SourceLocales = ({
 	setSourceLanguageId,
 	sourceLanguageId,
 }) => {
-	if (availableSourceLocales.length == 1) {
+	if (availableSourceLocales.length === 1) {
 		return (
 			<ClayInput readOnly value={availableSourceLocales[0].displayName} />
 		);
@@ -163,7 +163,7 @@ const TargetLocale = ({
 	sourceLanguageId,
 }) => {
 	const languageId = locale.languageId;
-	const checked = selectedTargetLanguageIds.indexOf(languageId) != -1;
+	const checked = selectedTargetLanguageIds.indexOf(languageId) !== -1;
 
 	return (
 		<ClayLayout.Col className="py-2" md={4}>
@@ -215,7 +215,7 @@ const ExportTranslation = ({
 			checked
 				? languageIds.concat(selectedLanguageId)
 				: languageIds.filter(
-						(languageId) => languageId != selectedLanguageId
+						(languageId) => languageId !== selectedLanguageId
 				  )
 		);
 	};
@@ -225,7 +225,7 @@ const ExportTranslation = ({
 			checked
 				? experiencesIds.concat(selectedExperienceId)
 				: experiencesIds.filter(
-						(experienceId) => experienceId != selectedExperienceId
+						(experienceId) => experienceId !== selectedExperienceId
 				  )
 		);
 	};

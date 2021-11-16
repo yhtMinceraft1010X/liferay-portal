@@ -16,7 +16,7 @@ import React from 'react';
 
 import {formatNumber} from './../../utils/numeric.es';
 
-export default ({summary}) => {
+export default function Summary({summary}) {
 	const getAttributes = (summaryItem) => {
 		return {
 			className: 'value',
@@ -71,4 +71,4 @@ export default ({summary}) => {
 			</div>
 		</div>
 	);
-};
+}

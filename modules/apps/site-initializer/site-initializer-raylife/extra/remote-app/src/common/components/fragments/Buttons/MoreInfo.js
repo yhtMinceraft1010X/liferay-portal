@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import {useCustomEvent} from '~/common/hooks/useCustomEvent';
 
-export const MoreInfoButton = ({callback, event, selected, value}) => {
+export function MoreInfoButton({callback, event, selected, value}) {
 	const [dispatchEvent] = useCustomEvent(event);
 
 	const updateState = () => {
@@ -31,4 +31,4 @@ export const MoreInfoButton = ({callback, event, selected, value}) => {
 			</div>
 		</button>
 	);
-};
+}

@@ -42,7 +42,7 @@ const FilterItem = ({filterKey, name, value}) => {
 	);
 };
 
-export const getSelectedFilters = (filters, appliedFilters) => {
+export function getSelectedFilters(filters, appliedFilters) {
 	const selectedFilters = [];
 
 	Object.keys(appliedFilters).forEach((filterKey) => {
@@ -65,9 +65,13 @@ export const getSelectedFilters = (filters, appliedFilters) => {
 	});
 
 	return selectedFilters;
-};
+}
 
-export default ({filters = [], isLoading, totalCount}) => {
+export default function ManagementToolbarResultsBar({
+	filters = [],
+	isLoading,
+	totalCount,
+}) {
 	const [{filters: appliedFilters = {}, keywords}, dispatch] = useContext(
 		SearchContext
 	);
@@ -109,4 +113,4 @@ export default ({filters = [], isLoading, totalCount}) => {
 			)}
 		</>
 	);
-};
+}

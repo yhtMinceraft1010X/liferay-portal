@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const FormField = ({children, error, id, name}) => {
-	const hasError = error != null;
+	const hasError = error !== null && error !== undefined;
 
 	return (
 		<div

@@ -92,7 +92,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						/>
 					)}
 
-					{this.unresolvedConflicts.length == 0 && (
+					{this.unresolvedConflicts.length === 0 && (
 						<ClayAlert
 							displayType="success"
 							spritemap={this.spritemap}

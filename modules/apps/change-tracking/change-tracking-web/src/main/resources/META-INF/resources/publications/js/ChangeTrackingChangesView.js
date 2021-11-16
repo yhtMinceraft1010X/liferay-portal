@@ -87,7 +87,7 @@ const DrilldownMenu = ({
 	);
 };
 
-export default ({
+export default function ChangeTrackingChangesView({
 	activeCTCollection,
 	changeTypesFromURL,
 	changes,
@@ -118,7 +118,7 @@ export default ({
 	updateCTCommentURL,
 	userInfo,
 	usersFromURL,
-}) => {
+}) {
 	const CHANGE_TYPE_ADDITION = 0;
 	const CHANGE_TYPE_DELETION = 1;
 	const CHANGE_TYPE_MODIFICATION = 2;
@@ -2536,4 +2536,4 @@ export default ({
 			</div>
 		</>
 	);
-};
+}

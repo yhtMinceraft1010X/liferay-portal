@@ -143,12 +143,12 @@ const EditCategoriesModal = ({
 		}
 		else {
 			addedCategories = finalCategories.filter(
-				(categoryId) => initialCategories.indexOf(categoryId) == -1
+				(categoryId) => initialCategories.indexOf(categoryId) === -1
 			);
 		}
 
 		const removedCategories = initialCategories.filter(
-			(category) => finalCategories.indexOf(category) == -1
+			(category) => finalCategories.indexOf(category) === -1
 		);
 
 		fetchCategories(URL_UPDATE_CATEGORIES, append ? 'PATCH' : 'PUT', {

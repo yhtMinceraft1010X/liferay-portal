@@ -161,9 +161,11 @@ function BulkActions({
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<span className="text-truncate">
-									{selectedItemsValue.length}{' '}
-									{Liferay.Language.get('of')} {total}{' '}
-									{Liferay.Language.get('items-selected')}
+									{`${
+										selectedItemsValue.length
+									} ${Liferay.Language.get(
+										'of'
+									)} ${total} Liferay.Language.get('items-selected')`}
 								</span>
 
 								<ClayLink

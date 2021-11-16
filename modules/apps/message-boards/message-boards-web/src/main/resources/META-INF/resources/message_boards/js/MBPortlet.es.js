@@ -303,7 +303,7 @@ class MBPortlet {
 								if (
 									searchContainerData.indexOf(
 										attachment.id
-									) == -1
+									) === -1
 								) {
 									searchContainer.addRow(
 										[

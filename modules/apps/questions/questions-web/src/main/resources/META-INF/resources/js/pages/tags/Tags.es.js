@@ -74,7 +74,7 @@ export default withRouter(({history, location}) => {
 	});
 
 	useEffect(() => {
-		if (!page || !pageSize || search == null) {
+		if (!page || !pageSize || search === null || search === undefined) {
 			return;
 		}
 

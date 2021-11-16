@@ -32,8 +32,8 @@ const defaultLanguageId = normalizeLanguageId(
 );
 
 type TInitialValues = {
-	objectFieldSize: number;
 	objectFieldId: number;
+	objectFieldSize: number;
 };
 
 interface IBoxBtnColumnsProps extends React.HTMLAttributes<HTMLElement> {

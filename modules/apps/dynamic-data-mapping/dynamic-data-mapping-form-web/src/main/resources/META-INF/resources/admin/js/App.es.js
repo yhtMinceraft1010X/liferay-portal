@@ -52,7 +52,7 @@ import {
  * Exporting default application to Forms Admin. Only Providers and
  * routing must be defined.
  */
-export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
+export function App({autosaveInterval, autosaveURL, ...otherProps}) {
 	const {config, state} = parseProps(otherProps);
 
 	return (
@@ -117,7 +117,7 @@ export const App = ({autosaveInterval, autosaveURL, ...otherProps}) => {
 			</ConfigProvider>
 		</DndProvider>
 	);
-};
+}
 
 App.displayName = 'App';
 

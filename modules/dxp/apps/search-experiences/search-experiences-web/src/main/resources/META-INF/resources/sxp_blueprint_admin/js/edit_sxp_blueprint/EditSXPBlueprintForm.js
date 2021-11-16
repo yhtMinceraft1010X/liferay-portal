@@ -415,7 +415,7 @@ function EditSXPBlueprintForm({
 
 	const _handleDeleteSXPElement = (id) => {
 		const index = formik.values.selectedQuerySXPElements.findIndex(
-			(item) => item.id == id
+			(item) => item.id === id
 		);
 
 		if (formik.touched?.selectedQuerySXPElements) {

@@ -20,7 +20,7 @@ import React, {useEffect, useState} from 'react';
 
 import {isValuesArrayChanged} from '../../../utils/index';
 
-export const formatValue = (values, items, exclude) => {
+export function formatValue(values, items, exclude) {
 	const formattedValue = values
 		? values
 				.map((value) => {
@@ -37,7 +37,7 @@ export const formatValue = (values, items, exclude) => {
 		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
 		formattedValue
 	);
-};
+}
 
 function getOdataString(values, key, exclude = false) {
 	if (values?.length) {

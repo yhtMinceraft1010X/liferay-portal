@@ -222,7 +222,7 @@ const DataSet = ({
 		if (wrapperRef.current) {
 			const form = wrapperRef.current.closest('form');
 
-			if (form.dataset['senna-off'] === null) {
+			if (form?.dataset.sennaOff === null) {
 				form.setAttribute('data-senna-off', true);
 			}
 		}

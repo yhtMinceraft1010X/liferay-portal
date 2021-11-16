@@ -1,6 +1,6 @@
 import {RuleIcon} from '../CreateAnAccount/RuleIcon';
 
-export const ListRules = ({objValidate}) => {
+export function ListRules({objValidate}) {
 	return (
 		<div className="create-account__list-rules">
 			<ul>
@@ -68,4 +68,4 @@ export const ListRules = ({objValidate}) => {
 			</ul>
 		</div>
 	);
-};
+}

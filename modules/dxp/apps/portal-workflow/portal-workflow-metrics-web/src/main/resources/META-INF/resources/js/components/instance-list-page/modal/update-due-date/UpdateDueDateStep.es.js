@@ -109,7 +109,8 @@ function UpdateDueDateStep({className, dueDate = new Date()}) {
 						}`}
 					>
 						<label htmlFor="dateInput">
-							{Liferay.Language.get('new-due-date')}{' '}
+							{Liferay.Language.get('new-due-date') + ' '}
+
 							<span className="reference-mark">
 								<ClayIcon symbol="asterisk" />
 							</span>

@@ -24,12 +24,12 @@ import {getFormId, getFormNode} from '../../../utils/formId.es';
 import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
 
-export const PaginationControls = ({
+export function PaginationControls({
 	activePage,
 	readOnly,
 	strings = null,
 	total,
-}) => {
+}) {
 	const {
 		cancelLabel,
 		redirectURL,
@@ -114,4 +114,4 @@ export const PaginationControls = ({
 			)}
 		</div>
 	);
-};
+}

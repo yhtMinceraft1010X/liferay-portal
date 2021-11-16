@@ -171,7 +171,7 @@ function MiniCart({
 				summaryDataMapper,
 				toggleable,
 				updateCartModel,
-				setCartState,
+				updateCartState: setCartState,
 			}}
 		>
 			{!!CartViews[CART] && (

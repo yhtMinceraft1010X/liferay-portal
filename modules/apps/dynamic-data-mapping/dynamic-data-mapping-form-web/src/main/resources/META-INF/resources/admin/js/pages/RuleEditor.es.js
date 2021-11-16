@@ -28,7 +28,7 @@ const localDataStorage = {
 	rule: undefined,
 };
 
-export const RuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
+export function RuleEditor({onCancel, onSave, rule, ...otherProps}) {
 	const [disabled, setDisabled] = useState(true);
 
 	return (
@@ -84,4 +84,4 @@ export const RuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 			</div>
 		</ClayForm>
 	);
-};
+}

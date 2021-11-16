@@ -62,13 +62,13 @@ function getItemFields(
 	});
 }
 
-export const getVisibleFields = (fields, visibleFieldNames) => {
+export function getVisibleFields(fields, visibleFieldNames) {
 	const visibleFields = fields.filter(
 		({fieldName}) => visibleFieldNames[fieldName]
 	);
 
 	return visibleFields.length ? visibleFields : fields;
-};
+}
 
 function Table({dataLoading, items, itemsActions, schema, style}) {
 	const {

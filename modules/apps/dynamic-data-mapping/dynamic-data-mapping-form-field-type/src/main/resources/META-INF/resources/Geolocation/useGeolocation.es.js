@@ -97,7 +97,7 @@ const setupGoogleMaps = (googleMapsAPIKey, callback) => {
 	}
 };
 
-export const useGeolocation = ({
+export function useGeolocation({
 	disabled,
 	googleMapsAPIKey,
 	instanceId,
@@ -106,7 +106,7 @@ export const useGeolocation = ({
 	onChange,
 	value,
 	viewMode,
-}) => {
+}) {
 	const eventHandlerPositionChanged = useCallback(
 		(event) => {
 			const {
@@ -193,4 +193,4 @@ export const useGeolocation = ({
 			mapRef.current.setCenter(parseJSONValue(value));
 		}
 	}, [instanceId, value]);
-};
+}

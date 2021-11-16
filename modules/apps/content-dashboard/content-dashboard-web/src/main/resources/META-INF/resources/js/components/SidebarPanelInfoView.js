@@ -127,7 +127,8 @@ const SidebarPanelInfoView = ({
 					{versions.map((version) => (
 						<div className="c-mt-2" key={version.version}>
 							<ClayLabel displayType="info">
-								{Liferay.Language.get('version')}{' '}
+								{Liferay.Language.get('version') + ' '}
+
 								{version.version}
 							</ClayLabel>
 

@@ -70,7 +70,7 @@ const usePropagateFieldSet = () => {
 
 		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 			({customProperties: {ddmStructureId}}) =>
-				ddmStructureId == fieldSet.id
+				ddmStructureId === fieldSet.id
 		);
 
 		if (dataDefinitionField) {

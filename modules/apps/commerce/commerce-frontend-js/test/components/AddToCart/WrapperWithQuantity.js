@@ -68,7 +68,7 @@ describe('WrapperWithQuantity', () => {
 			});
 
 			await wait(() => {
-				expect(AddToCartButtonElement.dataset['test-quantity']).toEqual(
+				expect(AddToCartButtonElement.dataset.testQuantity).toEqual(
 					updatedValue.toString()
 				);
 			});

@@ -17,14 +17,14 @@ import {ClayInput} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useState} from 'react';
 
-export default ({
+export default function ManagementToolbarSearch({
 	disabled,
 	onSubmit,
 	searchText = '',
 	setShowMobile,
 	showMobile,
 	...restProps
-}) => {
+}) {
 	const [value, setValue] = useState(searchText);
 
 	useEffect(() => {
@@ -72,4 +72,4 @@ export default ({
 			</ClayInput.Group>
 		</ClayManagementToolbar.Search>
 	);
-};
+}

@@ -706,7 +706,7 @@ const PublicationsSearchContainer = ({
 	);
 };
 
-export default ({
+export default function ChangeTrackingIndicator({
 	checkoutDropdownItem,
 	createDropdownItem,
 	getSelectPublicationsURL,
@@ -719,7 +719,7 @@ export default ({
 	saveDisplayPreferenceURL,
 	spritemap,
 	title,
-}) => {
+}) {
 	const COLUMN_MODIFIED_DATE = 'modifiedDate';
 	const COLUMN_NAME = 'name';
 
@@ -1140,4 +1140,4 @@ export default ({
 			/>
 		</>
 	);
-};
+}

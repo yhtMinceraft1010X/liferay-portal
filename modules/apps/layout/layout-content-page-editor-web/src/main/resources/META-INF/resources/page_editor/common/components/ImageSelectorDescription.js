@@ -19,10 +19,10 @@ import React, {useEffect, useState} from 'react';
 import {useId} from '../../app/utils/useId';
 import CurrentLanguageFlag from './CurrentLanguageFlag';
 
-export const ImageSelectorDescription = ({
+export function ImageSelectorDescription({
 	imageDescription,
 	onImageDescriptionChanged,
-}) => {
+}) {
 	const [
 		imageDescriptionInputElement,
 		setImageDescriptionInputElement,
@@ -61,7 +61,7 @@ export const ImageSelectorDescription = ({
 			</ClayInput.Group>
 		</ClayForm.Group>
 	);
-};
+}
 
 ImageSelectorDescription.propTypes = {
 	imageDescription: PropTypes.string.isRequired,

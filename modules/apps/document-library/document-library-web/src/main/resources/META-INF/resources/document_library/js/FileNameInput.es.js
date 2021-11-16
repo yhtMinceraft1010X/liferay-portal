@@ -42,7 +42,7 @@ const Feedback = ({message, warning}) => (
 const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 	const inputId = portletNamespace + 'fileName';
 	const [inputValue, setInputValue] = useState(initialValue);
-	const valueChanged = initialValue != inputValue;
+	const valueChanged = initialValue !== inputValue;
 
 	const showWarning = required ? valueChanged && inputValue : valueChanged;
 	const showError = required && !inputValue;

@@ -14,15 +14,17 @@
 
 import React from 'react';
 
-export default ({hexColor}) => (
-	<div className="color row">
-		<div className="col-md-1">
-			<div
-				className="color-viewer"
-				style={{backgroundColor: hexColor}}
-			></div>
-		</div>
+export default function Color({hexColor}) {
+	return (
+		<div className="color row">
+			<div className="col-md-1">
+				<div
+					className="color-viewer"
+					style={{backgroundColor: hexColor}}
+				></div>
+			</div>
 
-		<div className="color-text">{hexColor}</div>
-	</div>
-);
+			<div className="color-text">{hexColor}</div>
+		</div>
+	);
+}

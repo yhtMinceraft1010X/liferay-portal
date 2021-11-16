@@ -1,4 +1,4 @@
-export const useCustomEvent = (event) => {
+export function useCustomEvent(event) {
 	const dispatch = (data) => {
 		window.dispatchEvent(
 			new CustomEvent(event, {
@@ -10,4 +10,4 @@ export const useCustomEvent = (event) => {
 	};
 
 	return [dispatch];
-};
+}

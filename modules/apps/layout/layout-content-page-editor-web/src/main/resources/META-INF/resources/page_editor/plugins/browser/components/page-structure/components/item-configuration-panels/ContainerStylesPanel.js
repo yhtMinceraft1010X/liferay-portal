@@ -106,7 +106,7 @@ const WIDTH_TYPE_OPTIONS = [
 	},
 ];
 
-export const ContainerStylesPanel = ({item}) => {
+export function ContainerStylesPanel({item}) {
 	const dispatch = useDispatch();
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -259,7 +259,7 @@ export const ContainerStylesPanel = ({item}) => {
 			/>
 		</>
 	);
-};
+}
 
 ContainerStylesPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({

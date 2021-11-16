@@ -60,7 +60,7 @@ const ROW_STYLE_IDENTIFIERS = {
 	verticalAlignment: 'verticalAlignment',
 };
 
-export const RowStylesPanel = ({item}) => {
+export function RowStylesPanel({item}) {
 	const {availableViewportSizes} = config;
 	const dispatch = useDispatch();
 	const layoutData = useSelector((state) => state.layoutData);
@@ -212,7 +212,7 @@ export const RowStylesPanel = ({item}) => {
 			<CommonStyles commonStylesValues={rowConfig.styles} item={item} />
 		</>
 	);
-};
+}
 
 RowStylesPanel.propTypes = {
 	item: getLayoutDataItemPropTypes({

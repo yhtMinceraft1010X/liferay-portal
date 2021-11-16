@@ -21,7 +21,12 @@ import React, {useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
-export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
+export default function ChangeTrackingDiscardView({
+	ctEntriesJSONArray,
+	spritemap,
+	typeNames,
+	userInfo,
+}) {
 	const [delta, setDelta] = useState(20);
 	const [page, setPage] = useState(1);
 	const [viewEntry, setViewEntry] = useState(null);
@@ -246,4 +251,4 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 			{renderPagination()}
 		</>
 	);
-};
+}

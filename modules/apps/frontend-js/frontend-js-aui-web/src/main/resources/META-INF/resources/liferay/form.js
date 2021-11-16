@@ -508,7 +508,7 @@ AUI.add(
 						validatorName
 					);
 
-					if (ruleIndex == -1) {
+					if (ruleIndex === -1) {
 						fieldRules.push({
 							body: body || '',
 							custom: custom || false,
@@ -573,7 +573,7 @@ AUI.add(
 						validatorName
 					);
 
-					if (ruleIndex != -1) {
+					if (ruleIndex !== -1) {
 						var rule = fieldRules[ruleIndex];
 
 						instance.formValidator.resetField(rule.fieldName);

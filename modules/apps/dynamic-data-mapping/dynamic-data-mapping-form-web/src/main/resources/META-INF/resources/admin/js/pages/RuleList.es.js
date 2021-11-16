@@ -86,7 +86,7 @@ const getOperandTypeJson = (json, field) => {
 
 	const lastCommaPosition = label.lastIndexOf(', ');
 
-	if (lastCommaPosition != -1) {
+	if (lastCommaPosition !== -1) {
 		label = label.substr(0, lastCommaPosition);
 	}
 
@@ -456,33 +456,37 @@ const ListItem = ({
 	);
 };
 
-export const RuleList = ({
+export function RuleList({
 	rules = [],
 	onDelete,
 	onEdit,
 	operatorsByType = [],
 	...otherProps
-}) => (
-	<div className="form-rule-list">
-		<h1 className="text-default">{Liferay.Language.get('rule-builder')}</h1>
+}) {
+	return (
+		<div className="form-rule-list">
+			<h1 className="text-default">
+				{Liferay.Language.get('rule-builder')}
+			</h1>
 
-		{rules.length === 0 && <EmptyState />}
+			{rules.length === 0 && <EmptyState />}
 
-		{rules.length > 0 && (
-			<ClayList className="mt-4" showQuickActionsOnHover={false}>
-				{rules.map((rule, index) => (
-					<ListItem
-						key={index}
-						onDelete={() => onDelete(index)}
-						onEdit={() => onEdit(index)}
-						operatorsByType={operatorsByType}
-						rule={rule}
-						{...otherProps}
-					/>
-				))}
-			</ClayList>
-		)}
-	</div>
-);
+			{rules.length > 0 && (
+				<ClayList className="mt-4" showQuickActionsOnHover={false}>
+					{rules.map((rule, index) => (
+						<ListItem
+							key={index}
+							onDelete={() => onDelete(index)}
+							onEdit={() => onEdit(index)}
+							operatorsByType={operatorsByType}
+							rule={rule}
+							{...otherProps}
+						/>
+					))}
+				</ClayList>
+			)}
+		</div>
+	);
+}
 
 RuleList.displayName = 'RuleList';

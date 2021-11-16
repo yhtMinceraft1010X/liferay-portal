@@ -43,7 +43,7 @@ const InfoPanel = ({metadata}) => {
 	const itemsHeader = imageData.groups.map((group, index) => {
 		return (
 			<ClayTabs.Item
-				active={activeTabKeyValue == index}
+				active={activeTabKeyValue === index}
 				key={group.title}
 				onClick={() => setActiveTabKeyValue(index)}
 			>

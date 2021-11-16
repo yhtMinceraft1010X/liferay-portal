@@ -217,7 +217,7 @@ AUI.add(
 				_onEmailKeypress(event) {
 					var instance = this;
 
-					if (event.keyCode == KEY_ENTER) {
+					if (Number(event.keyCode) === KEY_ENTER) {
 						instance._addMemberEmail();
 
 						event.preventDefault();
@@ -308,8 +308,8 @@ AUI.add(
 
 					var buffer = [];
 
-					if (results.length == 0) {
-						if (options.start == 0) {
+					if (results.length === 0) {
+						if (Number(options.start) === 0) {
 							var noUsersMessage = A.Lang.sub(
 								TPL_NO_USERS_MESSAGE,
 								{

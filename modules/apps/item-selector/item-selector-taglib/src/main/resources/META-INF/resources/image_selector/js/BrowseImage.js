@@ -59,7 +59,7 @@ const BrowseImage = ({
 		<div className="file-validation-info">
 			{validExtensions && <strong>{validExtensions}</strong>}
 
-			{maxFileSize != 0 && (
+			{Number(maxFileSize) !== 0 && (
 				<span
 					className="pl-1"
 					dangerouslySetInnerHTML={{

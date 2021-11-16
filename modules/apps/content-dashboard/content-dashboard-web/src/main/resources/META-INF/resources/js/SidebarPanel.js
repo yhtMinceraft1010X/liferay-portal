@@ -161,7 +161,7 @@ const SidebarPanel = React.forwardRef(
 						</ClayAlert>
 					</>
 				) : (
-					state?.data && <CurrentView.current {...state.data} />
+					state?.data && <CurrentViewRef.current {...state.data} />
 				)}
 			</Sidebar>
 		);

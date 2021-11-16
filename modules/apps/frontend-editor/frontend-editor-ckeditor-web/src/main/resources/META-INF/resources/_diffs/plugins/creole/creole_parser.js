@@ -126,7 +126,7 @@
 					) {
 						best = matches[i];
 						rule = this.children[i];
-						if (best.index == 0) {
+						if (best.index === 0) {
 							break;
 						}
 					}
@@ -190,7 +190,7 @@
 			if (this.attrs) {
 				for (var i in this.attrs) {
 					target.setAttribute(i, this.attrs[i]);
-					if (options && options.forIE && i == 'class') {
+					if (options && options.forIE && i === 'class') {
 						target.className = this.attrs[i];
 					}
 				}

@@ -27,7 +27,7 @@ YUI.add(
 
 			return parseFloat(
 				str.replace(REGEX_VERSION_DOT, () => {
-					return count++ == 1 ? '' : '.';
+					return count++ === 1 ? '' : '.';
 				})
 			);
 		};
@@ -88,9 +88,9 @@ YUI.add(
 			safari: 0,
 		};
 
-		UAX.mac = OS == 'macintosh';
-		UAX.rhino = OS == 'rhino';
-		UAX.win = OS == 'windows';
+		UAX.mac = OS === 'macintosh';
+		UAX.rhino = OS === 'rhino';
+		UAX.win = OS === 'windows';
 
 		var BrowserSelectors = {
 			getSelectors() {

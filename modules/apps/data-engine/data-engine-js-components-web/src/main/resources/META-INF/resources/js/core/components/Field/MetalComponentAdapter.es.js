@@ -31,13 +31,13 @@ class NoRender extends React.Component {
 	}
 }
 
-export const MetalComponentAdapter = ({
+export function MetalComponentAdapter({
 	onBlur,
 	onChange,
 	onFocus,
 	type,
 	...field
-}) => {
+}) {
 	const {activePage, editable, pageIndex, spritemap} = usePage();
 	const dispatch = useForm();
 
@@ -94,4 +94,4 @@ export const MetalComponentAdapter = ({
 	}, [activePage, editable, onChange, pageIndex, spritemap, field]);
 
 	return <NoRender forwardRef={containerRef} />;
-};
+}

@@ -62,7 +62,7 @@ const CTEditComment = ({handleCancel, handleSave, initialValue}) => {
 	);
 };
 
-export default ({
+export default function ChangeTrackingComments({
 	ctEntryId,
 	currentUserId,
 	deleteCommentURL,
@@ -73,7 +73,7 @@ export default ({
 	spritemap,
 	updateCache,
 	updateCommentURL,
-}) => {
+}) {
 	const [deleting, setDeleting] = useState(0);
 	const [editing, setEditing] = useState(0);
 	const [fetchData, setFetchData] = useState(null);
@@ -550,4 +550,4 @@ export default ({
 			</div>
 		</div>
 	);
-};
+}

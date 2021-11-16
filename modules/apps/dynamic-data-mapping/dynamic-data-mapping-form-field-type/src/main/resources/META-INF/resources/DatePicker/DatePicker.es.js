@@ -55,11 +55,11 @@ const getDateMask = (dateDelimiter, dateFormat) => {
 const getDelimiter = (dateFormat) => {
 	let dateDelimiter = '/';
 
-	if (dateFormat.indexOf('.') != -1) {
+	if (dateFormat.indexOf('.') !== -1) {
 		dateDelimiter = '.';
 	}
 
-	if (dateFormat.indexOf('-') != -1) {
+	if (dateFormat.indexOf('-') !== -1) {
 		dateDelimiter = '-';
 	}
 
@@ -374,7 +374,9 @@ const Main = ({
 			defaultLanguageId={defaultLanguageId}
 			disabled={readOnly}
 			formatInEditingLocale={
-				localizedValue && localizedValue[locale] != undefined
+				localizedValue &&
+				localizedValue[locale] !== undefined &&
+				localizedValue[locale] !== null
 			}
 			locale={locale}
 			localizedValue={localizedValue}

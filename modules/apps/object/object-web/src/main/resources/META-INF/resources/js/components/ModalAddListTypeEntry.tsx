@@ -186,8 +186,8 @@ type TLocale = {
 };
 
 type TInitialValues = {
-	name_i18n: TTranslations;
 	key?: string;
+	name_i18n: TTranslations;
 };
 
 const ModalWithProvider: React.FC<IProps> = ({apiURL}) => {

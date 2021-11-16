@@ -138,7 +138,7 @@ const ManageCollaborators = ({
 
 		setCurrentCollaborators(
 			currentCollaborators.filter(
-				(collaborator) => collaborator.userId != collaboratorId
+				(collaborator) => collaborator.userId !== collaboratorId
 			)
 		);
 

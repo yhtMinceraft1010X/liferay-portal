@@ -136,7 +136,10 @@ export default withRouter(
 							<div className="c-ml-4 flex-column">
 								<div>
 									<span className="small">
-										{Liferay.Language.get('rank')}:{' '}
+										{Liferay.Language.get('rank') +
+											':' +
+											' '}
+
 										{userInfo.rank}
 									</span>
 								</div>
@@ -149,7 +152,10 @@ export default withRouter(
 
 								<div>
 									<span className="small">
-										{Liferay.Language.get('posts')}:{' '}
+										{Liferay.Language.get('posts') +
+											':' +
+											' '}
+
 										{userInfo.postsNumber}
 									</span>
 								</div>

@@ -18,7 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../AppContext.es';
 
-export default ({tagsChange, tagsLoaded, tags = []}) => {
+export default function TagSelector({tagsChange, tagsLoaded, tags = []}) {
 	const context = useContext(AppContext);
 
 	const [error, setError] = useState(false);
@@ -83,4 +83,4 @@ export default ({tagsChange, tagsLoaded, tags = []}) => {
 			</ClayForm.Group>
 		</>
 	);
-};
+}

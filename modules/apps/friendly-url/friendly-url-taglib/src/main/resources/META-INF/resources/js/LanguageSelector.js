@@ -68,7 +68,9 @@ function LanguageSelector({
 							<span className="inline-item inline-item-before">
 								<ClayIcon symbol={icon} />
 							</span>
-							{text}{' '}
+
+							{text + ' '}
+
 							{defaultLanguageId === id && (
 								<ClayLabel displayType="info">
 									{Liferay.Language.get('default')}

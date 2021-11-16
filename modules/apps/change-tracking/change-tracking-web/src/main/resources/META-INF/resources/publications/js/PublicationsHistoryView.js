@@ -323,7 +323,12 @@ const PublicationsHistoryTableRow = ({entry, spritemap, userInfo}) => {
 	);
 };
 
-export default ({displayStyle, entries, spritemap, userInfo}) => {
+export default function PublicationsHistoryView({
+	displayStyle,
+	entries,
+	spritemap,
+	userInfo,
+}) {
 	if (displayStyle === 'list') {
 		const rows = [];
 
@@ -398,4 +403,4 @@ export default ({displayStyle, entries, spritemap, userInfo}) => {
 	}
 
 	return <ClayList className="publications-table">{items}</ClayList>;
-};
+}

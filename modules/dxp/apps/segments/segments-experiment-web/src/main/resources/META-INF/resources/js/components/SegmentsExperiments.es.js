@@ -111,14 +111,14 @@ function SegmentsExperiments({
 
 			<ClayTabs justified={true}>
 				<ClayTabs.Item
-					active={activeTab == TABS_STATES.ACTIVE}
+					active={activeTab === TABS_STATES.ACTIVE}
 					onClick={() => setActiveTab(TABS_STATES.ACTIVE)}
 				>
 					{Liferay.Language.get('active-test')}
 				</ClayTabs.Item>
 
 				<ClayTabs.Item
-					active={activeTab == TABS_STATES.HISTORY}
+					active={activeTab === TABS_STATES.HISTORY}
 					onClick={() => setActiveTab(TABS_STATES.HISTORY)}
 				>
 					{Liferay.Language.get('history')}

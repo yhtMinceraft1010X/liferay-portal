@@ -23,7 +23,7 @@ import lang from '../utils/lang.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Modal from './Modal.es';
 
-export default ({comment, commentChange, editable = true}) => {
+export default function Comment({comment, commentChange, editable = true}) {
 	const [dateModified, setDateModified] = useState('');
 	const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
 
@@ -103,4 +103,4 @@ export default ({comment, commentChange, editable = true}) => {
 			</div>
 		</div>
 	);
-};
+}

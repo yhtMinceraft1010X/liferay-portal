@@ -30,7 +30,7 @@ import {useId} from '../utils/useId';
 
 const NO_ITEM_LABEL = `-- ${Liferay.Language.get('none')} --`;
 
-export const DisplayPagePreviewItemSelector = ({dark = false}) => {
+export function DisplayPagePreviewItemSelector({dark = false}) {
 	const [active, setActive] = useState(false);
 	const previewItem = useDisplayPagePreviewItem();
 	const recentPreviewItemList = useDisplayPageRecentPreviewItemList();
@@ -137,7 +137,7 @@ export const DisplayPagePreviewItemSelector = ({dark = false}) => {
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
-};
+}
 
 DisplayPagePreviewItemSelector.propTypes = {
 	dark: PropTypes.bool,

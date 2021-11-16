@@ -108,7 +108,7 @@ const Collaborators = ({
 								<div
 									className="lfr-portal-tooltip"
 									data-title={
-										moreCollaboratorsCount == 1
+										moreCollaboratorsCount === 1
 											? Liferay.Util.sub(
 													Liferay.Language.get(
 														'x-more-collaborator'

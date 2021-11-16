@@ -386,7 +386,7 @@ AUI.add(
 
 					return (
 						instance.get('recurrence') !== STR_BLANK ||
-						instance.get('calendarBookingId') !=
+						instance.get('calendarBookingId') !==
 							instance.get('recurringCalendarBookingId')
 					);
 				},

@@ -79,7 +79,7 @@ const ERROR_MESSAGES = {
 	noItems: Liferay.Language.get('this-collection-has-no-items'),
 };
 
-export const CollectionGeneralPanel = ({item}) => {
+export function CollectionGeneralPanel({item}) {
 	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
 	const [availableListStyles, setAvailableListStyles] = useState([
 		DEFAULT_LIST_STYLE,
@@ -549,7 +549,7 @@ export const CollectionGeneralPanel = ({item}) => {
 			) : null}
 		</>
 	);
-};
+}
 
 const ListItemStylesOptions = ({item, listItemStyles}) =>
 	listItemStyles.map((listItemStyle) =>

@@ -261,7 +261,7 @@
 		},
 
 		hasClass(attributeClass, target) {
-			return attributeClass && attributeClass.indexOf(target) != -1;
+			return attributeClass && attributeClass.indexOf(target) !== -1;
 		},
 
 		init(editor) {
@@ -424,7 +424,7 @@
 		},
 
 		replaceScriptContent(divNode, scriptContent) {
-			if (divNode.getChildCount() == 2) {
+			if (divNode.getChildCount() === 2) {
 				var scriptTmp = null;
 
 				divNode.getChild(1).remove();

@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
-export const TextField = ({field, onValueSelect, value}) => {
+export function TextField({field, onValueSelect, value}) {
 	const [errorMessage, setErrorMessage] = useState('');
 
 	const [nextValue, setNextValue] = useControlledState(value);
@@ -81,7 +81,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 			)}
 		</ClayForm.Group>
 	);
-};
+}
 
 function parseTypeOptions(typeOptions = {}) {
 	if (!typeOptions.validation) {

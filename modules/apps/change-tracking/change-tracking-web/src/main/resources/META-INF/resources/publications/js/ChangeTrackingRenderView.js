@@ -126,7 +126,7 @@ const LocalizationDropdown = ({
 	);
 };
 
-export default ({
+export default function ChangeTrackingRenderView({
 	childEntries,
 	dataURL,
 	defaultLocale,
@@ -141,7 +141,7 @@ export default ({
 	spritemap,
 	title,
 	updateCache,
-}) => {
+}) {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_MODIFIED = 'modified';
@@ -1408,4 +1408,4 @@ export default ({
 			<div className="sheet-section">{renderEntry()}</div>
 		</div>
 	);
-};
+}

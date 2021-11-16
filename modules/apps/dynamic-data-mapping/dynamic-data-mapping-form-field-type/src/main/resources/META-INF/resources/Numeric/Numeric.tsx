@@ -197,7 +197,7 @@ const Numeric: React.FC<IProps> = ({
 			? {
 					decimalSymbol: symbolsProp.decimalSymbol,
 					thousandsSeparator:
-						symbolsProp.thousandsSeparator == 'none'
+						symbolsProp.thousandsSeparator === 'none'
 							? null
 							: symbolsProp.thousandsSeparator,
 			  }

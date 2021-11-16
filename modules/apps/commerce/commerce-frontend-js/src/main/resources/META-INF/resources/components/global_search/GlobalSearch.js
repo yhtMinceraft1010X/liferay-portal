@@ -218,6 +218,7 @@ function GlobalSearch(props) {
 				ref={inputRef}
 				value={query}
 			/>
+
 			<ClayDropDown.Menu
 				active={active}
 				alignElementRef={inputRef}
