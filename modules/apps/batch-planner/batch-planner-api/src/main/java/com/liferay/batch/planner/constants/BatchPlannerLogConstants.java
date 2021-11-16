@@ -14,6 +14,8 @@
 
 package com.liferay.batch.planner.constants;
 
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+
 /**
  * @author Matija Petanjek
  */
@@ -26,5 +28,34 @@ public class BatchPlannerLogConstants {
 	public static final int STATUS_QUEUED = 1;
 
 	public static final int STATUS_RUNNING = 2;
+
+	public static int getStatus(
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus) {
+
+		if (batchEngineTaskExecuteStatus ==
+				BatchEngineTaskExecuteStatus.COMPLETED) {
+
+			return STATUS_COMPLETED;
+		}
+		else if (batchEngineTaskExecuteStatus ==
+					BatchEngineTaskExecuteStatus.FAILED) {
+
+			return STATUS_FAILED;
+		}
+		else if (batchEngineTaskExecuteStatus ==
+					BatchEngineTaskExecuteStatus.INITIAL) {
+
+			return STATUS_QUEUED;
+		}
+		else if (batchEngineTaskExecuteStatus ==
+					BatchEngineTaskExecuteStatus.STARTED) {
+
+			return STATUS_RUNNING;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid batch engine task execute status " +
+				batchEngineTaskExecuteStatus);
+	}
 
 }

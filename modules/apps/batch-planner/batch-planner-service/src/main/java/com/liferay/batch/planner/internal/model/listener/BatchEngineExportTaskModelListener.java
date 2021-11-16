@@ -16,7 +16,7 @@ package com.liferay.batch.planner.internal.model.listener;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
-import com.liferay.batch.planner.internal.util.BatchPlannerLogStatusUtil;
+import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -70,7 +70,7 @@ public class BatchEngineExportTaskModelListener
 		}
 
 		batchPlannerLog.setStatus(
-			BatchPlannerLogStatusUtil.getStatus(
+			BatchPlannerLogConstants.getStatus(
 				BatchEngineTaskExecuteStatus.valueOf(
 					batchEngineExportTask.getExecuteStatus())));
 
