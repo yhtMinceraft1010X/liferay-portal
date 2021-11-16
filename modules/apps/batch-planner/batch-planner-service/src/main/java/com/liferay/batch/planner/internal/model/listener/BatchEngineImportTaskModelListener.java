@@ -61,8 +61,9 @@ public class BatchEngineImportTaskModelListener
 		if (batchPlannerLog == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No batch planner log found for import task with ID: " +
-						batchEngineImportTask.getBatchEngineImportTaskId());
+					"No batch planner log found for batch engine import task " +
+						"ID " +
+							batchEngineImportTask.getBatchEngineImportTaskId());
 			}
 
 			return;

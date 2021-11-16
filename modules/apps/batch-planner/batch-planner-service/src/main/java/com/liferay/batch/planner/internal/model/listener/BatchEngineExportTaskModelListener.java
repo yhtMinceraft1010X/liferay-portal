@@ -61,8 +61,9 @@ public class BatchEngineExportTaskModelListener
 		if (batchPlannerLog == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No batch planner log found for export task with ID: " +
-						batchEngineExportTask.getBatchEngineExportTaskId());
+					"No batch planner log found for batch engine export task " +
+						"ID " +
+							batchEngineExportTask.getBatchEngineExportTaskId());
 			}
 
 			return;
