@@ -30,6 +30,10 @@
 		<td>//input[contains(@id,'listObjectLayoutName')]</td>
 		<td></td>
 	</tr>
+		<td>OBJECT_LAYOUTS_TAB</td>
+		<td>//a[contains(text(), 'Layouts')]</td>
+		<td></td>
+	</tr>
 	<tr>
 		<td>SAVE_CUSTOM_OBJECT</td>
 		<td>//button[contains(text(),'Save')]</td>

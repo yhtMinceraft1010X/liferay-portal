@@ -571,12 +571,35 @@ definition {
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteLayout {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141501 CanDeleteLayout pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject"
+
+		);
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToLayoutsTab();
+		
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		ObjectAdmin.assertObjectLayoutNotPresent(layoutLabel = "Layout Name");
+
+
+
+
+
 
 	}
 
