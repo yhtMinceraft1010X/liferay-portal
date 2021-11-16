@@ -202,7 +202,7 @@
 	</tr>
 	<tr>
 		<td>RELATIONSHIPS_TYPE_FORM_REQUIRED</td>
-		<td>//div[contains(@class, 'form-control')]/../following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//input[contains(@class, 'form-control')]/../following-sibling::div//span[contains(text(),'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>
