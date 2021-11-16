@@ -173,13 +173,13 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 
 		String url = _portal.getLayoutFullURL(layout, themeDisplay);
 
-		url = _http.addParameter(url, "p_l_mode", Constants.EDIT);
-
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
-		return _http.addParameter(url, "p_l_back_url", portletURL.toString());
+		url = _http.addParameter(url, "p_l_back_url", portletURL.toString());
+
+		return _http.addParameter(url, "p_l_mode", Constants.EDIT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
