@@ -659,10 +659,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-			commerceOrderItem.setDeliveryGroup(deliveryGroup);
-			commerceOrderItem.setPrintedNote(printedNote);
-			commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
-			commerceOrderItem.setShippingAddressId(shippingAddressId);
+		commerceOrderItem.setDeliveryGroup(deliveryGroup);
+		commerceOrderItem.setPrintedNote(printedNote);
+		commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
