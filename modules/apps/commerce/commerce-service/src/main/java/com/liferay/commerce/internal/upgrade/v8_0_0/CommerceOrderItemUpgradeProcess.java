@@ -50,12 +50,9 @@ public class CommerceOrderItemUpgradeProcess
 			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"decimalQuantity", "DECIMAL(30, 16) null");
 
-		String commerceOrderItemCompanyIdSQL =
-			"select distinct companyId from CommerceOrderItem";
-
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				commerceOrderItemCompanyIdSQL)) {
+				"select distinct companyId from CommerceOrderItem")) {
 
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong("companyId");
