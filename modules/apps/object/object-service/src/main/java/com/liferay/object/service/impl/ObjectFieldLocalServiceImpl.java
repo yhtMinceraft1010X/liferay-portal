@@ -369,7 +369,7 @@ public class ObjectFieldLocalServiceImpl
 
 	private void _validateRelationshipType(
 			ObjectField objectField, String name, String type)
-		throws ObjectFieldRelationshipTypeException {
+		throws PortalException {
 
 		if (Validator.isNotNull(objectField.getRelationshipType()) &&
 			(!Objects.equals(objectField.getName(), name) ||
