@@ -34,6 +34,7 @@ class D3Handler extends DiagramZoomHandler {
 		this._isAdmin = isAdmin;
 		this._updateLabels = updateLabels;
 		this._pinBackground = null;
+		this._pinsCSSSelectors = pinsCSSSelectors;
 		this._updateZoomState = updateZoomState;
 		this._zoomWrapper = zoomWrapper;
 		this._handleZoom = this._handleZoom.bind(this);
@@ -41,17 +42,9 @@ class D3Handler extends DiagramZoomHandler {
 
 		this._printSVGImage().then(() => {
 			this.rendered = true;
-			const sequences = this._pins.map((pin) => pin.sequence);
 
-			this._texts = Array.from(
-				this._diagramWrapper.querySelectorAll(
-					pinsCSSSelectors.join(',')
-				)
-			).filter((text) => isAdmin || sequences.includes(text.textContent));
-
-			this._updatePinsState();
 			this._addZoom();
-			this._updateLabels(this._texts);
+			this._updatePinsState();
 		});
 	}
 
@@ -68,22 +61,35 @@ class D3Handler extends DiagramZoomHandler {
 	}
 
 	_updatePinsState() {
-		if (this._pins) {
-			const sequences = new Set(this._pins.map((pin) => pin.sequence));
+		const sequences = new Set(
+			this._pins ? this._pins.map((pin) => pin.sequence) : []
+		);
 
-			this._texts.forEach((text) => {
+		const labels = Array.from(
+			this._diagramWrapper.querySelectorAll(
+				this._pinsCSSSelectors.join(',')
+			)
+		).filter((text) => {
+			const pinSaved = sequences.has(text.textContent);
+			const isPin = this._isAdmin || pinSaved;
+
+			if (this._isAdmin || pinSaved) {
 				text.classList.add('pin');
+			}
 
-				if (sequences.has(text.textContent)) {
-					text.classList.add('mapped');
-					text._mapped = true;
-				}
-				else {
-					text.classList.remove('mapped');
-					text._mapped = false;
-				}
-			});
-		}
+			if (pinSaved) {
+				text.classList.add('mapped');
+				text._mapped = true;
+			}
+			else {
+				text.classList.remove('mapped');
+				text._mapped = false;
+			}
+
+			return isPin;
+		});
+
+		this._updateLabels(labels);
 	}
 
 	updatePins(pins) {

@@ -25,7 +25,7 @@
 		},
 		"testPathIgnorePatterns": [
 			"<rootDir>/dev/",
-			"<rootDir>/test/testUtilities.js"
+			"<rootDir>/test/utilities.js"
 		]
 	},
 	"name": "@liferay/commerce-shop-by-diagram-web",

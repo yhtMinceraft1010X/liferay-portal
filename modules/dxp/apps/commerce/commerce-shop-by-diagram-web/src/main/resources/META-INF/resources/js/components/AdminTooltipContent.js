@@ -196,7 +196,7 @@ function AdminTooltipContent({
 	const disabled = !mappedProduct || !sequence || loading;
 
 	return (
-		<ClayForm onSubmit={_handleSubmit}>
+		<ClayForm className="diagram-admin-tooltip" onSubmit={_handleSubmit}>
 			<ClayForm.Group>
 				<label htmlFor="sequenceInput">
 					{Liferay.Language.get('position')}

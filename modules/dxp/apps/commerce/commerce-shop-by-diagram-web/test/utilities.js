@@ -133,18 +133,92 @@ function getSkus() {
 	};
 }
 
+export const productData = {
+	id: 12345,
+	name: 'Brake Fluid',
+	productConfiguration: {
+		allowBackOrder: true,
+		allowedOrderQuantities: [],
+		inventoryEngine: '',
+		maxOrderQuantity: 10000,
+		minOrderQuantity: 1,
+		multipleOrderQuantity: 1,
+	},
+	productId: 12346,
+	productOptions: [
+		{
+			description: '',
+			fieldType: 'select',
+			id: 42591,
+			key: 'package-quantity',
+			name: 'Package Quantity',
+			optionId: 42551,
+			productOptionValues: [
+				{
+					id: 42592,
+					key: '12',
+					name: '12',
+					priority: 1.0,
+				},
+				{
+					id: 42593,
+					key: '48',
+					name: '48',
+					priority: 3.0,
+				},
+				{
+					id: 42594,
+					key: '112',
+					name: '112',
+					priority: 4.0,
+				},
+			],
+		},
+	],
+	skus: [
+		{
+			availability: {
+				label: 'available',
+				label_i18n: 'Available',
+				stockQuantity: 240,
+			},
+			id: 42605,
+			options: {
+				42591: '42594',
+			},
+			price: {
+				currency: 'US Dollar',
+				price: 80.0,
+				priceFormatted: '$ 80.00',
+				promoPrice: 72.0,
+				promoPriceFormatted: '$ 72.00',
+			},
+			sku: 'MIN93016C',
+		},
+	],
+	slug: 'brake-fluid',
+	urlImage: '/product-image-url/',
+	urls: {
+		en_US: 'brake-fluid',
+	},
+};
+
 export function mockCommonEndpoints() {
-	const accountsEndpointRegexp = new RegExp(
+	const accountsEndpointRegExp = new RegExp(
 		`${PINS_ENDPOINT}/products/${defaultDiagramProps.productId}/pins`
 	);
-	const skusEndpointRegexp = new RegExp(
+	const skusEndpointRegExp = new RegExp(
 		`/o/headless-commerce-admin-catalog/v1.0/skus`
 	);
-	const diagramsEndpointRegexp = new RegExp(
+	const diagramsEndpointRegExp = new RegExp(
 		`/o/headless-commerce-admin-catalog/v1.0/products`
 	);
+	const deliveryCatalogEndpointRegExp = new RegExp(
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${defaultDiagramProps.channelId}/products`
+	);
 
-	fetchMock.mock(accountsEndpointRegexp, () => getPins());
-	fetchMock.mock(skusEndpointRegexp, () => getSkus());
-	fetchMock.mock(diagramsEndpointRegexp, () => getDiagrams());
+	fetchMock.mock(accountsEndpointRegExp, () => getPins());
+	fetchMock.mock(skusEndpointRegExp, () => getSkus());
+	fetchMock.mock(diagramsEndpointRegExp, () => getDiagrams());
+	fetchMock.mock(deliveryCatalogEndpointRegExp, () => productData);
 }

@@ -28,7 +28,8 @@ import {
 	load,
 	mockCommonEndpoints,
 	pinsData,
-} from '../../testUtilities';
+	productData,
+} from '../../utilities';
 
 describe('Diagram', () => {
 	beforeEach(() => {
@@ -167,6 +168,33 @@ describe('Diagram', () => {
 			pinsNodes.forEach((pin) => {
 				expect(sequences).toContain(pin.textContent);
 			});
+		});
+
+		it('must show consistent data within the tooltip', async () => {
+			const pinsNodes = await waitForElement(async () =>
+				diagram.getAllByRole('pin')
+			);
+
+			fireEvent.click(pinsNodes[0]);
+
+			await waitForElement(async () =>
+				document.querySelector('.diagram-storefront-tooltip')
+			);
+
+			const tooltip = document.querySelector(
+				'.diagram-storefront-tooltip'
+			);
+
+			const image = tooltip.querySelector('.sticker-img');
+			const link = tooltip.querySelector('a');
+			const title = tooltip.querySelector('h4');
+
+			expect(image.alt).toBe(productData.name);
+			expect(image.src).toContain(productData.urlImage);
+			expect(link.href).toContain(
+				productData.urls[Liferay.ThemeDisplay.getLanguageId()]
+			);
+			expect(title.textContent).toBe(productData.name);
 		});
 	});
 });

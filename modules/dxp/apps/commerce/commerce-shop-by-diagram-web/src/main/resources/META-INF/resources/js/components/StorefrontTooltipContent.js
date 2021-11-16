@@ -34,7 +34,7 @@ function SkuContent({
 	sku,
 }) {
 	return (
-		<div className="row">
+		<div className="diagram-storefront-tooltip row">
 			{product.urlImage && (
 				<div className="col-auto">
 					<ClaySticker className="fill-cover" size="xl">
