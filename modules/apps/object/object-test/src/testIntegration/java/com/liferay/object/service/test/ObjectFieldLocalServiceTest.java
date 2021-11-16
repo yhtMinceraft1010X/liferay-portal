@@ -614,7 +614,7 @@ public class ObjectFieldLocalServiceTest {
 					objectFieldRelationshipTypeException) {
 
 			Assert.assertEquals(
-				"Cannot change name and type of object relationship field",
+				"Object field relationship name and type cannot be changed",
 				objectFieldRelationshipTypeException.getMessage());
 		}
 		finally {

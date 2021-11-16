@@ -233,9 +233,20 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
-		_validateRelationshipType(objectField, name, type);
-		_validateName(objectFieldId, objectDefinition, name);
-		validateType(type);
+
+		if (Validator.isNotNull(objectField.getRelationshipType())) {
+			if (!Objects.equals(objectField.getName(), name) ||
+				!Objects.equals(objectField.getType(), type)) {
+
+				throw new ObjectFieldRelationshipTypeException(
+					"Object field relationship name and type cannot be " +
+						"changed");
+			}
+		}
+		else {
+			_validateName(objectFieldId, objectDefinition, name);
+			validateType(type);
+		}
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setIndexed(indexed);
@@ -364,19 +375,6 @@ public class ObjectFieldLocalServiceImpl
 			(objectField.getObjectFieldId() != objectFieldId)) {
 
 			throw new ObjectFieldNameException.MustNotBeDuplicate(name);
-		}
-	}
-
-	private void _validateRelationshipType(
-			ObjectField objectField, String name, String type)
-		throws PortalException {
-
-		if (Validator.isNotNull(objectField.getRelationshipType()) &&
-			(!Objects.equals(objectField.getName(), name) ||
-			 !Objects.equals(objectField.getType(), type))) {
-
-			throw new ObjectFieldRelationshipTypeException(
-				"Cannot change name and type of object relationship field");
 		}
 	}
 
