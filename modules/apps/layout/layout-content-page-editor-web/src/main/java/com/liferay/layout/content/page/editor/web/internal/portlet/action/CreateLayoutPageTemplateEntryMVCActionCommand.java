@@ -72,18 +72,15 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId");
-		String name = ParamUtil.getString(actionRequest, "name");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsEntryConstants.ID_DEFAULT);
+		String name = ParamUtil.getString(actionRequest, "name");
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPageTemplateEntry.class.getName(), actionRequest);
-
-		Layout sourceLayout = _layoutLocalService.getLayout(
-			themeDisplay.getPlid());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -91,8 +88,9 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.
 					createLayoutPageTemplateEntryFromLayout(
-						segmentsExperienceId, sourceLayout, name,
-						layoutPageTemplateCollectionId, serviceContext);
+						segmentsExperienceId,
+						_layoutLocalService.getLayout(themeDisplay.getPlid()),
+						name, layoutPageTemplateCollectionId, serviceContext);
 
 			Layout layout = _layoutLocalService.getLayout(
 				layoutPageTemplateEntry.getPlid());
