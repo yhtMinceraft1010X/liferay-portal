@@ -49,7 +49,24 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 	public void testPostSXPBlueprint() throws Exception {
 		super.testPostSXPBlueprint();
 
-		_testPostSXPBlueprintMissingI18N();
+		// Missing i18n
+
+		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toJSONString());
+
+		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
+			sxpBlueprint);
+
+		sxpBlueprint.setId(postSXPBlueprint.getId());
+
+		Assert.assertEquals(
+			sxpBlueprint.toString(), postSXPBlueprint.toString());
+
+		assertValid(postSXPBlueprint);
 	}
 
 	@Override
@@ -121,25 +138,6 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 		throws Exception {
 
 		return sxpBlueprintResource.postSXPBlueprint(sxpBlueprint);
-	}
-
-	private void _testPostSXPBlueprintMissingI18N() throws Exception {
-		SXPBlueprint sxpBlueprint = SXPBlueprint.toDTO(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toJSONString());
-
-		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
-			sxpBlueprint);
-
-		sxpBlueprint.setId(postSXPBlueprint.getId());
-
-		Assert.assertEquals(
-			sxpBlueprint.toString(), postSXPBlueprint.toString());
-
-		assertValid(postSXPBlueprint);
 	}
 
 }

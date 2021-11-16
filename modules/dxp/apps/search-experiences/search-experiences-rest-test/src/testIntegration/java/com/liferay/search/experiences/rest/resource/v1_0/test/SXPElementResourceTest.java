@@ -49,7 +49,26 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	public void testPostSXPElement() throws Exception {
 		super.testPostSXPElement();
 
-		_testPostSXPElementMissingI18N();
+		// Missing i18n
+
+		SXPElement sxpElement = SXPElement.toDTO(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toJSONString());
+
+		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
+			sxpElement);
+
+		sxpElement.setId(postSXPElement.getId());
+
+		sxpElement.setReadOnly(false);
+		sxpElement.setType(0);
+
+		Assert.assertEquals(sxpElement.toString(), postSXPElement.toString());
+
+		assertValid(postSXPElement);
 	}
 
 	@Override
@@ -112,27 +131,6 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 
 	private SXPElement _addSXPElement(SXPElement sxpElement) throws Exception {
 		return sxpElementResource.postSXPElement(sxpElement);
-	}
-
-	private void _testPostSXPElementMissingI18N() throws Exception {
-		SXPElement sxpElement = SXPElement.toDTO(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toJSONString());
-
-		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
-			sxpElement);
-
-		sxpElement.setId(postSXPElement.getId());
-
-		sxpElement.setReadOnly(false);
-		sxpElement.setType(0);
-
-		Assert.assertEquals(sxpElement.toString(), postSXPElement.toString());
-
-		assertValid(postSXPElement);
 	}
 
 }
