@@ -70,6 +70,7 @@ export const MultiStep = ({activePage, editable, pages}) => {
 						}}
 					>
 						<div className="multi-step-divider"></div>
+
 						<div className="multi-step-indicator">
 							<div className="multi-step-indicator-label">
 								{page.paginationItemRenderer ===

@@ -41,6 +41,7 @@ export const ImageSelectorDescription = ({
 			<label htmlFor={imageDescriptionInputId}>
 				{Liferay.Language.get('image-description')}
 			</label>
+
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
@@ -53,6 +54,7 @@ export const ImageSelectorDescription = ({
 						type="text"
 					/>
 				</ClayInput.GroupItem>
+
 				<ClayInput.GroupItem shrink>
 					<CurrentLanguageFlag />
 				</ClayInput.GroupItem>

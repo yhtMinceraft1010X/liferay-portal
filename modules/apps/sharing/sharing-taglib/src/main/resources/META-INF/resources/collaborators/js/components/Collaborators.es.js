@@ -102,6 +102,7 @@ const Collaborators = ({
 								</div>
 							</ClayLayout.ContentCol>
 						))}
+
 						{moreCollaboratorsCount > 0 && (
 							<ClayLayout.ContentCol className="collaborators-collaborator">
 								<div

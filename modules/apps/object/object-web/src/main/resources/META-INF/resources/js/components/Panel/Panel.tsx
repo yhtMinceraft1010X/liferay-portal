@@ -88,6 +88,7 @@ const PanelHeader: React.FC<IPanelHeaderProps> = ({
 					</span>
 				)}
 			</div>
+
 			<div className="object-admin-panel__header__content-right">
 				{contentRight && (
 					<span className="align-items-center d-flex ml-2">
@@ -127,6 +128,7 @@ const PanelSimpleBody: React.FC<IPanelSimpleBodyProps> = ({
 
 				<div>
 					<h5 className="object-admin-panel__title">{title}</h5>
+
 					<div>{children}</div>
 				</div>
 			</div>

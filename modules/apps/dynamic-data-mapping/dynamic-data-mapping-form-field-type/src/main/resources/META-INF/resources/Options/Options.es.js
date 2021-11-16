@@ -488,6 +488,7 @@ const Options = ({
 	return (
 		<div className="ddm-field-options-container">
 			<DragPreview component={Option}>{children}</DragPreview>
+
 			{fields.map((option, index) => (
 				<DnD
 					index={index}

@@ -493,6 +493,7 @@ export default withRouter(
 					allowCreateTopicInRootTopic={allowCreateTopicInRootTopic}
 					section={section}
 				/>
+
 				<div className="questions-container row">
 					<div className="c-mt-3 col col-xl-12">
 						<QuestionsNavigationBar />
@@ -597,6 +598,7 @@ export default withRouter(
 									/>
 								)}
 							</PaginatedList>
+
 							<ClayButton
 								className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
 								displayType="primary"
@@ -729,6 +731,7 @@ export default withRouter(
 												/>
 											</button>
 										)}
+
 										{!loading &&
 											((!!search && (
 												<ClayButtonWithIcon
@@ -779,6 +782,7 @@ export default withRouter(
 					{section && (
 						<Helmet>
 							<title>{section.title}</title>
+
 							<link
 								href={`${getFullPath('questions')}${
 									context.historyRouterBasePath ? '' : '#/'

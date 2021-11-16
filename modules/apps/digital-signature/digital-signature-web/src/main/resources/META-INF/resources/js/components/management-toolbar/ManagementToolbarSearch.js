@@ -60,6 +60,7 @@ export default ({
 							onClick={() => setShowMobile(false)}
 							symbol="times"
 						/>
+
 						<ClayButtonWithIcon
 							disabled={disabled}
 							displayType="unstyled"

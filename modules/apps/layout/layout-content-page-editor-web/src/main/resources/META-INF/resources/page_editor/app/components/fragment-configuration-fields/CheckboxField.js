@@ -56,6 +56,7 @@ export const CheckboxField = ({field, onValueSelect, value}) => {
 						onValueSelect(field.name, eventValue);
 					}}
 				/>
+
 				{field.responsive &&
 					selectedViewportSize !== VIEWPORT_SIZES.desktop && (
 						<ClayButtonWithIcon

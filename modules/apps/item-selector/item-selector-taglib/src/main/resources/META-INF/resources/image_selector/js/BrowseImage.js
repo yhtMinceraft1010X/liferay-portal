@@ -55,6 +55,7 @@ const BrowseImage = ({
 				Liferay.Language.get('drag-and-drop-to-upload')
 			)}
 		</div>
+
 		<div className="file-validation-info">
 			{validExtensions && <strong>{validExtensions}</strong>}
 

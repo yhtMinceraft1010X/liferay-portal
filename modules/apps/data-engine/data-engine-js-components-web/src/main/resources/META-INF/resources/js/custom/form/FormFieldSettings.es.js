@@ -120,6 +120,7 @@ export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
 				value={state}
 			>
 				<StateSync {...state} />
+
 				{children}
 			</FormProvider>
 		</ConfigProvider>

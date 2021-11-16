@@ -61,7 +61,9 @@ export default function DiagramBuilder() {
 						nodeTypes={nodeTypes}
 						onLoad={onLoad}
 					/>
+
 					<Controls showInteractive={false} />
+
 					<Background size={1} />
 				</ReactFlowProvider>
 			</div>

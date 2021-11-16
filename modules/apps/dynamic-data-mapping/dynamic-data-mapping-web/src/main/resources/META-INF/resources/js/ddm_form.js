@@ -570,7 +570,7 @@ AUI.add(
 					var instance = this;
 
 					var currentLocale = instance.get('displayLocale');
-					var displayLocale = event.item.getAttribute('data-value');
+					var displayLocale = event.item.dataset.value;
 
 					instance.updateLocalizationMap(currentLocale);
 
@@ -3894,9 +3894,7 @@ AUI.add(
 
 					var definition = instance.get('definition');
 
-					definition.defaultLanguageId = event.item.getAttribute(
-						'data-value'
-					);
+					definition.defaultLanguageId = event.item.dataset.value;
 
 					instance.set('definition', definition);
 				},

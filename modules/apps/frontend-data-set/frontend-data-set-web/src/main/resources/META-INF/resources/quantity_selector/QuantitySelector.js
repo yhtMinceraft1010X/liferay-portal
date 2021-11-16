@@ -142,6 +142,7 @@ function QuantitySelector({
 							</span>
 						</div>
 					)}
+
 					<div
 						className={classnames(
 							'input-group-item input-group-item-shrink',
@@ -164,6 +165,7 @@ function QuantitySelector({
 							value={currentQuantity}
 						/>
 					</div>
+
 					{(appendedIcon || appendedText) && (
 						<div className="input-group-append input-group-item input-group-item-shrink">
 							<span className="input-group-text">

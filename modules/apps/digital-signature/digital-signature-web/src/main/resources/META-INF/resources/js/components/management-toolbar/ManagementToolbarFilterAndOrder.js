@@ -200,6 +200,7 @@ export default ({columns = [], disabled, filters = []}) => {
 											symbol="caret-bottom"
 										/>
 									</span>
+
 									<span className="navbar-breakpoint-d-none">
 										<ClayIcon
 											className="inline-item inline-item-after"

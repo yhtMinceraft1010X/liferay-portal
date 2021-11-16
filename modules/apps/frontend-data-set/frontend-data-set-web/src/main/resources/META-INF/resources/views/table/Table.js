@@ -130,6 +130,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 							sorting={sorting}
 							updateSorting={updateSorting}
 						/>
+
 						<DndTable.Body>
 							{inlineAddingSettings && (
 								<TableInlineAddingRow
@@ -137,6 +138,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 									selectable={selectable}
 								/>
 							)}
+
 							{!!items.length &&
 								items.map((item) => {
 									const itemId = item[selectedItemsKey];
@@ -183,6 +185,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 														/>
 													</DndTable.Cell>
 												)}
+
 												{getItemFields(
 													item,
 													visibleFields,
@@ -190,6 +193,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 													itemsActions,
 													itemsChanges[itemId]
 												)}
+
 												<DndTable.Cell
 													className="item-actions"
 													columnName="item-actions"
@@ -208,6 +212,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 													)}
 												</DndTable.Cell>
 											</DndTable.Row>
+
 											{nestedItems &&
 												nestedItems.map(
 													(nestedItem, i) => (

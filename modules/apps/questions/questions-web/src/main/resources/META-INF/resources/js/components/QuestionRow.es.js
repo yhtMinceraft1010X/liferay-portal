@@ -132,6 +132,7 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 					)}
 				>
 					{question.headline}
+
 					{question.status && question.status !== 'approved' && (
 						<span className="c-ml-2">
 							<ClayLabel displayType="info">

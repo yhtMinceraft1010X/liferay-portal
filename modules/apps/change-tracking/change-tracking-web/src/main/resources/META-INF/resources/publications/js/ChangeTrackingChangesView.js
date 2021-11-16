@@ -183,9 +183,9 @@ export default ({
 
 	const params = new URLSearchParams(search);
 
-	const initialized = useRef(false);
+	const initializedRef = useRef(false);
 
-	if (!initialized.current) {
+	if (!initializedRef.current) {
 		if (
 			isWithinApp(params) &&
 			(!window.history.state || !window.history.state.senna)
@@ -198,7 +198,7 @@ export default ({
 			window.history.replaceState(state, document.title);
 		}
 
-		initialized.current = true;
+		initializedRef.current = true;
 	}
 
 	params.delete(PARAM_CHANGE_TYPES);
@@ -213,10 +213,10 @@ export default ({
 	params.delete(PARAM_TYPES);
 	params.delete(PARAM_USERS);
 
-	const basePath = useRef(pathname + '?' + params.toString());
+	const basePathRef = useRef(pathname + '?' + params.toString());
 
-	const commentsCache = useRef({});
-	const renderCache = useRef({});
+	const commentsCacheRef = useRef({});
+	const renderCacheRef = useRef({});
 
 	const getNodeId = useCallback(
 		(modelKey) => {
@@ -770,7 +770,7 @@ export default ({
 			}
 
 			let path =
-				basePath.current +
+				basePathRef.current +
 				'&' +
 				PARAM_COLUMN +
 				'=' +
@@ -1504,6 +1504,7 @@ export default ({
 				<span className="dropdown-item-indicator-text-end">
 					{label}
 				</span>
+
 				<span className="dropdown-item-indicator-end">
 					<ClayIcon spritemap={spritemap} symbol="angle-right" />
 				</span>
@@ -1544,6 +1545,7 @@ export default ({
 									type="text"
 									value={filterSearchTerms}
 								/>
+
 								<ClayInput.GroupInsetItem after tag="span">
 									{filterSearchTerms ? (
 										<ClayButton
@@ -1574,6 +1576,7 @@ export default ({
 						</ClayInput.Group>
 					</div>
 				)}
+
 				<div className="inline-scroller">
 					<ClayDropDown.ItemList>
 						{getFilterListFunction()}
@@ -1674,13 +1677,17 @@ export default ({
 							)}
 						</ClaySticker>
 					</ClayTable.Cell>
+
 					<ClayTable.Cell>{node.siteName}</ClayTable.Cell>
+
 					<ClayTable.Cell className="publication-name table-cell-expand">
 						{node.title}
 					</ClayTable.Cell>
+
 					<ClayTable.Cell className="table-cell-expand-smallest">
 						{node.changeTypeLabel}
 					</ClayTable.Cell>
+
 					<ClayTable.Cell className="table-cell-expand-smallest">
 						{Liferay.Util.sub(
 							Liferay.Language.get('x-ago'),
@@ -1847,6 +1854,7 @@ export default ({
 										symbol="caret-bottom"
 									/>
 								</span>
+
 								<span className="navbar-breakpoint-d-none">
 									<ClayIcon
 										spritemap={spritemap}
@@ -1871,37 +1879,44 @@ export default ({
 										Liferay.Language.get('change-types'),
 										MENU_CHANGE_TYPES
 									)}
+
 									{getDrilldownRootItem(
 										Liferay.Language.get('sites'),
 										MENU_SITES
 									)}
+
 									{getDrilldownRootItem(
 										Liferay.Language.get('types'),
 										MENU_TYPES
 									)}
+
 									{getDrilldownRootItem(
 										Liferay.Language.get('users'),
 										MENU_USERS
 									)}
 								</DrilldownMenu>
+
 								{getDrilldownMenu(
 									getChangeTypesFilterList,
 									Liferay.Language.get('change-types'),
 									false,
 									MENU_CHANGE_TYPES
 								)}
+
 								{getDrilldownMenu(
 									getSitesFilterList,
 									Liferay.Language.get('sites'),
 									true,
 									MENU_SITES
 								)}
+
 								{getDrilldownMenu(
 									getTypesFilterList,
 									Liferay.Language.get('types'),
 									true,
 									MENU_TYPES
 								)}
+
 								{getDrilldownMenu(
 									getUsersFilterList,
 									Liferay.Language.get('users'),
@@ -1920,6 +1935,7 @@ export default ({
 		return (
 			<ClayManagementToolbar>
 				{renderFilterDropdown()}
+
 				{renderState.id > 0 ? (
 					<ClayManagementToolbar.ItemList expand />
 				) : (
@@ -1949,6 +1965,7 @@ export default ({
 									type="text"
 									value={entrySearchTerms}
 								/>
+
 								<ClayInput.GroupInsetItem after tag="span">
 									<ClayButtonWithIcon
 										className="navbar-breakpoint-d-none"
@@ -1958,6 +1975,7 @@ export default ({
 										spritemap={spritemap}
 										symbol="times"
 									/>
+
 									<ClayButtonWithIcon
 										disabled={changes.length === 0}
 										displayType="unstyled"
@@ -1970,6 +1988,7 @@ export default ({
 						</ClayInput.Group>
 					</ClayManagementToolbar.Search>
 				)}
+
 				<ClayManagementToolbar.ItemList>
 					{renderState.id === 0 && (
 						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
@@ -1986,6 +2005,7 @@ export default ({
 							</ClayButton>
 						</ClayManagementToolbar.Item>
 					)}
+
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
 							disabled={changes.length === 0}
@@ -1996,6 +2016,7 @@ export default ({
 							toggled={renderState.showHideable}
 						/>
 					</ClayManagementToolbar.Item>
+
 					<ClayManagementToolbar.Item
 						data-tooltip-align="top"
 						title={Liferay.Language.get('comments')}
@@ -2193,6 +2214,7 @@ export default ({
 			return (
 				<div className="sheet taglib-empty-result-message">
 					<div className="taglib-empty-search-result-message-header" />
+
 					<div className="sheet-text text-center">
 						{Liferay.Language.get(
 							'there-are-no-changes-to-display-in-this-view'
@@ -2218,12 +2240,14 @@ export default ({
 									Liferay.Language.get('user')
 								)}
 							</ClayTable.Cell>
+
 							<ClayTable.Cell headingCell>
 								{getColumnHeader(
 									COLUMN_SITE,
 									Liferay.Language.get('site')
 								)}
 							</ClayTable.Cell>
+
 							<ClayTable.Cell
 								className="table-cell-expand"
 								headingCell
@@ -2233,6 +2257,7 @@ export default ({
 									Liferay.Language.get('title')
 								)}
 							</ClayTable.Cell>
+
 							<ClayTable.Cell
 								className="table-cell-expand-smallest"
 								headingCell
@@ -2242,6 +2267,7 @@ export default ({
 									Liferay.Language.get('change-type')
 								)}
 							</ClayTable.Cell>
+
 							<ClayTable.Cell
 								className="table-cell-expand-smallest"
 								headingCell
@@ -2253,6 +2279,7 @@ export default ({
 							</ClayTable.Cell>
 						</ClayTable.Row>
 					</ClayTable.Head>
+
 					<ClayTable.Body>
 						{getTableRows(filterDisplayNodes(renderState.changes))}
 					</ClayTable.Body>
@@ -2358,6 +2385,7 @@ export default ({
 
 					<div className="sheet taglib-empty-result-message">
 						<div className="taglib-empty-result-message-header" />
+
 						<div className="sheet-text text-center">
 							{Liferay.Language.get('no-changes-were-found')}
 						</div>
@@ -2400,7 +2428,7 @@ export default ({
 								}
 								discardURL={getDiscardURL(renderState.node)}
 								getCache={() =>
-									renderCache.current[
+									renderCacheRef.current[
 										renderState.node.modelClassNameId +
 											'-' +
 											renderState.node.modelClassPK
@@ -2418,7 +2446,7 @@ export default ({
 								spritemap={spritemap}
 								title={renderState.node.title}
 								updateCache={(data) => {
-									renderCache.current[
+									renderCacheRef.current[
 										renderState.node.modelClassNameId +
 											'-' +
 											renderState.node.modelClassPK
@@ -2426,6 +2454,7 @@ export default ({
 								}}
 							/>
 						)}
+
 						{renderTable()}
 					</div>
 				</div>
@@ -2473,7 +2502,7 @@ export default ({
 								currentUserId={currentUserId}
 								deleteCommentURL={deleteCTCommentURL}
 								getCache={() => {
-									return commentsCache.current['0'];
+									return commentsCacheRef.current['0'];
 								}}
 								getCommentsURL={getCTCommentsURL}
 								keyParam=""
@@ -2486,13 +2515,14 @@ export default ({
 
 									cacheData.updatedCommentId = null;
 
-									commentsCache.current['0'] = cacheData;
+									commentsCacheRef.current['0'] = cacheData;
 								}}
 								updateCommentURL={updateCTCommentURL}
 							/>
 						)}
 					</div>
 				</div>
+
 				<div
 					className="sidenav-content"
 					style={

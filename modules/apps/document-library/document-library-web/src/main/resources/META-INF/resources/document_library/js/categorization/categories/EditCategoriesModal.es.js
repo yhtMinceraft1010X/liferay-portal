@@ -332,6 +332,7 @@ const EditCategoriesModal = ({
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
+
 							<ClayButton
 								disabled={!isValid}
 								displayType="primary"

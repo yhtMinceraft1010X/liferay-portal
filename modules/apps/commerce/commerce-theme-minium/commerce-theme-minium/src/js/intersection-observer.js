@@ -97,7 +97,7 @@
 	function IntersectionObserver(callback, opt_options) {
 		var options = opt_options || {};
 
-		if (typeof callback != 'function') {
+		if (typeof callback !== 'function') {
 			throw new Error('callback must be a function');
 		}
 
@@ -225,7 +225,7 @@
 		}
 
 		return threshold.sort().filter((t, i, a) => {
-			if (typeof t != 'number' || isNaN(t) || t < 0 || t > 1) {
+			if (typeof t !== 'number' || isNaN(t) || t < 0 || t > 1) {
 				throw new Error(
 					'threshold must be a number between 0 and 1 inclusively'
 				);
@@ -647,10 +647,10 @@
 	 *     phase. Note: this only works in modern browsers.
 	 */
 	function addEvent(node, event, fn, opt_useCapture) {
-		if (typeof node.addEventListener == 'function') {
+		if (typeof node.addEventListener === 'function') {
 			node.addEventListener(event, fn, opt_useCapture || false);
 		}
-		else if (typeof node.attachEvent == 'function') {
+		else if (typeof node.attachEvent === 'function') {
 			node.attachEvent('on' + event, fn);
 		}
 	}
@@ -664,10 +664,10 @@
 	 *     flag set to true, it should be set to true here in order to remove it.
 	 */
 	function removeEvent(node, event, fn, opt_useCapture) {
-		if (typeof node.removeEventListener == 'function') {
+		if (typeof node.removeEventListener === 'function') {
 			node.removeEventListener(event, fn, opt_useCapture || false);
 		}
-		else if (typeof node.detatchEvent == 'function') {
+		else if (typeof node.detatchEvent === 'function') {
 			node.detatchEvent('on' + event, fn);
 		}
 	}

@@ -108,6 +108,7 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 				<ClayModal.Header>
 					{Liferay.Language.get('new-item')}
 				</ClayModal.Header>
+
 				<ClayModal.Body>
 					{error && (
 						<ClayAlert displayType="danger">{error}</ClayAlert>
@@ -147,6 +148,7 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 						}
 					/>
 				</ClayModal.Body>
+
 				<ClayModal.Footer
 					last={
 						<ClayButton.Group key={1} spaced>

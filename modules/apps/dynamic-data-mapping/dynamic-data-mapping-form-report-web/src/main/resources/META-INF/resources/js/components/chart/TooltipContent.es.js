@@ -72,8 +72,10 @@ export default ({
 										)}
 									</svg>
 								) : null}
+
 								<div id="tooltip-label">
 									{`${dataKey}: ${value} `}
+
 									{value == 1
 										? `${Liferay.Language.get(
 												'entry'
@@ -81,6 +83,7 @@ export default ({
 										: `${Liferay.Language.get(
 												'entries'
 										  ).toLowerCase()} `}
+
 									<b>
 										({roundPercentage(getPercentage(value))}
 										)

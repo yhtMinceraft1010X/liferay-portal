@@ -138,6 +138,7 @@ export const RuleBuilder = ({history, location}) => {
 				portletNamespace={portletNamespace}
 				variant="rules"
 			/>
+
 			<Switch>
 				<Route exact path="/rules">
 					<RuleList
@@ -161,6 +162,7 @@ export const RuleBuilder = ({history, location}) => {
 						rules={rules}
 					/>
 				</Route>
+
 				<Route path="/rules/editor">
 					<RuleEditor
 						dataProvider={dataProvider}

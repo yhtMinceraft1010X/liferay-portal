@@ -63,6 +63,7 @@ export const SelectField = ({
 	return (
 		<ClayForm.Group className={className} small>
 			<label htmlFor={inputId}>{field.label}</label>
+
 			{multiSelect ? (
 				<MultiSelect
 					disabled={disabled}

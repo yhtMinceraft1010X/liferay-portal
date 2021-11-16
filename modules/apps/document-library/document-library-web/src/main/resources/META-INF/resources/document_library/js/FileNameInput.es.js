@@ -33,6 +33,7 @@ const Feedback = ({message, warning}) => (
 	<ClayForm.FeedbackGroup>
 		<ClayForm.FeedbackItem>
 			{warning && <ClayIcon className="mr-1" symbol="warning-full" />}
+
 			{message}
 		</ClayForm.FeedbackItem>
 	</ClayForm.FeedbackGroup>
@@ -74,6 +75,7 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 					message={Liferay.Language.get('this-field-is-required')}
 				/>
 			)}
+
 			{showWarning && (
 				<Feedback
 					message={Liferay.Language.get(

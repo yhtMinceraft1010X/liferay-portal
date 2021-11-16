@@ -48,26 +48,28 @@ export const StoreAPIContextProvider = ({
 }) => {
 	const state = getState();
 
-	const subscribers = useRef([]);
+	const subscribersRef = useRef([]);
 
 	const subscribe = useCallback((subscriber) => {
-		subscribers.current = [...subscribers.current, subscriber];
+		subscribersRef.current = [...subscribersRef.current, subscriber];
 	}, []);
 
 	const unsubscribe = useCallback((subscriber) => {
-		subscribers.current = subscribers.current.filter(
+		subscribersRef.current = subscribersRef.current.filter(
 			(_subscriber) => _subscriber !== subscriber
 		);
 	}, []);
 
-	const subscriptionContext = useRef([subscribe, unsubscribe]);
+	const subscriptionContextRef = useRef([subscribe, unsubscribe]);
 
 	useEffect(() => {
-		subscribers.current.forEach((subscriber) => subscriber(state));
+		subscribersRef.current.forEach((subscriber) => subscriber(state));
 	}, [state]);
 
 	return (
-		<StoreSubscriptionContext.Provider value={subscriptionContext.current}>
+		<StoreSubscriptionContext.Provider
+			value={subscriptionContextRef.current}
+		>
 			<StoreDispatchContext.Provider value={dispatch}>
 				<StoreGetStateContext.Provider value={getState}>
 					{children}
@@ -166,7 +168,7 @@ function useThunk([state, dispatch]) {
 
 	stateRef.current = state;
 
-	const thunkDispatch = useRef((action) => {
+	const thunkDispatchRef = useRef((action) => {
 		if (isMounted()) {
 			if (typeof action === 'function') {
 				return action(
@@ -186,5 +188,5 @@ function useThunk([state, dispatch]) {
 		}
 	});
 
-	return [state, thunkDispatch.current];
+	return [state, thunkDispatchRef.current];
 }

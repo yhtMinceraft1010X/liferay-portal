@@ -223,6 +223,7 @@ export const Field = ({field, loc, ...otherProps}) => {
 						[field.type]
 					)}
 				</p>
+
 				{hasError.network && (
 					<ClayButton
 						className="ddm-field-renderer--button"

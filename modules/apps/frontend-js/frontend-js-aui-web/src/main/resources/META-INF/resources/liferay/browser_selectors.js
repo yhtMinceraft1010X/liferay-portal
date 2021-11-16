@@ -279,7 +279,10 @@ YUI.add(
 						behaviorObj.style.behavior = 'url(#default#VML)';
 
 						if (
-							!(behaviorObj && typeof behaviorObj.adj == 'object')
+							!(
+								behaviorObj &&
+								typeof behaviorObj.adj === 'object'
+							)
 						) {
 							vml = false;
 						}

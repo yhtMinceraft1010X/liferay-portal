@@ -179,6 +179,7 @@ const ModalContent = ({
 					onEditingLanguageIdChange={changeEditingLanguageId}
 					translatedLanguageIds={name}
 				/>
+
 				<ClayInput.Group className="pl-4 pr-4">
 					<ClayInput.GroupItem>
 						<ClayInput
@@ -224,6 +225,7 @@ const ModalContent = ({
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton
 							disabled={isFieldSetInvalid()}
 							onClick={onSave}

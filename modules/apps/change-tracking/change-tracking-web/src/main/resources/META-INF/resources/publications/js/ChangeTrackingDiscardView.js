@@ -126,8 +126,10 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 							)}
 						</ClaySticker>
 					</ClayTable.Cell>
+
 					<ClayTable.Cell>
 						<div className="publication-name">{entry.title}</div>
+
 						<div className="publication-description">
 							{entry.description}
 						</div>
@@ -199,14 +201,17 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 								)}
 							</ClaySticker>
 						</div>
+
 						<div className="autofit-col">
 							<div className="modal-title">{viewEntry.title}</div>
+
 							<div className="modal-description">
 								{viewEntry.description}
 							</div>
 						</div>
 					</div>
 				</ClayModal.Header>
+
 				<div className="publications-modal-body">
 					<ChangeTrackingRenderView
 						dataURL={viewEntry.dataURL}
@@ -234,6 +239,7 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				</ClayTable.Head>
+
 				<ClayTable.Body>{getTableRows()}</ClayTable.Body>
 			</ClayTable>
 

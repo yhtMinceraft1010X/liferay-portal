@@ -49,12 +49,14 @@ export default ({creator, statistics}) => {
 		>
 			<div className="text-secondary">
 				<p className="c-mb-0">Posts: {statistics?.postsNumber}</p>
+
 				<p className="c-mb-0">
 					Join Date:{' '}
 					{statistics
 						? dateToBriefInternationalHuman(statistics.joinDate)
 						: ''}
 				</p>
+
 				<p className="c-mb-0">
 					Last Post Date:{' '}
 					{statistics

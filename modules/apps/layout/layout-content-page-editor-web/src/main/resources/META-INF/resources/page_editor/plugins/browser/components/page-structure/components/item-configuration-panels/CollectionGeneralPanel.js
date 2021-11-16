@@ -364,6 +364,7 @@ export const CollectionGeneralPanel = ({item}) => {
 						<label htmlFor={listStyleId}>
 							{Liferay.Language.get('list-style')}
 						</label>
+
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('list-style')}
 							id={listStyleId}
@@ -382,6 +383,7 @@ export const CollectionGeneralPanel = ({item}) => {
 							<label htmlFor={collectionLayoutId}>
 								{Liferay.Language.get('layout')}
 							</label>
+
 							<ClaySelectWithOption
 								aria-label={Liferay.Language.get('layout')}
 								id={collectionLayoutId}
@@ -402,6 +404,7 @@ export const CollectionGeneralPanel = ({item}) => {
 								<label htmlFor={collectionListItemStyleId}>
 									{Liferay.Language.get('list-item-style')}
 								</label>
+
 								<ClaySelect
 									aria-label={Liferay.Language.get(
 										'list-item-style'
@@ -423,6 +426,7 @@ export const CollectionGeneralPanel = ({item}) => {
 						<label htmlFor={collectionPaginationTypeId}>
 							{Liferay.Language.get('pagination')}
 						</label>
+
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('pagination')}
 							id={collectionPaginationTypeId}
@@ -457,6 +461,7 @@ export const CollectionGeneralPanel = ({item}) => {
 						<label htmlFor={collectionNumberOfItemsId}>
 							{Liferay.Language.get('maximum-number-of-items')}
 						</label>
+
 						<ClayInput
 							id={collectionNumberOfItemsId}
 							min="1"
@@ -485,6 +490,7 @@ export const CollectionGeneralPanel = ({item}) => {
 									'maximum-number-of-items-per-page'
 								)}
 							</label>
+
 							<ClayInput
 								id={collectionNumberOfItemsPerPageId}
 								min="1"
@@ -584,6 +590,7 @@ const FeedbackMessage = ({message}) => (
 				<ClayIcon symbol="warning-full" />
 			</div>
 		</div>
+
 		<div className="autofit-col autofit-col-expand">
 			<div className="autofit-section">{message}</div>
 		</div>

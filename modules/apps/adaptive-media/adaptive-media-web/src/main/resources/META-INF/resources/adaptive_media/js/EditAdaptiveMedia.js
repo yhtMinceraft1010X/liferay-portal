@@ -233,6 +233,7 @@ const EditAdaptiveMedia = ({
 			<div className="sheet-section">
 				<h3 className="sheet-subtitle">
 					{Liferay.Language.get('size')}
+
 					<RequiredMark />
 				</h3>
 
@@ -267,6 +268,7 @@ const EditAdaptiveMedia = ({
 							value={values[maxWidthId]}
 						/>
 					</ClayLayout.Col>
+
 					<ClayLayout.Col md="3">
 						<Input
 							disabled={!configurationEntryEditable}

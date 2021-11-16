@@ -230,13 +230,13 @@ export const getDefaultValue = (item) => {
 
 	switch (item.type) {
 		case INPUT_TYPES.DATE:
-			return typeof itemValue == 'number'
+			return typeof itemValue === 'number'
 				? itemValue
 				: moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).isValid()
 				? moment(itemValue, ['MM-DD-YYYY', 'YYYY-MM-DD']).unix()
 				: '';
 		case INPUT_TYPES.FIELD_MAPPING:
-			return typeof itemValue == 'object' && itemValue.field
+			return typeof itemValue === 'object' && itemValue.field
 				? itemValue
 				: {
 						field: '',
@@ -251,7 +251,7 @@ export const getDefaultValue = (item) => {
 				? itemValue.filter((item) => item.label && item.value)
 				: [];
 		case INPUT_TYPES.JSON:
-			return typeof itemValue == 'object'
+			return typeof itemValue === 'object'
 				? JSON.stringify(itemValue, null, '\t')
 				: '{}';
 		case INPUT_TYPES.MULTISELECT:
@@ -259,9 +259,9 @@ export const getDefaultValue = (item) => {
 				? itemValue.filter((item) => item.label && item.value)
 				: [];
 		case INPUT_TYPES.NUMBER:
-			return typeof itemValue == 'number'
+			return typeof itemValue === 'number'
 				? itemValue
-				: typeof toNumber(itemValue) == 'number'
+				: typeof toNumber(itemValue) === 'number'
 				? toNumber(itemValue)
 				: '';
 		case INPUT_TYPES.SELECT:
@@ -271,13 +271,13 @@ export const getDefaultValue = (item) => {
 				? item.typeOptions.options[0].value
 				: '';
 		case INPUT_TYPES.SLIDER:
-			return typeof itemValue == 'number'
+			return typeof itemValue === 'number'
 				? itemValue
-				: typeof toNumber(itemValue) == 'number'
+				: typeof toNumber(itemValue) === 'number'
 				? toNumber(itemValue)
 				: '';
 		default:
-			return typeof itemValue == 'string' ? itemValue : '';
+			return typeof itemValue === 'string' ? itemValue : '';
 	}
 };
 
@@ -442,8 +442,8 @@ export const getSXPElementOutput = ({
 				}
 				else if (config.type === INPUT_TYPES.NUMBER) {
 					configValue =
-						typeof config.typeOptions?.unitSuffix == 'string'
-							? typeof initialConfigValue == 'string'
+						typeof config.typeOptions?.unitSuffix === 'string'
+							? typeof initialConfigValue === 'string'
 								? initialConfigValue.concat(
 										config.typeOptions?.unitSuffix
 								  )

@@ -314,7 +314,7 @@ AUI.add(
 					var instance = this;
 
 					if (ids) {
-						if (typeof ids == 'string') {
+						if (typeof ids === 'string') {
 							ids = ids.split(',');
 						}
 

@@ -422,11 +422,11 @@ AUI.add(
 				},
 
 				syncNodeTitleUI() {
-					var instance = this,
-						format = instance.get('titleDateFormat'),
-						startDate = instance.get('startDate'),
-						endDate = instance.get('endDate'),
-						title = [];
+					var instance = this;
+					var format = instance.get('titleDateFormat');
+					var startDate = instance.get('startDate');
+					var endDate = instance.get('endDate');
+					var title = [];
 
 					if (format.startDate) {
 						title.push(

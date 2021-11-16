@@ -57,6 +57,7 @@ export default ({fields}) => {
 						}}
 					>
 						<div className="indicator"></div>
+
 						<div className="field-label">
 							{showFieldLabel(field.label)}
 						</div>

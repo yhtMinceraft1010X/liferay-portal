@@ -139,6 +139,7 @@ export function TargetCollectionsField({
 							)}
 						</ClayDropDown.Help>
 					)}
+
 				{items.map((item) => (
 					<label
 						className={classNames('d-flex dropdown-item', {
@@ -153,6 +154,7 @@ export function TargetCollectionsField({
 							disabled={item.disabled}
 							onChange={item.onChange}
 						/>
+
 						<span className="font-weight-normal ml-2">
 							{item.label}
 						</span>

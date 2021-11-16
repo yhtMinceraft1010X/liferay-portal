@@ -219,7 +219,9 @@ const AddPanel = ({
 			>
 				<DndProvider backend={HTML5Backend}>
 					<DragPreview rtl={rtl} />
+
 					<DragAndDrop />
+
 					<TabsPanel tabs={tabs} />
 				</DndProvider>
 			</AddPanelContextProvider>

@@ -130,6 +130,7 @@ export const ContainerStylesPanel = ({item}) => {
 		<>
 			<p className="page-editor__row-styles-panel__viewport-label">
 				<ClayIcon className="mr-2" symbol={viewportSize.icon} />
+
 				{viewportSize.label}
 			</p>
 

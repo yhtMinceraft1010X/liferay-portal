@@ -62,6 +62,7 @@ export default ({tagsChange, tagsLoaded, tags = []}) => {
 						showSelectButton={true}
 					/>
 				</div>
+
 				<ClayForm.FeedbackGroup className={error && 'has-error'}>
 					<ClayForm.FeedbackItem>
 						<span className="small text-secondary">
@@ -70,9 +71,11 @@ export default ({tagsChange, tagsLoaded, tags = []}) => {
 							)}
 						</span>
 					</ClayForm.FeedbackItem>
+
 					{error && (
 						<ClayForm.FeedbackItem>
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
 							{Liferay.Language.get('this-is-an-invalid-tag')}
 						</ClayForm.FeedbackItem>
 					)}

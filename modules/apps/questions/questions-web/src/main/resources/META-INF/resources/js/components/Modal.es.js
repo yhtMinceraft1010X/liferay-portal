@@ -39,7 +39,9 @@ export default ({
 					status={status}
 				>
 					<ClayModal.Header>{title}</ClayModal.Header>
+
 					<ClayModal.Body>{body}</ClayModal.Body>
+
 					<ClayModal.Footer
 						first={
 							<ClayButton displayType="secondary" onClick={close}>

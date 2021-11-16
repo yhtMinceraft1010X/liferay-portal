@@ -34,6 +34,7 @@ const FilterItem = ({filterKey, name, value}) => {
 			>
 				<span className="label-section">
 					{`${name}: `}
+
 					<span className="font-weight-normal">{value}</span>
 				</span>
 			</ClayLabel>

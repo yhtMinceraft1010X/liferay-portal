@@ -61,6 +61,7 @@ export default ({
 										{ui || section.title}
 									</Link>
 								)}
+
 								<ClayIcon symbol="caret-bottom-l" />
 							</ClayButton>
 						}

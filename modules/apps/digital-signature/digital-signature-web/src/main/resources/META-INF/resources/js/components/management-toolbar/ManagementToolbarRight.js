@@ -29,6 +29,7 @@ export default ({addButton, setShowMobile}) => {
 					<ClayIcon symbol="search" />
 				</ClayButton>
 			</ClayManagementToolbar.Item>
+
 			{addButton && (
 				<ClayManagementToolbar.Item>
 					{addButton()}

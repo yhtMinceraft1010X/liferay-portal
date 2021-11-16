@@ -37,6 +37,7 @@ const FieldListSidebar = ({title}) => {
 		<Sidebar>
 			<Sidebar.Header>
 				<Sidebar.Title className="mb-3" title={title} />
+
 				<ClayForm onSubmit={(event) => event.preventDefault()}>
 					<Sidebar.SearchInput
 						onSearch={(keywords) => setSearchTerm(keywords)}
@@ -44,6 +45,7 @@ const FieldListSidebar = ({title}) => {
 					/>
 				</ClayForm>
 			</Sidebar.Header>
+
 			<Sidebar.Body>
 				<FieldsSidebarBody
 					keywords={searchTerm}

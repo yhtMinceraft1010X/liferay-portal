@@ -14,8 +14,8 @@
 
 import AJAX from '../../../utilities/AJAX/index';
 
-const CARTS_PATH = '/carts',
-	CHANNELS_PATH = '/channels';
+const CARTS_PATH = '/carts';
+const CHANNELS_PATH = '/channels';
 
 const VERSION = 'v1.0';
 

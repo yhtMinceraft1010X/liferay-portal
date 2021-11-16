@@ -57,7 +57,7 @@
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	var isString = function (val) {
-		return typeof val == 'string';
+		return typeof val === 'string';
 	};
 
 	var ELEMENTS_BLOCK = {

@@ -140,6 +140,7 @@ function LayoutFinder(props) {
 
 				{`${Liferay.Language.get('back-to-menu')} `}
 			</button>
+
 			<form onSubmit={handleFormSubmit} role="search">
 				<label
 					className="sr-only"

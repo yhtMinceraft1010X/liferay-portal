@@ -552,7 +552,7 @@
 	function cellInRow(tableMap, rowIndex, cell) {
 		const row = tableMap[rowIndex];
 
-		if (typeof cell == 'undefined') {
+		if (typeof cell === 'undefined') {
 			return row;
 		}
 

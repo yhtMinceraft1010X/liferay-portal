@@ -58,6 +58,7 @@ function PanelNavigator({
 						{impact && (
 							<div className="component-subtitle text-capitalize text-secondary">
 								{`${impact} - `}
+
 								<ClayLink
 									className="text-primary"
 									displayType="unstyled"

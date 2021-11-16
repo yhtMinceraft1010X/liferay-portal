@@ -64,6 +64,7 @@ export default (Component) => {
 						label={getLabel(confirmationLabel, label)}
 					/>
 				</div>
+
 				<div className={className}>
 					<Component
 						{...otherProps}

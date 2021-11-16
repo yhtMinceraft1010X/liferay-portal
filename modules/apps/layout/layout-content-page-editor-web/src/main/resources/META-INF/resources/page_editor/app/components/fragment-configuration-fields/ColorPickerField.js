@@ -71,6 +71,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 	return (
 		<ClayForm.Group small>
 			<label>{field.label}</label>
+
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
 					<ColorPicker
@@ -84,6 +85,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 						value={color}
 					/>
 				</ClayInput.GroupItem>
+
 				<ClayInput.GroupItem append>
 					<ClayInput
 						readOnly
@@ -94,6 +96,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 						}
 					/>
 				</ClayInput.GroupItem>
+
 				{color && (
 					<ClayButtonWithIcon
 						className="ml-2"

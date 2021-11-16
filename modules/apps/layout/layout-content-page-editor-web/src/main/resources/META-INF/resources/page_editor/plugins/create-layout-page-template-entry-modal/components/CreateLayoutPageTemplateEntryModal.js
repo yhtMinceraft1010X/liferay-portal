@@ -32,13 +32,13 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 		setLayoutPageTemplateCollections,
 	] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const layoutPageTemplateCollectionInput = useRef(null);
-	const nameInput = useRef(null);
+	const layoutPageTemplateCollectionInputRef = useRef(null);
+	const nameInputRef = useRef(null);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	useEffect(() => {
-		if (nameInput.current) {
-			nameInput.current.focus();
+		if (nameInputRef.current) {
+			nameInputRef.current.focus();
 		}
 	}, []);
 
@@ -64,11 +64,11 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 
 		const errorMessage = Liferay.Language.get('this-field-is-required');
 
-		if (!nameInput.current.value) {
+		if (!nameInputRef.current.value) {
 			error.name = errorMessage;
 		}
 
-		if (layoutPageTemplateCollectionInput.current.selectedIndex === 0) {
+		if (layoutPageTemplateCollectionInputRef.current.selectedIndex === 0) {
 			error.layoutPageTemplateCollectionId = errorMessage;
 		}
 
@@ -90,8 +90,8 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 			setLoading(true);
 
 			LayoutService.createLayoutPageTemplateEntry(
-				layoutPageTemplateCollectionInput.current.value,
-				nameInput.current.value,
+				layoutPageTemplateCollectionInputRef.current.value,
+				nameInputRef.current.value,
 				segmentsExperienceId
 			)
 				.then((response) => {
@@ -100,7 +100,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 							Liferay.Language.get(
 								'the-page-template-was-created-successfully.-you-can-view-it-here-x'
 							),
-							`<a href="${response.url}"><b>${nameInput.current.value}</b></a>`
+							`<a href="${response.url}"><b>${nameInputRef.current.value}</b></a>`
 						),
 						type: 'success',
 					});
@@ -128,6 +128,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 			<ClayModal.Header>
 				{Liferay.Language.get('create-page-template')}
 			</ClayModal.Header>
+
 			<ClayModal.Body>
 				{error && error.other && (
 					<ClayAlert
@@ -138,6 +139,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 						{error.other}
 					</ClayAlert>
 				)}
+
 				<form onSubmit={handleSubmit}>
 					<FormField
 						error={error && error.name}
@@ -148,7 +150,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 							className="form-control"
 							id={`${config.portletNamespace}name`}
 							onChange={() => setError({...error, name: null})}
-							ref={nameInput}
+							ref={nameInputRef}
 						/>
 					</FormField>
 
@@ -165,13 +167,14 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 							<select
 								className="form-control"
 								id={`${config.portletNamespace}layoutPageTemplateCollectionId`}
-								ref={layoutPageTemplateCollectionInput}
+								ref={layoutPageTemplateCollectionInputRef}
 							>
 								<option value="">
 									{`-- ${Liferay.Language.get(
 										'not-selected'
 									)} --`}
 								</option>
+
 								{layoutPageTemplateCollections.map(
 									(layoutPageTemplateCollection) => (
 										<option
@@ -191,12 +194,14 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 					</fieldset>
 				</form>
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton
 							displayType="primary"
 							onClick={handleSubmit}
@@ -209,6 +214,7 @@ const CreateLayoutPageTemplateEntryModal = ({observer, onClose}) => {
 									></span>
 								</span>
 							)}
+
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

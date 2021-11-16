@@ -165,6 +165,7 @@ export const ImageSelectorSize = ({
 					<label htmlFor={imageSizeSelectId}>
 						{Liferay.Language.get('resolution')}
 					</label>
+
 					<ClaySelectWithOption
 						className="form-control form-control-sm"
 						id={imageSizeSelectId}
@@ -184,6 +185,7 @@ export const ImageSelectorSize = ({
 			{!!imageSize.width && (
 				<div className="small text-secondary">
 					<b>{Liferay.Language.get('width')}:</b>
+
 					<span className="ml-1">{imageSize.width}px</span>
 				</div>
 			)}
@@ -191,6 +193,7 @@ export const ImageSelectorSize = ({
 			{!!imageSize.size && (
 				<div className="small text-secondary">
 					<b>{Liferay.Language.get('file-size')}:</b>
+
 					<span className="ml-1">
 						{Number(imageSize.size).toFixed(2)}kB
 					</span>

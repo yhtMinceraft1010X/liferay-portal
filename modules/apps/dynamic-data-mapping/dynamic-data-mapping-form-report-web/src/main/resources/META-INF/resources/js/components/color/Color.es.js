@@ -22,6 +22,7 @@ export default ({hexColor}) => (
 				style={{backgroundColor: hexColor}}
 			></div>
 		</div>
+
 		<div className="color-text">{hexColor}</div>
 	</div>
 );

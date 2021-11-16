@@ -109,6 +109,7 @@ export default ({data, field, height, structure, width}) => {
 									width="12"
 								/>
 							</svg>
+
 							<span>
 								{label && label.length > MAX_LABEL_SIZE
 									? ellipsize(label, MAX_LABEL_SIZE)

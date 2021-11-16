@@ -14,9 +14,9 @@
 
 import AJAX from '../../../utilities/AJAX/index';
 
-const CARTS_PATH = '/carts',
-	CART_ITEMS_PATH = '/cart-items',
-	ITEMS_PATH = '/items';
+const CARTS_PATH = '/carts';
+const CART_ITEMS_PATH = '/cart-items';
+const ITEMS_PATH = '/items';
 
 const VERSION = 'v1.0';
 

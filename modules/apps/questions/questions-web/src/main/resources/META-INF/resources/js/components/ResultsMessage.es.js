@@ -57,6 +57,7 @@ export default ({
 							}}
 						/>
 					)}
+
 					{totalCount > maxNumberOfSearchResults && (
 						<div className="text-secondary">
 							{Liferay.Language.get(

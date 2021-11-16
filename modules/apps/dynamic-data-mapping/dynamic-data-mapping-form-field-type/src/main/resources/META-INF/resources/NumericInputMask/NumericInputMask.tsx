@@ -187,6 +187,7 @@ const NumericInputMask: React.FC<IProps> = ({
 						visible={visible}
 					/>
 				</div>
+
 				<div className="pl-2 w-50">
 					<Select
 						label={Liferay.Language.get('decimal-separator')}
@@ -220,6 +221,7 @@ const NumericInputMask: React.FC<IProps> = ({
 						<label htmlFor="decimal_places ">
 							{Liferay.Language.get('decimal-places')}
 						</label>
+
 						<ClayInput
 							className="ddm-field-text"
 							disabled={readOnly}

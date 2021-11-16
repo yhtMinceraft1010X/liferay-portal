@@ -153,6 +153,7 @@ export const FormBuilder = () => {
 				<div className="ddm-form-builder-wrapper">
 					<div className="container ddm-form-builder">
 						<DragLayer />
+
 						<Pages
 							editable={true}
 							fieldActions={[
@@ -185,6 +186,7 @@ export const FormBuilder = () => {
 								},
 							]}
 						/>
+
 						<MultiPanelSidebar
 							createPlugin={({
 								panel,

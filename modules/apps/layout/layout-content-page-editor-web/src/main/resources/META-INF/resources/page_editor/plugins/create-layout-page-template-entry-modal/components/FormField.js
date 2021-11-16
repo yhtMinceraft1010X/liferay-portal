@@ -26,6 +26,7 @@ const FormField = ({children, error, id, name}) => {
 		>
 			<label htmlFor={id}>
 				{name}
+
 				<span className="reference-mark">
 					<ClayIcon symbol="asterisk" />
 				</span>
@@ -38,6 +39,7 @@ const FormField = ({children, error, id, name}) => {
 					<span className="form-feedback-indicator mr-1">
 						<ClayIcon symbol="exclamation-full" />
 					</span>
+
 					{error}
 				</div>
 			)}

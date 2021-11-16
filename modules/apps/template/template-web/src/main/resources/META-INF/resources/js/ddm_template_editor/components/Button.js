@@ -33,6 +33,7 @@ export const Button = ({label, onClick = noop, tooltip}) => {
 			small
 		>
 			{label}
+
 			<ClayPopover
 				alignPosition="left"
 				disableScroll

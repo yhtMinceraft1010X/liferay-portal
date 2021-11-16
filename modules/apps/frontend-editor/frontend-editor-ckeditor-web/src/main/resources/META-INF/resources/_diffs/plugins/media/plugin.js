@@ -114,7 +114,7 @@
 										fakeElement.attributes.style = fakeStyle;
 									}
 
-									if (typeof height != 'undefined') {
+									if (typeof height !== 'undefined') {
 										fakeStyle +=
 											'height:' +
 											CKEDITOR.tools.cssLength(height) +
@@ -123,7 +123,7 @@
 										fakeElement.attributes.style = fakeStyle;
 									}
 
-									if (typeof width != 'undefined') {
+									if (typeof width !== 'undefined') {
 										fakeStyle +=
 											'width:' +
 											CKEDITOR.tools.cssLength(width) +

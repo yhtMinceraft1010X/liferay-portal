@@ -139,6 +139,7 @@ const RuleEditorModalContent = ({onClose, onSaveRule, rule}) => {
 						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
+
 						<ClayButton
 							disabled={invalidRule || !ruleName}
 							onClick={() => {

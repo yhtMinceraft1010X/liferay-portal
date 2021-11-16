@@ -62,6 +62,7 @@ export const PaginationControls = ({
 					type="button"
 				>
 					<ClayIcon symbol="angle-left" />
+
 					{strings !== null
 						? strings['previous']
 						: Liferay.Language.get('previous')}
@@ -86,6 +87,7 @@ export const PaginationControls = ({
 					{strings !== null
 						? strings['next']
 						: Liferay.Language.get('next')}
+
 					<ClayIcon symbol="angle-right" />
 				</ClayButton>
 			)}

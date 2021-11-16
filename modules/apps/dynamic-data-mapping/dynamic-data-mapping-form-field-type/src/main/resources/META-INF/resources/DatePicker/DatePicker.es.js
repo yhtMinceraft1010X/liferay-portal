@@ -182,7 +182,7 @@ const DatePicker = ({
 	value: initialValue,
 }) => {
 	const inputRef = useRef(null);
-	const maskInstance = useRef(null);
+	const maskInstanceRef = useRef(null);
 
 	const [expanded, setExpand] = useState(false);
 
@@ -213,7 +213,7 @@ const DatePicker = ({
 
 	useEffect(() => {
 		if (inputRef.current && inputMask && dateMask) {
-			maskInstance.current = createTextMaskInputElement({
+			maskInstanceRef.current = createTextMaskInputElement({
 				guide: true,
 				inputElement: inputRef.current,
 				keepCharPositions: true,
@@ -259,7 +259,7 @@ const DatePicker = ({
 				inputRef.current.value.match(LETTER_DIGIT_REGEX) ||
 				inputRef.current.value === ''
 			) {
-				maskInstance.current.update(inputRef.current.value);
+				maskInstanceRef.current.update(inputRef.current.value);
 			}
 		}
 	}, [
@@ -300,7 +300,7 @@ const DatePicker = ({
 				}}
 				onFocus={onFocus}
 				onInput={(event) => {
-					maskInstance.current.update(event.target.value);
+					maskInstanceRef.current.update(event.target.value);
 					setLocalizedValue({
 						...localizedValue,
 						[locale]: event.target.value,
@@ -322,7 +322,8 @@ const DatePicker = ({
 
 					if (
 						!value ||
-						value === maskInstance.current.state.previousPlaceholder
+						value ===
+							maskInstanceRef.current.state.previousPlaceholder
 					) {
 						return onChange('');
 					}

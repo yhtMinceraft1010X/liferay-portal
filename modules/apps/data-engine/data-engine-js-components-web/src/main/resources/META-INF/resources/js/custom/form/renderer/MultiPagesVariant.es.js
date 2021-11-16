@@ -159,6 +159,7 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 
 				<div className="add-page-button-container">
 					<div className="horizontal-line" />
+
 					<ClayButton
 						className="add-page-button"
 						displayType="secondary"
@@ -172,12 +173,14 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 					>
 						{Liferay.Language.get('new-page')}
 					</ClayButton>
+
 					<div className="horizontal-line" />
 				</div>
 
 				{pages.length - 1 === pageIndex && (
 					<div className="add-page-button-container">
 						<div className="horizontal-line" />
+
 						<ClayButton
 							className="add-page-button"
 							displayType="secondary"
@@ -186,6 +189,7 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 						>
 							{Liferay.Language.get('add-success-page')}
 						</ClayButton>
+
 						<div className="horizontal-line" />
 					</div>
 				)}
@@ -219,6 +223,7 @@ export const PageHeader = ({localizedDescription, localizedTitle}) => {
 					localizedTitle[defaultLanguageId]
 				}
 			/>
+
 			<input
 				className="form-builder-page-header-description form-control p-0"
 				maxLength="120"

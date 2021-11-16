@@ -235,11 +235,11 @@ AUI.add(
 						resultTextLocator(response) {
 							var result = '';
 
-							if (typeof response.toString != STR_UNDEFINED) {
+							if (typeof response.toString !== STR_UNDEFINED) {
 								result = response.toString();
 							}
 							else if (
-								typeof response.responseText != STR_UNDEFINED
+								typeof response.responseText !== STR_UNDEFINED
 							) {
 								result = response.responseText;
 							}

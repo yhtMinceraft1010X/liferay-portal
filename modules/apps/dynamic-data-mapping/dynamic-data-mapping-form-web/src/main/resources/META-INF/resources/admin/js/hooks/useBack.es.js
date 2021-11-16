@@ -58,6 +58,7 @@ export const useBack = () => {
 							>
 								{Liferay.Language.get('leave')}
 							</ClayButton>
+
 							<ClayButton displayType="primary" onClick={onClose}>
 								{Liferay.Language.get('stay')}
 							</ClayButton>

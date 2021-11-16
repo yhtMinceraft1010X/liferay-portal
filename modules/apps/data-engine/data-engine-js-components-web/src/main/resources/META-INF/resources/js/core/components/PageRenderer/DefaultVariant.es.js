@@ -133,6 +133,7 @@ export const Page = ({
 		{invalidFormMessage && (
 			<span aria-atomic="true" aria-live="polite" className="sr-only">
 				{invalidFormMessage}
+
 				<span aria-hidden="true">{forceAriaUpdate}</span>
 			</span>
 		)}

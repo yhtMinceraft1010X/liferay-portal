@@ -50,6 +50,7 @@ const Experiences = ({
 										value={value}
 									/>
 								</ClayList.ItemField>
+
 								<ClayList.ItemField expand>
 									<ClayLayout.ContentRow
 										className="list-group-label"
@@ -64,6 +65,7 @@ const Experiences = ({
 												{label}
 											</div>
 										</ClayLayout.ContentCol>
+
 										<ClayLayout.ContentCol
 											className="text-right"
 											expand
@@ -258,6 +260,7 @@ const ExportTranslation = ({
 				>
 					{Liferay.Language.get('export-file-format')}
 				</label>
+
 				<ExportFileFormats
 					availableExportFileFormats={availableExportFileFormats}
 					exportMimeType={exportMimeType}
@@ -270,6 +273,7 @@ const ExportTranslation = ({
 				<label htmlFor={`${portletNamespace}sourceLanguageId`}>
 					{Liferay.Language.get('original-language')}
 				</label>
+
 				<SourceLocales
 					availableSourceLocales={availableSourceLocales}
 					portletNamespace={portletNamespace}
@@ -282,6 +286,7 @@ const ExportTranslation = ({
 				<label className="mb-2">
 					{Liferay.Language.get('languages-to-translate-to')}
 				</label>
+
 				<ClayLayout.Row>
 					{availableTargetLocales.map((locale) => (
 						<TargetLocale

@@ -488,7 +488,7 @@
 
 				while (parentWindow != window) {
 					try {
-						if (typeof parentWindow.location.href == 'undefined') {
+						if (typeof parentWindow.location.href === 'undefined') {
 							break;
 						}
 
