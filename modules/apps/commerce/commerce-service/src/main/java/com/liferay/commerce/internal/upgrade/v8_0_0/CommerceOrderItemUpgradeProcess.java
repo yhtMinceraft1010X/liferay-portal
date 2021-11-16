@@ -60,12 +60,12 @@ public class CommerceOrderItemUpgradeProcess
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong("companyId");
 
-				List<CPMeasurementUnit> piece =
+				List<CPMeasurementUnit> cpMeasurementUnits =
 					_cpMeasurementUnitLocalService.getCPMeasurementUnits(
 						companyId, new String[] {"pc"},
 						CPMeasurementUnitConstants.TYPE_PIECE);
 
-				if (piece.isEmpty()) {
+				if (cpMeasurementUnits.isEmpty()) {
 					ServiceContext serviceContext = new ServiceContext();
 
 					serviceContext.setCompanyId(companyId);
@@ -75,13 +75,13 @@ public class CommerceOrderItemUpgradeProcess
 					_cpMeasurementUnitLocalService.importDefaultValues(
 						serviceContext);
 
-					piece =
+					cpMeasurementUnits =
 						_cpMeasurementUnitLocalService.getCPMeasurementUnits(
 							companyId, new String[] {"pc"},
 							CPMeasurementUnitConstants.TYPE_PIECE);
 				}
 
-				CPMeasurementUnit cpMeasurementUnit = piece.get(0);
+				CPMeasurementUnit cpMeasurementUnit = cpMeasurementUnits.get(0);
 
 				String updateCommerceOrderItem = StringBundler.concat(
 					"update CommerceOrderItem set CPMeasurementUnitId = ",
