@@ -45,7 +45,6 @@ public class CommerceOrderItemUpgradeProcess
 		addColumn(
 			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"CPMeasurementUnitId", "LONG");
-
 		addColumn(
 			CommerceOrderItemTable.class, CommerceOrderItemTable.TABLE_NAME,
 			"decimalQuantity", "DECIMAL(30, 16) null");
