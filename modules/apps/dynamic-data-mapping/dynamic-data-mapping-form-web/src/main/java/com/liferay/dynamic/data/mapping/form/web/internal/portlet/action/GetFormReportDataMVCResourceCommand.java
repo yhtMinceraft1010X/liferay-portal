@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,11 +54,8 @@ public class GetFormReportDataMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
 		long formInstanceId = ParamUtil.getLong(
-			httpServletRequest, "formInstanceId");
+			resourceRequest, "formInstanceId");
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			_ddmFormInstanceReportLocalService.
@@ -90,7 +85,7 @@ public class GetFormReportDataMVCResourceCommand
 				"lastModifiedDate",
 				() -> {
 					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
+						(ThemeDisplay)resourceRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
 
 					return DDMFormReportDataUtil.getLastModifiedDate(

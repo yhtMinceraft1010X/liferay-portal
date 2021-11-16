@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,12 +58,8 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
 			throw new PrincipalException.MustBeAuthenticated(
@@ -74,22 +68,21 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_getFieldValuesJSONArray(httpServletRequest));
+			_getFieldValuesJSONArray(resourceRequest));
 	}
 
-	private JSONArray _getFieldValuesJSONArray(
-			HttpServletRequest httpServletRequest)
+	private JSONArray _getFieldValuesJSONArray(ResourceRequest resourceRequest)
 		throws Exception {
 
-		String fieldName = ParamUtil.getString(httpServletRequest, "fieldName");
+		String fieldName = ParamUtil.getString(resourceRequest, "fieldName");
 
 		long formInstanceId = ParamUtil.getLong(
-			httpServletRequest, "formInstanceId");
+			resourceRequest, "formInstanceId");
 
 		int start = ParamUtil.getInteger(
-			httpServletRequest, "start", QueryUtil.ALL_POS);
+			resourceRequest, "start", QueryUtil.ALL_POS);
 		int end = ParamUtil.getInteger(
-			httpServletRequest, "end", QueryUtil.ALL_POS);
+			resourceRequest, "end", QueryUtil.ALL_POS);
 
 		BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 			_ddmFormInstanceRecordService.searchFormInstanceRecords(
