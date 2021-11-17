@@ -43,7 +43,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,16 +90,15 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 						segmentsExperienceId, sourceLayout, name,
 						layoutPageTemplateCollectionId, serviceContext);
 
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				_portal.getHttpServletRequest(actionRequest),
-				themeDisplay.getScopeGroup(),
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, 0, 0,
-				PortletRequest.RENDER_PHASE);
-
 			jsonObject.put(
 				"url",
 				PortletURLBuilder.create(
-					portletURL
+					_portal.getControlPanelPortletURL(
+						_portal.getHttpServletRequest(actionRequest),
+						themeDisplay.getScopeGroup(),
+						LayoutPageTemplateAdminPortletKeys.
+							LAYOUT_PAGE_TEMPLATES,
+						0, 0, PortletRequest.RENDER_PHASE)
 				).setTabs1(
 					"page-templates"
 				).setParameter(
