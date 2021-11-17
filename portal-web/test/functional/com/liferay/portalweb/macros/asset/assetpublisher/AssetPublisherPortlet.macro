@@ -43,6 +43,16 @@ definition {
 		SiteSelector.viewSite(site = "${siteName}");
 	}
 
+	macro changePagination {
+		Click(locator1 = "Pagination#CURRENT_PAGE_MENU");
+
+		MenuItem.click(menuItem = "${paginationItem}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Pagination#CURRENT_PAGE_MENU",
+			value1 = "Page ${currentPageNumber}");
+	}
+
 	macro clickAssetTitle {
 		Click(
 			key_assetTitle = "${assetTitle}",
