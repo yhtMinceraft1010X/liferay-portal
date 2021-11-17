@@ -81,7 +81,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		}
 	}
 
-	private String _getFieldNameMappingString(
+	private String _getFieldNameMapping(
 		List<BatchPlannerMapping> batchPlannerMappings) {
 
 		if (batchPlannerMappings.isEmpty()) {
@@ -174,7 +174,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		try {
 			ImportTask importTask = _importTaskResource.postImportTask(
 				batchPlannerPlan.getInternalClassName(), null,
-				_getFieldNameMappingString(
+				_getFieldNameMapping(
 					_batchPlannerMappingLocalService.getBatchPlannerMappings(
 						batchPlannerPlan.getBatchPlannerPlanId())),
 				batchPlannerPlan.getTaskItemDelegateName(),
