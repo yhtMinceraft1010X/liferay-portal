@@ -356,7 +356,9 @@ AUI.add(
 				_onLocaleChangedHandler(event) {
 					var instance = this;
 
-					var contentsLanguage = event.item.dataset.value;
+					var contentsLanguage = event.item.getAttribute(
+						'data-value'
+					);
 					var contentsLanguageDir =
 						Liferay.Language.direction[contentsLanguage];
 

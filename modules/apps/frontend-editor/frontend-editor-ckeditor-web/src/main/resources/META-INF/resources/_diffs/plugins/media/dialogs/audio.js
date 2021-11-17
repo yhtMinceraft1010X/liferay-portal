@@ -27,8 +27,8 @@ CKEDITOR.dialog.add('audio', (editor) => {
 		var scriptTPL = null;
 		var textScript = null;
 
-		var audioOggUrl = audioNode.dataset['audio-ogg-url'];
-		var audioUrl = audioNode.dataset['audio-url'];
+		var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
+		var audioUrl = audioNode.getAttribute('data-audio-url');
 
 		if (id === 'url') {
 			audioNode.setAttribute('data-document-url', value);
@@ -68,7 +68,7 @@ CKEDITOR.dialog.add('audio', (editor) => {
 			var value = null;
 
 			if (id === 'url') {
-				value = audioNode.dataset['document-url'];
+				value = audioNode.getAttribute('data-document-url');
 			}
 
 			if (value !== null) {

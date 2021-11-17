@@ -106,7 +106,8 @@ const PreviewSeoContainer = ({
 		const inputLocalizedLocaleChangedHandle = Liferay.on(
 			'inputLocalized:localeChanged',
 			(event) => {
-				const newLanguage = event.item && event.item.dataset.value;
+				const newLanguage =
+					event.item && event.item.getAttribute('data-value');
 
 				if (newLanguage && isMounted()) {
 					setLanguage(newLanguage);

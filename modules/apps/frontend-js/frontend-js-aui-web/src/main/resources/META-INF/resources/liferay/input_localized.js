@@ -334,7 +334,9 @@ AUI.add(
 						);
 					}
 
-					var defaultLanguageId = event.item.dataset.value;
+					var defaultLanguageId = event.item.getAttribute(
+						'data-value'
+					);
 
 					instance.set('defaultLanguageId', defaultLanguageId);
 
@@ -345,6 +347,7 @@ AUI.add(
 						defaultLanguageId
 					);
 
+					console.log('ITEM:', event.item);
 					Liferay.fire('inputLocalized:localeChanged', {
 						item: event.item,
 						source: instance,
@@ -373,7 +376,7 @@ AUI.add(
 				_onLocaleChanged(event) {
 					var instance = this;
 
-					var languageId = event.item.dataset.value;
+					var languageId = event.item.getAttribute('data-value');
 
 					instance.selectFlag(languageId, event.source === instance);
 				},
@@ -445,6 +448,7 @@ AUI.add(
 					var instance = this;
 
 					if (!event.domEvent) {
+						console.log('ITEM:', event.item);
 						Liferay.fire('inputLocalized:localeChanged', {
 							item: event.item,
 							source: instance,
