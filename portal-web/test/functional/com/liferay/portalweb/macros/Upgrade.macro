@@ -4535,10 +4535,7 @@ definition {
 	}
 
 	macro viewSAMLGeneralConfiguration {
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "SAML Admin");
+		SAML.goToSAMLAdmin();
 
 		FormFields.viewCheckboxChecked(fieldName = "enabled");
 
