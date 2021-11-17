@@ -43,7 +43,7 @@ long previewClassNameId = ParamUtil.getLong(request, "previewClassNameId");
 long previewClassPK = ParamUtil.getLong(request, "previewClassPK");
 
 boolean print = GetterUtil.getBoolean(request.getAttribute("view.jsp-print"));
-boolean viewSingleAsset = ParamUtil.get(request, "viewSingleAsset", false);
+boolean viewSingleAsset = ParamUtil.getBoolean(request, "viewSingleAsset");
 
 assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
