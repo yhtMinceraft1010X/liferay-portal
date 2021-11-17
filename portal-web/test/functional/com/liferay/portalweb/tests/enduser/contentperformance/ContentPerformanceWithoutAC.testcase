@@ -50,9 +50,15 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test DontShowButton {
+		task ("Assert if element is not present") {
+			ContentPerformance.openContentPerformance();
+		}
 
-		// TODO LPS-139239 DontShowButton pending implementation
-
+		task ("Click on the") {
+			AssertElementPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
+				value1 = "Do not show me this again.");
+		}
 	}
 
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
@@ -106,9 +112,66 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test NotSyncedPanel {
+		task ("Open Analytics Cloud") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		// TODO LPS-139239 NotSyncedPanel pending implementation
+			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		}
 
+		task ("Take token from Analytics Cloud") {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Connect with Analytics Cloud and back to Home Page") {
+			ContentPerformance.onlyConectWithAnalyticsCloud();
+
+			Navigator.openURL();
+		}
+
+		task ("Open Content Performance") {
+			ContentPerformance.openContentPerformance();
+
+			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
+				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			}
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
+
+		task ("Assert if button is not present and instructions are present") {
+			AssertElementNotPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
+				value1 = "Do not show me this again.");
+
+			AssertElementPresent(
+				locator1 = "ContentPerformance#INSTRUCTIONS_SYNC_AC",
+				value1 = "Sync to Liferay Analytics Cloud");
+		}
+
+		task ("End connection with Analytics Cloud") {
+			var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+			Navigator.openURL();
+
+			AnalyticsCloud.teardownAnalyticsCloud();
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			if ("${testPortalInstance}" == "true") {
+				PortalInstances.tearDownCP();
+			}
+		}
 	}
 
 }
