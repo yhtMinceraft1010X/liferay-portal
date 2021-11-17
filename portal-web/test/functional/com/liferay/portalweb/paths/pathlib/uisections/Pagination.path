@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_PAGE_MENU</td>
+	<td>//div[contains(@class,'current-page-menu')]/a[contains(@class,'toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PAGE_SELECT</td>
 	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>
