@@ -130,10 +130,10 @@ public class CommandPoshiElement extends PoshiElement {
 		DescriptionPoshiElement descriptionPoshiElement =
 			(DescriptionPoshiElement)element("description");
 
-		List<String> annotationsList = new ArrayList<>();
+		List<String> annotations = new ArrayList<>();
 
 		if (descriptionPoshiElement != null) {
-			annotationsList.add("\t" + descriptionPoshiElement.toPoshiScript());
+			annotations.add("\t" + descriptionPoshiElement.toPoshiScript());
 		}
 
 		for (PoshiElementAttribute poshiElementAttribute :
@@ -149,17 +149,17 @@ public class CommandPoshiElement extends PoshiElement {
 				String annotationsValue = poshiElementAttribute.getValue();
 
 				for (String annotation : annotationsValue.split(",")) {
-					annotationsList.add("\t@" + annotation);
+					annotations.add("\t@" + annotation);
 				}
 
 				continue;
 			}
 
-			annotationsList.add("\t@" + poshiElementAttribute.toPoshiScript());
+			annotations.add("\t@" + poshiElementAttribute.toPoshiScript());
 		}
 
 		Collections.sort(
-			annotationsList,
+			annotations,
 			new Comparator<String>() {
 
 				@Override
@@ -176,10 +176,10 @@ public class CommandPoshiElement extends PoshiElement {
 
 			});
 
-		String sortedAnnotations = ListUtil.toString(annotationsList, "\n");
+		String annotationsString = ListUtil.toString(annotations, "\n");
 
-		if (sortedAnnotations.length() > 0) {
-			return "\n\n" + sortedAnnotations +
+		if (annotationsString.length() > 0) {
+			return "\n\n" + annotationsString +
 				createPoshiScriptBlock(getPoshiNodes());
 		}
 
