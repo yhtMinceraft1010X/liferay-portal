@@ -93,7 +93,7 @@ public class CommerceOrderItemQuantityFormatterImpl
 
 	protected DecimalFormat getDecimalFormat(Locale locale) {
 		DecimalFormat decimalFormat = new DecimalFormat(
-			CommerceOrderConstants.DEFAULT_FORMAT_PATTERN,
+			CommerceOrderConstants.DECIMAL_FORMAT_PATTERN,
 			DecimalFormatSymbols.getInstance(locale));
 
 		decimalFormat.setMaximumFractionDigits(

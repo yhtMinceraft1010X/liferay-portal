@@ -26,7 +26,7 @@ public class CommerceOrderConstants {
 
 	public static final String COMMERCE_ORDER = "commerce-order";
 
-	public static final String DEFAULT_FORMAT_PATTERN = "###,##0.00";
+	public static final String DECIMAL_FORMAT_PATTERN = "###,##0.00";
 
 	public static final String ORDER_NOTIFICATION_AWAITING_SHIPMENT =
 		"order-awaiting-shipment";
