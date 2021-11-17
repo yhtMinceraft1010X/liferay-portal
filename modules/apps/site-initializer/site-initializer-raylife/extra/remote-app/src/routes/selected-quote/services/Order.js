@@ -3,7 +3,7 @@ import {STORAGE_KEYS, Storage} from '~/common/services/liferay/storage';
 
 const DeliveryAPI = 'o/headless-commerce-admin-order';
 
-export const createOrder = (accountId, channelId, skuId, product) => {
+export function createOrder(accountId, channelId, skuId, product) {
 	const raylifeApplicationForm = JSON.parse(
 		Storage.getItem(STORAGE_KEYS.APPLICATION_FORM)
 	);
@@ -54,13 +54,13 @@ export const createOrder = (accountId, channelId, skuId, product) => {
 	};
 
 	return axios.post(`${DeliveryAPI}/v1.0/orders`, payload);
-};
+}
 
-export const updateOrderPaymentMethod = (paymentMethod, total, orderId) => {
+export function updateOrderPaymentMethod(paymentMethod, total, orderId) {
 	const payload = {
 		paymentMethod,
 		total,
 	};
 
 	return axios.patch(`${DeliveryAPI}/v1.0/orders/${orderId}`, payload);
-};
+}

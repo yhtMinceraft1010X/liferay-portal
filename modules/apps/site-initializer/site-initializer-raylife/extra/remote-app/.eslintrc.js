@@ -32,6 +32,7 @@ module.exports = {
 		'no-case-declarations': 'off',
 		'no-empty': ['error', {allowEmptyCatch: true}],
 		'no-prototype-builtins': 'off',
+		'promise/catch-or-return': 'off',
 		'quote-props': 'off',
 	},
 };

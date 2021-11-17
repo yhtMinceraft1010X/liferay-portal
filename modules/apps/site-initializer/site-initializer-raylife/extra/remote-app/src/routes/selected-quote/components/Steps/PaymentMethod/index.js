@@ -158,7 +158,8 @@ const PaymentMethod = () => {
 									</div>
 
 									<p>
-										I have read and agree to the{' '}
+										{'I have read and agree to the '}
+
 										<strong>
 											Raylife Terms and Conditions
 										</strong>

@@ -2,7 +2,7 @@ import {axios} from '~/common/services/liferay/api';
 
 const DeliveryAPI = 'o/headless-admin-user';
 
-export const createAccount = (name) => {
+export function createAccount(name) {
 	const payload = {
 		name,
 		status: 0,
@@ -10,4 +10,4 @@ export const createAccount = (name) => {
 	};
 
 	return axios.post(`${DeliveryAPI}/v1.0/accounts`, payload);
-};
+}
