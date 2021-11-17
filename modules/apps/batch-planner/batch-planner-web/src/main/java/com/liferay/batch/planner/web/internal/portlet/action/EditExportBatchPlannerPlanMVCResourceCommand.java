@@ -64,7 +64,7 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.EXPORT)) {
-			_runBatchPlannerPlan(resourceRequest, resourceResponse);
+			_submitBatchPlannerPlan(resourceRequest, resourceResponse);
 		}
 		else if (cmd.equals(Constants.SAVE)) {
 			_addBatchPlannerPlan(resourceRequest, resourceResponse);
@@ -172,7 +172,7 @@ public class EditExportBatchPlannerPlanMVCResourceCommand
 		return Boolean.TRUE.toString();
 	}
 
-	private void _runBatchPlannerPlan(
+	private void _submitBatchPlannerPlan(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
