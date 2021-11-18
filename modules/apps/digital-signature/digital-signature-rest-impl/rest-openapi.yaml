@@ -66,7 +66,7 @@ openapi: 3.0.1
 paths:
     "/sites/{siteId}/ds-envelopes":
         get:
-            operationId: getDSEnvelopesGroupPage
+            operationId: getSiteDSEnvelopesPage
             parameters:
                 - in: path
                   name: siteId
@@ -97,7 +97,7 @@ paths:
                                 type: array
             tags: ["DSEnvelope"]
         post:
-            operationId: postDSEnvelope
+            operationId: postSiteDSEnvelope
             parameters:
                 - in: path
                   name: siteId
@@ -125,7 +125,7 @@ paths:
             tags: ["DSEnvelope"]
     "/sites/{siteId}/ds-envelopes/{dsEnvelopeId}":
         get:
-            operationId: getDSEnvelope
+            operationId: getSiteDSEnvelope
             parameters:
                 - in: path
                   name: siteId
