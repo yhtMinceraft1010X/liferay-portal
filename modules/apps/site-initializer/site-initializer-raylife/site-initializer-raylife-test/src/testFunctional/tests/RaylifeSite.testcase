@@ -55,4 +55,22 @@ definition {
 			siteTitle = "Raylife");
 	}
 
+	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CatalogForRaylifeIsCreated {
+
+		// TODO LPS-142178 CatalogForRaylifeIsCreated pending implementation
+
+	}
+
+	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ProductsForRaylifeIsCreated {
+
+		// TODO LPS-142180 ProductsForRaylifeIsCreated pending implementation
+
+	}
+
 }

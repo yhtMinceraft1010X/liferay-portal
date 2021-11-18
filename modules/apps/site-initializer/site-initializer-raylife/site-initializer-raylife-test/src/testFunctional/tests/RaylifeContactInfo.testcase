@@ -1,0 +1,71 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	@description = "LPS-142532 - Verify if Continue Button is only enabled when all required fields have been filled in."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanContinueOnContactsInfoWithAllFilled {
+
+		// TODO LPS-142532 CanContinueOnContactsInfoWithAllFilled pending implementation
+
+	}
+
+	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewFirstNameInTip {
+
+		// TODO LPS-142207 CanViewFirstNameInTip pending implementation
+
+	}
+
+	@description = "LPS-142208 - Verify e-mail validation is required (Must have '@' and a '.' or else display, 'Please enter a valid email address.')"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForEmail {
+
+		// TODO LPS-142208 CanViewErrorMessageForEmail pending implementation
+
+	}
+
+	@description = "LPS-142209 - Verify Max number of characters in the First Name field (max chars 256)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FirstNameMaxNumber {
+
+		// TODO LPS-142209 FirstNameMaxNumber pending implementation
+
+	}
+
+	@description = "LPS-142533 - Verify Max number of characters in the Last Name field (max chars 256)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LastNameMaxNumber {
+
+		// TODO LPS-142533 LastNameMaxNumber pending implementation
+
+	}
+
+	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForPhoneNumber {
+
+		// TODO LPS-142536 CanViewErrorMessageForPhoneNumber pending implementation
+
+	}
+
+	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForInvalidZipCode {
+
+		// TODO LPS-142538 CanViewErrorMessageForInvalidZipCode pending implementation
+
+	}
+
+}

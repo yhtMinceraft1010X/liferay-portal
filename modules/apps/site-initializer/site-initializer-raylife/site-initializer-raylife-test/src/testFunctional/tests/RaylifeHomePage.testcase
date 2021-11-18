@@ -1,0 +1,44 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	@description = "LPS-142182 - Verify if ZipCode is required."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ZipCodeIsRequired {
+
+		// TODO LPS-142182 ZipCodeIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142184 - Verify ZipCode Max number of characters (max chars 5)."
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ZipCodeMaxNumber {
+
+		// TODO LPS-142184 ZipCodeMaxNumber pending implementation
+
+	}
+
+	@description = "LPS-142185 - Verify if Product Field is not empty by default."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ProductFieldNotEmpty {
+
+		// TODO LPS-142185 ProductFieldNotEmpty pending implementation
+
+	}
+
+	@description = "LPS-142187 - Verify if error message appear after inserting a wrong ZipCode."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForWrongZipCode {
+
+		// TODO LPS-142187 CanViewErrorMessageForWrongZipCode pending implementation
+
+	}
+
+}

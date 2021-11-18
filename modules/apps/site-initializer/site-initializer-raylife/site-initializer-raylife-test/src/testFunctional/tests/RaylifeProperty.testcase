@@ -1,0 +1,170 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	@description = "LPS-142548 - Verify if Continue Button is only enabled when all required fields have been filled in."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanContinueOnPropertyInfoWithAllFilled {
+
+		// TODO LPS-142548 CanContinueOnPropertyInfoWithAllFilled pending implementation
+
+	}
+
+	@description = "LPS-142550 - Verify if clicking on Previous returns to Previous Screen (Employee Info/'Tell us about your employees!') and all information is maintained in the Property Info page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanGoBackOnPropertyInfoKeepingAllData {
+
+		// TODO LPS-142550 CanGoBackOnPropertyInfoKeepingAllData pending implementation
+
+	}
+
+	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on the page's title (On Property's page's title: More about <Address>)."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdressInTitle {
+
+		// TODO LPS-135202 CanViewAdressInTitle pending implementation
+
+	}
+
+	@description = "LPS-135202 - Verify that the street address entered by the user on the “Just the business basics!” page is also on 'Do you own the building at <Business Street Address>?'"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAdressInDoOwnBuildingAtAddress {
+
+		// TODO LPS-135202 CanViewAdressInDoOwnBuildingAtAddress pending implementation
+
+	}
+
+	@description = "LPS-142551 - Verify error message 'This field is required' in the 'How many stories is this building?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StoriesIsRequired {
+
+		// TODO LPS-142551 StoriesIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142554 - Verify error message 'Must be equal or greater than 0.' in the 'How many stories is this building?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test StoriesNotBelowZero {
+
+		// TODO LPS-142554 StoriesNotBelowZero pending implementation
+
+	}
+
+	@description = "LPS-142556 - Verify error message 'This field is required' in the 'How many square feet of the building does your business occupy?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test BuildingSquareFeetOccupiedIsRequired {
+
+		// TODO LPS-142556 BuildingSquareFeetOccupiedIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142559 - Verify error message 'This field is required' in the 'How many total square feet is the building?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TotalBuildingSquareFeetIsRequired {
+
+		// TODO LPS-142559 TotalBuildingSquareFeetIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142561 - Verify error message 'This field is required' in the 'What year was the building constructed?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test YearBuildingIsRequired {
+
+		// TODO LPS-142561 YearBuildingIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142562 - Verify error message 'Must be a valid year.' in the 'What year was the building constructed?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test YearBuildingIsValid {
+
+		// TODO LPS-142562 YearBuildingIsValid pending implementation
+
+	}
+
+	@description = "LPS-142563 - Verify error message 'You cannot enter a future year.' in the 'What year was the building constructed?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test YearBuildingIsNotFuture {
+
+		// TODO LPS-142563 YearBuildingIsNotFuture pending implementation
+
+	}
+
+	@description = "LPS-142564 - Verify 'Are there swimming pool(s) on the premises?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DoesIsThereSwimmingShowUp {
+
+		// TODO LPS-142564 DoesIsThereSwimmingShowUp pending implementation
+
+	}
+
+	@description = "LPS-142565 - Verify 'Are there diving boards or slides?' only shows if Segment = Habitational (you can Search for Residential in the first page of Basics and select any of those)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DoesIsThereDivingBoardsShowUp {
+
+		// TODO LPS-142565 DoesIsThereDivingBoardsShowUp pending implementation
+
+	}
+
+	@description = "LPS-142572 - Verify clicking 'More Info' in the 'How many square feet of the building does your business occupy?' field opens an Information Panel"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewBuildingSquareFeetOccupiedInfoPanel {
+
+		// TODO LPS-142572 CanViewBuildingSquareFeetOccupiedInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142573 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many square feet of the building does your business occupy?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissBuildingSquareFeetOccupiedInfoPanel {
+
+		// TODO LPS-142573 CanDismissBuildingSquareFeetOccupiedInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142575 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'What year was the building constructed?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissYearBuildingInfoPanel {
+
+		// TODO LPS-142575 CanDismissYearBuildingInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142576 - Verify clicking 'More Info' in the 'Is this the primary location you conduct business?' field opens an Information Panel"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewPrimaryBusinessLocationInfoPanel {
+
+		// TODO LPS-142576 CanViewPrimaryBusinessLocationInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142577 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Is this the primary location you conduct business?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissPrimaryBusinessLocationInfoPanel {
+
+		// TODO LPS-142577 CanDismissPrimaryBusinessLocationInfoPanel pending implementation
+
+	}
+
+}

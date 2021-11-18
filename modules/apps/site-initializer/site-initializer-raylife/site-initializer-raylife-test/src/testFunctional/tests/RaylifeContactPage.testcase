@@ -1,0 +1,62 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	@description = "LPS-142584 - Verify if Application ID was generated after the user saved their Contact Info"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewApplicationId {
+
+		// TODO LPS-142584 CanViewApplicationId pending implementation
+
+	}
+
+	@description = "LPS-142589 - Verify if when the user click in the 'Back to edit info', the previous data persist"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DataPersistsWhenTryToEditInfo {
+
+		// TODO LPS-142589 DataPersistsWhenTryToEditInfo pending implementation
+
+	}
+
+	@description = "LPS-142596 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Let's get in touch.' page)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissContactAgentPageInfoPanel {
+
+		// TODO LPS-142596 CanDismissContactAgentPageInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142608 - Verify if you can reach the contact page by 'Let’s get to know your business!' page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReachContactPageByBusinessPage {
+
+		// TODO LPS-142608 CanReachContactPageByBusinessPage pending implementation
+
+	}
+
+	@description = "LPS-142609 - Verify if you can reach the contact page by 'Tell us about your employees!' page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReachContactPageByEmployeesPage {
+
+		// TODO LPS-142609 CanReachContactPageByEmployeesPage pending implementation
+
+	}
+
+	@description = "LPS-142610 - Verify if you can reach the contact page by 'More about... <Business Street Address>' page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReachContactPageByPropertyPage {
+
+		// TODO LPS-142610 CanReachContactPageByPropertyPage pending implementation
+
+	}
+
+}

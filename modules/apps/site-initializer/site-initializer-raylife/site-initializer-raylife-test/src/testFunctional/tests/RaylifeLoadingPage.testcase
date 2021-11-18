@@ -1,0 +1,35 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	@description = "LPS-142580 - Verify Loading Page is reachable after pressing Continue on Property page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReachLoadingPageByPropertyPage {
+
+		// TODO LPS-142580 CanReachLoadingPageByPropertyPage pending implementation
+
+	}
+
+	@description = "LPS-142581 - Verify Loading Page redirects automatically to Quote Profile Page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRedirectToQuotePage {
+
+		// TODO LPS-142581 CanRedirectToQuotePage pending implementation
+
+	}
+
+	@description = "LPS-142582 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Hang tight...' page)"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissLoadingPageInfoPanel {
+
+		// TODO LPS-142582 CanDismissLoadingPageInfoPanel pending implementation
+
+	}
+
+}
