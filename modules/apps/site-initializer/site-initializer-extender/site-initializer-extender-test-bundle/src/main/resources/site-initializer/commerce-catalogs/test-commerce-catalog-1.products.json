@@ -11,7 +11,7 @@
 		"externalReferenceCode": "TEST001",
 		"height": 2,
 		"images": [
-			"image.png"
+			"test_commerce_product.png"
 		],
 		"length": 7,
 		"minStockQuantity": 5,

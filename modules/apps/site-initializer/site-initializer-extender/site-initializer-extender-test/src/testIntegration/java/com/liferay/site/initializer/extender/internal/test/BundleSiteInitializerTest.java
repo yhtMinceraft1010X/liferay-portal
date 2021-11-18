@@ -280,6 +280,9 @@ public class BundleSiteInitializerTest {
 				cpDefinition.getCPDefinitionId());
 
 		Assert.assertNotNull(cpAttachmentFileEntry);
+
+		// TODO Check that the name is test_commerce_product.png
+
 	}
 
 	private void _assertDDMStructure(Group group) {
