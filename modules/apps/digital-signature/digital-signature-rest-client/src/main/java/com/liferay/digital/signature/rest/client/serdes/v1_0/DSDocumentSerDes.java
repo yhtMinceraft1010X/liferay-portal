@@ -67,20 +67,6 @@ public class DSDocumentSerDes {
 			sb.append("\"");
 		}
 
-		if (dsDocument.getDsDocumentId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dsDocumentId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsDocument.getDsDocumentId()));
-
-			sb.append("\"");
-		}
-
 		if (dsDocument.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -91,6 +77,20 @@ public class DSDocumentSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(dsDocument.getFileExtension()));
+
+			sb.append("\"");
+		}
+
+		if (dsDocument.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsDocument.getId()));
 
 			sb.append("\"");
 		}
@@ -148,20 +148,19 @@ public class DSDocumentSerDes {
 			map.put("data", String.valueOf(dsDocument.getData()));
 		}
 
-		if (dsDocument.getDsDocumentId() == null) {
-			map.put("dsDocumentId", null);
-		}
-		else {
-			map.put(
-				"dsDocumentId", String.valueOf(dsDocument.getDsDocumentId()));
-		}
-
 		if (dsDocument.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
 		else {
 			map.put(
 				"fileExtension", String.valueOf(dsDocument.getFileExtension()));
+		}
+
+		if (dsDocument.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(dsDocument.getId()));
 		}
 
 		if (dsDocument.getName() == null) {
@@ -204,14 +203,14 @@ public class DSDocumentSerDes {
 					dsDocument.setData((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "dsDocumentId")) {
-				if (jsonParserFieldValue != null) {
-					dsDocument.setDsDocumentId((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
 				if (jsonParserFieldValue != null) {
 					dsDocument.setFileExtension((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					dsDocument.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

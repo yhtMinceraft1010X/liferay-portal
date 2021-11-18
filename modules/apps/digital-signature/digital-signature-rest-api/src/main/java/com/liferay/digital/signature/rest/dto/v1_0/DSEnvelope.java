@@ -147,34 +147,6 @@ public class DSEnvelope implements Serializable {
 	protected DSDocument[] dsDocument;
 
 	@Schema
-	public String getDsEnvelopeId() {
-		return dsEnvelopeId;
-	}
-
-	public void setDsEnvelopeId(String dsEnvelopeId) {
-		this.dsEnvelopeId = dsEnvelopeId;
-	}
-
-	@JsonIgnore
-	public void setDsEnvelopeId(
-		UnsafeSupplier<String, Exception> dsEnvelopeIdUnsafeSupplier) {
-
-		try {
-			dsEnvelopeId = dsEnvelopeIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String dsEnvelopeId;
-
-	@Schema
 	@Valid
 	public DSRecipient[] getDsRecipient() {
 		return dsRecipient;
@@ -260,6 +232,32 @@ public class DSEnvelope implements Serializable {
 	protected String emailSubject;
 
 	@Schema
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -312,6 +310,34 @@ public class DSEnvelope implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String senderEmailAddress;
+
+	@Schema
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long siteId;
 
 	@Schema
 	public String getStatus() {
@@ -419,20 +445,6 @@ public class DSEnvelope implements Serializable {
 			sb.append("]");
 		}
 
-		if (dsEnvelopeId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dsEnvelopeId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsEnvelopeId));
-
-			sb.append("\"");
-		}
-
 		if (dsRecipient != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -481,6 +493,20 @@ public class DSEnvelope implements Serializable {
 			sb.append("\"");
 		}
 
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -507,6 +533,16 @@ public class DSEnvelope implements Serializable {
 			sb.append(_escape(senderEmailAddress));
 
 			sb.append("\"");
+		}
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
 		}
 
 		if (status != null) {

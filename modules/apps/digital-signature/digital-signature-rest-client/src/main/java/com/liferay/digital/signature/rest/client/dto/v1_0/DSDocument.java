@@ -53,27 +53,6 @@ public class DSDocument implements Cloneable, Serializable {
 
 	protected String data;
 
-	public String getDsDocumentId() {
-		return dsDocumentId;
-	}
-
-	public void setDsDocumentId(String dsDocumentId) {
-		this.dsDocumentId = dsDocumentId;
-	}
-
-	public void setDsDocumentId(
-		UnsafeSupplier<String, Exception> dsDocumentIdUnsafeSupplier) {
-
-		try {
-			dsDocumentId = dsDocumentIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String dsDocumentId;
-
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -94,6 +73,25 @@ public class DSDocument implements Cloneable, Serializable {
 	}
 
 	protected String fileExtension;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String id;
 
 	public String getName() {
 		return name;

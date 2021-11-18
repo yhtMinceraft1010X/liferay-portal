@@ -82,34 +82,6 @@ public class DSDocument implements Serializable {
 	protected String data;
 
 	@Schema
-	public String getDsDocumentId() {
-		return dsDocumentId;
-	}
-
-	public void setDsDocumentId(String dsDocumentId) {
-		this.dsDocumentId = dsDocumentId;
-	}
-
-	@JsonIgnore
-	public void setDsDocumentId(
-		UnsafeSupplier<String, Exception> dsDocumentIdUnsafeSupplier) {
-
-		try {
-			dsDocumentId = dsDocumentIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String dsDocumentId;
-
-	@Schema
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -136,6 +108,32 @@ public class DSDocument implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
+
+	@Schema
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String id;
 
 	@Schema
 	public String getName() {
@@ -230,20 +228,6 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 		}
 
-		if (dsDocumentId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dsDocumentId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsDocumentId));
-
-			sb.append("\"");
-		}
-
 		if (fileExtension != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -254,6 +238,20 @@ public class DSDocument implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(fileExtension));
+
+			sb.append("\"");
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(id));
 
 			sb.append("\"");
 		}

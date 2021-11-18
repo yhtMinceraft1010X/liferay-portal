@@ -112,20 +112,6 @@ public class DSEnvelopeSerDes {
 			sb.append("]");
 		}
 
-		if (dsEnvelope.getDsEnvelopeId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dsEnvelopeId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsEnvelope.getDsEnvelopeId()));
-
-			sb.append("\"");
-		}
-
 		if (dsEnvelope.getDsRecipient() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -174,6 +160,20 @@ public class DSEnvelopeSerDes {
 			sb.append("\"");
 		}
 
+		if (dsEnvelope.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsEnvelope.getId()));
+
+			sb.append("\"");
+		}
+
 		if (dsEnvelope.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -200,6 +200,16 @@ public class DSEnvelopeSerDes {
 			sb.append(_escape(dsEnvelope.getSenderEmailAddress()));
 
 			sb.append("\"");
+		}
+
+		if (dsEnvelope.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(dsEnvelope.getSiteId());
 		}
 
 		if (dsEnvelope.getStatus() != null) {
@@ -262,14 +272,6 @@ public class DSEnvelopeSerDes {
 			map.put("dsDocument", String.valueOf(dsEnvelope.getDsDocument()));
 		}
 
-		if (dsEnvelope.getDsEnvelopeId() == null) {
-			map.put("dsEnvelopeId", null);
-		}
-		else {
-			map.put(
-				"dsEnvelopeId", String.valueOf(dsEnvelope.getDsEnvelopeId()));
-		}
-
 		if (dsEnvelope.getDsRecipient() == null) {
 			map.put("dsRecipient", null);
 		}
@@ -292,6 +294,13 @@ public class DSEnvelopeSerDes {
 				"emailSubject", String.valueOf(dsEnvelope.getEmailSubject()));
 		}
 
+		if (dsEnvelope.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(dsEnvelope.getId()));
+		}
+
 		if (dsEnvelope.getName() == null) {
 			map.put("name", null);
 		}
@@ -306,6 +315,13 @@ public class DSEnvelopeSerDes {
 			map.put(
 				"senderEmailAddress",
 				String.valueOf(dsEnvelope.getSenderEmailAddress()));
+		}
+
+		if (dsEnvelope.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(dsEnvelope.getSiteId()));
 		}
 
 		if (dsEnvelope.getStatus() == null) {
@@ -360,11 +376,6 @@ public class DSEnvelopeSerDes {
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "dsEnvelopeId")) {
-				if (jsonParserFieldValue != null) {
-					dsEnvelope.setDsEnvelopeId((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "dsRecipient")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setDsRecipient(
@@ -387,6 +398,11 @@ public class DSEnvelopeSerDes {
 					dsEnvelope.setEmailSubject((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					dsEnvelope.setId((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setName((String)jsonParserFieldValue);
@@ -398,6 +414,12 @@ public class DSEnvelopeSerDes {
 				if (jsonParserFieldValue != null) {
 					dsEnvelope.setSenderEmailAddress(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					dsEnvelope.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

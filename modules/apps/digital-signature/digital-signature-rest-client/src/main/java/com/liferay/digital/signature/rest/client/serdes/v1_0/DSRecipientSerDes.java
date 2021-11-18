@@ -55,20 +55,6 @@ public class DSRecipientSerDes {
 
 		sb.append("{");
 
-		if (dsRecipient.getDsRecipientId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dsRecipientId\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(dsRecipient.getDsRecipientId()));
-
-			sb.append("\"");
-		}
-
 		if (dsRecipient.getEmailAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -79,6 +65,20 @@ public class DSRecipientSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(dsRecipient.getEmailAddress()));
+
+			sb.append("\"");
+		}
+
+		if (dsRecipient.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(dsRecipient.getId()));
 
 			sb.append("\"");
 		}
@@ -130,21 +130,19 @@ public class DSRecipientSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (dsRecipient.getDsRecipientId() == null) {
-			map.put("dsRecipientId", null);
-		}
-		else {
-			map.put(
-				"dsRecipientId",
-				String.valueOf(dsRecipient.getDsRecipientId()));
-		}
-
 		if (dsRecipient.getEmailAddress() == null) {
 			map.put("emailAddress", null);
 		}
 		else {
 			map.put(
 				"emailAddress", String.valueOf(dsRecipient.getEmailAddress()));
+		}
+
+		if (dsRecipient.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(dsRecipient.getId()));
 		}
 
 		if (dsRecipient.getName() == null) {
@@ -182,14 +180,14 @@ public class DSRecipientSerDes {
 			DSRecipient dsRecipient, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dsRecipientId")) {
-				if (jsonParserFieldValue != null) {
-					dsRecipient.setDsRecipientId((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
 				if (jsonParserFieldValue != null) {
 					dsRecipient.setEmailAddress((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					dsRecipient.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

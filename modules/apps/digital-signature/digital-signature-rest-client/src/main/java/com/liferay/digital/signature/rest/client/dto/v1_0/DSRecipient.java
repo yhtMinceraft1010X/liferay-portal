@@ -34,27 +34,6 @@ public class DSRecipient implements Cloneable, Serializable {
 		return DSRecipientSerDes.toDTO(json);
 	}
 
-	public String getDsRecipientId() {
-		return dsRecipientId;
-	}
-
-	public void setDsRecipientId(String dsRecipientId) {
-		this.dsRecipientId = dsRecipientId;
-	}
-
-	public void setDsRecipientId(
-		UnsafeSupplier<String, Exception> dsRecipientIdUnsafeSupplier) {
-
-		try {
-			dsRecipientId = dsRecipientIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String dsRecipientId;
-
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -75,6 +54,25 @@ public class DSRecipient implements Cloneable, Serializable {
 	}
 
 	protected String emailAddress;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String id;
 
 	public String getName() {
 		return name;

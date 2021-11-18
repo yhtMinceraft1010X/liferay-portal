@@ -30,6 +30,7 @@ import com.liferay.digital.signature.rest.client.resource.v1_0.DSEnvelopeResourc
 import com.liferay.digital.signature.rest.client.serdes.v1_0.DSEnvelopeSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -179,9 +180,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		DSEnvelope dsEnvelope = randomDSEnvelope();
 
-		dsEnvelope.setDsEnvelopeId(regex);
 		dsEnvelope.setEmailBlurb(regex);
 		dsEnvelope.setEmailSubject(regex);
+		dsEnvelope.setId(regex);
 		dsEnvelope.setName(regex);
 		dsEnvelope.setSenderEmailAddress(regex);
 		dsEnvelope.setStatus(regex);
@@ -192,9 +193,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		dsEnvelope = DSEnvelopeSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, dsEnvelope.getDsEnvelopeId());
 		Assert.assertEquals(regex, dsEnvelope.getEmailBlurb());
 		Assert.assertEquals(regex, dsEnvelope.getEmailSubject());
+		Assert.assertEquals(regex, dsEnvelope.getId());
 		Assert.assertEquals(regex, dsEnvelope.getName());
 		Assert.assertEquals(regex, dsEnvelope.getSenderEmailAddress());
 		Assert.assertEquals(regex, dsEnvelope.getStatus());
@@ -329,17 +330,174 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	@Test
 	public void testGetSiteDSEnvelope() throws Exception {
-		Assert.assertTrue(false);
+		DSEnvelope postDSEnvelope = testGetSiteDSEnvelope_addDSEnvelope();
+
+		DSEnvelope getDSEnvelope = dsEnvelopeResource.getSiteDSEnvelope(
+			postDSEnvelope.getSiteId(), postDSEnvelope.getId());
+
+		assertEquals(postDSEnvelope, getDSEnvelope);
+		assertValid(getDSEnvelope);
+	}
+
+	protected DSEnvelope testGetSiteDSEnvelope_addDSEnvelope()
+		throws Exception {
+
+		return dsEnvelopeResource.postSiteDSEnvelope(
+			testGroup.getGroupId(), randomDSEnvelope());
 	}
 
 	@Test
 	public void testGraphQLGetSiteDSEnvelope() throws Exception {
-		Assert.assertTrue(true);
+		DSEnvelope dsEnvelope = testGraphQLDSEnvelope_addDSEnvelope();
+
+		Assert.assertTrue(
+			equals(
+				dsEnvelope,
+				DSEnvelopeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dSEnvelope",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" + dsEnvelope.getSiteId() +
+												"\"");
+										put(
+											"dsEnvelopeId",
+											"\"" + dsEnvelope.getId() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/dSEnvelope"))));
 	}
 
 	@Test
 	public void testGraphQLGetSiteDSEnvelopeNotFound() throws Exception {
-		Assert.assertTrue(true);
+		String irrelevantDsEnvelopeId =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dSEnvelope",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put("dsEnvelopeId", irrelevantDsEnvelopeId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
+		throws Exception {
+
+		if (value instanceof Object[]) {
+			StringBuilder arraySB = new StringBuilder("[");
+
+			for (Object object : (Object[])value) {
+				if (arraySB.length() > 1) {
+					arraySB.append(", ");
+				}
+
+				arraySB.append("{");
+
+				Class<?> clazz = object.getClass();
+
+				for (java.lang.reflect.Field field :
+						getDeclaredFields(clazz.getSuperclass())) {
+
+					arraySB.append(field.getName());
+					arraySB.append(": ");
+
+					appendGraphQLFieldValue(arraySB, field.get(object));
+
+					arraySB.append(", ");
+				}
+
+				arraySB.setLength(arraySB.length() - 2);
+
+				arraySB.append("}");
+			}
+
+			arraySB.append("]");
+
+			sb.append(arraySB.toString());
+		}
+		else if (value instanceof String) {
+			sb.append("\"");
+			sb.append(value);
+			sb.append("\"");
+		}
+		else {
+			sb.append(value);
+		}
+	}
+
+	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope()
+		throws Exception {
+
+		return testGraphQLDSEnvelope_addDSEnvelope(randomDSEnvelope());
+	}
+
+	protected DSEnvelope testGraphQLDSEnvelope_addDSEnvelope(
+			DSEnvelope dsEnvelope)
+		throws Exception {
+
+		JSONDeserializer<DSEnvelope> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(DSEnvelope.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(field.getName());
+			sb.append(": ");
+
+			appendGraphQLFieldValue(sb, field.get(dsEnvelope));
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		return jsonDeserializer.deserialize(
+			JSONUtil.getValueAsString(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"createSiteDSEnvelope",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + testGroup.getGroupId() + "\"");
+								put("dsEnvelope", sb.toString());
+							}
+						},
+						graphQLFields)),
+				"JSONObject/data", "JSONObject/createSiteDSEnvelope"),
+			DSEnvelope.class);
 	}
 
 	protected void assertContains(
@@ -420,19 +578,19 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			valid = false;
 		}
 
+		if (dsEnvelope.getId() == null) {
+			valid = false;
+		}
+
+		if (!Objects.equals(dsEnvelope.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("dsDocument", additionalAssertFieldName)) {
 				if (dsEnvelope.getDsDocument() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("dsEnvelopeId", additionalAssertFieldName)) {
-				if (dsEnvelope.getDsEnvelopeId() == null) {
 					valid = false;
 				}
 
@@ -521,6 +679,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("siteId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope.
@@ -577,6 +737,10 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			return true;
 		}
 
+		if (!Objects.equals(dsEnvelope1.getSiteId(), dsEnvelope2.getSiteId())) {
+			return false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -613,17 +777,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("dsEnvelopeId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						dsEnvelope1.getDsEnvelopeId(),
-						dsEnvelope2.getDsEnvelopeId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("dsRecipient", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						dsEnvelope1.getDsRecipient(),
@@ -650,6 +803,16 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				if (!Objects.deepEquals(
 						dsEnvelope1.getEmailSubject(),
 						dsEnvelope2.getEmailSubject())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dsEnvelope1.getId(), dsEnvelope2.getId())) {
 
 					return false;
 				}
@@ -855,14 +1018,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("dsEnvelopeId")) {
-			sb.append("'");
-			sb.append(String.valueOf(dsEnvelope.getDsEnvelopeId()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("dsRecipient")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -884,6 +1039,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("id")) {
+			sb.append("'");
+			sb.append(String.valueOf(dsEnvelope.getId()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name")) {
 			sb.append("'");
 			sb.append(String.valueOf(dsEnvelope.getName()));
@@ -898,6 +1061,11 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("status")) {
@@ -954,17 +1122,17 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				dsEnvelopeId = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				emailBlurb =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
 				emailSubject =
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
+				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				senderEmailAddress = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				siteId = testGroup.getGroupId();
 				status = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -972,6 +1140,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	protected DSEnvelope randomIrrelevantDSEnvelope() throws Exception {
 		DSEnvelope randomIrrelevantDSEnvelope = randomDSEnvelope();
+
+		randomIrrelevantDSEnvelope.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantDSEnvelope;
 	}
