@@ -346,7 +346,7 @@ public class UpstreamFailureUtil {
 			TopLevelBuild topLevelBuild)
 		throws IllegalStateException {
 
-		Properties buildProperties;
+		Properties buildProperties = null;
 
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
@@ -356,11 +356,11 @@ public class UpstreamFailureUtil {
 				"Unable to get build properties", ioException);
 		}
 
-		String portalDirectory = buildProperties.getProperty(
+		String portalDirName = buildProperties.getProperty(
 			JenkinsResultsParserUtil.combine(
 				"portal.dir[", topLevelBuild.getBranchName(), "]"));
 
-		String baseGitRepositoryName = portalDirectory.replaceAll(
+		String baseGitRepositoryName = portalDirName.replaceAll(
 			"(?:.*)(liferay-portal.*)", "$1");
 
 		GitWorkingDirectory gitWorkingDirectory =
