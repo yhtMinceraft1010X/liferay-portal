@@ -187,7 +187,7 @@ definition {
 
 		task ("Open Content Performance and Assert if element is not present") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-			
+
 			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
 				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 			}
@@ -210,7 +210,6 @@ definition {
 				locator1 = "ContentPerformance#NUMBER_VIEWS",
 				value1 = "0");
 		}
-
 	}
 
 	@description = "LPS-110920: When the user selects a language in the switcher, it doesn't affect the user's language"
@@ -223,7 +222,7 @@ definition {
 
 		task ("Open Content Performance and Assert if element is not present") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-			
+
 			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
 				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 			}
