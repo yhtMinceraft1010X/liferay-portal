@@ -37,15 +37,9 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
 		throws Exception {
 
-		com.liferay.digital.signature.model.DSEnvelope dsEnvelope =
+		return DSEnvelopeUtil.toDSEnvelope(
 			_dsEnvelopeManager.getDSEnvelope(
-				contextCompany.getCompanyId(), siteId, dsEnvelopeId);
-
-		if (Validator.isNull(dsEnvelope.getDSEnvelopeId())) {
-			throw new Exception("Envelope does not exist!");
-		}
-
-		return DSEnvelopeUtil.toDSEnvelope(dsEnvelope);
+				contextCompany.getCompanyId(), siteId, dsEnvelopeId));
 	}
 
 	@Override
