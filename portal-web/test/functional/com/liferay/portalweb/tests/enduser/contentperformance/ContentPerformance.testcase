@@ -165,8 +165,51 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test LanguageSelector {
+		task ("Add a translation for that page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-139247 LanguageSelector pending implementation
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Content Page");
+
+			Page.addFriendlyURLLocalizedPG(
+				friendlyUrlLocalized = "pt_BR",
+				localizedFriendlyURL = "");
+
+			PortletEntry.inputName(name = "Pagina principal");
+
+			Button.clickSave();
+		}
+
+		task ("Set a custom page as canonical URL and go to Content Performance") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay.com.br");
+		}
+
+		task ("Open Content Performance and Assert if element is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			
+			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
+				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			}
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
+
+		task ("Change language and assert") {
+			PageAudit.changeLocale(locale = "Portuguese");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_TITLE",
+				value1 = "Pagina principal");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				value1 = "https://liferay.com.br");
+
+			AssertElementPresent(
+				key_number = "2",
+				locator1 = "ContentPerformance#NUMBER_VIEWS",
+				value1 = "0");
+		}
 
 	}
 
@@ -174,9 +217,30 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test LanguageSelectorUserLanguage {
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(URL = "https://liferay.com.br");
+		}
 
-		// TODO LPS-139247 LanguageSelectorUserLanguage pending implementation
+		task ("Open Content Performance and Assert if element is not present") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			
+			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
+				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			}
+			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		}
 
+		task ("Change language and assert") {
+			PageAudit.changeLocale(locale = "Portuguese");
+
+			AssertTextPresent(
+				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE_PANEL",
+				value1 = "Content Performance");
+
+			AssertTextPresent(
+				locator1 = "PageAudit#PANEL_PAGE_URL",
+				value1 = "https://liferay.com.br");
+		}
 	}
 
 	@description = "LPS-118006: When the DXP is not connected to AC, if the user clicks on the Metrics button, the sidebar panel shows up and displays a button titled Dont show me this again and a message informing the user that the panel will show up again if AC is connected"

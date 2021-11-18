@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERFORMANCE_TITLE_PANEL</td>
+	<td>//span[contains(@class, 'font-weight-bold') and contains(text(),'Content Performance')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERFORMANCE_URL</td>
 	<td>//*[contains(@class, 'text-truncate text-truncate-reverse')]//bdi[contains(@class,'text-secondary')]</td>
 	<td></td>
