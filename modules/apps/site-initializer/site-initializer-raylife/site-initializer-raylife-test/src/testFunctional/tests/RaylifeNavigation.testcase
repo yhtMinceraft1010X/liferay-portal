@@ -5,12 +5,12 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
-	@description = "LPS-142186 - Verify if when users are viewing a current section, that section will be highlighted in blue."
+	@description = "LPS-142193 - Verify if Navigation is clickable for sections that are partially or fully complete."
 	@ignore = "Test Stub"
-	@priority = "5"
-	test SectionIsHighlighted {
+	@priority = "4"
+	test CanNavigateByClickingInSections {
 
-		// TODO LPS-142186 SectionIsHighlighted pending implementation
+		// TODO LPS-142193 CanNavigateByClickingInSections pending implementation
 
 	}
 
@@ -23,21 +23,21 @@ definition {
 
 	}
 
+	@description = "LPS-142186 - Verify if when users are viewing a current section, that section will be highlighted in blue."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SectionIsHighlighted {
+
+		// TODO LPS-142186 SectionIsHighlighted pending implementation
+
+	}
+
 	@description = "LPS-142191 - Verify if when a section has not yet been started and the user is not currently viewing this section, that section will be grayed out."
 	@ignore = "Test Stub"
 	@priority = "5"
 	test SectionIsIncomplete {
 
 		// TODO LPS-142191 SectionIsIncomplete pending implementation
-
-	}
-
-	@description = "LPS-142193 - Verify if Navigation is clickable for sections that are partially or fully complete."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanNavigateByClickingInSections {
-
-		// TODO LPS-142193 CanNavigateByClickingInSections pending implementation
 
 	}
 

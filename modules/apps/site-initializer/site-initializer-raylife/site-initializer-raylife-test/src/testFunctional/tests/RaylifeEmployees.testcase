@@ -5,12 +5,48 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	@description = "LPS-142450 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AnnualPayrollForEmployeesIsRequired {
+
+		// TODO LPS-142450 AnnualPayrollForEmployeesIsRequired pending implementation
+
+	}
+
+	@description = "LPS-142449 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AnnualPayrollForOwnerIsRequired {
+
+		// TODO LPS-142449 AnnualPayrollForOwnerIsRequired pending implementation
+
+	}
+
 	@description = "LPS-142422 - Verify if Continue Button is only enabled when all required fields have been filled in."
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanContinueOnEmployeeInfoWithAllFilled {
 
 		// TODO LPS-142422 CanContinueOnEmployeeInfoWithAllFilled pending implementation
+
+	}
+
+	@description = "LPS-142541 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Federal Employer Identification Number (FEIN)')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissFEINInfoPanel {
+
+		// TODO LPS-142541 CanDismissFEINInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142546 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many full or part time employees do you have?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissPartTimeEmployeesInfoPanel {
+
+		// TODO LPS-142546 CanDismissPartTimeEmployeesInfoPanel pending implementation
 
 	}
 
@@ -23,12 +59,39 @@ definition {
 
 	}
 
+	@description = "LPS-142454 - Verify clicking 'More Info' in the 'Federal Employer Identification Number (FEIN)' field opens an Information Panel"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewFEINInfoPanel {
+
+		// TODO LPS-142454 CanViewFEINInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142542 - Verify clicking 'More Info' in the 'How many full or part time employees do you have?' field opens an Information Panel"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewPartTimeEmployeesInfoPanel {
+
+		// TODO LPS-142542 CanViewPartTimeEmployeesInfoPanel pending implementation
+
+	}
+
 	@description = "LPS-142424 - Verify if 'Does your business have a Federal Employer Identification Number (FEIN)?' = 'Yes', then field 'Federal Employer Identification Number (FEIN)' is shown"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test DoesFEINInputFieldShowsUp {
 
 		// TODO LPS-142424 DoesFEINInputFieldShowsUp pending implementation
+
+	}
+
+	@description = "LPS-142447 - Verify error message 'This field is required' in the 'What is your estimated annual gross revenue for the next 12 months?' field"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EstimatedAnnualGrossRevenueIsRequired {
+
+		// TODO LPS-142447 EstimatedAnnualGrossRevenueIsRequired pending implementation
 
 	}
 
@@ -50,24 +113,6 @@ definition {
 
 	}
 
-	@description = "LPS-142433 - Verify error message 'This field is required' in the 'What year did you start your business?' field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test StartBusinessYearIsRequired {
-
-		// TODO LPS-142433 StartBusinessYearIsRequired pending implementation
-
-	}
-
-	@description = "LPS-142435 - Verify error message 'You cannot enter a future year.' in the 'What year did you start your business?' field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test StartBusinessYearIsNotFuture {
-
-		// TODO LPS-142435 StartBusinessYearIsNotFuture pending implementation
-
-	}
-
 	@description = "LPS-142444 - Verify error message 'This field is required' in the 'How many full or part time employees do you have?' field"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -86,66 +131,21 @@ definition {
 
 	}
 
-	@description = "LPS-142447 - Verify error message 'This field is required' in the 'What is your estimated annual gross revenue for the next 12 months?' field"
+	@description = "LPS-142435 - Verify error message 'You cannot enter a future year.' in the 'What year did you start your business?' field"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test EstimatedAnnualGrossRevenueIsRequired {
+	test StartBusinessYearIsNotFuture {
 
-		// TODO LPS-142447 EstimatedAnnualGrossRevenueIsRequired pending implementation
+		// TODO LPS-142435 StartBusinessYearIsNotFuture pending implementation
 
 	}
 
-	@description = "LPS-142449 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' field"
+	@description = "LPS-142433 - Verify error message 'This field is required' in the 'What year did you start your business?' field"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test AnnualPayrollForOwnerIsRequired {
+	test StartBusinessYearIsRequired {
 
-		// TODO LPS-142449 AnnualPayrollForOwnerIsRequired pending implementation
-
-	}
-
-	@description = "LPS-142450 - Verify error message 'This field is required' in the 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test AnnualPayrollForEmployeesIsRequired {
-
-		// TODO LPS-142450 AnnualPayrollForEmployeesIsRequired pending implementation
-
-	}
-
-	@description = "LPS-142454 - Verify clicking 'More Info' in the 'Federal Employer Identification Number (FEIN)' field opens an Information Panel"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanViewFEINInfoPanel {
-
-		// TODO LPS-142454 CanViewFEINInfoPanel pending implementation
-
-	}
-
-	@description = "LPS-142541 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Federal Employer Identification Number (FEIN)')"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanDismissFEINInfoPanel {
-
-		// TODO LPS-142541 CanDismissFEINInfoPanel pending implementation
-
-	}
-
-	@description = "LPS-142542 - Verify clicking 'More Info' in the 'How many full or part time employees do you have?' field opens an Information Panel"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanViewPartTimeEmployeesInfoPanel {
-
-		// TODO LPS-142542 CanViewPartTimeEmployeesInfoPanel pending implementation
-
-	}
-
-	@description = "LPS-142546 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'How many full or part time employees do you have?')"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanDismissPartTimeEmployeesInfoPanel {
-
-		// TODO LPS-142546 CanDismissPartTimeEmployeesInfoPanel pending implementation
+		// TODO LPS-142433 StartBusinessYearIsRequired pending implementation
 
 	}
 

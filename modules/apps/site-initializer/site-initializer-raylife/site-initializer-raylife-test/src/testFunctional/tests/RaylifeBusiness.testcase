@@ -14,6 +14,24 @@ definition {
 
 	}
 
+	@description = "LPS-135198 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Percent of sales from used merchandise?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissSalesMerchandiseInfoPanel {
+
+		// TODO LPS-135198 CanDismissSalesMerchandiseInfoPanel pending implementation
+
+	}
+
+	@description = "LPS-142392 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Years of industry experience?')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDismissYearsOfExperienceInfoPanel {
+
+		// TODO LPS-142392 CanDismissYearsOfExperienceInfoPanel pending implementation
+
+	}
+
 	@description = "LPS-142379 - Verify if clicking on Previous returns to Previous Screen (Product Selection/'Select a product.') and all information is maintained in the Business page"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -23,39 +41,21 @@ definition {
 
 	}
 
-	@description = "LPS-142382 - Verify error message 'This field is required' in the 'Years of industry experience?' field"
+	@description = "LPS-142393 - Verify clicking 'More Info' in the 'Percent of sales from used merchandise?' field opens an Information Panel"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test YearsOfExperienceIsRequired {
+	@priority = "3"
+	test CanViewSalesMerchandiseInfoPanel {
 
-		// TODO LPS-142382 YearsOfExperienceIsRequired pending implementation
+		// TODO LPS-142393 CanViewSalesMerchandiseInfoPanel pending implementation
 
 	}
 
-	@description = "LPS-142383 - Verify error message 'Must be equal or greater than 0.' in the 'Years of industry experience?' field"
+	@description = "LPS-142390 - Verify clicking 'More Info' in the 'Years of industry experience?' field opens an Information Panel"
 	@ignore = "Test Stub"
-	@priority = "4"
-	test YearsOfExperienceNotBelowZero {
+	@priority = "3"
+	test CanViewYearsOfExperienceInfoPanel {
 
-		// TODO LPS-142383 YearsOfExperienceNotBelowZero pending implementation
-
-	}
-
-	@description = "LPS-142386 - Verify error message 'Percent of sales is required.' in the 'Percent of sales from used merchandise?' field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test SalesMerchandiseIsRequired {
-
-		// TODO LPS-142386 SalesMerchandiseIsRequired pending implementation
-
-	}
-
-	@description = "LPS-142385 - Verify error message 'Value must not be greater than 100%.' in the 'Percent of sales from used merchandise?' field"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test SalesMerchandiseNotAbove100 {
-
-		// TODO LPS-142385 SalesMerchandiseNotAbove100 pending implementation
+		// TODO LPS-142390 CanViewYearsOfExperienceInfoPanel pending implementation
 
 	}
 
@@ -77,39 +77,39 @@ definition {
 
 	}
 
-	@description = "LPS-142390 - Verify clicking 'More Info' in the 'Years of industry experience?' field opens an Information Panel"
+	@description = "LPS-142386 - Verify error message 'Percent of sales is required.' in the 'Percent of sales from used merchandise?' field"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test CanViewYearsOfExperienceInfoPanel {
+	@priority = "4"
+	test SalesMerchandiseIsRequired {
 
-		// TODO LPS-142390 CanViewYearsOfExperienceInfoPanel pending implementation
+		// TODO LPS-142386 SalesMerchandiseIsRequired pending implementation
 
 	}
 
-	@description = "LPS-142392 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Years of industry experience?')"
+	@description = "LPS-142385 - Verify error message 'Value must not be greater than 100%.' in the 'Percent of sales from used merchandise?' field"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test CanDismissYearsOfExperienceInfoPanel {
+	@priority = "4"
+	test SalesMerchandiseNotAbove100 {
 
-		// TODO LPS-142392 CanDismissYearsOfExperienceInfoPanel pending implementation
+		// TODO LPS-142385 SalesMerchandiseNotAbove100 pending implementation
 
 	}
 
-	@description = "LPS-142393 - Verify clicking 'More Info' in the 'Percent of sales from used merchandise?' field opens an Information Panel"
+	@description = "LPS-142382 - Verify error message 'This field is required' in the 'Years of industry experience?' field"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test CanViewSalesMerchandiseInfoPanel {
+	@priority = "4"
+	test YearsOfExperienceIsRequired {
 
-		// TODO LPS-142393 CanViewSalesMerchandiseInfoPanel pending implementation
+		// TODO LPS-142382 YearsOfExperienceIsRequired pending implementation
 
 	}
 
-	@description = "LPS-135198 - Verify clicking 'Dismiss' on the Information Panel closes it (Information Panel from 'Percent of sales from used merchandise?')"
+	@description = "LPS-142383 - Verify error message 'Must be equal or greater than 0.' in the 'Years of industry experience?' field"
 	@ignore = "Test Stub"
-	@priority = "3"
-	test CanDismissSalesMerchandiseInfoPanel {
+	@priority = "4"
+	test YearsOfExperienceNotBelowZero {
 
-		// TODO LPS-135198 CanDismissSalesMerchandiseInfoPanel pending implementation
+		// TODO LPS-142383 YearsOfExperienceNotBelowZero pending implementation
 
 	}
 

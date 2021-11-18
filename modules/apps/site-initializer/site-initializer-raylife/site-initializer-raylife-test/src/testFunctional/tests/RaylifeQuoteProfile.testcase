@@ -5,6 +5,15 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";
 
+	@description = "LPS-142605 - Verify if pressing the 'Purchase this policy' button in one of the quotes redirects to another page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanReachSelectedQuotePage {
+
+		// TODO LPS-142605 CanReachSelectedQuotePage pending implementation
+
+	}
+
 	@description = "LPS-142603 - Verify if Quote Profile Info panel is shown"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -20,15 +29,6 @@ definition {
 	test CanViewUserData {
 
 		// TODO LPS-142604 CanViewUserData pending implementation
-
-	}
-
-	@description = "LPS-142605 - Verify if pressing the 'Purchase this policy' button in one of the quotes redirects to another page"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanReachSelectedQuotePage {
-
-		// TODO LPS-142605 CanReachSelectedQuotePage pending implementation
 
 	}
 

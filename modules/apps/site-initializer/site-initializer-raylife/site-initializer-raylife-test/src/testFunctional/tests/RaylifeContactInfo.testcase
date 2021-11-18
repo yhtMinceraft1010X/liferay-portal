@@ -14,21 +14,39 @@ definition {
 
 	}
 
-	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test CanViewFirstNameInTip {
-
-		// TODO LPS-142207 CanViewFirstNameInTip pending implementation
-
-	}
-
 	@description = "LPS-142208 - Verify e-mail validation is required (Must have '@' and a '.' or else display, 'Please enter a valid email address.')"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewErrorMessageForEmail {
 
 		// TODO LPS-142208 CanViewErrorMessageForEmail pending implementation
+
+	}
+
+	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForInvalidZipCode {
+
+		// TODO LPS-142538 CanViewErrorMessageForInvalidZipCode pending implementation
+
+	}
+
+	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewErrorMessageForPhoneNumber {
+
+		// TODO LPS-142536 CanViewErrorMessageForPhoneNumber pending implementation
+
+	}
+
+	@description = "LPS-142207 - Verify name persistence in tip (information panel) in Basics section"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewFirstNameInTip {
+
+		// TODO LPS-142207 CanViewFirstNameInTip pending implementation
 
 	}
 
@@ -47,24 +65,6 @@ definition {
 	test LastNameMaxNumber {
 
 		// TODO LPS-142533 LastNameMaxNumber pending implementation
-
-	}
-
-	@description = "LPS-142536 - Verify if Phone field shows error message when filling in an invalid Phone number"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewErrorMessageForPhoneNumber {
-
-		// TODO LPS-142536 CanViewErrorMessageForPhoneNumber pending implementation
-
-	}
-
-	@description = "LPS-142538 - Verify if Zip Code field shows error message when filling in an invalid Zip Code"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanViewErrorMessageForInvalidZipCode {
-
-		// TODO LPS-142538 CanViewErrorMessageForInvalidZipCode pending implementation
 
 	}
 
