@@ -126,7 +126,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceCatalogs(group);
 			_assertCommerceChannel(group);
 			_assertCommerceInventoryWarehouse(group);
-			_assertCPDefinitions(group);
+			_assertCPDefinition(group);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
@@ -266,7 +266,7 @@ public class BundleSiteInitializerTest {
 			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
 	}
 
-	private void _assertCPDefinitions(Group group) throws Exception {
+	private void _assertCPDefinition(Group group) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
