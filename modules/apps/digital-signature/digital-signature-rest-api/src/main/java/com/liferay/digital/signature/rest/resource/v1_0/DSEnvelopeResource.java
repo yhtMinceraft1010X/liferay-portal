@@ -44,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-digital-signature/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/digital-signature-rest/v1.0
  *
  * @author José Abelenda
  * @generated
@@ -57,7 +57,7 @@ public interface DSEnvelopeResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<DSEnvelope> getDSEnvelopesPage(
+	public Page<DSEnvelope> getDSEnvelopesGroupPage(
 			Long companyId, Long groupId, Pagination pagination)
 		throws Exception;
 

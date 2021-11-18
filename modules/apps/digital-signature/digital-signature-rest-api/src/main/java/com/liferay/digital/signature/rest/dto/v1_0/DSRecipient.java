@@ -55,7 +55,7 @@ public class DSRecipient implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DSRecipient.class, json);
 	}
 
-	@Schema(description = "The recipient's Id.")
+	@Schema
 	public String getDsRecipientId() {
 		return dsRecipientId;
 	}
@@ -79,11 +79,11 @@ public class DSRecipient implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The recipient's Id.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dsRecipientId;
 
-	@Schema(description = "The recipient's email address.")
+	@Schema
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -107,11 +107,11 @@ public class DSRecipient implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The recipient's email address.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailAddress;
 
-	@Schema(description = "The recipient's name.")
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -133,11 +133,11 @@ public class DSRecipient implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The recipient's name.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "The recipient's status.")
+	@Schema
 	public String getStatus() {
 		return status;
 	}
@@ -161,7 +161,7 @@ public class DSRecipient implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The recipient's status.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 

@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"liferay.jackson=false",
-		"osgi.jaxrs.application.base=/headless-digital-signature",
+		"osgi.jaxrs.application.base=/digital-signature-rest",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=HeadlessDigitalSignature"
+		"osgi.jaxrs.name=Liferay.Digital.Signature.REST"
 	},
 	service = Application.class
 )
 @Generated("")
-public class HeadlessDigitalSignatureApplication extends Application {
+public class DigitalSignatureRESTApplication extends Application {
 }

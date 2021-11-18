@@ -71,7 +71,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -100,7 +100,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<DSEnvelope> getDSEnvelopesPage(
+	public Page<DSEnvelope> getDSEnvelopesGroupPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("companyId")
@@ -118,7 +118,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -158,7 +158,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/batch' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/batch' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -219,11 +219,8 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}'  -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves an envelope."
-	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -310,9 +307,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getDSEnvelopesPage(
-			Long.parseLong((String)parameters.get("companyId")),
-			Long.parseLong((String)parameters.get("groupId")), pagination);
+		return null;
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class ServletDataImpl implements ServletData {
 
 	@Override
 	public String getPath() {
-		return "/headless-digital-signature-graphql/v1_0";
+		return "/digital-signature-rest-graphql/v1_0";
 	}
 
 	@Override

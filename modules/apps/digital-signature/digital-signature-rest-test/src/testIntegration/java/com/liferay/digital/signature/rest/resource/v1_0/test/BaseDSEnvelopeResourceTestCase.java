@@ -201,25 +201,26 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	}
 
 	@Test
-	public void testGetDSEnvelopesPage() throws Exception {
-		Long companyId = testGetDSEnvelopesPage_getCompanyId();
+	public void testGetDSEnvelopesGroupPage() throws Exception {
+		Long companyId = testGetDSEnvelopesGroupPage_getCompanyId();
 		Long irrelevantCompanyId =
-			testGetDSEnvelopesPage_getIrrelevantCompanyId();
-		Long groupId = testGetDSEnvelopesPage_getGroupId();
-		Long irrelevantGroupId = testGetDSEnvelopesPage_getIrrelevantGroupId();
+			testGetDSEnvelopesGroupPage_getIrrelevantCompanyId();
+		Long groupId = testGetDSEnvelopesGroupPage_getGroupId();
+		Long irrelevantGroupId =
+			testGetDSEnvelopesGroupPage_getIrrelevantGroupId();
 
-		Page<DSEnvelope> page = dsEnvelopeResource.getDSEnvelopesPage(
+		Page<DSEnvelope> page = dsEnvelopeResource.getDSEnvelopesGroupPage(
 			companyId, groupId, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		if ((irrelevantCompanyId != null) && (irrelevantGroupId != null)) {
 			DSEnvelope irrelevantDSEnvelope =
-				testGetDSEnvelopesPage_addDSEnvelope(
+				testGetDSEnvelopesGroupPage_addDSEnvelope(
 					irrelevantCompanyId, irrelevantGroupId,
 					randomIrrelevantDSEnvelope());
 
-			page = dsEnvelopeResource.getDSEnvelopesPage(
+			page = dsEnvelopeResource.getDSEnvelopesGroupPage(
 				irrelevantCompanyId, irrelevantGroupId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -230,13 +231,13 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			assertValid(page);
 		}
 
-		DSEnvelope dsEnvelope1 = testGetDSEnvelopesPage_addDSEnvelope(
+		DSEnvelope dsEnvelope1 = testGetDSEnvelopesGroupPage_addDSEnvelope(
 			companyId, groupId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope2 = testGetDSEnvelopesPage_addDSEnvelope(
+		DSEnvelope dsEnvelope2 = testGetDSEnvelopesGroupPage_addDSEnvelope(
 			companyId, groupId, randomDSEnvelope());
 
-		page = dsEnvelopeResource.getDSEnvelopesPage(
+		page = dsEnvelopeResource.getDSEnvelopesGroupPage(
 			companyId, groupId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -248,27 +249,27 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	}
 
 	@Test
-	public void testGetDSEnvelopesPageWithPagination() throws Exception {
-		Long companyId = testGetDSEnvelopesPage_getCompanyId();
-		Long groupId = testGetDSEnvelopesPage_getGroupId();
+	public void testGetDSEnvelopesGroupPageWithPagination() throws Exception {
+		Long companyId = testGetDSEnvelopesGroupPage_getCompanyId();
+		Long groupId = testGetDSEnvelopesGroupPage_getGroupId();
 
-		DSEnvelope dsEnvelope1 = testGetDSEnvelopesPage_addDSEnvelope(
+		DSEnvelope dsEnvelope1 = testGetDSEnvelopesGroupPage_addDSEnvelope(
 			companyId, groupId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope2 = testGetDSEnvelopesPage_addDSEnvelope(
+		DSEnvelope dsEnvelope2 = testGetDSEnvelopesGroupPage_addDSEnvelope(
 			companyId, groupId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope3 = testGetDSEnvelopesPage_addDSEnvelope(
+		DSEnvelope dsEnvelope3 = testGetDSEnvelopesGroupPage_addDSEnvelope(
 			companyId, groupId, randomDSEnvelope());
 
-		Page<DSEnvelope> page1 = dsEnvelopeResource.getDSEnvelopesPage(
+		Page<DSEnvelope> page1 = dsEnvelopeResource.getDSEnvelopesGroupPage(
 			companyId, groupId, Pagination.of(1, 2));
 
 		List<DSEnvelope> dsEnvelopes1 = (List<DSEnvelope>)page1.getItems();
 
 		Assert.assertEquals(dsEnvelopes1.toString(), 2, dsEnvelopes1.size());
 
-		Page<DSEnvelope> page2 = dsEnvelopeResource.getDSEnvelopesPage(
+		Page<DSEnvelope> page2 = dsEnvelopeResource.getDSEnvelopesGroupPage(
 			companyId, groupId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -277,7 +278,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		Assert.assertEquals(dsEnvelopes2.toString(), 1, dsEnvelopes2.size());
 
-		Page<DSEnvelope> page3 = dsEnvelopeResource.getDSEnvelopesPage(
+		Page<DSEnvelope> page3 = dsEnvelopeResource.getDSEnvelopesGroupPage(
 			companyId, groupId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
@@ -285,7 +286,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			(List<DSEnvelope>)page3.getItems());
 	}
 
-	protected DSEnvelope testGetDSEnvelopesPage_addDSEnvelope(
+	protected DSEnvelope testGetDSEnvelopesGroupPage_addDSEnvelope(
 			Long companyId, Long groupId, DSEnvelope dsEnvelope)
 		throws Exception {
 
@@ -293,23 +294,23 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetDSEnvelopesPage_getCompanyId() throws Exception {
+	protected Long testGetDSEnvelopesGroupPage_getCompanyId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetDSEnvelopesPage_getIrrelevantCompanyId()
+	protected Long testGetDSEnvelopesGroupPage_getIrrelevantCompanyId()
 		throws Exception {
 
 		return null;
 	}
 
-	protected Long testGetDSEnvelopesPage_getGroupId() throws Exception {
+	protected Long testGetDSEnvelopesGroupPage_getGroupId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetDSEnvelopesPage_getIrrelevantGroupId()
+	protected Long testGetDSEnvelopesGroupPage_getIrrelevantGroupId()
 		throws Exception {
 
 		return null;

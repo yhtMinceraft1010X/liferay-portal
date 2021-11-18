@@ -58,10 +58,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopes(companyId: ___, groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopesGroup(companyId: ___, groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DSEnvelopePage dSEnvelopes(
+	public DSEnvelopePage dSEnvelopesGroup(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("pageSize") int pageSize,
@@ -72,16 +72,16 @@ public class Query {
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dsEnvelopeResource -> new DSEnvelopePage(
-				dsEnvelopeResource.getDSEnvelopesPage(
+				dsEnvelopeResource.getDSEnvelopesGroupPage(
 					companyId, groupId, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(companyId: ___, dsEnvelopeId: ___, groupId: ___){dateCreated, dateModified, dsDocument, dsRecipient, emailBlurb, emailSubject, dsEnvelopeId, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(companyId: ___, dsEnvelopeId: ___, groupId: ___){dateCreated, dateModified, dsDocument, dsEnvelopeId, dsRecipient, emailBlurb, emailSubject, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves an envelope.")
+	@GraphQLField
 	public DSEnvelope dSEnvelope(
 			@GraphQLName("companyId") Long companyId,
 			@GraphQLName("groupId") Long groupId,

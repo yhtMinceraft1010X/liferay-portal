@@ -146,7 +146,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DSDocument[] dsDocument;
 
-	@Schema(description = "The envelope's Id.")
+	@Schema
 	public String getDsEnvelopeId() {
 		return dsEnvelopeId;
 	}
@@ -170,7 +170,7 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's Id.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dsEnvelopeId;
 
@@ -203,7 +203,7 @@ public class DSEnvelope implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DSRecipient[] dsRecipient;
 
-	@Schema(description = "The envelope's email body.")
+	@Schema
 	public String getEmailBlurb() {
 		return emailBlurb;
 	}
@@ -227,11 +227,11 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's email body.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailBlurb;
 
-	@Schema(description = "The envelope's email subject.")
+	@Schema
 	public String getEmailSubject() {
 		return emailSubject;
 	}
@@ -255,11 +255,11 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's email subject.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String emailSubject;
 
-	@Schema(description = "The envelope's name.")
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -281,11 +281,11 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's name.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "The envelope's senderEmailAddress.")
+	@Schema
 	public String getSenderEmailAddress() {
 		return senderEmailAddress;
 	}
@@ -309,11 +309,11 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's senderEmailAddress.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String senderEmailAddress;
 
-	@Schema(description = "The envelope's status.")
+	@Schema
 	public String getStatus() {
 		return status;
 	}
@@ -337,7 +337,7 @@ public class DSEnvelope implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The envelope's status.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 

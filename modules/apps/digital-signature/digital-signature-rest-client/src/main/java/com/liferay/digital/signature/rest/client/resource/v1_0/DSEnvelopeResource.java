@@ -40,11 +40,11 @@ public interface DSEnvelopeResource {
 		return new Builder();
 	}
 
-	public Page<DSEnvelope> getDSEnvelopesPage(
+	public Page<DSEnvelope> getDSEnvelopesGroupPage(
 			Long companyId, Long groupId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getDSEnvelopesPageHttpResponse(
+	public HttpInvoker.HttpResponse getDSEnvelopesGroupPageHttpResponse(
 			Long companyId, Long groupId, Pagination pagination)
 		throws Exception;
 
@@ -145,12 +145,13 @@ public interface DSEnvelopeResource {
 
 	public static class DSEnvelopeResourceImpl implements DSEnvelopeResource {
 
-		public Page<DSEnvelope> getDSEnvelopesPage(
+		public Page<DSEnvelope> getDSEnvelopesGroupPage(
 				Long companyId, Long groupId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDSEnvelopesPageHttpResponse(companyId, groupId, pagination);
+				getDSEnvelopesGroupPageHttpResponse(
+					companyId, groupId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -189,7 +190,7 @@ public interface DSEnvelopeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDSEnvelopesPageHttpResponse(
+		public HttpInvoker.HttpResponse getDSEnvelopesGroupPageHttpResponse(
 				Long companyId, Long groupId, Pagination pagination)
 			throws Exception {
 
@@ -224,7 +225,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}");
+						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -309,7 +310,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}");
+						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -391,7 +392,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/batch");
+						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/batch");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);
@@ -474,7 +475,7 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-digital-signature/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}");
+						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}");
 
 			httpInvoker.path("companyId", companyId);
 			httpInvoker.path("groupId", groupId);

@@ -55,7 +55,7 @@ public class DSDocument implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DSDocument.class, json);
 	}
 
-	@Schema(description = "The document's data.")
+	@Schema
 	public String getData() {
 		return data;
 	}
@@ -77,11 +77,11 @@ public class DSDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The document's data.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String data;
 
-	@Schema(description = "The document's id.")
+	@Schema
 	public String getDsDocumentId() {
 		return dsDocumentId;
 	}
@@ -105,11 +105,11 @@ public class DSDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The document's id.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String dsDocumentId;
 
-	@Schema(description = "The document's file extension.")
+	@Schema
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -133,11 +133,11 @@ public class DSDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The document's file extension.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileExtension;
 
-	@Schema(description = "The document's name.")
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -159,11 +159,11 @@ public class DSDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The document's name.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "The document's URI.")
+	@Schema
 	public String getUri() {
 		return uri;
 	}
@@ -185,7 +185,7 @@ public class DSDocument implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The document's URI.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String uri;
 
