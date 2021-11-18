@@ -4,9 +4,9 @@ components:
             properties:
                 data:
                     type: string
-                dsDocumentId:
-                    type: string
                 fileExtension:
+                    type: string
+                id:
                     type: string
                 name:
                     type: string
@@ -26,8 +26,6 @@ components:
                     items:
                         $ref: "#/components/schemas/DSDocument"
                         type: array
-                dsEnvelopeId:
-                    type: string
                 dsRecipient:
                     items:
                         $ref: "#/components/schemas/DSRecipient"
@@ -36,18 +34,23 @@ components:
                     type: string
                 emailSubject:
                     type: string
+                id:
+                    type: string
                 name:
                     type: string
                 senderEmailAddress:
                     type: string
+                siteId:
+                    format: int64
+                    type: integer
                 status:
                     type: string
             type: object
         DSRecipient:
             properties:
-                dsRecipientId:
-                    type: string
                 emailAddress:
+                    type: string
+                id:
                     type: string
                 name:
                     type: string
