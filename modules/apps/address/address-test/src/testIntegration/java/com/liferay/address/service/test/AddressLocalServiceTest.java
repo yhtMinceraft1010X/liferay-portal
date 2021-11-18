@@ -175,13 +175,15 @@ public class AddressLocalServiceTest {
 		String street1 = RandomTestUtil.randomString();
 		String city = RandomTestUtil.randomString();
 		String zip = RandomTestUtil.randomString();
+
+		Country country = _countryLocalService.fetchCountryByA2(
+			TestPropsValues.getCompanyId(), "US");
+
 		Region region = _regionLocalService.addRegion(
 			country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
-		Country country = _countryLocalService.fetchCountryByA2(
-			TestPropsValues.getCompanyId(), "US");
 
 		_addressLocalService.updateAddress(
 			address.getAddressId(), name, description, street1, null, null,
