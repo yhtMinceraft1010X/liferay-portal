@@ -23,26 +23,11 @@ long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId")
 
 BatchPlannerPlan batchPlannerPlan = BatchPlannerPlanServiceUtil.fetchBatchPlannerPlan(batchPlannerPlanId);
 
-renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "add") : LanguageUtil.get(request, "edit"));
+renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "import") : LanguageUtil.get(request, "edit"));
 %>
 
 <div class="container pt-4">
-	<form
-		action="<%=
-			PortletURLBuilder.createActionURL(
-				renderResponse
-			).setActionName(
-				"/batch_planner/edit_import_batch_planner_plan"
-			).setCMD(
-				(batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE
-			).setRedirect(
-				backURL
-			).buildString()
-		%>"
-		id="<portlet:namespace />fm"
-		method="POST"
-		name="<portlet:namespace />fm"
-	>
+	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm" >
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
 
@@ -114,86 +99,45 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				</liferay-frontend:edit-form-body>
 			</div>
 		</div>
-
-		<div class="card hide import-mapping-table">
-			<h4 class="card-header"><%= LanguageUtil.get(request, "import-mappings") %></h4>
-
-			<div class="card-body">
-				<liferay-frontend:edit-form-body>
-					<clay:content-section>
-						<clay:row
-							cssClass="plan-mappings"
-						>
-
-						</clay:row>
-
-						<clay:row
-							cssClass="hide plan-mappings-template"
-						>
-							<clay:col
-								md="6"
-							>
-								<aui:input name="externalFieldName_ID_TEMPLATE" value="" />
-							</clay:col>
-
-							<clay:col
-								md="6"
-							>
-								<aui:input name="internalFieldName_ID_TEMPLATE" value="VALUE_TEMPLATE" />
-							</clay:col>
-						</clay:row>
-					</clay:content-section>
-				</liferay-frontend:edit-form-body>
-			</div>
-		</div>
-
-		<div class="mt-4" id="<portlet:namespace />formButtons">
-			<liferay-frontend:edit-form-footer>
-				<clay:link
-					displayType="secondary"
-					href="<%= backURL %>"
-					label="cancel"
-					type="button"
-				/>
-
-				<span>
-					<react:component
-						module="js/SaveTemplate"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"formSaveAsTemplateDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
-							).put(
-								"formSaveAsTemplateURL",
-								ResourceURLBuilder.createResourceURL(
-									renderResponse
-								).setCMD(
-									Constants.SAVE
-								).setParameter(
-									"template", true
-								).setResourceID(
-									"/batch_planner/edit_import_batch_planner_plan"
-								).buildString()
-							).build()
-						%>'
-					/>
-				</span>
-
-				<clay:button
-					disabled="true"
-					displayType="primary"
-					label="import"
-					type="submit"
-				/>
-			</liferay-frontend:edit-form-footer>
-		</div>
+		<span>
+			<react:component
+				module="js/import/ImportForm"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"backUrl",
+						backURL
+					).put(
+						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
+					).put(
+						"formImportURL",
+						PortletURLBuilder.createActionURL(
+							renderResponse
+						).setActionName(
+							"/batch_planner/edit_import_batch_planner_plan"
+						).setCMD(
+							(batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE
+						).setRedirect(
+							backURL
+						).buildString()
+					).put(
+						"formSaveAsTemplateURL",
+						ResourceURLBuilder.createResourceURL(
+							renderResponse
+						).setCMD(
+							Constants.SAVE
+						).setParameter(
+							"template", true
+						).setResourceID(
+							"/batch_planner/edit_import_batch_planner_plan"
+						).buildString()
+					).build()
+				%>'
+			/>
+		</span>
 	</form>
 </div>
 
+
 <liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"importMapping", "true"
-		).build()
-	%>'
 	module="js/edit_batch_planner_plan"
 />

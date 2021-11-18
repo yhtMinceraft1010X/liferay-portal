@@ -32,7 +32,6 @@ const STOP_LOADING = 'DOWNLOADING';
 const initialState = {
 	contentType: null,
 	errorMessage: null,
-	exportFileURL: null,
 	loading: false,
 	percentage: 0,
 	pollingIntervalId: null,
@@ -45,7 +44,7 @@ const setError = (error) => ({
 	type: ERROR,
 });
 
-const setExportFileURL = (contentType, taskId) => ({
+const setTaskId = (contentType, taskId) => ({
 	payload: {contentType, taskId},
 	type: COMPLETED,
 });
@@ -134,8 +133,7 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 			download(blobUrl, EXPORT_FILE_NAME);
 
 			dispatchIfMounted({type: STOP_LOADING});
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 			dispatchIfMounted(setError());
 		}
@@ -168,7 +166,7 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 								),
 							onSuccess: (contentType) =>
 								dispatchIfMounted(
-									setExportFileURL(contentType, exportTaskId)
+									setTaskId(contentType, exportTaskId)
 								),
 							taskId: exportTaskId,
 						}),
@@ -179,8 +177,7 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 					payload: pollingIntervalId,
 					type: START_POLLING,
 				});
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(error);
 				dispatchIfMounted(setError());
 			}
@@ -199,7 +196,6 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 		contentType: state.contentType,
 		downloadFile,
 		errorMessage: state.errorMessage,
-		exportFileURL: state.exportFileURL,
 		loading: state.loading,
 		percentage: state.percentage,
 		readyToDownload: state.readyToDownload,
