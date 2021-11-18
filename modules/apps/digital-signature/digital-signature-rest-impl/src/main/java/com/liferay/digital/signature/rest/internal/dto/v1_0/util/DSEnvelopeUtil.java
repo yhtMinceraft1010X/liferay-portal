@@ -37,7 +37,10 @@ public class DSEnvelopeUtil {
 					dsDocument -> _toDSDocument(dsDocument),
 					com.liferay.digital.signature.rest.dto.v1_0.DSDocument.class);
 				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
-				dsRecipient = _getDSRecipients(dsEnvelope.getDSRecipients());
+				dsRecipient = TransformUtil.transformToArray(
+					dsEnvelope.getDSRecipients(),
+					dsRecipient -> _toDSRecipient(dsRecipient),
+					com.liferay.digital.signature.rest.dto.v1_0.DSRecipient.class);
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();
 				name = dsEnvelope.getName();
@@ -56,7 +59,9 @@ public class DSEnvelopeUtil {
 					dsEnvelope.getDsDocument(),
 					dsDocument -> _toDSDocument(dsDocument));
 				dsEnvelopeId = dsEnvelope.getDsEnvelopeId();
-				dsRecipients = _getDSRecipients(dsEnvelope.getDsRecipient());
+				dsRecipients = TransformUtil.transformToList(
+					dsEnvelope.getDsRecipient(),
+					dsRecipient -> _toDSRecipient(dsRecipient));
 				emailBlurb = dsEnvelope.getEmailBlurb();
 				emailSubject = dsEnvelope.getEmailSubject();
 				name = dsEnvelope.getName();
@@ -64,30 +69,6 @@ public class DSEnvelopeUtil {
 				status = dsEnvelope.getStatus();
 			}
 		};
-	}
-
-	private static List<DSRecipient> _getDSRecipients(
-		com.liferay.digital.signature.rest.dto.v1_0.DSRecipient[]
-			dsRecipients) {
-
-		return ListUtil.toList(
-			ListUtil.fromArray(dsRecipients),
-			dsRecipient -> _toDSRecipient(dsRecipient));
-	}
-
-	private static com.liferay.digital.signature.rest.dto.v1_0.DSRecipient[]
-		_getDSRecipients(List<DSRecipient> dsRecipients) {
-
-		com.liferay.digital.signature.rest.dto.v1_0.DSRecipient[]
-			dsRecipientArray =
-				new com.liferay.digital.signature.rest.dto.v1_0.DSRecipient
-					[dsRecipients.size()];
-
-		List<com.liferay.digital.signature.rest.dto.v1_0.DSRecipient>
-			dsRecipientList = ListUtil.toList(
-				dsRecipients, dsRecipient -> _toDSRecipient(dsRecipient));
-
-		return dsRecipientList.toArray(dsRecipientArray);
 	}
 
 	private static DSDocument _toDSDocument(
