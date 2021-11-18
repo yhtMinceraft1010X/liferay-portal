@@ -18,7 +18,6 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
 import com.liferay.digital.signature.rest.internal.dto.v1_0.util.DSEnvelopeUtil;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

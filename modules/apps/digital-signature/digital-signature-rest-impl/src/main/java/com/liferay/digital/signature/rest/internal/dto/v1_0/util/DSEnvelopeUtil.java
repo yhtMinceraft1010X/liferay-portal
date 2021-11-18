@@ -15,12 +15,9 @@
 package com.liferay.digital.signature.rest.internal.dto.v1_0.util;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSDocument;
-import com.liferay.digital.signature.rest.dto.v1_0.DSRecipient;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.digital.signature.rest.dto.v1_0.DSRecipient;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
 
 /**
  * @author José Abelenda
@@ -34,8 +31,7 @@ public class DSEnvelopeUtil {
 			{
 				dsDocument = TransformUtil.transformToArray(
 					dsEnvelope.getDSDocuments(),
-					dsDocument -> _toDSDocument(dsDocument),
-					DSDocument.class);
+					dsDocument -> _toDSDocument(dsDocument), DSDocument.class);
 				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
 				dsRecipient = TransformUtil.transformToArray(
 					dsEnvelope.getDSRecipients(),
@@ -71,6 +67,20 @@ public class DSEnvelopeUtil {
 		};
 	}
 
+	private static DSDocument _toDSDocument(
+		com.liferay.digital.signature.model.DSDocument dsDocument) {
+
+		return new DSDocument() {
+			{
+				data = dsDocument.getData();
+				dsDocumentId = dsDocument.getDSDocumentId();
+				fileExtension = dsDocument.getFileExtension();
+				name = dsDocument.getName();
+				uri = dsDocument.getURI();
+			}
+		};
+	}
+
 	private static com.liferay.digital.signature.model.DSDocument _toDSDocument(
 		DSDocument dsDocument) {
 
@@ -85,24 +95,12 @@ public class DSEnvelopeUtil {
 		};
 	}
 
-	private static DSDocument
-		_toDSDocument(com.liferay.digital.signature.model.DSDocument dsDocument) {
+	private static DSRecipient _toDSRecipient(
+		com.liferay.digital.signature.model.DSRecipient dsRecipient) {
 
-		return new DSDocument() {
+		return new DSRecipient() {
 			{
-				data = dsDocument.getData();
-				dsDocumentId = dsDocument.getDSDocumentId();
-				fileExtension = dsDocument.getFileExtension();
-				name = dsDocument.getName();
-				uri = dsDocument.getURI();
-			}
-		};
-	}
-
-	private static com.liferay.digital.signature.model.DSRecipient _toDSRecipient(DSRecipient dsRecipient) {
-		return new com.liferay.digital.signature.model.DSRecipient() {
-			{
-				dsRecipientId = dsRecipient.getDsRecipientId();
+				dsRecipientId = dsRecipient.getDSRecipientId();
 				emailAddress = dsRecipient.getEmailAddress();
 				name = dsRecipient.getName();
 				status = dsRecipient.getStatus();
@@ -110,10 +108,12 @@ public class DSEnvelopeUtil {
 		};
 	}
 
-	private static DSRecipient _toDSRecipient(com.liferay.digital.signature.model.DSRecipient dsRecipient) {
-		return new DSRecipient() {
+	private static com.liferay.digital.signature.model.DSRecipient
+		_toDSRecipient(DSRecipient dsRecipient) {
+
+		return new com.liferay.digital.signature.model.DSRecipient() {
 			{
-				dsRecipientId = dsRecipient.getDSRecipientId();
+				dsRecipientId = dsRecipient.getDsRecipientId();
 				emailAddress = dsRecipient.getEmailAddress();
 				name = dsRecipient.getName();
 				status = dsRecipient.getStatus();
