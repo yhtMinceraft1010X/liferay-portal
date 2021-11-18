@@ -409,7 +409,7 @@ public class ObjectEntryLocalServiceTest {
 		try {
 			_addObjectEntry(
 				HashMapBuilder.<String, Serializable>put(
-					"emailAddress", "redwacky@liferay.com"
+					"emailAddress", "matthew@liferay.com"
 				).put(
 					"firstName", RandomTestUtil.randomString(281)
 				).put(
