@@ -155,12 +155,12 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private SXPBlueprint _expand(
-		SXPBlueprint sxpBlueprint1, SXPParameterData sxpParameterData) {
+		SXPBlueprint sxpBlueprint, SXPParameterData sxpParameterData) {
 
 		return SXPBlueprintUtil.toSXPBlueprint(
-			sxpBlueprint1,
+			sxpBlueprint,
 			SXPParameterParser.parse(
-				String.valueOf(sxpBlueprint1.getConfiguration()),
+				String.valueOf(sxpBlueprint.getConfiguration()),
 				sxpParameterData));
 	}
 
