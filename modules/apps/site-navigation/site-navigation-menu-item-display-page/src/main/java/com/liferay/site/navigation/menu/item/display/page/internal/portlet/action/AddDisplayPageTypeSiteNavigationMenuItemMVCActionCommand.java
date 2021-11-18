@@ -72,6 +72,9 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		if ((classNameId > 0) && (classPK > 0) && (siteNavigationMenuId > 0) &&
 			Validator.isNotNull(siteNavigationMenuItemType)) {
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			UnicodeProperties typeSettingsUnicodeProperties =
 				new UnicodeProperties(true);
 
@@ -90,9 +93,6 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			try {
 				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
