@@ -1,10 +1,10 @@
 apiDir: "../digital-signature-rest-api/src/main/java"
 apiPackagePath: "com.liferay.digital.signature.rest"
 application:
-    baseURI: "/headless-digital-signature"
-    className: "HeadlessDigitalSignatureApplication"
-    name: "HeadlessDigitalSignature"
+    baseURI: "/digital-signature-rest"
+    className: "DigitalSignatureRESTApplication"
+    name: "Liferay.Digital.Signature.REST"
 author: "José Abelenda"
 clientDir: "../digital-signature-rest-client/src/main/java"
-forcePredictableSchemaPropertyName: true
+forcePredictableOperationId: true
 testDir: "../digital-signature-rest-test/src/testIntegration/java"
