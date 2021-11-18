@@ -16,6 +16,8 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
+import getFieldsFromSchema from '../getFieldsFromSchema';
+
 function FieldsTable({portletNamespace}) {
 	const [fields, setFields] = useState([]);
 	const [selectedFields, setSelectedFields] = useState([]);
@@ -23,34 +25,13 @@ function FieldsTable({portletNamespace}) {
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {
 			if (event.schema) {
-				const newSelectedFields = [];
-				const newFields = [];
-
-				for (const [label, property] of Object.entries(event.schema)) {
-					if (property.writeOnly || label.startsWith('x-')) {
-						continue;
-					}
-
-					let value = label;
-
-					if (
-						property.extensions &&
-						property.extensions['x-parent-map']
-					) {
-						value =
-							property.extensions['x-parent-map'] + '_' + label;
-					}
-
-					const field = {label, value};
-
-					newFields.push(field);
-					newSelectedFields.push(field);
-				}
+				const [newFields, newSelectedFields] = getFieldsFromSchema(
+					event.schema
+				);
 
 				setFields(newFields);
 				setSelectedFields(newSelectedFields);
-			}
-			else {
+			} else {
 				setFields([]);
 				setSelectedFields([]);
 			}
@@ -91,8 +72,7 @@ function FieldsTable({portletNamespace}) {
 											fields.length
 										) {
 											setSelectedFields([]);
-										}
-										else {
+										} else {
 											setSelectedFields(fields);
 										}
 									}}
@@ -128,8 +108,7 @@ function FieldsTable({portletNamespace}) {
 																field
 														)
 													);
-												}
-												else {
+												} else {
 													setSelectedFields([
 														...selectedFields,
 														field,
