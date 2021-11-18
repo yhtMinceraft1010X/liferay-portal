@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 
 	@Override
-	public DSEnvelope getDSEnvelope(
-			Long companyId, Long groupId, String dsEnvelopeId)
+	public DSEnvelope getSiteDSEnvelope(
+			Long siteId, String dsEnvelopeId)
 		throws Exception {
 
 		com.liferay.digital.signature.model.DSEnvelope dsEnvelope =
-			_dsEnvelopeManager.getDSEnvelope(companyId, groupId, dsEnvelopeId);
+			_dsEnvelopeManager.getDSEnvelope(contextCompany.getCompanyId(), siteId, dsEnvelopeId);
 
 		if (Validator.isNull(dsEnvelope.getDSEnvelopeId())) {
 			throw new Exception("Envelope does not exist!");
@@ -49,13 +49,13 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 	}
 
 	@Override
-	public DSEnvelope postDSEnvelope(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope)
+	public DSEnvelope postSiteDSEnvelope(
+			Long siteId, DSEnvelope dsEnvelope)
 		throws Exception {
 
 		return DSEnvelopeUtil.toDSEnvelope(
 			_dsEnvelopeManager.addDSEnvelope(
-				companyId, groupId, DSEnvelopeUtil.toDSEnvelope(dsEnvelope)));
+				contextCompany.getCompanyId(), siteId, DSEnvelopeUtil.toDSEnvelope(dsEnvelope)));
 	}
 
 	@Reference
