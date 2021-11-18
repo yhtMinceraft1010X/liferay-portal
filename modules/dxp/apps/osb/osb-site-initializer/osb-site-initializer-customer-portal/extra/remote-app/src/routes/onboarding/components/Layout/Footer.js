@@ -11,7 +11,9 @@ const Footer = ({leftButton, middleButton, rightButton}) => {
 			})}
 		>
 			{leftButton}
+
 			{middleButton}
+
 			{rightButton}
 		</div>
 	);

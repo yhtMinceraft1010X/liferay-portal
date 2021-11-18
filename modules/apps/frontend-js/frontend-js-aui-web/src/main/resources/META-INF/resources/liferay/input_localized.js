@@ -347,7 +347,6 @@ AUI.add(
 						defaultLanguageId
 					);
 
-					console.log('ITEM:', event.item);
 					Liferay.fire('inputLocalized:localeChanged', {
 						item: event.item,
 						source: instance,
@@ -448,7 +447,6 @@ AUI.add(
 					var instance = this;
 
 					if (!event.domEvent) {
-						console.log('ITEM:', event.item);
 						Liferay.fire('inputLocalized:localeChanged', {
 							item: event.item,
 							source: instance,

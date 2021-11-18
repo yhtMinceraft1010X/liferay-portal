@@ -56,6 +56,7 @@ const ExportModal = ({
 		<ClayModal className={modalType} observer={observer} size="md">
 			<ClayModal.Header>
 				<ClayIcon className="mr-2" symbol={iconType} />
+
 				{Liferay.Language.get('export-file')}
 			</ClayModal.Header>
 
@@ -92,6 +93,7 @@ const ExportModal = ({
 									></span>
 								</span>
 							)}
+
 							{Liferay.Language.get('download')}
 						</ClayButton>
 					</ClayButton.Group>

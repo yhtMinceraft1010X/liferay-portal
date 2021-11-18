@@ -21,17 +21,15 @@ const HEADERS = new Headers({
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 });
 
-export const getExportTaskStatusURL = (taskId) =>
-	`/o/headless-batch-engine/v1.0/export-task/${taskId}`;
+export function getExportTaskStatusURL(taskId) {
+	return `/o/headless-batch-engine/v1.0/export-task/${taskId}`;
+}
 
-export const getExportFileURL = (taskId) =>
-	`/o/headless-batch-engine/v1.0/export-task/${taskId}/content`;
+export function getExportFileURL(taskId) {
+	return `/o/headless-batch-engine/v1.0/export-task/${taskId}/content`;
+}
 
-export const saveTemplateAPI = async (
-	formDataQuerySelector,
-	updateData,
-	url
-) => {
+export async function saveTemplateAPI(formDataQuerySelector, updateData, url) {
 	const mainFormData = document.querySelector(formDataQuerySelector);
 	Liferay.Util.setFormValues(mainFormData, updateData);
 
@@ -43,9 +41,9 @@ export const saveTemplateAPI = async (
 	});
 
 	return await response.json();
-};
+}
 
-export const startExport = async (formDataQuerySelector, url) => {
+export async function startExport(formDataQuerySelector, url) {
 	const mainFormData = document.querySelector(formDataQuerySelector);
 
 	const formData = new FormData(mainFormData);
@@ -57,22 +55,17 @@ export const startExport = async (formDataQuerySelector, url) => {
 	});
 
 	return await response.json();
-};
+}
 
-export const exportStatus = async (exportTaskId) => {
+export async function exportStatus(exportTaskId) {
 	const response = await fetch(getExportTaskStatusURL(exportTaskId), {
 		headers: HEADERS,
 	});
 
 	return await response.json();
-};
+}
 
-export const getExportStatus = async ({
-	onFail,
-	onProgress,
-	onSuccess,
-	taskId,
-}) => {
+export async function getExportStatus({onFail, onProgress, onSuccess, taskId}) {
 	try {
 		const {
 			contentType,
@@ -101,11 +94,11 @@ export const getExportStatus = async ({
 	catch (error) {
 		onFail(Liferay.Language.get('unexpected-error'));
 	}
-};
+}
 
-export const fetchExportedFile = async (taskId) => {
+export async function fetchExportedFile(taskId) {
 	const response = await fetch(getExportFileURL(taskId));
 	const blob = await response.blob();
 
 	return URL.createObjectURL(blob);
-};
+}

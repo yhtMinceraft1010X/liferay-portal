@@ -30,14 +30,17 @@ const Input = ({groupStyle, helper, label, validations, ...props}) => {
 			})}
 		>
 			<label>
-				{label}{' '}
+				{`${label} `}
+
 				{props.required && (
 					<span className="ml-n1 text-danger text-paragraph-sm">
 						*
 					</span>
 				)}
+
 				<ClayInput {...field} {...props} />
 			</label>
+
 			{helper && (
 				<div className="ml-3 pl-3 text-neutral-3 text-paragraph-sm">
 					{helper}

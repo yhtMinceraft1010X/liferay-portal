@@ -29,14 +29,17 @@ const Select = ({groupStyle, helper, label, validations, ...props}) => {
 			}`}
 		>
 			<label>
-				{label}{' '}
+				{`${label} `}
+
 				{props.required && (
 					<span className="ml-n1 text-danger text-paragraph-sm">
 						*
 					</span>
 				)}
+
 				<ClaySelectWithOption {...field} {...props} />
 			</label>
+
 			{helper && <div>{helper}</div>}
 		</ClayForm.Group>
 	);

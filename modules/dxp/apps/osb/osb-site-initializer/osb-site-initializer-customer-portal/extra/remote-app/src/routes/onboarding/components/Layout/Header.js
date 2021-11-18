@@ -8,6 +8,7 @@ const Header = ({greetings, helper, title}) => {
 					{greetings}
 				</h6>
 			)}
+
 			<h2
 				className={classNames('text-neutral-0', {
 					'mb-0': !helper,
@@ -16,6 +17,7 @@ const Header = ({greetings, helper, title}) => {
 			>
 				{title}
 			</h2>
+
 			{helper && (
 				<p className="mb-0 text-neutral-3 text-paragraph-sm">
 					{helper}

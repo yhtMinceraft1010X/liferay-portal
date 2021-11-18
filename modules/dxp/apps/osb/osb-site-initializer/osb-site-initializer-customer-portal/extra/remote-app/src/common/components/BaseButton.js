@@ -9,7 +9,9 @@ const BaseButton = ({appendIcon, children, prependIcon, ...props}) => {
 					<ClayIcon symbol={prependIcon} />
 				</span>
 			)}
+
 			{children}
+
 			{appendIcon && (
 				<span className="inline-item inline-item-after">
 					<ClayIcon symbol={appendIcon} />

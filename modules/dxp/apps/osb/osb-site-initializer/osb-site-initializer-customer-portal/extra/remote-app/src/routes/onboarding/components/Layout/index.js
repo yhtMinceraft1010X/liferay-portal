@@ -11,6 +11,7 @@ const Layout = ({
 }) => (
 	<div className="border d-flex flex-column mt-5 mx-auto onboarding rounded-lg shadow-lg">
 		{headerProps ? <Header {...headerProps} /> : headerSkeleton}
+
 		<main className={classNames('flex-grow-1', 'overflow-auto', className)}>
 			{children}
 		</main>

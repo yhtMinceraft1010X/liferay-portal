@@ -52,8 +52,10 @@ const ExportModalBody = ({
 		<ClayModal.Body className={classnames({'has-error': !!errorMessage})}>
 			<div className="export-process-description">
 				{title}
+
 				<div className="align-items-start d-flex pb-2 pt-2">
 					<ClayIcon className="mr-2 mt-1" symbol="document-default" />
+
 					<div className="d-flex flex-column">
 						<span>
 							{'Export' +
@@ -66,6 +68,7 @@ const ExportModalBody = ({
 					</div>
 				</div>
 			</div>
+
 			<div
 				className="progress-container"
 				data-percentage={readyToDownload ? 100 : percentage}
@@ -80,6 +83,7 @@ const ExportModalBody = ({
 					warn={errorMessage !== null}
 				/>
 			</div>
+
 			{errorMessage && (
 				<div className="form-feedback-item">
 					<ClayIcon
