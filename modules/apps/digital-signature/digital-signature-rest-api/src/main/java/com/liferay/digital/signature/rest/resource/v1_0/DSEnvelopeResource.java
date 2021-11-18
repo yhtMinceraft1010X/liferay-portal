@@ -57,21 +57,19 @@ public interface DSEnvelopeResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<DSEnvelope> getDSEnvelopesGroupPage(
-			Long companyId, Long groupId, Pagination pagination)
+	public Page<DSEnvelope> getSiteDSEnvelopesPage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public DSEnvelope postDSEnvelope(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope)
+	public DSEnvelope postSiteDSEnvelope(Long siteId, DSEnvelope dsEnvelope)
 		throws Exception;
 
-	public Response postDSEnvelopeBatch(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope,
-			String callbackURL, Object object)
+	public Response postSiteDSEnvelopeBatch(
+			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public DSEnvelope getDSEnvelope(
-			Long companyId, Long groupId, String dsEnvelopeId)
+	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

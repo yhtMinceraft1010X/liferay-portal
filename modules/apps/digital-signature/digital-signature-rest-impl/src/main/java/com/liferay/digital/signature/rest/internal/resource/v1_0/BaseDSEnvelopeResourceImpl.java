@@ -71,17 +71,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -97,18 +93,14 @@ public abstract class BaseDSEnvelopeResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}")
+	@javax.ws.rs.Path("/sites/{siteId}/ds-envelopes")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<DSEnvelope> getDSEnvelopesGroupPage(
+	public Page<DSEnvelope> getSiteDSEnvelopesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyId")
-			Long companyId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("groupId")
-			Long groupId,
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -118,17 +110,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
+				name = "siteId"
 			)
 		}
 	)
@@ -136,19 +124,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}")
+	@javax.ws.rs.Path("/sites/{siteId}/ds-envelopes")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public DSEnvelope postDSEnvelope(
+	public DSEnvelope postSiteDSEnvelope(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyId")
-			Long companyId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("groupId")
-			Long groupId,
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
 			DSEnvelope dsEnvelope)
 		throws Exception {
 
@@ -158,17 +142,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/batch' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/batch' -d $'{"dsDocument": ___, "dsEnvelopeId": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "name": ___, "senderEmailAddress": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -180,19 +160,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}/batch")
+	@javax.ws.rs.Path("/sites/{siteId}/ds-envelopes/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postDSEnvelopeBatch(
+	public Response postSiteDSEnvelopeBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyId")
-			Long companyId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("groupId")
-			Long groupId,
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
 			DSEnvelope dsEnvelope,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
@@ -219,17 +195,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/{dsEnvelopeId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "companyId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
@@ -241,18 +213,14 @@ public abstract class BaseDSEnvelopeResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "DSEnvelope")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}")
+	@javax.ws.rs.Path("/sites/{siteId}/ds-envelopes/{dsEnvelopeId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public DSEnvelope getDSEnvelope(
+	public DSEnvelope getSiteDSEnvelope(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyId")
-			Long companyId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("groupId")
-			Long groupId,
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("dsEnvelopeId")
@@ -270,9 +238,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<DSEnvelope, Exception> dsEnvelopeUnsafeConsumer =
-			dsEnvelope -> postDSEnvelope(
-				Long.parseLong((String)parameters.get("companyId")),
-				Long.parseLong((String)parameters.get("groupId")), dsEnvelope);
+			dsEnvelope -> {
+			};
+
+		if (parameters.containsKey("siteId")) {
+			dsEnvelopeUnsafeConsumer = dsEnvelope -> postSiteDSEnvelope(
+				(Long)parameters.get("siteId"), dsEnvelope);
+		}
 
 		for (DSEnvelope dsEnvelope : dsEnvelopes) {
 			dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
@@ -307,7 +279,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return null;
+		if (parameters.containsKey("siteId")) {
+			return getSiteDSEnvelopesPage(
+				(Long)parameters.get("siteId"), pagination);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

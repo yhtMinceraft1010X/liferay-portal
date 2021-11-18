@@ -32,6 +32,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -53,23 +55,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public DSEnvelope createDSEnvelope(
-			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("groupId") Long groupId,
+	public DSEnvelope createSiteDSEnvelope(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("dsEnvelope") DSEnvelope dsEnvelope)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dsEnvelopeResource -> dsEnvelopeResource.postDSEnvelope(
-				companyId, groupId, dsEnvelope));
+			dsEnvelopeResource -> dsEnvelopeResource.postSiteDSEnvelope(
+				Long.valueOf(siteKey), dsEnvelope));
 	}
 
 	@GraphQLField
-	public Response createDSEnvelopeBatch(
-			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("groupId") Long groupId,
+	public Response createSiteDSEnvelopeBatch(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("dsEnvelope") DSEnvelope dsEnvelope,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
@@ -78,8 +78,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dsEnvelopeResource -> dsEnvelopeResource.postDSEnvelopeBatch(
-				companyId, groupId, dsEnvelope, callbackURL, object));
+			dsEnvelopeResource -> dsEnvelopeResource.postSiteDSEnvelopeBatch(
+				Long.valueOf(siteKey), dsEnvelope, callbackURL, object));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

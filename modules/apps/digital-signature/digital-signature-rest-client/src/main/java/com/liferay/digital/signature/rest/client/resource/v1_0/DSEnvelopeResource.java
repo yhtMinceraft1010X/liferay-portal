@@ -40,38 +40,36 @@ public interface DSEnvelopeResource {
 		return new Builder();
 	}
 
-	public Page<DSEnvelope> getDSEnvelopesGroupPage(
-			Long companyId, Long groupId, Pagination pagination)
+	public Page<DSEnvelope> getSiteDSEnvelopesPage(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getDSEnvelopesGroupPageHttpResponse(
-			Long companyId, Long groupId, Pagination pagination)
+	public HttpInvoker.HttpResponse getSiteDSEnvelopesPageHttpResponse(
+			Long siteId, Pagination pagination)
 		throws Exception;
 
-	public DSEnvelope postDSEnvelope(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope)
+	public DSEnvelope postSiteDSEnvelope(Long siteId, DSEnvelope dsEnvelope)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDSEnvelopeHttpResponse(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope)
+	public HttpInvoker.HttpResponse postSiteDSEnvelopeHttpResponse(
+			Long siteId, DSEnvelope dsEnvelope)
 		throws Exception;
 
-	public void postDSEnvelopeBatch(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope,
-			String callbackURL, Object object)
+	public void postSiteDSEnvelopeBatch(
+			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postDSEnvelopeBatchHttpResponse(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope,
-			String callbackURL, Object object)
+	public HttpInvoker.HttpResponse postSiteDSEnvelopeBatchHttpResponse(
+			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
+			Object object)
 		throws Exception;
 
-	public DSEnvelope getDSEnvelope(
-			Long companyId, Long groupId, String dsEnvelopeId)
+	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getDSEnvelopeHttpResponse(
-			Long companyId, Long groupId, String dsEnvelopeId)
+	public HttpInvoker.HttpResponse getSiteDSEnvelopeHttpResponse(
+			Long siteId, String dsEnvelopeId)
 		throws Exception;
 
 	public static class Builder {
@@ -145,13 +143,12 @@ public interface DSEnvelopeResource {
 
 	public static class DSEnvelopeResourceImpl implements DSEnvelopeResource {
 
-		public Page<DSEnvelope> getDSEnvelopesGroupPage(
-				Long companyId, Long groupId, Pagination pagination)
+		public Page<DSEnvelope> getSiteDSEnvelopesPage(
+				Long siteId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getDSEnvelopesGroupPageHttpResponse(
-					companyId, groupId, pagination);
+				getSiteDSEnvelopesPageHttpResponse(siteId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -190,8 +187,8 @@ public interface DSEnvelopeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDSEnvelopesGroupPageHttpResponse(
-				Long companyId, Long groupId, Pagination pagination)
+		public HttpInvoker.HttpResponse getSiteDSEnvelopesPageHttpResponse(
+				Long siteId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -225,10 +222,9 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}");
+						"/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes");
 
-			httpInvoker.path("companyId", companyId);
-			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -236,12 +232,11 @@ public interface DSEnvelopeResource {
 			return httpInvoker.invoke();
 		}
 
-		public DSEnvelope postDSEnvelope(
-				Long companyId, Long groupId, DSEnvelope dsEnvelope)
+		public DSEnvelope postSiteDSEnvelope(Long siteId, DSEnvelope dsEnvelope)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = postDSEnvelopeHttpResponse(
-				companyId, groupId, dsEnvelope);
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteDSEnvelopeHttpResponse(siteId, dsEnvelope);
 
 			String content = httpResponse.getContent();
 
@@ -280,8 +275,8 @@ public interface DSEnvelopeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postDSEnvelopeHttpResponse(
-				Long companyId, Long groupId, DSEnvelope dsEnvelope)
+		public HttpInvoker.HttpResponse postSiteDSEnvelopeHttpResponse(
+				Long siteId, DSEnvelope dsEnvelope)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -310,10 +305,9 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}");
+						"/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes");
 
-			httpInvoker.path("companyId", companyId);
-			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -321,14 +315,14 @@ public interface DSEnvelopeResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postDSEnvelopeBatch(
-				Long companyId, Long groupId, DSEnvelope dsEnvelope,
-				String callbackURL, Object object)
+		public void postSiteDSEnvelopeBatch(
+				Long siteId, DSEnvelope dsEnvelope, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postDSEnvelopeBatchHttpResponse(
-					companyId, groupId, dsEnvelope, callbackURL, object);
+				postSiteDSEnvelopeBatchHttpResponse(
+					siteId, dsEnvelope, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -356,9 +350,9 @@ public interface DSEnvelopeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postDSEnvelopeBatchHttpResponse(
-				Long companyId, Long groupId, DSEnvelope dsEnvelope,
-				String callbackURL, Object object)
+		public HttpInvoker.HttpResponse postSiteDSEnvelopeBatchHttpResponse(
+				Long siteId, DSEnvelope dsEnvelope, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -392,10 +386,9 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/batch");
+						"/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/batch");
 
-			httpInvoker.path("companyId", companyId);
-			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -403,12 +396,11 @@ public interface DSEnvelopeResource {
 			return httpInvoker.invoke();
 		}
 
-		public DSEnvelope getDSEnvelope(
-				Long companyId, Long groupId, String dsEnvelopeId)
+		public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse = getDSEnvelopeHttpResponse(
-				companyId, groupId, dsEnvelopeId);
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteDSEnvelopeHttpResponse(siteId, dsEnvelopeId);
 
 			String content = httpResponse.getContent();
 
@@ -447,8 +439,8 @@ public interface DSEnvelopeResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getDSEnvelopeHttpResponse(
-				Long companyId, Long groupId, String dsEnvelopeId)
+		public HttpInvoker.HttpResponse getSiteDSEnvelopeHttpResponse(
+				Long siteId, String dsEnvelopeId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -475,10 +467,9 @@ public interface DSEnvelopeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/digital-signature-rest/v1.0/ds-envelopes/{companyId}/{groupId}/{dsEnvelopeId}");
+						"/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/{dsEnvelopeId}");
 
-			httpInvoker.path("companyId", companyId);
-			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("dsEnvelopeId", dsEnvelopeId);
 
 			httpInvoker.userNameAndPassword(

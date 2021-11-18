@@ -201,27 +201,23 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	}
 
 	@Test
-	public void testGetDSEnvelopesGroupPage() throws Exception {
-		Long companyId = testGetDSEnvelopesGroupPage_getCompanyId();
-		Long irrelevantCompanyId =
-			testGetDSEnvelopesGroupPage_getIrrelevantCompanyId();
-		Long groupId = testGetDSEnvelopesGroupPage_getGroupId();
-		Long irrelevantGroupId =
-			testGetDSEnvelopesGroupPage_getIrrelevantGroupId();
+	public void testGetSiteDSEnvelopesPage() throws Exception {
+		Long siteId = testGetSiteDSEnvelopesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDSEnvelopesPage_getIrrelevantSiteId();
 
-		Page<DSEnvelope> page = dsEnvelopeResource.getDSEnvelopesGroupPage(
-			companyId, groupId, Pagination.of(1, 10));
+		Page<DSEnvelope> page = dsEnvelopeResource.getSiteDSEnvelopesPage(
+			siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if ((irrelevantCompanyId != null) && (irrelevantGroupId != null)) {
+		if (irrelevantSiteId != null) {
 			DSEnvelope irrelevantDSEnvelope =
-				testGetDSEnvelopesGroupPage_addDSEnvelope(
-					irrelevantCompanyId, irrelevantGroupId,
-					randomIrrelevantDSEnvelope());
+				testGetSiteDSEnvelopesPage_addDSEnvelope(
+					irrelevantSiteId, randomIrrelevantDSEnvelope());
 
-			page = dsEnvelopeResource.getDSEnvelopesGroupPage(
-				irrelevantCompanyId, irrelevantGroupId, Pagination.of(1, 2));
+			page = dsEnvelopeResource.getSiteDSEnvelopesPage(
+				irrelevantSiteId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -231,14 +227,14 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			assertValid(page);
 		}
 
-		DSEnvelope dsEnvelope1 = testGetDSEnvelopesGroupPage_addDSEnvelope(
-			companyId, groupId, randomDSEnvelope());
+		DSEnvelope dsEnvelope1 = testGetSiteDSEnvelopesPage_addDSEnvelope(
+			siteId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope2 = testGetDSEnvelopesGroupPage_addDSEnvelope(
-			companyId, groupId, randomDSEnvelope());
+		DSEnvelope dsEnvelope2 = testGetSiteDSEnvelopesPage_addDSEnvelope(
+			siteId, randomDSEnvelope());
 
-		page = dsEnvelopeResource.getDSEnvelopesGroupPage(
-			companyId, groupId, Pagination.of(1, 10));
+		page = dsEnvelopeResource.getSiteDSEnvelopesPage(
+			siteId, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -249,28 +245,27 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 	}
 
 	@Test
-	public void testGetDSEnvelopesGroupPageWithPagination() throws Exception {
-		Long companyId = testGetDSEnvelopesGroupPage_getCompanyId();
-		Long groupId = testGetDSEnvelopesGroupPage_getGroupId();
+	public void testGetSiteDSEnvelopesPageWithPagination() throws Exception {
+		Long siteId = testGetSiteDSEnvelopesPage_getSiteId();
 
-		DSEnvelope dsEnvelope1 = testGetDSEnvelopesGroupPage_addDSEnvelope(
-			companyId, groupId, randomDSEnvelope());
+		DSEnvelope dsEnvelope1 = testGetSiteDSEnvelopesPage_addDSEnvelope(
+			siteId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope2 = testGetDSEnvelopesGroupPage_addDSEnvelope(
-			companyId, groupId, randomDSEnvelope());
+		DSEnvelope dsEnvelope2 = testGetSiteDSEnvelopesPage_addDSEnvelope(
+			siteId, randomDSEnvelope());
 
-		DSEnvelope dsEnvelope3 = testGetDSEnvelopesGroupPage_addDSEnvelope(
-			companyId, groupId, randomDSEnvelope());
+		DSEnvelope dsEnvelope3 = testGetSiteDSEnvelopesPage_addDSEnvelope(
+			siteId, randomDSEnvelope());
 
-		Page<DSEnvelope> page1 = dsEnvelopeResource.getDSEnvelopesGroupPage(
-			companyId, groupId, Pagination.of(1, 2));
+		Page<DSEnvelope> page1 = dsEnvelopeResource.getSiteDSEnvelopesPage(
+			siteId, Pagination.of(1, 2));
 
 		List<DSEnvelope> dsEnvelopes1 = (List<DSEnvelope>)page1.getItems();
 
 		Assert.assertEquals(dsEnvelopes1.toString(), 2, dsEnvelopes1.size());
 
-		Page<DSEnvelope> page2 = dsEnvelopeResource.getDSEnvelopesGroupPage(
-			companyId, groupId, Pagination.of(2, 2));
+		Page<DSEnvelope> page2 = dsEnvelopeResource.getSiteDSEnvelopesPage(
+			siteId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -278,74 +273,72 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		Assert.assertEquals(dsEnvelopes2.toString(), 1, dsEnvelopes2.size());
 
-		Page<DSEnvelope> page3 = dsEnvelopeResource.getDSEnvelopesGroupPage(
-			companyId, groupId, Pagination.of(1, 3));
+		Page<DSEnvelope> page3 = dsEnvelopeResource.getSiteDSEnvelopesPage(
+			siteId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(dsEnvelope1, dsEnvelope2, dsEnvelope3),
 			(List<DSEnvelope>)page3.getItems());
 	}
 
-	protected DSEnvelope testGetDSEnvelopesGroupPage_addDSEnvelope(
-			Long companyId, Long groupId, DSEnvelope dsEnvelope)
+	protected DSEnvelope testGetSiteDSEnvelopesPage_addDSEnvelope(
+			Long siteId, DSEnvelope dsEnvelope)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dsEnvelopeResource.postSiteDSEnvelope(siteId, dsEnvelope);
 	}
 
-	protected Long testGetDSEnvelopesGroupPage_getCompanyId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+	protected Long testGetSiteDSEnvelopesPage_getSiteId() throws Exception {
+		return testGroup.getGroupId();
 	}
 
-	protected Long testGetDSEnvelopesGroupPage_getIrrelevantCompanyId()
+	protected Long testGetSiteDSEnvelopesPage_getIrrelevantSiteId()
 		throws Exception {
 
-		return null;
-	}
-
-	protected Long testGetDSEnvelopesGroupPage_getGroupId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetDSEnvelopesGroupPage_getIrrelevantGroupId()
-		throws Exception {
-
-		return null;
+		return irrelevantGroup.getGroupId();
 	}
 
 	@Test
-	public void testPostDSEnvelope() throws Exception {
+	public void testPostSiteDSEnvelope() throws Exception {
 		DSEnvelope randomDSEnvelope = randomDSEnvelope();
 
-		DSEnvelope postDSEnvelope = testPostDSEnvelope_addDSEnvelope(
+		DSEnvelope postDSEnvelope = testPostSiteDSEnvelope_addDSEnvelope(
 			randomDSEnvelope);
 
 		assertEquals(randomDSEnvelope, postDSEnvelope);
 		assertValid(postDSEnvelope);
 	}
 
-	protected DSEnvelope testPostDSEnvelope_addDSEnvelope(DSEnvelope dsEnvelope)
+	protected DSEnvelope testPostSiteDSEnvelope_addDSEnvelope(
+			DSEnvelope dsEnvelope)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return dsEnvelopeResource.postSiteDSEnvelope(
+			testGetSiteDSEnvelopesPage_getSiteId(), dsEnvelope);
 	}
 
 	@Test
-	public void testGetDSEnvelope() throws Exception {
+	public void testGraphQLPostSiteDSEnvelope() throws Exception {
+		DSEnvelope randomDSEnvelope = randomDSEnvelope();
+
+		DSEnvelope dsEnvelope = testGraphQLDSEnvelope_addDSEnvelope(
+			randomDSEnvelope);
+
+		Assert.assertTrue(equals(randomDSEnvelope, dsEnvelope));
+	}
+
+	@Test
+	public void testGetSiteDSEnvelope() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetDSEnvelope() throws Exception {
+	public void testGraphQLGetSiteDSEnvelope() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetDSEnvelopeNotFound() throws Exception {
+	public void testGraphQLGetSiteDSEnvelopeNotFound() throws Exception {
 		Assert.assertTrue(true);
 	}
 

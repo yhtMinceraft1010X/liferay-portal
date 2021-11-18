@@ -36,6 +36,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -58,12 +60,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopesGroup(companyId: ___, groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopes(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public DSEnvelopePage dSEnvelopesGroup(
-			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("groupId") Long groupId,
+	public DSEnvelopePage dSEnvelopes(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -72,27 +73,26 @@ public class Query {
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dsEnvelopeResource -> new DSEnvelopePage(
-				dsEnvelopeResource.getDSEnvelopesGroupPage(
-					companyId, groupId, Pagination.of(page, pageSize))));
+				dsEnvelopeResource.getSiteDSEnvelopesPage(
+					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(companyId: ___, dsEnvelopeId: ___, groupId: ___){dateCreated, dateModified, dsDocument, dsEnvelopeId, dsRecipient, emailBlurb, emailSubject, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelope(dsEnvelopeId: ___, siteKey: ___){dateCreated, dateModified, dsDocument, dsEnvelopeId, dsRecipient, emailBlurb, emailSubject, name, senderEmailAddress, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DSEnvelope dSEnvelope(
-			@GraphQLName("companyId") Long companyId,
-			@GraphQLName("groupId") Long groupId,
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("dsEnvelopeId") String dsEnvelopeId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_dsEnvelopeResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			dsEnvelopeResource -> dsEnvelopeResource.getDSEnvelope(
-				companyId, groupId, dsEnvelopeId));
+			dsEnvelopeResource -> dsEnvelopeResource.getSiteDSEnvelope(
+				Long.valueOf(siteKey), dsEnvelopeId));
 	}
 
 	@GraphQLName("DSEnvelopePage")
