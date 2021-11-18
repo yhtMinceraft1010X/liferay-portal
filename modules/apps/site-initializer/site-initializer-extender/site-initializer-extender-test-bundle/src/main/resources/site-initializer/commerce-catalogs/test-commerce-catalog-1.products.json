@@ -5,7 +5,7 @@
 		"categories": [
 			"Test Asset Category 1"
 		],
-		"description": "Test Commerce Product.",
+		"description": "This is a test commerce product.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
 		"externalReferenceCode": "TEST001",
@@ -21,7 +21,7 @@
 		"sku": "TEST001",
 		"specificationOptions": [
 		],
-		"taxCategory": "Normal Product",
+		"taxCategory": "Test Tax Category",
 		"warehouse1": 60
 	}
 ]
