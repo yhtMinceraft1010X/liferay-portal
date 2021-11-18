@@ -18,6 +18,7 @@ import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class DSEnvelopeUtil {
 
 		return new DSEnvelope() {
 			{
+				dsDocument = TransformUtil.transformToArray(
+					dsEnvelope.getDSDocuments(),
+					dsDocument -> _toDSDocument(dsDocument),
+					com.liferay.digital.signature.rest.dto.v1_0.DSDocument.class);
 				dsEnvelopeId = dsEnvelope.getDSEnvelopeId();
 				dsRecipient = _getDSRecipients(dsEnvelope.getDSRecipients());
 				emailBlurb = dsEnvelope.getEmailBlurb();
@@ -47,7 +52,9 @@ public class DSEnvelopeUtil {
 
 		return new com.liferay.digital.signature.model.DSEnvelope() {
 			{
-				dsDocuments = _getDSDocuments(dsEnvelope.getDsDocument());
+				dsDocuments = TransformUtil.transformToList(
+					dsEnvelope.getDsDocument(),
+					dsDocument -> _toDSDocument(dsDocument));
 				dsEnvelopeId = dsEnvelope.getDsEnvelopeId();
 				dsRecipients = _getDSRecipients(dsEnvelope.getDsRecipient());
 				emailBlurb = dsEnvelope.getEmailBlurb();
@@ -57,29 +64,6 @@ public class DSEnvelopeUtil {
 				status = dsEnvelope.getStatus();
 			}
 		};
-	}
-
-	private static List<DSDocument> _getDSDocuments(
-		com.liferay.digital.signature.rest.dto.v1_0.DSDocument[] dsDocuments) {
-
-		return ListUtil.toList(
-			ListUtil.fromArray(dsDocuments),
-			dsDocument -> _toDSDocument(dsDocument));
-	}
-
-	private static com.liferay.digital.signature.rest.dto.v1_0.DSDocument[]
-		_getDSDocuments(List<DSDocument> dsDocuments) {
-
-		com.liferay.digital.signature.rest.dto.v1_0.DSDocument[]
-			dsDocumentArray =
-				new com.liferay.digital.signature.rest.dto.v1_0.DSDocument
-					[dsDocuments.size()];
-
-		List<com.liferay.digital.signature.rest.dto.v1_0.DSDocument>
-			dsDocumentList = ListUtil.toList(
-				dsDocuments, dsDocument -> _toDSDocument(dsDocument));
-
-		return dsDocumentList.toArray(dsDocumentArray);
 	}
 
 	private static List<DSRecipient> _getDSRecipients(
