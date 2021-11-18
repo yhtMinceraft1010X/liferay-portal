@@ -170,18 +170,18 @@ public class AddressLocalServiceTest {
 	public void testSearchAddressesWithKeywords() throws Exception {
 		Address address = _addAddress("1234567890");
 
-		String city = RandomTestUtil.randomString();
-		Country country = _countryLocalService.fetchCountryByA2(
-			TestPropsValues.getCompanyId(), "US");
-		String description = RandomTestUtil.randomString();
 		String name = RandomTestUtil.randomString();
+		String description = RandomTestUtil.randomString();
+		String street1 = RandomTestUtil.randomString();
+		String city = RandomTestUtil.randomString();
+		String zip = RandomTestUtil.randomString();
 		Region region = _regionLocalService.addRegion(
 			country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
-		String street1 = RandomTestUtil.randomString();
-		String zip = RandomTestUtil.randomString();
+		Country country = _countryLocalService.fetchCountryByA2(
+			TestPropsValues.getCompanyId(), "US");
 
 		_addressLocalService.updateAddress(
 			address.getAddressId(), name, description, street1, null, null,
@@ -191,13 +191,13 @@ public class AddressLocalServiceTest {
 
 		List<Address> expectedAddresses = Arrays.asList(address);
 
-		_assertSearchAddress(expectedAddresses, city, null);
-		_assertSearchAddress(expectedAddresses, country.getName(), null);
-		_assertSearchAddress(expectedAddresses, description, null);
 		_assertSearchAddress(expectedAddresses, name, null);
-		_assertSearchAddress(expectedAddresses, region.getName(), null);
+		_assertSearchAddress(expectedAddresses, description, null);
 		_assertSearchAddress(expectedAddresses, street1, null);
+		_assertSearchAddress(expectedAddresses, city, null);
 		_assertSearchAddress(expectedAddresses, zip, null);
+		_assertSearchAddress(expectedAddresses, region.getName(), null);
+		_assertSearchAddress(expectedAddresses, country.getName(), null);
 	}
 
 	@Test
