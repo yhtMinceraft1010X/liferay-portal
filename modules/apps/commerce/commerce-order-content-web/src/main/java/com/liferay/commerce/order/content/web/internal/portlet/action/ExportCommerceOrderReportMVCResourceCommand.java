@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportCommerceOrderReportMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
-	public String getLogoURL(ThemeDisplay themeDisplay) throws PortalException {
+	private String _getLogoURL(ThemeDisplay themeDisplay) throws PortalException {
 		String logoURL = StringPool.BLANK;
 
 		Company company = themeDisplay.getCompany();
@@ -129,7 +129,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"commerceOrderId", commerceOrder.getCommerceOrderId()
 			).put(
-				"logoUrl", getLogoURL(themeDisplay)
+				"logoUrl", _getLogoURL(themeDisplay)
 			).put(
 				"orderDate", commerceOrder.getOrderDate()
 			).put(
