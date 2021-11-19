@@ -5745,7 +5745,7 @@ public class JournalArticleLocalServiceImpl
 			Group companyGroup = _groupLocalService.getCompanyGroup(
 				article.getCompanyId());
 
-			if (companyGroup.getGroupId() != article.getGroupId()) {
+			if (article.getGroupId() != companyGroup.getGroupId()) {
 				throw new ArticleFriendlyURLException();
 			}
 		}
