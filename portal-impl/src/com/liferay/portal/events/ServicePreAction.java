@@ -1015,7 +1015,7 @@ public class ServicePreAction extends Action {
 						sourceGroupId);
 
 					if (sourceGroup.isUser() &&
-						(user.getUserId() != sourceGroup.getClassPK()) &&
+						(sourceGroup.getClassPK() != user.getUserId()) &&
 						!GroupPermissionUtil.contains(
 							permissionChecker, sourceGroup, ActionKeys.VIEW)) {
 
