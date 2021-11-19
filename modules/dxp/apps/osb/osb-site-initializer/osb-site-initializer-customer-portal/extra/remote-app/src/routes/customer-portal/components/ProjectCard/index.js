@@ -33,6 +33,7 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => (
 				tag={isSmall ? 'h4' : 'h3'}
 			>
 				{title}
+
 				{isSmall && (
 					<div className="font-weight-lighter subtitle text-neutral-5 text-paragraph text-uppercase">
 						{code}
@@ -63,7 +64,8 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => (
 							}
 						)}
 					>
-						Ends on{' '}
+						{`Ends on `}
+
 						<span className="font-weight-bold text-paragraph">
 							{getCurrentEndDate(sla.currentEndDate)}
 						</span>
@@ -71,7 +73,8 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => (
 
 					{isSmall && (
 						<div className="text-neutral-5 text-paragraph-sm">
-							Support Region{' '}
+							{`Support Region `}
+
 							<span className="font-weight-bold">{region}</span>
 						</div>
 					)}
