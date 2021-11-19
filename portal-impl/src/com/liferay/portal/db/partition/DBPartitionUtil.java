@@ -441,7 +441,7 @@ public class DBPartitionUtil {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to retrieve character set from database session",
+				"Unable to get session character set encoding",
 				exception);
 
 			return "utf8";
