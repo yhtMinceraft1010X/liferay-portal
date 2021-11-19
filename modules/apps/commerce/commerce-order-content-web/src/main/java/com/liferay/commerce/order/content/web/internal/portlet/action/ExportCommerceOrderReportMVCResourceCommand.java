@@ -20,7 +20,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
@@ -71,84 +70,80 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
-
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
-
-		HashMapBuilder.HashMapWrapper<String, Object> parameters =
-			HashMapBuilder.<String, Object>put(
-				"billingAddressCity", billingAddress.getCity()
-			).put(
-				"billingAddressCountry",
-				() -> {
-					Country billingAddressCountry = billingAddress.getCountry();
-
-					return billingAddressCountry.getName(
-						themeDisplay.getLocale());
-				}
-			).put(
-				"billingAddressName", billingAddress.getName()
-			).put(
-				"billingAddressPhoneNumber", billingAddress.getPhoneNumber()
-			).put(
-				"billingAddressRegion",
-				() -> {
-					Region billingAddressRegion = billingAddress.getRegion();
-
-					return billingAddressRegion.getName();
-				}
-			).put(
-				"billingAddressStreet1", billingAddress.getStreet1()
-			).put(
-				"billingAddressStreet2", billingAddress.getStreet2()
-			).put(
-				"billingAddressStreet3", billingAddress.getStreet3()
-			).put(
-				"billingAddressZip", billingAddress.getZip()
-			).put(
-				"commerceOrderId", commerceOrder.getCommerceOrderId()
-			).put(
-				"logoUrl", _getLogoURL(themeDisplay)
-			).put(
-				"orderDate", commerceOrder.getOrderDate()
-			).put(
-				"printedNote", commerceOrder.getPrintedNote()
-			).put(
-				"shippingAddressCity", shippingAddress.getCity()
-			).put(
-				"shippingAddressCountry",
-				() -> {
-					Country shippingAddressCountry =
-						shippingAddress.getCountry();
-
-					return shippingAddressCountry.getName(
-						themeDisplay.getLocale());
-				}
-			).put(
-				"shippingAddressName", shippingAddress.getName()
-			).put(
-				"shippingAddressPhoneNumber", shippingAddress.getPhoneNumber()
-			).put(
-				"shippingAddressRegion",
-				() -> {
-					Region shippingAddressRegion = shippingAddress.getRegion();
-
-					return shippingAddressRegion.getName();
-				}
-			).put(
-				"shippingAddressStreet1", shippingAddress.getStreet1()
-			).put(
-				"shippingAddressStreet2", shippingAddress.getStreet2()
-			).put(
-				"shippingAddressStreet3", shippingAddress.getStreet3()
-			).put(
-				"shippingAddressZip", shippingAddress.getZip()
-			);
+		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 
 		PortletResponseUtil.write(
 			resourceResponse,
 			_commerceReportExporter.export(
-				commerceOrder.getCommerceOrderItems(), parameters.build()));
+				commerceOrder.getCommerceOrderItems(),
+				HashMapBuilder.<String, Object>put(
+					"billingAddressCity", billingAddress.getCity()
+				).put(
+					"billingAddressCountry",
+					() -> {
+						Country country = billingAddress.getCountry();
+
+						return country.getName(themeDisplay.getLocale());
+					}
+				).put(
+					"billingAddressName", billingAddress.getName()
+				).put(
+					"billingAddressPhoneNumber", billingAddress.getPhoneNumber()
+				).put(
+					"billingAddressRegion",
+					() -> {
+						Region region = billingAddress.getRegion();
+
+						return region.getName();
+					}
+				).put(
+					"billingAddressStreet1", billingAddress.getStreet1()
+				).put(
+					"billingAddressStreet2", billingAddress.getStreet2()
+				).put(
+					"billingAddressStreet3", billingAddress.getStreet3()
+				).put(
+					"billingAddressZip", billingAddress.getZip()
+				).put(
+					"commerceOrderId", commerceOrder.getCommerceOrderId()
+				).put(
+					"logoUrl", _getLogoURL(themeDisplay)
+				).put(
+					"orderDate", commerceOrder.getOrderDate()
+				).put(
+					"printedNote", commerceOrder.getPrintedNote()
+				).put(
+					"shippingAddressCity", shippingAddress.getCity()
+				).put(
+					"shippingAddressCountry",
+					() -> {
+						Country country = shippingAddress.getCountry();
+
+						return country.getName(themeDisplay.getLocale());
+					}
+				).put(
+					"shippingAddressName", shippingAddress.getName()
+				).put(
+					"shippingAddressPhoneNumber",
+					shippingAddress.getPhoneNumber()
+				).put(
+					"shippingAddressRegion",
+					() -> {
+						Region shippingAddressRegion =
+							shippingAddress.getRegion();
+
+						return shippingAddressRegion.getName();
+					}
+				).put(
+					"shippingAddressStreet1", shippingAddress.getStreet1()
+				).put(
+					"shippingAddressStreet2", shippingAddress.getStreet2()
+				).put(
+					"shippingAddressStreet3", shippingAddress.getStreet3()
+				).put(
+					"shippingAddressZip", shippingAddress.getZip()
+				).build()));
 	}
 
 	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
