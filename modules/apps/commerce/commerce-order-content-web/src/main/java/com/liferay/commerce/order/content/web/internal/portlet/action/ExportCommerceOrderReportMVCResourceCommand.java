@@ -55,27 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportCommerceOrderReportMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
-	private String _getLogoURL(ThemeDisplay themeDisplay) throws PortalException {
-		String logoURL = StringPool.BLANK;
-
-		Company company = themeDisplay.getCompany();
-
-		if (company.isSiteLogo()) {
-			Group group = themeDisplay.getScopeGroup();
-
-			if (group == null) {
-				return logoURL;
-			}
-
-			logoURL = group.getLogoURL(themeDisplay, false);
-		}
-		else {
-			logoURL = themeDisplay.getCompanyLogo();
-		}
-
-		return _portal.getPortalURL(themeDisplay) + logoURL;
-	}
-
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -170,6 +149,27 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			resourceResponse,
 			_commerceReportExporter.export(
 				commerceOrder.getCommerceOrderItems(), parameters.build()));
+	}
+
+	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
+		String logoURL = StringPool.BLANK;
+
+		Company company = themeDisplay.getCompany();
+
+		if (company.isSiteLogo()) {
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group == null) {
+				return logoURL;
+			}
+
+			logoURL = group.getLogoURL(themeDisplay, false);
+		}
+		else {
+			logoURL = themeDisplay.getCompanyLogo();
+		}
+
+		return _portal.getPortalURL(themeDisplay) + logoURL;
 	}
 
 	@Reference
