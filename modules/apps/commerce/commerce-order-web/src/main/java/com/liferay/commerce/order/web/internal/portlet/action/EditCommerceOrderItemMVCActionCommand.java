@@ -173,15 +173,16 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		long commerceOrderItemId = ParamUtil.getLong(
 			actionRequest, "commerceOrderItemId");
-		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "decimalQuantity");
-		long cpMeasurementUnitId = ParamUtil.getLong(
-			actionRequest, "cpMeasurementUnitId");
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(commerceOrderItemId);
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		long cpMeasurementUnitId = ParamUtil.getLong(
+			actionRequest, "cpMeasurementUnitId");
+		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "decimalQuantity");
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItemId, cpMeasurementUnitId,
@@ -200,15 +201,14 @@ public class EditCommerceOrderItemMVCActionCommand
 					commerceOrderItemId, decimalQuantity, price);
 		}
 
+		String deliveryGroup = ParamUtil.getString(
+			actionRequest, "deliveryGroup");
 		int requestedDeliveryDateMonth = ParamUtil.getInteger(
 			actionRequest, "requestedDeliveryDateMonth");
 		int requestedDeliveryDateDay = ParamUtil.getInteger(
 			actionRequest, "requestedDeliveryDateDay");
 		int requestedDeliveryDateYear = ParamUtil.getInteger(
 			actionRequest, "requestedDeliveryDateYear");
-
-		String deliveryGroup = ParamUtil.getString(
-			actionRequest, "deliveryGroup");
 
 		_commerceOrderItemService.updateCommerceOrderItemInfo(
 			commerceOrderItem.getCommerceOrderItemId(),
