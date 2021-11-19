@@ -210,8 +210,10 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 						locale, themeDisplay);
 
 				if (jsonObject != null) {
-					workbookBuilder.cell(
-						4, jsonObject.getString("displayDate")
+					workbookBuilder.cellIndexIncrement(
+						4
+					).cell(
+						jsonObject.getString("displayDate")
 					).cell(
 						jsonObject.getString("creationDate")
 					).cell(
@@ -271,16 +273,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return byteArrayOutputStream.toByteArray();
 		}
 
-		public WorkbookBuilder cell(int cellIndexIncrement, String value) {
-			_cellIndex += cellIndexIncrement;
-
-			Cell cell = _row.createCell(_cellIndex++);
-
-			cell.setCellValue(value);
-
-			return this;
-		}
-
 		public WorkbookBuilder cell(String value) {
 			Cell cell = _row.createCell(_cellIndex++);
 
@@ -291,6 +283,12 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 		public WorkbookBuilder cell(Supplier<String> supplier) {
 			return cell(supplier.get());
+		}
+
+		public WorkbookBuilder cellIndexIncrement(int cellIndexIncrement) {
+			_cellIndex += cellIndexIncrement;
+
+			return this;
 		}
 
 		public WorkbookBuilder localizedCell(String value) {
