@@ -550,7 +550,7 @@ public class CommerceOrderContentDisplayContext {
 			).build());
 	}
 
-	public String getExportCommerceOrderPdfURLString() {
+	public String getExportCommerceOrderReportURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_cpRequestHelper.getLiferayPortletResponse();
 
@@ -559,7 +559,7 @@ public class CommerceOrderContentDisplayContext {
 				CommercePortletKeys.COMMERCE_ORDER_CONTENT);
 
 		liferayPortletURL.setResourceID(
-			"/commerce_order_content/export_commerce_order_pdf");
+			"/commerce_order_content/export_commerce_order_report");
 
 		return PortletURLBuilder.create(
 			liferayPortletURL

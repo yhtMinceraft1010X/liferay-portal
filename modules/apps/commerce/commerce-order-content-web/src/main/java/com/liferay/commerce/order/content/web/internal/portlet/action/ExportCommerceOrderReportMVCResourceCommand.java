@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_CONTENT,
-		"mvc.command.name=/commerce_order_content/export_commerce_order_pdf"
+		"mvc.command.name=/commerce_order_content/export_commerce_order_report"
 	},
 	service = MVCResourceCommand.class
 )
-public class ExportCommerceOrderPdfMVCResourceCommand
+public class ExportCommerceOrderReportMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	public String getLogoURL(ThemeDisplay themeDisplay) throws PortalException {
