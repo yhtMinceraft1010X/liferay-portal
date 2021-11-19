@@ -67,7 +67,6 @@ const DownloadSpreadsheetModal = ({
 											small
 										/>
 									)}{' '}
-
 									{secondaryButtonText}
 								</ClayButton>
 
