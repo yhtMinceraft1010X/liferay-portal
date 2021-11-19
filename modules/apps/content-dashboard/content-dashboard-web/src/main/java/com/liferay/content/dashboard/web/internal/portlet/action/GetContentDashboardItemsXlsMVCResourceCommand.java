@@ -298,8 +298,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		}
 
 		public WorkbookBuilder row() {
-			_row = _sheet.createRow(_rowIndex++);
 			_cellIndex = 0;
+			_row = _sheet.createRow(_rowIndex++);
 
 			return this;
 		}
