@@ -211,7 +211,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 				if (jsonObject != null) {
 					workbookBuilder.cell(
-						jsonObject.getString("displayDate"), 4
+						4, jsonObject.getString("displayDate")
 					).cell(
 						jsonObject.getString("creationDate")
 					).cell(
@@ -279,7 +279,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return this;
 		}
 
-		public WorkbookBuilder cell(String value, int cellIndexIncrement) {
+		public WorkbookBuilder cell(int cellIndexIncrement, String value) {
 			_cellIndex += cellIndexIncrement;
 
 			Cell cell = _row.createCell(_cellIndex++);
