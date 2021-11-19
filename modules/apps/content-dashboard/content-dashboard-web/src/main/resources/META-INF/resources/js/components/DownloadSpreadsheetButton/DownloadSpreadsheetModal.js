@@ -41,6 +41,7 @@ const DownloadSpreadsheetModal = ({
 					<ClayModal.Header>
 						{Liferay.Language.get('file-generation-in-progress')}
 					</ClayModal.Header>
+
 					<ClayModal.Body>
 						<p>
 							{Liferay.Language.get(
@@ -48,6 +49,7 @@ const DownloadSpreadsheetModal = ({
 							)}
 						</p>
 					</ClayModal.Body>
+
 					<ClayModal.Footer
 						last={
 							<ClayButton.Group spaced>
@@ -67,6 +69,7 @@ const DownloadSpreadsheetModal = ({
 									)}{' '}
 									{secondaryButtonText}
 								</ClayButton>
+
 								<ClayButton
 									displayType="info"
 									onClick={onClose}

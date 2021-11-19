@@ -263,6 +263,7 @@ const DownloadSpreadsheetButton = ({fileURL, total}) => {
 							<ClayIcon symbol={clayIconSymbol} />
 						)}
 					</span>
+
 					{buttonTextKey}
 				</ClayButton>
 			</ClayTooltipProvider>
