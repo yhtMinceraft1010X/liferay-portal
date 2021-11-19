@@ -271,7 +271,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return byteArrayOutputStream.toByteArray();
 		}
 
-		public WorkbookBuilder cell(String value) {
+		public WorkbookBuilder cell(int cellIndexIncrement, String value) {
+			_cellIndex += cellIndexIncrement;
+
 			Cell cell = _row.createCell(_cellIndex++);
 
 			cell.setCellValue(value);
@@ -279,9 +281,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			return this;
 		}
 
-		public WorkbookBuilder cell(int cellIndexIncrement, String value) {
-			_cellIndex += cellIndexIncrement;
-
+		public WorkbookBuilder cell(String value) {
 			Cell cell = _row.createCell(_cellIndex++);
 
 			cell.setCellValue(value);
