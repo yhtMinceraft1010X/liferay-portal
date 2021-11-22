@@ -418,13 +418,13 @@ public class DataFactory {
 		_companyId = _counter.get();
 
 		_dlDDMStructureContent = _readFile(
-			"ddm_structure_data/ddm_structure_basic_document.json");
+			"ddm_structure/ddm_structure_basic_document.json");
 		_dlDDMStructureLayoutContent = _readFile(
-			"ddm_structure_data/ddm_structure_layout_basic_document.json");
+			"ddm_structure/ddm_structure_layout_basic_document.json");
 		_journalDDMStructureContent = _readFile(
-			"ddm_structure_data/ddm_structure_basic_web_content.json");
+			"ddm_structure/ddm_structure_basic_web_content.json");
 		_journalDDMStructureLayoutContent = _readFile(
-			"ddm_structure_data/ddm_structure_layout_basic_web_content.json");
+			"ddm_structure/ddm_structure_layout_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
 			"layout_page_template_structure_rel_data.json");
 
@@ -434,8 +434,8 @@ public class DataFactory {
 
 		initJournalArticleContent();
 
-		_firstNames = _readLines("user_name_data/first_names.txt");
-		_lastNames = _readLines("user_name_data/last_names.txt");
+		_firstNames = _readLines("user_name/first_names.txt");
+		_lastNames = _readLines("user_name/last_names.txt");
 	}
 
 	public RoleModel getAdministratorRoleModel() {
@@ -1538,7 +1538,7 @@ public class DataFactory {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
-				getResourceInputStream("commerce_data/commerce_layouts.json")));
+				getResourceInputStream("commerce/commerce_layouts.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1593,7 +1593,7 @@ public class DataFactory {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
-				getResourceInputStream("commerce_data/commerce_layouts.json")));
+				getResourceInputStream("commerce/commerce_layouts.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -1625,7 +1625,7 @@ public class DataFactory {
 				JSONFactoryUtil.createJSONArray(
 					StringUtil.read(
 						getResourceInputStream(
-							"commerce_data/commerce_portlet_settings.json")))));
+							"commerce/commerce_portlet_settings.json")))));
 
 		return portletPreferenceValueModels;
 	}
@@ -2027,7 +2027,7 @@ public class DataFactory {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
 				getResourceInputStream(
-					"commerce_data/commerce_theme_portlet_settings.json")));
+					"commerce/commerce_theme_portlet_settings.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2039,7 +2039,7 @@ public class DataFactory {
 				portletPreferencesJSONObject.getJSONObject("displayStyle");
 
 			String fileName =
-				"commerce_data/" + displayStyleJSONObject.getString("FileName");
+				"commerce/" + displayStyleJSONObject.getString("FileName");
 
 			ddmTemplateModels.add(
 				newDDMTemplateModel(
@@ -2067,7 +2067,7 @@ public class DataFactory {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.read(
 				getResourceInputStream(
-					"commerce_data/commerce_theme_portlet_settings.json")));
+					"commerce/commerce_theme_portlet_settings.json")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -7052,7 +7052,7 @@ public class DataFactory {
 			String templateFileName)
 		throws Exception {
 
-		String data = _readFile("home_page_template_data/" + templateFileName);
+		String data = _readFile("home_page_template/" + templateFileName);
 
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :
 				fragmentEntryLinkModels) {
