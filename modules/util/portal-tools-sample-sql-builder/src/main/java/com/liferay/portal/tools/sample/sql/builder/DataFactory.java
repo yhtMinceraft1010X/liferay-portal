@@ -426,7 +426,7 @@ public class DataFactory {
 		_journalDDMStructureLayoutContent = _readFile(
 			"ddm_structure/ddm_structure_layout_basic_web_content.json");
 		_layoutPageTemplateStructureRelData = _readFile(
-			"layout_page_template_structure_rel_data.json");
+			"layout_page_template_structure_rel.json");
 
 		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
