@@ -460,7 +460,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		String[] assetTagNames = JSONUtil.toStringArray(
-			assetListJSONObject.getJSONArray("tags"));
+			assetListJSONObject.getJSONArray("assetTagNames"));
 
 		for (int i = 0; i < assetTagNames.length; i++) {
 			map.put("queryValues" + i, assetTagNames[i]);
@@ -1096,7 +1096,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					JSONUtil.toStringArray(
 						jsonObject.getJSONArray("categories"))));
 			serviceContext.setAssetTagNames(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
+				JSONUtil.toStringArray(jsonObject.getJSONArray("assetTagNames")));
 
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
