@@ -505,7 +505,6 @@ public class BundleSiteInitializerTest {
 			GetterUtil.getBoolean(
 				privateLayoutSetUnicodeProperties.getProperty(
 					"lfr-theme:regular:show-footer")));
-
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
 				privateLayoutSetUnicodeProperties.getProperty(
@@ -527,7 +526,6 @@ public class BundleSiteInitializerTest {
 			GetterUtil.getBoolean(
 				publicLayoutSetUnicodeProperties.getProperty(
 					"lfr-theme:regular:show-footer")));
-
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				publicLayoutSetUnicodeProperties.getProperty(
