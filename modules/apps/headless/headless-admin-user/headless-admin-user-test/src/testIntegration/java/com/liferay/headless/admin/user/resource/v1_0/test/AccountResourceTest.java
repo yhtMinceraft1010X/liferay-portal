@@ -284,7 +284,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 			_postAccount(account2);
 
-			Assert.fail("An exception must be thrown");
+			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {
 			Assert.assertEquals(
