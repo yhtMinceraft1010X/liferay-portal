@@ -80,7 +80,7 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 		CompletableFuture.runAsync(
 			() -> {
 				try {
-					_generateFrontendDataSetSample(
+					_generate(
 						_portal.getCompanyId(renderRequest));
 				}
 				catch (Exception exception) {
@@ -97,10 +97,10 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private void _generateFrontendDataSetSample(long companyId)
+	private void _generate(long companyId)
 		throws Exception {
 
-		if (_isFrontendDataSetSampleGenerated(companyId)) {
+		if (_isGenerated(companyId)) {
 			return;
 		}
 
@@ -156,7 +156,7 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 		_generated = true;
 	}
 
-	private boolean _isFrontendDataSetSampleGenerated(long companyId) {
+	private boolean _isGenerated(long companyId) {
 		if (_generated != null) {
 			return _generated;
 		}
