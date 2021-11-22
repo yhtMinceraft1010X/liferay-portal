@@ -37,7 +37,6 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.concurrent.CompletableFuture;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -77,16 +76,12 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CompletableFuture.runAsync(
-			() -> {
-				try {
-					_generate(
-						_portal.getCompanyId(renderRequest));
-				}
-				catch (Exception exception) {
-					_log.error(exception, exception);
-				}
-			});
+		try {
+			_generate(_portal.getCompanyId(renderRequest));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
 
 		renderRequest.setAttribute(
 			FrontendDataSetSampleWebKeys.
@@ -97,13 +92,7 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private void _generate(long companyId)
-		throws Exception {
-
-		if (_isGenerated(companyId)) {
-			return;
-		}
-
+	private synchronized void _generate(long companyId) throws Exception {
 		User user = _userLocalService.fetchUserByEmailAddress(
 			companyId, "test@liferay.com");
 
@@ -115,30 +104,29 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "C_FrontendDataSetSample");
 
-		if (objectDefinition == null) {
-			objectDefinition =
-				_objectDefinitionLocalService.addCustomObjectDefinition(
-					user.getUserId(),
-					LocalizedMapUtil.getLocalizedMap(
-						"Frontend Data Set Sample"),
-					"FrontendDataSetSample", "100", null,
-					LocalizedMapUtil.getLocalizedMap(
-						"Frontend Data Set Samples"),
-					ObjectDefinitionConstants.SCOPE_COMPANY,
-					Arrays.asList(
-						ObjectFieldUtil.createObjectField(
-							true, false, null, "Title", "title", false,
-							"String"),
-						ObjectFieldUtil.createObjectField(
-							true, false, null, "Description", "description",
-							false, "String"),
-						ObjectFieldUtil.createObjectField(
-							true, false, null, "Date", "date", false, "Date")));
-
-			objectDefinition =
-				_objectDefinitionLocalService.publishCustomObjectDefinition(
-					user.getUserId(), objectDefinition.getObjectDefinitionId());
+		if (objectDefinition != null) {
+			return;
 		}
+
+		objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				user.getUserId(),
+				LocalizedMapUtil.getLocalizedMap("Frontend Data Set Sample"),
+				"FrontendDataSetSample", "100", null,
+				LocalizedMapUtil.getLocalizedMap("Frontend Data Set Samples"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Title", "title", false, "String"),
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Description", "description", false,
+						"String"),
+					ObjectFieldUtil.createObjectField(
+						true, false, null, "Date", "date", false, "Date")));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				user.getUserId(), objectDefinition.getObjectDefinitionId());
 
 		for (int i = 1; i <= 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
@@ -146,43 +134,16 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 				HashMapBuilder.<String, Serializable>put(
 					"date", new Date()
 				).put(
-					"description", "This is a description for sample " + i "."
+					"description", "This is a description for sample " + i + "."
 				).put(
 					"title", "Sample" + i
 				).build(),
 				new ServiceContext());
 		}
-
-		_generated = true;
-	}
-
-	private boolean _isGenerated(long companyId) {
-		if (_generated != null) {
-			return _generated;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "C_FrontendDataSetSample");
-
-		if (objectDefinition == null) {
-			_generated = false;
-
-			return false;
-		}
-
-		int samples = _objectEntryLocalService.getObjectEntriesCount(
-			0L, objectDefinition.getObjectDefinitionId());
-
-		_generated = samples > 0;
-
-		return _generated;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendDataSetSamplePortlet.class);
-
-	private Boolean _generated;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
