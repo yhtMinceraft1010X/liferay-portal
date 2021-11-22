@@ -145,7 +145,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	private void _enhance(
 		ElementInstance elementInstance,
-		PropertyExpander.PropertyResolver propertyResolver1,
+		PropertyExpander.PropertyResolver propertyResolver,
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
@@ -153,24 +153,21 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
 
-		PropertyExpander.PropertyResolver propertyResolver2 =
-			(name, options) -> {
-				String prefix = "configuration.";
-
-				if (!name.startsWith(prefix)) {
-					return null;
-				}
-
-				Map<String, Object> values =
-					elementInstance.getUiConfigurationValues();
-
-				return values.get(name.substring(prefix.length()));
-			};
-
 		_contributeSXPSearchRequestBodyContributors(
 			_expand(
-				elementDefinition.getConfiguration(), propertyResolver1,
-				propertyResolver2),
+				elementDefinition.getConfiguration(), propertyResolver,
+				(name, options) -> {
+					String prefix = "configuration.";
+
+					if (!name.startsWith(prefix)) {
+						return null;
+					}
+
+					Map<String, Object> values =
+						elementInstance.getUiConfigurationValues();
+
+					return values.get(name.substring(prefix.length()));
+				}),
 			searchRequestBuilder, sxpParameterData);
 	}
 
