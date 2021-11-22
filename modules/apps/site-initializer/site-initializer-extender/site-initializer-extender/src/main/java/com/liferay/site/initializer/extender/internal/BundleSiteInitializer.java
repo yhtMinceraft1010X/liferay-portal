@@ -1094,9 +1094,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_getAssetCategoryIds(
 					serviceContext.getScopeGroupId(),
 					JSONUtil.toStringArray(
-						jsonObject.getJSONArray("categories"))));
+						jsonObject.getJSONArray("assetCategoryERCs"))));
 			serviceContext.setAssetTagNames(
-				JSONUtil.toStringArray(jsonObject.getJSONArray("assetTagNames")));
+				JSONUtil.toStringArray(
+					jsonObject.getJSONArray("assetTagNames")));
 
 			_journalArticleLocalService.addArticle(
 				null, serviceContext.getUserId(),
