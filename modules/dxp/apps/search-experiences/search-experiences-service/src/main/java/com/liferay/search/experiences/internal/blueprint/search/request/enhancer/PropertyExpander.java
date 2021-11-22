@@ -46,7 +46,7 @@ public class PropertyExpander {
 
 		StringBundler sb = new StringBundler();
 
-		do {
+		while (index1 != -1) {
 			int index2 = index1 + 2;
 
 			int index3 = json.indexOf("}", index2);
@@ -83,7 +83,6 @@ public class PropertyExpander {
 
 			index1 = json.indexOf("${");
 		}
-		while (index1 != -1);
 
 		if (sb.index() == 0) {
 			return json;
