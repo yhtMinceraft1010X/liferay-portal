@@ -159,7 +159,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	private String _renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js,
 		String configuration, String namespace, String fragmentElementId,
-		String viewMode, HttpServletRequest httpServletRequest) {
+		String mode, HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(18);
 
@@ -196,7 +196,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			}
 
 			if (!cssLoaded ||
-				Objects.equals(viewMode, FragmentEntryLinkConstants.EDIT)) {
+				Objects.equals(mode, FragmentEntryLinkConstants.EDIT)) {
 
 				sb.append("<style>");
 				sb.append(css);
