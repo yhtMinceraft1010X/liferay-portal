@@ -183,7 +183,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 					Collections.singletonMap(
 						"file",
 						new BinaryFile(
-							BatchPlannerPlanConstants.contentTypes.get(
+							BatchPlannerPlanConstants.getContentType(
 								batchPlannerPlan.getExternalType()),
 							file.getName(), new FileInputStream(file),
 							file.length())),

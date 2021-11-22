@@ -44,7 +44,11 @@ public class BatchPlannerPlanConstants {
 		EXTERNAL_TYPE_XML
 	};
 
-	public static final Map<String, String> contentTypes = HashMapBuilder.put(
+	public static String getContentType(String externalType) {
+		return _contentTypes.get(externalType);
+	}
+
+	private static final Map<String, String> _contentTypes = HashMapBuilder.put(
 		EXTERNAL_TYPE_CSV, ContentTypes.TEXT_CSV
 	).put(
 		EXTERNAL_TYPE_JSON, ContentTypes.APPLICATION_JSON
