@@ -435,7 +435,6 @@ public class DataFactory {
 		initJournalArticleContent();
 
 		_firstNames = _readLines("user_name_data/first_names.txt");
-
 		_lastNames = _readLines("user_name_data/last_names.txt");
 	}
 
@@ -3838,7 +3837,6 @@ public class DataFactory {
 						"fragment_component_data" +
 							"/fragment_component_heading_editValue.json"),
 					0, headingRenderNamespace));
-
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH,
@@ -3855,7 +3853,6 @@ public class DataFactory {
 								"/fragment_component_paragraph_editValue." +
 									"json")),
 					0, paragraphRenderNamespace));
-
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, _FRAGMENT_COMPONENT_RENDER_KEY_IMAGE, "",
