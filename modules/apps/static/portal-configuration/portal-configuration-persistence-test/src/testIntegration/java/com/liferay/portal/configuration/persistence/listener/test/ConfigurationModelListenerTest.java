@@ -99,53 +99,6 @@ public class ConfigurationModelListenerTest {
 	}
 
 	@Test
-	public void testRegisterConfigurationModelListeners() throws Exception {
-		String pid = RandomTestUtil.randomString(20);
-
-		int numberOfListeners = 3;
-
-		AtomicInteger callCounter = new AtomicInteger();
-
-		for (int i = 0; i < numberOfListeners; i++) {
-			_registerConfigurationModelListener(
-				new ConfigurationModelListener() {
-
-					@Override
-					public void onAfterDelete(String pid) {
-						callCounter.incrementAndGet();
-					}
-
-					@Override
-					public void onAfterSave(
-						String pid, Dictionary<String, Object> properties) {
-
-						callCounter.incrementAndGet();
-					}
-
-					@Override
-					public void onBeforeDelete(String pid) {
-						callCounter.incrementAndGet();
-					}
-
-					@Override
-					public void onBeforeSave(
-						String pid, Dictionary<String, Object> properties) {
-
-						callCounter.incrementAndGet();
-					}
-
-				},
-				pid);
-		}
-
-		ConfigurationTestUtil.saveConfiguration(pid, new HashMapDictionary<>());
-
-		ConfigurationTestUtil.deleteConfiguration(pid);
-
-		Assert.assertEquals(numberOfListeners * 4, callCounter.get());
-	}
-
-	@Test
 	public void testOnAfterDelete() throws Exception {
 		String pid = StringUtil.randomString(20);
 
@@ -305,6 +258,53 @@ public class ConfigurationModelListenerTest {
 
 			Assert.assertEquals(_TEST_VALUE, properties.get(_TEST_KEY));
 		}
+	}
+
+	@Test
+	public void testRegisterConfigurationModelListeners() throws Exception {
+		String pid = RandomTestUtil.randomString(20);
+
+		int numberOfListeners = 3;
+
+		AtomicInteger callCounter = new AtomicInteger();
+
+		for (int i = 0; i < numberOfListeners; i++) {
+			_registerConfigurationModelListener(
+				new ConfigurationModelListener() {
+
+					@Override
+					public void onAfterDelete(String pid) {
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onAfterSave(
+						String pid, Dictionary<String, Object> properties) {
+
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onBeforeDelete(String pid) {
+						callCounter.incrementAndGet();
+					}
+
+					@Override
+					public void onBeforeSave(
+						String pid, Dictionary<String, Object> properties) {
+
+						callCounter.incrementAndGet();
+					}
+
+				},
+				pid);
+		}
+
+		ConfigurationTestUtil.saveConfiguration(pid, new HashMapDictionary<>());
+
+		ConfigurationTestUtil.deleteConfiguration(pid);
+
+		Assert.assertEquals(numberOfListeners * 4, callCounter.get());
 	}
 
 	private Configuration _getConfiguration(String pid) throws IOException {
