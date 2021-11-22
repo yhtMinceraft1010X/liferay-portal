@@ -99,7 +99,7 @@ public class ConfigurationModelListenerTest {
 	}
 
 	@Test
-	public void testMultipleListenersRegistered() throws Exception {
+	public void testRegisterConfigurationModelListeners() throws Exception {
 		String pid = RandomTestUtil.randomString(20);
 
 		int numberOfListeners = 3;
