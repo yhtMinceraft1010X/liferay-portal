@@ -10,6 +10,12 @@
 </thead>
 
 <tbody>
+<!--PAGE_DESIGN_OPTIONS-->
+<tr>
+	<td>STYLE_BOOK_CARD_SELECTED</td>
+	<td>//li[contains(@class,'active')]//div[contains(@class,'card')][contains(.,'${key_card}')] | //div[contains(@class,'card')][contains(@class,'active')][contains(.,'${key_styleBookName}')]</td>
+	<td></td>
+</tr>
 <!--PAGE_PREVIEW-->
 <tr>
 	<td>CONTRIBUTED_FRAGMENT_INLINE_CONTENT</td>
