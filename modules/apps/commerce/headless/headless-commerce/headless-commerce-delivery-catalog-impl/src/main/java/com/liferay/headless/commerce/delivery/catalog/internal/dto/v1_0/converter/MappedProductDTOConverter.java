@@ -87,7 +87,6 @@ public class MappedProductDTOConverter
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(
 				csDiagramEntry.getCProductId());
-
 		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			GetterUtil.getLong(csDiagramEntry.getCPInstanceId()));
 
@@ -271,20 +270,25 @@ public class MappedProductDTOConverter
 		CommerceMoney unitPriceCommerceMoney =
 			commerceProductPrice.getUnitPrice();
 
+		Price price = new Price() {
+			{
+				currency = commerceCurrency.getName(locale);
+				priceFormatted = unitPriceCommerceMoney.format(locale);
+
+				setPrice(
+					() -> {
+						BigDecimal unitPrice =
+							unitPriceCommerceMoney.getPrice();
+
+						return unitPrice.doubleValue();
+					});
+			}
+		};
+
 		CommerceMoney unitPromoPriceCommerceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
 		BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
-
-		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
-
-		Price price = new Price() {
-			{
-				currency = commerceCurrency.getName(locale);
-				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceCommerceMoney.format(locale);
-			}
-		};
 
 		int compareUnitPricePromoPrice = unitPromoPrice.compareTo(
 			unitPriceCommerceMoney.getPrice());
@@ -305,16 +309,18 @@ public class MappedProductDTOConverter
 			CommerceMoney discountAmountCommerceMoney =
 				discountValue.getDiscountAmount();
 
-			CommerceMoney finalPriceCommerceMoney =
-				commerceProductPrice.getFinalPrice();
-
 			price.setDiscount(discountAmountCommerceMoney.format(locale));
+
 			price.setDiscountPercentage(
 				_commercePriceFormatter.format(
 					discountValue.getDiscountPercentage(), locale));
 			price.setDiscountPercentages(
 				_getFormattedDiscountPercentages(
 					discountValue.getPercentages(), locale));
+
+			CommerceMoney finalPriceCommerceMoney =
+				commerceProductPrice.getFinalPrice();
+
 			price.setFinalPrice(finalPriceCommerceMoney.format(locale));
 		}
 
