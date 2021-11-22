@@ -146,7 +146,7 @@ public class FrontendDataSetSamplePortlet extends MVCPortlet {
 				HashMapBuilder.<String, Serializable>put(
 					"date", new Date()
 				).put(
-					"description", "Description of the sample " + i
+					"description", "This is a description for sample " + i "."
 				).put(
 					"title", "Sample" + i
 				).build(),
