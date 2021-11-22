@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES,
 	service = FrontendDataSetFilter.class
 )
-public class StatusCheckBoxFrontendDataSetFilter
+public class SampleCheckBoxFrontendDataSetFilter
 	extends BaseCheckBoxFrontendDataSetFilter {
 
 	@Override
