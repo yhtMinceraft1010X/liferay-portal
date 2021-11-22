@@ -154,7 +154,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
 
 		PropertyExpander.PropertyResolver propertyResolver2 =
-			(name, options) -> _resolveProperty(elementInstance, name);
+			(name, options) -> {
+				String prefix = "configuration.";
+
+				if (!name.startsWith(prefix)) {
+					return null;
+				}
+
+				Map<String, Object> values =
+					elementInstance.getUiConfigurationValues();
+
+				return values.get(name.substring(prefix.length()));
+			};
 
 		_contributeSXPSearchRequestBodyContributors(
 			_expand(
@@ -178,8 +189,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			sxpBlueprint);
 
 		PropertyExpander.PropertyResolver propertyResolver =
-			(name, options) -> _resolveProperty(
-				name, options, sxpParameterData);
+			(name, options) -> {
+				SXPParameter sxpParameter =
+					sxpParameterData.getSXPParameterByName(name);
+
+				if ((sxpParameter == null) ||
+					!sxpParameter.isTemplateVariable()) {
+
+					return null;
+				}
+
+				return sxpParameter.evaluateToString(options);
+			};
 
 		if (sxpBlueprint.getConfiguration() != null) {
 			_contributeSXPSearchRequestBodyContributors(
@@ -215,34 +236,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return (DTOConverter
 			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>)
 				_dtoConverterRegistry.getDTOConverter(dtoClassName);
-	}
-
-	private Object _resolveProperty(
-		ElementInstance elementInstance, String name) {
-
-		String prefix = "configuration.";
-
-		if (!name.startsWith(prefix)) {
-			return null;
-		}
-
-		Map<String, Object> values = elementInstance.getUiConfigurationValues();
-
-		return values.get(name.substring(prefix.length()));
-	}
-
-	private Object _resolveProperty(
-		String name, Map<String, String> options,
-		SXPParameterData sxpParameterData) {
-
-		SXPParameter sxpParameter = sxpParameterData.getSXPParameterByName(
-			name);
-
-		if ((sxpParameter == null) || !sxpParameter.isTemplateVariable()) {
-			return null;
-		}
-
-		return sxpParameter.evaluateToString(options);
 	}
 
 	@Reference
