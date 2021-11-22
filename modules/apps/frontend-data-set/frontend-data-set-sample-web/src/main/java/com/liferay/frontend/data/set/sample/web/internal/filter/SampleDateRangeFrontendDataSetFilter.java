@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.HEADLESS_SAMPLE,
+	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES,
 	service = FrontendDataSetFilter.class
 )
 public class SampleDateRangeFrontendDataSetFilter

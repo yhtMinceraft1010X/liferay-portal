@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false,
-	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.HEADLESS_SAMPLE,
+	property = "frontend.data.set.name=" + FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES,
 	service = FrontendDataSetView.class
 )
 public class SampleListFrontendDataSetView extends BaseListFrontendDataSetView {

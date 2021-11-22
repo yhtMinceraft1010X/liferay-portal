@@ -24,7 +24,7 @@ FrontendDataSetSampleDisplayContext frontendDataSetSampleDisplayContext = (Front
 	apiURL="<%= frontendDataSetSampleDisplayContext.getAPIURL() %>"
 	formId="fm"
 	frontendDataSetActionDropdownItems="<%= frontendDataSetSampleDisplayContext.getFrontendDataSetActionDropdownItems() %>"
-	id="<%= FrontendDataSetSampleFrontendDataSetNames.HEADLESS_SAMPLE %>"
+	id="<%= FrontendDataSetSampleFrontendDataSetNames.FRONTEND_DATA_SET_SAMPLES %>"
 	itemsPerPage="<%= 20 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
