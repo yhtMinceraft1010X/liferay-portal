@@ -66,18 +66,18 @@ public class PropertyExpanderTest {
 					return null;
 				}
 
-				String s = "gamma";
+				String value = "gamma";
 
 				if (options.containsKey("len")) {
-					s = StringUtil.shorten(
-						s, GetterUtil.getInteger(options.get("len")));
+					value = StringUtil.shorten(
+						value, GetterUtil.getInteger(options.get("len")));
 				}
 
 				if (options.containsKey("up")) {
-					s = StringUtil.toUpperCase(s);
+					value = StringUtil.toUpperCase(value);
 				}
 
-				return s;
+				return value;
 			};
 
 		PropertyExpander.PropertyResolver propertyResolver3 =

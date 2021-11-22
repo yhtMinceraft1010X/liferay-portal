@@ -110,11 +110,11 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		Assert.assertEquals("should", complexQueryPart2.getOccur());
 
-		WrapperQuery wrapperQuery1 = (WrapperQuery)complexQueryPart2.getQuery();
+		WrapperQuery wrapperQuery = (WrapperQuery)complexQueryPart2.getQuery();
 
 		Assert.assertEquals(
 			_formatJSON(JSONUtil.put("match", JSONUtil.put("ranking", 5))),
-			_formatJSON(new String(wrapperQuery1.getSource())));
+			_formatJSON(new String(wrapperQuery.getSource())));
 
 		ComplexQueryPart complexQueryPart3 = complexQueryParts.get(2);
 
@@ -129,15 +129,15 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 
 		List<Sort> sorts = searchRequest.getSorts();
 
-		FieldSort sort1 = (FieldSort)sorts.get(0);
+		FieldSort fieldSort1 = (FieldSort)sorts.get(0);
 
-		Assert.assertEquals("department", sort1.getField());
-		Assert.assertEquals(SortOrder.ASC, sort1.getSortOrder());
+		Assert.assertEquals("department", fieldSort1.getField());
+		Assert.assertEquals(SortOrder.ASC, fieldSort1.getSortOrder());
 
-		FieldSort sort2 = (FieldSort)sorts.get(1);
+		FieldSort fieldSort2 = (FieldSort)sorts.get(1);
 
-		Assert.assertEquals("lastName", sort2.getField());
-		Assert.assertEquals(SortOrder.DESC, sort2.getSortOrder());
+		Assert.assertEquals("lastName", fieldSort2.getField());
+		Assert.assertEquals(SortOrder.DESC, fieldSort2.getSortOrder());
 
 		_assert(sxpBlueprint);
 	}
