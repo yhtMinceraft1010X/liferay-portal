@@ -36,21 +36,20 @@ public class StringSXPParameter extends BaseSXPParameter {
 
 	@Override
 	public boolean evaluateContains(Object value, Object[] values) {
-		if (values != null) {
-			for (Object object : values) {
-				if (StringUtil.containsIgnoreCase(
-						_value, GetterUtil.getString(object),
-						StringPool.BLANK)) {
-
-					return true;
-				}
-			}
-
-			return false;
+		if (values == null) {
+			return StringUtil.containsIgnoreCase(
+				_value, GetterUtil.getString(value), StringPool.BLANK);
 		}
 
-		return StringUtil.containsIgnoreCase(
-			_value, GetterUtil.getString(value), StringPool.BLANK);
+		for (Object object : values) {
+			if (StringUtil.containsIgnoreCase(
+					_value, GetterUtil.getString(object), StringPool.BLANK)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
