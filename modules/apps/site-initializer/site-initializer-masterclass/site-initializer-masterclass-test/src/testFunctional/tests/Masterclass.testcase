@@ -46,12 +46,30 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141573. Apply the Masterclass Modern Style Book to home pages"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ApplyMasterclassModernStyleBook {
+		task ("Go to Masterclass Stylebook and set Masterclass Moderns as Default") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
-		// TODO Create the automation about the LPS-141573.
+			StyleBooksAdmin.markStyleBookAsDefault(
+				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
+				styleBookName = "Masterclass Modern");
+		}
 
+		task ("Assert the default Masterclass Moderns is applied to Home page") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/test-masterclass-name");
+
+			AssertCssValue(
+				key_content = "Read More",
+				key_element = "a",
+				key_id = "hero-button",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "color",
+				value1 = "rgba(255, 255, 255, 1)");
+		 }
 	}
 
 	@description = "This is a test for LPS-136183. Can use a Masterclass Border and Classroom Header fragments"
@@ -490,12 +508,37 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141573. View the Masterclass Modern Style Book in content pages"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewMasterclassModernStyleBookonPage {
+		task ("Go to Masterclass Stylebook and set Masterclass Moderns as Default") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 
-		// TODO Create the automation about the LPS-141573.
+			StyleBooksAdmin.markStyleBookAsDefault(
+				confirmMessage = "Do you want to replace Masterclass Modern for Masterclass Classic as the default style book?",
+				styleBookName = "Masterclass Modern");
+		}
 
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Masterclass Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Assert the Masterclass Modern as an Inherited from Master") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Masterclass Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Style Book");
+
+			AssertElementPresent(
+				key_card = "Inherited from Master",
+				locator1 = "StyleBookEditor#STYLE_BOOK_CARD_SELECTED",
+				key_styleBookName = "Masterclass Modern");
+		}
 	}
 
 	@description = "This is a test for LPS-137508. View the Masterclass Pages"
