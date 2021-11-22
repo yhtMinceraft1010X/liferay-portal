@@ -159,6 +159,7 @@ public class BundleSiteInitializerTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+
 			GroupLocalServiceUtil.deleteGroup(group);
 
 			// TODO We should not need to delete the object definition manually
