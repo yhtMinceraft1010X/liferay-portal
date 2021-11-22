@@ -1095,7 +1095,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getScopeGroupId(),
 					JSONUtil.toStringArray(
 						jsonObject.getJSONArray("categories"))));
-
 			serviceContext.setAssetTagNames(
 				JSONUtil.toStringArray(jsonObject.getJSONArray("tags")));
 
@@ -1115,6 +1114,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
 				0, true, true, false, null, null, null, null, serviceContext);
 
+			serviceContext.setAssetCategoryIds(null);
 			serviceContext.setAssetTagNames(null);
 		}
 	}
