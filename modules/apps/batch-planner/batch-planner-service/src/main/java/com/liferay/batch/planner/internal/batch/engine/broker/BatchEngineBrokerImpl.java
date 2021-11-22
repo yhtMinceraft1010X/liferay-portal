@@ -87,7 +87,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		if (batchPlannerMappings.isEmpty()) {
 			throw new IllegalArgumentException(
-				"At least one import export mapping entry is expected");
+				"There are no batch planner mappings");
 		}
 
 		StringBundler sb = new StringBundler(
