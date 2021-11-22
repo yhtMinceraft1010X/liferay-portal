@@ -57,8 +57,8 @@ public class PropertyExpander {
 
 			int index4 = json.indexOf("|", index2);
 
-			String name;
-			String optionsString;
+			String name = null;
+			String optionsString = null;
 
 			if ((index4 == -1) || (index4 > index3)) {
 				name = json.substring(index2, index3);
