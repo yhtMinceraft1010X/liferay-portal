@@ -8,19 +8,19 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Application Id"
+				"en_US": "Quote Retrieve Link"
 			},
-			"name": "applicationId",
+			"name": "quoteRetrieveLink",
 			"required": true,
-			"type": "Long"
+			"type": "String"
 		},
 		{
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Product"
+				"en_US": "Product Name"
 			},
-			"name": "product",
+			"name": "productName",
 			"required": true,
 			"type": "String"
 		},

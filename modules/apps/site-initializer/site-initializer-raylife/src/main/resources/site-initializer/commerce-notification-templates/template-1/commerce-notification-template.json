@@ -11,7 +11,7 @@
 	"name": "Quote retrieve notification template",
 	"objectDefinitionName": "C_QuoteRetrieve",
 	"subject": {
-		"en-US": "Continue your Raylife [%PRODUCT%] quote"
+		"en-US": "Continue your Raylife [%PRODUCTNAME%] quote"
 	},
 	"to": "[%RETRIEVEEMAIL%]"
 }
