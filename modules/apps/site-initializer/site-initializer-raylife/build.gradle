@@ -95,10 +95,7 @@ uploadExtraRemoteApp {
 }
 
 zipExtraRemoteApp {
-	if (gradle.startParameter.taskNames.contains("uploadArchives") ||
-		gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") ||
-		gradle.startParameter.taskNames.contains("zipExtraRemoteApp")) {
-
+	if (gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") || gradle.startParameter.taskNames.contains("zipExtraRemoteApp")) {
 		dependsOn buildExtraRemoteApp
 
 		archiveName "extra-remote-app.zip"
