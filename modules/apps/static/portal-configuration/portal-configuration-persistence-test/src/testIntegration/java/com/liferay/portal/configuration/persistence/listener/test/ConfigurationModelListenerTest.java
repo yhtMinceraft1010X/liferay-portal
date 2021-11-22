@@ -262,38 +262,36 @@ public class ConfigurationModelListenerTest {
 
 	@Test
 	public void testRegisterConfigurationModelListeners() throws Exception {
+		int configurationModelListenersCount = 3;
+		AtomicInteger methodInvocationsCount = new AtomicInteger();
 		String pid = RandomTestUtil.randomString(20);
 
-		int numberOfListeners = 3;
-
-		AtomicInteger callCounter = new AtomicInteger();
-
-		for (int i = 0; i < numberOfListeners; i++) {
+		for (int i = 0; i < configurationModelListenersCount; i++) {
 			_registerConfigurationModelListener(
 				new ConfigurationModelListener() {
 
 					@Override
 					public void onAfterDelete(String pid) {
-						callCounter.incrementAndGet();
+						methodInvocationsCount.incrementAndGet();
 					}
 
 					@Override
 					public void onAfterSave(
 						String pid, Dictionary<String, Object> properties) {
 
-						callCounter.incrementAndGet();
+						methodInvocationsCount.incrementAndGet();
 					}
 
 					@Override
 					public void onBeforeDelete(String pid) {
-						callCounter.incrementAndGet();
+						methodInvocationsCount.incrementAndGet();
 					}
 
 					@Override
 					public void onBeforeSave(
 						String pid, Dictionary<String, Object> properties) {
 
-						callCounter.incrementAndGet();
+						methodInvocationsCount.incrementAndGet();
 					}
 
 				},
@@ -304,7 +302,8 @@ public class ConfigurationModelListenerTest {
 
 		ConfigurationTestUtil.deleteConfiguration(pid);
 
-		Assert.assertEquals(numberOfListeners * 4, callCounter.get());
+		Assert.assertEquals(
+			configurationModelListenersCount * 4, methodInvocationsCount.get());
 	}
 
 	private Configuration _getConfiguration(String pid) throws IOException {
