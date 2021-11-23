@@ -405,7 +405,7 @@ public class UserAccountResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount));
+				_getSuffixId(userAccount), null);
 
 		User user = accountEntryUserRel.getUser();
 
