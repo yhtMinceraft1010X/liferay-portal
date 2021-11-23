@@ -169,9 +169,9 @@ public class CartItemResourceImpl
 		}
 
 		for (CartItem cartItem : cartItems) {
-			Long parentId = cartItem.getParentCartItemId();
+			Long parentCartItemId = cartItem.getParentCartItemId();
 
-			if (parentId != null) {
+			if (parentCartItemId != null) {
 				CartItem parentCartItem = cartItemsMap.get(parentCartItemId);
 
 				if (parentCartItem != null) {
