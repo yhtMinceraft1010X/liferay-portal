@@ -171,19 +171,24 @@ public class CartItemResourceImpl
 		for (CartItem cartItem : cartItems) {
 			Long parentCartItemId = cartItem.getParentCartItemId();
 
-			if (parentCartItemId != null) {
-				CartItem parentCartItem = cartItemsMap.get(parentCartItemId);
-
-				if (parentCartItem != null) {
-					if (parentCartItem.getCartItems() == null) {
-						parentCartItem.setCartItems(new CartItem[0]);
-					}
-
-					parentCartItem.setCartItems(
-						ArrayUtil.append(parentCartItem.getCartItems(), cartItem));
-					cartItemsMap.remove(cartItem.getId());
-				}
+			if (parentCartItemId == null) {
+				continue;
 			}
+
+			CartItem parentCartItem = cartItemsMap.get(parentCartItemId);
+
+			if (parentCartItem == null) {
+				continue;
+			}
+
+			if (parentCartItem.getCartItems() == null) {
+				parentCartItem.setCartItems(new CartItem[0]);
+			}
+
+			parentCartItem.setCartItems(
+				ArrayUtil.append(parentCartItem.getCartItems(), cartItem));
+
+			cartItemsMap.remove(cartItem.getId());
 		}
 
 		return new ArrayList(cartItemsMap.values());
