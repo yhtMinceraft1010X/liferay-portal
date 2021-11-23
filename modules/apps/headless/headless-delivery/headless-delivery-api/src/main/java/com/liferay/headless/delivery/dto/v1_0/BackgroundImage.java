@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -179,7 +180,11 @@ public class BackgroundImage implements Serializable {
 
 			sb.append("\"description\": ");
 
-			if (description instanceof String) {
+			if (description instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject((Map<?, ?>)description));
+			}
+			else if (description instanceof String) {
 				sb.append("\"");
 				sb.append((String)description);
 				sb.append("\"");
@@ -196,7 +201,10 @@ public class BackgroundImage implements Serializable {
 
 			sb.append("\"title\": ");
 
-			if (title instanceof String) {
+			if (title instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)title));
+			}
+			else if (title instanceof String) {
 				sb.append("\"");
 				sb.append((String)title);
 				sb.append("\"");
@@ -213,7 +221,10 @@ public class BackgroundImage implements Serializable {
 
 			sb.append("\"url\": ");
 
-			if (url instanceof String) {
+			if (url instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)url));
+			}
+			else if (url instanceof String) {
 				sb.append("\"");
 				sb.append((String)url);
 				sb.append("\"");

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -423,7 +424,10 @@ public class SearchResponse implements Serializable {
 
 			sb.append("\"request\": ");
 
-			if (request instanceof String) {
+			if (request instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)request));
+			}
+			else if (request instanceof String) {
 				sb.append("\"");
 				sb.append((String)request);
 				sb.append("\"");
@@ -454,7 +458,11 @@ public class SearchResponse implements Serializable {
 
 			sb.append("\"response\": ");
 
-			if (response instanceof String) {
+			if (response instanceof Map) {
+				sb.append(
+					JSONFactoryUtil.createJSONObject((Map<?, ?>)response));
+			}
+			else if (response instanceof String) {
 				sb.append("\"");
 				sb.append((String)response);
 				sb.append("\"");

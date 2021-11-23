@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -349,7 +350,10 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"max\": ");
 
-			if (max instanceof String) {
+			if (max instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)max));
+			}
+			else if (max instanceof String) {
 				sb.append("\"");
 				sb.append((String)max);
 				sb.append("\"");
@@ -366,7 +370,10 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"min\": ");
 
-			if (min instanceof String) {
+			if (min instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)min));
+			}
+			else if (min instanceof String) {
 				sb.append("\"");
 				sb.append((String)min);
 				sb.append("\"");
@@ -423,7 +430,10 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"step\": ");
 
-			if (step instanceof String) {
+			if (step instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)step));
+			}
+			else if (step instanceof String) {
 				sb.append("\"");
 				sb.append((String)step);
 				sb.append("\"");

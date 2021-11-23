@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -269,7 +270,10 @@ public class Range implements Serializable {
 
 			sb.append("\"gt\": ");
 
-			if (gt instanceof String) {
+			if (gt instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gt));
+			}
+			else if (gt instanceof String) {
 				sb.append("\"");
 				sb.append((String)gt);
 				sb.append("\"");
@@ -286,7 +290,10 @@ public class Range implements Serializable {
 
 			sb.append("\"gte\": ");
 
-			if (gte instanceof String) {
+			if (gte instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gte));
+			}
+			else if (gte instanceof String) {
 				sb.append("\"");
 				sb.append((String)gte);
 				sb.append("\"");
@@ -303,7 +310,10 @@ public class Range implements Serializable {
 
 			sb.append("\"lt\": ");
 
-			if (lt instanceof String) {
+			if (lt instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lt));
+			}
+			else if (lt instanceof String) {
 				sb.append("\"");
 				sb.append((String)lt);
 				sb.append("\"");
@@ -320,7 +330,10 @@ public class Range implements Serializable {
 
 			sb.append("\"lte\": ");
 
-			if (lte instanceof String) {
+			if (lte instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lte));
+			}
+			else if (lte instanceof String) {
 				sb.append("\"");
 				sb.append((String)lte);
 				sb.append("\"");

@@ -288,13 +288,13 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				<#if allSchemas[propertyType]??>
 					sb.append(String.valueOf(${propertyName}));
 				<#elseif stringUtil.equals(propertyType, "Object")>
-					if (${propertyName} instanceof String) {
+					if (${propertyName} instanceof Map) {
+						sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)${propertyName}));
+					}
+					else if (${propertyName} instanceof String) {
 						sb.append("\"");
 						sb.append((String)${propertyName});
 						sb.append("\"");
-					}
-					else if (${propertyName} instanceof Map) {
-						sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)${propertyName}));
 					}
 					else {
 						sb.append(${propertyName});
