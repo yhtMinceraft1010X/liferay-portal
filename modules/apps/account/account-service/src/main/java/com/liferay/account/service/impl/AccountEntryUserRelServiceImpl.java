@@ -48,21 +48,6 @@ public class AccountEntryUserRelServiceImpl
 	public AccountEntryUserRel addAccountEntryUserRel(
 			long accountEntryId, long creatorUserId, String screenName,
 			String emailAddress, Locale locale, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId)
-		throws PortalException {
-
-		_modelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
-
-		return accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId, null);
-	}
-
-	@Override
-	public AccountEntryUserRel addAccountEntryUserRel(
-			long accountEntryId, long creatorUserId, String screenName,
-			String emailAddress, Locale locale, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
 			String jobTitle)
 		throws PortalException {
