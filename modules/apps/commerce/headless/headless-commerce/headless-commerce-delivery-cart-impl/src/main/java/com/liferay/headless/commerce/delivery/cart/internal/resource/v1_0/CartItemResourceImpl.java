@@ -98,14 +98,14 @@ public class CartItemResourceImpl
 					_commerceOrderItemService.getCommerceOrderItems(
 						cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					commerceOrderItem -> {
-						if ((skuId == null) ||
-							Objects.equals(
+						if ((skuId != null) &&
+							!Objects.equals(
 								commerceOrderItem.getCPInstanceId(), skuId)) {
 
-							return _toCartItem(commerceOrderItem);
+							return null;
 						}
 
-						return null;
+						return _toCartItem(commerceOrderItem);
 					})));
 	}
 
