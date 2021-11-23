@@ -162,31 +162,31 @@ public class CartItemResourceImpl
 	}
 
 	private List<CartItem> _filterCartItems(List<CartItem> cartItems) {
-		Map<Long, CartItem> cartItemMap = new HashMap<>();
+		Map<Long, CartItem> cartItemsMap = new HashMap<>();
 
 		for (CartItem cartItem : cartItems) {
-			cartItemMap.put(cartItem.getId(), cartItem);
+			cartItemsMap.put(cartItem.getId(), cartItem);
 		}
 
 		for (CartItem cartItem : cartItems) {
 			Long parentId = cartItem.getParentCartItemId();
 
 			if (parentId != null) {
-				CartItem parent = cartItemMap.get(parentId);
+				CartItem parentCartItem = cartItemsMap.get(parentCartItemId);
 
-				if (parent != null) {
-					if (parent.getCartItems() == null) {
-						parent.setCartItems(new CartItem[0]);
+				if (parentCartItem != null) {
+					if (parentCartItem.getCartItems() == null) {
+						parentCartItem.setCartItems(new CartItem[0]);
 					}
 
-					parent.setCartItems(
-						ArrayUtil.append(parent.getCartItems(), cartItem));
-					cartItemMap.remove(cartItem.getId());
+					parentCartItem.setCartItems(
+						ArrayUtil.append(parentCartItem.getCartItems(), cartItem));
+					cartItemsMap.remove(cartItem.getId());
 				}
 			}
 		}
 
-		return new ArrayList(cartItemMap.values());
+		return new ArrayList(cartItemsMap.values());
 	}
 
 	private CartItem _toCartItem(CommerceOrderItem commerceOrderItem)
