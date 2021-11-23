@@ -34,14 +34,13 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.core.Response;
 
@@ -93,27 +92,21 @@ public class CartItemResourceImpl
 			@NestedFieldId("id") Long cartId, Long skuId, Pagination pagination)
 		throws Exception {
 
-		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrderItemService.getCommerceOrderItems(
-				cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<CommerceOrderItem> commerceOrderItemsStream =
-			commerceOrderItems.stream();
-
 		return Page.of(
-			_toCartItems(
-				commerceOrderItemsStream.filter(
+			_filterCartItems(
+				TransformUtil.transform(
+					_commerceOrderItemService.getCommerceOrderItems(
+						cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					commerceOrderItem -> {
-						if (skuId == null) {
-							return true;
+						if ((skuId == null) ||
+							Objects.equals(
+								commerceOrderItem.getCPInstanceId(), skuId)) {
+
+							return _toCartItem(commerceOrderItem);
 						}
 
-						return Objects.equals(
-							commerceOrderItem.getCPInstanceId(), skuId);
-					}
-				).collect(
-					Collectors.toList()
-				)));
+						return null;
+					})));
 	}
 
 	@Override
@@ -168,7 +161,7 @@ public class CartItemResourceImpl
 				cartItem.getQuantity(), commerceContext, serviceContext));
 	}
 
-	private List<CartItem> _handleProductBundle(List<CartItem> cartItems) {
+	private List<CartItem> _filterCartItems(List<CartItem> cartItems) {
 		Map<Long, CartItem> cartItemMap = new HashMap<>();
 
 		for (CartItem cartItem : cartItems) {
@@ -203,19 +196,6 @@ public class CartItemResourceImpl
 			new DefaultDTOConverterContext(
 				commerceOrderItem.getCommerceOrderItemId(),
 				contextAcceptLanguage.getPreferredLocale()));
-	}
-
-	private List<CartItem> _toCartItems(
-			List<CommerceOrderItem> commerceOrderItems)
-		throws Exception {
-
-		List<CartItem> cartItems = new ArrayList<>();
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			cartItems.add(_toCartItem(commerceOrderItem));
-		}
-
-		return _handleProductBundle(cartItems);
 	}
 
 	@Reference
