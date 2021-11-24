@@ -110,7 +110,6 @@ public class DDMFormFieldFactoryHelperTest {
 
 		Assert.assertEquals(
 			"expression", ddmFormFieldValidationExpression.getValue());
-
 		Assert.assertNull(ddmFormFieldValidationExpression.getName());
 
 		Assert.assertNull(ddmFormFieldValidation.getParameterLocalizedValue());
