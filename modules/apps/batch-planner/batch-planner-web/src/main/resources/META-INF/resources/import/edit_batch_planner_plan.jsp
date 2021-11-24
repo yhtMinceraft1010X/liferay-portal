@@ -27,7 +27,7 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 %>
 
 <div class="container pt-4">
-	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm" >
+	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm">
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
 
@@ -51,7 +51,11 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 						<aui:option label="XML" value="XML" />
 					</aui:select>
 
-					<aui:input name="importFile" required="<%= true %>" type="file" />
+					<span>
+						<react:component
+							module="js/FileUpload"
+						/>
+					</span>
 
 					<%
 					EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -99,13 +103,13 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 				</liferay-frontend:edit-form-body>
 			</div>
 		</div>
+
 		<span>
 			<react:component
 				module="js/import/ImportForm"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"backUrl",
-						backURL
+						"backUrl", backURL
 					).put(
 						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
 					).put(
@@ -136,7 +140,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 		</span>
 	</form>
 </div>
-
 
 <liferay-frontend:component
 	module="js/edit_batch_planner_plan"
