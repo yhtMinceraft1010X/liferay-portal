@@ -182,7 +182,8 @@ definition {
 
 		if (IsElementPresent(locator1 = "ProcessBuilderSource#SOURCE_WAPPER")){
 			Alert.viewErrorMessage(errorMessage = "Please add a workflow title before publishing.");
-		} else {
+		}
+		else {
 			Alert.viewErrorMessage(errorMessage = "Please name your workflow before publishing.");
 		}
 
