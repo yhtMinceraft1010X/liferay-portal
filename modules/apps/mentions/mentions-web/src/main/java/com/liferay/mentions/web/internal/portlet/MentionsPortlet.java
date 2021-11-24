@@ -207,17 +207,17 @@ public class MentionsPortlet extends MVCPortlet {
 
 		return () -> {
 			try {
+				List<User> filteredUsers = new ArrayList<>();
+
 				List<User> users = mentionsStrategy.getUsers(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					query, jsonObject);
 
-				Layout layout = themeDisplay.getLayout();
-
-				List<User> filteredUsers = new ArrayList<>();
-
 				for (User user : users) {
 					PermissionChecker permissionChecker =
 						PermissionCheckerFactoryUtil.create(user);
+
+					Layout layout = themeDisplay.getLayout();
 
 					if ((layout != null) &&
 						_layoutPermission.contains(
