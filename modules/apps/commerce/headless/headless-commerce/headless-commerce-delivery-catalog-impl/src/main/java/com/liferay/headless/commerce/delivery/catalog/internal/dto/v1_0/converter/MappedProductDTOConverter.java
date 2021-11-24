@@ -84,12 +84,12 @@ public class MappedProductDTOConverter
 		MappedProductDTOConverterContext mappedProductDTOConverterContext =
 			(MappedProductDTOConverterContext)dtoConverterContext;
 
+		CommerceContext commerceContext =
+			mappedProductDTOConverterContext.getCommerceContext();
+
 		CSDiagramEntry csDiagramEntry =
 			_csDiagramEntryService.getCSDiagramEntry(
 				(Long)mappedProductDTOConverterContext.getId());
-
-		CommerceContext commerceContext =
-			mappedProductDTOConverterContext.getCommerceContext();
 
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(
