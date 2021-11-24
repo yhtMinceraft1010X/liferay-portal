@@ -133,7 +133,8 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 			download(blobUrl, EXPORT_FILE_NAME);
 
 			dispatchIfMounted({type: STOP_LOADING});
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 			dispatchIfMounted(setError());
 		}
@@ -177,7 +178,8 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 					payload: pollingIntervalId,
 					type: START_POLLING,
 				});
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(error);
 				dispatchIfMounted(setError());
 			}

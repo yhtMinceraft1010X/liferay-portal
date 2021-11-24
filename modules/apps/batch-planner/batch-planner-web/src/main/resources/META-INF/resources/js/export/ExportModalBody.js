@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
@@ -49,51 +50,59 @@ const ExportModalBody = ({
 	}
 
 	return (
-		<ClayModal.Body className={classnames({'has-error': !!errorMessage})}>
-			<div className="export-process-description">
-				{title}
+		<ClayModal.Body>
+			<ClayForm.Group
+				className={classnames({'has-error': !!errorMessage})}
+			>
+				<div>
+					{title}
 
-				<div className="align-items-start d-flex pb-2 pt-2">
-					<ClayIcon className="mr-2 mt-1" symbol="document-default" />
+					<div className="align-items-start d-flex pb-2 pt-2">
+						<ClayIcon
+							className="mr-2 mt-1"
+							symbol="document-default"
+						/>
 
-					<div className="d-flex flex-column">
-						<span>
-							{'Export' +
-								(contentType
-									? `.${contentType.toLowerCase()}`
-									: '')}
-						</span>
+						<div className="d-flex flex-column">
+							<span>
+								{'Export' +
+									(contentType
+										? `.${contentType.toLowerCase()}`
+										: '')}
+							</span>
 
-						<ClayLabel displayType={labelType}>{label}</ClayLabel>
+							<ClayLabel displayType={labelType}>
+								{label}
+							</ClayLabel>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div
-				className="progress-container"
-				data-percentage={readyToDownload ? 100 : percentage}
-				data-title={
-					readyToDownload
-						? Liferay.Language.get('completed')
-						: Liferay.Language.get('in-progress')
-				}
-			>
-				<ClayProgressBar
-					value={readyToDownload ? 100 : percentage}
-					warn={errorMessage !== null}
-				/>
-			</div>
-
-			{errorMessage && (
-				<div className="form-feedback-item">
-					<ClayIcon
-						className="inline-item inline-item-before"
-						symbol="exclamation-full"
+				<div
+					className="progress-container"
+					data-percentage={readyToDownload ? 100 : percentage}
+					data-title={
+						readyToDownload
+							? Liferay.Language.get('completed')
+							: Liferay.Language.get('in-progress')
+					}
+				>
+					<ClayProgressBar
+						value={readyToDownload ? 100 : percentage}
+						warn={!!errorMessage}
 					/>
-
-					{errorMessage}
 				</div>
-			)}
+
+				{errorMessage && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+							{errorMessage}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
+			</ClayForm.Group>
 		</ClayModal.Body>
 	);
 };

@@ -16,7 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React, {useEffect, useState} from 'react';
 
-import getFieldsFromSchema from '../getFieldsFromSchema';
+import getFieldsFromSchema from './getFieldsFromSchema';
 
 function FieldsTable({portletNamespace}) {
 	const [fields, setFields] = useState([]);
@@ -25,13 +25,12 @@ function FieldsTable({portletNamespace}) {
 	useEffect(() => {
 		const handleSchemaUpdated = (event) => {
 			if (event.schema) {
-				const [newFields, newSelectedFields] = getFieldsFromSchema(
-					event.schema
-				);
+				const newFields = getFieldsFromSchema(event.schema);
 
 				setFields(newFields);
-				setSelectedFields(newSelectedFields);
-			} else {
+				setSelectedFields(newFields);
+			}
+			else {
 				setFields([]);
 				setSelectedFields([]);
 			}
@@ -72,7 +71,8 @@ function FieldsTable({portletNamespace}) {
 											fields.length
 										) {
 											setSelectedFields([]);
-										} else {
+										}
+										else {
 											setSelectedFields(fields);
 										}
 									}}
@@ -108,7 +108,8 @@ function FieldsTable({portletNamespace}) {
 																field
 														)
 													);
-												} else {
+												}
+												else {
 													setSelectedFields([
 														...selectedFields,
 														field,

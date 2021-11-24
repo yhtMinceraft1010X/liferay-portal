@@ -17,7 +17,7 @@ import {fetch} from 'frontend-js-web';
 import {EXPORT_PROCESS_COMPLETED, EXPORT_PROCESS_FAILED} from './constants';
 
 const HEADERS = new Headers({
-	Accept: 'application/json',
+	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 });
 
@@ -92,7 +92,8 @@ export async function getExportStatus({onFail, onProgress, onSuccess, taskId}) {
 					Math.round((processedItemsCount / totalItemsCount) * 100)
 				);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		onFail(Liferay.Language.get('unexpected-error'));
 	}
 }

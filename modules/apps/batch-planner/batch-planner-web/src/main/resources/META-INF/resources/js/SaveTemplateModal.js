@@ -49,13 +49,16 @@ const SaveTemplateModal = ({
 				if (saveTemplateResponse.error) {
 					setLoadingResponse(false);
 					setErrorMessage(saveTemplateResponse.error);
-				} else {
+				}
+				else {
 					closeModal();
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			setErrorMessage(Liferay.Language.get('unexpected-error'));
-		} finally {
+		}
+		finally {
 			setLoadingResponse(false);
 		}
 	};
@@ -95,6 +98,7 @@ const SaveTemplateModal = ({
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
 									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
 									{errorMessage}
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>

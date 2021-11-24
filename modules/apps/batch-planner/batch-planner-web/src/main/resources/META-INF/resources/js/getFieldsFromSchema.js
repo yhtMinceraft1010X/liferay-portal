@@ -12,9 +12,8 @@
  * details.
  */
 
-export default (schema) => {
+const getFieldsFromSchema = (schema) => {
 	const dbFields = [];
-	const fileFields = [];
 
 	for (const [label, property] of Object.entries(schema)) {
 		if (property.writeOnly || label.startsWith('x-')) {
@@ -29,9 +28,10 @@ export default (schema) => {
 
 		const field = {label, value};
 
-		fileFields.push(field);
 		dbFields.push(field);
 	}
 
-	return [fileFields, dbFields];
+	return dbFields;
 };
+
+export default getFieldsFromSchema;
