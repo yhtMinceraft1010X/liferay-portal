@@ -16,6 +16,8 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +51,17 @@ public class MapUtil {
 				return JSONFactoryUtil.createJSONObject((String)value);
 			}
 			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException, jsonException);
+				}
+
 				return value;
 			}
 		}
 
 		return value;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MapUtil.class);
 
 }

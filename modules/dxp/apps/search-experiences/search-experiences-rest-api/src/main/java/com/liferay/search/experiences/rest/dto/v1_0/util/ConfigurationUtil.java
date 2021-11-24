@@ -16,6 +16,8 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.AggregationConfiguration;
@@ -99,6 +101,9 @@ public class ConfigurationUtil {
 						(String)clause.getQuery()));
 			}
 			catch (JSONException jsonException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsonException, jsonException);
+				}
 			}
 		}
 	}
@@ -110,5 +115,8 @@ public class ConfigurationUtil {
 					(Map<?, ?>)rescore.getQuery()));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationUtil.class);
 
 }
