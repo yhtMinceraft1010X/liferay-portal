@@ -66,6 +66,8 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 			}
 		}
 
+		commerceAddress.setCommerceAddressId(address.getAddressId());
+
 		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
 			address.getCompanyId(), Address.class.getName(),
 			address.getAddressId());
@@ -76,7 +78,6 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 			commerceAddress.setPhoneNumber(phone.getNumber());
 		}
 
-		commerceAddress.setCommerceAddressId(address.getAddressId());
 		commerceAddress.setDefaultBilling(
 			toCommerceAccountDefaultBilling(address));
 		commerceAddress.setDefaultShipping(
