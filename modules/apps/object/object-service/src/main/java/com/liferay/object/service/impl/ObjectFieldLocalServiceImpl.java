@@ -149,6 +149,9 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField = objectFieldPersistence.remove(objectField);
 
+		_objectLayoutColumnPersistence.removeByObjectFieldId(
+			objectField.getObjectFieldId());
+
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
 				objectField.getDBTableName())) {
@@ -158,9 +161,6 @@ public class ObjectFieldLocalServiceImpl
 					objectField.getDBTableName(),
 					objectField.getDBColumnName()));
 		}
-
-		_objectLayoutColumnPersistence.removeByObjectFieldId(
-			objectField.getObjectFieldId());
 
 		return objectField;
 	}
