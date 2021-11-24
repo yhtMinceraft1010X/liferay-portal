@@ -129,13 +129,13 @@ public class CommerceChannelRelLocalServiceTest {
 				CPDefinition.class.getName(), _cpDefinition.getCPDefinitionId(),
 				"Channel Test", QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		Assert.assertEquals(
+			commerceChannelRels.toString(), 2, commerceChannelRels.size());
+
 		int commerceChannelRelsCount =
 			CommerceChannelRelLocalServiceUtil.getCommerceChannelRelsCount(
 				CPDefinition.class.getName(), _cpDefinition.getCPDefinitionId(),
 				"Channel Test");
-
-		Assert.assertEquals(
-			commerceChannelRels.toString(), 2, commerceChannelRels.size());
 
 		Assert.assertEquals(
 			commerceChannelRels.toString(), 2, commerceChannelRelsCount);
