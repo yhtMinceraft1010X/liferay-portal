@@ -42,15 +42,6 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 						<input class="form-control" id="<portlet:namespace />name" type="text" />
 					</div>
 
-					<aui:select bean="<%= batchPlannerPlan %>" model="<%= BatchPlannerPlan.class %>" name="externalType">
-						<aui:option label="CSV" value="CSV" />
-						<aui:option label="JSON" value="JSON" />
-						<aui:option label="JSONL" value="JSONL" />
-						<aui:option label="TXT" value="TXT" />
-						<aui:option label="XLS" value="XLS" />
-						<aui:option label="XML" value="XML" />
-					</aui:select>
-
 					<span>
 						<react:component
 							module="js/FileUpload"
