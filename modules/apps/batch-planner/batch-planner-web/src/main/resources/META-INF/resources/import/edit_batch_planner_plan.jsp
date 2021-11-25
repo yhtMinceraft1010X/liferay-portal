@@ -105,14 +105,12 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 						"formDataQuerySelector", "#" + liferayPortletResponse.getNamespace() + "fm"
 					).put(
 						"formImportURL",
-						PortletURLBuilder.createActionURL(
+						ResourceURLBuilder.createResourceURL(
 							renderResponse
-						).setActionName(
-							"/batch_planner/edit_import_batch_planner_plan"
 						).setCMD(
-							(batchPlannerPlanId == 0) ? Constants.IMPORT : Constants.UPDATE
-						).setRedirect(
-							backURL
+							Constants.IMPORT
+						).setResourceID(
+							"/batch_planner/edit_import_batch_planner_plan"
 						).buildString()
 					).put(
 						"formSaveAsTemplateURL",
