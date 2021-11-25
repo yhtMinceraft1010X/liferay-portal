@@ -16,25 +16,18 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADERS, HEADLESS_BATCH_ENGINE_URL} from './constants';
 
-export function getExportTaskStatusURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/${taskId}`;
+export function getImportTaskStatusURL(taskId) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/${taskId}`;
 }
 
-export function getExportFileURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/${taskId}/content`;
+export function getImportFileURL(taskId) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/${taskId}/content`;
 }
 
-export async function exportStatus(exportTaskId) {
-	const response = await fetch(getExportTaskStatusURL(exportTaskId), {
+export async function importStatus(exportTaskId) {
+	const response = await fetch(getImportTaskStatusURL(exportTaskId), {
 		headers: HEADERS,
 	});
 
 	return await response.json();
-}
-
-export async function fetchExportedFile(taskId) {
-	const response = await fetch(getExportFileURL(taskId));
-	const blob = await response.blob();
-
-	return URL.createObjectURL(blob);
 }

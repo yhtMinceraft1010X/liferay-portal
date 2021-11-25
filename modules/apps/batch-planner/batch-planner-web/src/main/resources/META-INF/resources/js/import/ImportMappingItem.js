@@ -26,6 +26,7 @@ import ImportMappingDropdownItem, {
 const ImportMappingItem = ({
 	field,
 	onChange,
+	portletNamespace,
 	selectableFields,
 	selectedField,
 }) => {
@@ -77,6 +78,18 @@ const ImportMappingItem = ({
 	return (
 		<ClayForm.Group>
 			<label htmlFor={inputId}>{field}</label>
+
+			<input
+				hidden
+				name={`${portletNamespace}externalFieldName_${field}`}
+				value={field}
+			/>
+
+			<input
+				hidden
+				name={`${portletNamespace}internalFieldName_${selectedField?.value}`}
+				value={selectedField?.value}
+			/>
 
 			<ClayDropDown
 				active={dropDownActive}
@@ -177,6 +190,7 @@ const buildDropdownItemsFromFields = (
 ImportMappingItem.propTypes = {
 	field: PropTypes.string.isRequired,
 	onChange: PropTypes.func,
+	portletNamespace: PropTypes.string.isRequired,
 	selectableFields: PropTypes.arrayOf(PropTypes.shape(ImportFieldPropType)),
 	selectedField: PropTypes.shape(ImportFieldPropType),
 };

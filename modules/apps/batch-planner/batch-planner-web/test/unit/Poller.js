@@ -15,13 +15,14 @@
 import fetchMock from 'fetch-mock';
 
 import {
-	getExportStatus,
+	exportStatus,
 	getExportTaskStatusURL,
 } from '../../src/main/resources/META-INF/resources/js/BatchPlannerExport';
+import {getTaskStatus} from '../../src/main/resources/META-INF/resources/js/Poller';
 import {
-	EXPORT_PROCESS_COMPLETED,
-	EXPORT_PROCESS_FAILED,
-	EXPORT_PROCESS_STARTED,
+	PROCESS_COMPLETED,
+	PROCESS_FAILED,
+	PROCESS_STARTED,
 } from '../../src/main/resources/META-INF/resources/js/constants';
 
 const taskId = 1234;
@@ -45,15 +46,16 @@ describe('Polling Export Status Process', () => {
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: null,
-			executeStatus: EXPORT_PROCESS_STARTED,
+			executeStatus: PROCESS_STARTED,
 			id: taskId,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
-		await getExportStatus({
+		await getTaskStatus({
 			onProgress,
+			requestTaskStatus: exportStatus,
 			taskId,
 		});
 
@@ -68,15 +70,16 @@ describe('Polling Export Status Process', () => {
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: mockErrorMessage,
-			executeStatus: EXPORT_PROCESS_FAILED,
+			executeStatus: PROCESS_FAILED,
 			id: taskId,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
-		await getExportStatus({
+		await getTaskStatus({
 			onFail,
+			requestTaskStatus: exportStatus,
 			taskId,
 		});
 
@@ -90,15 +93,16 @@ describe('Polling Export Status Process', () => {
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: null,
-			executeStatus: EXPORT_PROCESS_COMPLETED,
+			executeStatus: PROCESS_COMPLETED,
 			id: taskId,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
-		await getExportStatus({
+		await getTaskStatus({
 			onSuccess,
+			requestTaskStatus: exportStatus,
 			taskId,
 		});
 

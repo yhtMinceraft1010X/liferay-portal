@@ -13,14 +13,16 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {fetch} from 'frontend-js-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
 import {
-	fetchExportedFile,
-	getExportStatus,
-	startExport,
-} from '../BatchPlannerExport';
-import {EXPORT_FILE_NAME, EXPORT_POLL_INTERVAL} from '../constants';
+	EXPORT_FILE_NAME,
+	HEADERS,
+	POLL_INTERVAL,
+	PROCESS_COMPLETED,
+	PROCESS_FAILED,
+} from './constants';
 
 const ERROR = 'ERROR';
 const COMPLETED = 'COMPLETED';
@@ -35,7 +37,7 @@ const initialState = {
 	loading: false,
 	percentage: 0,
 	pollingIntervalId: null,
-	readyToDownload: false,
+	ready: false,
 	taskId: null,
 };
 
@@ -53,6 +55,56 @@ const setProgress = (contentType, percentage) => ({
 	payload: {contentType, percentage},
 	type: PROGRESS,
 });
+
+export async function startTask(formDataQuerySelector, formSubmitURL) {
+	const mainFormData = document.querySelector(formDataQuerySelector);
+	const formData = new FormData(mainFormData);
+
+	const response = await fetch(formSubmitURL, {
+		body: formData,
+		headers: HEADERS,
+		method: 'POST',
+	});
+
+	return await response.json();
+}
+
+export async function getTaskStatus({
+	onFail,
+	onProgress,
+	onSuccess,
+	requestTaskStatus,
+	taskId,
+}) {
+	try {
+		const {
+			contentType,
+			errorMessage,
+			executeStatus,
+			processedItemsCount,
+			totalItemsCount,
+		} = await requestTaskStatus(taskId);
+
+		switch (executeStatus) {
+			case PROCESS_FAILED:
+				onFail(
+					errorMessage || Liferay.Language.get('unexpected-error')
+				);
+				break;
+			case PROCESS_COMPLETED:
+				onSuccess(contentType);
+				break;
+			default:
+				onProgress(
+					contentType,
+					Math.round((processedItemsCount / totalItemsCount) * 100)
+				);
+		}
+	}
+	catch (error) {
+		onFail(Liferay.Language.get('unexpected-error'));
+	}
+}
 
 const reducer = (state = initialState, {payload, type}) => {
 	switch (type) {
@@ -84,7 +136,7 @@ const reducer = (state = initialState, {payload, type}) => {
 				loading: false,
 				percentage: 100,
 				pollingIntervalId: null,
-				readyToDownload: true,
+				ready: true,
 				taskId: payload.taskId,
 			};
 		case PROGRESS:
@@ -103,7 +155,12 @@ const reducer = (state = initialState, {payload, type}) => {
 	}
 };
 
-const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
+const Poller = (
+	formDataQuerySelector,
+	formSubmitURL,
+	requestTaskStatus,
+	requestTaskFile
+) => {
 	const isMounted = useIsMounted();
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -129,7 +186,7 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 	const downloadFile = useCallback(async () => {
 		dispatchIfMounted({type: LOADING});
 		try {
-			const blobUrl = await fetchExportedFile(state.taskId);
+			const blobUrl = await requestTaskFile(state.taskId);
 			download(blobUrl, EXPORT_FILE_NAME);
 
 			dispatchIfMounted({type: STOP_LOADING});
@@ -138,16 +195,16 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 			console.error(error);
 			dispatchIfMounted(setError());
 		}
-	}, [dispatchIfMounted, state.taskId]);
+	}, [dispatchIfMounted, requestTaskFile, state.taskId]);
 
 	useEffect(() => {
 		let pollingIntervalId;
 
-		async function callStartExport() {
+		async function callStartTask() {
 			dispatchIfMounted({type: LOADING});
 
 			try {
-				const {error, exportTaskId} = await startExport(
+				const {error, exportTaskId, importTaskId} = await startTask(
 					formDataQuerySelector,
 					formSubmitURL
 				);
@@ -158,7 +215,7 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 
 				pollingIntervalId = setInterval(
 					() =>
-						getExportStatus({
+						getTaskStatus({
 							onFail: (error) =>
 								dispatchIfMounted(setError(error)),
 							onProgress: (contentType, percent) =>
@@ -167,11 +224,15 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 								),
 							onSuccess: (contentType) =>
 								dispatchIfMounted(
-									setTaskId(contentType, exportTaskId)
+									setTaskId(
+										contentType,
+										exportTaskId || importTaskId
+									)
 								),
-							taskId: exportTaskId,
+							requestTaskStatus,
+							taskId: exportTaskId || importTaskId,
 						}),
-					EXPORT_POLL_INTERVAL
+					POLL_INTERVAL
 				);
 
 				dispatchIfMounted({
@@ -185,14 +246,20 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 			}
 		}
 
-		callStartExport();
+		callStartTask();
 
 		return () => {
 			if (pollingIntervalId) {
 				clearInterval(pollingIntervalId);
 			}
 		};
-	}, [dispatchIfMounted, formDataQuerySelector, formSubmitURL, isMounted]);
+	}, [
+		dispatchIfMounted,
+		formDataQuerySelector,
+		formSubmitURL,
+		isMounted,
+		requestTaskStatus,
+	]);
 
 	return {
 		contentType: state.contentType,
@@ -200,8 +267,8 @@ const ExportPoller = (formDataQuerySelector, formSubmitURL) => {
 		errorMessage: state.errorMessage,
 		loading: state.loading,
 		percentage: state.percentage,
-		readyToDownload: state.readyToDownload,
+		ready: state.ready,
 	};
 };
 
-export default ExportPoller;
+export default Poller;

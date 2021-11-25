@@ -52,7 +52,7 @@ function FileUpload({portletNamespace}) {
 		[isMounted]
 	);
 
-	const inputNameId = `${portletNamespace}-import-file`;
+	const inputNameId = `${portletNamespace}importFile`;
 
 	return (
 		<span>

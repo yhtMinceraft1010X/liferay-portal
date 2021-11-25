@@ -17,9 +17,24 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {saveTemplateAPI} from './BatchPlannerExport';
+import {HEADERS} from './constants';
+
+async function saveTemplate(formDataQuerySelector, updateData, url) {
+	const mainFormData = document.querySelector(formDataQuerySelector);
+	Liferay.Util.setFormValues(mainFormData, updateData);
+
+	const formData = new FormData(mainFormData);
+	const response = await fetch(url, {
+		body: formData,
+		headers: HEADERS,
+		method: 'POST',
+	});
+
+	return await response.json();
+}
 
 const SaveTemplateModal = ({
 	closeModal,
@@ -39,7 +54,7 @@ const SaveTemplateModal = ({
 
 		try {
 			const updateData = {[inputNameId]: inputValue};
-			const saveTemplateResponse = await saveTemplateAPI(
+			const saveTemplateResponse = await saveTemplate(
 				formDataQuerySelector,
 				updateData,
 				formSubmitURL

@@ -21,7 +21,7 @@ import ImportModal from './ImportModal';
 
 function ImportSubmit({
 	disabled,
-	formImportDataQuerySelector,
+	formDataQuerySelector,
 	formImportURL,
 	portletNamespace,
 }) {
@@ -42,13 +42,13 @@ function ImportSubmit({
 				onClick={onButtonClick}
 				type="button"
 			>
-				{Liferay.Language.get('next')}
+				{Liferay.Language.get('import')}
 			</ClayButton>
 
 			{visible && (
 				<ImportModal
 					closeModal={onClose}
-					formDataQuerySelector={formImportDataQuerySelector}
+					formDataQuerySelector={formDataQuerySelector}
 					formSubmitURL={formImportURL}
 					namespace={portletNamespace}
 					observer={observer}
@@ -60,7 +60,7 @@ function ImportSubmit({
 
 ImportSubmit.propTypes = {
 	disabled: PropTypes.bool.isRequired,
-	formImportDataQuerySelector: PropTypes.string.isRequired,
+	formDataQuerySelector: PropTypes.string.isRequired,
 	formImportURL: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 };

@@ -71,9 +71,7 @@ describe('ImportForm', () => {
 			})
 		);
 
-		getByLabelText(fileSchema[0]);
-		getByLabelText(fileSchema[1]);
-		getByLabelText(fileSchema[2]);
+		fileSchema.forEach((f) => getByLabelText(f));
 	});
 
 	it('must select the item on user click dropdown item', () => {

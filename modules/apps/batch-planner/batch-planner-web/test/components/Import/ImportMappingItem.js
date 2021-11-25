@@ -18,10 +18,8 @@ import React from 'react';
 
 import ImportMappingItem from '../../../src/main/resources/META-INF/resources/js/import/ImportMappingItem';
 
-const field = {
-	label: 'currencyCode',
-	value: 'currencyCode',
-};
+const field = 'currencyCode';
+
 const selectableFields = [
 	{
 		label: 'test',
@@ -36,6 +34,7 @@ const selectableFields = [
 
 const BASE_PROPS = {
 	field,
+	portletNamespace: 'test',
 	selectableFields,
 };
 
@@ -52,7 +51,7 @@ describe('ImportMappingItem', () => {
 		);
 
 		act(() => {
-			fireEvent.click(getByLabelText(BASE_PROPS.field.label));
+			fireEvent.click(getByLabelText(BASE_PROPS.field));
 		});
 
 		getByText(BASE_PROPS.selectableFields[0].label);
@@ -65,7 +64,7 @@ describe('ImportMappingItem', () => {
 		);
 
 		act(() => {
-			fireEvent.click(getByLabelText(BASE_PROPS.field.label));
+			fireEvent.click(getByLabelText(BASE_PROPS.field));
 		});
 
 		act(() => {
@@ -80,6 +79,7 @@ describe('ImportMappingItem', () => {
 			<ImportMappingItem
 				field={field}
 				onChange={onChangeMock}
+				portletNamespace={BASE_PROPS.portletNamespace}
 				selectableFields={selectableFields.filter(
 					(f) => f.label !== selectableFields[0].label
 				)}
@@ -88,7 +88,7 @@ describe('ImportMappingItem', () => {
 		);
 
 		act(() => {
-			fireEvent.click(getByLabelText(BASE_PROPS.field.label));
+			fireEvent.click(getByLabelText(BASE_PROPS.field));
 		});
 
 		act(() => {
@@ -104,6 +104,7 @@ describe('ImportMappingItem', () => {
 		const {getByLabelText, getByRole} = render(
 			<ImportMappingItem
 				field={field}
+				portletNamespace={BASE_PROPS.portletNamespace}
 				selectableFields={selectableFields.filter(
 					(f) => f.label !== selectableFields[0].label
 				)}
@@ -112,7 +113,7 @@ describe('ImportMappingItem', () => {
 		);
 
 		act(() => {
-			fireEvent.click(getByLabelText(field.label));
+			fireEvent.click(getByLabelText(field));
 		});
 
 		expect(
@@ -129,7 +130,7 @@ describe('ImportMappingItem', () => {
 		} = render(<ImportMappingItem {...BASE_PROPS} />);
 
 		act(() => {
-			fireEvent.click(getByLabelText(BASE_PROPS.field.label));
+			fireEvent.click(getByLabelText(BASE_PROPS.field));
 		});
 
 		act(() => {

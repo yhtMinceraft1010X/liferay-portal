@@ -26,7 +26,6 @@ const file = new Blob([fileContents], {type: 'text/csv'});
 const readAsText = jest.fn();
 let dummyFileReader;
 
-const onProgress = jest.fn();
 const onComplete = jest.fn();
 const onError = jest.fn();
 
@@ -45,10 +44,10 @@ describe('FileParsers', () => {
 		jest.clearAllMocks();
 	});
 
-	it('must correctly call onProgress', () => {
+	it('must correctly call onError when columns not detected', () => {
 		const onProgressEvent = {
 			target: {
-				result: 'currencyCode,typ',
+				result: `currencyCode,ty`,
 			},
 		};
 
@@ -58,17 +57,14 @@ describe('FileParsers', () => {
 			})
 		);
 
-		const onProgress = jest.fn();
-
 		parseCSV({
 			file,
 			onComplete,
 			onError,
-			onProgress,
 		});
 
-		expect(onProgress).toBeCalled();
-		expect(onComplete).not.toBeCalled();
+		expect(onComplete).not.toBeCalledWith(fileSchema);
+		expect(onError).toBeCalled();
 	});
 
 	it('must correctly call onComplete', () => {
@@ -88,9 +84,10 @@ describe('FileParsers', () => {
 		parseCSV({
 			file,
 			onComplete,
-			onProgress,
+			onError,
 		});
 
 		expect(onComplete).toBeCalledWith(fileSchema);
+		expect(onError).not.toBeCalled();
 	});
 });

@@ -18,8 +18,9 @@ import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {exportStatus, fetchExportedFile} from '../BatchPlannerExport';
+import Poller from '../Poller';
 import ExportModalBody from './ExportModalBody';
-import ExportPoller from './ExportPoller';
 
 const ExportModal = ({
 	closeModal,
@@ -33,8 +34,13 @@ const ExportModal = ({
 		errorMessage,
 		loading,
 		percentage,
-		readyToDownload,
-	} = ExportPoller(formDataQuerySelector, formSubmitURL);
+		ready: readyToDownload,
+	} = Poller(
+		formDataQuerySelector,
+		formSubmitURL,
+		exportStatus,
+		fetchExportedFile
+	);
 
 	let modalType;
 	let iconType;
