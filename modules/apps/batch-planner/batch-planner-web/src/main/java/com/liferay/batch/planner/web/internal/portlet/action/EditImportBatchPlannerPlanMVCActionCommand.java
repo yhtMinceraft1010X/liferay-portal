@@ -73,10 +73,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		if (cmd.equals(Constants.DELETE)) {
-			_deleteBatchPlannerPlan(actionRequest);
-		}
-		else if (cmd.equals(Constants.IMPORT)) {
+		if (cmd.equals(Constants.IMPORT)) {
 			_addBatchPlannerPlan(actionRequest);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
@@ -89,7 +86,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 		boolean export = ParamUtil.getBoolean(actionRequest, "export");
 		String externalType = ParamUtil.getString(
-			actionRequest, "externalType");
+			actionRequest, "externalType", "CSV");
 		String internalClassName = ParamUtil.getString(
 			actionRequest, "internalClassName");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -132,15 +129,6 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		finally {
 			FileUtil.delete(importFile);
 		}
-	}
-
-	private void _deleteBatchPlannerPlan(ActionRequest actionRequest)
-		throws Exception {
-
-		long batchPlannerPlanId = ParamUtil.getLong(
-			actionRequest, "batchPlannerPlanId");
-
-		_batchPlannerPlanService.deleteBatchPlannerPlan(batchPlannerPlanId);
 	}
 
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(
