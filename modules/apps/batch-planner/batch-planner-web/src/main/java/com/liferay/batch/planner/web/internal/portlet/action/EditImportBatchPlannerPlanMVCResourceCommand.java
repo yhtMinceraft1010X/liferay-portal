@@ -23,8 +23,8 @@ import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -46,8 +46,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,40 +61,40 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 		"mvc.command.name=/batch_planner/edit_import_batch_planner_plan"
 	},
-	service = MVCActionCommand.class
+	service = MVCResourceCommand.class
 )
-public class EditImportBatchPlannerPlanMVCActionCommand
-	extends BaseTransactionalMVCActionCommand {
+public class EditImportBatchPlannerPlanMVCResourceCommand
+	extends BaseTransactionalMVCResourceCommand {
 
 	@Override
 	protected void doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.IMPORT)) {
-			_addBatchPlannerPlan(actionRequest);
+			_addBatchPlannerPlan(resourceRequest);
 		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_updateBatchPlannerPlan(actionRequest);
+		else if (cmd.equals(Constants.SAVE)) {
+			_updateBatchPlannerPlan(resourceRequest);
 		}
 	}
 
-	private void _addBatchPlannerPlan(ActionRequest actionRequest)
+	private void _addBatchPlannerPlan(ResourceRequest resourceRequest)
 		throws Exception {
 
-		boolean export = ParamUtil.getBoolean(actionRequest, "export");
+		boolean export = ParamUtil.getBoolean(resourceRequest, "export");
 		String externalType = ParamUtil.getString(
-			actionRequest, "externalType", "CSV");
+			resourceRequest, "externalType", "CSV");
 		String internalClassName = ParamUtil.getString(
-			actionRequest, "internalClassName");
-		String name = ParamUtil.getString(actionRequest, "name");
+			resourceRequest, "internalClassName");
+		String name = ParamUtil.getString(resourceRequest, "name");
 		String taskItemDelegateName = ParamUtil.getString(
-			actionRequest, "taskItemDelegateName");
+			resourceRequest, "taskItemDelegateName");
 
 		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
+			_portal.getUploadPortletRequest(resourceRequest);
 
 		File importFile = _toBatchPlannerFile(
 			externalType, uploadPortletRequest.getFileAsStream("importFile"));
@@ -109,10 +109,10 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
 				batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
-				_getCheckboxValue(actionRequest, "containsHeaders"));
+				_getCheckboxValue(resourceRequest, "containsHeaders"));
 
 			List<BatchPlannerMapping> batchPlannerMappings =
-				_getBatchPlannerMappings(actionRequest);
+				_getBatchPlannerMappings(resourceRequest);
 
 			for (BatchPlannerMapping batchPlannerMapping :
 					batchPlannerMappings) {
@@ -132,18 +132,18 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 	}
 
 	private List<BatchPlannerMapping> _getBatchPlannerMappings(
-		ActionRequest actionRequest) {
+		ResourceRequest resourceRequest) {
 
 		List<BatchPlannerMapping> batchPlannerMappings = new ArrayList<>();
 
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
+		Enumeration<String> enumeration = resourceRequest.getParameterNames();
 
 		while (enumeration.hasMoreElements()) {
 			String parameterName = enumeration.nextElement();
 
 			if (!parameterName.startsWith("externalFieldName_") ||
 				Validator.isNull(
-					ParamUtil.getString(actionRequest, parameterName))) {
+					ParamUtil.getString(resourceRequest, parameterName))) {
 
 				continue;
 			}
@@ -153,7 +153,7 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 
 			if (Validator.isNull(
 					ParamUtil.getString(
-						actionRequest, "internalFieldName_" + suffix))) {
+						resourceRequest, "internalFieldName_" + suffix))) {
 
 				continue;
 			}
@@ -162,10 +162,10 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 				BatchPlannerMappingUtil.create(0);
 
 			batchPlannerMapping.setExternalFieldName(
-				ParamUtil.getString(actionRequest, parameterName));
+				ParamUtil.getString(resourceRequest, parameterName));
 			batchPlannerMapping.setInternalFieldName(
 				ParamUtil.getString(
-					actionRequest, "internalFieldName_" + suffix));
+					resourceRequest, "internalFieldName_" + suffix));
 
 			batchPlannerMappings.add(batchPlannerMapping);
 		}
@@ -173,8 +173,10 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		return batchPlannerMappings;
 	}
 
-	private String _getCheckboxValue(ActionRequest actionRequest, String name) {
-		String value = actionRequest.getParameter(name);
+	private String _getCheckboxValue(
+		ResourceRequest resourceRequest, String name) {
+
+		String value = resourceRequest.getParameter(name);
 
 		if (value == null) {
 			return Boolean.FALSE.toString();
@@ -205,30 +207,30 @@ public class EditImportBatchPlannerPlanMVCActionCommand
 		}
 	}
 
-	private void _updateBatchPlannerPlan(ActionRequest actionRequest)
+	private void _updateBatchPlannerPlan(ResourceRequest resourceRequest)
 		throws Exception {
 
 		long batchPlannerPlanId = ParamUtil.getLong(
-			actionRequest, "batchPlannerPlanId");
+			resourceRequest, "batchPlannerPlanId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		String name = ParamUtil.getString(resourceRequest, "name");
 
 		_batchPlannerPlanService.updateBatchPlannerPlan(
 			batchPlannerPlanId, name);
 
 		if (Validator.isNotNull(
-				ParamUtil.getString(actionRequest, "policyName")) &&
+				ParamUtil.getString(resourceRequest, "policyName")) &&
 			Validator.isNotNull(
-				ParamUtil.getString(actionRequest, "policyValue"))) {
+				ParamUtil.getString(resourceRequest, "policyValue"))) {
 
 			_batchPlannerPolicyService.updateBatchPlannerPolicy(
 				batchPlannerPlanId,
-				ParamUtil.getString(actionRequest, "policyName"),
-				ParamUtil.getString(actionRequest, "policyValue"));
+				ParamUtil.getString(resourceRequest, "policyName"),
+				ParamUtil.getString(resourceRequest, "policyValue"));
 		}
 
 		List<BatchPlannerMapping> batchPlannerMappings =
-			_getBatchPlannerMappings(actionRequest);
+			_getBatchPlannerMappings(resourceRequest);
 
 		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
 			_batchPlannerMappingService.updateBatchPlannerMapping(
