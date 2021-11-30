@@ -314,7 +314,9 @@ public class BundleSiteInitializerTest {
 
 		// TODO Fix and enable test
 
-		//_assertCommerceNotificationTemplate(commerceChannel, group);
+		if (false) {
+			_assertCommerceNotificationTemplate(commerceChannel, group);
+		}
 	}
 
 	private void _assertCommerceInventoryWarehouse(Group group) {
@@ -328,7 +330,6 @@ public class BundleSiteInitializerTest {
 			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
 	}
 
-	@SuppressWarnings("unused")
 	private void _assertCommerceNotificationTemplate(
 			CommerceChannel commerceChannel, Group group)
 		throws Exception {
