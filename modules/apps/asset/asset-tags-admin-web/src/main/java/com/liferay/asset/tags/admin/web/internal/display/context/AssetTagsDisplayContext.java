@@ -313,6 +313,8 @@ public class AssetTagsDisplayContext {
 		else {
 			String orderByCol = getOrderByCol();
 
+			tagsSearchContainer.setOrderByCol(orderByCol);
+
 			OrderByComparator<AssetTag> orderByComparator = null;
 
 			boolean orderByAsc = false;
@@ -331,8 +333,8 @@ public class AssetTagsDisplayContext {
 					orderByAsc);
 			}
 
-			tagsSearchContainer.setOrderByCol(orderByCol);
 			tagsSearchContainer.setOrderByComparator(orderByComparator);
+
 			tagsSearchContainer.setOrderByType(orderByType);
 
 			long scopeGroupId = _themeDisplay.getScopeGroupId();
