@@ -135,12 +135,13 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
-		for (String parameter : parameterMap.keySet()) {
-			if (parameter.startsWith(_INFO_FIELD_PREFIX)) {
+		for (String parameterName : parameterMap.keySet()) {
+			if (parameterName.startsWith(_PARAMETER_NAME_INFO_FIELD)) {
 				values.put(
-					parameter.substring(
-						_INFO_FIELD_PREFIX.length(), parameter.length() - 2),
-					portletRequest.getParameterValues(parameter));
+					parameterName.substring(
+						_PARAMETER_NAME_INFO_FIELD.length(),
+						parameterName.length() - 2),
+					portletRequest.getParameterValues(parameterName));
 			}
 		}
 
@@ -232,7 +233,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return LocaleUtil.fromLanguageId(_getTargetLanguageId(actionRequest));
 	}
 
-	private static final String _INFO_FIELD_PREFIX = "infoField--";
+	private static final String _PARAMETER_NAME_INFO_FIELD = "infoField--";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateTranslationMVCActionCommand.class);

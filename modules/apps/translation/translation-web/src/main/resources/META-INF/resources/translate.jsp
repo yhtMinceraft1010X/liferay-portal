@@ -144,9 +144,11 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 								String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
 
 								List<String> sourceStringValues = translateDisplayContext.getSourceStringValues(infoField, translateDisplayContext.getSourceLocale());
-								List<String> targetStringValues = translateDisplayContext.getTargetStringValues(infoField, translateDisplayContext.getTargetLocale());
 
 								Iterator<String> sourceStringValuesIterator = sourceStringValues.iterator();
+
+								List<String> targetStringValues = translateDisplayContext.getTargetStringValues(infoField, translateDisplayContext.getTargetLocale());
+
 								Iterator<String> targetStringValuesIterator = targetStringValues.iterator();
 							%>
 
