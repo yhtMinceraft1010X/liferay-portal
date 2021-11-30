@@ -283,9 +283,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			Navigator.openSpecificURL(url = "${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com");
 
-			Pause(locator1 = "3000");
-
-			Portlet.viewHomePage(pageName = "Home");
+			Portlet.waitForHomePage(pageName = "Home");
 		}
 
 		task ("View welcome content page") {
@@ -301,7 +299,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		task ("Assert test present in home page") {
 			Navigator.openSpecificURL(url = '''${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test''');
 
-			Portlet.viewHomePage(pageName = "Test");
+			Portlet.waitForHomePage(pageName = "Test");
 		}
 	}
 
