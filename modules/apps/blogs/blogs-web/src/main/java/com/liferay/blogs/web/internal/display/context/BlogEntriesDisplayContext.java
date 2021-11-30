@@ -289,16 +289,15 @@ public class BlogEntriesDisplayContext {
 				searchContext.setOwnerUserId(themeDisplay.getUserId());
 			}
 
-			String orderByCol = getOrderByCol();
-			String orderByType = getOrderByType();
-
 			Sort sort = null;
 
 			boolean orderByAsc = false;
 
-			if (Objects.equals(orderByType, "asc")) {
+			if (Objects.equals(getOrderByType(), "asc")) {
 				orderByAsc = true;
 			}
+
+			String orderByCol = getOrderByCol();
 
 			if (Objects.equals(orderByCol, "display-date")) {
 				sort = new Sort(
