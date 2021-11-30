@@ -26,8 +26,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.navigation.menu.item.display.page.internal.configuration.FFDisplayPageSiteNavigationMenuItemConfigurationUtil;
@@ -76,19 +74,11 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 		for (ServiceRegistration<SiteNavigationMenuItemType>
 				serviceRegistration : _serviceRegistrations.values()) {
 
-			try {
-				serviceRegistration.unregister();
-			}
-			catch (IllegalStateException illegalStateException) {
-				_log.error(illegalStateException, illegalStateException);
-			}
+			serviceRegistration.unregister();
 		}
 
 		_serviceRegistrations.clear();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
