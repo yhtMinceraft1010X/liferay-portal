@@ -44,7 +44,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select ");
+		sb.append("select formInstanceId, ");
 
 		boolean hasExpirationDate = hasColumn(
 			"DDMFormInstance", "expirationDate");
@@ -53,7 +53,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 			sb.append("expirationDate, ");
 		}
 
-		sb.append("formInstanceId, settings_ from DDMFormInstance");
+		sb.append("settings_ from DDMFormInstance");
 
 		try (PreparedStatement selectPreparedStatement1 =
 				connection.prepareStatement(sb.toString());
