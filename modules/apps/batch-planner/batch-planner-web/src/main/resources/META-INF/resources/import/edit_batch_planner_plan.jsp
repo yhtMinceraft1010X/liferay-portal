@@ -30,18 +30,13 @@ renderResponse.setTitle((batchPlannerPlan == null) ? LanguageUtil.get(request, "
 	<form id="<portlet:namespace />fm" name="<portlet:namespace />fm">
 		<aui:input name="batchPlannerPlanId" type="hidden" value="<%= batchPlannerPlanId %>" />
 		<aui:input name="taskItemDelegateName" type="hidden" value="DEFAULT" />
+		<input class="form-control" id="<portlet:namespace />name" name="<portlet:namespace />name" type="hidden" />
 
 		<div class="card">
 			<h4 class="card-header"><%= LanguageUtil.get(request, "import-settings") %></h4>
 
 			<div class="card-body">
 				<liferay-frontend:edit-form-body>
-					<div class="form-group">
-						<label for="<portlet:namespace />name"><%= LanguageUtil.get(request, "template-name") %></label>
-
-						<input class="form-control" id="<portlet:namespace />name" type="text" />
-					</div>
-
 					<span>
 						<react:component
 							module="js/FileUpload"
