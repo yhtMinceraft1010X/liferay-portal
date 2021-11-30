@@ -108,8 +108,8 @@ portletDisplay.setURLBack(backURL);
 
 					fields.forEach((field) => {
 						if (
-							field.type === 'text' &&
 							field.displayStyle === 'singleline' &&
+							field.type === 'text' &&
 							field.value.length > 280
 						) {
 							shouldSubmitForm = false;
