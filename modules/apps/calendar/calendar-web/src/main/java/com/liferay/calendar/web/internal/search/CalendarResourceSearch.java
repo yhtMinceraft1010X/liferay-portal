@@ -82,16 +82,18 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 			String.valueOf(displayTerms.getScope()));
 
 		try {
+			setOrderableHeaders(orderableHeaders);
+
 			String orderByCol = SearchOrderByUtil.getOrderByCol(
 				portletRequest, CalendarPortletKeys.CALENDAR,
 				"users-resources-order-by-col", "last-name");
+
+			setOrderByCol(orderByCol);
 
 			String orderByType = SearchOrderByUtil.getOrderByType(
 				portletRequest, CalendarPortletKeys.CALENDAR,
 				"users-resources-order-by-type", "asc");
 
-			setOrderableHeaders(orderableHeaders);
-			setOrderByCol(orderByCol);
 			setOrderByComparator(
 				_getOrderByComparator(orderByCol, orderByType));
 			setOrderByType(orderByType);
