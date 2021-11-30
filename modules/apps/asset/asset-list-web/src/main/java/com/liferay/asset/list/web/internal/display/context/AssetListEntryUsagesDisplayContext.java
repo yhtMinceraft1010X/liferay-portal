@@ -204,6 +204,8 @@ public class AssetListEntryUsagesDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collection-usages");
 
+		assetListEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
+
 		boolean orderByAsc = false;
 
 		String orderByType = _getOrderByType();
@@ -212,9 +214,9 @@ public class AssetListEntryUsagesDisplayContext {
 			orderByAsc = true;
 		}
 
-		assetListEntryUsagesSearchContainer.setOrderByCol(_getOrderByCol());
 		assetListEntryUsagesSearchContainer.setOrderByComparator(
 			new AssetListEntryUsageModifiedDateComparator(orderByAsc));
+
 		assetListEntryUsagesSearchContainer.setOrderByType(orderByType);
 
 		List<AssetListEntryUsage> assetListEntryUsages = null;
