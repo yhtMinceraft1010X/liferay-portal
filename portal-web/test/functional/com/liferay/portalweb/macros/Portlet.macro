@@ -548,12 +548,6 @@ definition {
 			value1 = "${message}");
 	}
 
-	macro viewHomePage {
-		AssertElementPresent(
-			key_pageName = "${pageName}",
-			locator1 = "Home#PAGE");
-	}
-
 	macro viewNoPermissionPG {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
@@ -684,4 +678,9 @@ definition {
 		AssertElementNotPresent(locator1 = "//fieldset[@disabled]");
 	}
 
+	macro waitForHomePage {
+		WaitForElementPresent(
+			key_pageName = "${pageName}",
+			locator1 = "Home#PAGE");
+	}
 }
