@@ -280,7 +280,8 @@ public class CPDefinitionLocalServiceImpl
 				BigDecimal.ZERO, published, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
+				expirationDateHour, expirationDateMinute, neverExpire, false,
+				false, 1, StringPool.BLANK, null, 0, null,
 				cpInstanceServiceContext);
 		}
 
