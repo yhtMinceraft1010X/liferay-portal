@@ -46,11 +46,11 @@ public class BlogsEntryInfoItemFriendlyURLUpdater
 
 		_friendlyURLEntryLocalService.setMainFriendlyURLEntry(friendlyURLEntry);
 
-		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+		BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(classPK);
 
-		entry.setUrlTitle(friendlyURLEntry.getUrlTitle());
+		blogsEntry.setUrlTitle(friendlyURLEntry.getUrlTitle());
 
-		_blogsEntryLocalService.updateBlogsEntry(entry);
+		_blogsEntryLocalService.updateBlogsEntry(blogsEntry);
 	}
 
 	@Reference

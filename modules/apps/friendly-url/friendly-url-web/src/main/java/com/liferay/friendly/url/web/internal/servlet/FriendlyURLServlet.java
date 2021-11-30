@@ -209,11 +209,18 @@ public class FriendlyURLServlet extends HttpServlet {
 			String className, long classPK)
 		throws Exception {
 
+		JSONObject friendlyURLEntryLocalizationsJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
 
 		Object object = infoItemObjectProvider.getInfoItem(classPK);
+
+		InfoItemFriendlyURLProvider<Object> infoItemFriendlyURLProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFriendlyURLProvider.class, className);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			Optional.ofNullable(
@@ -222,13 +229,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			).orElse(
 				_defaultInfoItemLanguagesProvider
 			);
-
-		InfoItemFriendlyURLProvider<Object> infoItemFriendlyURLProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFriendlyURLProvider.class, className);
-
-		JSONObject friendlyURLEntryLocalizationsJSONObject =
-			JSONFactoryUtil.createJSONObject();
 
 		for (String languageId :
 				infoItemLanguagesProvider.getAvailableLanguageIds(object)) {
