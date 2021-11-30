@@ -128,6 +128,8 @@ public class AssetTagsSelectorDisplayContext {
 		SearchContainer<AssetTag> tagsSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null, "there-are-no-tags");
 
+		tagsSearchContainer.setOrderByCol(_getOrderByCol());
+
 		boolean orderByAsc = false;
 
 		String orderByType = getOrderByType();
@@ -136,9 +138,9 @@ public class AssetTagsSelectorDisplayContext {
 			orderByAsc = true;
 		}
 
-		tagsSearchContainer.setOrderByCol(_getOrderByCol());
 		tagsSearchContainer.setOrderByComparator(
 			new AssetTagNameComparator(orderByAsc));
+
 		tagsSearchContainer.setOrderByType(orderByType);
 
 		if (_rowChecker) {
