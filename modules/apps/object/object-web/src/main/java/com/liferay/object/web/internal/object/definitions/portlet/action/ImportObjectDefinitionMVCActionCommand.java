@@ -87,10 +87,10 @@ public class ImportObjectDefinitionMVCActionCommand
 
 			ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 				objectDefinitionJSONObject,
-				objectLayoutColumnJsonObject -> {
-					objectLayoutColumnJsonObject.remove("objectFieldName");
+				objectLayoutColumnJSONObject -> {
+					objectLayoutColumnJSONObject.remove("objectFieldName");
 
-					return objectLayoutColumnJsonObject;
+					return objectLayoutColumnJSONObject;
 				});
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
@@ -186,25 +186,25 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 			objectDefinitionJSONObject,
-			objectLayoutColumnJsonObject -> {
+			objectLayoutColumnJSONObject -> {
 				for (ObjectField objectField :
 						postObjectDefinition.getObjectFields()) {
 
 					if (StringUtil.equals(
 							objectField.getName(),
-							(String)objectLayoutColumnJsonObject.get(
+							(String)objectLayoutColumnJSONObject.get(
 								"objectFieldName"))) {
 
-						objectLayoutColumnJsonObject.put(
+						objectLayoutColumnJSONObject.put(
 							"objectFieldId", objectField.getId());
 
 						break;
 					}
 				}
 
-				objectLayoutColumnJsonObject.remove("objectFieldName");
+				objectLayoutColumnJSONObject.remove("objectFieldName");
 
-				return objectLayoutColumnJsonObject;
+				return objectLayoutColumnJSONObject;
 			});
 
 		List<ObjectLayout> objectLayouts = new ArrayList<>();
