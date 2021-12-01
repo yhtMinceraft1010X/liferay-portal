@@ -138,8 +138,15 @@ public class ImportObjectDefinitionMVCActionCommand
 	private void _importObjectDefinition(ActionRequest actionRequest)
 		throws Exception {
 
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			themeDisplay.getUser()
+		).build();
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			actionRequest);
@@ -163,13 +170,6 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
 
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource = builder.user(
-			themeDisplay.getUser()
-		).build();
-
 		ObjectDefinition postObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(objectDefinition);
 
@@ -187,6 +187,15 @@ public class ImportObjectDefinitionMVCActionCommand
 			JSONObject objectDefinitionJSONObject,
 			ObjectDefinition postObjectDefinition, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		ObjectLayoutResource.Builder builder =
+			_objectLayoutResourceFactory.create();
+
+		ObjectLayoutResource objectLayoutResource = builder.user(
+			themeDisplay.getUser()
+		).build();
+
+		List<ObjectLayout> objectLayouts = new ArrayList<>();
 
 		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 			objectDefinitionJSONObject,
@@ -211,8 +220,6 @@ public class ImportObjectDefinitionMVCActionCommand
 				return objectLayoutColumnJSONObject;
 			});
 
-		List<ObjectLayout> objectLayouts = new ArrayList<>();
-
 		JSONArray objectLayoutsJSONArray =
 			(JSONArray)objectDefinitionJSONObject.get("objectLayouts");
 
@@ -223,13 +230,6 @@ public class ImportObjectDefinitionMVCActionCommand
 			objectLayouts.add(
 				ObjectLayout.toDTO(objectLayoutJSONObject.toString()));
 		}
-
-		ObjectLayoutResource.Builder builder =
-			_objectLayoutResourceFactory.create();
-
-		ObjectLayoutResource objectLayoutResource = builder.user(
-			themeDisplay.getUser()
-		).build();
 
 		for (ObjectLayout objectLayout : objectLayouts) {
 			objectLayoutResource.postObjectDefinitionObjectLayout(
