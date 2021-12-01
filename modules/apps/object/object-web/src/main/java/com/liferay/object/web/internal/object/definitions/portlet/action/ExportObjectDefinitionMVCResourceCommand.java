@@ -99,7 +99,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 					if (Objects.equals(
 							curObjectField.getId(),
 							Long.valueOf(
-								(Integer)objectLayoutColumnJSONObject.get(
+								objectLayoutColumnJSONObject.getString(
 									"objectFieldId")))) {
 
 						objectField = curObjectField;
