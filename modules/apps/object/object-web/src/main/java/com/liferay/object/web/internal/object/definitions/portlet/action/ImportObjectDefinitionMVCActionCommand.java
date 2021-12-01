@@ -79,11 +79,11 @@ public class ImportObjectDefinitionMVCActionCommand
 			UploadPortletRequest uploadPortletRequest =
 				_getUploadPortletRequest(actionRequest);
 
-			String jsonFile = FileUtil.read(
-				uploadPortletRequest.getFile("jsonFile"));
+			String objectDefinitionJSON = FileUtil.read(
+				uploadPortletRequest.getFile("objectDefinitionJSON"));
 
 			JSONObject objectDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(jsonFile);
+				JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
 
 			ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 				objectDefinitionJSONObject,
@@ -114,7 +114,7 @@ public class ImportObjectDefinitionMVCActionCommand
 				objectDefinition, postObjectDefinition, themeDisplay);
 
 			objectDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
-				jsonFile);
+				objectDefinitionJSON);
 
 			_importObjectLayouts(
 				objectDefinitionJSONObject, postObjectDefinition, themeDisplay);

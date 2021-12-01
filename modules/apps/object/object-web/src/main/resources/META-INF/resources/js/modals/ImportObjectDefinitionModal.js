@@ -29,8 +29,8 @@ const ImportObjectDefinitionModal = ({
 	const [name, setName] = useState('');
 	const importObjectDefinitionModalComponentId = `${portletNamespace}importObjectDefinitionModal`;
 	const importObjectDefinitionFormId = `${portletNamespace}importObjectDefinitionForm`;
-	const jsonFileInputId = `${portletNamespace}jsonFile`;
 	const nameInputId = `${portletNamespace}name`;
+	const objectDefinitionJSONInputId = `${portletNamespace}objectDefinitionJSON`;
 	const [{fileName, inputFile, inputFileValue}, setFile] = useState({
 		fileName: '',
 		inputFile: null,
@@ -103,7 +103,7 @@ const ImportObjectDefinitionModal = ({
 					</ClayForm.Group>
 
 					<ClayForm.Group>
-						<label htmlFor={jsonFileInputId}>
+						<label htmlFor={objectDefinitionJSONInputId}>
 							{Liferay.Language.get('json-file')}
 						</label>
 
@@ -111,7 +111,7 @@ const ImportObjectDefinitionModal = ({
 							<ClayInput.GroupItem prepend>
 								<ClayInput
 									disabled
-									id={jsonFileInputId}
+									id={objectDefinitionJSONInputId}
 									type="text"
 									value={fileName}
 								/>
@@ -147,7 +147,7 @@ const ImportObjectDefinitionModal = ({
 
 					<input
 						className="d-none"
-						name={jsonFileInputId}
+						name={objectDefinitionJSONInputId}
 						onChange={({target}) => {
 							const [inputFile] = target.files;
 							setFile({
