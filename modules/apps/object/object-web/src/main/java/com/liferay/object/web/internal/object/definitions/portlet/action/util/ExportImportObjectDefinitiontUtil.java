@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 public class ExportImportObjectDefinitiontUtil {
 
-	public static void applyObjectLayoutColumnJSONObject(
+	public static void apply(
 		JSONObject objectDefinitionJSONObject,
 		UnsafeFunction<JSONObject, JSONObject, Exception> unsafeFunction) {
 

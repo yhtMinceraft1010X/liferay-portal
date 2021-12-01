@@ -154,7 +154,7 @@ public class ImportObjectDefinitionMVCActionCommand
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
 
-		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
+		ExportImportObjectDefinitiontUtil.apply(
 			objectDefinitionJSONObject,
 			objectLayoutColumnJSONObject -> {
 				objectLayoutColumnJSONObject.remove("objectFieldName");
@@ -192,7 +192,7 @@ public class ImportObjectDefinitionMVCActionCommand
 			themeDisplay.getUser()
 		).build();
 
-		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
+		ExportImportObjectDefinitiontUtil.apply(
 			objectDefinitionJSONObject,
 			objectLayoutColumnJSONObject -> {
 				for (ObjectField objectField :

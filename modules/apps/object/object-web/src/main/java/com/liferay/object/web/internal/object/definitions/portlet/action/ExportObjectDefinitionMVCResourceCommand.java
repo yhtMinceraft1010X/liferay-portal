@@ -88,7 +88,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinition.toString());
 
-		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
+		ExportImportObjectDefinitiontUtil.apply(
 			objectDefinitionJSONObject,
 			objectLayoutColumnJSONObject -> {
 				ObjectField objectField = null;
