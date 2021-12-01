@@ -66,11 +66,11 @@ public class ExportObjectDefinitionMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		ObjectDefinitionResource.Builder builder =
 			_objectDefinitionResourceFactory.create();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ObjectDefinitionResource objectDefinitionResource = builder.user(
 			themeDisplay.getUser()
