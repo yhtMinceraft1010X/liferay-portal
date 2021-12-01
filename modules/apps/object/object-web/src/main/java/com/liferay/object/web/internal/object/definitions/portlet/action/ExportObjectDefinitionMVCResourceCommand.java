@@ -69,11 +69,11 @@ public class ExportObjectDefinitionMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ObjectDefinitionResource.Builder objectDefinitionResourcedBuilder =
+		ObjectDefinitionResource.Builder builder =
 			_objectDefinitionResourceFactory.create();
 
 		ObjectDefinitionResource objectDefinitionResource =
-			objectDefinitionResourcedBuilder.user(
+			builder.user(
 				themeDisplay.getUser()
 			).build();
 
