@@ -73,50 +73,7 @@ public class ImportObjectDefinitionMVCActionCommand
 		throws Exception {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			UploadPortletRequest uploadPortletRequest =
-				_getUploadPortletRequest(actionRequest);
-
-			String objectDefinitionJSON = FileUtil.read(
-				uploadPortletRequest.getFile("objectDefinitionJSON"));
-
-			JSONObject objectDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
-
-			ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
-				objectDefinitionJSONObject,
-				objectLayoutColumnJSONObject -> {
-					objectLayoutColumnJSONObject.remove("objectFieldName");
-
-					return objectLayoutColumnJSONObject;
-				});
-
-			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
-				objectDefinitionJSONObject.toString());
-
-			objectDefinition.setName(
-				ParamUtil.getString(actionRequest, "name"));
-
-			ObjectDefinitionResource.Builder builder =
-				_objectDefinitionResourceFactory.create();
-
-			ObjectDefinitionResource objectDefinitionResource = builder.user(
-				themeDisplay.getUser()
-			).build();
-
-			ObjectDefinition postObjectDefinition =
-				objectDefinitionResource.postObjectDefinition(objectDefinition);
-
-			_importObjectActions(
-				objectDefinition, postObjectDefinition, themeDisplay);
-
-			objectDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
-				objectDefinitionJSON);
-
-			_importObjectLayouts(
-				objectDefinitionJSONObject, postObjectDefinition, themeDisplay);
+			_importObjectDefinition(actionRequest);
 
 			SessionMessages.add(
 				actionRequest, "importObjectDefinitionSuccessMessage");
@@ -176,6 +133,54 @@ public class ImportObjectDefinitionMVCActionCommand
 			objectActionResource.postObjectDefinitionObjectAction(
 				postObjectDefinition.getId(), objectAction);
 		}
+	}
+
+	private void _importObjectDefinition(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			actionRequest);
+
+		String objectDefinitionJSON = FileUtil.read(
+			uploadPortletRequest.getFile("objectDefinitionJSON"));
+
+		JSONObject objectDefinitionJSONObject =
+			JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
+
+		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
+			objectDefinitionJSONObject,
+			objectLayoutColumnJSONObject -> {
+				objectLayoutColumnJSONObject.remove("objectFieldName");
+
+				return objectLayoutColumnJSONObject;
+			});
+
+		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+			objectDefinitionJSONObject.toString());
+
+		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
+
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			themeDisplay.getUser()
+		).build();
+
+		ObjectDefinition postObjectDefinition =
+			objectDefinitionResource.postObjectDefinition(objectDefinition);
+
+		_importObjectActions(
+			objectDefinition, postObjectDefinition, themeDisplay);
+
+		objectDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
+			objectDefinitionJSON);
+
+		_importObjectLayouts(
+			objectDefinitionJSONObject, postObjectDefinition, themeDisplay);
 	}
 
 	private void _importObjectLayouts(
