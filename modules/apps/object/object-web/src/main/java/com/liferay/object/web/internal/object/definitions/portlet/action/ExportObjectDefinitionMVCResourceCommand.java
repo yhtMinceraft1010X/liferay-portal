@@ -72,10 +72,9 @@ public class ExportObjectDefinitionMVCResourceCommand
 		ObjectDefinitionResource.Builder builder =
 			_objectDefinitionResourceFactory.create();
 
-		ObjectDefinitionResource objectDefinitionResource =
-			builder.user(
-				themeDisplay.getUser()
-			).build();
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			themeDisplay.getUser()
+		).build();
 
 		long objectDefinitionId = ParamUtil.getLong(
 			resourceRequest, "objectDefinitionId");
@@ -94,7 +93,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 			objectFields.toArray(new ObjectField[0]));
 
 		JSONObject objectDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject(String.valueOf(objectDefinition));
+			JSONFactoryUtil.createJSONObject(objectDefinition.toString());
 
 		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 			objectDefinitionJSONObject,
