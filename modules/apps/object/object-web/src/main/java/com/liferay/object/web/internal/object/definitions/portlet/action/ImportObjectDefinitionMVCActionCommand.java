@@ -102,10 +102,9 @@ public class ImportObjectDefinitionMVCActionCommand
 			ObjectDefinitionResource.Builder builder =
 				_objectDefinitionResourceFactory.create();
 
-			ObjectDefinitionResource objectDefinitionResource =
-				builder.user(
-					themeDisplay.getUser()
-				).build();
+			ObjectDefinitionResource objectDefinitionResource = builder.user(
+				themeDisplay.getUser()
+			).build();
 
 			ObjectDefinition postObjectDefinition =
 				objectDefinitionResource.postObjectDefinition(objectDefinition);
@@ -223,10 +222,9 @@ public class ImportObjectDefinitionMVCActionCommand
 		ObjectLayoutResource.Builder builder =
 			_objectLayoutResourceFactory.create();
 
-		ObjectLayoutResource objectLayoutResource =
-			builder.user(
-				themeDisplay.getUser()
-			).build();
+		ObjectLayoutResource objectLayoutResource = builder.user(
+			themeDisplay.getUser()
+		).build();
 
 		for (ObjectLayout objectLayout : objectLayouts) {
 			objectLayoutResource.postObjectDefinitionObjectLayout(
