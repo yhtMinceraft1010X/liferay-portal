@@ -200,7 +200,7 @@ public class ImportObjectDefinitionMVCActionCommand
 
 					if (StringUtil.equals(
 							objectField.getName(),
-							(String)objectLayoutColumnJSONObject.get(
+							objectLayoutColumnJSONObject.getString(
 								"objectFieldName"))) {
 
 						objectLayoutColumnJSONObject.put(
