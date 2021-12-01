@@ -65,7 +65,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"
+	@description = "LRQA-71892 - Verify that the user name is displayed on -From Name- field, on Notification Templates tab"
 	@ignore = "Test Stub"
 	@priority = "5"
 	test FromNameFieldDisplaysUsername {

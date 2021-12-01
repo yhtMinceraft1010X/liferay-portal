@@ -193,7 +193,7 @@ definition {
 		Workflow.openWorkflowListView();
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "ASingle Approver");
-		
+
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "BSingle Approver");
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "CSingle Approver");

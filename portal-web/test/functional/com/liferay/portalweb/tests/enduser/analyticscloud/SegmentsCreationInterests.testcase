@@ -64,7 +64,7 @@ definition {
 	@priority = "5"
 	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
 		property portal.upstream = "quarantine";
-		
+
 		ACUtils.createBlogsAndAddToPage();
 
 		task ("Get site assigned property name") {

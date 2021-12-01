@@ -56,7 +56,7 @@ definition {
 		}
 	}
 
-    @description = "LRQA-71891 - Verify that the user can apply the selected template"
+	@description = "LRQA-71891 - Verify that the user can apply the selected template"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanApplySelectedTemplate {
@@ -65,7 +65,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71891 - Verify that the user can delete a template"
+	@description = "LRQA-71891 - Verify that the user can delete a template"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDeleteTemplate {
@@ -83,7 +83,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71891 - Verify that the user can filter by Name"
+	@description = "LRQA-71891 - Verify that the user can filter by Name"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanFilterByTemplateName {
@@ -92,7 +92,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
+	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanSaveCurrentConfigurationAsTemplate {

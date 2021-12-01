@@ -65,7 +65,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71890 - Verify that the user can clear the result bar after a search"
+	@description = "LRQA-71890 - Verify that the user can clear the result bar after a search"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test CanClearTheResultsOfASearch {
@@ -73,7 +73,7 @@ definition {
 		// TODO LRQA-71960 CanClearTheResultsOfASearch pending implementation
 
 	}
-	
+
 	@description = "LRQA-71890 - Verify that the user can search for a existent permission"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -83,7 +83,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"
+	@description = "LRQA-71890 - Verify that when the user search for a non existent role, the system displays a message"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test SystemDisplaysMessageWhenNoRoleIsFound {

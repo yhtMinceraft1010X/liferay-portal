@@ -94,7 +94,7 @@ definition {
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
 		property portal.upstream = "quarantine";
-		
+
 		var usernameList = "ac,ac2";
 
 		var emailList = "ac@liferay.com,ac2@liferay.com";

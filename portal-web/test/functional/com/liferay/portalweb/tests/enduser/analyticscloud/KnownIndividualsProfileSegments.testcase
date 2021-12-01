@@ -63,7 +63,7 @@ definition {
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
 		property portal.upstream = "quarantine";
-		
+
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
 		task ("Get site assigned property name") {

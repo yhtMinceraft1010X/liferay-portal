@@ -38,8 +38,9 @@ definition {
 
 		for (var element : list "${elementsList}") {
 			AssertElementPresent(
-			key_fragmentName = "${element}",
-			locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
+				key_fragmentName = "${element}",
+				locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
 		}
 	}
+
 }

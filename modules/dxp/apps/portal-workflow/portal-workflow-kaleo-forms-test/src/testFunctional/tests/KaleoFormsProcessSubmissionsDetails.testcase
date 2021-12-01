@@ -99,6 +99,15 @@ definition {
 
 	}
 
+	@description = "Verify that the basic structure of workflow track approval is available."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewTrackApprovalBasicStructure {
+
+		// TODO LRQA-71869 CanViewTrackApprovalBasicStructure pending implementation
+
+	}
+
 	@description = "Verify that the fields filled on submissions appears on the details page."
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -114,15 +123,6 @@ definition {
 	test VersionOnDetailsPage {
 
 		// TODO LRQA-70701 VersionOnDetailsPage pending implementation
-
-	}
-
-	@description = "Verify that the basic structure of workflow track approval is available."
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanViewTrackApprovalBasicStructure {
-
-		// TODO LRQA-71869 CanViewTrackApprovalBasicStructure pending implementation
 
 	}
 

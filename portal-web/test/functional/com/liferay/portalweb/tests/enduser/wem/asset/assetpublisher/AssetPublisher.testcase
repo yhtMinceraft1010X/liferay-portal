@@ -1026,7 +1026,7 @@ definition {
 			SystemSettings.saveConfiguration();
 		}
 
-		task ("Assert the Web Content Article Structures selector appear.") {			
+		task ("Assert the Web Content Article Structures selector appear.") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 			SitePages.addPublicPage(pageName = "Test AP Page");
@@ -1051,4 +1051,5 @@ definition {
 				selectedAssetConfiguration = "Web Content Article");
 		}
 	}
+
 }

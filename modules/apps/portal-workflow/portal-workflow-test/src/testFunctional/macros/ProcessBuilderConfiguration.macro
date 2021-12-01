@@ -1,14 +1,14 @@
 definition {
 
-    macro chooseSortOption {
+	macro chooseSortOption {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		Click(
-			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM",
-			key_menuItem = "${key_menuItem}");
+			key_menuItem = "${key_menuItem}",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
-    
-    macro viewSpecificOrder {
+
+	macro viewSpecificOrder {
 		var resultOrder = "0";
 
 		for (var searchAssetTitle : list "${resultsList}") {
@@ -20,4 +20,5 @@ definition {
 				value1 = "${searchAssetTitle}");
 		}
 	}
+
 }

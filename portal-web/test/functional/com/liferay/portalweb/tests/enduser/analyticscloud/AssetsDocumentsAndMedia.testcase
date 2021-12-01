@@ -749,7 +749,7 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
 		property portal.upstream = "quarantine";
-		
+
 		var documentNameList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

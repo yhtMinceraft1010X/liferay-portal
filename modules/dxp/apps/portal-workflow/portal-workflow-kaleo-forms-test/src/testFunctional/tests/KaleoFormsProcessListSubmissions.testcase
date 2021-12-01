@@ -162,21 +162,21 @@ definition {
 
 	}
 
-	@description = "Verify that the user can view the column values on the page after submit the process."
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanViewValuesAfterSubmitAProcess {
-
-		// TODO LRQA-70693 CanViewValuesAfterSubmitAProcess pending implementation
-
-	}
-
 	@description = "Verify that the user is able to track the workflow through the Kebab Menu."
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewTrackApprovalThroughKebabMenu {
 
 		// TODO LRQA-70645 CanViewTrackApprovalThroughKebabMenu pending implementation
+
+	}
+
+	@description = "Verify that the user can view the column values on the page after submit the process."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewValuesAfterSubmitAProcess {
+
+		// TODO LRQA-70693 CanViewValuesAfterSubmitAProcess pending implementation
 
 	}
 

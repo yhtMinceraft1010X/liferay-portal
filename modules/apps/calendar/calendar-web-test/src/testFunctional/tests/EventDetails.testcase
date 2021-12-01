@@ -73,7 +73,6 @@ definition {
 
 	}
 
-
 	@description = "LRQA-71888 - Verify that the user can delete a rate status into a event"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -669,21 +668,21 @@ definition {
 		CalendarEvent.view(eventTitle = "Calendar Event Repeating Title Edit");
 	}
 
-	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test EventStatusIsApprovedWhenNoWorkflowAssigned {
-
-		// TODO LRQA-71903 EventStatusIsApprovedWhenNoWorkflowAssigned pending implementation
-
-	}
-
 	@description = "LRQA-71888 - Verify that the event status is Any when the user Maybe attend the event"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test EventStatusIsAnyWhenUserMaybeAttend {
 
 		// TODO LRQA-71907 EventStatusIsAnyWhenUserMaybeAttend pending implementation
+
+	}
+
+	@description = "LRQA-71888 - Verify that the event status is -Approved- when the Calendar has no workflow assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EventStatusIsApprovedWhenNoWorkflowAssigned {
+
+		// TODO LRQA-71903 EventStatusIsApprovedWhenNoWorkflowAssigned pending implementation
 
 	}
 
@@ -948,5 +947,5 @@ definition {
 
 		CalendarEvent.viewDetailsResources(calendarName = "Test Test");
 	}
-	
+
 }

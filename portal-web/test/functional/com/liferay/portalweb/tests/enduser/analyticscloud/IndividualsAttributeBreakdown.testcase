@@ -64,7 +64,7 @@ definition {
 	@priority = "5"
 	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
 		property portal.upstream = "quarantine";
-		
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}

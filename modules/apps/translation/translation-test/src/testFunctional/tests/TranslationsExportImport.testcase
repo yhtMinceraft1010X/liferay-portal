@@ -177,7 +177,7 @@ definition {
 			webContentDescription = "Beschreibung",
 			webContentTitle = "TiteldesWebinhalts");
 	}
-	
+
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
 	@refactordone

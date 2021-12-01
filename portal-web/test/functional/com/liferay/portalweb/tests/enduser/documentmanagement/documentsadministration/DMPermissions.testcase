@@ -710,7 +710,7 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
-	
+
 		User.logoutPG();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -1075,9 +1075,9 @@ definition {
 			widgetName = "Documents and Media");
 
 		JSONFolder.addFolder(
-		 	dmFolderDescription = "DM Folder Description",
-		 	dmFolderName = "DM Folder Name",
-		 	groupName = "Guest");
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

@@ -352,7 +352,6 @@ definition {
 	@priority = "5"
 	test CheckBlogDepthReachedTo75AndCheckProperties {
 		property portal.upstream = "quarantine";
-		
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

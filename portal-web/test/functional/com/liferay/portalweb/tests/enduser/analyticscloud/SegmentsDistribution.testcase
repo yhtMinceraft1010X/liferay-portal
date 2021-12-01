@@ -278,7 +278,7 @@ definition {
 	@priority = "3"
 	test CanSearchTheSegmentProfileDistribution {
 		property portal.upstream = "quarantine";
-		
+
 		var userList = "ac,dxp";
 
 		var emailList = "ac@liferay.com,dxp@liferay.com,userea@liferay.com";

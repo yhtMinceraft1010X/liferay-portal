@@ -212,7 +212,6 @@ definition {
 	@priority = "5"
 	test CheckPageDepthReachedTo75 {
 		property portal.upstream = "quarantine";
-		
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {
@@ -275,7 +274,6 @@ definition {
 	@priority = "5"
 	test CheckPageDepthReachedTo100 {
 		property portal.upstream = "quarantine";
-
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {
@@ -338,7 +336,6 @@ definition {
 	@priority = "3"
 	test CheckPageDepthReachedWhenPressPageDownKey {
 		property portal.upstream = "quarantine";
-
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {
@@ -403,7 +400,6 @@ definition {
 	@priority = "4"
 	test CheckPageEventsTriggeredAgainAfterHardRefresh {
 		property portal.upstream = "quarantine";
-		
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {
@@ -496,7 +492,6 @@ definition {
 	@priority = "4"
 	test CheckPageEventsTriggeredAgainAfterRefresh {
 		property portal.upstream = "quarantine";
-
 		property proxy.server.enabled = "true";
 
 		task ("Get site assigned property name") {

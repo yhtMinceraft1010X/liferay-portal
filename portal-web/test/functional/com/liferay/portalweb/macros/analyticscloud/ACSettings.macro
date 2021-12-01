@@ -41,7 +41,6 @@ definition {
 
 		if (isSet(selectAnalyticsCloudField)) {
 			if (IsElementNotPresent(locator1 = "ACSettings#DATA_SOURCE_FIELD_NAME", key_FieldName = "${fieldName}", key_index = "${index}")) {
-
 				Button.click(button = "Select Analytics Cloud Field");
 
 				if (isSet(newField)) {
@@ -509,7 +508,7 @@ definition {
 
 		while (IsElementPresent(locator1 = "ACSettings#ITEM_TABLE")) {
 			ACSettings.deleteDataSource();
-			
+
 			Refresh();
 		}
 	}

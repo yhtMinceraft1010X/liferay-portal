@@ -56,7 +56,7 @@ definition {
 		}
 	}
 
-    @description = "LRQA-71889 - Verify that the user can apply configuration of Application Decorators in the calendar widget"
+	@description = "LRQA-71889 - Verify that the user can apply configuration of Application Decorators in the calendar widget"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ApplyConfigurationDecorators {
@@ -65,7 +65,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71889 - Verify that the user can modify Text Styles in the look and feel configuration page"
+	@description = "LRQA-71889 - Verify that the user can modify Text Styles in the look and feel configuration page"
 	@ignore = "Test Stub"
 	@priority = "3"
 	test ApplyModifiedTextStyles {
@@ -74,7 +74,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
+	@description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyBackground {
@@ -83,7 +83,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
+	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyBorder {
@@ -92,7 +92,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"
+	@description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyMarginAndPadding {
@@ -101,7 +101,7 @@ definition {
 
 	}
 
-    @description = "LRQA-71889 - Verify that the user can set Advanced Styling on calendar"
+	@description = "LRQA-71889 - Verify that the user can set Advanced Styling on calendar"
 	@ignore = "Test Stub"
 	@priority = "2"
 	test CanSetAdvancedStyling {
@@ -111,5 +111,3 @@ definition {
 	}
 
 }
-    
-

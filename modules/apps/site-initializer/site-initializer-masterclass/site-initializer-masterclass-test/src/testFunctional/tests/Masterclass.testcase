@@ -600,7 +600,6 @@ definition {
 				deviceType = "desktop",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Mobile size"
@@ -617,7 +616,6 @@ definition {
 				deviceType = "smartphone",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Apply Page in Tablet size"
@@ -634,7 +632,6 @@ definition {
 				deviceType = "tablet",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Desktop size"
@@ -651,7 +648,6 @@ definition {
 				deviceType = "desktop",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Mobile size"
@@ -668,7 +664,6 @@ definition {
 				deviceType = "smartphone",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Blog Page in Tablet size"
@@ -685,7 +680,6 @@ definition {
 				deviceType = "tablet",
 				elementsList = "navbar,heading,text-block,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Desktop size"
@@ -701,7 +695,6 @@ definition {
 				deviceType = "desktop",
 				elementsList = "navbar,hero,align-items-lg-start,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Mobile size"
@@ -716,7 +709,6 @@ definition {
 				deviceType = "smartphone",
 				elementsList = "navbar,hero,align-items-lg-start,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Home Page in Tablet size"
@@ -731,7 +723,6 @@ definition {
 				deviceType = "tablet",
 				elementsList = "navbar,hero,align-items-lg-start,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Desktop size"
@@ -743,8 +734,8 @@ definition {
 				portlet = "Pages");
 
 			SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "My Learning");	
+				menuItem = "View",
+				pageName = "My Learning");
 		}
 
 		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
@@ -752,7 +743,6 @@ definition {
 				deviceType = "desktop",
 				elementsList = "navbar,private-header,portlet-body,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Mobile size"
@@ -765,7 +755,7 @@ definition {
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "View",
-				pageName = "My Learning");	
+				pageName = "My Learning");
 		}
 
 		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
@@ -773,7 +763,6 @@ definition {
 				deviceType = "smartphone",
 				elementsList = "navbar,private-header,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Tablet size"
@@ -786,7 +775,7 @@ definition {
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "View",
-				pageName = "My Learning");	
+				pageName = "My Learning");
 		}
 
 		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
@@ -794,7 +783,6 @@ definition {
 				deviceType = "tablet",
 				elementsList = "navbar,private-header,footer");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Desktop size"
@@ -811,7 +799,7 @@ definition {
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "View",
-				pageName = "Sign In");	
+				pageName = "Sign In");
 		}
 
 		task ("Select Desktop Device in simulation menu and Assert the page elements presence") {
@@ -819,7 +807,6 @@ definition {
 				deviceType = "desktop",
 				elementsList = "sign-in-logo,sign-in-form");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Mobile size"
@@ -836,7 +823,7 @@ definition {
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "View",
-				pageName = "Sign In");	
+				pageName = "Sign In");
 		}
 
 		task ("Select Mobile Device in simulation menu and Assert the page elements presence") {
@@ -844,7 +831,6 @@ definition {
 				deviceType = "smartphone",
 				elementsList = "sign-in-logo,sign-in-form");
 		}
-
 	}
 
 	@description = "This is a test for LPS-140611. Masterclass Sign In Page in Tablet size"
@@ -861,7 +847,7 @@ definition {
 
 			SitePages.gotoPageMenuItem(
 				menuItem = "View",
-				pageName = "Sign In");	
+				pageName = "Sign In");
 		}
 
 		task ("Select Tablet Device in simulation menu and Assert the page elements presence") {
@@ -869,7 +855,6 @@ definition {
 				deviceType = "tablet",
 				elementsList = "sign-in-logo,sign-in-form");
 		}
-
 	}
 
 	@description = "This is a test for LPS-141768. View the READ MORE links of the three courses redirect to the course display page"
