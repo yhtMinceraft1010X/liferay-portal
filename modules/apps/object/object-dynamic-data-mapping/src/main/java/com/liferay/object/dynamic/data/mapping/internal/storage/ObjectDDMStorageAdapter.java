@@ -40,7 +40,6 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,6 +64,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -305,8 +305,8 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		Map<String, String> objectFieldTypes = stream.collect(
 			Collectors.toMap(ObjectField::getName, ObjectField::getType));
 
-		Map<String, ObjectField> objectFieldsMap =
-			ObjectFieldUtil.getObjectFieldsMap(objectFields);
+		Map<String, ObjectField> objectFieldsMap = _toObjectFieldsMap(
+			objectFields);
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			if (StringUtil.equals(
@@ -454,6 +454,18 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		else {
 			return value;
 		}
+	}
+
+	private Map<String, ObjectField> _toObjectFieldsMap(
+		List<ObjectField> objectFields) {
+
+		Map<String, ObjectField> objectFieldsMap = new LinkedHashMap<>();
+
+		for (ObjectField objectField : objectFields) {
+			objectFieldsMap.put(objectField.getName(), objectField);
+		}
+
+		return objectFieldsMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
