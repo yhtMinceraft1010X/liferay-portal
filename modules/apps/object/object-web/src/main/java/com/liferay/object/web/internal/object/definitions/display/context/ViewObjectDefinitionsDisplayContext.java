@@ -70,9 +70,9 @@ public class ViewObjectDefinitionsDisplayContext {
 
 		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
 
+		resourceURL.setParameter("objectDefinitionId", "{id}");
 		resourceURL.setResourceID(
 			"/object_definitions/export_object_definition");
-		resourceURL.setParameter("objectDefinitionId", "{id}");
 
 		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
 			new ArrayList<>();
