@@ -195,8 +195,6 @@ public class ImportObjectDefinitionMVCActionCommand
 			themeDisplay.getUser()
 		).build();
 
-		List<ObjectLayout> objectLayouts = new ArrayList<>();
-
 		ExportImportObjectDefinitiontUtil.applyObjectLayoutColumnJSONObject(
 			objectDefinitionJSONObject,
 			objectLayoutColumnJSONObject -> {
@@ -227,13 +225,9 @@ public class ImportObjectDefinitionMVCActionCommand
 			JSONObject objectLayoutJSONObject =
 				(JSONObject)objectLayoutsJSONArray.get(i);
 
-			objectLayouts.add(
-				ObjectLayout.toDTO(objectLayoutJSONObject.toString()));
-		}
-
-		for (ObjectLayout objectLayout : objectLayouts) {
 			objectLayoutResource.postObjectDefinitionObjectLayout(
-				postObjectDefinition.getId(), objectLayout);
+				postObjectDefinition.getId(),
+				ObjectLayout.toDTO(objectLayoutJSONObject.toString()));
 		}
 	}
 
