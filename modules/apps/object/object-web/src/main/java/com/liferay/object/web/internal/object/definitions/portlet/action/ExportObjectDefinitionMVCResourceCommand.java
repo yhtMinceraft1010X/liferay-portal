@@ -131,7 +131,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 				"objectDefinitionId", "objectFieldId", "objectRelationshipId"
 			});
 
-		String dataDefinitionString = objectDefinitionJSONObject.toString();
+		String objectDefinitionJSON = objectDefinitionJSONObject.toString();
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse,
@@ -139,7 +139,7 @@ public class ExportObjectDefinitionMVCResourceCommand
 				"Object_", objectDefinition.getName(), StringPool.UNDERLINE,
 				String.valueOf(objectDefinitionId), StringPool.UNDERLINE,
 				Time.getTimestamp(), ".json"),
-			dataDefinitionString.getBytes(), ContentTypes.APPLICATION_JSON);
+			objectDefinitionJSON.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 
 	private void _sanitizeJSON(Object object, String[] keys) {
