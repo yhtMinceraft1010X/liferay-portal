@@ -29,5 +29,9 @@ export async function importStatus(exportTaskId) {
 		headers: HEADERS,
 	});
 
+	if (!response.ok) {
+		throw new Error(response);
+	}
+
 	return await response.json();
 }

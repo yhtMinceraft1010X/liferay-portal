@@ -66,6 +66,10 @@ export async function startTask(formDataQuerySelector, formSubmitURL) {
 		method: 'POST',
 	});
 
+	if (!response.ok) {
+		throw new Error(response);
+	}
+
 	return await response.json();
 }
 

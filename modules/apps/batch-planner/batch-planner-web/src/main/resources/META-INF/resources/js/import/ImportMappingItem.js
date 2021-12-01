@@ -81,13 +81,15 @@ const ImportMappingItem = ({
 
 			<input
 				hidden
-				name={`${portletNamespace}externalFieldName_${field}`}
+				name={`${portletNamespace}externalFieldName_${selectedField?.value}`}
+				readOnly
 				value={field}
 			/>
 
 			<input
 				hidden
 				name={`${portletNamespace}internalFieldName_${selectedField?.value}`}
+				readOnly
 				value={selectedField?.value}
 			/>
 
@@ -170,19 +172,25 @@ const buildDropdownItemsFromFields = (
 		allFields.sort((a, b) => (a.label > b.label ? 1 : -1));
 	}
 
-	const searchedFields = allFields.filter((f) =>
+	const searchedFields = allFields.filter((fields) =>
 		searchLabel
-			? f.label.toLowerCase().includes(searchLabel.toLowerCase())
+			? fields.label.toLowerCase().includes(searchLabel.toLowerCase())
 			: true
 	);
 
-	const dropdownItems =
-		searchedFields?.map((f) => ({
-			...f,
-		})) || [];
+	const {optionalFields, requiredFields} = searchedFields.reduce(
+		(accumulator, currentField) => {
+			if (currentField.required) {
+				accumulator.requiredFields.push(currentField);
+			}
+			else {
+				accumulator.optionalFields.push(currentField);
+			}
 
-	const requiredFields = dropdownItems.filter((f) => f.required);
-	const optionalFields = dropdownItems.filter((f) => !f.required);
+			return accumulator;
+		},
+		{optionalFields: [], requiredFields: []}
+	);
 
 	return [requiredFields, optionalFields];
 };

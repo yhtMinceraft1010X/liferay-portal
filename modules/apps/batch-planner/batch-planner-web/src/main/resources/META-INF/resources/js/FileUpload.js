@@ -24,17 +24,15 @@ function FileUpload({portletNamespace}) {
 
 	const onFileChange = useCallback(
 		(event) => {
-			const fileToInspect = event?.target?.files[0];
-			if (!fileToInspect) {
+			const {files} = event.target;
+			if (files?.length === 0) {
 				return;
 			}
 
 			const onComplete = (schema) => {
-				if (isMounted()) {
-					Liferay.fire('file-schema', {
-						schema,
-					});
-				}
+				Liferay.fire('file-schema', {
+					schema,
+				});
 			};
 
 			const onError = () => {
@@ -44,7 +42,7 @@ function FileUpload({portletNamespace}) {
 			};
 
 			return parseCSV({
-				file: fileToInspect,
+				file: files[0],
 				onComplete,
 				onError,
 			});
@@ -55,31 +53,29 @@ function FileUpload({portletNamespace}) {
 	const inputNameId = `${portletNamespace}importFile`;
 
 	return (
-		<span>
-			<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-				<label htmlFor={inputNameId}>
-					{Liferay.Language.get('csv-file')}
-				</label>
+		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
+			<label htmlFor={inputNameId}>
+				{Liferay.Language.get('csv-file')}
+			</label>
 
-				<ClayInput
-					accept=".csv"
-					id={inputNameId}
-					name={inputNameId}
-					onChange={onFileChange}
-					type="file"
-				/>
+			<ClayInput
+				accept=".csv"
+				id={inputNameId}
+				name={inputNameId}
+				onChange={onFileChange}
+				type="file"
+			/>
 
-				{errorMessage && (
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+			{errorMessage && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-							{errorMessage}
-						</ClayForm.FeedbackItem>
-					</ClayForm.FeedbackGroup>
-				)}
-			</ClayForm.Group>
-		</span>
+						{errorMessage}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
+		</ClayForm.Group>
 	);
 }
 

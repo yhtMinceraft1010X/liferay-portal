@@ -29,7 +29,6 @@ const ExportModal = ({
 	observer,
 }) => {
 	const {
-		contentType,
 		downloadFile,
 		errorMessage,
 		loading,
@@ -67,7 +66,6 @@ const ExportModal = ({
 			</ClayModal.Header>
 
 			<ExportModalBody
-				contentType={contentType}
 				errorMessage={errorMessage}
 				percentage={percentage}
 				readyToDownload={readyToDownload}

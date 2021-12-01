@@ -53,8 +53,8 @@ function ImportForm({
 			setFileFields(fileSchema);
 
 			const newFieldsSelection = {};
-			fileSchema.forEach((f) => {
-				newFieldsSelection[f] = null;
+			fileSchema.forEach((field) => {
+				newFieldsSelection[field] = null;
 			});
 			setFieldsSelections(newFieldsSelection);
 		}
@@ -70,9 +70,9 @@ function ImportForm({
 
 	const selectableFields =
 		dbFields?.filter(
-			(f) =>
+			(field) =>
 				!Object.values(fieldsSelections).find(
-					(s) => s?.value === f.value
+					(selected) => selected?.value === field.value
 				)
 		) || [];
 

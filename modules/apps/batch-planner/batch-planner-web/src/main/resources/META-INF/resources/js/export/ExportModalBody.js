@@ -21,12 +21,9 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ExportModalBody = ({
-	contentType,
-	errorMessage,
-	percentage,
-	readyToDownload,
-}) => {
+import {EXPORT_FILE_NAME} from '../constants';
+
+const ExportModalBody = ({errorMessage, percentage, readyToDownload}) => {
 	let labelType;
 	let label;
 	let title;
@@ -64,12 +61,7 @@ const ExportModalBody = ({
 						/>
 
 						<div className="d-flex flex-column">
-							<span>
-								{'Export' +
-									(contentType
-										? `.${contentType.toLowerCase()}`
-										: '')}
-							</span>
+							<span>{EXPORT_FILE_NAME}</span>
 
 							<ClayLabel displayType={labelType}>
 								{label}
@@ -108,7 +100,6 @@ const ExportModalBody = ({
 };
 
 ExportModalBody.propTypes = {
-	contentType: PropTypes.string,
 	errorMessage: PropTypes.string,
 	percentage: PropTypes.number,
 	readyToDownload: PropTypes.bool,

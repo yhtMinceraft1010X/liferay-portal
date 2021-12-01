@@ -28,7 +28,7 @@ const ImportModal = ({
 	formSubmitURL,
 	observer,
 }) => {
-	const {errorMessage, loading, percentage, ready} = Poller(
+	const {errorMessage, loading, percentage} = Poller(
 		formDataQuerySelector,
 		formSubmitURL,
 		importStatus
@@ -42,15 +42,7 @@ const ImportModal = ({
 
 			<ClayModal.Body>
 				<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-					<div
-						className="progress-container"
-						data-percentage={percentage}
-						data-title={
-							ready
-								? Liferay.Language.get('completed')
-								: Liferay.Language.get('in-progress')
-						}
-					>
+					<div className="progress-container">
 						<ClayProgressBar
 							value={percentage}
 							warn={!!errorMessage}

@@ -54,7 +54,9 @@ describe('ImportMappingItem', () => {
 			fireEvent.click(getByLabelText(BASE_PROPS.field));
 		});
 
-		getByText(BASE_PROPS.selectableFields[0].label);
+		expect(
+			getByText(BASE_PROPS.selectableFields[0].label)
+		).toBeInTheDocument();
 	});
 
 	it('must call the onChange method on user click dropdown item not selected', () => {
@@ -65,11 +67,9 @@ describe('ImportMappingItem', () => {
 
 		act(() => {
 			fireEvent.click(getByLabelText(BASE_PROPS.field));
-		});
-
-		act(() => {
 			fireEvent.click(getByText(BASE_PROPS.selectableFields[0].label));
 		});
+
 		expect(onChangeMock).toBeCalledTimes(1);
 	});
 
@@ -81,7 +81,7 @@ describe('ImportMappingItem', () => {
 				onChange={onChangeMock}
 				portletNamespace={BASE_PROPS.portletNamespace}
 				selectableFields={selectableFields.filter(
-					(f) => f.label !== selectableFields[0].label
+					(field) => field.label !== selectableFields[0].label
 				)}
 				selectedField={selectableFields[0]}
 			/>
@@ -89,9 +89,6 @@ describe('ImportMappingItem', () => {
 
 		act(() => {
 			fireEvent.click(getByLabelText(BASE_PROPS.field));
-		});
-
-		act(() => {
 			fireEvent.click(
 				within(getByRole('list')).getByText(selectableFields[0].label)
 			);
@@ -106,7 +103,7 @@ describe('ImportMappingItem', () => {
 				field={field}
 				portletNamespace={BASE_PROPS.portletNamespace}
 				selectableFields={selectableFields.filter(
-					(f) => f.label !== selectableFields[0].label
+					(fields) => fields.label !== selectableFields[0].label
 				)}
 				selectedField={selectableFields[0]}
 			/>
@@ -131,9 +128,6 @@ describe('ImportMappingItem', () => {
 
 		act(() => {
 			fireEvent.click(getByLabelText(BASE_PROPS.field));
-		});
-
-		act(() => {
 			fireEvent.change(
 				getByPlaceholderText(Liferay.Language.get('search')),
 				{
@@ -142,7 +136,9 @@ describe('ImportMappingItem', () => {
 			);
 		});
 
-		getByText(BASE_PROPS.selectableFields[1].label);
+		expect(
+			getByText(BASE_PROPS.selectableFields[1].label)
+		).toBeInTheDocument();
 		expect(queryByText(BASE_PROPS.selectableFields[0].label)).toBeNull();
 	});
 });
