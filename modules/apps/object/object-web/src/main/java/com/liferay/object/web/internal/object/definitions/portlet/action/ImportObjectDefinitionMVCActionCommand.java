@@ -99,11 +99,11 @@ public class ImportObjectDefinitionMVCActionCommand
 			objectDefinition.setName(
 				ParamUtil.getString(actionRequest, "name"));
 
-			ObjectDefinitionResource.Builder objectDefinitionResourcedBuilder =
+			ObjectDefinitionResource.Builder builder =
 				_objectDefinitionResourceFactory.create();
 
 			ObjectDefinitionResource objectDefinitionResource =
-				objectDefinitionResourcedBuilder.user(
+				builder.user(
 					themeDisplay.getUser()
 				).build();
 
