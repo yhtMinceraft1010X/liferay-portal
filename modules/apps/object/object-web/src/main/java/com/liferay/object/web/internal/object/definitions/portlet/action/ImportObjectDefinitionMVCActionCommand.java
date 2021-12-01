@@ -43,9 +43,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
