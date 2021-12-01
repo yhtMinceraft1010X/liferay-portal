@@ -220,11 +220,11 @@ public class ImportObjectDefinitionMVCActionCommand
 				ObjectLayout.toDTO(objectLayoutJSONObject.toString()));
 		}
 
-		ObjectLayoutResource.Builder objectLayoutResourcedBuilder =
+		ObjectLayoutResource.Builder builder =
 			_objectLayoutResourceFactory.create();
 
 		ObjectLayoutResource objectLayoutResource =
-			objectLayoutResourcedBuilder.user(
+			builder.user(
 				themeDisplay.getUser()
 			).build();
 
