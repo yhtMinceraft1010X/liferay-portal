@@ -3358,13 +3358,6 @@ definition {
 		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Keyword");
 
 		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Text");
-
-
-
-
-
-
-		
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text disappears under the Searchable section when updating the field type from String to another type"

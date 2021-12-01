@@ -100,8 +100,6 @@ definition {
 		AssertElementPresent(
 			key_radioOption = "${radioOption}",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
-
-
 	}
 
 	macro assertToggleCollapsibleChecked {
