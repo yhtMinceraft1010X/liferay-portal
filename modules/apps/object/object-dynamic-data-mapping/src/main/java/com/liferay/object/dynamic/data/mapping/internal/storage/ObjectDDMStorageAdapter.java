@@ -411,17 +411,17 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 					ddmFormFieldValue.getType(),
 					DDMFormFieldTypeConstants.GRID)) {
 
-			DDMFormFieldOptions rows =
+			DDMFormFieldOptions rowsDDMFormFieldOptions =
 				(DDMFormFieldOptions)ddmFormField.getProperty("rows");
 
 			Map<String, String> rowOptionsReferences =
-				rows.getOptionsReferences();
+				rowsDDMFormFieldOptions.getOptionsReferences();
 
-			DDMFormFieldOptions columns =
+			DDMFormFieldOptions columnsDDMFormFieldOptions =
 				(DDMFormFieldOptions)ddmFormField.getProperty("columns");
 
 			Map<String, String> columnOptionsReferences =
-				columns.getOptionsReferences();
+				columnsDDMFormFieldOptions.getOptionsReferences();
 
 			JSONObject optionValueJSONObject = _jsonFactory.createJSONObject(
 				value.getString(value.getDefaultLocale()));
