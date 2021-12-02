@@ -782,7 +782,7 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	private void _setUp(
-			String[] expandoColumns, String[] journalArticleTitles,
+			String[] expandoBridgeAttributeNames, String[] journalArticleTitles,
 			double[] latitudes, double[] longitudes,
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -792,7 +792,7 @@ public class SXPBlueprintSearchResultTest {
 		for (int i = 0; i < journalArticleTitles.length; i++) {
 			_serviceContext.setExpandoBridgeAttributes(
 				Collections.singletonMap(
-					expandoColumns[i],
+					expandoBridgeAttributeNames[i],
 					JSONUtil.put(
 						"latitude", latitudes[i]
 					).put(
