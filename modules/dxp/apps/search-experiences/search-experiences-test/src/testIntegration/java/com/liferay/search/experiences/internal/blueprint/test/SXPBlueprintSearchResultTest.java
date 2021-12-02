@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,10 +82,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
@@ -734,14 +731,13 @@ public class SXPBlueprintSearchResultTest {
 		return new ConfigurationTemporarySwapper(
 			"com.liferay.search.experiences.internal.configuration." +
 				"IpstackConfiguration",
-			_toDictionary(
-				HashMapBuilder.put(
-					"apiKey", apiKey
-				).put(
-					"apiURL", apiURL
-				).put(
-					"enabled", enabled
-				).build()));
+			HashMapDictionaryBuilder.put(
+				"apiKey", (Object)apiKey
+			).put(
+				"apiURL", apiURL
+			).put(
+				"enabled", enabled
+			).build());
 	}
 
 	private Date _getNextDay() {
@@ -853,34 +849,24 @@ public class SXPBlueprintSearchResultTest {
 
 		TimeUnit.SECONDS.sleep(_addJournalArticleSleep);
 
+		long journalFolderId = 0;
+
 		if (_journalFolder != null) {
-			_journalArticles.add(
-				JournalTestUtil.addArticle(
-					group.getGroupId(), _journalFolder.getFolderId(),
-					PortalUtil.getClassNameId(JournalArticle.class),
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleTitles[1]
-					).build(),
-					null,
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleContents[1]
-					).build(),
-					LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+			journalFolderId = _journalFolder.getFolderId();
 		}
-		else {
-			_journalArticles.add(
-				JournalTestUtil.addArticle(
-					group.getGroupId(), 0,
-					PortalUtil.getClassNameId(JournalArticle.class),
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleTitles[1]
-					).build(),
-					null,
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleContents[1]
-					).build(),
-					LocaleUtil.getSiteDefault(), false, true, _serviceContext));
-		}
+
+		_journalArticles.add(
+			JournalTestUtil.addArticle(
+				group.getGroupId(), journalFolderId,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				HashMapBuilder.put(
+					LocaleUtil.US, journalArticleTitles[1]
+				).build(),
+				null,
+				HashMapBuilder.put(
+					LocaleUtil.US, journalArticleContents[1]
+				).build(),
+				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
 
 		for (int i = 2;
 			 (journalArticleTitles.length > 2) &&
@@ -939,10 +925,6 @@ public class SXPBlueprintSearchResultTest {
 			_sxpBlueprint.getTitleMap(), _serviceContext);
 
 		unsafeRunnable.run();
-	}
-
-	private Dictionary<String, Object> _toDictionary(Map<String, String> map) {
-		return new HashMapDictionary<>(new HashMap<String, Object>(map));
 	}
 
 	private int _addJournalArticleSleep;
