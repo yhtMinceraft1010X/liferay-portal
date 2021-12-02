@@ -135,6 +135,11 @@
 		<td>//button[contains(@class,'collapse-icon collapse-icon-middle panel-header panel-header-link')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ENTRY_RELATIONSHIP_FIELD_OPTION</td>
+		<td>//button[contains(@class,'dropdown-item') and contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>
