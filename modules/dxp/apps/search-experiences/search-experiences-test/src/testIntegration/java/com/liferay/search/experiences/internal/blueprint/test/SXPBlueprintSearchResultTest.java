@@ -222,6 +222,7 @@ public class SXPBlueprintSearchResultTest {
 				ExpandoColumnLocalServiceUtil.updateExpandoColumn(
 					expandoColumn);
 			});
+
 		_test(
 			new String[] {"${configuration.lat}", "${configuration.lon}"},
 			new String[] {"24.03", "-107.44"}, "withFunctionScore",
@@ -279,12 +280,12 @@ public class SXPBlueprintSearchResultTest {
 
 		_test(
 			new String[] {"${articleId}"},
-			new String[] {journalArticle.getArticleId()}, "withNotContains",
-			() -> _assertSearch("[beta alpha, charlie alpha]", "alpha"));
-		_test(
-			new String[] {"${articleId}"},
 			new String[] {journalArticle.getArticleId()}, "withContains",
 			() -> _assertSearch("[charlie alpha, beta alpha]", "alpha"));
+		_test(
+			new String[] {"${articleId}"},
+			new String[] {journalArticle.getArticleId()}, "withNotContains",
+			() -> _assertSearch("[beta alpha, charlie alpha]", "alpha"));
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(_user);
 
@@ -355,19 +356,18 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"", ""}, new String[] {"do not hide me", "hide me"},
 			() -> {
 				_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "hide");
-
 				_journalFolder = JournalFolderServiceUtil.addFolder(
 					_group.getGroupId(), 0, RandomTestUtil.randomString(),
 					StringPool.BLANK, _serviceContext);
 			});
 
 		_test(
+			null, null, "taggedContent",
+			() -> _assertSearch("[do not hide me]", "hide me"));
+		_test(
 			new String[] {"${configuration.value}"},
 			new String[] {String.valueOf(_journalFolder.getFolderId())},
 			"byExactTermMatch",
-			() -> _assertSearch("[do not hide me]", "hide me"));
-		_test(
-			null, null, "taggedContent",
 			() -> _assertSearch("[do not hide me]", "hide me"));
 		_test(
 			null, null, null,
@@ -387,13 +387,13 @@ public class SXPBlueprintSearchResultTest {
 
 		_test(
 			new String[] {"${configuration.query}", "${configuration.occur}"},
+			new String[] {"los angeles", "must_not"}, "pasteESQueryMustNot",
+			() -> _assertSearchIgnoreRelevance("[cloud cafe]", "cafe"));
+		_test(
+			new String[] {"${configuration.query}", "${configuration.occur}"},
 			new String[] {"orange county", "must_not"}, "pasteESQueryMustNot",
 			() -> _assertSearchIgnoreRelevance(
 				"[cafe rio, starbucks cafe]", "cafe"));
-		_test(
-			new String[] {"${configuration.query}", "${configuration.occur}"},
-			new String[] {"los angeles", "must_not"}, "pasteESQueryMustNot",
-			() -> _assertSearchIgnoreRelevance("[cloud cafe]", "cafe"));
 	}
 
 	@Test
@@ -422,6 +422,10 @@ public class SXPBlueprintSearchResultTest {
 			() -> _addGroupAAndGroupB());
 
 		_test(
+			null, null, null,
+			() -> _assertSearchIgnoreRelevance(
+				"[cola coca, cola pepsi, cola sprite]", "cola"));
+		_test(
 			new String[] {"${configuration.value1}", "${configuration.value2}"},
 			new String[] {
 				String.valueOf(_groupA.getGroupId()),
@@ -430,14 +434,10 @@ public class SXPBlueprintSearchResultTest {
 			"withFilterByExactTermMatch",
 			() -> _assertSearchIgnoreRelevance(
 				"[cola coca, cola pepsi]", "cola"));
-		_test(
-			null, null, null,
-			() -> _assertSearchIgnoreRelevance(
-				"[cola coca, cola pepsi, cola sprite]", "cola"));
 
-		_user = UserTestUtil.addUser(_groupA.getGroupId());
+		User user = UserTestUtil.addUser(_groupA.getGroupId());
 
-		_serviceContext.setUserId(_user.getUserId());
+		_serviceContext.setUserId(user.getUserId());
 
 		_test(
 			null, null, "withInAGroup",
@@ -488,16 +488,16 @@ public class SXPBlueprintSearchResultTest {
 			});
 
 		_test(
-			null, null, "withMultiMatch",
-			() -> _assertSearch(
-				"[this coca looks like a kind of drink, this looks like a " +
-					"kind of coca drink]",
-				"coca drink"));
-		_test(
 			null, null, "withMultiAllKeywordsMatch",
 			() -> _assertSearch(
 				"[this looks like a kind of coca drink, this coca looks like " +
 					"a kind of drink]",
+				"coca drink"));
+		_test(
+			null, null, "withMultiMatch",
+			() -> _assertSearch(
+				"[this coca looks like a kind of drink, this looks like a " +
+					"kind of coca drink]",
 				"coca drink"));
 	}
 
@@ -536,6 +536,7 @@ public class SXPBlueprintSearchResultTest {
 				"drink carbonated coca", "drink carbonated pepsi cola",
 				"fruit punch", "sprite"
 			});
+
 		_test(
 			new String[] {
 				"${configuration.fuzziness}", "${configuration.operator}"
@@ -549,6 +550,7 @@ public class SXPBlueprintSearchResultTest {
 		_setUp(
 			new String[] {"ipsum sit", "ipsum sit sit", "non-lorem ipsum sit"},
 			new String[] {"lorem ipsum dolor", "lorem ipsum sit", "nunquis"});
+
 		_test(
 			new String[] {
 				"${configuration.fuzziness}", "${configuration.operator}"
@@ -614,15 +616,15 @@ public class SXPBlueprintSearchResultTest {
 			});
 
 		_test(
+			new String[] {"${configuration.operator}"}, new String[] {"and"},
+			"withOperator",
+			() -> _assertSearch("[lorem ipsum sit, nunquis]", "sit lorem"));
+		_test(
 			new String[] {"${configuration.operator}"}, new String[] {"or"},
 			"withOperator",
 			() -> _assertSearch(
 				"[lorem ipsum sit, lorem ipsum dolor, amet, nunquis]",
 				"ipsum sit sit"));
-		_test(
-			new String[] {"${configuration.operator}"}, new String[] {"and"},
-			"withOperator",
-			() -> _assertSearch("[lorem ipsum sit, nunquis]", "sit lorem"));
 	}
 
 	@Test
