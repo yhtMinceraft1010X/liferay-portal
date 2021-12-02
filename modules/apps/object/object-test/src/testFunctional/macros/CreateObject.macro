@@ -3,15 +3,11 @@ definition {
 	macro assertAddedEntryRelationshipIsDisplayed {
 		LexiconEntry.gotoAdd();
 
-		Click(
-			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 
 		AssertElementPresent(
 			key_entry = "${entry}",
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
-
-
-
 	}
 
 	macro assertCanCollapseAndExpandEntryField {
@@ -40,7 +36,7 @@ definition {
 
 	macro assertDisabledFieldName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_NAME");
-	} 
+	}
 
 	macro assertDisabledFieldType {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_TYPE");

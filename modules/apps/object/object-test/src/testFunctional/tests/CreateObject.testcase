@@ -3016,11 +3016,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "Entry 1");
-
-		
-
-		
-
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
