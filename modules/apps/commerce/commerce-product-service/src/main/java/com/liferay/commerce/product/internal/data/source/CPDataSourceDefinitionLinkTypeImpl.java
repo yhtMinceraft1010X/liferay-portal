@@ -88,6 +88,23 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
+				"commerceAccountGroupIds",
+				() -> {
+					CommerceContext commerceContext =
+						(CommerceContext)httpServletRequest.getAttribute(
+							CommerceWebKeys.COMMERCE_CONTEXT);
+
+					CommerceAccount commerceAccount =
+						commerceContext.getCommerceAccount();
+
+					if (commerceAccount == null) {
+						return null;
+					}
+
+					return _commerceAccountHelper.getCommerceAccountGroupIds(
+						commerceAccount.getCommerceAccountId());
+				}
+			).put(
 				"definitionLinkCPDefinitionId",
 				cpCatalogEntry.getCPDefinitionId()
 			).put(
@@ -96,21 +113,6 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
 			).build());
 		searchContext.setCompanyId(_portal.getCompanyId(httpServletRequest));
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			long[] commerceAccountGroupIds =
-				_commerceAccountHelper.getCommerceAccountGroupIds(
-					commerceAccount.getCommerceAccountId());
-
-			searchContext.setAttribute(
-				"commerceAccountGroupIds", commerceAccountGroupIds);
-		}
 
 		return _cpDefinitionHelper.search(
 			_portal.getScopeGroupId(httpServletRequest), searchContext,
