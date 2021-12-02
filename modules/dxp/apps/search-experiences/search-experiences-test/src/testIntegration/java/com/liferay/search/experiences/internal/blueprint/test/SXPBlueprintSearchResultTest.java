@@ -751,24 +751,23 @@ public class SXPBlueprintSearchResultTest {
 	private SearchResponse _getSearchResponse(String keywords)
 		throws Exception {
 
-		SearchRequest searchRequest = _searchRequestBuilderFactory.builder(
-		).companyId(
-			TestPropsValues.getCompanyId()
-		).queryString(
-			keywords
-		).withSearchContext(
-			_searchContext -> {
-				_searchContext.setAttribute(
-					"scope_group_id", _group.getGroupId());
-				_searchContext.setAttribute(
-					"search.experiences.blueprint.id",
-					_sxpBlueprint.getSXPBlueprintId());
-				_searchContext.setTimeZone(_user.getTimeZone());
-				_searchContext.setUserId(_serviceContext.getUserId());
-			}
-		).build();
-
-		return _searcher.search(searchRequest);
+		return _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				TestPropsValues.getCompanyId()
+			).queryString(
+				keywords
+			).withSearchContext(
+				_searchContext -> {
+					_searchContext.setAttribute(
+						"scope_group_id", _group.getGroupId());
+					_searchContext.setAttribute(
+						"search.experiences.blueprint.id",
+						_sxpBlueprint.getSXPBlueprintId());
+					_searchContext.setTimeZone(_user.getTimeZone());
+					_searchContext.setUserId(_serviceContext.getUserId());
+				}
+			).build());
 	}
 
 	private void _setUp(
