@@ -4241,9 +4241,9 @@ public class FragmentEntryLinkPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_PLID_2 =
 		"fragmentEntryLink.plid = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_O_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_O_P;
-	private FinderPath _finderPathCountByG_O_P;
+	private FinderPath _finderPathWithPaginationFindByG_OFELI_P;
+	private FinderPath _finderPathWithoutPaginationFindByG_OFELI_P;
+	private FinderPath _finderPathCountByG_OFELI_P;
 
 	/**
 	 * Returns all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkId = &#63; and plid = &#63;.
@@ -4254,10 +4254,10 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the matching fragment entry links
 	 */
 	@Override
-	public List<FragmentEntryLink> findByG_O_P(
+	public List<FragmentEntryLink> findByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid) {
 
-		return findByG_O_P(
+		return findByG_OFELI_P(
 			groupId, originalFragmentEntryLinkId, plid, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -4277,11 +4277,11 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the range of matching fragment entry links
 	 */
 	@Override
-	public List<FragmentEntryLink> findByG_O_P(
+	public List<FragmentEntryLink> findByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid, int start,
 		int end) {
 
-		return findByG_O_P(
+		return findByG_OFELI_P(
 			groupId, originalFragmentEntryLinkId, plid, start, end, null);
 	}
 
@@ -4301,11 +4301,11 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
-	public List<FragmentEntryLink> findByG_O_P(
+	public List<FragmentEntryLink> findByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return findByG_O_P(
+		return findByG_OFELI_P(
 			groupId, originalFragmentEntryLinkId, plid, start, end,
 			orderByComparator, true);
 	}
@@ -4327,7 +4327,7 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the ordered range of matching fragment entry links
 	 */
 	@Override
-	public List<FragmentEntryLink> findByG_O_P(
+	public List<FragmentEntryLink> findByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator,
 		boolean useFinderCache) {
@@ -4342,14 +4342,14 @@ public class FragmentEntryLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByG_O_P;
+				finderPath = _finderPathWithoutPaginationFindByG_OFELI_P;
 				finderArgs = new Object[] {
 					groupId, originalFragmentEntryLinkId, plid
 				};
 			}
 		}
 		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByG_O_P;
+			finderPath = _finderPathWithPaginationFindByG_OFELI_P;
 			finderArgs = new Object[] {
 				groupId, originalFragmentEntryLinkId, plid, start, end,
 				orderByComparator
@@ -4391,11 +4391,11 @@ public class FragmentEntryLinkPersistenceImpl
 
 			sb.append(_SQL_SELECT_FRAGMENTENTRYLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_O_P_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_O_P_ORIGINALFRAGMENTENTRYLINKID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_ORIGINALFRAGMENTENTRYLINKID_2);
 
-			sb.append(_FINDER_COLUMN_G_O_P_PLID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_PLID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -4453,12 +4453,12 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
 	 */
 	@Override
-	public FragmentEntryLink findByG_O_P_First(
+	public FragmentEntryLink findByG_OFELI_P_First(
 			long groupId, long originalFragmentEntryLinkId, long plid,
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_O_P_First(
+		FragmentEntryLink fragmentEntryLink = fetchByG_OFELI_P_First(
 			groupId, originalFragmentEntryLinkId, plid, orderByComparator);
 
 		if (fragmentEntryLink != null) {
@@ -4493,11 +4493,11 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the first matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	 */
 	@Override
-	public FragmentEntryLink fetchByG_O_P_First(
+	public FragmentEntryLink fetchByG_OFELI_P_First(
 		long groupId, long originalFragmentEntryLinkId, long plid,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_O_P(
+		List<FragmentEntryLink> list = findByG_OFELI_P(
 			groupId, originalFragmentEntryLinkId, plid, 0, 1,
 			orderByComparator);
 
@@ -4519,12 +4519,12 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @throws NoSuchEntryLinkException if a matching fragment entry link could not be found
 	 */
 	@Override
-	public FragmentEntryLink findByG_O_P_Last(
+	public FragmentEntryLink findByG_OFELI_P_Last(
 			long groupId, long originalFragmentEntryLinkId, long plid,
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_O_P_Last(
+		FragmentEntryLink fragmentEntryLink = fetchByG_OFELI_P_Last(
 			groupId, originalFragmentEntryLinkId, plid, orderByComparator);
 
 		if (fragmentEntryLink != null) {
@@ -4559,17 +4559,18 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the last matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
 	 */
 	@Override
-	public FragmentEntryLink fetchByG_O_P_Last(
+	public FragmentEntryLink fetchByG_OFELI_P_Last(
 		long groupId, long originalFragmentEntryLinkId, long plid,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		int count = countByG_O_P(groupId, originalFragmentEntryLinkId, plid);
+		int count = countByG_OFELI_P(
+			groupId, originalFragmentEntryLinkId, plid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<FragmentEntryLink> list = findByG_O_P(
+		List<FragmentEntryLink> list = findByG_OFELI_P(
 			groupId, originalFragmentEntryLinkId, plid, count - 1, count,
 			orderByComparator);
 
@@ -4592,7 +4593,7 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
 	 */
 	@Override
-	public FragmentEntryLink[] findByG_O_P_PrevAndNext(
+	public FragmentEntryLink[] findByG_OFELI_P_PrevAndNext(
 			long fragmentEntryLinkId, long groupId,
 			long originalFragmentEntryLinkId, long plid,
 			OrderByComparator<FragmentEntryLink> orderByComparator)
@@ -4608,13 +4609,13 @@ public class FragmentEntryLinkPersistenceImpl
 
 			FragmentEntryLink[] array = new FragmentEntryLinkImpl[3];
 
-			array[0] = getByG_O_P_PrevAndNext(
+			array[0] = getByG_OFELI_P_PrevAndNext(
 				session, fragmentEntryLink, groupId,
 				originalFragmentEntryLinkId, plid, orderByComparator, true);
 
 			array[1] = fragmentEntryLink;
 
-			array[2] = getByG_O_P_PrevAndNext(
+			array[2] = getByG_OFELI_P_PrevAndNext(
 				session, fragmentEntryLink, groupId,
 				originalFragmentEntryLinkId, plid, orderByComparator, false);
 
@@ -4628,7 +4629,7 @@ public class FragmentEntryLinkPersistenceImpl
 		}
 	}
 
-	protected FragmentEntryLink getByG_O_P_PrevAndNext(
+	protected FragmentEntryLink getByG_OFELI_P_PrevAndNext(
 		Session session, FragmentEntryLink fragmentEntryLink, long groupId,
 		long originalFragmentEntryLinkId, long plid,
 		OrderByComparator<FragmentEntryLink> orderByComparator,
@@ -4647,11 +4648,11 @@ public class FragmentEntryLinkPersistenceImpl
 
 		sb.append(_SQL_SELECT_FRAGMENTENTRYLINK_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_O_P_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_OFELI_P_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_O_P_ORIGINALFRAGMENTENTRYLINKID_2);
+		sb.append(_FINDER_COLUMN_G_OFELI_P_ORIGINALFRAGMENTENTRYLINKID_2);
 
-		sb.append(_FINDER_COLUMN_G_O_P_PLID_2);
+		sb.append(_FINDER_COLUMN_G_OFELI_P_PLID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -4755,11 +4756,11 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @param plid the plid
 	 */
 	@Override
-	public void removeByG_O_P(
+	public void removeByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid) {
 
 		for (FragmentEntryLink fragmentEntryLink :
-				findByG_O_P(
+				findByG_OFELI_P(
 					groupId, originalFragmentEntryLinkId, plid,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
@@ -4776,7 +4777,7 @@ public class FragmentEntryLinkPersistenceImpl
 	 * @return the number of matching fragment entry links
 	 */
 	@Override
-	public int countByG_O_P(
+	public int countByG_OFELI_P(
 		long groupId, long originalFragmentEntryLinkId, long plid) {
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -4788,7 +4789,7 @@ public class FragmentEntryLinkPersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByG_O_P;
+			finderPath = _finderPathCountByG_OFELI_P;
 
 			finderArgs = new Object[] {
 				groupId, originalFragmentEntryLinkId, plid
@@ -4802,11 +4803,11 @@ public class FragmentEntryLinkPersistenceImpl
 
 			sb.append(_SQL_COUNT_FRAGMENTENTRYLINK_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_O_P_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_O_P_ORIGINALFRAGMENTENTRYLINKID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_ORIGINALFRAGMENTENTRYLINKID_2);
 
-			sb.append(_FINDER_COLUMN_G_O_P_PLID_2);
+			sb.append(_FINDER_COLUMN_G_OFELI_P_PLID_2);
 
 			String sql = sb.toString();
 
@@ -4842,14 +4843,14 @@ public class FragmentEntryLinkPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_O_P_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_OFELI_P_GROUPID_2 =
 		"fragmentEntryLink.groupId = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_G_O_P_ORIGINALFRAGMENTENTRYLINKID_2 =
+		_FINDER_COLUMN_G_OFELI_P_ORIGINALFRAGMENTENTRYLINKID_2 =
 			"fragmentEntryLink.originalFragmentEntryLinkId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_O_P_PLID_2 =
+	private static final String _FINDER_COLUMN_G_OFELI_P_PLID_2 =
 		"fragmentEntryLink.plid = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_F_C;
@@ -10221,8 +10222,8 @@ public class FragmentEntryLinkPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "plid"}, false);
 
-		_finderPathWithPaginationFindByG_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_O_P",
+		_finderPathWithPaginationFindByG_OFELI_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_OFELI_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
@@ -10231,16 +10232,16 @@ public class FragmentEntryLinkPersistenceImpl
 			new String[] {"groupId", "originalFragmentEntryLinkId", "plid"},
 			true);
 
-		_finderPathWithoutPaginationFindByG_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_O_P",
+		_finderPathWithoutPaginationFindByG_OFELI_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_OFELI_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "originalFragmentEntryLinkId", "plid"},
 			true);
 
-		_finderPathCountByG_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_O_P",
+		_finderPathCountByG_OFELI_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_OFELI_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
