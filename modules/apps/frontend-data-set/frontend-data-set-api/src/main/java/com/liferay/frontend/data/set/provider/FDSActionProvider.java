@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface FDSActionProvider {
 
 	public List<DropdownItem> getDropdownItems(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
+			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException;
 
 }

@@ -29,12 +29,12 @@ import javax.servlet.http.HttpServletRequest;
 public interface FDSDataProvider<T> {
 
 	public List<T> getItems(
-			HttpServletRequest httpServletRequest, FDSKeywords fdsKeywords,
-			FDSPagination fdsPagination, Sort sort)
+			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
+			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException;
 
 	public int getItemsCount(
-			HttpServletRequest httpServletRequest, FDSKeywords fdsKeywords)
+			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }
