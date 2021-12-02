@@ -51,17 +51,16 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -79,7 +78,6 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -197,7 +195,7 @@ public class SXPBlueprintSearchResultTest {
 				try (ConfigurationTemporarySwapper
 						configurationTemporarySwapper =
 							_getConfigurationTemporarySwapper(
-								"2345", "true", "34.94.32.240")) {
+								"2345", "34.94.32.240", "true")) {
 
 					_assertSearch("[branch la, branch sf]", "branch");
 				}
@@ -209,7 +207,7 @@ public class SXPBlueprintSearchResultTest {
 				try (ConfigurationTemporarySwapper
 						configurationTemporarySwapper =
 							_getConfigurationTemporarySwapper(
-								"2345", "true", "64.225.32.7")) {
+								"2345", "64.225.32.7", "true")) {
 
 					_assertSearch("[branch sf, branch la]", "branch");
 				}
@@ -287,7 +285,9 @@ public class SXPBlueprintSearchResultTest {
 				DateUtil.getDate(
 					new Date(System.currentTimeMillis()), "yyyyMMdd",
 					LocaleUtil.US),
-				DateUtil.getDate(_getNextDay(), "yyyyMMdd", LocaleUtil.US)
+				DateUtil.getDate(
+					new Date(System.currentTimeMillis() + Time.DAY), "yyyyMMdd",
+					LocaleUtil.US)
 			},
 			"withPeriodOfTime",
 			() -> _assertSearch("[pepsi cola, coca cola]", "cola"));
@@ -725,7 +725,7 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	private ConfigurationTemporarySwapper _getConfigurationTemporarySwapper(
-			String apiKey, String enabled, String apiURL)
+			String apiKey, String apiURL, String enabled)
 		throws Exception {
 
 		return new ConfigurationTemporarySwapper(
@@ -738,14 +738,6 @@ public class SXPBlueprintSearchResultTest {
 			).put(
 				"enabled", enabled
 			).build());
-	}
-
-	private Date _getNextDay() {
-		Calendar cal = CalendarFactoryUtil.getCalendar();
-
-		cal.add(Calendar.DAY_OF_YEAR, 1);
-
-		return cal.getTime();
 	}
 
 	private SearchResponse _getSearchResponse(String keywords)
