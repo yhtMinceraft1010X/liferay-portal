@@ -426,11 +426,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			JSONObject optionValueJSONObject = _jsonFactory.createJSONObject(
 				value.getString(value.getDefaultLocale()));
 
-			Set<String> rowsValues = optionValueJSONObject.keySet();
+			Set<String> rowValues = optionValueJSONObject.keySet();
 
-			StringBundler sb = new StringBundler((rowsValues.size() * 2) - 1);
+			StringBundler sb = new StringBundler((rowValues.size() * 2) - 1);
 
-			for (String rowValue : rowsValues) {
+			for (String rowValue : rowValues) {
 				sb.append(rowOptionsReferences.get(rowValue));
 
 				sb.append(StringPool.COLON + StringPool.SPACE);
