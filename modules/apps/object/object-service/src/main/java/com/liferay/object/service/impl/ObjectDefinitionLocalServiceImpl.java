@@ -914,6 +914,7 @@ public class ObjectDefinitionLocalServiceImpl
 						objectDefinition.isActive());
 				}
 			});
+
 		actionableDynamicQuery.performActions();
 	}
 
