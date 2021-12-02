@@ -300,13 +300,12 @@ public class MentionsPortletTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayResourceRequest.setParameter(
+			"discussionPortletId", themeDisplay.getPpid());
 
 		if (query != null) {
 			mockLiferayResourceRequest.setParameter("query", query);
 		}
-
-		mockLiferayResourceRequest.setParameter(
-			"discussionPortletId", themeDisplay.getPpid());
 
 		return mockLiferayResourceRequest;
 	}
