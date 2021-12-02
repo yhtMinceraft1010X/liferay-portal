@@ -186,8 +186,42 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"location", "location"},
 			new String[] {"Branch SF", "Branch LA"},
 			new double[] {64.01, 24.03}, new double[] {-117.42, -107.44},
-			() -> _addExpandoColumn(_group.getCompanyId(), "location"));
+			() -> {
+				ExpandoTable expandoTable =
+					ExpandoTableLocalServiceUtil.fetchTable(
+						_group.getCompanyId(),
+						ClassNameLocalServiceUtil.getClassNameId(
+							JournalArticle.class),
+						"CUSTOM_FIELDS");
 
+				if (expandoTable == null) {
+					expandoTable = ExpandoTableLocalServiceUtil.addTable(
+						_group.getCompanyId(),
+						ClassNameLocalServiceUtil.getClassNameId(
+							JournalArticle.class),
+						"CUSTOM_FIELDS");
+
+					_expandoTables.add(expandoTable);
+				}
+
+				ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+					expandoTable, "location",
+					ExpandoColumnConstants.GEOLOCATION);
+
+				_expandoColumns.add(expandoColumn);
+
+				UnicodeProperties unicodeProperties =
+					expandoColumn.getTypeSettingsProperties();
+
+				unicodeProperties.setProperty(
+					ExpandoColumnConstants.INDEX_TYPE,
+					String.valueOf(ExpandoColumnConstants.GEOLOCATION));
+
+				expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+				ExpandoColumnLocalServiceUtil.updateExpandoColumn(
+					expandoColumn);
+			});
 		_test(
 			new String[] {"${configuration.lat}", "${configuration.lon}"},
 			new String[] {"24.03", "-107.44"}, "withFunctionScore",
@@ -637,42 +671,6 @@ public class SXPBlueprintSearchResultTest {
 		_assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			user.getUserId(), _group.getGroupId(), title,
 			_assetVocabulary.getVocabularyId(), _serviceContext);
-	}
-
-	private void _addExpandoColumn(long companyId, String... columnNames)
-		throws Exception {
-
-		ExpandoTable expandoTable = ExpandoTableLocalServiceUtil.fetchTable(
-			companyId,
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			"CUSTOM_FIELDS");
-
-		if (expandoTable == null) {
-			expandoTable = ExpandoTableLocalServiceUtil.addTable(
-				companyId,
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				"CUSTOM_FIELDS");
-
-			_expandoTables.add(expandoTable);
-		}
-
-		for (String columnName : columnNames) {
-			ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
-				expandoTable, columnName, ExpandoColumnConstants.GEOLOCATION);
-
-			_expandoColumns.add(expandoColumn);
-
-			UnicodeProperties unicodeProperties =
-				expandoColumn.getTypeSettingsProperties();
-
-			unicodeProperties.setProperty(
-				ExpandoColumnConstants.INDEX_TYPE,
-				String.valueOf(ExpandoColumnConstants.GEOLOCATION));
-
-			expandoColumn.setTypeSettingsProperties(unicodeProperties);
-
-			ExpandoColumnLocalServiceUtil.updateExpandoColumn(expandoColumn);
-		}
 	}
 
 	private void _addGroupAAndGroupB() throws Exception {
