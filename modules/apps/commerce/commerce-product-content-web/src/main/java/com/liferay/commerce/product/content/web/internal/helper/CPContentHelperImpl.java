@@ -169,20 +169,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		long commerceAccountId = 0;
-
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		List<CPMedia> cpMedias = new ArrayList<>();
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -197,7 +183,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 			cpMedias.add(
 				new CPMediaImpl(
-					commerceAccountId, cpAttachmentFileEntry, themeDisplay));
+					_getCommerceAccountId(themeDisplay.getRequest()),
+					cpAttachmentFileEntry, themeDisplay));
 		}
 
 		return cpMedias;
@@ -212,18 +199,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 			(CPCatalogEntry)httpServletRequest.getAttribute(
 				CPWebKeys.CP_CATALOG_ENTRY);
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
 		if (cpCatalogEntry == null) {
 			long productId = ParamUtil.getLong(httpServletRequest, "productId");
 
@@ -235,8 +210,12 @@ public class CPContentHelperImpl implements CPContentHelper {
 					return null;
 				}
 
+				CommerceContext commerceContext =
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT);
+
 				cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
-					commerceAccountId,
+					_getCommerceAccountId(httpServletRequest),
 					commerceContext.getCommerceChannelGroupId(),
 					cProduct.getPublishedCPDefinitionId(),
 					_portal.getLocale(httpServletRequest));
@@ -316,23 +295,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
-		// TODO COMMERCE-7966
-
 		if (!_commerceProductViewPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
-				cpDefinitionId)) {
+				PermissionThreadLocal.getPermissionChecker(),
+				_getCommerceAccountId(httpServletRequest), cpDefinitionId)) {
 
 			return null;
 		}
@@ -411,6 +376,15 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public String getDefaultImageFileURL(
+			long commerceAccountId, long cpDefinitionId)
+		throws PortalException {
+
+		return _cpDefinitionHelper.getDefaultImageFileURL(
+			commerceAccountId, cpDefinitionId);
+	}
+
+	@Override
 	public String getDownloadFileEntryURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -434,19 +408,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		long commerceAccountId = 0;
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
+		long commerceAccountId = _getCommerceAccountId(
+			themeDisplay.getRequest());
 
 		List<CPMedia> cpMedias = new ArrayList<>();
 
@@ -764,6 +727,22 @@ public class CPContentHelperImpl implements CPContentHelper {
 		}
 
 		return cpDefinitionOptionRelsMap;
+	}
+
+	private long _getCommerceAccountId(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount == null) {
+			return CommerceAccountConstants.ACCOUNT_ID_GUEST;
+		}
+
+		return commerceAccount.getCommerceAccountId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
