@@ -36,6 +36,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.MappedProduct;
@@ -202,7 +203,8 @@ public class MappedProductDTOConverter
 							return StringPool.BLANK;
 						}
 
-						return cpDefinition.getDefaultImageThumbnailSrc();
+						return cpDefinition.getDefaultImageThumbnailSrc(
+							CommerceUtil.getCommerceAccountId(commerceContext));
 					});
 				setType(
 					() -> {
