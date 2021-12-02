@@ -137,7 +137,7 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"cola cola", ""},
 			new String[] {"coca cola", "pepsi cola"},
 			() -> {
-				_addAssetCatetory("Important", _user);
+				_addAssetCategory("Important", _user);
 				_addGroupAAndGroupB();
 			});
 
@@ -257,7 +257,7 @@ public class SXPBlueprintSearchResultTest {
 		_setUp(
 			new String[] {"alpha alpha", ""},
 			new String[] {"beta alpha", "charlie alpha"},
-			() -> _addAssetCatetory(
+			() -> _addAssetCategory(
 				"Promoted", _addGroupUser(_group, "employee")));
 
 		_test(
@@ -306,7 +306,7 @@ public class SXPBlueprintSearchResultTest {
 		_setUp(
 			new String[] {"cola cola", ""},
 			new String[] {"Coca Cola", "Pepsi Cola"},
-			() -> _addAssetCatetory(
+			() -> _addAssetCategory(
 				"Promoted", _addGroupUser(_group, "Custmers")));
 
 		_test(
@@ -336,7 +336,7 @@ public class SXPBlueprintSearchResultTest {
 				"Company policies for All Employees Recruits",
 				"Company Policies for New Recruits"
 			},
-			() -> _addAssetCatetory(
+			() -> _addAssetCategory(
 				"For New Recruits", _addGroupUser(_group, "Employee")));
 
 		_test(
@@ -661,7 +661,7 @@ public class SXPBlueprintSearchResultTest {
 				"[watch birds on the sky, clouds]", "simple things are beau"));
 	}
 
-	private void _addAssetCatetory(String title, User user) throws Exception {
+	private void _addAssetCategory(String title, User user) throws Exception {
 		if (_assetVocabulary == null) {
 			_assetVocabulary =
 				AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
