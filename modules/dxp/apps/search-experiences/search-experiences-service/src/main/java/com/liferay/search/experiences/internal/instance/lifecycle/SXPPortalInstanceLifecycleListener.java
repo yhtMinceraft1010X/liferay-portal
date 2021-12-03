@@ -26,7 +26,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
-import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import java.util.HashSet;
@@ -50,15 +49,6 @@ public class SXPPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		_addSXPElements(company);
-	}
-
-	@Override
-	public void portalInstanceUnregistered(Company company) throws Exception {
-		_sxpBlueprintLocalService.deleteCompanySXPBlueprints(
-			company.getCompanyId());
-
-		_sxpElementLocalService.deleteCompanySXPElements(
-			company.getCompanyId());
 	}
 
 	protected SXPElement readSXPElement(String fileName) {
@@ -135,9 +125,6 @@ public class SXPPortalInstanceLifecycleListener
 			}
 		}
 	}
-
-	@Reference
-	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
