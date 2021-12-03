@@ -3284,10 +3284,6 @@ definition {
 		ObjectPortlet.assertEntryStauts(
 			key_entry = "Entry 1",
 			key_status = "Approved");
-
-
-
-			
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many will allow the entry with relation to be deleted and its relations to be disassociated"
