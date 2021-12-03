@@ -864,18 +864,18 @@ public class CPTestUtil {
 			displayDateHour += 12;
 		}
 
-		Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
 
-		expirationCal.setTime(expirationDate);
+		expirationCalendar.setTime(expirationDate);
 
-		int expirationDateMonth = expirationCal.get(Calendar.MONTH);
-		int expirationDateDay = expirationCal.get(Calendar.DATE);
-		int expirationDateYear = expirationCal.get(Calendar.YEAR);
-		int expirationDateHour = expirationCal.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DATE);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
 
-		if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+		if (expirationCalendar.get(Calendar.AM_PM) == Calendar.PM) {
 			expirationDateHour += 12;
 		}
 
@@ -961,18 +961,18 @@ public class CPTestUtil {
 			displayDateHour += 12;
 		}
 
-		Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
 
-		expirationCal.setTime(expirationDate);
+		expirationCalendar.setTime(expirationDate);
 
-		int expirationDateMonth = expirationCal.get(Calendar.MONTH);
-		int expirationDateDay = expirationCal.get(Calendar.DATE);
-		int expirationDateYear = expirationCal.get(Calendar.YEAR);
-		int expirationDateHour = expirationCal.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DATE);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
 
-		if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+		if (expirationCalendar.get(Calendar.AM_PM) == Calendar.PM) {
 			expirationDateHour += 12;
 		}
 
@@ -1074,18 +1074,18 @@ public class CPTestUtil {
 			displayDateHour += 12;
 		}
 
-		Calendar expirationCal = CalendarFactoryUtil.getCalendar(
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
 
-		expirationCal.setTime(expirationDate);
+		expirationCalendar.setTime(expirationDate);
 
-		int expirationDateMonth = expirationCal.get(Calendar.MONTH);
-		int expirationDateDay = expirationCal.get(Calendar.DATE);
-		int expirationDateYear = expirationCal.get(Calendar.YEAR);
-		int expirationDateHour = expirationCal.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCal.get(Calendar.MINUTE);
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DATE);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
 
-		if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
+		if (expirationCalendar.get(Calendar.AM_PM) == Calendar.PM) {
 			expirationDateHour += 12;
 		}
 
