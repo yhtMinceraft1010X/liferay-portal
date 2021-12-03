@@ -47,15 +47,11 @@ public class ImportCommerceOrderClayTableDataSetDisplayView
 		clayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("date", "order-date");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"accountName", "account");
-
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"author", "submitted-by");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("orderStatus", "status");
-
 		clayTableSchemaBuilder.addClayTableSchemaField("amount", "amount");
 
 		return clayTableSchemaBuilder.build();
