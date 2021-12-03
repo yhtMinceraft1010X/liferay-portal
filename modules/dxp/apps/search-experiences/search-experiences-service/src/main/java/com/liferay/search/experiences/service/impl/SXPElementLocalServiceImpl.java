@@ -122,8 +122,8 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<SXPElement> getSXPElements(long companyId) {
-		return sxpElementPersistence.findByCompanyId(companyId);
+	public List<SXPElement> getSXPElements(long companyId, boolean readOnly) {
+		return sxpElementPersistence.findByC_R(companyId, readOnly);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

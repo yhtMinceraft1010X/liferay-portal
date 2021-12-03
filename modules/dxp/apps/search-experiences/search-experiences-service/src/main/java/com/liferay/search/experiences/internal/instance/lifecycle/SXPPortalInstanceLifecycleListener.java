@@ -110,14 +110,17 @@ public class SXPPortalInstanceLifecycleListener
 	private void _addSXPElements(Company company) throws Exception {
 		Set<String> titles = new HashSet<>();
 
-		for (com.liferay.search.experiences.model.SXPElement dbSXPElement :
+		for (com.liferay.search.experiences.model.SXPElement sxpPElement :
 				_sxpElementLocalService.getSXPElements(
-					company.getCompanyId())) {
+					company.getCompanyId(), true)) {
 
-			titles.add(dbSXPElement.getTitle(LocaleUtil.US));
+			titles.add(sxpPElement.getTitle(LocaleUtil.US));
 		}
 
 		for (SXPElement sxpElement : _sxpElements) {
+
+			// TODO Should this be en_US or en-US?
+
 			if (!titles.contains(
 					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
 
