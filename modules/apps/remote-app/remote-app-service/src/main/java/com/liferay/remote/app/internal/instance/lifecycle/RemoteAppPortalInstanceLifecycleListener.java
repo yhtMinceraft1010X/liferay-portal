@@ -19,10 +19,11 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,7 +50,8 @@ public class RemoteAppPortalInstanceLifecycleListener
 				"/vanilla-counter/index.js",
 			"Sample vanilla counter remote application", "vanilla_counter",
 			false,
-			LocalizationUtil.getMap(new LocalizedValuesMap("Vanilla Counter")),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), "Vanilla Counter"),
 			"category.remote-apps", "friendly-url-mapping=vanilla_counter",
 			"https://liferay.github.io/liferay-frontend-projects",
 			WorkflowConstants.STATUS_APPROVED);
