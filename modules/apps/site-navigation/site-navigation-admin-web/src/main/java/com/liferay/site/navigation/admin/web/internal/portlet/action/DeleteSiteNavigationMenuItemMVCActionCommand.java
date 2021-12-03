@@ -61,15 +61,16 @@ public class DeleteSiteNavigationMenuItemMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean deleteChildren = ParamUtil.getBoolean(
-			actionRequest, "deleteChildren");
 		long siteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuItemId");
+
+		boolean deleteChildren = ParamUtil.getBoolean(
+			actionRequest, "deleteChildren");
 
 		try {
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
-					deleteChildren, siteNavigationMenuItemId);
+					siteNavigationMenuItemId, deleteChildren);
 
 			jsonObject.put(
 				"siteNavigationMenuItems",

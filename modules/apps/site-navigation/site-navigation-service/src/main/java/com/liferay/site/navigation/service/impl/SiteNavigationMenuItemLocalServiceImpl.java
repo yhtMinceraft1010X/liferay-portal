@@ -120,7 +120,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
-			boolean deleteChildren, long siteNavigationMenuItemId)
+			long siteNavigationMenuItemId, boolean deleteChildren)
 		throws PortalException {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
@@ -165,8 +165,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 			if (deleteChildren) {
 				siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
-					true,
-					childSiteNavigationMenuItem.getSiteNavigationMenuItemId());
+					childSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
+					true);
 
 				continue;
 			}
@@ -190,7 +190,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
-			false, siteNavigationMenuItemId);
+			siteNavigationMenuItemId, false);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
