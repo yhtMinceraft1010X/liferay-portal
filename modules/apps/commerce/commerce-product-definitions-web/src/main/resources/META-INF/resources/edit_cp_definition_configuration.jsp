@@ -160,15 +160,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 			>
 				<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
-				<%
-				boolean shippableDisabled = false;
-
-				if ((cpDefinition != null) && StringUtil.equalsIgnoreCase(cpDefinition.getProductTypeName(), VirtualCPTypeConstants.NAME)) {
-					shippableDisabled = true;
-				}
-				%>
-
-				<aui:input checked="<%= shippable %>" disabled="<%= shippableDisabled %>" name="shippable" type="toggle-switch" value="<%= shippable %>" />
+				<aui:input checked="<%= shippable %>" disabled="<%= (cpDefinition != null) && StringUtil.equalsIgnoreCase(cpDefinition.getProductTypeName(), VirtualCPTypeConstants.NAME) %>" name="shippable" type="toggle-switch" value="<%= shippable %>" />
 
 				<div class="<%= shippable ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />shippableOptions">
 					<aui:input checked='<%= BeanParamUtil.getBoolean(cpDefinition, request, "freeShipping", false) %>' inlineField="<%= true %>" name="freeShipping" type="toggle-switch" />
