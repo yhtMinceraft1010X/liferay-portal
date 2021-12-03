@@ -775,10 +775,9 @@ public class CPTestUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		String defaultSku = CPInstanceConstants.DEFAULT_SKU;
-
 		return _addCPDefinitionWithSku(
-			groupId, productTypeName, serviceContext, defaultSku, shippable);
+			groupId, productTypeName, serviceContext,
+			CPInstanceConstants.DEFAULT_SKU, shippable);
 	}
 
 	private static CPDefinition _addCPDefinition(
