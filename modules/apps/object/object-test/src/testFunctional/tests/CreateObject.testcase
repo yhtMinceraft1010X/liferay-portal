@@ -3238,13 +3238,56 @@ definition {
 	}
 
 	@description = "LPS-135649 - Verify that a completed entry is displayed with an Approved status"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CompletedEntryDisplaysApprovedStatus {
 		property portal.acceptance = "true";
 
-		// TODO LPS-141629 CompletedEntryDisplaysApprovedStatus pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Custom Object");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry 1");
+
+		ObjectAdmin.openMyWorkflowTasks();
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectPortlet.assertEntryStauts(
+			key_entry = "Entry 1",
+			key_status = "Approved");
+
+
+
+			
 	}
 
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship Many to Many will allow the entry with relation to be deleted and its relations to be disassociated"
