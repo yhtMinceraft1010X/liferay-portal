@@ -2957,6 +2957,10 @@ definition {
 			value1 = "${dmDocumentTitle}");
 	}
 
+	macro viewNoAddPermission {
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+	}
+
 	macro viewNoCategoriesPG {
 		if (isSet(categoryNameList)) {
 			for (var categoryName : list "${categoryNameList}") {
