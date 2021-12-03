@@ -48,6 +48,10 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+
+		// TODO Move to an upgrade process for existing companies. For new
+		// companies, use a model listener.
+
 		_addSXPElements(company);
 	}
 

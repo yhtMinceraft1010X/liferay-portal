@@ -36,6 +36,10 @@ public class RemoteAppPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	public void portalInstanceRegistered(Company company) throws Exception {
+
+		// TODO Move to an upgrade process for existing companies. For new
+		// companies, use a model listener.
+
 		long count = _remoteAppEntryLocalService.getRemoteAppEntriesCount(
 			company.getCompanyId());
 
