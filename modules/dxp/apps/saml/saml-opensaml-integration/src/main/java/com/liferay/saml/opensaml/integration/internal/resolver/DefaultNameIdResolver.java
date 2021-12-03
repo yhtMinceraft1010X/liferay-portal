@@ -67,13 +67,13 @@ public class DefaultNameIdResolver implements NameIdResolver {
 			return GetterUtil.getString(
 				expandoBridge.getAttribute(attributeName));
 		}
-		else if (nameIdAttributeName.startsWith("static:")) {
+
+		if (nameIdAttributeName.startsWith("static:")) {
 			return nameIdAttributeName.substring(7);
 		}
-		else {
-			return GetterUtil.getString(
-				BeanPropertiesUtil.getObject(user, nameIdAttributeName));
-		}
+
+		return GetterUtil.getString(
+			BeanPropertiesUtil.getObject(user, nameIdAttributeName));
 	}
 
 	private MetadataManager _metadataManager;
