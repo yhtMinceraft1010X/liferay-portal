@@ -110,7 +110,8 @@ public class SXPPortalInstanceLifecycleListener
 
 			_sxpElementLocalService.addSXPElement(
 				user.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(sxpElement.getDescription_i18n()),
+				LocalizedMapUtil.getLocalizedMap(
+					sxpElement.getDescription_i18n()),
 				String.valueOf(sxpElement.getElementDefinition()), true,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
 				new ServiceContext() {
