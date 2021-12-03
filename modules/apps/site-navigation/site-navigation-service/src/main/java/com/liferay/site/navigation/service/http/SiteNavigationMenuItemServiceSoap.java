@@ -91,7 +91,7 @@ public class SiteNavigationMenuItemServiceSoap {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap
 			deleteSiteNavigationMenuItem(
-				boolean deleteChildren, long siteNavigationMenuItemId)
+				long siteNavigationMenuItemId, boolean deleteChildren)
 		throws RemoteException {
 
 		try {
@@ -99,7 +99,7 @@ public class SiteNavigationMenuItemServiceSoap {
 				returnValue =
 					SiteNavigationMenuItemServiceUtil.
 						deleteSiteNavigationMenuItem(
-							deleteChildren, siteNavigationMenuItemId);
+							siteNavigationMenuItemId, deleteChildren);
 
 			return com.liferay.site.navigation.model.SiteNavigationMenuItemSoap.
 				toSoapModel(returnValue);

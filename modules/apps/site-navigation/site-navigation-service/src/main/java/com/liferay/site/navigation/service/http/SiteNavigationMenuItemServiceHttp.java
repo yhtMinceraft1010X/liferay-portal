@@ -101,8 +101,8 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
 			deleteSiteNavigationMenuItem(
-				HttpPrincipal httpPrincipal, boolean deleteChildren,
-				long siteNavigationMenuItemId)
+				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId,
+				boolean deleteChildren)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -112,7 +112,7 @@ public class SiteNavigationMenuItemServiceHttp {
 				_deleteSiteNavigationMenuItemParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, deleteChildren, siteNavigationMenuItemId);
+				methodKey, siteNavigationMenuItemId, deleteChildren);
 
 			Object returnObj = null;
 
@@ -441,7 +441,7 @@ public class SiteNavigationMenuItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteSiteNavigationMenuItemParameterTypes1 = new Class[] {
-			boolean.class, long.class
+			long.class, boolean.class
 		};
 	private static final Class<?>[]
 		_deleteSiteNavigationMenuItemParameterTypes2 = new Class[] {long.class};

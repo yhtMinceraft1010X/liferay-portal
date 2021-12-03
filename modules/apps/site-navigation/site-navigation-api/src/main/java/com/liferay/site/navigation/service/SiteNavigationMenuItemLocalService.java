@@ -121,10 +121,6 @@ public interface SiteNavigationMenuItemLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
-			boolean deleteChildren, long siteNavigationMenuItemId)
-		throws PortalException;
-
 	/**
 	 * Deletes the site navigation menu item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -139,6 +135,10 @@ public interface SiteNavigationMenuItemLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
+		throws PortalException;
+
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId, boolean deleteChildren)
 		throws PortalException;
 
 	/**

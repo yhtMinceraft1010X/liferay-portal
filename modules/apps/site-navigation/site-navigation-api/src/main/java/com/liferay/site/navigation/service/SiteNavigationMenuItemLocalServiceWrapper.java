@@ -120,15 +120,6 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 			persistedModel);
 	}
 
-	@Override
-	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
-			boolean deleteChildren, long siteNavigationMenuItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
-			deleteChildren, siteNavigationMenuItemId);
-	}
-
 	/**
 	 * Deletes the site navigation menu item with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -147,6 +138,15 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
 			siteNavigationMenuItemId);
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId, boolean deleteChildren)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItemId, deleteChildren);
 	}
 
 	/**

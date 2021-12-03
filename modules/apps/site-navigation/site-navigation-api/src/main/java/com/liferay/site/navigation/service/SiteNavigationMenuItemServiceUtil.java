@@ -51,19 +51,19 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
-			boolean deleteChildren, long siteNavigationMenuItemId)
-		throws PortalException {
-
-		return getService().deleteSiteNavigationMenuItem(
-			deleteChildren, siteNavigationMenuItemId);
-	}
-
-	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 			long siteNavigationMenuItemId)
 		throws PortalException {
 
 		return getService().deleteSiteNavigationMenuItem(
 			siteNavigationMenuItemId);
+	}
+
+	public static SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId, boolean deleteChildren)
+		throws PortalException {
+
+		return getService().deleteSiteNavigationMenuItem(
+			siteNavigationMenuItemId, deleteChildren);
 	}
 
 	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
