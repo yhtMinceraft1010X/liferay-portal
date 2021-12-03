@@ -363,9 +363,9 @@ public class SXPElementLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.search.experiences.model.SXPElement>
-		getSXPElements(long companyId) {
+		getSXPElements(long companyId, boolean readOnly) {
 
-		return _sxpElementLocalService.getSXPElements(companyId);
+		return _sxpElementLocalService.getSXPElements(companyId, readOnly);
 	}
 
 	/**

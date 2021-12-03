@@ -325,8 +325,10 @@ public class SXPElementLocalServiceUtil {
 		return getService().getSXPElements(start, end);
 	}
 
-	public static List<SXPElement> getSXPElements(long companyId) {
-		return getService().getSXPElements(companyId);
+	public static List<SXPElement> getSXPElements(
+		long companyId, boolean readOnly) {
+
+		return getService().getSXPElements(companyId, readOnly);
 	}
 
 	/**

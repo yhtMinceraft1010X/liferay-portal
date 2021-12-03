@@ -293,7 +293,7 @@ public interface SXPElementLocalService
 	public List<SXPElement> getSXPElements(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SXPElement> getSXPElements(long companyId);
+	public List<SXPElement> getSXPElements(long companyId, boolean readOnly);
 
 	/**
 	 * Returns the number of sxp elements.
