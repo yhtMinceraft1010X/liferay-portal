@@ -99,7 +99,6 @@ public class DLSelectDDMStructureDisplayContext {
 					_getSearchRestrictionClassNameId(),
 					_getSearchRestrictionClassPK(),
 					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd());
-
 			total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(
 				_getSearchRestrictionClassNameId(),
 				_getSearchRestrictionClassPK());
@@ -111,7 +110,6 @@ public class DLSelectDDMStructureDisplayContext {
 				_getKeywords(), WorkflowConstants.STATUS_ANY,
 				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
 				ddmStructureSearch.getOrderByComparator());
-
 			total = DDMStructureServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), groupIds,
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()),
@@ -123,7 +121,6 @@ public class DLSelectDDMStructureDisplayContext {
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()),
 				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
 				ddmStructureSearch.getOrderByComparator());
-
 			total = DDMStructureServiceUtil.getStructuresCount(
 				themeDisplay.getCompanyId(), groupIds,
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()));
