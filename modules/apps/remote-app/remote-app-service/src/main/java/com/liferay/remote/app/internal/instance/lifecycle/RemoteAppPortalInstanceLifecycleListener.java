@@ -35,7 +35,7 @@ public class RemoteAppPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	public void portalInstanceRegistered(Company company) throws Exception {
-		long count = _remoteAppEntryLocalService.countByCompanyId(
+		long count = _remoteAppEntryLocalService.getRemoteAppEntriesCount(
 			company.getCompanyId());
 
 		if (count != 0) {
