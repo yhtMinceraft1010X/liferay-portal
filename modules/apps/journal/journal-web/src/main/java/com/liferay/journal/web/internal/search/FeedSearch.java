@@ -63,11 +63,12 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			portletRequest, JournalPortletKeys.JOURNAL,
 			"feed-search-order-by-col", "name");
 
+		setOrderByCol(orderByCol);
+
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, JournalPortletKeys.JOURNAL,
 			"feed-search-order-by-type", "asc");
 
-		setOrderByCol(orderByCol);
 		setOrderByComparator(
 			getOrganizationOrderByComparator(orderByCol, orderByType));
 		setOrderByType(orderByType);
