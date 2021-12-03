@@ -61,16 +61,7 @@ renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 	</aui:fieldset-group>
 
 	<aui:button-row>
-
-		<%
-		String buttonLabel = "add";
-
-		if (type.equals("layout")) {
-			buttonLabel = "select";
-		}
-		%>
-
-		<aui:button name="addButton" type="submit" value="<%= buttonLabel %>" />
+		<aui:button name="addButton" type="submit" value='<%= type.equals("layout") ? "select" : "add" %>' />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

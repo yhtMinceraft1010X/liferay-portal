@@ -62,12 +62,12 @@ public class SiteNavigationMenuPortletUtil {
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		ThemeDisplay themeDisplay) {
 
+		JSONArray siteNavigationMenuItemsJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
 				siteNavigationMenuId, parentSiteNavigationMenuItemId);
-
-		JSONArray siteNavigationMenuItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
