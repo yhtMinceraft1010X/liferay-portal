@@ -192,10 +192,10 @@ public class CPTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
-		long now = System.currentTimeMillis();
+		long time = System.currentTimeMillis();
 
-		Date displayDate = new Date(now - Time.HOUR);
-		Date expirationDate = new Date(now + Time.DAY);
+		Date displayDate = new Date(time - Time.HOUR);
+		Date expirationDate = new Date(time + Time.DAY);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
@@ -817,8 +817,6 @@ public class CPTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
-		long now = System.currentTimeMillis();
-
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> shortDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -846,8 +844,10 @@ public class CPTestUtil {
 		String ddmStructureKey = null;
 		boolean published = true;
 
-		Date displayDate = new Date(now - Time.HOUR);
-		Date expirationDate = new Date(now + Time.DAY);
+		long time = System.currentTimeMillis();
+
+		Date displayDate = new Date(time - Time.HOUR);
+		Date expirationDate = new Date(time + Time.DAY);
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
@@ -915,8 +915,6 @@ public class CPTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
-		long now = System.currentTimeMillis();
-
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> shortDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -943,8 +941,10 @@ public class CPTestUtil {
 		String ddmStructureKey = null;
 		boolean published = true;
 
-		Date displayDate = new Date(now - Time.HOUR);
-		Date expirationDate = new Date(now + Time.DAY);
+		long time = System.currentTimeMillis();
+
+		Date displayDate = new Date(time - Time.HOUR);
+		Date expirationDate = new Date(time + Time.DAY);
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
@@ -1027,8 +1027,6 @@ public class CPTestUtil {
 			commerceCatalog.getCommerceCurrencyCode(),
 			CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
 
-		long now = System.currentTimeMillis();
-
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
 		Map<Locale, String> shortDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -1056,8 +1054,10 @@ public class CPTestUtil {
 		String ddmStructureKey = null;
 		boolean published = true;
 
-		Date displayDate = new Date(now - Time.HOUR);
-		Date expirationDate = new Date(now + Time.DAY);
+		long time = System.currentTimeMillis();
+
+		Date displayDate = new Date(time - Time.HOUR);
+		Date expirationDate = new Date(time + Time.DAY);
 
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
