@@ -1181,7 +1181,6 @@ public class ObjectEntryLocalServiceTest {
 		Date birthdayDate = calendar.getTime();
 
 		String portrait = "In the beginning was the Logos";
-
 		String script = RandomTestUtil.randomString(1500);
 
 		_objectEntryLocalService.updateObjectEntry(
