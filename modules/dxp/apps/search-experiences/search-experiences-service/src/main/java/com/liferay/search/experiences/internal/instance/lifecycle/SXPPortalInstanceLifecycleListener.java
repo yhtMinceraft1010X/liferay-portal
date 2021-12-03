@@ -86,27 +86,6 @@ public class SXPPortalInstanceLifecycleListener
 		"text_match_over_multiple_fields"
 	};
 
-	private void _addSXPElement(Company company, SXPElement sxpElement)
-		throws Exception {
-
-		User user = company.getDefaultUser();
-
-		_sxpElementLocalService.addSXPElement(
-			user.getUserId(),
-			LocalizedMapUtil.getLocalizedMap(sxpElement.getDescription_i18n()),
-			String.valueOf(sxpElement.getElementDefinition()), true,
-			LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
-			new ServiceContext() {
-				{
-					setAddGroupPermissions(true);
-					setAddGuestPermissions(true);
-					setCompanyId(company.getCompanyId());
-					setScopeGroupId(company.getGroupId());
-					setUserId(user.getUserId());
-				}
-			});
-	}
-
 	private void _addSXPElements(Company company) throws Exception {
 		Set<String> titles = new HashSet<>();
 
@@ -121,11 +100,28 @@ public class SXPPortalInstanceLifecycleListener
 
 			// TODO Should this be en_US or en-US?
 
-			if (!titles.contains(
+			if (titles.contains(
 					MapUtil.getString(sxpElement.getTitle_i18n(), "en_US"))) {
 
-				_addSXPElement(company, sxpElement);
+				continue;
 			}
+
+			User user = company.getDefaultUser();
+
+			_sxpElementLocalService.addSXPElement(
+				user.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getDescription_i18n()),
+				String.valueOf(sxpElement.getElementDefinition()), true,
+				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n()), 0,
+				new ServiceContext() {
+					{
+						setAddGroupPermissions(true);
+						setAddGuestPermissions(true);
+						setCompanyId(company.getCompanyId());
+						setScopeGroupId(company.getGroupId());
+						setUserId(user.getUserId());
+					}
+				});
 		}
 	}
 
