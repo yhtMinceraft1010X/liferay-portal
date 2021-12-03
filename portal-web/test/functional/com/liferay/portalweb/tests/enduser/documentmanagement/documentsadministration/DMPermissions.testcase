@@ -730,7 +730,7 @@ definition {
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		AssertElementNotPresent(locator1 = "Button#PLUS");
+		DMDocument.viewNoAddPermission();
 	}
 
 	@description = "This is a test for LPS-136834. It checks that a guest cannot delete a file without permissions."
