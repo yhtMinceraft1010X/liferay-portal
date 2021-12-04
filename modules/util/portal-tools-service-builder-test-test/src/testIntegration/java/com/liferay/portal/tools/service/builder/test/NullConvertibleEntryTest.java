@@ -39,8 +39,20 @@ public class NullConvertibleEntryTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCountNullConvertibleString() {
-		int initialCount = _nullConvertibleEntryLocalService.countByName(null);
+	public void testFetchNullConvertibleEntry() {
+		NullConvertibleEntry nullConvertibleEntry =
+			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
+				(String)null);
+
+		Assert.assertEquals(
+			nullConvertibleEntry,
+			_nullConvertibleEntryLocalService.fetchNullConvertibleEntry(null));
+	}
+
+	@Test
+	public void testGetNullConvertibleEntries() {
+		int initialCount =
+			_nullConvertibleEntryLocalService.getNullConvertibleEntries(null);
 
 		NullConvertibleEntry nullConvertibleEntry =
 			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
@@ -48,24 +60,14 @@ public class NullConvertibleEntryTest {
 
 		Assert.assertEquals(
 			initialCount + 1,
-			_nullConvertibleEntryLocalService.countByName(null));
+			_nullConvertibleEntryLocalService.getNullConvertibleEntries(null));
 
 		_nullConvertibleEntryLocalService.deleteNullConvertibleEntry(
 			nullConvertibleEntry);
 
 		Assert.assertEquals(
-			initialCount, _nullConvertibleEntryLocalService.countByName(null));
-	}
-
-	@Test
-	public void testFetchNullConvertibleString() {
-		NullConvertibleEntry nullConvertibleEntry =
-			_nullConvertibleEntryLocalService.addNullConvertibleEntry(
-				(String)null);
-
-		Assert.assertEquals(
-			nullConvertibleEntry,
-			_nullConvertibleEntryLocalService.fetchByName(null));
+			initialCount,
+			_nullConvertibleEntryLocalService.getNullConvertibleEntries(null));
 	}
 
 	@Inject
