@@ -53,7 +53,7 @@ public class SearchResponseResourceTest
 
 		if (false) {
 
-			// TODO Tests pass with remote elastic but sidecar does not play
+			// TODO Tests pass with remote Elastic but sidecar does not play
 			// well with ConfigurationTemporarySwapper
 
 			_testPostSearchThrowsElasticsearchStatusException();
