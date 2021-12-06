@@ -109,13 +109,11 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 		_assertSize(2, _assetCategoryIds);
 
 		AssetCategory assetCategory1 = _assetCategories.get(0);
-		AssetCategory assetCategory2 = _assetCategories.get(1);
 
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.GUEST, AssetCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(assetCategory1.getCategoryId()), ActionKeys.VIEW);
-
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.SITE_MEMBER, AssetCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -123,6 +121,8 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
+
+		AssetCategory assetCategory2 = _assetCategories.get(1);
 
 		_assertSize(2, new long[] {assetCategory2.getCategoryId()});
 	}
@@ -138,7 +138,6 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(_assetVocabulary.getVocabularyId()),
 			ActionKeys.VIEW);
-
 		RoleTestUtil.removeResourcePermission(
 			RoleConstants.SITE_MEMBER, AssetVocabulary.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
