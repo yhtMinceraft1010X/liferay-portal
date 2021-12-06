@@ -75,15 +75,15 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceTest {
 		_creatorUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_MEMBER);
 
-		String name = RandomTestUtil.randomString();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _creatorUser.getUserId());
 
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			_creatorUser.getUserId(), _group.getGroupId(), name, name,
-			Collections.singletonMap(LocaleUtil.getDefault(), name),
+			_creatorUser.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			Collections.emptyMap(), StringPool.BLANK, serviceContext);
 
 		for (int i = 0; i < _assetCategoryIds.length; i++) {
