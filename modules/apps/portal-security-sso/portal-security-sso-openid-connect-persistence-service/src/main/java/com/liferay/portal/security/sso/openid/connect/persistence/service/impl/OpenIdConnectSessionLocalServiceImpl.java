@@ -21,17 +21,7 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.base.O
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the open ID connect session local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Arthur Chan
- * @see OpenIdConnectSessionLocalServiceBaseImpl
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession",
@@ -53,7 +43,7 @@ public class OpenIdConnectSessionLocalServiceImpl
 
 	@Override
 	public OpenIdConnectSession fetchOpenIdConnectSession(
-		String configurationPid, long userId) {
+		long userId, String configurationPid) {
 
 		return openIdConnectSessionPersistence.fetchByU_C(
 			userId, configurationPid);
