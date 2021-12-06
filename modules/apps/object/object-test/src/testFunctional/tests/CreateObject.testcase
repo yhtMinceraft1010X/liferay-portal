@@ -3064,10 +3064,9 @@ definition {
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject",
-			value = "Entry 1");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry 1");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
@@ -4018,6 +4017,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -4166,6 +4169,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -4231,6 +4238,10 @@ definition {
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
 		CreateObject.checkToggleActive();
 
 		CreateObject.saveObject();
@@ -4259,6 +4270,10 @@ definition {
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.checkToggleActive();
 
@@ -4296,6 +4311,10 @@ definition {
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.checkToggleActive();
 
@@ -4339,6 +4358,10 @@ definition {
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.checkToggleActive();
 
@@ -4409,6 +4432,10 @@ definition {
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.checkToggleActive();
 
@@ -4718,6 +4745,10 @@ definition {
 		CreateObject.checkToggleInactive();
 
 		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		CreateObject.checkToggleActive();
 
