@@ -64,19 +64,18 @@ public class DefaultNameIdResolver implements NameIdResolver {
 
 			ExpandoBridge expandoBridge = user.getExpandoBridge();
 
-			return _getNullableObjectAsString(
-				expandoBridge.getAttribute(attributeName));
+			return _toString(expandoBridge.getAttribute(attributeName));
 		}
 
 		if (nameIdAttributeName.startsWith("static:")) {
 			return nameIdAttributeName.substring(7);
 		}
 
-		return _getNullableObjectAsString(
+		return _toString(
 			BeanPropertiesUtil.getObject(user, nameIdAttributeName));
 	}
 
-	private String _getNullableObjectAsString(Object object) {
+	private String _toString(Object object) {
 		if (object == null) {
 			return StringPool.BLANK;
 		}
