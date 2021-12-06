@@ -106,7 +106,9 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 					csDiagramEntry.getCPDefinitionId());
 
 			if (_isCommerceAccountEnabled(commerceAccountId, cpDefinition) &&
-				_viewCatalog(cpDefinition)) {
+				_commerceCatalogPermission.contains(
+					PermissionThreadLocal.getPermissionChecker(),
+					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW)) {
 
 				cpCatalogEntries.add(
 					_cpDefinitionHelper.getCPCatalogEntry(
@@ -154,12 +156,6 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 		}
 
 		return false;
-	}
-
-	private boolean _viewCatalog(CPDefinition cpDefinition) throws Exception {
-		return _commerceCatalogPermission.contains(
-			PermissionThreadLocal.getPermissionChecker(),
-			cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
 	}
 
 	@Reference
