@@ -105,7 +105,7 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 				_cpDefinitionLocalService.getCPDefinition(
 					csDiagramEntry.getCPDefinitionId());
 
-			if (_accountEnabled(commerceAccountId, cpDefinition) &&
+			if (_isCommerceAccountEnabled(commerceAccountId, cpDefinition) &&
 				_viewCatalog(cpDefinition)) {
 
 				cpCatalogEntries.add(
@@ -125,7 +125,7 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 			cpCatalogEntries, cpCatalogEntries.size());
 	}
 
-	private boolean _accountEnabled(
+	private boolean _isCommerceAccountEnabled(
 			long commerceAccountId, CPDefinition cpDefinition)
 		throws Exception {
 
