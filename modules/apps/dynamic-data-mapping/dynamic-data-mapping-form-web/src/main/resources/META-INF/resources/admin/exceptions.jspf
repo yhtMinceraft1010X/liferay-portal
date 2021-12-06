@@ -101,7 +101,7 @@
 			%>
 
 			<c:choose>
-				<c:when test='<%= msvv.getFieldName() == "expirationDate" %>'>
+				<c:when test='<%= Objects.equals(msvv.getFieldName(), "expirationDate") %>'>
 					<liferay-ui:message key="please-enter-a-valid-expiration-date-only-future-dates-are-accepted" />
 				</c:when>
 				<c:otherwise>
