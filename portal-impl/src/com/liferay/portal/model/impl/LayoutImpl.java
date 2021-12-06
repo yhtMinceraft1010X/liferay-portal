@@ -304,9 +304,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public String getBreadcrumb(Locale locale) throws PortalException {
-		List<Layout> ancestors = getAncestors();
+		List<Layout> layouts = getAncestors();
 
-		StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
+		StringBundler sb = new StringBundler((4 * layouts.size()) + 5);
 
 		Group group = getGroup();
 
@@ -316,10 +316,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		sb.append(StringPool.GREATER_THAN);
 		sb.append(StringPool.SPACE);
 
-		Collections.reverse(ancestors);
+		Collections.reverse(layouts);
 
-		for (Layout ancestor : ancestors) {
-			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
+		for (Layout layout : layouts) {
+			sb.append(HtmlUtil.escape(layout.getName(locale)));
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.GREATER_THAN);
 			sb.append(StringPool.SPACE);
