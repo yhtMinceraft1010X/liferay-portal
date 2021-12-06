@@ -43,7 +43,7 @@ public class RequiredUserGroupExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"You cannot delete user groups that have users.");
+			"Remove all users before deleting this user group");
 	}
 
 }
