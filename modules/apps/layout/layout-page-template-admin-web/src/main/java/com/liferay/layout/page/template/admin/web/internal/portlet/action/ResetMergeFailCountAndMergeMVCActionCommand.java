@@ -15,14 +15,9 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -34,15 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Resets the number of failed merge attempts for the page template, which is
- * accessed from the action request's <code>layoutPrototypeId</code> param. Once
- * the counter is reset, the modified page template is merged back into its
- * linked page, which is accessed from the action request's <code>selPlid</code>
- * param.
- *
- * <p>
- * If the number of failed merge attempts is not equal to zero after the merge,
- * an error key is submitted into the {@link SessionErrors}.
- * </p>
+ * accessed from the action request's <code>layoutPrototypeId</code> param.
  *
  * @author Eudaldo Alonso
  */
@@ -65,37 +52,12 @@ public class ResetMergeFailCountAndMergeMVCActionCommand
 		long layoutPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutPrototypeId");
 
-		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId);
-
-		SitesUtil.setMergeFailCount(layoutPrototype, 0);
-
-		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
-
-		Layout selLayout = _layoutLocalService.getLayout(selPlid);
-
-		SitesUtil.resetPrototype(selLayout);
-
-		SitesUtil.mergeLayoutPrototypeLayout(selLayout.getGroup(), selLayout);
-
-		layoutPrototype = _layoutPrototypeService.getLayoutPrototype(
-			layoutPrototypeId);
-
-		int mergeFailCountAfterMerge = SitesUtil.getMergeFailCount(
-			layoutPrototype);
-
-		if (mergeFailCountAfterMerge > 0) {
-			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
-		}
+		SitesUtil.setMergeFailCount(
+			_layoutPrototypeLocalService.getLayoutPrototype(layoutPrototypeId),
+			0);
 	}
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
-
-	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
 
 }
