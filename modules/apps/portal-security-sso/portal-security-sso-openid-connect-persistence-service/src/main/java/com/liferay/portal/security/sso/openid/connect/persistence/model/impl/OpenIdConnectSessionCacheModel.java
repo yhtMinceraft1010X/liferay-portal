@@ -86,10 +86,10 @@ public class OpenIdConnectSessionCacheModel
 		sb.append(openIdConnectSessionId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
 		sb.append(", userId=");
 		sb.append(userId);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", accessToken=");
 		sb.append(accessToken);
 		sb.append(", configurationPid=");
@@ -114,6 +114,7 @@ public class OpenIdConnectSessionCacheModel
 		openIdConnectSessionImpl.setOpenIdConnectSessionId(
 			openIdConnectSessionId);
 		openIdConnectSessionImpl.setCompanyId(companyId);
+		openIdConnectSessionImpl.setUserId(userId);
 
 		if (modifiedDate == Long.MIN_VALUE) {
 			openIdConnectSessionImpl.setModifiedDate(null);
@@ -121,8 +122,6 @@ public class OpenIdConnectSessionCacheModel
 		else {
 			openIdConnectSessionImpl.setModifiedDate(new Date(modifiedDate));
 		}
-
-		openIdConnectSessionImpl.setUserId(userId);
 
 		if (accessToken == null) {
 			openIdConnectSessionImpl.setAccessToken("");
@@ -171,9 +170,9 @@ public class OpenIdConnectSessionCacheModel
 		openIdConnectSessionId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
-		modifiedDate = objectInput.readLong();
 
 		userId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 		accessToken = objectInput.readUTF();
 		configurationPid = objectInput.readUTF();
 		idToken = objectInput.readUTF();
@@ -188,9 +187,9 @@ public class OpenIdConnectSessionCacheModel
 		objectOutput.writeLong(openIdConnectSessionId);
 
 		objectOutput.writeLong(companyId);
-		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(userId);
+		objectOutput.writeLong(modifiedDate);
 
 		if (accessToken == null) {
 			objectOutput.writeUTF("");
@@ -231,8 +230,8 @@ public class OpenIdConnectSessionCacheModel
 	public long mvccVersion;
 	public long openIdConnectSessionId;
 	public long companyId;
-	public long modifiedDate;
 	public long userId;
+	public long modifiedDate;
 	public String accessToken;
 	public String configurationPid;
 	public String idToken;

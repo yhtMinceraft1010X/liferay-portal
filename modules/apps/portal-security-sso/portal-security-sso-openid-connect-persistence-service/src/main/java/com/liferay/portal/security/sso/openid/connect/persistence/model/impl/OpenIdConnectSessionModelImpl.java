@@ -72,8 +72,8 @@ public class OpenIdConnectSessionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"openIdConnectSessionId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
-		{"userId", Types.BIGINT}, {"accessToken", Types.VARCHAR},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"accessToken", Types.VARCHAR},
 		{"configurationPid", Types.VARCHAR}, {"idToken", Types.VARCHAR},
 		{"providerName", Types.VARCHAR}, {"refreshToken", Types.VARCHAR}
 	};
@@ -85,8 +85,8 @@ public class OpenIdConnectSessionModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("openIdConnectSessionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessToken", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("configurationPid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("idToken", Types.VARCHAR);
@@ -95,7 +95,7 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,modifiedDate DATE null,userId LONG,accessToken VARCHAR(3000) null,configurationPid VARCHAR(256) null,idToken VARCHAR(3999) null,providerName VARCHAR(75) null,refreshToken VARCHAR(2000) null)";
+		"create table OpenIdConnectSession (mvccVersion LONG default 0 not null,openIdConnectSessionId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,accessToken VARCHAR(3000) null,configurationPid VARCHAR(256) null,idToken VARCHAR(3999) null,providerName VARCHAR(75) null,refreshToken VARCHAR(2000) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OpenIdConnectSession";
@@ -292,17 +292,17 @@ public class OpenIdConnectSessionModelImpl
 			"companyId",
 			(BiConsumer<OpenIdConnectSession, Long>)
 				OpenIdConnectSession::setCompanyId);
+		attributeGetterFunctions.put("userId", OpenIdConnectSession::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<OpenIdConnectSession, Long>)
+				OpenIdConnectSession::setUserId);
 		attributeGetterFunctions.put(
 			"modifiedDate", OpenIdConnectSession::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<OpenIdConnectSession, Date>)
 				OpenIdConnectSession::setModifiedDate);
-		attributeGetterFunctions.put("userId", OpenIdConnectSession::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<OpenIdConnectSession, Long>)
-				OpenIdConnectSession::setUserId);
 		attributeGetterFunctions.put(
 			"accessToken", OpenIdConnectSession::getAccessToken);
 		attributeSetterBiConsumers.put(
@@ -383,26 +383,6 @@ public class OpenIdConnectSessionModelImpl
 	}
 
 	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public boolean hasSetModifiedDate() {
-		return _setModifiedDate;
-	}
-
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_setModifiedDate = true;
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_modifiedDate = modifiedDate;
-	}
-
-	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -439,6 +419,26 @@ public class OpenIdConnectSessionModelImpl
 	@Deprecated
 	public long getOriginalUserId() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -607,8 +607,8 @@ public class OpenIdConnectSessionModelImpl
 		openIdConnectSessionImpl.setOpenIdConnectSessionId(
 			getOpenIdConnectSessionId());
 		openIdConnectSessionImpl.setCompanyId(getCompanyId());
-		openIdConnectSessionImpl.setModifiedDate(getModifiedDate());
 		openIdConnectSessionImpl.setUserId(getUserId());
+		openIdConnectSessionImpl.setModifiedDate(getModifiedDate());
 		openIdConnectSessionImpl.setAccessToken(getAccessToken());
 		openIdConnectSessionImpl.setConfigurationPid(getConfigurationPid());
 		openIdConnectSessionImpl.setIdToken(getIdToken());
@@ -631,10 +631,10 @@ public class OpenIdConnectSessionModelImpl
 			this.<Long>getColumnOriginalValue("openIdConnectSessionId"));
 		openIdConnectSessionImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
-		openIdConnectSessionImpl.setModifiedDate(
-			this.<Date>getColumnOriginalValue("modifiedDate"));
 		openIdConnectSessionImpl.setUserId(
 			this.<Long>getColumnOriginalValue("userId"));
+		openIdConnectSessionImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
 		openIdConnectSessionImpl.setAccessToken(
 			this.<String>getColumnOriginalValue("accessToken"));
 		openIdConnectSessionImpl.setConfigurationPid(
@@ -731,6 +731,8 @@ public class OpenIdConnectSessionModelImpl
 
 		openIdConnectSessionCacheModel.companyId = getCompanyId();
 
+		openIdConnectSessionCacheModel.userId = getUserId();
+
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
@@ -740,8 +742,6 @@ public class OpenIdConnectSessionModelImpl
 		else {
 			openIdConnectSessionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		openIdConnectSessionCacheModel.userId = getUserId();
 
 		openIdConnectSessionCacheModel.accessToken = getAccessToken();
 
@@ -879,9 +879,9 @@ public class OpenIdConnectSessionModelImpl
 	private long _mvccVersion;
 	private long _openIdConnectSessionId;
 	private long _companyId;
+	private long _userId;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _userId;
 	private String _accessToken;
 	private String _configurationPid;
 	private String _idToken;
@@ -919,8 +919,8 @@ public class OpenIdConnectSessionModelImpl
 		_columnOriginalValues.put(
 			"openIdConnectSessionId", _openIdConnectSessionId);
 		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("accessToken", _accessToken);
 		_columnOriginalValues.put("configurationPid", _configurationPid);
 		_columnOriginalValues.put("idToken", _idToken);
@@ -945,9 +945,9 @@ public class OpenIdConnectSessionModelImpl
 
 		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("modifiedDate", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("modifiedDate", 16L);
 
 		columnBitmasks.put("accessToken", 32L);
 

@@ -260,10 +260,10 @@ public class OpenIdConnectSessionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.security.sso.openid.connect.persistence.model.
 		OpenIdConnectSession fetchOpenIdConnectSession(
-			String configurationPid, long userId) {
+			long userId, String configurationPid) {
 
 		return _openIdConnectSessionLocalService.fetchOpenIdConnectSession(
-			configurationPid, userId);
+			userId, configurationPid);
 	}
 
 	@Override

@@ -47,8 +47,8 @@ public class OpenIdConnectSessionWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("openIdConnectSessionId", getOpenIdConnectSessionId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("userId", getUserId());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accessToken", getAccessToken());
 		attributes.put("configurationPid", getConfigurationPid());
 		attributes.put("idToken", getIdToken());
@@ -79,16 +79,16 @@ public class OpenIdConnectSessionWrapper
 			setCompanyId(companyId);
 		}
 
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
 			setUserId(userId);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		String accessToken = (String)attributes.get("accessToken");

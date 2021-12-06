@@ -105,20 +105,6 @@ public interface OpenIdConnectSessionModel
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the modified date of this open ID connect session.
-	 *
-	 * @return the modified date of this open ID connect session
-	 */
-	public Date getModifiedDate();
-
-	/**
-	 * Sets the modified date of this open ID connect session.
-	 *
-	 * @param modifiedDate the modified date of this open ID connect session
-	 */
-	public void setModifiedDate(Date modifiedDate);
-
-	/**
 	 * Returns the user ID of this open ID connect session.
 	 *
 	 * @return the user ID of this open ID connect session
@@ -145,6 +131,20 @@ public interface OpenIdConnectSessionModel
 	 * @param userUuid the user uuid of this open ID connect session
 	 */
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the modified date of this open ID connect session.
+	 *
+	 * @return the modified date of this open ID connect session
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this open ID connect session.
+	 *
+	 * @param modifiedDate the modified date of this open ID connect session
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the access token of this open ID connect session.

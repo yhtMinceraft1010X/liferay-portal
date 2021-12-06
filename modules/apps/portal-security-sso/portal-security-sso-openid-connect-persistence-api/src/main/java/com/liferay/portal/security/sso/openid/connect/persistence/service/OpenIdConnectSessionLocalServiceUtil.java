@@ -227,9 +227,9 @@ public class OpenIdConnectSessionLocalServiceUtil {
 	}
 
 	public static OpenIdConnectSession fetchOpenIdConnectSession(
-		String configurationPid, long userId) {
+		long userId, String configurationPid) {
 
-		return getService().fetchOpenIdConnectSession(configurationPid, userId);
+		return getService().fetchOpenIdConnectSession(userId, configurationPid);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

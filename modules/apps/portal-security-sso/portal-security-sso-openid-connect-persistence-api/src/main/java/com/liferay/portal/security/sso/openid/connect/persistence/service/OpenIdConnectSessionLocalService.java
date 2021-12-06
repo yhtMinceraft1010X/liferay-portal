@@ -211,7 +211,7 @@ public interface OpenIdConnectSessionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OpenIdConnectSession fetchOpenIdConnectSession(
-		String configurationPid, long userId);
+		long userId, String configurationPid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
