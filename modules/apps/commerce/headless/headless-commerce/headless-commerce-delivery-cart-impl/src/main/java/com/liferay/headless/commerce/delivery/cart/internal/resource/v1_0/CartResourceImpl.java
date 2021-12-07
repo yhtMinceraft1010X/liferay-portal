@@ -148,7 +148,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		if (commerceOrder.isGuestOrder()) {
 			sb.append("guestToken=");
-			sb.append(_getGuestToken(commerceOrder.getCommerceOrderId()));
+
+			Key key = contextCompany.getKeyObj();
+
+			sb.append(
+				Encryptor.encrypt(
+					key, String.valueOf(commerceOrder.getCommerceOrderId())));
+
 			sb.append(StringPool.AMPERSAND);
 		}
 
@@ -519,12 +525,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		}
 
 		return 0;
-	}
-
-	private String _getGuestToken(long commerceOrderId) throws Exception {
-		Key key = contextCompany.getKeyObj();
-
-		return Encryptor.encrypt(key, String.valueOf(commerceOrderId));
 	}
 
 	private String _getOrderConfirmationCheckoutStepURL(
