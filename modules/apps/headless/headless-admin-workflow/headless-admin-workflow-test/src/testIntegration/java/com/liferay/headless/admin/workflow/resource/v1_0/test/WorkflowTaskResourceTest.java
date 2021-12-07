@@ -95,8 +95,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		_workflowInstance = WorkflowInstanceTestUtil.addWorkflowInstance(
 			testGroup.getGroupId(), objectReviewed, _workflowDefinition);
 
-		_workflowTasks = new Stack<>();
-
 		_workflowTasks.addAll(
 			WorkflowTaskTestUtil.getWorkflowTasks(_workflowInstance.getId()));
 	}
@@ -1054,6 +1052,6 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;
 
-	private Stack<WorkflowTask> _workflowTasks;
+	private Stack<WorkflowTask> _workflowTasks = new Stack<>();
 
 }
