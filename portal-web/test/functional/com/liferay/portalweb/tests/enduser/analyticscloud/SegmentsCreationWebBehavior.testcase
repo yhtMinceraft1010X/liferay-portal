@@ -1019,6 +1019,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingDM {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingDM";
 
 		var username = "ac";
@@ -1171,6 +1172,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingPage {
+		property portal.upstream = "quarantine";
+
 		var username = "ac";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
