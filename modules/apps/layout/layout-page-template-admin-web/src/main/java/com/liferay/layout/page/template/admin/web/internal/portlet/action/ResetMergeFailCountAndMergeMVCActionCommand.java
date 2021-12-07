@@ -28,9 +28,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Resets the number of failed merge attempts for the page template, which is
- * accessed from the action request's <code>layoutPrototypeId</code> param.
- *
  * @author Eudaldo Alonso
  */
 @Component(
