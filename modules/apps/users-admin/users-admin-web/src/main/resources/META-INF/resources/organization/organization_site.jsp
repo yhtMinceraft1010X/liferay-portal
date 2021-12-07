@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
-
-Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
-
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 
 LayoutSetPrototype privateLayoutSetPrototype = null;
@@ -28,6 +24,10 @@ boolean privateLayoutSetPrototypeLinkEnabled = true;
 
 LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
+
+OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
+
+Organization organization = organizationScreenNavigationDisplayContext.getOrganization();
 
 Group organizationGroup = organization.getGroup();
 
