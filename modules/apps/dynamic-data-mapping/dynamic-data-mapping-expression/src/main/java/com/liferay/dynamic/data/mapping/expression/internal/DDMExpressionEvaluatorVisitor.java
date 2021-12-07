@@ -207,7 +207,7 @@ public class DDMExpressionEvaluatorVisitor
 				_ddmExpressionFieldAccessor);
 		}
 
-		Method method;
+		Method method = null;
 
 		Object[] functionParameters = getFunctionParameters(
 			context.functionParameters());
