@@ -101,8 +101,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
 			deleteSiteNavigationMenuItem(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId,
-				boolean deleteChildren)
+				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -112,7 +111,7 @@ public class SiteNavigationMenuItemServiceHttp {
 				_deleteSiteNavigationMenuItemParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteNavigationMenuItemId, deleteChildren);
+				methodKey, siteNavigationMenuItemId);
 
 			Object returnObj = null;
 
@@ -145,7 +144,8 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
 			deleteSiteNavigationMenuItem(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId)
+				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId,
+				boolean deleteChildren)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -155,7 +155,7 @@ public class SiteNavigationMenuItemServiceHttp {
 				_deleteSiteNavigationMenuItemParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteNavigationMenuItemId);
+				methodKey, siteNavigationMenuItemId, deleteChildren);
 
 			Object returnObj = null;
 
@@ -440,11 +440,11 @@ public class SiteNavigationMenuItemServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_deleteSiteNavigationMenuItemParameterTypes1 = new Class[] {
+		_deleteSiteNavigationMenuItemParameterTypes1 = new Class[] {long.class};
+	private static final Class<?>[]
+		_deleteSiteNavigationMenuItemParameterTypes2 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[]
-		_deleteSiteNavigationMenuItemParameterTypes2 = new Class[] {long.class};
 	private static final Class<?>[]
 		_deleteSiteNavigationMenuItemsParameterTypes3 = new Class[] {
 			long.class
