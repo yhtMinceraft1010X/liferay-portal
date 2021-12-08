@@ -134,7 +134,7 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"The application can not include itself: " + TEST_PORTLET_ID,
+				"The application cannot include itself: " + TEST_PORTLET_ID,
 				logEntry.getMessage());
 
 			Assert.assertEquals(200, response.getCode());
