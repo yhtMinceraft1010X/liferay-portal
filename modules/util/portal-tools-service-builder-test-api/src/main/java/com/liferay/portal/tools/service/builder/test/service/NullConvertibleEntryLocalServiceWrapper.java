@@ -27,6 +27,10 @@ public class NullConvertibleEntryLocalServiceWrapper
 	implements NullConvertibleEntryLocalService,
 			   ServiceWrapper<NullConvertibleEntryLocalService> {
 
+	public NullConvertibleEntryLocalServiceWrapper() {
+		this(null);
+	}
+
 	public NullConvertibleEntryLocalServiceWrapper(
 		NullConvertibleEntryLocalService nullConvertibleEntryLocalService) {
 
