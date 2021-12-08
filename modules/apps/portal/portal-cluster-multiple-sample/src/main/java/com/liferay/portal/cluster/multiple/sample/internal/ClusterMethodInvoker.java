@@ -61,7 +61,7 @@ public class ClusterMethodInvoker {
 						targetClusterNode.getClusterNodeId());
 
 				_log.info(
-					"Result of invoke-method-module is :" +
+					"Result of invoke-method-module: " +
 						clusterNodeResponse.getResult());
 			}
 		}
@@ -86,7 +86,7 @@ public class ClusterMethodInvoker {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Result of invoke-method-module-on-master is :" +
+					"Result of invoke-method-module-on-master: " +
 						future.get());
 			}
 		}
@@ -122,7 +122,7 @@ public class ClusterMethodInvoker {
 						targetClusterNode.getClusterNodeId());
 
 				_log.info(
-					"Result of invoke-method-portal is :" +
+					"Result of invoke-method-portal: " +
 						clusterNodeResponse.getResult());
 			}
 		}
@@ -147,7 +147,7 @@ public class ClusterMethodInvoker {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Result of invoke-method-portal-on-master is :" +
+					"Result of invoke-method-portal-on-master: " +
 						future.get());
 			}
 		}

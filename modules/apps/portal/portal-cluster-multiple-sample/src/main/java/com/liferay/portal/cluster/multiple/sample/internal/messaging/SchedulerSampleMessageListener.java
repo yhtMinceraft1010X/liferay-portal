@@ -61,9 +61,7 @@ public class SchedulerSampleMessageListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Memory clustered job from modules is triggered at " +
-					System.currentTimeMillis());
+			_log.debug("Received message at " + System.currentTimeMillis());
 		}
 	}
 

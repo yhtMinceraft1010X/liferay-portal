@@ -51,7 +51,7 @@ public class ClusterSampleDispatcher {
 
 		if (Validator.isNull(clusterSampleCommand)) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Cluster Sample Command is null");
+				_log.info("Cluster sample command is null");
 			}
 
 			return;
@@ -83,7 +83,9 @@ public class ClusterSampleDispatcher {
 					_clusterMasterExecutor);
 			}
 			else {
-				_log.error("Unable to find command " + clusterSampleCommand);
+				_log.error(
+					"Unable to find cluster sample command " +
+						clusterSampleCommand);
 			}
 		}
 		catch (Exception exception) {
@@ -100,7 +102,7 @@ public class ClusterSampleDispatcher {
 			}
 		}
 
-		throw new Exception("Unable to find another cluster node");
+		throw new Exception("Unable to get target cluster node");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
