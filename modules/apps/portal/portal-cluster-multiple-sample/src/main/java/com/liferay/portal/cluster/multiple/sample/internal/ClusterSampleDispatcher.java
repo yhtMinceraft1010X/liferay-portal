@@ -19,9 +19,18 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.concurrent.Future;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -59,24 +68,20 @@ public class ClusterSampleDispatcher {
 
 		try {
 			if (clusterSampleCommand.equals("invoke-method-module")) {
-				ClusterMethodInvoker.invokeMethodModule(
-					_clusterExecutor, getTargetClusterNode());
+				_invokeMethodModule(_clusterExecutor, _getTargetClusterNode());
 			}
 			else if (clusterSampleCommand.equals(
 						"invoke-method-module-on-master")) {
 
-				ClusterMethodInvoker.invokeMethodModuleOnMaster(
-					_clusterMasterExecutor);
+				_invokeMethodModuleOnMaster(_clusterMasterExecutor);
 			}
 			else if (clusterSampleCommand.equals("invoke-method-portal")) {
-				ClusterMethodInvoker.invokeMethodPortal(
-					_clusterExecutor, getTargetClusterNode());
+				_invokeMethodPortal(_clusterExecutor, _getTargetClusterNode());
 			}
 			else if (clusterSampleCommand.equals(
 						"invoke-method-portal-on-master")) {
 
-				ClusterMethodInvoker.invokeMethodPortalOnMaster(
-					_clusterMasterExecutor);
+				_invokeMethodPortalOnMaster(_clusterMasterExecutor);
 			}
 			else {
 				_log.error(
@@ -89,7 +94,7 @@ public class ClusterSampleDispatcher {
 		}
 	}
 
-	protected ClusterNode getTargetClusterNode() throws Exception {
+	private ClusterNode _getTargetClusterNode() throws Exception {
 		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
 
 		for (ClusterNode clusterNode : _clusterExecutor.getClusterNodes()) {
@@ -99,6 +104,128 @@ public class ClusterSampleDispatcher {
 		}
 
 		throw new Exception("Unable to get target cluster node");
+	}
+
+	private void _invokeMethodModule(
+		ClusterExecutor clusterExecutor, ClusterNode targetClusterNode) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ClusterSampleClass.class, "getPortalLocalPort",
+				new Class<?>[0]);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, new Object[0]);
+
+			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+				methodHandler,
+				new String[] {targetClusterNode.getClusterNodeId()});
+
+			FutureClusterResponses futureClusterResponses =
+				clusterExecutor.execute(clusterRequest);
+
+			if (_log.isInfoEnabled()) {
+				ClusterNodeResponses clusterNodeResponses =
+					futureClusterResponses.get();
+
+				ClusterNodeResponse clusterNodeResponse =
+					clusterNodeResponses.getClusterResponse(
+						targetClusterNode.getClusterNodeId());
+
+				_log.info(
+					"Result of invoke-method-module: " +
+						clusterNodeResponse.getResult());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+	}
+
+	private void _invokeMethodModuleOnMaster(
+		ClusterMasterExecutor clusterMasterExecutor) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ClusterSampleClass.class, "getPortalLocalPort",
+				new Class<?>[0]);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, new Object[0]);
+
+			Future<Integer> future = clusterMasterExecutor.executeOnMaster(
+				methodHandler);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Result of invoke-method-module-on-master: " +
+						future.get());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+	}
+
+	private void _invokeMethodPortal(
+		ClusterExecutor clusterExecutor, ClusterNode targetClusterNode) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PortalUtil.class, "getPortalLocalPort",
+				new Class<?>[] {Boolean.TYPE});
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, new Object[] {Boolean.FALSE});
+
+			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
+				methodHandler,
+				new String[] {targetClusterNode.getClusterNodeId()});
+
+			FutureClusterResponses futureClusterResponses =
+				clusterExecutor.execute(clusterRequest);
+
+			if (_log.isInfoEnabled()) {
+				ClusterNodeResponses clusterNodeResponses =
+					futureClusterResponses.get();
+
+				ClusterNodeResponse clusterNodeResponse =
+					clusterNodeResponses.getClusterResponse(
+						targetClusterNode.getClusterNodeId());
+
+				_log.info(
+					"Result of invoke-method-portal: " +
+						clusterNodeResponse.getResult());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+	}
+
+	private void _invokeMethodPortalOnMaster(
+		ClusterMasterExecutor clusterMasterExecutor) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PortalUtil.class, "getPortalLocalPort",
+				new Class<?>[] {Boolean.TYPE});
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, new Object[] {Boolean.FALSE});
+
+			Future<Integer> future = clusterMasterExecutor.executeOnMaster(
+				methodHandler);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Result of invoke-method-portal-on-master: " +
+						future.get());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
