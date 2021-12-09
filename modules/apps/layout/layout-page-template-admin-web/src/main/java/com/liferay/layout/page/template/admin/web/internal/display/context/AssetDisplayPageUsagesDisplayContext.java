@@ -166,6 +166,7 @@ public class AssetDisplayPageUsagesDisplayContext {
 
 		searchContainer.setOrderByComparator(
 			new AssetDisplayPageEntryModifiedDateComparator(orderByAsc));
+
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResults(
 			AssetDisplayPageEntryServiceUtil.getAssetDisplayPageEntries(
