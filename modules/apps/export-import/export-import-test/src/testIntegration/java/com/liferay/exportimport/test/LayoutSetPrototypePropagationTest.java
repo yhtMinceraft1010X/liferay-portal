@@ -622,7 +622,6 @@ public class LayoutSetPrototypePropagationTest
 		for (String propertyKey : prototypeThemeSettings.keySet()) {
 			String prototypeValue = prototypeLayoutSet.getThemeSetting(
 				propertyKey, device);
-
 			String targetValue = targetLayoutSet.getThemeSetting(
 				propertyKey, device);
 
