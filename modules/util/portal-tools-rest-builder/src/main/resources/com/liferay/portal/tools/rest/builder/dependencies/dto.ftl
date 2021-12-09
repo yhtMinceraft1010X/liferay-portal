@@ -409,9 +409,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 	</#list>
 
 	private static String _escape(Object object) {
-		return StringUtil.replace(
-			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
-			_JSON_ESCAPE_STRINGS[1]);
+		return StringUtil.replace(String.valueOf(object), _JSON_ESCAPE_STRINGS[0], _JSON_ESCAPE_STRINGS[1]);
 	}
 
 	private static boolean _isArray(Object value) {
