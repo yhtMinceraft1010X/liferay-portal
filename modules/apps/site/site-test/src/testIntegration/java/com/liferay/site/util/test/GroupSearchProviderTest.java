@@ -83,15 +83,21 @@ public class GroupSearchProviderTest {
 		Group parentGroup = GroupTestUtil.addGroup();
 
 		Group childGroup1 = GroupTestUtil.addGroup(parentGroup.getGroupId());
-		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
-		Group childGroup3 = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
 		childGroup1.setType(GroupConstants.TYPE_SITE_PRIVATE);
-		childGroup2.setType(GroupConstants.TYPE_SITE_PRIVATE);
-		childGroup3.setType(GroupConstants.TYPE_SITE_PRIVATE);
 
 		_groupLocalService.updateGroup(childGroup1);
+
+		Group childGroup2 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		childGroup2.setType(GroupConstants.TYPE_SITE_PRIVATE);
+
 		_groupLocalService.updateGroup(childGroup2);
+
+		Group childGroup3 = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		childGroup3.setType(GroupConstants.TYPE_SITE_PRIVATE);
+
 		_groupLocalService.updateGroup(childGroup3);
 
 		User user = UserTestUtil.addGroupUser(
