@@ -240,6 +240,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			propertyExpander.expand(String.valueOf(configuration)));
 	}
 
+	private DTOConverter
+		<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
+			_getDTOConverter() {
+
+		String dtoClassName =
+			com.liferay.search.experiences.model.SXPBlueprint.class.getName();
+
+		return (DTOConverter
+			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>)
+				_dtoConverterRegistry.getDTOConverter(dtoClassName);
+	}
+
 	private Field _getField(Field[] fields, String name) {
 		if (ArrayUtil.isEmpty(fields)) {
 			return null;
@@ -268,18 +280,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		}
 
 		return null;
-	}
-
-	private DTOConverter
-		<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>
-			_getDTOConverter() {
-
-		String dtoClassName =
-			com.liferay.search.experiences.model.SXPBlueprint.class.getName();
-
-		return (DTOConverter
-			<com.liferay.search.experiences.model.SXPBlueprint, SXPBlueprint>)
-				_dtoConverterRegistry.getDTOConverter(dtoClassName);
 	}
 
 	private String _getFieldType(String name, UiConfiguration uiConfiguration) {
