@@ -127,7 +127,7 @@ if (publicVirtualHostnames.isEmpty()) {
 	<p class="small text-secondary">
 		<liferay-ui:message key="enter-the-virtual-host-that-map-to-the-friendly-url" />
 
-		<liferay-ui:message arguments='<%= new Object[] {"<strong>www.helloworld.com</strong>", "<strong>/helloworld</strong>", "<strong>" + HttpUtil.getProtocol(request) + "://www.helloworld.com</strong>", "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "/helloworld</strong>"} %>' key="for-example,-if-the-virtual-host-is-x-and-the-friendly-url-is-x,-x-is-mapped-to-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= new Object[] {"<strong>www.helloworld.com</strong>", "<strong>/helloworld</strong>", "<strong>" + HttpUtil.getProtocol(request) + "://www.helloworld.com</strong>", "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "/helloworld</strong>"} %>' key="for-example,-if-the-virtual-host-is-x-and-the-friendly-url-is-x,-then-x-is-mapped-to-x" translateArguments="<%= false %>" />
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">
