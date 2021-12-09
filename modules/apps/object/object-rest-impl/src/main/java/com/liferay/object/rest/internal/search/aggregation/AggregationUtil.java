@@ -39,34 +39,27 @@ public class AggregationUtil {
 			return;
 		}
 
-		Map<String, String> vulcanAggregationTerms =
+		Map<String, String> aggregationTerms =
 			vulcanAggregation.getAggregationTerms();
 
-		for (Map.Entry<String, String> vulcanAggregationEntry :
-				vulcanAggregationTerms.entrySet()) {
+		for (Map.Entry<String, String> entry : aggregationTerms.entrySet()) {
+			String value = entry.getValue();
 
-			String aggregationEntryValue = vulcanAggregationEntry.getValue();
-
-			if (!aggregationEntryValue.startsWith("nestedFieldArray")) {
+			if (!value.startsWith("nestedFieldArray")) {
 				continue;
 			}
 
-			String[] aggregationEntryValueParts = aggregationEntryValue.split(
-				StringPool.POUND);
+			NestedAggregation nestedAggregation = aggregations.nested(
+				entry.getKey(), "nestedFieldArray");
 
-			TermsAggregation termsAggregation = aggregations.terms(
-				vulcanAggregationEntry.getKey(), aggregationEntryValueParts[0]);
+			String[] valueParts = value.split(StringPool.POUND);
 
 			FilterAggregation filterAggregation = aggregations.filter(
 				"filterAggregation",
-				queries.term(
-					"nestedFieldArray.fieldName",
-					aggregationEntryValueParts[1]));
+				queries.term("nestedFieldArray.fieldName", valueParts[1]));
 
-			filterAggregation.addChildAggregation(termsAggregation);
-
-			NestedAggregation nestedAggregation = aggregations.nested(
-				vulcanAggregationEntry.getKey(), "nestedFieldArray");
+			filterAggregation.addChildAggregation(
+				aggregations.terms(entry.getKey(), valueParts[0]));
 
 			nestedAggregation.addChildAggregation(filterAggregation);
 
