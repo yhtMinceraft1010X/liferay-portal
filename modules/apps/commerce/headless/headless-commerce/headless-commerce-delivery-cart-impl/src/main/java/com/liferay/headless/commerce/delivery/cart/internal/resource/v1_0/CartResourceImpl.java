@@ -657,6 +657,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		themeServicePreAction.run(
 			contextHttpServletRequest, httpServletResponse);
 
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
