@@ -29,7 +29,6 @@ import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetric
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +64,7 @@ public class TransitionWorkflowMetricsReindexer
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(KaleoTransition kaleoTransition) -> {
-				if (Objects.isNull(kaleoTransition)) {
+				if (kaleoTransition == null) {
 					return;
 				}
 
