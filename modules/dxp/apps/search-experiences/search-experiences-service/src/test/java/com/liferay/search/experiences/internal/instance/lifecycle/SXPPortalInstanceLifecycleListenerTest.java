@@ -16,7 +16,6 @@ package com.liferay.search.experiences.internal.instance.lifecycle;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
-import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -34,22 +33,18 @@ public class SXPPortalInstanceLifecycleListenerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testReadSXPElement() {
-		for (String fileName : SXPPortalInstanceLifecycleListener.FILE_NAMES) {
-			_testReadSXPElement(fileName);
-		}
-	}
-
-	private void _testReadSXPElement(String fileName) {
+	public void testSXPElements() throws Exception {
 		SXPPortalInstanceLifecycleListener sxpPortalInstanceLifecycleListener =
 			new SXPPortalInstanceLifecycleListener();
 
-		SXPElement sxpElement =
-			sxpPortalInstanceLifecycleListener.readSXPElement(fileName);
+		Assert.assertNotEquals(
+			0, sxpPortalInstanceLifecycleListener.sxpElements.size());
 
-		Assert.assertEquals(
-			fileName, sxpElement.toString(),
-			String.valueOf(SXPElementUtil.toSXPElement(sxpElement.toString())));
+		for (SXPElement sxpElement :
+				sxpPortalInstanceLifecycleListener.sxpElements) {
+
+			Assert.assertNotNull(sxpElement);
+		}
 	}
 
 }
