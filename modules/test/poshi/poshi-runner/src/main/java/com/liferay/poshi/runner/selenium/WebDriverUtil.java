@@ -344,15 +344,15 @@ public class WebDriverUtil extends PropsValues {
 		if (webDriverChromeDriverPath == null) {
 			throw new RuntimeException(
 				StringUtil.combine(
-					"Please set the system property '",
-					webDriverBinaryPropertyName, "' to a valid ",
+					"Please set the system property \"",
+					webDriverBinaryPropertyName, "\" to a valid ",
 					webDriverBinaryName, " binary"));
 		}
 
 		System.out.println(
 			StringUtil.combine(
-				"Using '", webDriverChromeDriverPath, "' as '",
-				webDriverBinaryPropertyName, "' path"));
+				"Using \"", webDriverChromeDriverPath, "\" as \"",
+				webDriverBinaryPropertyName, "\" path"));
 	}
 
 	private static final URL _REMOTE_DRIVER_URL;
