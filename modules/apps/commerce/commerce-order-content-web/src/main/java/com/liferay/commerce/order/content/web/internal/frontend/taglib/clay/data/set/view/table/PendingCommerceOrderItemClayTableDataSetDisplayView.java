@@ -41,17 +41,17 @@ public class PendingCommerceOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
 
-		clayTableSchemaField = clayTableSchemaBuilder.addClayTableSchemaField(
-			"sku", "sku");
+		ClayTableSchemaField skuClayTableSchemaField =
+			clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		skuClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("price", "list-price");
 
