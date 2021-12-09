@@ -118,7 +118,6 @@ public class GroupSearchProviderTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(parentGroup, user));
-
 		mockLiferayPortletActionRequest.setParameter(
 			"groupId", String.valueOf(parentGroup.getGroupId()));
 
@@ -153,11 +152,9 @@ public class GroupSearchProviderTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(group.getCompanyId()));
-
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setUser(user);
 
