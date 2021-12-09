@@ -145,6 +145,18 @@ public class GroupSearchProviderTest {
 		_assertGroupSearch(childGroup1, complexSQLGroupSearch);
 	}
 
+	private void _assertGroupSearch(
+		Group childGroup1, GroupSearch groupSearch) {
+
+		List<Group> results = groupSearch.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		Group group = results.get(0);
+
+		Assert.assertEquals(childGroup1.getGroupId(), group.getGroupId());
+	}
+
 	private ThemeDisplay _getThemeDisplay(Group group, User user)
 		throws Exception {
 
@@ -159,18 +171,6 @@ public class GroupSearchProviderTest {
 		themeDisplay.setUser(user);
 
 		return themeDisplay;
-	}
-
-	private void _assertGroupSearch(
-		Group childGroup1, GroupSearch groupSearch) {
-
-		List<Group> results = groupSearch.getResults();
-
-		Assert.assertEquals(results.toString(), 1, results.size());
-
-		Group group = results.get(0);
-
-		Assert.assertEquals(childGroup1.getGroupId(), group.getGroupId());
 	}
 
 	private static String[] _originalGroupsComplexSQLClassNames;
