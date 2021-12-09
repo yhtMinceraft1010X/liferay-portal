@@ -1427,7 +1427,6 @@ definition {
 		AssertElementNotPresent(locator1 = "CalendarViewEventDetails#CALENDAR_COMMENT_DEFAULT_MESSAGE");
 	}
 
-
 	macro viewCalendarRatingNotPresent {
 		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR");
 
@@ -1438,7 +1437,6 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
-		
 	}
 
 	macro viewComment {
