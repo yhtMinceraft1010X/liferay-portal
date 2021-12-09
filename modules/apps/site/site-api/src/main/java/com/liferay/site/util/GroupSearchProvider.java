@@ -156,9 +156,9 @@ public class GroupSearchProvider {
 
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
-				"site", Boolean.TRUE
-			).put(
 				"actionId", ActionKeys.VIEW
+			).put(
+				"site", Boolean.TRUE
 			).build();
 
 		if (searchTerms.hasSearchTerms()) {
