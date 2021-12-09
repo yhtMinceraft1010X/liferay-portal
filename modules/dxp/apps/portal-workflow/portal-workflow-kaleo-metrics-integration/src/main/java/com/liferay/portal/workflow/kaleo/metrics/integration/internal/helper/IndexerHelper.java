@@ -70,10 +70,9 @@ public class IndexerHelper {
 		KaleoInstance kaleoInstance,
 		KaleoTaskInstanceToken kaleoTaskInstanceToken, String processVersion) {
 
-		AddTaskRequest.Builder addTaskRequestBuilder =
-			new AddTaskRequest.Builder();
+		AddTaskRequest.Builder builder = new AddTaskRequest.Builder();
 
-		addTaskRequestBuilder.assetTitleMap(
+		builder.assetTitleMap(
 			createAssetTitleLocalizationMap(
 				kaleoTaskInstanceToken.getClassName(),
 				kaleoTaskInstanceToken.getClassPK(),
@@ -104,14 +103,14 @@ public class IndexerHelper {
 		);
 
 		if (kaleoInstance != null) {
-			addTaskRequestBuilder.instanceCompleted(
+			builder.instanceCompleted(
 				kaleoInstance.isCompleted()
 			).instanceCompletionDate(
 				kaleoInstance.getCompletionDate()
 			);
 		}
 
-		return addTaskRequestBuilder.instanceId(
+		return builder.instanceId(
 			kaleoTaskInstanceToken.getKaleoInstanceId()
 		).modifiedDate(
 			kaleoTaskInstanceToken.getModifiedDate()
@@ -134,10 +133,10 @@ public class IndexerHelper {
 			KaleoTransition kaleoTransition, String processVersion)
 		throws PortalException {
 
-		AddTransitionRequest.Builder addTransitionRequestBuilder =
+		AddTransitionRequest.Builder builder =
 			new AddTransitionRequest.Builder();
 
-		return addTransitionRequestBuilder.companyId(
+		return builder.companyId(
 			kaleoTransition.getCompanyId()
 		).createDate(
 			kaleoTransition.getCreateDate()
@@ -222,10 +221,10 @@ public class IndexerHelper {
 	public DeleteTransitionRequest createDeleteTransitionRequest(
 		KaleoTransition kaleoTransition) {
 
-		DeleteTransitionRequest.Builder deleteTransitionRequestBuilder =
+		DeleteTransitionRequest.Builder builder =
 			new DeleteTransitionRequest.Builder();
 
-		return deleteTransitionRequestBuilder.companyId(
+		return builder.companyId(
 			kaleoTransition.getCompanyId()
 		).transitionId(
 			kaleoTransition.getKaleoTransitionId()
