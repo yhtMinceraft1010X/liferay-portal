@@ -240,7 +240,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			propertyExpander.expand(String.valueOf(configuration)));
 	}
 
-	private Field _findField(Field[] fields, String name) {
+	private Field _getField(Field[] fields, String name) {
 		if (ArrayUtil.isEmpty(fields)) {
 			return null;
 		}
@@ -254,13 +254,13 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		return null;
 	}
 
-	private Field _findField(FieldSet[] fieldSets, String name) {
+	private Field _getField(FieldSet[] fieldSets, String name) {
 		if (ArrayUtil.isEmpty(fieldSets)) {
 			return null;
 		}
 
 		for (FieldSet fieldSet : fieldSets) {
-			Field field = _findField(fieldSet.getFields(), name);
+			Field field = _getField(fieldSet.getFields(), name);
 
 			if (field != null) {
 				return field;
@@ -283,7 +283,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private String _getFieldType(String name, UiConfiguration uiConfiguration) {
-		Field field = _findField(uiConfiguration.getFieldSets(), name);
+		Field field = _getField(uiConfiguration.getFieldSets(), name);
 
 		if (field != null) {
 			return field.getType();
