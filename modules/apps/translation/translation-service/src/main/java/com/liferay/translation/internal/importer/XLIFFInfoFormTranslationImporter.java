@@ -187,11 +187,11 @@ public class XLIFFInfoFormTranslationImporter
 
 		Stream<Event> stream = events.stream();
 
-		Optional<Event> startSubDocumentEventOptional = stream.filter(
+		Optional<Event> optional = stream.filter(
 			Event::isStartSubDocument
 		).findFirst();
 
-		return startSubDocumentEventOptional.flatMap(
+		return optional.flatMap(
 			event -> {
 				StartSubDocument startSubDocument = event.getStartSubDocument();
 
@@ -208,7 +208,7 @@ public class XLIFFInfoFormTranslationImporter
 			}
 		).orElseThrow(
 			() -> new XLIFFFileException.MustBeWellFormed(
-				"The XLIFF file is not well Formed")
+				"The XLIFF file is not well formed")
 		);
 	}
 
@@ -221,7 +221,7 @@ public class XLIFFInfoFormTranslationImporter
 
 		if (!matcher.matches()) {
 			throw new XLIFFFileException.MustBeWellFormed(
-				"The XLIFF file is not well Formed");
+				"The XLIFF file is not well formed");
 		}
 
 		return new InfoItemReference(
