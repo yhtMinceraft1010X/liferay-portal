@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -88,8 +88,6 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 	public List<String> getAvailableActions(
 		AccountRoleDisplay accountRoleDisplay) {
 
-		List<String> availableActions = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -98,10 +96,10 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 				themeDisplay.getPermissionChecker(),
 				accountRoleDisplay.getAccountRoleId(), ActionKeys.DELETE)) {
 
-			availableActions.add("deleteAccountRoles");
+			Collections.<String>singletonList("deleteAccountRoles");
 		}
 
-		return availableActions;
+		return Collections.<String>emptyList();
 	}
 
 	@Override
