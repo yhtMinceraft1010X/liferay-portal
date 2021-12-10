@@ -71,7 +71,7 @@ public class SXPPortalInstanceLifecycleListener
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
 
-			sxpElements.add(
+			_sxpElements.add(
 				SXPElementUtil.toSXPElement(
 					StreamUtil.toString(url.openStream())));
 		}
@@ -86,8 +86,6 @@ public class SXPPortalInstanceLifecycleListener
 		_addSXPElements(company);
 	}
 
-	protected final List<SXPElement> sxpElements = new ArrayList<>();
-
 	private void _addSXPElements(Company company) throws Exception {
 		Set<String> titles = new HashSet<>();
 
@@ -98,7 +96,7 @@ public class SXPPortalInstanceLifecycleListener
 			titles.add(sxpPElement.getTitle(LocaleUtil.US));
 		}
 
-		for (SXPElement sxpElement : sxpElements) {
+		for (SXPElement sxpElement : _sxpElements) {
 
 			// TODO Should this be en_US or en-US?
 
@@ -130,5 +128,7 @@ public class SXPPortalInstanceLifecycleListener
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
+
+	private final List<SXPElement> _sxpElements = new ArrayList<>();
 
 }

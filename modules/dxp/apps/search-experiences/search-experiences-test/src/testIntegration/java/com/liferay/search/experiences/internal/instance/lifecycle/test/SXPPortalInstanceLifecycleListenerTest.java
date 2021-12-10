@@ -44,7 +44,7 @@ public class SXPPortalInstanceLifecycleListenerTest {
 	@Test
 	public void testSXPElements() throws Exception {
 		List<SXPElement> sxpElements = ReflectionTestUtil.getFieldValue(
-			_portalInstanceLifecycleListener, "sxpElements");
+			_portalInstanceLifecycleListener, "_sxpElements");
 
 		Assert.assertNotEquals(0, sxpElements.size());
 
