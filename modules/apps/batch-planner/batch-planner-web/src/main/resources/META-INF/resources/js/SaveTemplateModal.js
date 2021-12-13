@@ -70,7 +70,7 @@ const SaveTemplateModal = ({
 				}
 				else {
 					openToast({
-						message: Liferay.Language.get('template-created'),
+						message: Liferay.Language.get('template-was-created'),
 						type: 'success',
 					});
 
