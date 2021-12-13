@@ -639,14 +639,14 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(page1);
 
-		ObjectRelationship existingRelationship1 = page1.fetchFirstItem();
+		ObjectRelationship existingObjectRelationship1 = page1.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition1",
-			existingRelationship1.getObjectDefinitionName2());
+			existingObjectRelationship1.getObjectDefinitionName2());
 
 		ObjectRelationship.Type objectRelationshipType1 =
-			existingRelationship1.getType();
+			existingObjectRelationship1.getType();
 
 		Assert.assertEquals("oneToMany", objectRelationshipType1.toString());
 
@@ -659,14 +659,14 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(page2);
 
-		ObjectRelationship existingRelationship2 = page2.fetchFirstItem();
+		ObjectRelationship existingObjectRelationship2 = page2.fetchFirstItem();
 
 		Assert.assertEquals(
 			"TestObjectDefinition2",
-			existingRelationship2.getObjectDefinitionName2());
+			existingObjectRelationship2.getObjectDefinitionName2());
 
 		ObjectRelationship.Type objectRelationshipType2 =
-			existingRelationship2.getType();
+			existingObjectRelationship2.getType();
 
 		Assert.assertEquals("manyToMany", objectRelationshipType2.toString());
 	}
