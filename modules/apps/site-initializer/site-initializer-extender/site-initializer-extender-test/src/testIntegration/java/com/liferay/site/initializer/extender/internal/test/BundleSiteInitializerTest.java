@@ -592,9 +592,9 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				group.getCompanyId(), "C_TestObjectDefinition1");
 
+		Assert.assertEquals(objectDefinition1.isSystem(), false);
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
-		Assert.assertEquals(objectDefinition1.isSystem(), false);
 
 		_assertObjectEntries(group, objectDefinition1);
 		_assertObjectRelationship(objectDefinition1, serviceContext);
