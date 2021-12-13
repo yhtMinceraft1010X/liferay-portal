@@ -1637,11 +1637,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
-			"/site-initializer/object-definitions");
-
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 			new HashMap<>();
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
 			return objectDefinitionIdsStringUtilReplaceValues;
