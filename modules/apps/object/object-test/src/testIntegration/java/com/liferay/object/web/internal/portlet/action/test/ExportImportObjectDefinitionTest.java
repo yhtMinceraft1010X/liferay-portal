@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -103,7 +104,8 @@ public class ExportImportObjectDefinitionTest {
 				_createMockMultipartHttpServletRequest(fileName));
 
 		mockLiferayPortletActionRequest.addParameter("name", name);
-		mockLiferayPortletActionRequest.addParameter("redirect", "fakeURL");
+		mockLiferayPortletActionRequest.addParameter(
+			"redirect", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
@@ -163,7 +165,6 @@ public class ExportImportObjectDefinitionTest {
 			"\r\nContent-Disposition:form-data;",
 			"name=\"objectDefinitionJSON\";filename=\"", fileName,
 			"\";\r\nContent-type:application/json\r\n\r\n");
-
 		String end = StringBundler.concat(
 			"\r\n--", boundary, StringPool.DOUBLE_DASH);
 
