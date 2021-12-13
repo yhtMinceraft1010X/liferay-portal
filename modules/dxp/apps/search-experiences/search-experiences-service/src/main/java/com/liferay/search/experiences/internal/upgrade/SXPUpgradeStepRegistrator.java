@@ -35,8 +35,8 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.registerInitialUpgradeSteps(
 			new SXPElementUpgradeProcess(
-				_companyLocalService, _sxpElementLocalService,
-				_companyModelListener));
+				_companyLocalService, _companyModelListener,
+				_sxpElementLocalService));
 	}
 
 	@Reference

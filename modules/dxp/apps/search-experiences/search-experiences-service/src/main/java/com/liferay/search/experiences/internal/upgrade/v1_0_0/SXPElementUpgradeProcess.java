@@ -26,12 +26,12 @@ public class SXPElementUpgradeProcess extends UpgradeProcess {
 
 	public SXPElementUpgradeProcess(
 		CompanyLocalService companyLocalService,
-		SXPElementLocalService sxpElementLocalService,
-		CompanyModelListener companyModelListener) {
+		CompanyModelListener companyModelListener,
+		SXPElementLocalService sxpElementLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_sxpElementLocalService = sxpElementLocalService;
 		_companyModelListener = companyModelListener;
+		_sxpElementLocalService = sxpElementLocalService;
 	}
 
 	@Override
