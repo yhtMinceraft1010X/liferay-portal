@@ -597,7 +597,7 @@ public class BundleSiteInitializerTest {
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		_assertObjectEntries(group, objectDefinition1);
-		_assertObjectRelationship(objectDefinition1, serviceContext);
+		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -618,7 +618,7 @@ public class BundleSiteInitializerTest {
 				group.getGroupId(), objectDefinition.getObjectDefinitionId()));
 	}
 
-	private void _assertObjectRelationship(
+	private void _assertObjectRelationships(
 			ObjectDefinition objectDefinition, ServiceContext serviceContext)
 		throws Exception {
 
