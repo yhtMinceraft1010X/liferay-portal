@@ -1781,10 +1781,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 								"'")),
 						null);
 
-			ObjectRelationship existingObjectRelationships =
+			ObjectRelationship existingObjectRelationship =
 				objectRelationshipsPage.fetchFirstItem();
 
-			if (existingObjectRelationships == null) {
+			if (existingObjectRelationship == null) {
 				objectRelationshipResource.
 					postObjectDefinitionObjectRelationship(
 						objectRelationship.getObjectDefinitionId1(),
@@ -1792,7 +1792,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				objectRelationshipResource.putObjectRelationship(
-					existingObjectRelationships.getId(), objectRelationship);
+					existingObjectRelationship.getId(), objectRelationship);
 			}
 		}
 	}
