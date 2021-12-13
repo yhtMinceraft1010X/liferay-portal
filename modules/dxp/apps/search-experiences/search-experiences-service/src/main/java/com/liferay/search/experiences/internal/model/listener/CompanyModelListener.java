@@ -130,7 +130,7 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		}
 	}
 
-	private static List<SXPElement> _createSXPElements() {
+	private List<SXPElement> _createSXPElements() {
 		Bundle bundle = FrameworkUtil.getBundle(CompanyModelListener.class);
 
 		Package pkg = CompanyModelListener.class.getPackage();
@@ -162,12 +162,12 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyModelListener.class);
 
-	private static final List<SXPElement> _sxpElements = _createSXPElements();
-
 	@Reference
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
+
+	private final List<SXPElement> _sxpElements = _createSXPElements();
 
 }
