@@ -111,14 +111,20 @@ describe('Export', () => {
 
 	it('must enable button on Schema Change Event', () => {
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		expect(getByText(Liferay.Language.get('export'))).not.toBeDisabled();
 	});
 
 	it('must show modal when the button is clicked', async () => {
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -133,7 +139,10 @@ describe('Export', () => {
 
 	it('must show modal with disabled button', async () => {
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -147,7 +156,10 @@ describe('Export', () => {
 
 	it('must call export API only one time on mount', async () => {
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -179,7 +191,10 @@ describe('Export', () => {
 		}));
 
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -220,7 +235,10 @@ describe('Export', () => {
 			}));
 
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -256,7 +274,10 @@ describe('Export', () => {
 		}));
 
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));
@@ -296,7 +317,10 @@ describe('Export', () => {
 		}));
 
 		const {getByText} = render(<Export {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('export')));

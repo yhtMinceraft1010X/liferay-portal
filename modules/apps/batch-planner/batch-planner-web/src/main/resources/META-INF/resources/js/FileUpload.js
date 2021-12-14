@@ -27,7 +27,9 @@ function FileUpload({portletNamespace}) {
 		(event) => {
 			const {files} = event.target;
 			if (files?.length === 0) {
-				return;
+				return Liferay.fire(FILE_SCHEMA_EVENT, {
+					schema: null,
+				});
 			}
 
 			const onComplete = (schema) => {
@@ -55,9 +57,7 @@ function FileUpload({portletNamespace}) {
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-			<label htmlFor={inputNameId}>
-				{Liferay.Language.get('csv-file')}
-			</label>
+			<label htmlFor={inputNameId}>{Liferay.Language.get('file')}</label>
 
 			<ClayInput
 				accept={IMPORT_FILE_FORMATS.map((format) => `.${format}`).join(

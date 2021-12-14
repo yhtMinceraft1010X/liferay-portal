@@ -79,19 +79,22 @@ const ImportMappingItem = ({
 		<ClayForm.Group>
 			<label htmlFor={inputId}>{field}</label>
 
-			<input
-				hidden
-				name={`${portletNamespace}externalFieldName_${selectedField?.value}`}
-				readOnly
-				value={field}
-			/>
-
-			<input
-				hidden
-				name={`${portletNamespace}internalFieldName_${selectedField?.value}`}
-				readOnly
-				value={selectedField?.value}
-			/>
+			{selectedField && (
+				<>
+					<input
+						hidden
+						name={`${portletNamespace}externalFieldName_${selectedField.value}`}
+						readOnly
+						value={field}
+					/>
+					<input
+						hidden
+						name={`${portletNamespace}internalFieldName_${selectedField.value}`}
+						readOnly
+						value={selectedField?.value}
+					/>
+				</>
+			)}
 
 			<ClayDropDown
 				active={dropDownActive}

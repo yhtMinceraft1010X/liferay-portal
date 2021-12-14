@@ -72,7 +72,10 @@ describe('SaveTemplateModal', () => {
 
 	it('must enable button on Schema Change Event', () => {
 		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		expect(
 			getByText(Liferay.Language.get('save-as-template'))
@@ -81,7 +84,10 @@ describe('SaveTemplateModal', () => {
 
 	it('must show modal when the button is clicked', async () => {
 		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
-		fireSchemaChangeEvent();
+
+		act(() => {
+			fireSchemaChangeEvent();
+		});
 
 		act(() => {
 			fireEvent.click(
@@ -99,7 +105,10 @@ describe('SaveTemplateModal', () => {
 	describe('modal', () => {
 		it('must has button disabled if no text input provided', async () => {
 			const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
-			fireSchemaChangeEvent();
+
+			act(() => {
+				fireSchemaChangeEvent();
+			});
 
 			act(() => {
 				fireEvent.click(
@@ -119,7 +128,10 @@ describe('SaveTemplateModal', () => {
 			const {getByPlaceholderText, getByText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
-			fireSchemaChangeEvent();
+
+			act(() => {
+				fireSchemaChangeEvent();
+			});
 
 			act(() => {
 				fireEvent.click(
@@ -148,10 +160,13 @@ describe('SaveTemplateModal', () => {
 			);
 
 			const testName = 'test';
-			const {getByPlaceholderText, getByText, queryByText} = render(
+			const {getByPlaceholderText, getByText, queryByLabelText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
-			fireSchemaChangeEvent();
+
+			act(() => {
+				fireSchemaChangeEvent();
+			});
 
 			act(() => {
 				fireEvent.click(
@@ -175,7 +190,9 @@ describe('SaveTemplateModal', () => {
 			expect(mockedApi.called()).toBe(true);
 
 			await wait(() => {
-				expect(queryByText(Liferay.Language.get('save'))).toBeNull();
+				expect(
+					queryByLabelText(Liferay.Language.get('name'))
+				).toBeNull();
 			});
 		});
 	});

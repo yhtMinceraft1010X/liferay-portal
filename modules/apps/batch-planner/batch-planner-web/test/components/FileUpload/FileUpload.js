@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {parseCSV} from '../../../src/main/resources/META-INF/resources/js/FileParsers';
+import parseFile from '../../../src/main/resources/META-INF/resources/js/FileParsers';
 import FileUpload from '../../../src/main/resources/META-INF/resources/js/FileUpload';
 import {FILE_SCHEMA_EVENT} from '../../../src/main/resources/META-INF/resources/js/constants';
 
@@ -42,7 +42,7 @@ describe('FileUpload', () => {
 	it('must read the file on input change', async () => {
 		const mockFileSchemaListener = jest.fn();
 		Liferay.on(FILE_SCHEMA_EVENT, mockFileSchemaListener);
-		parseCSV.mockImplementationOnce(({onComplete}) =>
+		parseFile.mockImplementationOnce(({onComplete}) =>
 			onComplete(fileSchema)
 		);
 
