@@ -87,7 +87,7 @@ public class DXPCloudClientTestrayImporter {
 		}
 	}
 
-	private static String _getEnvVar(String varName) {
+	private static String _getEnvVarValue(String varName) {
 		String varValue = System.getenv(varName);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(varValue)) {
@@ -343,7 +343,7 @@ public class DXPCloudClientTestrayImporter {
 	}
 
 	private static void _initEnvironmentVariables() {
-		String projectDirPath = _getEnvVar("projectDir");
+		String projectDirPath = _getEnvVarValue("projectDir");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(projectDirPath)) {
 			throw new RuntimeException("Please set 'projectDir'");
@@ -356,13 +356,14 @@ public class DXPCloudClientTestrayImporter {
 				"Could not find '" + projectDirPath + "'");
 		}
 
-		String environmentBrowserName = _getEnvVar("environmentBrowserName");
+		String environmentBrowserName = _getEnvVarValue(
+			"environmentBrowserName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(environmentBrowserName)) {
 			_environmentBrowserName = environmentBrowserName;
 		}
 
-		String environmentOperatingSystemName = _getEnvVar(
+		String environmentOperatingSystemName = _getEnvVarValue(
 			"environmentOperatingSystemName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(
@@ -371,13 +372,13 @@ public class DXPCloudClientTestrayImporter {
 			_environmentOperatingSystemName = environmentOperatingSystemName;
 		}
 
-		String testrayBuildName = _getEnvVar("testrayBuildName");
+		String testrayBuildName = _getEnvVarValue("testrayBuildName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayBuildName)) {
 			_testrayBuildName = testrayBuildName;
 		}
 
-		String testrayCasePriority = _getEnvVar("testrayCasePriority");
+		String testrayCasePriority = _getEnvVarValue("testrayCasePriority");
 
 		if ((testrayCasePriority != null) &&
 			testrayCasePriority.matches("\\d+")) {
@@ -385,43 +386,43 @@ public class DXPCloudClientTestrayImporter {
 			_testrayCasePriority = Integer.valueOf(testrayCasePriority);
 		}
 
-		String testrayComponentName = _getEnvVar("testrayComponentName");
+		String testrayComponentName = _getEnvVarValue("testrayComponentName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayComponentName)) {
 			_testrayComponentName = testrayComponentName;
 		}
 
-		String testrayLogsURLPath = _getEnvVar("testrayLogsURLPath");
+		String testrayLogsURLPath = _getEnvVarValue("testrayLogsURLPath");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayLogsURLPath)) {
 			_testrayLogsURLPath = testrayLogsURLPath;
 		}
 
-		String testrayProductVersion = _getEnvVar("testrayProductVersion");
+		String testrayProductVersion = _getEnvVarValue("testrayProductVersion");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProductVersion)) {
 			_testrayProductVersion = testrayProductVersion;
 		}
 
-		String testrayProjectName = _getEnvVar("testrayProjectName");
+		String testrayProjectName = _getEnvVarValue("testrayProjectName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayProjectName)) {
 			_testrayProjectName = testrayProjectName;
 		}
 
-		String testrayRoutineName = _getEnvVar("testrayRoutineName");
+		String testrayRoutineName = _getEnvVarValue("testrayRoutineName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 			_testrayRoutineName = testrayRoutineName;
 		}
 
-		String testrayServerURL = _getEnvVar("testrayServerURL");
+		String testrayServerURL = _getEnvVarValue("testrayServerURL");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayServerURL)) {
 			_testrayServerURL = testrayServerURL;
 		}
 
-		String testrayTeamName = _getEnvVar("testrayTeamName");
+		String testrayTeamName = _getEnvVarValue("testrayTeamName");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(testrayTeamName)) {
 			_testrayTeamName = testrayTeamName;
