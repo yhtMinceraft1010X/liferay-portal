@@ -26,6 +26,10 @@ export const TEMPLATE_SOILED = 'template-soiled';
 export const NULL_TEMPLATE_VALUE = '';
 
 export const PARSE_FILE_CHUNK_SIZE = 64 * 1024;
+export const CSV_FORMAT = 'csv';
+export const JSON_FORMAT = 'json';
+export const JSONL_FORMAT = 'jsonl';
+export const IMPORT_FILE_FORMATS = [CSV_FORMAT, JSON_FORMAT, JSONL_FORMAT];
 
 export const HEADERS = new Headers({
 	'Accept': 'application/json',
