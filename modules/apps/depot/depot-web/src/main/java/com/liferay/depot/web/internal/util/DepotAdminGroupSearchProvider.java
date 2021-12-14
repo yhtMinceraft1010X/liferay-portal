@@ -124,8 +124,6 @@ public class DepotAdminGroupSearchProvider {
 				"actionId", ActionKeys.VIEW
 			).put(
 				"site", Boolean.FALSE
-			).put(
-				"userId", themeDisplay.getUserId()
 			).build();
 
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
