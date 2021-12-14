@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import SaveTemplateModal from './SaveTemplateModal';
@@ -25,10 +26,16 @@ function SaveTemplate({
 	portletNamespace,
 }) {
 	const [disable, setDisable] = useState(true);
+	const isMounted = useIsMounted();
 	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
+		onClose: () => {
+			if (isMounted()) {
+				setVisible(false);
+			}
+		},
 	});
+
 	const onButtonClick = useCallback(() => {
 		setVisible(true);
 	}, [setVisible]);

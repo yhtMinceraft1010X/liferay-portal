@@ -14,9 +14,11 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
+	act,
 	cleanup,
 	fireEvent,
 	render,
+	wait,
 	waitForElement,
 } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
@@ -81,7 +83,11 @@ describe('SaveTemplateModal', () => {
 		const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
 		fireSchemaChangeEvent();
 
-		fireEvent.click(getByText(Liferay.Language.get('save-as-template')));
+		act(() => {
+			fireEvent.click(
+				getByText(Liferay.Language.get('save-as-template'))
+			);
+		});
 
 		const saveButton = await waitForElement(() =>
 			getByText(Liferay.Language.get('save'))
@@ -95,9 +101,11 @@ describe('SaveTemplateModal', () => {
 			const {getByText} = render(<SaveTemplate {...BASE_PROPS} />);
 			fireSchemaChangeEvent();
 
-			fireEvent.click(
-				getByText(Liferay.Language.get('save-as-template'))
-			);
+			act(() => {
+				fireEvent.click(
+					getByText(Liferay.Language.get('save-as-template'))
+				);
+			});
 
 			const saveButton = await waitForElement(() =>
 				getByText(Liferay.Language.get('save'))
@@ -113,16 +121,20 @@ describe('SaveTemplateModal', () => {
 			);
 			fireSchemaChangeEvent();
 
-			fireEvent.click(
-				getByText(Liferay.Language.get('save-as-template'))
-			);
+			act(() => {
+				fireEvent.click(
+					getByText(Liferay.Language.get('save-as-template'))
+				);
+			});
 
 			await waitForElement(() => getByText(Liferay.Language.get('save')));
 
-			fireEvent.change(
-				getByPlaceholderText(Liferay.Language.get('template-name')),
-				{target: {value: testName}}
-			);
+			act(() => {
+				fireEvent.change(
+					getByPlaceholderText(Liferay.Language.get('template-name')),
+					{target: {value: testName}}
+				);
+			});
 
 			expect(getByText(Liferay.Language.get('save'))).not.toBeDisabled();
 		});
@@ -136,25 +148,35 @@ describe('SaveTemplateModal', () => {
 			);
 
 			const testName = 'test';
-			const {getByPlaceholderText, getByText} = render(
+			const {getByPlaceholderText, getByText, queryByText} = render(
 				<SaveTemplate {...BASE_PROPS} />
 			);
 			fireSchemaChangeEvent();
 
-			fireEvent.click(
-				getByText(Liferay.Language.get('save-as-template'))
-			);
+			act(() => {
+				fireEvent.click(
+					getByText(Liferay.Language.get('save-as-template'))
+				);
+			});
 
 			await waitForElement(() => getByText(Liferay.Language.get('save')));
 
-			fireEvent.change(
-				getByPlaceholderText(Liferay.Language.get('template-name')),
-				{target: {value: testName}}
-			);
+			act(() => {
+				fireEvent.change(
+					getByPlaceholderText(Liferay.Language.get('template-name')),
+					{target: {value: testName}}
+				);
+			});
 
-			fireEvent.click(getByText(Liferay.Language.get('save')));
+			act(() => {
+				fireEvent.click(getByText(Liferay.Language.get('save')));
+			});
 
 			expect(mockedApi.called()).toBe(true);
+
+			await wait(() => {
+				expect(queryByText(Liferay.Language.get('save'))).toBeNull();
+			});
 		});
 	});
 });
