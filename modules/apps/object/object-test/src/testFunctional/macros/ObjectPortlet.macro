@@ -183,12 +183,12 @@ definition {
 
 	macro goToCustomObjectPortletOnControlPanel {
 		Click(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
-		
 	}
 
 	macro gotoRelationshipTab {
-		Click(locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB",
-		key_tabName = "Relationship Tab");
+		Click(
+			key_tabName = "Relationship Tab",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
 	macro searchColumn {
