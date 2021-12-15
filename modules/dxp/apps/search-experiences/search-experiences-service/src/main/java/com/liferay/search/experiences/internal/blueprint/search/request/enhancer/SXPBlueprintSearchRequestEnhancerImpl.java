@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
@@ -85,14 +86,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SXPBlueprintSearchRequestEnhancerImpl
 	implements SXPBlueprintSearchRequestEnhancer {
-
-	public static boolean isNullOrEmptyMap(Map<?, ?> map) {
-		if ((map == null) || map.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
 
 	@Override
 	public void enhance(
@@ -218,7 +211,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		Map<String, Object> searchContextAttributes =
 			sxpBlueprintConfiguration.getSearchContextAttributes();
 
-		if (!isNullOrEmptyMap(searchContextAttributes)) {
+		if (!MapUtil.isEmpty(searchContextAttributes)) {
 			searchContextAttributes.forEach(
 				(key, value) -> searchRequestBuilder.withSearchContext(
 					searchContext -> searchContext.setAttribute(
