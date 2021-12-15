@@ -205,18 +205,13 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			return;
 		}
 
-		Configuration sxpBlueprintConfiguration =
-			sxpBlueprint.getConfiguration();
+		Configuration configuration = sxpBlueprint.getConfiguration();
 
-		Map<String, Object> searchContextAttributes =
-			sxpBlueprintConfiguration.getSearchContextAttributes();
-
-		if (!MapUtil.isEmpty(searchContextAttributes)) {
-			searchContextAttributes.forEach(
-				(key, value) -> searchRequestBuilder.withSearchContext(
-					searchContext -> searchContext.setAttribute(
-						key, (Serializable)value)));
-		}
+		MapUtil.isNotEmptyForEach(
+			configuration.getSearchContextAttributes(),
+			(key, value) -> searchRequestBuilder.withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					key, (Serializable)value)));
 
 		SXPParameterData sxpParameterData = _sxpParameterDataCreator.create(
 			searchRequestBuilder.withSearchContextGet(
