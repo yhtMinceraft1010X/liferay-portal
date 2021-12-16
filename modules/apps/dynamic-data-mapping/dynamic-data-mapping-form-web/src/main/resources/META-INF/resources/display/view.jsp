@@ -244,16 +244,11 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
 							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
-
-							<%
-							String description = StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale)));
-							%>
-
 							<react:component
 								module="admin/js/FormView"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
-										"description", HtmlUtil.replaceNewLine(description)
+										"description", HtmlUtil.replaceNewLine(StringUtil.trim(HtmlUtil.escape(formInstance.getDescription(displayLocale))))
 									).put(
 										"formReportDataURL", formReportDataURL.toString()
 									).put(
