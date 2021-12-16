@@ -1592,7 +1592,7 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			GraphQLInputType graphQLInputType;
+			GraphQLInputType graphQLInputType = null;
 
 			if (Objects.equals(
 					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
@@ -1626,7 +1626,7 @@ public class GraphQLServletExtender {
 		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getGraphQLDTOProperties()) {
 
-			GraphQLOutputType graphQLOutputType;
+			GraphQLOutputType graphQLOutputType = null;
 
 			if (Objects.equals(
 					ListEntry.class, graphQLDTOProperty.getTypeClass())) {
@@ -1764,13 +1764,13 @@ public class GraphQLServletExtender {
 	private void _registerCommonTypes(
 		ProcessingElementsContainer processingElementsContainer) {
 
-		Map<String, GraphQLType> typeRegistry =
+		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
 			new GraphQLObjectType.Builder();
 
-		typeRegistry.put(
+		graphQLTypes.put(
 			"ListEntry",
 			graphQLObjectTypeBuilder.name(
 				"ListEntry"
@@ -1785,7 +1785,7 @@ public class GraphQLServletExtender {
 		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
 
-		typeRegistry.put(
+		graphQLTypes.put(
 			"InputListEntry",
 			graphQLInputObjectTypeBuilder.name(
 				"InputListEntry"
