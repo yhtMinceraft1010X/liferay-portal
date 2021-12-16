@@ -87,11 +87,11 @@ public class OnHoldCommerceOrderStatusImpl implements CommerceOrderStatus {
 				commerceOrder.getOrderStatus());
 
 		if ((currentCommerceOrderStatus.getKey() !=
-				CommerceOrderConstants.ORDER_STATUS_OPEN) &&
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED) &&
 			(currentCommerceOrderStatus.getKey() !=
 				CommerceOrderConstants.ORDER_STATUS_COMPLETED) &&
 			(currentCommerceOrderStatus.getKey() !=
-				CommerceOrderConstants.ORDER_STATUS_CANCELLED)) {
+				CommerceOrderConstants.ORDER_STATUS_OPEN)) {
 
 			return true;
 		}
