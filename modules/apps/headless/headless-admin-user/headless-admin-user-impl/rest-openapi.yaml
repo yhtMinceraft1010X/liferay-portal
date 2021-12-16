@@ -3856,9 +3856,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
-                    # @review
-                    description:
-                        "User group successfully created"
             tags: ["UserGroup"]
     "/user-groups/{userGroupId}":
         delete:
@@ -3921,9 +3918,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
-                    # @review
-                    description:
-                        "User group successfully updated"
             tags: ["UserGroup"]
         put:
             operationId: putUserGroup
@@ -3951,9 +3945,6 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
-                    # @review
-                    description:
-                        "User group successfully replaced"
             tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
