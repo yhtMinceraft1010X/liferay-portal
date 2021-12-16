@@ -31,9 +31,9 @@ public class ClobClayTableSchemaField extends ClayTableSchemaField {
 
 	@Override
 	public JSONObject toJSONObject() {
-		JSONObject clayTableSchemaFieldJSONObject = super.toJSONObject();
+		JSONObject jsonObject = super.toJSONObject();
 
-		return clayTableSchemaFieldJSONObject.put("truncate", isTruncate());
+		return jsonObject.put("truncate", isTruncate());
 	}
 
 	private boolean _truncate;
