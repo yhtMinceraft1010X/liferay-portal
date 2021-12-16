@@ -107,6 +107,7 @@ const DropArea = ({
 		}
 
 		button.onclick = () => {
+			input.value = null;
 			input.click();
 		};
 
