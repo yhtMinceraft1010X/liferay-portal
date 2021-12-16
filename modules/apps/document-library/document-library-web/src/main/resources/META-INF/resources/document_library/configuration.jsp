@@ -194,9 +194,9 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new FolderItemSelectorReturnType());
 							folderItemSelectorCriterion.setFolderId(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 							folderItemSelectorCriterion.setIgnoreRootFolder(true);
+							folderItemSelectorCriterion.setRepositoryId(0);
 							folderItemSelectorCriterion.setSelectedFolderId(dlAdminDisplayContext.getRootFolderId());
 							folderItemSelectorCriterion.setSelectedRepositoryId(dlAdminDisplayContext.getRepositoryId());
-							folderItemSelectorCriterion.setRepositoryId(0);
 							folderItemSelectorCriterion.setShowGroupSelector(true);
 							folderItemSelectorCriterion.setShowMountFolder(false);
 
