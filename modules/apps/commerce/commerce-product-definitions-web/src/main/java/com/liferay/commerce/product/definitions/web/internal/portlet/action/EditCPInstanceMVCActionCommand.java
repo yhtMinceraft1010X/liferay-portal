@@ -242,21 +242,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
-
 		String unspsc = ParamUtil.getString(actionRequest, "unspsc");
-
 		boolean discontinued = ParamUtil.getBoolean(
 			actionRequest, "discontinued");
-
-		int discontinuedDateMonth = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateMonth");
-		int discontinuedDateDay = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateDay");
-		int discontinuedDateYear = ParamUtil.getInteger(
-			actionRequest, "discontinuedDateYear");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstance.class.getName(), actionRequest);
 
 		CPInstance cpInstance = null;
 
@@ -280,6 +268,16 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				replacementCProductId = replacementCPDefinition.getCProductId();
 			}
 		}
+
+		int discontinuedDateMonth = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateMonth");
+		int discontinuedDateDay = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateDay");
+		int discontinuedDateYear = ParamUtil.getInteger(
+			actionRequest, "discontinuedDateYear");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
 
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.updateCPInstance(
