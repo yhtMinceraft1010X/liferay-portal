@@ -12,7 +12,7 @@ dependencies {
 #end
 }
 
-node{
+node {
 	nodeVersion = "10.15.1"
 	npmVersion = "6.4.1"
 }
