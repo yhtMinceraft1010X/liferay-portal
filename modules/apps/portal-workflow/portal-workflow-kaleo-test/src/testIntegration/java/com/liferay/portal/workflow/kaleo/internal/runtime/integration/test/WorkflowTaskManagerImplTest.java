@@ -124,7 +124,6 @@ import com.liferay.portal.util.PortalInstances;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -132,8 +131,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -1297,7 +1294,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		return _blogsEntryLocalService.addEntry(
 			user.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			DateUtils.truncate(new Date(), Calendar.SECOND), _serviceContext);
+			new Date(System.currentTimeMillis() - Time.SECOND),
+			_serviceContext);
 	}
 
 	private DLFileEntryType _addFileEntryType() throws Exception {
