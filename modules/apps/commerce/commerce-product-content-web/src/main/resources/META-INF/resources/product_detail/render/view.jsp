@@ -72,7 +72,7 @@ if (cpSku != null) {
 				</div>
 
 				<c:if test="<%= (cpSku != null) && cpSku.isDiscontinued() && (stockQuantity <= 0) %>">
-					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
+					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
 
 					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku.getReplacementCProductId(), cpSku.getReplacementCPInstanceUuid(), themeDisplay) %>" value="replacement-product" />
 				</c:if>
