@@ -327,7 +327,7 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		}
 		catch (RuntimeException runtimeException) {
 
-			// TODO should remove whole key actually, like client side expansion
+			// TODO Remove the whole key just like client side expansion
 
 			Throwable throwable = runtimeException.getSuppressed()[0];
 
