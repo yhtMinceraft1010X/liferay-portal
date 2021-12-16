@@ -17,13 +17,9 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
 String backURL = ParamUtil.getString(request, "backURL");
 
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setURLBack(backURL);
-}
+KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 	KBArticle latestKBArticle = KBArticleLocalServiceUtil.getLatestKBArticle(kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
@@ -41,6 +37,10 @@ if (enableKBArticleRatings && kbArticle.isDraft()) {
 	if (latestKBArticle != null) {
 		enableKBArticleSuggestions = true;
 	}
+}
+
+if (Validator.isNotNull(backURL)) {
+	portletDisplay.setURLBack(backURL);
 }
 
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
