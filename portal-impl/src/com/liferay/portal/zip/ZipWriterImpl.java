@@ -229,8 +229,8 @@ public class ZipWriterImpl implements ZipWriter {
 					StandardOpenOption.WRITE);
 			}
 
-			_exportEntriesBytes = 0;
 			_exportEntries = null;
+			_exportEntriesBytes = 0;
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);
