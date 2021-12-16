@@ -3,8 +3,8 @@
 /development/annotations.jar
 /development/ant-apache-bsf.jar
 /development/ant-compress.jar
-/development/ant-get-file-set.jar
-/development/ant-manifest-helper.jar
+/development/com.liferay.ant.get.file.set.jar
+/development/com.liferay.ant.manifest.helper.jar
 /development/appium.jar
 /development/aspectj-rt.jar
 /development/aspectj-weaver.jar
