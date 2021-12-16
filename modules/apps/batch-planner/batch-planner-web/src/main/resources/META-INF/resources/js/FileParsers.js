@@ -54,15 +54,24 @@ export function extractFieldsFromJSONL(content) {
 }
 
 export function extractFieldsFromJSON(content) {
-	try {
-		const parsedContent = JSON.parse(content);
+	const jsonArray = content.split('');
+	let parsedJSON;
 
-		return Object.keys(parsedContent[0]);
-	}
-	catch (error) {
-		console.error(error);
+	jsonArray.shift();
 
-		return;
+	for (let index = 0; index < jsonArray.length - 1; index++) {
+		if (jsonArray[index] === '}') {
+			const partialJson = jsonArray.slice(0, index + 1).join('');
+
+			try {
+				parsedJSON = JSON.parse(partialJson);
+
+				return Object.keys(parsedJSON);
+			}
+			catch (error) {
+				console.error(error);
+			}
+		}
 	}
 }
 
@@ -105,30 +114,6 @@ function parseInChunk({chunkParser, file, onComplete, onError, options}) {
 	};
 }
 
-function parseFileEntirely({file, onComplete, onError, parser}) {
-	function handleOnLoad(event) {
-		const schema = parser(event.target.result);
-		if (schema) {
-			onComplete(schema);
-		}
-		else {
-			onError();
-		}
-	}
-	try {
-		const reader = new FileReader();
-		reader.addEventListener('load', handleOnLoad);
-		reader.readAsText(file);
-
-		return () => reader.removeEventListener('load', handleOnLoad);
-	}
-	catch (error) {
-		onError(error);
-	}
-}
-
-const formatsToParseInChunks = [CSV_FORMAT, JSONL_FORMAT];
-
 const parseOperators = {
 	[CSV_FORMAT]: extractFieldsFromCSV,
 	[JSON_FORMAT]: extractFieldsFromJSON,
@@ -138,22 +123,11 @@ const parseOperators = {
 export default function parseFile({file, onComplete, onError, options}) {
 	const extension = file.name.substring(file.name.lastIndexOf('.') + 1);
 
-	if (formatsToParseInChunks.includes(extension)) {
-		return parseInChunk({
-			chunkParser: parseOperators[extension],
-			file,
-			onComplete,
-			onError,
-			options,
-		});
-	}
-	else {
-		return parseFileEntirely({
-			file,
-			onComplete,
-			onError,
-			options,
-			parser: parseOperators[extension],
-		});
-	}
+	return parseInChunk({
+		chunkParser: parseOperators[extension],
+		file,
+		onComplete,
+		onError,
+		options,
+	});
 }
