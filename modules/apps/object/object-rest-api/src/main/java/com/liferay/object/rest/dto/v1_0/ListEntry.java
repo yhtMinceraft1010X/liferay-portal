@@ -58,7 +58,7 @@ public class ListEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ListEntry.class, json);
 	}
 
-	@Schema(description = "List entry's key. Independent from localization")
+	@Schema
 	public String getKey() {
 		return key;
 	}
@@ -80,13 +80,11 @@ public class ListEntry implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "List entry's key. Independent from localization"
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
-	@Schema(description = "Localized list entry's name")
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -108,11 +106,11 @@ public class ListEntry implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "Localized list entry's name")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema(description = "The localized list entry's names.")
+	@Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
@@ -138,7 +136,7 @@ public class ListEntry implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The localized list entry's names.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 
