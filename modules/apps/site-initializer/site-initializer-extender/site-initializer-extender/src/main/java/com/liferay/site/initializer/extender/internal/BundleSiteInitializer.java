@@ -372,7 +372,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
-
 			_invoke(
 				() -> _addObjectRelationships(
 					objectDefinitionIdsStringUtilReplaceValues,
