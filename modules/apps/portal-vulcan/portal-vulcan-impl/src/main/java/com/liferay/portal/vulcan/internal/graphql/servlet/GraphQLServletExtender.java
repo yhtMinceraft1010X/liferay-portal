@@ -1767,21 +1767,6 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
-			new GraphQLObjectType.Builder();
-
-		graphQLTypes.put(
-			"ListEntry",
-			graphQLObjectTypeBuilder.name(
-				"ListEntry"
-			).field(
-				_addField(Scalars.GraphQLString, "key")
-			).field(
-				_addField(Scalars.GraphQLString, "name")
-			).field(
-				_addField(_mapGraphQLScalarType, "name_i18n")
-			).build());
-
 		GraphQLInputObjectType.Builder graphQLInputObjectTypeBuilder =
 			new GraphQLInputObjectType.Builder();
 
@@ -1795,6 +1780,21 @@ public class GraphQLServletExtender {
 				_addInputField(Scalars.GraphQLString, "name")
 			).field(
 				_addInputField(_mapGraphQLScalarType, "name_i18n")
+			).build());
+
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder =
+			new GraphQLObjectType.Builder();
+
+		graphQLTypes.put(
+			"ListEntry",
+			graphQLObjectTypeBuilder.name(
+				"ListEntry"
+			).field(
+				_addField(Scalars.GraphQLString, "key")
+			).field(
+				_addField(Scalars.GraphQLString, "name")
+			).field(
+				_addField(_mapGraphQLScalarType, "name_i18n")
 			).build());
 	}
 
