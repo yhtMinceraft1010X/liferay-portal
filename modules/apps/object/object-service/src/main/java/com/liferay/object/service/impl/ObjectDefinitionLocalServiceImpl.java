@@ -531,7 +531,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		_invalidateDisplayPagesCaches(objectDefinition);
+		_invalidatePortalCache(objectDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -794,9 +794,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return false;
 	}
 
-	private void _invalidateDisplayPagesCaches(
-		ObjectDefinition objectDefinition) {
-
+	private void _invalidatePortalCache(ObjectDefinition objectDefinition) {
 		PortalCache<String, String> portalCache =
 			(PortalCache<String, String>)_multiVMPool.getPortalCache(
 				FragmentEntryLink.class.getName());
@@ -815,15 +813,10 @@ public class ObjectDefinitionLocalServiceImpl
 				layoutClassedModelUsage.getGroupId());
 
 			for (Locale locale : availableLocales) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(layoutClassedModelUsage.getContainerKey());
-				sb.append(StringPool.DASH);
-				sb.append(locale);
-				sb.append(StringPool.DASH);
-				sb.append(0);
-
-				portalCache.remove(sb.toString());
+				portalCache.remove(
+					StringBundler.concat(
+						layoutClassedModelUsage.getContainerKey(),
+						StringPool.DASH, locale, StringPool.DASH, 0));
 			}
 		}
 	}
