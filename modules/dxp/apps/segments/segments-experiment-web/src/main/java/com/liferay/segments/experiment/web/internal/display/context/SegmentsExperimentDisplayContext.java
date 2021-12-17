@@ -225,21 +225,24 @@ public class SegmentsExperimentDisplayContext {
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			draftLayout, _themeDisplay);
 
-		layoutFullURL = HttpUtil.setParameter(
-			layoutFullURL, "redirect", layoutFullURL);
-
-		layoutFullURL = HttpUtil.setParameter(
-			layoutFullURL, "p_l_mode", Constants.EDIT);
+		String layoutURL = _portal.getLayoutURL(_themeDisplay);
 
 		long segmentsExperienceId = _getSegmentsExperienceId();
-		String layoutURL = _portal.getLayoutURL(_themeDisplay);
 
 		if (segmentsExperienceId != -1) {
 			layoutURL = HttpUtil.setParameter(
 				layoutURL, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		return HttpUtil.setParameter(layoutFullURL, "p_l_back_url", layoutURL);
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_back_url", layoutURL);
+
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "redirect", layoutFullURL);
+
+		return layoutFullURL;
 	}
 
 	private String _getEditSegmentsVariantURL() {
