@@ -36,8 +36,6 @@ if (cpSku != null) {
 }
 
 String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId, themeDisplay);
-
-long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT));
 %>
 
 <div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -67,6 +65,8 @@ long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)requ
 					<div class="col-10 col-lg-10 col-md-9 full-image">
 
 						<%
+						long commerceAccountId = CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT));
+
 						String defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(commerceAccountId, cpCatalogEntry.getCPDefinitionId());
 						%>
 

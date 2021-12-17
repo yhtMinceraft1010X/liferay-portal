@@ -187,7 +187,6 @@ public class CommerceSearchResource {
 				"item", account.getName());
 
 			searchItemModel.setImage(account.getThumbnail());
-
 			searchItemModel.setUrl(
 				_getAccountManagementPortletEditURL(
 					GetterUtil.getLong(account.getAccountId()), themeDisplay));
@@ -377,14 +376,6 @@ public class CommerceSearchResource {
 		SearchItemModel searchItemModel = new SearchItemModel(
 			"item", HtmlUtil.escape(cpCatalogEntry.getName()));
 
-		String subtitle = cpCatalogEntry.getShortDescription();
-
-		if (Validator.isNull(subtitle)) {
-			subtitle = HtmlUtil.extractText(cpCatalogEntry.getDescription());
-		}
-
-		searchItemModel.setSubtitle(subtitle);
-
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
 		searchItemModel.setImage(
@@ -393,6 +384,14 @@ public class CommerceSearchResource {
 					(CommerceContext)httpServletRequest.getAttribute(
 						CommerceWebKeys.COMMERCE_CONTEXT)),
 				cpCatalogEntry.getCPDefinitionId()));
+
+		String subtitle = cpCatalogEntry.getShortDescription();
+
+		if (Validator.isNull(subtitle)) {
+			subtitle = HtmlUtil.extractText(cpCatalogEntry.getDescription());
+		}
+
+		searchItemModel.setSubtitle(subtitle);
 
 		String url = _cpDefinitionHelper.getFriendlyURL(
 			cpCatalogEntry.getCPDefinitionId(), themeDisplay);
