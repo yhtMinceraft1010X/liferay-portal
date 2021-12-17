@@ -22,12 +22,23 @@ import {
 	PRODUCT_REMOVED_FROM_CART,
 } from '../../utilities/eventsDefinitions';
 import {useCommerceAccount, useCommerceCart} from '../../utilities/hooks';
-import {getProductMinQuantity} from '../../utilities/quantities';
+import {getMinQuantity} from '../../utilities/quantities';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import AddToCartButton from './AddToCartButton';
 import {ALL} from './constants';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
+function getQuantity(settings) {
+	if (settings?.quantityDetails?.allowedQuantities?.length) {
+		return Math.min(...settings.quantityDetails.allowedQuantities);
+	}
+
+	return getMinQuantity(
+		settings?.quantityDetails?.minQuantity,
+		settings?.quantityDetails?.multipleQuantity
+	);
+}
 
 function AddToCart({
 	accountId: initialAccountId,
@@ -46,14 +57,10 @@ function AddToCart({
 		},
 		channel.groupId
 	);
+
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
-		quantity: getProductMinQuantity({
-			allowedOrderQuantities:
-				settings.quantityDetails.allowedQuantities || [],
-			minOrderQuantity: settings.quantityDetails.minQuantity,
-			multipleOrderQuantity: settings.quantityDetails.multipleQuantity,
-		}),
+		quantity: getQuantity(settings),
 	});
 
 	const buttonDisabled = useMemo(() => {
@@ -72,13 +79,7 @@ function AddToCart({
 	useEffect(() => {
 		setCpInstance({
 			...initialCpInstance,
-			quantity: getProductMinQuantity({
-				allowedOrderQuantities:
-					settings.quantityDetails.allowedQuantities || [],
-				minOrderQuantity: settings.quantityDetails.minQuantity,
-				multipleOrderQuantity:
-					settings.quantityDetails.multipleQuantity,
-			}),
+			quantity: getQuantity(settings),
 		});
 	}, [initialCpInstance, settings]);
 
