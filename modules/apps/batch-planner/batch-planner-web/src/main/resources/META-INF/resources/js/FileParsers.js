@@ -82,6 +82,7 @@ function parseInChunk({chunkParser, file, onComplete, onError, options}) {
 
 	const chunkReaderBlock = (_offset, length, _file) => {
 		const reader = new FileReader();
+
 		const blob = _file.slice(_offset, length + _offset);
 
 		reader.addEventListener('load', readEventHandler);
