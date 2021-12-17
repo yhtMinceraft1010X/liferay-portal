@@ -136,7 +136,6 @@ public class EditImportBatchPlannerPlanMVCResourceCommand
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
 			_getCheckboxValue(resourceRequest, "containsHeaders"));
-
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "headlessEndpoint",
 			ParamUtil.getString(resourceRequest, "headlessEndpoint"));
