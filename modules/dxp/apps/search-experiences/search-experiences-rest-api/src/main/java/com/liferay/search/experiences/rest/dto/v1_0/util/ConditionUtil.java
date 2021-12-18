@@ -54,18 +54,14 @@ public class ConditionUtil {
 				anyConditions, i -> UnpackUtil.unpack(anyConditions[i]));
 		}
 
-		_unpackContains(condition.getContains());
-
-		_unpackEquals(condition.getEquals());
-
-		_unpackIn(condition.getIn());
-
-		_unpackRange(condition.getRange());
-
+		_unpack(condition.getContains());
+		_unpack(condition.getEquals());
+		_unpack(condition.getIn());
+		_unpack(condition.getRange());
 		_unpack(condition.getNot());
 	}
 
-	private static void _unpackContains(Contains contains) {
+	private static void _unpack(Contains contains) {
 		if (contains == null) {
 			return;
 		}
@@ -74,7 +70,7 @@ public class ConditionUtil {
 		_unpackValues(contains::getValues, contains::setValues);
 	}
 
-	private static void _unpackEquals(Equals equals) {
+	private static void _unpack(Equals equals) {
 		if (equals == null) {
 			return;
 		}
@@ -82,7 +78,7 @@ public class ConditionUtil {
 		_unpackValue(equals::getValue, equals::setValue);
 	}
 
-	private static void _unpackIn(In in) {
+	private static void _unpack(In in) {
 		if (in == null) {
 			return;
 		}
@@ -90,7 +86,7 @@ public class ConditionUtil {
 		_unpackValues(in::getValues, in::setValues);
 	}
 
-	private static void _unpackRange(Range range) {
+	private static void _unpack(Range range) {
 		if (range == null) {
 			return;
 		}
@@ -116,6 +112,7 @@ public class ConditionUtil {
 
 		if (values != null) {
 			Arrays.setAll(values, i -> UnpackUtil.unpack(values[i]));
+
 			consumer.accept(values);
 		}
 	}
