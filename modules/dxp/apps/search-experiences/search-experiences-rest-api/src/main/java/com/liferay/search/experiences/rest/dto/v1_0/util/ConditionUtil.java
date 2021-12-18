@@ -66,8 +66,8 @@ public class ConditionUtil {
 			return;
 		}
 
-		_unpackValue(contains::getValue, contains::setValue);
-		_unpackValues(contains::getValues, contains::setValues);
+		_unpackValue(contains::setValue, contains::getValue);
+		_unpackValues(contains::setValues, contains::getValues);
 	}
 
 	private static void _unpack(Equals equals) {
@@ -75,7 +75,7 @@ public class ConditionUtil {
 			return;
 		}
 
-		_unpackValue(equals::getValue, equals::setValue);
+		_unpackValue(equals::setValue, equals::getValue);
 	}
 
 	private static void _unpack(In in) {
@@ -83,7 +83,7 @@ public class ConditionUtil {
 			return;
 		}
 
-		_unpackValues(in::getValues, in::setValues);
+		_unpackValues(in::setValues, in::getValues);
 	}
 
 	private static void _unpack(Range range) {
@@ -91,12 +91,12 @@ public class ConditionUtil {
 			return;
 		}
 
-		_unpackValue(range::getValue, range::setValue);
-		_unpackValues(range::getValues, range::setValues);
+		_unpackValue(range::setValue, range::getValue);
+		_unpackValues(range::setValues, range::getValues);
 	}
 
 	private static void _unpackValue(
-		Supplier<Object> supplier, Consumer<Object> consumer) {
+		Consumer<Object> consumer, Supplier<Object> supplier) {
 
 		Object value = supplier.get();
 
@@ -106,7 +106,7 @@ public class ConditionUtil {
 	}
 
 	private static void _unpackValues(
-		Supplier<Object[]> supplier, Consumer<Object[]> consumer) {
+		Consumer<Object[]> consumer, Supplier<Object[]> supplier) {
 
 		Object[] values = supplier.get();
 
