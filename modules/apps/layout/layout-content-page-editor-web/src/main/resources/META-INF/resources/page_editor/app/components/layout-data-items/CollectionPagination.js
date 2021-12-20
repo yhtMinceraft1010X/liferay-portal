@@ -26,7 +26,6 @@ export default function CollectionPagination({
 	collectionConfig,
 	collectionId,
 	onPageChange,
-	showAllItems,
 	totalNumberOfItems,
 	totalPages,
 }) {
@@ -41,15 +40,11 @@ export default function CollectionPagination({
 		numberOfItemsPerPage && numberOfItems && totalNumberOfItems
 			? (activePage - 1) * numberOfItemsPerPage + 1
 			: 0,
-		showAllItems
-			? Math.min(activePage * numberOfItemsPerPage, totalNumberOfItems)
-			: Math.min(
-					Math.min(activePage * numberOfItemsPerPage, numberOfItems),
-					totalNumberOfItems
-			  ),
-		showAllItems
-			? totalNumberOfItems
-			: Math.min(numberOfItems, totalNumberOfItems),
+		Math.min(
+			Math.min(activePage * numberOfItemsPerPage, numberOfItems),
+			totalNumberOfItems
+		),
+		Math.min(numberOfItems, totalNumberOfItems),
 	];
 
 	return (
