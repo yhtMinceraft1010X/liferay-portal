@@ -74,9 +74,6 @@ public class CollectionLayoutStructureItemMapper
 						paginationType = _getPaginationType(
 							collectionStyledLayoutStructureItem.
 								getPaginationType());
-						showAllItems =
-							collectionStyledLayoutStructureItem.
-								isShowAllItems();
 						templateKey =
 							collectionStyledLayoutStructureItem.
 								getTemplateKey();
