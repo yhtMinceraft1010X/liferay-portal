@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {
-	HEADERS_BATCH_PLANNER_URL,
+	HEADLESS_BATCH_PLANNER_URL,
 	HEADLESS_ENDPOINT_POLICY_NAME,
 	NULL_TEMPLATE_VALUE,
 	TEMPLATE_SELECTED_EVENT,
@@ -113,7 +113,7 @@ async function fireTemplateSelectionEvent(templateId) {
 
 	try {
 		const request = await fetch(
-			`${HEADERS_BATCH_PLANNER_URL}/plans/${templateId}`
+			`${HEADLESS_BATCH_PLANNER_URL}/plans/${templateId}`
 		);
 
 		if (!request.ok) {

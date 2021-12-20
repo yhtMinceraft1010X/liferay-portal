@@ -50,9 +50,9 @@ const ImportMappingItem = ({
 	}, []);
 
 	const onDropdownItemClick = useCallback(
-		(item) => {
+		(newValue) => {
 			if (onChange) {
-				onChange(item, field);
+				onChange(newValue, field);
 			}
 			setDropDownActive(false);
 		},
@@ -83,15 +83,15 @@ const ImportMappingItem = ({
 				<>
 					<input
 						hidden
-						name={`${portletNamespace}externalFieldName_${selectedField.value}`}
+						name={`${portletNamespace}externalFieldName_${selectedField}`}
 						readOnly
 						value={field}
 					/>
 					<input
 						hidden
-						name={`${portletNamespace}internalFieldName_${selectedField.value}`}
+						name={`${portletNamespace}internalFieldName_${selectedField}`}
 						readOnly
-						value={selectedField?.value}
+						value={selectedField}
 					/>
 				</>
 			)}
@@ -109,7 +109,7 @@ const ImportMappingItem = ({
 						id={inputId}
 					>
 						<span className="align-items-center d-flex justify-content-between">
-							<span>{selectedField?.label ?? '\u00A0'}</span>
+							<span>{selectedField ?? '\u00A0'}</span>
 
 							<ClayIcon symbol="caret-double" />
 						</span>
@@ -171,7 +171,7 @@ const buildDropdownItemsFromFields = (
 	const allFields = [...selectableFields];
 
 	if (selectedField) {
-		allFields.push(selectedField);
+		allFields.push({label: selectedField, value: selectedField});
 		allFields.sort((a, b) => (a.label > b.label ? 1 : -1));
 	}
 
@@ -203,7 +203,7 @@ ImportMappingItem.propTypes = {
 	onChange: PropTypes.func,
 	portletNamespace: PropTypes.string.isRequired,
 	selectableFields: PropTypes.arrayOf(PropTypes.shape(ImportFieldPropType)),
-	selectedField: PropTypes.shape(ImportFieldPropType),
+	selectedField: PropTypes.string,
 };
 
 export default ImportMappingItem;

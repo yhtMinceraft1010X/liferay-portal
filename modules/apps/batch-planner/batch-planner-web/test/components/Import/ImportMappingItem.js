@@ -85,7 +85,7 @@ describe('ImportMappingItem', () => {
 				selectableFields={selectableFields.filter(
 					(field) => field.label !== selectableFields[0].label
 				)}
-				selectedField={selectableFields[0]}
+				selectedField={selectableFields[0].value}
 			/>
 		);
 
@@ -107,7 +107,7 @@ describe('ImportMappingItem', () => {
 				selectableFields={selectableFields.filter(
 					(fields) => fields.label !== selectableFields[0].label
 				)}
-				selectedField={selectableFields[0]}
+				selectedField={selectableFields[0].value}
 			/>
 		);
 

@@ -44,7 +44,19 @@ function ImportForm({
 			...prevSelections,
 			[field]: selectedItem,
 		}));
+
+		Liferay.fire(TEMPLATE_SOILED);
 	}, []);
+
+	useEffect(() => {
+		if (dbFields && fileFields && !useTemplateMappingRef.current) {
+			const newFieldsSelection = {};
+			fileFields.forEach((field) => {
+				newFieldsSelection[field] = null;
+			});
+			setFieldsSelections(newFieldsSelection);
+		}
+	}, [dbFields, fileFields]);
 
 	useEffect(() => {
 		function handleSchemaUpdated(event) {
@@ -58,14 +70,6 @@ function ImportForm({
 		function handleFileSchemaUpdate(event) {
 			const fileSchema = event.schema;
 			setFileFields(fileSchema);
-
-			if (!useTemplateMappingRef.current) {
-				const newFieldsSelection = {};
-				fileSchema.forEach((field) => {
-					newFieldsSelection[field] = null;
-				});
-				setFieldsSelections(newFieldsSelection);
-			}
 		}
 
 		function handleTemplateSelect(event) {
@@ -101,7 +105,7 @@ function ImportForm({
 		dbFields?.filter(
 			(field) =>
 				!Object.values(fieldsSelections).find(
-					(selected) => selected?.value === field.value
+					(selected) => selected === field.value
 				)
 		) || [];
 
@@ -109,7 +113,7 @@ function ImportForm({
 		(selection) => selection !== null
 	);
 
-	const disableButtons = !(hasSelectedField && dbFields);
+	const disableButtons = !(hasSelectedField && dbFields && fileFields);
 
 	return (
 		<>
