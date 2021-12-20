@@ -139,8 +139,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 		String paginationType = ParamUtil.getString(
 			resourceRequest, "paginationType");
-		boolean showAllItems = ParamUtil.getBoolean(
-			resourceRequest, "showAllItems");
 		String templateKey = ParamUtil.getString(
 			resourceRequest, "templateKey");
 
@@ -150,8 +148,7 @@ public class GetCollectionFieldMVCResourceCommand
 				_portal.getHttpServletResponse(resourceResponse), activePage,
 				languageId, layoutObjectReference, listStyle, listItemStyle,
 				resourceResponse.getNamespace(), numberOfItems,
-				numberOfItemsPerPage, paginationType, showAllItems,
-				templateKey);
+				numberOfItemsPerPage, paginationType, templateKey);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get collection field", exception);
@@ -194,8 +191,7 @@ public class GetCollectionFieldMVCResourceCommand
 			HttpServletResponse httpServletResponse, int activePage,
 			String languageId, String layoutObjectReference, String listStyle,
 			String listItemStyle, String namespace, int numberOfItems,
-			int numberOfItemsPerPage, String paginationType,
-			boolean showAllItems, String templateKey)
+			int numberOfItemsPerPage, String paginationType, String templateKey)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -244,10 +240,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 					if (activePage < 1) {
 						activePage = 1;
-					}
-
-					if (showAllItems) {
-						numberOfItems = Integer.MAX_VALUE;
 					}
 
 					end = Math.min(
