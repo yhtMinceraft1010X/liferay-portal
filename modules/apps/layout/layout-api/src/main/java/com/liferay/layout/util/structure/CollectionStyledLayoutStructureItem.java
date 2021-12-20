@@ -187,12 +187,7 @@ public class CollectionStyledLayoutStructureItem
 	}
 
 	public void setShowAllItems(Boolean showAllItems) {
-		if (showAllItems == null) {
-			_showAllItems = false;
-		}
-		else {
-			_showAllItems = showAllItems;
-		}
+		_showAllItems = showAllItems;
 	}
 
 	public void setTemplateKey(String templateKey) {
