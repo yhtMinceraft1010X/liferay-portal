@@ -130,6 +130,10 @@ public class DBPartitionUtil {
 		}
 	}
 
+	public static boolean isPartitionEnabled() {
+		return _DATABASE_PARTITION_ENABLED;
+	}
+
 	public static boolean removeDBPartition(long companyId)
 		throws PortalException {
 
