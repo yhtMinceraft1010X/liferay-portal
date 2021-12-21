@@ -167,6 +167,7 @@ public class TalendProcessCallable
 				}
 
 				_lines.add(_sb.toString());
+
 				_sb = new StringBundler();
 			}
 			else {
