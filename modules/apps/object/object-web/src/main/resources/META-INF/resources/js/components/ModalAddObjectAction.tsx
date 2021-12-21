@@ -140,7 +140,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 					<CustomSelect
 						error={errors.trigger}
 						label={Liferay.Language.get(
-							'when-object-action-is-triggered'
+							'when[object]'
 						)}
 						onChange={(objectActionTrigger: any) => {
 							handleChange({
@@ -167,7 +167,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 					<CustomSelect
 						error={errors.executor}
 						label={Liferay.Language.get(
-							'then-object-action-is-triggered'
+							'then[object]'
 						)}
 						onChange={(objectActionExecutor: any) => {
 							handleChange({
