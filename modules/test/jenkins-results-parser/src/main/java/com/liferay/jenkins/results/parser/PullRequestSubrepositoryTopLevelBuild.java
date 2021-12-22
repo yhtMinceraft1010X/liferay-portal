@@ -115,7 +115,6 @@ public class PullRequestSubrepositoryTopLevelBuild
 				(SubrepositoryWorkspace)workspace;
 
 			subrepositoryWorkspace.setBuildProfile(getBuildProfile());
-
 			subrepositoryWorkspace.setPortalUpstreamBranchName(
 				_getPortalUpstreamBranchName());
 		}
