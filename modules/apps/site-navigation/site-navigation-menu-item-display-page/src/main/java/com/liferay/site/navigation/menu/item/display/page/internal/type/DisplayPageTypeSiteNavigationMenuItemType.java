@@ -148,19 +148,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public PortletURL getAddURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		String actionName =
-			"/navigation_menu/add_display_page_type_site_navigation_menu_item";
-
-		if (isMultiSelection()) {
-			actionName =
-				"/navigation_menu" +
-					"/add_multiple_display_page_type_site_navigation_menu_item";
-		}
-
 		return PortletURLBuilder.createActionURL(
 			renderResponse
 		).setActionName(
-			actionName
+			"/navigation_menu/add_display_page_type_site_navigation_menu_item"
 		).setParameter(
 			"siteNavigationMenuItemType", getType()
 		).buildPortletURL();
