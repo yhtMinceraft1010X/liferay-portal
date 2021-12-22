@@ -84,12 +84,6 @@ public class StagingLocalServiceTest {
 			LocaleUtil.getSiteDefault(), "test name"
 		).build();
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.getSiteDefault(), "test title"
-		).build();
-
-		byte[] iconBytes = null;
-
 		try {
 			StagingLocalServiceUtil.enableLocalStaging(
 				_user.getUserId(), group, true, true, new ServiceContext());
@@ -108,18 +102,21 @@ public class StagingLocalServiceTest {
 				stagingLayout.getDescriptionMap(),
 				stagingLayout.getKeywordsMap(), stagingLayout.getRobotsMap(),
 				stagingLayout.getType(), stagingLayout.isHidden(),
-				stagingLayout.getFriendlyURLMap(), false, iconBytes,
+				stagingLayout.getFriendlyURLMap(), false, null,
 				stagingLayout.getMasterLayoutPlid(),
 				stagingLayout.getStyleBookEntryId(), new ServiceContext());
 
 			stagingLayout = _layoutLocalService.updateLayout(
 				stagingLayout.getGroupId(), stagingLayout.isPrivateLayout(),
 				stagingLayout.getLayoutId(), stagingLayout.getParentLayoutId(),
-				stagingLayout.getNameMap(), titleMap,
+				stagingLayout.getNameMap(),
+				HashMapBuilder.put(
+					LocaleUtil.getSiteDefault(), "test title"
+				).build(),
 				stagingLayout.getDescriptionMap(),
 				stagingLayout.getKeywordsMap(), stagingLayout.getRobotsMap(),
 				stagingLayout.getType(), stagingLayout.isHidden(),
-				stagingLayout.getFriendlyURLMap(), false, iconBytes,
+				stagingLayout.getFriendlyURLMap(), false, null,
 				stagingLayout.getMasterLayoutPlid(),
 				stagingLayout.getStyleBookEntryId(), new ServiceContext());
 
