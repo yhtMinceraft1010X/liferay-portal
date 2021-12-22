@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.menu.item.display.page.internal.portlet.action;
 
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemHierarchicalReference;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderTracker;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import java.util.ArrayList;
@@ -129,7 +127,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 				for (InfoItemReference infoItemReference : infoItemReferences) {
 					_addSiteNavigationMenuItem(
 						themeDisplay.getScopeGroupId(), infoItemReference,
-						jsonObjectByClassPKMap, 0, serviceContext,
+						jsonObjectByClassPKMap, serviceContext,
 						siteNavigationMenuId, siteNavigationMenuItemType);
 				}
 			}
@@ -168,8 +166,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	private void _addSiteNavigationMenuItem(
 			long groupId, InfoItemReference infoItemReference,
 			Map<Long, JSONObject> jsonObjectByClassPKMap,
-			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
-			long siteNavigationMenuId, String siteNavigationMenuItemType)
+			ServiceContext serviceContext, long siteNavigationMenuId,
+			String siteNavigationMenuItemType)
 		throws PortalException {
 
 		JSONObject jsonObject = jsonObjectByClassPKMap.get(
@@ -195,29 +193,9 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		typeSettingsUnicodeProperties.setProperty(
 			"title", jsonObject.getString("title"));
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId,
-				siteNavigationMenuItemType,
-				typeSettingsUnicodeProperties.toString(), serviceContext);
-
-		if (!(infoItemReference instanceof InfoItemHierarchicalReference)) {
-			return;
-		}
-
-		InfoItemHierarchicalReference infoItemHierarchicalReference =
-			(InfoItemHierarchicalReference)infoItemReference;
-
-		for (InfoItemHierarchicalReference childInfoItemHierarchicalReference :
-				infoItemHierarchicalReference.getChildren()) {
-
-			_addSiteNavigationMenuItem(
-				groupId, childInfoItemHierarchicalReference,
-				jsonObjectByClassPKMap,
-				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext, siteNavigationMenuId,
-				siteNavigationMenuItemType);
-		}
+		_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+			groupId, siteNavigationMenuId, 0L, siteNavigationMenuItemType,
+			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 	private long _getClassPK(InfoItemReference infoItemReference) {
