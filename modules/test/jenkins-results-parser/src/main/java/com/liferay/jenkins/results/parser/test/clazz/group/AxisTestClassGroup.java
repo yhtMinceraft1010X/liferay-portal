@@ -77,7 +77,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		for (TestClass testClass : getTestClasses()) {
 			if (testClass == null) {
 				throw new RuntimeException(
-					"Could not find testClass in " + getAxisName());
+					"Unable to not find test class in " + getAxisName());
 			}
 
 			testClassesJSONArray.put(testClass.getJSONObject());
