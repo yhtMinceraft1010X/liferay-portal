@@ -314,13 +314,13 @@ public class CProductAssetDisplayPageFriendlyURLResolver
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
+
 		CommerceAccount commerceAccount =
 			_commerceAccountHelper.getCurrentCommerceAccount(
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				httpServletRequest);
-
-		long commerceAccountId = CommerceAccountConstants.ACCOUNT_ID_GUEST;
 
 		if (commerceAccount != null) {
 			commerceAccountId = commerceAccount.getCommerceAccountId();
