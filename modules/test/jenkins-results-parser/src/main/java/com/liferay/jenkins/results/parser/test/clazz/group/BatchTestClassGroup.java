@@ -133,8 +133,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("batch_name", getBatchName());
-
 		JSONArray axesJSONArray = new JSONArray();
 
 		jsonObject.put("axes", axesJSONArray);
@@ -142,6 +140,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
 			axesJSONArray.put(axisTestClassGroup.getJSONObject());
 		}
+
+		jsonObject.put("batch_name", getBatchName());
 
 		return jsonObject;
 	}
