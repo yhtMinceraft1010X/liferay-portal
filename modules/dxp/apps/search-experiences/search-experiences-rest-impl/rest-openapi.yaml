@@ -127,6 +127,8 @@ components:
                             items:
                                 type: string
                             type: array
+                        timeZoneId:
+                            type: string
                     type: object
                 highlightConfiguration:
                     properties:
