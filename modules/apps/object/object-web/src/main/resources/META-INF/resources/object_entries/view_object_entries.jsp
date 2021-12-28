@@ -20,12 +20,10 @@
 ViewObjectEntriesDisplayContext viewObjectEntriesDisplayContext = (ViewObjectEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDefinition();
-
-String type = layout.getType();
 %>
 
 <c:choose>
-	<c:when test='<%= objectDefinition.isPortlet() || type.equals("control_panel") %>'>
+	<c:when test="<%= objectDefinition.isPortlet() || Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL) %>">
 		<clay:headless-data-set-display
 			apiURL="<%= viewObjectEntriesDisplayContext.getAPIURL() %>"
 			clayDataSetActionDropdownItems="<%= viewObjectEntriesDisplayContext.getClayDataSetActionDropdownItems() %>"
