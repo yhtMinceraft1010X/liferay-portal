@@ -104,12 +104,13 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			).size(
 				pagination.getPageSize()
 			).withSearchContext(
-				searchContext -> searchContext.setAttribute(
-					"search.experiences.ip.address",
-					contextHttpServletRequest.getRemoteAddr())
-			).withSearchContext(
-				searchContext -> searchContext.setUserId(
-					contextUser.getUserId())
+				searchContext -> {
+					searchContext.setAttribute(
+						"search.experiences.ip.address",
+						contextHttpServletRequest.getRemoteAddr());
+					searchContext.setTimeZone(contextUser.getTimeZone());
+					searchContext.setUserId(contextUser.getUserId());
+				}
 			);
 
 		RuntimeException runtimeException = new RuntimeException();
