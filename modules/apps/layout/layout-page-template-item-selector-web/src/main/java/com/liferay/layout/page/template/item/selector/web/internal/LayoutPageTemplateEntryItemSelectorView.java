@@ -35,7 +35,6 @@ import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryN
 import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -210,11 +209,11 @@ public class LayoutPageTemplateEntryItemSelectorView
 						).buildString();
 
 						url = HttpUtil.addParameter(
-							url, "doAsUserId",
-							_themeDisplay.getDefaultUserId());
+							url, "p_l_mode", Constants.PREVIEW);
 
 						return HttpUtil.addParameter(
-							url, "p_l_mode", Constants.PREVIEW);
+							url, "doAsUserId",
+							_themeDisplay.getDefaultUserId());
 					}
 
 					String layoutURL = HttpUtil.addParameter(
