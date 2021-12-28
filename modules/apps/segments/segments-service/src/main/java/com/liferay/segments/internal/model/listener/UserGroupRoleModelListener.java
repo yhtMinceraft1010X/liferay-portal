@@ -15,7 +15,6 @@
 package com.liferay.segments.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
@@ -44,57 +43,56 @@ public class UserGroupRoleModelListener
 		throws ModelListenerException {
 
 		try {
-			_deleteUserGroupRoleSegmentsData(userGroupRole);
+			long[] segmentsEntryIds =
+				_segmentsEntryRetriever.getSegmentsEntryIds(
+					userGroupRole.getGroupId(), userGroupRole.getUserId(),
+					null);
+
+			for (long segmentsEntryId : segmentsEntryIds) {
+				_deleteSegmentsEntryId(userGroupRole, segmentsEntryId);
+			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
 
-	private void _deleteUserGroupRoleSegmentsData(UserGroupRole userGroupRole)
-		throws PortalException {
+	private void _deleteSegmentsEntryId(
+			UserGroupRole userGroupRole, long segmentsEntryId)
+		throws Exception {
 
-		long[] segmentsEntryIds =
-			_segmentsEntryRetriever.getSegmentsEntryIds(
-				userGroupRole.getGroupId(), userGroupRole.getUserId(), null);
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId);
 
-		for (long segmentsEntryId : segmentsEntryIds) {
-			SegmentsEntry segmentsEntry =
-				_segmentsEntryLocalService.fetchSegmentsEntry(
-					segmentsEntryId);
+		if (segmentsEntry == null) {
+			return;
+		}
 
-			if (segmentsEntry == null) {
+		Criteria criteria = segmentsEntry.getCriteriaObj();
+
+		Map<String, String> filterStrings = criteria.getFilterStrings();
+
+		for (Map.Entry<String, String> entry : filterStrings.entrySet()) {
+			String filterString = entry.getValue();
+
+			if (!filterString.contains("userGroupRoleIds") ||
+				!filterString.contains(
+					String.valueOf(userGroupRole.getRoleId()))) {
+
 				continue;
 			}
 
-			Criteria criteria = segmentsEntry.getCriteriaObj();
+			long classNameId = _classNameLocalService.getClassNameId(
+				User.class);
 
-			Map<String, String> filterStrings = criteria.getFilterStrings();
+			if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
+					segmentsEntryId, classNameId, userGroupRole.getUserId())) {
 
-			for (Map.Entry<String, String> entry : filterStrings.entrySet()) {
-				String filterString = entry.getValue();
-
-				if (!filterString.contains("userGroupRoleIds") ||
-					!filterString.contains(
-						String.valueOf(userGroupRole.getRoleId()))) {
-
-					continue;
-				}
-
-				long classNameId = _classNameLocalService.getClassNameId(
-					User.class);
-
-				if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-						segmentsEntryId, classNameId,
-						userGroupRole.getUserId())) {
-
-					continue;
-				}
-
-				_segmentsEntryRelLocalService.deleteSegmentsEntryRel(
-					segmentsEntryId, classNameId,
-					userGroupRole.getUserId());
+				continue;
 			}
+
+			_segmentsEntryRelLocalService.deleteSegmentsEntryRel(
+				segmentsEntryId, classNameId, userGroupRole.getUserId());
 		}
 	}
 
