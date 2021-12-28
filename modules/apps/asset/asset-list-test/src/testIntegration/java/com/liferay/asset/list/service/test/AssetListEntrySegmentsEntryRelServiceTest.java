@@ -203,18 +203,14 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
 			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 				_group.getGroupId(), assetListEntry);
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRelNew =
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel4 =
 			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 				_group.getGroupId(), assetListEntry);
 
 		Assert.assertEquals(1, assetListEntrySegmentsEntryRel1.getPriority());
-
 		Assert.assertEquals(2, assetListEntrySegmentsEntryRel2.getPriority());
-
 		Assert.assertEquals(3, assetListEntrySegmentsEntryRel3.getPriority());
-
-		Assert.assertEquals(4, assetListEntrySegmentsEntryRelNew.getPriority());
+		Assert.assertEquals(4, assetListEntrySegmentsEntryRel4.getPriority());
 	}
 
 	@Test
@@ -354,10 +350,8 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 
 			Assert.assertEquals(
 				1, updatedAssetListEntrySegmentsEntryRel1.getPriority());
-
 			Assert.assertEquals(
 				2, updatedAssetListEntrySegmentsEntryRel2.getPriority());
-
 			Assert.assertEquals(
 				0, updatedAssetListEntrySegmentsEntryRel3.getPriority());
 		}
