@@ -29,13 +29,16 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
-
-AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 %>
 
 <clay:container-fluid
 	cssClass="container-view"
 >
+
+	<%
+	AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
+	%>
+
 	<clay:row>
 		<clay:col
 			lg="3"
