@@ -229,6 +229,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			<#else>
 				access = JsonProperty.Access.READ_WRITE
 			</#if>
+
 			<#if propertySchema.name?? && !stringUtil.equals(propertyName, propertySchema.name)>
 				, value = "${propertySchema.name}"
 			</#if>
