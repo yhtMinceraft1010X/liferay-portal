@@ -585,6 +585,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		for (BlogsEntry entry : entries) {
 			ServiceContext serviceContext = new ServiceContext();
 
+			serviceContext.setAttribute(
+				_INVOKED_BY_CHECK_ENTRIES, Boolean.TRUE);
+
 			String[] trackbacks = StringUtil.split(entry.getTrackbacks());
 
 			serviceContext.setAttribute("trackbacks", trackbacks);
@@ -602,8 +605,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
-
-			serviceContext.setAttribute(_SCHEDULER_INVOCATION, Boolean.TRUE);
 
 			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
@@ -1903,16 +1904,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		BlogsGroupServiceSettings blogsGroupServiceSettings =
 			BlogsGroupServiceSettings.getInstance(entry.getGroupId());
 
+		boolean invokedByCheckEntries = GetterUtil.getBoolean(
+			serviceContext.getAttribute(_INVOKED_BY_CHECK_ENTRIES));
 		boolean sendEmailEntryUpdated = GetterUtil.getBoolean(
 			serviceContext.getAttribute("sendEmailEntryUpdated"));
-
-		boolean schedulerInvocation = GetterUtil.getBoolean(
-			serviceContext.getAttribute(_SCHEDULER_INVOCATION));
 
 		if (serviceContext.isCommandAdd() &&
 			blogsGroupServiceSettings.isEmailEntryAddedEnabled()) {
 		}
-		else if ((sendEmailEntryUpdated || schedulerInvocation) &&
+		else if ((invokedByCheckEntries || sendEmailEntryUpdated) &&
 				 serviceContext.isCommandUpdate() &&
 				 blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) {
 		}
@@ -2392,8 +2392,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";
 
-	private static final String _SCHEDULER_INVOCATION =
-		BlogsEntry.class.getName() + "SCHEDULER_INVOCATION";
+	private static final String _INVOKED_BY_CHECK_ENTRIES =
+		BlogsEntry.class.getName() + "#INVOKED_BY_CHECK_ENTRIES";
 
 	private static final String _SMALL_IMAGE_FOLDER_NAME = "Small Image";
 
