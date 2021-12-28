@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -491,6 +493,14 @@ public class SearchContainer<R> {
 	@Deprecated
 	public void setResults(List<R> results) {
 		_setResults(results);
+	}
+
+	public <T extends BaseModel<T>> void setResultsAndTotal(
+		BaseModelSearchResult<T> baseModelSearchResult) {
+
+		setResultsAndTotal(
+			() -> (List<R>)baseModelSearchResult.getBaseModels(),
+			baseModelSearchResult.getLength());
 	}
 
 	public void setResultsAndTotal(

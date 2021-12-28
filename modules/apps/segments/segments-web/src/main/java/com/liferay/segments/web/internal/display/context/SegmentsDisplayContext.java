@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -184,8 +183,7 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
-			BaseModelSearchContainerAdapter.setResultsAndTotal(
-				searchContainer,
+			searchContainer.setResultsAndTotal(
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
 					_themeDisplay.getScopeGroupId(), _getKeywords(), true,

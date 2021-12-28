@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -211,8 +210,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 		RoleSearchTerms roleSearchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		BaseModelSearchContainerAdapter.setResultsAndTotal(
-			roleSearch,
+		roleSearch.setResultsAndTotal(
 			_currentRoleTypeContributor.searchRoles(
 				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
 				roleSearch.getStart(), roleSearch.getEnd(),

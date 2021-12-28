@@ -14,7 +14,6 @@
 
 package com.liferay.roles.admin.web.internal.dao.search;
 
-import com.liferay.portal.kernel.dao.search.BaseModelSearchContainerAdapter;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -84,8 +83,7 @@ public class SegmentsEntrySearchContainerFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BaseModelSearchContainerAdapter.setResultsAndTotal(
-			searchContainer,
+		searchContainer.setResultsAndTotal(
 			SegmentsEntryLocalServiceUtil.searchSegmentsEntries(
 				_buildSearchContext(
 					themeDisplay.getCompanyId(),
