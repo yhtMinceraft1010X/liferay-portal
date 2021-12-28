@@ -263,6 +263,34 @@ public class GeneralConfiguration implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] searchableAssetTypes;
 
+	@Schema
+	public String getTimeZoneId() {
+		return timeZoneId;
+	}
+
+	public void setTimeZoneId(String timeZoneId) {
+		this.timeZoneId = timeZoneId;
+	}
+
+	@JsonIgnore
+	public void setTimeZoneId(
+		UnsafeSupplier<String, Exception> timeZoneIdUnsafeSupplier) {
+
+		try {
+			timeZoneId = timeZoneIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String timeZoneId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -405,6 +433,20 @@ public class GeneralConfiguration implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (timeZoneId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"timeZoneId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(timeZoneId));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

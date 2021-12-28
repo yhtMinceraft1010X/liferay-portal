@@ -191,6 +191,27 @@ public class GeneralConfiguration implements Cloneable, Serializable {
 
 	protected String[] searchableAssetTypes;
 
+	public String getTimeZoneId() {
+		return timeZoneId;
+	}
+
+	public void setTimeZoneId(String timeZoneId) {
+		this.timeZoneId = timeZoneId;
+	}
+
+	public void setTimeZoneId(
+		UnsafeSupplier<String, Exception> timeZoneIdUnsafeSupplier) {
+
+		try {
+			timeZoneId = timeZoneIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String timeZoneId;
+
 	@Override
 	public GeneralConfiguration clone() throws CloneNotSupportedException {
 		return (GeneralConfiguration)super.clone();

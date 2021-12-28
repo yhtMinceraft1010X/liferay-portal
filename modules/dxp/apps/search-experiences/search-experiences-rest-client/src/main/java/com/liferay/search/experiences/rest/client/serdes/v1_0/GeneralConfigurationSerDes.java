@@ -197,6 +197,20 @@ public class GeneralConfigurationSerDes {
 			sb.append("]");
 		}
 
+		if (generalConfiguration.getTimeZoneId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"timeZoneId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(generalConfiguration.getTimeZoneId()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -283,6 +297,15 @@ public class GeneralConfigurationSerDes {
 				String.valueOf(generalConfiguration.getSearchableAssetTypes()));
 		}
 
+		if (generalConfiguration.getTimeZoneId() == null) {
+			map.put("timeZoneId", null);
+		}
+		else {
+			map.put(
+				"timeZoneId",
+				String.valueOf(generalConfiguration.getTimeZoneId()));
+		}
+
 		return map;
 	}
 
@@ -354,6 +377,12 @@ public class GeneralConfigurationSerDes {
 				if (jsonParserFieldValue != null) {
 					generalConfiguration.setSearchableAssetTypes(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "timeZoneId")) {
+				if (jsonParserFieldValue != null) {
+					generalConfiguration.setTimeZoneId(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}
