@@ -460,7 +460,7 @@ public class DBPartitionUtil {
 		return false;
 	}
 
-	private static boolean _isSkip(String tableName, Connection connection)
+	private static boolean _isSkip(Connection connection, String tableName)
 		throws SQLException {
 
 		try {
@@ -547,13 +547,13 @@ public class DBPartitionUtil {
 				String[] query = sql.split(StringPool.SPACE);
 
 				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
-					 _isSkip(query[2], statement.getConnection())) ||
+					 _isSkip(statement.getConnection(), query[2])) ||
 					((StringUtil.startsWith(lowerCaseSQL, "create index") ||
 					  StringUtil.startsWith(lowerCaseSQL, "drop index")) &&
-					 _isSkip(query[4], statement.getConnection())) ||
+					 _isSkip(statement.getConnection(), query[4])) ||
 					(StringUtil.startsWith(
 						lowerCaseSQL, "create unique index") &&
-					 _isSkip(query[5], statement.getConnection()))) {
+					 _isSkip(statement.getConnection(), query[5]))) {
 
 					return 0;
 				}
