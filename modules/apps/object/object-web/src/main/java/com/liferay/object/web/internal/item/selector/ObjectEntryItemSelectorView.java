@@ -262,11 +262,11 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
+			List<ObjectEntry> objectEntries = null;
+
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				_infoItemItemSelectorCriterion.
 					getDesiredItemSelectorReturnTypes();
-
-			List<ObjectEntry> objectEntries = null;
 
 			if (desiredItemSelectorReturnTypes.get(0) instanceof
 					InfoItemItemSelectorReturnType) {
