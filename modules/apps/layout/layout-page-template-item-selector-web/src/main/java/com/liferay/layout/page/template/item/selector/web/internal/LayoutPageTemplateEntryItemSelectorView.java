@@ -192,62 +192,46 @@ public class LayoutPageTemplateEntryItemSelectorView
 			).put(
 				"previewURL",
 				() -> {
-					try {
-						Layout layout = _layoutLocalService.getLayout(
-							_layoutPageTemplateEntry.getPlid());
+					Layout layout = _layoutLocalService.getLayout(
+						_layoutPageTemplateEntry.getPlid());
 
-						if (_layoutPageTemplateEntry.getType() ==
-								LayoutPageTemplateEntryTypeConstants.
-									TYPE_DISPLAY_PAGE) {
+					if (_layoutPageTemplateEntry.getType() ==
+							LayoutPageTemplateEntryTypeConstants.
+								TYPE_DISPLAY_PAGE) {
 
-							String url = ResourceURLBuilder.createResourceURL(
-								PortletURLFactoryUtil.create(
-									_httpServletRequest,
-									ContentPageEditorPortletKeys.
-										CONTENT_PAGE_EDITOR_PORTLET,
-									layout, PortletRequest.RESOURCE_PHASE)
-							).setResourceID(
-								"/layout_content_page_editor/get_page_preview"
-							).buildString();
+						String url = ResourceURLBuilder.createResourceURL(
+							PortletURLFactoryUtil.create(
+								_httpServletRequest,
+								ContentPageEditorPortletKeys.
+									CONTENT_PAGE_EDITOR_PORTLET,
+								layout, PortletRequest.RESOURCE_PHASE)
+						).setResourceID(
+							"/layout_content_page_editor/get_page_preview"
+						).buildString();
 
-							url = HttpUtil.addParameter(
-								url, "doAsUserId",
-								_themeDisplay.getDefaultUserId());
-
-							return HttpUtil.addParameter(
-								url, "p_l_mode", Constants.PREVIEW);
-						}
-
-						String layoutURL = HttpUtil.addParameter(
-							PortalUtil.getLayoutFullURL(layout, _themeDisplay),
-							"p_l_mode", Constants.PREVIEW);
+						url = HttpUtil.addParameter(
+							url, "doAsUserId",
+							_themeDisplay.getDefaultUserId());
 
 						return HttpUtil.addParameter(
-							layoutURL, "p_p_auth",
-							AuthTokenUtil.getToken(_httpServletRequest));
-					}
-					catch (PortalException portalException) {
-						_log.error(
-							portalException.getMessage(), portalException);
+							url, "p_l_mode", Constants.PREVIEW);
 					}
 
-					return StringPool.BLANK;
+					String layoutURL = HttpUtil.addParameter(
+						PortalUtil.getLayoutFullURL(layout, _themeDisplay),
+						"p_l_mode", Constants.PREVIEW);
+
+					return HttpUtil.addParameter(
+						layoutURL, "p_p_auth",
+						AuthTokenUtil.getToken(_httpServletRequest));
 				}
 			).put(
 				"url",
 				() -> {
-					try {
-						Layout layout = _layoutLocalService.getLayout(
-							_layoutPageTemplateEntry.getPlid());
+					Layout layout = _layoutLocalService.getLayout(
+						_layoutPageTemplateEntry.getPlid());
 
-						return _portal.getLayoutFullURL(layout, _themeDisplay);
-					}
-					catch (PortalException portalException) {
-						_log.error(
-							portalException.getMessage(), portalException);
-					}
-
-					return StringPool.BLANK;
+					return _portal.getLayoutFullURL(layout, _themeDisplay);
 				}
 			).put(
 				"uuid", _layoutPageTemplateEntry.getUuid()
