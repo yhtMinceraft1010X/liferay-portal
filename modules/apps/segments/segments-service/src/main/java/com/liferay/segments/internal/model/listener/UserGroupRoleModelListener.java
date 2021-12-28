@@ -63,35 +63,38 @@ public class UserGroupRoleModelListener
 				_segmentsEntryLocalService.fetchSegmentsEntry(
 					userSegmentsEntryId);
 
-			if (userSegmentsEntry != null) {
-				Criteria criteria = userSegmentsEntry.getCriteriaObj();
+			if (userSegmentsEntry == null) {
+				continue;
+			}
 
-				Map<String, String> filterStrings = criteria.getFilterStrings();
+			Criteria criteria = userSegmentsEntry.getCriteriaObj();
 
-				for (Map.Entry<String, String> entry :
-						filterStrings.entrySet()) {
+			Map<String, String> filterStrings = criteria.getFilterStrings();
 
-					long deletedUserGroupRoleRoleId = userGroupRole.getRoleId();
-					String filterString = entry.getValue();
+			for (Map.Entry<String, String> entry : filterStrings.entrySet()) {
+				long deletedUserGroupRoleRoleId = userGroupRole.getRoleId();
+				String filterString = entry.getValue();
 
-					if (filterString.contains("userGroupRoleIds") &&
-						filterString.contains(
-							String.valueOf(deletedUserGroupRoleRoleId))) {
+				if (!filterString.contains("userGroupRoleIds") ||
+					!filterString.contains(
+						String.valueOf(deletedUserGroupRoleRoleId))) {
 
-						long classNameId =
-							_classNameLocalService.getClassNameId(User.class);
-
-						if (_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-								userSegmentsEntryId, classNameId,
-								userGroupRole.getUserId())) {
-
-							_segmentsEntryRelLocalService.
-								deleteSegmentsEntryRel(
-									userSegmentsEntryId, classNameId,
-									userGroupRole.getUserId());
-						}
-					}
+					continue;
 				}
+
+				long classNameId = _classNameLocalService.getClassNameId(
+					User.class);
+
+				if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
+						userSegmentsEntryId, classNameId,
+						userGroupRole.getUserId())) {
+
+					continue;
+				}
+
+				_segmentsEntryRelLocalService.deleteSegmentsEntryRel(
+					userSegmentsEntryId, classNameId,
+					userGroupRole.getUserId());
 			}
 		}
 	}
