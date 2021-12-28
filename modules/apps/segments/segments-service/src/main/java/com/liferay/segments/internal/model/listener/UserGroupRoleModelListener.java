@@ -72,12 +72,11 @@ public class UserGroupRoleModelListener
 			Map<String, String> filterStrings = criteria.getFilterStrings();
 
 			for (Map.Entry<String, String> entry : filterStrings.entrySet()) {
-				long deletedUserGroupRoleRoleId = userGroupRole.getRoleId();
 				String filterString = entry.getValue();
 
 				if (!filterString.contains("userGroupRoleIds") ||
 					!filterString.contains(
-						String.valueOf(deletedUserGroupRoleRoleId))) {
+						String.valueOf(userGroupRole.getRoleId()))) {
 
 					continue;
 				}
