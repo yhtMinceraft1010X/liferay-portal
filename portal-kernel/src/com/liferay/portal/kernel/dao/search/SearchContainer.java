@@ -485,7 +485,8 @@ public class SearchContainer<R> {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setResultsAndTotal(BiFunction, int)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setResultsAndTotal(Supplier, int)}
 	 */
 	@Deprecated
 	public void setResults(List<R> results) {
@@ -517,7 +518,8 @@ public class SearchContainer<R> {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setResultsAndTotal(BiFunction, int)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setResultsAndTotal(Supplier, int)}
 	 */
 	@Deprecated
 	public void setTotal(int total) {
