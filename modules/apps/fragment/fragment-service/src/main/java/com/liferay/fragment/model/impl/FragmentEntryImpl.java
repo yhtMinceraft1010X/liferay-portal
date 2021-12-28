@@ -148,14 +148,19 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		).put(
 			"htmlPath", "index.html"
 		).put(
+			"icon",
+			() -> {
+				if (Validator.isNotNull(_icon)) {
+					return _icon;
+				}
+
+				return null;
+			}
+		).put(
 			"jsPath", "index.js"
 		).put(
 			"name", getName()
 		);
-
-		if (Validator.isNotNull(_icon)) {
-			jsonObject.put("icon", _icon);
-		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();
 
