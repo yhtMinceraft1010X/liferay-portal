@@ -265,7 +265,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
 				migrate);
-
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
