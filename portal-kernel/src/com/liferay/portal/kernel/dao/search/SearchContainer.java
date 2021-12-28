@@ -496,6 +496,7 @@ public class SearchContainer<R> {
 		Supplier<List<R>> getResultsSupplier, int total) {
 
 		_setTotal(total);
+
 		_setResults(getResultsSupplier.get());
 	}
 
