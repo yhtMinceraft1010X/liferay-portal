@@ -493,11 +493,11 @@ public class SearchContainer<R> {
 	}
 
 	public void setResultsAndTotal(
-		Supplier<List<R>> getResultsSupplier, int total) {
+		Supplier<List<R>> setResultsSupplier, int total) {
 
 		_setTotal(total);
 
-		_setResults(getResultsSupplier.get());
+		_setResults(setResultsSupplier.get());
 	}
 
 	public void setRowChecker(RowChecker rowChecker) {
