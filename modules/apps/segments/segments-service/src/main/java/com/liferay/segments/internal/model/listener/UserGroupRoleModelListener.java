@@ -54,20 +54,20 @@ public class UserGroupRoleModelListener
 	private void _deleteUserGroupRoleSegmentsData(UserGroupRole userGroupRole)
 		throws PortalException {
 
-		long[] userSegmentsEntryIds =
+		long[] segmentsEntryIds =
 			_segmentsEntryRetriever.getSegmentsEntryIds(
 				userGroupRole.getGroupId(), userGroupRole.getUserId(), null);
 
-		for (long userSegmentsEntryId : userSegmentsEntryIds) {
-			SegmentsEntry userSegmentsEntry =
+		for (long segmentsEntryId : segmentsEntryIds) {
+			SegmentsEntry segmentsEntry =
 				_segmentsEntryLocalService.fetchSegmentsEntry(
-					userSegmentsEntryId);
+					segmentsEntryId);
 
-			if (userSegmentsEntry == null) {
+			if (segmentsEntry == null) {
 				continue;
 			}
 
-			Criteria criteria = userSegmentsEntry.getCriteriaObj();
+			Criteria criteria = segmentsEntry.getCriteriaObj();
 
 			Map<String, String> filterStrings = criteria.getFilterStrings();
 
@@ -86,14 +86,14 @@ public class UserGroupRoleModelListener
 					User.class);
 
 				if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-						userSegmentsEntryId, classNameId,
+						segmentsEntryId, classNameId,
 						userGroupRole.getUserId())) {
 
 					continue;
 				}
 
 				_segmentsEntryRelLocalService.deleteSegmentsEntryRel(
-					userSegmentsEntryId, classNameId,
+					segmentsEntryId, classNameId,
 					userGroupRole.getUserId());
 			}
 		}
