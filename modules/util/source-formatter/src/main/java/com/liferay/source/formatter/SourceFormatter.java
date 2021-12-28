@@ -1202,11 +1202,11 @@ public class SourceFormatter {
 
 		sourceProcessor.format();
 
+		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
 		_sourceFormatterMessages.addAll(
 			sourceProcessor.getSourceFormatterMessages());
 		_sourceMismatchExceptions.addAll(
 			sourceProcessor.getSourceMismatchExceptions());
-		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
 	}
 
 	private void _validateCommitMessages() throws Exception {
