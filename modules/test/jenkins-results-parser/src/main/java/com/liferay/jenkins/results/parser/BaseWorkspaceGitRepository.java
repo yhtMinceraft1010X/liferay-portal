@@ -161,35 +161,32 @@ public abstract class BaseWorkspaceGitRepository
 		int localGitCommitsSize = localGitCommits.size();
 
 		if (count > localGitCommitsSize) {
-			List<List<LocalGitCommit>> localGitCommitsPartitions =
+			List<List<LocalGitCommit>> partitionedLocalGitCommits =
 				new ArrayList<>(localGitCommitsSize);
 
 			for (LocalGitCommit localGitCommit : localGitCommits) {
-				localGitCommitsPartitions.add(
+				partitionedLocalGitCommits.add(
 					Lists.newArrayList(localGitCommit));
 			}
 
-			return localGitCommitsPartitions;
+			return partitionedLocalGitCommits;
 		}
 
-		List<List<LocalGitCommit>> localGitCommitsPartitions = new ArrayList<>(
+		List<List<LocalGitCommit>> partitionedLocalGitCommits = new ArrayList<>(
 			count);
 
 		LocalGitCommit lastLocalGitCommit = localGitCommits.remove(
 			localGitCommits.size() - 1);
 
 		if (!localGitCommits.isEmpty()) {
-			localGitCommitsPartitions.addAll(
+			partitionedLocalGitCommits.addAll(
 				JenkinsResultsParserUtil.partitionByCount(
 					localGitCommits, count - 1));
 		}
 
-		List<LocalGitCommit> lastLocalGitCommitsPartition = Lists.newArrayList(
-			lastLocalGitCommit);
+		partitionedLocalGitCommits.add(Lists.newArrayList(lastLocalGitCommit));
 
-		localGitCommitsPartitions.add(lastLocalGitCommitsPartition);
-
-		return localGitCommitsPartitions;
+		return partitionedLocalGitCommits;
 	}
 
 	@Override
