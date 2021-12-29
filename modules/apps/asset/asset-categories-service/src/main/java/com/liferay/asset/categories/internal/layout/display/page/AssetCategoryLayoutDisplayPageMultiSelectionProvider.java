@@ -108,7 +108,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 			Set<Long> categoryIds = categoryIdInfoItemReferences.keySet();
 
-			Map<Long, List<InfoItemReference>> itemsByParentCategoryIdMap =
+			Map<Long, List<InfoItemReference>> parentCategoryIdInfoItemReferences =
 				new HashMap<>();
 
 			for (InfoItemReference infoItemReference :
@@ -122,35 +122,35 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 					assetCategory, categoryIds);
 
 				List<InfoItemReference> children =
-					itemsByParentCategoryIdMap.get(parentCategoryId);
+					parentCategoryIdInfoItemReferences.get(parentCategoryId);
 
 				if (children == null) {
 					children = new ArrayList<>();
 
-					itemsByParentCategoryIdMap.put(parentCategoryId, children);
+					parentCategoryIdInfoItemReferences.put(parentCategoryId, children);
 				}
 
 				children.add(infoItemReference);
 			}
 
-			hierarchicalInfoItemReferences.addAll(_getHierarchicalInfoItemReferences(itemsByParentCategoryIdMap, 0L));
+			hierarchicalInfoItemReferences.addAll(_getHierarchicalInfoItemReferences(parentCategoryIdInfoItemReferences, 0L));
 		}
 
 		return hierarchicalInfoItemReferences;
 	}
 
 	private List<HierarchicalInfoItemReference> _getHierarchicalInfoItemReferences(
-		Map<Long, List<InfoItemReference>> itemsByParentCategoryIdMap,
+		Map<Long, List<InfoItemReference>> parentCategoryIdInfoItemReferences,
 		long parentCategoryId) {
 
-		if (!itemsByParentCategoryIdMap.containsKey(parentCategoryId)) {
+		if (!parentCategoryIdInfoItemReferences.containsKey(parentCategoryId)) {
 			return Collections.emptyList();
 		}
 
 		List<HierarchicalInfoItemReference> children = new ArrayList<>();
 
 		List<InfoItemReference> items = ListUtil.sort(
-			itemsByParentCategoryIdMap.get(parentCategoryId),
+			parentCategoryIdInfoItemReferences.get(parentCategoryId),
 			Comparator.comparing(
 				infoItemReference -> {
 					AssetCategory assetCategory =
@@ -169,7 +169,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			hierarchicalInfoItemReference.
 				setChildrenHierarchicalInfoItemReferences(
 					_getHierarchicalInfoItemReferences(
-						itemsByParentCategoryIdMap,
+						parentCategoryIdInfoItemReferences,
 						_getClassPK(infoItemReference)));
 
 			children.add(hierarchicalInfoItemReference);
