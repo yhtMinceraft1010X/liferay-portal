@@ -91,7 +91,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 						Function.identity()))
 			);
 
-		List<InfoItemReference> itemsHierarchy = new ArrayList<>();
+		List<InfoItemReference> processedInfoItemReferences = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -133,10 +133,10 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				children.add(infoItemReference);
 			}
 
-			itemsHierarchy.addAll(_getChildren(itemsByParentCategoryIdMap, 0L));
+			processedInfoItemReferences.addAll(_getChildren(itemsByParentCategoryIdMap, 0L));
 		}
 
-		return itemsHierarchy;
+		return processedInfoItemReferences;
 	}
 
 	private List<HierarchicalInfoItemReference> _getChildren(
