@@ -833,7 +833,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[The direction the translation admin dropdown should open.]]></description>
 			<name>languagesDropdownDirection</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
