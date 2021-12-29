@@ -71,7 +71,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 	public List<InfoItemReference> process(List<InfoItemReference> list) {
 		Stream<InfoItemReference> stream = list.stream();
 
-		Map<Long, Map<Long, InfoItemReference>> itemsByVocabularyIdMap =
+		Map<Long, Map<Long, InfoItemReference>> vocabularyIdInfoItemReferences =
 			stream.filter(
 				infoItemReference ->
 					Objects.equals(
@@ -99,20 +99,20 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		for (long vocabularyId : _getOrderedVocabularyIds(themeDisplay)) {
-			Map<Long, InfoItemReference> itemsByCategoryId =
-				itemsByVocabularyIdMap.get(vocabularyId);
+			Map<Long, InfoItemReference> categoryIdInfoItemReferences =
+				vocabularyIdInfoItemReferences.get(vocabularyId);
 
-			if (MapUtil.isEmpty(itemsByCategoryId)) {
+			if (MapUtil.isEmpty(categoryIdInfoItemReferences)) {
 				continue;
 			}
 
-			Set<Long> categoryIds = itemsByCategoryId.keySet();
+			Set<Long> categoryIds = categoryIdInfoItemReferences.keySet();
 
 			Map<Long, List<InfoItemReference>> itemsByParentCategoryIdMap =
 				new HashMap<>();
 
 			for (InfoItemReference infoItemReference :
-					itemsByCategoryId.values()) {
+					categoryIdInfoItemReferences.values()) {
 
 				AssetCategory assetCategory =
 					_assetCategoryLocalService.fetchAssetCategory(
