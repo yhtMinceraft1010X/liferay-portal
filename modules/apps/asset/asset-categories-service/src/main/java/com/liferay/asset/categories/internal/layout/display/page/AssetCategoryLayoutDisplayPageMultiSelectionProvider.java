@@ -149,7 +149,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 		List<HierarchicalInfoItemReference> hierarchicalInfoItemReferences = new ArrayList<>();
 
-		List<InfoItemReference> items = ListUtil.sort(
+		List<InfoItemReference> infoItemReferences = ListUtil.sort(
 			parentCategoryIdInfoItemReferences.get(parentCategoryId),
 			Comparator.comparing(
 				infoItemReference -> {
@@ -160,7 +160,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 					return assetCategory.getName();
 				}));
 
-		for (InfoItemReference infoItemReference : items) {
+		for (InfoItemReference infoItemReference : infoItemReferences) {
 			HierarchicalInfoItemReference hierarchicalInfoItemReference =
 				new HierarchicalInfoItemReference(
 					infoItemReference.getClassName(),
