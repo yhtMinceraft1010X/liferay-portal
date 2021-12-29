@@ -276,101 +276,100 @@ public class PortalInstancesLocalServiceImpl
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(user.getUserId());
 
-		if (httpServletRequest != null) {
-			long controlPanelPlid = _portal.getControlPanelPlid(
-				company.getCompanyId());
+		if (httpServletRequest == null) {
+			return serviceContext;
+		}
 
-			Layout controlPanelLayout = _layoutLocalService.getLayout(
-				controlPanelPlid);
+		long controlPanelPlid = _portal.getControlPanelPlid(
+			company.getCompanyId());
 
-			httpServletRequest.setAttribute(WebKeys.LAYOUT, controlPanelLayout);
+		Layout controlPanelLayout = _layoutLocalService.getLayout(
+			controlPanelPlid);
 
-			ThemeDisplay currentThemeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		httpServletRequest.setAttribute(WebKeys.LAYOUT, controlPanelLayout);
 
-			ThemeDisplay themeDisplay = null;
+		ThemeDisplay currentThemeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			if (currentThemeDisplay != null) {
-				try {
-					themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
-				}
-				catch (CloneNotSupportedException cloneNotSupportedException) {
-					_log.error(cloneNotSupportedException);
-				}
+		ThemeDisplay themeDisplay = null;
+
+		if (currentThemeDisplay != null) {
+			try {
+				themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
 			}
-			else {
-				themeDisplay = new ThemeDisplay();
+			catch (CloneNotSupportedException cloneNotSupportedException) {
+				_log.error(cloneNotSupportedException);
 			}
+		}
+		else {
+			themeDisplay = new ThemeDisplay();
+		}
 
-			themeDisplay.setCompany(company);
-			themeDisplay.setLayout(controlPanelLayout);
-			themeDisplay.setLayoutSet(controlPanelLayout.getLayoutSet());
-			themeDisplay.setLayoutTypePortlet(
-				(LayoutTypePortlet)controlPanelLayout.getLayoutType());
-			themeDisplay.setLocale(LocaleUtil.getSiteDefault());
+		themeDisplay.setCompany(company);
+		themeDisplay.setLayout(controlPanelLayout);
+		themeDisplay.setLayoutSet(controlPanelLayout.getLayoutSet());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)controlPanelLayout.getLayoutType());
+		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
 
-			String themeId = PrefsPropsUtil.getString(
-				company.getCompanyId(),
-				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
+		String themeId = PrefsPropsUtil.getString(
+			company.getCompanyId(),
+			PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
 
-			Theme theme = _themeLocalService.getTheme(
-				company.getCompanyId(), themeId);
+		Theme theme = _themeLocalService.getTheme(
+			company.getCompanyId(), themeId);
 
-			themeDisplay.setLookAndFeel(
-				theme, ColorSchemeFactoryUtil.getDefaultRegularColorScheme());
+		themeDisplay.setLookAndFeel(
+			theme, ColorSchemeFactoryUtil.getDefaultRegularColorScheme());
 
-			themeDisplay.setPermissionChecker(permissionChecker);
-			themeDisplay.setPlid(controlPanelPlid);
-			themeDisplay.setRealUser(user);
-			themeDisplay.setRequest(httpServletRequest);
-			themeDisplay.setScopeGroupId(group.getGroupId());
-			themeDisplay.setSiteGroupId(group.getGroupId());
-			themeDisplay.setUser(user);
+		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setPlid(controlPanelPlid);
+		themeDisplay.setRealUser(user);
+		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(user);
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		if (portletRequest != null) {
+			return serviceContext;
+		}
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			CompanyConstants.SYSTEM, PortletKeys.PORTAL);
+
+		try {
+			InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
+				portlet, httpServletRequest.getServletContext());
+
+			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+				portlet, httpServletRequest.getServletContext());
+
+			LiferayRenderRequest liferayRenderRequest =
+				RenderRequestFactory.create(
+					httpServletRequest, portlet, invokerPortlet,
+					portletConfig.getPortletContext(), WindowState.NORMAL,
+					PortletMode.VIEW,
+					PortletPreferencesFactoryUtil.fromDefaultXML(
+						portlet.getDefaultPreferences()),
+					themeDisplay.getPlid());
 
 			httpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, themeDisplay);
+				JavaConstants.JAVAX_PORTLET_REQUEST, liferayRenderRequest);
 
-			PortletRequest portletRequest =
-				(PortletRequest)httpServletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			if (portletRequest == null) {
-				Portlet portlet = _portletLocalService.getPortletById(
-					CompanyConstants.SYSTEM, PortletKeys.PORTAL);
-
-				try {
-					InvokerPortlet invokerPortlet =
-						PortletInstanceFactoryUtil.create(
-							portlet, httpServletRequest.getServletContext());
-
-					PortletConfig portletConfig =
-						PortletConfigFactoryUtil.create(
-							portlet, httpServletRequest.getServletContext());
-
-					LiferayRenderRequest liferayRenderRequest =
-						RenderRequestFactory.create(
-							httpServletRequest, portlet, invokerPortlet,
-							portletConfig.getPortletContext(),
-							WindowState.NORMAL, PortletMode.VIEW,
-							PortletPreferencesFactoryUtil.fromDefaultXML(
-								portlet.getDefaultPreferences()),
-							themeDisplay.getPlid());
-
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST,
-						liferayRenderRequest);
-
-					httpServletRequest.setAttribute(
-						JavaConstants.JAVAX_PORTLET_RESPONSE,
-						RenderResponseFactory.create(
-							new DummyHttpServletResponse(),
-							liferayRenderRequest));
-				}
-				catch (Exception exception) {
-					_log.error(exception, exception);
-				}
-			}
+			httpServletRequest.setAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE,
+				RenderResponseFactory.create(
+					new DummyHttpServletResponse(), liferayRenderRequest));
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return serviceContext;
