@@ -63,10 +63,10 @@ public class RESTBuilderTest {
 
 		_assertForcePredictableOperationId(filesPath);
 
-		_assertHyphensSupportInProperties(
+		_assertPropertiesWithHyphens(
 			filesPath, "Test", "property-with-hyphens");
 
-		_assertXMLSupportInProperties(filesPath, "Test", "xmlProperty");
+		_assertPropertiesWithXML(filesPath, "Test", "xmlProperty");
 
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
@@ -95,7 +95,7 @@ public class RESTBuilderTest {
 		Assert.assertFalse(text.contains("ForcePredictableOperationIdTest"));
 	}
 
-	private void _assertHyphensSupportInProperties(
+	private void _assertPropertiesWithHyphens(
 			String filesPath, String resourceName, String propertyName)
 		throws Exception {
 
@@ -169,7 +169,7 @@ public class RESTBuilderTest {
 		Assert.assertTrue(resourceFolderFile.exists());
 	}
 
-	private void _assertXMLSupportInProperties(
+	private void _assertPropertiesWithXML(
 			String filesPath, String resourceName, String xmlPropertyName)
 		throws Exception {
 
