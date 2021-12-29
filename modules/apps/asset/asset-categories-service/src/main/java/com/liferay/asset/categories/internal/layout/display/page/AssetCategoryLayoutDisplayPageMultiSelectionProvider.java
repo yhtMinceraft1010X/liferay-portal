@@ -91,7 +91,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 						Function.identity()))
 			);
 
-		List<InfoItemReference> processedInfoItemReferences = new ArrayList<>();
+		List<InfoItemReference> hierarchicalInfoItemReferences = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -133,13 +133,13 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				children.add(infoItemReference);
 			}
 
-			processedInfoItemReferences.addAll(_getChildren(itemsByParentCategoryIdMap, 0L));
+			hierarchicalInfoItemReferences.addAll(_getHierarchicalInfoItemReferences(itemsByParentCategoryIdMap, 0L));
 		}
 
-		return processedInfoItemReferences;
+		return hierarchicalInfoItemReferences;
 	}
 
-	private List<HierarchicalInfoItemReference> _getChildren(
+	private List<HierarchicalInfoItemReference> _getHierarchicalInfoItemReferences(
 		Map<Long, List<InfoItemReference>> itemsByParentCategoryIdMap,
 		long parentCategoryId) {
 
@@ -168,7 +168,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 
 			hierarchicalInfoItemReference.
 				setChildrenHierarchicalInfoItemReferences(
-					_getChildren(
+					_getHierarchicalInfoItemReferences(
 						itemsByParentCategoryIdMap,
 						_getClassPK(infoItemReference)));
 
