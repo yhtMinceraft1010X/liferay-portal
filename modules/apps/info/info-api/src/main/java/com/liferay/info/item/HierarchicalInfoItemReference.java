@@ -75,8 +75,9 @@ public class HierarchicalInfoItemReference extends InfoItemReference {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{infoItemReference=", super.toString(), ", childrenHierarchicalInfoItemReferences=",
-			_childrenHierarchicalInfoItemReferences, "}");
+			"{childrenHierarchicalInfoItemReferences=",
+			_childrenHierarchicalInfoItemReferences, ", infoItemReference=",
+			super.toString(), "}");
 	}
 
 	private List<HierarchicalInfoItemReference>
