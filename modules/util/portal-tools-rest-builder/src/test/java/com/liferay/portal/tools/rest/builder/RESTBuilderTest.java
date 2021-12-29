@@ -61,12 +61,11 @@ public class RESTBuilderTest {
 		_assertResourceFilesExist(filesPath, "Folder");
 		_assertResourceFilesExist(filesPath, "Test");
 
-		_assertForcePredictableOperationId(filesPath);
-
 		_assertPropertiesWithHyphens(
 			filesPath, "Test", "property-with-hyphens");
-
 		_assertPropertiesWithXML(filesPath, "Test", "xmlProperty");
+
+		_assertForcePredictableOperationId(filesPath);
 
 		File sampleApiDir = new File(filesPath + "/sample-api");
 
