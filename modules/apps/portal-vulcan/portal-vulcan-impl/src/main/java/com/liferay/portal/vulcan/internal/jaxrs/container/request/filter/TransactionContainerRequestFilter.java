@@ -50,13 +50,12 @@ public class TransactionContainerRequestFilter
 	public void filter(ContainerRequestContext containerRequestContext)
 		throws IOException {
 
-		boolean transactionDisabledHeader = GetterUtil.getBoolean(
-			containerRequestContext.getHeaderString(
-				"X-Liferay-Transaction-Disabled"));
+		if (GetterUtil.getBoolean(
+				containerRequestContext.getHeaderString(
+					"X-Liferay-Transaction-Disabled"))) {
 
-		if (transactionDisabledHeader) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Transaction control disabled");
+				_log.debug("Transaction management is disabled");
 			}
 
 			return;
