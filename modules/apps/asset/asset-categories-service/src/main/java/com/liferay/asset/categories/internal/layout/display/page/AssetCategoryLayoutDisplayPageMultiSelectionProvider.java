@@ -147,7 +147,7 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			return Collections.emptyList();
 		}
 
-		List<HierarchicalInfoItemReference> children = new ArrayList<>();
+		List<HierarchicalInfoItemReference> hierarchicalInfoItemReferences = new ArrayList<>();
 
 		List<InfoItemReference> items = ListUtil.sort(
 			parentCategoryIdInfoItemReferences.get(parentCategoryId),
@@ -172,10 +172,10 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 						parentCategoryIdInfoItemReferences,
 						_getClassPK(infoItemReference)));
 
-			children.add(hierarchicalInfoItemReference);
+			hierarchicalInfoItemReferences.add(hierarchicalInfoItemReference);
 		}
 
-		return children;
+		return hierarchicalInfoItemReferences;
 	}
 
 	private long _getClassPK(InfoItemReference infoItemReference) {
