@@ -123,6 +123,26 @@ public class RESTBuilderTest {
 					"sb.append(\"\\\"" + propertyName + "\\\": \");")));
 	}
 
+	private void _assertPropertiesWithXML(
+			String filesPath, String resourceName, String xmlPropertyName)
+		throws Exception {
+
+		File dtoResourceFile = new File(
+			_getResourcePath(
+				filesPath,
+				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
+				resourceName, ".java"));
+
+		List<String> lines = Files.readAllLines(dtoResourceFile.toPath());
+
+		Stream<String> stream = lines.stream();
+
+		Assert.assertTrue(
+			stream.anyMatch(
+				line -> line.contains(
+					"@XmlElement(name = \"" + xmlPropertyName + "\")")));
+	}
+
 	private void _assertResourceFilesExist(
 		String filesPath, String resourceName) {
 
@@ -167,26 +187,6 @@ public class RESTBuilderTest {
 				resourceName, "Resource.java"));
 
 		Assert.assertTrue(resourceFolderFile.exists());
-	}
-
-	private void _assertPropertiesWithXML(
-			String filesPath, String resourceName, String xmlPropertyName)
-		throws Exception {
-
-		File dtoResourceFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
-				resourceName, ".java"));
-
-		List<String> lines = Files.readAllLines(dtoResourceFile.toPath());
-
-		Stream<String> stream = lines.stream();
-
-		Assert.assertTrue(
-			stream.anyMatch(
-				line -> line.contains(
-					"@XmlElement(name = \"" + xmlPropertyName + "\")")));
 	}
 
 	private String _getDependenciesPath() {
