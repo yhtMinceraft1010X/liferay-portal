@@ -29,9 +29,9 @@ public interface LayoutDisplayPageMultiSelectionProvider<T> {
 	public String getPluralLabel(Locale locale);
 
 	public default List<InfoItemReference> process(
-		List<InfoItemReference> list) {
+		List<InfoItemReference> infoItemReferences) {
 
-		return list;
+		return infoItemReferences;
 	}
 
 }

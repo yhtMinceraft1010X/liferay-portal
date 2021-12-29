@@ -68,8 +68,8 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 	}
 
 	@Override
-	public List<InfoItemReference> process(List<InfoItemReference> list) {
-		Stream<InfoItemReference> stream = list.stream();
+	public List<InfoItemReference> process(List<InfoItemReference> infoItemReferences) {
+		Stream<InfoItemReference> stream = infoItemReferences.stream();
 
 		Map<Long, Map<Long, InfoItemReference>> vocabularyIdInfoItemReferences =
 			stream.filter(
