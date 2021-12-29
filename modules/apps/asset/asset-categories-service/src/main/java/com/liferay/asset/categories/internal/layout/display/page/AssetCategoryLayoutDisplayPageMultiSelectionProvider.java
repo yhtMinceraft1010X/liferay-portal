@@ -121,16 +121,11 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 				long parentCategoryId = _getNearestAncestorCategoryId(
 					assetCategory, categoryIds);
 
-				List<InfoItemReference> children =
-					parentCategoryIdInfoItemReferences.get(parentCategoryId);
-
-				if (children == null) {
-					children = new ArrayList<>();
-
-					parentCategoryIdInfoItemReferences.put(parentCategoryId, children);
+				if (parentCategoryIdInfoItemReferences.containsKey(parentCategoryId)) {
+					continue;
 				}
 
-				children.add(infoItemReference);
+				parentCategoryIdInfoItemReferences.put(parentCategoryId, ListUtil.fromArray(infoItemReference));
 			}
 
 			hierarchicalInfoItemReferences.addAll(_getHierarchicalInfoItemReferences(parentCategoryIdInfoItemReferences, 0L));
