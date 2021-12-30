@@ -158,7 +158,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	}
 
 	private void _enhance(
-		int index, ElementInstance elementInstance,
+		ElementInstance elementInstance, int index,
 		SearchRequestBuilder searchRequestBuilder,
 		SXPParameterData sxpParameterData) {
 
@@ -385,7 +385,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		for (int index = 0; index < elementInstances.length; index++) {
 			try {
 				_enhance(
-					index, elementInstances[index], searchRequestBuilder,
+					elementInstances[index], index, searchRequestBuilder,
 					sxpParameterData);
 			}
 			catch (Exception exception) {
