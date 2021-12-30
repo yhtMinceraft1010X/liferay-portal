@@ -491,6 +491,7 @@ function EditSXPBlueprintForm({
 						...configuration,
 						generalConfiguration: {
 							...configuration?.generalConfiguration,
+							emptySearchEnabled: true,
 							explain: true,
 							includeResponseString: true,
 						},
