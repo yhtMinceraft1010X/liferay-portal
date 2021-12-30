@@ -1626,21 +1626,21 @@ public class GraphQLServletExtender {
 				_addField(graphQLOutputType, graphQLDTOProperty.getName()));
 		}
 
-		for (GraphQLDTOProperty graphQLDTORelationship :
-				graphQLDTOContributor.getGraphQLDTORelationships()) {
+		for (GraphQLDTOProperty relationshipGraphQLDTOProperty :
+				graphQLDTOContributor.getRelationshipGraphQLDTOProperties()) {
 
 			graphQLObjectTypeBuilder.field(
 				_addField(
 					(GraphQLOutputType)_toGraphQLType(
-						graphQLDTORelationship.getTypeClass(), graphQLTypes,
+						relationshipGraphQLDTOProperty.getTypeClass(), graphQLTypes,
 						false),
-					graphQLDTORelationship.getName()));
+					relationshipGraphQLDTOProperty.getName()));
 
 			graphQLSchemaBuilder.codeRegistry(
 				graphQLCodeRegistryBuilder.dataFetcher(
 					FieldCoordinates.coordinates(
 						graphQLDTOContributor.getTypeName(),
-						graphQLDTORelationship.getName()),
+						relationshipGraphQLDTOProperty.getName()),
 					(DataFetcher<Object>)dataFetchingEnvironment -> {
 						Map<String, Object> source =
 							dataFetchingEnvironment.getSource();
@@ -1655,8 +1655,8 @@ public class GraphQLServletExtender {
 						return graphQLDTOContributor.getRelationshipValue(
 							_getDTOConverterContext(
 								dataFetchingEnvironment, null),
-							(long)id, graphQLDTORelationship.getTypeClass(),
-							graphQLDTORelationship.getName());
+							(long)id, relationshipGraphQLDTOProperty.getTypeClass(),
+							relationshipGraphQLDTOProperty.getName());
 					}
 				).build());
 		}

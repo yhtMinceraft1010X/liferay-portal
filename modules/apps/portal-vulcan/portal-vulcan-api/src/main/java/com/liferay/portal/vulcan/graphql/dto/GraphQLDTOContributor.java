@@ -52,7 +52,7 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public List<GraphQLDTOProperty> getGraphQLDTOProperties();
 
-	public default List<GraphQLDTOProperty> getGraphQLDTORelationships() {
+	public default List<GraphQLDTOProperty> getRelationshipGraphQLDTOProperties() {
 		return Collections.emptyList();
 	}
 

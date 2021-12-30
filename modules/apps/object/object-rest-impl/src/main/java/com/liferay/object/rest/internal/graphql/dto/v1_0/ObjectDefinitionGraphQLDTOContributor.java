@@ -59,7 +59,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		ObjectScopeProvider objectScopeProvider) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
-		List<GraphQLDTOProperty> graphQLDTORelationships = new ArrayList<>();
+		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties = new ArrayList<>();
 
 		graphQLDTOProperties.add(
 			GraphQLDTOProperty.of(
@@ -87,7 +87,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 				String relationshipName = StringUtil.replaceLast(
 					relationshipIdName, "Id", "");
 
-				graphQLDTORelationships.add(
+				relationshipGraphQLDTOProperties.add(
 					GraphQLDTOProperty.of(relationshipName, Map.class));
 			}
 			else {
@@ -102,7 +102,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
 			new ObjectEntryEntityModel(objectFields), graphQLDTOProperties,
-			graphQLDTORelationships,
+			relationshipGraphQLDTOProperties,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),
 			objectDefinition, objectEntryManager, objectScopeProvider,
@@ -179,8 +179,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public List<GraphQLDTOProperty> getGraphQLDTORelationships() {
-		return _graphQLDTORelationships;
+	public List<GraphQLDTOProperty> getRelationshipGraphQLDTOProperties() {
+		return _relationshipGraphQLDTOProperties;
 	}
 
 	@Override
@@ -247,7 +247,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private ObjectDefinitionGraphQLDTOContributor(
 		long companyId, EntityModel entityModel,
 		List<GraphQLDTOProperty> graphQLDTOProperties,
-		List<GraphQLDTOProperty> graphQLDTORelationships, String idName,
+		List<GraphQLDTOProperty> relationshipGraphQLDTOProperties, String idName,
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
 		ObjectScopeProvider objectScopeProvider, String resourceName,
@@ -256,7 +256,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_companyId = companyId;
 		_entityModel = entityModel;
 		_graphQLDTOProperties = graphQLDTOProperties;
-		_graphQLDTORelationships = graphQLDTORelationships;
+		_relationshipGraphQLDTOProperties = relationshipGraphQLDTOProperties;
 		_idName = idName;
 		_objectDefinition = objectDefinition;
 		_objectEntryManager = objectEntryManager;
@@ -319,7 +319,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private final long _companyId;
 	private final EntityModel _entityModel;
 	private final List<GraphQLDTOProperty> _graphQLDTOProperties;
-	private final List<GraphQLDTOProperty> _graphQLDTORelationships;
+	private final List<GraphQLDTOProperty> _relationshipGraphQLDTOProperties;
 	private final String _idName;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryManager _objectEntryManager;
