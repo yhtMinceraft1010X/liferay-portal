@@ -2281,28 +2281,28 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLType _toGraphQLType(
-		Class<?> type, Map<String, GraphQLType> graphQLTypes, boolean input) {
+		Class<?> clazz, Map<String, GraphQLType> graphQLTypes, boolean input) {
 
-		if (Boolean.class.equals(type)) {
+		if (Boolean.class.equals(clazz)) {
 			return Scalars.GraphQLBoolean;
 		}
-		else if (Integer.class.equals(type)) {
+		else if (Integer.class.equals(clazz)) {
 			return Scalars.GraphQLInt;
 		}
-		else if (Long.class.equals(type)) {
+		else if (Long.class.equals(clazz)) {
 			return Scalars.GraphQLLong;
 		}
-		else if (Map.class.equals(type)) {
+		else if (Map.class.equals(clazz)) {
 			return _mapGraphQLScalarType;
 		}
-		else if (String.class.equals(type)) {
+		else if (String.class.equals(clazz)) {
 			return Scalars.GraphQLString;
 		}
 
-		String customType = (input ? "Input" : "") + type.getSimpleName();
+		String key = (input ? "Input" : "") + clazz.getSimpleName();
 
-		if (graphQLTypes.containsKey(customType)) {
-			return graphQLTypes.get(customType);
+		if (graphQLTypes.containsKey(key)) {
+			return graphQLTypes.get(key);
 		}
 
 		return _mapGraphQLScalarType;
