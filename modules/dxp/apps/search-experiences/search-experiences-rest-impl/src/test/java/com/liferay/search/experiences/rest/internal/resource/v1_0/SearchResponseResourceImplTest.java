@@ -122,7 +122,7 @@ public class SearchResponseResourceImplTest {
 		SearchResponse searchResponse = searchResponseResourceImpl.search(
 			Mockito.mock(Pagination.class), null, new SXPBlueprint());
 
-		// TODO add warnings to SearchResponse DTO and assert them here
+		// TODO Add warnings to search response DTO and assert them
 
 		Assert.assertNotNull(searchResponse);
 	}
@@ -204,25 +204,20 @@ public class SearchResponseResourceImplTest {
 		ReflectionTestUtil.setFieldValue(
 			searchResponseResourceImpl, "contextCompany",
 			Mockito.mock(Company.class));
-
 		ReflectionTestUtil.setFieldValue(
 			searchResponseResourceImpl, "contextHttpServletRequest",
 			Mockito.mock(HttpServletRequest.class));
-
 		ReflectionTestUtil.setFieldValue(
 			searchResponseResourceImpl, "contextUser",
 			Mockito.mock(User.class));
-
+		ReflectionTestUtil.setFieldValue(
+			searchResponseResourceImpl, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			searchResponseResourceImpl, "_searchRequestBuilderFactory",
 			_searchRequestBuilderFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			searchResponseResourceImpl, "_sxpBlueprintSearchRequestEnhancer",
 			_sxpBlueprintSearchRequestEnhancer);
-
-		ReflectionTestUtil.setFieldValue(
-			searchResponseResourceImpl, "_searcher", _searcher);
 
 		return searchResponseResourceImpl;
 	}

@@ -135,7 +135,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			SearchResponse searchResponse = toSearchResponse(
 				_searcher.search(searchRequestBuilder.build()));
 
-			// TODO add warnings to SearchResponse DTO for client side rendering
+			// TODO Add warnings to search response DTO for client side
+			// rendering
 
 			if (ArrayUtil.isNotEmpty(runtimeException.getSuppressed())) {
 				if (_log.isWarnEnabled()) {
