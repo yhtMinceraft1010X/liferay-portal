@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 

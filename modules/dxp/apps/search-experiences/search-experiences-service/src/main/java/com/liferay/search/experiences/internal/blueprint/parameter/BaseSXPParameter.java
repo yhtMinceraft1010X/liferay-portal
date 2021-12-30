@@ -12,9 +12,10 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 
 import java.util.Map;
 import java.util.Objects;

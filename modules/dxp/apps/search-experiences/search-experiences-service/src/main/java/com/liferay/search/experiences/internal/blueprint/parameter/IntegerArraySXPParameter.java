@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,10 +23,10 @@ import java.util.Map;
 /**
  * @author Petteri Karttunen
  */
-public class LongArraySXPParameter extends BaseSXPParameter {
+public class IntegerArraySXPParameter extends BaseSXPParameter {
 
-	public LongArraySXPParameter(
-		String name, boolean templateVariable, Long[] value) {
+	public IntegerArraySXPParameter(
+		String name, boolean templateVariable, Integer[] value) {
 
 		super(name, templateVariable);
 
@@ -37,7 +37,7 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 	public boolean evaluateContains(Object value) {
 		if (value instanceof Object[]) {
 			for (Object object : (Object[])value) {
-				if (ArrayUtil.contains(_value, GetterUtil.getLong(object))) {
+				if (ArrayUtil.contains(_value, GetterUtil.getInteger(object))) {
 					return true;
 				}
 			}
@@ -45,7 +45,7 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 			return false;
 		}
 
-		return ArrayUtil.contains(_value, GetterUtil.getLong(value));
+		return ArrayUtil.contains(_value, GetterUtil.getInteger(value));
 	}
 
 	@Override
@@ -54,10 +54,10 @@ public class LongArraySXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public Long[] getValue() {
+	public Integer[] getValue() {
 		return _value;
 	}
 
-	private final Long[] _value;
+	private final Integer[] _value;
 
 }

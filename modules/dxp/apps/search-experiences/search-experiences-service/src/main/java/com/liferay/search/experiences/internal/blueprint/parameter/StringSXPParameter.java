@@ -12,21 +12,22 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Petteri Karttunen
  */
-public class IntegerArraySXPParameter extends BaseSXPParameter {
+public class StringSXPParameter extends BaseSXPParameter {
 
-	public IntegerArraySXPParameter(
-		String name, boolean templateVariable, Integer[] value) {
+	public StringSXPParameter(
+		String name, boolean templateVariable, String value) {
 
 		super(name, templateVariable);
 
@@ -37,7 +38,10 @@ public class IntegerArraySXPParameter extends BaseSXPParameter {
 	public boolean evaluateContains(Object value) {
 		if (value instanceof Object[]) {
 			for (Object object : (Object[])value) {
-				if (ArrayUtil.contains(_value, GetterUtil.getInteger(object))) {
+				if (StringUtil.containsIgnoreCase(
+						_value, GetterUtil.getString(object),
+						StringPool.BLANK)) {
+
 					return true;
 				}
 			}
@@ -45,19 +49,28 @@ public class IntegerArraySXPParameter extends BaseSXPParameter {
 			return false;
 		}
 
-		return ArrayUtil.contains(_value, GetterUtil.getInteger(value));
+		return StringUtil.containsIgnoreCase(
+			_value, GetterUtil.getString(value), StringPool.BLANK);
 	}
 
 	@Override
-	public String evaluateToString(Map<String, String> options) {
-		return Arrays.toString(_value);
+	public boolean evaluateEquals(Object object) {
+		return Objects.equals(_value, GetterUtil.getString(object));
 	}
 
 	@Override
-	public Integer[] getValue() {
+	public boolean evaluateIn(Object value) {
+		return ArrayUtil.contains(
+			GetterUtil.getStringValues(
+				ArrayUtil.toStringArray((Object[])value)),
+			_value);
+	}
+
+	@Override
+	public String getValue() {
 		return _value;
 	}
 
-	private final Integer[] _value;
+	private final String _value;
 
 }

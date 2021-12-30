@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Petteri Karttunen
  */
-public class IntegerSXPParameter extends BaseSXPParameter {
+public class FloatSXPParameter extends BaseSXPParameter {
 
-	public IntegerSXPParameter(
-		String name, boolean templateVariable, Integer value) {
+	public FloatSXPParameter(
+		String name, boolean templateVariable, Float value) {
 
 		super(name, templateVariable);
 
@@ -32,7 +32,7 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 
 	@Override
 	public boolean evaluateEquals(Object object) {
-		if (_value.intValue() == GetterUtil.getInteger(object)) {
+		if (_value.floatValue() == GetterUtil.getFloat(object)) {
 			return true;
 		}
 
@@ -42,26 +42,25 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 	@Override
 	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getIntegerValues(
-				ArrayUtil.toStringArray((Object[])value)),
+			GetterUtil.getFloatValues(ArrayUtil.toStringArray((Object[])value)),
 			_value);
 	}
 
 	@Override
 	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte) {
-		if ((gt != null) && (_value <= GetterUtil.getInteger(gt))) {
+		if ((gt != null) && (_value <= GetterUtil.getFloat(gt))) {
 			return false;
 		}
 
-		if ((gte != null) && (_value < GetterUtil.getInteger(gte))) {
+		if ((gte != null) && (_value < GetterUtil.getFloat(gte))) {
 			return false;
 		}
 
-		if ((lt != null) && (_value >= GetterUtil.getInteger(lt))) {
+		if ((lt != null) && (_value >= GetterUtil.getFloat(lt))) {
 			return false;
 		}
 
-		if ((lte != null) && (_value > GetterUtil.getInteger(lte))) {
+		if ((lte != null) && (_value > GetterUtil.getFloat(lte))) {
 			return false;
 		}
 
@@ -69,10 +68,10 @@ public class IntegerSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public Integer getValue() {
+	public Float getValue() {
 		return _value;
 	}
 
-	private final Integer _value;
+	private final Float _value;
 
 }

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Petteri Karttunen
  */
-public class DoubleSXPParameter extends BaseSXPParameter {
+public class IntegerSXPParameter extends BaseSXPParameter {
 
-	public DoubleSXPParameter(
-		String name, boolean templateVariable, Double value) {
+	public IntegerSXPParameter(
+		String name, boolean templateVariable, Integer value) {
 
 		super(name, templateVariable);
 
@@ -32,7 +32,7 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 
 	@Override
 	public boolean evaluateEquals(Object object) {
-		if (_value.doubleValue() == GetterUtil.getDouble(object)) {
+		if (_value.intValue() == GetterUtil.getInteger(object)) {
 			return true;
 		}
 
@@ -42,26 +42,26 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 	@Override
 	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getDoubleValues(
+			GetterUtil.getIntegerValues(
 				ArrayUtil.toStringArray((Object[])value)),
 			_value);
 	}
 
 	@Override
 	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte) {
-		if ((gt != null) && (_value <= GetterUtil.getDouble(gt))) {
+		if ((gt != null) && (_value <= GetterUtil.getInteger(gt))) {
 			return false;
 		}
 
-		if ((gte != null) && (_value < GetterUtil.getDouble(gte))) {
+		if ((gte != null) && (_value < GetterUtil.getInteger(gte))) {
 			return false;
 		}
 
-		if ((lt != null) && (_value >= GetterUtil.getDouble(lt))) {
+		if ((lt != null) && (_value >= GetterUtil.getInteger(lt))) {
 			return false;
 		}
 
-		if ((lte != null) && (_value > GetterUtil.getDouble(lte))) {
+		if ((lte != null) && (_value > GetterUtil.getInteger(lte))) {
 			return false;
 		}
 
@@ -69,10 +69,10 @@ public class DoubleSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public Double getValue() {
+	public Integer getValue() {
 		return _value;
 	}
 
-	private final Double _value;
+	private final Integer _value;
 
 }

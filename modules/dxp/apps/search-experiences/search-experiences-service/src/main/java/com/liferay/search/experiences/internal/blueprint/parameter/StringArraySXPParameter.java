@@ -12,22 +12,21 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author Petteri Karttunen
  */
-public class StringSXPParameter extends BaseSXPParameter {
+public class StringArraySXPParameter extends BaseSXPParameter {
 
-	public StringSXPParameter(
-		String name, boolean templateVariable, String value) {
+	public StringArraySXPParameter(
+		String name, boolean templateVariable, String[] value) {
 
 		super(name, templateVariable);
 
@@ -38,9 +37,8 @@ public class StringSXPParameter extends BaseSXPParameter {
 	public boolean evaluateContains(Object value) {
 		if (value instanceof Object[]) {
 			for (Object object : (Object[])value) {
-				if (StringUtil.containsIgnoreCase(
-						_value, GetterUtil.getString(object),
-						StringPool.BLANK)) {
+				if (ArrayUtil.contains(
+						_value, GetterUtil.getString(object), true)) {
 
 					return true;
 				}
@@ -49,28 +47,19 @@ public class StringSXPParameter extends BaseSXPParameter {
 			return false;
 		}
 
-		return StringUtil.containsIgnoreCase(
-			_value, GetterUtil.getString(value), StringPool.BLANK);
+		return ArrayUtil.contains(_value, GetterUtil.getString(value), true);
 	}
 
 	@Override
-	public boolean evaluateEquals(Object object) {
-		return Objects.equals(_value, GetterUtil.getString(object));
+	public String evaluateToString(Map<String, String> options) {
+		return Arrays.toString(_value);
 	}
 
 	@Override
-	public boolean evaluateIn(Object value) {
-		return ArrayUtil.contains(
-			GetterUtil.getStringValues(
-				ArrayUtil.toStringArray((Object[])value)),
-			_value);
-	}
-
-	@Override
-	public String getValue() {
+	public String[] getValue() {
 		return _value;
 	}
 
-	private final String _value;
+	private final String[] _value;
 
 }

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.search.experiences.blueprint.parameter;
+package com.liferay.search.experiences.internal.blueprint.parameter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Petteri Karttunen
  */
-public class FloatSXPParameter extends BaseSXPParameter {
+public class DoubleSXPParameter extends BaseSXPParameter {
 
-	public FloatSXPParameter(
-		String name, boolean templateVariable, Float value) {
+	public DoubleSXPParameter(
+		String name, boolean templateVariable, Double value) {
 
 		super(name, templateVariable);
 
@@ -32,7 +32,7 @@ public class FloatSXPParameter extends BaseSXPParameter {
 
 	@Override
 	public boolean evaluateEquals(Object object) {
-		if (_value.floatValue() == GetterUtil.getFloat(object)) {
+		if (_value.doubleValue() == GetterUtil.getDouble(object)) {
 			return true;
 		}
 
@@ -42,25 +42,26 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	@Override
 	public boolean evaluateIn(Object value) {
 		return ArrayUtil.contains(
-			GetterUtil.getFloatValues(ArrayUtil.toStringArray((Object[])value)),
+			GetterUtil.getDoubleValues(
+				ArrayUtil.toStringArray((Object[])value)),
 			_value);
 	}
 
 	@Override
 	public boolean evaluateRange(Object gt, Object gte, Object lt, Object lte) {
-		if ((gt != null) && (_value <= GetterUtil.getFloat(gt))) {
+		if ((gt != null) && (_value <= GetterUtil.getDouble(gt))) {
 			return false;
 		}
 
-		if ((gte != null) && (_value < GetterUtil.getFloat(gte))) {
+		if ((gte != null) && (_value < GetterUtil.getDouble(gte))) {
 			return false;
 		}
 
-		if ((lt != null) && (_value >= GetterUtil.getFloat(lt))) {
+		if ((lt != null) && (_value >= GetterUtil.getDouble(lt))) {
 			return false;
 		}
 
-		if ((lte != null) && (_value > GetterUtil.getFloat(lte))) {
+		if ((lte != null) && (_value > GetterUtil.getDouble(lte))) {
 			return false;
 		}
 
@@ -68,10 +69,10 @@ public class FloatSXPParameter extends BaseSXPParameter {
 	}
 
 	@Override
-	public Float getValue() {
+	public Double getValue() {
 		return _value;
 	}
 
-	private final Float _value;
+	private final Double _value;
 
 }
