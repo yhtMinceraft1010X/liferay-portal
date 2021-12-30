@@ -225,7 +225,7 @@ public class ModulesStructureTest {
 							}
 						}
 
-						if (!dirName.endsWith("-standalone") &&
+						if (!dirName.endsWith("poshi-standalone") &&
 							!liferaySpringBootDefaultsPlugin) {
 
 							Assert.assertFalse(
@@ -233,7 +233,7 @@ public class ModulesStructureTest {
 								Files.deleteIfExists(gradlePropertiesPath));
 						}
 
-						if (!dirName.endsWith("-standalone")) {
+						if (!dirName.endsWith("poshi-standalone")) {
 							Path settingsGradlePath = dirPath.resolve(
 								"settings.gradle");
 
@@ -981,7 +981,7 @@ public class ModulesStructureTest {
 		String dirName = String.valueOf(dirPath.getFileName());
 		String name = gradleDependency.getModuleName();
 
-		if (dirName.endsWith("-standalone") ||
+		if (dirName.endsWith("poshi-standalone") ||
 			name.equals("com.liferay.ant.bnd") ||
 			name.equals("com.liferay.arquillian.extension.junit.bridge") ||
 			name.equals("com.liferay.gradle.plugins.defaults") ||
