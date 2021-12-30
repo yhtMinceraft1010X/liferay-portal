@@ -156,7 +156,6 @@ public class SearchResponseResourceTest
 				SearchResponse searchResponse = _postSearch(_read());
 
 				Assert.assertNull(searchResponse.getResponse());
-
 				Assert.assertThat(
 					searchResponse.getResponseString(),
 					CoreMatchers.containsString(message));
