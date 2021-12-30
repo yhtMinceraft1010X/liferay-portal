@@ -1632,8 +1632,8 @@ public class GraphQLServletExtender {
 			graphQLObjectTypeBuilder.field(
 				_addField(
 					(GraphQLOutputType)_toGraphQLType(
-						relationshipGraphQLDTOProperty.getTypeClass(), graphQLTypes,
-						false),
+						relationshipGraphQLDTOProperty.getTypeClass(),
+						graphQLTypes, false),
 					relationshipGraphQLDTOProperty.getName()));
 
 			graphQLSchemaBuilder.codeRegistry(
@@ -1655,7 +1655,8 @@ public class GraphQLServletExtender {
 						return graphQLDTOContributor.getRelationshipValue(
 							_getDTOConverterContext(
 								dataFetchingEnvironment, null),
-							(long)id, relationshipGraphQLDTOProperty.getTypeClass(),
+							(long)id,
+							relationshipGraphQLDTOProperty.getTypeClass(),
 							relationshipGraphQLDTOProperty.getName());
 					}
 				).build());
