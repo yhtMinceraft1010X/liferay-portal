@@ -1655,8 +1655,8 @@ public class GraphQLServletExtender {
 						return graphQLDTOContributor.getRelationshipValue(
 							_getDTOConverterContext(
 								dataFetchingEnvironment, null),
-							(long)id, graphQLDTORelationship.getName(),
-							graphQLDTORelationship.getTypeClass());
+							(long)id, graphQLDTORelationship.getTypeClass(),
+							graphQLDTORelationship.getName());
 					}
 				).build());
 		}

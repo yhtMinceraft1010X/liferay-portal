@@ -191,7 +191,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	@Override
 	public <T> T getRelationshipValue(
 			DTOConverterContext dtoConverterContext, long id,
-			String relationshipName, Class<T> relationshipClass)
+			Class<T> relationshipClass, String relationshipName)
 		throws Exception {
 
 		if (!Objects.equals(relationshipClass, Map.class)) {

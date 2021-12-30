@@ -60,7 +60,7 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public default <T> T getRelationshipValue(
 			DTOConverterContext dtoConverterContext, long id,
-			String relationshipName, Class<T> relationshipClass)
+			Class<T> relationshipClass, String relationshipName)
 		throws Exception {
 
 		return null;
