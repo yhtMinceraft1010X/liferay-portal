@@ -52,11 +52,13 @@ public interface GraphQLDTOContributor<D, R> {
 
 	public List<GraphQLDTOProperty> getGraphQLDTOProperties();
 
-	public default List<GraphQLDTOProperty> getRelationshipGraphQLDTOProperties() {
+	public String getIdName();
+
+	public default List<GraphQLDTOProperty>
+		getRelationshipGraphQLDTOProperties() {
+
 		return Collections.emptyList();
 	}
-
-	public String getIdName();
 
 	public default <T> T getRelationshipValue(
 			DTOConverterContext dtoConverterContext, long id,
