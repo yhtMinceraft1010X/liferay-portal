@@ -97,8 +97,6 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			_searchRequestBuilderFactory.builder(
 			).companyId(
 				contextCompany.getCompanyId()
-			).emptySearchEnabled(
-				true
 			).from(
 				pagination.getStartPosition()
 			).queryString(
