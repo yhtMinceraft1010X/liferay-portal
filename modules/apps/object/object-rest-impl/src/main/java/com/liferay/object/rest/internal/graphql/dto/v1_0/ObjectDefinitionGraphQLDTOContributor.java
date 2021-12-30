@@ -205,9 +205,9 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		String relationshipNameId = relationshipName + "Id";
+		String relationshipIdName = relationshipName + "Id";
 
-		Object relationshipId = properties.get(relationshipNameId);
+		Object relationshipId = properties.get(relationshipIdName);
 
 		if (!(relationshipId instanceof Long)) {
 			return null;
@@ -216,7 +216,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return (T)_toMap(
 			_objectEntryManager.getObjectEntry(
 				dtoConverterContext, null, (long)relationshipId),
-			relationshipNameId);
+			relationshipIdName);
 	}
 
 	@Override
