@@ -97,6 +97,17 @@ public class RemoteAppEntryLocalServiceImpl
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
+		long remoteAppEntryId = counterLocalService.increment();
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = String.valueOf(remoteAppEntryId);
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		_validateExternalReferenceCode(
+			user.getCompanyId(), externalReferenceCode);
+
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
 		customElementHTMLElementName = StringUtil.trim(
 			customElementHTMLElementName);
@@ -109,24 +120,12 @@ public class RemoteAppEntryLocalServiceImpl
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		RemoteAppEntry remoteAppEntry = remoteAppEntryPersistence.create(
-			counterLocalService.increment());
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(
-				remoteAppEntry.getRemoteAppEntryId());
-		}
-
-		User user = _userLocalService.getUser(userId);
-
-		_validateExternalReferenceCode(
-			user.getCompanyId(), externalReferenceCode);
+			remoteAppEntryId);
 
 		remoteAppEntry.setExternalReferenceCode(externalReferenceCode);
-
 		remoteAppEntry.setCompanyId(user.getCompanyId());
 		remoteAppEntry.setUserId(user.getUserId());
 		remoteAppEntry.setUserName(user.getFullName());
-
 		remoteAppEntry.setCustomElementCSSURLs(customElementCSSURLs);
 		remoteAppEntry.setCustomElementHTMLElementName(
 			customElementHTMLElementName);
