@@ -133,7 +133,7 @@ public abstract class BaseBuild implements Build {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to to write archive-marker file", ioException);
+				"Unable to to write archive-marker", ioException);
 		}
 
 		archiveConsoleLog();
