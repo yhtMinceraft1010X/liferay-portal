@@ -229,6 +229,7 @@ public class ViewUserGroupsManagementToolbarDisplayContext {
 				userGroupSearch.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), keywords, userGroupParams));
+
 		userGroupSearch.setRowChecker(new UserGroupChecker(_renderResponse));
 
 		_userGroupSearch = userGroupSearch;
