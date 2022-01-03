@@ -182,7 +182,7 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
-	macro  chooseEntryOnRelationshipField {
+	macro chooseEntryOnRelationshipField {
 		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 
 		KeyPress(
