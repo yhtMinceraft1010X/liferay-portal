@@ -44,7 +44,7 @@ public class UserScreenNameExceptionMustNotBeNullExceptionMapper
 		return new Problem(
 			Response.Status.BAD_REQUEST,
 			"Email address, first name, and last name are all required when " +
-				"providing information for the default admin user.");
+				"providing information for the default admin user");
 	}
 
 }
