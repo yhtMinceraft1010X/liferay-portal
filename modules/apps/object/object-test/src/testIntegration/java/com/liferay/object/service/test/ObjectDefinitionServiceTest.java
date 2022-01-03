@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -193,9 +194,8 @@ public class ObjectDefinitionServiceTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					"Able", "able", false, "String"),
-				ObjectFieldUtil.createObjectField(
-					"Baker", "baker", false, "String")));
+					RandomTestUtil.randomString(), StringUtil.randomId(),
+					"String")));
 	}
 
 	private void _setUser(User user) {
@@ -221,9 +221,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Able", "able", false, "String"),
-						ObjectFieldUtil.createObjectField(
-							"Baker", "baker", false, "String")));
+							RandomTestUtil.randomString(),
+							StringUtil.randomId(), "String")));
 
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -300,9 +299,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Able", "able", false, "String"),
-						ObjectFieldUtil.createObjectField(
-							"Baker", "baker", false, "String")));
+							RandomTestUtil.randomString(),
+							StringUtil.randomId(), "String")));
 
 			objectDefinition =
 				_objectDefinitionService.publishCustomObjectDefinition(
@@ -335,9 +333,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectDefinitionConstants.SCOPE_COMPANY,
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
-							"Able", "able", false, "String"),
-						ObjectFieldUtil.createObjectField(
-							"Baker", "baker", false, "String")));
+							RandomTestUtil.randomString(),
+							StringUtil.randomId(), "String")));
 
 			objectDefinition =
 				_objectDefinitionService.updateCustomObjectDefinition(
