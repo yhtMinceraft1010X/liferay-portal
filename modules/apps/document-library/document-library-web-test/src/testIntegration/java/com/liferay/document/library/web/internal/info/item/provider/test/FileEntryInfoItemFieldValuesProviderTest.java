@@ -40,7 +40,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jodd.net.MimeTypes;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -71,22 +70,17 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@After
-	public void tearDown() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
 	@Test
 	public void testFileEntryInfoItemFieldReader() throws PortalException {
 		Bundle bundle = FrameworkUtil.getBundle(InfoItemFieldReader.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			InfoItemFieldReader.class, new TestFileEntryInfoItemFieldReader(),
-			new HashMapDictionary<String, String>());
+		ServiceRegistration<InfoItemFieldReader> serviceRegistration =
+			bundleContext.registerService(
+				InfoItemFieldReader.class,
+				new TestFileEntryInfoItemFieldReader(),
+				new HashMapDictionary<String, String>());
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(),
@@ -107,6 +101,8 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 		Assert.assertEquals(
 			TestFileEntryInfoItemFieldReader._INFO_FIELD_VALUE,
 			infoFieldValue.getValue());
+
+		serviceRegistration.unregister();
 	}
 
 	@Test
@@ -150,8 +146,6 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 
 	@Inject(filter = "component.name=*.FileEntryInfoItemFieldValuesProvider")
 	private InfoItemFieldValuesProvider _infoItemFieldValuesProvider;
-
-	private ServiceRegistration<InfoItemFieldReader> _serviceRegistration;
 
 	private static class TestFileEntryInfoItemFieldReader
 		implements InfoItemFieldReader<FileEntry> {
