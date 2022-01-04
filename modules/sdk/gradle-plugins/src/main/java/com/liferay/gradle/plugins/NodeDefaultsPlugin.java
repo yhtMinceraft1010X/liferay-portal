@@ -175,18 +175,18 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			publishNodeModuleTask.setModuleLicense(moduleLicense);
 		}
 
-		String npmAccessToken = GradleUtil.getProperty(
-			project, "nodejs.npm.access.token", (String)null);
-
-		if (Validator.isNotNull(npmAccessToken)) {
-			publishNodeModuleTask.setNpmAccessToken(npmAccessToken);
-		}
-
 		String moduleRepository = GradleUtil.getProperty(
 			project, "nodejs.npm.module.repository", (String)null);
 
 		if (Validator.isNotNull(moduleRepository)) {
 			publishNodeModuleTask.setModuleRepository(moduleRepository);
+		}
+
+		String npmAccessToken = GradleUtil.getProperty(
+			project, "nodejs.npm.access.token", (String)null);
+
+		if (Validator.isNotNull(npmAccessToken)) {
+			publishNodeModuleTask.setNpmAccessToken(npmAccessToken);
 		}
 	}
 
