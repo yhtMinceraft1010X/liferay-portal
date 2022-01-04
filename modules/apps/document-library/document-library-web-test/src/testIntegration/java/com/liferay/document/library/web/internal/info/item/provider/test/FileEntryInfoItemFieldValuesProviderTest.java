@@ -80,7 +80,13 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 
 	@Test
 	public void testFileEntryInfoItemFieldReader() throws PortalException {
-		_registerFileEntryInfoItemFieldReader();
+		Bundle bundle = FrameworkUtil.getBundle(InfoItemFieldReader.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			InfoItemFieldReader.class, new TestFileEntryInfoItemFieldReader(),
+			new HashMapDictionary<String, String>());
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(),
@@ -134,16 +140,6 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 
 		Assert.assertEquals(
 			fileEntry.getModifiedDate(), publishDateInfoFieldValue.getValue());
-	}
-
-	private void _registerFileEntryInfoItemFieldReader() {
-		Bundle bundle = FrameworkUtil.getBundle(InfoItemFieldReader.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceRegistration = bundleContext.registerService(
-			InfoItemFieldReader.class, new TestFileEntryInfoItemFieldReader(),
-			new HashMapDictionary<String, String>());
 	}
 
 	@Inject
