@@ -94,13 +94,13 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(fileEntry);
 
-		InfoFieldValue<Object> testInfoFieldValue =
+		InfoFieldValue<Object> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(
 				TestFileEntryInfoItemFieldReader._INFO_FIELD_NAME);
 
 		Assert.assertEquals(
 			TestFileEntryInfoItemFieldReader._INFO_FIELD_VALUE,
-			testInfoFieldValue.getValue());
+			infoFieldValue.getValue());
 	}
 
 	@Test
