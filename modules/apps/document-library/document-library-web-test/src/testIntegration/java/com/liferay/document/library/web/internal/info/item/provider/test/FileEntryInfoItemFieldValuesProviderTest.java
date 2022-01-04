@@ -96,10 +96,10 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 
 		InfoFieldValue<Object> testInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(
-				TestFileEntryInfoItemFieldReader.INFO_FIELD_NAME);
+				TestFileEntryInfoItemFieldReader._INFO_FIELD_NAME);
 
 		Assert.assertEquals(
-			TestFileEntryInfoItemFieldReader.INFO_FIELD_VALUE,
+			TestFileEntryInfoItemFieldReader._INFO_FIELD_VALUE,
 			testInfoFieldValue.getValue());
 	}
 
@@ -166,7 +166,7 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
 			).name(
-				INFO_FIELD_NAME
+				_INFO_FIELD_NAME
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(
 					getClass(), RandomTestUtil.randomString())
@@ -175,13 +175,13 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 
 		@Override
 		public Object getValue(FileEntry fileEntry) {
-			return INFO_FIELD_VALUE;
+			return _INFO_FIELD_VALUE;
 		}
 
-		protected static final String INFO_FIELD_NAME =
+		private static final String _INFO_FIELD_NAME =
 			RandomTestUtil.randomString();
 
-		protected static final String INFO_FIELD_VALUE =
+		private static final String _INFO_FIELD_VALUE =
 			RandomTestUtil.randomString();
 
 	}
