@@ -54,13 +54,16 @@ const Validation = ({
 }) => {
 	const {focusedField} = useFormState();
 
+	/* TODO: Remove the focusedField variable when the fieldName is properly delivered by the validator prop */
+	const parentFieldName = validation?.fieldName ?? focusedField?.fieldName;
+
 	const [
 		{enableValidation, errorMessage, parameter, selectedValidation},
 		dispatch,
 	] = useReducer(
 		reducer({
 			editingLanguageId,
-			fieldName: validation?.fieldName ?? focusedField?.fieldName,
+			fieldName: parentFieldName,
 			onChange,
 		}),
 		{
@@ -120,7 +123,7 @@ const Validation = ({
 					name={name}
 					onBlur={onBlur}
 					parameter={parameter}
-					parentFieldName={validation.fieldName}
+					parentFieldName={parentFieldName}
 					readOnly={readOnly}
 					selectedValidation={selectedValidation}
 					transformSelectedValidation={transformSelectedValidation}
