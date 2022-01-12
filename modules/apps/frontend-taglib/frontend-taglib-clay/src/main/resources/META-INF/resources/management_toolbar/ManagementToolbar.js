@@ -230,6 +230,7 @@ function ManagementToolbar({
 											displayType="primary"
 											onClick={onCreateButtonClick}
 											symbol="plus"
+											wide
 										>
 											{Liferay.Language.get('new')}
 										</LinkOrButton>
