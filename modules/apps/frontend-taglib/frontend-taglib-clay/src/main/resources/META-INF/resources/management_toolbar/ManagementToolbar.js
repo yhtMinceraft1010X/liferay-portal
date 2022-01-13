@@ -226,7 +226,7 @@ function ManagementToolbar({
 										/>
 									) : showDesignImprovementsFF ? (
 										<LinkOrButton
-											className="nav-btn nav-btn-monospaced"
+											className="nav-btn"
 											displayType="primary"
 											onClick={onCreateButtonClick}
 											symbol="plus"
