@@ -6547,18 +6547,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/htmlparser.jar</file-name>
-				<version>1.6</version>
-				<project-name>HTML Parser</project-name>
-				<project-url>http://htmlparser.sourceforge.net/project-info.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Common Public License 1.0</license-name>
-						<license-url>http://opensource.org/licenses/cpl1.0.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/httpclient.jar</file-name>
 				<version>4.5.13</version>
 				<project-name>HttpComponents</project-name>
