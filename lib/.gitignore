@@ -124,7 +124,6 @@
 /portal/hessian.jar
 /portal/hibernate-core.jar
 /portal/hikaricp.jar
-/portal/htmlparser.jar
 /portal/httpclient.jar
 /portal/httpcore.jar
 /portal/httpmime.jar
