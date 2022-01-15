@@ -161,7 +161,6 @@ public class DispatchLogLocalServiceTest {
 					dispatchLog.getDispatchLogId());
 
 				Assert.assertNotEquals(
-					"Dispatch log must not be deleted",
 					DispatchTaskStatus.IN_PROGRESS, dispatchTaskStatus);
 
 				Assert.assertNull(
@@ -175,7 +174,6 @@ public class DispatchLogLocalServiceTest {
 			}
 
 			Assert.assertEquals(
-				"Dispatch log cannot be deleted while task is in progress",
 				DispatchLogStatusException.class, exceptionClass);
 		}
 	}
