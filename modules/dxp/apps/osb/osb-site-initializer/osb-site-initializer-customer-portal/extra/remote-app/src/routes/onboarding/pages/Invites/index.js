@@ -90,7 +90,8 @@ const Invites = ({project}) => {
 				payload: steps.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = `${API_BASE_URL}/${getLiferaySiteName()}/overview?${
 				PARAMS_KEYS.PROJECT_APPLICATION_EXTERNAL_REFERENCE_CODE
 			}=${project.accountKey}`;
@@ -120,7 +121,8 @@ const Invites = ({project}) => {
 			if (!error) {
 				nextPage();
 			}
-		} else {
+		}
+		else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
