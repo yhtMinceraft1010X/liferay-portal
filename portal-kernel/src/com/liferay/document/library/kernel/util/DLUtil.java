@@ -325,7 +325,8 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getUniqueFileName(long, long, String, boolean)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUniqueFileName(long, long, String, boolean)}
 	 */
 	@Deprecated
 	public static String getUniqueFileName(

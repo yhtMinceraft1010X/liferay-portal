@@ -851,7 +851,8 @@ public class DLImpl implements DL {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getUniqueFileName(long, long, String, boolean)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUniqueFileName(long, long, String, boolean)}
 	 */
 	@Deprecated
 	@Override
