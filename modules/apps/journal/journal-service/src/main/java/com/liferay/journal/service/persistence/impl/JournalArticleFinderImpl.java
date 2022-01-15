@@ -1896,10 +1896,10 @@ public class JournalArticleFinderImpl
 				StringBundler.concat(
 					"(JournalArticle.status != ", queryDefinition.getStatus(),
 					" AND JournalArticle.companyId = ", group.getCompanyId(),
-					") AND (tempJournalArticle.status != ",
-					queryDefinition.getStatus(),
-					" AND tempJournalArticle.companyId = ",
-					group.getCompanyId(), ")"));
+					") AND (tempJournalArticle.companyId = ",
+					group.getCompanyId(),
+					" AND tempJournalArticle.status != ",
+					queryDefinition.getStatus(), ")"));
 		}
 		else {
 			sql = StringUtil.replace(
@@ -1907,10 +1907,10 @@ public class JournalArticleFinderImpl
 				StringBundler.concat(
 					"(JournalArticle.status = ", queryDefinition.getStatus(),
 					" AND JournalArticle.companyId = ", group.getCompanyId(),
-					") AND (tempJournalArticle.status = ",
-					queryDefinition.getStatus(),
-					" AND tempJournalArticle.companyId = ",
-					group.getCompanyId(), ")"));
+					") AND (tempJournalArticle.companyId = ",
+					group.getCompanyId(),
+					" AND tempJournalArticle.status = ",
+					queryDefinition.getStatus(), ")"));
 		}
 
 		return sql;
