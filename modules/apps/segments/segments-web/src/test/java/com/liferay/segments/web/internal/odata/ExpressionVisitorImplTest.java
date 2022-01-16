@@ -60,7 +60,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testMultipleNotNestedOperationsWithSameTitle()
+	public void testVisitBinaryExpressionOperationWithSameTitleUnnestedOperations()
 		throws ExpressionVisitException {
 
 		Map<String, EntityField> entityFieldsMap =
@@ -114,7 +114,7 @@ public class ExpressionVisitorImplTest {
 	}
 
 	@Test
-	public void testNestedMultipleOperationsWithSameTitle()
+	public void testVisitBinaryExpressionOperationWithSameTitleNestedOperations()
 		throws ExpressionVisitException {
 
 		Map<String, EntityField> entityFieldsMap =
