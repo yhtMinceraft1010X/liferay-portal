@@ -147,9 +147,9 @@ public class ObjectViewLocalServiceTest {
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), false, false, null,
-			LocalizedMapUtil.getLocalizedMap(name), StringUtil.randomId(), true,
-			"String");
+			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
+			false, null, LocalizedMapUtil.getLocalizedMap(name),
+			StringUtil.randomId(), true);
 
 		return name;
 	}
