@@ -281,7 +281,7 @@ public class ObjectFieldLocalServiceTest {
 				"Duplicate name able", objectFieldNameException.getMessage());
 		}
 
-		// Types
+		// DB types
 
 		String[] dbTypes = {
 			"BigDecimal", "Blob", "Clob", "Boolean", "Date", "Double",
