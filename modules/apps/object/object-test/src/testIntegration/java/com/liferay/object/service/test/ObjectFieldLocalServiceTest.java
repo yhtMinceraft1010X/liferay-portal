@@ -83,6 +83,32 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldDBTypeException.getMessage());
 		}
 
+		// DB types
+
+		String[] dbTypes = {
+			"BigDecimal", "Blob", "Clob", "Boolean", "Date", "Double",
+			"Integer", "Long", "String"
+		};
+
+		for (String dbType : dbTypes) {
+			_testAddSystemObjectField(
+				ObjectFieldUtil.createObjectField(
+					"Text", dbType, "Able", "able"));
+		}
+
+		try {
+			_testAddSystemObjectField(
+				ObjectFieldUtil.createObjectField(
+					"Text", "STRING", "Able", "able"));
+
+			Assert.fail();
+		}
+		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
+			Assert.assertEquals(
+				"Invalid DB type STRING",
+				objectFieldDBTypeException.getMessage());
+		}
+
 		// Indexed language ID can only be applied with type \"String\" that
 		// is not indexed as a keyword
 
@@ -279,32 +305,6 @@ public class ObjectFieldLocalServiceTest {
 		catch (ObjectFieldNameException objectFieldNameException) {
 			Assert.assertEquals(
 				"Duplicate name able", objectFieldNameException.getMessage());
-		}
-
-		// DB types
-
-		String[] dbTypes = {
-			"BigDecimal", "Blob", "Clob", "Boolean", "Date", "Double",
-			"Integer", "Long", "String"
-		};
-
-		for (String dbType : dbTypes) {
-			_testAddSystemObjectField(
-				ObjectFieldUtil.createObjectField(
-					"Text", dbType, "Able", "able"));
-		}
-
-		try {
-			_testAddSystemObjectField(
-				ObjectFieldUtil.createObjectField(
-					"Text", "STRING", "Able", "able"));
-
-			Assert.fail();
-		}
-		catch (ObjectFieldDBTypeException objectFieldDBTypeException) {
-			Assert.assertEquals(
-				"Invalid DB type STRING",
-				objectFieldDBTypeException.getMessage());
 		}
 	}
 
