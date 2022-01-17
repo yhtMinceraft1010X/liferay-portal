@@ -5204,7 +5204,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		String newEncPwd;
+
+		String newEncPwd = null;
 
 		if (user.isPasswordEncrypted()) {
 			newEncPwd = PasswordEncryptorUtil.encrypt(
