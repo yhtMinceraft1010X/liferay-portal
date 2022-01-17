@@ -45,7 +45,7 @@ public class DuplicateAccountExternalReferenceCodeExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"The externalReferenceCode belongs to another account");
+			"The external reference code belongs to another account");
 	}
 
 }

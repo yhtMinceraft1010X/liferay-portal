@@ -294,7 +294,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		}
 		catch (Problem.ProblemException problemException) {
 			Assert.assertEquals(
-				"The externalReferenceCode belongs to another account",
+				"The external reference code belongs to another account",
 				problemException.getMessage());
 		}
 	}
