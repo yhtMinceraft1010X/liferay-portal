@@ -1897,8 +1897,7 @@ public class JournalArticleFinderImpl
 					"(JournalArticle.status != ", queryDefinition.getStatus(),
 					" AND JournalArticle.companyId = ", group.getCompanyId(),
 					") AND (tempJournalArticle.companyId = ",
-					group.getCompanyId(),
-					" AND tempJournalArticle.status != ",
+					group.getCompanyId(), " AND tempJournalArticle.status != ",
 					queryDefinition.getStatus(), ")"));
 		}
 		else {
@@ -1908,8 +1907,7 @@ public class JournalArticleFinderImpl
 					"(JournalArticle.status = ", queryDefinition.getStatus(),
 					" AND JournalArticle.companyId = ", group.getCompanyId(),
 					") AND (tempJournalArticle.companyId = ",
-					group.getCompanyId(),
-					" AND tempJournalArticle.status = ",
+					group.getCompanyId(), " AND tempJournalArticle.status = ",
 					queryDefinition.getStatus(), ")"));
 		}
 
