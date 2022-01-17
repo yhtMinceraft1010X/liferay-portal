@@ -92,6 +92,10 @@ public interface DB {
 
 	public String getPopulateSQL(String databaseName, String sqlContent);
 
+	public ResultSet getPrimaryKeysResultSet(
+			Connection connection, String tableName)
+		throws SQLException;
+
 	public String getRecreateSQL(String databaseName);
 
 	public Integer getSQLType(String templateType);
