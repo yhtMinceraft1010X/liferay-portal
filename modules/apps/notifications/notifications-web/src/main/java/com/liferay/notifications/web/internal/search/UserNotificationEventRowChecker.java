@@ -38,11 +38,11 @@ public class UserNotificationEventRowChecker extends EmptyOnClickRowChecker {
 			return true;
 		}
 
-		UserNotificationEvent storedUserNotificationEvent =
+		userNotificationEvent =
 			UserNotificationEventLocalServiceUtil.fetchUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
-		if (storedUserNotificationEvent == null) {
+		if (userNotificationEvent == null) {
 			return true;
 		}
 
