@@ -54,13 +54,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
-		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
-			_userGroupService.addUserGroup(
-				userGroup.getName(), userGroup.getDescription(), null);
-
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(
-				serviceBuilderUserGroup, userGroup.getExternalReferenceCode()));
+				_userGroupService.addUserGroup(
+					userGroup.getName(), userGroup.getDescription(), null),
+				userGroup.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -74,14 +72,12 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	public UserGroup putUserGroup(Long userGroupId, UserGroup userGroup)
 		throws Exception {
 
-		com.liferay.portal.kernel.model.UserGroup serviceBuilderUserGroup =
-			_userGroupService.updateUserGroup(
-				userGroupId, userGroup.getName(), userGroup.getDescription(),
-				null);
-
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(
-				serviceBuilderUserGroup, userGroup.getExternalReferenceCode()));
+				_userGroupService.updateUserGroup(
+					userGroupId, userGroup.getName(),
+					userGroup.getDescription(), null),
+				userGroup.getExternalReferenceCode()));
 	}
 
 	private DTOConverterContext _getDTOConverterContext(long userGroupId) {
