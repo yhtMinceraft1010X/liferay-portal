@@ -24,14 +24,6 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
-
-String hideCssClass = StringPool.BLANK;
-
-boolean hasReplacement = cpContentHelper.hasReplacement(cpSku, request);
-
-if (hasReplacement) {
-	hideCssClass = "hide";
-}
 %>
 
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -66,11 +58,23 @@ if (hasReplacement) {
 					</div>
 				</div>
 
+				<%
+				boolean hasReplacement = cpContentHelper.hasReplacement(cpSku, request);
+				%>
+
 				<c:if test="<%= hasReplacement %>">
 					<p class="product-description"><%= LanguageUtil.get(request, "this-product-is-discontinued.-you-can-see-the-replacement-product-by-clicking-on-the-button-below") %></p>
 
 					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" value="replacement-product" />
 				</c:if>
+
+				<%
+				String hideCssClass = StringPool.BLANK;
+
+				if (hasReplacement) {
+					hideCssClass = "hide";
+				}
+				%>
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-sku>
 					<span class="font-weight-semi-bold">
