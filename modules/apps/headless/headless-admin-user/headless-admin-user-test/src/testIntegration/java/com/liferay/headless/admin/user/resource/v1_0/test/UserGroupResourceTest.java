@@ -44,17 +44,17 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 		_userLocalService.addUserGroupUser(userGroup.getId(), user.getUserId());
 
-		List<User> userList = _userLocalService.getUserGroupUsers(
+		List<User> users = _userLocalService.getUserGroupUsers(
 			userGroup.getId());
 
-		Assert.assertTrue(userList.contains(user));
+		Assert.assertTrue(users.contains(user));
 
 		userGroupResource.deleteUserGroupUsers(
 			userGroup.getId(), new Long[] {user.getUserId()});
 
-		userList = _userLocalService.getUserGroupUsers(userGroup.getId());
+		users = _userLocalService.getUserGroupUsers(userGroup.getId());
 
-		Assert.assertFalse(userList.contains(user));
+		Assert.assertFalse(users.contains(user));
 	}
 
 	@Override
