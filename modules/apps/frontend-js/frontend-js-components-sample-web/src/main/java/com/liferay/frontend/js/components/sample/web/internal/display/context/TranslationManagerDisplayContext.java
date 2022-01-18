@@ -38,11 +38,13 @@ public class TranslationManagerDisplayContext {
 			return _activeLanguageIds;
 		}
 
-		_activeLanguageIds = new ArrayList<>();
+		List<String> activeLanguageIds = new ArrayList<>();
 
-		_activeLanguageIds.add(getDefaultLanguageId());
-		_activeLanguageIds.add("ca_ES");
-		_activeLanguageIds.add("fr_FR");
+		activeLanguageIds.add(getDefaultLanguageId());
+		activeLanguageIds.add("ca_ES");
+		activeLanguageIds.add("fr_FR");
+
+		_activeLanguageIds = activeLanguageIds;
 
 		return _activeLanguageIds;
 	}
@@ -81,7 +83,9 @@ public class TranslationManagerDisplayContext {
 				));
 		}
 
-		return availableLocalesJSONArray;
+		_availableLocalesJSONArray = availableLocalesJSONArray;
+
+		return _availableLocalesJSONArray;
 	}
 
 	public String getDefaultLanguageId() {
