@@ -1056,7 +1056,6 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 							iconTag.setCssClass(
 								"inline-item inline-item-after");
-
 							iconTag.setSymbol("caret-double-l");
 
 							iconTag.doTag(pageContext);
