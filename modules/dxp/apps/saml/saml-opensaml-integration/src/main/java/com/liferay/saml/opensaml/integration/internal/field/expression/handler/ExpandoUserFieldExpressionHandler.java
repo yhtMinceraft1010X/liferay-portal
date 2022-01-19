@@ -239,13 +239,13 @@ public class ExpandoUserFieldExpressionHandler
 	public List<String> getValidFieldExpressions() {
 		List<String> validExpressions = new ArrayList<>();
 
-		Set<Integer> keySet = _valueConsumers.keySet();
+		Set<Integer> types = _valueConsumers.keySet();
 
 		for (ExpandoColumn column :
 				_expandoColumnLocalService.getDefaultTableColumns(
 					CompanyThreadLocal.getCompanyId(), User.class.getName())) {
 
-			if (keySet.contains(column.getType())) {
+			if (types.contains(column.getType())) {
 				validExpressions.add(column.getName());
 			}
 		}
