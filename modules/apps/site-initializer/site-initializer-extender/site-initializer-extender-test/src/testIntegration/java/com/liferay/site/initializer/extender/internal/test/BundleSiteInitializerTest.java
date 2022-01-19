@@ -726,11 +726,11 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertObjectEntries(
-			int expected, long groupId, ObjectDefinition objectDefinition)
+			int objectEntriesCount, long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		Assert.assertEquals(
-			expected,
+			objectEntriesCount,
 			_objectEntryLocalService.getObjectEntriesCount(
 				groupId, objectDefinition.getObjectDefinitionId()));
 	}
@@ -909,7 +909,7 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertUserAccounts(
-			Long accountId, int expected,
+			Long accountId, int totalCount,
 			UserAccountResource userAccountResource)
 		throws Exception {
 
@@ -917,7 +917,7 @@ public class BundleSiteInitializerTest {
 			accountId, null, null, null, null);
 
 		Assert.assertNotNull(page);
-		Assert.assertEquals(expected, page.getTotalCount());
+		Assert.assertEquals(totalCount, page.getTotalCount());
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)
