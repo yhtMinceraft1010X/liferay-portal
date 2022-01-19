@@ -491,10 +491,10 @@ public class ExpandoUserFieldExpressionHandler
 
 			throw new ValueDataException(
 				StringBundler.concat(
-					"Column ", expandoColumn.getColumnId(), " has type ",
+					"Unsupported column ", expandoColumn.getColumnId(),
+					" type ",
 					ExpandoColumnConstants.getTypeLabel(
-						expandoColumn.getType()),
-					" and this is not a supported mapping"));
+						expandoColumn.getType())));
 		}
 
 		valueConsumer.accept(expandoValue, values);
