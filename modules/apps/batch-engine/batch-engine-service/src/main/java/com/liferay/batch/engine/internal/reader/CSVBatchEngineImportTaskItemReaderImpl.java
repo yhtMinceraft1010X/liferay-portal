@@ -146,12 +146,12 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 	}
 
 	private static final String[] _ESCAPED_DELIMITERS = {
-		StringPool.OPEN_BRACKET, StringPool.CLOSE_BRACKET,
-		StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS,
-		StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
-		StringPool.QUESTION, StringPool.PERIOD, StringPool.STAR,
-		StringPool.CARET, StringPool.DOLLAR, StringPool.PLUS,
-		StringPool.EXCLAMATION, StringPool.PIPE
+		StringPool.CARET, StringPool.CLOSE_BRACKET,
+		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
+		StringPool.DOLLAR, StringPool.EXCLAMATION, StringPool.OPEN_BRACKET,
+		StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS,
+		StringPool.PERIOD, StringPool.PIPE, StringPool.PLUS,
+		StringPool.QUESTION, StringPool.STAR
 	};
 
 	private final String _delimiter;
