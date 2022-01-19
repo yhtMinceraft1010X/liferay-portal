@@ -18,7 +18,6 @@
 
 <%
 long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
-
 boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.isLimitToOneSubmissionPerUser(ddmFormDisplayContext.getFormInstance());
 %>
 
