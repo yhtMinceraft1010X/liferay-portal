@@ -122,14 +122,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 						return portletDisplay.getId();
 					}
+				).setWindowState(
+					LiferayWindowState.EXCLUSIVE
 				).buildPortletURL();
-
-				try {
-					portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-				}
-				catch (WindowStateException windowStateException) {
-					ReflectionUtil.throwException(windowStateException);
-				}
 
 				return "data-url='" + portletURL.toString() + "'";
 			}
