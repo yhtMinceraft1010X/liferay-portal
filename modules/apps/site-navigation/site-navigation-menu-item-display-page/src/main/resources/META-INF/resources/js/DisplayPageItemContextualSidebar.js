@@ -222,7 +222,7 @@ function DisplayPageItemContextualSidebar({
 				</ClayForm.Group>
 			)}
 
-			{Boolean(itemData.length) &&
+			{Boolean(itemData?.length) &&
 				itemData.map(({title, value}) => (
 					<ClayForm.Group key={title}>
 						<div className="list-group">
