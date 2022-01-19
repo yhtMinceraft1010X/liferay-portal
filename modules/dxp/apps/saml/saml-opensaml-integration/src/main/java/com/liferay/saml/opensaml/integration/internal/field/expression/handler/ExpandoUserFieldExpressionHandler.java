@@ -482,8 +482,8 @@ public class ExpandoUserFieldExpressionHandler
 	}
 
 	private void _setExpandoValueData(
-			ExpandoValue expandoValue,
-			ValueConsumer<String[]> valueConsumer, String[] values)
+			ExpandoValue expandoValue, ValueConsumer<String[]> valueConsumer,
+			String[] values)
 		throws PortalException {
 
 		if (valueConsumer == null) {
