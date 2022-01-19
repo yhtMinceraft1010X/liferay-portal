@@ -698,7 +698,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectEntries(0, group.getGroupId(), objectDefinition1);
+		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
 		ObjectDefinition objectDefinition2 =
@@ -709,7 +709,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectEntries(0, group.getGroupId(), objectDefinition2);
+		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
 
 		ObjectDefinition objectDefinition3 =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -722,11 +722,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectEntries(5, 0, objectDefinition3);
+		_assertObjectEntries(0, objectDefinition3, 5);
 	}
 
 	private void _assertObjectEntries(
-			int objectEntriesCount, long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			int objectEntriesCount)
 		throws Exception {
 
 		Assert.assertEquals(
