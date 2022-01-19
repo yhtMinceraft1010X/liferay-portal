@@ -125,7 +125,7 @@ public class BatchEngineImportTaskLocalServiceImpl
 			return;
 		}
 
-		if (_VALID_ENCLOSING_CHARACTERS.contains(delimiter)) {
+		if (_INVALID_ENCLOSING_CHARACTERS.contains(delimiter)) {
 			throw new BatchEngineImportTaskParametersException(
 				"Illegal delimiter value " + delimiter);
 		}
@@ -138,13 +138,13 @@ public class BatchEngineImportTaskLocalServiceImpl
 			return;
 		}
 
-		if (!_VALID_ENCLOSING_CHARACTERS.contains(enclosingCharacter)) {
+		if (!_INVALID_ENCLOSING_CHARACTERS.contains(enclosingCharacter)) {
 			throw new BatchEngineImportTaskParametersException(
 				"Illegal enclosing character value " + enclosingCharacter);
 		}
 	}
 
-	private static final String _VALID_ENCLOSING_CHARACTERS =
+	private static final String _INVALID_ENCLOSING_CHARACTERS =
 		StringPool.APOSTROPHE + StringPool.QUOTE;
 
 }
