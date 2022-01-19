@@ -466,12 +466,12 @@ public class ExpandoUserFieldExpressionHandler
 			long companyId, String columnName, String... values)
 		throws PortalException {
 
+		ExpandoValue expandoValue =
+			_expandoValueLocalService.createExpandoValue(0);
+
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
 			companyId, User.class.getName(),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, columnName);
-
-		ExpandoValue expandoValue =
-			_expandoValueLocalService.createExpandoValue(0);
 
 		expandoValue.setColumnId(expandoColumn.getColumnId());
 
