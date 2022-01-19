@@ -143,11 +143,11 @@ public class ExpandoUserFieldExpressionHandler
 			String userIdentifierExpression)
 		throws Exception {
 
-		Collection<LDAPServerConfiguration> ldapServerConfigurations =
-			_ldapServerConfigurationProvider.getConfigurations(companyId);
-
 		userIdentifier = _getNormalizedData(
 			companyId, userIdentifierExpression, userIdentifier);
+
+		Collection<LDAPServerConfiguration> ldapServerConfigurations =
+			_ldapServerConfigurationProvider.getConfigurations(companyId);
 
 		for (LDAPServerConfiguration ldapServerConfiguration :
 				ldapServerConfigurations) {
