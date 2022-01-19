@@ -283,44 +283,6 @@ public class ExpandoUserFieldExpressionHandler
 		_ldapServerConfigurationProvider = ldapServerConfigurationProvider;
 	}
 
-	private static int[] _getIntegerValuesStrict(String[] values) {
-		if (values == null) {
-			return null;
-		}
-
-		Stream<String> stream = Arrays.stream(values);
-
-		return stream.mapToInt(
-			GetterUtil::getIntegerStrict
-		).toArray();
-	}
-
-	private static long[] _getLongValuesStrict(String[] values) {
-		if (values == null) {
-			return null;
-		}
-
-		Stream<String> stream = Arrays.stream(values);
-
-		return stream.mapToLong(
-			GetterUtil::getLongStrict
-		).toArray();
-	}
-
-	private static short[] _getShortValuesStrict(String[] values) {
-		if (values == null) {
-			return null;
-		}
-
-		short[] shortValues = new short[values.length];
-
-		for (int i = 0; i < values.length; i++) {
-			shortValues[i] = GetterUtil.getShortStrict(values[i]);
-		}
-
-		return shortValues;
-	}
-
 	private static <V> ValueConsumer<String[]> _getValueConsumer(
 		Function<String[], V> function, ValueConsumer<V> unsafeValueConsumer) {
 
@@ -596,7 +558,17 @@ public class ExpandoUserFieldExpressionHandler
 		).put(
 			ExpandoColumnConstants.INTEGER_ARRAY,
 			_getValueConsumer(
-				ExpandoUserFieldExpressionHandler::_getIntegerValuesStrict,
+				values -> {
+					if (values == null) {
+						return null;
+					}
+
+					Stream<String> stream = Arrays.stream(values);
+
+					return stream.mapToInt(
+						GetterUtil::getIntegerStrict
+					).toArray();
+				},
 				ExpandoValue::setIntegerArray)
 		).put(
 			ExpandoColumnConstants.LONG,
@@ -606,7 +578,17 @@ public class ExpandoUserFieldExpressionHandler
 		).put(
 			ExpandoColumnConstants.LONG_ARRAY,
 			_getValueConsumer(
-				ExpandoUserFieldExpressionHandler::_getLongValuesStrict,
+				values -> {
+					if (values == null) {
+						return null;
+					}
+
+					Stream<String> stream = Arrays.stream(values);
+
+					return stream.mapToLong(
+						GetterUtil::getLongStrict
+					).toArray();
+				},
 				ExpandoValue::setLongArray)
 		).put(
 			ExpandoColumnConstants.NUMBER,
@@ -625,7 +607,19 @@ public class ExpandoUserFieldExpressionHandler
 		).put(
 			ExpandoColumnConstants.SHORT_ARRAY,
 			_getValueConsumer(
-				ExpandoUserFieldExpressionHandler::_getShortValuesStrict,
+				values -> {
+					if (values == null) {
+						return null;
+					}
+
+					short[] shortValues = new short[values.length];
+
+					for (int i = 0; i < values.length; i++) {
+						shortValues[i] = GetterUtil.getShortStrict(values[i]);
+					}
+
+					return shortValues;
+				},
 				ExpandoValue::setShortArray)
 		).put(
 			ExpandoColumnConstants.STRING,
