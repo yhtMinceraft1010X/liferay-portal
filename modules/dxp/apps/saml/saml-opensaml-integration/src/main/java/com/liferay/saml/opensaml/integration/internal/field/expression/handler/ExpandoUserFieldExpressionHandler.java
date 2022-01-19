@@ -118,7 +118,7 @@ public class ExpandoUserFieldExpressionHandler
 					try {
 						_setExpandoValueData(
 							expandoValue,
-							_unsafeBiConsumers.get(expandoColumn.getType()),
+							_valueConsumers.get(expandoColumn.getType()),
 							values);
 					}
 					catch (Exception exception) {
@@ -239,7 +239,7 @@ public class ExpandoUserFieldExpressionHandler
 	public List<String> getValidFieldExpressions() {
 		List<String> validExpressions = new ArrayList<>();
 
-		Set<Integer> keySet = _unsafeBiConsumers.keySet();
+		Set<Integer> keySet = _valueConsumers.keySet();
 
 		for (ExpandoColumn column :
 				_expandoColumnLocalService.getDefaultTableColumns(
@@ -515,7 +515,7 @@ public class ExpandoUserFieldExpressionHandler
 		expandoValue.setColumnId(expandoColumn.getColumnId());
 
 		_setExpandoValueData(
-			expandoValue, _unsafeBiConsumers.get(expandoColumn.getType()),
+			expandoValue, _valueConsumers.get(expandoColumn.getType()),
 			values);
 
 		return expandoValue.getData();
@@ -563,7 +563,7 @@ public class ExpandoUserFieldExpressionHandler
 		ExpandoUserFieldExpressionHandler.class);
 
 	private static final HashMap<Integer, ValueConsumer<String[]>>
-		_unsafeBiConsumers =
+		_valueConsumers =
 			HashMapBuilder.<Integer, ValueConsumer<String[]>>put(
 				ExpandoColumnConstants.BOOLEAN,
 				_getValueConsumer(
