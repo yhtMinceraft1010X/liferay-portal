@@ -35,16 +35,15 @@ public class BatchEngineImportTaskItemReaderFactory {
 	}
 
 	public BatchEngineImportTaskItemReader create(
-			Map<String, Serializable> parameters,
 			BatchEngineTaskContentType batchEngineTaskContentType,
-			InputStream inputStream)
+			InputStream inputStream, Map<String, Serializable> parameters)
 		throws Exception {
 
 		inputStream = ZipInputStreamUtil.asZipInputStream(inputStream);
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReaderImpl(
-				_csvFileColumnDelimiter, parameters, inputStream);
+				_csvFileColumnDelimiter, inputStream, parameters);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {

@@ -35,18 +35,17 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
 
 	public CSVBatchEngineImportTaskItemReaderImpl(
-			String delimiter, Map<String, Serializable> parameters,
-			InputStream inputStream)
+			String delimiter, InputStream inputStream,
+			Map<String, Serializable> parameters)
 		throws IOException {
 
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
 
+		_inputStream = inputStream;
+
 		_delimiterRegex = _getDelimiterRegex(
 			_getEnclosingCharacter(parameters));
-
 		_enclosingCharacter = _getEnclosingCharacter(parameters);
-
-		_inputStream = inputStream;
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
