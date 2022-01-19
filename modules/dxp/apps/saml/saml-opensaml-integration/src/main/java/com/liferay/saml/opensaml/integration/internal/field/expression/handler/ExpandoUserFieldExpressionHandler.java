@@ -322,8 +322,7 @@ public class ExpandoUserFieldExpressionHandler
 	}
 
 	private static <V> ValueConsumer<String[]> _getValueConsumer(
-		Function<String[], V> function,
-		ValueConsumer<V> unsafeValueConsumer) {
+		Function<String[], V> function, ValueConsumer<V> unsafeValueConsumer) {
 
 		return (expandoValue, value) -> unsafeValueConsumer.accept(
 			expandoValue, function.apply(value));
@@ -515,8 +514,7 @@ public class ExpandoUserFieldExpressionHandler
 		expandoValue.setColumnId(expandoColumn.getColumnId());
 
 		_setExpandoValueData(
-			expandoValue, _valueConsumers.get(expandoColumn.getType()),
-			values);
+			expandoValue, _valueConsumers.get(expandoColumn.getType()), values);
 
 		return expandoValue.getData();
 	}
@@ -563,83 +561,81 @@ public class ExpandoUserFieldExpressionHandler
 		ExpandoUserFieldExpressionHandler.class);
 
 	private static final HashMap<Integer, ValueConsumer<String[]>>
-		_valueConsumers =
-			HashMapBuilder.<Integer, ValueConsumer<String[]>>put(
-				ExpandoColumnConstants.BOOLEAN,
-				_getValueConsumer(
-					values -> GetterUtil.getBoolean(_head(values)),
-					ExpandoValue::setBoolean)
-			).put(
-				ExpandoColumnConstants.BOOLEAN_ARRAY,
-				_getValueConsumer(
-					GetterUtil::getBooleanValues, ExpandoValue::setBooleanArray)
-			).put(
-				ExpandoColumnConstants.DOUBLE,
-				_getValueConsumer(
-					values -> GetterUtil.getDouble(_head(values)),
-					ExpandoValue::setDouble)
-			).put(
-				ExpandoColumnConstants.DOUBLE_ARRAY,
-				_getValueConsumer(
-					GetterUtil::getDoubleValues, ExpandoValue::setDoubleArray)
-			).put(
-				ExpandoColumnConstants.FLOAT,
-				_getValueConsumer(
-					values -> GetterUtil.getFloat(_head(values)),
-					ExpandoValue::setFloat)
-			).put(
-				ExpandoColumnConstants.FLOAT_ARRAY,
-				_getValueConsumer(
-					GetterUtil::getLongValues, ExpandoValue::setLongArray)
-			).put(
-				ExpandoColumnConstants.INTEGER,
-				_getValueConsumer(
-					values -> GetterUtil.getIntegerStrict(_head(values)),
-					ExpandoValue::setInteger)
-			).put(
-				ExpandoColumnConstants.INTEGER_ARRAY,
-				_getValueConsumer(
-					ExpandoUserFieldExpressionHandler::_getIntegerValuesStrict,
-					ExpandoValue::setIntegerArray)
-			).put(
-				ExpandoColumnConstants.LONG,
-				_getValueConsumer(
-					values -> GetterUtil.getLongStrict(_head(values)),
-					ExpandoValue::setLong)
-			).put(
-				ExpandoColumnConstants.LONG_ARRAY,
-				_getValueConsumer(
-					ExpandoUserFieldExpressionHandler::_getLongValuesStrict,
-					ExpandoValue::setLongArray)
-			).put(
-				ExpandoColumnConstants.NUMBER,
-				_getValueConsumer(
-					values -> GetterUtil.getNumber(_head(values)),
-					ExpandoValue::setNumber)
-			).put(
-				ExpandoColumnConstants.NUMBER_ARRAY,
-				_getValueConsumer(
-					GetterUtil::getNumberValues, ExpandoValue::setNumberArray)
-			).put(
-				ExpandoColumnConstants.SHORT,
-				_getValueConsumer(
-					values -> GetterUtil.getShortStrict(_head(values)),
-					ExpandoValue::setShort)
-			).put(
-				ExpandoColumnConstants.SHORT_ARRAY,
-				_getValueConsumer(
-					ExpandoUserFieldExpressionHandler::_getShortValuesStrict,
-					ExpandoValue::setShortArray)
-			).put(
-				ExpandoColumnConstants.STRING,
-				_getValueConsumer(
-					ExpandoUserFieldExpressionHandler::_head,
-					ExpandoValue::setString)
-			).put(
-				ExpandoColumnConstants.STRING_ARRAY,
-				_getValueConsumer(
-					Function.identity(), ExpandoValue::setStringArray)
-			).build();
+		_valueConsumers = HashMapBuilder.<Integer, ValueConsumer<String[]>>put(
+			ExpandoColumnConstants.BOOLEAN,
+			_getValueConsumer(
+				values -> GetterUtil.getBoolean(_head(values)),
+				ExpandoValue::setBoolean)
+		).put(
+			ExpandoColumnConstants.BOOLEAN_ARRAY,
+			_getValueConsumer(
+				GetterUtil::getBooleanValues, ExpandoValue::setBooleanArray)
+		).put(
+			ExpandoColumnConstants.DOUBLE,
+			_getValueConsumer(
+				values -> GetterUtil.getDouble(_head(values)),
+				ExpandoValue::setDouble)
+		).put(
+			ExpandoColumnConstants.DOUBLE_ARRAY,
+			_getValueConsumer(
+				GetterUtil::getDoubleValues, ExpandoValue::setDoubleArray)
+		).put(
+			ExpandoColumnConstants.FLOAT,
+			_getValueConsumer(
+				values -> GetterUtil.getFloat(_head(values)),
+				ExpandoValue::setFloat)
+		).put(
+			ExpandoColumnConstants.FLOAT_ARRAY,
+			_getValueConsumer(
+				GetterUtil::getLongValues, ExpandoValue::setLongArray)
+		).put(
+			ExpandoColumnConstants.INTEGER,
+			_getValueConsumer(
+				values -> GetterUtil.getIntegerStrict(_head(values)),
+				ExpandoValue::setInteger)
+		).put(
+			ExpandoColumnConstants.INTEGER_ARRAY,
+			_getValueConsumer(
+				ExpandoUserFieldExpressionHandler::_getIntegerValuesStrict,
+				ExpandoValue::setIntegerArray)
+		).put(
+			ExpandoColumnConstants.LONG,
+			_getValueConsumer(
+				values -> GetterUtil.getLongStrict(_head(values)),
+				ExpandoValue::setLong)
+		).put(
+			ExpandoColumnConstants.LONG_ARRAY,
+			_getValueConsumer(
+				ExpandoUserFieldExpressionHandler::_getLongValuesStrict,
+				ExpandoValue::setLongArray)
+		).put(
+			ExpandoColumnConstants.NUMBER,
+			_getValueConsumer(
+				values -> GetterUtil.getNumber(_head(values)),
+				ExpandoValue::setNumber)
+		).put(
+			ExpandoColumnConstants.NUMBER_ARRAY,
+			_getValueConsumer(
+				GetterUtil::getNumberValues, ExpandoValue::setNumberArray)
+		).put(
+			ExpandoColumnConstants.SHORT,
+			_getValueConsumer(
+				values -> GetterUtil.getShortStrict(_head(values)),
+				ExpandoValue::setShort)
+		).put(
+			ExpandoColumnConstants.SHORT_ARRAY,
+			_getValueConsumer(
+				ExpandoUserFieldExpressionHandler::_getShortValuesStrict,
+				ExpandoValue::setShortArray)
+		).put(
+			ExpandoColumnConstants.STRING,
+			_getValueConsumer(
+				ExpandoUserFieldExpressionHandler::_head,
+				ExpandoValue::setString)
+		).put(
+			ExpandoColumnConstants.STRING_ARRAY,
+			_getValueConsumer(Function.identity(), ExpandoValue::setStringArray)
+		).build();
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
