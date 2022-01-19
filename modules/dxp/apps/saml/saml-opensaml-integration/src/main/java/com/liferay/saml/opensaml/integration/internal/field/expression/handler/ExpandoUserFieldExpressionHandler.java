@@ -128,7 +128,7 @@ public class ExpandoUserFieldExpressionHandler
 
 						throw new PortalException(
 							StringBundler.concat(
-								"Failed to set value for Expando field ",
+								"Unable to set value for expando column ",
 								validFieldExpression, ": ",
 								exception.getMessage()),
 							exception);
