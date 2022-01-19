@@ -278,9 +278,6 @@ describe('remote-app-web', () => {
 
 			expect(receiveMessage.mock.calls[0][0].data).toEqual({
 				appID: 'some UUID',
-				error: new Error(
-					'Invalid resource: Resource must come from permitted origin.'
-				),
 				kind: 'fetch:reject',
 				protocol: 'com.liferay.remote.app.protocol',
 				requestID: undefined,

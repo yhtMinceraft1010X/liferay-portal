@@ -120,22 +120,18 @@ function receiveMessage(event) {
 
 					// TODO: more validation here
 
-					let resource = data.resource;
-
-					if (resource.startsWith('/o/')) {
-						resource = window.location.origin + resource;
-					}
-
-					const resourceUrl = new URL(resource);
+					const resource = data.resource;
 
 					// LPS-145277: Prevent requests to other origins
 
-					if (resourceUrl.origin !== window.location.origin) {
+					if (
+						!(
+							resource.startsWith(window.location.origin) ||
+							resource.startsWith('/o/')
+						)
+					) {
 						postMessage(source, {
 							appID,
-							error: new Error(
-								'Invalid resource: Resource must come from permitted origin.'
-							),
 							kind: 'fetch:reject',
 							requestID,
 						});
