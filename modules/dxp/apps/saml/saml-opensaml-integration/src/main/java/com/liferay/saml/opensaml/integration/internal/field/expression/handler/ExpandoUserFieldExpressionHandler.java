@@ -284,9 +284,9 @@ public class ExpandoUserFieldExpressionHandler
 	}
 
 	private static <V> ValueConsumer<String[]> _getValueConsumer(
-		Function<String[], V> function, ValueConsumer<V> unsafeValueConsumer) {
+		Function<String[], V> function, ValueConsumer<V> valueConsumer) {
 
-		return (expandoValue, value) -> unsafeValueConsumer.accept(
+		return (expandoValue, value) -> valueConsumer.accept(
 			expandoValue, function.apply(value));
 	}
 
@@ -483,10 +483,10 @@ public class ExpandoUserFieldExpressionHandler
 
 	private void _setExpandoValueData(
 			ExpandoValue expandoValue,
-			ValueConsumer<String[]> unsafeValueConsumer, String[] values)
+			ValueConsumer<String[]> valueConsumer, String[] values)
 		throws PortalException {
 
-		if (unsafeValueConsumer == null) {
+		if (valueConsumer == null) {
 			ExpandoColumn expandoColumn = expandoValue.getColumn();
 
 			throw new ValueDataException(
@@ -497,7 +497,7 @@ public class ExpandoUserFieldExpressionHandler
 					" and this is not a supported mapping"));
 		}
 
-		unsafeValueConsumer.accept(expandoValue, values);
+		valueConsumer.accept(expandoValue, values);
 	}
 
 	private ExpandoValue _update(
