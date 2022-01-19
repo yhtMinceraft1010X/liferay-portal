@@ -54,6 +54,13 @@ public class BatchEngineImportTaskLocalServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
+		if ((parameters != null) && !parameters.isEmpty()) {
+			_validateDelimiter(
+				(String)parameters.getOrDefault("delimiter", null));
+			_validateEnclosingCharacter(
+				(String)parameters.getOrDefault("enclosingCharacter", null));
+		}
+
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskPersistence.create(
 				counterLocalService.increment(
@@ -75,14 +82,6 @@ public class BatchEngineImportTaskLocalServiceImpl
 		}
 
 		batchEngineImportTask.setOperation(operation);
-
-		if ((parameters != null) && !parameters.isEmpty()) {
-			_validateDelimiter(
-				(String)parameters.getOrDefault("delimiter", null));
-			_validateEnclosingCharacter(
-				(String)parameters.getOrDefault("enclosingCharacter", null));
-		}
-
 		batchEngineImportTask.setParameters(parameters);
 		batchEngineImportTask.setTaskItemDelegateName(taskItemDelegateName);
 
