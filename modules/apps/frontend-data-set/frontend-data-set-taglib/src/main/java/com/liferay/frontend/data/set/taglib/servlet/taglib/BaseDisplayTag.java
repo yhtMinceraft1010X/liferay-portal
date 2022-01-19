@@ -137,7 +137,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		String propsTransformer = null;
 
 		if (Validator.isNotNull(_propsTransformer)) {
-			String resolvedPackageName;
+			String resolvedPackageName = null;
 
 			try {
 				resolvedPackageName = NPMResolvedPackageNameUtil.get(
