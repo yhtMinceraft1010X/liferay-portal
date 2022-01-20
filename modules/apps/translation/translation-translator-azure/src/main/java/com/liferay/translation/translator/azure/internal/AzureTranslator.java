@@ -92,7 +92,7 @@ public class AzureTranslator implements Translator {
 				).toString());
 			options.setPost(true);
 
-			String responseJSONString = _http.URLtoString(options);
+			String json = _http.URLtoString(options);
 
 			Http.Response response = options.getResponse();
 
@@ -104,7 +104,7 @@ public class AzureTranslator implements Translator {
 
 			Map<String, String> translatedFieldsMap = _getTranslatedFieldsMap(
 				translatorPacket.getFieldsMap(),
-				JSONFactoryUtil.createJSONArray(responseJSONString));
+				JSONFactoryUtil.createJSONArray(json));
 
 			return new TranslatorPacket() {
 
