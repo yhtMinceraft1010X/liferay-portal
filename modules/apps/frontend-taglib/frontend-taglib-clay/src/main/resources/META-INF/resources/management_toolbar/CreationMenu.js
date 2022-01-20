@@ -156,7 +156,7 @@ const CreationMenu = ({
 						})}
 
 						{secondaryItemsGroup.separator && (
-							<ClayDropDown.Item className="dropdown-divider" />
+							<ClayDropDown.Divider />
 						)}
 					</ClayDropDown.Group>
 				))}
