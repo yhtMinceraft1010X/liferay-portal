@@ -98,13 +98,12 @@ public class AzureTranslator implements Translator {
 
 			if (response.getResponseCode() != 200) {
 				throw new PortalException(
-					"Azure Translate service failed with code " +
-						response.getResponseCode());
+					"Response code " + response.getResponseCode());
 			}
 
 			Map<String, String> translatedFieldsMap = _getTranslatedFieldsMap(
 				translatorPacket.getFieldsMap(),
-				JSONFactoryUtil.createJSONArray(json));
+				JSONFactoryUtil.createJSONArray(json ));
 
 			return new TranslatorPacket() {
 
