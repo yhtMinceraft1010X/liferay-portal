@@ -76,7 +76,7 @@ public class BlogsContentEditorConfigContributor
 				_getAllowedContentLists(), " p[*](*){text-align}; ",
 				_getAllowedContentTable(), " video[*](*);")
 		).put(
-			"stylesSet", getStyleFormatsJSONArray(themeDisplay.getLocale())
+			"stylesSet", _getStyleFormatsJSONArray(themeDisplay.getLocale())
 		);
 
 		String namespace = GetterUtil.getString(
@@ -105,7 +105,23 @@ public class BlogsContentEditorConfigContributor
 		}
 	}
 
-	protected JSONObject getStyleFormatJSONObject(
+	private String _getAllowedContentLists() {
+		return "li ol ul;";
+	}
+
+	private String _getAllowedContentTable() {
+		return StringBundler.concat(
+			"col[span]; colgroup[span]; table[border, cellpadding, ",
+			"cellspacing]{width}; tbody td[colspan, headers, rowspan]{*}; ",
+			"th[abbr, colspan, headers, rowspan, scope, sorted]{*}; thead tr;");
+	}
+
+	private String _getAllowedContentText() {
+		return "b blockquote cite code em h1 h2 h3 h4 h5 h6 hr i pre s " +
+			"strike strong u;";
+	}
+
+	private JSONObject _getStyleFormatJSONObject(
 		String styleFormatName, String element, String cssClass) {
 
 		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
@@ -125,58 +141,42 @@ public class BlogsContentEditorConfigContributor
 		return styleJSONObject;
 	}
 
-	protected JSONArray getStyleFormatsJSONArray(Locale locale) {
+	private JSONArray _getStyleFormatsJSONArray(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, "com.liferay.frontend.editor.lang");
 
 		return JSONUtil.putAll(
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "normal"), "p", null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "1"), "h1",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "2"), "h2",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "3"), "h3",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.format(resourceBundle, "heading-x", "4"), "h4",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "preformatted-text"), "pre",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "cited-work"), "cite", null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "computer-code"), "code",
 				null),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "info-message"), "div",
 				"overflow-auto portlet-msg-info"),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "alert-message"), "div",
 				"overflow-auto portlet-msg-alert"),
-			getStyleFormatJSONObject(
+			_getStyleFormatJSONObject(
 				LanguageUtil.get(resourceBundle, "error-message"), "div",
 				"overflow-auto portlet-msg-error"));
-	}
-
-	private String _getAllowedContentLists() {
-		return "li ol ul;";
-	}
-
-	private String _getAllowedContentTable() {
-		return StringBundler.concat(
-			"col[span]; colgroup[span]; table[border, cellpadding, ",
-			"cellspacing]{width}; tbody td[colspan, headers, rowspan]{*}; ",
-			"th[abbr, colspan, headers, rowspan, scope, sorted]{*}; thead tr;");
-	}
-
-	private String _getAllowedContentText() {
-		return "b blockquote cite code em h1 h2 h3 h4 h5 h6 hr i pre s " +
-			"strike strong u;";
 	}
 
 	private void _populateFileBrowserURL(
