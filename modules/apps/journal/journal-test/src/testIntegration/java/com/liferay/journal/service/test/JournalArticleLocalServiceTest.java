@@ -496,7 +496,6 @@ public class JournalArticleLocalServiceTest {
 					_group.getGroupId(), JournalArticle.class.getName(),
 					String.valueOf(journalArticle.getResourcePrimKey()),
 					ActionKeys.PERMISSIONS));
-
 			Assert.assertTrue(
 				nonownerPermissionChecker.hasPermission(
 					_group.getGroupId(), JournalArticle.class.getName(),
@@ -531,7 +530,6 @@ public class JournalArticleLocalServiceTest {
 					_group.getGroupId(), JournalArticle.class.getName(),
 					String.valueOf(journalArticle.getResourcePrimKey()),
 					ActionKeys.PERMISSIONS));
-
 			Assert.assertTrue(
 				nonownerPermissionChecker.hasPermission(
 					_group.getGroupId(), JournalArticle.class.getName(),
