@@ -19,10 +19,9 @@ package com.liferay.remote.app.web.internal.frontend.taglib.clay.data.set.model;
  */
 public class StatusInfo {
 
-	public StatusInfo(String label, String localizedLabel) {
+	public StatusInfo(String label, String label_i18n) {
 		_label = label;
-
-		_label_i18n = localizedLabel;
+		_label_i18n = label_i18n;
 	}
 
 	public String getLabel() {
