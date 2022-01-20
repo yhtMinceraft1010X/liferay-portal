@@ -79,13 +79,13 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 
-		HashMapBuilder.HashMapWrapper<String, Object> orderInfo =
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			new HashMapBuilder.HashMapWrapper<>();
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
 		if (billingAddress != null) {
-			orderInfo.put(
+			hashMapWrapper.put(
 				"billingAddressCity", billingAddress.getCity()
 			).put(
 				"billingAddressCountry",
@@ -126,7 +126,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			);
 		}
 
-		orderInfo.put(
+		hashMapWrapper.put(
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
 			"companyCode", commerceAccount.getCompanyId()
@@ -149,7 +149,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		);
 
 		if (shippingAddress != null) {
-			orderInfo.put(
+			hashMapWrapper.put(
 				"shippingAddressCity", shippingAddress.getCity()
 			).put(
 				"shippingAddressCountry",
@@ -201,7 +201,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		List<CommerceOrderItem> commerceOrderItemList =
 			commerceOrder.getCommerceOrderItems();
 
-		orderInfo.put(
+		hashMapWrapper.put(
 			"subtotal", commerceOrder.getTotalMoney()
 		).put(
 			"taxAmount",
@@ -217,7 +217,7 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		PortletResponseUtil.write(
 			resourceResponse,
 			_commerceReportExporter.export(
-				commerceOrderItemList, orderInfo.build()));
+				commerceOrderItemList, hashMapWrapper.build()));
 	}
 
 	private String _getLogoURL(ThemeDisplay themeDisplay) throws Exception {
