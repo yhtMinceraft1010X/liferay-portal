@@ -32,7 +32,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 		action="<%= editPLOEntryURL %>"
 		method="POST"
 		name="editPLOEntryFm"
-		onSubmit='<%= Validator.isNull(editDisplayContext.getKey()) ? "event.preventDefault();" + liferayPortletResponse.getNamespace() + "validateForm(event);" : StringPool.BLANK %>'
+		onSubmit='<%= Validator.isNull(editDisplayContext.getKey()) ? "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "validateForm(event); " : StringPool.BLANK %>'
 	>
 		<aui:input name="redirect" type="hidden" value="<%= editDisplayContext.getBackURL() %>" />
 
