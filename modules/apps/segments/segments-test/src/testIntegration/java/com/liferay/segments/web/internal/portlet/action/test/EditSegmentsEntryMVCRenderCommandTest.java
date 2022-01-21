@@ -167,10 +167,10 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLanguageId(LanguageUtil.getLanguageId(LocaleUtil.US));
 		themeDisplay.setLocale(LocaleUtil.US);
-		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
 	}
