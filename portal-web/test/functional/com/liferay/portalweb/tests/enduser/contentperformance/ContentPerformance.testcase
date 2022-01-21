@@ -538,15 +538,12 @@ definition {
 		}
 
 		task ("Create a default Display Page Template") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.clickPublish();
 
@@ -566,7 +563,7 @@ definition {
 		task ("Assert that 'View metrics' option is not displayed") {
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
 
 		task ("Longin with Test Tes user to allow teardown") {
@@ -653,15 +650,12 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.clickPublish();
 
@@ -677,9 +671,9 @@ definition {
 		task ("Check if button is present in Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -748,15 +742,12 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.clickPublish();
 
@@ -774,7 +765,7 @@ definition {
 
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -921,15 +912,12 @@ definition {
 		}
 
 		task ("Create a DPT and set as Default") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.clickPublish();
 
@@ -947,7 +935,7 @@ definition {
 
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertElementPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
