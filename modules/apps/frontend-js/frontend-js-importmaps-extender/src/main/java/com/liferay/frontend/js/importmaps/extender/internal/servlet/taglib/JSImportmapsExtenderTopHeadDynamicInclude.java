@@ -63,11 +63,8 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.println("<script type=\"importmap\">");
-
 		printWriter.println(_importmaps.get());
-
 		printWriter.println("</script>");
-
 		printWriter.print("<script src=\"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -154,11 +151,11 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 	}
 
 	private synchronized void _rebuildImportmaps() {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		JSONObject globalJSONObject = _getGlobalJSONObject();
 
 		globalJSONObject.put("scopes", _getScopesJSONObject());
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("imports", globalJSONObject);
 
