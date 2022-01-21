@@ -39,8 +39,9 @@ public class ContentDashboardGroupUtilTest {
 
 	@Test
 	public void testGetGroupName() throws PortalException {
-		Locale locale = LocaleUtil.US;
 		Group group = Mockito.mock(Group.class);
+
+		Locale locale = LocaleUtil.US;
 
 		Mockito.when(
 			group.getDescriptiveName(locale)
@@ -57,8 +58,9 @@ public class ContentDashboardGroupUtilTest {
 	public void testGetGroupNameWithDescriptiveNameException()
 		throws PortalException {
 
-		Locale locale = LocaleUtil.US;
 		Group group = Mockito.mock(Group.class);
+
+		Locale locale = LocaleUtil.US;
 
 		Mockito.when(
 			group.getDescriptiveName(locale)
@@ -81,8 +83,9 @@ public class ContentDashboardGroupUtilTest {
 	public void testGetGroupNameWithoutDescriptiveName()
 		throws PortalException {
 
-		Locale locale = LocaleUtil.US;
 		Group group = Mockito.mock(Group.class);
+
+		Locale locale = LocaleUtil.US;
 
 		Mockito.when(
 			group.getName(locale)
