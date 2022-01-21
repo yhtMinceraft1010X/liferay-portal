@@ -145,7 +145,6 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, targetGroup.getGroupId(), targetGroupFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
@@ -205,22 +204,20 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		_dlAppService.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-
 		_dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
+		_dlAppService.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Assert.assertEquals(
 			2,

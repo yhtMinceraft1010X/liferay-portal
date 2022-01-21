@@ -127,16 +127,16 @@ public class DLFolderUtilTest {
 		Group group = PowerMockito.mock(Group.class);
 
 		PowerMockito.doReturn(
-			true
-		).when(
-			group
-		).isDepot();
-
-		PowerMockito.doReturn(
 			groupId
 		).when(
 			group
 		).getGroupId();
+
+		PowerMockito.doReturn(
+			true
+		).when(
+			group
+		).isDepot();
 
 		return group;
 	}

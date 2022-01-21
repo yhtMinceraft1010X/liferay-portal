@@ -112,7 +112,6 @@ public class DLFolderServiceTest {
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
@@ -143,7 +142,6 @@ public class DLFolderServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
@@ -213,13 +211,11 @@ public class DLFolderServiceTest {
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), folder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
-
 		_dlAppService.addFileEntry(
 			null, _group.getGroupId(), folder.getFolderId(),
 			StringUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
@@ -418,11 +414,15 @@ public class DLFolderServiceTest {
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
+		expectedFileEntries.add(fileEntry2);
+
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
+
+		expectedFileEntries.add(fileEntry1);
 
 		FileEntry fileEntry3 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
@@ -430,8 +430,6 @@ public class DLFolderServiceTest {
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
-		expectedFileEntries.add(fileEntry2);
-		expectedFileEntries.add(fileEntry1);
 		expectedFileEntries.add(fileEntry3);
 
 		List<Object> actualFoldersAndFileEntriesAndFileShortcuts =
