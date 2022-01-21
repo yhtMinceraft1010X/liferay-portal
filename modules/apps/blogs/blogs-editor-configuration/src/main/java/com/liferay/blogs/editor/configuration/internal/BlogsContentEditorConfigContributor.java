@@ -84,6 +84,9 @@ public class BlogsContentEditorConfigContributor
 				"liferay-ui:input-editor:namespace"));
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		String editorName = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:editorName"));
 
 		_populateFileBrowserURL(
 			jsonObject, requestBackedPortletURLFactory,
@@ -103,10 +106,6 @@ public class BlogsContentEditorConfigContributor
 					"/blogs/upload_temp_image"
 				).buildString());
 		}
-
-		String editorName = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:editorName"));
 
 		if (editorName.equals("ballooneditor")) {
 			jsonObject.put(
