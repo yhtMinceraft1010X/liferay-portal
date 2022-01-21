@@ -84,9 +84,6 @@ public class BlogsContentEditorConfigContributor
 				"liferay-ui:input-editor:namespace"));
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
-		String editorName = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:editorName"));
 
 		_populateFileBrowserURL(
 			jsonObject, requestBackedPortletURLFactory,
@@ -107,17 +104,15 @@ public class BlogsContentEditorConfigContributor
 				).buildString());
 		}
 
-		if (editorName.equals("ballooneditor")) {
-			jsonObject.put(
-				"extraPlugins",
-				"itemselector,stylescombo,ballooneditor," +
-					"videoembed,insertbutton,codemirror"
-			).put(
-				"toolbarText",
-				"Styles,Bold,Italic,Underline,BulletedList" +
-					",NumberedList,TextLink,SourceEditor"
-			);
-		}
+		jsonObject.put(
+			"extraPlugins",
+			"itemselector,stylescombo,ballooneditor," +
+				"videoembed,insertbutton,codemirror"
+		).put(
+			"toolbarText",
+			"Styles,Bold,Italic,Underline,BulletedList" +
+				",NumberedList,TextLink,SourceEditor"
+		);
 	}
 
 	private String _getAllowedContentLists() {
