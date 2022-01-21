@@ -52,8 +52,6 @@ if (commercePaymentMethodKey != null) {
 
 String commerceShippingOptionName = commerceOrder.getShippingOptionName();
 
-Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
-
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
 
@@ -428,6 +426,8 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						int requestedDeliveryDay = 0;
 						int requestedDeliveryMonth = -1;
 						int requestedDeliveryYear = 0;
+
+						Date requestedDeliveryDate = commerceOrder.getRequestedDeliveryDate();
 
 						if (requestedDeliveryDate != null) {
 							Calendar calendar = CalendarFactoryUtil.getCalendar(requestedDeliveryDate.getTime());
