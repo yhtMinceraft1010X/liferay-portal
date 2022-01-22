@@ -414,13 +414,13 @@ public class DLFolderServiceTest {
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
 
-		expectedFileEntries.add(fileEntry2);
-
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
 			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
 			null, null, serviceContext);
+
+		expectedFileEntries.add(fileEntry2);
 
 		expectedFileEntries.add(fileEntry1);
 
