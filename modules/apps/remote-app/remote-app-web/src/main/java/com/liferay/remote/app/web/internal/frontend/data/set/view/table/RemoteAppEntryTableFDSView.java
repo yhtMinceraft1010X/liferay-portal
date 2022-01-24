@@ -42,32 +42,19 @@ public class RemoteAppEntryTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		_addFDSTableSchemaField(
-			fdsTableSchemaBuilder, "name", "name", "actionLink");
-		_addFDSTableSchemaField(fdsTableSchemaBuilder, "type", "type");
-		_addFDSTableSchemaField(
-			fdsTableSchemaBuilder, "status", "status", "status");
+		FDSTableSchemaField nameFDSTableSchemaField =
+			fdsTableSchemaBuilder.addFDSTableSchemaField("name", "name");
+
+		nameFDSTableSchemaField.setContentRenderer("actionLink");
+
+		fdsTableSchemaBuilder.addFDSTableSchemaField("type", "type");
+
+		FDSTableSchemaField statusFDSTableSchemaField =
+			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
+
+		statusFDSTableSchemaField.setContentRenderer("status");
 
 		return fdsTableSchemaBuilder.build();
-	}
-
-	private void _addFDSTableSchemaField(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldName,
-		String label) {
-
-		_addFDSTableSchemaField(fdsTableSchemaBuilder, fieldName, label, null);
-	}
-
-	private void _addFDSTableSchemaField(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldName,
-		String label, String contentRenderer) {
-
-		FDSTableSchemaField fdsTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(fieldName, label);
-
-		if (contentRenderer != null) {
-			fdsTableSchemaField.setContentRenderer(contentRenderer);
-		}
 	}
 
 	@Reference
