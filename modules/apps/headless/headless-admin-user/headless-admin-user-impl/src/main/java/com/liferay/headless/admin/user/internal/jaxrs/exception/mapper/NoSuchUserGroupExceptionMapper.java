@@ -41,7 +41,8 @@ public class NoSuchUserGroupExceptionMapper
 	protected Problem getProblem(
 		NoSuchUserGroupException noSuchUserGroupException) {
 
-		return new Problem(Response.Status.NOT_FOUND, "User group not found");
+		return new Problem(
+			Response.Status.NOT_FOUND, noSuchUserGroupException.getMessage());
 	}
 
 }
