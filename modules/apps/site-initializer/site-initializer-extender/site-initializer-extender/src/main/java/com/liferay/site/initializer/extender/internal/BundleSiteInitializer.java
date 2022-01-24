@@ -1556,13 +1556,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 			json);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		String type = StringUtil.toLowerCase(jsonObject.getString("type"));
 
 		if (Objects.equals(type, "widget")) {
 			type = LayoutConstants.TYPE_PORTLET;
 		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
