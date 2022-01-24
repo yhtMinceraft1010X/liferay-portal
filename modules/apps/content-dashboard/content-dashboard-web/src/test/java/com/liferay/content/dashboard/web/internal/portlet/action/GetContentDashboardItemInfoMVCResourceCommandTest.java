@@ -183,7 +183,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
-
 		Assert.assertEquals("portraitURL", userJSONObject.getString("url"));
 
 		List<ContentDashboardItem.Version> versions =
@@ -231,7 +230,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			contentDashboardItem.getUserName(),
 			userJSONObject.getString("name"));
-
 		Assert.assertEquals(StringPool.BLANK, userJSONObject.getString("url"));
 	}
 
