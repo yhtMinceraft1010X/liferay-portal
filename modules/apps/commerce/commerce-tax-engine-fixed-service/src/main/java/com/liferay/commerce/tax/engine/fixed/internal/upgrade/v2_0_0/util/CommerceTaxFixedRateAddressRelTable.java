@@ -33,8 +33,8 @@ public class CommerceTaxFixedRateAddressRelTable {
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"commerceTaxMethodId", Types.BIGINT},
-		{"CPTaxCategoryId", Types.BIGINT}, {"commerceCountryId", Types.BIGINT},
-		{"commerceRegionId", Types.BIGINT}, {"zip", Types.VARCHAR},
+		{"CPTaxCategoryId", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"regionId", Types.BIGINT}, {"zip", Types.VARCHAR},
 		{"rate", Types.DOUBLE}
 	};
 
@@ -60,9 +60,9 @@ TABLE_COLUMNS_MAP.put("commerceTaxMethodId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
+TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
+TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 
@@ -70,7 +70,7 @@ TABLE_COLUMNS_MAP.put("rate", Types.DOUBLE);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table CommerceTaxFixedRateAddressRel (CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
+"create table CommerceTaxFixedRateAddressRel (CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 "drop table CommerceTaxFixedRateAddressRel";
