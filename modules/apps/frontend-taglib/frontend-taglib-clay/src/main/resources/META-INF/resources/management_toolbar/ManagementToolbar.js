@@ -31,6 +31,8 @@ import SelectionControls from './SelectionControls';
 
 import './ManagementToolbar.scss';
 
+const noop = () => {};
+
 function ManagementToolbar({
 	clearResultsURL,
 	clearSelectionURL,
@@ -44,15 +46,15 @@ function ManagementToolbar({
 	initialCheckboxStatus,
 	initialSelectAllButtonVisible,
 	initialSelectedItems,
-	onActionButtonClick = () => {},
-	onCheckboxChange = () => {},
-	onClearSelectionButtonClick = () => {},
-	onCreateButtonClick = () => {},
-	onCreationMenuItemClick = () => {},
-	onInfoButtonClick = () => {},
-	onFilterDropdownItemClick = () => {},
-	onOrderDropdownItemClick = () => {},
-	onSelectAllButtonClick = () => {},
+	onActionButtonClick = noop,
+	onCheckboxChange = noop,
+	onClearSelectionButtonClick = noop,
+	onCreateButtonClick = noop,
+	onCreationMenuItemClick = noop,
+	onInfoButtonClick = noop,
+	onFilterDropdownItemClick = noop,
+	onOrderDropdownItemClick = noop,
+	onSelectAllButtonClick = noop,
 	onShowMoreButtonClick,
 	orderDropdownItems,
 	searchActionURL,
