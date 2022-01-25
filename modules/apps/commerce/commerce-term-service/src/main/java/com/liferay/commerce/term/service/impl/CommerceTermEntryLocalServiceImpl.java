@@ -86,10 +86,9 @@ public class CommerceTermEntryLocalServiceImpl
 
 		_validate(null, serviceContext.getCompanyId(), name, priority, type);
 
-		long commerceTermEntryId = counterLocalService.increment();
-
 		CommerceTermEntry commerceTermEntry =
-			commerceTermEntryPersistence.create(commerceTermEntryId);
+			commerceTermEntryPersistence.create(
+				counterLocalService.increment());
 
 		commerceTermEntry.setExternalReferenceCode(externalReferenceCode);
 
@@ -147,7 +146,8 @@ public class CommerceTermEntryLocalServiceImpl
 		// Commerce term entry localization
 
 		_addCommerceTermEntryLocalizedFields(
-			user.getCompanyId(), commerceTermEntryId, descriptionMap, labelMap);
+			user.getCompanyId(), commerceTermEntry.getCommerceTermEntryId(),
+			descriptionMap, labelMap);
 
 		// Resource
 
