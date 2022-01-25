@@ -128,17 +128,7 @@ public class FilterUtil {
 		public Filter visit(QueryFilter queryFilter) {
 			Query query = queryFilter.getQuery();
 
-			if (query instanceof WildcardQuery) {
-				WildcardQuery wildcardQuery = (WildcardQuery)query;
-
-				QueryTerm queryTerm = wildcardQuery.getQueryTerm();
-
-				return _createNestedQueryFilter(
-					queryTerm.getField(), queryFilter,
-					nestedFieldName -> new WildcardQueryImpl(
-						nestedFieldName, queryTerm.getValue()));
-			}
-			else if (query instanceof TermQuery) {
+			if (query instanceof TermQuery) {
 				TermQuery termQuery = (TermQuery)query;
 
 				QueryTerm queryTerm = termQuery.getQueryTerm();
@@ -146,6 +136,16 @@ public class FilterUtil {
 				return _createNestedQueryFilter(
 					queryTerm.getField(), queryFilter,
 					nestedFieldName -> new TermQueryImpl(
+						nestedFieldName, queryTerm.getValue()));
+			}
+			else if (query instanceof WildcardQuery) {
+				WildcardQuery wildcardQuery = (WildcardQuery)query;
+
+				QueryTerm queryTerm = wildcardQuery.getQueryTerm();
+
+				return _createNestedQueryFilter(
+					queryTerm.getField(), queryFilter,
+					nestedFieldName -> new WildcardQueryImpl(
 						nestedFieldName, queryTerm.getValue()));
 			}
 
