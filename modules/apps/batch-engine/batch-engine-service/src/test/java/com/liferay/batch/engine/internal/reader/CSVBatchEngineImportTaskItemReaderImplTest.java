@@ -384,13 +384,13 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 						FIELD_NAMES, delimiter, enclosingCharacter,
 						new Object[][] {
 							{
-								createDateString, "hey, here is comma inside",
+								createDateString, "hey, here is a comma inside,
 								1, "sample name", "naziv"
 							}
 						})) {
 
 			validate(
-				createDateString, "hey, here is comma inside", 1L,
+				createDateString, "hey, here is a comma inside", 1L,
 				Collections.emptyMap(),
 				csvBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
