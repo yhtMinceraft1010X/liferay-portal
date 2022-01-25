@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 const checkbox = fragmentElement.querySelector('#togBtn');
 const sliderBefore = fragmentElement.querySelector(
 	'.public-site-navbar .switch .slider'
@@ -11,53 +25,63 @@ const sliderOff = fragmentElement.querySelector(
 
 function changeBeforeText(checked) {
 	if (checked) {
-		sliderBefore.setAttribute(
+		return sliderBefore.setAttribute(
 			'data-content',
 			sliderOn.firstChild.nodeValue
 		);
 	}
-	else {
-		sliderBefore.setAttribute(
-			'data-content',
-			sliderOff.firstChild.nodeValue
-		);
-	}
+	sliderBefore.setAttribute('data-content', sliderOff.firstChild.nodeValue);
 }
 
 changeBeforeText(checkbox.checked);
 
-checkbox.addEventListener('click', function (event) {
+checkbox.addEventListener('click', (event) => {
 	changeBeforeText(event.target.checked);
 });
 
+const backgroundIconDisplay = ['background-icon-close', 'background-icon-grid'];
 const menuButton = fragmentElement.querySelector('.raylife-navbar-button');
+const menuDisplay = ['show-menu', 'hidden-menu'];
+const menuIcon = fragmentElement.querySelector('#button-menu-icon');
 const myDropdown = fragmentElement.querySelector('#myDropdown');
-const menuGrid = fragmentElement.querySelector('.menu-grid');
-const menuClose = fragmentElement.querySelector('.menu-close');
 
 menuButton.addEventListener('click', () => {
-	myDropdown.classList.toggle('menu-options');
+	menuDisplay.forEach((cssClass) => {
+		myDropdown.classList.toggle(cssClass);
+	});
 
-	if (myDropdown.classList.contains('menu-options')) {
-		fragmentElement.querySelector(
+	backgroundIconDisplay.forEach((cssClass) => {
+		menuIcon.classList.toggle(cssClass);
+	});
+
+	if (myDropdown.classList.contains('show-menu')) {
+		return (fragmentElement.querySelector(
 			'.raylife-navbar-button div span'
-		).innerText = 'CLOSE';
-		menuGrid.style.display = 'none';
-		menuClose.style.display = 'block';
+		).innerText = 'CLOSE');
 	}
-	else {
-		fragmentElement.querySelector(
-			'.raylife-navbar-button div span'
-		).innerText = 'MENU';
-		menuGrid.style.display = 'block';
-		menuClose.style.display = 'none';
-	}
+
+	fragmentElement.querySelector('.raylife-navbar-button div span').innerText =
+		'MENU';
 });
 
 menuButton.addEventListener('blur', () => {
-	myDropdown.classList.remove('menu-options');
-	fragmentElement.querySelector('.raylife-navbar-button div span').innerText =
-		'MENU';
-	menuGrid.style.display = 'block';
-	menuClose.style.display = 'none';
+	if (myDropdown.classList.contains('show-menu')) {
+		menuDisplay.forEach((cssClass) => {
+			myDropdown.classList.toggle(cssClass);
+		});
+
+		backgroundIconDisplay.forEach((cssClass) => {
+			menuIcon.classList.toggle(cssClass);
+		});
+
+		if (myDropdown.classList.contains('show-menu')) {
+			return (fragmentElement.querySelector(
+				'.raylife-navbar-button div span'
+			).innerText = 'CLOSE');
+		}
+
+		fragmentElement.querySelector(
+			'.raylife-navbar-button div span'
+		).innerText = 'MENU';
+	}
 });
