@@ -55,8 +55,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
 
-		<aui:input name="system" type="hidden" value="<%= objectDefinition.isSystem() %>" />
-
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "information") %>
 		</h2>

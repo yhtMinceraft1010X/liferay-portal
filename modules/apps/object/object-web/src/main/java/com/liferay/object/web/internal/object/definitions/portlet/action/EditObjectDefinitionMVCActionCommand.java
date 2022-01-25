@@ -22,6 +22,7 @@ import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -76,10 +77,13 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> pluralLabelMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "pluralLabel");
 		String scope = ParamUtil.getString(actionRequest, "scope");
-		boolean system = ParamUtil.getBoolean(actionRequest, "system");
 
 		try {
-			if (system) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionService.getObjectDefinition(
+					objectDefinitionId);
+
+			if (objectDefinition.isSystem()) {
 				_objectDefinitionService.updateTitleObjectFieldId(
 					objectDefinitionId, titleObjectFieldId);
 
