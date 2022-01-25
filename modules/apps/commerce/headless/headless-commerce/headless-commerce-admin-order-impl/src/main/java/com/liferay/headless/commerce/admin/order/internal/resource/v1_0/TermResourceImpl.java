@@ -241,6 +241,12 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			CommerceTermEntry commerceTermEntry, Term term)
 		throws Exception {
 
+		Map<String, String> descriptionMap = term.getDescription();
+
+		if ((commerceTermEntry != null) && (descriptionMap == null)) {
+			descriptionMap = commerceTermEntry.getLanguageIdToDescriptionMap();
+		}
+
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
 
@@ -248,12 +254,6 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 			term.getDisplayDate(), serviceContext.getTimeZone());
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			term.getExpirationDate(), serviceContext.getTimeZone());
-
-		Map<String, String> descriptionMap = term.getDescription();
-
-		if ((commerceTermEntry != null) && (descriptionMap == null)) {
-			descriptionMap = commerceTermEntry.getLanguageIdToDescriptionMap();
-		}
 
 		Map<String, String> labelMap = term.getLabel();
 
