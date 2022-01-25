@@ -228,7 +228,7 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			updateCustomObjectDefinition(
-				Long objectDefinitionId, long descriptionObjectFieldId,
+				long objectDefinitionId, long descriptionObjectFieldId,
 				long titleObjectFieldId, boolean active,
 				String[] labelMapLanguageIds, String[] labelMapValues,
 				String name, String panelAppOrder, String panelCategoryKey,
@@ -261,7 +261,7 @@ public class ObjectDefinitionServiceSoap {
 
 	public static com.liferay.object.model.ObjectDefinitionSoap
 			updateTitleObjectFieldId(
-				Long objectDefinitionId, long titleObjectFieldId)
+				long objectDefinitionId, long titleObjectFieldId)
 		throws RemoteException {
 
 		try {

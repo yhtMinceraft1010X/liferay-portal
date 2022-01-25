@@ -369,7 +369,7 @@ public class ObjectDefinitionServiceHttp {
 
 	public static com.liferay.object.model.ObjectDefinition
 			updateCustomObjectDefinition(
-				HttpPrincipal httpPrincipal, Long objectDefinitionId,
+				HttpPrincipal httpPrincipal, long objectDefinitionId,
 				long descriptionObjectFieldId, long titleObjectFieldId,
 				boolean active,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -419,7 +419,7 @@ public class ObjectDefinitionServiceHttp {
 
 	public static com.liferay.object.model.ObjectDefinition
 			updateTitleObjectFieldId(
-				HttpPrincipal httpPrincipal, Long objectDefinitionId,
+				HttpPrincipal httpPrincipal, long objectDefinitionId,
 				long titleObjectFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -485,11 +485,11 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCustomObjectDefinitionParameterTypes8 = new Class[] {
-			Long.class, long.class, long.class, boolean.class,
+			long.class, long.class, long.class, boolean.class,
 			java.util.Map.class, String.class, String.class, String.class,
 			boolean.class, java.util.Map.class, String.class
 		};
 	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes9 =
-		new Class[] {Long.class, long.class};
+		new Class[] {long.class, long.class};
 
 }
