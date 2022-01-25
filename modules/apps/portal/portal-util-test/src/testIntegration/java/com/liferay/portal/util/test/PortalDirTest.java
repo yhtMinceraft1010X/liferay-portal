@@ -43,14 +43,9 @@ public class PortalDirTest {
 			PropsValues.LIFERAY_WEB_PORTAL_DIR, "WEB-INF");
 
 		Assert.assertTrue(
-			"LIFERAY_WEB_PORTAL_DIR should be parent dir for \"WEB-INF\": " +
-				PropsValues.LIFERAY_WEB_PORTAL_DIR,
 			portalWebInfDir.isDirectory());
 
 		Assert.assertTrue(
-			"LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR should point to " +
-				"\"WEB-INF/shielded-container-lib/\": " +
-					PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
 			PropsValues.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR.endsWith(
 				"WEB-INF/shielded-container-lib/"));
 	}
