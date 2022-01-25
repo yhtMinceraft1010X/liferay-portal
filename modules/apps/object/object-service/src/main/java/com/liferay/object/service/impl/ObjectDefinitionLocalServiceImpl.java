@@ -551,7 +551,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			Long objectDefinitionId, long descriptionObjectFieldId,
+			long objectDefinitionId, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
@@ -575,7 +575,7 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateTitleObjectFieldId(
-			Long objectDefinitionId, long titleObjectFieldId)
+			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =

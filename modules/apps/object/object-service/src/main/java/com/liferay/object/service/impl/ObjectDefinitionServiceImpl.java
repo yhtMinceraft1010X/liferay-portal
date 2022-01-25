@@ -126,7 +126,7 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition updateCustomObjectDefinition(
-			Long objectDefinitionId, long descriptionObjectFieldId,
+			long objectDefinitionId, long descriptionObjectFieldId,
 			long titleObjectFieldId, boolean active,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
@@ -144,7 +144,7 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition updateTitleObjectFieldId(
-			Long objectDefinitionId, long titleObjectFieldId)
+			long objectDefinitionId, long titleObjectFieldId)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
